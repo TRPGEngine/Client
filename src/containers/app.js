@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 const { Route, Redirect, IndexRoute, BrowserRouter, Link } = require('react-router-dom');
 const Router = BrowserRouter;
+// require('./App.scss');
+import './App.scss'
 
 const Login = require('./Login');
 const User = ({ match }) => {
@@ -14,7 +16,7 @@ class App extends React.Component {
     // console.log(this.props.state.get('ui'));
     return (
       <Router>
-        <div>
+        <div className="app">
           <Link to="/login">登录</Link>
           <Link to="/user/user">用户</Link>
           <Route name="login" path="/login" component={Login} />

@@ -1,0 +1,22 @@
+.login-screen {
+  width: 372px;
+  height: 343px;
+  background: url('../assets/img/login_bg.png') repeat-x 0 0 scroll #e6f2f8;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 0 8px;
+  padding: 125px 30px 0;
+
+  input {
+    color: #222;
+    font-size: 14px;
+    width: 312px;
+    height: 40px;
+    border: 1px solid #baced9;
+    border-radius: 3px;
+    background-color: #deeef5;
+    margin: 0;
+    padding: 10px;
+    outline: 0;
+    margin: 0 0 5px;
+  }
+}

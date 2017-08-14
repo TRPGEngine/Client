@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+  font-family: PingFang SC, "Microsoft YaHei", arial, serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  min-width: 100%;
+}
+
+body {
+  background-image: url('../assets/img/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-width: 100%;
+  background-color: rgba(255,255,255,0.2);
+}

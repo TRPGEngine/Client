@@ -18,12 +18,16 @@ module.exports = {
     rules: [
       {
         test: /\.(scss|css)$/,
-        loaders: ['css-loader', 'sass-loader']
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(js|jsx)?$/,
         loader: "babel-loader",
         include: APP_PATH,
+      },
+      {
+        test: /\.(png|jpg)$/,
+        loader: 'url-loader?limit=8192'
       }
     ]
   },

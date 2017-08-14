@@ -1,5 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
+require('./Login.scss');
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,10 +12,14 @@ class Login extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
-      <div>login</div>
+      <div className="login-screen">
+        <input name="username" />
+        <input name="password" />
+      </div>
     )
   }
 }
 
-module.exports = Login;
+module.exports = connect()(Login);
