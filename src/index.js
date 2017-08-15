@@ -7,7 +7,6 @@ const configureStore = require('./redux/configureStore');
 
 const App = require('./containers/App');
 
-// const initialState = immutable.Map();
 const store = configureStore();
 
 ReactDom.render(
