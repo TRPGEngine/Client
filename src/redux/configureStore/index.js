@@ -9,7 +9,7 @@ const logger = createLogger({
   collapsed: true
 })
 
-const createStoreWithMiddleware = process.env.NODE_ENV === 'development' ? applyMiddleware(
+const createStoreWithMiddleware = process.env.NODE_ENV !== 'production' ? applyMiddleware(
   thunk, logger
 )(createStore) : applyMiddleware(
   thunk

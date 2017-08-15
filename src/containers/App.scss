@@ -18,14 +18,13 @@ body {
 }
 
 #app {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  min-width: 100%;
-  background-color: rgba(255,255,255,0.2);
-
   .app {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-width: 100%;
+    background-color: rgba(255,255,255,0.2);
     .version {
       position: absolute;
       left: 15px;

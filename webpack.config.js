@@ -26,7 +26,7 @@ module.exports = {
         include: APP_PATH,
       },
       {
-        test: /\.(png|jpg)$/,
+        test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf)$/,
         loader: 'url-loader?limit=8192'
       }
     ]
