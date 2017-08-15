@@ -24,4 +24,14 @@ body {
   min-height: 100vh;
   min-width: 100%;
   background-color: rgba(255,255,255,0.2);
+
+  .app {
+    .version {
+      position: absolute;
+      left: 15px;
+      bottom: 10px;
+      color: rgba(white, .6);
+      font-size: 12px;
+    }
+  }
 }

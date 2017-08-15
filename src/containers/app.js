@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 const { Route, Redirect, IndexRoute, BrowserRouter, Link } = require('react-router-dom');
 const Router = BrowserRouter;
 // require('./App.scss');
-import './App.scss'
+require('./App.scss');
 
+const appConfig = require('../../package.json');
+const appVersion = appConfig.version;
 const Login = require('./Login');
 const User = ({ match }) => {
   return <h1>Hello {match.params.username}!</h1>
@@ -21,6 +23,7 @@ class App extends React.Component {
           <Link to="/user/user">用户</Link>
           <Route name="login" path="/login" component={Login} />
           <Route name="user" path="/user/:username" component={User} />
+          <div className='version'>当前版本号v{appVersion}</div>
         </div>
       </Router>
     )
