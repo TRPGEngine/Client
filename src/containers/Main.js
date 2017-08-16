@@ -12,7 +12,7 @@ class Main extends React.Component {
         <div className="head">
           <span className="title">TRPG - 桌上角色扮演游戏客户端</span>
         </div>
-        <MenuPannel className="body" history={this.props.history}/>
+        <MenuPannel className="body"/>
       </div>
     )
   }

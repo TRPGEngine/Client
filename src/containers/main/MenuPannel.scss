@@ -34,6 +34,14 @@
       }
     }
 
+    &.active {
+      color: #705949;
+
+      span{
+        opacity: 1;
+      }
+    }
+
     span {
       font-size: 12px;
       opacity: 0;

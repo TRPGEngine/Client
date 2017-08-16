@@ -8,8 +8,8 @@ let platformSocketParam = {
 function API() {
   this.serverUrl = `${config.io.protocol}://${config.io.host}:${config.io.port}`;
   this.io = io(this.serverUrl, platformSocketParam);
-  this.emit = this.io.emit;
-  this.on = this.io.on;
+  this.emit = this.io.emit.bind(this.io);
+  this.on = this.io.on.bind(this.io);
 }
 
 function getApiInstance() {

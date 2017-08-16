@@ -15,7 +15,7 @@ trpgApi.bindEventFunc.call(api, store);
 
 setTimeout(function() {
   console.time('hello');
-  api.io.emit('hello', {a:1, b:3}, function(data) {
+  api.emit('hello', {a:1, b:3}, function(data) {
     console.timeEnd('hello');
     console.log('self', data);
   })
