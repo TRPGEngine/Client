@@ -11,18 +11,18 @@ class MenuPannel extends React.Component {
     return (
       <div className={this.props.className}>
         <div className="menu-pannel">
-          <Link to="/conv">
+          <Link to="/main/conv">
             <i className="fa fa-comments-o fa-2x"></i><span>消息</span>
           </Link>
-          <Link to="/conv">
+          <Link to="/main/conv">
             <i className="fa fa-comments-o fa-2x"></i><span>消息</span>
           </Link>
-          <Link to="/conv">
+          <Link to="/main/conv">
             <i className="fa fa-comments-o fa-2x"></i><span>消息</span>
           </Link>
         </div>
         <div className="menu-sub-panel">
-          <Route name="conv" path="/conv" component={ConverseList} />
+          <Route name="conv" path="/main/conv" component={ConverseList} />
         </div>
       </div>
     )
