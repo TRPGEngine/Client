@@ -15,7 +15,10 @@ class Login extends React.Component {
 
   _handleLogin() {
     this.props.dispatch(showLoading());
-    setTimeout(()=>this.props.dispatch(hideLoading()), 10000)
+    setTimeout(()=>{
+      this.props.dispatch(hideLoading());
+      this.props.history.push('main');
+    }, 2000);
   }
 
   render() {

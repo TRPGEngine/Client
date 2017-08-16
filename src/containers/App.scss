@@ -11,15 +11,22 @@ html, body {
 }
 
 body {
-  background-image: url('../assets/img/bg.jpg');
+  background-image: url('/src/assets/img/bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
+a {
+  &,&:link,&:visited,&:hover,&:active {
+    text-decoration: none;
+  }
+}
+
 #app {
   .app {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;

@@ -27,7 +27,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf)$/,
-        loader: 'url-loader?limit=8192'
+        loader: 'url-loader?limit=8192&name=[hash].[ext]'
       }
     ]
   },

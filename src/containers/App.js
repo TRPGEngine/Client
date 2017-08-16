@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 const { Route, Redirect, IndexRoute, BrowserRouter, Link } = require('react-router-dom');
 const Router = BrowserRouter;
 const Loading = require('../components/Loading');
-// require('./App.scss');
 require('./App.scss');
+require('../assets/css/font-awesome.css');
 
 const appConfig = require('../../package.json');
 const appVersion = appConfig.version;
@@ -12,6 +12,7 @@ const Login = require('./Login');
 const User = ({ match }) => {
   return <h1>Hello {match.params.username}!</h1>
 }
+const Main = require('./Main');
 
 class App extends React.Component {
   render() {
@@ -22,10 +23,9 @@ class App extends React.Component {
         <div>
           <Loading show={this.props.showLoading} />
           <div className="app">
-            {/*<Link to="/login">登录</Link>
-            <Link to="/user/user">用户</Link>*/}
             <Route name="login" path="/login" component={Login} />
             <Route name="user" path="/user/:username" component={User} />
+            <Route name="main" path="/main(/*)" component={Main} />
             <div className='version'>当前版本号v{appVersion}</div>
           </div>
         </div>
@@ -36,7 +36,6 @@ class App extends React.Component {
 
 module.exports = connect(
   state => ({
-    state: state,
     playSound: state.getIn(['pc', 'playSound']),
     showLoading: state.getIn(['ui', 'showLoading']),
   })
