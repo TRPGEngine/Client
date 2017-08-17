@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   width: 76px;
-  background-color: #fffbf8;
+  background-color: #f1ebe6;
   position: relative;
   border-right: 1px solid #dddcdd;
   border-bottom-left-radius: 3px;
@@ -46,5 +46,17 @@
       font-size: 12px;
       opacity: 0;
     }
+  }
+}
+
+.menu-sub-panel {
+  display: flex;
+  flex: 1;
+  background-color: #fffcfc;
+
+  > div {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
   }
 }

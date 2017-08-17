@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-const { Route, Redirect, IndexRoute, BrowserRouter, Link } = require('react-router-dom');
+const { Route, Redirect, Switch, BrowserRouter, Link } = require('react-router-dom');
 const Router = BrowserRouter;
 const Loading = require('../components/Loading');
 require('./App.scss');
@@ -23,9 +23,11 @@ class App extends React.Component {
         <div>
           <Loading show={this.props.showLoading} />
           <div className="app">
-            <Route name="login" path="/login" component={Login} />
-            <Route name="user" path="/user/:username" component={User} />
-            <Route name="main" path="/main(/*)" component={Main} />
+            <Switch>
+              <Route name="login" path="/login" component={Login} />
+              <Route name="user" path="/user/:username" component={User} />
+              <Route name="main" path="/main" component={Main} />
+            </Switch>
             <div className='version'>当前版本号v{appVersion}</div>
           </div>
         </div>

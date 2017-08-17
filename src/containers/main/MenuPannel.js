@@ -14,18 +14,21 @@ class MenuPannel extends React.Component {
     };
     this.menus = [
       {
-        url: '/main/conv',
         icon: 'comments',
+        activeIcon: 'comments-o',
         text: '消息',
+        component: (
+          <Route name="conv" path="/main/conv" component={ConverseList} />
+        )
       },
       {
-        url: '/main/co123',
         icon: 'comments',
+        activeIcon: 'comments-o',
         text: '消息2',
       },
       {
-        url: '/main/co122',
         icon: 'comments',
+        activeIcon: 'comments-o',
         text: '消息3',
       },
     ]
@@ -39,21 +42,20 @@ class MenuPannel extends React.Component {
           {
             this.menus.map((item, index) => {
               return (
-                <Link
+                <a
                   key={"menu-"+index}
-                  to={item.url}
                   className={selectedMenu===index?'active':''}
                   onClick={()=>this.setState({selectedMenu:index})}
                 >
-                  <i className={selectedMenu===index?`fa fa-${item.icon} fa-2x`:`fa fa-${item.icon}-o fa-2x`}></i>
+                  <i className={selectedMenu===index?`fa fa-2x fa-${item.icon}`:`fa fa-2x fa-${item.activeIcon}`}></i>
                   <span>{item.text}</span>
-                </Link>
+                </a>
               )
             })
           }
         </div>
         <div className="menu-sub-panel">
-          <Route name="conv" path="/main/conv" component={ConverseList} />
+          {this.menus[selectedMenu].component || ''}
         </div>
       </div>
     )

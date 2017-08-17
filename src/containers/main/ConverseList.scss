@@ -1,0 +1,14 @@
+.converse {
+  .list {
+    user-select: none;
+    width: 240px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #fffbf8;
+    border-right: 1px solid #dddcdd;
+  }
+
+  .detail {
+    flex: 1;
+  }
+}
