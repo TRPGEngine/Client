@@ -47,7 +47,8 @@ module.exports = {
     new HtmlwebpackPlugin({
       title: 'TRPG-Game',
       template: 'build/template/index.html',
-      inject: false,
+      inject: true,
+      favicon: 'src/assets/img/favicon.ico'
     })
   ],
 }
