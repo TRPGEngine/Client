@@ -1,0 +1,53 @@
+.msg-item {
+  &:hover > .profile .time {
+    visibility: visible;
+  }
+
+  .profile {
+    padding-left: 45px;
+
+    .name {
+      color: #8e97a1;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-wrap: normal;
+    }
+    .time {
+      visibility: hidden;
+      color: #bdbebf;
+      font-size: 12px;
+      margin: 0 6px;
+      transform: scale(0.9);
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: row;
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 7px;
+
+      > img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .bubble {
+      // flex: 1 1 auto;
+      min-width: 0;
+      padding: 5px 11px;
+      border: 1px solid #e1e0e4;
+      border-radius: 6px;
+      background-color: #fff;
+      line-height: 1.5;
+      word-break: break-all;
+    }
+  }
+}

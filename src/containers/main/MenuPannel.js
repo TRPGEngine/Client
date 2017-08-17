@@ -18,7 +18,7 @@ class MenuPannel extends React.Component {
         activeIcon: 'comments-o',
         text: '消息',
         component: (
-          <Route name="conv" path="/main/conv" component={ConverseList} />
+          <ConverseList />
         )
       },
       {
