@@ -19,7 +19,7 @@ class ConverseList extends React.Component {
           />
         </div>
         <div className="detail">
-          <ConverseDetail />
+          <ConverseDetail/>
         </div>
       </div>
     )

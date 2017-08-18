@@ -1,0 +1,20 @@
+.conv-detail {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .conv-container {
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex: 1;
+
+    .msg-items {
+      padding: 4px 16px 16px 16px;
+    }
+  }
+
+  .send-msg-box {
+    height: 106px;
+    background-color: #fffbf8;
+    border-top: 1px solid #dddcdd;
+  }
+}
