@@ -26,7 +26,6 @@ class ConverseDetail extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="conv-detail">
         <div className="conv-container" ref="container">

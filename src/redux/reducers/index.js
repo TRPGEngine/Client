@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux-immutable';
 
 const reducers = combineReducers({
-  ui: require('./ui')
+  ui: require('./ui'),
+  chat: require('./chat'),
 })
 
 module.exports = reducers;
