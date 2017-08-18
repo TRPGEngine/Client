@@ -12,7 +12,9 @@ class MsgItem extends React.Component {
         </div>
         <div className="content">
           <div className="avatar"><img src={this.props.icon} /></div>
-          <div className="bubble">{this.props.content}</div>
+          <div className="body">
+            <div className="bubble">{this.props.content}</div>
+          </div>
         </div>
       </div>
     )

@@ -17,9 +17,13 @@
         margin-left: 7px;
       }
 
-      .bubble {
+      > .body {
         margin-right: 0;
         margin-left: 140px;
+
+        .bubble {
+          float: right;
+        }
       }
     }
   }
@@ -65,16 +69,20 @@
         height: 100%;
       }
     }
-    .bubble {
+    > .body {
       flex: 1;
-      min-width: 0;
-      padding: 5px 11px;
-      border: 1px solid #e1e0e4;
-      border-radius: 6px;
-      background-color: #fff;
-      line-height: 1.5;
-      word-break: break-all;
       margin-right: 140px;
+      .bubble {
+        min-width: 0;
+        padding: 5px 11px;
+        border: 1px solid #e1e0e4;
+        border-radius: 6px;
+        background-color: #fff;
+        line-height: 1.5;
+        word-break: break-all;
+        float: left;
+      }
     }
+
   }
 }
