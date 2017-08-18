@@ -6,7 +6,8 @@ const { createLogger } = require('redux-logger');
 const logger = createLogger({
   level: 'info',
   logger: console,
-  collapsed: true
+  collapsed: true,
+  stateTransformer: (state) => state.toJS(),
 })
 
 const createStoreWithMiddleware = process.env.NODE_ENV !== 'production' ? applyMiddleware(
