@@ -6,4 +6,5 @@ module.exports = {
   HIDE_LOADING: 'HIDE_LOADING',
   ADD_CONVERSES: 'ADD_CONVERSES',
   ADD_MSG: 'ADD_MSG',
+  LOGIN: 'LOGIN'
 }

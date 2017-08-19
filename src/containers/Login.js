@@ -2,6 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const { Link } = require('react-router-dom');
 const { showLoading, hideLoading } = require('../redux/actions/ui');
+const { login } = require('../redux/actions/user');
 require('./Login.scss');
 
 class Login extends React.Component {
@@ -15,13 +16,20 @@ class Login extends React.Component {
 
   _handleLogin() {
     this.props.dispatch(showLoading());
-    setTimeout(()=>{
-      this.props.dispatch(hideLoading());
-      this.props.history.push('main');
-    }, 2000);
+    // setTimeout(()=>{
+    //   this.props.dispatch(hideLoading());
+    //   this.props.history.push('main');
+    // }, 2000);
+    let username = this.state.username;
+    let password = this.state.password;
+    this.props.dispatch(login(username, password));
   }
 
   render() {
+    if(!!this.props.isLogin) {
+      this.props.history.push('main');
+    }
+
     return (
       <div className="login-screen">
         <h2>欢迎来到TRPG的世界</h2>
@@ -34,4 +42,10 @@ class Login extends React.Component {
   }
 }
 
-module.exports = connect()(Login);
+function mapStateToProps(state) {
+  return {
+    isLogin: state.getIn(['user', 'isLogin'])
+  };
+}
+
+module.exports = connect(mapStateToProps)(Login);

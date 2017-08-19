@@ -9,9 +9,9 @@ const App = require('./containers/App');
 
 const store = configureStore();
 
-// const trpgApi = require('./api/trpg.api.js');
-// const api = trpgApi.getInstance();
-// trpgApi.bindEventFunc.call(api, store);
+const trpgApi = require('./api/trpg.api.js');
+const api = trpgApi.getInstance();
+trpgApi.bindEventFunc.call(api, store);
 //
 // setTimeout(function() {
 //   console.time('hello');
