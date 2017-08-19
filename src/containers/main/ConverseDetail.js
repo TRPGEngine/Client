@@ -25,53 +25,84 @@ class ConverseDetail extends React.Component {
     this.setState({inputMsg: ''});
   }
 
+  getMsgList(list) {
+    if(!!list) {
+      return (
+        <div className="msg-items">
+        {
+          list.map((item, index) => {
+            return (
+              <MsgItem
+                key={item.uuid}
+                icon={item.icon}
+                name={item.sender}
+                content={item.content}
+                time={item.time}
+                me={false}
+              />
+            )
+          })
+        }
+        </div>
+      )
+    }else {
+      return (
+        <div className="msg-items">
+          <MsgItem
+            icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
+            name="admin"
+            content="咕咕咕？"
+            time="2017-08-17 13:48:46"
+          />
+          <MsgItem
+            icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
+            name="admin"
+            content="咕咕咕？"
+            time="2017-08-17 13:48:46"
+            me={true}
+          />
+          <MsgItem
+            icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
+            name="admin"
+            content="咕咕！咕咕咕咕咕咕咕咕咕咕咕咕咕咕!!咕咕咕咕!咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕"
+            time="2017-08-17 13:48:46"
+            me={false}
+          />
+          <MsgItem
+            icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
+            name="admin"
+            content="咕咕~咕咕咕？"
+            time="2017-08-17 13:48:46"
+            me={false}
+          />
+          <MsgItem
+            icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
+            name="admin"
+            content="咕咕咕！"
+            time="2017-08-17 13:48:46"
+            me={true}
+          />
+          <MsgItem
+            icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
+            name="admin"
+            content="咕！！！！"
+            time="2017-08-17 13:48:46"
+            me={true}
+          />
+        </div>
+      )
+    }
+  }
+
   render() {
+    let list = this.props.list;
+    if(!!list) {
+      list = list.toJS();
+    }
     return (
       <div className="conv-detail">
         <div className="conv-container" ref="container">
-          <div className="msg-items" ref="msgItems">
-            <MsgItem
-              icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
-              name="admin"
-              content="咕咕咕？"
-              time="2017-08-17 13:48:46"
-            />
-            <MsgItem
-              icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
-              name="admin"
-              content="咕咕咕？"
-              time="2017-08-17 13:48:46"
-              me={true}
-            />
-            <MsgItem
-              icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
-              name="admin"
-              content="咕咕！咕咕咕咕咕咕咕咕咕咕咕咕咕咕!!咕咕咕咕!咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕"
-              time="2017-08-17 13:48:46"
-              me={false}
-            />
-            <MsgItem
-              icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
-              name="admin"
-              content="咕咕~咕咕咕？"
-              time="2017-08-17 13:48:46"
-              me={false}
-            />
-            <MsgItem
-              icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
-              name="admin"
-              content="咕咕咕！"
-              time="2017-08-17 13:48:46"
-              me={true}
-            />
-            <MsgItem
-              icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
-              name="admin"
-              content="咕！！！！"
-              time="2017-08-17 13:48:46"
-              me={true}
-            />
-          </div>
+          {this.getMsgList(list)}
         </div>
         <div className="send-msg-box">
           <div className="input-area">
@@ -90,8 +121,4 @@ class ConverseDetail extends React.Component {
   }
 }
 
-module.exports = connect(
-  state => ({
-
-  })
-)(ConverseDetail);
+module.exports = connect()(ConverseDetail);

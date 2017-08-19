@@ -5,7 +5,7 @@ require('./ConvItem.scss');
 class ConvItem extends React.Component {
   render() {
     return (
-      <div className="conv-item">
+      <div className={this.props.isSelected?"conv-item active":"conv-item"} onClick={this.props.onClick}>
         <div className="close"><i className="fa fa-close"></i></div>
         <div className="icon"><img src={this.props.icon}></img></div>
         <div className="body">

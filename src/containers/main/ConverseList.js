@@ -8,6 +8,13 @@ const chat = require('../../redux/actions/chat');
 require('./ConverseList.scss');
 
 class ConverseList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedUUID: ''
+    };
+  }
+
   componentDidMount() {
     setTimeout(() => {
       console.log('add converse test....');
@@ -31,6 +38,13 @@ class ConverseList extends React.Component {
     },3000);
   }
 
+  _handleSelectConverse(uuid) {
+    console.log("选择会话", uuid);
+    this.setState({
+      selectedUUID: uuid
+    })
+  }
+
   getConverseList() {
     let converses = this.props.converses.toArray().map((item, index) => {
       item = item.toJS();
@@ -41,6 +55,9 @@ class ConverseList extends React.Component {
           title={item.name}
           content={item.lastMsg}
           time={item.lastTime}
+          uuid={item.uuid}
+          isSelected={this.state.selectedUUID === item.uuid}
+          onClick={() => this._handleSelectConverse(item.uuid)}
         />
       )
     });
@@ -54,7 +71,7 @@ class ConverseList extends React.Component {
           {this.getConverseList()}
         </div>
         <div className="detail">
-          <ConverseDetail/>
+          <ConverseDetail uuid={this.state.selectedUUID} list={this.props.converses.getIn([this.state.selectedUUID, 'msgList'])}/>
         </div>
       </div>
     )
