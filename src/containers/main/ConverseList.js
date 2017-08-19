@@ -21,7 +21,7 @@ class ConverseList extends React.Component {
       this.props.dispatch(chat.addConverse({
         uuid: 'dasdasdqwdqw',
         name: '测试会话组',
-        icon: 'http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg',
+        icon: '/src/assets/img/gugugu1.png',
         lastMsg: 'lastMsg',
         lastTime: 'lastTime',
       }));
@@ -51,7 +51,7 @@ class ConverseList extends React.Component {
       return (
         <ConvItem
           key={'converses#'+index}
-          icon={item.icon}
+          icon={item.icon || '/src/assets/img/gugugu1.png'}
           title={item.name}
           content={item.lastMsg}
           time={item.lastTime}

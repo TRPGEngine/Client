@@ -34,7 +34,7 @@ class ConverseDetail extends React.Component {
             return (
               <MsgItem
                 key={item.uuid}
-                icon={item.icon}
+                icon={item.icon || '/src/assets/img/gugugu1.png'}
                 name={item.sender}
                 content={item.content}
                 time={item.time}
@@ -49,41 +49,41 @@ class ConverseDetail extends React.Component {
       return (
         <div className="msg-items">
           <MsgItem
-            icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
+            icon="/src/assets/img/gugugu1.png"
             name="admin"
             content="咕咕咕？"
             time="2017-08-17 13:48:46"
           />
           <MsgItem
-            icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
+            icon="/src/assets/img/gugugu1.png"
             name="admin"
             content="咕咕咕？"
             time="2017-08-17 13:48:46"
             me={true}
           />
           <MsgItem
-            icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
+            icon="/src/assets/img/gugugu1.png"
             name="admin"
             content="咕咕！咕咕咕咕咕咕咕咕咕咕咕咕咕咕!!咕咕咕咕!咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕"
             time="2017-08-17 13:48:46"
             me={false}
           />
           <MsgItem
-            icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
+            icon="/src/assets/img/gugugu1.png"
             name="admin"
             content="咕咕~咕咕咕？"
             time="2017-08-17 13:48:46"
             me={false}
           />
           <MsgItem
-            icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
+            icon="/src/assets/img/gugugu1.png"
             name="admin"
             content="咕咕咕！"
             time="2017-08-17 13:48:46"
             me={true}
           />
           <MsgItem
-            icon="http://img4.imgtn.bdimg.com/it/u=1627316970,161287288&fm=26&gp=0.jpg"
+            icon="/src/assets/img/gugugu1.png"
             name="admin"
             content="咕！！！！"
             time="2017-08-17 13:48:46"
