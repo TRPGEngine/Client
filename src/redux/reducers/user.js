@@ -1,17 +1,22 @@
 const immutable = require('immutable');
+const { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED } = require('../constants');
 
 const initialState = immutable.fromJS({
-  isLogin: false
-})
+  isLogin: false,
+  info: {}
+});
 
 module.exports = function ui(state = initialState, action) {
   switch (action.type) {
-    case 'REQUEST_LOGIN':
+    case LOGIN_REQUEST:
       return state;
-    case 'RECEIVED_LOGIN':
-      console.log(action.payload);
-      return state.set('isLogin', true);
+    case LOGIN_SUCCESS:
+      return state.set('isLogin', true).set('info', action.payload);
+    case LOGIN_FAILED:
+      return state.set('isLogin', false).set('info', {});
     default:
       return state;
   }
+
+  return state;
 }
