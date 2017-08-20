@@ -9,9 +9,7 @@ require('../assets/css/font-awesome.css');
 const appConfig = require('../../package.json');
 const appVersion = appConfig.version;
 const Login = require('./Login');
-const User = ({ match }) => {
-  return <h1>Hello {match.params.username}!</h1>
-}
+const Register = require('./Register');
 const Main = require('./Main');
 
 class App extends React.Component {
@@ -25,7 +23,7 @@ class App extends React.Component {
           <div className="app">
             <Switch>
               <Route name="login" path="/login" component={Login} />
-              <Route name="user" path="/user/:username" component={User} />
+              <Route name="register" path="/register" component={Register} />
               <Route name="main" path="/main" component={Main} />
             </Switch>
             <div className='version'>当前版本号v{appVersion}</div>

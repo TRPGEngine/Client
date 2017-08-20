@@ -21,6 +21,8 @@ body {
 a {
   &,&:link,&:visited,&:hover,&:active {
     text-decoration: none;
+    color: #2596e5;
+    font-size: 14px;
   }
 }
 
@@ -50,7 +52,7 @@ a {
 #app {
   .app {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
