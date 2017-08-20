@@ -22,14 +22,14 @@ class MenuPannel extends React.Component {
         )
       },
       {
-        icon: 'comments',
-        activeIcon: 'comments-o',
-        text: '消息2',
+        icon: 'id-card',
+        activeIcon: 'id-card-o',
+        text: '人物卡',
       },
       {
-        icon: 'comments',
-        activeIcon: 'comments-o',
-        text: '消息3',
+        icon: 'sticky-note',
+        activeIcon: 'sticky-note-o',
+        text: '记事本',
       },
     ]
   }

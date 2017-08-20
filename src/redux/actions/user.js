@@ -9,9 +9,9 @@ exports.login = function(username, password) {
     return api.emit('player::login', {username, password}, function(data) {
       dispatch(hideLoading());
       if(data.result) {
-        dispatch({type:LOGIN_SUCCESS,payload: data.info});
+        dispatch({type:LOGIN_SUCCESS, payload: data.info});
       }else {
-        dispatch({type:LOGIN_FAILED,payload: data.msg});
+        dispatch({type:LOGIN_FAILED, payload: data.msg});
       }
     })
   }
