@@ -1,3 +1,10 @@
+const {
+  ADD_CONVERSES,
+  ADD_MSG,
+  GET_CONVERSES_REQUEST,
+  GET_CONVERSES_SUCCESS,
+  GET_CONVERSES_FAILED
+} = require('../constants');
 const immutable = require('immutable');
 
 const initialState = immutable.fromJS({
@@ -23,7 +30,7 @@ const initialState = immutable.fromJS({
 module.exports = function chat(state = initialState, action) {
   try {
     switch (action.type) {
-      case 'ADD_CONVERSES':
+      case ADD_CONVERSES:
         let uuid = action.payload.get('uuid');
         if(!state.getIn(['converses', uuid])) {
           return state.setIn(['converses', uuid], action.payload);
@@ -31,7 +38,7 @@ module.exports = function chat(state = initialState, action) {
           // 如果有会话了直接返回
           return state;
         }
-      case 'ADD_MSG':
+      case ADD_MSG:
         let converseUUID = action.converseUUID;
         if(!state.getIn(['converses', converseUUID])) {
           console.log(state.getIn(['converses', converseUUID]));
@@ -43,6 +50,18 @@ module.exports = function chat(state = initialState, action) {
           ['converses', converseUUID, 'msgList'],
           (msgList) => msgList.push(action.payload)
         );
+      case GET_CONVERSES_SUCCESS:
+        let list = action.payload;
+        if(list instanceof Array && list.length > 0) {
+          let converses = {};
+          for (var i = 0; i < list.length; i++) {
+            let item = list[i];
+            let uuid = item.uuid;
+            converses[uuid] = Object.assign({}, {msgList:[]}, item);
+          }
+          return state.setIn(['converses'], immutable.fromJS(converses));
+        }
+        return state;
       default:
         return state;
     }

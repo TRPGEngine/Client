@@ -1,5 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const { getConverses } = require('../redux/actions/chat');
 
 const MenuPannel = require('./main/MenuPannel');
 
@@ -10,6 +11,8 @@ class Main extends React.Component {
     if(!this.props.isLogin) {
       this.props.history.push('login');
     }
+
+    this.props.dispatch(getConverses());
   }
 
   render() {

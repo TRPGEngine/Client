@@ -1,5 +1,13 @@
-const { ADD_CONVERSES, ADD_MSG } = require('../constants');
+const {
+  ADD_CONVERSES,
+  ADD_MSG,
+  GET_CONVERSES_REQUEST,
+  GET_CONVERSES_SUCCESS,
+  GET_CONVERSES_FAILED
+} = require('../constants');
 const immutable = require('immutable');
+const trpgApi = require('../../api/trpg.api.js');
+const api = trpgApi.getInstance();
 
 function createConverse(dat) {
   return immutable.fromJS({
@@ -37,4 +45,16 @@ exports.addMsg = function(converseUUID, payload) {
     return;
   }
   return {type: ADD_MSG, converseUUID, payload: createMsg(payload)}
+}
+exports.getConverses = function() {
+  return function(dispatch, getState) {
+    dispatch({type:GET_CONVERSES_REQUEST});
+    return api.emit('chat::getConverses', {}, function(data) {
+      if(data.result) {
+        dispatch({type:GET_CONVERSES_SUCCESS, payload: data.list});
+      }else {
+        dispatch({type:GET_CONVERSES_FAILED, payload: data.msg});
+      }
+    })
+  }
 }
