@@ -6,6 +6,12 @@ const MenuPannel = require('./main/MenuPannel');
 require('./Main.scss');
 
 class Main extends React.Component {
+  componentDidMount() {
+    if(!this.props.isLogin) {
+      this.props.history.push('login');
+    }
+  }
+
   render() {
     return (
       <div id="main">
@@ -20,6 +26,6 @@ class Main extends React.Component {
 
 module.exports = connect(
   state => ({
-
+    isLogin: state.getIn(['user', 'isLogin'])
   })
 )(Main);

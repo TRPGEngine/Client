@@ -2,16 +2,16 @@ const immutable = require('immutable');
 
 const initialState = immutable.fromJS({
   showAlert: false,
-  showAlertContent: '',
+  showAlertInfo: {},
   showLoading: false,
 })
 
 module.exports = function ui(state = initialState, action) {
   switch (action.type) {
     case 'SHOW_ALERT':
-      return state.set('showAlert', true).set('showAlertContent', action.content || '');
+      return state.set('showAlert', true).set('showAlertInfo', action.payload || {})
     case 'HIDE_ALERT':
-      return state.set('showAlert', false);
+      return state.set('showAlert', false).set('showAlertInfo', immutable.fromJS({}));
     case 'SHOW_LOADING':
       return state.set('showLoading', true);
     case 'HIDE_LOADING':

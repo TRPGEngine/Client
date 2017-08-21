@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 const { Route, Redirect, Switch, BrowserRouter, Link } = require('react-router-dom');
 const Router = BrowserRouter;
 const Loading = require('../components/Loading');
+const Alert = require('../components/Alert');
 require('./App.scss');
 require('../assets/css/font-awesome.css');
 
@@ -14,12 +15,18 @@ const Main = require('./Main');
 
 class App extends React.Component {
   render() {
-    // console.log(this.props.state.getIn(['ui', 'showAlert']));
-    // console.log(this.props.state.get('ui'));
+    const {showLoading, showAlert, showAlertInfo} = this.props;
+    let alertInfo = showAlertInfo.toJS();
     return (
       <Router>
         <div>
-          <Loading show={this.props.showLoading} />
+          <Loading show={showLoading} />
+          <Alert
+            show={showAlert}
+            title={alertInfo.title}
+            content={alertInfo.content}
+            type={alertInfo.type || 'alert'}
+            onConfirm={alertInfo.onConfirm} />
           <div className="app">
             <Switch>
               <Route name="login" path="/login" component={Login} />
@@ -38,5 +45,7 @@ module.exports = connect(
   state => ({
     playSound: state.getIn(['pc', 'playSound']),
     showLoading: state.getIn(['ui', 'showLoading']),
+    showAlert: state.getIn(['ui', 'showAlert']),
+    showAlertInfo: state.getIn(['ui', 'showAlertInfo']),
   })
 )(App);
