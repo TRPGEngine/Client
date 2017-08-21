@@ -22,6 +22,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
+        img {
+          max-width: 380px;
+          max-height: 380px;
+          opacity: 0.6;
+        }
       }
 
       .welcome {

@@ -1,7 +1,23 @@
 const immutable = require('immutable');
 
 const initialState = immutable.fromJS({
-  converses: {}
+  converses: {
+    "welcomeConverses": {
+      uuid: 'welcomeConverses',
+      name: '系统',
+      icon: '',
+      lastMsg: '欢迎使用TPRG客户端',
+      lastTime: new Date().Format("yyyy-MM-dd HH:mm:ss"),
+      msgList: [
+        {
+          uuid: 'welcomeMessage',
+          sender: '系统',
+          time: new Date().Format("yyyy-MM-dd HH:mm:ss"),
+          content: '欢迎使用TPRG客户端',
+        }
+      ]
+    }
+  }
 });
 
 module.exports = function chat(state = initialState, action) {

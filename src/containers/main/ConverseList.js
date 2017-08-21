@@ -16,26 +16,26 @@ class ConverseList extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      console.log('add converse test....');
-      this.props.dispatch(chat.addConverse({
-        uuid: 'dasdasdqwdqw',
-        name: '测试会话组',
-        icon: '/src/assets/img/gugugu1.png',
-        lastMsg: 'lastMsg',
-        lastTime: 'lastTime',
-      }));
-    },1000);
-
-    setTimeout(() => {
-      console.log('add message test....');
-      this.props.dispatch(chat.addMsg('dasdasdqwdqw', {
-        uuid: '12312412312',
-        sender: 'admin',
-        time: '2017-08-18 16:16:59',
-        content: '你好',
-      }));
-    },3000);
+    // setTimeout(() => {
+    //   console.log('add converse test....');
+    //   this.props.dispatch(chat.addConverse({
+    //     uuid: 'dasdasdqwdqw',
+    //     name: '测试会话组',
+    //     icon: '/src/assets/img/gugugu1.png',
+    //     lastMsg: 'lastMsg',
+    //     lastTime: 'lastTime',
+    //   }));
+    // },1000);
+    //
+    // setTimeout(() => {
+    //   console.log('add message test....');
+    //   this.props.dispatch(chat.addMsg('dasdasdqwdqw', {
+    //     uuid: '12312412312',
+    //     sender: 'admin',
+    //     time: '2017-08-18 16:16:59',
+    //     content: '你好',
+    //   }));
+    // },3000);
   }
 
   _handleSelectConverse(uuid) {
@@ -91,7 +91,7 @@ class ConverseList extends React.Component {
             )
             : (
               <div className="nocontent">
-                <p className="nocontent-img">这里应有图片</p>
+                <p className="nocontent-img"><img src="/src/assets/img/dice.png" /></p>
                 <p className="welcome">{this.getWelcomeMessage()}</p>
               </div>
             )

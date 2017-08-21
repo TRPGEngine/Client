@@ -1,12 +1,9 @@
+require('./utils/common');
 const React = require('react');
 const ReactDom = require('react-dom');
 const immutable = require('immutable');
 const { Provider } = require('react-redux');
-
 const configureStore = require('./redux/configureStore');
-
-const App = require('./containers/App');
-
 const store = configureStore();
 
 const trpgApi = require('./api/trpg.api.js');
@@ -20,7 +17,7 @@ trpgApi.bindEventFunc.call(api, store);
 //     console.log('self', data);
 //   })
 // },1000);
-
+const App = require('./containers/App');
 
 ReactDom.render(
   <Provider store={store}>
