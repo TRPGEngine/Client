@@ -11,7 +11,7 @@ module.exports = function ui(state = initialState, action) {
     case 'SHOW_ALERT':
       return state.set('showAlert', true).set('showAlertInfo', action.payload || {})
     case 'HIDE_ALERT':
-      return state.set('showAlert', false).set('showAlertInfo', immutable.fromJS({}));
+      return state.set('showAlert', false).set('showAlertInfo', immutable.Map());
     case 'SHOW_LOADING':
       return state.set('showLoading', true);
     case 'HIDE_LOADING':

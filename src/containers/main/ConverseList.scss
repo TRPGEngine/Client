@@ -10,5 +10,24 @@
 
   .detail {
     flex: 1;
+    display: flex;
+
+    .nocontent {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+
+      .nocontent-img {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .welcome {
+        text-align: center;
+        padding-bottom: 60px;
+      }
+    }
   }
 }

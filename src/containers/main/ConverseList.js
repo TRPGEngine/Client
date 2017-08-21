@@ -45,6 +45,19 @@ class ConverseList extends React.Component {
     })
   }
 
+  getWelcomeMessage() {
+    let hours = new Date().getHours();
+    if(hours < 6) {
+      return "我欲修仙，法力无边。"
+    }else if(hours < 12) {
+      return "早上好，今天请继续加油！"
+    }else if(hours < 18) {
+      return "下午好，喝杯茶吧，让精神抖擞起来。"
+    }else {
+      return "跑团时间到！赶紧找个团一起哈啤！"
+    }
+  }
+
   getConverseList() {
     let converses = this.props.converses.toArray().map((item, index) => {
       item = item.toJS();
@@ -71,7 +84,18 @@ class ConverseList extends React.Component {
           {this.getConverseList()}
         </div>
         <div className="detail">
-          <ConverseDetail uuid={this.state.selectedUUID} list={this.props.converses.getIn([this.state.selectedUUID, 'msgList'])}/>
+          {
+            this.state.selectedUUID
+            ? (
+              <ConverseDetail uuid={this.state.selectedUUID} list={this.props.converses.getIn([this.state.selectedUUID, 'msgList'])}/>
+            )
+            : (
+              <div className="nocontent">
+                <p className="nocontent-img">这里应有图片</p>
+                <p className="welcome">{this.getWelcomeMessage()}</p>
+              </div>
+            )
+          }
         </div>
       </div>
     )
