@@ -51,7 +51,9 @@ exports.getConverses = function() {
     dispatch({type:GET_CONVERSES_REQUEST});
     return api.emit('chat::getConverses', {}, function(data) {
       if(data.result) {
-        dispatch({type:GET_CONVERSES_SUCCESS, payload: data.list});
+        let list = data.list;
+        dispatch({type:GET_CONVERSES_SUCCESS, payload: list});
+        console.log(list);
       }else {
         dispatch({type:GET_CONVERSES_FAILED, payload: data.msg});
       }

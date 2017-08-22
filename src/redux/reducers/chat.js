@@ -57,7 +57,11 @@ module.exports = function chat(state = initialState, action) {
           for (var i = 0; i < list.length; i++) {
             let item = list[i];
             let uuid = item.uuid;
-            converses[uuid] = Object.assign({}, {msgList:[]}, item);
+            converses[uuid] = Object.assign({}, {
+              msgList:[],
+              lastMsg: '',
+              lastTime: '',
+            }, item);
           }
           return state.setIn(['converses'], immutable.fromJS(converses));
         }
