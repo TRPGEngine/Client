@@ -9,6 +9,7 @@ const {
 const immutable = require('immutable');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
+const {checkUser} = require('../../utils/usercache');
 
 function createConverse(dat) {
   return immutable.fromJS({
@@ -59,6 +60,8 @@ exports.getConverses = function() {
         for (let item of list) {
           let convUUID = item.uuid;
           // 获取日志
+          checkUser(uuid);
+          checkUser(convUUID);
           api.emit('chat::getChatLog', {uuid1: uuid, uuid2: convUUID}, function(data) {
             if(data.result) {
               let list = data.list;

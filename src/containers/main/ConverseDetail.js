@@ -29,6 +29,8 @@ class ConverseDetail extends React.Component {
   getMsgList(list) {
     if(!!list) {
       let userUUID = this.props.uuid;
+      let usercache = this.props.usercache;
+      console.log(usercache);
       return (
         <div className="msg-items">
         {
@@ -37,7 +39,7 @@ class ConverseDetail extends React.Component {
               <MsgItem
                 key={item.uuid}
                 icon={item.icon || '/src/assets/img/gugugu1.png'}
-                name={item.sender_uuid}
+                name={usercache.getIn([item.sender_uuid, 'username']) || ''}
                 content={item.message}
                 time={moment(item.date).format('HH:mm:ss')}
                 me={userUUID===item.sender_uuid}
@@ -125,6 +127,7 @@ class ConverseDetail extends React.Component {
 
 module.exports = connect(
   state => ({
-    uuid: state.getIn(['user','info','uuid'])
+    uuid: state.getIn(['user','info','uuid']),
+    usercache: state.getIn(['cache', 'user'])
   })
 )(ConverseDetail);

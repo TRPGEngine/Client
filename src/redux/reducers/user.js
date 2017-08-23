@@ -9,7 +9,7 @@ const {
 
 const initialState = immutable.fromJS({
   isLogin: false,
-  info: {}
+  info: {},
 });
 
 module.exports = function ui(state = initialState, action) {
