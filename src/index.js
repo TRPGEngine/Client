@@ -1,4 +1,5 @@
 require('./utils/common');
+require('moment').locale('zh_CN');
 const React = require('react');
 const ReactDom = require('react-dom');
 const immutable = require('immutable');

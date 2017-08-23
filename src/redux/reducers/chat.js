@@ -3,9 +3,11 @@ const {
   ADD_MSG,
   GET_CONVERSES_REQUEST,
   GET_CONVERSES_SUCCESS,
-  GET_CONVERSES_FAILED
+  GET_CONVERSES_FAILED,
+  UPDATE_CONVERSES,
 } = require('../constants');
 const immutable = require('immutable');
+const moment = require('moment');
 
 const initialState = immutable.fromJS({
   converses: {
@@ -66,6 +68,13 @@ module.exports = function chat(state = initialState, action) {
           return state.setIn(['converses'], immutable.fromJS(converses));
         }
         return state;
+      case UPDATE_CONVERSES:
+        let convUUID = action.convUUID;
+        let payload = immutable.fromJS(action.payload);
+        let lastLog = payload.last();
+        return state.updateIn(['converses', convUUID, 'msgList'], (list) => list.concat(payload))
+          .setIn(['converses', convUUID, 'lastMsg'], lastLog.get('message'))
+          .setIn(['converses', convUUID, 'lastTime'], moment(lastLog.get('date')).format('HH:mm'));
       default:
         return state;
     }

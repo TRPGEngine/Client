@@ -1,5 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const moment = require('moment');
 const MsgItem = require('../../components/MsgItem');
 const scrollTo = require('../../utils/animatedScrollTo.js');
 
@@ -27,6 +28,7 @@ class ConverseDetail extends React.Component {
 
   getMsgList(list) {
     if(!!list) {
+      let userUUID = this.props.uuid;
       return (
         <div className="msg-items">
         {
@@ -35,10 +37,10 @@ class ConverseDetail extends React.Component {
               <MsgItem
                 key={item.uuid}
                 icon={item.icon || '/src/assets/img/gugugu1.png'}
-                name={item.sender}
-                content={item.content}
-                time={item.time}
-                me={false}
+                name={item.sender_uuid}
+                content={item.message}
+                time={moment(item.date).format('HH:mm:ss')}
+                me={userUUID===item.sender_uuid}
               />
             )
           })
@@ -121,4 +123,8 @@ class ConverseDetail extends React.Component {
   }
 }
 
-module.exports = connect()(ConverseDetail);
+module.exports = connect(
+  state => ({
+    uuid: state.getIn(['user','info','uuid'])
+  })
+)(ConverseDetail);
