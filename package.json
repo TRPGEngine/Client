@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --inline --progress --colors --port 8080 --host 127.0.0.1",
+    "start": "webpack-dev-server --hot --inline --progress --colors --port 8080 --host 0.0.0.0",
     "build": "webpack --progress --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

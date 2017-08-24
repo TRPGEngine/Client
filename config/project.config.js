@@ -1,7 +1,9 @@
+let currentHost = window.location.host.split(":")[0];
+
 module.exports = {
   io: {
     protocol: 'ws',
-    host: '127.0.0.1',
+    host: currentHost,
     port: '23256'
   }
 }
