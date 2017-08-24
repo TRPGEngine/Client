@@ -30,7 +30,6 @@ class ConverseDetail extends React.Component {
     if(!!list) {
       let userUUID = this.props.uuid;
       let usercache = this.props.usercache;
-      console.log(usercache);
       return (
         <div className="msg-items">
         {

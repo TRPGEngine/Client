@@ -5,7 +5,7 @@ const Router = BrowserRouter;
 const Loading = require('../components/Loading');
 const Alert = require('../components/Alert');
 require('./App.scss');
-require('../assets/css/font-awesome.css');
+require('../assets/css/iconfont.css');
 
 const appConfig = require('../../package.json');
 const appVersion = appConfig.version;

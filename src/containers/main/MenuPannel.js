@@ -14,21 +14,26 @@ class MenuPannel extends React.Component {
     };
     this.menus = [
       {
-        icon: 'comments',
-        activeIcon: 'comments-o',
+        icon: '&#xe63e;',
+        activeIcon: '&#xe63e;',
         text: '消息',
         component: (
           <ConverseList />
         )
       },
       {
-        icon: 'id-card',
-        activeIcon: 'id-card-o',
+        icon: '&#xe61b;',
+        activeIcon: '&#xe61b;',
         text: '人物卡',
       },
       {
-        icon: 'sticky-note',
-        activeIcon: 'sticky-note-o',
+        icon: '&#xe607;',
+        activeIcon: '&#xe607;',
+        text: '好友',
+      },
+      {
+        icon: '&#xe624;',
+        activeIcon: '&#xe624;',
         text: '记事本',
       },
     ]
@@ -36,23 +41,31 @@ class MenuPannel extends React.Component {
 
   render() {
     let { selectedMenu } = this.state;
+    let { className, avatar } = this.props;
     return (
-      <div className={this.props.className}>
+      <div className={className}>
         <div className="menu-pannel">
-          {
-            this.menus.map((item, index) => {
-              return (
-                <a
-                  key={"menu-"+index}
-                  className={selectedMenu===index?'active':''}
-                  onClick={()=>this.setState({selectedMenu:index})}
-                >
-                  <i className={selectedMenu===index?`fa fa-2x fa-${item.icon}`:`fa fa-2x fa-${item.activeIcon}`}></i>
-                  <span>{item.text}</span>
-                </a>
-              )
-            })
-          }
+          <div className="profile">
+            <div className="avatar">
+              <img src={avatar || '/src/assets/img/gugugu1.png'} />
+            </div>
+          </div>
+          <div className="menus">
+            {
+              this.menus.map((item, index) => {
+                return (
+                  <a
+                    key={"menu-"+index}
+                    className={selectedMenu===index?'active':''}
+                    onClick={()=>this.setState({selectedMenu:index})}
+                  >
+                    <i className='iconfont' dangerouslySetInnerHTML={{__html:(selectedMenu===index?item.icon:item.activeIcon)}}></i>
+                    <span>{item.text}</span>
+                  </a>
+                )
+              })
+            }
+          </div>
         </div>
         <div className="menu-sub-panel">
           {this.menus[selectedMenu].component || ''}
@@ -64,6 +77,6 @@ class MenuPannel extends React.Component {
 
 module.exports = connect(
   state => ({
-
+    avatar: state.getIn(['user', 'info', 'avatar'])
   })
 )(MenuPannel);
