@@ -3,6 +3,8 @@ const {
   HIDE_LOADING,
   SHOW_ALERT,
   HIDE_ALERT,
+  SHOW_INFO_CARD,
+  HIDE_INFO_CARD,
 } = require('../constants');
 const immutable = require('immutable');
 
@@ -18,4 +20,17 @@ exports.showAlert = function(payload) {
 }
 exports.hideAlert = function() {
   return {type: HIDE_ALERT}
+}
+exports.showInfoCard = function(info) {
+  return (dispatch, getState) => {
+    if(!info) {
+      // 获取个人信息数据
+      info = getState().getIn(['user', 'info']).toJS();
+    }
+    dispatch({type: SHOW_INFO_CARD, payload: info});
+  }
+
+}
+exports.hideInfoCard = function() {
+  return {type: HIDE_INFO_CARD}
 }

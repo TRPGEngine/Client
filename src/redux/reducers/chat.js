@@ -16,12 +16,12 @@ const initialState = immutable.fromJS({
       name: '系统',
       icon: '',
       lastMsg: '欢迎使用TPRG客户端',
-      lastTime: new Date().Format("yyyy-MM-dd HH:mm:ss"),
+      lastTime: moment().format('HH:mm'),
       msgList: [
         {
           uuid: 'welcomeMessage',
           sender: '系统',
-          time: new Date().Format("yyyy-MM-dd HH:mm:ss"),
+          time: moment().format('HH:mm'),
           content: '欢迎使用TPRG客户端',
         }
       ]
