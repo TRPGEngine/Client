@@ -38,6 +38,11 @@ exports.register = function(username, password) {
         dispatch({type:REGISTER_SUCCESS, payload: data.results});
       }else {
         dispatch({type:REGISTER_FAILED, payload: data.msg});
+        dispatch(showAlert({
+          type: 'alert',
+          title: '注册失败',
+          content: data.msg
+        }));
       }
     })
   }

@@ -23,7 +23,8 @@ const initialState = immutable.fromJS({
 module.exports = function ui(state = initialState, action) {
   switch (action.type) {
     case SHOW_ALERT:
-      return state.set('showAlert', true).set('showAlertInfo', action.payload || {})
+      let showAlertInfo = action.payload || {};
+      return state.set('showAlert', true).set('showAlertInfo', immutable.fromJS(showAlertInfo));
     case HIDE_ALERT:
       return state.set('showAlert', false).set('showAlertInfo', immutable.Map());
     case SHOW_LOADING:
