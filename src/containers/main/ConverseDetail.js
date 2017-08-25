@@ -4,6 +4,7 @@ const moment = require('moment');
 const MsgItem = require('../../components/MsgItem');
 const scrollTo = require('../../utils/animatedScrollTo.js');
 const ReactTooltip = require('react-tooltip');
+const { sendMsg } = require('../../redux/actions/chat');
 
 require('./ConverseDetail.scss');
 
@@ -21,16 +22,27 @@ class ConverseDetail extends React.Component {
     scrollTo.bottom(container, 400);
   }
 
+  componentDidUpdate() {
+    let container = this.refs.container;
+    scrollTo.bottom(container, 400);
+  }
+
   _handleSendMsg() {
-    let msg = this.state.inputMsg;
-    console.log('send msg:', msg);
+    let message = this.state.inputMsg;
+    let type = this.state.inputType;
+    console.log('send msg:', message, this.props.converseUUID);
+    this.props.dispatch(sendMsg(this.props.converseUUID ,{
+      message,
+      is_public: false,
+      type,
+    }));
     this.refs.inputMsg.focus();
     this.setState({inputMsg: ''});
   }
 
   getMsgList(list) {
     if(!!list) {
-      let userUUID = this.props.uuid;
+      let userUUID = this.props.userUUID;
       let usercache = this.props.usercache;
       return (
         <div className="msg-items">
@@ -38,7 +50,7 @@ class ConverseDetail extends React.Component {
           list.map((item, index) => {
             return (
               <MsgItem
-                key={item.uuid}
+                key={item.uuid+'+'+index}
                 icon={item.icon || '/src/assets/img/gugugu1.png'}
                 name={usercache.getIn([item.sender_uuid, 'username']) || ''}
                 content={item.message}
@@ -160,7 +172,7 @@ class ConverseDetail extends React.Component {
 
 module.exports = connect(
   state => ({
-    uuid: state.getIn(['user','info','uuid']),
+    userUUID: state.getIn(['user','info','uuid']),
     usercache: state.getIn(['cache', 'user'])
   })
 )(ConverseDetail);

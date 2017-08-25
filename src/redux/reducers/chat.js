@@ -11,18 +11,25 @@ const moment = require('moment');
 
 const initialState = immutable.fromJS({
   converses: {
-    "welcomeConverses": {
-      uuid: 'welcomeConverses',
+    "systemUUID": {
+      uuid: 'systemUUID',
+      type: 'user',
       name: '系统',
       icon: '',
       lastMsg: '欢迎使用TPRG客户端',
       lastTime: moment().format('HH:mm'),
       msgList: [
         {
+          room: '',
           uuid: 'welcomeMessage',
           sender: '系统',
+          sender_uuid: 'systemUUID',
+          to_uuid: '',
+          type: 'normal',
+          is_public: false,
           time: moment().format('HH:mm'),
-          content: '欢迎使用TPRG客户端',
+          message: '欢迎使用TPRG客户端',
+          date: moment().valueOf()
         }
       ]
     }
@@ -31,11 +38,12 @@ const initialState = immutable.fromJS({
 
 module.exports = function chat(state = initialState, action) {
   try {
+    let payload;
     switch (action.type) {
       case ADD_CONVERSES:
         let uuid = action.payload.get('uuid');
         if(!state.getIn(['converses', uuid])) {
-          return state.setIn(['converses', uuid], action.payload);
+          return state.setIn(['converses', uuid], immutable.fromJS(action.payload));
         }else {
           // 如果有会话了直接返回
           return state;
@@ -43,15 +51,16 @@ module.exports = function chat(state = initialState, action) {
       case ADD_MSG:
         let converseUUID = action.converseUUID;
         if(!state.getIn(['converses', converseUUID])) {
-          console.log(state.getIn(['converses', converseUUID]));
           console.warn('add msg failed: this converses is not exist', converseUUID);
           return state;
         }
+        payload = immutable.fromJS(action.payload)
 
         return state.updateIn(
           ['converses', converseUUID, 'msgList'],
-          (msgList) => msgList.push(action.payload)
-        );
+          (msgList) => msgList.push(payload)
+        ).setIn(['converses', converseUUID, 'lastMsg'], payload.get('message'))
+        .setIn(['converses', converseUUID, 'lastTime'], moment(payload.get('date')).format('HH:mm'));;
       case GET_CONVERSES_SUCCESS:
         let list = action.payload;
         if(list instanceof Array && list.length > 0) {
@@ -70,7 +79,7 @@ module.exports = function chat(state = initialState, action) {
         return state;
       case UPDATE_CONVERSES:
         let convUUID = action.convUUID;
-        let payload = immutable.fromJS(action.payload);
+        payload = immutable.fromJS(action.payload);
         let lastLog = payload.last();
         return state.updateIn(['converses', convUUID, 'msgList'], (list) => list.concat(payload))
           .setIn(['converses', convUUID, 'lastMsg'], lastLog.get('message'))

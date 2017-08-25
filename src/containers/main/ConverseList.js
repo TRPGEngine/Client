@@ -15,29 +15,6 @@ class ConverseList extends React.Component {
     };
   }
 
-  componentDidMount() {
-    // setTimeout(() => {
-    //   console.log('add converse test....');
-    //   this.props.dispatch(chat.addConverse({
-    //     uuid: 'dasdasdqwdqw',
-    //     name: '测试会话组',
-    //     icon: '/src/assets/img/gugugu1.png',
-    //     lastMsg: 'lastMsg',
-    //     lastTime: 'lastTime',
-    //   }));
-    // },1000);
-    //
-    // setTimeout(() => {
-    //   console.log('add message test....');
-    //   this.props.dispatch(chat.addMsg('dasdasdqwdqw', {
-    //     uuid: '12312412312',
-    //     sender: 'admin',
-    //     time: '2017-08-18 16:16:59',
-    //     content: '你好',
-    //   }));
-    // },3000);
-  }
-
   _handleSelectConverse(uuid) {
     console.log("选择会话", uuid);
     this.setState({
@@ -87,7 +64,7 @@ class ConverseList extends React.Component {
           {
             this.state.selectedUUID
             ? (
-              <ConverseDetail uuid={this.state.selectedUUID} list={this.props.converses.getIn([this.state.selectedUUID, 'msgList'])}/>
+              <ConverseDetail converseUUID={this.state.selectedUUID} list={this.props.converses.getIn([this.state.selectedUUID, 'msgList'])}/>
             )
             : (
               <div className="nocontent">

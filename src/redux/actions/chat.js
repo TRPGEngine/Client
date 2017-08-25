@@ -4,51 +4,61 @@ const {
   GET_CONVERSES_REQUEST,
   GET_CONVERSES_SUCCESS,
   GET_CONVERSES_FAILED,
-  UPDATE_CONVERSES
+  UPDATE_CONVERSES,
+  SEND_MSG,
+  SEND_MSG_COMPLETED
 } = require('../constants');
 const immutable = require('immutable');
+const moment = require('moment');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const {checkUser} = require('../../utils/usercache');
 
-function createConverse(dat) {
-  return immutable.fromJS({
-    uuid: dat.uuid || '',
-    name: dat.name || '',
-    icon: dat.icon || '',
-    lastMsg: dat.lastMsg || '',
-    lastTime: dat.lastTime || '',
-    msgList: dat.msgList || []
-  })
-}
-function createMsg(dat) {
-  return immutable.fromJS({
-    uuid: dat.uuid || '',
-    sender: dat.sender || '',
-    time: dat.time || '',
-    content: dat.content || '',
-  })
+let addConverse = function addConverse(payload) {
+  // if(!payload.uuid) {
+  //   console.error('[addConverse]payload need uuid', payload);
+  //   return;
+  // }
+  return {type: ADD_CONVERSES, payload: payload}
 }
 
-exports.addConverse = function(payload) {
-  if(!payload.uuid) {
-    console.error('[addConverse]payload need uuid', payload);
-    return;
-  }
-  return {type: ADD_CONVERSES, payload: createConverse(payload)}
-}
-exports.addMsg = function(converseUUID, payload) {
+let addMsg = function addMsg(converseUUID, payload) {
   if(!(converseUUID && typeof converseUUID === 'string')) {
     console.error('[addMsg]add message need converseUUID:', converseUUID);
     return;
   }
-  if(!!payload && !payload.uuid) {
-    console.error('[addMsg]payload need uuid:', payload);
-    return;
-  }
-  return {type: ADD_MSG, converseUUID, payload: createMsg(payload)}
+  // if(!!payload && !payload.uuid) {
+  //   console.error('[addMsg]payload need uuid:', payload);
+  //   return;
+  // }
+  return {type: ADD_MSG, converseUUID, payload: payload}
 }
-exports.getConverses = function() {
+let sendMsg = function sendMsg(converseUUID, payload) {
+  return function(dispatch, getState) {
+    dispatch({type:SEND_MSG});
+    const info = getState().getIn(['user', 'info']);
+    let pkg = {
+      room: '',
+      sender_uuid: info.get('uuid'),
+      to_uuid: converseUUID,
+      type: payload.type,
+      message: payload.message,
+      is_public: payload.is_public,
+      date: moment().valueOf(),
+    };
+    dispatch(addMsg(converseUUID, pkg))
+    return api.emit('chat::message', pkg, function(data) {
+      // console.log(data);
+      dispatch({type:SEND_MSG_COMPLETED, payload: data});
+      if(data.result) {
+        console.log('发送成功');
+      }else {
+        console.log('发送失败', pkg);
+      }
+    })
+  }
+}
+let getConverses = function getConverses() {
   return function(dispatch, getState) {
     dispatch({type:GET_CONVERSES_REQUEST});
     // 获取会话列表
@@ -77,3 +87,8 @@ exports.getConverses = function() {
     })
   }
 }
+
+exports.addConverse = addConverse;
+exports.addMsg = addMsg;
+exports.sendMsg = sendMsg;
+exports.getConverses = getConverses;
