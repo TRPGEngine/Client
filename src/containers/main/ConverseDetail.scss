@@ -21,7 +21,36 @@
     .input-area {
       display: flex;
       flex: 1;
-      padding-top: 34px;// 预留给工具栏
+      flex-direction: column;
+      .tool-area {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 34px;
+        padding: 0 10px;
+        user-select: none;
+
+        .tool-item {
+          margin-right: 8px;
+          width: 18px;
+          height: 18px;
+          cursor: pointer;
+
+          &:hover, &.active {
+            .iconfont {
+              color: #7e3f12;
+            }
+          }
+
+          .iconfont {
+            color: #9ea1a2;
+            line-height: 18px;
+            height: 18px;
+            font-size: 18px;
+          }
+        }
+      }
+
       .input-msg {
         background-color: transparent;
         resize: none;

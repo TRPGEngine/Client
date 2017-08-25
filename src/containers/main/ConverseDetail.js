@@ -10,7 +10,8 @@ class ConverseDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputMsg: ''
+      inputMsg: '',
+      inputType: 'normal'
     };
   }
 
@@ -102,6 +103,7 @@ class ConverseDetail extends React.Component {
     if(!!list) {
       list = list.toJS();
     }
+    let inputType = this.state.inputType;
     return (
       <div className="conv-detail">
         <div className="conv-container" ref="container">
@@ -109,6 +111,32 @@ class ConverseDetail extends React.Component {
         </div>
         <div className="send-msg-box">
           <div className="input-area">
+            <div className="tool-area">
+              <div
+                className={inputType==='normal'?"tool-item active":"tool-item"}
+                onClick={() => this.setState({inputType: 'normal'})}
+              >
+                <i className="iconfont">&#xe72d;</i>
+              </div>
+              <div
+                className={inputType==='occ'?"tool-item active":"tool-item"}
+                onClick={() => this.setState({inputType: 'occ'})}
+              >
+                <i className="iconfont">&#xe64d;</i>
+              </div>
+              <div
+                className={inputType==='speak'?"tool-item active":"tool-item"}
+                onClick={() => this.setState({inputType: 'speak'})}
+              >
+                <i className="iconfont">&#xe61f;</i>
+              </div>
+              <div
+                className={inputType==='action'?"tool-item active":"tool-item"}
+                onClick={() => this.setState({inputType: 'action'})}
+              >
+                <i className="iconfont">&#xe619;</i>
+              </div>
+            </div>
             <textarea
               ref="inputMsg"
               className="input-msg"
