@@ -19,8 +19,13 @@
   .close {
     line-height: 39px;
     width: 13px;
+    text-align: center;
     opacity: 0;
     color: #7d7d7e;
+
+    .iconfont {
+      font-size: 10px;
+    }
   }
 
   .icon {

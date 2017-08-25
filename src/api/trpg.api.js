@@ -28,8 +28,8 @@ function bindEventFunc(store) {
     throw new Error('bindEventFunc shound a API object class');
   }
 
-  // console.log(this, store);
-  // this.on('hello', function(data) {
-  //   console.log(data);
-  // });
+  let socket = this;
+  socket.on('chat::message', function(data) {
+    console.log(data);
+  })
 }

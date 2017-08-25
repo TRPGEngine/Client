@@ -24,20 +24,28 @@ class ConverseDetail extends React.Component {
 
   componentDidUpdate() {
     let container = this.refs.container;
-    scrollTo.bottom(container, 400);
+    scrollTo.bottom(container, 400, false);
   }
 
   _handleSendMsg() {
-    let message = this.state.inputMsg;
+    let message = this.state.inputMsg.trim();
     let type = this.state.inputType;
-    console.log('send msg:', message, this.props.converseUUID);
-    this.props.dispatch(sendMsg(this.props.converseUUID ,{
-      message,
-      is_public: false,
-      type,
-    }));
-    this.refs.inputMsg.focus();
-    this.setState({inputMsg: ''});
+    if(!!message) {
+      console.log('send msg:', message, 'to', this.props.converseUUID);
+      this.props.dispatch(sendMsg(this.props.converseUUID ,{
+        message,
+        is_public: false,
+        type,
+      }));
+      this.refs.inputMsg.focus();
+      this.setState({inputMsg: ''});
+    }
+  }
+
+  _handleMsgInput(e) {
+    if(e.keyCode===13 && !e.shiftKey) {
+      this._handleSendMsg();
+    }
   }
 
   getMsgList(list) {
@@ -159,7 +167,8 @@ class ConverseDetail extends React.Component {
               ref="inputMsg"
               className="input-msg"
               value={this.state.inputMsg}
-              onChange={(e)=>this.setState({inputMsg:e.target.value})} />
+              onChange={(e)=>this.setState({inputMsg:e.target.value})}
+              onKeyUp={(e)=> this._handleMsgInput(e)} />
           </div>
           <div className="action-area">
             <button onClick={() => this._handleSendMsg()} disabled={this.state.inputMsg?false:true}>发送</button>

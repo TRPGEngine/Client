@@ -1,5 +1,10 @@
 // scrollTo(document.body, 0, 1250);
-function scrollTo(element, to, duration) {
+function scrollTo(element, to, duration, isAnimatied = true) {
+  if(!isAnimatied) {
+    element.scrollTop = to;
+    return;
+  }
+
   var start = element.scrollTop,
     change = to - start,
     currentTime = 0,
@@ -16,9 +21,9 @@ function scrollTo(element, to, duration) {
   animateScroll();
 }
 
-function scrollToBottom(element, duration) {
+function scrollToBottom(element, duration, isAnimatied = true) {
   var to = element.scrollHeight - element.clientHeight;
-  scrollTo(element, to, duration);
+  scrollTo(element, to, duration, isAnimatied);
 }
 
 //t = current time
