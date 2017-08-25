@@ -25,9 +25,7 @@ class Main extends React.Component {
           name={userInfo.get('username')}
           avatar={userInfo.get('avatar')}
           uuid={userInfo.get('uuid')}
-        >
-
-        </InfoCard>
+        />
         <div className="head">
           <span className="title">TRPG - 桌上角色扮演游戏客户端</span>
         </div>

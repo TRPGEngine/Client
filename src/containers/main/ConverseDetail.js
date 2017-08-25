@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const moment = require('moment');
 const MsgItem = require('../../components/MsgItem');
 const scrollTo = require('../../utils/animatedScrollTo.js');
+const ReactTooltip = require('react-tooltip');
 
 require('./ConverseDetail.scss');
 
@@ -112,25 +113,30 @@ class ConverseDetail extends React.Component {
         <div className="send-msg-box">
           <div className="input-area">
             <div className="tool-area">
+              <ReactTooltip effect='solid' />
               <div
+                data-tip="普通信息"
                 className={inputType==='normal'?"tool-item active":"tool-item"}
                 onClick={() => this.setState({inputType: 'normal'})}
               >
                 <i className="iconfont">&#xe72d;</i>
               </div>
               <div
+                data-tip="吐槽信息"
                 className={inputType==='occ'?"tool-item active":"tool-item"}
                 onClick={() => this.setState({inputType: 'occ'})}
               >
                 <i className="iconfont">&#xe64d;</i>
               </div>
               <div
+                data-tip="对话信息"
                 className={inputType==='speak'?"tool-item active":"tool-item"}
                 onClick={() => this.setState({inputType: 'speak'})}
               >
                 <i className="iconfont">&#xe61f;</i>
               </div>
               <div
+                data-tip="行动信息"
                 className={inputType==='action'?"tool-item active":"tool-item"}
                 onClick={() => this.setState({inputType: 'action'})}
               >
