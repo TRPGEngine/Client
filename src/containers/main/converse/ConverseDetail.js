@@ -1,10 +1,10 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const moment = require('moment');
-const MsgItem = require('../../components/MsgItem');
-const scrollTo = require('../../utils/animatedScrollTo.js');
+const MsgItem = require('../../../components/MsgItem');
+const scrollTo = require('../../../utils/animatedScrollTo.js');
 const ReactTooltip = require('react-tooltip');
-const { sendMsg } = require('../../redux/actions/chat');
+const { sendMsg } = require('../../../redux/actions/chat');
 
 require('./ConverseDetail.scss');
 

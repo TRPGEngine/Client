@@ -2,8 +2,8 @@ const React = require('react');
 const { connect } = require('react-redux');
 
 const ConverseDetail = require('./ConverseDetail');
-const ConvItem = require('../../components/ConvItem');
-const chat = require('../../redux/actions/chat');
+const ConvItem = require('../../../components/ConvItem');
+const chat = require('../../../redux/actions/chat');
 
 require('./ConverseList.scss');
 

@@ -2,7 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const { Route, Link } = require('react-router-dom')
 const { showInfoCard } = require('../../redux/actions/ui');
-const ConverseList = require('./ConverseList');
+const ConverseList = require('./converse/ConverseList');
 
 require('./MenuPannel.scss');
 
