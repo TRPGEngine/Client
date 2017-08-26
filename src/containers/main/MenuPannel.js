@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const { Route, Link } = require('react-router-dom')
 const { showInfoCard } = require('../../redux/actions/ui');
 const ConverseList = require('./converse/ConverseList');
+const ExtraOptions = require('./ExtraOptions');
 
 require('./MenuPannel.scss');
 
@@ -66,6 +67,7 @@ class MenuPannel extends React.Component {
               })
             }
           </div>
+          <ExtraOptions />
         </div>
         <div className="menu-sub-panel">
           {this.menus[selectedMenu].component || ''}

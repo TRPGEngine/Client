@@ -11,6 +11,12 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 body {
   background-image: url('/src/assets/img/bg.jpg');
   background-size: cover;
