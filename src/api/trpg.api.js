@@ -1,5 +1,5 @@
 const io = require('socket.io-client');
-const config = require('../../config/project.config.js')
+const config = require('../../config/project.config.js');
 
 let api = null;
 let platformSocketParam = {
@@ -20,16 +20,18 @@ function getApiInstance() {
   return api;
 }
 
-exports.bindEventFunc = bindEventFunc;
-exports.getInstance = getApiInstance;
-
 function bindEventFunc(store) {
+  const { addMsg } = require('../redux/actions/chat');
+
   if(!(this instanceof API)) {
     throw new Error('bindEventFunc shound a API object class');
   }
-
   let socket = this;
   socket.on('chat::message', function(data) {
-    console.log(data);
-  })
+    let converseUUID = data.room || data.sender_uuid;
+    store.dispatch(addMsg(converseUUID, data));
+  });
 }
+
+exports.bindEventFunc = bindEventFunc;
+exports.getInstance = getApiInstance;

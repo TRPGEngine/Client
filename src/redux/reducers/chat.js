@@ -57,10 +57,10 @@ module.exports = function chat(state = initialState, action) {
         payload = immutable.fromJS(action.payload)
 
         return state.updateIn(
-          ['converses', converseUUID, 'msgList'],
-          (msgList) => msgList.push(payload)
-        ).setIn(['converses', converseUUID, 'lastMsg'], payload.get('message'))
-        .setIn(['converses', converseUUID, 'lastTime'], moment(payload.get('date')).format('HH:mm'));;
+            ['converses', converseUUID, 'msgList'],
+            (msgList) => msgList.push(payload)
+          ).setIn(['converses', converseUUID, 'lastMsg'], payload.get('message'))
+          .setIn(['converses', converseUUID, 'lastTime'], moment(payload.get('date')).format('HH:mm'));;
       case GET_CONVERSES_SUCCESS:
         let list = action.payload;
         if(list instanceof Array && list.length > 0) {

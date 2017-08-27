@@ -23,15 +23,22 @@ let addConverse = function addConverse(payload) {
 }
 
 let addMsg = function addMsg(converseUUID, payload) {
-  if(!(converseUUID && typeof converseUUID === 'string')) {
-    console.error('[addMsg]add message need converseUUID:', converseUUID);
-    return;
+  return (dispatch, getState) => {
+    if(!(converseUUID && typeof converseUUID === 'string')) {
+      console.error('[addMsg]add message need converseUUID:', converseUUID);
+      return;
+    }
+
+    // if(!!getState().getIn(['chat', 'converses', converseUUID])) {
+    //
+    // }
+    
+    // if(!!payload && !payload.uuid) {
+    //   console.error('[addMsg]payload need uuid:', payload);
+    //   return;
+    // }
+    dispatch({type: ADD_MSG, converseUUID, payload: payload});
   }
-  // if(!!payload && !payload.uuid) {
-  //   console.error('[addMsg]payload need uuid:', payload);
-  //   return;
-  // }
-  return {type: ADD_MSG, converseUUID, payload: payload}
 }
 let sendMsg = function sendMsg(converseUUID, payload) {
   return function(dispatch, getState) {
