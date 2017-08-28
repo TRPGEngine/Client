@@ -6,6 +6,7 @@ const {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILED } = require('../constants');
+const sessionStorage = require('../../api/sessionStorage.api.js');
 
 const initialState = immutable.fromJS({
   isLogin: false,
@@ -17,6 +18,8 @@ module.exports = function ui(state = initialState, action) {
     case LOGIN_REQUEST:
       return state;
     case LOGIN_SUCCESS:
+      let {uuid, token} = action.payload;
+      sessionStorage.set({uuid, token});
       return state.set('isLogin', true)
         .set('info', immutable.fromJS(action.payload));
     case LOGIN_FAILED:
