@@ -3,6 +3,7 @@ const {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  LOGOUT,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILED } = require('../constants');
@@ -23,7 +24,10 @@ module.exports = function ui(state = initialState, action) {
       return state.set('isLogin', true)
         .set('info', immutable.fromJS(action.payload));
     case LOGIN_FAILED:
-      return state.set('isLogin', false).set('info', {});
+      return state.set('isLogin', false).set('info', immutable.Map());
+    case LOGOUT:
+      sessionStorage.remove('uuid').remove('token');
+      return state.set('isLogin', false).set('info', immutable.Map());
     case REGISTER_REQUEST:
     case REGISTER_FAILED:
     case REGISTER_SUCCESS:

@@ -2,6 +2,7 @@ const {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  LOGOUT,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILED } = require('../constants');
@@ -24,6 +25,18 @@ exports.login = function(username, password) {
         }));
         dispatch({type:LOGIN_FAILED, payload: data.msg});
       }
+    })
+  }
+}
+
+exports.logout = function() {
+  return function(dispatch, getState) {
+    let info = getState().getIn(['user','info']);
+    let uuid = info.get('uuid');
+    let token = info.get('token');
+    dispatch({type: LOGOUT});
+    api.emit('player::logout', {uuid, token} ,function(data) {
+      console.log(data);
     })
   }
 }

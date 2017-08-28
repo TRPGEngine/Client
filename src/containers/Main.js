@@ -11,9 +11,15 @@ class Main extends React.Component {
   componentDidMount() {
     if(!this.props.isLogin) {
       this.props.history.push('login');
+    }else {
+      this.props.dispatch(getConverses());
     }
+  }
 
-    this.props.dispatch(getConverses());
+  componentWillUpdate(nextProps, nextState) {
+    if(!nextProps.isLogin) {
+      this.props.history.push('login');
+    }
   }
 
   render() {

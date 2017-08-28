@@ -26,6 +26,14 @@ let _sessionStorage = {
     arr.push(value);
     sessionStorage[key] = JSON.stringify(arr);
     return _sessionStorage;
+  },
+  remove: function(key) {
+    if(typeof key === 'string') {
+      sessionStorage.removeItem(key);
+    }else {
+      console.warn('sessionStorage remove need string key not', typeof key);
+    }
+    return _sessionStorage;
   }
 }
 

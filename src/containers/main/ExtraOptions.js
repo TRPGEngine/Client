@@ -1,5 +1,7 @@
 const React = require('react');
 const ReactTooltip = require('react-tooltip');
+const { connect } = require('react-redux');
+const { logout } = require('../../redux/actions/user');
 
 require('./ExtraOptions.scss');
 
@@ -17,6 +19,12 @@ class ExtraOptions extends React.Component {
       this.setState({show: type});
     }else {
       this.setState({show: ''});
+    }
+  }
+
+  _handleClickMenu(menu) {
+    if(menu === 'logout') {
+      this.props.dispatch(logout());
     }
   }
 
@@ -38,7 +46,7 @@ class ExtraOptions extends React.Component {
           <li>系统设置</li>
           <li>修改密码</li>
           <li>帮助反馈</li>
-          <li>退出登录</li>
+          <li onClick={() => this._handleClickMenu('logout')}>退出登录</li>
         </ul>
       )
     }else {
@@ -63,4 +71,4 @@ class ExtraOptions extends React.Component {
   }
 }
 
-module.exports = ExtraOptions;
+module.exports = connect()(ExtraOptions);

@@ -12,15 +12,6 @@ require('./utils/usercache').attachStore(store);
 const trpgApi = require('./api/trpg.api.js');
 const api = trpgApi.getInstance();
 trpgApi.bindEventFunc.call(api, store);
-//
-// setTimeout(function() {
-//   console.time('hello');
-//   api.emit('hello', {a:1, b:3}, function(data) {
-//     console.timeEnd('hello');
-//     console.log('self', data);
-//   })
-// },1000);
-const App = require('./containers/App');
 
 const sessionStorage = require('./api/sessionStorage.api.js');
 let uuid = sessionStorage.get('uuid');
@@ -35,6 +26,7 @@ if(!!token && !!uuid) {
   })
 }
 
+const App = require('./containers/App');
 ReactDom.render(
   <Provider store={store}>
     <App />
