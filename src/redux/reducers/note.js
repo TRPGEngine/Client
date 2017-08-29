@@ -10,7 +10,7 @@ const moment = require('moment');
 const uuid = require('uuid/v1');
 
 const initialState = immutable.fromJS({
-  noteList: [],
+  noteList: {},
   selectedNoteUUID: '',
 })
 
@@ -29,7 +29,8 @@ module.exports = function ui(state = initialState, action) {
     case ADD_NOTE:
       let showAlertInfo = action.payload || {};
       let blankNote = immutable.fromJS(getBlankNote());
-      return state.update('noteList', (item) => item.push(blankNote)).set('selectedNoteUUID', blankNote.get('uuid'));
+      let uuid = blankNote.get('uuid');
+      return state.setIn(['noteList', uuid], blankNote).set('selectedNoteUUID', uuid);
     default:
       return state;
   }

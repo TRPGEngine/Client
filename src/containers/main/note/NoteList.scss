@@ -10,7 +10,7 @@
     .note-item {
       cursor: pointer;
       padding: 24px 12px;
-      &:hover {
+      &:hover, &.active {
         background-color: #fbf5f1;
       }
 

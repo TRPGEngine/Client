@@ -19,7 +19,7 @@ class NoteList extends React.Component {
     let notes = this.props.noteList;
     let selectedNoteUUID = this.props.selectedNoteUUID;
 
-    let content = notes?notes.map((item, index) => {
+    let content = notes?notes.toArray().map((item, index) => {
       item = item.toJS();
 
       let summary = item.content.replace(/<\/?.+?>/g,"").replace(/ /g,"");
@@ -41,6 +41,26 @@ class NoteList extends React.Component {
     return content;
   }
 
+  getNoteDetail() {
+    if(this.props.selectedNoteUUID) {
+      let note = this.props.noteList.get(this.props.selectedNoteUUID);
+
+      if(note) {
+        return (
+          <NoteDetail uuid={this.props.selectedNoteUUID} note={note.toJS()} />
+        )
+      }else {
+        console.log('不存在该笔记');
+      }
+    }
+
+    return (
+      <div className="nocontent">
+        <button className="addNote" onClick={() => {this.props.dispatch(addNote())}}>添加笔记</button>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="note">
@@ -48,17 +68,7 @@ class NoteList extends React.Component {
           {this.getNoteList()}
         </div>
         <div className="detail">
-          {
-            this.state.selectedUUID
-            ? (
-              <NoteDetail />
-            )
-            : (
-              <div className="nocontent">
-                <button className="addNote" onClick={() => {this.props.dispatch(addNote())}}>添加笔记</button>
-              </div>
-            )
-          }
+          {this.getNoteDetail()}
         </div>
       </div>
     )
