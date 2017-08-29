@@ -23,6 +23,9 @@ class NoteList extends React.Component {
       item = item.toJS();
 
       let summary = item.content.replace(/<\/?.+?>/g,"").replace(/ /g,"");
+      if(summary.length > 70) {
+        summary = summary.slice(0, 70) + '...';
+      }
       return (
         <div key={item.uuid} className={"note-item" + (selectedNoteUUID===item.uuid?" active":"")}>
           <div className="note-title">
