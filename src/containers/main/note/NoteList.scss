@@ -1,0 +1,39 @@
+.note {
+  .list {
+    user-select: none;
+    width: 240px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #fffbf8;
+    // border-right: 1px solid #dddcdd;
+  }
+
+  .detail {
+    flex: 1;
+
+    .nocontent {
+      display: flex;
+      flex: 1;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-left: 1px solid #dddcdd;
+
+      .addNote {
+        width: 160px;
+        height: 40px;
+        border-radius: 3px;
+        border: 0;
+        color: white;
+        outline: 0;
+        background-color: #c7c7cc;
+        font-size: 15px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #4c98cc;
+        }
+      }
+    }
+  }
+}
