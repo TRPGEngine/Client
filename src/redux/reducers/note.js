@@ -29,8 +29,13 @@ module.exports = function ui(state = initialState, action) {
     case ADD_NOTE:
       let showAlertInfo = action.payload || {};
       let blankNote = immutable.fromJS(getBlankNote());
-      let uuid = blankNote.get('uuid');
-      return state.setIn(['noteList', uuid], blankNote).set('selectedNoteUUID', uuid);
+      let blankUUID = blankNote.get('uuid');
+      return state.setIn(['noteList', blankUUID], blankNote).set('selectedNoteUUID', blankUUID);
+    case SAVE_NOTE:
+      let saveUUID = action.payload.uuid;
+      let saveContent = action.payload.content;
+      // TODO save to server
+      return state.setIn(['noteList', saveUUID, 'content'], saveContent);
     default:
       return state;
   }

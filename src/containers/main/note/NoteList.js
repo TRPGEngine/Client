@@ -42,12 +42,13 @@ class NoteList extends React.Component {
   }
 
   getNoteDetail() {
-    if(this.props.selectedNoteUUID) {
-      let note = this.props.noteList.get(this.props.selectedNoteUUID);
+    const selectedNoteUUID = this.props.selectedNoteUUID;
+    if(selectedNoteUUID) {
+      let note = this.props.noteList.get(selectedNoteUUID);
 
       if(note) {
         return (
-          <NoteDetail uuid={this.props.selectedNoteUUID} note={note.toJS()} />
+          <NoteDetail key={selectedNoteUUID} uuid={selectedNoteUUID} note={note.toJS()} />
         )
       }else {
         console.log('不存在该笔记');

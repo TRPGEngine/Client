@@ -31,7 +31,8 @@ class TinyEditorComponent extends React.Component {
           const content = editor.getContent();
           this.props.onEditorChange(content);
         });
-      }
+      },
+      save_onsavecallback: () => this.props.onEditorSave(this.state.editor.getContent())
     });
   }
 
