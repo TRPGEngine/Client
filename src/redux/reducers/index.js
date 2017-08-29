@@ -5,6 +5,7 @@ const reducers = combineReducers({
   chat: require('./chat'),
   user: require('./user'),
   cache: require('./cache'),
+  note: require('./note'),
 })
 
 module.exports = reducers;
