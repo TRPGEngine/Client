@@ -13,3 +13,7 @@ exports.addNote = function addNote() {
 exports.saveNote = function saveNote(uuid, content) {
   return {type: SAVE_NOTE, payload: {uuid, content}}
 }
+
+exports.getNote = function getNote() {
+  return {type: GET_NOTE}
+}

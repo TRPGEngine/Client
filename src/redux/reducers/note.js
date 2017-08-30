@@ -8,6 +8,7 @@ const {
 const immutable = require('immutable');
 const moment = require('moment');
 const uuid = require('uuid/v1');
+const localStorage = require('../../api/localStorage.api.js');
 
 const initialState = immutable.fromJS({
   noteList: {},
@@ -34,8 +35,18 @@ module.exports = function ui(state = initialState, action) {
     case SAVE_NOTE:
       let saveUUID = action.payload.uuid;
       let saveContent = action.payload.content;
-      // TODO save to server
-      return state.setIn(['noteList', saveUUID, 'content'], saveContent);
+      let noteObj = localStorage.get('note');
+
+      state.setIn(['noteList', saveUUID, 'content'], saveContent)
+        .setIn(['noteList', saveUUID, 'updated_At'], moment().valueOf());
+
+      noteObj[saveUUID] = state.getIn(['noteList', saveUUID]).toJS();
+      localStorage.set('note', noteObj);
+
+      return state;
+    case GET_NOTE:
+      let localNote = localStorage.get('note');
+      return state.set('noteList', immutable.fromJS(localNote));
     default:
       return state;
   }

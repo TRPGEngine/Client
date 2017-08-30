@@ -1,25 +1,25 @@
-let _sessionStorage = {
+let _localStorage = {
   set: function(key, value) {
     if(!!key && !!value) {
-      sessionStorage[key] = JSON.stringify(value);
+      localStorage[key] = JSON.stringify(value);
     }else if(!!key && typeof key === 'object' && !value) {
       for (var subKey in key) {
         if (key.hasOwnProperty(subKey)) {
-          sessionStorage[subKey] = key[subKey] || '';
+          localStorage[subKey] = key[subKey] || '';
         }
       }
     }
 
-    return _sessionStorage;
+    return _localStorage;
   },
   get: function(key) {
-    let ls = sessionStorage[key];
+    let ls = localStorage[key];
 
     if(!!ls) {
       try {
         ls = JSON.parse(ls);
       } catch(e) {
-        ls = ls;
+        console.warn(e);
       }
     }else {
       ls = {};
@@ -29,23 +29,23 @@ let _sessionStorage = {
   push: function(key, value) {
     let arr;
     try {
-      arr = sessionStorage[key] ? JSON.parse(sessionStorage[key]) : [];
+      arr = localStorage[key] ? JSON.parse(localStorage[key]) : [];
     } catch (e) {
-      console.warn('[sessionStorage::push]' ,e);
+      console.warn('[localStorage::push]' ,e);
       arr = [];
     }
     arr.push(value);
-    sessionStorage[key] = JSON.stringify(arr);
-    return _sessionStorage;
+    localStorage[key] = JSON.stringify(arr);
+    return _localStorage;
   },
   remove: function(key) {
     if(typeof key === 'string') {
-      sessionStorage.removeItem(key);
+      localStorage.removeItem(key);
     }else {
-      console.warn('sessionStorage remove need string key not', typeof key);
+      console.warn('localStorage remove need string key not', typeof key);
     }
-    return _sessionStorage;
+    return _localStorage;
   }
 }
 
-module.exports = _sessionStorage;
+module.exports = _localStorage;
