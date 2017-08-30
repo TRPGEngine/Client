@@ -3,23 +3,18 @@ const { connect } = require('react-redux');
 
 const ConverseDetail = require('./ConverseDetail');
 const ConvItem = require('../../../components/ConvItem');
-const chat = require('../../../redux/actions/chat');
+const { switchConverse } = require('../../../redux/actions/chat');
 
 require('./ConverseList.scss');
 
 class ConverseList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedUUID: ''
-    };
   }
 
   _handleSelectConverse(uuid) {
     console.log("选择会话", uuid);
-    this.setState({
-      selectedUUID: uuid
-    })
+    this.props.dispatch(switchConverse(uuid));
   }
 
   getWelcomeMessage() {
@@ -46,7 +41,7 @@ class ConverseList extends React.Component {
           content={item.lastMsg}
           time={item.lastTime}
           uuid={item.uuid}
-          isSelected={this.state.selectedUUID === item.uuid}
+          isSelected={this.props.selectedUUID === item.uuid}
           onClick={() => this._handleSelectConverse(item.uuid)}
         />
       )
@@ -62,9 +57,9 @@ class ConverseList extends React.Component {
         </div>
         <div className="detail">
           {
-            this.state.selectedUUID
+            this.props.selectedUUID
             ? (
-              <ConverseDetail converseUUID={this.state.selectedUUID} list={this.props.converses.getIn([this.state.selectedUUID, 'msgList'])}/>
+              <ConverseDetail converseUUID={this.props.selectedUUID} list={this.props.converses.getIn([this.props.selectedUUID, 'msgList'])}/>
             )
             : (
               <div className="nocontent">
@@ -81,6 +76,7 @@ class ConverseList extends React.Component {
 
 module.exports = connect(
   state => ({
-    converses: state.getIn(['chat', 'converses'])
+    selectedUUID: state.getIn(['chat', 'selectedConversesUUID']),
+    converses: state.getIn(['chat', 'converses']),
   })
 )(ConverseList);

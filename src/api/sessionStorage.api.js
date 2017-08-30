@@ -22,7 +22,7 @@ let _sessionStorage = {
         ls = ls;
       }
     }else {
-      ls = {};
+      ls = '';
     }
     return ls;
   },

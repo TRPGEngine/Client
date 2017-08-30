@@ -22,7 +22,7 @@ let _localStorage = {
         console.warn(e);
       }
     }else {
-      ls = {};
+      ls = '';
     }
     return ls;
   },

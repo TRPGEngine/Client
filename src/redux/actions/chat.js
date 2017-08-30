@@ -5,6 +5,7 @@ const {
   GET_CONVERSES_SUCCESS,
   GET_CONVERSES_FAILED,
   UPDATE_CONVERSES,
+  SWITCH_CONVERSES,
   SEND_MSG,
   SEND_MSG_COMPLETED
 } = require('../constants');
@@ -22,6 +23,10 @@ let addConverse = function addConverse(payload) {
   return {type: ADD_CONVERSES, payload: payload}
 }
 
+let switchConverse = function switchConverse(uuid) {
+  return {type: SWITCH_CONVERSES, converseUUID: uuid}
+}
+
 let addMsg = function addMsg(converseUUID, payload) {
   return (dispatch, getState) => {
     if(!(converseUUID && typeof converseUUID === 'string')) {
@@ -32,7 +37,7 @@ let addMsg = function addMsg(converseUUID, payload) {
     // if(!!getState().getIn(['chat', 'converses', converseUUID])) {
     //
     // }
-    
+
     // if(!!payload && !payload.uuid) {
     //   console.error('[addMsg]payload need uuid:', payload);
     //   return;
@@ -96,6 +101,7 @@ let getConverses = function getConverses() {
 }
 
 exports.addConverse = addConverse;
+exports.switchConverse = switchConverse;
 exports.addMsg = addMsg;
 exports.sendMsg = sendMsg;
 exports.getConverses = getConverses;
