@@ -37,7 +37,7 @@ module.exports = function ui(state = initialState, action) {
       let saveContent = action.payload.content;
       let noteObj = localStorage.get('note');
 
-      state.setIn(['noteList', saveUUID, 'content'], saveContent)
+      state = state.setIn(['noteList', saveUUID, 'content'], saveContent)
         .setIn(['noteList', saveUUID, 'updated_At'], moment().valueOf());
 
       noteObj[saveUUID] = state.getIn(['noteList', saveUUID]).toJS();
@@ -47,6 +47,8 @@ module.exports = function ui(state = initialState, action) {
     case GET_NOTE:
       let localNote = localStorage.get('note');
       return state.set('noteList', immutable.fromJS(localNote));
+    case SWITCH_NOTE:
+      return state.set('selectedNoteUUID', action.noteUUID);
     default:
       return state;
   }

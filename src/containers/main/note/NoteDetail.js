@@ -13,7 +13,7 @@ class NoteDetail extends React.Component {
         <TinyMCE
           id="note-editor"
           content={note.content}
-          onEditorChange={content => console.log(content)}
+          onEditorChange={() => {}}
           onEditorSave={content => this.props.dispatch(saveNote(uuid, content))}
         />
       </div>

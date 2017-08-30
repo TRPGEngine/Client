@@ -5,7 +5,14 @@
     overflow-x: hidden;
     overflow-y: auto;
     background-color: #fffbf8;
+    position: relative;
     // border-right: 1px solid #dddcdd;
+
+    .items {
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
 
     .note-item {
       cursor: pointer;
@@ -44,6 +51,24 @@
         line-height: 17px;
         min-height: 17px;
         color: #878787;
+      }
+    }
+
+    .add-note {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      right: 20px;
+      bottom: 20px;
+      background-color: #edab7c;
+      border-radius: 50%;
+      text-align: center;
+      cursor: pointer;
+
+      .iconfont {
+        font-size: 24px;
+        color: white;
       }
     }
   }

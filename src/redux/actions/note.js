@@ -17,3 +17,7 @@ exports.saveNote = function saveNote(uuid, content) {
 exports.getNote = function getNote() {
   return {type: GET_NOTE}
 }
+
+exports.switchNote = function switchNote(uuid) {
+  return {type: SWITCH_NOTE, noteUUID: uuid}
+}

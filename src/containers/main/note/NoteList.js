@@ -1,7 +1,8 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const { addNote, getNote } = require('../../../redux/actions/note');
+const { addNote, getNote, switchNote } = require('../../../redux/actions/note');
 const moment = require('moment');
+const ReactTooltip = require('react-tooltip');
 
 const NoteDetail = require('./NoteDetail');
 
@@ -19,6 +20,10 @@ class NoteList extends React.Component {
     this.props.dispatch(getNote());
   }
 
+  _handleClick(uuid) {
+    this.props.dispatch(switchNote(uuid));
+  }
+
   getNoteList() {
     let notes = this.props.noteList;
     let selectedNoteUUID = this.props.selectedNoteUUID;
@@ -30,8 +35,13 @@ class NoteList extends React.Component {
       if(summary.length > 70) {
         summary = summary.slice(0, 70) + '...';
       }
+      let uuid = item.uuid;
       return (
-        <div key={item.uuid} className={"note-item" + (selectedNoteUUID===item.uuid?" active":"")}>
+        <div
+          key={uuid}
+          className={"note-item" + (selectedNoteUUID===uuid?" active":"")}
+          onClick={() => this._handleClick(uuid)}
+        >
           <div className="note-title">
             {item.title}
           </div>
@@ -64,7 +74,7 @@ class NoteList extends React.Component {
 
     return (
       <div className="nocontent">
-        <button className="addNote" onClick={() => {this.props.dispatch(addNote())}}>添加笔记</button>
+        <button className="addNote" onClick={() => this.props.dispatch(addNote())}>添加笔记</button>
       </div>
     )
   }
@@ -73,7 +83,13 @@ class NoteList extends React.Component {
     return (
       <div className="note">
         <div className="list">
-          {this.getNoteList()}
+          <div className="add-note" data-tip="添加笔记" onClick={() => this.props.dispatch(addNote())}>
+            <ReactTooltip effect='solid'/>
+            <i className="iconfont">&#xe604;</i>
+          </div>
+          <div className="items">
+            {this.getNoteList()}
+          </div>
         </div>
         <div className="detail">
           {this.getNoteDetail()}
