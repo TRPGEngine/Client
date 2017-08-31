@@ -5,7 +5,11 @@ const {
   LOGOUT,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
-  REGISTER_FAILED } = require('../constants');
+  REGISTER_FAILED,
+  FIND_USER_REQUEST,
+  FIND_USER_SUCCESS,
+  FIND_USER_FAILED,
+} = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { hideLoading, showAlert } = require('./ui');
@@ -56,6 +60,22 @@ exports.register = function(username, password) {
           title: '注册失败',
           content: data.msg
         }));
+      }
+    })
+  }
+}
+
+exports.findUser = function(text, type) {
+  return function(dispatch, getState) {
+    dispatch({type: FIND_USER_REQUEST});
+
+    console.log({text, type});
+    return api.emit('player::findUser', {text, type}, function(data) {
+      console.log('findUser', data);
+      if(data.result) {
+        dispatch({type: FIND_USER_SUCCESS, payload: data.results});
+      }else {
+        dispatch({type: FIND_USER_FAILED, payload: data.msg});
       }
     })
   }
