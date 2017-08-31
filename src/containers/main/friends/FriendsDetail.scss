@@ -1,0 +1,46 @@
+.friends-detail {
+  .friends-search {
+    height: 44px;
+    padding: 0 24px;
+    display: flex;
+    margin: 12px 0;
+
+    input {
+      height: 100%;
+      flex: 1;
+      font-size: 16px;
+      background-color: transparent;
+      border: 0;
+      border-bottom: 1px solid #dddcdd;
+      margin: 0 12px;
+      padding: 6px 12px;
+      outline: 0;
+
+      &:focus {
+        border-bottom-color: #705949;
+      }
+    }
+
+    select {
+      height: 100%;
+      width: 80px;
+      margin-right: 10px;
+    }
+
+    button {
+      height: 100%;
+      width: 80px;
+      color: white;
+      font-size: 14px;
+      border: 0;
+      border-radius: 3px;
+      background-color: #999;
+      cursor: pointer;
+      outline: 0;
+
+      &:hover {
+        background-color: #705949;
+      }
+    }
+  }
+}

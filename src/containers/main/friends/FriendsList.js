@@ -2,11 +2,13 @@ const React = require('react');
 const { connect } = require('react-redux');
 const { showInfoCard } = require('../../../redux/actions/ui');
 
+const FriendsDetail = require('./FriendsDetail');
+
 require('./FriendsList.scss');
 
 class FriendsList extends React.Component {
   _handleClick(uuid) {
-    this.props.dispatch(showInfoCard(uuid))
+    this.props.dispatch(showInfoCard(uuid));
   }
 
   getFriendList() {
@@ -37,9 +39,9 @@ class FriendsList extends React.Component {
             {this.getFriendList()}
           </div>
         </div>
-        {/*<div className="detail">
-          {this.getFriendDetail()}
-        </div>*/}
+        <div className="detail">
+          <FriendsDetail />
+        </div>
       </div>
     )
   }
