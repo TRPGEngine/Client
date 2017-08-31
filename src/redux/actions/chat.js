@@ -13,7 +13,7 @@ const immutable = require('immutable');
 const moment = require('moment');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
-const {checkUser} = require('../../utils/usercache');
+const { checkUser } = require('../../utils/usercache');
 
 let addConverse = function addConverse(payload) {
   // if(!payload.uuid) {

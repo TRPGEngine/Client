@@ -6,6 +6,7 @@ const {
   SHOW_INFO_CARD,
   HIDE_INFO_CARD,
 } = require('../constants');
+const cache = require('./cache');
 
 exports.showLoading = function() {
   return {type: SHOW_LOADING}
@@ -19,13 +20,16 @@ exports.showAlert = function(payload) {
 exports.hideAlert = function() {
   return {type: HIDE_ALERT}
 }
-exports.showInfoCard = function(info) {
+exports.showInfoCard = function(uuid) {
   return (dispatch, getState) => {
-    if(!info) {
+    if(!uuid) {
       // 获取个人信息数据
-      info = getState().getIn(['user', 'info']).toJS();
+      uuid = getState().getIn(['user', 'info', 'uuid']);
+    }else {
+      // 发起一次更新用户信息的请求
+      dispatch(cache.getUserInfo(uuid));
     }
-    dispatch({type: SHOW_INFO_CARD, payload: info});
+    dispatch({type: SHOW_INFO_CARD, uuid});
   }
 
 }

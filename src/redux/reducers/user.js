@@ -12,6 +12,17 @@ const sessionStorage = require('../../api/sessionStorage.api.js');
 const initialState = immutable.fromJS({
   isLogin: false,
   info: {},
+  friendList: [
+    '15cc5ae0-8de9-11e7-98b3-0d4a68b4face',
+    '15cc5ae0-8de9-11e7-98b3-0d4a68b4face',
+    '15cc5ae0-8de9-11e7-98b3-0d4a68b4face',
+    '15cc5ae0-8de9-11e7-98b3-0d4a68b4face',
+    '15cc5ae0-8de9-11e7-98b3-0d4a68b4face',
+    '15cc5ae0-8de9-11e7-98b3-0d4a68b4face',
+    '15cc5ae0-8de9-11e7-98b3-0d4a68b4face',
+    '15cc5ae0-8de9-11e7-98b3-0d4a68b4face',
+    '15cc5ae0-8de9-11e7-98b3-0d4a68b4face',
+  ],
 });
 
 module.exports = function ui(state = initialState, action) {

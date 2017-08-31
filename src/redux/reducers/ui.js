@@ -13,11 +13,7 @@ const initialState = immutable.fromJS({
   showAlertInfo: {},
   showLoading: false,
   showInfoCard: false,
-  infoCard: {
-    name: '演示名',
-    avatar: '',
-    uuid: 'asdasdsadqwdqw'
-  }
+  showInfoCardUUID: '',
 })
 
 module.exports = function ui(state = initialState, action) {
@@ -32,8 +28,8 @@ module.exports = function ui(state = initialState, action) {
     case HIDE_LOADING:
       return state.set('showLoading', false);
     case SHOW_INFO_CARD:
-      let info = action.payload || {};
-      return state.set('showInfoCard', true).set('infoCard', immutable.fromJS(info));
+      let uuid = action.uuid || {};
+      return state.set('showInfoCard', true).set('showInfoCardUUID', uuid);
     case HIDE_INFO_CARD:
       return state.set('showInfoCard', false);
     default:

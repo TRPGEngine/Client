@@ -23,14 +23,12 @@ class Main extends React.Component {
   }
 
   render() {
-    const {userInfo, showInfoCard} = this.props;
+    const {showInfoCard, showInfoCardUUID} = this.props;
     return (
       <div id="main">
         <InfoCard
           show={showInfoCard}
-          name={userInfo.get('username')}
-          avatar={userInfo.get('avatar')}
-          uuid={userInfo.get('uuid')}
+          uuid={showInfoCardUUID}
         />
         <div className="head">
           <span className="title">TRPG - 桌上角色扮演游戏客户端</span>
@@ -45,6 +43,6 @@ module.exports = connect(
   state => ({
     isLogin: state.getIn(['user', 'isLogin']),
     showInfoCard: state.getIn(['ui', 'showInfoCard']),
-    userInfo: state.getIn(['ui', 'infoCard'])
+    showInfoCardUUID: state.getIn(['ui', 'showInfoCardUUID'])
   })
 )(Main);

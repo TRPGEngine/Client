@@ -6,17 +6,21 @@ require('./InfoCard.scss');
 
 class InfoCard extends React.Component {
   render() {
+    let uuid = this.props.uuid;
+    let info = this.props.usercache.get(uuid);
+
     let body = '';
-    if(this.props.show) {
+    if(this.props.show && info) {
+      info = info.toJS();
       body = (
         <div className="mask">
           <div className="card">
             <div className="header">
               <div className="profile">
                 <div className="avatar">
-                  <img src={this.props.avatar || '/src/assets/img/gugugu1.png'} />
+                  <img src={info.avatar || '/src/assets/img/gugugu1.png'} />
                 </div>
-                <span>{this.props.name}</span>
+                <span>{info.nickname || info.username}</span>
               </div>
               <div className="close" onClick={() => this.props.dispatch(hideInfoCard())}>
                 <i className="iconfont">&#xe70c;</i>
@@ -24,7 +28,7 @@ class InfoCard extends React.Component {
             </div>
             <div className="body">
               <div className="item">
-                <span>唯一标识符:</span><span>{this.props.uuid}</span>
+                <span>唯一标识符:</span><span>{info.uuid}</span>
               </div>
             </div>
             <div className="footer">
@@ -49,4 +53,8 @@ InfoCard.propTypes = {
   show: PropTypes.bool
 }
 
-module.exports = connect()(InfoCard);
+module.exports = connect(
+  state => ({
+    usercache: state.getIn(['cache', 'user']),
+  })
+)(InfoCard);
