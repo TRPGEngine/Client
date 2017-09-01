@@ -2,6 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const Select = require('react-select');
 const { findUser } = require('../../../redux/actions/user');
+const FindResultItem = require('../../../components/FindResultItem');
 
 require('react-select/dist/react-select.css');
 require('./FriendsDetail.scss');
@@ -10,7 +11,7 @@ class FriendsDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectValue: 'uuid',
+      selectValue: 'username',
       searchText: '',
     }
   }
@@ -19,6 +20,18 @@ class FriendsDetail extends React.Component {
     let text = this.state.searchText.trim();
     let type = this.state.selectValue;
     this.props.dispatch(findUser(text, type));
+  }
+
+  getFriendResult(findingResult) {
+    if(!findingResult) {
+      findingResult = [];
+    }
+
+    return findingResult.map(function(item, index) {
+      return (
+        <FindResultItem key={item.uuid + '#' + index} info={item} />
+      )
+    });
   }
 
   render() {
@@ -50,7 +63,9 @@ class FriendsDetail extends React.Component {
           <button onClick={() => this._handleSearch()}>搜索</button>
         </div>
         <div className="friends-search-result">
-          结果
+          {
+            this.props.isFinding ? '正在查询...' : this.getFriendResult(this.props.findingResult.toJS())
+          }
         </div>
       </div>
     )
@@ -59,6 +74,7 @@ class FriendsDetail extends React.Component {
 
 module.exports = connect(
   state => ({
-
+    isFinding: state.getIn(['user', 'isFindingUser']),
+    findingResult: state.getIn(['user', 'findingResult'])
   })
 )(FriendsDetail);

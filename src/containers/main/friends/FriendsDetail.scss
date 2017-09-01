@@ -1,6 +1,10 @@
 .friends-detail {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   .friends-search {
     height: 44px;
+    min-height: 44px;
     padding: 0 24px;
     display: flex;
     margin: 12px 0;
@@ -43,5 +47,12 @@
         background-color: #705949;
       }
     }
+  }
+
+  .friends-search-result {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
   }
 }

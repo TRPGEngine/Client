@@ -10,7 +10,7 @@ exports.checkUser = function(uuid, type = 'user') {
   if(!!store && !!store.dispatch) {
     const state = store.getState();
     if(type === 'user') {
-      let info = state.getIn(['user', 'cache', uuid]);
+      let info = state.getIn(['cache', 'user', uuid]);
       if(!info) {
         store.dispatch(getUserInfo(uuid));
       }

@@ -6,7 +6,11 @@ const {
   LOGOUT,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
-  REGISTER_FAILED } = require('../constants');
+  REGISTER_FAILED,
+  FIND_USER_REQUEST,
+  FIND_USER_SUCCESS,
+  FIND_USER_FAILED,
+} = require('../constants');
 const sessionStorage = require('../../api/sessionStorage.api.js');
 
 const initialState = immutable.fromJS({
@@ -23,6 +27,8 @@ const initialState = immutable.fromJS({
     'd0e29b30-8e27-11e7-a683-8f6999c64aab',
     'd0e29b30-8e27-11e7-a683-8f6999c64aab',
   ],
+  isFindingUser: false,// 好友查询页面
+  findingResult: [],
 });
 
 module.exports = function ui(state = initialState, action) {
@@ -43,6 +49,11 @@ module.exports = function ui(state = initialState, action) {
     case REGISTER_FAILED:
     case REGISTER_SUCCESS:
       return state;
+    case FIND_USER_REQUEST:
+      return state.set('isFindingUser', true);
+    case FIND_USER_SUCCESS:
+    case FIND_USER_FAILED:
+      return state.set('isFindingUser', false).set('findingResult', immutable.fromJS(action.payload || []))
     default:
       return state;
   }

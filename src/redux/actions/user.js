@@ -13,6 +13,7 @@ const {
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { hideLoading, showAlert } = require('./ui');
+const { checkUser } = require('../../utils/usercache');
 
 exports.login = function(username, password) {
   return function(dispatch, getState) {
@@ -73,7 +74,16 @@ exports.findUser = function(text, type) {
     return api.emit('player::findUser', {text, type}, function(data) {
       console.log('findUser', data);
       if(data.result) {
-        dispatch({type: FIND_USER_SUCCESS, payload: data.results});
+        let list = data.results;
+        if(list && list.length>0) {
+          for (let user of list) {
+            let uuid = user.uuid;
+            if(!!uuid) {
+              checkUser(uuid);
+            }
+          }
+        }
+        dispatch({type: FIND_USER_SUCCESS, payload: list});
       }else {
         dispatch({type: FIND_USER_FAILED, payload: data.msg});
       }
