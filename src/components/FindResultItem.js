@@ -1,15 +1,42 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const { addFriend } = require('../redux/actions/user');
 
 require('./FindResultItem.scss');
 
 class FindResultItem extends React.Component {
   _handleAddFriend(uuid) {
     console.log("add friend:", uuid);
+    this.props.dispatch(addFriend(uuid));
+  }
+
+  getAction(uuid) {
+    let friendList = this.props.friendList.toJS();
+    let selfUUID = this.props.selfUUID;
+    if(selfUUID === uuid) {
+      return (
+        <button disabled>
+          <i className="iconfont">&#xe607;</i>我自己
+        </button>
+      )
+    }else if(friendList.indexOf(uuid) >= 0){
+      return (
+        <button disabled>
+          <i className="iconfont">&#xe604;</i>已添加
+        </button>
+      )
+    }else {
+      return (
+        <button onClick={() => this._handleAddFriend(uuid)}>
+          <i className="iconfont">&#xe604;</i>添加好友
+        </button>
+      )
+    }
   }
 
   render() {
     let info = this.props.info;
+
     return (
       <div className="find-result-item">
         <div className="avatar">
@@ -20,13 +47,16 @@ class FindResultItem extends React.Component {
           <span className="uuid">{info.uuid}</span>
         </div>
         <div className="action">
-          <button onClick={() => this._handleAddFriend(info.uuid)}>
-            <i className="iconfont">&#xe604;</i>添加好友
-          </button>
+          {this.getAction(info.uuid)}
         </div>
       </div>
     )
   }
 }
 
-module.exports = FindResultItem;
+module.exports = connect(
+  state => ({
+    selfUUID: state.getIn(['user', 'info', 'uuid']),
+    friendList: state.getIn(['user', 'friendList'])
+  })
+)(FindResultItem);

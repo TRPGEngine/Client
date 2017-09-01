@@ -9,6 +9,11 @@ const {
   FIND_USER_REQUEST,
   FIND_USER_SUCCESS,
   FIND_USER_FAILED,
+  ADD_FRIEND_SUCCESS,
+  ADD_FRIEND_FAILED,
+  GET_FRIENDS_REQUEST,
+  GET_FRIENDS_SUCCESS,
+  GET_FRIENDS_FAILED,
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
@@ -86,6 +91,40 @@ exports.findUser = function(text, type) {
         dispatch({type: FIND_USER_SUCCESS, payload: list});
       }else {
         dispatch({type: FIND_USER_FAILED, payload: data.msg});
+      }
+    })
+  }
+}
+
+exports.addFriend = function(uuid) {
+  return function(dispatch, getState) {
+    console.log('addFriend:', uuid);
+    return api.emit('player::addFriend', {uuid}, function(data) {
+      if(data.result) {
+        dispatch({type: ADD_FRIEND_SUCCESS, friendUUID: uuid});
+      }else {
+        console.error(data.msg);
+        dispatch({type: ADD_FRIEND_FAILED, payload: data.msg});
+      }
+    });
+  }
+}
+
+exports.getFriends = function() {
+  return function(dispatch, getState) {
+    dispatch({type: GET_FRIENDS_REQUEST});
+    return api.emit('player::getFriends', {}, function(data) {
+      if(data.result) {
+        let uuidList = [];
+        for (let item of data.list) {
+          let uuid = item.uuid
+          uuidList.push(uuid);
+          checkUser(uuid);
+        }
+
+        dispatch({type: GET_FRIENDS_SUCCESS, payload: uuidList});
+      }else {
+        dispatch({type: GET_FRIENDS_FAILED, payload: data.msg});
       }
     })
   }

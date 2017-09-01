@@ -19,7 +19,11 @@ class FriendsDetail extends React.Component {
   _handleSearch() {
     let text = this.state.searchText.trim();
     let type = this.state.selectValue;
-    this.props.dispatch(findUser(text, type));
+    if(!!text) {
+      this.props.dispatch(findUser(text, type));
+    }else {
+      console.log('搜索内容不能为空');
+    }
   }
 
   getFriendResult(findingResult) {

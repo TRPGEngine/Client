@@ -10,23 +10,18 @@ const {
   FIND_USER_REQUEST,
   FIND_USER_SUCCESS,
   FIND_USER_FAILED,
+  ADD_FRIEND_SUCCESS,
+  ADD_FRIEND_FAILED,
+  GET_FRIENDS_REQUEST,
+  GET_FRIENDS_SUCCESS,
+  GET_FRIENDS_FAILED,
 } = require('../constants');
 const sessionStorage = require('../../api/sessionStorage.api.js');
 
 const initialState = immutable.fromJS({
   isLogin: false,
   info: {},
-  friendList: [
-    'd0e29b30-8e27-11e7-a683-8f6999c64aab',
-    'd0e29b30-8e27-11e7-a683-8f6999c64aab',
-    'd0e29b30-8e27-11e7-a683-8f6999c64aab',
-    'd0e29b30-8e27-11e7-a683-8f6999c64aab',
-    'd0e29b30-8e27-11e7-a683-8f6999c64aab',
-    'd0e29b30-8e27-11e7-a683-8f6999c64aab',
-    'd0e29b30-8e27-11e7-a683-8f6999c64aab',
-    'd0e29b30-8e27-11e7-a683-8f6999c64aab',
-    'd0e29b30-8e27-11e7-a683-8f6999c64aab',
-  ],
+  friendList: [],
   isFindingUser: false,// 好友查询页面
   findingResult: [],
 });
@@ -54,6 +49,17 @@ module.exports = function ui(state = initialState, action) {
     case FIND_USER_SUCCESS:
     case FIND_USER_FAILED:
       return state.set('isFindingUser', false).set('findingResult', immutable.fromJS(action.payload || []))
+    case ADD_FRIEND_SUCCESS:
+      let friendUUID = action.friendUUID;
+      return state.update('friendList', (list) => {
+        if(list.indexOf(friendUUID) === -1) {
+          return list.push(friendUUID);
+        }else {
+          return list;
+        }
+      })
+    case GET_FRIENDS_SUCCESS:
+      return state.set('friendList', immutable.fromJS(action.payload));
     default:
       return state;
   }

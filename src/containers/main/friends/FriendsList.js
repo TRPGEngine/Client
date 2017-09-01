@@ -18,8 +18,10 @@ class FriendsList extends React.Component {
       console.log('friends item', item);
       return (
         <div key={item + index} className="item" onClick={() => this._handleClick(item)}>
-          <div className="avatar"><img src={usercache.getIn([item, 'avatar']) || '/src/assets/img/gugugu1.png'} /></div>
-          <div className="username">{usercache.getIn([item, 'username'])}</div>
+          <div className="item-wrap">
+            <div className="avatar"><img src={usercache.getIn([item, 'avatar']) || '/src/assets/img/gugugu1.png'} /></div>
+            <div className="username">{usercache.getIn([item, 'username'])}</div>
+          </div>
         </div>
       )
     }) : (
