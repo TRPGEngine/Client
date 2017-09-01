@@ -19,6 +19,7 @@
     left: 2px;
     padding: 0;
     display: none;
+    z-index: 1;
 
     &:after {
       content: ' ';

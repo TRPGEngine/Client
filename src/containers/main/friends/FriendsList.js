@@ -14,13 +14,14 @@ class FriendsList extends React.Component {
   getFriendList() {
     let friends = this.props.friends;
     let usercache = this.props.usercache;
-    return friends ? friends.map((item, index) => {
+    return friends.length > 0 ? friends.map((item, index) => {
       console.log('friends item', item);
+      let uuid = item;
       return (
-        <div key={item + index} className="item" onClick={() => this._handleClick(item)}>
-          <div className="item-wrap">
-            <div className="avatar"><img src={usercache.getIn([item, 'avatar']) || '/src/assets/img/gugugu1.png'} /></div>
-            <div className="username">{usercache.getIn([item, 'username'])}</div>
+        <div key={uuid + index} className="item">
+          <div className="item-wrap" onClick={() => this._handleClick(uuid)}>
+            <div className="avatar"><img src={usercache.getIn([uuid, 'avatar']) || '/src/assets/img/gugugu1.png'} /></div>
+            <div className="username">{usercache.getIn([uuid, 'username'])}</div>
           </div>
         </div>
       )
