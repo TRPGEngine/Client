@@ -5,6 +5,7 @@ const {
   HIDE_ALERT,
   SHOW_INFO_CARD,
   HIDE_INFO_CARD,
+  SWITCH_MENU,
 } = require('../constants');
 const cache = require('./cache');
 
@@ -35,4 +36,7 @@ exports.showInfoCard = function(uuid) {
 }
 exports.hideInfoCard = function() {
   return {type: HIDE_INFO_CARD}
+}
+exports.switchMenu = function(menuIndex = 0) {
+  return {type: SWITCH_MENU, menuIndex: menuIndex}
 }

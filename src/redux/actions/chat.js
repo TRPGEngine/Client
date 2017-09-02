@@ -4,6 +4,9 @@ const {
   GET_CONVERSES_REQUEST,
   GET_CONVERSES_SUCCESS,
   GET_CONVERSES_FAILED,
+  CREATE_CONVERSES_REQUEST,
+  CREATE_CONVERSES_SUCCESS,
+  CREATE_CONVERSES_FAILED,
   UPDATE_CONVERSES,
   SWITCH_CONVERSES,
   SEND_MSG,
@@ -14,6 +17,15 @@ const moment = require('moment');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { checkUser } = require('../../utils/usercache');
+const { hideInfoCard, switchMenu } = require('./ui');
+
+let switchToConverse = function switchToConverse(uuid) {
+  return function(dispatch, getState) {
+    dispatch(hideInfoCard());
+    dispatch(switchMenu(0));
+    dispatch(switchConverse(uuid));
+  }
+}
 
 let addConverse = function addConverse(payload) {
   // if(!payload.uuid) {
@@ -100,8 +112,43 @@ let getConverses = function getConverses() {
   }
 }
 
+let createConverse = function createConverse(uuid, type) {
+  return function(dispatch, getState) {
+    if(!!getState().getIn(['chat', 'converses', uuid])) {
+      console.log('已存在该会话');
+      dispatch(switchToConverse(uuid));
+      return;
+    }
+    dispatch({type: CREATE_CONVERSES_REQUEST});
+    return api.emit('chat::createConverse', {uuid, type}, function(data) {
+      if(data.result) {
+        let conv = data.data;
+        dispatch({type: CREATE_CONVERSES_SUCCESS, payload:conv});
+
+        let uuid = getState().getIn(['user','info','uuid']);
+        let convUUID = conv.uuid;
+        dispatch(switchToConverse(convUUID));
+        // 获取日志
+        checkUser(uuid);
+        checkUser(convUUID);
+        api.emit('chat::getChatLog', {uuid1: uuid, uuid2: convUUID}, function(data) {
+          if(data.result) {
+            let list = data.list;
+            dispatch({type:UPDATE_CONVERSES, payload: list, convUUID});
+          }else {
+            console.error('获取聊天记录失败:' + data.msg);
+          }
+        })
+      }else {
+        dispatch({type: CREATE_CONVERSES_FAILED, payload:data.msg});
+      }
+    })
+  }
+}
+
 exports.addConverse = addConverse;
 exports.switchConverse = switchConverse;
 exports.addMsg = addMsg;
 exports.sendMsg = sendMsg;
 exports.getConverses = getConverses;
+exports.createConverse = createConverse;

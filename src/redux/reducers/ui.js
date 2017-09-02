@@ -5,6 +5,7 @@ const {
   HIDE_ALERT,
   SHOW_INFO_CARD,
   HIDE_INFO_CARD,
+  SWITCH_MENU,
 } = require('../constants');
 const immutable = require('immutable');
 
@@ -14,6 +15,7 @@ const initialState = immutable.fromJS({
   showLoading: false,
   showInfoCard: false,
   showInfoCardUUID: '',
+  menuIndex: 0,
 })
 
 module.exports = function ui(state = initialState, action) {
@@ -32,6 +34,8 @@ module.exports = function ui(state = initialState, action) {
       return state.set('showInfoCard', true).set('showInfoCardUUID', uuid);
     case HIDE_INFO_CARD:
       return state.set('showInfoCard', false);
+    case SWITCH_MENU:
+      return state.set('menuIndex', action.menuIndex)
     default:
       return state;
   }

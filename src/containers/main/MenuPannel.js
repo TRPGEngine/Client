@@ -1,7 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const { Route, Link } = require('react-router-dom')
-const { showInfoCard } = require('../../redux/actions/ui');
+const { showInfoCard, switchMenu } = require('../../redux/actions/ui');
 const ConverseList = require('./converse/ConverseList');
 const FriendsList = require('./friends/FriendsList');
 const NoteList = require('./note/NoteList');
@@ -12,9 +12,6 @@ require('./MenuPannel.scss');
 class MenuPannel extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedMenu: 0
-    };
     this.menus = [
       {
         icon: '&#xe63e;',
@@ -49,8 +46,7 @@ class MenuPannel extends React.Component {
   }
 
   render() {
-    let { selectedMenu } = this.state;
-    let { className, avatar } = this.props;
+    let { className, avatar, selectedMenu } = this.props;
     return (
       <div className={className}>
         <div className="menu-pannel">
@@ -66,7 +62,7 @@ class MenuPannel extends React.Component {
                   <a
                     key={"menu-"+index}
                     className={selectedMenu===index?'active':''}
-                    onClick={()=>this.setState({selectedMenu:index})}
+                    onClick={ () => this.props.dispatch(switchMenu(index)) }
                   >
                     <i className='iconfont' dangerouslySetInnerHTML={{__html:(selectedMenu===index?item.icon:item.activeIcon)}}></i>
                     <span>{item.text}</span>
@@ -87,6 +83,7 @@ class MenuPannel extends React.Component {
 
 module.exports = connect(
   state => ({
-    avatar: state.getIn(['user', 'info', 'avatar'])
+    avatar: state.getIn(['user', 'info', 'avatar']),
+    selectedMenu: state.getIn(['ui', 'menuIndex']),
   })
 )(MenuPannel);

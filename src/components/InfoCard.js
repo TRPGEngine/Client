@@ -2,9 +2,29 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { hideInfoCard } = require('../redux/actions/ui');
+const { createConverse } = require('../redux/actions/chat');
+const { addFriend } = require('../redux/actions/user');
 require('./InfoCard.scss');
 
 class InfoCard extends React.Component {
+  getActions(uuid) {
+    let friendList = this.props.friendList.toJS();
+    let selfUUID = this.props.selfUUID;
+    let disabledAddFriend = friendList.indexOf(uuid)>=0 || uuid===selfUUID;
+    return (
+      <div className="actions">
+        <div
+          className="footer-item"
+          onClick={() => this.props.dispatch(createConverse(uuid, 'user'))}
+        ><i className="iconfont">&#xe61f;</i>发消息</div>
+        <div
+          className={"footer-item" + (disabledAddFriend?" disabled":"")}
+          onClick={() => {if(!disabledAddFriend) {this.props.dispatch(addFriend(uuid))} }}
+        ><i className="iconfont">&#xe604;</i>添加好友</div>
+      </div>
+    )
+  }
+
   render() {
     let uuid = this.props.uuid;
     let info = this.props.usercache.get(uuid);
@@ -32,9 +52,7 @@ class InfoCard extends React.Component {
               </div>
             </div>
             <div className="footer">
-              <div className="actions">
-
-              </div>
+              {this.getActions(info.uuid)}
             </div>
           </div>
         </div>
@@ -56,5 +74,7 @@ InfoCard.propTypes = {
 module.exports = connect(
   state => ({
     usercache: state.getIn(['cache', 'user']),
+    friendList: state.getIn(['user', 'friendList']),
+    selfUUID: state.getIn(['user', 'info', 'uuid']),
   })
 )(InfoCard);

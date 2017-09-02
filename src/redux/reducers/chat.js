@@ -4,6 +4,9 @@ const {
   GET_CONVERSES_REQUEST,
   GET_CONVERSES_SUCCESS,
   GET_CONVERSES_FAILED,
+  CREATE_CONVERSES_REQUEST,
+  CREATE_CONVERSES_SUCCESS,
+  CREATE_CONVERSES_FAILED,
   UPDATE_CONVERSES,
   SWITCH_CONVERSES,
 } = require('../constants');
@@ -88,6 +91,14 @@ module.exports = function chat(state = initialState, action) {
           .setIn(['converses', convUUID, 'lastTime'], moment(lastLog.get('date')).format('HH:mm'));
       case SWITCH_CONVERSES:
         return state.set('selectedConversesUUID', action.converseUUID);
+      case CREATE_CONVERSES_SUCCESS:
+        let createConvUUID = action.payload.uuid;
+        let createConv = Object.assign({}, {
+          msgList: [],
+          lastMsg: '',
+          lastTime: '',
+        }, action.payload);
+        return state.setIn(['converses', createConvUUID], immutable.fromJS(createConv));
       default:
         return state;
     }

@@ -112,7 +112,7 @@
         background-color: #f9f9f9;
 
         .actions {
-          height: 23px;
+          height: 23px + 30px;
           line-height: 23px;
           padding: 15px 0;
           display: flex;
@@ -126,9 +126,21 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
+            color: #a78e7c;
+            font-size: 14px;
+            user-select: none;
 
             &:last-child {
               border-right: 0;
+            }
+
+            &.disabled {
+              color: #bdbebf;
+            }
+
+            .iconfont {
+              font-size: 22px;
+              margin-right: 4px;
             }
           }
         }

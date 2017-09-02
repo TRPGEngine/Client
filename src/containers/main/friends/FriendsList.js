@@ -12,7 +12,7 @@ class FriendsList extends React.Component {
   }
 
   getFriendList() {
-    let friends = this.props.friends;
+    let friends = this.props.friends.toJS();
     let usercache = this.props.usercache;
     return friends.length > 0 ? friends.map((item, index) => {
       console.log('friends item', item);
