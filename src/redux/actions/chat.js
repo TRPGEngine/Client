@@ -46,9 +46,17 @@ let addMsg = function addMsg(converseUUID, payload) {
       return;
     }
 
-    // if(!!getState().getIn(['chat', 'converses', converseUUID])) {
-    //
-    // }
+    if(!getState().getIn(['chat', 'converses', converseUUID])) {
+      // 会话不存在，则创建会话
+      console.log(payload);
+      if(!!payload.room) {
+        // 群聊
+        dispatch(createConverse(payload.room, 'group', false));
+      }else {
+        // 单聊
+        dispatch(createConverse(payload.sender_uuid, 'user', false))
+      }
+    }
 
     // if(!!payload && !payload.uuid) {
     //   console.error('[addMsg]payload need uuid:', payload);
@@ -111,23 +119,27 @@ let getConverses = function getConverses() {
     })
   }
 }
-
-let createConverse = function createConverse(uuid, type) {
+let createConverse = function createConverse(uuid, type, isSwitchToConv = true) {
   return function(dispatch, getState) {
     if(!!getState().getIn(['chat', 'converses', uuid])) {
       console.log('已存在该会话');
-      dispatch(switchToConverse(uuid));
+      if(isSwitchToConv) {
+        dispatch(switchToConverse(uuid));
+      }
       return;
     }
     dispatch({type: CREATE_CONVERSES_REQUEST});
     return api.emit('chat::createConverse', {uuid, type}, function(data) {
+      console.log('chat::createConverse', data);
       if(data.result) {
         let conv = data.data;
         dispatch({type: CREATE_CONVERSES_SUCCESS, payload:conv});
 
         let uuid = getState().getIn(['user','info','uuid']);
         let convUUID = conv.uuid;
-        dispatch(switchToConverse(convUUID));
+        if(isSwitchToConv) {
+          dispatch(switchToConverse(convUUID));
+        }
         // 获取日志
         checkUser(uuid);
         checkUser(convUUID);
