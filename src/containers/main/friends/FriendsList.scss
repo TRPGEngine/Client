@@ -6,6 +6,7 @@
     overflow-y: auto;
     background-color: #fffbf8;
     border-right: 1px solid #dddcdd;
+    position: relative;
 
 
     .items {
@@ -54,6 +55,76 @@
             overflow: hidden;
             white-space: nowrap;
             word-wrap: normal;
+          }
+        }
+      }
+    }
+
+    .requests {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      max-height: 44px * 3;
+
+      .request-item {
+        height: 44px;
+        background-color: #ffa160;
+        color: white;
+        overflow: hidden;
+
+        &.active {
+          height: auto;
+
+          .request-profile > .text {
+            white-space: normal;
+            line-height: 1.5em;
+          }
+        }
+
+        .request-profile {
+          display: flex;
+          cursor: pointer;
+
+          .avatar {
+            width: 44px;
+            height: 44px;
+            line-height: 44px;
+
+            img {
+              width: 32px;
+              height: 32px;
+              border-radius: 50%;
+              vertical-align: middle;
+              margin: 0 4px;
+              border: 1px solid white;
+            }
+          }
+
+          .text {
+            min-height: 44px;
+            flex: 1;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            line-height: 44px;
+          }
+        }
+
+        .request-action {
+          display: flex;
+          justify-content: center;
+          > div {
+            padding: 2px 16px;
+            margin: 4px 10px;
+            border: 1px solid white;
+            border-radius: 15px;
+            cursor: pointer;
+
+            &:hover {
+              background-color: white;
+              color: #ffa160;
+            }
           }
         }
       }

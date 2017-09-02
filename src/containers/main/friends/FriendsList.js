@@ -7,6 +7,13 @@ const FriendsDetail = require('./FriendsDetail');
 require('./FriendsList.scss');
 
 class FriendsList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectRequest: '',
+    }
+  }
+
   _handleClick(uuid) {
     this.props.dispatch(showInfoCard(uuid));
   }
@@ -15,7 +22,6 @@ class FriendsList extends React.Component {
     let friends = this.props.friends.toJS();
     let usercache = this.props.usercache;
     return friends.length > 0 ? friends.map((item, index) => {
-      console.log('friends item', item);
       let uuid = item;
       return (
         <div key={uuid + index} className="item">
@@ -30,6 +36,49 @@ class FriendsList extends React.Component {
     )
   }
 
+  getFriendRequest() {
+    let friendRequests = this.props.friendRequests.toJS();
+    friendRequests = [{
+      "username":"admin2",
+      "uuid":"d53fde10-8fd8-11e7-8a56-530562e6d304",
+      "selected_actor":2,
+      "last_login":null,
+      "id":2,
+      "avatar":null,
+      "token":""
+    }]; // demo data
+
+    let selectRequest = this.state.selectRequest;
+    return friendRequests.map((item, index) => {
+      return (
+        <div
+          key={item.uuid + "#" + index}
+          className={"request-item" + (item.uuid===selectRequest?" active":"")}
+        >
+          <div
+            className="request-profile"
+            onClick={() => {
+              if(selectRequest === item.uuid) {
+                this.setState({selectRequest: ""})
+              }else {
+                this.setState({selectRequest: item.uuid})
+              }
+            }}
+          >
+            <div className="avatar" onClick={() => this.props.dispatch(showInfoCard(item.uuid))}>
+              <img src={item.avatar || "/src/assets/img/gugugu1.png"} />
+            </div>
+            <div className="text">{item.username}{item.username} 请求添加你为好友</div>
+          </div>
+          <div className="request-action">
+            <div onClick={() => console.log("refuse")}>拒绝</div>
+            <div onClick={() => console.log("agree")}>同意</div>
+          </div>
+        </div>
+      )
+    });
+  }
+
   render() {
     return (
       <div className="friends">
@@ -40,6 +89,9 @@ class FriendsList extends React.Component {
           </div>*/}
           <div className="items">
             {this.getFriendList()}
+          </div>
+          <div className="requests">
+            {this.getFriendRequest()}
           </div>
         </div>
         <div className="detail">
@@ -53,6 +105,7 @@ class FriendsList extends React.Component {
 module.exports = connect(
   state => ({
     friends: state.getIn(['user', 'friendList']),
+    friendRequests: state.getIn(['user', 'friendRequests']),
     usercache: state.getIn(['cache', 'user']),
   })
 )(FriendsList);

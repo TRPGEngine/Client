@@ -22,6 +22,7 @@ const initialState = immutable.fromJS({
   isLogin: false,
   info: {},
   friendList: [],
+  friendRequests: [],// 好友申请
   isFindingUser: false,// 好友查询页面
   findingResult: [],
 });
