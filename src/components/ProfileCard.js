@@ -15,11 +15,11 @@ class ProfileCard extends React.Component {
         <div
           className="footer-item"
           onClick={() => console.log('reset')}
-        ><i className="iconfont">&#xe61f;</i>重置</div>
+        ><i className="iconfont">&#xe67c;</i>重置</div>
         <div
           className={"footer-item" + (disabledAddFriend?" disabled":"")}
           onClick={() => console.log('save')}
-        ><i className="iconfont">&#xe604;</i>保存</div>
+        ><i className="iconfont">&#xe634;</i>保存</div>
       </div>
     )
   }
