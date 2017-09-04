@@ -1,4 +1,4 @@
-.info-card {
+.profile-card {
   .mask {
     position: fixed;
     left: 0;
@@ -50,33 +50,6 @@
             img {
               width: 100%;
               height: 100%;
-            }
-          }
-
-          .username {
-            flex: 1;
-            text-align: left;
-            overflow: hidden;
-            text-overflow:ellipsis;
-            white-space: nowrap;
-          }
-
-          .action {
-            background-color: transparent;
-            border: 1px solid white;
-            padding: 4px 12px;
-            color: white;
-            border-radius: 14px;
-            cursor: pointer;
-            outline: 0;
-
-            &:hover {
-              color: #726155;
-              background-color: white;
-            }
-
-            .iconfont {
-              margin-right: 4px;
             }
           }
         }
