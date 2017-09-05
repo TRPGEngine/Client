@@ -4,6 +4,7 @@ const { Route, Redirect, Switch, BrowserRouter, Link } = require('react-router-d
 const Router = BrowserRouter;
 const Loading = require('../components/Loading');
 const Alert = require('../components/Alert');
+const NetworkIndicator = require('../components/NetworkIndicator');
 require('./App.scss');
 require('../assets/css/iconfont.css');
 
@@ -33,6 +34,7 @@ class App extends React.Component {
               <Route name="register" path="/register" component={Register} />
               <Route name="main" path="/main" component={Main} />
             </Switch>
+            <NetworkIndicator />
             <div className='version'>当前版本号v{appVersion}</div>
           </div>
         </div>

@@ -27,6 +27,7 @@ function getApiInstance() {
 
 function bindEventFunc(store) {
   const { addMsg } = require('../redux/actions/chat');
+  const { changeNetworkStatue } = require('../redux/actions/ui');
 
   if(!(this instanceof API)) {
     throw new Error('bindEventFunc shound a API object class');
@@ -37,15 +38,34 @@ function bindEventFunc(store) {
     store.dispatch(addMsg(converseUUID, data));
   });
 
-  socket.on('connection', function(data) {
+  socket.on('connect', function(data) {
+    store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
     console.log('连接成功');
-  })
+  });
+  socket.on('connecting', function(data) {
+    store.dispatch(changeNetworkStatue(false, '正在连接...', true));
+    console.log('正在连接');
+  });
   socket.on('reconnect', function(data) {
+    store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
     console.log('重连成功');
-  })
+  });
+  socket.on('reconnecting', function(data) {
+    store.dispatch(changeNetworkStatue(false, '正在连接...', true));
+    console.log('重连中...');
+  });
   socket.on('disconnect', function(data) {
-    console.log('断开连接');
-  })
+    store.dispatch(changeNetworkStatue(false, '已断开连接'));
+    console.log('已断开连接');
+  });
+  socket.on('connect_failed', function(data) {
+    store.dispatch(changeNetworkStatue(false, '连接失败'));
+    console.log('连接失败');
+  });
+  socket.on('error', function(data) {
+    store.dispatch(changeNetworkStatue(false, '网络出现异常'));
+    console.log('网络出现异常', data);
+  });
 }
 
 exports.bindEventFunc = bindEventFunc;

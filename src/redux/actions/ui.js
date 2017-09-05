@@ -8,6 +8,7 @@ const {
   SHOW_PROFILE_CARD,
   HIDE_PROFILE_CARD,
   SWITCH_MENU,
+  CHANGE_NETWORK_STATE,
 } = require('../constants');
 const cache = require('./cache');
 
@@ -54,4 +55,7 @@ exports.hideProfileCard = function() {
 }
 exports.switchMenu = function(menuIndex = 0) {
   return {type: SWITCH_MENU, menuIndex: menuIndex}
+}
+exports.changeNetworkStatue = function(isOnline, msg, tryReconnect = false) {
+  return {type: CHANGE_NETWORK_STATE, payload: {isOnline, msg, tryReconnect}}
 }
