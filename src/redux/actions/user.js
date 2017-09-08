@@ -14,6 +14,8 @@ const {
   GET_FRIENDS_REQUEST,
   GET_FRIENDS_SUCCESS,
   GET_FRIENDS_FAILED,
+  SEND_FRIEND_INVITE_SUCCESS,
+  SEND_FRIEND_INVITE_ERROR,
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
@@ -125,6 +127,30 @@ exports.getFriends = function() {
         dispatch({type: GET_FRIENDS_SUCCESS, payload: uuidList});
       }else {
         dispatch({type: GET_FRIENDS_FAILED, payload: data.msg});
+      }
+    })
+  }
+}
+
+exports.sendFriendInvite = function(uuid) {
+  return function(dispatch, getState) {
+    return api.emit('player::invite', {to: uuid}, function(data) {
+      if(data.result) {
+        dispatch({type: SEND_FRIEND_INVITE_SUCCESS, payload: data.invite, uuid});
+      }else {
+        dispatch({type: SEND_FRIEND_INVITE_ERROR, payload: data.msg});
+      }
+    })
+  }
+}
+
+exports.agreeFriendInvite = function(inviteUUID) {
+  return function(dispatch, getState) {
+    return api.emit('player::agreeFriendInvite', {inviteUUID}, function(data) {
+      if(data.result) {
+        dispatch({type: AGREE_FRIEND_INVITE_SUCCESS});
+      }else {
+        dispatch({type: AGREE_FRIEND_INVITE_ERROR, payload: data.msg});
       }
     })
   }

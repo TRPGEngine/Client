@@ -1,17 +1,16 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const { addFriend } = require('../redux/actions/user');
+const { sendFriendInvite, agreeFriendInvite } = require('../redux/actions/user');
 
 require('./FindResultItem.scss');
 
 class FindResultItem extends React.Component {
-  _handleAddFriend(uuid) {
-    console.log("add friend:", uuid);
-    this.props.dispatch(addFriend(uuid));
-  }
-
   getAction(uuid) {
     let friendList = this.props.friendList.toJS();
+    let friendInvite = this.props.friendInvite.toJS();
+    let friendRequests = this.props.friendRequests.toArray().map((item) => {
+      return item.get('fromUUID');
+    });
     let selfUUID = this.props.selfUUID;
     if(selfUUID === uuid) {
       return (
@@ -25,9 +24,21 @@ class FindResultItem extends React.Component {
           <i className="iconfont">&#xe604;</i>已添加
         </button>
       )
+    }else if(friendInvite.indexOf(uuid) >= 0){
+      return (
+        <button disabled>
+          <i className="iconfont">&#xe62e;</i>已邀请
+        </button>
+      )
+    }else if(friendRequests.indexOf(uuid) >= 0){
+      return (
+        <button disabled>
+          <i className="iconfont">&#xe67d;</i>同意
+        </button>
+      )
     }else {
       return (
-        <button onClick={() => this._handleAddFriend(uuid)}>
+        <button onClick={() => this.props.sendFriendInvite(uuid)}>
           <i className="iconfont">&#xe604;</i>添加好友
         </button>
       )
@@ -57,6 +68,26 @@ class FindResultItem extends React.Component {
 module.exports = connect(
   state => ({
     selfUUID: state.getIn(['user', 'info', 'uuid']),
-    friendList: state.getIn(['user', 'friendList'])
+    friendList: state.getIn(['user', 'friendList']),
+    friendInvite: state.getIn(['user', 'friendInvite']),
+    friendRequests: state.getIn(['user', 'friendRequests']),
+  }),
+  dispatch => ({
+    sendFriendInvite: (uuid) => {
+      dispatch(sendFriendInvite(uuid));
+    },
+    agreeFriendInvite: (fromUUID) => {
+      let inviteUUID = '';
+      for (req of friendRequests) {
+        if(req.fromUUID === uuid) {
+          inviteUUID = req.uuid;
+          break;
+        }
+      }
+
+      if(!!inviteUUID) {
+        dispatch(agreeFriendInvite(inviteUUID));
+      }
+    }
   })
 )(FindResultItem);

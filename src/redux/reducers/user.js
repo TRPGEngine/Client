@@ -15,6 +15,8 @@ const {
   GET_FRIENDS_REQUEST,
   GET_FRIENDS_SUCCESS,
   GET_FRIENDS_FAILED,
+  SEND_FRIEND_INVITE_SUCCESS,
+  SEND_FRIEND_INVITE_ERROR,
 } = require('../constants');
 const sessionStorage = require('../../api/sessionStorage.api.js');
 
@@ -22,6 +24,7 @@ const initialState = immutable.fromJS({
   isLogin: false,
   info: {},
   friendList: [],
+  friendInvite: [],// 好友邀请
   friendRequests: [],// 好友申请
   isFindingUser: false,// 好友查询页面
   findingResult: [],
@@ -61,6 +64,15 @@ module.exports = function ui(state = initialState, action) {
       })
     case GET_FRIENDS_SUCCESS:
       return state.set('friendList', immutable.fromJS(action.payload));
+    case SEND_FRIEND_INVITE_SUCCESS:
+      return state.update('friendInvite', (list) => {
+        let toUUID = action.uuid;
+        if(list.indexOf(toUUID) === -1) {
+          return list.push(toUUID);
+        }else {
+          return list;
+        }
+      })
     default:
       return state;
   }
