@@ -9,7 +9,7 @@ class FindResultItem extends React.Component {
     let friendList = this.props.friendList.toJS();
     let friendInvite = this.props.friendInvite.toJS();
     let friendRequests = this.props.friendRequests.toArray().map((item) => {
-      return item.get('fromUUID');
+      return item.get('from_uuid');
     });
     let selfUUID = this.props.selfUUID;
     if(selfUUID === uuid) {
@@ -32,7 +32,7 @@ class FindResultItem extends React.Component {
       )
     }else if(friendRequests.indexOf(uuid) >= 0){
       return (
-        <button disabled>
+        <button onClick={() => this.props.agreeFriendInvite(uuid)}>
           <i className="iconfont">&#xe67d;</i>同意
         </button>
       )
@@ -77,17 +77,21 @@ module.exports = connect(
       dispatch(sendFriendInvite(uuid));
     },
     agreeFriendInvite: (fromUUID) => {
-      let inviteUUID = '';
-      for (req of friendRequests) {
-        if(req.fromUUID === uuid) {
-          inviteUUID = req.uuid;
-          break;
-        }
-      }
+      dispatch((dispatch, getState) => {
+        let friendRequests = getState().getIn(['user', 'friendRequests']).toJS();
 
-      if(!!inviteUUID) {
-        dispatch(agreeFriendInvite(inviteUUID));
-      }
+        let inviteUUID = '';
+        for (let req of friendRequests) {
+          if(req.from_uuid === fromUUID) {
+            inviteUUID = req.uuid;
+            break;
+          }
+        }
+
+        if(!!inviteUUID) {
+          dispatch(agreeFriendInvite(inviteUUID));
+        }
+      })
     }
   })
 )(FindResultItem);

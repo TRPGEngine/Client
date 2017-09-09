@@ -17,6 +17,10 @@ const {
   GET_FRIENDS_FAILED,
   SEND_FRIEND_INVITE_SUCCESS,
   SEND_FRIEND_INVITE_ERROR,
+  AGREE_FRIEND_INVITE_SUCCESS,
+  AGREE_FRIEND_INVITE_ERROR,
+  GET_FRIEND_INVITE_SUCCESS,
+  GET_FRIEND_INVITE_ERROR,
 } = require('../constants');
 const sessionStorage = require('../../api/sessionStorage.api.js');
 
@@ -24,8 +28,8 @@ const initialState = immutable.fromJS({
   isLogin: false,
   info: {},
   friendList: [],
-  friendInvite: [],// 好友邀请
-  friendRequests: [],// 好友申请
+  friendInvite: [],// 好友邀请(发送的)
+  friendRequests: [],// 好友申请(接受到的)
   isFindingUser: false,// 好友查询页面
   findingResult: [],
 });
@@ -73,6 +77,26 @@ module.exports = function ui(state = initialState, action) {
           return list;
         }
       })
+    case GET_FRIEND_INVITE_SUCCESS:
+      return state.set('friendRequests', immutable.fromJS(action.payload || []))
+    case AGREE_FRIEND_INVITE_SUCCESS:
+      return state.update('friendRequests', (list) => {
+        let agreeUUID = action.payload.uuid;
+        let index = -1;
+        for (let i = 0; i < list.count(); i++) {
+          let item = list.get(i);
+          if(item.get('uuid') === agreeUUID) {
+            index = i;
+            break;
+          }
+        }
+
+        if(index >= 0) {
+          return list.delete(0);
+        }else {
+          return list;
+        }
+      }).update('friendList', (list) => list.push(action.payload.from_uuid));
     default:
       return state;
   }

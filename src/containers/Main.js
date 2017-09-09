@@ -1,7 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const { getConverses } = require('../redux/actions/chat');
-const { getFriends } = require('../redux/actions/user');
+const { getFriends, getFriendsInvite } = require('../redux/actions/user');
 
 const MenuPannel = require('./main/MenuPannel');
 const InfoCard = require('../components/InfoCard');
@@ -14,8 +14,9 @@ class Main extends React.Component {
     if(!this.props.isLogin) {
       this.props.history.push('login');
     }else {
-      this.props.dispatch(getConverses());
-      this.props.dispatch(getFriends());
+      this.props.getConverses();
+      this.props.getFriends();
+      this.props.getFriendsInvite();
     }
   }
 
@@ -51,5 +52,16 @@ module.exports = connect(
     showInfoCard: state.getIn(['ui', 'showInfoCard']),
     showInfoCardUUID: state.getIn(['ui', 'showInfoCardUUID']),
     showProfileCard: state.getIn(['ui', 'showProfileCard']),
+  }),
+  dispatch => ({
+    getConverses: () => {
+      dispatch(getConverses());
+    },
+    getFriends: () => {
+      dispatch(getFriends());
+    },
+    getFriendsInvite: () => {
+      dispatch(getFriendsInvite());
+    },
   })
 )(Main);
