@@ -27,6 +27,7 @@ function getApiInstance() {
 
 function bindEventFunc(store) {
   const { addMsg } = require('../redux/actions/chat');
+  const { addFriendInvite } = require('../redux/actions/user');
   const { changeNetworkStatue } = require('../redux/actions/ui');
 
   if(!(this instanceof API)) {
@@ -37,6 +38,10 @@ function bindEventFunc(store) {
     let converseUUID = data.room || data.sender_uuid;
     store.dispatch(addMsg(converseUUID, data));
   });
+
+  socket.on('player::invite', function(data) {
+    store.dispatch(addFriendInvite(data));
+  })
 
   socket.on('connect', function(data) {
     store.dispatch(changeNetworkStatue(true, '网络连接畅通'));

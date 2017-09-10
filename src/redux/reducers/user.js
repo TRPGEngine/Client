@@ -21,6 +21,9 @@ const {
   AGREE_FRIEND_INVITE_ERROR,
   GET_FRIEND_INVITE_SUCCESS,
   GET_FRIEND_INVITE_ERROR,
+  REFUSE_FRIEND_INVITE_SUCCESS,
+  REFUSE_FRIEND_INVITE_ERROR,
+  ADD_FRIEND_INVITE,
 } = require('../constants');
 const sessionStorage = require('../../api/sessionStorage.api.js');
 
@@ -97,6 +100,27 @@ module.exports = function ui(state = initialState, action) {
           return list;
         }
       }).update('friendList', (list) => list.push(action.payload.from_uuid));
+    case REFUSE_FRIEND_INVITE_SUCCESS:
+      return state.update('friendRequests', (list) => {
+        // same as agree
+        let agreeUUID = action.payload.uuid;
+        let index = -1;
+        for (let i = 0; i < list.count(); i++) {
+          let item = list.get(i);
+          if(item.get('uuid') === agreeUUID) {
+            index = i;
+            break;
+          }
+        }
+
+        if(index >= 0) {
+          return list.delete(0);
+        }else {
+          return list;
+        }
+      })
+    case ADD_FRIEND_INVITE:
+      return state.update('friendRequests', (list) => list.push(action.payload))
     default:
       return state;
   }
