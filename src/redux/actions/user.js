@@ -167,6 +167,9 @@ exports.getFriendsInvite = function() {
   return function(dispatch, getState) {
     return api.emit('player::getFriendsInvite', {}, function(data) {
       if(data.result) {
+        for (let item of data.res) {
+          checkUser(item.from_uuid);
+        }
         dispatch({type: GET_FRIEND_INVITE_SUCCESS, payload: data.res});
       }else {
         dispatch({type: GET_FRIEND_INVITE_ERROR, payload: data.msg});
@@ -177,7 +180,7 @@ exports.getFriendsInvite = function() {
 
 exports.refuseFriendInvite = function(inviteUUID) {
   return function(dispatch, getState) {
-    return api.emit('player::refuseFriendInvite', {inviteUUID}, function(data) {
+    return api.emit('player::refuseFriendInvite', {uuid: inviteUUID}, function(data) {
       if(data.result) {
         dispatch({type: REFUSE_FRIEND_INVITE_SUCCESS, payload: data.res});
       }else {
