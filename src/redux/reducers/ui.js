@@ -3,6 +3,8 @@ const {
   HIDE_LOADING,
   SHOW_ALERT,
   HIDE_ALERT,
+  SHOW_MODAL,
+  HIDE_MODAL,
   SHOW_INFO_CARD,
   HIDE_INFO_CARD,
   SHOW_PROFILE_CARD,
@@ -16,6 +18,8 @@ const initialState = immutable.fromJS({
   showAlert: false,
   showAlertInfo: {},
   showLoading: false,
+  showModal: false,
+  showModalBody: undefined,
   showInfoCard: false,
   showInfoCardUUID: '',
   showProfileCard: false,
@@ -38,6 +42,10 @@ module.exports = function ui(state = initialState, action) {
       return state.set('showLoading', true);
     case HIDE_LOADING:
       return state.set('showLoading', false);
+    case SHOW_MODAL:
+      return state.set('showModal', true).set('showModalBody', immutable.fromJS(action.payload));
+    case HIDE_MODAL:
+      return state.set('showModal', false).set('showModalBody', undefined);
     case SHOW_INFO_CARD:
       let uuid = action.uuid || {};
       return state.set('showInfoCard', true).set('showInfoCardUUID', uuid);

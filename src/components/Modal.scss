@@ -1,0 +1,47 @@
+.modal {
+  .modal-mask {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 100;
+
+    .modal-card {
+      border-radius: 3px;
+      overflow: hidden;
+      background-color: white;
+      text-align: center;
+      box-shadow: rgba(0, 0, 0, 0.15) 1px 4px 12px;
+      min-width: 375px;
+      min-height: 375px;
+      display: flex;
+      position: relative;
+
+      .modal-close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+        // height: 24px;
+        // width: 24px;
+
+        .iconfont {
+          font-size: 21px;
+          color: rgba(0,0,0,0.2);
+          line-height: 1em;
+          display: block;
+          transition: all 0.2s ease-in-out;
+
+          &:hover {
+            color: rgba(0,0,0,0.6);
+          }
+        }
+      }
+    }
+  }
+}

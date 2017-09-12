@@ -3,6 +3,8 @@ const {
   HIDE_LOADING,
   SHOW_ALERT,
   HIDE_ALERT,
+  SHOW_MODAL,
+  HIDE_MODAL,
   SHOW_INFO_CARD,
   HIDE_INFO_CARD,
   SHOW_PROFILE_CARD,
@@ -23,6 +25,12 @@ exports.showAlert = function(payload) {
 }
 exports.hideAlert = function() {
   return {type: HIDE_ALERT}
+}
+exports.showModal = function(body) {
+  return {type: SHOW_MODAL, payload: body}
+}
+exports.hideModal = function() {
+  return {type: HIDE_MODAL}
 }
 exports.showInfoCard = function(uuid) {
   return (dispatch, getState) => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 const { Route, Redirect, Switch, BrowserRouter, Link } = require('react-router-dom');
 const Router = BrowserRouter;
+const Modal = require('../components/Modal');
 const Loading = require('../components/Loading');
 const Alert = require('../components/Alert');
 const NetworkIndicator = require('../components/NetworkIndicator');
@@ -21,6 +22,7 @@ class App extends React.Component {
     return (
       <Router>
         <div>
+          <Modal />
           <Loading show={showLoading} />
           <Alert
             show={showAlert}
