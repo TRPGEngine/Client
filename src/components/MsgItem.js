@@ -5,7 +5,7 @@ require('./MsgItem.scss');
 class MsgItem extends React.Component {
   render() {
     return (
-      <div className={this.props.me?"msg-item me":"msg-item"}>
+      <div className={"msg-item "+(this.props.me?"me ":"") + this.props.type}>
         <div className="profile">
           <span className="name">{this.props.name}</span>
           <span className="time">{this.props.time}</span>
@@ -24,6 +24,7 @@ class MsgItem extends React.Component {
 MsgItem.propTypes = {
   icon: PropTypes.string,
   name: PropTypes.string,
+  type: PropTypes.string,
   time: PropTypes.string,
   content: PropTypes.string,
   me: PropTypes.bool,

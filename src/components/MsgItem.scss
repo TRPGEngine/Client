@@ -28,6 +28,70 @@
     }
   }
 
+  &.occ {
+    .content>.body>.bubble {
+      color: #ccc;
+      border-style: dashed;
+      &:before{
+        content: '（';
+      }
+      &:after{
+        content: '）';
+      }
+    }
+  }
+
+  &.speak {
+    .content>.body>.bubble {
+      padding-left: 22px;
+      padding-right: 22px;
+      border-color: #bec9ff;
+      box-shadow: 0px 0px 2px 0px #bec9ff;
+      &:before{
+        content: '\e605';
+        top: 0;
+        left: 6px;
+      }
+      &:after{
+        content: '\e601';
+        bottom: 16px;
+        right: 6px;
+      }
+      &:before, &:after{
+        font-family: "iconfont";
+        color: #ccc;
+        position: absolute;
+        font-size: 12px;
+      }
+    }
+  }
+
+  &.action {
+    & .content>.body>.bubble {
+      border-color: #ffa787;
+      box-shadow: 0px 0px 2px 0px #ffa787;
+
+      &:after {
+        content: '\e619';
+        font-family: "iconfont";
+        color: #ccc;
+        margin-left: 4px;
+      }
+    }
+
+    &.me .content>.body>.bubble {
+      &:after {
+        content: '';
+      }
+      &:before {
+        content: '\e619';
+        font-family: "iconfont";
+        color: #ccc;
+        margin-right: 4px;
+      }
+    }
+  }
+
   .profile {
     padding: 0 45px;
     margin: 2px 0;
@@ -81,6 +145,7 @@
         line-height: 1.5;
         word-break: break-all;
         float: left;
+        position: relative;
       }
     }
 

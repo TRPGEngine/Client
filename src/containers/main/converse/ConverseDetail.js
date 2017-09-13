@@ -59,8 +59,9 @@ class ConverseDetail extends React.Component {
             return (
               <MsgItem
                 key={item.uuid+'+'+index}
-                icon={item.icon || '/src/assets/img/gugugu1.png'}
+                icon={usercache.getIn([item.sender_uuid, 'avatar']) || '/src/assets/img/gugugu1.png'}
                 name={usercache.getIn([item.sender_uuid, 'username']) || ''}
+                type={item.type}
                 content={item.message}
                 time={moment(item.date).format('HH:mm:ss')}
                 me={userUUID===item.sender_uuid}
@@ -171,7 +172,7 @@ class ConverseDetail extends React.Component {
               onKeyUp={(e)=> this._handleMsgInput(e)} />
           </div>
           <div className="action-area">
-            <button onClick={() => this._handleSendMsg()} disabled={this.state.inputMsg?false:true}>发送</button>
+            <button onClick={() => this._handleSendMsg()} disabled={this.state.inputMsg?false:true}>发送&lt;Enter&gt;</button>
           </div>
         </div>
       </div>
