@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const { Route, Link } = require('react-router-dom')
 const { showInfoCard, switchMenu } = require('../../redux/actions/ui');
 const ConverseList = require('./converse/ConverseList');
+const ActorList = require('./actors/ActorList');
 const FriendsList = require('./friends/FriendsList');
 const NoteList = require('./note/NoteList');
 const ExtraOptions = require('./ExtraOptions');
@@ -25,6 +26,9 @@ class MenuPannel extends React.Component {
         icon: '&#xe61b;',
         activeIcon: '&#xe61b;',
         text: '人物卡',
+        component: (
+          <ActorList />
+        )
       },
       {
         icon: '&#xe607;',
@@ -33,6 +37,11 @@ class MenuPannel extends React.Component {
         component: (
           <FriendsList />
         )
+      },
+      {
+        icon: '&#xe958;',
+        activeIcon: '&#xe958;',
+        text: '团',
       },
       {
         icon: '&#xe624;',

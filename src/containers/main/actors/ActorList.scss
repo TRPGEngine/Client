@@ -1,0 +1,143 @@
+.actor {
+  display: flex;
+
+  .actor-list {
+    flex: 1;
+    overflow-y: overlay;
+    overflow-x: hidden;
+    .actor-list-collection {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: space-between;
+      align-content: flex-start;
+      padding: 24px 18px;
+
+      .actor-card {
+        display: flex;
+        width: 280px;
+        height: 120px;
+        background-color: white;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 14px;
+        box-shadow: rgba(0, 0, 0, 0.15) 0 0 6px;
+        border: 1px solid #dddcdd;
+        padding: 10px 6px;
+
+        .avatar {
+          display: flex;
+          height: 100%;
+          width: 80px;
+          overflow: hidden;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid #dddcdd;
+          background-position: center;
+          background-size: cover;
+
+          img {
+            width: 100%;
+            height: auto;
+          }
+        }
+
+        .profile {
+          flex: 1;
+          margin-left: 5px;
+          font-size: 12px;
+          display: flex;
+          flex-direction: column;
+
+          p {
+            margin: 0;
+            display: flex;
+            height: auto;
+            user-select: none;
+            cursor: default;
+
+            &:nth-child(2) {
+              flex: 1;
+            }
+
+            span:nth-child(1) {
+              color: #666;
+              word-break: keep-all;
+              margin-right: 2px;
+            }
+            span:nth-child(2) {
+              float: left;
+              flex: 1;
+              word-break: break-all;
+              text-align: left;
+              color: #222;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 3;
+              overflow: hidden;
+              max-height: 3 * 1.48em;
+            }
+
+            &.action {
+              justify-content: flex-end;
+              button {
+                background-color: transparent;
+                border: 0;
+                outline: 0;
+                color: #389bff;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+
+        .actor-card-new {
+          display: flex;
+          flex: 1;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: #999;
+          transition: all 0.1s ease-in-out;
+
+          &:hover {
+            color: #222;
+          }
+        }
+      }
+    }
+  }
+
+  .actor-info {
+    width: 300px;
+    background-color: #fffbf8;
+    border-left: 1px solid #dddcdd;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 10px;
+
+    p {
+      margin: 0;
+      display: flex;
+      height: auto;
+
+      &:nth-child(2) {
+        flex: 1;
+      }
+
+      span:nth-child(1) {
+        color: #666;
+        word-break: keep-all;
+        margin-right: 2px;
+      }
+      span:nth-child(2) {
+        float: left;
+        flex: 1;
+        word-break: break-all;
+        text-align: left;
+        color: #222;
+      }
+    }
+  }
+}
