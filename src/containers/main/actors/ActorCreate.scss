@@ -1,0 +1,53 @@
+.actor-create {
+  height: 640px;
+  width: 900px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  .header {
+    padding: 20px 26px;
+    display: flex;
+
+    input {
+      flex: 1;
+      margin: 0 5px;
+      height: 44px;
+      padding: 12px 16px;
+      border: 0;
+      outline: 0;
+      border-bottom: 1px solid #dddcdd;
+      background-color: transparent;
+
+      &:focus {
+        border-bottom-color: #705949;
+      }
+    }
+
+    button {
+      margin: 0 5px;
+      height: 44px;
+      font-size: 16px;
+      background-color: transparent;
+      border: 0;
+      cursor: pointer;
+      color: white;
+      border-radius: 3px;
+      background-color: #999;
+      padding: 6px 12px;
+      height: 40px;
+      margin-top: 2px;
+
+      .iconfont {
+        margin-right: 4px;
+      }
+
+      &:hover {
+        background-color: #705949;
+      }
+    }
+  }
+  .body {
+    flex: 1
+  }
+}

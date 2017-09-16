@@ -6,6 +6,7 @@ const reducers = combineReducers({
   user: require('./user'),
   cache: require('./cache'),
   note: require('./note'),
+  actor: require('./actor'),
 })
 
 module.exports = reducers;

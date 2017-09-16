@@ -1,11 +1,19 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const ActorCreate = require('./ActorCreate');
+const { showModal } = require('../../../redux/actions/ui');
 
 require('./ActorList.scss');
 
 class ActorList extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  _handleAddNewActor() {
+    this.props.showModal(
+      <ActorCreate />
+    )
   }
 
   render() {
@@ -31,7 +39,7 @@ class ActorList extends React.Component {
     )
     let addNewCard = (
       <div className="actor-card">
-        <div className="actor-card-new">
+        <div className="actor-card-new" onClick={() => this._handleAddNewActor()}>
           <i className="iconfont">&#xe604;</i><span>添加新人物</span>
         </div>
       </div>
@@ -57,16 +65,6 @@ class ActorList extends React.Component {
           <div className="actor-list-collection">
             {actorCard}
             {actorCard}
-            {actorCard}
-            {actorCard}
-            {actorCard}
-            {actorCard}
-            {actorCard}
-            {actorCard}
-            {actorCard}
-            {actorCard}
-            {actorCard}
-            {actorCard}
             {addNewCard}
           </div>
         </div>
@@ -78,4 +76,11 @@ class ActorList extends React.Component {
   }
 }
 
-module.exports = connect()(ActorList);
+module.exports = connect(
+  state => ({
+    actors: [],
+  }),
+  dispatch => ({
+    showModal: (body) => dispatch(showModal(body))
+  })
+)(ActorList);
