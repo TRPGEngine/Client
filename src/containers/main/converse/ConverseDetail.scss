@@ -4,8 +4,12 @@
   flex: 1;
   .conv-container {
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
     flex: 1;
+
+    &:hover {
+      overflow-y: overlay;
+    }
 
     .msg-items {
       padding: 4px 16px 16px 16px;

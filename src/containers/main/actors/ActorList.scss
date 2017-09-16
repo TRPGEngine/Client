@@ -3,8 +3,13 @@
 
   .actor-list {
     flex: 1;
-    overflow-y: overlay;
+    overflow-y: hidden;
     overflow-x: hidden;
+
+    &:hover {
+      overflow-y: overlay;
+    }
+
     .actor-list-collection {
       flex: 1;
       display: flex;

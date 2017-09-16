@@ -3,11 +3,14 @@
     user-select: none;
     width: 240px;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
     background-color: #fffbf8;
     border-right: 1px solid #dddcdd;
     position: relative;
 
+    &:hover {
+      overflow-y: overlay;
+    }
 
     .items {
       display: flex;

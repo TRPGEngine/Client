@@ -46,7 +46,11 @@ module.exports = function ui(state = initialState, action) {
       return state;
     case GET_NOTE:
       let localNote = localStorage.get('note');
-      return state.set('noteList', immutable.fromJS(localNote));
+      if(localNote) {
+        return state.set('noteList', immutable.fromJS(localNote));
+      }else {
+        return state;
+      }
     case SWITCH_NOTE:
       return state.set('selectedNoteUUID', action.noteUUID);
     default:

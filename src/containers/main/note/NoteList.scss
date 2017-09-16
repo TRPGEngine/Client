@@ -2,16 +2,17 @@
   .list {
     user-select: none;
     width: 240px;
-    overflow-x: hidden;
-    overflow-y: auto;
     background-color: #fffbf8;
     position: relative;
-    // border-right: 1px solid #dddcdd;
 
     .items {
       height: 100%;
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: hidden;
+
+      &:hover {
+        overflow-y: overlay;
+      }
     }
 
     .note-item {
