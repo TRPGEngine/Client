@@ -1,0 +1,33 @@
+.template-cell {
+  display: flex;
+  margin-bottom: 10px;
+
+  &:hover {
+    background-color: rgba(black, 0.1);
+  }
+
+  .property {
+    padding: 8px;
+    flex: 1;
+    text-align: left;
+  }
+
+  .actions {
+    padding: 8px;
+    button {
+      border: 0;
+      background-color: transparent;
+      user-select: none;
+      cursor: pointer;
+      outline: 0;
+
+      &:hover {
+        color: #705949;
+      }
+
+      .iconfont {
+        font-size: 18px;
+      }
+    }
+  }
+}
