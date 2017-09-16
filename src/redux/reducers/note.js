@@ -21,7 +21,7 @@ function getBlankNote() {
     created_At: moment().valueOf(),
     updated_At: moment().valueOf(),
     title: '笔记标题',
-    content: '欢迎使用笔记本',
+    content: '欢迎使用笔记本',
   }
 }
 
@@ -35,7 +35,7 @@ module.exports = function ui(state = initialState, action) {
     case SAVE_NOTE:
       let saveUUID = action.payload.uuid;
       let saveContent = action.payload.content;
-      let noteObj = localStorage.get('note');
+      let noteObj = localStorage.get('note') || {};
 
       state = state.setIn(['noteList', saveUUID, 'content'], saveContent)
         .setIn(['noteList', saveUUID, 'updated_At'], moment().valueOf());
