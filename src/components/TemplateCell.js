@@ -9,10 +9,10 @@ class TemplateCell extends React.Component {
   }
 
   render()　{
-    let { name, value, onEdit, onRemove } = this.props;
+    let { name, value, onEdit, onRemove, isActive } = this.props;
 
     return (
-      <div className="template-cell">
+      <div className={"template-cell" + (isActive?" active":"")}>
         <div className="property">{name} : {value}</div>
         <div className="actions">
           <button title="编辑" onClick={onEdit}>

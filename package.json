@@ -40,6 +40,7 @@
     "socket.io-client": "^2.0.3",
     "tinycon": "^0.6.8",
     "tinymce": "^4.6.5",
+    "trpg-actor-template": "0.0.7",
     "webpack": "^3.5.4"
   },
   "devDependencies": {

@@ -60,6 +60,32 @@
       }
     }
 
+    > .actions {
+      display: flex;
+      padding: 10px 30px;
+
+      button {
+        margin: 0 5px;
+        font-size: 16px;
+        background-color: transparent;
+        border: 0;
+        cursor: pointer;
+        color: white;
+        border-radius: 3px;
+        background-color: #999;
+        padding: 6px 12px;
+        margin-top: 2px;
+
+        &:hover {
+          background-color: #705949;
+        }
+
+        > .iconfont {
+          margin-right: 2px;
+        }
+      }
+    }
+
     .property-list {
       padding: 20px 30px;
       flex: 1;
