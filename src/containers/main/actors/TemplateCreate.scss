@@ -23,7 +23,7 @@
         padding: 6px 12px;
         height: 40px;
         margin-top: 2px;
-        outline: 0
+        outline: 0;
       }
 
       input {
@@ -75,5 +75,100 @@
     width: 320px;
     border-left: 1px solid #dddcdd;
     background-color: #fffbf8;
+    padding: 20px 10px;
+
+    .data {
+      display: flex;
+      margin-bottom: 6px;
+
+      > span {
+        padding: 4px 6px;
+        color: #666;
+      }
+
+      > input {
+        background-color: transparent;
+        font-size: 16px;
+        border: 1px solid #dddcdd;
+        outline: 0;
+        padding: 4px 6px;
+        border-radius: 3px;
+
+        &:focus {
+          border-color: #705949;
+        }
+
+        &[type="checkbox"] {
+          -webkit-appearance: none;
+          background-color: #fff;
+          background-image: url('/src/assets/img/checkbox.png');
+          height: 22px;
+          vertical-align: middle;
+          width: 22px;
+          outline: none;
+          border: 0;
+          transition: initial;
+          padding: 0;
+
+          &:focus,
+          &:hover {
+            background-position: -24px 0;
+          }
+          &:checked {
+            background-position: -48px 0;
+          }
+          &[disabled] {
+            background-position: -72px 0;
+          }
+          &[disabled]:checked {
+            background-position: -96px 0;
+          }
+        }
+      }
+
+      > textarea {
+        resize: none;
+        background-color: transparent;
+        font-size: 16px;
+        border: 1px solid #dddcdd;
+        outline: 0;
+        padding: 4px 6px;
+        border-radius: 3px;
+
+        &:focus {
+          border-color: #705949;
+        }
+      }
+
+      .func-select {
+        min-width: 180px;
+      }
+    }
+
+    .actions {
+      text-align: right;
+      margin-top: 20px;
+
+      button {
+        margin: 0 5px;
+        font-size: 16px;
+        background-color: transparent;
+        border: 0;
+        cursor: pointer;
+        color: white;
+        border-radius: 3px;
+        background-color: #999;
+        padding: 6px 12px;
+        margin-top: 2px;
+
+        .iconfont {
+          margin-right: 4px;
+        }
+
+        &:hover {
+          background-color: #705949;
+        }
+      }
+    }
   }
 }

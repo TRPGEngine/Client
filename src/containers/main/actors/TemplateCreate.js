@@ -1,6 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux')
 const { showModal } = require('../../../redux/actions/ui');
+const Select = require('react-select');
 const TemplateCell = require('../../../components/TemplateCell');
 
 require('./TemplateCreate.scss');
@@ -8,6 +9,9 @@ require('./TemplateCreate.scss');
 class TemplateCreate extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      selectFunc: 'value',
+    }
   }
 
   _handleBack() {
@@ -16,6 +20,10 @@ class TemplateCreate extends React.Component {
   }
 
   render()　{
+    let options = [
+      { value: 'value', label: '值' },
+      { value: 'expression', label: '表达式' }
+    ];
     return (
       <div className="template-create">
         <div className="profile-panel">
@@ -45,7 +53,42 @@ class TemplateCreate extends React.Component {
           </div>
         </div>
         <div className="inspect-panel">
-
+          <div className="data">
+            <span>属性名:</span>
+            <input type="text" placeholder="属性名"/>
+          </div>
+          <div className="data">
+            <span>是否所有人可见:</span>
+            <input
+              type="checkbox"
+              onChange={(e) => console.log(e.target.checked)}
+            />
+          </div>
+          <div className="data">
+            <span>描述:</span>
+            <textarea placeholder="属性描述" rows="3"></textarea>
+          </div>
+          <div className="data">
+            <span>计算方式:</span>
+            <Select
+              name="func"
+              className="func-select"
+              value={this.state.selectFunc}
+              options={options}
+              clearable={false}
+              searchable={false}
+              placeholder="属性计算方式"
+              onChange={(item) => this.setState({selectFunc: item.value})}
+            />
+          </div>
+          <div className="data">
+            <span>{this.state.selectFunc==="expression"?"表达式":"默认值"}:</span>
+            <input type="text" />
+          </div>
+          <div className="actions">
+            <button>重置</button>
+            <button>保存</button>
+          </div>
         </div>
       </div>
     )

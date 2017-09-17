@@ -8,7 +8,6 @@ class Modal extends React.Component {
   render() {
     let body = '';
     if(this.props.show && this.props.body) {
-      console.log(this.props.body.toJS());
       body = (
         <div className="modal-mask">
           <div className="modal-card">
