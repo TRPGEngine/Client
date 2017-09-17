@@ -2,6 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux')
 const { showModal } = require('../../../redux/actions/ui');
 const TemplateCreate = require('./TemplateCreate');
+const TemplateItem = require('../../../components/TemplateItem');
 
 require('./ActorCreate.scss');
 
@@ -27,6 +28,18 @@ class ActorCreate extends React.Component {
           </button>
         </div>
         <div className="body">
+          <div className="search-result">
+            <div className="no-result">暂无搜索结果...</div>
+          </div>
+          <div className="self-template">
+            <TemplateItem />
+            <TemplateItem />
+            <TemplateItem />
+            <TemplateItem />
+            <TemplateItem />
+            <TemplateItem />
+            <TemplateItem />
+          </div>
         </div>
       </div>
     )

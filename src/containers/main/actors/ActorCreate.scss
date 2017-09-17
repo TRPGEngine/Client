@@ -48,6 +48,35 @@
     }
   }
   .body {
-    flex: 1
+    flex: 1;
+    display: flex;
+    padding-bottom: 20px;
+
+    .search-result {
+      flex: 1;
+      overflow: hidden;
+
+      &:hover {
+        overflow-y: overlay;
+      }
+
+      .no-result {
+        color: #666;
+        margin-top: 40px;
+        user-select: none;
+        cursor: default;
+      }
+    }
+
+    .self-template {
+      width: 340px;
+      border-left: 1px solid #dddcdd;
+      padding: 20px;
+      overflow: hidden;
+
+      &:hover {
+        overflow-y: overlay;
+      }
+    }
   }
 }
