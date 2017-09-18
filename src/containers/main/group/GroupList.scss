@@ -1,0 +1,202 @@
+@import "../../../utils/mixins";
+@import "../../../utils/color";
+
+.group {
+  .list {
+    @include auto-scroll-bar;
+    user-select: none;
+    width: 240px;
+    background-color: $color-soapstone;
+    border-right: 1px solid $color-bon-jour;
+  }
+
+  .detail {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    // .nocontent {
+    //   display: flex;
+    //   flex: 1;
+    //   flex-direction: column;
+    //
+    //   .nocontent-img {
+    //     flex: 1;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //
+    //     img {
+    //       max-width: 380px;
+    //       max-height: 380px;
+    //       opacity: 0.6;
+    //     }
+    //   }
+    //
+    //   .welcome {
+    //     text-align: center;
+    //     padding-bottom: 60px;
+    //   }
+    // }
+
+    .group-header {
+      height: 50px;
+      border-bottom: 1px solid $color-bon-jour;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+
+      .avatar {
+        height: 38px;
+        width: 38px;
+        border-radius: 50%;
+        margin-right: 18px;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .title {
+        flex: 1;
+        .main-title {
+          @include one-line;
+          font-size: 14px;
+        }
+        .sub-title {
+          @include one-line;
+          color: $color-dusty-gray;
+          font-size: 12px;
+        }
+      }
+
+      .actions {
+        button {
+          @include icon-btn;
+
+          .iconfont {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+
+    .group-content {
+      flex: 1;
+    }
+
+    .group-msg-box {
+      height: 106px;
+      background-color: $color-soapstone;
+      border-top: 1px solid $color-bon-jour;
+      display: flex;
+
+      .input-area {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        .tool-area {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          height: 34px;
+          padding: 0 10px;
+          user-select: none;
+
+          .type-select, .actions {
+            display: flex;
+          }
+          .type-select {
+            flex: 1;
+          }
+
+          .tool-item {
+            @include icon-btn;
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+          }
+        }
+
+        .input-msg {
+          @include auto-scroll-bar;
+          background-color: transparent;
+          resize: none;
+          border: 0;
+          padding: 6px 10px 6px 6px;
+          line-height: 1.2em;
+          flex: 1;
+          color: $color-cod-gray;
+          font-size: 14px;
+          outline: 0;
+        }
+      }
+
+      .action-area {
+        width: 78px;
+        border-left: 1px solid $color-bon-jour;
+
+        button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          background-color: white;
+          border: 0;
+          outline: 0;
+          cursor: pointer;
+
+          &:disabled {
+            cursor: default;
+          }
+        }
+      }
+    }
+
+    .group-slide-panel {
+      box-shadow: 0 7px 21px rgba(0, 0, 0, 0.25);
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 360px;
+      height: 100%;
+      background-color: white;
+      transition-duration: 0.5s;
+
+      &.hide {
+        right: -380px;
+      }
+
+      .header {
+        height: 50px;
+        border-bottom: 1px solid $color-bon-jour;
+        position: relative;
+        line-height: 50px;
+
+        .title {
+          @include one-line;
+          text-align: center;
+        }
+
+        .close {
+          @include icon-btn;
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          width: 30px;
+
+          .iconfont {
+            font-size: 24px;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+}

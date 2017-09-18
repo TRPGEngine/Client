@@ -33,31 +33,19 @@
         user-select: none;
 
         .tool-item {
+          @include icon-btn;
           margin-right: 8px;
           width: 18px;
           height: 18px;
-          cursor: pointer;
-
-          &:hover, &.active {
-            .iconfont {
-              color: $color-copper-canyon;
-            }
-          }
-
-          .iconfont {
-            color: #9ea1a2;
-            line-height: 18px;
-            height: 18px;
-            font-size: 18px;
-          }
         }
       }
 
       .input-msg {
+        @include auto-scroll-bar;
         background-color: transparent;
         resize: none;
         border: 0;
-        padding: 6px;
+        padding: 6px 10px 6px 6px;
         line-height: 1.2em;
         flex: 1;
         color: $color-cod-gray;
