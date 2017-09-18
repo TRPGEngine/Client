@@ -1,3 +1,6 @@
+@import "../../../utils/mixins";
+@import "../../../utils/color";
+
 .template-create {
   width:1000px;
   height: 600px;
@@ -13,17 +16,10 @@
       display: flex;
 
       button {
+        @include link-btn;
         margin: 0 5px;
-        font-size: 16px;
-        background-color: transparent;
-        border: 0;
-        cursor: pointer;
-        color: #705949;
-        border-radius: 3px;
-        padding: 6px 12px;
         height: 40px;
         margin-top: 2px;
-        outline: 0;
       }
 
       input {
@@ -34,11 +30,11 @@
         padding: 12px 16px;
         border: 0;
         outline: 0;
-        border-bottom: 1px solid #dddcdd;
+        border-bottom: 1px solid $color-bon-jour;
         background-color: transparent;
 
         &:focus {
-          border-bottom-color: #705949;
+          border-bottom-color: $color-tobacco-brown;
         }
       }
     }
@@ -50,12 +46,12 @@
       textarea {
         resize: none;
         font-size: 16px;
-        border: 1px solid #dddcdd;
+        border: 1px solid $color-bon-jour;
         outline: 0;
         padding: 10px;
 
         &:focus {
-          border-color: #705949;
+          border-color: $color-tobacco-brown;
         }
       }
     }
@@ -65,20 +61,9 @@
       padding: 10px 30px;
 
       button {
+        @include block-btn;
         margin: 0 5px;
-        font-size: 16px;
-        background-color: transparent;
-        border: 0;
-        cursor: pointer;
-        color: white;
-        border-radius: 3px;
-        background-color: #999;
-        padding: 6px 12px;
         margin-top: 2px;
-
-        &:hover {
-          background-color: #705949;
-        }
 
         > .iconfont {
           margin-right: 2px;
@@ -87,20 +72,16 @@
     }
 
     .property-list {
+      @include auto-scroll-bar;
       padding: 20px 30px;
       flex: 1;
-      overflow: hidden;
-
-      &:hover {
-        overflow-y: overlay;
-      }
     }
   }
 
   .inspect-panel {
     width: 320px;
-    border-left: 1px solid #dddcdd;
-    background-color: #fffbf8;
+    border-left: 1px solid $color-bon-jour;
+    background-color: $color-soapstone;
     padding: 20px 10px;
 
     .data {
@@ -109,24 +90,24 @@
 
       > span {
         padding: 4px 6px;
-        color: #666;
+        color: $color-dove-gray;
       }
 
       > input {
         background-color: transparent;
         font-size: 16px;
-        border: 1px solid #dddcdd;
+        border: 1px solid $color-bon-jour;
         outline: 0;
         padding: 4px 6px;
         border-radius: 3px;
 
         &:focus {
-          border-color: #705949;
+          border-color: $color-tobacco-brown;
         }
 
         &[type="checkbox"] {
           -webkit-appearance: none;
-          background-color: #fff;
+          background-color: white;
           background-image: url('/src/assets/img/checkbox.png');
           height: 22px;
           vertical-align: middle;
@@ -156,13 +137,13 @@
         resize: none;
         background-color: transparent;
         font-size: 16px;
-        border: 1px solid #dddcdd;
+        border: 1px solid $color-bon-jour;
         outline: 0;
         padding: 4px 6px;
         border-radius: 3px;
 
         &:focus {
-          border-color: #705949;
+          border-color: $color-tobacco-brown;
         }
       }
 
@@ -176,23 +157,12 @@
       margin-top: 20px;
 
       button {
+        @include block-btn;
         margin: 0 5px;
-        font-size: 16px;
-        background-color: transparent;
-        border: 0;
-        cursor: pointer;
-        color: white;
-        border-radius: 3px;
-        background-color: #999;
-        padding: 6px 12px;
         margin-top: 2px;
 
         .iconfont {
           margin-right: 4px;
-        }
-
-        &:hover {
-          background-color: #705949;
         }
       }
     }

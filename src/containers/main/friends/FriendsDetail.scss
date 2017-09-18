@@ -1,3 +1,6 @@
+@import "../../../utils/mixins";
+@import "../../../utils/color";
+
 .friends-detail {
   height: 100%;
   display: flex;
@@ -15,13 +18,13 @@
       font-size: 16px;
       background-color: transparent;
       border: 0;
-      border-bottom: 1px solid #dddcdd;
+      border-bottom: 1px solid $color-bon-jour;
       margin: 0 12px;
       padding: 6px 12px;
       outline: 0;
 
       &:focus {
-        border-bottom-color: #705949;
+        border-bottom-color: $color-tobacco-brown;
       }
     }
 
@@ -33,19 +36,10 @@
     }
 
     button {
+      @include block-btn;
       height: 100%;
       width: 80px;
-      color: white;
       font-size: 14px;
-      border: 0;
-      border-radius: 3px;
-      background-color: #999;
-      cursor: pointer;
-      outline: 0;
-
-      &:hover {
-        background-color: #705949;
-      }
     }
   }
 

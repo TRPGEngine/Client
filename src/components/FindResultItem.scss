@@ -1,3 +1,5 @@
+@import "../utils/color";
+
 .find-result-item {
   height: 100px;
   overflow: hidden;
@@ -5,7 +7,7 @@
   margin: 0 24px;
   display: flex;
   align-items: center;
-  border-bottom: 1px dashed #dddcdd;
+  border-bottom: 1px dashed $color-bon-jour;
 
   .avatar {
     height: 60px;
@@ -31,7 +33,7 @@
     }
 
     .uuid {
-      color: #999;
+      color: $color-dusty-gray;
       font-size: 12px;
     }
   }
@@ -41,19 +43,19 @@
     button {
       padding: 6px 12px;
       background-color: transparent;
-      border: 1px solid #8c6244;
+      border: 1px solid $color-spicy-mix;
       border-radius: 2px;
       cursor: pointer;
-      color: #333;
+      color: $color-mine-shaft;
 
       &:hover {
-        background-color: #8c6244;
+        background-color: $color-spicy-mix;
         color: white;
       }
 
       &:disabled {
-        border-color: #999;
-        background-color: #ccc;
+        border-color: $color-dusty-gray;
+        background-color: $color-silver;
         color: white;
         cursor: not-allowed;
       }

@@ -1,3 +1,6 @@
+@import "../../../utils/mixins";
+@import "../../../utils/color";
+
 .actor-create {
   height: 640px;
   width: 900px;
@@ -16,25 +19,17 @@
       padding: 12px 16px;
       border: 0;
       outline: 0;
-      border-bottom: 1px solid #dddcdd;
+      border-bottom: 1px solid $color-bon-jour;
       background-color: transparent;
 
       &:focus {
-        border-bottom-color: #705949;
+        border-bottom-color: $color-tobacco-brown;
       }
     }
 
     button {
+      @include block-btn;
       margin: 0 5px;
-      height: 44px;
-      font-size: 16px;
-      background-color: transparent;
-      border: 0;
-      cursor: pointer;
-      color: white;
-      border-radius: 3px;
-      background-color: #999;
-      padding: 6px 12px;
       height: 40px;
       margin-top: 2px;
 
@@ -42,9 +37,6 @@
         margin-right: 4px;
       }
 
-      &:hover {
-        background-color: #705949;
-      }
     }
   }
   .body {

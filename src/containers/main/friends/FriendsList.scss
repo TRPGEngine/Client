@@ -1,16 +1,14 @@
+@import "../../../utils/mixins";
+@import "../../../utils/color";
+
 .friends {
   .list {
+    @include auto-scroll-bar;
     user-select: none;
     width: 240px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    background-color: #fffbf8;
-    border-right: 1px solid #dddcdd;
+    background-color: $color-soapstone;
+    border-right: 1px solid $color-bon-jour;
     position: relative;
-
-    &:hover {
-      overflow-y: overlay;
-    }
 
     .items {
       display: flex;
@@ -50,13 +48,11 @@
           }
 
           .username {
+            @include one-line;
             margin-top: 2px;
             font-size: 14px;
             line-height: 1em;
             text-align: center;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
             word-wrap: normal;
           }
         }
@@ -72,7 +68,7 @@
 
       .request-item {
         height: 44px;
-        background-color: #ffa160;
+        background-color: $color-atomic-tangerine;
         color: white;
         overflow: hidden;
 
@@ -105,11 +101,9 @@
           }
 
           .text {
-            min-height: 44px;
+            @include one-line;
             flex: 1;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
+            min-height: 44px;
             line-height: 44px;
           }
         }
@@ -126,7 +120,7 @@
 
             &:hover {
               background-color: white;
-              color: #ffa160;
+              color: $color-atomic-tangerine;
             }
           }
         }
@@ -136,7 +130,7 @@
     .no-friend {
       text-align: center;
       font-size: 16px;
-      color: #999;
+      color: $color-dusty-gray;
       padding-top: 200px;
       width: 100%;
     }
