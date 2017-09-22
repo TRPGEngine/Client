@@ -1,37 +1,34 @@
+@import "../../../utils/mixins";
+@import "../../../utils/color";
+
 .note {
   .list {
     user-select: none;
     width: 240px;
-    background-color: #fffbf8;
+    background-color: $color-soapstone;
     position: relative;
 
     .items {
+      @include auto-scroll-bar;
       height: 100%;
-      overflow-x: hidden;
-      overflow-y: hidden;
-
-      &:hover {
-        overflow-y: overlay;
-      }
     }
 
     .note-item {
       cursor: pointer;
       padding: 24px 12px;
       &:hover, &.active {
-        background-color: #fbf5f1;
+        background-color: $color-white-linen;
       }
 
       .note-title {
+        @include one-line;
         font-size: 16px;
         font-weight: 400;
-        color: #4a4a4a;
+        color: $color-tundora;
         margin-bottom: 4px;
         max-height: 40px;
         overflow: hidden;
         overflow-wrap: break-word;
-        text-overflow: ellipsis;
-        white-space: nowrap;
         word-wrap: break-word;
         line-height: 20px;
         min-height: 20px;
@@ -43,7 +40,7 @@
         text-transform: uppercase;
         letter-spacing: 1px;
         margin-bottom: 8px;
-        color: #878787;
+        color: $color-gray;
       }
 
       .note-summary {
@@ -51,7 +48,7 @@
         font-weight: 400;
         line-height: 17px;
         min-height: 17px;
-        color: #878787;
+        color: $color-gray;
       }
     }
 
@@ -62,7 +59,7 @@
       line-height: 40px;
       right: 20px;
       bottom: 20px;
-      background-color: #edab7c;
+      background-color: $color-tacao;
       border-radius: 50%;
       text-align: center;
       cursor: pointer;
@@ -83,22 +80,12 @@
       height: 100%;
       align-items: center;
       justify-content: center;
-      border-left: 1px solid #dddcdd;
+      border-left: 1px solid $color-bon-jour;
 
       .addNote {
+        @include block-btn;
         width: 160px;
         height: 40px;
-        border-radius: 3px;
-        border: 0;
-        color: white;
-        outline: 0;
-        background-color: #c7c7cc;
-        font-size: 15px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #705949;
-        }
       }
     }
   }

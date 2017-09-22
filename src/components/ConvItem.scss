@@ -1,3 +1,6 @@
+@import "../utils/mixins";
+@import "../utils/color";
+
 .conv-item {
   display: flex;
   height: 55px;
@@ -5,11 +8,11 @@
   cursor: pointer;
 
   &.active {
-    background-color: #fbf5f1;
+    background-color: $color-white-linen;
   }
 
   &:hover {
-    background-color: #fbf5f1;
+    background-color: $color-white-linen;
 
     .close {
       opacity: 1;
@@ -54,9 +57,13 @@
       justify-content: space-between;
       font-size: 13px;
       padding-right: 4px;
+      p {
+        @include one-line;
+        flex: 1;
+      }
 
       span {
-        color: #bdbebf;
+        color: $color-silver-sand;
         font-size: 12px;
       }
     }

@@ -1,3 +1,6 @@
+@import "../utils/mixins";
+@import "../utils/color";
+
 .msg-item {
   margin-top: 20px;
   margin-bottom: 22px;
@@ -100,17 +103,15 @@
     align-items: center;
 
     .name {
+      @include one-line;
       color: #8e97a1;
       max-width: 180px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       word-wrap: normal;
       font-size: 12px;
     }
     .time {
       visibility: hidden;
-      color: #bdbebf;
+      color: $color-silver-sand;
       font-size: 12px;
       margin: 0 6px;
       // transform: scale(0.9);

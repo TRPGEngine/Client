@@ -5,6 +5,7 @@ const { showInfoCard, switchMenu } = require('../../redux/actions/ui');
 const ConverseList = require('./converse/ConverseList');
 const ActorList = require('./actors/ActorList');
 const FriendsList = require('./friends/FriendsList');
+const GroupList = require('./group/GroupList');
 const NoteList = require('./note/NoteList');
 const ExtraOptions = require('./ExtraOptions');
 
@@ -42,6 +43,9 @@ class MenuPannel extends React.Component {
         icon: '&#xe958;',
         activeIcon: '&#xe958;',
         text: '团',
+        component: (
+          <GroupList />
+        )
       },
       {
         icon: '&#xe624;',

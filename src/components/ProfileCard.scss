@@ -1,3 +1,6 @@
+@import "../utils/mixins";
+@import "../utils/color";
+
 .profile-card {
   .mask {
     position: fixed;
@@ -84,11 +87,9 @@
 
           span{
             &:nth-child(1) {
+              @include one-line;
               float: left;
               width: 28%;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
               word-wrap: normal;
               margin-right: 2%;
               color: #aeaeb2;
@@ -119,13 +120,11 @@
           width: 100%;
 
           .footer-item {
+            @include one-line;
             flex: 1 1 0;
             border-right: 1px solid #d7d6d9;
             text-align: center;
             cursor: pointer;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
             color: #a78e7c;
             font-size: 14px;
             user-select: none;
@@ -135,7 +134,7 @@
             }
 
             &.disabled {
-              color: #bdbebf;
+              color: $color-silver-sand;
             }
 
             .iconfont {

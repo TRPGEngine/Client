@@ -1,15 +1,13 @@
+@import "../../../utils/mixins";
+@import "../../../utils/color";
+
 .conv-detail {
   display: flex;
   flex-direction: column;
   flex: 1;
   .conv-container {
-    overflow-x: hidden;
-    overflow-y: hidden;
+    @include auto-scroll-bar;
     flex: 1;
-
-    &:hover {
-      overflow-y: overlay;
-    }
 
     .msg-items {
       padding: 4px 16px 16px 16px;
@@ -18,8 +16,8 @@
 
   .send-msg-box {
     height: 106px;
-    background-color: #fffbf8;
-    border-top: 1px solid #dddcdd;
+    background-color: $color-soapstone;
+    border-top: 1px solid $color-bon-jour;
     display: flex;
 
     .input-area {
@@ -35,34 +33,22 @@
         user-select: none;
 
         .tool-item {
+          @include icon-btn;
           margin-right: 8px;
           width: 18px;
           height: 18px;
-          cursor: pointer;
-
-          &:hover, &.active {
-            .iconfont {
-              color: #7e3f12;
-            }
-          }
-
-          .iconfont {
-            color: #9ea1a2;
-            line-height: 18px;
-            height: 18px;
-            font-size: 18px;
-          }
         }
       }
 
       .input-msg {
+        @include auto-scroll-bar;
         background-color: transparent;
         resize: none;
         border: 0;
-        padding: 6px;
+        padding: 6px 10px 6px 6px;
         line-height: 1.2em;
         flex: 1;
-        color: #222;
+        color: $color-cod-gray;
         font-size: 14px;
         outline: 0;
       }
@@ -70,7 +56,7 @@
 
     .action-area {
       width: 78px;
-      border-left: 1px solid #dddcdd;
+      border-left: 1px solid $color-bon-jour;
 
       button {
         display: flex;

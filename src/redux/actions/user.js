@@ -153,7 +153,7 @@ exports.sendFriendInvite = function(uuid) {
 
 exports.agreeFriendInvite = function(inviteUUID) {
   return function(dispatch, getState) {
-    return api.emit('player::agreeFriendInvite', {inviteUUID}, function(data) {
+    return api.emit('player::agreeFriendInvite', {uuid: inviteUUID}, function(data) {
       if(data.result) {
         dispatch({type: AGREE_FRIEND_INVITE_SUCCESS, payload: data.res});
       }else {

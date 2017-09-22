@@ -1,14 +1,12 @@
+@import "../../../utils/mixins";
+@import "../../../utils/color";
+
 .actor {
   display: flex;
 
   .actor-list {
+    @include auto-scroll-bar;
     flex: 1;
-    overflow-y: hidden;
-    overflow-x: hidden;
-
-    &:hover {
-      overflow-y: overlay;
-    }
 
     .actor-list-collection {
       flex: 1;
@@ -28,7 +26,7 @@
         overflow: hidden;
         margin-bottom: 14px;
         box-shadow: rgba(0, 0, 0, 0.15) 0 0 6px;
-        border: 1px solid #dddcdd;
+        border: 1px solid $color-bon-jour;
         padding: 10px 6px;
 
         &:hover {
@@ -42,7 +40,7 @@
           overflow: hidden;
           align-items: center;
           justify-content: center;
-          border: 1px solid #dddcdd;
+          border: 1px solid $color-bon-jour;
           background-position: center;
           background-size: cover;
 
@@ -71,7 +69,7 @@
             }
 
             span:nth-child(1) {
-              color: #666;
+              color: $color-dove-gray;
               word-break: keep-all;
               margin-right: 2px;
             }
@@ -80,7 +78,7 @@
               flex: 1;
               word-break: break-all;
               text-align: left;
-              color: #222;
+              color: $color-cod-gray;
               display: -webkit-box;
               -webkit-box-orient: vertical;
               -webkit-line-clamp: 3;
@@ -107,11 +105,11 @@
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          color: #999;
+          color: $color-dusty-gray;
           transition: all 0.1s ease-in-out;
 
           &:hover {
-            color: #222;
+            color: $color-cod-gray;
           }
         }
       }
@@ -120,8 +118,8 @@
 
   .actor-info {
     width: 300px;
-    background-color: #fffbf8;
-    border-left: 1px solid #dddcdd;
+    background-color: $color-soapstone;
+    border-left: 1px solid $color-bon-jour;
     overflow-x: hidden;
     overflow-y: auto;
     padding: 10px;
@@ -136,7 +134,7 @@
       }
 
       span:nth-child(1) {
-        color: #666;
+        color: $color-dove-gray;
         word-break: keep-all;
         margin-right: 2px;
       }
@@ -145,7 +143,7 @@
         flex: 1;
         word-break: break-all;
         text-align: left;
-        color: #222;
+        color: $color-cod-gray;
       }
     }
   }

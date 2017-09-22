@@ -1,15 +1,13 @@
+@import "../../../utils/mixins";
+@import "../../../utils/color";
+
 .converse {
   .list {
+    @include auto-scroll-bar;
     user-select: none;
     width: 240px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    background-color: #fffbf8;
-    border-right: 1px solid #dddcdd;
-
-    &:hover {
-      overflow-y: overlay;
-    }
+    background-color: $color-soapstone;
+    border-right: 1px solid $color-bon-jour;
   }
 
   .detail {

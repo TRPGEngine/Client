@@ -1,3 +1,5 @@
+@import "../utils/color";
+
 .register-screen {
   width: 372px;
   background-color: rgba(230, 242, 248, 0.5);
@@ -17,7 +19,7 @@
     font-size: 14px;
     width: 312px;
     height: 40px;
-    border: 1px solid #baced9;
+    border: 1px solid $color-jungle-mist;
     border-radius: 3px;
     background-color: rgba(240, 248, 255, 0.5);
     margin: 0;

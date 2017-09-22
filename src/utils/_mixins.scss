@@ -1,0 +1,58 @@
+@mixin one-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin auto-scroll-bar {
+  overflow: hidden;
+
+  &:hover {
+    overflow-y: overlay;
+  }
+}
+
+@mixin block-btn {
+  font-size: 16px;
+  border: 0;
+  cursor: pointer;
+  color: white;
+  border-radius: 3px;
+  background-color: #999;
+  padding: 6px 12px;
+  outline: 0;
+
+  &:hover {
+    background-color: #705949;
+  }
+}
+
+@mixin link-btn {
+  font-size: 16px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  color: #705949;
+  padding: 4px 4px;
+  outline: 0;
+}
+
+@mixin icon-btn {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+
+  &:hover, &.active {
+    .iconfont {
+      color: #7e3f12;
+    }
+  }
+
+  .iconfont {
+    color: #9ea1a2;
+    line-height: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+}
