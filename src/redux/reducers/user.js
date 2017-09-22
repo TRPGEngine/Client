@@ -95,7 +95,7 @@ module.exports = function ui(state = initialState, action) {
         }
 
         if(index >= 0) {
-          return list.delete(0);
+          return list.delete(index);
         }else {
           return list;
         }
@@ -114,7 +114,7 @@ module.exports = function ui(state = initialState, action) {
         }
 
         if(index >= 0) {
-          return list.delete(0);
+          return list.delete(index);
         }else {
           return list;
         }

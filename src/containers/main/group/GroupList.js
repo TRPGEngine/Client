@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const ConvItem = require('../../../components/ConvItem');
 const moment = require('moment');
 const ReactTooltip = require('react-tooltip');
+const Select = require('react-select');
 
 require('./GroupList.scss');
 
@@ -15,6 +16,7 @@ class GroupList extends React.Component {
       isSlidePanelShow: false,
       slidePanelTitle: '',
       slidePanelContent: null,
+      selectedActorUUID: 'uuiduuid',
     }
   }
 
@@ -97,7 +99,8 @@ class GroupList extends React.Component {
         <button
           key={"group-action-"+index}
           data-tip={item.name}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             this._handleShowSlidePanel(item.name, item.component)
           }}
         >
@@ -109,6 +112,10 @@ class GroupList extends React.Component {
 
   render() {
     let inputType = this.state.inputType;
+    let options = [
+      { value: 'uuiduuid', label: '桐谷和人' },
+      { value: 'uuiduuid2', label: '亚丝娜' }
+    ];
     return (
       <div className="group">
         <div className="list">
@@ -133,6 +140,16 @@ class GroupList extends React.Component {
               <div className="main-title">无限恐怖跑团1群</div>
               <div className="sub-title">可以开始车卡了</div>
             </div>
+            <Select
+              name="form-field-name"
+              className="actor-select"
+              value={this.state.selectedActorUUID}
+              options={options}
+              clearable={false}
+              searchable={false}
+              placeholder="请选择身份..."
+              onChange={(item) => this.setState({selectedActorUUID: item.value})}
+            />
             <div className="actions">
               {this.getHeaderActions()}
             </div>

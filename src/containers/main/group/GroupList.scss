@@ -61,7 +61,7 @@
       }
 
       .title {
-        flex: 1;
+        flex: 2;
         .main-title {
           @include one-line;
           font-size: 14px;
@@ -71,6 +71,12 @@
           color: $color-dusty-gray;
           font-size: 12px;
         }
+      }
+
+      .actor-select {
+        width: 120px;
+        flex: 1;
+        margin-right: 20px;
       }
 
       .actions {
