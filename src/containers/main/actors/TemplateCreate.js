@@ -4,6 +4,7 @@ const { showModal } = require('../../../redux/actions/ui');
 const Select = require('react-select');
 const TemplateCell = require('../../../components/TemplateCell');
 const at = require('trpg-actor-template');
+const { setTemplate, createTemplate } = require('../../../redux/actions/actor');
 
 require('./TemplateCreate.scss');
 
@@ -22,6 +23,15 @@ class TemplateCreate extends React.Component {
   _handleBack() {
     const ActorCreate = require('./ActorCreate');
     this.props.showModal(<ActorCreate />);
+  }
+
+  _handleSave() {
+    let template = this.state.template;
+    template.name = this.state.name;
+    template.desc = this.state.desc;
+    template.avatar = '';
+    let info = at.stringify(template);
+    this.props.createTemplate(template.name, template.desc, template.avatar, info);
   }
 
   _handleEdit(item) {
@@ -147,7 +157,7 @@ class TemplateCreate extends React.Component {
               placeholder="模板名"
               value={this.state.name}
               onChange={(e) => this.setState({name: e.target.value})} />
-            <button onClick={() => console.log(this.state.template)}>保存</button>
+            <button onClick={() => this._handleSave()}>保存</button>
           </div>
           <div className="desc">
             <textarea
@@ -191,9 +201,10 @@ class TemplateCreate extends React.Component {
 
 module.exports = connect(
   state => ({
-    findingResult: state.getIn(['user', 'actor', 'findingResult']),
+    currentEditedTemplate: state.getIn(['actor', 'currentEditedTemplate'])
   }),
   dispatch => ({
-    showModal: (body) => dispatch(showModal(body))
+    showModal: (body) => dispatch(showModal(body)),
+    createTemplate: (name, desc, avatar, info) => dispatch(createTemplate(name, desc, avatar, info)),
   })
 )(TemplateCreate)

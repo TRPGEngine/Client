@@ -17,16 +17,16 @@ const Main = require('./Main');
 
 class App extends React.Component {
   render() {
-    const {showLoading, showAlert, showAlertInfo} = this.props;
+    const {showLoading, showLoadingText, showAlert, showAlertInfo} = this.props;
     let alertInfo = showAlertInfo.toJS();
     return (
       <Router>
         <div>
           <Modal />
-          <Loading show={showLoading} />
+          <Loading show={showLoading} text={showLoadingText} />
           <Alert
             show={showAlert}
-            title={alertInfo.title}
+            title={alertInfo.title || ''}
             content={alertInfo.content}
             type={alertInfo.type || 'alert'}
             onConfirm={alertInfo.onConfirm} />
@@ -49,6 +49,7 @@ module.exports = connect(
   state => ({
     playSound: state.getIn(['pc', 'playSound']),
     showLoading: state.getIn(['ui', 'showLoading']),
+    showLoadingText: state.getIn(['ui', 'showLoadingText']),
     showAlert: state.getIn(['ui', 'showAlert']),
     showAlertInfo: state.getIn(['ui', 'showAlertInfo']),
   })

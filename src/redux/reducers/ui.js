@@ -18,6 +18,7 @@ const initialState = immutable.fromJS({
   showAlert: false,
   showAlertInfo: {},
   showLoading: false,
+  showLoadingText: '加载中...',
   showModal: false,
   showModalBody: undefined,
   showInfoCard: false,
@@ -39,7 +40,7 @@ module.exports = function ui(state = initialState, action) {
     case HIDE_ALERT:
       return state.set('showAlert', false).set('showAlertInfo', immutable.Map());
     case SHOW_LOADING:
-      return state.set('showLoading', true);
+      return state.set('showLoading', true).set('showLoadingText', action.text || '加载中...');
     case HIDE_LOADING:
       return state.set('showLoading', false);
     case SHOW_MODAL:

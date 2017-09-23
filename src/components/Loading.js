@@ -16,7 +16,7 @@ class Loading extends React.Component {
               <div className="rect4"></div>
               <div className="rect5"></div>
             </div>
-            <span>加载中...</span>
+            <span>{this.props.text}</span>
           </div>
         </div>
       )
@@ -31,7 +31,8 @@ class Loading extends React.Component {
 }
 
 Loading.propTypes = {
-  show: PropTypes.bool
+  show: PropTypes.bool,
+  text: PropTypes.string
 }
 
 module.exports = Loading;

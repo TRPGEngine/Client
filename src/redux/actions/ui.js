@@ -14,13 +14,18 @@ const {
 } = require('../constants');
 const cache = require('./cache');
 
-exports.showLoading = function() {
-  return {type: SHOW_LOADING}
+exports.showLoading = function(text = '加载中...') {
+  return {type: SHOW_LOADING, text: text}
 }
 exports.hideLoading = function() {
   return {type: HIDE_LOADING}
 }
 exports.showAlert = function(payload) {
+  if(typeof payload === 'string') {
+    payload = {
+      content: payload
+    }
+  }
   return {type: SHOW_ALERT, payload}
 }
 exports.hideAlert = function() {

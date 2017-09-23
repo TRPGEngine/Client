@@ -1,3 +1,5 @@
+@import "../utils/mixins";
+
 .alert {
   .mask {
     position: fixed;
@@ -11,7 +13,8 @@
     .content {
       padding: 20px;
       border-radius: 4px;
-      background-color: rgba(white,0.6);
+      // background-color: rgba(white,0.6);
+      background-color: white;
       text-align: center;
       min-width: 300px;
       min-height: 100px;
@@ -22,20 +25,11 @@
       }
 
       button {
+        @include block-btn;
         width: 100%;
         height: 40px;
-        border-radius: 3px;
-        border: 0;
-        color: white;
-        outline: 0;
-        background-color: #c7c7cc;
         margin-top: 20px;
         font-size: 15px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #4c98cc;
-        }
       }
     }
   }
