@@ -3,6 +3,7 @@ const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const {
   SET_TEMPLATE,
+  GET_TEMPLATE_SUCCESS,
   CREATE_TEMPLATE_SUCCESS,
   UPDATE_TEMPLATE_SUCCESS,
 } = require('../constants');
@@ -15,6 +16,19 @@ let setTemplate = function setTemplate(uuid, name, desc, avatar, info) {
     desc,
     avatar,
     info,
+  }
+}
+
+let getTemplate = function getTemplate(uuid) {
+  return function(dispatch, getState) {
+    return api.emit('actor::getTemplate', {uuid}, function(data) {
+      if(data.result) {
+        let payload = uuid?data.template:data.templates;
+        dispatch({type: GET_TEMPLATE_SUCCESS, uuid, payload})
+      }else {
+        console.error(data.msg);
+      }
+    })
   }
 }
 
@@ -53,6 +67,7 @@ let updateTemplate = function updateTemplate(uuid, name, desc, avatar, info) {
 
 module.exports = {
   setTemplate,
+  getTemplate,
   createTemplate,
   updateTemplate,
 }

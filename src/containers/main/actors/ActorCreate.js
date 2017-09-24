@@ -1,7 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux')
 const { showModal } = require('../../../redux/actions/ui');
-const TemplateCreate = require('./TemplateCreate');
+const TemplateEdit = require('./TemplateEdit');
 const TemplateItem = require('../../../components/TemplateItem');
 
 require('./ActorCreate.scss');
@@ -12,7 +12,7 @@ class ActorCreate extends React.Component {
   }
 
   _handleCreateTemplate() {
-    this.props.showModal(<TemplateCreate />);
+    this.props.showModal(<TemplateEdit />);
   }
 
   render()　{
@@ -32,13 +32,19 @@ class ActorCreate extends React.Component {
             <div className="no-result">暂无搜索结果...</div>
           </div>
           <div className="self-template">
-            <TemplateItem />
-            <TemplateItem />
-            <TemplateItem />
-            <TemplateItem />
-            <TemplateItem />
-            <TemplateItem />
-            <TemplateItem />
+            {
+              this.props.selfTemplate.map((item, index) => {
+                return (
+                  <TemplateItem
+                    key={item.get('uuid')}
+                    name={item.get('name')}
+                    desc={item.get('desc')}
+                    creator={this.props.username}
+                    time={item.get('updateAt')}
+                  />
+                )
+              })
+            }
           </div>
         </div>
       </div>
@@ -48,7 +54,9 @@ class ActorCreate extends React.Component {
 
 module.exports = connect(
   state => ({
-    findingResult: state.getIn(['user', 'actor', 'findingResult']),
+    username: state.getIn(['user', 'info', 'username']),
+    findingResult: state.getIn(['actor', 'findingResult']),
+    selfTemplate: state.getIn(['actor', 'selfTemplate']),
   }),
   dispatch => ({
     showModal: (body) => dispatch(showModal(body))

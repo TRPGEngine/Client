@@ -1,4 +1,5 @@
 const React = require('react');
+const moment = require('moment');
 
 require('./TemplateItem.scss');
 
@@ -10,11 +11,11 @@ class TemplateItem extends React.Component {
   render()　{
     return (
       <div className="template-item">
-        <div className="name">无限恐怖人物卡</div>
-        <div className="desc">无限恐怖人物卡无限恐怖人物卡无限恐怖人物卡无限恐怖人物卡</div>
+        <div className="name">{this.props.name}</div>
+        <div className="desc">{this.props.desc}</div>
         <div className="footer">
-          <div className="creator" title="moonrailgun">moonrailgun</div>
-          <div className="time">2017-9-17 17:42:35</div>
+          <div className="creator" title="moonrailgun">{this.props.creator}</div>
+          <div className="time">{moment(this.props.time).format('YYYY-MM-DD HH:mm:ss')}</div>
         </div>
       </div>
     )

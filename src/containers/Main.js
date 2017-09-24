@@ -2,6 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const { getConverses } = require('../redux/actions/chat');
 const { getFriends, getFriendsInvite } = require('../redux/actions/user');
+const { getTemplate } = require('../redux/actions/actor');
 
 const MenuPannel = require('./main/MenuPannel');
 const InfoCard = require('../components/InfoCard');
@@ -17,6 +18,7 @@ class Main extends React.Component {
       this.props.getConverses();
       this.props.getFriends();
       this.props.getFriendsInvite();
+      this.props.getAllTemplate();
     }
   }
 
@@ -63,5 +65,8 @@ module.exports = connect(
     getFriendsInvite: () => {
       dispatch(getFriendsInvite());
     },
+    getAllTemplate: () => {
+      dispatch(getTemplate());
+    }
   })
 )(Main);

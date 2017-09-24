@@ -10,9 +10,9 @@ const {
   updateTemplate,
 } = require('../../../redux/actions/actor');
 
-require('./TemplateCreate.scss');
+require('./TemplateEdit.scss');
 
-class TemplateCreate extends React.Component {
+class TemplateEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -159,7 +159,7 @@ class TemplateCreate extends React.Component {
 
   render()　{
     return (
-      <div className="template-create">
+      <div className="template-edit">
         <div className="profile-panel">
           <div className="header">
             <button onClick={() => this._handleBack()}>&lt;返回</button>
@@ -218,4 +218,4 @@ module.exports = connect(
     createTemplate: (name, desc, avatar, info) => dispatch(createTemplate(name, desc, avatar, info)),
     updateTemplate: (uuid, name, desc, avatar, info) => dispatch(updateTemplate(uuid, name, desc, avatar, info)),
   })
-)(TemplateCreate)
+)(TemplateEdit)
