@@ -4,7 +4,11 @@ const { showModal } = require('../../../redux/actions/ui');
 const Select = require('react-select');
 const TemplateCell = require('../../../components/TemplateCell');
 const at = require('trpg-actor-template');
-const { setTemplate, createTemplate } = require('../../../redux/actions/actor');
+const {
+  setTemplate,
+  createTemplate,
+  updateTemplate,
+} = require('../../../redux/actions/actor');
 
 require('./TemplateCreate.scss');
 
@@ -31,7 +35,13 @@ class TemplateCreate extends React.Component {
     template.desc = this.state.desc;
     template.avatar = '';
     let info = at.stringify(template);
-    this.props.createTemplate(template.name, template.desc, template.avatar, info);
+    let uuid = this.props.currentEditedTemplate.get('uuid');
+    if(!uuid) {
+      this.props.createTemplate(template.name, template.desc, template.avatar, info);
+    }else {
+      this.props.updateTemplate(uuid, template.name, template.desc, template.avatar, info);
+    }
+
   }
 
   _handleEdit(item) {
@@ -206,5 +216,6 @@ module.exports = connect(
   dispatch => ({
     showModal: (body) => dispatch(showModal(body)),
     createTemplate: (name, desc, avatar, info) => dispatch(createTemplate(name, desc, avatar, info)),
+    updateTemplate: (uuid, name, desc, avatar, info) => dispatch(updateTemplate(uuid, name, desc, avatar, info)),
   })
 )(TemplateCreate)
