@@ -146,6 +146,7 @@ class TemplateEdit extends React.Component {
             <input
               type="text"
               value={inspectCell.value}
+              disabled={inspectCell.func==="expression"}
               onChange={(e) => {
                 inspectCell.value = e.target.value;
                 this.setState({inspectCell: inspectCell});

@@ -20,6 +20,11 @@ class GroupList extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('click', this.sildeEvent);
+    this.sildeEvent = null;
+  }
+
   _handleSelectGroup(uuid) {
     console.log(uuid);
   }
@@ -49,14 +54,17 @@ class GroupList extends React.Component {
   }
 
   _handleShowSlidePanel(title, content) {
-    let event = function () {
+    this.sildeEvent = function () {
       console.log('close slide panel');
-      this.setState({isSlidePanelShow: false});
-      window.removeEventListener('click', event);
+      if(this.sildeEvent) {
+        this.setState({isSlidePanelShow: false});
+        window.removeEventListener('click', this.sildeEvent);
+        this.sildeEvent = null;
+      }
     }.bind(this);
 
     setTimeout(() => {
-      window.addEventListener('click', event);
+      window.addEventListener('click', this.sildeEvent);
     }, 500);
     this.setState({
       isSlidePanelShow: true,
