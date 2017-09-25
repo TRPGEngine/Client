@@ -1,6 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const { addNote, getNote, switchNote } = require('../../../redux/actions/note');
+const { addNote, switchNote } = require('../../../redux/actions/note');
 const moment = require('moment');
 const ReactTooltip = require('react-tooltip');
 
@@ -14,10 +14,6 @@ class NoteList extends React.Component {
     this.state = {
       selectedUUID: ''
     };
-  }
-
-  componentDidMount() {
-    this.props.dispatch(getNote());
   }
 
   _handleClick(uuid) {

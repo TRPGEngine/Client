@@ -56,6 +56,7 @@ exports.logout = function() {
     dispatch({type: LOGOUT});
     api.emit('player::logout', {uuid, token} ,function(data) {
       console.log(data);
+      location.reload();
     })
   }
 }
