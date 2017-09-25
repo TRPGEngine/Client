@@ -11,7 +11,14 @@ class TemplateItem extends React.Component {
   render()　{
     return (
       <div className="template-item">
-        <div className="name">{this.props.name}</div>
+        <div className="header">
+          <div className="name">{this.props.name}</div>
+          <div className="actions">
+            <button data-tip="编辑" onClick={this.props.onEdit}>
+              <i className="iconfont">&#xe83f;</i>
+            </button>
+          </div>
+        </div>
         <div className="desc">{this.props.desc}</div>
         <div className="footer">
           <div className="creator" title="moonrailgun">{this.props.creator}</div>

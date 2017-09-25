@@ -1,5 +1,5 @@
-.template-cell {
-  display: flex;
+.template-property-cell {
+  // display: flex;
   margin-bottom: 10px;
 
   &:hover, &.active {
@@ -9,6 +9,10 @@
   .property {
     padding: 8px;
     flex: 1;
+    text-align: left;
+  }
+
+  .defaultValue {
     text-align: left;
   }
 

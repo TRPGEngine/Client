@@ -1,6 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux')
 const { showModal } = require('../../../redux/actions/ui');
+const { setEditedTemplate } = require('../../../redux/actions/actor');
 const TemplateEdit = require('./TemplateEdit');
 const TemplateItem = require('../../../components/TemplateItem');
 
@@ -12,6 +13,12 @@ class ActorCreate extends React.Component {
   }
 
   _handleCreateTemplate() {
+    this.props.setEditedTemplate({});
+    this.props.showModal(<TemplateEdit />);
+  }
+
+  _handleEdit(item) {
+    this.props.setEditedTemplate(item.toJS());
     this.props.showModal(<TemplateEdit />);
   }
 
@@ -41,6 +48,7 @@ class ActorCreate extends React.Component {
                     desc={item.get('desc')}
                     creator={this.props.username}
                     time={item.get('updateAt')}
+                    onEdit={() => this._handleEdit(item)}
                   />
                 )
               })
@@ -59,6 +67,7 @@ module.exports = connect(
     selfTemplate: state.getIn(['actor', 'selfTemplate']),
   }),
   dispatch => ({
-    showModal: (body) => dispatch(showModal(body))
+    showModal: (body) => dispatch(showModal(body)),
+    setEditedTemplate: (obj) => dispatch(setEditedTemplate(obj)),
   })
 )(ActorCreate)

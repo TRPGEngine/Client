@@ -2,7 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux')
 const { showModal } = require('../../../redux/actions/ui');
 const Select = require('react-select');
-const TemplateCell = require('../../../components/TemplateCell');
+const TemplatePropertyCell = require('../../../components/TemplatePropertyCell');
 const at = require('trpg-actor-template');
 const {
   setTemplate,
@@ -19,8 +19,14 @@ class TemplateEdit extends React.Component {
       selectFunc: 'value',
       name: '',
       desc: '',
-      template: at.getInitTemplate(),
       inspectCell: undefined,
+    }
+    if(this.props.currentEditedTemplate.get('uuid')) {
+      this.state.template = at.parse(this.props.currentEditedTemplate.get('info'));
+      this.state.name = this.props.currentEditedTemplate.get('name');
+      this.state.desc = this.props.currentEditedTemplate.get('desc');
+    }else {
+      this.state.template = at.getInitTemplate();
     }
   }
 
@@ -188,19 +194,32 @@ class TemplateEdit extends React.Component {
             </button>
           </div>
           <div className="property-list">
-            {
-              this.state.template.table.map((item, index) => {
-                return (
-                  <TemplateCell
-                    key={"template-cell-"+index}
-                    isActive={item===this.state.inspectCell}
-                    name={item.name}
-                    value={item.default}
-                    onEdit={() => this._handleEdit(item)}
-                    onRemove={() => this._handleRemove(item, index)} />
-                )
-              })
-            }
+            <table cellSpacing="0" cellPadding="0">
+              <thead>
+                <tr>
+                  <td>属性名</td>
+                  <td>默认值/表达式</td>
+                  <td>测试值</td>
+                  <td>操作</td>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  this.state.template.table.map((item, index) => {
+                    return (
+                      <TemplatePropertyCell
+                        key={"template-cell-"+index}
+                        isActive={item===this.state.inspectCell}
+                        name={item.name}
+                        defaultValue={item.default}
+                        value={item.value}
+                        onEdit={() => this._handleEdit(item)}
+                        onRemove={() => this._handleRemove(item, index)} />
+                    )
+                  })
+                }
+              </tbody>
+            </table>
           </div>
         </div>
         { this.getInspectPanel() }

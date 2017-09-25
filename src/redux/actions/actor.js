@@ -6,6 +6,7 @@ const {
   GET_TEMPLATE_SUCCESS,
   CREATE_TEMPLATE_SUCCESS,
   UPDATE_TEMPLATE_SUCCESS,
+  SET_EDITED_TEMPLATE,
 } = require('../constants');
 const { showLoading, hideLoading, showAlert } = require('./ui');
 
@@ -65,9 +66,14 @@ let updateTemplate = function updateTemplate(uuid, name, desc, avatar, info) {
   }
 }
 
+let setEditedTemplate = function setEditedTemplate(obj) {
+  return {type: SET_EDITED_TEMPLATE, payload: obj}
+}
+
 module.exports = {
   setTemplate,
   getTemplate,
   createTemplate,
   updateTemplate,
+  setEditedTemplate,
 }

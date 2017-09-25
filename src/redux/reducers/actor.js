@@ -4,6 +4,7 @@ const {
   GET_TEMPLATE_SUCCESS,
   CREATE_TEMPLATE_SUCCESS,
   UPDATE_TEMPLATE_SUCCESS,
+  SET_EDITED_TEMPLATE,
 } = require('../constants');
 const initialState = immutable.fromJS({
   isFindingTemplate: false,// 模板查询页面
@@ -19,10 +20,9 @@ const initialState = immutable.fromJS({
 });
 
 function updateSelfTemplate(list, uuid, template) {
-  for (var i = 0; i < list.length; i++) {
-    if(uuid === list[i].uuid) {
-      list[i] = immutable.fromJS(template);
-      break;
+  for (var i = 0; i < list.size; i++) {
+    if(uuid === list.getIn([i, 'uuid'])) {
+      return list.set(i, immutable.fromJS(template))
     }
   }
   return list;
@@ -45,6 +45,8 @@ module.exports = function actor(state = initialState, action) {
       }else {
         return state.set('selfTemplate', immutable.fromJS(action.payload));
       }
+    case SET_EDITED_TEMPLATE:
+      return state.set('currentEditedTemplate', immutable.fromJS(action.payload));
     default:
       return state;
   }

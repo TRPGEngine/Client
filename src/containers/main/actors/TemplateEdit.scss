@@ -76,6 +76,11 @@
       @include auto-scroll-bar;
       padding: 20px 30px;
       flex: 1;
+
+      table {
+        width: 100%;
+        
+      }
     }
   }
 

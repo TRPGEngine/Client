@@ -8,7 +8,7 @@
   flex: 1;
   flex-direction: column;
 
-  .header {
+  > .header {
     padding: 20px 26px;
     display: flex;
 
@@ -39,7 +39,7 @@
 
     }
   }
-  .body {
+  > .body {
     flex: 1;
     display: flex;
     padding-bottom: 20px;
