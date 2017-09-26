@@ -1,15 +1,25 @@
 const React = require('react');
 const { connect } = require('react-redux')
 const { showModal } = require('../../../redux/actions/ui');
-const { setEditedTemplate } = require('../../../redux/actions/actor');
+const { setEditedTemplate, findTemplate } = require('../../../redux/actions/actor');
 const TemplateEdit = require('./TemplateEdit');
 const TemplateItem = require('../../../components/TemplateItem');
+const ReactTooltip = require('react-tooltip');
 
 require('./ActorCreate.scss');
 
 class ActorCreate extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      searchName: ''
+    };
+  }
+
+  _handleSearch() {
+    // console.log(this.state.searchName);
+    let searchName = this.state.searchName;
+    this.props.findTemplate(searchName);
   }
 
   _handleCreateTemplate() {
@@ -22,12 +32,47 @@ class ActorCreate extends React.Component {
     this.props.showModal(<TemplateEdit />);
   }
 
+  getFindResult() {
+    let findingResult = this.props.findingResult;
+    if(findingResult) {
+      if(findingResult.length === 0) {
+        return (
+          <div className="no-result">暂无搜索结果...</div>
+        )
+      }else {
+        return findingResult.map((item, index) => {
+          return (
+            <TemplateItem
+              key={"template-find-result" + item.get('uuid')}
+              canEdit={false}
+              name={item.get('name')}
+              desc={item.get('desc')}
+              creator={''}
+              time={item.get('updateAt')}
+              onEdit={() => this._handleEdit(item)}
+            />
+          )
+        })
+      }
+    }else {
+      return null;
+    }
+  }
+
   render()　{
     return (
       <div className="actor-create">
+        <ReactTooltip effect="solid" />
         <div className="header">
-          <input type="text" placeholder="输入要搜索的模板名" />
-          <button>
+          <input
+            type="text"
+            placeholder="输入要搜索的模板名"
+            value={this.state.searchName}
+            onChange={(e) => {
+              this.setState({searchName: e.target.value})
+            }}
+          />
+        <button onClick={() => this._handleSearch()}>
             <i className="iconfont">&#xe60a;</i>搜索
           </button>
           <button onClick={() => this._handleCreateTemplate()}>
@@ -36,7 +81,7 @@ class ActorCreate extends React.Component {
         </div>
         <div className="body">
           <div className="search-result">
-            <div className="no-result">暂无搜索结果...</div>
+            { this.getFindResult() }
           </div>
           <div className="self-template">
             {
@@ -44,6 +89,7 @@ class ActorCreate extends React.Component {
                 return (
                   <TemplateItem
                     key={item.get('uuid')}
+                    canEdit={true}
                     name={item.get('name')}
                     desc={item.get('desc')}
                     creator={this.props.username}
@@ -69,5 +115,6 @@ module.exports = connect(
   dispatch => ({
     showModal: (body) => dispatch(showModal(body)),
     setEditedTemplate: (obj) => dispatch(setEditedTemplate(obj)),
+    findTemplate: (name) => dispatch(findTemplate(name)),
   })
 )(ActorCreate)

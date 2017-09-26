@@ -21,6 +21,7 @@
       outline: 0;
       border-bottom: 1px solid $color-bon-jour;
       background-color: transparent;
+      font-size: 16px;
 
       &:focus {
         border-bottom-color: $color-tobacco-brown;
@@ -45,8 +46,10 @@
     padding-bottom: 20px;
 
     .search-result {
+      @include auto-scroll-bar;
       flex: 1;
       overflow: hidden;
+      padding: 20px;
 
       &:hover {
         overflow-y: overlay;
@@ -61,6 +64,7 @@
     }
 
     .self-template {
+      @include auto-scroll-bar;
       width: 340px;
       border-left: 1px solid #dddcdd;
       padding: 20px;

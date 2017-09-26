@@ -4,6 +4,7 @@ const api = trpgApi.getInstance();
 const {
   SET_TEMPLATE,
   GET_TEMPLATE_SUCCESS,
+  FIND_TEMPLATE_SUCCESS,
   CREATE_TEMPLATE_SUCCESS,
   UPDATE_TEMPLATE_SUCCESS,
   SET_EDITED_TEMPLATE,
@@ -26,6 +27,19 @@ let getTemplate = function getTemplate(uuid) {
       if(data.result) {
         let payload = uuid?data.template:data.templates;
         dispatch({type: GET_TEMPLATE_SUCCESS, uuid, payload})
+      }else {
+        console.error(data.msg);
+      }
+    })
+  }
+}
+
+let findTemplate = function findTemplate(searchName) {
+  return function (dispatch, getState) {
+    return api.emit('actor::findTemplate', {name: searchName}, function(data) {
+      console.log(data);
+      if(data.result) {
+        dispatch({type: FIND_TEMPLATE_SUCCESS, payload: data.templates});
       }else {
         console.error(data.msg);
       }
@@ -73,6 +87,7 @@ let setEditedTemplate = function setEditedTemplate(obj) {
 module.exports = {
   setTemplate,
   getTemplate,
+  findTemplate,
   createTemplate,
   updateTemplate,
   setEditedTemplate,

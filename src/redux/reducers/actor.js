@@ -2,6 +2,7 @@ const immutable = require('immutable');
 const {
   SET_TEMPLATE,
   GET_TEMPLATE_SUCCESS,
+  FIND_TEMPLATE_SUCCESS,
   CREATE_TEMPLATE_SUCCESS,
   UPDATE_TEMPLATE_SUCCESS,
   SET_EDITED_TEMPLATE,
@@ -30,6 +31,8 @@ function updateSelfTemplate(list, uuid, template) {
 
 module.exports = function actor(state = initialState, action) {
   switch (action.type) {
+    case FIND_TEMPLATE_SUCCESS:
+      return state.set('findingResult', immutable.fromJS(action.payload));
     case CREATE_TEMPLATE_SUCCESS:
       return state
         .set('currentEditedTemplate', immutable.fromJS(action.payload))

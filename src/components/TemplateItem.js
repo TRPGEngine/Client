@@ -8,16 +8,31 @@ class TemplateItem extends React.Component {
     super(props);
   }
 
+  getActions() {
+    return (
+      <div className="actions">
+        {
+          this.props.canEdit
+          ? (
+            <button data-tip="编辑模板" onClick={this.props.onEdit}>
+              <i className="iconfont">&#xe83f;</i>
+            </button>
+          )
+          : null
+        }
+        <button data-tip="创建人物" onClick={this.props.onCreate}>
+          <i className="iconfont">&#xe61d;</i>
+        </button>
+      </div>
+    )
+  }
+
   render()　{
     return (
       <div className="template-item">
         <div className="header">
           <div className="name">{this.props.name}</div>
-          <div className="actions">
-            <button data-tip="编辑" onClick={this.props.onEdit}>
-              <i className="iconfont">&#xe83f;</i>
-            </button>
-          </div>
+          { this.getActions() }
         </div>
         <div className="desc">{this.props.desc}</div>
         <div className="footer">
