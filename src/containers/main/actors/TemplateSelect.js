@@ -6,9 +6,9 @@ const TemplateEdit = require('./TemplateEdit');
 const TemplateItem = require('../../../components/TemplateItem');
 const ReactTooltip = require('react-tooltip');
 
-require('./ActorCreate.scss');
+require('./TemplateSelect.scss');
 
-class ActorCreate extends React.Component {
+class TemplateSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,7 +35,7 @@ class ActorCreate extends React.Component {
   getFindResult() {
     let findingResult = this.props.findingResult;
     if(findingResult) {
-      if(findingResult.length === 0) {
+      if(findingResult.size === 0) {
         return (
           <div className="no-result">暂无搜索结果...</div>
         )
@@ -47,7 +47,7 @@ class ActorCreate extends React.Component {
               canEdit={false}
               name={item.get('name')}
               desc={item.get('desc')}
-              creator={''}
+              creator={item.get('creator_name') || '未知'}
               time={item.get('updateAt')}
               onEdit={() => this._handleEdit(item)}
             />
@@ -61,7 +61,7 @@ class ActorCreate extends React.Component {
 
   render()　{
     return (
-      <div className="actor-create">
+      <div className="template-select">
         <ReactTooltip effect="solid" />
         <div className="header">
           <input
@@ -117,4 +117,4 @@ module.exports = connect(
     setEditedTemplate: (obj) => dispatch(setEditedTemplate(obj)),
     findTemplate: (name) => dispatch(findTemplate(name)),
   })
-)(ActorCreate)
+)(TemplateSelect)

@@ -31,8 +31,8 @@ class TemplateEdit extends React.Component {
   }
 
   _handleBack() {
-    const ActorCreate = require('./ActorCreate');
-    this.props.showModal(<ActorCreate />);
+    const TemplateSelect = require('./TemplateSelect');
+    this.props.showModal(<TemplateSelect />);
   }
 
   _handleSave() {

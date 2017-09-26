@@ -5,7 +5,7 @@ const { logout } = require('../../redux/actions/user');
 const { showModal, switchMenu } = require('../../redux/actions/ui');
 const { setEditedTemplate } = require('../../redux/actions/actor');
 const { addNote } = require('../../redux/actions/note');
-const ActorCreate = require('./actors/ActorCreate');
+const TemplateSelect = require('./actors/TemplateSelect');
 const TemplateEdit = require('./actors/TemplateEdit');
 
 require('./ExtraOptions.scss');
@@ -34,7 +34,7 @@ class ExtraOptions extends React.Component {
       window.open("http://moonrailgun.com");
     }else if(menu === 'actorCreate') {
       this.props.dispatch(showModal(
-        <ActorCreate />
+        <TemplateSelect />
       ));
     }else if(menu === 'templateCreate') {
       this.props.dispatch(setEditedTemplate({}));

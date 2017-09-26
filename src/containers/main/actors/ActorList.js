@@ -1,6 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const ActorCreate = require('./ActorCreate');
+const TemplateSelect = require('./TemplateSelect');
 const { showModal } = require('../../../redux/actions/ui');
 
 require('./ActorList.scss');
@@ -12,7 +12,7 @@ class ActorList extends React.Component {
 
   _handleAddNewActor() {
     this.props.showModal(
-      <ActorCreate />
+      <TemplateSelect />
     )
   }
 
