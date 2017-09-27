@@ -1,5 +1,5 @@
 // let currentHost = window.location.host.split(":")[0];
-let currentHost = 'trpg.moonrailgun.com';
+let currentHost = 'trpgapi.moonrailgun.com';
 
 module.exports = {
   io: {

@@ -10,6 +10,7 @@ script:
   - npm run build
 after_script:
   - cd ./dist/
+  - cp ../build/CNAME ./
   - mkdir -p src/assets
   - cp -r ../src/assets/* ./src/assets
   - git init
