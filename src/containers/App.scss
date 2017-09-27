@@ -1,3 +1,5 @@
+@import "../utils/color";
+
 * {
   box-sizing: border-box;
   font-family: PingFang SC, "Microsoft YaHei", arial, serif;
@@ -19,6 +21,7 @@ ul, li {
 }
 
 body {
+  background-color: $color-tobacco-brown;
   background-image: url('/src/assets/img/bg.jpg');
   background-size: cover;
   background-position: center;
@@ -71,6 +74,43 @@ a {
       bottom: 10px;
       color: rgba(white, .6);
       font-size: 12px;
+    }
+
+    .start-btn {
+      @keyframes blink {
+        0% {
+          opacity: 0.2;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.2;
+        }
+      }
+
+      font-size: 24px;
+      animation: blink 3s infinite ease-in-out;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-direction: column;
+
+      .main {
+        font-size: 28px;
+        color: $color-jungle-mist;
+      }
+
+      .sub {
+        font-size: 18px;
+        color: $color-saltpan;
+      }
     }
   }
 }

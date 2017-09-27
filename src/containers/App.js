@@ -35,6 +35,12 @@ class App extends React.Component {
               <Route name="login" path="/login" component={Login} />
               <Route name="register" path="/register" component={Register} />
               <Route name="main" path="/main" component={Main} />
+              <Route name="index" path="/">
+                <Link to="login" className="start-btn">
+                  <div className="main">点击屏幕登录</div>
+                  <div className="sub">Press screen to login</div>
+                </Link>
+              </Route>
             </Switch>
             <NetworkIndicator />
             <div className='version'>当前版本号v{appVersion}</div>

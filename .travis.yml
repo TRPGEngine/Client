@@ -23,3 +23,4 @@ after_script:
 env:
   global:
     - GH_REF: github.com/TRPGEngine/Client.git
+    - NODE_ENV: production

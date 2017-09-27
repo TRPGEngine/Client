@@ -44,11 +44,16 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      }
+    }),
     new HtmlwebpackPlugin({
       title: 'TRPG-Game',
       template: 'build/template/index.html',
       inject: true,
       favicon: 'src/assets/img/favicon.ico'
-    })
+    }),
   ],
 }
