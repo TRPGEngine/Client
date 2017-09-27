@@ -8,3 +8,17 @@ before_script:
   - npm install
 script:
   - npm run build
+after_script:
+  - cd ./dist/
+  - mkdir -p src/assets
+  - cp -r ../src/assets/* ./src/assets
+  - git init
+  - git config user.name "travis"
+  - git config user.email "travis@travis.com"
+  - git add .
+  - git commit -m "update file"
+  - git branch -m gh-pages
+  - git push --force "https://${GH_TOKEN}@${GH_REF}" gh-pages:gh-pages
+env:
+  global:
+    - GH_REF: github.com/TRPGEngine/Client.git
