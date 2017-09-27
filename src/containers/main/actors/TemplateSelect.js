@@ -1,8 +1,10 @@
 const React = require('react');
-const { connect } = require('react-redux')
+const { connect } = require('react-redux');
+const immutable = require('immutable');
 const { showModal } = require('../../../redux/actions/ui');
-const { setEditedTemplate, findTemplate } = require('../../../redux/actions/actor');
+const { setEditedTemplate, findTemplate, selectTemplate } = require('../../../redux/actions/actor');
 const TemplateEdit = require('./TemplateEdit');
+const ActorCreate = require('./ActorCreate');
 const TemplateItem = require('../../../components/TemplateItem');
 const ReactTooltip = require('react-tooltip');
 
@@ -25,6 +27,14 @@ class TemplateSelect extends React.Component {
   _handleCreateTemplate() {
     this.props.setEditedTemplate({});
     this.props.showModal(<TemplateEdit />);
+  }
+
+  _handleCreateActor(template) {
+    if(immutable.isImmutable) {
+      template = template.toJS();
+    }
+    this.props.selectTemplate(template);
+    this.props.showModal(<ActorCreate />);
   }
 
   _handleEdit(item) {
@@ -50,6 +60,7 @@ class TemplateSelect extends React.Component {
               creator={item.get('creator_name') || '未知'}
               time={item.get('updateAt')}
               onEdit={() => this._handleEdit(item)}
+              onCreate={() => this._handleCreateActor(item)}
             />
           )
         })
@@ -95,6 +106,7 @@ class TemplateSelect extends React.Component {
                     creator={this.props.username}
                     time={item.get('updateAt')}
                     onEdit={() => this._handleEdit(item)}
+                    onCreate={() => this._handleCreateActor(item)}
                   />
                 )
               })
@@ -116,5 +128,6 @@ module.exports = connect(
     showModal: (body) => dispatch(showModal(body)),
     setEditedTemplate: (obj) => dispatch(setEditedTemplate(obj)),
     findTemplate: (name) => dispatch(findTemplate(name)),
+    selectTemplate: (template) => dispatch(selectTemplate(template)),
   })
 )(TemplateSelect)

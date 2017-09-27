@@ -56,3 +56,39 @@
     font-size: 18px;
   }
 }
+
+@mixin bottom-line-input {
+  height: 44px;
+  padding: 8px 12px;
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid #DDDCDD;
+  background-color: transparent;
+  font-size: 16px;
+
+  &:focus {
+    border-bottom-color: #705949;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+@mixin block-input {
+  background-color: transparent;
+  font-size: 16px;
+  border: 1px solid #DDDCDD;
+  outline: 0;
+  padding: 4px 6px;
+  border-radius: 3px;
+  resize: none;
+
+  &:focus {
+    border-color: #705949;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}

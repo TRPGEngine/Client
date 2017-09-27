@@ -22,6 +22,10 @@
       display: flex;
       position: relative;
 
+      .modal-content {
+        flex: 1;
+      }
+
       .modal-close {
         position: absolute;
         right: 10px;

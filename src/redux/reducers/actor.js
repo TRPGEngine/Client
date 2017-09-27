@@ -6,6 +6,7 @@ const {
   CREATE_TEMPLATE_SUCCESS,
   UPDATE_TEMPLATE_SUCCESS,
   SET_EDITED_TEMPLATE,
+  SELECT_TEMPLATE,
 } = require('../constants');
 const initialState = immutable.fromJS({
   isFindingTemplate: false,// 模板查询页面
@@ -18,6 +19,7 @@ const initialState = immutable.fromJS({
     info: '',
   },
   selfTemplate: [],
+  selectedTemplate: {},
 });
 
 function updateSelfTemplate(list, uuid, template) {
@@ -50,6 +52,8 @@ module.exports = function actor(state = initialState, action) {
       }
     case SET_EDITED_TEMPLATE:
       return state.set('currentEditedTemplate', immutable.fromJS(action.payload));
+    case SELECT_TEMPLATE:
+      return state.set('selectedTemplate', immutable.fromJS(action.payload));
     default:
       return state;
   }
