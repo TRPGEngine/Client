@@ -1,5 +1,6 @@
 const React = require('react');
 const PropTypes = require('prop-types');
+const { connect } = require('react-redux');
 const fileUrl = require('../api/trpg.api.js').fileUrl;
 
 require('./ImageUploader.scss');
@@ -24,15 +25,25 @@ class ImageUploader extends React.Component {
 
     fetch(fileUrl+"/avatar", {
       method: 'POST',
-      headers: {},
+      headers: {
+        'avatar-type': 'actor',
+        'user-uuid': this.props.user_uuid,
+      },
       body: formData
     }).then((response) => {
-      console.log(response);
       if(response.ok) {
         return response.json();
+      }else {
+        return response.text();
       }
     }).then((json) => {
-      console.log(json);
+      if(typeof json === 'object'){
+        console.log('上传成功', json);
+      }else {
+        console.error(json);
+      }
+    }).catch((e) => {
+      console.error(e);
     })
   }
 
@@ -47,4 +58,8 @@ class ImageUploader extends React.Component {
   }
 }
 
-module.exports = ImageUploader;
+module.exports = connect(
+  state => ({
+    user_uuid: state.getIn(['user', 'info', 'uuid'])
+  })
+)(ImageUploader);
