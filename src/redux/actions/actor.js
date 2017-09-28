@@ -9,8 +9,9 @@ const {
   UPDATE_TEMPLATE_SUCCESS,
   SET_EDITED_TEMPLATE,
   SELECT_TEMPLATE,
+  CREATE_ACTOR_SUCCESS,
 } = require('../constants');
-const { showLoading, hideLoading, showAlert } = require('./ui');
+const { showLoading, hideLoading, showAlert, hideAlert, hideModal } = require('./ui');
 
 let setTemplate = function setTemplate(uuid, name, desc, avatar, info) {
   return {
@@ -89,6 +90,21 @@ let selectTemplate = function selectTemplate(template) {
   return {type: SELECT_TEMPLATE, payload: template}
 }
 
+let createActor = function createActor(name, avatar, desc, info, template_uuid) {
+  return function(dispatch, getState) {
+    return api.emit('actor::createActor', {name, avatar, desc, info, template_uuid}, function(data) {
+      dispatch(hideAlert());
+      dispatch(hideModal());
+      if(data.result) {
+        dispatch({type: CREATE_ACTOR_SUCCESS, payload: data.actor});
+      }else {
+        dispatch(showAlert(data.msg));
+        console.error(data.msg);
+      }
+    })
+  }
+}
+
 module.exports = {
   setTemplate,
   getTemplate,
@@ -97,4 +113,5 @@ module.exports = {
   updateTemplate,
   setEditedTemplate,
   selectTemplate,
+  createActor,
 }

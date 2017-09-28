@@ -6,6 +6,15 @@ require('./Alert.scss');
 
 class Alert extends React.Component {
   getAlertContent(title, content, onConfirm) {
+    let cancelBtn;
+    if(onConfirm) {
+      cancelBtn = (
+        <button onClick={() => this.props.dispatch(hideAlert())}>
+          取消
+        </button>
+      )
+    }
+
     return (
       <div>
         <h2>{title || '警告'}</h2>
@@ -19,15 +28,16 @@ class Alert extends React.Component {
         }}>
           确认
         </button>
+        { cancelBtn }
       </div>
     )
   }
 
   render() {
-    const {show, type, title, content, onConfirm} = this.props;
+    const {show, type, title, content, onConfirm, onCancel} = this.props;
     let alertContent = '';
     if(!type || type==='alert') {
-      alertContent = this.getAlertContent(title, content, onConfirm);
+      alertContent = this.getAlertContent(title, content, onConfirm, onCancel);
     }
     let body = '';
     if(this.props.show) {
@@ -58,6 +68,7 @@ Alert.propTypes = {
   show: PropTypes.bool,
   content: PropTypes.string,
   onConfirm: PropTypes.func,
+  onCancel: PropTypes.func,
 }
 
 module.exports = connect()(Alert);
