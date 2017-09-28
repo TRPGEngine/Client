@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const at = require('trpg-actor-template');
 const { showAlert } = require('../../../redux/actions/ui');
 const { createActor } = require('../../../redux/actions/actor');
+const ImageUploader = require('../../../components/ImageUploader');
 
 require('./ActorCreate.scss');
 
@@ -60,9 +61,9 @@ class ActorCreate extends React.Component {
         </div>
         <div className="actor-create-body">
           <div className="actor-create-profile">
-            <div className="avatar">
-              <img />
-            </div>
+            <ImageUploader>
+              <div className="avatar"></div>
+            </ImageUploader>
             <div className="desc">
               <textarea
                 placeholder="人物卡描述/背景"

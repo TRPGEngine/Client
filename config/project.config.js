@@ -8,5 +8,10 @@ module.exports = {
     protocol: 'ws',
     host: currentHost,
     port: '23256'
+  },
+  file: {
+    protocol: 'http',
+    host: currentHost,
+    port: '23257'
   }
 }

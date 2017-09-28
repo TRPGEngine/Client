@@ -39,11 +39,11 @@
         border: 1px solid #DDDCDD;
         background-position: center;
         background-size: cover;
-        margin-bottom: 10px;
       }
 
       .desc {
         flex: 1;
+        margin-top: 10px;
         textarea {
           height: 100%;
           @include block-input;
