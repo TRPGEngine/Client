@@ -61,8 +61,8 @@ class ActorCreate extends React.Component {
         </div>
         <div className="actor-create-body">
           <div className="actor-create-profile">
-            <ImageUploader>
-              <div className="avatar"></div>
+            <ImageUploader onUploadSuccess={(json) => this.setState({profileAvatar: json.url})}>
+              <div className="avatar" style={{backgroundImage: `url(${this.state.profileAvatar})`}}></div>
             </ImageUploader>
             <div className="desc">
               <textarea

@@ -10,6 +10,8 @@ const {
   SET_EDITED_TEMPLATE,
   SELECT_TEMPLATE,
   CREATE_ACTOR_SUCCESS,
+  GET_ACTOR_SUCCESS,
+  SELECT_ACTOR,
 } = require('../constants');
 const { showLoading, hideLoading, showAlert, hideAlert, hideModal } = require('./ui');
 
@@ -105,6 +107,23 @@ let createActor = function createActor(name, avatar, desc, info, template_uuid) 
   }
 }
 
+let getActor = function getActor(uuid = '') {
+  return function(dispatch, getState) {
+    return api.emit('actor::getActor', {uuid}, function(data) {
+      if(data.result) {
+        let payload = uuid ? data.actor : data.actors;
+        dispatch({type: GET_ACTOR_SUCCESS, uuid, payload})
+      }else {
+        console.error(data.msg);
+      }
+    });
+  }
+}
+
+let selectActor = function selectActor(uuid) {
+  return {type: SELECT_ACTOR, payload: uuid}
+}
+
 module.exports = {
   setTemplate,
   getTemplate,
@@ -114,4 +133,6 @@ module.exports = {
   setEditedTemplate,
   selectTemplate,
   createActor,
+  getActor,
+  selectActor,
 }

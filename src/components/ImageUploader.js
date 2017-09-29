@@ -39,6 +39,9 @@ class ImageUploader extends React.Component {
     }).then((json) => {
       if(typeof json === 'object'){
         console.log('上传成功', json);
+        if(this.props.onUploadSuccess) {
+          this.props.onUploadSuccess(json)
+        }
       }else {
         console.error(json);
       }
@@ -50,7 +53,12 @@ class ImageUploader extends React.Component {
   render() {
     return (
       <div className="image-uploader" onClick={() => this._handleSelect()}>
-        <input type="file" ref="file" onChange={(e) => this._handleUpload()} />
+        <input
+          type="file"
+          ref="file"
+          accept="image/*"
+          onChange={(e) => this._handleUpload()}
+        />
         <div className="mask">点击上传图片</div>
         {this.props.children}
       </div>
