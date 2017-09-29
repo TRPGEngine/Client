@@ -16,12 +16,23 @@
       // background-color: rgba(white,0.6);
       background-color: white;
       text-align: center;
-      min-width: 300px;
+      min-width: 340px;
       min-height: 100px;
 
-      p {
+      .header {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      .body {
         color: #666666;
         line-height: 1.5em;
+        max-height: 200px;
+        @include auto-scroll-bar;
+
+        p {
+          margin: 0;
+        }
       }
 
       button {

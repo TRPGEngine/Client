@@ -12,6 +12,7 @@ const {
   CREATE_ACTOR_SUCCESS,
   GET_ACTOR_SUCCESS,
   SELECT_ACTOR,
+  REMOVE_ACTOR_SUCCESS,
 } = require('../constants');
 const { showLoading, hideLoading, showAlert, hideAlert, hideModal } = require('./ui');
 
@@ -124,6 +125,20 @@ let selectActor = function selectActor(uuid) {
   return {type: SELECT_ACTOR, payload: uuid}
 }
 
+let removeActor = function removeActor(uuid) {
+  return function(dispatch, getState) {
+    return api.emit('actor::removeActor', {uuid}, function(data) {
+      dispatch(hideAlert());
+      if(data.result) {
+        let payload = data.remove;
+        dispatch({type: REMOVE_ACTOR_SUCCESS, uuid, payload})
+      }else {
+        console.error(data.msg);
+      }
+    });
+  }
+}
+
 module.exports = {
   setTemplate,
   getTemplate,
@@ -135,4 +150,5 @@ module.exports = {
   createActor,
   getActor,
   selectActor,
+  removeActor,
 }

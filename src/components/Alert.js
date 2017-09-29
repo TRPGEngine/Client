@@ -17,8 +17,8 @@ class Alert extends React.Component {
 
     return (
       <div>
-        <h2>{title || '警告'}</h2>
-        <p>{content || '确认进行该操作?'}</p>
+        <div className="header">{title || '警告'}</div>
+        <div className="body">{content || '确认进行该操作?'}</div>
         <button onClick={() => {
           if(!!onConfirm) {
             onConfirm();
@@ -66,7 +66,6 @@ Alert.defaultProps = {
 
 Alert.propTypes = {
   show: PropTypes.bool,
-  content: PropTypes.string,
   onConfirm: PropTypes.func,
   onCancel: PropTypes.func,
 }

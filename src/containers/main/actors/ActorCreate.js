@@ -38,9 +38,21 @@ class ActorCreate extends React.Component {
       this.props.showAlert('人物名不能为空');
     }else {
       console.log('save data', {name, avatar, desc, info, template_uuid});
+      let content = (
+        <div>
+          <p>是否要创建人物？数据如下:</p>
+          {
+            this.template.getCells().map((cell, index) => {
+              return (
+                <p key={template_uuid+'-cell-'+index}>{cell.name}:{cell.value}</p>
+              )
+            })
+          }
+        </div>
+      )
       this.props.showAlert({
         title: '创建人物',
-        content: '是否要创建人物？数据如下:',
+        content: content,
         type: 'alert',
         onConfirm: () => {
           this.props.createActor(name, avatar, desc, info, template_uuid)
