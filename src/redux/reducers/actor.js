@@ -24,6 +24,7 @@ const initialState = immutable.fromJS({
   },
   selfTemplate: [],
   selectedTemplate: {},
+  currentEditedActorUUID: '',
   selfActors: [],
   selectedActorUUID: '',// actor UUID
 });

@@ -1,13 +1,13 @@
 @import "../../../utils/mixins";
 
-.actor-create {
+.actor-edit {
   display: flex;
   flex-direction: column;
   padding: 20px;
   width: 100%;
   width: 700px;
   max-height: 560px;
-  .actor-create-header {
+  .actor-edit-header {
     text-align:left;
     display: flex;
     input {
@@ -21,9 +21,9 @@
     }
   }
 
-  .actor-create-body {
+  .actor-edit-body {
     display: flex;
-    .actor-create-profile {
+    .actor-edit-profile {
       margin-right: 20px;
       padding: 20px 0;
       display: flex;
@@ -51,7 +51,7 @@
       }
     }
 
-    .actor-create-property {
+    .actor-edit-property {
       @include auto-scroll-bar;
       margin-top: 10px;
       padding-right: 12px;

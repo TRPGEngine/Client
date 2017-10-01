@@ -5,9 +5,9 @@ const { showAlert } = require('../../../redux/actions/ui');
 const { createActor } = require('../../../redux/actions/actor');
 const ImageUploader = require('../../../components/ImageUploader');
 
-require('./ActorCreate.scss');
+require('./ActorEdit.scss');
 
-class ActorCreate extends React.Component {
+class ActorEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,7 +22,6 @@ class ActorCreate extends React.Component {
     this.template_uuid = this.props.selectedTemplate.get('uuid');
     let info = this.props.selectedTemplate.get('info');
     let template = this.template = at.parse(info);
-    // console.log(template);
     template.eval();
     this.setState({cells: template.getCells()});
   }
@@ -44,7 +43,7 @@ class ActorCreate extends React.Component {
           {
             this.template.getCells().map((cell, index) => {
               return (
-                <p key={template_uuid+'-cell-'+index}>{cell.name}:{cell.value}</p>
+                <p key={template_uuid+'-cell-'+index} style={{textAlign: 'left'}}>{cell.name}:{cell.value}</p>
               )
             })
           }
@@ -63,16 +62,16 @@ class ActorCreate extends React.Component {
 
   render() {
     return (
-      <div className="actor-create">
-        <div className="actor-create-header">
+      <div className="actor-edit">
+        <div className="actor-edit-header">
           <input
             placeholder="人物卡名"
             value={this.state.profileName}
             onChange={(e) => this.setState({profileName: e.target.value})} />
           <button onClick={() => this._handleSave()}>创建</button>
         </div>
-        <div className="actor-create-body">
-          <div className="actor-create-profile">
+        <div className="actor-edit-body">
+          <div className="actor-edit-profile">
             <ImageUploader onUploadSuccess={(json) => this.setState({profileAvatar: json.url})}>
               <div className="avatar" style={{backgroundImage: `url(${this.state.profileAvatar})`}}></div>
             </ImageUploader>
@@ -83,7 +82,7 @@ class ActorCreate extends React.Component {
                 onChange={(e) => this.setState({profileDesc: e.target.value})} />
             </div>
           </div>
-            <div className="actor-create-property">
+            <div className="actor-edit-property">
               {
                 this.state.cells.map((item, index) => {
                   let isExpression = item.func === 'expression'
@@ -118,7 +117,8 @@ class ActorCreate extends React.Component {
 
 module.exports = connect(
   state => ({
-    selectedTemplate: state.getIn(['actor', 'selectedTemplate'])
+    selectedTemplate: state.getIn(['actor', 'selectedTemplate']),
+    currentEditedActorUUID: state.getIn(['actor', 'currentEditedActorUUID']),
   }),
   dispatch => ({
     showAlert: (msg) => {
@@ -128,4 +128,4 @@ module.exports = connect(
       dispatch(createActor(name, avatar, desc, info, template_uuid));
     },
   })
-)(ActorCreate);
+)(ActorEdit);
