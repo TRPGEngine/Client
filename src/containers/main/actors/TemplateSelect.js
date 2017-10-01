@@ -4,7 +4,7 @@ const immutable = require('immutable');
 const { showModal } = require('../../../redux/actions/ui');
 const { setEditedTemplate, findTemplate, selectTemplate } = require('../../../redux/actions/actor');
 const TemplateEdit = require('./TemplateEdit');
-const ActorCreate = require('./ActorCreate');
+const ActorEdit = require('./ActorEdit');
 const TemplateItem = require('../../../components/TemplateItem');
 const ReactTooltip = require('react-tooltip');
 
@@ -34,7 +34,7 @@ class TemplateSelect extends React.Component {
       template = template.toJS();
     }
     this.props.selectTemplate(template);
-    this.props.showModal(<ActorCreate />);
+    this.props.showModal(<ActorEdit />);
   }
 
   _handleEdit(item) {
