@@ -11,6 +11,7 @@ const {
   GET_ACTOR_SUCCESS,
   SELECT_ACTOR,
   REMOVE_ACTOR_SUCCESS,
+  UPDATE_ACTOR_SUCCESS,
 } = require('../constants');
 const initialState = immutable.fromJS({
   isFindingTemplate: false,// 模板查询页面
@@ -24,9 +25,8 @@ const initialState = immutable.fromJS({
   },
   selfTemplate: [],
   selectedTemplate: {},
-  currentEditedActorUUID: '',
   selfActors: [],
-  selectedActorUUID: '',// actor UUID
+  selectedActorUUID: '',// selected actor UUID
 });
 
 function updateSelfTemplate(list, uuid, template) {
@@ -71,7 +71,9 @@ module.exports = function actor(state = initialState, action) {
     case SELECT_TEMPLATE:
       return state.set('selectedTemplate', immutable.fromJS(action.payload));
     case CREATE_ACTOR_SUCCESS:
-      return state.update('selfActors', (list) => list.push(immutable.fromJS(action.payload)));
+      return state
+        .update('selfActors', (list) => list.push(immutable.fromJS(action.payload)))
+        .set('selectedActorUUID', '');
     case GET_ACTOR_SUCCESS:
       if(action.uuid) {
         return state.update('selfActors', (list) => updateSelfActor(list, action.uuid, action.payload))
@@ -89,6 +91,8 @@ module.exports = function actor(state = initialState, action) {
         }
         return list;
       })
+    case UPDATE_ACTOR_SUCCESS:
+      return state.update('selfActors', (list) => updateSelfActor(list, action.payload.uuid, action.payload))
     default:
       return state;
   }

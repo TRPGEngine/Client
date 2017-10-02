@@ -30,9 +30,7 @@ class TemplateSelect extends React.Component {
   }
 
   _handleCreateActor(template) {
-    if(immutable.isImmutable) {
-      template = template.toJS();
-    }
+    template = template.toJS();
     this.props.selectTemplate(template);
     this.props.showModal(<ActorEdit />);
   }

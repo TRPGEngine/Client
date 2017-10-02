@@ -1,8 +1,10 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const TemplateSelect = require('./TemplateSelect');
+const ActorEdit = require('./ActorEdit');
+const apiHelper = require('../../../utils/apiHelper');
 const { showModal, showAlert } = require('../../../redux/actions/ui');
-const { selectActor, removeActor } = require('../../../redux/actions/actor');
+const { selectActor, removeActor, selectTemplate } = require('../../../redux/actions/actor');
 
 require('./ActorList.scss');
 
@@ -12,16 +14,28 @@ class ActorList extends React.Component {
   }
 
   _handleAddNewActor() {
+    this.props.selectActor('');
     this.props.showModal(
       <TemplateSelect />
     )
   }
 
   _handleRemoveActor(uuid) {
+    this.props.selectActor('');
     this.props.showAlert({
       content: '你确定要删除该人物卡么？删除后无法找回',
       onConfirm: () => this.props.removeActor(uuid)
     })
+  }
+
+  _handleEditActor(uuid, template_uuid) {
+    this.props.selectActor(uuid);
+
+    // 获取模板信息
+    apiHelper.getTemplate(template_uuid, (template) => {
+      this.props.selectTemplate(template);
+      this.props.showModal(<ActorEdit />);
+    });
   }
 
   getActorList() {
@@ -31,7 +45,8 @@ class ActorList extends React.Component {
         backgroundImage: `url(${item.get('avatar')})`
       };
       let actorname = item.get('name');
-      let desc = item.get('desc')
+      let desc = item.get('desc');
+      let template_uuid = item.get('template_uuid');
       return (
         <div className="actor-card" key={uuid + '-' + index}>
           <div className="avatar" style={backgroundStyle}></div>
@@ -40,7 +55,7 @@ class ActorList extends React.Component {
             <p><span>说明:</span><span title={desc}>{desc}</span></p>
             <p className="action">
               <button onClick={() => this._handleRemoveActor(uuid)}>删除</button>
-              <button>编辑</button>
+              <button onClick={() => this._handleEditActor(uuid, template_uuid)}>编辑</button>
               <button onClick={() => this.props.selectActor(uuid)}>查看</button>
             </p>
           </div>
@@ -117,5 +132,6 @@ module.exports = connect(
     showAlert: (...args) => dispatch(showAlert(...args)),
     selectActor: (uuid) => dispatch(selectActor(uuid)),
     removeActor: (uuid) => dispatch(removeActor(uuid)),
+    selectTemplate: (template) => dispatch(selectTemplate(template)),
   })
 )(ActorList);

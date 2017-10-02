@@ -2,7 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const at = require('trpg-actor-template');
 const { showAlert } = require('../../../redux/actions/ui');
-const { createActor } = require('../../../redux/actions/actor');
+const { createActor, updateActor } = require('../../../redux/actions/actor');
 const ImageUploader = require('../../../components/ImageUploader');
 
 require('./ActorEdit.scss');
@@ -16,17 +16,41 @@ class ActorEdit extends React.Component {
       profileDesc: '',
       profileAvatar: '',
     };
+    if(this.props.selectedActorUUID) {
+      let actorIndex = this.props.selfActors.findIndex((item, index) => {
+        if(item.get('uuid') === this.props.selectedActorUUID) {
+          return true;
+        }else {
+          return false;
+        }
+      })
+
+      if(actorIndex >= 0) {
+        let actor = this.editedActor = this.props.selfActors.get(actorIndex);
+        this.state.profileName = actor.get('name');
+        this.state.profileDesc = actor.get('desc');
+        this.state.profileAvatar = actor.get('avatar');
+      }else {
+        console.error('角色不存在');
+      }
+    }
   }
 
   componentDidMount() {
     this.template_uuid = this.props.selectedTemplate.get('uuid');
     let info = this.props.selectedTemplate.get('info');
     let template = this.template = at.parse(info);
+    if(this.editedActor) {
+      let data = this.editedActor.get('info').toJS();
+      template.setData(data);
+    }
     template.eval();
     this.setState({cells: template.getCells()});
   }
 
   _handleSave() {
+    let isCreate = !this.props.selectedActorUUID;//是否为新建人物
+
     console.log('save template', this.template);
     let name = this.state.profileName;
     let avatar = this.state.profileAvatar;
@@ -39,7 +63,7 @@ class ActorEdit extends React.Component {
       console.log('save data', {name, avatar, desc, info, template_uuid});
       let content = (
         <div>
-          <p>是否要创建人物？数据如下:</p>
+          <p>是否要{isCreate?'创建':'更新'}人物？数据如下:</p>
           {
             this.template.getCells().map((cell, index) => {
               return (
@@ -50,11 +74,18 @@ class ActorEdit extends React.Component {
         </div>
       )
       this.props.showAlert({
-        title: '创建人物',
+        title: isCreate?'创建人物':'更新人物',
         content: content,
         type: 'alert',
         onConfirm: () => {
-          this.props.createActor(name, avatar, desc, info, template_uuid)
+          if(isCreate) {
+            // create
+            this.props.createActor(name, avatar, desc, info, template_uuid);
+          }else {
+            // update
+            let uuid = this.props.selectedActorUUID;
+            this.props.updateActor(uuid, name, avatar, desc, info);
+          }
         }
       })
     }
@@ -68,7 +99,7 @@ class ActorEdit extends React.Component {
             placeholder="人物卡名"
             value={this.state.profileName}
             onChange={(e) => this.setState({profileName: e.target.value})} />
-          <button onClick={() => this._handleSave()}>创建</button>
+          <button onClick={() => this._handleSave()}>{this.props.selectedActorUUID?'更新':'创建'}</button>
         </div>
         <div className="actor-edit-body">
           <div className="actor-edit-profile">
@@ -118,7 +149,8 @@ class ActorEdit extends React.Component {
 module.exports = connect(
   state => ({
     selectedTemplate: state.getIn(['actor', 'selectedTemplate']),
-    currentEditedActorUUID: state.getIn(['actor', 'currentEditedActorUUID']),
+    selectedActorUUID: state.getIn(['actor', 'selectedActorUUID']),
+    selfActors: state.getIn(['actor', 'selfActors']),
   }),
   dispatch => ({
     showAlert: (msg) => {
@@ -126,6 +158,9 @@ module.exports = connect(
     },
     createActor: (name, avatar, desc, info, template_uuid) => {
       dispatch(createActor(name, avatar, desc, info, template_uuid));
+    },
+    updateActor: (uuid, name, avatar, desc, info) => {
+      dispatch(updateActor(uuid, name, avatar, desc, info));
     },
   })
 )(ActorEdit);

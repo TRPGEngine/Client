@@ -13,6 +13,7 @@ const {
   GET_ACTOR_SUCCESS,
   SELECT_ACTOR,
   REMOVE_ACTOR_SUCCESS,
+  UPDATE_ACTOR_SUCCESS,
 } = require('../constants');
 const { showLoading, hideLoading, showAlert, hideAlert, hideModal } = require('./ui');
 
@@ -95,7 +96,9 @@ let selectTemplate = function selectTemplate(template) {
 
 let createActor = function createActor(name, avatar, desc, info, template_uuid) {
   return function(dispatch, getState) {
+    dispatch(showLoading('创建人物中，请稍后...'));
     return api.emit('actor::createActor', {name, avatar, desc, info, template_uuid}, function(data) {
+      dispatch(hideLoading());
       dispatch(hideAlert());
       dispatch(hideModal());
       if(data.result) {
@@ -139,6 +142,23 @@ let removeActor = function removeActor(uuid) {
   }
 }
 
+let updateActor = function updateActor(uuid, name, avatar, desc, info) {
+  return function(dispatch, getState) {
+    dispatch(showLoading('正在更新人物卡信息，请稍后...'));
+    return api.emit('actor::updateActor', {uuid, name, avatar, desc, info}, function(data) {
+      dispatch(hideLoading());
+      dispatch(hideAlert());
+      dispatch(hideModal());
+      if(data.result) {
+        dispatch({type: UPDATE_ACTOR_SUCCESS, payload: data.actor});
+      }else {
+        dispatch(showAlert(data.msg));
+        console.error(data.msg);
+      }
+    })
+  }
+}
+
 module.exports = {
   setTemplate,
   getTemplate,
@@ -151,4 +171,5 @@ module.exports = {
   getActor,
   selectActor,
   removeActor,
+  updateActor,
 }
