@@ -4,6 +4,7 @@ const ConvItem = require('../../../components/ConvItem');
 const moment = require('moment');
 const ReactTooltip = require('react-tooltip');
 const Select = require('react-select');
+const { switchSelectGroup } = require('../../../redux/actions/group');
 
 require('./GroupList.scss');
 
@@ -23,10 +24,6 @@ class GroupList extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('click', this.sildeEvent);
     this.sildeEvent = null;
-  }
-
-  _handleSelectGroup(uuid) {
-    console.log(uuid);
   }
 
   _handleSendMsg() {
@@ -71,6 +68,24 @@ class GroupList extends React.Component {
       slidePanelTitle: title,
       slidePanelContent: content,
     });
+  }
+
+  getGroupList() {
+    return this.props.groups.map((item, index) => {
+      let uuid = item.get('uuid');
+      return (
+        <ConvItem
+          key={uuid+'#'+index}
+          icon={'/src/assets/img/gugugu1.png'}
+          title={item.get('name')}
+          content={''}
+          time={moment().format('YYYY-MM-DD HH:mm:ss')}
+          uuid={uuid}
+          isSelected={this.props.selectedUUID === uuid}
+          onClick={() => this.props.switchSelectGroup(uuid)}
+        />
+      )
+    })
   }
 
   getHeaderActions() {
@@ -127,6 +142,7 @@ class GroupList extends React.Component {
     return (
       <div className="group">
         <div className="list">
+          { this.getGroupList() }
           <ConvItem
             key={'converses#'+1}
             icon={'/src/assets/img/gugugu1.png'}
@@ -247,4 +263,12 @@ class GroupList extends React.Component {
   }
 }
 
-module.exports = connect()(GroupList);
+module.exports = connect(
+  state => ({
+    groups: state.getIn(['group', 'groups']),
+    selectedUUID: state.getIn(['group', 'selectedGroupUUID']),
+  }),
+  dispatch => ({
+    switchSelectGroup: (uuid) => dispatch(switchSelectGroup(uuid)),
+  })
+)(GroupList);

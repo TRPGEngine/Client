@@ -4,7 +4,11 @@ const {
   AGREE_GROUP_INVITE_SUCCESS,
   REFUSE_GROUP_INVITE_SUCCESS,
   GET_GROUP_INVITE_SUCCESS,
+  GET_GROUP_LIST_SUCCESS,
+  SWITCH_GROUP,
 } = require('../constants');
+const trpgApi = require('../../api/trpg.api.js');
+const api = trpgApi.getInstance();
 
 exports.getGroupInfo = function(uuid) {
   return function(dispatch, getState) {
@@ -61,4 +65,20 @@ exports.getGroupInvite = function(inviteUUID) {
       }
     })
   }
+}
+
+exports.getGroupList = function() {
+  return function(dispatch, getState) {
+    return api.emit('group::getGroupList', null, function(data) {
+      if(data.result) {
+        dispatch({type: GET_GROUP_LIST_SUCCESS, payload: data.groups});
+      }else {
+        console.error(data.msg);
+      }
+    })
+  }
+}
+
+exports.switchSelectGroup = function(uuid) {
+  return {type: SWITCH_GROUP, payload: uuid}
 }

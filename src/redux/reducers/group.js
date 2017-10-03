@@ -5,12 +5,15 @@ const {
   AGREE_GROUP_INVITE_SUCCESS,
   REFUSE_GROUP_INVITE_SUCCESS,
   GET_GROUP_INVITE_SUCCESS,
+  GET_GROUP_LIST_SUCCESS,
+  SWITCH_GROUP,
 } = require('../constants');
 
 const initialState = immutable.fromJS({
-  list: [],// 加入的组列表。uuid
   info: {},// 所有的group信息。包括加入的和未加入的
   invites: [],// 邀请列表。里面是邀请对象
+  groups: [],// 个人所有组的信息
+  selectedGroupUUID: '',
 });
 
 module.exports = function group(state = initialState, action) {
@@ -19,12 +22,12 @@ module.exports = function group(state = initialState, action) {
       let group_uuid = action.payload.uuid;
       return state.setIn(['info', group_uuid], action.payload);
     case GET_GROUP_INVITE_SUCCESS:
-      return state.set('invites', action.payload);
+      return state.set('invites', immutable.fromJS(action.payload));
     case AGREE_GROUP_INVITE_SUCCESS:
       return state.update('invites', (list) => {
         let agreeUUID = action.payload.uuid;
         let index = -1;
-        for (let i = 0; i < list.count(); i++) {
+        for (let i = 0; i < list.size; i++) {
           let item = list.get(i);
           if(item.get('uuid') === agreeUUID) {
             index = i;
@@ -37,13 +40,13 @@ module.exports = function group(state = initialState, action) {
         }else {
           return list;
         }
-      }).update('list', (list) => list.push(action.payload.group_uuid));
+      }).update('groups', (list) => list.push(action.payload.group));
     case REFUSE_GROUP_INVITE_SUCCESS:
       return state.update('invites', (list) => {
         // same as agree
         let agreeUUID = action.payload.uuid;
         let index = -1;
-        for (let i = 0; i < list.count(); i++) {
+        for (let i = 0; i < list.size; i++) {
           let item = list.get(i);
           if(item.get('uuid') === agreeUUID) {
             index = i;
@@ -57,6 +60,10 @@ module.exports = function group(state = initialState, action) {
           return list;
         }
       })
+    case GET_GROUP_LIST_SUCCESS:
+      return state.set('groups', immutable.fromJS(action.payload));
+    case SWITCH_GROUP:
+      return state.set('selectedGroupUUID', action.payload);
   }
 
   return state;
