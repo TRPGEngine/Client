@@ -52,10 +52,10 @@ class GroupList extends React.Component {
 
   _handleShowSlidePanel(title, content) {
     this.sildeEvent = function () {
-      console.log('close slide panel');
+      console.log('close slide panel with click');
+      window.removeEventListener('click', this.sildeEvent);
       if(this.sildeEvent) {
         this.setState({isSlidePanelShow: false});
-        window.removeEventListener('click', this.sildeEvent);
         this.sildeEvent = null;
       }
     }.bind(this);
@@ -68,6 +68,13 @@ class GroupList extends React.Component {
       slidePanelTitle: title,
       slidePanelContent: content,
     });
+  }
+
+  _handleHideSlidePanel() {
+    console.log('close slide panel with btn');
+    this.setState({isSlidePanelShow: false});
+    window.removeEventListener('click', this.sildeEvent);
+    this.sildeEvent = null;
   }
 
   getGroupList() {
@@ -250,7 +257,7 @@ class GroupList extends React.Component {
               <div className="title">{this.state.slidePanelTitle}</div>
               <div
                 className="close"
-                onClick={() => this.setState({isSlidePanelShow: false})}
+                onClick={() => this._handleHideSlidePanel()}
               >
                 <i className="iconfont">&#xe70c;</i>
               </div>
