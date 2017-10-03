@@ -5,6 +5,7 @@ const moment = require('moment');
 const ReactTooltip = require('react-tooltip');
 const Select = require('react-select');
 const { switchSelectGroup } = require('../../../redux/actions/group');
+const GroupMap = require('./GroupMap');
 
 require('./GroupList.scss');
 
@@ -113,6 +114,9 @@ class GroupList extends React.Component {
       {
         name: '游戏地图',
         icon: '&#xe6d7;',
+        component: (
+          <GroupMap />
+        )
       },
       {
         name: '游戏规则',
