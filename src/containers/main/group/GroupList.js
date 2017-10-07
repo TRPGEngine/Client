@@ -6,6 +6,7 @@ const ReactTooltip = require('react-tooltip');
 const Select = require('react-select');
 const { switchSelectGroup } = require('../../../redux/actions/group');
 const GroupMap = require('./GroupMap');
+const GroupInvite = require('./GroupInvite');
 
 require('./GroupList.scss');
 
@@ -102,9 +103,7 @@ class GroupList extends React.Component {
         name: '添加团员',
         icon: '&#xe61c;',
         component: (
-          <div>
-            aaaaa
-          </div>
+          <GroupInvite />
         )
       },
       {
