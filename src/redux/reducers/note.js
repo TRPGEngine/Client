@@ -34,10 +34,13 @@ module.exports = function ui(state = initialState, action) {
       return state.setIn(['noteList', blankUUID], blankNote).set('selectedNoteUUID', blankUUID);
     case SAVE_NOTE:
       let saveUUID = action.payload.uuid;
+      let saveTitle = action.payload.title;
       let saveContent = action.payload.content;
       let noteObj = localStorage.get('note') || {};
 
-      state = state.setIn(['noteList', saveUUID, 'content'], saveContent)
+      state = state
+        .setIn(['noteList', saveUUID, 'title'], saveTitle)
+        .setIn(['noteList', saveUUID, 'content'], saveContent)
         .setIn(['noteList', saveUUID, 'updated_At'], moment().valueOf());
 
       noteObj[saveUUID] = state.getIn(['noteList', saveUUID]).toJS();

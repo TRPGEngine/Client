@@ -10,8 +10,8 @@ exports.addNote = function addNote() {
   return {type: ADD_NOTE}
 }
 
-exports.saveNote = function saveNote(uuid, content) {
-  return {type: SAVE_NOTE, payload: {uuid, content}}
+exports.saveNote = function saveNote(uuid, title, content) {
+  return {type: SAVE_NOTE, payload: {uuid, title, content}}
 }
 
 exports.getNote = function getNote() {
