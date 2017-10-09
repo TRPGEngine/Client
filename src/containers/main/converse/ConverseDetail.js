@@ -74,47 +74,7 @@ class ConverseDetail extends React.Component {
     }else {
       return (
         <div className="msg-items">
-          <MsgItem
-            icon="/src/assets/img/gugugu1.png"
-            name="admin"
-            content="咕咕咕？"
-            time="2017-08-17 13:48:46"
-          />
-          <MsgItem
-            icon="/src/assets/img/gugugu1.png"
-            name="admin"
-            content="咕咕咕？"
-            time="2017-08-17 13:48:46"
-            me={true}
-          />
-          <MsgItem
-            icon="/src/assets/img/gugugu1.png"
-            name="admin"
-            content="咕咕！咕咕咕咕咕咕咕咕咕咕咕咕咕咕!!咕咕咕咕!咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕咕"
-            time="2017-08-17 13:48:46"
-            me={false}
-          />
-          <MsgItem
-            icon="/src/assets/img/gugugu1.png"
-            name="admin"
-            content="咕咕~咕咕咕？"
-            time="2017-08-17 13:48:46"
-            me={false}
-          />
-          <MsgItem
-            icon="/src/assets/img/gugugu1.png"
-            name="admin"
-            content="咕咕咕！"
-            time="2017-08-17 13:48:46"
-            me={true}
-          />
-          <MsgItem
-            icon="/src/assets/img/gugugu1.png"
-            name="admin"
-            content="咕！！！！"
-            time="2017-08-17 13:48:46"
-            me={true}
-          />
+          {/*暂无消息*/}
         </div>
       )
     }

@@ -7,7 +7,7 @@ const {
   CREATE_CONVERSES_REQUEST,
   CREATE_CONVERSES_SUCCESS,
   CREATE_CONVERSES_FAILED,
-  UPDATE_CONVERSES,
+  UPDATE_CONVERSES_SUCCESS,
   SWITCH_CONVERSES,
   SEND_MSG,
   SEND_MSG_COMPLETED
@@ -99,6 +99,7 @@ let getConverses = function getConverses() {
         let list = data.list;
         dispatch({type:GET_CONVERSES_SUCCESS, payload: list});
         let uuid = getState().getIn(['user','info','uuid']);
+        // 用户聊天记录
         for (let item of list) {
           let convUUID = item.uuid;
           // 获取日志
@@ -107,7 +108,7 @@ let getConverses = function getConverses() {
           api.emit('chat::getChatLog', {uuid1: uuid, uuid2: convUUID}, function(data) {
             if(data.result) {
               let list = data.list;
-              dispatch({type:UPDATE_CONVERSES, payload: list, convUUID});
+              dispatch({type:UPDATE_CONVERSES_SUCCESS, payload: list, convUUID});
             }else {
               console.error('获取聊天记录失败:' + data.msg);
             }
@@ -146,7 +147,7 @@ let createConverse = function createConverse(uuid, type, isSwitchToConv = true) 
         api.emit('chat::getChatLog', {uuid1: uuid, uuid2: convUUID}, function(data) {
           if(data.result) {
             let list = data.list;
-            dispatch({type:UPDATE_CONVERSES, payload: list, convUUID});
+            dispatch({type:UPDATE_CONVERSES_SUCCESS, payload: list, convUUID});
           }else {
             console.error('获取聊天记录失败:' + data.msg);
           }

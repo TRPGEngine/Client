@@ -7,7 +7,7 @@ const {
   CREATE_CONVERSES_REQUEST,
   CREATE_CONVERSES_SUCCESS,
   CREATE_CONVERSES_FAILED,
-  UPDATE_CONVERSES,
+  UPDATE_CONVERSES_SUCCESS,
   SWITCH_CONVERSES,
 } = require('../constants');
 const immutable = require('immutable');
@@ -82,7 +82,7 @@ module.exports = function chat(state = initialState, action) {
           return state.setIn(['converses'], immutable.fromJS(converses));
         }
         return state;
-      case UPDATE_CONVERSES:
+      case UPDATE_CONVERSES_SUCCESS:
         let convUUID = action.convUUID;
         payload = immutable.fromJS(action.payload);
         let lastLog = payload.last();

@@ -33,10 +33,11 @@ class ConverseList extends React.Component {
   getConverseList() {
     let converses = this.props.converses.toArray().map((item, index) => {
       item = item.toJS();
+      let defaultIcon = item.uuid === 'trpgsystem' ? '/src/assets/img/system_notice.png' : '/src/assets/img/gugugu1.png';
       return (
         <ConvItem
           key={'converses#'+index}
-          icon={item.icon || '/src/assets/img/gugugu1.png'}
+          icon={item.icon || defaultIcon}
           title={item.name}
           content={item.lastMsg}
           time={item.lastTime}
@@ -49,27 +50,10 @@ class ConverseList extends React.Component {
     return converses;
   }
 
-  getSystemConverse() {
-    let uuid = "trpgsystem";
-    return (
-      <ConvItem
-        key={'converses#system'}
-        icon='/src/assets/img/system_notice.png'
-        title='系统消息'
-        content={''}
-        time={''}
-        uuid={uuid}
-        isSelected={this.props.selectedUUID === uuid}
-        onClick={() => this._handleSelectConverse(uuid)}
-      />
-    )
-  }
-
   render() {
     return (
       <div className="converse">
         <div className="list">
-          {this.getSystemConverse()}
           {this.getConverseList()}
         </div>
         <div className="detail">
