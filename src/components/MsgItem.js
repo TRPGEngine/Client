@@ -3,6 +3,39 @@ const PropTypes = require('prop-types');
 require('./MsgItem.scss');
 
 class MsgItem extends React.Component {
+  getCardAction(cardType) {
+    if(cardType === 'friendInvite') {
+      let uuid = this.props.uuid;
+      return (
+        <div className="card-action">
+          <button onClick={() => console.log(uuid)}>拒绝</button>
+          <button onClick={() => console.log(uuid)}>同意</button>
+        </div>
+      )
+    }
+  }
+
+  getContent() {
+    if(this.props.type === 'card') {
+      let data = this.props.data || {};
+      return (
+        <div className="bubble">
+          <div className="card-title">
+            {data.title}
+          </div>
+          <div className="card-content">
+            {data.content}
+          </div>
+          {this.getCardAction(data.type)}
+        </div>
+      )
+    }else {
+      return (
+        <div className="bubble">{this.props.content}</div>
+      )
+    }
+  }
+
   render() {
     return (
       <div className={"msg-item "+(this.props.me?"me ":"") + this.props.type}>
@@ -13,7 +46,7 @@ class MsgItem extends React.Component {
         <div className="content">
           <div className="avatar"><img src={this.props.icon} /></div>
           <div className="body">
-            <div className="bubble">{this.props.content}</div>
+            {this.getContent()}
           </div>
         </div>
       </div>

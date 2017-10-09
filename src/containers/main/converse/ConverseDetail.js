@@ -56,13 +56,15 @@ class ConverseDetail extends React.Component {
         <div className="msg-items">
         {
           list.map((item, index) => {
+            let defaultAvatar = item.sender_uuid === 'trpgsystem' ? '/src/assets/img/system_notice.png' : '/src/assets/img/gugugu1.png';
             return (
               <MsgItem
                 key={item.uuid+'+'+index}
-                icon={usercache.getIn([item.sender_uuid, 'avatar']) || '/src/assets/img/gugugu1.png'}
+                icon={usercache.getIn([item.sender_uuid, 'avatar']) || defaultAvatar}
                 name={usercache.getIn([item.sender_uuid, 'username']) || ''}
                 type={item.type}
                 content={item.message}
+                data={item.data}
                 time={moment(item.date).format('HH:mm:ss')}
                 me={userUUID===item.sender_uuid}
               />

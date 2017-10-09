@@ -95,6 +95,37 @@
     }
   }
 
+  &.card {
+    & .content>.body>.bubble {
+      padding: 0;
+      width: 230px;
+
+      .card-title {
+        @include one-line;
+        color: white;
+        line-height: 30px;
+        padding: 0 6px;
+        background-color: $color-tan;
+      }
+
+      .card-content {
+        padding: 10px 6px;
+        color: $color-tundora;
+        min-height: 60px;
+      }
+
+      .card-action {
+        margin: 0 6px;
+        padding: 4px 0;
+        border-top: 1px solid $color-bon-jour;
+
+        button {
+          @include link-btn;
+        }
+      }
+    }
+  }
+
   .profile {
     padding: 0 45px;
     margin: 2px 0;
@@ -147,6 +178,7 @@
         word-break: break-all;
         float: left;
         position: relative;
+        overflow: hidden;
       }
     }
 

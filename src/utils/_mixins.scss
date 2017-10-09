@@ -28,13 +28,34 @@
 }
 
 @mixin link-btn {
-  font-size: 16px;
+  font-size: 14px;
   background-color: transparent;
   border: 0;
   cursor: pointer;
   color: #705949;
-  padding: 4px 4px;
+  padding: 0 2px;
+  margin: 4px 6px;
   outline: 0;
+  position: relative;
+
+  &:after {
+    content: ' ';
+    position: absolute;
+    width: 100%;
+    border-top: 1px solid #705949;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    transition: width 0.2s ease-in-out;
+  }
+
+  &:hover, &.active {
+    &:after {
+      position: absolute;
+      width: 100%;
+      border-top: 1px solid #705949;
+    }
+  }
 }
 
 @mixin icon-btn {
@@ -65,6 +86,7 @@
   border-bottom: 1px solid #DDDCDD;
   background-color: transparent;
   font-size: 16px;
+  position: relative;
 
   &:focus {
     border-bottom-color: #705949;
