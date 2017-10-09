@@ -55,18 +55,18 @@ class ConverseDetail extends React.Component {
       return (
         <div className="msg-items">
         {
-          list.map((item, index) => {
+          list.sortBy((item) => item.get('date')).map((item, index) => {
             let defaultAvatar = item.sender_uuid === 'trpgsystem' ? '/src/assets/img/system_notice.png' : '/src/assets/img/gugugu1.png';
             return (
               <MsgItem
-                key={item.uuid+'+'+index}
+                key={item.get('uuid')+'+'+index}
                 icon={usercache.getIn([item.sender_uuid, 'avatar']) || defaultAvatar}
                 name={usercache.getIn([item.sender_uuid, 'username']) || ''}
-                type={item.type}
-                content={item.message}
-                data={item.data}
-                time={moment(item.date).format('HH:mm:ss')}
-                me={userUUID===item.sender_uuid}
+                type={item.get('type')}
+                content={item.get('message')}
+                data={item.get('data')}
+                time={moment(item.get('date')).format('HH:mm:ss')}
+                me={userUUID===item.get('sender_uuid')}
               />
             )
           })
@@ -84,9 +84,9 @@ class ConverseDetail extends React.Component {
 
   render() {
     let list = this.props.list;
-    if(!!list) {
-      list = list.toJS();
-    }
+    // if(!!list) {
+    //   list = list.toJS();
+    // }
     let inputType = this.state.inputType;
     return (
       <div className="conv-detail">

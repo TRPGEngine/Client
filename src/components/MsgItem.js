@@ -3,9 +3,10 @@ const PropTypes = require('prop-types');
 require('./MsgItem.scss');
 
 class MsgItem extends React.Component {
-  getCardAction(cardType) {
+  getCardAction(data) {
+    let cardType = data.get('type');
     if(cardType === 'friendInvite') {
-      let uuid = this.props.uuid;
+      let uuid = data.get('uuid');
       return (
         <div className="card-action">
           <button onClick={() => console.log(uuid)}>拒绝</button>
@@ -21,12 +22,12 @@ class MsgItem extends React.Component {
       return (
         <div className="bubble">
           <div className="card-title">
-            {data.title}
+            {data.get('title')}
           </div>
           <div className="card-content">
-            {data.content}
+            {data.get('content')}
           </div>
-          {this.getCardAction(data.type)}
+          {this.getCardAction(data)}
         </div>
       )
     }else {
