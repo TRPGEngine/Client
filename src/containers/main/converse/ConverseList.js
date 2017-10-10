@@ -1,6 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
-
+const moment = require('moment');
 const ConverseDetail = require('./ConverseDetail');
 const ConvItem = require('../../../components/ConvItem');
 const { switchConverse } = require('../../../redux/actions/chat');
@@ -31,22 +31,26 @@ class ConverseList extends React.Component {
   }
 
   getConverseList() {
-    let converses = this.props.converses.toArray().map((item, index) => {
-      item = item.toJS();
-      let defaultIcon = item.uuid === 'trpgsystem' ? '/src/assets/img/system_notice.png' : '/src/assets/img/gugugu1.png';
-      return (
-        <ConvItem
-          key={'converses#'+index}
-          icon={item.icon || defaultIcon}
-          title={item.name}
-          content={item.lastMsg}
-          time={item.lastTime}
-          uuid={item.uuid}
-          isSelected={this.props.selectedUUID === item.uuid}
-          onClick={() => this._handleSelectConverse(item.uuid)}
-        />
-      )
-    });
+    let converses = this.props.converses
+      .valueSeq()
+      .sortBy((item) => item.get('lastTime'))
+      .reverse()
+      .map((item, index) => {
+        let uuid = item.get('uuid');
+        let defaultIcon = uuid === 'trpgsystem' ? '/src/assets/img/system_notice.png' : '/src/assets/img/gugugu1.png';
+        return (
+          <ConvItem
+            key={'converses#'+index}
+            icon={item.get('icon') || defaultIcon}
+            title={item.get('name')}
+            content={item.get('lastMsg')}
+            time={moment(item.get('lastTime')).format('HH:mm')}
+            uuid={uuid}
+            isSelected={this.props.selectedUUID === uuid}
+            onClick={() => this._handleSelectConverse(uuid)}
+          />
+        )
+      });
     return converses;
   }
 

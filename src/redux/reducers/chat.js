@@ -11,7 +11,6 @@ const {
   SWITCH_CONVERSES,
 } = require('../constants');
 const immutable = require('immutable');
-const moment = require('moment');
 
 const initialState = immutable.fromJS({
   selectedConversesUUID: '',
@@ -22,7 +21,7 @@ const initialState = immutable.fromJS({
       name: '系统',
       icon: '',
       lastMsg: '欢迎使用TPRG客户端',
-      lastTime: moment().format('HH:mm'),
+      lastTime: new Date().valueOf(),
       msgList: [
         {
           room: '',
@@ -32,9 +31,8 @@ const initialState = immutable.fromJS({
           to_uuid: '',
           type: 'normal',
           is_public: false,
-          time: moment().format('HH:mm'),
           message: '欢迎使用TPRG客户端',
-          date: moment().valueOf()
+          date: new Date().valueOf()
         }
       ]
     }
@@ -65,7 +63,7 @@ module.exports = function chat(state = initialState, action) {
             ['converses', converseUUID, 'msgList'],
             (msgList) => msgList.push(payload)
           ).setIn(['converses', converseUUID, 'lastMsg'], payload.get('message'))
-          .setIn(['converses', converseUUID, 'lastTime'], moment(payload.get('date')).format('HH:mm'));;
+          .setIn(['converses', converseUUID, 'lastTime'], payload.get('date'));;
       case GET_CONVERSES_SUCCESS:
         let list = action.payload;
         if(list instanceof Array && list.length > 0) {
@@ -88,7 +86,7 @@ module.exports = function chat(state = initialState, action) {
         let lastLog = payload.last();
         return state.updateIn(['converses', convUUID, 'msgList'], (list) => list.concat(payload))
           .setIn(['converses', convUUID, 'lastMsg'], lastLog.get('message'))
-          .setIn(['converses', convUUID, 'lastTime'], moment(lastLog.get('date')).format('HH:mm'));
+          .setIn(['converses', convUUID, 'lastTime'], lastLog.get('date'));
       case SWITCH_CONVERSES:
         return state.set('selectedConversesUUID', action.converseUUID);
       case CREATE_CONVERSES_SUCCESS:
