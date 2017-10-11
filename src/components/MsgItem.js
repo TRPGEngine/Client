@@ -1,18 +1,37 @@
 const React = require('react');
 const PropTypes = require('prop-types');
+const { connect } = require('react-redux');
+const { agreeFriendInvite, refuseFriendInvite } = require('../redux/actions/user');
 require('./MsgItem.scss');
 
 class MsgItem extends React.Component {
   getCardAction(data) {
     let cardType = data.get('type');
     if(cardType === 'friendInvite') {
-      let uuid = data.get('uuid');
-      return (
-        <div className="card-action">
-          <button onClick={() => console.log(uuid)}>拒绝</button>
-          <button onClick={() => console.log(uuid)}>同意</button>
-        </div>
-      )
+      let actionState = data.get('actionState');
+      let uuid = data.getIn(['invite', 'uuid']);
+      switch (actionState) {
+        case 1:
+          return (
+            <div className="card-action">
+              <button disabled>已同意</button>
+            </div>
+          )
+        case 2:
+          return (
+            <div className="card-action">
+              <button disabled>已拒绝</button>
+            </div>
+          )
+        case 0:
+        default:
+          return (
+            <div className="card-action">
+              <button onClick={() => this.props.dispatch(refuseFriendInvite(uuid))}>拒绝</button>
+              <button onClick={() => this.props.dispatch(agreeFriendInvite(uuid))}>同意</button>
+            </div>
+          )
+      }
     }
   }
 
@@ -64,4 +83,4 @@ MsgItem.propTypes = {
   me: PropTypes.bool,
 }
 
-module.exports = MsgItem;
+module.exports = connect()(MsgItem);

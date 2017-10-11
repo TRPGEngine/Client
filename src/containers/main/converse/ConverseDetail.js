@@ -57,6 +57,37 @@ class ConverseDetail extends React.Component {
         {
           list.sortBy((item) => item.get('date')).map((item, index) => {
             let defaultAvatar = item.sender_uuid === 'trpgsystem' ? '/src/assets/img/system_notice.png' : '/src/assets/img/gugugu1.png';
+            let data = item.get('data');
+
+            // data 预处理
+            if(data && item.get('type') === 'card') {
+              if(data.get('type') === 'friendInvite') {
+                let inviteUUID = data.getIn(['invite', 'uuid']);
+                let from_uuid = data.getIn(['invite', 'from_uuid']);
+                let inviteIndex = this.props.friendRequests.findIndex((item) => {
+                  if(item.get('uuid') === inviteUUID) {
+                    return true
+                  }else {
+                    return false
+                  }
+                });
+                if(inviteIndex >= 0) {
+                  // 尚未处理
+                  data = data.set('actionState', 0);
+                }else {
+                  let friendIndex = this.props.friendList.indexOf(from_uuid);
+                  if(friendIndex >= 0) {
+                    // 已同意是好友
+                    data = data.set('actionState', 1);
+                  }else {
+                    // 已拒绝好友邀请
+                    data = data.set('actionState', 2);
+                  }
+
+                }
+              }
+            }
+
             return (
               <MsgItem
                 key={item.get('uuid')+'+'+index}
@@ -64,7 +95,7 @@ class ConverseDetail extends React.Component {
                 name={usercache.getIn([item.sender_uuid, 'username']) || ''}
                 type={item.get('type')}
                 content={item.get('message')}
-                data={item.get('data')}
+                data={data}
                 time={moment(item.get('date')).format('HH:mm:ss')}
                 me={userUUID===item.get('sender_uuid')}
               />
@@ -145,6 +176,8 @@ class ConverseDetail extends React.Component {
 module.exports = connect(
   state => ({
     userUUID: state.getIn(['user','info','uuid']),
-    usercache: state.getIn(['cache', 'user'])
+    usercache: state.getIn(['cache', 'user']),
+    friendRequests: state.getIn(['user', 'friendRequests']),
+    friendList: state.getIn(['user', 'friendList']),
   })
 )(ConverseDetail);

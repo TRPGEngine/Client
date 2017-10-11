@@ -38,22 +38,29 @@
   outline: 0;
   position: relative;
 
-  &:after {
-    content: ' ';
-    position: absolute;
-    width: 100%;
-    border-top: 1px solid #705949;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    transition: width 0.2s ease-in-out;
+  &:disabled {
+    cursor: not-allowed;
+    color: #999999;
   }
 
-  &:hover, &.active {
+  &:enabled {
     &:after {
+      content: ' ';
       position: absolute;
       width: 100%;
       border-top: 1px solid #705949;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      transition: width 0.2s ease-in-out;
+    }
+
+    &:hover, &.active {
+      &:after {
+        position: absolute;
+        width: 100%;
+        border-top: 1px solid #705949;
+      }
     }
   }
 }

@@ -34,6 +34,7 @@ class FriendsList extends React.Component {
   }
 
   getFriendRequest() {
+    // 弃用
     let friendRequests = this.props.friendRequests.toJS();
     let usercache = this.props.usercache;
     // friendRequests = [{
@@ -88,9 +89,9 @@ class FriendsList extends React.Component {
           <div className="items">
             {this.getFriendList()}
           </div>
-          <div className="requests">
+          {/*<div className="requests">
             {this.getFriendRequest()}
-          </div>
+          </div>*/}
         </div>
         <div className="detail">
           <FriendsDetail />
