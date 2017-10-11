@@ -10,54 +10,58 @@
     border-right: 1px solid $color-bon-jour;
     position: relative;
 
-    .items {
-      display: flex;
-      flex-wrap: wrap;
-      height: 100%;
-      width: 100%;
-      justify-content: flex-start;
-      align-content: flex-start;
-
-      .item {
-        width: 33%;
-
-        .item-wrap {
-          width: 60px;
-          height: 64px;
-          min-height: 60px;
-          margin: 10px auto;
-          padding: 4px;
-          cursor: pointer;
-          border-radius: 2px;
-
-          &:hover {
-            background-color: rgba(black, 0.2);
-          }
-
-          .avatar {
-            width: 40px;
-            height: 40px;
-            margin: auto;
-            border-radius: 50%;
-            overflow: hidden;
-
-            > img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-
-          .username {
-            @include one-line;
-            margin-top: 2px;
-            font-size: 14px;
-            line-height: 1em;
-            text-align: center;
-            word-wrap: normal;
-          }
-        }
-      }
+    .items > div {
+      padding-left: 10px;
     }
+
+    // .items {
+    //   display: flex;
+    //   flex-wrap: wrap;
+    //   height: 100%;
+    //   width: 100%;
+    //   justify-content: flex-start;
+    //   align-content: flex-start;
+    //
+    //   .item {
+    //     width: 33%;
+    //
+    //     .item-wrap {
+    //       width: 60px;
+    //       height: 64px;
+    //       min-height: 60px;
+    //       margin: 10px auto;
+    //       padding: 4px;
+    //       cursor: pointer;
+    //       border-radius: 2px;
+    //
+    //       &:hover {
+    //         background-color: rgba(black, 0.2);
+    //       }
+    //
+    //       .avatar {
+    //         width: 40px;
+    //         height: 40px;
+    //         margin: auto;
+    //         border-radius: 50%;
+    //         overflow: hidden;
+    //
+    //         > img {
+    //           width: 100%;
+    //           height: 100%;
+    //         }
+    //       }
+    //
+    //       .username {
+    //         @include one-line;
+    //         margin-top: 2px;
+    //         font-size: 14px;
+    //         line-height: 1em;
+    //         text-align: center;
+    //         word-wrap: normal;
+    //       }
+    //     }
+    //   }
+    // }
 
     .requests {
       position: absolute;

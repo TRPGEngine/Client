@@ -56,7 +56,7 @@ class ConverseDetail extends React.Component {
         <div className="msg-items">
         {
           list.sortBy((item) => item.get('date')).map((item, index) => {
-            let defaultAvatar = item.sender_uuid === 'trpgsystem' ? '/src/assets/img/system_notice.png' : '/src/assets/img/gugugu1.png';
+            let defaultAvatar = item.get('sender_uuid') === 'trpgsystem' ? '/src/assets/img/system_notice.png' : '/src/assets/img/gugugu1.png';
             let data = item.get('data');
 
             // data 预处理

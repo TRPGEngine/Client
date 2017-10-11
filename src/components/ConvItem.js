@@ -4,9 +4,13 @@ require('./ConvItem.scss');
 
 class ConvItem extends React.Component {
   render() {
+    let closeBtn = !this.props.hideCloseBtn ? (
+      <div className="close" onClick={() => console.log('close conv:',this.props.uuid)}><i className="iconfont">&#xe70c;</i></div>
+    ) : null
+
     return (
       <div className={this.props.isSelected?"conv-item active":"conv-item"} onClick={this.props.onClick}>
-        <div className="close" onClick={() => console.log('close conv:',this.props.uuid)}><i className="iconfont">&#xe70c;</i></div>
+        {closeBtn}
         <div className="icon"><img src={this.props.icon}></img></div>
         <div className="body">
           <div className="title"><p>{this.props.title}</p><span>{this.props.time}</span></div>

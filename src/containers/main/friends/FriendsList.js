@@ -2,6 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const { showInfoCard } = require('../../../redux/actions/ui');
 const { agreeFriendInvite, refuseFriendInvite } = require('../../../redux/actions/user');
+const ConvItem = require('../../../components/ConvItem');
 
 const FriendsDetail = require('./FriendsDetail');
 
@@ -20,13 +21,26 @@ class FriendsList extends React.Component {
     let usercache = this.props.usercache;
     return friends.length > 0 ? friends.map((item, index) => {
       let uuid = item;
+      // return (
+      //   <div key={uuid + index} className="item">
+      //     <div className="item-wrap" onClick={() => this.props.showInfoCard(uuid)}>
+      //       <div className="avatar"><img src={usercache.getIn([uuid, 'avatar']) || '/src/assets/img/gugugu1.png'} /></div>
+      //       <div className="username">{usercache.getIn([uuid, 'username'])}</div>
+      //     </div>
+      //   </div>
+      // )
       return (
-        <div key={uuid + index} className="item">
-          <div className="item-wrap" onClick={() => this.props.showInfoCard(uuid)}>
-            <div className="avatar"><img src={usercache.getIn([uuid, 'avatar']) || '/src/assets/img/gugugu1.png'} /></div>
-            <div className="username">{usercache.getIn([uuid, 'username'])}</div>
-          </div>
-        </div>
+        <ConvItem
+          key={`friends#${uuid}#${index}`}
+          icon={usercache.getIn([uuid, 'avatar']) || '/src/assets/img/gugugu1.png'}
+          title={usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username'])}
+          content={usercache.getIn([uuid, 'sign'])}
+          time=''
+          uuid=''
+          isSelected={false}
+          onClick={() => this.props.showInfoCard(uuid)}
+          hideCloseBtn={true}
+        />
       )
     }) : (
       <div className="no-friend">暂无好友哦</div>

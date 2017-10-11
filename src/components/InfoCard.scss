@@ -109,8 +109,9 @@
 
         .item {
           margin-top: 13px;
+          display: flex;
 
-          span{
+          > span{
             &:nth-child(1) {
               @include one-line;
               float: left;
@@ -118,6 +119,8 @@
               word-wrap: normal;
               margin-right: 2%;
               color: #aeaeb2;
+              text-align: left;
+              user-select: none;
             }
             &:nth-child(2) {
               float: left;

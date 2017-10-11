@@ -32,6 +32,32 @@ class InfoCard extends React.Component {
     let body = '';
     if(this.props.show && info) {
       info = info.toJS();
+      let sex = null;
+      if(info.sex === '男') {
+        sex = (
+          <span>
+            <i className="iconfont">&#xe698;</i>男
+          </span>
+        );
+      }else if(info.sex === '女') {
+        sex = (
+          <span>
+            <i className="iconfont">&#xe64a;</i>女
+          </span>
+        );
+      }else if(info.sex === '其他') {
+        sex = (
+          <span>
+            <i className="iconfont">&#xe727;</i>其他
+          </span>
+        );
+      }else {
+        sex = (
+          <span>
+            <i className="iconfont">&#xe617;</i>保密
+          </span>
+        );
+      }
       body = (
         <div className="mask">
           <div className="card">
@@ -55,6 +81,13 @@ class InfoCard extends React.Component {
             <div className="body">
               <div className="item">
                 <span>唯一标识符:</span><span>{info.uuid}</span>
+              </div>
+              <div className="item">
+                <span>性别:</span>
+                {sex}
+              </div>
+              <div className="item">
+                <span>个人签名:</span><span>{info.sign}</span>
               </div>
             </div>
             <div className="footer">
