@@ -49,7 +49,9 @@ class GroupList extends React.Component {
         <div className="list">
           { this.getGroupList() }
         </div>
-        <GroupDetail />
+        {this.props.selectedUUID ? (
+          <GroupDetail />
+        ) : '请选择团'}
       </div>
     )
   }

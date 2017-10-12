@@ -1,0 +1,8 @@
+@import "../../../utils/color";
+@import "../../../utils/mixins";
+
+.group-actor {
+  button {
+    @include block-btn;
+  }
+}

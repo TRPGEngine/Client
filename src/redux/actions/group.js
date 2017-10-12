@@ -6,6 +6,7 @@ const {
   GET_GROUP_INVITE_SUCCESS,
   GET_GROUP_LIST_SUCCESS,
   SWITCH_GROUP,
+  GET_GROUP_ACTOR_SUCCESS,
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
@@ -71,7 +72,18 @@ exports.getGroupList = function() {
   return function(dispatch, getState) {
     return api.emit('group::getGroupList', null, function(data) {
       if(data.result) {
-        dispatch({type: GET_GROUP_LIST_SUCCESS, payload: data.groups});
+        let groups = data.groups;
+        dispatch({type: GET_GROUP_LIST_SUCCESS, payload: groups});
+        for (let group of groups) {
+          let groupUUID = group.uuid;
+          api.emit('group::getGroupActors', {groupUUID}, function(data) {
+            if(data.result) {
+              dispatch({type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: data.actors})
+            }else {
+              console.error(data.msg);
+            }
+          })
+        }
       }else {
         console.error(data.msg);
       }

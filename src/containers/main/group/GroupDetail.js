@@ -4,6 +4,7 @@ const Select = require('react-select');
 const ReactTooltip = require('react-tooltip');
 const GroupMap = require('./GroupMap');
 const GroupInvite = require('./GroupInvite');
+const GroupActor = require('./GroupActor');
 
 class GroupDetail extends React.Component {
   constructor(props) {
@@ -96,6 +97,9 @@ class GroupDetail extends React.Component {
       {
         name: '人物卡',
         icon: '&#xe61b;',
+        component: (
+          <GroupActor />
+        )
       },
       {
         name: '团信息',
