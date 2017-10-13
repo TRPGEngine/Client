@@ -44,7 +44,7 @@ module.exports = function chat(state = initialState, action) {
     let payload;
     switch (action.type) {
       case ADD_CONVERSES:
-        let uuid = action.payload.get('uuid');
+        let uuid = action.payload.uuid;
         if(!state.getIn(['converses', uuid])) {
           return state.setIn(['converses', uuid], immutable.fromJS(action.payload));
         }else {

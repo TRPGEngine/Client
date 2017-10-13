@@ -12,7 +12,6 @@ const {
   SEND_MSG,
   SEND_MSG_COMPLETED
 } = require('../constants');
-const immutable = require('immutable');
 const moment = require('moment');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
@@ -70,7 +69,7 @@ let sendMsg = function sendMsg(converseUUID, payload) {
     dispatch({type:SEND_MSG});
     const info = getState().getIn(['user', 'info']);
     let pkg = {
-      room: '',
+      room: payload.room || '',
       sender_uuid: info.get('uuid'),
       to_uuid: converseUUID,
       type: payload.type,
@@ -78,6 +77,7 @@ let sendMsg = function sendMsg(converseUUID, payload) {
       is_public: payload.is_public,
       date: moment().valueOf(),
     };
+    // TODO room
     dispatch(addMsg(converseUUID, pkg))
     return api.emit('chat::message', pkg, function(data) {
       // console.log(data);

@@ -205,4 +205,23 @@
       }
     }
   }
+
+  .none-select-group {
+    $color: $color-silver;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    text-align: center;
+    padding-top: 60px;
+    .iconfont {
+      font-size: 320px;
+      opacity: 0.7;
+      color: $color;
+      user-select: none;
+    }
+
+    .welcome {
+      color: $color;
+    }
+  }
 }

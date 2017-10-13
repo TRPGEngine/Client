@@ -33,6 +33,7 @@ class ConverseList extends React.Component {
   getConverseList() {
     let converses = this.props.converses
       .valueSeq()
+      .filter((item) => item.get('type')==='user'||item.get('type')==='system')
       .sortBy((item) => item.get('lastTime'))
       .reverse()
       .map((item, index) => {

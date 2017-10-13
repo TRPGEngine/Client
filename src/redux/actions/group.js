@@ -10,6 +10,7 @@ const {
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
+const { addConverse } = require('./chat');
 
 exports.getGroupInfo = function(uuid) {
   return function(dispatch, getState) {
@@ -76,6 +77,15 @@ exports.getGroupList = function() {
         dispatch({type: GET_GROUP_LIST_SUCCESS, payload: groups});
         for (let group of groups) {
           let groupUUID = group.uuid;
+          dispatch(addConverse({
+            uuid: groupUUID,
+            id: group.id,
+            name: group.name,
+            type: 'group',
+            msgList: [],
+            lastMsg: '',
+            lastTime: '',
+          }));
           api.emit('group::getGroupActors', {groupUUID}, function(data) {
             if(data.result) {
               dispatch({type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: data.actors})

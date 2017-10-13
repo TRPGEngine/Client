@@ -2,6 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const Select = require('react-select');
 const ReactTooltip = require('react-tooltip');
+const { sendMsg } = require('../../../redux/actions/chat')
 const GroupMap = require('./GroupMap');
 const GroupInvite = require('./GroupInvite');
 const GroupActor = require('./GroupActor');
@@ -22,14 +23,15 @@ class GroupDetail extends React.Component {
   _handleSendMsg() {
     let message = this.state.inputMsg.trim();
     let type = this.state.inputType;
-    console.log(message, type);
-    return;
+    // console.log(message, type);
+    // return;
 
     if(!!message) {
-      console.log('send msg:', message, 'to', this.props.converseUUID);
-      this.props.dispatch(sendMsg(this.props.converseUUID ,{
+      console.log('send msg:', message, 'to', this.props.selectedUUID);
+      this.props.dispatch(sendMsg(this.props.selectedUUID ,{
+        room: this.props.selectedUUID,
         message,
-        is_public: false,
+        is_public: true,
         type,
       }));
       this.refs.inputMsg.focus();
@@ -68,6 +70,10 @@ class GroupDetail extends React.Component {
     this.setState({isSlidePanelShow: false});
     window.removeEventListener('click', this.sildeEvent);
     this.sildeEvent = null;
+  }
+
+  componentDidMount() {
+    console.log('curGroupInfo', this.props.groupInfo?this.props.groupInfo.toJS():'None');
   }
 
   getHeaderActions() {
@@ -123,8 +129,20 @@ class GroupDetail extends React.Component {
     })
   }
 
+  getMsgList() {
+    console.log(this.props.msgList);
+    if(!this.props.msgList) {
+      return null;
+    }else {
+      return (
+        <div>
+          {JSON.stringify(this.props.msgList.toJS())}
+        </div>
+      )
+    }
+  }
+
   render() {
-    console.log('curGroupInfo', this.props.groupInfo?this.props.groupInfo.toJS():'None');
     let inputType = this.state.inputType;
     let options = [
       { value: 'uuiduuid', label: '桐谷和人' },
@@ -138,8 +156,8 @@ class GroupDetail extends React.Component {
             <img src="/src/assets/img/gugugu1.png" />
           </div>
           <div className="title">
-            <div className="main-title">无限恐怖跑团1群</div>
-            <div className="sub-title">可以开始车卡了</div>
+            <div className="main-title">{this.props.groupInfo.get('name')}</div>
+            <div className="sub-title">{this.props.groupInfo.get('desc')}</div>
           </div>
           <Select
             name="form-field-name"
@@ -155,7 +173,7 @@ class GroupDetail extends React.Component {
             {this.getHeaderActions()}
           </div>
         </div>
-        <div className="group-content"></div>
+        <div className="group-content">{this.getMsgList()}</div>
         <div className="group-msg-box">
           <div className="input-area">
             <div className="tool-area">
@@ -240,10 +258,14 @@ class GroupDetail extends React.Component {
 }
 
 module.exports = connect(
-  state => ({
-    selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
-    groupInfo: state
-      .getIn(['group', 'groups'])
-      .find((group) => group.get('uuid')===state.getIn(['group', 'selectedGroupUUID'])),
-  })
+  state => {
+    let selectedUUID = state.getIn(['group', 'selectedGroupUUID'])
+    return {
+      selectedUUID,
+      groupInfo: state
+        .getIn(['group', 'groups'])
+        .find((group) => group.get('uuid')===selectedUUID),
+      msgList: state.getIn(['chat', 'converses', selectedUUID, 'msgList'])
+    }
+  }
 )(GroupDetail);
