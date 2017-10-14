@@ -4,7 +4,9 @@ const moment = require('moment');
 const Select = require('react-select');
 const ReactTooltip = require('react-tooltip');
 const { sendMsg } = require('../../../redux/actions/chat');
+const MsgSendBox = require('../../../components/MsgSendBox');
 const MsgItem = require('../../../components/MsgItem');
+const scrollTo = require('../../../utils/animatedScrollTo.js');
 const GroupMap = require('./GroupMap');
 const GroupInvite = require('./GroupInvite');
 const GroupActor = require('./GroupActor');
@@ -13,8 +15,6 @@ class GroupDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputMsg: '',
-      inputType: 'normal',
       isSlidePanelShow: false,
       slidePanelTitle: '',
       slidePanelContent: null,
@@ -22,29 +22,15 @@ class GroupDetail extends React.Component {
     }
   }
 
-  _handleSendMsg() {
-    let message = this.state.inputMsg.trim();
-    let type = this.state.inputType;
-    // console.log(message, type);
-    // return;
-
-    if(!!message) {
-      console.log('send msg:', message, 'to', this.props.selectedUUID);
-      this.props.dispatch(sendMsg(this.props.selectedUUID ,{
-        room: this.props.selectedUUID,
-        message,
-        is_public: true,
-        type,
-      }));
-      this.refs.inputMsg.focus();
-      this.setState({inputMsg: ''});
-    }
+  componentDidMount() {
+    let container = this.refs.container;
+    scrollTo.bottom(container, 400);
+    console.log('curGroupInfo', this.props.groupInfo?this.props.groupInfo.toJS():'None');
   }
 
-  _handleMsgInput(e) {
-    if(e.keyCode===13 && !e.shiftKey) {
-      this._handleSendMsg();
-    }
+  componentDidUpdate() {
+    let container = this.refs.container;
+    scrollTo.bottom(container, 400, false);
   }
 
   _handleShowSlidePanel(title, content) {
@@ -74,8 +60,14 @@ class GroupDetail extends React.Component {
     this.sildeEvent = null;
   }
 
-  componentDidMount() {
-    console.log('curGroupInfo', this.props.groupInfo?this.props.groupInfo.toJS():'None');
+  _handleSendMsg(message, type) {
+    console.log('send msg:', message, 'to', this.props.selectedUUID);
+    this.props.dispatch(sendMsg(this.props.selectedUUID ,{
+      room: this.props.selectedUUID,
+      message,
+      is_public: true,
+      type,
+    }));
   }
 
   getHeaderActions() {
@@ -223,68 +215,10 @@ class GroupDetail extends React.Component {
             {this.getHeaderActions()}
           </div>
         </div>
-        <div className="group-content">{this.getMsgList()}</div>
-        <div className="group-msg-box">
-          <div className="input-area">
-            <div className="tool-area">
-              <div className="type-select">
-                <div
-                  data-tip="普通信息"
-                  className={inputType==='normal'?"tool-item active":"tool-item"}
-                  onClick={() => this.setState({inputType: 'normal'})}
-                >
-                  <i className="iconfont">&#xe72d;</i>
-                </div>
-                <div
-                  data-tip="吐槽信息"
-                  className={inputType==='occ'?"tool-item active":"tool-item"}
-                  onClick={() => this.setState({inputType: 'occ'})}
-                >
-                  <i className="iconfont">&#xe64d;</i>
-                </div>
-                <div
-                  data-tip="对话信息"
-                  className={inputType==='speak'?"tool-item active":"tool-item"}
-                  onClick={() => this.setState({inputType: 'speak'})}
-                >
-                  <i className="iconfont">&#xe61f;</i>
-                </div>
-                <div
-                  data-tip="行动信息"
-                  className={inputType==='action'?"tool-item active":"tool-item"}
-                  onClick={() => this.setState({inputType: 'action'})}
-                >
-                  <i className="iconfont">&#xe619;</i>
-                </div>
-              </div>
-              <div className="actions">
-                <div
-                  data-tip="请求投骰"
-                  className="tool-item"
-                  onClick={() => console.log('a')}
-                >
-                  <i className="iconfont">&#xe609;</i>
-                </div>
-                <div
-                  data-tip="邀请投骰"
-                  className="tool-item"
-                  onClick={() => console.log('b')}
-                >
-                  <i className="iconfont">&#xe631;</i>
-                </div>
-              </div>
-            </div>
-            <textarea
-              ref="inputMsg"
-              className="input-msg"
-              value={this.state.inputMsg}
-              onChange={(e)=>this.setState({inputMsg:e.target.value})}
-              onKeyDown={(e)=> this._handleMsgInput(e)} />
-          </div>
-          <div className="action-area">
-            <button onClick={() => this._handleSendMsg()} disabled={this.state.inputMsg?false:true}>发送&lt;Enter&gt;</button>
-          </div>
+        <div className="group-content" ref="container">
+          {this.getMsgList()}
         </div>
+        <MsgSendBox onSendMsg={(message, type) => this._handleSendMsg(message, type)} />
         <div
           className={"group-slide-panel" + (this.state.isSlidePanelShow?"":" hide")}
           onClick={(e) => {
