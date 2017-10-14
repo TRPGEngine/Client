@@ -107,10 +107,9 @@ let getConverses = function getConverses() {
           checkUser(convUUID);
           api.emit('chat::getChatLog', {uuid1: uuid, uuid2: convUUID}, function(data) {
             if(data.result) {
-              let list = data.list;
-              dispatch({type:UPDATE_CONVERSES_SUCCESS, payload: list, convUUID});
+              dispatch({type:UPDATE_CONVERSES_SUCCESS, payload: data.list, convUUID});
             }else {
-              console.error('获取聊天记录失败:' + data.msg);
+              console.error('获取聊天记录失败:', data.msg);
             }
           })
         }

@@ -1,4 +1,5 @@
 const {
+  UPDATE_CONVERSES_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
   SEND_GROUP_INVITE_SUCCESS,
   AGREE_GROUP_INVITE_SUCCESS,
@@ -86,11 +87,20 @@ exports.getGroupList = function() {
             lastMsg: '',
             lastTime: '',
           }));
+          // 获取团成员
           api.emit('group::getGroupActors', {groupUUID}, function(data) {
             if(data.result) {
               dispatch({type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: data.actors})
             }else {
-              console.error(data.msg);
+              console.error('获取团成员失败:', data.msg);
+            }
+          })
+          // 获取团聊天日志
+          api.emit('chat::getChatLog', {room: groupUUID}, function(data) {
+            if(data.result) {
+              dispatch({type: UPDATE_CONVERSES_SUCCESS, convUUID: groupUUID, payload: data.list})
+            }else {
+              console.error('获取团聊天记录失败:', data.msg);
             }
           })
         }

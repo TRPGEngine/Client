@@ -130,13 +130,13 @@ class GroupDetail extends React.Component {
   }
 
   getMsgList() {
-    console.log(this.props.msgList);
     if(!this.props.msgList) {
       return null;
     }else {
+      console.log(this.props.msgList.toJS());
       return (
         <div>
-          {JSON.stringify(this.props.msgList.toJS())}
+          {JSON.stringify(this.props.msgList.size)}
         </div>
       )
     }
