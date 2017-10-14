@@ -19,6 +19,14 @@
       padding: 0 10px;
       user-select: none;
 
+      .type-select, .input-actions {
+        display: flex;
+      }
+
+      .type-select {
+        flex: 1;
+      }
+
       .tool-item {
         @include icon-btn;
         margin-right: 8px;

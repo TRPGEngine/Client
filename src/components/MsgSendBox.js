@@ -32,16 +32,39 @@ class MsgSendBox extends React.Component {
         icon: '&#xe619;'
       },
     ]
+    this.actions = [
+      {
+        label: '请求投骰',
+        type: 'dice-req',
+        icon: '&#xe609;'
+      },
+      {
+        label: '邀请投骰',
+        type: 'dice-inv',
+        icon: '&#xe631;'
+      },
+    ]
   }
 
-  _handleMsgInput(e) {
-    if(e.keyCode===13 && !e.shiftKey) {
-      this._handleSendMsg();
-    }
-
+  _handleMsgInputKeyDown(e) {
     if(e.keyCode===9) {
       e.preventDefault();
-      console.log("tab");
+      let index = this.inputType.findIndex((item) => item.type===this.state.inputType);
+      if(!e.shiftKey) {
+        // 正向
+        let i = (index + 1) % this.inputType.length;
+        this.setState({inputType: this.inputType[i].type});
+      }else {
+        // 反向
+        let i = (index + this.inputType.length - 1) % this.inputType.length;
+        this.setState({inputType: this.inputType[i].type});
+      }
+    }
+  }
+
+  _handleMsgInputKeyUp(e) {
+    if(e.keyCode===13 && !e.shiftKey) {
+      this._handleSendMsg();
     }
   }
 
@@ -61,25 +84,42 @@ class MsgSendBox extends React.Component {
         <div className="input-area">
           <div className="tool-area">
             <ReactTooltip effect='solid' />
-            {this.inputType.map((item, index) => {
-              return (
-                <div
-                  key={"input-type#"+index}
-                  data-tip={item.label}
-                  className={this.state.inputType===item.type?"tool-item active":"tool-item"}
-                  onClick={() => this.setState({inputType: item.type})}
-                >
-                  <i className="iconfont" dangerouslySetInnerHTML={{__html:item.icon}}></i>
-                </div>
-              )
-            })}
+            <div className="type-select">
+              {this.inputType.map((item, index) => {
+                return (
+                  <div
+                    key={"input-type#"+index}
+                    data-tip={item.label}
+                    className={this.state.inputType===item.type?"tool-item active":"tool-item"}
+                    onClick={() => this.setState({inputType: item.type})}
+                  >
+                    <i className="iconfont" dangerouslySetInnerHTML={{__html:item.icon}}></i>
+                  </div>
+                )
+              })}
+            </div>
+            <div className="input-actions">
+              {this.actions.map((item, index) => {
+                return (
+                  <div
+                    key={"input-action#"+index}
+                    data-tip={item.label}
+                    className="tool-item"
+                    onClick={() => console.log(item.label)}
+                  >
+                    <i className="iconfont" dangerouslySetInnerHTML={{__html:item.icon}}></i>
+                  </div>
+                )
+              })}
+            </div>
           </div>
           <textarea
             ref="inputMsg"
             className="input-msg"
             value={this.state.inputMsg}
             onChange={(e)=>this.setState({inputMsg:e.target.value})}
-            onKeyDown={(e)=> this._handleMsgInput(e)} />
+            onKeyDown={(e)=> this._handleMsgInputKeyDown(e)}
+            onKeyUp={(e)=> this._handleMsgInputKeyUp(e)} />
         </div>
         <div className="action-area">
           <button onClick={() => this._handleSendMsg()} disabled={this.state.inputMsg?false:true}>发送&lt;Enter&gt;</button>
