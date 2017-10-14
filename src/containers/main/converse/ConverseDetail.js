@@ -162,7 +162,7 @@ class ConverseDetail extends React.Component {
               className="input-msg"
               value={this.state.inputMsg}
               onChange={(e)=>this.setState({inputMsg:e.target.value})}
-              onKeyUp={(e)=> this._handleMsgInput(e)} />
+              onKeyDown={(e)=> this._handleMsgInput(e)} />
           </div>
           <div className="action-area">
             <button onClick={() => this._handleSendMsg()} disabled={this.state.inputMsg?false:true}>发送&lt;Enter&gt;</button>

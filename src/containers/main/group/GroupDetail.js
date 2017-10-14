@@ -1,8 +1,10 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const moment = require('moment');
 const Select = require('react-select');
 const ReactTooltip = require('react-tooltip');
-const { sendMsg } = require('../../../redux/actions/chat')
+const { sendMsg } = require('../../../redux/actions/chat');
+const MsgItem = require('../../../components/MsgItem');
 const GroupMap = require('./GroupMap');
 const GroupInvite = require('./GroupInvite');
 const GroupActor = require('./GroupActor');
@@ -133,10 +135,58 @@ class GroupDetail extends React.Component {
     if(!this.props.msgList) {
       return null;
     }else {
-      console.log(this.props.msgList.toJS());
+      let userUUID = this.props.userUUID;
+      let usercache = this.props.usercache;
       return (
-        <div>
-          {JSON.stringify(this.props.msgList.size)}
+        <div className="msg-items">
+        {
+          this.props.msgList.sortBy((item) => item.get('date')).map((item, index) => {
+            let defaultAvatar = item.get('sender_uuid') === 'trpgsystem' ? '/src/assets/img/system_notice.png' : '/src/assets/img/gugugu1.png';
+            let data = item.get('data');
+
+            // data 预处理
+            if(data && item.get('type') === 'card') {
+              if(data.get('type') === 'friendInvite') {
+                let inviteUUID = data.getIn(['invite', 'uuid']);
+                let from_uuid = data.getIn(['invite', 'from_uuid']);
+                let inviteIndex = this.props.friendRequests.findIndex((item) => {
+                  if(item.get('uuid') === inviteUUID) {
+                    return true
+                  }else {
+                    return false
+                  }
+                });
+                if(inviteIndex >= 0) {
+                  // 尚未处理
+                  data = data.set('actionState', 0);
+                }else {
+                  let friendIndex = this.props.friendList.indexOf(from_uuid);
+                  if(friendIndex >= 0) {
+                    // 已同意是好友
+                    data = data.set('actionState', 1);
+                  }else {
+                    // 已拒绝好友邀请
+                    data = data.set('actionState', 2);
+                  }
+
+                }
+              }
+            }
+
+            return (
+              <MsgItem
+                key={item.get('uuid')+'+'+index}
+                icon={usercache.getIn([item.sender_uuid, 'avatar']) || defaultAvatar}
+                name={usercache.getIn([item.sender_uuid, 'username']) || ''}
+                type={item.get('type')}
+                content={item.get('message')}
+                data={data}
+                time={moment(item.get('date')).format('HH:mm:ss')}
+                me={userUUID===item.get('sender_uuid')}
+              />
+            )
+          })
+        }
         </div>
       )
     }
@@ -229,7 +279,7 @@ class GroupDetail extends React.Component {
               className="input-msg"
               value={this.state.inputMsg}
               onChange={(e)=>this.setState({inputMsg:e.target.value})}
-              onKeyUp={(e)=> this._handleMsgInput(e)} />
+              onKeyDown={(e)=> this._handleMsgInput(e)} />
           </div>
           <div className="action-area">
             <button onClick={() => this._handleSendMsg()} disabled={this.state.inputMsg?false:true}>发送&lt;Enter&gt;</button>
@@ -265,7 +315,9 @@ module.exports = connect(
       groupInfo: state
         .getIn(['group', 'groups'])
         .find((group) => group.get('uuid')===selectedUUID),
-      msgList: state.getIn(['chat', 'converses', selectedUUID, 'msgList'])
+      msgList: state.getIn(['chat', 'converses', selectedUUID, 'msgList']),
+      userUUID: state.getIn(['user','info','uuid']),
+      usercache: state.getIn(['cache', 'user']),
     }
   }
 )(GroupDetail);

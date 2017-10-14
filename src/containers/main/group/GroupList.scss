@@ -92,6 +92,10 @@
 
     .group-content {
       flex: 1;
+
+      .msg-items {
+        padding: 4px 16px 16px 16px;
+      }
     }
 
     .group-msg-box {
