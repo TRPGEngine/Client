@@ -12,6 +12,7 @@ const {
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { addConverse } = require('./chat');
+const { checkTemplate } = require('../../utils/usercache');
 
 exports.getGroupInfo = function(uuid) {
   return function(dispatch, getState) {
@@ -90,7 +91,11 @@ exports.getGroupList = function() {
           // 获取团成员
           api.emit('group::getGroupActors', {groupUUID}, function(data) {
             if(data.result) {
-              dispatch({type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: data.actors})
+              let actors = data.actors;
+              for (let ga of actors) {
+                checkTemplate(ga.actor.template_uuid)
+              }
+              dispatch({type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors})
             }else {
               console.error('获取团成员失败:', data.msg);
             }
