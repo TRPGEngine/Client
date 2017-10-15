@@ -234,7 +234,9 @@ class GroupDetail extends React.Component {
               <i className="iconfont">&#xe70c;</i>
             </div>
           </div>
-          {this.state.slidePanelContent}
+          <div className="content">
+            {this.state.slidePanelContent}
+          </div>
         </div>
       </div>
     )

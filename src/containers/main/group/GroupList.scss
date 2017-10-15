@@ -16,30 +16,6 @@
     flex-direction: column;
     position: relative;
 
-    // .nocontent {
-    //   display: flex;
-    //   flex: 1;
-    //   flex-direction: column;
-    //
-    //   .nocontent-img {
-    //     flex: 1;
-    //     display: flex;
-    //     align-items: center;
-    //     justify-content: center;
-    //
-    //     img {
-    //       max-width: 380px;
-    //       max-height: 380px;
-    //       opacity: 0.6;
-    //     }
-    //   }
-    //
-    //   .welcome {
-    //     text-align: center;
-    //     padding-bottom: 60px;
-    //   }
-    // }
-
     .group-header {
       height: 50px;
       border-bottom: 1px solid $color-bon-jour;
@@ -109,6 +85,8 @@
       height: 100%;
       background-color: white;
       transition-duration: 0.5s;
+      display: flex;
+      flex-direction: column;
 
       &.hide {
         right: -380px;
@@ -138,6 +116,11 @@
             vertical-align: middle;
           }
         }
+      }
+
+      .content {
+        flex: 1;
+        @include auto-scroll-bar;
       }
     }
   }
