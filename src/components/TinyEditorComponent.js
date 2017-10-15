@@ -10,6 +10,8 @@ require('tinymce/plugins/imagetools');
 require('tinymce/plugins/textcolor');
 require('../assets/lib/tinymce/zh_CN');
 
+require('./TinyEditorComponent.scss');
+
 class TinyEditorComponent extends React.Component {
   constructor() {
     super();
@@ -22,7 +24,7 @@ class TinyEditorComponent extends React.Component {
       plugins: 'wordcount table save link image imagetools textcolor',
       toolbar: "undo redo | styleselect forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | link image | blockquote | save",
       imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
-      height : 469,
+      height : 469-44,
       branding: false,
       statusbar: false,
       setup: editor => {
