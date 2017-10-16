@@ -8,6 +8,7 @@ const {
   GET_GROUP_LIST_SUCCESS,
   SWITCH_GROUP,
   GET_GROUP_ACTOR_SUCCESS,
+  GET_GROUP_MEMBERS_SUCCESS,
 } = require('../constants');
 
 const initialState = immutable.fromJS({
@@ -70,6 +71,16 @@ module.exports = function group(state = initialState, action) {
         for (var i = 0; i < list.size; i++) {
           if (list.getIn([i, 'uuid']) === action.groupUUID) {
             list = list.setIn([i, 'group_actors'], immutable.fromJS(action.payload));
+          }
+        }
+
+        return list;
+      })
+    case GET_GROUP_MEMBERS_SUCCESS:
+      return state.update('groups', (list) => {
+        for (var i = 0; i < list.size; i++) {
+          if (list.getIn([i, 'uuid']) === action.groupUUID) {
+            list = list.setIn([i, 'group_members'], immutable.fromJS(action.payload));
           }
         }
 

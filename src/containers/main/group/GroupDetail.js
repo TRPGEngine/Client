@@ -10,6 +10,7 @@ const scrollTo = require('../../../utils/animatedScrollTo.js');
 const GroupMap = require('./GroupMap');
 const GroupInvite = require('./GroupInvite');
 const GroupActor = require('./GroupActor');
+const GroupMember = require('./GroupMember');
 
 class GroupDetail extends React.Component {
   constructor(props) {
@@ -82,6 +83,9 @@ class GroupDetail extends React.Component {
       {
         name: '查看团员',
         icon: '&#xe603;',
+        component: (
+          <GroupMember />
+        ),
       },
       {
         name: '游戏地图',

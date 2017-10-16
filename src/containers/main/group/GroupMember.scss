@@ -1,0 +1,63 @@
+@import "../../../utils/color";
+@import "../../../utils/mixins";
+
+.group-members {
+  width: 100%;
+  padding: 10px;
+
+  thead {
+    td {
+      text-align: center;
+    }
+  }
+
+  tbody {
+    .group-member-item {
+      cursor: pointer;
+      &:hover {
+        background-color: rgba(black, 0.1);
+      }
+
+      .auth {
+        padding-left: 4px;
+        &.manager {
+          color: $color-downy;
+        }
+
+        &.owner {
+          color: $color-gold;
+        }
+
+        .iconfont {
+          font-size: 20px;
+        }
+      }
+
+      .avatar {
+        padding-left: 4px;
+        img {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          vertical-align: middle;
+        }
+      }
+
+      .name {
+        padding: 10px;
+        font-size: 14px;
+      }
+
+      .last-login {
+        color: $color-dusty-gray;
+        font-size: 12px;
+      }
+
+      .actions {
+        button {
+          @include link-btn;
+        }
+      }
+    }
+  }
+}

@@ -8,11 +8,12 @@ const {
   GET_GROUP_LIST_SUCCESS,
   SWITCH_GROUP,
   GET_GROUP_ACTOR_SUCCESS,
+  GET_GROUP_MEMBERS_SUCCESS,
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { addConverse } = require('./chat');
-const { checkTemplate } = require('../../utils/usercache');
+const { checkUser, checkTemplate } = require('../../utils/usercache');
 
 exports.getGroupInfo = function(uuid) {
   return function(dispatch, getState) {
@@ -89,6 +90,21 @@ exports.getGroupList = function() {
             lastTime: '',
           }));
           // 获取团成员
+          api.emit('group::getGroupMembers', {groupUUID}, function(data) {
+            if(data.result) {
+              let members = data.members;
+              let uuidList = [];
+              for (let member of members) {
+                let uuid = member.uuid;
+                uuidList.push(uuid);
+                checkUser(uuid);
+              }
+              dispatch({type: GET_GROUP_MEMBERS_SUCCESS, groupUUID, payload: uuidList})
+            }else {
+              console.error('获取团成员失败:', data.msg);
+            }
+          });
+          // 获取团人物
           api.emit('group::getGroupActors', {groupUUID}, function(data) {
             if(data.result) {
               let actors = data.actors;
@@ -97,9 +113,9 @@ exports.getGroupList = function() {
               }
               dispatch({type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors})
             }else {
-              console.error('获取团成员失败:', data.msg);
+              console.error('获取团人物失败:', data.msg);
             }
-          })
+          });
           // 获取团聊天日志
           api.emit('chat::getChatLog', {room: groupUUID}, function(data) {
             if(data.result) {
@@ -107,7 +123,7 @@ exports.getGroupList = function() {
             }else {
               console.error('获取团聊天记录失败:', data.msg);
             }
-          })
+          });
         }
       }else {
         console.error(data.msg);

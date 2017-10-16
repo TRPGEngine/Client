@@ -37,6 +37,15 @@
 
       .info {
         flex: 1;
+        overflow: hidden;
+
+        .title {
+          color: $color-cod-gray;
+        }
+
+        .desc {
+          color: $color-dusty-gray;
+        }
       }
     }
   }

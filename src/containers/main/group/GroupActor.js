@@ -48,7 +48,8 @@ class GroupActor extends React.Component {
           >
             <div className="avatar" style={{backgroundImage: `url(${item.get('avatar') || originActor.get('avatar')})`}}></div>
             <div className="info">
-              <div>{originActor.get('desc')}</div>
+              <div className="name">{originActor.get('name')}</div>
+              <div className="desc">{originActor.get('desc')}</div>
             </div>
           </div>
         )

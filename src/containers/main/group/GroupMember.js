@@ -1,0 +1,69 @@
+const React = require('react');
+const { connect } = require('react-redux');
+const moment = require('moment');
+
+require('./GroupMember.scss')
+
+class GroupMember extends React.Component {
+  getMemberList() {
+    if(this.props.groupInfo.get('group_members')) {
+      return this.props.groupInfo.get('group_members').map((uuid) => {
+        let user = this.props.usercache.get(uuid);
+        let last_login = user.get('last_login') ? moment(user.get('last_login')).format('YYYY-M-D HH:mm:ss') : '从未登录';
+        console.log(user);
+        return (
+          <tr
+            key={`group-member#${this.props.selectedGroupUUID}#${uuid}`}
+            className="group-member-item"
+          >
+            <td className="auth manager">
+              <i className="iconfont">&#xe648;</i>
+            </td>
+            <td className="avatar">
+              <img src={user.get('avatar') || '/src/assets/img/gugugu1.png'} />
+            </td>
+            <td className="name">
+              {user.get('nickname') || user.get('username')}
+            </td>
+            <td className="last-login">
+              {last_login}
+            </td>
+            <td className="actions">
+              <button><i className="iconfont">&#xe83f;</i></button>
+              <button><i className="iconfont">&#xe61b;</i></button>
+            </td>
+          </tr>
+        )
+      });
+    }
+  }
+
+  render() {
+    return (
+      <table className="group-members" cellSpacing="0" cellPadding="0">
+        <thead>
+          <tr>
+            <td></td>
+            <td>头像</td>
+            <td>名字</td>
+            <td>上次登录</td>
+            <td>操作</td>
+          </tr>
+        </thead>
+        <tbody>
+          {this.getMemberList()}
+        </tbody>
+      </table>
+    )
+  }
+}
+
+module.exports = connect(
+  state => ({
+    selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
+    groupInfo: state
+      .getIn(['group', 'groups'])
+      .find((group) => group.get('uuid')===state.getIn(['group', 'selectedGroupUUID'])),
+    usercache: state.getIn(['cache', 'user']),
+  })
+)(GroupMember);
