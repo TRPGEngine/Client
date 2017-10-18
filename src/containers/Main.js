@@ -7,7 +7,6 @@ const { getGroupList } = require('../redux/actions/group');
 const { getNote } = require('../redux/actions/note');
 
 const MenuPannel = require('./main/MenuPannel');
-const InfoCard = require('../components/InfoCard');
 const ProfileCard = require('../components/ProfileCard');
 
 require('./Main.scss');
@@ -34,16 +33,9 @@ class Main extends React.Component {
   }
 
   render() {
-    const {showInfoCard, showInfoCardUUID, showProfileCard} = this.props;
     return (
       <div id="main">
-        <InfoCard
-          show={showInfoCard}
-          uuid={showInfoCardUUID}
-        />
-        <ProfileCard
-          show={showProfileCard}
-        />
+        <ProfileCard />
         <div className="head">
           <span className="title">TRPG - 桌上角色扮演游戏客户端</span>
         </div>
@@ -56,9 +48,6 @@ class Main extends React.Component {
 module.exports = connect(
   state => ({
     isLogin: state.getIn(['user', 'isLogin']),
-    showInfoCard: state.getIn(['ui', 'showInfoCard']),
-    showInfoCardUUID: state.getIn(['ui', 'showInfoCardUUID']),
-    showProfileCard: state.getIn(['ui', 'showProfileCard']),
   }),
   dispatch => ({
     getConverses: () => {

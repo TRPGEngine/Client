@@ -5,8 +5,6 @@ const {
   HIDE_ALERT,
   SHOW_MODAL,
   HIDE_MODAL,
-  SHOW_INFO_CARD,
-  HIDE_INFO_CARD,
   SHOW_PROFILE_CARD,
   HIDE_PROFILE_CARD,
   SWITCH_MENU,
@@ -37,29 +35,16 @@ exports.showModal = function(body) {
 exports.hideModal = function() {
   return {type: HIDE_MODAL}
 }
-exports.showInfoCard = function(uuid) {
+exports.showProfileCard = function(uuid) {
   return (dispatch, getState) => {
     if(!uuid) {
       // 获取个人信息数据
       uuid = getState().getIn(['user', 'info', 'uuid']);
-    }else {
-      // 发起一次更新用户信息的请求
-      dispatch(cache.getUserInfo(uuid));
     }
-    dispatch({type: SHOW_INFO_CARD, uuid});
-  }
-
-}
-exports.hideInfoCard = function() {
-  return {type: HIDE_INFO_CARD}
-}
-exports.showProfileCard = function() {
-  return (dispatch, getState) => {
     // 获取最新信息
-    let uuid = getState().getIn(['user', 'info', 'uuid']);
     dispatch(cache.getUserInfo(uuid));
 
-    dispatch({type: SHOW_PROFILE_CARD});
+    dispatch({type: SHOW_PROFILE_CARD, uuid});
   }
 
 }

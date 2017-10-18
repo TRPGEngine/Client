@@ -1,7 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const { Route, Link } = require('react-router-dom')
-const { showInfoCard, switchMenu } = require('../../redux/actions/ui');
+const { showProfileCard, switchMenu } = require('../../redux/actions/ui');
 const ConverseList = require('./converse/ConverseList');
 const ActorList = require('./actors/ActorList');
 const FriendsList = require('./friends/FriendsList');
@@ -64,7 +64,7 @@ class MenuPannel extends React.Component {
       <div className={className}>
         <div className="menu-pannel">
           <div className="profile">
-            <div className="avatar" onClick={() => this.props.dispatch(showInfoCard())}>
+            <div className="avatar" onClick={() => this.props.dispatch(showProfileCard())}>
               <img src={avatar || '/src/assets/img/gugugu1.png'} />
             </div>
           </div>

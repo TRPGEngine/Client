@@ -5,8 +5,6 @@ const {
   HIDE_ALERT,
   SHOW_MODAL,
   HIDE_MODAL,
-  SHOW_INFO_CARD,
-  HIDE_INFO_CARD,
   SHOW_PROFILE_CARD,
   HIDE_PROFILE_CARD,
   SWITCH_MENU,
@@ -21,9 +19,8 @@ const initialState = immutable.fromJS({
   showLoadingText: '加载中...',
   showModal: false,
   showModalBody: undefined,
-  showInfoCard: false,
-  showInfoCardUUID: '',
   showProfileCard: false,
+  showProfileCardUUID: '',
   menuIndex: 0,
   network: {
     isOnline: false,
@@ -47,13 +44,8 @@ module.exports = function ui(state = initialState, action) {
       return state.set('showModal', true).set('showModalBody', immutable.fromJS(action.payload));
     case HIDE_MODAL:
       return state.set('showModal', false).set('showModalBody', undefined);
-    case SHOW_INFO_CARD:
-      let uuid = action.uuid || {};
-      return state.set('showInfoCard', true).set('showInfoCardUUID', uuid);
-    case HIDE_INFO_CARD:
-      return state.set('showInfoCard', false);
     case SHOW_PROFILE_CARD:
-      return state.set('showProfileCard', true);
+      return state.set('showProfileCard', true).set('showProfileCardUUID', action.uuid);
     case HIDE_PROFILE_CARD:
       return state.set('showProfileCard', false);
     case SWITCH_MENU:

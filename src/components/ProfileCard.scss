@@ -55,6 +55,31 @@
               height: 100%;
             }
           }
+
+          .username {
+            flex: 1;
+            text-align: left;
+            @include one-line;
+          }
+
+          .action {
+            background-color: transparent;
+            border: 1px solid white;
+            padding: 4px 12px;
+            color: white;
+            border-radius: 14px;
+            cursor: pointer;
+            outline: 0;
+
+            &:hover {
+              color: #726155;
+              background-color: white;
+            }
+
+            .iconfont {
+              margin-right: 4px;
+            }
+          }
         }
 
         .close {
@@ -84,8 +109,9 @@
 
         .item {
           margin-top: 13px;
+          display: flex;
 
-          span{
+          > span{
             &:nth-child(1) {
               @include one-line;
               float: left;
@@ -93,6 +119,8 @@
               word-wrap: normal;
               margin-right: 2%;
               color: #aeaeb2;
+              text-align: left;
+              user-select: none;
             }
             &:nth-child(2) {
               float: left;

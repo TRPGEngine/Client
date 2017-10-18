@@ -1,6 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const { showInfoCard } = require('../../../redux/actions/ui');
+const { showProfileCard } = require('../../../redux/actions/ui');
 const { agreeFriendInvite, refuseFriendInvite } = require('../../../redux/actions/user');
 const ConvItem = require('../../../components/ConvItem');
 
@@ -21,14 +21,6 @@ class FriendsList extends React.Component {
     let usercache = this.props.usercache;
     return friends.length > 0 ? friends.map((item, index) => {
       let uuid = item;
-      // return (
-      //   <div key={uuid + index} className="item">
-      //     <div className="item-wrap" onClick={() => this.props.showInfoCard(uuid)}>
-      //       <div className="avatar"><img src={usercache.getIn([uuid, 'avatar']) || '/src/assets/img/gugugu1.png'} /></div>
-      //       <div className="username">{usercache.getIn([uuid, 'username'])}</div>
-      //     </div>
-      //   </div>
-      // )
       return (
         <ConvItem
           key={`friends#${uuid}#${index}`}
@@ -38,7 +30,7 @@ class FriendsList extends React.Component {
           time=''
           uuid=''
           isSelected={false}
-          onClick={() => this.props.showInfoCard(uuid)}
+          onClick={() => this.props.showProfileCard(uuid)}
           hideCloseBtn={true}
         />
       )
@@ -78,7 +70,7 @@ class FriendsList extends React.Component {
               }
             }}
           >
-            <div className="avatar" onClick={() => this.props.showInfoCard(item.from_uuid)}>
+            <div className="avatar" onClick={() => this.props.showProfileCard(item.from_uuid)}>
               <img src={usercache.getIn([item.from_uuid, 'avatar']) || "/src/assets/img/gugugu1.png"} />
             </div>
             <div className="text">{usercache.getIn([item.from_uuid, 'username'])} 请求添加你为好友</div>
@@ -122,8 +114,8 @@ module.exports = connect(
     usercache: state.getIn(['cache', 'user']),
   }),
   dispatch => ({
-    showInfoCard: (uuid) => {
-      dispatch(showInfoCard(uuid));
+    showProfileCard: (uuid) => {
+      dispatch(showProfileCard(uuid));
     },
     agreeFriendInvite: (inviteUUID) => {
       dispatch(agreeFriendInvite(inviteUUID));

@@ -1,7 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const moment = require('moment');
-const { showInfoCard } = require('../../../redux/actions/ui');
+const { showProfileCard } = require('../../../redux/actions/ui');
 
 require('./GroupMember.scss')
 
@@ -39,7 +39,7 @@ class GroupMember extends React.Component {
                   <button><i className="iconfont">&#xe83f;</i></button>
                 ) : null
               }
-              <button onClick={() => this.props.showInfoCard(uuid)}><i className="iconfont">&#xe61b;</i></button>
+              <button onClick={() => this.props.showProfileCard(uuid)}><i className="iconfont">&#xe61b;</i></button>
             </td>
           </tr>
         )
@@ -77,6 +77,6 @@ module.exports = connect(
     usercache: state.getIn(['cache', 'user']),
   }),
   dispatch => ({
-    showInfoCard: (uuid) => dispatch(showInfoCard(uuid))
+    showProfileCard: (uuid) => dispatch(showProfileCard(uuid))
   })
 )(GroupMember);
