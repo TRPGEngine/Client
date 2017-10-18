@@ -22,8 +22,13 @@
   padding: 6px 12px;
   outline: 0;
 
-  &:hover {
+  &:hover, &.active {
     background-color: #705949;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: #999999;
   }
 }
 

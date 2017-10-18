@@ -1,4 +1,5 @@
 @import "../utils/color";
+@import "../utils/mixins";
 
 .login-screen {
   width: 372px;
@@ -20,7 +21,7 @@
     font-size: 14px;
     width: 312px;
     height: 40px;
-    border: 1px solid $color-jungle-mist;
+    border: 1px solid $color-dusty-gray;
     border-radius: 3px;
     background-color: rgba(240, 248, 255, 0.5);
     margin: 0;
@@ -32,22 +33,9 @@
   button {
     width: 312px;
     height: 40px;
-    margin: 0;
-    padding: 10px;
-    outline: 0;
-    margin: 0 0 5px;
-    color: white;
-    border: 0;
-    border-radius: 3px;
-    font-size: 15px;
-    background-color: #4c98cc;
-    margin-top: 8px;
-    cursor: pointer;
+    margin: 8px 0 5px;
 
-    &:disabled {
-      cursor: default !important;
-      background-color: #c7c7cc;
-    }
+    @include block-btn;
   }
 
   a, a:link, a:visited {

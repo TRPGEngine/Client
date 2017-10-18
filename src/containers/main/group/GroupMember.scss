@@ -8,6 +8,7 @@
   thead {
     td {
       text-align: center;
+      font-size: 12px;
     }
   }
 
@@ -20,12 +21,15 @@
 
       .auth {
         padding-left: 4px;
+        opacity: 0;
         &.manager {
           color: $color-downy;
+          opacity: 1;
         }
 
         &.owner {
           color: $color-gold;
+          opacity: 1;
         }
 
         .iconfont {
