@@ -24,6 +24,11 @@ class ProfileCard extends React.Component {
     }
   }
 
+  _handleClose() {
+    this.setState({isEdited: false});
+    this.props.dispatch(hideProfileCard());
+  }
+
   checkEditedIsChange() {
     let info = this.props.usercache.get(this.props.selectedUUID);
     console.log(JSON.stringify(this.state.editedInfo) === JSON.stringify(info));
@@ -196,7 +201,7 @@ class ProfileCard extends React.Component {
                   isSelf ? editBtn : null
                 }
               </div>
-              <div className="close" onClick={() => this.props.dispatch(hideProfileCard())}>
+              <div className="close" onClick={() => this._handleClose()}>
                 <i className="iconfont">&#xe70c;</i>
               </div>
             </div>
