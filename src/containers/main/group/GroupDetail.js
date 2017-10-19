@@ -6,6 +6,7 @@ const ReactTooltip = require('react-tooltip');
 const { sendMsg } = require('../../../redux/actions/chat');
 const MsgSendBox = require('../../../components/MsgSendBox');
 const MsgItem = require('../../../components/MsgItem');
+const Webview = require('../../../components/Webview');
 const scrollTo = require('../../../utils/animatedScrollTo.js');
 const GroupMap = require('./GroupMap');
 const GroupInvite = require('./GroupInvite');
@@ -97,6 +98,9 @@ class GroupDetail extends React.Component {
       {
         name: '游戏规则',
         icon: '&#xe621;',
+        component: (
+          <Webview src="http://www.baidu.com" />
+        )
       },
       {
         name: '人物卡',
