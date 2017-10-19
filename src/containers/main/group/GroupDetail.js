@@ -210,7 +210,7 @@ class GroupDetail extends React.Component {
             <div className="sub-title">{this.props.groupInfo.get('desc')}</div>
           </div>
           <Select
-            name="form-field-name"
+            name="actor-select"
             className="actor-select"
             value={this.state.selectedActorUUID}
             options={options}

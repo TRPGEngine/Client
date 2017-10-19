@@ -110,6 +110,7 @@
         .item {
           margin-top: 13px;
           display: flex;
+          // align-items: center;
 
           > span{
             &:nth-child(1) {
@@ -133,6 +134,18 @@
               color: #222;
             }
           }
+
+          .Select {
+            min-width: 120px;
+          }
+
+          input, textarea {
+            @include block-input;
+          }
+
+          textarea {
+            flex: 1;
+          }
         }
       }
 
@@ -149,11 +162,12 @@
 
           .footer-item {
             @include one-line;
+            @include icon-btn;
             flex: 1 1 0;
             border-right: 1px solid #d7d6d9;
             text-align: center;
-            cursor: pointer;
-            color: #a78e7c;
+            // cursor: pointer;
+            // color: #a78e7c;
             font-size: 14px;
             user-select: none;
 
@@ -161,7 +175,7 @@
               border-right: 0;
             }
 
-            &.disabled {
+            &:disabled {
               color: $color-silver-sand;
             }
 

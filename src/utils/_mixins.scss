@@ -75,11 +75,20 @@
   border: 0;
   outline: 0;
   cursor: pointer;
+  color: #9ea1a2;
 
-  &:hover, &.active {
-    .iconfont {
+  &:enabled {
+    &:hover, &.active {
       color: #7e3f12;
+
+      .iconfont {
+        color: #7e3f12;
+      }
     }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 
   .iconfont {
