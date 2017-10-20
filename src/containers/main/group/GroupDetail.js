@@ -99,7 +99,7 @@ class GroupDetail extends React.Component {
         name: '游戏规则',
         icon: '&#xe621;',
         component: (
-          <Webview src="http://www.baidu.com" />
+          <Webview src="http://www.goddessfantasy.net/" />
         )
       },
       {
