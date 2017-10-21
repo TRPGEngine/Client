@@ -3,7 +3,7 @@ const { connect } = require('react-redux');
 const { getConverses } = require('../redux/actions/chat');
 const { getFriends, getFriendsInvite } = require('../redux/actions/user');
 const { getTemplate, getActor } = require('../redux/actions/actor');
-const { getGroupList } = require('../redux/actions/group');
+const { getGroupList, getGroupInvite } = require('../redux/actions/group');
 const { getNote } = require('../redux/actions/note');
 
 const MenuPannel = require('./main/MenuPannel');
@@ -23,6 +23,7 @@ class Main extends React.Component {
       this.props.getSelfActor();
       this.props.getNote();
       this.props.getGroupList();
+      this.props.getGroupInvite();
     }
   }
 
@@ -71,5 +72,8 @@ module.exports = connect(
     getGroupList: () => {
       dispatch(getGroupList());
     },
+    getGroupInvite: () => {
+      dispatch(getGroupInvite());
+    }
   })
 )(Main);

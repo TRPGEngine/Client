@@ -2,6 +2,7 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { agreeFriendInvite, refuseFriendInvite } = require('../redux/actions/user');
+const { agreeGroupInvite, refuseGroupInvite } = require('../redux/actions/group');
 require('./MsgItem.scss');
 
 class MsgItem extends React.Component {
@@ -29,6 +30,31 @@ class MsgItem extends React.Component {
             <div className="card-action">
               <button onClick={() => this.props.dispatch(refuseFriendInvite(uuid))}>拒绝</button>
               <button onClick={() => this.props.dispatch(agreeFriendInvite(uuid))}>同意</button>
+            </div>
+          )
+      }
+    }else if(cardType === 'groupInvite') {
+      let actionState = data.get('actionState');
+      let uuid = data.getIn(['invite', 'uuid']);
+      switch (actionState) {
+        case 1:
+          return (
+            <div className="card-action">
+              <button disabled>已同意</button>
+            </div>
+          )
+        case 2:
+          return (
+            <div className="card-action">
+              <button disabled>已拒绝</button>
+            </div>
+          )
+        case 0:
+        default:
+          return (
+            <div className="card-action">
+              <button onClick={() => this.props.dispatch(refuseGroupInvite(uuid))}>拒绝</button>
+              <button onClick={() => this.props.dispatch(agreeGroupInvite(uuid))}>同意</button>
             </div>
           )
       }

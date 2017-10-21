@@ -33,6 +33,58 @@ class ConverseDetail extends React.Component {
     }));
   }
 
+  prepareMsgItemCardData(data) {
+    if(data.get('type') === 'friendInvite') {
+      let inviteUUID = data.getIn(['invite', 'uuid']);
+      let from_uuid = data.getIn(['invite', 'from_uuid']);
+      let inviteIndex = this.props.friendRequests.findIndex((item) => {
+        if(item.get('uuid') === inviteUUID) {
+          return true
+        }else {
+          return false
+        }
+      });
+      if(inviteIndex >= 0) {
+        // 尚未处理
+        data = data.set('actionState', 0);
+      }else {
+        let friendIndex = this.props.friendList.indexOf(from_uuid);
+        if(friendIndex >= 0) {
+          // 已同意是好友
+          data = data.set('actionState', 1);
+        }else {
+          // 已拒绝好友邀请
+          data = data.set('actionState', 2);
+        }
+      }
+    }else if(data.get('type') === 'groupInvite') {
+      let inviteUUID = data.getIn(['invite', 'uuid']);
+      let group_uuid = data.getIn(['invite', 'group_uuid']);
+      let inviteIndex = this.props.groupInvites.findIndex((item) => {
+        if(item.get('uuid') === inviteUUID) {
+          return true
+        }else {
+          return false
+        }
+      });
+      if(inviteIndex >= 0) {
+        // 尚未处理
+        data = data.set('actionState', 0);
+      }else {
+        let friendIndex = this.props.groupUUIDList.indexOf(group_uuid);
+        if(friendIndex >= 0) {
+          // 已同意是邀请
+          data = data.set('actionState', 1);
+        }else {
+          // 已拒绝邀请
+          data = data.set('actionState', 2);
+        }
+      }
+    }
+
+    return data;
+  }
+
   getMsgList(list) {
     if(!!list) {
       let userUUID = this.props.userUUID;
@@ -46,31 +98,7 @@ class ConverseDetail extends React.Component {
 
             // data 预处理
             if(data && item.get('type') === 'card') {
-              if(data.get('type') === 'friendInvite') {
-                let inviteUUID = data.getIn(['invite', 'uuid']);
-                let from_uuid = data.getIn(['invite', 'from_uuid']);
-                let inviteIndex = this.props.friendRequests.findIndex((item) => {
-                  if(item.get('uuid') === inviteUUID) {
-                    return true
-                  }else {
-                    return false
-                  }
-                });
-                if(inviteIndex >= 0) {
-                  // 尚未处理
-                  data = data.set('actionState', 0);
-                }else {
-                  let friendIndex = this.props.friendList.indexOf(from_uuid);
-                  if(friendIndex >= 0) {
-                    // 已同意是好友
-                    data = data.set('actionState', 1);
-                  }else {
-                    // 已拒绝好友邀请
-                    data = data.set('actionState', 2);
-                  }
-
-                }
-              }
+              data = this.prepareMsgItemCardData(data);
             }
 
             return (
@@ -120,5 +148,7 @@ module.exports = connect(
     usercache: state.getIn(['cache', 'user']),
     friendRequests: state.getIn(['user', 'friendRequests']),
     friendList: state.getIn(['user', 'friendList']),
+    groupInvites: state.getIn(['group', 'invites']),
+    groupUUIDList: state.getIn(['group', 'groups']).map((item) => item.get('uuid')),
   })
 )(ConverseDetail);

@@ -42,7 +42,7 @@ module.exports = function group(state = initialState, action) {
         }else {
           return list;
         }
-      }).update('groups', (list) => list.push(action.payload.group));
+      }).update('groups', (list) => list.push(immutable.fromJS(action.payload.group)));
     case REFUSE_GROUP_INVITE_SUCCESS:
       return state.update('invites', (list) => {
         // same as agree

@@ -15,6 +15,55 @@ const api = trpgApi.getInstance();
 const { addConverse } = require('./chat');
 const { checkUser, checkTemplate } = require('../../utils/usercache');
 
+// 当state-group-groups状态添加新的group时使用来初始化
+let initGroupInfo = function(dispatch, group) {
+  let groupUUID = group.uuid;
+  dispatch(addConverse({
+    uuid: groupUUID,
+    id: group.id,
+    name: group.name,
+    type: 'group',
+    msgList: [],
+    lastMsg: '',
+    lastTime: '',
+  }));
+  // 获取团成员
+  api.emit('group::getGroupMembers', {groupUUID}, function(data) {
+    if(data.result) {
+      let members = data.members;
+      let uuidList = [];
+      for (let member of members) {
+        let uuid = member.uuid;
+        uuidList.push(uuid);
+        checkUser(uuid);
+      }
+      dispatch({type: GET_GROUP_MEMBERS_SUCCESS, groupUUID, payload: uuidList})
+    }else {
+      console.error('获取团成员失败:', data.msg);
+    }
+  });
+  // 获取团人物
+  api.emit('group::getGroupActors', {groupUUID}, function(data) {
+    if(data.result) {
+      let actors = data.actors;
+      for (let ga of actors) {
+        checkTemplate(ga.actor.template_uuid)
+      }
+      dispatch({type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors})
+    }else {
+      console.error('获取团人物失败:', data.msg);
+    }
+  });
+  // 获取团聊天日志
+  api.emit('chat::getChatLog', {room: groupUUID}, function(data) {
+    if(data.result) {
+      dispatch({type: UPDATE_CONVERSES_SUCCESS, convUUID: groupUUID, payload: data.list})
+    }else {
+      console.error('获取团聊天记录失败:', data.msg);
+    }
+  });
+}
+
 exports.getGroupInfo = function(uuid) {
   return function(dispatch, getState) {
     api.emit('group::getInfo', {uuid} ,function(data) {
@@ -43,6 +92,9 @@ exports.agreeGroupInvite = function(inviteUUID) {
     api.emit('group::agreeGroupInvite', {uuid: inviteUUID}, function(data) {
       if(data.result) {
         dispatch({type: AGREE_GROUP_INVITE_SUCCESS, payload: data.res});
+        if(data.res && data.res.group) {
+          initGroupInfo(dispatch, data.res.group);
+        }
       }else {
         console.error(data);
       }
@@ -79,51 +131,7 @@ exports.getGroupList = function() {
         let groups = data.groups;
         dispatch({type: GET_GROUP_LIST_SUCCESS, payload: groups});
         for (let group of groups) {
-          let groupUUID = group.uuid;
-          dispatch(addConverse({
-            uuid: groupUUID,
-            id: group.id,
-            name: group.name,
-            type: 'group',
-            msgList: [],
-            lastMsg: '',
-            lastTime: '',
-          }));
-          // 获取团成员
-          api.emit('group::getGroupMembers', {groupUUID}, function(data) {
-            if(data.result) {
-              let members = data.members;
-              let uuidList = [];
-              for (let member of members) {
-                let uuid = member.uuid;
-                uuidList.push(uuid);
-                checkUser(uuid);
-              }
-              dispatch({type: GET_GROUP_MEMBERS_SUCCESS, groupUUID, payload: uuidList})
-            }else {
-              console.error('获取团成员失败:', data.msg);
-            }
-          });
-          // 获取团人物
-          api.emit('group::getGroupActors', {groupUUID}, function(data) {
-            if(data.result) {
-              let actors = data.actors;
-              for (let ga of actors) {
-                checkTemplate(ga.actor.template_uuid)
-              }
-              dispatch({type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors})
-            }else {
-              console.error('获取团人物失败:', data.msg);
-            }
-          });
-          // 获取团聊天日志
-          api.emit('chat::getChatLog', {room: groupUUID}, function(data) {
-            if(data.result) {
-              dispatch({type: UPDATE_CONVERSES_SUCCESS, convUUID: groupUUID, payload: data.list})
-            }else {
-              console.error('获取团聊天记录失败:', data.msg);
-            }
-          });
+          initGroupInfo(dispatch, group);
         }
       }else {
         console.error(data.msg);
