@@ -1,5 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const ReactTooltip = require('react-tooltip');
+const { sendGroupInvite } = require('../../../redux/actions/group');
 
 require('./GroupInvite.scss')
 
@@ -24,44 +26,72 @@ class GroupInvite extends React.Component {
   }
 
   _handleSendGroupInvite() {
-    console.log('handleSendGroupInvite');
+    console.log('handleSendGroupInvite', this.state.selectedUUIDs);
+    let groupUUID = this.props.selectedGroupUUID;
+    for (let uuid of this.state.selectedUUIDs) {
+      // TODO 需要一个待处理的group邀请列表，防止多次提交邀请
+      this.props.sendGroupInvite(groupUUID, uuid);
+    }
   }
 
   render() {
     return (
       <div className="group-invite">
+        <ReactTooltip effect="solid" />
         <div className="friend-list">
           {
             this.props.friendList.map((uuid) => {
+              if(this.props.groupMembers.indexOf(uuid) >= 0) {
+                return;
+              }
+
               let user = this.props.usercache.get(uuid);
               if(!user) {
                 return;
               }
-              
+
               return (
                 <div
                   key={"group-invite#friend#"+uuid}
                   className={"item" + (this.state.selectedUUIDs.indexOf(uuid)>=0?' active':'')}
                   onClick={() => this._handleSelect(uuid)}
+                  data-tip={user.get('nickname') || user.get('username')}
                 >
-                  <div className="avatar" data-tip={user.get('nickname') || user.get('username')}>
-                    <img src={user.get('avatar')} />
+                  <div className="avatar">
+                    <img src={user.get('avatar') || '/src/assets/img/gugugu1.png'} />
                   </div>
                   <div className="mask"></div>
                 </div>
               )
             })
           }
-          <div className="item active">
-            <div className="avatar">
-              <img src="/src/assets/img/gugugu1.png" />
-            </div>
-            <div className="mask"></div>
-          </div>
         </div>
         <i className="iconfont">&#xe606;</i>
-        <div className="invite-list"></div>
-        <button>发送邀请</button>
+        <div className="invite-list">
+          {
+            this.props.groupMembers.map((uuid) => {
+              let user = this.props.usercache.get(uuid);
+              if(!user) {
+                return;
+              }
+
+              return (
+                <div
+                  key={"group-invite#groupMembers#"+uuid}
+                  className={"item-solid"}
+                  onClick={() => console.log(uuid)}
+                  data-tip={user.get('nickname') || user.get('username')}
+                >
+                  <div className="avatar">
+                    <img src={user.get('avatar') || '/src/assets/img/gugugu1.png'} />
+                  </div>
+                  <div className="mask"></div>
+                </div>
+              )
+            })
+          }
+        </div>
+        <button onClick={() => this._handleSendGroupInvite()}>发送邀请</button>
       </div>
     )
   }
@@ -80,5 +110,8 @@ module.exports = connect(
       groupInfo,
       groupMembers: groupInfo.get('group_members'),
     }
-  }
+  },
+  dispatch => ({
+    sendGroupInvite: (group_uuid, to_uuid) => dispatch(sendGroupInvite(group_uuid, to_uuid)),
+  })
 )(GroupInvite);

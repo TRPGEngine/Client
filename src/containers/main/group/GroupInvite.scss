@@ -17,7 +17,7 @@
     align-items: flex-start;
     justify-content: flex-start;
 
-    .item {
+    .item, .item-solid {
       position: relative;
       width: 44px;
       height: 44px;
@@ -54,7 +54,9 @@
           font-size: 12px;
         }
       }
+    }
 
+    .item {
       &:not(.active):hover .mask{
         opacity: 1;
       }
