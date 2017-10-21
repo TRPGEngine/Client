@@ -1,5 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const config = require('../../../../config/project.config.js');
 const { showProfileCard } = require('../../../redux/actions/ui');
 const { agreeFriendInvite, refuseFriendInvite } = require('../../../redux/actions/user');
 const ConvItem = require('../../../components/ConvItem');
@@ -24,7 +25,7 @@ class FriendsList extends React.Component {
       return (
         <ConvItem
           key={`friends#${uuid}#${index}`}
-          icon={usercache.getIn([uuid, 'avatar']) || '/src/assets/img/gugugu1.png'}
+          icon={usercache.getIn([uuid, 'avatar']) || config.defaultImg.user}
           title={usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username'])}
           content={usercache.getIn([uuid, 'sign'])}
           time=''
@@ -71,7 +72,7 @@ class FriendsList extends React.Component {
             }}
           >
             <div className="avatar" onClick={() => this.props.showProfileCard(item.from_uuid)}>
-              <img src={usercache.getIn([item.from_uuid, 'avatar']) || "/src/assets/img/gugugu1.png"} />
+              <img src={usercache.getIn([item.from_uuid, 'avatar']) || config.defaultImg.user} />
             </div>
             <div className="text">{usercache.getIn([item.from_uuid, 'username'])} 请求添加你为好友</div>
           </div>

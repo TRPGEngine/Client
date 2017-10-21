@@ -1,6 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
+const config = require('../../config/project.config.js');
 const Select = require('react-select');
 const { hideProfileCard } = require('../redux/actions/ui');
 const { addFriend } = require('../redux/actions/user');
@@ -194,7 +195,7 @@ class ProfileCard extends React.Component {
             <div className="header">
               <div className="profile">
                 <div className="avatar">
-                  <img src={this.props.usercache.getIn([uuid, 'avatar']) || '/src/assets/img/gugugu1.png'} />
+                  <img src={this.props.usercache.getIn([uuid, 'avatar']) || config.defaultImg.user} />
                 </div>
                 <span className="username">{this.props.usercache.getIn([uuid, 'nickname']) || this.props.usercache.getIn([uuid, 'username'])}</span>
                 {

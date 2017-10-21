@@ -1,5 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const config = require('../../../../config/project.config.js');
 const ConvItem = require('../../../components/ConvItem');
 const moment = require('moment');
 const { switchSelectGroup } = require('../../../redux/actions/group');
@@ -31,7 +32,7 @@ class GroupList extends React.Component {
       return (
         <ConvItem
           key={uuid+'#'+index}
-          icon={'/src/assets/img/gugugu1.png'}
+          icon={item.get('avatar') || config.defaultImg.group}
           title={item.get('name')}
           content={''}
           time={moment().format('YYYY-MM-DD HH:mm:ss')}

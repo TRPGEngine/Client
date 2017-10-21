@@ -1,5 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const config = require('../../../../config/project.config.js');
 const moment = require('moment');
 const { showProfileCard } = require('../../../redux/actions/ui');
 
@@ -25,7 +26,7 @@ class GroupMember extends React.Component {
               <i className="iconfont">&#xe648;</i>
             </td>
             <td className="avatar">
-              <img src={user.get('avatar') || '/src/assets/img/gugugu1.png'} />
+              <img src={user.get('avatar') || config.defaultImg.user} />
             </td>
             <td className="name">
               {user.get('nickname') || user.get('username')}

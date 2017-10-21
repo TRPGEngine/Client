@@ -1,5 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const config = require('../../../../config/project.config.js');
 const ReactTooltip = require('react-tooltip');
 const { sendGroupInvite } = require('../../../redux/actions/group');
 
@@ -58,7 +59,7 @@ class GroupInvite extends React.Component {
                   data-tip={user.get('nickname') || user.get('username')}
                 >
                   <div className="avatar">
-                    <img src={user.get('avatar') || '/src/assets/img/gugugu1.png'} />
+                    <img src={user.get('avatar') || config.defaultImg.user} />
                   </div>
                   <div className="mask"></div>
                 </div>
@@ -83,7 +84,7 @@ class GroupInvite extends React.Component {
                   data-tip={user.get('nickname') || user.get('username')}
                 >
                   <div className="avatar">
-                    <img src={user.get('avatar') || '/src/assets/img/gugugu1.png'} />
+                    <img src={user.get('avatar') || config.defaultImg.user} />
                   </div>
                   <div className="mask"></div>
                 </div>

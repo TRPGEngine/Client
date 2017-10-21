@@ -1,5 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const config = require('../../config/project.config.js');
 const { sendFriendInvite, agreeFriendInvite } = require('../redux/actions/user');
 
 require('./FindResultItem.scss');
@@ -51,7 +52,7 @@ class FindResultItem extends React.Component {
     return (
       <div className="find-result-item">
         <div className="avatar">
-          <img src={info.avatar || '/src/assets/img/gugugu1.png'} />
+          <img src={info.avatar || config.defaultImg.user} />
         </div>
         <div className="profile">
           <span className="username">{info.nickname || info.username}</span>

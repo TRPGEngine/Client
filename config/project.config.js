@@ -13,5 +13,10 @@ module.exports = {
     protocol: 'http',
     host: currentHost,
     port: '23257'
-  }
+  },
+  defaultImg: {
+    user: '/src/assets/img/gugugu1.png',
+    group: '/src/assets/img/gugugu1.png',
+    trpgsystem: '/src/assets/img/system_notice.png',
+  },
 }

@@ -1,5 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const config = require('../../../../config/project.config.js');
 const moment = require('moment');
 const MsgSendBox = require('../../../components/MsgSendBox');
 const MsgItem = require('../../../components/MsgItem');
@@ -93,7 +94,7 @@ class ConverseDetail extends React.Component {
         <div className="msg-items">
         {
           list.sortBy((item) => item.get('date')).map((item, index) => {
-            let defaultAvatar = item.get('sender_uuid') === 'trpgsystem' ? '/src/assets/img/system_notice.png' : '/src/assets/img/gugugu1.png';
+            let defaultAvatar = item.get('sender_uuid') === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.user;
             let data = item.get('data');
 
             // data 预处理

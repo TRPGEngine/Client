@@ -1,6 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const moment = require('moment');
+const config = require('../../../../config/project.config.js');
 const ConverseDetail = require('./ConverseDetail');
 const ConvItem = require('../../../components/ConvItem');
 const { switchConverse } = require('../../../redux/actions/chat');
@@ -38,7 +39,7 @@ class ConverseList extends React.Component {
       .reverse()
       .map((item, index) => {
         let uuid = item.get('uuid');
-        let defaultIcon = uuid === 'trpgsystem' ? '/src/assets/img/system_notice.png' : '/src/assets/img/gugugu1.png';
+        let defaultIcon = uuid === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.user;
         return (
           <ConvItem
             key={'converses#'+index}
