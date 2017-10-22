@@ -1,0 +1,47 @@
+@import "../utils/color";
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  .tab-nav {
+    display: flex;
+    margin-bottom: 10px;
+
+    .tab-item {
+      $padding: 10%;
+      $normal-color: $color-dusty-gray;
+      $active-color: $color-tobacco-brown;
+      $line-width: 2px;
+      flex: 1;
+      text-align: center;
+      line-height: 44px;
+      position: relative;
+      color: $normal-color;
+      cursor: pointer;
+
+      &:after {
+        content: " ";
+        position: absolute;
+        left: $padding;
+        bottom: 0;
+        right: $padding;
+        border-bottom: $line-width solid transparent;
+      }
+
+      &:hover:after {
+        border-bottom-color: $normal-color;
+      }
+
+      &.active {
+        color: $active-color;
+
+        &:after {
+          border-bottom-color: $active-color;
+        }
+      }
+    }
+  }
+  .tab-content {
+    flex: 1;
+  }
+}

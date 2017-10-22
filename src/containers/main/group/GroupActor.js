@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const { showAlert } = require('../../../redux/actions/ui');
 const ReactTooltip = require('react-tooltip');
 const at = require('trpg-actor-template');
+const Tab = require('../../../components/Tab');
 
 require('./GroupActor.scss')
 
@@ -60,13 +61,30 @@ class GroupActor extends React.Component {
   render() {
     return (
       <div className="group-actor">
-        <ReactTooltip effect="solid" place="left" id="group-actor-info" class="group-actor-info"/>
-        <div className="group-actor-action">
-          <button onClick={() => this._handleSendGroupActorCheck()}><i className="iconfont">&#xe604;</i>申请审核</button>
-        </div>
-        <div className="group-actor-items">
-          {this.getGroupActorsList()}
-        </div>
+        <Tab
+          items={[
+            {
+              name: '正式人物卡',
+              component: (
+                <div className="formal-actor">
+                  <ReactTooltip effect="solid" place="left" id="group-actor-info" class="group-actor-info"/>
+                  <div className="group-actor-action">
+                    <button onClick={() => this._handleSendGroupActorCheck()}><i className="iconfont">&#xe604;</i>申请审核</button>
+                  </div>
+                  <div className="group-actor-items">
+                    {this.getGroupActorsList()}
+                  </div>
+                </div>
+              )
+            },
+            {
+              name: '待审人物卡',
+              component: (
+                <div className="reserve-actor">aaaaa</div>
+              )
+            }
+          ]}
+        />
       </div>
     )
   }
