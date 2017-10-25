@@ -36,12 +36,14 @@ class MsgSendBox extends React.Component {
       {
         label: '请求投骰',
         type: 'dice-req',
-        icon: '&#xe609;'
+        icon: '&#xe609;',
+        onClick: this.props.onSendDiceReq,
       },
       {
         label: '邀请投骰',
         type: 'dice-inv',
-        icon: '&#xe631;'
+        icon: '&#xe631;',
+        onClick: this.props.onSendDiceInv,
       },
     ]
   }
@@ -105,7 +107,7 @@ class MsgSendBox extends React.Component {
                     key={"input-action#"+index}
                     data-tip={item.label}
                     className="tool-item"
-                    onClick={() => console.log(item.label)}
+                    onClick={() => item.onClick ? item.onClick() : ''}
                   >
                     <i className="iconfont" dangerouslySetInnerHTML={{__html:item.icon}}></i>
                   </div>

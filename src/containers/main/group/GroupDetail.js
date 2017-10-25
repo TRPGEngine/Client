@@ -4,6 +4,7 @@ const config = require('../../../../config/project.config.js');
 const moment = require('moment');
 const Select = require('react-select');
 const ReactTooltip = require('react-tooltip');
+const { showModal } = require('../../../redux/actions/ui');
 const { sendMsg } = require('../../../redux/actions/chat');
 const MsgSendBox = require('../../../components/MsgSendBox');
 const MsgItem = require('../../../components/MsgItem');
@@ -13,6 +14,7 @@ const GroupMap = require('./GroupMap');
 const GroupInvite = require('./GroupInvite');
 const GroupActor = require('./GroupActor');
 const GroupMember = require('./GroupMember');
+const DiceRequest = require('../dice/DiceRequest');
 
 class GroupDetail extends React.Component {
   constructor(props) {
@@ -71,6 +73,12 @@ class GroupDetail extends React.Component {
       is_public: true,
       type,
     }));
+  }
+
+  _handleSendDiceReq() {
+    this.props.dispatch(showModal(
+      <DiceRequest />
+    ))
   }
 
   getHeaderActions() {
@@ -227,7 +235,10 @@ class GroupDetail extends React.Component {
         <div className="group-content" ref="container">
           {this.getMsgList()}
         </div>
-        <MsgSendBox onSendMsg={(message, type) => this._handleSendMsg(message, type)} />
+        <MsgSendBox
+          onSendMsg={(message, type) => this._handleSendMsg(message, type)}
+          onSendDiceReq={() => this._handleSendDiceReq()}
+        />
         <div
           className={"group-slide-panel" + (this.state.isSlidePanelShow?"":" hide")}
           onClick={(e) => {
