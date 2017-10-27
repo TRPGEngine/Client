@@ -1,0 +1,18 @@
+@import "../../../../utils/mixins";
+
+.group-actor-check {
+  .actions {
+    display: flex;
+    justify-content: center;
+
+    button {
+      @include block-btn;
+      margin: 10px 10px;
+      width: 120px;
+
+      .iconfont {
+        margin-right: 2px;
+      }
+    }
+  }
+}

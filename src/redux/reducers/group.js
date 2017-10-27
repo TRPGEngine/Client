@@ -86,6 +86,8 @@ module.exports = function group(state = initialState, action) {
 
         return list;
       })
+    default:
+      return state;
   }
 
   return state;

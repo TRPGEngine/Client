@@ -1,9 +1,12 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const { showAlert } = require('../../../redux/actions/ui');
+const { selectActor } = require('../../../redux/actions/actor');
+const { showAlert, showModal } = require('../../../redux/actions/ui');
 const ReactTooltip = require('react-tooltip');
 const at = require('trpg-actor-template');
 const Tab = require('../../../components/Tab');
+const ActorProfile = require('../../../components/ActorProfile');
+const GroupActorCheck = require('./modal/GroupActorCheck');
 
 require('./GroupActor.scss')
 
@@ -16,10 +19,32 @@ class GroupActor extends React.Component {
     // TODO: 团人物审核模态框
   }
 
+  // 查看人物卡
+  _handleShowActorProfile(actor) {
+    if(actor) {
+      this.props.showModal(
+        <ActorProfile actor={actor}/>
+      )
+    }else {
+      console.error('actor');
+    }
+  }
+
+  // 审批人物
+  _handleApprove(groupActorInfo) {
+    if(groupActorInfo) {
+      this.props.showModal(
+        <GroupActorCheck groupActor={groupActorInfo} />
+      )
+    }else {
+      console.error('groupActor');
+    }
+  }
+
   getGroupActorsList() {
     let actors = this.props.groupInfo.get('group_actors');
     if(actors) {
-      return actors.map((item) => {
+      return actors.filter(item => item.get('passed')===true).map((item) => {
         let originActor = item.get('actor');
         let actorData = originActor.get('info').merge(item.get('actor_info'));
         let template = this.props.templateCache.get(originActor.get('template_uuid'));
@@ -28,7 +53,6 @@ class GroupActor extends React.Component {
           let info = at.parse(template.get('info'));
           info.setData(actorData);
           cells = info.getCells();
-          console.log(info.getCells());
         }
 
         let tipHtml = cells.map((item) => {
@@ -51,6 +75,40 @@ class GroupActor extends React.Component {
             <div className="info">
               <div className="name">{originActor.get('name')}</div>
               <div className="desc">{originActor.get('desc')}</div>
+              <div className="action">
+                <button data-tip="查询" data-for="group-actor-check-action" onClick={() => this._handleShowActorProfile(originActor.toJS())}>
+                  <i className="iconfont">&#xe61b;</i>
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      })
+    }
+  }
+
+  getGroupActorChecksList() {
+    let groupActors = this.props.groupInfo.get('group_actors');
+    if(groupActors) {
+      return groupActors.filter(item => item.get('passed')!=true).map((item) => {
+        let originActor = item.get('actor');
+        return (
+          <div
+            key={'group-actor-check#'+item.get('uuid')}
+            className="group-actor-check-item"
+          >
+            <div className="avatar" style={{backgroundImage: `url(${originActor.get('avatar')})`}}></div>
+            <div className="info">
+              <div className="name">{originActor.get('name')}</div>
+              <div className="desc">{originActor.get('desc')}</div>
+              <div className="action">
+                <button data-tip="查询" data-for="group-actor-check-action" onClick={() => this._handleShowActorProfile(originActor.toJS())}>
+                  <i className="iconfont">&#xe61b;</i>
+                </button>
+                <button data-tip="审批" data-for="group-actor-check-action" onClick={() => this._handleApprove(item.toJS())}>
+                  <i className="iconfont">&#xe83f;</i>
+                </button>
+              </div>
             </div>
           </div>
         )
@@ -80,7 +138,12 @@ class GroupActor extends React.Component {
             {
               name: '待审人物卡',
               component: (
-                <div className="reserve-actor">aaaaa</div>
+                <div className="reserve-actor">
+                  <div className="group-actor-check-items">
+                    <ReactTooltip effect="solid" place="top" id="group-actor-check-action" class="group-actor-info"/>
+                    {this.getGroupActorChecksList()}
+                  </div>
+                </div>
               )
             }
           ]}
@@ -97,5 +160,10 @@ module.exports = connect(
       .getIn(['group', 'groups'])
       .find((group) => group.get('uuid')===state.getIn(['group', 'selectedGroupUUID'])),
     templateCache: state.getIn(['cache', 'template']),
+  }),
+  dispatch => ({
+    showAlert: (...args) => dispatch(showAlert(...args)),
+    showModal: (...args) => dispatch(showModal(...args)),
+    selectActor: (actorUUID) => dispatch(selectActor(actorUUID)),
   })
 )(GroupActor);

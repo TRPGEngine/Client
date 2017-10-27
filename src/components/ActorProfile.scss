@@ -40,6 +40,7 @@
   .property {
     flex: 1;
     margin-left: 20px;
+    padding-top: 15px;
     @include auto-scroll-bar;
 
     .actor-property-cell {
