@@ -225,11 +225,6 @@ class ProfileCard extends React.Component {
   }
 }
 
-ProfileCard.propTypes = {
-  uuid: PropTypes.string,
-  show: PropTypes.bool,
-}
-
 module.exports = connect(
   state => ({
     usercache: state.getIn(['cache', 'user']),

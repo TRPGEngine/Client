@@ -9,7 +9,7 @@ class Modal extends React.Component {
     let body = '';
     if(this.props.show && this.props.body) {
       body = (
-        <div className="modal-mask">
+        <div className="modal-mask" onClick={(e) => e.stopPropagation()}>
           <div className="modal-card">
             <div className="modal-close" onClick={() => this.props.hideModal()}>
               <i className="iconfont">&#xe70c;</i>

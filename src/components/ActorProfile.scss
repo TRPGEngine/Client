@@ -1,0 +1,62 @@
+@import "../utils/mixins";
+@import "../utils/color";
+
+.actor-profile {
+  width: 700px;
+  height: 560px;
+  padding: 20px;
+  display: flex;
+  .profile {
+    width: 190px + 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-right: 20px;
+    border-right: 1px dashed $color-bon-jour;
+
+    .uuid {
+      font-size: 9px;
+      color: $color-french-gray;
+      margin-bottom: 10px;
+      @include one-line;
+    }
+    .avatar {
+      width: 100%;
+      height: 240px;
+      border: 1px solid #DDDCDD;
+      background-position: center;
+      background-size: cover;
+    }
+
+    .desc {
+      flex: 1;
+      margin-top: 10px;
+      text-align: left;
+      color: $color-tundora;
+      @include auto-scroll-bar;
+    }
+  }
+
+  .property {
+    flex: 1;
+    margin-left: 20px;
+    @include auto-scroll-bar;
+
+    .actor-property-cell {
+      text-align: left;
+      display: flex;
+      margin-bottom: 6px;
+      padding: 4px 6px;
+      border-radius: 3px;
+      &:hover {
+        background-color: rgba(black, 0.2);
+      }
+      span:nth-child(1) {
+        flex: 1;
+      }
+      span:nth-child(2) {
+        flex: 2;
+      }
+    }
+  }
+}
