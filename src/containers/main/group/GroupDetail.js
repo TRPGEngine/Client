@@ -14,6 +14,7 @@ const GroupMap = require('./GroupMap');
 const GroupInvite = require('./GroupInvite');
 const GroupActor = require('./GroupActor');
 const GroupMember = require('./GroupMember');
+const GroupInfo = require('./GroupInfo');
 const DiceRequest = require('../dice/DiceRequest');
 
 class GroupDetail extends React.Component {
@@ -121,6 +122,9 @@ class GroupDetail extends React.Component {
       {
         name: '团信息',
         icon: '&#xe611;',
+        component: (
+          <GroupInfo />
+        )
       },
     ]
 

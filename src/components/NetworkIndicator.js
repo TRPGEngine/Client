@@ -14,7 +14,7 @@ class NetworkIndicator extends React.Component {
     }else {
       if(network.tryReconnect) {
         state = 'loading';
-        icon = '&#xe61e;';
+        icon = '&#xeb0f;';
       }else {
         state = 'close';
         icon = '&#xe70c;';
