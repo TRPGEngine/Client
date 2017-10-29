@@ -42,7 +42,7 @@ class Alert extends React.Component {
     let body = '';
     if(this.props.show) {
       body = (
-        <div className="mask">
+        <div className="mask" onClick={(e) => e.stopPropagation()}>
           <div className="content">
             {alertContent}
           </div>

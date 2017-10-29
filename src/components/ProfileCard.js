@@ -190,7 +190,7 @@ class ProfileCard extends React.Component {
       )
 
       return (
-        <div className="mask">
+        <div className="mask" onClick={(e) => e.stopPropagation()}>
           <div className="card">
             <div className="header">
               <div className="profile">
