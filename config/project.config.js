@@ -18,5 +18,6 @@ module.exports = {
     user: '/src/assets/img/gugugu1.png',
     group: '/src/assets/img/gugugu1.png',
     trpgsystem: '/src/assets/img/system_notice.png',
+    actor: '',
   },
 }

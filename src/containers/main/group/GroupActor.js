@@ -7,6 +7,7 @@ const at = require('trpg-actor-template');
 const Tab = require('../../../components/Tab');
 const ActorProfile = require('../../../components/ActorProfile');
 const GroupActorCheck = require('./modal/GroupActorCheck');
+const GroupActorCheckSend = require('./modal/GroupActorCheckSend');
 
 require('./GroupActor.scss')
 
@@ -17,6 +18,9 @@ class GroupActor extends React.Component {
     }
 
     // TODO: 团人物审核模态框
+    this.props.showModal(
+      <GroupActorCheckSend />
+    )
   }
 
   // 查看人物卡
@@ -26,7 +30,7 @@ class GroupActor extends React.Component {
         <ActorProfile actor={actor}/>
       )
     }else {
-      console.error('actor');
+      console.error('需要actor');
     }
   }
 
@@ -37,7 +41,7 @@ class GroupActor extends React.Component {
         <GroupActorCheck groupActor={groupActorInfo} />
       )
     }else {
-      console.error('groupActor');
+      console.error('需要groupActor');
     }
   }
 
