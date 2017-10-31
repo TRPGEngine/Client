@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-const { Route, Redirect, Switch, BrowserRouter, Link } = require('react-router-dom');
-const Router = BrowserRouter;
+const { Route, Redirect, Switch, HashRouter, BrowserRouter, Link } = require('react-router-dom');
 const Modal = require('../components/Modal');
 const Loading = require('../components/Loading');
 const Alert = require('../components/Alert');
 const NetworkIndicator = require('../components/NetworkIndicator');
+const config = require('../../config/project.config.js');
 require('./App.scss');
 require('../assets/css/iconfont.css');
 
+const Router = config.platform === 'web' ? BrowserRouter : HashRouter;
 const appConfig = require('../../package.json');
 const appVersion = appConfig.version;
 const Login = require('./Login');

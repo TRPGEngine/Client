@@ -2,10 +2,12 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
 
-const ROOT_PATH = path.resolve(__dirname);
+const ROOT_PATH = path.resolve(__dirname, '../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
+
+console.log("打包环境:\n", "环境:", process.env.NODE_ENV, "\n", "平台:", process.env.PLATFORM);
 
 module.exports = {
   entry: path.resolve(APP_PATH, 'index.js'),
@@ -27,7 +29,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf)$/,
-        loader: 'url-loader?limit=8192&name=[hash].[ext]'
+        loader: 'url-loader?limit=8192&name=assets/[hash].[ext]'
       }
     ]
   },
@@ -46,14 +48,15 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        'PLATFORM': JSON.stringify(process.env.PLATFORM)
       }
     }),
     new HtmlwebpackPlugin({
       title: 'TRPG-Game',
-      template: 'build/template/index.html',
+      template: path.resolve(BUILD_PATH, './template/index.html'),
       inject: true,
-      favicon: 'src/assets/img/favicon.ico'
+      favicon: path.resolve(APP_PATH, './assets/img/favicon.ico')
     }),
   ],
 }

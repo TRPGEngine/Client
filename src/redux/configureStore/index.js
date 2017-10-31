@@ -10,6 +10,7 @@ const logger = createLogger({
   stateTransformer: (state) => state.toJS(),
 })
 console.log('当前环境:', process.env.NODE_ENV);
+console.log('当前平台:', process.env.PLATFORM);
 const createStoreWithMiddleware = process.env.NODE_ENV !== 'production' ? applyMiddleware(
   thunk, logger
 )(createStore) : applyMiddleware(
