@@ -23,12 +23,20 @@ class ImageUploader extends React.Component {
     let formData = new FormData();
     formData.append('avatar', file);
 
+    let headers = {
+      'avatar-type': this.props.type || 'actor',
+      'user-uuid': this.props.user_uuid,
+    }
+    if(this.props.width) {
+      headers.width = this.props.width;
+      if(this.props.height) {
+        headers.height = this.props.height;
+      }
+    }
+
     fetch(fileUrl+"/avatar", {
       method: 'POST',
-      headers: {
-        'avatar-type': 'actor',
-        'user-uuid': this.props.user_uuid,
-      },
+      headers,
       body: formData
     }).then((response) => {
       if(response.ok) {

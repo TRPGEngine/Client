@@ -3,6 +3,7 @@ const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const config = require('../../config/project.config.js');
 const Select = require('react-select');
+const ImageUploader = require('./ImageUploader');
 const { hideProfileCard } = require('../redux/actions/ui');
 const { addFriend } = require('../redux/actions/user');
 require('./ProfileCard.scss');
@@ -30,9 +31,20 @@ class ProfileCard extends React.Component {
     this.props.dispatch(hideProfileCard());
   }
 
+  _handleReset() {
+    console.log('reset');
+  }
+
+  _handleSave() {
+    console.log('save');
+  }
+
+  _handleUpdateAvatar(avatarUrl) {
+    console.log('update avatar', avatarUrl);
+  }
+
   checkEditedIsChange() {
     let info = this.props.usercache.get(this.props.selectedUUID);
-    console.log(JSON.stringify(this.state.editedInfo) === JSON.stringify(info));
     if(JSON.stringify(this.state.editedInfo) === JSON.stringify(info)) {
       return false;
     }else {
@@ -56,12 +68,12 @@ class ProfileCard extends React.Component {
         <div className="actions">
           <button
             className="footer-item active"
-            onClick={() => console.log('reset')}
+            onClick={() => this._handleReset()}
             disabled={isChanged}
           ><i className="iconfont">&#xe67c;</i>重置</button>
           <button
             className="footer-item active"
-            onClick={() => console.log('save')}
+            onClick={() => this._handleSave()}
             disabled={!isChanged}
           ><i className="iconfont">&#xe634;</i>保存</button>
         </div>
@@ -160,14 +172,9 @@ class ProfileCard extends React.Component {
           </div>
           <div className="item">
             <span>个人签名:</span>
-            {/*<input
-              type="text"
-              value={this.state.editedInfo.sign}
-              onChange={(e) => this.setState({editedInfo: Object.assign(this.state.editedInfo, {sign: e.target.value})})}
-            />*/}
             <textarea
               rows="3"
-              value={this.state.editedInfo.sign}
+              value={this.state.editedInfo.sign || ''}
               onChange={(e) => this.setState({
                 editedInfo: Object.assign(this.state.editedInfo, {sign: e.target.value})
               })}
@@ -195,7 +202,20 @@ class ProfileCard extends React.Component {
             <div className="header">
               <div className="profile">
                 <div className="avatar">
-                  <img src={this.props.usercache.getIn([uuid, 'avatar']) || config.defaultImg.user} />
+                  {
+                    isSelf ? (
+                      <ImageUploader
+                        width="57"
+                        height="57"
+                        type="user"
+                        onUploadSuccess={(json) => this._handleUpdateAvatar(json.url)}
+                      >
+                        <img src={this.props.usercache.getIn([uuid, 'avatar']) || config.defaultImg.user} />
+                      </ImageUploader>
+                    ) : (
+                      <img src={this.props.usercache.getIn([uuid, 'avatar']) || config.defaultImg.user} />
+                    )
+                  }
                 </div>
                 <span className="username">{this.props.usercache.getIn([uuid, 'nickname']) || this.props.usercache.getIn([uuid, 'username'])}</span>
                 {
