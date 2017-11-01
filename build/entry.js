@@ -13,7 +13,12 @@ let mainWindow;
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({
+    width: 1000,
+    height: 600 + 20 + 3,
+    minWidth: 1000,
+    minHeight: 600 + 20 + 3,// 20px为标题栏
+  });
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
