@@ -2,8 +2,9 @@ const gulp = require('gulp');
 const gutil = require('gulp-util');
 const replace = require('gulp-replace');
 const webpack = require('webpack');
-const webpackConfig = require('./webpack.config.js');
+const webpackConfig = require('../config/webpack.config.js');
 const packager = require('electron-packager');
+const packagerConfig = require('../config/packager.config.js');
 
 gulp.task('default', ['assets', 'webpack', 'redirect']);
 
@@ -35,13 +36,7 @@ gulp.task('webpack', function(callback) {
 gulp.task('package', ['webpack', 'redirect'], function(callback) {
   gutil.log('[electron-packager]', 'start packing...');
 
-  packager({
-    dir: '../',
-    out: '../dist/app/',
-    overwrite: true,
-    platform: 'darwin',
-    mirror: 'https://npm.taobao.org/mirrors/electron/',
-  }, function(err, appPaths) {
+  packager(packagerConfig, function(err, appPaths) {
     if(err) {
       throw new Error(err);
     }else {
