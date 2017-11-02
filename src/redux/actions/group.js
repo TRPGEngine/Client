@@ -9,6 +9,7 @@ const {
   SWITCH_GROUP,
   GET_GROUP_ACTOR_SUCCESS,
   GET_GROUP_MEMBERS_SUCCESS,
+  SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS,
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
@@ -142,4 +143,16 @@ exports.getGroupList = function() {
 
 exports.switchSelectGroup = function(uuid) {
   return {type: SWITCH_GROUP, payload: uuid}
+}
+
+exports.changeSelectGroupActor = function(groupUUID, groupActorUUID) {
+  return function(dispatch, getState) {
+    return api.emit('group::setPlayerSelectedGroupActor', {groupUUID, groupActorUUID}, function(data) {
+      if(data.result) {
+        dispatch({type: SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS, payload: data.data});
+      }else {
+        console.error(data);
+      }
+    })
+  }
 }

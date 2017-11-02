@@ -6,6 +6,7 @@ const Select = require('react-select');
 const ReactTooltip = require('react-tooltip');
 const { showModal } = require('../../../redux/actions/ui');
 const { sendMsg } = require('../../../redux/actions/chat');
+const { changeSelectGroupActor } = require('../../../redux/actions/group');
 const MsgSendBox = require('../../../components/MsgSendBox');
 const MsgItem = require('../../../components/MsgItem');
 const Webview = require('../../../components/Webview');
@@ -24,7 +25,6 @@ class GroupDetail extends React.Component {
       isSlidePanelShow: false,
       slidePanelTitle: '',
       slidePanelContent: null,
-      selectedActorUUID: 'uuiduuid',
     }
   }
 
@@ -64,6 +64,12 @@ class GroupDetail extends React.Component {
     this.setState({isSlidePanelShow: false});
     window.removeEventListener('click', this.sildeEvent);
     this.sildeEvent = null;
+  }
+
+  _handleSelectGroupActor(item) {
+    if(item.value !== this.props.selectedGroupActorUUID) {
+      this.props.dispatch(changeSelectGroupActor(this.props.selectedUUID, item.value));
+    }
   }
 
   _handleSendMsg(message, type) {
@@ -207,10 +213,14 @@ class GroupDetail extends React.Component {
 
   render() {
     let inputType = this.state.inputType;
-    let options = [
-      { value: 'uuiduuid', label: '桐谷和人' },
-      { value: 'uuiduuid2', label: '亚丝娜' }
-    ];
+    let { selfGroupActors } = this.props;
+    let options = [];
+    if(selfGroupActors && selfGroupActors.size > 0) {
+      options = selfGroupActors.map((item, index) => ({
+        value: item.get('uuid'),
+        label: item.getIn(['actor', 'name']),
+      })).toJS();
+    }
     return (
       <div className="detail">
         <ReactTooltip effect='solid' />
@@ -225,12 +235,12 @@ class GroupDetail extends React.Component {
           <Select
             name="actor-select"
             className="actor-select"
-            value={this.state.selectedActorUUID}
+            value={this.props.selectedGroupActorUUID}
             options={options}
             clearable={false}
             searchable={false}
-            placeholder="请选择身份..."
-            onChange={(item) => this.setState({selectedActorUUID: item.value})}
+            placeholder="请选择身份卡"
+            onChange={(item) => this._handleSelectGroupActor(item)}
           />
           <div className="actions">
             {this.getHeaderActions()}
@@ -269,15 +279,19 @@ class GroupDetail extends React.Component {
 
 module.exports = connect(
   state => {
-    let selectedUUID = state.getIn(['group', 'selectedGroupUUID'])
+    let selectedUUID = state.getIn(['group', 'selectedGroupUUID']);
+    let groupInfo = state
+      .getIn(['group', 'groups'])
+      .find((group) => group.get('uuid')===selectedUUID);
+    let selfActors = state.getIn(['actor', 'selfActors']).map((i) => i.get('uuid'));
     return {
       selectedUUID,
-      groupInfo: state
-        .getIn(['group', 'groups'])
-        .find((group) => group.get('uuid')===selectedUUID),
+      groupInfo,
       msgList: state.getIn(['chat', 'converses', selectedUUID, 'msgList']),
       userUUID: state.getIn(['user','info','uuid']),
       usercache: state.getIn(['cache', 'user']),
+      selfGroupActors: groupInfo.get('group_actors').filter(i => i.get('enabled')&&selfActors.indexOf(i.get('actor_uuid'))>=0),
+      selectedGroupActorUUID: groupInfo.getIn(['extra', 'selected_group_actor_uuid']),
     }
   }
 )(GroupDetail);
