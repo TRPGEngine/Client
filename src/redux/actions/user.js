@@ -48,6 +48,27 @@ exports.login = function(username, password) {
   }
 }
 
+exports.loginWithToken = function(uuid, token) {
+  return function(dispatch, getState) {
+    return api.emit('player::loginWithToken', {uuid, token}, function(data) {
+      if(data.result) {
+        dispatch({type:LOGIN_SUCCESS, payload: data.info});
+      }else {
+        console.log(data);
+        if(getState().getIn(['user', 'isLogin'])) {
+          // 登录超时
+          dispatch({type:LOGIN_FAILED, payload: data.msg});
+          dispatch(showAlert({
+            type: 'alert',
+            title: '登录失败',
+            content: '您的登录已超时，请重新登录',
+          }));
+        }
+      }
+    })
+  }
+}
+
 exports.logout = function() {
   return function(dispatch, getState) {
     let info = getState().getIn(['user','info']);

@@ -17,13 +17,7 @@ const sessionStorage = require('./api/sessionStorage.api.js');
 let uuid = sessionStorage.get('uuid');
 let token = sessionStorage.get('token');
 if(!!token && !!uuid) {
-  api.emit('player::loginWithToken', {uuid, token}, function(data) {
-    if(data.result) {
-      store.dispatch({type:LOGIN_SUCCESS, payload: data.info});
-    }else {
-      console.log(data);
-    }
-  })
+  store.dispatch(require('./redux/actions/user').loginWithToken(uuid, token));
 }
 
 const App = require('./containers/App');

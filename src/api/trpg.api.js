@@ -27,7 +27,7 @@ function getApiInstance() {
 
 function bindEventFunc(store) {
   const { addMsg } = require('../redux/actions/chat');
-  const { addFriendInvite } = require('../redux/actions/user');
+  const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
   const { changeNetworkStatue } = require('../redux/actions/ui');
 
   if(!(this instanceof API)) {
@@ -54,6 +54,15 @@ function bindEventFunc(store) {
   socket.on('reconnect', function(data) {
     store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
     console.log('重连成功');
+
+    let isLogin = store.getState().getIn(['user', 'isLogin']);
+    if(isLogin) {
+      const sessionStorage = require('./sessionStorage.api.js');
+      let uuid = sessionStorage.get('uuid');
+      let token = sessionStorage.get('token');
+      console.log('正在尝试自动重新登录');
+      store.dispatch(loginWithToken(uuid, token));
+    }
   });
   socket.on('reconnecting', function(data) {
     store.dispatch(changeNetworkStatue(false, '正在连接...', true));
