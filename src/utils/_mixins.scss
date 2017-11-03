@@ -22,7 +22,7 @@
   padding: 6px 12px;
   outline: 0;
 
-  &:hover, &.active {
+  &:hover, &:active, &.active {
     background-color: #705949;
   }
 
@@ -60,7 +60,7 @@
       transition: width 0.2s ease-in-out;
     }
 
-    &:hover, &.active {
+    &:hover, &:active, &.active {
       &:after {
         position: absolute;
         width: 100%;
@@ -78,7 +78,7 @@
   color: #9ea1a2;
 
   &:enabled {
-    &:hover, &.active {
+    &:hover, &:active, &.active {
       color: #7e3f12;
 
       .iconfont {

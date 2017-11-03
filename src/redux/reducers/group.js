@@ -11,6 +11,8 @@ const {
   GET_GROUP_MEMBERS_SUCCESS,
   SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS,
   ADD_GROUP_ACTOR_SUCCESS,
+  AGREE_GROUP_ACTOR_SUCCESS,
+  REFUSE_GROUP_ACTOR_SUCCESS,
 } = require('../constants');
 
 const initialState = immutable.fromJS({
@@ -103,6 +105,34 @@ module.exports = function group(state = initialState, action) {
         for (var i = 0; i < list.size; i++) {
           if (list.getIn([i, 'uuid']) === action.groupUUID) {
             list = list.updateIn([i, 'group_actors'], (i) => i.push(immutable.fromJS(action.payload)));
+          }
+        }
+
+        return list;
+      })
+    case AGREE_GROUP_ACTOR_SUCCESS:
+      return state.update('groups', (list) => {
+        for (var i = 0; i < list.size; i++) {
+          if (list.getIn([i, 'uuid']) === action.groupUUID) {
+            let groupActorUUID = action.payload.uuid;
+            list = list.updateIn([i, 'group_actors'], (_list) => {
+              let _index = list.findIndex((_item) => _item.uuid === groupActorUUID);
+              return _list.setIn([_index, 'passed'], true);
+            });
+          }
+        }
+
+        return list;
+      })
+    case REFUSE_GROUP_ACTOR_SUCCESS:
+      return state.update('groups', (list) => {
+        for (var i = 0; i < list.size; i++) {
+          if (list.getIn([i, 'uuid']) === action.groupUUID) {
+            let groupActorUUID = action.groupActorUUID;
+            list = list.updateIn([i, 'group_actors'], (_list) => {
+              let _index = list.findIndex((_item) => _item.uuid === groupActorUUID);
+              return _list.delete(_index);
+            });
           }
         }
 

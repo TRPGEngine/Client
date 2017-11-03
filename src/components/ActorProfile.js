@@ -15,7 +15,7 @@ class ActorProfile extends React.Component {
 
     let templateInfo = at.parse(template.get('info'));
     templateInfo.setData(actor.info);
-    console.log(templateInfo);
+    // console.log(templateInfo);
 
     return templateInfo.getCells().map((item, index) => {
       return (
@@ -35,7 +35,7 @@ class ActorProfile extends React.Component {
   render() {
     let actor = this.props.actor;
     let template = this.props.templateCache.get(actor.template_uuid);
-    console.log(actor, template.toJS());
+    // console.log(actor, template.toJS());
     return (
       <div className="actor-profile">
         <ReactTooltip effect='solid' id="property-desc" place="left" />
