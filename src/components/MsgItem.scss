@@ -122,6 +122,12 @@
         button {
           @include link-btn;
         }
+
+        .no-support {
+          color: $color-dusty-gray;
+          font-size: 12px;
+          user-select: none;
+        }
       }
     }
   }

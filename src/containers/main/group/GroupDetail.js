@@ -26,6 +26,11 @@ class GroupDetail extends React.Component {
       slidePanelTitle: '',
       slidePanelContent: null,
     }
+    this.sildeEvent = () => {
+      console.log('close slide panel with click');
+      window.removeEventListener('click', this.sildeEvent);
+      this.setState({isSlidePanelShow: false});
+    };
   }
 
   componentDidMount() {
@@ -39,16 +44,11 @@ class GroupDetail extends React.Component {
     scrollTo.bottom(container, 400, false);
   }
 
-  _handleShowSlidePanel(title, content) {
-    this.sildeEvent = function () {
-      console.log('close slide panel with click');
-      window.removeEventListener('click', this.sildeEvent);
-      if(this.sildeEvent) {
-        this.setState({isSlidePanelShow: false});
-        this.sildeEvent = null;
-      }
-    }.bind(this);
+  componentWillUnmount() {
+    window.removeEventListener('click', this.sildeEvent);
+  }
 
+  _handleShowSlidePanel(title, content) {
     setTimeout(() => {
       window.addEventListener('click', this.sildeEvent);
     }, 500);
@@ -63,7 +63,6 @@ class GroupDetail extends React.Component {
     console.log('close slide panel with btn');
     this.setState({isSlidePanelShow: false});
     window.removeEventListener('click', this.sildeEvent);
-    this.sildeEvent = null;
   }
 
   _handleSelectGroupActor(item) {

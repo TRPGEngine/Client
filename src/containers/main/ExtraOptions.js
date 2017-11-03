@@ -16,6 +16,14 @@ class ExtraOptions extends React.Component {
     this.state = {
       show: ''
     }
+    this.hideMenu = () => {
+      document.removeEventListener('click', this.hideMenu);
+      this.setState({show: ''});
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.hideMenu);
   }
 
   _handleClick(type) {
@@ -25,6 +33,7 @@ class ExtraOptions extends React.Component {
     }else {
       this.setState({show: ''});
     }
+    document.addEventListener('click', this.hideMenu);
   }
 
   _handleClickMenu(menu) {

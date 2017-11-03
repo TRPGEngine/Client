@@ -91,7 +91,7 @@ class ActorList extends React.Component {
       )
     }else {
       return (
-        <div>
+        <div className="no-content">
           没有信息
         </div>
       )

@@ -89,11 +89,8 @@
             &.action {
               justify-content: flex-end;
               button {
-                background-color: transparent;
-                border: 0;
-                outline: 0;
-                color: #389bff;
-                cursor: pointer;
+                @include link-btn;
+                font-size: 12px;
               }
             }
           }
@@ -144,6 +141,13 @@
         text-align: left;
         color: $color-cod-gray;
       }
+    }
+
+    .no-content {
+      text-align: center;
+      margin-top: 120px;
+      color: $color-dove-gray;
+      user-select: none;
     }
   }
 }

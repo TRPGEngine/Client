@@ -58,6 +58,12 @@ class MsgItem extends React.Component {
             </div>
           )
       }
+    }else {
+      return (
+        <div className="card-action">
+          <span className="no-support">您当前的版本暂时不支持处理该信息</span>
+        </div>
+      )
     }
   }
 
