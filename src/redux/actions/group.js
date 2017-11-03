@@ -10,11 +10,13 @@ const {
   GET_GROUP_ACTOR_SUCCESS,
   GET_GROUP_MEMBERS_SUCCESS,
   SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS,
+  ADD_GROUP_ACTOR_SUCCESS,
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { addConverse } = require('./chat');
 const { checkUser, checkTemplate } = require('../../utils/usercache');
+const { showAlert, hideModal } = require('./ui');
 
 // 当state-group-groups状态添加新的group时使用来初始化
 let initGroupInfo = function(dispatch, group) {
@@ -151,6 +153,21 @@ exports.changeSelectGroupActor = function(groupUUID, groupActorUUID) {
       if(data.result) {
         dispatch({type: SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS, payload: data.data});
       }else {
+        console.error(data);
+      }
+    })
+  }
+}
+
+exports.addGroupActor = function(groupUUID, actorUUID) {
+  return function(dispatch, getState) {
+    return api.emit('group::addGroupActor', {groupUUID, actorUUID}, function(data, cb) {
+      if(data.result) {
+        dispatch({type: ADD_GROUP_ACTOR_SUCCESS, groupUUID, payload: data.groupActor});
+        dispatch(hideModal());
+        dispatch(showAlert('提交成功!'));
+      }else {
+        dispatch(showAlert(data.msg));
         console.error(data);
       }
     })

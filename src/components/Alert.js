@@ -17,7 +17,7 @@ class Alert extends React.Component {
 
     return (
       <div>
-        <div className="header">{title || '警告'}</div>
+        <div className="header">{title || ''}</div>
         <div className="body">{content || '确认进行该操作?'}</div>
         <button onClick={() => {
           if(!!onConfirm) {

@@ -1,6 +1,8 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../../../../config/project.config.js');
+const { showAlert } = require('../../../../redux/actions/ui');
+const { addGroupActor } = require('../../../../redux/actions/group');
 
 require('./GroupActorCheckSend.scss')
 
@@ -9,6 +11,15 @@ class GroupActorCheckSend extends React.Component {
     super(props);
     this.state = {
       selectActorUUID: '',
+    }
+  }
+
+  _handleSendCheck() {
+    let selectActorUUID = this.state.selectActorUUID;
+    if(selectActorUUID) {
+      this.props.addGroupActor(this.props.selectedGroupUUID, selectActorUUID);
+    }else {
+      this.props.showAlert('请选择人物卡');
     }
   }
 
@@ -40,7 +51,7 @@ class GroupActorCheckSend extends React.Component {
           }
         </div>
         <div className="action">
-          <button>提交申请</button>
+          <button onClick={() => this._handleSendCheck()}>提交申请</button>
         </div>
       </div>
     )
@@ -51,5 +62,9 @@ module.exports = connect(
   state => ({
     selfActors: state.getIn(['actor', 'selfActors']),
     selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
+  }),
+  dispatch => ({
+    showAlert: (...args) => dispatch(showAlert(...args)),
+    addGroupActor: (...args) => dispatch(addGroupActor(...args)),
   })
 )(GroupActorCheckSend);

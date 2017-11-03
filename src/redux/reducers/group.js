@@ -10,6 +10,7 @@ const {
   GET_GROUP_ACTOR_SUCCESS,
   GET_GROUP_MEMBERS_SUCCESS,
   SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS,
+  ADD_GROUP_ACTOR_SUCCESS,
 } = require('../constants');
 
 const initialState = immutable.fromJS({
@@ -92,6 +93,16 @@ module.exports = function group(state = initialState, action) {
         for (var i = 0; i < list.size; i++) {
           if (list.getIn([i, 'uuid']) === action.payload.groupUUID) {
             list = list.setIn([i, 'extra', 'selected_group_actor_uuid'], action.payload.groupActorUUID);
+          }
+        }
+
+        return list;
+      })
+    case ADD_GROUP_ACTOR_SUCCESS:
+      return state.update('groups', (list) => {
+        for (var i = 0; i < list.size; i++) {
+          if (list.getIn([i, 'uuid']) === action.groupUUID) {
+            list = list.updateIn([i, 'group_actors'], (i) => i.push(immutable.fromJS(action.payload)));
           }
         }
 

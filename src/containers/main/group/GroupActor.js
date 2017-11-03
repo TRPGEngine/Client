@@ -17,7 +17,6 @@ class GroupActor extends React.Component {
       showAlert('请选择一个团来提交您的人物');
     }
 
-    // TODO: 团人物审核模态框
     this.props.showModal(
       <GroupActorCheckSend />
     )
