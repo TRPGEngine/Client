@@ -1,5 +1,6 @@
 const immutable = require('immutable');
 const {
+  RESET,
   GET_USER_INFO,
   GET_USER_INFO_ERROR,
   GET_TEMPLATE_INFO,
@@ -13,6 +14,8 @@ const initialState = immutable.fromJS({
 
 module.exports = function cache(state = initialState, action) {
   switch (action.type) {
+    case RESET:
+      return initialState;
     case GET_USER_INFO:
       let payload = action.payload;
       let uuid = payload.uuid;

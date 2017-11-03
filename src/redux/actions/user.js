@@ -1,4 +1,5 @@
 const {
+  RESET,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
@@ -57,6 +58,7 @@ exports.loginWithToken = function(uuid, token) {
         console.log(data);
         if(getState().getIn(['user', 'isLogin'])) {
           // 登录超时
+          dispatch({type:RESET});// 登录超时以后重置数据内容。需要重新获取
           dispatch({type:LOGIN_FAILED, payload: data.msg});
           dispatch(showAlert({
             type: 'alert',

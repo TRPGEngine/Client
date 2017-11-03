@@ -1,4 +1,5 @@
 const {
+  RESET,
   ADD_NOTE,
   GET_NOTE,
   SWITCH_NOTE,
@@ -27,6 +28,8 @@ function getBlankNote() {
 
 module.exports = function ui(state = initialState, action) {
   switch (action.type) {
+    case RESET:
+      return initialState;
     case ADD_NOTE:
       let showAlertInfo = action.payload || {};
       let blankNote = immutable.fromJS(getBlankNote());

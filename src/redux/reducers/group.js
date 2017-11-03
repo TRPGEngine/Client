@@ -1,5 +1,6 @@
 const immutable = require('immutable');
 const {
+  RESET,
   GET_GROUP_INFO_SUCCESS,
   SEND_GROUP_INVITE_SUCCESS,
   AGREE_GROUP_INVITE_SUCCESS,
@@ -24,6 +25,8 @@ const initialState = immutable.fromJS({
 
 module.exports = function group(state = initialState, action) {
   switch (action.type) {
+    case RESET:
+      return initialState;
     case GET_GROUP_INFO_SUCCESS:
       let group_uuid = action.payload.uuid;
       return state.setIn(['info', group_uuid], action.payload);

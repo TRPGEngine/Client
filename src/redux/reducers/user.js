@@ -1,5 +1,6 @@
 const immutable = require('immutable');
 const {
+  RESET,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
@@ -39,6 +40,8 @@ const initialState = immutable.fromJS({
 
 module.exports = function ui(state = initialState, action) {
   switch (action.type) {
+    case RESET:
+      return initialState;
     case LOGIN_REQUEST:
       return state;
     case LOGIN_SUCCESS:

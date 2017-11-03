@@ -1,4 +1,5 @@
 const {
+  RESET,
   SHOW_LOADING,
   HIDE_LOADING,
   SHOW_ALERT,
@@ -31,6 +32,8 @@ const initialState = immutable.fromJS({
 
 module.exports = function ui(state = initialState, action) {
   switch (action.type) {
+    // case RESET:
+    //   return initialState;
     case SHOW_ALERT:
       let showAlertInfo = action.payload || {};
       return state.set('showAlert', true).set('showAlertInfo', immutable.fromJS(showAlertInfo));

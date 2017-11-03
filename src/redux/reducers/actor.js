@@ -1,5 +1,6 @@
 const immutable = require('immutable');
 const {
+  RESET,
   SET_TEMPLATE,
   GET_TEMPLATE_SUCCESS,
   FIND_TEMPLATE_SUCCESS,
@@ -49,6 +50,8 @@ function updateSelfActor(list, uuid, actor) {
 
 module.exports = function actor(state = initialState, action) {
   switch (action.type) {
+    case RESET:
+      return initialState;
     case FIND_TEMPLATE_SUCCESS:
       return state.set('findingResult', immutable.fromJS(action.payload));
     case CREATE_TEMPLATE_SUCCESS:

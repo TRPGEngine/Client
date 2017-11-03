@@ -1,4 +1,5 @@
 const {
+  RESET,
   ADD_CONVERSES,
   ADD_MSG,
   GET_CONVERSES_REQUEST,
@@ -43,6 +44,8 @@ module.exports = function chat(state = initialState, action) {
   try {
     let payload;
     switch (action.type) {
+      case RESET:
+        return initialState;
       case ADD_CONVERSES:
         let uuid = action.payload.uuid;
         if(!state.getIn(['converses', uuid])) {
