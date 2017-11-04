@@ -1,7 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../../../config/project.config.js');
-const moment = require('moment');
+const dateHelper = require('../../../utils/dateHelper');
 const MsgSendBox = require('../../../components/MsgSendBox');
 const MsgItem = require('../../../components/MsgItem');
 const scrollTo = require('../../../utils/animatedScrollTo.js');
@@ -110,7 +110,7 @@ class ConverseDetail extends React.Component {
                 type={item.get('type')}
                 content={item.get('message')}
                 data={data}
-                time={moment(item.get('date')).format('HH:mm:ss')}
+                time={dateHelper.getMsgDate(item.get('date'))}
                 me={userUUID===item.get('sender_uuid')}
               />
             )

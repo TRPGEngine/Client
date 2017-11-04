@@ -1,6 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const moment = require('moment');
+const dateHelper = require('../../../utils/dateHelper');
 const config = require('../../../../config/project.config.js');
 const ConverseDetail = require('./ConverseDetail');
 const ConvItem = require('../../../components/ConvItem');
@@ -46,7 +46,7 @@ class ConverseList extends React.Component {
             icon={item.get('icon') || defaultIcon}
             title={item.get('name')}
             content={item.get('lastMsg')}
-            time={item.get('lastTime')?moment(item.get('lastTime')).format('HH:mm'):''}
+            time={item.get('lastTime')?dateHelper.getShortDate(item.get('lastTime')):''}
             uuid={uuid}
             isSelected={this.props.selectedUUID === uuid}
             onClick={() => this._handleSelectConverse(uuid)}

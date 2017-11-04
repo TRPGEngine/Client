@@ -2,7 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../../../config/project.config.js');
 const ConvItem = require('../../../components/ConvItem');
-const moment = require('moment');
+const dateHelper = require('../../../utils/dateHelper');
 const { switchSelectGroup } = require('../../../redux/actions/group');
 const GroupDetail = require('./GroupDetail');
 
@@ -36,7 +36,7 @@ class GroupList extends React.Component {
           icon={item.get('avatar') || config.defaultImg.group}
           title={item.get('name')}
           content={''}
-          time={lastTime?moment(lastTime).format('HH:mm'):''}
+          time={lastTime?dateHelper.getShortDate(lastTime):''}
           uuid={uuid}
           isSelected={this.props.selectedUUID === uuid}
           onClick={() => this.props.switchSelectGroup(uuid)}
