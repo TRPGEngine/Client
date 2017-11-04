@@ -33,7 +33,7 @@ gulp.task('webpack', function(callback) {
   });
 });
 
-gulp.task('package', ['webpack', 'redirect'], function(callback) {
+gulp.task('package', ['assets', 'webpack', 'redirect'], function(callback) {
   gutil.log('[electron-packager]', 'start packing...');
 
   packager(packagerConfig, function(err, appPaths) {
