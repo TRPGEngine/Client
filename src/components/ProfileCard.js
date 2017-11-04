@@ -6,6 +6,7 @@ const Select = require('react-select');
 const ImageUploader = require('./ImageUploader');
 const { hideProfileCard } = require('../redux/actions/ui');
 const { addFriend } = require('../redux/actions/user');
+const { createConverse } = require('../redux/actions/chat');
 require('./ProfileCard.scss');
 
 class ProfileCard extends React.Component {

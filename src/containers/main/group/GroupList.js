@@ -29,13 +29,14 @@ class GroupList extends React.Component {
   getGroupList() {
     return this.props.groups.map((item, index) => {
       let uuid = item.get('uuid');
+      let lastTime = this.props.converses.getIn([uuid, 'lastTime']);
       return (
         <ConvItem
           key={uuid+'#'+index}
           icon={item.get('avatar') || config.defaultImg.group}
           title={item.get('name')}
           content={''}
-          time={moment().format('YYYY-MM-DD HH:mm:ss')}
+          time={lastTime?moment(lastTime).format('HH:mm'):''}
           uuid={uuid}
           isSelected={this.props.selectedUUID === uuid}
           onClick={() => this.props.switchSelectGroup(uuid)}
@@ -69,6 +70,7 @@ module.exports = connect(
   state => ({
     groups: state.getIn(['group', 'groups']),
     selectedUUID: state.getIn(['group', 'selectedGroupUUID']),
+    converses: state.getIn(['chat', 'converses']),
   }),
   dispatch => ({
     switchSelectGroup: (uuid) => dispatch(switchSelectGroup(uuid)),

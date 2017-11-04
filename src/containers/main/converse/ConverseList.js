@@ -46,7 +46,7 @@ class ConverseList extends React.Component {
             icon={item.get('icon') || defaultIcon}
             title={item.get('name')}
             content={item.get('lastMsg')}
-            time={moment(item.get('lastTime')).format('HH:mm')}
+            time={item.get('lastTime')?moment(item.get('lastTime')).format('HH:mm'):''}
             uuid={uuid}
             isSelected={this.props.selectedUUID === uuid}
             onClick={() => this._handleSelectConverse(uuid)}

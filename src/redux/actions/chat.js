@@ -16,11 +16,11 @@ const moment = require('moment');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { checkUser } = require('../../utils/usercache');
-const { hideInfoCard, switchMenu } = require('./ui');
+const { hideProfileCard, switchMenu } = require('./ui');
 
 let switchToConverse = function switchToConverse(uuid) {
   return function(dispatch, getState) {
-    dispatch(hideInfoCard());
+    dispatch(hideProfileCard());
     dispatch(switchMenu(0));
     dispatch(switchConverse(uuid));
   }
