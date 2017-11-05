@@ -13,6 +13,8 @@ const {
   ADD_GROUP_ACTOR_SUCCESS,
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
+  QUIT_GROUP_SUCCESS,
+  DISMISS_GROUP_SUCCESS,
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
@@ -200,6 +202,32 @@ exports.refuseGroupActor = function(groupUUID, groupActorUUID) {
         dispatch(showAlert('已拒绝该人物加入本团!'));
       }else {
         dispatch(showAlert(data.msg));
+        console.error(data);
+      }
+    })
+  }
+}
+
+exports.quitGroup = function(groupUUID) {
+  return function(dispatch, getState) {
+    return api.emit('group::quitGroup', {groupUUID}, function(data) {
+      if(data.result) {
+        dispatch({type: QUIT_GROUP_SUCCESS, groupUUID});
+        dispatch(showAlert('已退出本群!'));
+      }else {
+        console.error(data);
+      }
+    })
+  }
+}
+
+exports.dismissGroup = function(groupUUID) {
+  return function(dispatch, getState) {
+    return api.emit('group::dismissGroup', {groupUUID}, function(data) {
+      if(data.result) {
+        dispatch({type: DISMISS_GROUP_SUCCESS, groupUUID});
+        dispatch(showAlert('已解散本群!'));
+      }else {
         console.error(data);
       }
     })

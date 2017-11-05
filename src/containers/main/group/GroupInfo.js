@@ -1,9 +1,37 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const { showAlert, hideAlert } = require('../../../redux/actions/ui');
+const { switchSelectGroup, quitGroup, dismissGroup } = require('../../../redux/actions/group');
 
 require('./GroupInfo.scss')
 
 class GroupInfo extends React.Component {
+  _handleDismissGroup() {
+    this.props.showAlert({
+      title: '是否要解散群',
+      content: '一旦确定无法撤销',
+      onConfirm: () => {
+        this.props.hideAlert();
+        let groupUUID = this.props.groupInfo.get('uuid');
+        this.props.switchSelectGroup('');
+        this.props.dismissGroup(groupUUID);
+      }
+    })
+  }
+
+  _handleQuitGroup() {
+    this.props.showAlert({
+      title: '是否要退出群',
+      content: '一旦确定无法撤销',
+      onConfirm: () => {
+        this.props.hideAlert();
+        let groupUUID = this.props.groupInfo.get('uuid');
+        this.props.switchSelectGroup('');
+        this.props.quitGroup(groupUUID);
+      }
+    })
+  }
+
   render() {
     let {groupInfo, usercache} = this.props;
     return (
@@ -16,6 +44,15 @@ class GroupInfo extends React.Component {
         <div><span>团管理数:</span><span>{groupInfo.get('managers_uuid').size}人</span></div>
         <div><span>团地图数:</span><span>{groupInfo.get('maps_uuid').size}张</span></div>
         <div><span>团简介:</span><span className="desc">{groupInfo.get('desc')}</span></div>
+        <div>
+          {
+            this.props.userUUID === groupInfo.get('owner_uuid') ? (
+              <button onClick={() => this._handleDismissGroup()}>解散团</button>
+            ) : (
+              <button onClick={() => this._handleQuitGroup()}>退出团</button>
+            )
+          }
+        </div>
       </div>
     )
   }
@@ -23,10 +60,18 @@ class GroupInfo extends React.Component {
 
 module.exports = connect(
   state => ({
+    userUUID: state.getIn(['user', 'info', 'uuid']),
     usercache: state.getIn(['cache', 'user']),
     selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
     groupInfo: state
       .getIn(['group', 'groups'])
       .find((group) => group.get('uuid')===state.getIn(['group', 'selectedGroupUUID'])),
   }),
+  dispatch => ({
+    showAlert: (...args) => dispatch(showAlert(...args)),
+    hideAlert: () => dispatch(hideAlert()),
+    switchSelectGroup: (groupUUID) => dispatch(switchSelectGroup(groupUUID)),
+    quitGroup: (groupUUID) => dispatch(quitGroup(groupUUID)),
+    dismissGroup: (groupUUID) => dispatch(dismissGroup(groupUUID)),
+  })
 )(GroupInfo);
