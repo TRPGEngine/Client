@@ -44,7 +44,7 @@ class GroupInfo extends React.Component {
         <div><span>团管理数:</span><span>{groupInfo.get('managers_uuid').size}人</span></div>
         <div><span>团地图数:</span><span>{groupInfo.get('maps_uuid').size}张</span></div>
         <div><span>团简介:</span><span className="desc">{groupInfo.get('desc')}</span></div>
-        <div>
+        <div className="actions">
           {
             this.props.userUUID === groupInfo.get('owner_uuid') ? (
               <button onClick={() => this._handleDismissGroup()}>解散团</button>

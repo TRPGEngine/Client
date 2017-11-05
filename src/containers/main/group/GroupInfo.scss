@@ -5,10 +5,27 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  position: relative;
+  padding-bottom: 20px + 45px;
 
   > div {
     margin-bottom: 4px;
     display: flex;
+
+    &.actions {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      margin: 0;
+
+      button {
+        @include block-btn;
+        width: 100%;
+        padding: 12px;
+      }
+    }
 
     span{
       &:nth-child(1) {
@@ -33,6 +50,4 @@
       }
     }
   }
-
-
 }
