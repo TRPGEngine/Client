@@ -1,0 +1,11 @@
+@import "../../../../utils/mixins";
+
+.group-member-manage {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  button {
+    @include block-btn;
+    margin-bottom: 10px;
+  }
+}

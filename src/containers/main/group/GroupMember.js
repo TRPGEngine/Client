@@ -2,11 +2,18 @@ const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../../../config/project.config.js');
 const moment = require('moment');
-const { showProfileCard } = require('../../../redux/actions/ui');
+const { showModal, showProfileCard } = require('../../../redux/actions/ui');
+const GroupMemberManage = require('./modal/GroupMemberManage');
 
 require('./GroupMember.scss')
 
 class GroupMember extends React.Component {
+  _handleManageMember(uuid) {
+    this.props.showModal(
+      <GroupMemberManage uuid={uuid} />
+    )
+  }
+
   getMemberList() {
     let groupInfo = this.props.groupInfo;
     let hasManagerAuth = groupInfo.get('managers_uuid').indexOf(this.props.userUUID) >= 0;
@@ -37,7 +44,7 @@ class GroupMember extends React.Component {
             <td className="actions">
               {
                 hasManagerAuth ? (
-                  <button><i className="iconfont">&#xe83f;</i></button>
+                  <button onClick={() => this._handleManageMember(uuid)}><i className="iconfont">&#xe83f;</i></button>
                 ) : null
               }
               <button onClick={() => this.props.showProfileCard(uuid)}><i className="iconfont">&#xe61b;</i></button>
@@ -78,6 +85,7 @@ module.exports = connect(
     usercache: state.getIn(['cache', 'user']),
   }),
   dispatch => ({
-    showProfileCard: (uuid) => dispatch(showProfileCard(uuid))
+    showModal: (body) => dispatch(showModal(body)),
+    showProfileCard: (uuid) => dispatch(showProfileCard(uuid)),
   })
 )(GroupMember);
