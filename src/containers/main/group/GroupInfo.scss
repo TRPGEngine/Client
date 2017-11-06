@@ -21,7 +21,7 @@
       margin: 0;
 
       button {
-        @include block-btn;
+        @include block-btn-dangerous;
         width: 100%;
         padding: 12px;
       }

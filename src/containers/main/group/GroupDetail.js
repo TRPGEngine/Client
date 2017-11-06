@@ -17,6 +17,7 @@ const GroupActor = require('./GroupActor');
 const GroupMember = require('./GroupMember');
 const GroupInfo = require('./GroupInfo');
 const DiceRequest = require('../dice/DiceRequest');
+const IsDeveloping = require('../../../components/IsDeveloping');
 
 class GroupDetail extends React.Component {
   constructor(props) {
@@ -106,8 +107,11 @@ class GroupDetail extends React.Component {
       {
         name: '游戏地图',
         icon: '&#xe6d7;',
+        // component: (
+        //   <GroupMap />
+        // )
         component: (
-          <GroupMap />
+          <IsDeveloping />
         )
       },
       {

@@ -32,6 +32,13 @@
   }
 }
 
+@mixin block-btn-dangerous {
+  @include block-btn;
+  &:hover, &:active, &.active {
+    background-color: #e74c3c;
+  }
+}
+
 @mixin link-btn {
   font-size: 14px;
   background-color: transparent;
