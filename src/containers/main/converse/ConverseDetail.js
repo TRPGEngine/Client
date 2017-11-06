@@ -6,7 +6,9 @@ const MsgSendBox = require('../../../components/MsgSendBox');
 const MsgItem = require('../../../components/MsgItem');
 const scrollTo = require('../../../utils/animatedScrollTo.js');
 const ReactTooltip = require('react-tooltip');
+const { showModal } = require('../../../redux/actions/ui');
 const { sendMsg } = require('../../../redux/actions/chat');
+const DiceRequest = require('../dice/DiceRequest');
 
 require('./ConverseDetail.scss');
 
@@ -32,6 +34,18 @@ class ConverseDetail extends React.Component {
       is_public: false,
       type,
     }));
+  }
+
+  _handleSendDiceReq() {
+    // TODO
+    this.props.dispatch(showModal(
+      <DiceRequest />
+    ))
+  }
+
+  _handleSendDiceInv() {
+    // TODO
+    console.log("发送投骰邀请");
   }
 
   prepareMsgItemCardData(data) {
@@ -137,7 +151,11 @@ class ConverseDetail extends React.Component {
         <div className="conv-container" ref="container">
           {this.getMsgList(list)}
         </div>
-        <MsgSendBox onSendMsg={(message, type) => this._handleSendMsg(message, type)} />
+        <MsgSendBox
+          onSendMsg={(message, type) => this._handleSendMsg(message, type)}
+          onSendDiceReq={() => this._handleSendDiceReq()}
+          onSendDiceInv={() => this._handleSendDiceInv()}
+        />
       </div>
     )
   }

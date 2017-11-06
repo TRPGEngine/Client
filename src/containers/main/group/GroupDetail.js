@@ -83,9 +83,15 @@ class GroupDetail extends React.Component {
   }
 
   _handleSendDiceReq() {
+    // TODO
     this.props.dispatch(showModal(
       <DiceRequest />
     ))
+  }
+
+  _handleSendDiceInv() {
+    // TODO
+    console.log("发送投骰邀请");
   }
 
   getHeaderActions() {
@@ -255,6 +261,7 @@ class GroupDetail extends React.Component {
         <MsgSendBox
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
           onSendDiceReq={() => this._handleSendDiceReq()}
+          onSendDiceInv={() => this._handleSendDiceInv()}
         />
         <div
           className={"group-slide-panel" + (this.state.isSlidePanelShow?"":" hide")}

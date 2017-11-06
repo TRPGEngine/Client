@@ -52,13 +52,13 @@ class DiceRequest extends React.Component {
         {
           this.state.diceType === 'complexDice' ? (
             <div className="dice complexDice">
-              <input type="text" placeholder="请输入骰子表达式" ref="diceExp" />
+              <input key="dicereq-diceExp" type="text" placeholder="请输入骰子表达式" ref="diceExp" defaultValue="1d100" />
             </div>
           ) : (
             <div className="dice basicDice">
-              <input type="number" placeholder="骰数" defaultValue="1" ref="diceNum" />
+              <input key="dicereq-diceNum" type="number" placeholder="骰数" defaultValue="1" ref="diceNum" />
               <span>d</span>
-              <input type="number" placeholder="骰面" defaultValue="100" ref="diceFace" />
+              <input key="dicereq-diceFace" type="number" placeholder="骰面" defaultValue="100" ref="diceFace" />
             </div>
           )
         }

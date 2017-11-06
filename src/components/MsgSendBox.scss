@@ -19,19 +19,19 @@
       padding: 0 10px;
       user-select: none;
 
+      .tool-item {
+        @include icon-btn;
+        margin-right: 8px;
+        width: 18px;
+        height: 18px;
+      }
+
       .type-select, .input-actions {
         display: flex;
       }
 
       .type-select {
         flex: 1;
-      }
-
-      .tool-item {
-        @include icon-btn;
-        margin-right: 8px;
-        width: 18px;
-        height: 18px;
       }
     }
 

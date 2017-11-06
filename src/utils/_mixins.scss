@@ -84,7 +84,7 @@
   cursor: pointer;
   color: #9ea1a2;
 
-  &:enabled {
+  &:not(:disabled) {
     &:hover, &:active, &.active {
       color: #7e3f12;
 
