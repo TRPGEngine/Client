@@ -32,6 +32,7 @@
   }
 
   .icon {
+    min-width: 38px;
     width: 38px;
     height: 38px;
     overflow: hidden;
@@ -46,7 +47,10 @@
   }
 
   .body {
+    // display: flex;
+    flex-direction: column;
     flex: 1;
+    min-width: 0;
     p {
       margin: 0;
       padding: 0;
@@ -69,8 +73,10 @@
     }
 
     .content {
+      flex: 1;
       font-size: 12px;
       color: #777;
+      @include one-line;
     }
   }
 }

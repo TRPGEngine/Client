@@ -30,12 +30,13 @@ class GroupList extends React.Component {
     return this.props.groups.map((item, index) => {
       let uuid = item.get('uuid');
       let lastTime = this.props.converses.getIn([uuid, 'lastTime']);
+      let lastMsg = this.props.converses.getIn([uuid, 'lastMsg']);
       return (
         <ConvItem
           key={uuid+'#'+index}
           icon={item.get('avatar') || config.defaultImg.group}
           title={item.get('name')}
-          content={''}
+          content={lastMsg}
           time={lastTime?dateHelper.getShortDate(lastTime):''}
           uuid={uuid}
           isSelected={this.props.selectedUUID === uuid}

@@ -7,6 +7,7 @@ const ReactTooltip = require('react-tooltip');
 const { showModal } = require('../../../redux/actions/ui');
 const { sendMsg } = require('../../../redux/actions/chat');
 const { changeSelectGroupActor } = require('../../../redux/actions/group');
+const { sendDiceRequest } = require('../../../redux/actions/dice');
 const MsgSendBox = require('../../../components/MsgSendBox');
 const MsgItem = require('../../../components/MsgItem');
 const Webview = require('../../../components/Webview');
@@ -85,7 +86,12 @@ class GroupDetail extends React.Component {
   _handleSendDiceReq() {
     // TODO
     this.props.dispatch(showModal(
-      <DiceRequest />
+      <DiceRequest
+        onSendDiceRequest={(diceReason, diceExp) => {
+          let selectedUUID = this.props.selectedUUID;
+          this.props.dispatch(sendDiceRequest(selectedUUID, true, diceExp, diceReason));
+        }}
+      />
     ))
   }
 

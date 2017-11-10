@@ -21,6 +21,7 @@ class DiceRequest extends React.Component {
     }
 
     console.log(`因为 ${this.state.diceReason} 请求投出: ${diceExp}`);
+    this.props.onSendDiceRequest(this.state.diceReason, diceExp);
   }
 
   render() {
