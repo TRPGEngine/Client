@@ -76,7 +76,7 @@ class MsgItem extends React.Component {
             {data.get('title')}
           </div>
           <div className="card-content">
-            {data.get('content')}
+            {data.get('content') || this.props.content}
           </div>
           {this.getCardAction(data)}
         </div>

@@ -8,6 +8,7 @@ const scrollTo = require('../../../utils/animatedScrollTo.js');
 const ReactTooltip = require('react-tooltip');
 const { showModal } = require('../../../redux/actions/ui');
 const { sendMsg } = require('../../../redux/actions/chat');
+const { sendDiceRequest } = require('../../../redux/actions/dice');
 const DiceRequest = require('../dice/DiceRequest');
 
 require('./ConverseDetail.scss');
@@ -39,7 +40,12 @@ class ConverseDetail extends React.Component {
   _handleSendDiceReq() {
     // TODO
     this.props.dispatch(showModal(
-      <DiceRequest />
+      <DiceRequest
+        onSendDiceRequest={(diceReason, diceExp) => {
+          let conversesUUID = this.props.conversesUUID;
+          this.props.dispatch(sendDiceRequest(conversesUUID, false, diceExp, diceReason));
+        }}
+      />
     ))
   }
 
@@ -165,6 +171,7 @@ module.exports = connect(
   state => ({
     userUUID: state.getIn(['user','info','uuid']),
     usercache: state.getIn(['cache', 'user']),
+    conversesUUID: state.getIn(['chat', 'selectedConversesUUID']),
     friendRequests: state.getIn(['user', 'friendRequests']),
     friendList: state.getIn(['user', 'friendList']),
     groupInvites: state.getIn(['group', 'invites']),
