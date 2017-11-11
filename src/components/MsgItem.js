@@ -3,6 +3,7 @@ const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { agreeFriendInvite, refuseFriendInvite } = require('../redux/actions/user');
 const { agreeGroupInvite, refuseGroupInvite } = require('../redux/actions/group');
+const { acceptDiceRequest } = require('../redux/actions/dice');
 require('./MsgItem.scss');
 
 class MsgItem extends React.Component {
@@ -58,6 +59,14 @@ class MsgItem extends React.Component {
             </div>
           )
       }
+    }else if(cardType === 'diceRequest') {
+      let uuid = this.props.uuid;
+      // TODO: 需要修改为只有有同意权限的人才会显示
+      return (
+        <div className="card-action">
+          <button onClick={() => this.props.dispatch(acceptDiceRequest(uuid))}>接受</button>
+        </div>
+      )
     }else {
       return (
         <div className="card-action">

@@ -6,7 +6,7 @@ const MsgSendBox = require('../../../components/MsgSendBox');
 const MsgItem = require('../../../components/MsgItem');
 const scrollTo = require('../../../utils/animatedScrollTo.js');
 const ReactTooltip = require('react-tooltip');
-const { showModal } = require('../../../redux/actions/ui');
+const { showModal, hideModal } = require('../../../redux/actions/ui');
 const { sendMsg } = require('../../../redux/actions/chat');
 const { sendDiceRequest } = require('../../../redux/actions/dice');
 const DiceRequest = require('../dice/DiceRequest');
@@ -44,6 +44,7 @@ class ConverseDetail extends React.Component {
         onSendDiceRequest={(diceReason, diceExp) => {
           let conversesUUID = this.props.conversesUUID;
           this.props.dispatch(sendDiceRequest(conversesUUID, false, diceExp, diceReason));
+          this.props.dispatch(hideModal());
         }}
       />
     ))
@@ -125,6 +126,7 @@ class ConverseDetail extends React.Component {
             return (
               <MsgItem
                 key={item.get('uuid')+'+'+index}
+                uuid={item.get('uuid')}
                 icon={usercache.getIn([item.sender_uuid, 'avatar']) || defaultAvatar}
                 name={usercache.getIn([item.sender_uuid, 'username']) || ''}
                 type={item.get('type')}

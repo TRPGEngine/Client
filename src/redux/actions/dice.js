@@ -16,3 +16,18 @@ exports.sendDiceRequest = function(to_uuid, is_group, dice_request, reason) {
     })
   }
 }
+
+exports.acceptDiceRequest = function(uuid) {
+  return function(dispatch, getState) {
+    return api.emit('dice::acceptDiceRequest', {msg_card_uuid: uuid} ,function(data) {
+      if(data.result) {
+        // TODO
+        console.log(data);
+        // console.log('pkg', data.pkg);
+        // dispatch({type: ADD_MSG, converseUUID: to_uuid, payload: data.pkg});
+      }else {
+        console.error(data);
+      }
+    })
+  }
+}

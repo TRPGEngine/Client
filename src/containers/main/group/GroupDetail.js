@@ -4,7 +4,7 @@ const config = require('../../../../config/project.config.js');
 const dateHelper = require('../../../utils/dateHelper');
 const Select = require('react-select');
 const ReactTooltip = require('react-tooltip');
-const { showModal } = require('../../../redux/actions/ui');
+const { showModal, hideModal } = require('../../../redux/actions/ui');
 const { sendMsg } = require('../../../redux/actions/chat');
 const { changeSelectGroupActor } = require('../../../redux/actions/group');
 const { sendDiceRequest } = require('../../../redux/actions/dice');
@@ -84,12 +84,12 @@ class GroupDetail extends React.Component {
   }
 
   _handleSendDiceReq() {
-    // TODO
     this.props.dispatch(showModal(
       <DiceRequest
         onSendDiceRequest={(diceReason, diceExp) => {
           let selectedUUID = this.props.selectedUUID;
           this.props.dispatch(sendDiceRequest(selectedUUID, true, diceExp, diceReason));
+          this.props.dispatch(hideModal());
         }}
       />
     ))
@@ -202,7 +202,6 @@ class GroupDetail extends React.Component {
                     // 已拒绝好友邀请
                     data = data.set('actionState', 2);
                   }
-
                 }
               }
             }
@@ -210,6 +209,7 @@ class GroupDetail extends React.Component {
             return (
               <MsgItem
                 key={item.get('uuid')+'+'+index}
+                uuid={item.get('uuid')}
                 icon={usercache.getIn([item.sender_uuid, 'avatar']) || defaultAvatar}
                 name={usercache.getIn([item.sender_uuid, 'username']) || ''}
                 type={item.get('type')}
