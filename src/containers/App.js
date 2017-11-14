@@ -10,8 +10,7 @@ require('./App.scss');
 require('../assets/css/iconfont.css');
 
 const Router = config.platform === 'web' ? BrowserRouter : HashRouter;
-const appConfig = require('../../package.json');
-const appVersion = appConfig.version;
+const appVersion = config.version;
 const Login = require('./Login');
 const Register = require('./Register');
 const Main = require('./Main');

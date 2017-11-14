@@ -6,6 +6,7 @@ if(process.env.NODE_ENV=='production') {
 let platform = process.env.PLATFORM || 'web';
 
 module.exports = {
+  version: require('../package.json').version,
   platform,
   io: {
     protocol: 'ws',
