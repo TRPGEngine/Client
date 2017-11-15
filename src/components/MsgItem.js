@@ -84,15 +84,15 @@ class MsgItem extends React.Component {
           <div className="card-title">
             {data.get('title')}
           </div>
-          <div className="card-content">
+          <pre className="card-content">
             {data.get('content') || this.props.content}
-          </div>
+          </pre>
           {this.getCardAction(data)}
         </div>
       )
     }else {
       return (
-        <div className="bubble">{this.props.content}</div>
+        <pre className="bubble">{this.props.content}</pre>
       )
     }
   }
