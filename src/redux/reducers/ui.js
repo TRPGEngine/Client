@@ -8,7 +8,7 @@ const {
   HIDE_MODAL,
   SHOW_PROFILE_CARD,
   HIDE_PROFILE_CARD,
-  SWITCH_MENU,
+  SWITCH_MENU_PANNEL,
   CHANGE_NETWORK_STATE,
 } = require('../constants');
 const immutable = require('immutable');
@@ -23,6 +23,7 @@ const initialState = immutable.fromJS({
   showProfileCard: false,
   showProfileCardUUID: '',
   menuIndex: 0,
+  menuPannel: null,
   network: {
     isOnline: false,
     tryReconnect: false,
@@ -51,8 +52,10 @@ module.exports = function ui(state = initialState, action) {
       return state.set('showProfileCard', true).set('showProfileCardUUID', action.uuid);
     case HIDE_PROFILE_CARD:
       return state.set('showProfileCard', false);
-    case SWITCH_MENU:
-      return state.set('menuIndex', action.menuIndex);
+    case SWITCH_MENU_PANNEL:
+      return state
+        .set('menuIndex', action.menuIndex)
+        .set('menuPannel', action.payload);
     case CHANGE_NETWORK_STATE:
       return state.set('network', immutable.fromJS(action.payload));
     default:

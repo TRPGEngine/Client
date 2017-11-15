@@ -2,7 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const { Route, Link } = require('react-router-dom')
 const config = require('../../../config/project.config.js');
-const { showProfileCard, switchMenu } = require('../../redux/actions/ui');
+const { showProfileCard, switchMenuPannel } = require('../../redux/actions/ui');
 const ConverseList = require('./converse/ConverseList');
 const ActorList = require('./actors/ActorList');
 const FriendsList = require('./friends/FriendsList');
@@ -59,6 +59,10 @@ class MenuPannel extends React.Component {
     ]
   }
 
+  _handleSwitchMenu(index) {
+    this.props.dispatch(switchMenuPannel(index, this.menus[index].component));
+  }
+
   render() {
     let { className, avatar, selectedMenu } = this.props;
     return (
@@ -76,7 +80,7 @@ class MenuPannel extends React.Component {
                   <a
                     key={"menu-"+index}
                     className={selectedMenu===index?'active':''}
-                    onClick={ () => this.props.dispatch(switchMenu(index)) }
+                    onClick={() => this._handleSwitchMenu(index)}
                   >
                     <i className='iconfont' dangerouslySetInnerHTML={{__html:(selectedMenu===index?item.icon:item.activeIcon)}}></i>
                     <span>{item.text}</span>
@@ -88,7 +92,7 @@ class MenuPannel extends React.Component {
           <ExtraOptions />
         </div>
         <div className="menu-sub-panel">
-          {this.menus[selectedMenu].component || ''}
+          {this.props.selectedPannel || this.menus[selectedMenu].component || null}
         </div>
       </div>
     )
@@ -99,5 +103,6 @@ module.exports = connect(
   state => ({
     avatar: state.getIn(['user', 'info', 'avatar']),
     selectedMenu: state.getIn(['ui', 'menuIndex']),
+    selectedPannel: state.getIn(['ui', 'menuPannel'])
   })
 )(MenuPannel);

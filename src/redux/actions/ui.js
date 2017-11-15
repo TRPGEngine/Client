@@ -7,7 +7,7 @@ const {
   HIDE_MODAL,
   SHOW_PROFILE_CARD,
   HIDE_PROFILE_CARD,
-  SWITCH_MENU,
+  SWITCH_MENU_PANNEL,
   CHANGE_NETWORK_STATE,
 } = require('../constants');
 const cache = require('./cache');
@@ -51,8 +51,8 @@ exports.showProfileCard = function(uuid) {
 exports.hideProfileCard = function() {
   return {type: HIDE_PROFILE_CARD}
 }
-exports.switchMenu = function(menuIndex = 0) {
-  return {type: SWITCH_MENU, menuIndex: menuIndex}
+exports.switchMenuPannel = function(index, pannel = null) {
+  return {type: SWITCH_MENU_PANNEL, menuIndex: index, payload: pannel}
 }
 exports.changeNetworkStatue = function(isOnline, msg, tryReconnect = false) {
   return {type: CHANGE_NETWORK_STATE, payload: {isOnline, msg, tryReconnect}}
