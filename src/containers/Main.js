@@ -6,6 +6,7 @@ const { getTemplate, getActor } = require('../redux/actions/actor');
 const { getGroupList, getGroupInvite } = require('../redux/actions/group');
 const { getNote } = require('../redux/actions/note');
 const { switchMenuPannel } = require('../redux/actions/ui');
+const Webview = require('../components/Webview');
 const ConverseList = require('./main/converse/ConverseList');
 
 const MenuPannel = require('./main/MenuPannel');
@@ -31,7 +32,7 @@ class Main extends React.Component {
         name: '广场',
         menuIndex: -1,
         component: (
-          <div>广场</div>
+          <Webview src="http://www.goddessfantasy.net/" />
         ),
       },
       {
@@ -41,7 +42,7 @@ class Main extends React.Component {
           <div>应用</div>
         ),
       },
-    ]
+    ];
   }
 
   componentDidMount() {

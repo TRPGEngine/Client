@@ -46,7 +46,7 @@ class GroupActor extends React.Component {
 
   getGroupActorsList() {
     let actors = this.props.groupInfo.get('group_actors');
-    if(actors) {
+    if(actors && actors.length) {
       return actors.filter(item => item.get('passed')===true).map((item) => {
         let originActor = item.get('actor');
         let actorData = originActor.get('info').merge(item.get('actor_info'));
@@ -87,12 +87,18 @@ class GroupActor extends React.Component {
           </div>
         )
       })
+    }else {
+      return (
+        <div className="no-content">
+          暂无卡片
+        </div>
+      )
     }
   }
 
   getGroupActorChecksList() {
     let groupActors = this.props.groupInfo.get('group_actors');
-    if(groupActors) {
+    if(groupActors && groupActors.length > 0) {
       return groupActors.filter(item => item.get('passed')!=true).map((item) => {
         let originActor = item.get('actor');
         return (
@@ -116,6 +122,12 @@ class GroupActor extends React.Component {
           </div>
         )
       })
+    }else {
+      return (
+        <div className="no-content">
+          暂无卡片
+        </div>
+      )
     }
   }
 
