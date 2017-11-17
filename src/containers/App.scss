@@ -42,6 +42,8 @@ a {
 
 pre {
   margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 /* 滚动条 */
