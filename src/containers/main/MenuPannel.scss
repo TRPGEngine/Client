@@ -1,6 +1,6 @@
 @import "../../utils/color";
 
-.menu-pannel{
+.sidebar{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,7 +79,7 @@
   }
 }
 
-.menu-sub-panel {
+.menu-panel {
   display: flex;
   flex: 1;
   background-color: #fffcfc;

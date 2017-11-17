@@ -2,7 +2,7 @@
 
 .is-developing {
   display: flex;
-  flex-direction: column;
+  flex-direction: column !important;
   text-align: center;
   color: $color-silver;
   padding-top: 40px;

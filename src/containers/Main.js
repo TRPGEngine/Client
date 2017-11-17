@@ -6,11 +6,11 @@ const { getTemplate, getActor } = require('../redux/actions/actor');
 const { getGroupList, getGroupInvite } = require('../redux/actions/group');
 const { getNote } = require('../redux/actions/note');
 const { switchMenuPannel } = require('../redux/actions/ui');
-const Webview = require('../components/Webview');
 const ConverseList = require('./main/converse/ConverseList');
-
 const MenuPannel = require('./main/MenuPannel');
 const ProfileCard = require('../components/ProfileCard');
+const IsDeveloping = require('../components/IsDeveloping');
+const Webview = require('../components/Webview');
 
 require('./Main.scss');
 
@@ -39,7 +39,7 @@ class Main extends React.Component {
         name: '应用',
         menuIndex: -1,
         component: (
-          <div>应用</div>
+          <IsDeveloping />
         ),
       },
     ];
@@ -83,8 +83,18 @@ class Main extends React.Component {
           <div className="menu">
             {
               this.titleMenu.map((menu, index) => {
+                let isActive = false;
+                if(this.props.menuIndex !== -1) {
+                  isActive = index === 0;
+                }else {
+                  isActive = index === this.state.titleMenuIndex;
+                }
                 return (
-                  <button className={index === this.state.titleMenuIndex ? "active" : ""} onClick={() => this._handleSelectTitleMenu(index)}>{menu.name}</button>
+                  <button
+                    key={"title-menu#" + index}
+                    className={isActive ? "active" : ""}
+                    onClick={() => this._handleSelectTitleMenu(index)}
+                  >{menu.name}</button>
                 )
               })
             }
@@ -99,6 +109,7 @@ class Main extends React.Component {
 module.exports = connect(
   state => ({
     isLogin: state.getIn(['user', 'isLogin']),
+    menuIndex: state.getIn(['ui', 'menuIndex']),
   }),
   dispatch => ({
     getConverses: () => {

@@ -67,7 +67,7 @@ class MenuPannel extends React.Component {
     let { className, avatar, selectedMenu } = this.props;
     return (
       <div className={className}>
-        <div className="menu-pannel">
+        <div className="sidebar">
           <div className="profile">
             <div className="avatar" onClick={() => this.props.dispatch(showProfileCard())}>
               <img src={avatar || config.defaultImg.user} />
@@ -91,7 +91,7 @@ class MenuPannel extends React.Component {
           </div>
           <ExtraOptions />
         </div>
-        <div className="menu-sub-panel">
+        <div className="menu-panel">
           {this.props.selectedPannel || this.menus[selectedMenu].component || null}
         </div>
       </div>

@@ -4,7 +4,7 @@ const { connect } = require('react-redux');
 const config = require('../../config/project.config.js');
 const Select = require('react-select');
 const ImageUploader = require('./ImageUploader');
-const { hideProfileCard } = require('../redux/actions/ui');
+const { showAlert, hideProfileCard } = require('../redux/actions/ui');
 const { addFriend } = require('../redux/actions/user');
 const { createConverse } = require('../redux/actions/chat');
 require('./ProfileCard.scss');
@@ -23,24 +23,27 @@ class ProfileCard extends React.Component {
       this.setState({isEdited: true});
       this.setEditedInfo();
     }else {
-      console.error("不是本人无法修改信息");
+      this.props.showAlert("不是本人无法修改信息");
     }
   }
 
   _handleClose() {
     this.setState({isEdited: false});
-    this.props.dispatch(hideProfileCard());
+    this.props.hideProfileCard();
   }
 
   _handleReset() {
+    // TODO
     console.log('reset');
   }
 
   _handleSave() {
+    // TODO
     console.log('save');
   }
 
   _handleUpdateAvatar(avatarUrl) {
+    // TODO
     console.log('update avatar', avatarUrl);
   }
 
@@ -84,12 +87,12 @@ class ProfileCard extends React.Component {
         <div className="actions">
           <button
             className="footer-item active"
-            onClick={() => this.props.dispatch(createConverse(uuid, 'user'))}
+            onClick={() => this.props.createConverse(uuid, 'user')}
           ><i className="iconfont">&#xe61f;</i>发消息</button>
           <button
             className="footer-item active"
             disabled={disabledAddFriend}
-            onClick={() => this.props.dispatch(addFriend(uuid))}
+            onClick={() => this.props.addFriend(uuid)}
           ><i className="iconfont">&#xe604;</i>添加好友</button>
         </div>
       )
@@ -253,5 +256,11 @@ module.exports = connect(
     selfUUID: state.getIn(['user', 'info', 'uuid']),
     selectedUUID: state.getIn(['ui', 'showProfileCardUUID']),
     isShow: state.getIn(['ui', 'showProfileCard']),
-  })
+  }),
+  dispatch => ({
+    showAlert: (...args) => dispatch(showAlert(...args)),
+    hideProfileCard: () => dispatch(hideProfileCard()),
+    createConverse: (uuid, type, isSwitchToConv = true) => dispatch(createConverse(uuid, type, isSwitchToConv)),
+    addFriend: (uuid) => dispatch(addFriend(uuid)),
+  }),
 )(ProfileCard);
