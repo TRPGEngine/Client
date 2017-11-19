@@ -62,11 +62,21 @@ class MsgItem extends React.Component {
     }else if(cardType === 'diceRequest') {
       let uuid = this.props.uuid;
       // TODO: 需要修改为只有有同意权限的人才会显示
-      return (
-        <div className="card-action">
-          <button onClick={() => this.props.dispatch(acceptDiceRequest(uuid))}>接受</button>
-        </div>
-      )
+      let is_accept = data.get('is_accept');
+      if(is_accept) {
+        return (
+          <div className="card-action">
+            <button disabled={true}>已接受</button>
+          </div>
+        )
+      }else {
+        return (
+          <div className="card-action">
+            <button onClick={() => this.props.dispatch(acceptDiceRequest(uuid))}>接受</button>
+          </div>
+        )
+      }
+
     }else {
       return (
         <div className="card-action">

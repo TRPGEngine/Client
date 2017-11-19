@@ -2,6 +2,7 @@ const {
   RESET,
   ADD_CONVERSES,
   ADD_MSG,
+  UPDATE_MSG,
   GET_CONVERSES_REQUEST,
   GET_CONVERSES_SUCCESS,
   GET_CONVERSES_FAILED,
@@ -66,7 +67,19 @@ module.exports = function chat(state = initialState, action) {
             ['converses', converseUUID, 'msgList'],
             (msgList) => msgList.push(payload)
           ).setIn(['converses', converseUUID, 'lastMsg'], payload.get('message'))
-          .setIn(['converses', converseUUID, 'lastTime'], payload.get('date'));;
+          .setIn(['converses', converseUUID, 'lastTime'], payload.get('date'));
+      case UPDATE_MSG:
+        return state.updateIn(['converses', action.converseUUID, 'msgList'], (msgList) => {
+          for (var i = 0; i < msgList.size; i++) {
+            let msg = msgList.get(i);
+            if(msg.get('uuid') === action.msgUUID) {
+              msgList = msgList.set(i, immutable.fromJS(action.payload));
+              break;
+            }
+          }
+
+          return msgList;
+        })
       case GET_CONVERSES_SUCCESS:
         let list = action.payload;
         if(list instanceof Array && list.length > 0) {
