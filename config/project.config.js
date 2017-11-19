@@ -24,4 +24,8 @@ module.exports = {
     trpgsystem: '/src/assets/img/system_notice.png',
     actor: '',
   },
+  github: {
+    projectUrl: 'https://github.com/TRPGEngine/Client',
+    projectPackageUrl: 'https://raw.githubusercontent.com/TRPGEngine/Client/master/package.json'
+  },
 }

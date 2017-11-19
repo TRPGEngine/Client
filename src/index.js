@@ -4,7 +4,7 @@ const React = require('react');
 const ReactDom = require('react-dom');
 const immutable = require('immutable');
 const { Provider } = require('react-redux');
-const { LOGIN_SUCCESS } = require('./redux/constants');
+const config = require('../config/project.config.js');
 const configureStore = require('./redux/configureStore');
 const store = configureStore();
 require('./utils/usercache').attachStore(store);
@@ -31,7 +31,7 @@ checkVersion(function(isLatest) {
       title: '检测到新版本',
       content: '检测到有新的版本, 是否现在获取',
       onConfirm: () => {
-        window.open("https://github.com/TRPGEngine/Client");
+        window.open(config.github.projectUrl);
       }
     }));
   }
