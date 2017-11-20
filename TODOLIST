@@ -1,2 +1,3 @@
 尚未将react-router整合到redux环境中
 reducer应为纯函数。将一些状态检测放到action中（通过redux-thunk)
+统一管理卡片信息预处理函数prepareMsgItemCardData
