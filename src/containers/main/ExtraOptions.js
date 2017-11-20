@@ -1,6 +1,7 @@
 const React = require('react');
 const ReactTooltip = require('react-tooltip');
 const { connect } = require('react-redux');
+const config = require('../../../config/project.config');
 const { logout } = require('../../redux/actions/user');
 const { showModal, switchMenu } = require('../../redux/actions/ui');
 const { setEditedTemplate } = require('../../redux/actions/actor');
@@ -40,7 +41,7 @@ class ExtraOptions extends React.Component {
     if(menu === 'logout') {
       this.props.dispatch(logout());
     }else if(menu === 'blog') {
-      window.open("http://moonrailgun.com");
+      window.open(config.url.blog);
     }else if(menu === 'actorCreate') {
       this.props.dispatch(showModal(
         <TemplateSelect />

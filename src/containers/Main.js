@@ -1,5 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const config = require('../../config/project.config');
 const { getConverses } = require('../redux/actions/chat');
 const { getFriends, getFriendsInvite } = require('../redux/actions/user');
 const { getTemplate, getActor } = require('../redux/actions/actor');
@@ -32,7 +33,7 @@ class Main extends React.Component {
         name: '广场',
         menuIndex: -1,
         component: (
-          <Webview src="http://www.goddessfantasy.net/" />
+          <Webview src={config.url.goddessfantasy} />
         ),
       },
       {

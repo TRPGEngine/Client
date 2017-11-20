@@ -28,4 +28,8 @@ module.exports = {
     projectUrl: 'https://github.com/TRPGEngine/Client',
     projectPackageUrl: 'https://raw.githubusercontent.com/TRPGEngine/Client/master/package.json'
   },
+  url: {
+    goddessfantasy: 'http://www.goddessfantasy.net/',
+    blog: 'http://moonrailgun.com'
+  },
 }
