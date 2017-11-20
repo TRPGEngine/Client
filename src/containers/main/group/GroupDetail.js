@@ -216,6 +216,7 @@ class GroupDetail extends React.Component {
                 data={data}
                 time={dateHelper.getMsgDate(item.get('date'))}
                 me={userUUID===item.get('sender_uuid')}
+                isGroupMsg={true}
               />
             )
           })

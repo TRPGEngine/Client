@@ -70,9 +70,18 @@ class MsgItem extends React.Component {
           </div>
         )
       }else {
+        let canAccept = !this.props.me;
+
+        if(this.props.isGroupMsg) {
+          // TODO: 检测是否为团管理者，如果为管理者，则允许接受投骰请求。否则置为false
+        }
         return (
           <div className="card-action">
-            <button onClick={() => this.props.dispatch(acceptDiceRequest(uuid))}>接受</button>
+            {canAccept ? (
+              <button onClick={() => this.props.dispatch(acceptDiceRequest(uuid))}>接受</button>
+            ) : (
+              <button disabled={true}>等待对方处理</button>
+            )}
           </div>
         )
       }
@@ -132,6 +141,7 @@ MsgItem.propTypes = {
   time: PropTypes.string,
   content: PropTypes.string,
   me: PropTypes.bool,
+  isGroupMsg: PropTypes.bool,
 }
 
 module.exports = connect()(MsgItem);
