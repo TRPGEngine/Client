@@ -1,4 +1,6 @@
 module.exports = {
+  // all: true,
+  asar: true,
   dir: '../',
   out: '../dist/app/',
   overwrite: true,
