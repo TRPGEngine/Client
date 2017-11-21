@@ -9,7 +9,7 @@ const config = require('../../config/project.config.js');
 require('./App.scss');
 require('../assets/css/iconfont.css');
 
-const Router = config.platform === 'web' ? BrowserRouter : HashRouter;
+const Router = (config.platform === 'web' || config.environment === 'development') ? BrowserRouter : HashRouter;
 const appVersion = config.version;
 const Login = require('./Login');
 const Register = require('./Register');
