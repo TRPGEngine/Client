@@ -8,7 +8,7 @@
     "build": "webpack --progress --colors --display-modules --config ./config/webpack.config.js",
     "pc": "cross-env PLATFORM=electron gulp --gulpfile build/gulpfile.js && electron .",
     "pcdev": "cross-env PLATFORM=electron npm run dev & gulp assets --gulpfile build/gulpfile.js && electron .",
-    "package": "cross-env PLATFORM=electron gulp package --gulpfile build/gulpfile.js",
+    "package": "cross-env PLATFORM=electron NODE_ENV=production gulp package --gulpfile build/gulpfile.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

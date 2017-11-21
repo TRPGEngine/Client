@@ -1,3 +1,7 @@
 尚未将react-router整合到redux环境中
 reducer应为纯函数。将一些状态检测放到action中（通过redux-thunk)
 统一管理卡片信息预处理函数prepareMsgItemCardData
+
+electron:
+在electron 使用特殊dom webview 替换掉react组件Webview
+electron 注册menu 解决mac下复制粘贴问题
