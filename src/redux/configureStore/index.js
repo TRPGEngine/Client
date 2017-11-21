@@ -2,6 +2,7 @@ import thunk from 'redux-thunk';
 const {createStore, applyMiddleware} = require('redux');
 const reducer = require('../reducers');
 const { createLogger } = require('redux-logger');
+const config = require('../../../config/project.config');
 
 const logger = createLogger({
   level: 'info',
@@ -9,9 +10,9 @@ const logger = createLogger({
   collapsed: true,
   stateTransformer: (state) => state.toJS(),
 })
-console.log('当前环境:', process.env.NODE_ENV);
-console.log('当前平台:', process.env.PLATFORM);
-const createStoreWithMiddleware = process.env.NODE_ENV !== 'production' ? applyMiddleware(
+console.log('当前环境:', config.environment);
+console.log('当前平台:', config.platform);
+const createStoreWithMiddleware = config.environment !== 'production' ? applyMiddleware(
   thunk, logger
 )(createStore) : applyMiddleware(
   thunk

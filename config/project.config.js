@@ -1,22 +1,26 @@
-let currentHost = window.location.host ? window.location.host.split(":")[0] : '127.0.0.1';
-if(process.env.NODE_ENV=='production') {
+let environment = process.env.NODE_ENV || 'development';
+let platform = process.env.PLATFORM || 'web';
+let currentHost = '127.0.0.1';
+if(!!window && window.location && window.location.host) {
+  currentHost = window.location.host.split(":")[0];
+}
+if(environment=='production') {
   currentHost = 'trpgapi.moonrailgun.com';
 }
 
-let platform = process.env.PLATFORM || 'web';
-
 module.exports = {
   version: require('../package.json').version,
+  environment,
   platform,
   io: {
     protocol: 'ws',
     host: currentHost,
-    port: '23256'
+    port: '23256',
   },
   file: {
     protocol: 'http',
     host: currentHost,
-    port: '23257'
+    port: '23257',
   },
   defaultImg: {
     user: '/src/assets/img/gugugu1.png',
@@ -26,10 +30,10 @@ module.exports = {
   },
   github: {
     projectUrl: 'https://github.com/TRPGEngine/Client',
-    projectPackageUrl: 'https://raw.githubusercontent.com/TRPGEngine/Client/master/package.json'
+    projectPackageUrl: 'https://raw.githubusercontent.com/TRPGEngine/Client/master/package.json',
   },
   url: {
     goddessfantasy: 'http://www.goddessfantasy.net/',
-    blog: 'http://moonrailgun.com'
+    blog: 'http://moonrailgun.com',
   },
 }
