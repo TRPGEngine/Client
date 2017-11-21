@@ -42,7 +42,11 @@ class App extends React.Component {
                 </Link>
               </Route>
             </Switch>
-            <NetworkIndicator />
+            {
+              config.platform === 'web' ? (
+                <NetworkIndicator />
+              ) : null
+            }
             <div className='version'>当前版本号v{appVersion}</div>
           </div>
         </div>

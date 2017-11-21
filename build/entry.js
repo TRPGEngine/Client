@@ -14,12 +14,7 @@ let mainWindow;
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 600 + 20 + 3,
-    minWidth: 1000,
-    minHeight: 600 + 20 + 3,// 20px为标题栏
-  });
+  mainWindow = new BrowserWindow(config.window);
 
   // and load the index.html of the app.
   let fileUrl = process.env.NODE_ENV === 'production' ? url.format({

@@ -1,10 +1,6 @@
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const replace = require('gulp-replace');
-const webpack = require('webpack');
-const webpackConfig = require('../config/webpack.config.js');
-const packager = require('electron-packager');
-const packagerConfig = require('../config/packager.config.js');
 
 gulp.task('default', ['assets', 'webpack', 'redirect']);
 
@@ -24,6 +20,8 @@ gulp.task('redirect', ['webpack'], function() {
 })
 
 gulp.task('webpack', function(callback) {
+  const webpack = require('webpack');
+  const webpackConfig = require('../config/webpack.config.js');
   webpack(webpackConfig, function (err, stats) {
     if (err) {
       throw new gutil.PluginError('webpack', err);
@@ -34,6 +32,8 @@ gulp.task('webpack', function(callback) {
 });
 
 gulp.task('package', ['assets', 'webpack', 'redirect'], function(callback) {
+  const packager = require('electron-packager');
+  const packagerConfig = require('../config/packager.config.js');
   gutil.log('[electron-packager]', 'start packing...');
 
   packager(packagerConfig, function(err, appPaths) {

@@ -14,6 +14,9 @@ const IsDeveloping = require('../components/IsDeveloping');
 const Webview = require('../components/Webview');
 
 require('./Main.scss');
+if(config.platform === 'electron') {
+  require('./Main.electron.scss');
+}
 
 class Main extends React.Component {
   constructor(props) {
