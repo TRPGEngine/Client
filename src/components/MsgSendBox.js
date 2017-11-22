@@ -62,6 +62,11 @@ class MsgSendBox extends React.Component {
         this.setState({inputType: this.inputType[i].type});
       }
     }
+
+    if(e.keyCode===13 && !e.shiftKey) {
+      // 发送信息
+      e.preventDefault();
+    }
   }
 
   _handleMsgInputKeyUp(e) {
