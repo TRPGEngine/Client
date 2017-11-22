@@ -77,7 +77,7 @@ let sendMsg = function sendMsg(converseUUID, payload) {
       is_public: payload.is_public,
       date: moment().valueOf(),
     };
-    // TODO room
+
     dispatch(addMsg(converseUUID, pkg))
     return api.emit('chat::message', pkg, function(data) {
       // console.log(data);
