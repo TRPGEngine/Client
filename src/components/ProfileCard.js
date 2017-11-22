@@ -5,7 +5,7 @@ const config = require('../../config/project.config.js');
 const Select = require('react-select');
 const ImageUploader = require('./ImageUploader');
 const { showAlert, hideProfileCard } = require('../redux/actions/ui');
-const { addFriend } = require('../redux/actions/user');
+const { addFriend, updateInfo } = require('../redux/actions/user');
 const { createConverse } = require('../redux/actions/chat');
 require('./ProfileCard.scss');
 
@@ -19,7 +19,7 @@ class ProfileCard extends React.Component {
   }
 
   _handleEditProfile() {
-    if(this.props.selfUUID === this.props.selectedUUID) {
+    if(this.props.isSelf) {
       this.setState({isEdited: true});
       this.setEditedInfo();
     }else {
@@ -33,13 +33,14 @@ class ProfileCard extends React.Component {
   }
 
   _handleReset() {
-    // TODO
-    console.log('reset');
+    console.log('重置');
+    this.setEditedInfo();
   }
 
   _handleSave() {
-    // TODO
-    console.log('save');
+    console.log('保存修改', this.state.editedInfo);
+    this.props.updateInfo(this.state.editedInfo);
+    this.setState({isEdited: false});
   }
 
   _handleUpdateAvatar(avatarUrl) {
@@ -48,7 +49,7 @@ class ProfileCard extends React.Component {
   }
 
   checkEditedIsChange() {
-    let info = this.props.usercache.get(this.props.selectedUUID);
+    let info = this.props.userInfo;
     if(JSON.stringify(this.state.editedInfo) === JSON.stringify(info)) {
       return false;
     }else {
@@ -57,15 +58,13 @@ class ProfileCard extends React.Component {
   }
 
   setEditedInfo() {
-    let info = this.props.usercache.get(this.props.selectedUUID);
+    let info = this.props.userInfo;
     this.setState({editedInfo: info ? info.toJS() : {}});
   }
 
   getActions() {
     let friendList = this.props.friendList.toJS();
-    let selfUUID = this.props.selfUUID;
-    let uuid = this.props.selectedUUID;
-    let disabledAddFriend = friendList.indexOf(uuid)>=0 || uuid===selfUUID;
+    let disabledAddFriend = friendList.indexOf(this.props.selectedUUID)>=0 || this.props.isSelf;
     if(this.state.isEdited) {
       let isChanged = this.checkEditedIsChange();
       return (
@@ -73,7 +72,7 @@ class ProfileCard extends React.Component {
           <button
             className="footer-item active"
             onClick={() => this._handleReset()}
-            disabled={isChanged}
+            disabled={!isChanged}
           ><i className="iconfont">&#xe67c;</i>重置</button>
           <button
             className="footer-item active"
@@ -131,7 +130,7 @@ class ProfileCard extends React.Component {
   getBody() {
     let isShow = this.props.isShow;
     if(isShow) {
-      let isSelf = this.props.selfUUID === this.props.selectedUUID;
+      let isSelf = this.props.isSelf;
       let uuid = this.props.selectedUUID;
       let editBtn = this.state.isEdited ? (
         <button
@@ -152,7 +151,7 @@ class ProfileCard extends React.Component {
       let bodyContent = this.state.isEdited ? (
         <div className="body">
           <div className="item">
-            <span>唯一标识符:</span><span>{this.props.usercache.getIn([uuid, 'uuid'])}</span>
+            <span>唯一标识符:</span><span>{this.props.userInfo.get('uuid')}</span>
           </div>
           <div className="item">
             <span>性别:</span>
@@ -188,14 +187,14 @@ class ProfileCard extends React.Component {
       ) : (
         <div className="body">
           <div className="item">
-            <span>唯一标识符:</span><span>{this.props.usercache.getIn([uuid, 'uuid'])}</span>
+            <span>唯一标识符:</span><span>{this.props.userInfo.get('uuid')}</span>
           </div>
           <div className="item">
             <span>性别:</span>
-            { this.getSexP(this.props.usercache.getIn([uuid, 'sex'])) }
+            { this.getSexP(this.props.userInfo.get('sex')) }
           </div>
           <div className="item">
-            <span>个人签名:</span><span>{this.props.usercache.getIn([uuid, 'sign'])}</span>
+            <span>个人签名:</span><span>{this.props.userInfo.get('sign')}</span>
           </div>
         </div>
       )
@@ -214,14 +213,14 @@ class ProfileCard extends React.Component {
                         type="user"
                         onUploadSuccess={(json) => this._handleUpdateAvatar(json.url)}
                       >
-                        <img src={this.props.usercache.getIn([uuid, 'avatar']) || config.defaultImg.user} />
+                        <img src={this.props.userInfo.get('avatar') || config.defaultImg.user} />
                       </ImageUploader>
                     ) : (
-                      <img src={this.props.usercache.getIn([uuid, 'avatar']) || config.defaultImg.user} />
+                      <img src={this.props.userInfo.get('avatar') || config.defaultImg.user} />
                     )
                   }
                 </div>
-                <span className="username">{this.props.usercache.getIn([uuid, 'nickname']) || this.props.usercache.getIn([uuid, 'username'])}</span>
+                <span className="username">{this.props.userInfo.get('nickname') || this.props.userInfo.get('username')}</span>
                 {
                   isSelf ? editBtn : null
                 }
@@ -250,17 +249,25 @@ class ProfileCard extends React.Component {
 }
 
 module.exports = connect(
-  state => ({
-    usercache: state.getIn(['cache', 'user']),
-    friendList: state.getIn(['user', 'friendList']),
-    selfUUID: state.getIn(['user', 'info', 'uuid']),
-    selectedUUID: state.getIn(['ui', 'showProfileCardUUID']),
-    isShow: state.getIn(['ui', 'showProfileCard']),
-  }),
+  state => {
+    let selfUUID = state.getIn(['user', 'info', 'uuid']);
+    let selectedUUID = state.getIn(['ui', 'showProfileCardUUID']);
+    let isSelf = selfUUID === selectedUUID;
+    let userInfo = isSelf ? state.getIn(['user', 'info']) : state.getIn(['cache', 'user', selectedUUID]);
+
+    return {
+      userInfo,
+      friendList: state.getIn(['user', 'friendList']),
+      isSelf,
+      selectedUUID,
+      isShow: state.getIn(['ui', 'showProfileCard']),
+    }
+  },
   dispatch => ({
     showAlert: (...args) => dispatch(showAlert(...args)),
     hideProfileCard: () => dispatch(hideProfileCard()),
     createConverse: (uuid, type, isSwitchToConv = true) => dispatch(createConverse(uuid, type, isSwitchToConv)),
     addFriend: (uuid) => dispatch(addFriend(uuid)),
+    updateInfo: (updatedData) => dispatch(updateInfo(updatedData)),
   }),
 )(ProfileCard);

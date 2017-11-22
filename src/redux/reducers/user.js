@@ -11,6 +11,7 @@ const {
   FIND_USER_REQUEST,
   FIND_USER_SUCCESS,
   FIND_USER_FAILED,
+  UPDATE_INFO_SUCCESS,
   ADD_FRIEND_SUCCESS,
   ADD_FRIEND_FAILED,
   GET_FRIENDS_REQUEST,
@@ -62,7 +63,9 @@ module.exports = function ui(state = initialState, action) {
       return state.set('isFindingUser', true);
     case FIND_USER_SUCCESS:
     case FIND_USER_FAILED:
-      return state.set('isFindingUser', false).set('findingResult', immutable.fromJS(action.payload || []))
+      return state.set('isFindingUser', false).set('findingResult', immutable.fromJS(action.payload || []));
+    case UPDATE_INFO_SUCCESS:
+      return state.set('info', immutable.fromJS(action.payload));
     case ADD_FRIEND_SUCCESS:
       let friendUUID = action.friendUUID;
       return state.update('friendList', (list) => {

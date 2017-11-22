@@ -10,6 +10,7 @@ const {
   FIND_USER_REQUEST,
   FIND_USER_SUCCESS,
   FIND_USER_FAILED,
+  UPDATE_INFO_SUCCESS,
   ADD_FRIEND_SUCCESS,
   ADD_FRIEND_FAILED,
   GET_FRIENDS_REQUEST,
@@ -124,6 +125,18 @@ exports.findUser = function(text, type) {
         dispatch({type: FIND_USER_SUCCESS, payload: list});
       }else {
         dispatch({type: FIND_USER_FAILED, payload: data.msg});
+      }
+    })
+  }
+}
+
+exports.updateInfo = function(updatedData) {
+  return function(dispatch, getState) {
+    return api.emit('player::updateInfo', updatedData, function(data) {
+      if(data.result) {
+        dispatch({type: UPDATE_INFO_SUCCESS, payload: data.user});
+      }else {
+        console.error(data.msg);
       }
     })
   }
