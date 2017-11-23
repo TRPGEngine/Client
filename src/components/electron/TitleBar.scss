@@ -1,0 +1,21 @@
+@import "../../utils/color";
+
+.electron-title-bar {
+  display: flex;
+  padding: 6px;
+  > button {
+    background: transparent;
+    color: white;
+    border: 0;
+    margin: 10px 8px;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+    outline: 0;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

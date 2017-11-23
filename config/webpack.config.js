@@ -34,6 +34,10 @@ module.exports = {
     ]
   },
 
+  externals: {
+    electron: "require('electron')",
+  },
+
   devtool: 'cheap-module-eval-source-map', //开发环境
 
   devServer: {

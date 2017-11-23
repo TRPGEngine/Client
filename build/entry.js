@@ -3,6 +3,7 @@ const electron = require('electron');
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
+const ipcMain = electron.ipcMain;
 
 const path = require('path');
 const url = require('url');
@@ -57,3 +58,20 @@ app.on('activate', function () {
     createWindow();
   }
 })
+
+// 退出
+ipcMain.on('close-window', function() {
+  mainWindow.close();
+})
+// 最小化
+ipcMain.on('hide-window', function() {
+  mainWindow.minimize();
+})
+//最大化
+ipcMain.on('show-window', () => {
+  mainWindow.maximize();
+});
+//还原
+ipcMain.on('orignal-window', () => {
+  mainWindow.unmaximize();
+});

@@ -12,6 +12,7 @@ const MenuPannel = require('./main/MenuPannel');
 const ProfileCard = require('../components/ProfileCard');
 const IsDeveloping = require('../components/IsDeveloping');
 const Webview = require('../components/Webview');
+const TitleBar = config.platform === 'electron' ? require('../components/electron/TitleBar') : null;
 
 require('./Main.scss');
 if(config.platform === 'electron') {
@@ -84,6 +85,7 @@ class Main extends React.Component {
         <ProfileCard />
         <div className="head">
           <span className="title">TRPG - 桌上角色扮演游戏客户端</span>
+          <div className="title-blank"></div>
           <div className="menu">
             {
               this.titleMenu.map((menu, index) => {
@@ -103,6 +105,9 @@ class Main extends React.Component {
               })
             }
           </div>
+          {TitleBar ? (
+            <TitleBar />
+          ) : null}
         </div>
         <MenuPannel className="body"/>
       </div>
