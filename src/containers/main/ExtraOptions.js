@@ -8,6 +8,8 @@ const { setEditedTemplate } = require('../../redux/actions/actor');
 const { addNote } = require('../../redux/actions/note');
 const TemplateSelect = require('./actors/TemplateSelect');
 const TemplateEdit = require('./actors/TemplateEdit');
+const IsDeveloping = require('../../components/IsDeveloping');
+const ChangePassword = require('../../components/ChangePassword');
 
 require('./ExtraOptions.scss');
 
@@ -38,11 +40,7 @@ class ExtraOptions extends React.Component {
   }
 
   _handleClickMenu(menu) {
-    if(menu === 'logout') {
-      this.props.dispatch(logout());
-    }else if(menu === 'blog') {
-      window.open(config.url.blog);
-    }else if(menu === 'actorCreate') {
+    if(menu === 'actorCreate') {
       this.props.dispatch(showModal(
         <TemplateSelect />
       ));
@@ -54,6 +52,26 @@ class ExtraOptions extends React.Component {
       this.props.dispatch(addNote());
     }else if(menu === 'addFriend') {
       this.props.dispatch(switchMenu(2));
+    }else if(menu === 'userSettings') {
+      this.props.dispatch(showModal(
+        <IsDeveloping />
+      ));
+    }else if(menu === 'systemSettings') {
+      this.props.dispatch(showModal(
+        <IsDeveloping />
+      ));
+    }else if(menu === 'changePassword') {
+      this.props.dispatch(showModal(
+        <ChangePassword />
+      ));
+    }else if(menu === 'help') {
+      this.props.dispatch(showModal(
+        <IsDeveloping />
+      ));
+    }else if(menu === 'blog') {
+      window.open(config.url.blog);
+    }else if(menu === 'logout') {
+      this.props.dispatch(logout());
     }
 
     this.setState({show: ''});
@@ -73,9 +91,9 @@ class ExtraOptions extends React.Component {
     }else if(type === 'more') {
       return (
         <ul>
-          <li>个人设置</li>
-          <li>系统设置</li>
-          <li>修改密码</li>
+          <li onClick={() => this._handleClickMenu('userSettings')}>个人设置</li>
+          <li onClick={() => this._handleClickMenu('systemSettings')}>系统设置</li>
+          <li onClick={() => this._handleClickMenu('changePassword')}>修改密码</li>
           <li onClick={() => this._handleClickMenu('help')}>帮助反馈</li>
           <li onClick={() => this._handleClickMenu('blog')}>开发者博客</li>
           <li onClick={() => this._handleClickMenu('logout')}>退出登录</li>
