@@ -142,6 +142,21 @@ exports.updateInfo = function(updatedData) {
   }
 }
 
+exports.changePassword = function(oldPassword, newPassword, success, error) {
+  return function(dispatch, getState) {
+    return api.emit('player::changePassword', {oldPassword, newPassword}, function(data) {
+      if(data.result) {
+        // TODO
+        success();
+        // dispatch({type: UPDATE_INFO_SUCCESS, payload: data.user});
+      }else {
+        console.error(data.msg);
+        error(data.msg);
+      }
+    })
+  }
+}
+
 exports.addFriend = function(uuid) {
   return function(dispatch, getState) {
     console.log('addFriend:', uuid);

@@ -1,5 +1,8 @@
 const React = require('react');
+const { connect } = require('react-redux');
 const ModalPanel = require('./ModalPanel');
+const { changePassword } = require('../redux/actions/user');
+const { showAlert, hideModal } = require('../redux/actions/ui');
 
 require('./ChangePassword.scss');
 
@@ -29,7 +32,14 @@ class ChangePassword extends React.Component {
       return;
     }
 
-    // TODO:发送修改密码请求
+    this.props.dispatch(changePassword(this.state.oldPassword, this.state.newPassword, () => {
+      // 成功
+      this.props.dispatch(hideModal());
+      this.props.dispatch(showAlert('密码修改成功'));
+    }, (msg) => {
+      // 失败
+      this.setState({error: msg});
+    }))
   }
 
   render() {
@@ -53,4 +63,4 @@ class ChangePassword extends React.Component {
   }
 }
 
-module.exports = ChangePassword;
+module.exports = connect()(ChangePassword);
