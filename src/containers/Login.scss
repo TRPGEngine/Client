@@ -39,9 +39,7 @@
   }
 
   a, a:link, a:visited {
-    color: #2596e5;
-    text-decoration: none;
     float: right;
-    font-size: 14px;
+    @include link-btn;
   }
 }

@@ -1,4 +1,5 @@
 @import "../utils/color";
+@import "../utils/mixins";
 
 .register-screen {
   width: 372px;
@@ -34,19 +35,21 @@
   }
 
   button {
+    @include block-btn;
     width: 312px;
     height: 40px;
-    margin: 0;
-    padding: 10px;
-    outline: 0;
-    margin: 0 0 5px;
-    color: white;
-    border: 0;
-    border-radius: 3px;
-    font-size: 15px;
-    background-color: #4c98cc;
+    // margin: 0;
+    // padding: 10px;
+    // outline: 0;
+    // margin: 0 0 5px;
+    // color: white;
+    // border: 0;
+    // border-radius: 3px;
+    // font-size: 15px;
+    // background-color: #4c98cc;
     margin-top: 8px;
-    cursor: pointer;
+    // cursor: pointer;
+
 
     &:disabled {
       cursor: default !important;
@@ -54,7 +57,8 @@
     }
   }
 
-  a {
+  a, a:link, a:visited {
     float: right;
+    @include link-btn;
   }
 }
