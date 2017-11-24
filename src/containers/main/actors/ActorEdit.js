@@ -51,7 +51,6 @@ class ActorEdit extends React.Component {
   _handleSave() {
     let isCreate = !this.props.selectedActorUUID;//是否为新建人物
 
-    console.log('save template', this.template);
     let name = this.state.profileName;
     let avatar = this.state.profileAvatar;
     let desc = this.state.profileDesc;
@@ -78,6 +77,7 @@ class ActorEdit extends React.Component {
         content: content,
         type: 'alert',
         onConfirm: () => {
+          // TODO:需要绑定头像的关联uuid
           if(isCreate) {
             // create
             this.props.createActor(name, avatar, desc, info, template_uuid);
@@ -103,7 +103,7 @@ class ActorEdit extends React.Component {
         </div>
         <div className="actor-edit-body">
           <div className="actor-edit-profile">
-            <ImageUploader onUploadSuccess={(json) => this.setState({profileAvatar: json.url})}>
+            <ImageUploader type="actor" onUploadSuccess={(json) => this.setState({profileAvatar: json.url})}>
               <div className="avatar" style={{backgroundImage: `url(${this.state.profileAvatar})`}}></div>
             </ImageUploader>
             <div className="desc">

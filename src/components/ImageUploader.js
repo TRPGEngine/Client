@@ -23,6 +23,9 @@ class ImageUploader extends React.Component {
       'avatar-type': this.props.type || 'actor',
       'user-uuid': this.props.user_uuid,
     }
+    if(this.props.attachUUID) {
+      headers['attach-uuid'] = this.props.attachUUID;
+    }
     if(this.props.width) {
       headers.width = this.props.width;
       if(this.props.height) {

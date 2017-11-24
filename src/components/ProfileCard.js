@@ -45,7 +45,8 @@ class ProfileCard extends React.Component {
 
   _handleUpdateAvatar(avatarUrl) {
     // TODO
-    console.log('update avatar', avatarUrl);
+    // console.log('update avatar', avatarUrl);
+    this.props.updateInfo({avatar: avatarUrl});
   }
 
   checkEditedIsChange() {
@@ -211,6 +212,7 @@ class ProfileCard extends React.Component {
                         width="57"
                         height="57"
                         type="user"
+                        attachUUID={this.props.selectedUUID}
                         onUploadSuccess={(json) => this._handleUpdateAvatar(json.url)}
                       >
                         <img src={this.props.userInfo.get('avatar') || config.defaultImg.user} />
