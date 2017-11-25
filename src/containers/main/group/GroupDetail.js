@@ -4,7 +4,7 @@ const config = require('../../../../config/project.config.js');
 const dateHelper = require('../../../utils/dateHelper');
 const Select = require('react-select');
 const ReactTooltip = require('react-tooltip');
-const { showModal, hideModal } = require('../../../redux/actions/ui');
+const { showModal, hideModal, showAlert } = require('../../../redux/actions/ui');
 const { sendMsg } = require('../../../redux/actions/chat');
 const { changeSelectGroupActor } = require('../../../redux/actions/group');
 const { sendDiceRequest } = require('../../../redux/actions/dice');
@@ -17,6 +17,8 @@ const GroupActor = require('./GroupActor');
 const GroupMember = require('./GroupMember');
 const GroupInfo = require('./GroupInfo');
 const DiceRequest = require('../dice/DiceRequest');
+const DiceInvite = require('../dice/DiceInvite');
+const ListSelect = require('../../../components/ListSelect');
 const IsDeveloping = require('../../../components/IsDeveloping');
 
 class GroupDetail extends React.Component {
@@ -95,8 +97,34 @@ class GroupDetail extends React.Component {
   }
 
   _handleSendDiceInv() {
-    // TODO
-    console.log("发送投骰邀请");
+    let usercache = this.props.usercache;
+    let groupMembers = this.props.groupInfo.get('group_members');
+    let list = groupMembers.map((i) => usercache.getIn([i, 'nickname']) || usercache.getIn([i, 'username']));
+    this.props.dispatch(showModal(
+      <ListSelect
+        list={list}
+        onListSelect={(selecteds) => {
+          let inviteList = list.filter((_, i) => selecteds.indexOf(i) >= 0).toJS();
+          if(inviteList.length === 0) {
+            this.props.dispatch(showAlert('请选择邀请对象'))
+            return;
+          }
+          console.log('邀请人物选择结果', selecteds, inviteList);
+          this.props.dispatch(showModal(
+            <DiceInvite
+              inviteList={inviteList}
+              onSendDiceInvite={(diceReason, diceExp) => {
+                // TODO
+                console.log(diceReason, diceExp);
+                // let selectedUUID = this.props.selectedUUID;
+                // this.props.dispatch(sendDiceRequest(selectedUUID, true, diceExp, diceReason));
+                // this.props.dispatch(hideModal());
+              }}
+            />
+          ))
+        }}
+      />
+    ))
   }
 
   getHeaderActions() {
