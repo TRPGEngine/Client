@@ -20,9 +20,20 @@ class ListSelect extends React.Component {
     }
   }
 
+  _handleSubmit() {
+    if(this.props.onListSelect) {
+      this.props.onListSelect(this.state.selected.sort());
+    }
+  }
+
   render() {
+    let actions = (
+      <button onClick={() => this._handleSubmit()}>
+        确认
+      </button>
+    )
     return (
-      <ModalPanel title="选择">
+      <ModalPanel title="请选择..." actions={actions}>
         <div className="list-select">
           {
             this.props.list.map((item, index) => {
