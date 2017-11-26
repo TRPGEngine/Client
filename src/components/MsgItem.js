@@ -63,6 +63,7 @@ class MsgItem extends React.Component {
       let uuid = this.props.uuid;
       // TODO: 需要修改为只有有同意权限的人才会显示
       let is_accept = data.get('is_accept');
+      let allow_accept_list = data.get('allow_accept_list');
       if(is_accept) {
         return (
           <div className="card-action">
@@ -70,17 +71,14 @@ class MsgItem extends React.Component {
           </div>
         )
       }else {
-        let canAccept = !this.props.me;
+        let canAccept = allow_accept_list.includes(this.props.selfUUID);
 
-        if(this.props.isGroupMsg) {
-          // TODO: 检测是否为团管理者，如果为管理者，则允许接受投骰请求。否则置为false
-        }
         return (
           <div className="card-action">
             {canAccept ? (
               <button onClick={() => this.props.dispatch(acceptDiceRequest(uuid))}>接受</button>
             ) : (
-              <button disabled={true}>等待对方处理</button>
+              <button disabled={true}>{this.props.me?'等待对方处理':'等待处理'}</button>
             )}
           </div>
         )
@@ -144,4 +142,8 @@ MsgItem.propTypes = {
   isGroupMsg: PropTypes.bool,
 }
 
-module.exports = connect()(MsgItem);
+module.exports = connect(
+  state => ({
+    selfUUID: state.getIn(['user', 'info', 'uuid']),
+  })
+)(MsgItem);

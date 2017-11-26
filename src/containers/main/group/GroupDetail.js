@@ -7,7 +7,7 @@ const ReactTooltip = require('react-tooltip');
 const { showModal, hideModal, showAlert } = require('../../../redux/actions/ui');
 const { sendMsg } = require('../../../redux/actions/chat');
 const { changeSelectGroupActor } = require('../../../redux/actions/group');
-const { sendDiceRequest } = require('../../../redux/actions/dice');
+const { sendDiceRequest, sendDiceInvite } = require('../../../redux/actions/dice');
 const MsgSendBox = require('../../../components/MsgSendBox');
 const MsgItem = require('../../../components/MsgItem');
 const scrollTo = require('../../../utils/animatedScrollTo.js');
@@ -122,6 +122,8 @@ class GroupDetail extends React.Component {
                 // TODO
                 console.log(inviteUUIDList);
                 console.log(diceReason, diceExp);
+                this.props.dispatch(sendDiceInvite(selectedUUID, true, diceExp, diceReason, inviteUUIDList));
+                this.props.dispatch(hideModal());
                 // let selectedUUID = this.props.selectedUUID;
                 // this.props.dispatch(sendDiceRequest(selectedUUID, true, diceExp, diceReason));
                 // this.props.dispatch(hideModal());
