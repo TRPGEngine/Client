@@ -1,6 +1,9 @@
 @import "../utils/mixins";
 
 .list-select {
+  max-height: 360px;
+  @include auto-scroll-bar;
+
   .list-select-cell {
     margin-bottom: 6px;
     padding: 6px;

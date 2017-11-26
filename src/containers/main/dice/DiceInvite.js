@@ -20,9 +20,9 @@ class DiceInvite extends React.Component {
       diceExp = this.refs.diceExp.value;
     }
 
-    console.log(`因为 ${this.state.diceReason} 请求投出: ${diceExp}`);
-    if(this.props.onSendDiceRequest) {
-      this.props.onSendDiceRequest(this.state.diceReason, diceExp);
+    // console.log(`因为 ${this.state.diceReason} 请求投出: ${diceExp}`);
+    if(this.props.onSendDiceInvite) {
+      this.props.onSendDiceInvite(this.state.diceReason, diceExp);
     }
   }
 

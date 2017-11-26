@@ -99,22 +99,28 @@ class GroupDetail extends React.Component {
   _handleSendDiceInv() {
     let usercache = this.props.usercache;
     let groupMembers = this.props.groupInfo.get('group_members');
-    let list = groupMembers.map((i) => usercache.getIn([i, 'nickname']) || usercache.getIn([i, 'username']));
+    let list = groupMembers.map((i) => ({
+      name: usercache.getIn([i, 'nickname']) || usercache.getIn([i, 'username']),
+      uuid: usercache.getIn([i, 'uuid']),
+    }));
     this.props.dispatch(showModal(
       <ListSelect
-        list={list}
+        list={list.map((i)=>i.name)}
         onListSelect={(selecteds) => {
           let inviteList = list.filter((_, i) => selecteds.indexOf(i) >= 0).toJS();
-          if(inviteList.length === 0) {
+          let inviteNameList = inviteList.map((i)=>i.name);
+          let inviteUUIDList = inviteList.map((i)=>i.uuid);
+          if(inviteNameList.length === 0) {
             this.props.dispatch(showAlert('请选择邀请对象'))
             return;
           }
-          console.log('邀请人物选择结果', selecteds, inviteList);
+          console.log('邀请人物选择结果', selecteds, inviteNameList);
           this.props.dispatch(showModal(
             <DiceInvite
-              inviteList={inviteList}
+              inviteList={inviteNameList}
               onSendDiceInvite={(diceReason, diceExp) => {
                 // TODO
+                console.log(inviteUUIDList);
                 console.log(diceReason, diceExp);
                 // let selectedUUID = this.props.selectedUUID;
                 // this.props.dispatch(sendDiceRequest(selectedUUID, true, diceExp, diceReason));
