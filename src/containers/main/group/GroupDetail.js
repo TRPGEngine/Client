@@ -245,8 +245,8 @@ class GroupDetail extends React.Component {
               <MsgItem
                 key={item.get('uuid')+'+'+index}
                 uuid={item.get('uuid')}
-                icon={usercache.getIn([item.sender_uuid, 'avatar']) || defaultAvatar}
-                name={usercache.getIn([item.sender_uuid, 'username']) || ''}
+                icon={usercache.getIn([item.get('sender_uuid'), 'avatar']) || defaultAvatar}
+                name={usercache.getIn([item.get('sender_uuid'), 'username']) || usercache.getIn([item.get('sender_uuid'), 'nickname']) || ''}
                 type={item.get('type')}
                 content={item.get('message')}
                 data={data}

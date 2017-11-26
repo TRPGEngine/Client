@@ -190,3 +190,21 @@
 
   }
 }
+
+.msg-item-tip {
+  text-align: center;
+  margin: 10px 0;
+  .content {
+    display: inline-block;
+    background-color: rgba(black, 0.1);
+    color: $color-dove-gray;
+    max-width: 360px;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 5px;
+    word-break: break-all;
+    padding: 6px 12px;
+    font-size: 12px;
+    vertical-align: middle;
+  }
+}

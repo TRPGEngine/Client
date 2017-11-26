@@ -115,20 +115,28 @@ class MsgItem extends React.Component {
   }
 
   render() {
-    return (
-      <div className={"msg-item "+(this.props.me?"me ":"") + this.props.type}>
-        <div className="profile">
-          <span className="name">{this.props.name}</span>
-          <span className="time">{this.props.time}</span>
+    if(this.props.type === 'tip') {
+      return (
+        <div className="msg-item-tip">
+          <div className="content">{this.props.content}</div>
         </div>
-        <div className="content">
-          <div className="avatar"><img src={this.props.icon} /></div>
-          <div className="body">
-            {this.getContent()}
+      )
+    }else {
+      return (
+        <div className={"msg-item "+(this.props.me?"me ":"") + this.props.type}>
+          <div className="profile">
+            <span className="name">{this.props.name}</span>
+            <span className="time">{this.props.time}</span>
+          </div>
+          <div className="content">
+            <div className="avatar"><img src={this.props.icon} /></div>
+            <div className="body">
+              {this.getContent()}
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 }
 
