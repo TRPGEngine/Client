@@ -3,7 +3,7 @@ const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { agreeFriendInvite, refuseFriendInvite } = require('../redux/actions/user');
 const { agreeGroupInvite, refuseGroupInvite } = require('../redux/actions/group');
-const { acceptDiceRequest } = require('../redux/actions/dice');
+const { acceptDiceRequest, acceptDiceInvite } = require('../redux/actions/dice');
 require('./MsgItem.scss');
 
 class MsgItem extends React.Component {
@@ -77,6 +77,29 @@ class MsgItem extends React.Component {
           <div className="card-action">
             {canAccept ? (
               <button onClick={() => this.props.dispatch(acceptDiceRequest(uuid))}>接受</button>
+            ) : (
+              <button disabled={true}>{this.props.me?'等待对方处理':'等待处理'}</button>
+            )}
+          </div>
+        )
+      }
+    }else if(cardType === 'diceInvite') {
+      let uuid = this.props.uuid;
+      // TODO: 需要修改为只有有同意权限的人才会显示
+      let is_accept_list = data.get('is_accept_list');
+      let allow_accept_list = data.get('allow_accept_list');
+      let canAccept = allow_accept_list.includes(this.props.selfUUID);
+      if(canAccept && is_accept_list.includes(this.props.selfUUID)) {
+        return (
+          <div className="card-action">
+            <button disabled={true}>已接受</button>
+          </div>
+        )
+      }else {
+        return (
+          <div className="card-action">
+            {canAccept ? (
+              <button onClick={() => this.props.dispatch(acceptDiceInvite(uuid))}>接受</button>
             ) : (
               <button disabled={true}>{this.props.me?'等待对方处理':'等待处理'}</button>
             )}

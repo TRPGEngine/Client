@@ -42,3 +42,16 @@ exports.sendDiceInvite = function(to_uuid, is_group, dice_request, reason, invit
     })
   }
 }
+
+exports.acceptDiceInvite = function(uuid) {
+  return function(dispatch, getState) {
+    return api.emit('dice::acceptDiceInvite', {msg_card_uuid: uuid} ,function(data) {
+      if(data.result) {
+        let log = data.log;
+        dispatch({type: UPDATE_MSG, converseUUID: log.to_uuid, msgUUID: log.uuid, payload: log});
+      }else {
+        console.error(data);
+      }
+    })
+  }
+}
