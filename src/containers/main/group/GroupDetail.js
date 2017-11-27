@@ -121,8 +121,9 @@ class GroupDetail extends React.Component {
               onSendDiceInvite={(diceReason, diceExp) => {
                 // TODO
                 console.log(inviteUUIDList);
-                console.log(diceReason, diceExp);
-                this.props.dispatch(sendDiceInvite(selectedUUID, true, diceExp, diceReason, inviteUUIDList));
+                console.log("diceReason, diceExp",diceReason, diceExp);
+                let selectedUUID = this.props.selectedUUID;
+                this.props.dispatch(sendDiceInvite(selectedUUID, true, diceExp, diceReason, inviteUUIDList, inviteNameList));
                 this.props.dispatch(hideModal());
                 // let selectedUUID = this.props.selectedUUID;
                 // this.props.dispatch(sendDiceRequest(selectedUUID, true, diceExp, diceReason));

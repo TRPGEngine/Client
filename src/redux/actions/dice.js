@@ -31,14 +31,11 @@ exports.acceptDiceRequest = function(uuid) {
   }
 }
 
-exports.sendDiceInvite = function(to_uuid, is_group, dice_request, reason, inviteList) {
+exports.sendDiceInvite = function(to_uuid, is_group, dice_request, reason, inviteUUIDList, inviteNameList) {
   return function(dispatch, getState) {
-    return api.emit('dice::sendDiceInvite', {to_uuid, is_group, dice_request, reason, inviteList}, function(data) {
+    return api.emit('dice::sendDiceInvite', {to_uuid, is_group, dice_request, reason, inviteUUIDList, inviteNameList}, function(data) {
       if(data.result) {
-        // console.log('pkg', data.pkg);
-        // dispatch({type: ADD_MSG, converseUUID: to_uuid, payload: data.pkg});
-        // TODO
-        console.log(data);
+        dispatch({type: ADD_MSG, converseUUID: to_uuid, payload: data.pkg});
       }else {
         console.error(data);
       }
