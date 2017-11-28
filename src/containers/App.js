@@ -14,7 +14,7 @@ const appVersion = config.version;
 const Login = require('./Login');
 const Register = require('./Register');
 const Main = require('./Main');
-const emojify = require('../utils/emoji');
+const {emojify, getCodeList} = require('../utils/emoji');
 
 class App extends React.Component {
   render() {
@@ -36,6 +36,35 @@ class App extends React.Component {
               <Route name="login" path="/login" component={Login} />
               <Route name="register" path="/register" component={Register} />
               <Route name="main" path="/main" component={Main} />
+              <Route name="emoji" path="/emoji">
+                <div>
+                  {
+                    getCodeList().people.map(item => (
+                      <span>{emojify(item)}</span>
+                    ))
+                  }
+                  {
+                    getCodeList().nature.map(item => (
+                      <span>{emojify(item)}</span>
+                    ))
+                  }
+                  {
+                    getCodeList().objects.map(item => (
+                      <span>{emojify(item)}</span>
+                    ))
+                  }
+                  {
+                    getCodeList().places.map(item => (
+                      <span>{emojify(item)}</span>
+                    ))
+                  }
+                  {
+                    getCodeList().symbols.map(item => (
+                      <span>{emojify(item)}</span>
+                    ))
+                  }
+                </div>
+              </Route>
               <Route name="index" path="/">
                 <Link to="login" className="start-btn">
                   <div className="main">点击屏幕登录</div>
