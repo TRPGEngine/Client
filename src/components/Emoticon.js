@@ -7,9 +7,26 @@ class Emoticon extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectGroup: '',
+      selectGroup: 'people',
     }
     this.emoji = getCodeList();
+  }
+
+  getEmoticonItems() {
+    let selectGroup = this.state.selectGroup;
+    if(selectGroup && this.emoji[selectGroup]) {
+      return this.emoji[selectGroup].map((item) => (
+        <span
+          key={"emoji-cell#"+item}
+          className="emoji-cell"
+          onClick={()=>this.props.onSelect(item)}
+        >
+          {emojify(item)}
+        </span>
+      ))
+    }
+
+    return null;
   }
 
   render() {
@@ -20,8 +37,9 @@ class Emoticon extends React.Component {
           e.stopPropagation();
         }}
       >
-        表情包
-        <div className="items"></div>
+        <div className="items">
+          {this.getEmoticonItems()}
+        </div>
         <div className="group">
           {Object.keys(this.emoji).map((groupName) => (
             <div

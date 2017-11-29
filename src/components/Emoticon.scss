@@ -1,14 +1,24 @@
 @import "../utils/color";
+@import "../utils/mixins";
 
 .emoticon {
   // display: flex;
   // flex-direction: column;
   min-width: 388px;
+  max-width: 388px;
   min-height: 288px;
 
   .items {
     height: 288px - 36px;
+    padding: 8px;
+    padding-bottom: 0;
+    margin-bottom: 4px;
+    @include auto-scroll-bar;
     // flex: 1;
+    .emoji-cell {
+      cursor: pointer;
+      margin: 4px;
+    }
   }
 
   .group {

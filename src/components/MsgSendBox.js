@@ -60,6 +60,14 @@ class MsgSendBox extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.refs.inputMsg.focus();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.hideEmoticon);
+  }
+
   _handleMsgInputKeyDown(e) {
     if(e.keyCode===9) {
       e.preventDefault();
@@ -107,13 +115,19 @@ class MsgSendBox extends React.Component {
     setTimeout(() => window.addEventListener('click', this.hideEmoticon), 0);
   }
 
+  _handleSelectEmoticon(code) {
+    this.setState({inputMsg: this.state.inputMsg + code});
+    this.hideEmoticon();
+    this.refs.inputMsg.focus();
+  }
+
   render() {
     return (
       <div className="send-msg-box">
         <div className="input-area">
           <div className="tool-area">
               <div className={"popup emoticon" + (this.state.showEmoticon ? ' active':'')}>
-                <Emoticon />
+                <Emoticon onSelect={(code) => this._handleSelectEmoticon(code)}/>
               </div>
             <ReactTooltip effect='solid' />
             <div className="btn-group">

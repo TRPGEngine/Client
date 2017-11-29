@@ -1,6 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
+const { emojify } = require('../utils/emoji');
 const { agreeFriendInvite, refuseFriendInvite } = require('../redux/actions/user');
 const { agreeGroupInvite, refuseGroupInvite } = require('../redux/actions/group');
 const { acceptDiceRequest, acceptDiceInvite } = require('../redux/actions/dice');
@@ -132,7 +133,7 @@ class MsgItem extends React.Component {
       )
     }else {
       return (
-        <pre className="bubble">{this.props.content}</pre>
+        <pre className="bubble">{emojify(this.props.content)}</pre>
       )
     }
   }
