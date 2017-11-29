@@ -1,5 +1,6 @@
 const React = require('react');
 const ReactTooltip = require('react-tooltip');
+const Emoticon = require('./Emoticon');
 
 require('./MsgSendBox.scss');
 
@@ -8,30 +9,37 @@ class MsgSendBox extends React.Component {
     super(props);
     this.state = {
       inputMsg: '',
-      inputType: 'normal'
+      inputType: 'normal',
+      showEmoticon: false,
     };
+    this.clickableBtn = [
+      {
+        label: '表情',
+        icon: '&#xe683;',
+      }
+    ];
     this.inputType = [
       {
         label: '普通信息',
         type: 'normal',
-        icon: '&#xe72d;'
+        icon: '&#xe72d;',
       },
       {
         label: '吐槽信息',
         type: 'occ',
-        icon: '&#xe64d;'
+        icon: '&#xe64d;',
       },
       {
         label: '对话信息',
         type: 'speak',
-        icon: '&#xe61f;'
+        icon: '&#xe61f;',
       },
       {
         label: '行动信息',
         type: 'action',
-        icon: '&#xe619;'
+        icon: '&#xe619;',
       },
-    ]
+    ];
     this.actions = [
       {
         label: '请求投骰',
@@ -45,7 +53,11 @@ class MsgSendBox extends React.Component {
         icon: '&#xe631;',
         onClick: this.props.onSendDiceInv,
       },
-    ]
+    ];
+    this.hideEmoticon = () => {
+      window.removeEventListener('click', this.hideEmoticon);
+      this.setState({showEmoticon: false});
+    }
   }
 
   _handleMsgInputKeyDown(e) {
@@ -85,12 +97,39 @@ class MsgSendBox extends React.Component {
     }
   }
 
+  _handleShowEmoticon() {
+    let isShow = this.state.showEmoticon;
+    if(isShow === false) {
+      this.setState({showEmoticon: true});
+    }else {
+      this.setState({showEmoticon: false});
+    }
+    setTimeout(() => window.addEventListener('click', this.hideEmoticon), 0);
+  }
+
   render() {
     return (
       <div className="send-msg-box">
         <div className="input-area">
           <div className="tool-area">
+              <div className={"popup emoticon" + (this.state.showEmoticon ? ' active':'')}>
+                <Emoticon />
+              </div>
             <ReactTooltip effect='solid' />
+            <div className="btn-group">
+              {this.clickableBtn.map((item, index) => {
+                return (
+                  <div
+                    key={"btn-group#"+index}
+                    title={item.label}
+                    className="tool-item"
+                    onClick={(e) => {e.stopPropagation();this._handleShowEmoticon();}}
+                  >
+                    <i className="iconfont" dangerouslySetInnerHTML={{__html:item.icon}}></i>
+                  </div>
+                )
+              })}
+            </div>
             <div className="type-select">
               {this.inputType.map((item, index) => {
                 return (

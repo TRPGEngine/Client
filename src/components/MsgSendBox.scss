@@ -18,6 +18,7 @@
       height: 34px;
       padding: 0 10px;
       user-select: none;
+      position: relative;
 
       .tool-item {
         @include icon-btn;
@@ -67,6 +68,31 @@
       &:disabled {
         cursor: default;
       }
+    }
+  }
+
+  .popup.emoticon {
+    border-radius: 3px;
+    min-width: 72px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 0 8px;
+    background-color: white;
+    position: absolute;
+    left: 12px;
+    bottom: 32px;
+    padding: 0;
+    z-index: 1;
+    display: none;
+    &.active {
+      display: block;
+    }
+
+    &:after {
+      content: ' ';
+      border-width: 5px;
+      border-style: solid dashed dashed dashed;
+      border-color: #F9FCFA transparent transparent transparent;
+      position: absolute;
+      left: 2px;
     }
   }
 }

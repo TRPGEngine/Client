@@ -1,0 +1,36 @@
+@import "../utils/color";
+
+.emoticon {
+  // display: flex;
+  // flex-direction: column;
+  min-width: 388px;
+  min-height: 288px;
+
+  .items {
+    height: 288px - 36px;
+    // flex: 1;
+  }
+
+  .group {
+    height: 36px;
+    display: flex;
+    background-color: $color-wild-sand;
+    padding: 0 14px;
+
+    .group-selection {
+      width: 42px;
+      cursor: pointer;
+      height: 36px;
+      line-height: 33px;
+      text-align: center;
+      border-color: transparent;
+
+      &.active {
+        border-top: 1px solid white;
+        border-left: 1px solid #e6e5e6;
+        border-right: 1px solid #e6e5e6;
+        background-color: white;
+      }
+    }
+  }
+}
