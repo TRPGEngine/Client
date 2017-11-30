@@ -155,6 +155,15 @@ class ProfileCard extends React.Component {
             <span>唯一标识符:</span><span>{this.props.userInfo.get('uuid')}</span>
           </div>
           <div className="item">
+            <span>昵称:</span>
+            <input
+              value={this.state.editedInfo.nickname || ''}
+              onChange={(e) => this.setState({
+                editedInfo: Object.assign(this.state.editedInfo, {nickname: e.target.value})
+              })}
+            />
+          </div>
+          <div className="item">
             <span>性别:</span>
             <Select
               name="sex-select"
@@ -189,6 +198,10 @@ class ProfileCard extends React.Component {
         <div className="body">
           <div className="item">
             <span>唯一标识符:</span><span>{this.props.userInfo.get('uuid')}</span>
+          </div>
+          <div className="item">
+            <span>昵称:</span>
+            { this.props.userInfo.get('nickname') }
           </div>
           <div className="item">
             <span>性别:</span>
