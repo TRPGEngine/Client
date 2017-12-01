@@ -45,3 +45,19 @@ gulp.task('package', ['assets', 'webpack', 'redirect'], function(callback) {
     }
   })
 })
+
+gulp.task('package:all', ['assets', 'webpack', 'redirect'], function(callback) {
+  const packager = require('electron-packager');
+  const packagerConfig = require('../config/packager.config.js');
+  packagerConfig.all = true;
+  gutil.log('[electron-packager]', 'start packing...');
+
+  packager(packagerConfig, function(err, appPaths) {
+    if(err) {
+      throw new Error(err);
+    }else {
+      gutil.log('[electron-packager]', 'package completed!', appPaths);
+      callback();
+    }
+  })
+})

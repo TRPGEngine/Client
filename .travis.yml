@@ -8,6 +8,7 @@ before_script:
   - npm install
 script:
   - NODE_ENV=production npm run build
+  - npm run package-all
 after_script:
   - cd ./dist/
   - cp ../build/CNAME ./
