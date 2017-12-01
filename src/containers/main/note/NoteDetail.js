@@ -35,7 +35,8 @@ class NoteDetail extends React.Component {
           <input
             type="text"
             placeholder="笔记标题"
-            value={this.state.title} />
+            value={this.state.title}
+            onChange={(e) => this.setState({title: e.target.value})} />
         </div>
         <TinyMCE
           id="note-editor"
