@@ -2,12 +2,13 @@ const React = require('react');
 const { connect } = require('react-redux');
 const { selectActor } = require('../../../redux/actions/actor');
 const { showAlert, showModal } = require('../../../redux/actions/ui');
+const { addGroupActor } = require('../../../redux/actions/group');
 const ReactTooltip = require('react-tooltip');
 const at = require('trpg-actor-template');
 const Tab = require('../../../components/Tab');
 const ActorProfile = require('../../../components/ActorProfile');
+const ActorSelect = require('../../../components/modal/ActorSelect');
 const GroupActorCheck = require('./modal/GroupActorCheck');
-const GroupActorCheckSend = require('./modal/GroupActorCheckSend');
 
 require('./GroupActor.scss')
 
@@ -18,7 +19,11 @@ class GroupActor extends React.Component {
     }
 
     this.props.showModal(
-      <GroupActorCheckSend />
+      <ActorSelect
+        onSelect={(actorUUID) => {
+          this.props.addGroupActor(this.props.selectedGroupUUID, actorUUID);
+        }}
+      />
     )
   }
 
@@ -45,9 +50,9 @@ class GroupActor extends React.Component {
   }
 
   getGroupActorsList() {
-    let actors = this.props.groupInfo.get('group_actors');
-    if(actors && actors.length) {
-      return actors.filter(item => item.get('passed')===true).map((item) => {
+    let groupActors = this.props.groupInfo.get('group_actors');
+    if(groupActors && groupActors.size > 0) {
+      return groupActors.filter(item => item.get('passed')===true).map((item) => {
         let originActor = item.get('actor');
         let actorData = originActor.get('info').merge(item.get('actor_info'));
         let template = this.props.templateCache.get(originActor.get('template_uuid'));
@@ -98,8 +103,8 @@ class GroupActor extends React.Component {
 
   getGroupActorChecksList() {
     let groupActors = this.props.groupInfo.get('group_actors');
-    if(groupActors && groupActors.length > 0) {
-      return groupActors.filter(item => item.get('passed')!=true).map((item) => {
+    if(groupActors && groupActors.size > 0) {
+      return groupActors.filter(item => item.get('passed')===false).map((item) => {
         let originActor = item.get('actor');
         return (
           <div
@@ -180,5 +185,6 @@ module.exports = connect(
     showAlert: (...args) => dispatch(showAlert(...args)),
     showModal: (...args) => dispatch(showModal(...args)),
     selectActor: (actorUUID) => dispatch(selectActor(actorUUID)),
+    addGroupActor: (groupUUID, actorUUID) => dispatch(addGroupActor(groupUUID, actorUUID)),
   })
 )(GroupActor);

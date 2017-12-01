@@ -1,6 +1,9 @@
 const React = require('react');
+const { connect } = require('react-redux');
 const ReactTooltip = require('react-tooltip');
 const Emoticon = require('./Emoticon');
+const { showModal } = require('../redux/actions/ui');
+const ActorSelect = require('./modal/ActorSelect');
 
 require('./MsgSendBox.scss');
 
@@ -14,9 +17,15 @@ class MsgSendBox extends React.Component {
     };
     this.clickableBtn = [
       {
-        label: '表情',
+        label: '发送表情',
         icon: '&#xe683;',
-      }
+        onClick: (e) => {e.stopPropagation();this._handleShowEmoticon();},
+      },
+      {
+        label: '发送人物卡',
+        icon: '&#xe61b;',
+        onClick: (e) => this._handleShowSendActor(),
+      },
     ];
     this.inputType = [
       {
@@ -121,23 +130,34 @@ class MsgSendBox extends React.Component {
     this.refs.inputMsg.focus();
   }
 
+  _handleShowSendActor() {
+    console.log('发送人物卡');
+    this.props.dispatch(showModal(
+      <ActorSelect
+        onSelect={(actorUUID) => {
+          console.log(actorUUID);
+        }}
+      />
+    ))
+  }
+
   render() {
     return (
       <div className="send-msg-box">
         <div className="input-area">
           <div className="tool-area">
-              <div className={"popup emoticon" + (this.state.showEmoticon ? ' active':'')}>
-                <Emoticon onSelect={(code) => this._handleSelectEmoticon(code)}/>
-              </div>
+            <div className={"popup emoticon" + (this.state.showEmoticon ? ' active':'')}>
+              <Emoticon onSelect={(code) => this._handleSelectEmoticon(code)}/>
+            </div>
             <ReactTooltip effect='solid' />
             <div className="btn-group">
               {this.clickableBtn.map((item, index) => {
                 return (
                   <div
                     key={"btn-group#"+index}
-                    title={item.label}
+                    data-tip={item.label}
                     className="tool-item"
-                    onClick={(e) => {e.stopPropagation();this._handleShowEmoticon();}}
+                    onClick={(e) => !!item.onClick && item.onClick(e)}
                   >
                     <i className="iconfont" dangerouslySetInnerHTML={{__html:item.icon}}></i>
                   </div>
@@ -189,4 +209,4 @@ class MsgSendBox extends React.Component {
   }
 }
 
-module.exports = MsgSendBox;
+module.exports = connect()(MsgSendBox);

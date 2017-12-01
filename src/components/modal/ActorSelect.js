@@ -1,12 +1,11 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const config = require('../../../../../config/project.config.js');
-const { showAlert } = require('../../../../redux/actions/ui');
-const { addGroupActor } = require('../../../../redux/actions/group');
+const config = require('../../../config/project.config.js');
+const { showAlert } = require('../../redux/actions/ui');
 
-require('./GroupActorCheckSend.scss')
+require('./ActorSelect.scss')
 
-class GroupActorCheckSend extends React.Component {
+class ActorSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,10 +13,11 @@ class GroupActorCheckSend extends React.Component {
     }
   }
 
-  _handleSendCheck() {
+  _handleSelect() {
     let selectActorUUID = this.state.selectActorUUID;
     if(selectActorUUID) {
-      this.props.addGroupActor(this.props.selectedGroupUUID, selectActorUUID);
+      console.log('[人物卡列表]选择了' + selectActorUUID);
+      this.props.onSelect && this.props.onSelect(selectActorUUID);
     }else {
       this.props.showAlert('请选择人物卡');
     }
@@ -25,8 +25,8 @@ class GroupActorCheckSend extends React.Component {
 
   render() {
     return (
-      <div className="group-actor-check-send">
-        <h3>请选择人物卡申请加入本团</h3>
+      <div className="actor-select">
+        <h3>请选择人物卡</h3>
         <div className="actor-list">
           {
             this.props.selfActors.map((item, index) => {
@@ -51,7 +51,7 @@ class GroupActorCheckSend extends React.Component {
           }
         </div>
         <div className="action">
-          <button onClick={() => this._handleSendCheck()}>提交申请</button>
+          <button onClick={() => this._handleSelect()}>确定</button>
         </div>
       </div>
     )
@@ -61,10 +61,8 @@ class GroupActorCheckSend extends React.Component {
 module.exports = connect(
   state => ({
     selfActors: state.getIn(['actor', 'selfActors']),
-    selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
   }),
   dispatch => ({
     showAlert: (...args) => dispatch(showAlert(...args)),
-    addGroupActor: (...args) => dispatch(addGroupActor(...args)),
   })
-)(GroupActorCheckSend);
+)(ActorSelect);
