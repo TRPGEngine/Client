@@ -19,6 +19,7 @@ cache:
     - "$HOME/.electron"
 before_install: 
   - chmod +x build/ci/before_install.sh
+  - chmod +x build/ci/zipapp.sh
   - build/ci/before_install.sh
 install:
   - npm install
@@ -31,6 +32,7 @@ after_success:
   - cp ../build/CNAME ./
   - mkdir -p src/assets
   - cp -r ../src/assets/* ./src/assets
+  - sh ../build/ci/zipapp.sh
   - git init
   - git config user.name "travis"
   - git config user.email "travis@travis.com"
