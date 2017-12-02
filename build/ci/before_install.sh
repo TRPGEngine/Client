@@ -24,7 +24,7 @@ case "$TRAVIS_OS_NAME" in
     openssl req -newkey rsa:1024 -nodes -subj \
       "/C=CI/ST=Travis/L=Developer/O=Developer/CN=Developer CodeCert" \
       -out codesign.csr -keyout codesign.key
-    openssl ca -batch -config $(pwd)/test/ci/dev_ca.cnf -notext -create_serial \
+    openssl ca -batch -config $(pwd)/build/ci/dev_ca.cnf -notext -create_serial \
       -in codesign.csr -out codesign.cer
     openssl pkcs12 -export -in codesign.cer -inkey codesign.key -out codesign.p12 -password pass:12345
     security import codesign.p12 -k ~/Library/Keychains/login.keychain -P 12345 -T /usr/bin/codesign
