@@ -17,7 +17,9 @@ cache:
   - directories:
     - "node_modules"
     - "$HOME/.electron"
-before_install: build/ci/before_install.sh
+before_install: 
+  - chmod +x build/ci/before_install.sh
+  - build/ci/before_install.sh
 install:
   - npm install
   - npm update
