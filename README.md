@@ -6,6 +6,8 @@ TPRG前端网页端
 
 ## 开发版下载
 
+**开发版不一定是一个稳定可用版本。请下载时候注意**
+
 - [trpg-game-client-win32-ia32](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/TRPGEngine/Client/tree/gh-pages/app/trpg-game-client-win32-ia32)
 
 - [trpg-game-client-win32-x64](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/TRPGEngine/Client/tree/gh-pages/app/trpg-game-client-win32-x64)
