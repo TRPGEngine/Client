@@ -13,6 +13,12 @@ const config = require('../config/electron.config');
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
+if (!!process.env.NODE_ENV){
+  // null
+}else{
+  process.env.NODE_ENV = 'production';
+}
+
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow(config.window);

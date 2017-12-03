@@ -7,7 +7,7 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --inline --progress --colors --port 8080 --host 0.0.0.0 --config ./config/webpack.config.js",
     "build": "webpack --progress --colors --display-modules --config ./config/webpack.config.js",
     "pc": "cross-env PLATFORM=electron gulp --gulpfile build/gulpfile.js && electron .",
-    "pcdev": "cross-env PLATFORM=electron npm run dev & gulp assets --gulpfile build/gulpfile.js && electron .",
+    "pcdev": "cross-env PLATFORM=electron npm run dev & gulp assets --gulpfile build/gulpfile.js && cross-env NODE_ENV=development electron .",
     "package": "cross-env PLATFORM=electron NODE_ENV=production gulp package --gulpfile build/gulpfile.js",
     "package-all": "cross-env PLATFORM=electron NODE_ENV=production gulp package:all --gulpfile build/gulpfile.js",
     "test": "echo \"Error: no test specified\" && exit 1"
