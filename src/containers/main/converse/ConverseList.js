@@ -3,8 +3,11 @@ const { connect } = require('react-redux');
 const dateHelper = require('../../../utils/dateHelper');
 const config = require('../../../../config/project.config.js');
 const ConverseDetail = require('./ConverseDetail');
+// const Tab = require('../../../components/Tab');
+const { TabsController, Tab } = require('../../../components/Tabs');
 const ConvItem = require('../../../components/ConvItem');
 const { switchConverse } = require('../../../redux/actions/chat');
+const { showProfileCard } = require('../../../redux/actions/ui');
 
 require('./ConverseList.scss');
 
@@ -35,7 +38,7 @@ class ConverseList extends React.Component {
     let converses = this.props.converses
       .valueSeq()
       .filter((item) => item.get('type')==='user'||item.get('type')==='system')
-      .sortBy((item) => item.get('lastTime'))
+      .sortBy((item) => new Date(item.get('lastTime')))
       .reverse()
       .map((item, index) => {
         let uuid = item.get('uuid');
@@ -53,14 +56,63 @@ class ConverseList extends React.Component {
           />
         )
       });
-    return converses;
+
+    return (
+      <div className="converses-list">
+        {converses}
+      </div>
+    );
+  }
+
+  getFriendList() {
+    let friends = this.props.friends.toJS();
+    let usercache = this.props.usercache;
+    return (
+      <div className="friend-list">
+        {
+          friends.length > 0 ? friends.map((item, index) => {
+            let uuid = item;
+            return (
+              <ConvItem
+                key={`friends#${uuid}#${index}`}
+                icon={usercache.getIn([uuid, 'avatar']) || config.defaultImg.user}
+                title={usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username'])}
+                content={usercache.getIn([uuid, 'sign'])}
+                time=''
+                uuid=''
+                isSelected={false}
+                onClick={() => this.props.dispatch(showProfileCard(uuid))}
+                hideCloseBtn={true}
+              />
+            )
+          }) : (
+            <div className="no-friend">暂无好友哦</div>
+          )
+        }
+      </div>
+    )
   }
 
   render() {
     return (
       <div className="converse">
         <div className="list">
-          {this.getConverseList()}
+          <TabsController>
+            <Tab
+              name={(
+                <span><i className="iconfont">&#xe769;</i>消息</span>
+              )}
+            >
+              {this.getConverseList()}
+            </Tab>
+            <Tab
+              name={(
+                <span><i className="iconfont">&#xe60d;</i>好友</span>
+              )}
+            >
+              {this.getFriendList()}
+            </Tab>
+          </TabsController>
         </div>
         <div className="detail">
           {
@@ -85,5 +137,7 @@ module.exports = connect(
   state => ({
     selectedUUID: state.getIn(['chat', 'selectedConversesUUID']),
     converses: state.getIn(['chat', 'converses']),
+    friends: state.getIn(['user', 'friendList']),
+    usercache: state.getIn(['cache', 'user']),
   })
 )(ConverseList);

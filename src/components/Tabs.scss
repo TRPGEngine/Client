@@ -39,9 +39,23 @@
           border-bottom-color: $active-color;
         }
       }
+
+      .tab-label {
+        .iconfont {
+          margin-right: 2px;
+        }
+      }
     }
   }
   .tab-content {
     flex: 1;
+
+    > div {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+    }
   }
 }

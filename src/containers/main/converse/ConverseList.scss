@@ -8,6 +8,10 @@
     width: 240px;
     background-color: $color-soapstone;
     border-right: 1px solid $color-bon-jour;
+
+    .friend-list .conv-item {
+      padding-left: 13px;
+    }
   }
 
   .detail {

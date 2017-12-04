@@ -5,7 +5,7 @@ const { showAlert, showModal } = require('../../../redux/actions/ui');
 const { addGroupActor } = require('../../../redux/actions/group');
 const ReactTooltip = require('react-tooltip');
 const at = require('trpg-actor-template');
-const Tab = require('../../../components/Tab');
+const { TabsController, Tab } = require('../../../components/Tabs');
 const ActorProfile = require('../../../components/ActorProfile');
 const ActorSelect = require('../../../components/modal/ActorSelect');
 const GroupActorCheck = require('./modal/GroupActorCheck');
@@ -139,35 +139,27 @@ class GroupActor extends React.Component {
   render() {
     return (
       <div className="group-actor">
-        <Tab
-          items={[
-            {
-              name: '正式人物卡',
-              component: (
-                <div className="formal-actor">
-                  <ReactTooltip effect="solid" place="left" id="group-actor-info" class="group-actor-info"/>
-                  <div className="group-actor-action">
-                    <button onClick={() => this._handleSendGroupActorCheck()}><i className="iconfont">&#xe604;</i>申请审核</button>
-                  </div>
-                  <div className="group-actor-items">
-                    {this.getGroupActorsList()}
-                  </div>
-                </div>
-              )
-            },
-            {
-              name: '待审人物卡',
-              component: (
-                <div className="reserve-actor">
-                  <div className="group-actor-check-items">
-                    <ReactTooltip effect="solid" place="top" id="group-actor-check-action" class="group-actor-info"/>
-                    {this.getGroupActorChecksList()}
-                  </div>
-                </div>
-              )
-            }
-          ]}
-        />
+        <TabsController>
+          <Tab name="正式人物卡">
+            <div className="formal-actor">
+              <ReactTooltip effect="solid" place="left" id="group-actor-info" class="group-actor-info"/>
+              <div className="group-actor-action">
+                <button onClick={() => this._handleSendGroupActorCheck()}><i className="iconfont">&#xe604;</i>申请审核</button>
+              </div>
+              <div className="group-actor-items">
+                {this.getGroupActorsList()}
+              </div>
+            </div>
+          </Tab>
+          <Tab name="待审人物卡">
+            <div className="reserve-actor">
+              <div className="group-actor-check-items">
+                <ReactTooltip effect="solid" place="top" id="group-actor-check-action" class="group-actor-info"/>
+                {this.getGroupActorChecksList()}
+              </div>
+            </div>
+          </Tab>
+        </TabsController>
       </div>
     )
   }
