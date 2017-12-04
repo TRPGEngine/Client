@@ -161,6 +161,8 @@ class ConverseDetail extends React.Component {
           {this.getMsgList(list)}
         </div>
         <MsgSendBox
+          conversesUUID={this.props.conversesUUID}
+          isRoom={false}
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
           onSendDiceReq={() => this._handleSendDiceReq()}
           onSendDiceInv={() => this._handleSendDiceInv()}

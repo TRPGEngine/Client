@@ -302,6 +302,8 @@ class GroupDetail extends React.Component {
           {this.getMsgList()}
         </div>
         <MsgSendBox
+          conversesUUID={this.props.selectedUUID}
+          isRoom={true}
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
           onSendDiceReq={() => this._handleSendDiceReq()}
           onSendDiceInv={() => this._handleSendDiceInv()}

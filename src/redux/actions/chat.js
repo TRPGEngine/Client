@@ -76,6 +76,7 @@ let sendMsg = function sendMsg(converseUUID, payload) {
       message: payload.message,
       is_public: payload.is_public,
       date: moment().valueOf(),
+      data: payload.data,
     };
 
     dispatch(addMsg(converseUUID, pkg))

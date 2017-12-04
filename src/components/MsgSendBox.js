@@ -1,8 +1,10 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const ReactTooltip = require('react-tooltip');
 const Emoticon = require('./Emoticon');
-const { showModal } = require('../redux/actions/ui');
+const { sendMsg } = require('../redux/actions/chat');
+const { showModal, hideModal } = require('../redux/actions/ui');
 const ActorSelect = require('./modal/ActorSelect');
 
 require('./MsgSendBox.scss');
@@ -135,7 +137,19 @@ class MsgSendBox extends React.Component {
     this.props.dispatch(showModal(
       <ActorSelect
         onSelect={(actorUUID) => {
+          this.props.dispatch(hideModal());
           console.log(actorUUID);
+          let {conversesUUID, isRoom} = this.props;
+          this.props.dispatch(sendMsg(conversesUUID, {
+            room: isRoom ? conversesUUID : '',
+            type: 'card',
+            message: '[人物卡]',
+            is_public: isRoom,
+            data: {
+              type: 'actor',
+              uuid: actorUUID
+            }
+          }))
         }}
       />
     ))
@@ -207,6 +221,11 @@ class MsgSendBox extends React.Component {
       </div>
     )
   }
+}
+
+MsgSendBox.propTypes = {
+  conversesUUID: PropTypes.string,
+  isRoom: PropTypes.bool,
 }
 
 module.exports = connect()(MsgSendBox);
