@@ -84,18 +84,6 @@ class GroupDetail extends React.Component {
     }));
   }
 
-  _handleSendDiceReq() {
-    this.props.dispatch(showModal(
-      <DiceRequest
-        onSendDiceRequest={(diceReason, diceExp) => {
-          let selectedUUID = this.props.selectedUUID;
-          this.props.dispatch(sendDiceRequest(selectedUUID, true, diceExp, diceReason));
-          this.props.dispatch(hideModal());
-        }}
-      />
-    ))
-  }
-
   _handleSendDiceInv() {
     let usercache = this.props.usercache;
     let groupMembers = this.props.groupInfo.get('group_members');
@@ -303,9 +291,8 @@ class GroupDetail extends React.Component {
         </div>
         <MsgSendBox
           conversesUUID={this.props.selectedUUID}
-          isRoom={true}
+          isGroup={true}
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
-          onSendDiceReq={() => this._handleSendDiceReq()}
           onSendDiceInv={() => this._handleSendDiceInv()}
         />
         <div

@@ -5,7 +5,10 @@ const ReactTooltip = require('react-tooltip');
 const Emoticon = require('./Emoticon');
 const { sendMsg } = require('../redux/actions/chat');
 const { showModal, hideModal } = require('../redux/actions/ui');
+const { sendDiceRequest } = require('../redux/actions/dice');
 const ActorSelect = require('./modal/ActorSelect');
+const DiceRequest = require('../containers/main/dice/DiceRequest');
+const DiceInvite = require('../containers/main/dice/DiceInvite');
 
 require('./MsgSendBox.scss');
 
@@ -56,7 +59,7 @@ class MsgSendBox extends React.Component {
         label: '请求投骰',
         type: 'dice-req',
         icon: '&#xe609;',
-        onClick: this.props.onSendDiceReq,
+        onClick: () => this._handleSendDiceReq(),
       },
       {
         label: '邀请投骰',
@@ -132,6 +135,7 @@ class MsgSendBox extends React.Component {
     this.refs.inputMsg.focus();
   }
 
+  // 发送人物卡
   _handleShowSendActor() {
     console.log('发送人物卡');
     this.props.dispatch(showModal(
@@ -139,17 +143,30 @@ class MsgSendBox extends React.Component {
         onSelect={(actorUUID) => {
           this.props.dispatch(hideModal());
           console.log(actorUUID);
-          let {conversesUUID, isRoom} = this.props;
+          let {conversesUUID, isGroup} = this.props;
           this.props.dispatch(sendMsg(conversesUUID, {
-            room: isRoom ? conversesUUID : '',
+            room: isGroup ? conversesUUID : '',
             type: 'card',
             message: '[人物卡]',
-            is_public: isRoom,
+            is_public: isGroup,
             data: {
               type: 'actor',
               uuid: actorUUID
             }
           }))
+        }}
+      />
+    ))
+  }
+
+  // 发送投骰请求
+  _handleSendDiceReq() {
+    this.props.dispatch(showModal(
+      <DiceRequest
+        onSendDiceRequest={(diceReason, diceExp) => {
+          let {conversesUUID, isGroup} = this.props;
+          this.props.dispatch(sendDiceRequest(conversesUUID, isGroup, diceExp, diceReason));
+          this.props.dispatch(hideModal());
         }}
       />
     ))

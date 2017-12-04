@@ -12,7 +12,6 @@ const {
   SEND_MSG,
   SEND_MSG_COMPLETED
 } = require('../constants');
-const moment = require('moment');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { checkUser } = require('../../utils/usercache');
@@ -75,7 +74,7 @@ let sendMsg = function sendMsg(converseUUID, payload) {
       type: payload.type,
       message: payload.message,
       is_public: payload.is_public,
-      date: moment().valueOf(),
+      date: new Date(),
       data: payload.data,
     };
 

@@ -37,19 +37,6 @@ class ConverseDetail extends React.Component {
     }));
   }
 
-  _handleSendDiceReq() {
-    // TODO
-    this.props.dispatch(showModal(
-      <DiceRequest
-        onSendDiceRequest={(diceReason, diceExp) => {
-          let conversesUUID = this.props.conversesUUID;
-          this.props.dispatch(sendDiceRequest(conversesUUID, false, diceExp, diceReason));
-          this.props.dispatch(hideModal());
-        }}
-      />
-    ))
-  }
-
   _handleSendDiceInv() {
     // TODO
     console.log("发送投骰邀请");
@@ -162,9 +149,8 @@ class ConverseDetail extends React.Component {
         </div>
         <MsgSendBox
           conversesUUID={this.props.conversesUUID}
-          isRoom={false}
+          isGroup={false}
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
-          onSendDiceReq={() => this._handleSendDiceReq()}
           onSendDiceInv={() => this._handleSendDiceInv()}
         />
       </div>
