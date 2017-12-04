@@ -1,17 +1,38 @@
 const React = require('react');
 const PropTypes = require('prop-types');
+const { connect } = require('react-redux');
+const { isUserUUID } = require('../utils/uuid');
+const { showProfileCard } = require('../redux/actions/ui');
 require('./ConvItem.scss');
 
 class ConvItem extends React.Component {
+  _handleCloseConv(e) {
+    // TODO
+    console.log('close conv:',this.props.uuid);
+    e.stopPropagation();
+  }
+
+  _handleShowInfo(e) {
+    if(isUserUUID(this.props.uuid)) {
+      e.stopPropagation();
+      this.props.dispatch(showProfileCard(this.props.uuid));
+    }
+  }
+
   render() {
     let closeBtn = !this.props.hideCloseBtn ? (
-      <div className="close" onClick={() => console.log('close conv:',this.props.uuid)}><i className="iconfont">&#xe70c;</i></div>
+      <div className="close" onClick={(e) => this._handleCloseConv(e)}><i className="iconfont">&#xe70c;</i></div>
     ) : null
 
     return (
       <div className={this.props.isSelected?"conv-item active":"conv-item"} onClick={this.props.onClick}>
         {closeBtn}
-        <div className="icon"><img src={this.props.icon}></img></div>
+        <div
+          className="icon"
+          onClick={(e) => this._handleShowInfo(e)}
+        >
+          <img src={this.props.icon}></img>
+        </div>
         <div className="body">
           <div className="title"><p>{this.props.title}</p><span>{this.props.time}</span></div>
           <div className="content">{this.props.content}</div>
@@ -29,4 +50,4 @@ ConvItem.propTypes = {
   uuid: PropTypes.string,
 }
 
-module.exports = ConvItem;
+module.exports = connect()(ConvItem);
