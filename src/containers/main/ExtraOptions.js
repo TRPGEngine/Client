@@ -11,6 +11,7 @@ const TemplateEdit = require('./actors/TemplateEdit');
 const IsDeveloping = require('../../components/IsDeveloping');
 const ChangePassword = require('../../components/ChangePassword');
 const FriendsAdd = require('../../components/modal/FriendsAdd');
+const GroupAdd = require('../../components/modal/GroupAdd');
 
 require('./ExtraOptions.scss');
 
@@ -56,6 +57,10 @@ class ExtraOptions extends React.Component {
       this.props.dispatch(showModal(
         <FriendsAdd />
       ))
+    }else if(menu === 'addGroup') {
+      this.props.dispatch(showModal(
+        <GroupAdd />
+      ))
     }else if(menu === 'userSettings') {
       this.props.dispatch(showModal(
         <IsDeveloping />
@@ -90,6 +95,7 @@ class ExtraOptions extends React.Component {
           <li onClick={() => this._handleClickMenu('templateCreate')}>创建模板</li>
           <li onClick={() => this._handleClickMenu('noteCreate')}>添加笔记</li>
           <li onClick={() => this._handleClickMenu('addFriend')}>添加好友</li>
+          <li onClick={() => this._handleClickMenu('addGroup')}>添加团</li>
         </ul>
       )
     }else if(type === 'more') {

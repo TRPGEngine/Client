@@ -2,6 +2,8 @@ const immutable = require('immutable');
 const {
   RESET,
   GET_GROUP_INFO_SUCCESS,
+  FIND_GROUP_REQUEST,
+  FIND_GROUP_SUCCESS,
   SEND_GROUP_INVITE_SUCCESS,
   AGREE_GROUP_INVITE_SUCCESS,
   REFUSE_GROUP_INVITE_SUCCESS,
@@ -23,6 +25,8 @@ const initialState = immutable.fromJS({
   invites: [],// 邀请列表。里面是邀请对象
   groups: [],// 个人所有组的信息
   selectedGroupUUID: '',
+  isFindingGroup: false,
+  findingResult: [],
 });
 
 module.exports = function group(state = initialState, action) {
@@ -32,6 +36,10 @@ module.exports = function group(state = initialState, action) {
     case GET_GROUP_INFO_SUCCESS:
       let group_uuid = action.payload.uuid;
       return state.setIn(['info', group_uuid], action.payload);
+    case FIND_GROUP_REQUEST:
+      return state.set('isFindingGroup', true);
+    case FIND_GROUP_SUCCESS:
+      return state.set('isFindingGroup', false).set('findingResult', immutable.fromJS(action.payload));
     case GET_GROUP_INVITE_SUCCESS:
       return state.set('invites', immutable.fromJS(action.payload));
     case AGREE_GROUP_INVITE_SUCCESS:

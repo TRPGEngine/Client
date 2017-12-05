@@ -1,6 +1,8 @@
 const {
   UPDATE_CONVERSES_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
+  FIND_GROUP_REQUEST,
+  FIND_GROUP_SUCCESS,
   SEND_GROUP_INVITE_SUCCESS,
   AGREE_GROUP_INVITE_SUCCESS,
   REFUSE_GROUP_INVITE_SUCCESS,
@@ -78,6 +80,21 @@ exports.getGroupInfo = function(uuid) {
         dispatch({type: GET_GROUP_INFO_SUCCESS, payload: data.group});
       }else {
         console.error(data);
+      }
+    })
+  }
+}
+
+exports.findGroup = function(text, type) {
+  return function(dispatch, getState) {
+    dispatch({type: FIND_GROUP_REQUEST});
+    console.log("搜索团:", text, type);
+    return api.emit('group::findGroup', {text, type}, function(data) {
+      console.log('findGroup', data);
+      if(data.result) {
+        dispatch({type: FIND_GROUP_SUCCESS, payload: data.results});
+      }else {
+        console.error(data.msg);
       }
     })
   }
