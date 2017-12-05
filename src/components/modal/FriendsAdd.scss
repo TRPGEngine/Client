@@ -1,8 +1,9 @@
-@import "../../../utils/mixins";
-@import "../../../utils/color";
+@import "../../utils/mixins";
+@import "../../utils/color";
 
-.friends-detail {
-  height: 100%;
+.friends-add {
+  height: 480px;
+  width: 640px;
   display: flex;
   flex-direction: column;
   .friends-search {
@@ -10,7 +11,7 @@
     min-height: 44px;
     padding: 0 24px;
     display: flex;
-    margin: 12px 0;
+    margin: 6px 0;
 
     input {
       height: 100%;

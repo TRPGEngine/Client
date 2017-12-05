@@ -15,12 +15,12 @@ const {
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { checkUser } = require('../../utils/usercache');
-const { hideProfileCard, switchMenu } = require('./ui');
+const { hideProfileCard, switchMenuPannel } = require('./ui');
 
 let switchToConverse = function switchToConverse(uuid) {
   return function(dispatch, getState) {
     dispatch(hideProfileCard());
-    dispatch(switchMenu(0));
+    dispatch(switchMenuPannel(0));
     dispatch(switchConverse(uuid));
   }
 }

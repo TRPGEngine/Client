@@ -5,7 +5,6 @@ const config = require('../../../config/project.config.js');
 const { showProfileCard, switchMenuPannel } = require('../../redux/actions/ui');
 const ConverseList = require('./converse/ConverseList');
 const ActorList = require('./actors/ActorList');
-const FriendsList = require('./friends/FriendsList');
 const GroupList = require('./group/GroupList');
 const NoteList = require('./note/NoteList');
 const ExtraOptions = require('./ExtraOptions');
@@ -30,14 +29,6 @@ class MenuPannel extends React.Component {
         text: '人物卡',
         component: (
           <ActorList />
-        )
-      },
-      {
-        icon: '&#xe607;',
-        activeIcon: '&#xe607;',
-        text: '好友',
-        component: (
-          <FriendsList />
         )
       },
       {

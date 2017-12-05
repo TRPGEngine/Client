@@ -3,13 +3,14 @@ const ReactTooltip = require('react-tooltip');
 const { connect } = require('react-redux');
 const config = require('../../../config/project.config');
 const { logout } = require('../../redux/actions/user');
-const { showModal, switchMenu } = require('../../redux/actions/ui');
+const { showModal, switchMenuPannel } = require('../../redux/actions/ui');
 const { setEditedTemplate } = require('../../redux/actions/actor');
 const { addNote } = require('../../redux/actions/note');
 const TemplateSelect = require('./actors/TemplateSelect');
 const TemplateEdit = require('./actors/TemplateEdit');
 const IsDeveloping = require('../../components/IsDeveloping');
 const ChangePassword = require('../../components/ChangePassword');
+const FriendsAdd = require('../../components/modal/FriendsAdd');
 
 require('./ExtraOptions.scss');
 
@@ -48,10 +49,13 @@ class ExtraOptions extends React.Component {
       this.props.dispatch(setEditedTemplate({}));
       this.props.dispatch(showModal(<TemplateEdit />));
     }else if(menu === 'noteCreate') {
-      this.props.dispatch(switchMenu(4));
+      this.props.dispatch(switchMenuPannel(3));
       this.props.dispatch(addNote());
     }else if(menu === 'addFriend') {
-      this.props.dispatch(switchMenu(2));
+      // this.props.dispatch(switchMenuPannel(2));
+      this.props.dispatch(showModal(
+        <FriendsAdd />
+      ))
     }else if(menu === 'userSettings') {
       this.props.dispatch(showModal(
         <IsDeveloping />

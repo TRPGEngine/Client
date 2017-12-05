@@ -8,6 +8,7 @@ const NetworkIndicator = require('../components/NetworkIndicator');
 const config = require('../../config/project.config.js');
 require('./App.scss');
 require('../assets/css/iconfont.css');
+require('react-select/dist/react-select.css');
 
 const Router = (config.platform === 'web' || config.environment === 'development') ? BrowserRouter : HashRouter;
 const appVersion = config.version;
