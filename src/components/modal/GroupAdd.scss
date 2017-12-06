@@ -6,7 +6,7 @@
   width: 640px;
   display: flex;
   flex-direction: column;
-  .friends-search {
+  .group-search {
     height: 44px;
     min-height: 44px;
     padding: 0 24px;
@@ -29,7 +29,7 @@
       }
     }
 
-    .friends-search-method {
+    .group-search-method {
       height: 100%;
       padding-top: 4px;
       min-width: 150px;
@@ -44,7 +44,7 @@
     }
   }
 
-  .friends-search-result {
+  .group-search-result {
     flex: 1;
     overflow-y: auto;
     display: flex;

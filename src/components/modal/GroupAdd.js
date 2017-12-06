@@ -33,7 +33,7 @@ class GroupAdd extends React.Component {
 
     return findingResult.map(function(item, index) {
       return (
-        <FindResultItem key={item.uuid + '#' + index} info={item} />
+        <FindResultItem key={item.uuid + '#' + index} info={item} type="group" />
       )
     });
   }
@@ -47,7 +47,7 @@ class GroupAdd extends React.Component {
     return (
       <ModalPanel title="添加团">
         <div className="group-add">
-          <div className="friends-search">
+          <div className="group-search">
             <input
               type="text"
               placeholder="请输入你要添加的团信息"
@@ -55,7 +55,7 @@ class GroupAdd extends React.Component {
               value={this.state.searchText}
               onChange={(e) => this.setState({searchText: e.target.value})}
             />
-            <div className="friends-search-method">
+            <div className="group-search-method">
               <Select
                 name="form-field-name"
                 value={this.state.selectValue}
@@ -68,7 +68,7 @@ class GroupAdd extends React.Component {
             </div>
             <button onClick={() => this._handleSearch()}>搜索</button>
           </div>
-          <div className="friends-search-result">
+          <div className="group-search-result">
             {
               this.props.isFinding ? '正在查询...' : this.getFriendResult(this.props.findingResult.toJS())
             }

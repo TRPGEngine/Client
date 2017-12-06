@@ -6,7 +6,7 @@ const { sendFriendInvite, agreeFriendInvite } = require('../redux/actions/user')
 require('./FindResultItem.scss');
 
 class FindResultItem extends React.Component {
-  getAction(uuid) {
+  getUserAction(uuid) {
     let friendList = this.props.friendList.toJS();
     let friendInvite = this.props.friendInvite.toJS();
     let friendRequests = this.props.friendRequests.toArray().map((item) => {
@@ -46,23 +46,59 @@ class FindResultItem extends React.Component {
     }
   }
 
+  getGroupAction(uuid) {
+    let joinedGroupUUIDs = this.props.joinedGroupUUIDs;
+    if(joinedGroupUUIDs.includes(uuid)) {
+      return (
+        <button disabled>
+          <i className="iconfont">&#xe604;</i>已加入
+        </button>
+      )
+    }else {
+      return (
+        <button onClick={() => console.log('TODO:添加团')}>
+          <i className="iconfont">&#xe604;</i>添加团
+        </button>
+      )
+    }
+  }
+
   render() {
     let info = this.props.info;
+    let type = this.props.type || 'user';
 
-    return (
-      <div className="find-result-item">
-        <div className="avatar">
-          <img src={info.avatar || config.defaultImg.user} />
+    if(type === 'user') {
+      return (
+        <div className="find-result-item">
+          <div className="avatar">
+            <img src={info.avatar || config.defaultImg.user} />
+          </div>
+          <div className="profile">
+            <span className="username">{info.nickname || info.username}</span>
+            <span className="uuid">{info.uuid}</span>
+          </div>
+          <div className="action">
+            {this.getUserAction(info.uuid)}
+          </div>
         </div>
-        <div className="profile">
-          <span className="username">{info.nickname || info.username}</span>
-          <span className="uuid">{info.uuid}</span>
+      )
+    }else if(type === 'group') {
+      return (
+        <div className="find-result-item">
+          <div className="avatar">
+            <img src={info.avatar || config.defaultImg.group} />
+          </div>
+          <div className="profile">
+            <span className="username">{info.name}</span>
+            <span className="uuid">{info.uuid}</span>
+          </div>
+          <div className="action">
+            {this.getGroupAction(info.uuid)}
+          </div>
         </div>
-        <div className="action">
-          {this.getAction(info.uuid)}
-        </div>
-      </div>
-    )
+      )
+    }
+
   }
 }
 
@@ -72,6 +108,7 @@ module.exports = connect(
     friendList: state.getIn(['user', 'friendList']),
     friendInvite: state.getIn(['user', 'friendInvite']),
     friendRequests: state.getIn(['user', 'friendRequests']),
+    joinedGroupUUIDs: state.getIn(['group', 'groups']).map(g => g.get('uuid')),
   }),
   dispatch => ({
     sendFriendInvite: (uuid) => {

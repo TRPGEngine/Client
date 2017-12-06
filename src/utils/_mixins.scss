@@ -39,6 +39,33 @@
   }
 }
 
+@mixin border-btn {
+  padding: 6px 12px;
+  background-color: transparent;
+  border: 1px solid #8C6244;
+  border-radius: 2px;
+  cursor: pointer;
+  color: #333333;
+  outline: 0;
+
+  &:hover {
+    background-color: #8C6244;
+    color: white;
+  }
+
+  &:disabled {
+    border-color: #999999;
+    background-color: #CCCCCC;
+    color: white;
+    cursor: not-allowed;
+  }
+
+  .iconfont {
+    vertical-align: middle;
+    margin-right: 2px;
+  }
+}
+
 @mixin link-btn {
   font-size: 14px;
   background-color: transparent;

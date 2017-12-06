@@ -1,4 +1,5 @@
 @import "../utils/color";
+@import "../utils/mixins";
 
 .find-result-item {
   height: 100px;
@@ -41,29 +42,7 @@
   .action {
     width: 100px;
     button {
-      padding: 6px 12px;
-      background-color: transparent;
-      border: 1px solid $color-spicy-mix;
-      border-radius: 2px;
-      cursor: pointer;
-      color: $color-mine-shaft;
-
-      &:hover {
-        background-color: $color-spicy-mix;
-        color: white;
-      }
-
-      &:disabled {
-        border-color: $color-dusty-gray;
-        background-color: $color-silver;
-        color: white;
-        cursor: not-allowed;
-      }
-
-      .iconfont {
-        vertical-align: middle;
-        margin-right: 2px;
-      }
+      @include border-btn;
     }
   }
 }
