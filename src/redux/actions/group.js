@@ -3,6 +3,7 @@ const {
   GET_GROUP_INFO_SUCCESS,
   FIND_GROUP_REQUEST,
   FIND_GROUP_SUCCESS,
+  REQUEST_JOIN_GROUP_SUCCESS,
   SEND_GROUP_INVITE_SUCCESS,
   AGREE_GROUP_INVITE_SUCCESS,
   REFUSE_GROUP_INVITE_SUCCESS,
@@ -94,6 +95,19 @@ exports.findGroup = function(text, type) {
       if(data.result) {
         dispatch({type: FIND_GROUP_SUCCESS, payload: data.results});
       }else {
+        console.error(data.msg);
+      }
+    })
+  }
+}
+
+exports.requestJoinGroup = function(group_uuid) {
+  return function(dispatch, getState) {
+    return api.emit('group::requestJoinGroup', {group_uuid}, function(data) {
+      if(data.result) {
+        dispatch({type: REQUEST_JOIN_GROUP_SUCCESS, payload: data.request});
+      }else {
+        dispatch(showAlert(data.msg));
         console.error(data.msg);
       }
     })

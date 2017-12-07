@@ -2,6 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../config/project.config.js');
 const { sendFriendInvite, agreeFriendInvite } = require('../redux/actions/user');
+const { requestJoinGroup } = require('../redux/actions/group');
 
 require('./FindResultItem.scss');
 
@@ -48,15 +49,22 @@ class FindResultItem extends React.Component {
 
   getGroupAction(uuid) {
     let joinedGroupUUIDs = this.props.joinedGroupUUIDs;
+    let requestingGroupUUID = this.props.requestingGroupUUID;
     if(joinedGroupUUIDs.includes(uuid)) {
       return (
         <button disabled>
           <i className="iconfont">&#xe604;</i>已加入
         </button>
       )
+    }else if(requestingGroupUUID.includes(uuid)) {
+      return (
+        <button disabled>
+          <i className="iconfont">&#xe604;</i>已申请
+        </button>
+      )
     }else {
       return (
-        <button onClick={() => console.log('TODO:添加团')}>
+        <button onClick={() => this.props.requestJoinGroup(uuid)}>
           <i className="iconfont">&#xe604;</i>添加团
         </button>
       )
@@ -109,6 +117,7 @@ module.exports = connect(
     friendInvite: state.getIn(['user', 'friendInvite']),
     friendRequests: state.getIn(['user', 'friendRequests']),
     joinedGroupUUIDs: state.getIn(['group', 'groups']).map(g => g.get('uuid')),
+    requestingGroupUUID: state.getIn(['group', 'requestingGroupUUID']),
   }),
   dispatch => ({
     sendFriendInvite: (uuid) => {
@@ -130,6 +139,7 @@ module.exports = connect(
           dispatch(agreeFriendInvite(inviteUUID));
         }
       })
-    }
+    },
+    requestJoinGroup: (uuid) => dispatch(requestJoinGroup(uuid)),
   })
 )(FindResultItem);

@@ -82,6 +82,6 @@ class GroupAdd extends React.Component {
 module.exports = connect(
   state => ({
     isFinding: state.getIn(['group', 'isFindingGroup']),
-    findingResult: state.getIn(['group', 'findingResult'])
+    findingResult: state.getIn(['group', 'findingResult']),
   })
 )(GroupAdd);
