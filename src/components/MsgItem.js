@@ -3,7 +3,7 @@ const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { emojify } = require('../utils/emoji');
 const { agreeFriendInvite, refuseFriendInvite } = require('../redux/actions/user');
-const { agreeGroupInvite, refuseGroupInvite } = require('../redux/actions/group');
+const { agreeGroupRequest, refuseGroupRequest, agreeGroupInvite, refuseGroupInvite } = require('../redux/actions/group');
 const { acceptDiceRequest, acceptDiceInvite } = require('../redux/actions/dice');
 require('./MsgItem.scss');
 
@@ -11,6 +11,7 @@ class MsgItem extends React.Component {
   getCardAction(data) {
     let cardType = data.get('type');
     if(cardType === 'friendInvite') {
+      // 好友邀请
       let actionState = data.get('actionState');
       let uuid = data.getIn(['invite', 'uuid']);
       switch (actionState) {
@@ -36,6 +37,7 @@ class MsgItem extends React.Component {
           )
       }
     }else if(cardType === 'groupInvite') {
+      // 入团邀请
       let actionState = data.get('actionState');
       let uuid = data.getIn(['invite', 'uuid']);
       switch (actionState) {
@@ -61,8 +63,8 @@ class MsgItem extends React.Component {
           )
       }
     }else if(cardType === 'diceRequest') {
+      // 投骰请求
       let uuid = this.props.uuid;
-      // TODO: 需要修改为只有有同意权限的人才会显示
       let is_accept = data.get('is_accept');
       let allow_accept_list = data.get('allow_accept_list');
       if(is_accept) {
@@ -85,8 +87,8 @@ class MsgItem extends React.Component {
         )
       }
     }else if(cardType === 'diceInvite') {
+      // 投骰邀请
       let uuid = this.props.uuid;
-      // TODO: 需要修改为只有有同意权限的人才会显示
       let is_accept_list = data.get('is_accept_list');
       let allow_accept_list = data.get('allow_accept_list');
       let canAccept = allow_accept_list.includes(this.props.selfUUID);
@@ -107,8 +109,36 @@ class MsgItem extends React.Component {
           </div>
         )
       }
-
+    }else if(cardType === 'groupRequest') {
+      // 入团申请
+      let uuid = data.get('requestUUID');
+      let groupUUID = data.get('groupUUID');
+      let fromUUID = data.get('fromUUID');
+      let group = this.props.groups.find(g => g.get('uuid') === groupUUID);
+      if(group) {
+        if(group.get('group_members').includes(fromUUID)) {
+          return (
+            <div className="card-action">
+              <button disabled={true}>已同意</button>
+            </div>
+          )
+        }else {
+          return (
+            <div className="card-action">
+              <button onClick={() => this.props.dispatch(agreeGroupRequest(uuid))}>同意</button>
+              <button onClick={() => this.props.dispatch(refuseGroupRequest(uuid))}>拒绝</button>
+            </div>
+          )
+        }
+      }else {
+        return (
+          <div className="card-action">
+            <span className="no-support">数据异常</span>
+          </div>
+        )
+      }
     }else {
+      // 默认返回
       return (
         <div className="card-action">
           <span className="no-support">您当前的版本暂时不支持处理该信息</span>
@@ -177,5 +207,6 @@ MsgItem.propTypes = {
 module.exports = connect(
   state => ({
     selfUUID: state.getIn(['user', 'info', 'uuid']),
+    groups: state.getIn(['group', 'groups']),
   })
 )(MsgItem);

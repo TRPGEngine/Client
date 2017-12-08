@@ -4,6 +4,8 @@ const {
   FIND_GROUP_REQUEST,
   FIND_GROUP_SUCCESS,
   REQUEST_JOIN_GROUP_SUCCESS,
+  AGREE_GROUP_REQUEST_SUCCESS,
+  REFUSE_GROUP_REQUEST_SUCCESS,
   SEND_GROUP_INVITE_SUCCESS,
   AGREE_GROUP_INVITE_SUCCESS,
   REFUSE_GROUP_INVITE_SUCCESS,
@@ -108,6 +110,29 @@ exports.requestJoinGroup = function(group_uuid) {
         dispatch({type: REQUEST_JOIN_GROUP_SUCCESS, payload: data.request});
       }else {
         dispatch(showAlert(data.msg));
+        console.error(data.msg);
+      }
+    })
+  }
+}
+
+exports.agreeGroupRequest = function(request_uuid) {
+  return function(dispatch, getState) {
+    return api.emit('group::agreeGroupRequest', {request_uuid}, function(data) {
+      if(data.result) {
+        dispatch({type: AGREE_GROUP_REQUEST_SUCCESS, payload: data.request});
+      }else {
+        console.error(data.msg);
+      }
+    })
+  }
+}
+exports.refuseGroupRequest = function(request_uuid) {
+  return function(dispatch, getState) {
+    return api.emit('group::refuseGroupRequest', {request_uuid}, function(data) {
+      if(data.result) {
+        dispatch({type: REFUSE_GROUP_REQUEST_SUCCESS, payload: data.request});
+      }else {
         console.error(data.msg);
       }
     })
