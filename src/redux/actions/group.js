@@ -23,7 +23,7 @@ const {
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
-const { addConverse } = require('./chat');
+const { addConverse, updateSystemCardChatData } = require('./chat');
 const { checkUser, checkTemplate } = require('../../utils/usercache');
 const { showAlert, hideModal } = require('./ui');
 
@@ -116,10 +116,11 @@ exports.requestJoinGroup = function(group_uuid) {
   }
 }
 
-exports.agreeGroupRequest = function(request_uuid) {
+exports.agreeGroupRequest = function(chatlogUUID, requestUUID) {
   return function(dispatch, getState) {
-    return api.emit('group::agreeGroupRequest', {request_uuid}, function(data) {
+    return api.emit('group::agreeGroupRequest', {request_uuid: requestUUID}, function(data) {
       if(data.result) {
+        dispatch(updateSystemCardChatData(chatlogUUID, {is_processed: true}));
         dispatch({type: AGREE_GROUP_REQUEST_SUCCESS, payload: data.request});
       }else {
         console.error(data.msg);
@@ -127,10 +128,11 @@ exports.agreeGroupRequest = function(request_uuid) {
     })
   }
 }
-exports.refuseGroupRequest = function(request_uuid) {
+exports.refuseGroupRequest = function(chatlogUUID, requestUUID) {
   return function(dispatch, getState) {
-    return api.emit('group::refuseGroupRequest', {request_uuid}, function(data) {
+    return api.emit('group::refuseGroupRequest', {request_uuid: requestUUID}, function(data) {
       if(data.result) {
+        dispatch(updateSystemCardChatData(chatlogUUID, {is_processed: true}));
         dispatch({type: REFUSE_GROUP_REQUEST_SUCCESS, payload: data.request});
       }else {
         console.error(data.msg);

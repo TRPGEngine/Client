@@ -11,6 +11,7 @@ const {
   CREATE_CONVERSES_FAILED,
   UPDATE_CONVERSES_SUCCESS,
   SWITCH_CONVERSES,
+  UPDATE_SYSTEM_CARD_CHAT_DATA,
 } = require('../constants');
 const immutable = require('immutable');
 
@@ -118,6 +119,17 @@ module.exports = function chat(state = initialState, action) {
           lastTime: '',
         }, action.payload);
         return state.setIn(['converses', createConvUUID], immutable.fromJS(createConv));
+      case UPDATE_SYSTEM_CARD_CHAT_DATA:
+        return state.updateIn(['converses', 'trpgsystem', 'msgList'], (list) => {
+          for (var i = 0; i < list.size; i++) {
+            let msg = list.get(i);
+            if(msg.get('uuid') === action.chatUUID) {
+              msg = msg.set('data', immutable.fromJS(action.payload))
+            }
+          }
+
+          return list;
+        })
       default:
         return state;
     }

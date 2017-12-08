@@ -10,7 +10,8 @@ const {
   UPDATE_CONVERSES_SUCCESS,
   SWITCH_CONVERSES,
   SEND_MSG,
-  SEND_MSG_COMPLETED
+  SEND_MSG_COMPLETED,
+  UPDATE_SYSTEM_CARD_CHAT_DATA,
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
@@ -158,9 +159,22 @@ let createConverse = function createConverse(uuid, type, isSwitchToConv = true) 
   }
 }
 
+let updateSystemCardChatData = function(chatUUID, newData) {
+  return function(dispatch, getState) {
+    return api.emit('chat::updateSystemCardChatData', {chatUUID, newData}, function(data) {
+      if(data.result) {
+        dispatch({type:UPDATE_SYSTEM_CARD_CHAT_DATA, chatUUID, payload: data.log});
+      }else {
+        console.error(data.msg);
+      }
+    })
+  }
+}
+
 exports.addConverse = addConverse;
 exports.switchConverse = switchConverse;
 exports.addMsg = addMsg;
 exports.sendMsg = sendMsg;
 exports.getConverses = getConverses;
 exports.createConverse = createConverse;
+exports.updateSystemCardChatData = updateSystemCardChatData;

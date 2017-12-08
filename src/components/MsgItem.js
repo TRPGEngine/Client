@@ -111,7 +111,8 @@ class MsgItem extends React.Component {
       }
     }else if(cardType === 'groupRequest') {
       // 入团申请
-      let uuid = data.get('requestUUID');
+      let chatlogUUID = this.props.uuid;
+      let requestUUID = data.get('requestUUID');
       let groupUUID = data.get('groupUUID');
       let fromUUID = data.get('fromUUID');
       let group = this.props.groups.find(g => g.get('uuid') === groupUUID);
@@ -122,10 +123,16 @@ class MsgItem extends React.Component {
               <button disabled={true}>已同意</button>
             </div>
           )
+        }else if(data.get('is_processed')) {
+          return (
+            <div className="card-action">
+              <button disabled={true}>已处理</button>
+            </div>
+          )
         }else {
           return (
             <div className="card-action">
-              <button onClick={() => this.props.dispatch(agreeGroupRequest(uuid))}>同意</button>
+              <button onClick={() => this.props.dispatch(agreeGroupRequest(chatlogUUID, requestUUID))}>同意</button>
               <button onClick={() => this.props.dispatch(refuseGroupRequest(uuid))}>拒绝</button>
             </div>
           )
