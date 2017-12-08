@@ -5,6 +5,7 @@ const {
   FIND_GROUP_REQUEST,
   FIND_GROUP_SUCCESS,
   REQUEST_JOIN_GROUP_SUCCESS,
+  AGREE_GROUP_REQUEST_SUCCESS,
   SEND_GROUP_INVITE_SUCCESS,
   AGREE_GROUP_INVITE_SUCCESS,
   REFUSE_GROUP_INVITE_SUCCESS,
@@ -44,6 +45,16 @@ module.exports = function group(state = initialState, action) {
       return state.set('isFindingGroup', false).set('findingResult', immutable.fromJS(action.payload));
     case REQUEST_JOIN_GROUP_SUCCESS:
       return state.update('requestingGroupUUID', l => l.push(action.payload.group_uuid));
+    case AGREE_GROUP_REQUEST_SUCCESS:
+      return state.update('groups', (list) => {
+        for (let i = 0; i < list.size; i++) {
+          if(list.getIn([i, 'uuid']) === action.groupUUID) {
+            list = list.setIn([i, 'group_members'], immutable.fromJS(action.payload));
+          }
+        }
+
+        return list;
+      });
     case GET_GROUP_INVITE_SUCCESS:
       return state.set('invites', immutable.fromJS(action.payload));
     case AGREE_GROUP_INVITE_SUCCESS:

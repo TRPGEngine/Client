@@ -5,7 +5,6 @@ const {
   FIND_GROUP_SUCCESS,
   REQUEST_JOIN_GROUP_SUCCESS,
   AGREE_GROUP_REQUEST_SUCCESS,
-  REFUSE_GROUP_REQUEST_SUCCESS,
   SEND_GROUP_INVITE_SUCCESS,
   AGREE_GROUP_INVITE_SUCCESS,
   REFUSE_GROUP_INVITE_SUCCESS,
@@ -121,7 +120,7 @@ exports.agreeGroupRequest = function(chatlogUUID, requestUUID) {
     return api.emit('group::agreeGroupRequest', {request_uuid: requestUUID}, function(data) {
       if(data.result) {
         dispatch(updateSystemCardChatData(chatlogUUID, {is_processed: true}));
-        dispatch({type: AGREE_GROUP_REQUEST_SUCCESS, payload: data.request});
+        dispatch({type: AGREE_GROUP_REQUEST_SUCCESS, groupUUID: data.groupUUID, payload: data.members});
       }else {
         console.error(data.msg);
       }
@@ -133,7 +132,6 @@ exports.refuseGroupRequest = function(chatlogUUID, requestUUID) {
     return api.emit('group::refuseGroupRequest', {request_uuid: requestUUID}, function(data) {
       if(data.result) {
         dispatch(updateSystemCardChatData(chatlogUUID, {is_processed: true}));
-        dispatch({type: REFUSE_GROUP_REQUEST_SUCCESS, payload: data.request});
       }else {
         console.error(data.msg);
       }

@@ -122,9 +122,8 @@ module.exports = function chat(state = initialState, action) {
       case UPDATE_SYSTEM_CARD_CHAT_DATA:
         return state.updateIn(['converses', 'trpgsystem', 'msgList'], (list) => {
           for (var i = 0; i < list.size; i++) {
-            let msg = list.get(i);
-            if(msg.get('uuid') === action.chatUUID) {
-              msg = msg.set('data', immutable.fromJS(action.payload))
+            if(list.getIn([i, 'uuid']) === action.chatUUID) {
+              list = list.set(i, immutable.fromJS(action.payload));
             }
           }
 
