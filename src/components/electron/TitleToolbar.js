@@ -1,9 +1,9 @@
 const React = require('react');
 const ipcRenderer = require('electron').ipcRenderer;
 
-require('./TitleBar.scss');
+require('./TitleToolbar.scss');
 
-class TitleBar extends React.Component {
+class TitleToolbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +31,7 @@ class TitleBar extends React.Component {
 
   render() {
     return (
-      <div className="electron-title-bar">
+      <div className="electron-title-toolbar">
         <button title="最小化" onClick={() => this._handleMinimize()}><i className="iconfont">&#xe657;</i></button>
         <button title="最大化" onClick={() => this._handleMaximize()}>
           {
@@ -48,4 +48,4 @@ class TitleBar extends React.Component {
   }
 }
 
-module.exports = TitleBar;
+module.exports = TitleToolbar;

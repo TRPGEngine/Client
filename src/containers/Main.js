@@ -12,7 +12,7 @@ const MenuPannel = require('./main/MenuPannel');
 const ProfileCard = require('../components/ProfileCard');
 const IsDeveloping = require('../components/IsDeveloping');
 const Webview = require('../components/Webview');
-const TitleBar = config.platform === 'electron' ? require('../components/electron/TitleBar') : null;
+const TitleToolbar = config.platform === 'electron' ? require('../components/electron/TitleToolbar') : null;
 
 require('./Main.scss');
 if(config.platform === 'electron') {
@@ -105,8 +105,8 @@ class Main extends React.Component {
               })
             }
           </div>
-          {TitleBar ? (
-            <TitleBar />
+          {TitleToolbar ? (
+            <TitleToolbar />
           ) : null}
         </div>
         <MenuPannel className="body"/>
