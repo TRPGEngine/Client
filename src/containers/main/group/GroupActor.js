@@ -6,7 +6,8 @@ const { addGroupActor } = require('../../../redux/actions/group');
 const ReactTooltip = require('react-tooltip');
 const at = require('trpg-actor-template');
 const { TabsController, Tab } = require('../../../components/Tabs');
-const ActorProfile = require('../../../components/ActorProfile');
+const ModalPanel = require('../../../components/ModalPanel');
+const ActorProfile = require('../../../components/modal/ActorProfile');
 const ActorSelect = require('../../../components/modal/ActorSelect');
 const GroupActorCheck = require('./modal/GroupActorCheck');
 
@@ -31,7 +32,9 @@ class GroupActor extends React.Component {
   _handleShowActorProfile(actor) {
     if(actor) {
       this.props.showModal(
-        <ActorProfile actor={actor}/>
+        <ModalPanel title="人物属性">
+          <ActorProfile actor={actor}/>
+        </ModalPanel>
       )
     }else {
       console.error('需要actor');

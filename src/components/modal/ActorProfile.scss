@@ -1,10 +1,11 @@
-@import "../utils/mixins";
-@import "../utils/color";
+@import "../../utils/mixins";
+@import "../../utils/color";
 
 .actor-profile {
   width: 700px;
-  height: 560px;
-  padding: 20px;
+  height: 500px;
+  padding: 10px;
+  padding-left: 20px;
   display: flex;
   .profile {
     width: 190px + 20px;
@@ -41,6 +42,7 @@
     flex: 1;
     margin-left: 20px;
     padding-top: 15px;
+    padding-right: 20px;
     @include auto-scroll-bar;
 
     .actor-property-cell {
