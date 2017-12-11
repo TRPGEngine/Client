@@ -6,6 +6,7 @@ const { setEditedTemplate, findTemplate, selectTemplate } = require('../../../re
 const TemplateEdit = require('./TemplateEdit');
 const ActorEdit = require('./ActorEdit');
 const TemplateItem = require('../../../components/TemplateItem');
+const ModalPanel = require('../../../components/ModalPanel');
 const ReactTooltip = require('react-tooltip');
 
 require('./TemplateSelect.scss');
@@ -70,48 +71,50 @@ class TemplateSelect extends React.Component {
 
   render()　{
     return (
-      <div className="template-select">
-        <ReactTooltip effect="solid" />
-        <div className="header">
-          <input
-            type="text"
-            placeholder="输入要搜索的模板名"
-            value={this.state.searchName}
-            onChange={(e) => {
-              this.setState({searchName: e.target.value})
-            }}
-          />
-        <button onClick={() => this._handleSearch()}>
-            <i className="iconfont">&#xe60a;</i>搜索
-          </button>
-          <button onClick={() => this._handleCreateTemplate()}>
-            <i className="iconfont">&#xe604;</i>创建新的人物模板
-          </button>
-        </div>
-        <div className="body">
-          <div className="search-result">
-            { this.getFindResult() }
+      <ModalPanel title="创建人物卡">
+        <div className="template-select">
+          <ReactTooltip effect="solid" />
+          <div className="header">
+            <input
+              type="text"
+              placeholder="输入要搜索的模板名"
+              value={this.state.searchName}
+              onChange={(e) => {
+                this.setState({searchName: e.target.value})
+              }}
+            />
+          <button onClick={() => this._handleSearch()}>
+              <i className="iconfont">&#xe60a;</i>搜索
+            </button>
+            <button onClick={() => this._handleCreateTemplate()}>
+              <i className="iconfont">&#xe604;</i>创建新的人物模板
+            </button>
           </div>
-          <div className="self-template">
-            {
-              this.props.selfTemplate.map((item, index) => {
-                return (
-                  <TemplateItem
-                    key={item.get('uuid')}
-                    canEdit={true}
-                    name={item.get('name')}
-                    desc={item.get('desc')}
-                    creator={this.props.username}
-                    time={item.get('updateAt')}
-                    onEdit={() => this._handleEdit(item)}
-                    onCreate={() => this._handleCreateActor(item)}
-                  />
-                )
-              })
-            }
+          <div className="body">
+            <div className="search-result">
+              { this.getFindResult() }
+            </div>
+            <div className="self-template">
+              {
+                this.props.selfTemplate.map((item, index) => {
+                  return (
+                    <TemplateItem
+                      key={item.get('uuid')}
+                      canEdit={true}
+                      name={item.get('name')}
+                      desc={item.get('desc')}
+                      creator={this.props.username}
+                      time={item.get('updateAt')}
+                      onEdit={() => this._handleEdit(item)}
+                      onCreate={() => this._handleCreateActor(item)}
+                    />
+                  )
+                })
+              }
+            </div>
           </div>
         </div>
-      </div>
+      </ModalPanel>
     )
   }
 }
