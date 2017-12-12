@@ -2,6 +2,7 @@ const {
   GET_USER_INFO,
   GET_USER_INFO_ERROR,
   GET_TEMPLATE_INFO,
+  GET_ACTOR_INFO,
 } = require('../constants');
 const immutable = require('immutable');
 const trpgApi = require('../../api/trpg.api.js');
@@ -32,6 +33,23 @@ exports.getTemplateInfo = function(uuid) {
     return api.emit('actor::getTemplate', {uuid}, function(data) {
       if(data.result) {
         dispatch({type:GET_TEMPLATE_INFO, payload: data.template});
+      }else {
+        console.error(data.msg)
+      }
+    })
+  }
+}
+
+exports.getActorInfo = function(uuid) {
+  if(!uuid) {
+    throw new Error('getActorInfo need uuid');
+  }
+
+  return function(dispatch, getState) {
+    return api.emit('actor::getActor', {uuid}, function(data) {
+      if(data.result) {
+        let actor = data.actor ? data.actor : data.actors[0];
+        dispatch({type:GET_ACTOR_INFO, payload: actor});
       }else {
         console.error(data.msg)
       }
