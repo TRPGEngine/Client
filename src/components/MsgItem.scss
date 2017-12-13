@@ -98,9 +98,10 @@
   &.card {
     & .content>.body>.bubble {
       padding: 0;
-      width: 230px;
+      min-width: 230px;
+      max-width: 467px;
 
-      .card-title {
+      > .card-title {
         @include one-line;
         color: white;
         line-height: 30px;
@@ -108,13 +109,13 @@
         background-color: $color-tan;
       }
 
-      .card-content {
+      > .card-content {
         padding: 10px 6px;
         color: $color-tundora;
         min-height: 60px;
       }
 
-      .card-action {
+      > .card-action {
         margin: 0 6px;
         padding: 4px 0;
         border-top: 1px solid $color-bon-jour;
@@ -127,6 +128,40 @@
           color: $color-dusty-gray;
           font-size: 12px;
           user-select: none;
+        }
+      }
+
+      > .card-content-actor {
+        width: 420px;
+        height: 160px;
+        display: flex;
+
+        > .card-content-avatar {
+          display: flex;
+          height: 100%;
+          width: 110px;
+          overflow: hidden;
+          align-items: center;
+          justify-content: center;
+          background-position: center;
+          background-size: cover;
+        }
+
+        > .card-content-profile {
+          flex: 1;
+          padding: 10px;
+          display: flex;
+          flex-direction: column;
+          > h3 {
+            margin: 0;
+            margin-bottom: 4px;
+          }
+
+          > p {
+            margin: 0;
+            flex: 1;
+            @include auto-scroll-bar;
+          }
         }
       }
     }

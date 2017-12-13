@@ -152,6 +152,7 @@ class MsgSendBox extends React.Component {
             data: {
               type: 'actor',
               uuid: actorUUID,
+              avatar: actorInfo.avatar,
               name: actorInfo.name,
               desc: actorInfo.desc,
             }
