@@ -28,7 +28,7 @@ const {
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
-const { hideLoading, showAlert } = require('./ui');
+const { showLoading, hideLoading, showAlert } = require('./ui');
 const { checkUser } = require('../../utils/usercache');
 
 exports.login = function(username, password) {
@@ -77,10 +77,15 @@ exports.logout = function() {
     let info = getState().getIn(['user','info']);
     let uuid = info.get('uuid');
     let token = info.get('token');
+    dispatch(showLoading());
     dispatch({type: LOGOUT});
     api.emit('player::logout', {uuid, token} ,function(data) {
-      console.log(data);
-      location.reload();
+      dispatch(hideLoading());
+      if(data.result) {
+        dispatch({type: RESET});
+      }else {
+        dispatch(showAlert(data.msg));
+      }
     })
   }
 }
