@@ -19,6 +19,7 @@ const {
   REFUSE_GROUP_ACTOR_SUCCESS,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
+  TICK_MEMBER_SUCCESS,
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
@@ -283,6 +284,20 @@ exports.dismissGroup = function(groupUUID) {
       if(data.result) {
         dispatch({type: DISMISS_GROUP_SUCCESS, groupUUID});
         dispatch(showAlert('已解散本群!'));
+      }else {
+        console.error(data);
+      }
+    })
+  }
+}
+
+exports.tickMember = function(groupUUID, memberUUID) {
+  return function(dispatch, getState) {
+    return api.emit('group::tickMember', {groupUUID, memberUUID}, function(data) {
+      if(data.result) {
+        dispatch({type: TICK_MEMBER_SUCCESS, groupUUID, memberUUID});
+        dispatch(showAlert('操作成功'));
+        dispatch(hideModal());
       }else {
         console.error(data);
       }

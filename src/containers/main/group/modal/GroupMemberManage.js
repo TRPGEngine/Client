@@ -1,5 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const { tickMember } = require('../../../../redux/actions/group');
 
 require('./GroupMemberManage.scss')
 
@@ -10,8 +11,7 @@ class GroupMemberManage extends React.Component {
   }
 
   _handleTickGroup() {
-    // TODO
-    console.log('踢出团');
+    this.props.dispatch(tickMember(this.props.selectedGroupUUID, this.props.uuid))
   }
 
   render() {
@@ -30,5 +30,6 @@ class GroupMemberManage extends React.Component {
 module.exports = connect(
   state => ({
     usercache: state.getIn(['cache', 'user']),
+    selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
   })
 )(GroupMemberManage);

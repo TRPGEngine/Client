@@ -20,6 +20,7 @@ const {
   REFUSE_GROUP_ACTOR_SUCCESS,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
+  TICK_MEMBER_SUCCESS,
 } = require('../constants');
 
 const initialState = immutable.fromJS({
@@ -171,6 +172,13 @@ module.exports = function group(state = initialState, action) {
       return state.update('groups', (list) => {
         let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
         return list.delete(index);
+      })
+    case TICK_MEMBER_SUCCESS:
+      return state.update('groups', (list) => {
+        let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
+        return list.updateIn([index, 'group_members'], (gml) => {
+          return gml.delete(gml.findIndex(i => i === action.memberUUID));
+        });
       })
     default:
       return state;
