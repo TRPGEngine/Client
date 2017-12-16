@@ -1,13 +1,12 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const { tickMember } = require('../../../../redux/actions/group');
+const { tickMember, setMemberToManager } = require('../../../../redux/actions/group');
 
 require('./GroupMemberManage.scss')
 
 class GroupMemberManage extends React.Component {
   _handleRaiseManager() {
-    // TODO
-    console.log('提升为管理');
+    this.props.dispatch(setMemberToManager(this.props.selectedGroupUUID, this.props.uuid));
   }
 
   _handleTickGroup() {

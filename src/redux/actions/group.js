@@ -20,6 +20,7 @@ const {
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
   TICK_MEMBER_SUCCESS,
+  SET_MEMBER_TO_MANAGER_SUCCESS,
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
@@ -300,6 +301,21 @@ exports.tickMember = function(groupUUID, memberUUID) {
         dispatch(hideModal());
       }else {
         console.error(data);
+      }
+    })
+  }
+}
+
+exports.setMemberToManager = function(groupUUID, memberUUID) {
+  return function(dispatch, getState) {
+    return api.emit('group::setMemberToManager', {groupUUID, memberUUID}, function(data) {
+      if(data.result) {
+        dispatch({type: SET_MEMBER_TO_MANAGER_SUCCESS, groupUUID, memberUUID});
+        dispatch(showAlert('操作成功'));
+        dispatch(hideModal());
+      }else {
+        console.error(data);
+        dispatch(showAlert(data.msg));
       }
     })
   }
