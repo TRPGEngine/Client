@@ -31,9 +31,10 @@
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: #fff;
-    
+
     button {
       @include block-btn;
+      margin: 0 4px;
     }
   }
 }

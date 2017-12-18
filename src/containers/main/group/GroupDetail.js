@@ -270,7 +270,7 @@ class GroupDetail extends React.Component {
           </div>
           <div className="title">
             <div className="main-title">{this.props.groupInfo.get('name')}</div>
-            <div className="sub-title">{this.props.groupInfo.get('desc')}</div>
+            <div className="sub-title">{this.props.groupInfo.get('sub-name')}</div>
           </div>
           <Select
             name="actor-select"

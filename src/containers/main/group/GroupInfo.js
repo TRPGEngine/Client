@@ -6,6 +6,10 @@ const { switchSelectGroup, quitGroup, dismissGroup } = require('../../../redux/a
 require('./GroupInfo.scss')
 
 class GroupInfo extends React.Component {
+  _handleEditGroup() {
+    console.log("编辑团");
+  }
+
   _handleDismissGroup() {
     this.props.showAlert({
       title: '是否要解散群',
@@ -36,23 +40,29 @@ class GroupInfo extends React.Component {
     let {groupInfo, usercache} = this.props;
     return (
       <div className="group-info">
-        <div><span>团唯一标识: </span><span className="uuid">{groupInfo.get('uuid')}</span></div>
-        <div><span>团名:</span><span>{groupInfo.get('name')}</span></div>
-        <div><span>团主:</span><span>{usercache.getIn([groupInfo.get('owner_uuid'), 'username'])}</span></div>
-        <div><span>团人物卡数:</span><span>{groupInfo.get('group_actors').size}张</span></div>
-        <div><span>团成员数:</span><span>{groupInfo.get('group_members').size}人</span></div>
-        <div><span>团管理数:</span><span>{groupInfo.get('managers_uuid').size}人</span></div>
-        <div><span>团地图数:</span><span>{groupInfo.get('maps_uuid').size}张</span></div>
-        <div><span>团简介:</span><span className="desc">{groupInfo.get('desc')}</span></div>
-        <div className="actions">
-          {
-            this.props.userUUID === groupInfo.get('owner_uuid') ? (
-              <button onClick={() => this._handleDismissGroup()}>解散团</button>
-            ) : (
-              <button onClick={() => this._handleQuitGroup()}>退出团</button>
-            )
-          }
+        <div className="group-props">
+          <div><span>团唯一标识: </span><span className="uuid">{groupInfo.get('uuid')}</span></div>
+          <div><span>团名:</span><span>{groupInfo.get('name')}</span></div>
+          <div><span>团副名:</span><span>{groupInfo.get('sub_name')}</span></div>
+          <div><span>团主:</span><span>{usercache.getIn([groupInfo.get('owner_uuid'), 'username'])}</span></div>
+          <div><span>团人物卡数:</span><span>{groupInfo.get('group_actors').size}张</span></div>
+          <div><span>团成员数:</span><span>{groupInfo.get('group_members').size}人</span></div>
+          <div><span>团管理数:</span><span>{groupInfo.get('managers_uuid').size}人</span></div>
+          <div><span>团地图数:</span><span>{groupInfo.get('maps_uuid').size}张</span></div>
+          <div><span>团简介:</span><span className="desc">{groupInfo.get('desc')}</span></div>
         </div>
+        {
+          this.props.userUUID === groupInfo.get('owner_uuid') ? (
+            <div className="group-actions">
+              <button onClick={() => this._handleEditGroup()}>编辑团</button>
+              <button onClick={() => this._handleDismissGroup()}>解散团</button>
+            </div>
+          ) : (
+            <div className="group-actions">
+              <button onClick={() => this._handleQuitGroup()}>退出团</button>
+            </div>
+          )
+        }
       </div>
     )
   }
