@@ -2,14 +2,18 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const { isUserUUID } = require('../utils/uuid');
+const { removeConverse } = require('../redux/actions/chat');
 const { showProfileCard } = require('../redux/actions/ui');
 require('./ConvItem.scss');
 
 class ConvItem extends React.Component {
   _handleCloseConv(e) {
     // TODO
-    console.log('close conv:',this.props.uuid);
-    e.stopPropagation();
+    if(isUserUUID(this.props.uuid)) {
+      console.log('close conv:',this.props.uuid);
+      this.props.dispatch(removeConverse(this.props.uuid));
+      e.stopPropagation();
+    }
   }
 
   _handleShowInfo(e) {

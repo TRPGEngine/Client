@@ -10,6 +10,7 @@ const {
   CREATE_CONVERSES_SUCCESS,
   CREATE_CONVERSES_FAILED,
   UPDATE_CONVERSES_SUCCESS,
+  REMOVE_CONVERSES_SUCCESS,
   SWITCH_CONVERSES,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
 } = require('../constants');
@@ -109,6 +110,8 @@ module.exports = function chat(state = initialState, action) {
         }else {
           return state;
         }
+      case REMOVE_CONVERSES_SUCCESS:
+        return state.deleteIn(['converses', action.converseUUID]);
       case SWITCH_CONVERSES:
         return state.set('selectedConversesUUID', action.converseUUID);
       case CREATE_CONVERSES_SUCCESS:

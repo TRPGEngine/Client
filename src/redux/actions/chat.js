@@ -8,6 +8,7 @@ const {
   CREATE_CONVERSES_SUCCESS,
   CREATE_CONVERSES_FAILED,
   UPDATE_CONVERSES_SUCCESS,
+  REMOVE_CONVERSES_SUCCESS,
   SWITCH_CONVERSES,
   SEND_MSG,
   SEND_MSG_COMPLETED,
@@ -158,6 +159,17 @@ let createConverse = function createConverse(uuid, type, isSwitchToConv = true) 
     })
   }
 }
+let removeConverse = function removeConverse(converseUUID) {
+  return function(dispatch, getState) {
+    return api.emit('chat::removeConverse', {converseUUID}, function(data) {
+      if(data.result) {
+        dispatch({type:REMOVE_CONVERSES_SUCCESS, converseUUID});
+      }else {
+        console.error(data);
+      }
+    })
+  }
+}
 
 let updateSystemCardChatData = function(chatUUID, newData) {
   return function(dispatch, getState) {
@@ -177,4 +189,5 @@ exports.addMsg = addMsg;
 exports.sendMsg = sendMsg;
 exports.getConverses = getConverses;
 exports.createConverse = createConverse;
+exports.removeConverse = removeConverse;
 exports.updateSystemCardChatData = updateSystemCardChatData;
