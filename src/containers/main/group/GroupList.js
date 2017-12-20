@@ -41,6 +41,7 @@ class GroupList extends React.Component {
           uuid={uuid}
           isSelected={this.props.selectedUUID === uuid}
           onClick={() => this.props.switchSelectGroup(uuid)}
+          hideCloseBtn={true}
         />
       )
     })

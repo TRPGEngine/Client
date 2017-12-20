@@ -53,6 +53,7 @@ class ConverseList extends React.Component {
             uuid={uuid}
             isSelected={this.props.selectedUUID === uuid}
             onClick={() => this._handleSelectConverse(uuid)}
+            hideCloseBtn={false}
           />
         )
       });
