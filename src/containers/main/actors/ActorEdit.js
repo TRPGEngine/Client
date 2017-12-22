@@ -77,7 +77,6 @@ class ActorEdit extends React.Component {
         content: content,
         type: 'alert',
         onConfirm: () => {
-          // TODO:需要绑定头像的关联uuid
           if(isCreate) {
             // create
             this.props.createActor(name, avatar, desc, info, template_uuid);

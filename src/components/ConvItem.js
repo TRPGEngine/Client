@@ -8,7 +8,6 @@ require('./ConvItem.scss');
 
 class ConvItem extends React.Component {
   _handleCloseConv(e) {
-    // TODO
     if(isUserUUID(this.props.uuid)) {
       console.log('close conv:',this.props.uuid);
       this.props.dispatch(removeConverse(this.props.uuid));

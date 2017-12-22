@@ -44,8 +44,6 @@ class ProfileCard extends React.Component {
   }
 
   _handleUpdateAvatar(avatarUrl) {
-    // TODO
-    // console.log('update avatar', avatarUrl);
     this.props.updateInfo({avatar: avatarUrl});
   }
 
