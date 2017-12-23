@@ -31,6 +31,7 @@ class GroupList extends React.Component {
       let uuid = item.get('uuid');
       let lastTime = this.props.converses.getIn([uuid, 'lastTime']);
       let lastMsg = this.props.converses.getIn([uuid, 'lastMsg']);
+      let unread = this.props.converses.getIn([uuid, 'unread']);
       return (
         <ConvItem
           key={uuid+'#'+index}
@@ -39,6 +40,7 @@ class GroupList extends React.Component {
           content={lastMsg}
           time={lastTime?dateHelper.getShortDate(lastTime):''}
           uuid={uuid}
+          unread={unread}
           isSelected={this.props.selectedUUID === uuid}
           onClick={() => this.props.switchSelectGroup(uuid)}
           hideCloseBtn={true}
