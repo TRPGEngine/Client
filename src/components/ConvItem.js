@@ -28,7 +28,10 @@ class ConvItem extends React.Component {
     ) : null
 
     return (
-      <div className={`conv-item ${this.props.isSelected?'active':''} ${this.props.hideCloseBtn?'hide-close-btn':''}`} onClick={this.props.onClick}>
+      <div
+        className={`conv-item ${this.props.isSelected?'active':''} ${this.props.hideCloseBtn?'hide-close-btn':''} ${this.props.unread?'unread':''}`} 
+        onClick={this.props.onClick}
+      >
         {closeBtn}
         <div
           className="icon"

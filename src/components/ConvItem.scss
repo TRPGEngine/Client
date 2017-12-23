@@ -6,6 +6,7 @@
   height: 55px;
   padding: 8px 0;
   cursor: pointer;
+  position: relative;
 
   &.active {
     background-color: $color-white-linen;
@@ -21,6 +22,21 @@
 
   &.hide-close-btn {
     padding-left: 13px;
+  }
+
+  &.unread {
+    &:before {
+      $point-size: 8px;// 小红点大小
+      $point-img-offset: 1px;// 点相对图片右下角的位置
+      content: ' ';
+      width: $point-size;
+      height: $point-size;
+      background-color: #ff8673;
+      position: absolute;
+      border-radius: 50%;
+      left: 13px + 38px - $point-size - $point-img-offset;
+      bottom: 8px + $point-img-offset;
+    }
   }
 
   .close {
