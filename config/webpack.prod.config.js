@@ -8,9 +8,10 @@ module.exports = webpackMerge({}, base, {
       compress: {
         warnings: false,
         drop_debugger: true,
-        drop_console: true
+        drop_console: true,
       },
-      sourceMap: true
+      sourceMap: false,
+      except: ['$super', '$', 'exports', 'require'], // 排除关键字
     }),
   ]
 })
