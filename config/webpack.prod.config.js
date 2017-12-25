@@ -11,7 +11,9 @@ module.exports = webpackMerge({}, base, {
         drop_console: true,
       },
       sourceMap: false,
-      except: ['$super', '$', 'exports', 'require'], // 排除关键字
+      mangle: {
+        except: ['$super', '$', 'exports', 'require'], // 排除关键字
+      }
     }),
   ]
 })
