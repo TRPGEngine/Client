@@ -25,6 +25,12 @@ class Login extends React.Component {
     this.props.dispatch(login(username, password));
   }
 
+  componentDidMount() {
+    if(this.props.isLogin) {
+      this.props.history.push('main');
+    }
+  }
+
   componentWillUpdate(nextProps, nextState) {
     if(!!nextProps.isLogin) {
       this.props.history.push('main');
