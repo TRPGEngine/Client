@@ -52,7 +52,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        'PLATFORM': JSON.stringify(process.env.PLATFORM)
+        'PLATFORM': JSON.stringify(process.env.PLATFORM),
+        'TRPG_HOST': JSON.stringify(process.env.TRPG_HOST),
       }
     }),
     new HtmlwebpackPlugin({
