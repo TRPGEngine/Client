@@ -26,12 +26,14 @@ const {
   REFUSE_FRIEND_INVITE_ERROR,
   ADD_FRIEND_INVITE,
 } = require('../constants');
+const md5 = require('md5');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { showLoading, hideLoading, showAlert } = require('./ui');
 const { checkUser } = require('../../utils/usercache');
 
 exports.login = function(username, password) {
+  password = md5(password);
   return function(dispatch, getState) {
     dispatch({type:LOGIN_REQUEST});
     return api.emit('player::login', {username, password}, function(data) {
@@ -91,6 +93,7 @@ exports.logout = function() {
 }
 
 exports.register = function(username, password) {
+  password = md5(password);
   return function(dispatch, getState) {
     dispatch({type:REGISTER_REQUEST});
     return api.emit('player::register', {username, password}, function(data) {
@@ -148,6 +151,8 @@ exports.updateInfo = function(updatedData) {
 }
 
 exports.changePassword = function(oldPassword, newPassword, success, error) {
+  oldPassword = md5(oldPassword);
+  newPassword = md5(newPassword);
   return function(dispatch, getState) {
     return api.emit('player::changePassword', {oldPassword, newPassword}, function(data) {
       if(data.result) {
