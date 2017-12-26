@@ -17,7 +17,7 @@ cache:
   - directories:
     - "node_modules"
     - "$HOME/.electron"
-before_install: 
+before_install:
   - chmod +x build/ci/before_install.sh
   - chmod +x build/ci/zipapp.sh
   - build/ci/before_install.sh
@@ -25,8 +25,8 @@ install:
   - npm install
   - npm update
 script:
-  - NODE_ENV=production npm run build
   - npm run package-all
+  - NODE_ENV=production npm run build
 after_success:
   - cd ./dist/
   - cp ../build/CNAME ./
