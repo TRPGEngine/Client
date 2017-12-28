@@ -104,6 +104,9 @@ class ConverseDetail extends React.Component {
           list.sortBy((item) => item.get('date')).map((item, index) => {
             let defaultAvatar = item.get('sender_uuid') === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.user;
             let data = item.get('data');
+            let isMe = userUUID===item.get('sender_uuid');
+            let icon = isMe ? this.props.selfInfo.get('avatar') : usercache.getIn([item.get('sender_uuid'), 'avatar'])
+            let name = isMe ? this.props.selfInfo.get('nickname') || this.props.selfInfo.get('username') : usercache.getIn([item.get('sender_uuid'), 'username'])
 
             // data 预处理
             if(data && item.get('type') === 'card') {
@@ -114,13 +117,13 @@ class ConverseDetail extends React.Component {
               <MsgItem
                 key={item.get('uuid')+'+'+index}
                 uuid={item.get('uuid')}
-                icon={usercache.getIn([item.sender_uuid, 'avatar']) || defaultAvatar}
-                name={usercache.getIn([item.sender_uuid, 'username']) || ''}
+                icon={icon || defaultAvatar}
+                name={name || ''}
                 type={item.get('type')}
                 content={item.get('message')}
                 data={data}
                 time={dateHelper.getMsgDate(item.get('date'))}
-                me={userUUID===item.get('sender_uuid')}
+                me={isMe}
                 isGroupMsg={false}
               />
             )
@@ -161,6 +164,7 @@ class ConverseDetail extends React.Component {
 module.exports = connect(
   state => ({
     userUUID: state.getIn(['user','info','uuid']),
+    selfInfo: state.getIn(['user', 'info']),
     usercache: state.getIn(['cache', 'user']),
     conversesUUID: state.getIn(['chat', 'selectedConversesUUID']),
     friendRequests: state.getIn(['user', 'friendRequests']),
