@@ -9,6 +9,7 @@ const { addNote } = require('../../redux/actions/note');
 const TemplateSelect = require('./actors/TemplateSelect');
 const TemplateEdit = require('./actors/TemplateEdit');
 const IsDeveloping = require('../../components/IsDeveloping');
+const GroupCreate = require('../../components/modal/GroupCreate');
 const ChangePassword = require('../../components/ChangePassword');
 const FriendsAdd = require('../../components/modal/FriendsAdd');
 const GroupAdd = require('../../components/modal/GroupAdd');
@@ -52,6 +53,10 @@ class ExtraOptions extends React.Component {
     }else if(menu === 'noteCreate') {
       this.props.dispatch(switchMenuPannel(3));
       this.props.dispatch(addNote());
+    }else if(menu === 'groupCreate') {
+      this.props.dispatch(showModal(
+        <GroupCreate />
+      ));
     }else if(menu === 'addFriend') {
       // this.props.dispatch(switchMenuPannel(2));
       this.props.dispatch(showModal(
@@ -93,6 +98,7 @@ class ExtraOptions extends React.Component {
         <ul>
           <li onClick={() => this._handleClickMenu('actorCreate')}>创建人物</li>
           <li onClick={() => this._handleClickMenu('templateCreate')}>创建模板</li>
+          <li onClick={() => this._handleClickMenu('groupCreate')}>创建团</li>
           <li onClick={() => this._handleClickMenu('noteCreate')}>添加笔记</li>
           <li onClick={() => this._handleClickMenu('addFriend')}>添加好友</li>
           <li onClick={() => this._handleClickMenu('addGroup')}>添加团</li>
