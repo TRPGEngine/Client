@@ -58,11 +58,16 @@ let addMsg = function addMsg(converseUUID, payload) {
       }
     }
 
+    let unread = true;
+    if(converseUUID === getState().getIn(['chat', 'selectedConversesUUID']) || converseUUID === getState().getIn(['group', 'selectedGroupUUID'])) {
+      unread = false;
+    }
+
     // if(!!payload && !payload.uuid) {
     //   console.error('[addMsg]payload need uuid:', payload);
     //   return;
     // }
-    dispatch({type: ADD_MSG, converseUUID, payload: payload});
+    dispatch({type: ADD_MSG, converseUUID, unread, payload: payload});
   }
 }
 let sendMsg = function sendMsg(converseUUID, payload) {

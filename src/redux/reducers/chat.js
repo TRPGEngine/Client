@@ -12,6 +12,7 @@ const {
   UPDATE_CONVERSES_SUCCESS,
   REMOVE_CONVERSES_SUCCESS,
   SWITCH_CONVERSES,
+  SWITCH_GROUP,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
 } = require('../constants');
 const immutable = require('immutable');
@@ -70,7 +71,7 @@ module.exports = function chat(state = initialState, action) {
             (msgList) => msgList.push(payload)
           ).setIn(['converses', converseUUID, 'lastMsg'], payload.get('message'))
           .setIn(['converses', converseUUID, 'lastTime'], payload.get('date'))
-          .setIn(['converses', converseUUID, 'unread'], converseUUID===state.get('selectedConversesUUID')?false:true);//已读未读
+          .setIn(['converses', converseUUID, 'unread'], action.unread);//已读未读
       case UPDATE_MSG:
         return state.updateIn(['converses', action.converseUUID, 'msgList'], (msgList) => {
           for (var i = 0; i < msgList.size; i++) {
@@ -116,6 +117,8 @@ module.exports = function chat(state = initialState, action) {
       case SWITCH_CONVERSES:
         return state.set('selectedConversesUUID', action.converseUUID)
           .setIn(['converses', action.converseUUID, 'unread'], false);//已读未读;
+      case SWITCH_GROUP:
+        return state.setIn(['converses', action.payload, 'unread'], false);
       case CREATE_CONVERSES_SUCCESS:
         let createConvUUID = action.payload.uuid;
         let createConv = Object.assign({}, {
