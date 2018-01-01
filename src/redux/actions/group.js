@@ -1,4 +1,5 @@
 const {
+  CREATE_GROUP_SUCCESS,
   UPDATE_CONVERSES_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
   FIND_GROUP_REQUEST,
@@ -26,9 +27,9 @@ const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { addConverse, updateSystemCardChatData } = require('./chat');
 const { checkUser, checkTemplate } = require('../../utils/usercache');
-const { showAlert, hideModal } = require('./ui');
+const { showLoading, hideLoading, showAlert, hideModal } = require('./ui');
 
-// 当state-group-groups状态添加新的group时使用来初始化
+// 当state->group->groups状态添加新的group时使用来初始化
 let initGroupInfo = function(dispatch, group) {
   let groupUUID = group.uuid;
   dispatch(addConverse({
@@ -75,6 +76,24 @@ let initGroupInfo = function(dispatch, group) {
       console.error('获取团聊天记录失败:', data.msg);
     }
   });
+}
+
+exports.createGroup = function(name, subname, desc) {
+  return function(dispatch, getState) {
+    dispatch(showLoading());
+    api.emit('group::create', {name, subname, desc}, function(data) {
+      dispatch(hideLoading());
+      if(data.result) {
+        dispatch(hideModal());
+        dispatch(showAlert('创建成功'));
+        dispatch({type: CREATE_GROUP_SUCCESS, payload: data.group});
+        initGroupInfo(dispatch, data.group);// 创建成功后直接初始化
+      }else {
+        console.error(data);
+        dispatch(showAlert(data.msg));
+      }
+    })
+  }
 }
 
 exports.getGroupInfo = function(uuid) {
