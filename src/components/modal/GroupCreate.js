@@ -1,6 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const ModalPanel = require('../ModalPanel');
+const { createGroup } = require('../../redux/actions/group');
 
 require('./GroupCreate.scss');
 
@@ -15,8 +16,7 @@ class GroupCreate extends React.Component {
   }
 
   _handleCreate() {
-    // TODO:创建团
-    console.log('创建团');
+    this.props.dispatch(createGroup(this.state.groupName, this.state.groupSubName, this.state.groupDesc));
   }
 
   render() {
