@@ -37,6 +37,22 @@ function bindEventFunc(store) {
   socket.on('chat::message', function(data) {
     let converseUUID = data.room || data.sender_uuid;
     store.dispatch(addMsg(converseUUID, data));
+
+    // web通知
+    if(document.hidden) {
+      let notificationPermission = store.getState().getIn(['ui', 'notificationPermission']);
+      if(notificationPermission === 'granted') {
+        let usercache = store.getState().getIn(['cache', 'user']);
+        let userinfo = usercache.get(data.sender_uuid);
+        let username = userinfo.get('nickname') || userinfo.get('username');
+        let notification = new Notification(username + ':', {
+          body: data.message,
+          icon: userinfo.get('avatar') || config.defaultImg.trpgsystem,
+          tag: 'trpg-msg',
+          renotify: true,
+        });
+      }
+    }
   });
 
   socket.on('player::invite', function(data) {

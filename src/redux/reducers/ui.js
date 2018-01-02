@@ -10,6 +10,7 @@ const {
   HIDE_PROFILE_CARD,
   SWITCH_MENU_PANNEL,
   CHANGE_NETWORK_STATE,
+  UPDATE_NOTIFICATION_PERMISSION,
 } = require('../constants');
 const immutable = require('immutable');
 
@@ -28,7 +29,8 @@ const initialState = immutable.fromJS({
     isOnline: false,
     tryReconnect: false,
     msg: '',
-  }
+  },
+  notificationPermission: Notification.permission,// granted, denied, default
 })
 
 module.exports = function ui(state = initialState, action) {
@@ -58,6 +60,8 @@ module.exports = function ui(state = initialState, action) {
         .set('menuPannel', action.payload);
     case CHANGE_NETWORK_STATE:
       return state.set('network', immutable.fromJS(action.payload));
+    case UPDATE_NOTIFICATION_PERMISSION:
+      return state.set('notificationPermission', action.payload);
     default:
       return state;
   }

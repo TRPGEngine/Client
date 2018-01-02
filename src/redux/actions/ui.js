@@ -9,6 +9,7 @@ const {
   HIDE_PROFILE_CARD,
   SWITCH_MENU_PANNEL,
   CHANGE_NETWORK_STATE,
+  UPDATE_NOTIFICATION_PERMISSION,
 } = require('../constants');
 const cache = require('./cache');
 
@@ -56,4 +57,17 @@ exports.switchMenuPannel = function(index, pannel = null) {
 }
 exports.changeNetworkStatue = function(isOnline, msg, tryReconnect = false) {
   return {type: CHANGE_NETWORK_STATE, payload: {isOnline, msg, tryReconnect}}
+}
+exports.setNotification = function(target) {
+  return function(dispatch, getState) {
+    if(target === false) {
+      dispatch({type: UPDATE_NOTIFICATION_PERMISSION, payload: 'denied'});
+      return;
+    }
+
+    Notification.requestPermission(result => {
+      console.log('授权结果', result);
+      dispatch({type: UPDATE_NOTIFICATION_PERMISSION, payload: result});
+    })
+  }
 }

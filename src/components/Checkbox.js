@@ -1,4 +1,5 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 
 require('./Checkbox.scss');
 
@@ -6,7 +7,7 @@ class Checkbox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isChecked: props.default || false
+      isChecked: props.value || false
     }
   }
 
@@ -23,6 +24,11 @@ class Checkbox extends React.Component {
       </div>
     )
   }
+}
+
+Checkbox.propTypes = {
+  value: PropTypes.bool,
+  onChange: PropTypes.func,
 }
 
 module.exports = Checkbox;

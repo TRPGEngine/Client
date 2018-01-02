@@ -13,6 +13,7 @@ const GroupCreate = require('../../components/modal/GroupCreate');
 const ChangePassword = require('../../components/ChangePassword');
 const FriendsAdd = require('../../components/modal/FriendsAdd');
 const GroupAdd = require('../../components/modal/GroupAdd');
+const SystemSettings = require('../../components/modal/SystemSettings');
 
 require('./ExtraOptions.scss');
 
@@ -72,7 +73,7 @@ class ExtraOptions extends React.Component {
       ));
     }else if(menu === 'systemSettings') {
       this.props.dispatch(showModal(
-        <IsDeveloping />
+        <SystemSettings />
       ));
     }else if(menu === 'changePassword') {
       this.props.dispatch(showModal(
