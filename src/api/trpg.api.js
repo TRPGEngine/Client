@@ -51,6 +51,8 @@ function bindEventFunc(store) {
           tag: 'trpg-msg',
           renotify: true,
         });
+
+        // TODO: 增加notification点击回调
       }
     }
   });
