@@ -1,5 +1,6 @@
 const io = require('socket.io-client');
 const config = require('../../config/project.config.js');
+const { RESET } = require('../redux/constants');
 
 let api = null;
 const platformSocketParam = {
@@ -27,8 +28,8 @@ function getApiInstance() {
 
 function bindEventFunc(store) {
   const { addMsg } = require('../redux/actions/chat');
-  const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
-  const { changeNetworkStatue } = require('../redux/actions/ui');
+  const { addFriendInvite, loginWithToken, logout } = require('../redux/actions/user');
+  const { changeNetworkStatue, showAlert } = require('../redux/actions/ui');
 
   if(!(this instanceof API)) {
     throw new Error('bindEventFunc shound a API object class');
@@ -59,6 +60,10 @@ function bindEventFunc(store) {
 
   socket.on('player::invite', function(data) {
     store.dispatch(addFriendInvite(data));
+  })
+  socket.on('player::tick', function(data) {
+    store.dispatch(showAlert(data.msg));
+    store.dispatch({type: RESET});
   })
 
   socket.on('connect', function(data) {
