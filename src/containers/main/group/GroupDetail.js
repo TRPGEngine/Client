@@ -20,6 +20,7 @@ const DiceRequest = require('../dice/DiceRequest');
 const DiceInvite = require('../dice/DiceInvite');
 const ListSelect = require('../../../components/ListSelect');
 const IsDeveloping = require('../../../components/IsDeveloping');
+const MsgContainer = require('../../../components/MsgContainer');
 
 class GroupDetail extends React.Component {
   constructor(props) {
@@ -28,7 +29,6 @@ class GroupDetail extends React.Component {
       isSlidePanelShow: false,
       slidePanelTitle: '',
       slidePanelContent: null,
-      nomore: false,
     }
     this.sildeEvent = () => {
       console.log('close slide panel with click');
@@ -37,41 +37,8 @@ class GroupDetail extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.msgList.size === 0 || nextProps.msgList.size === this.props.msgList.size) {
-      this.setState({nomore: true});
-    }
-  }
-
-  componentDidMount() {
-    let container = this.refs.container;
-    scrollTo.bottom(container, 400);
-    console.log('curGroupInfo', this.props.groupInfo?this.props.groupInfo.toJS():'None');
-
-    if(this.props.msgList.size === 0) {
-      this.setState({nomore: true});
-    }else {
-      this.setState({nomore: false});
-    }
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if(this.props.nextState && this.props.nextState.size > 0 && nextProps.msgList.last().get('date') !== this.props.msgList.last().get('date')) {
-      let container = this.refs.container;
-      setTimeout(function() {
-        scrollTo.bottom(container, 100);
-      }, 0);
-    }
-  }
-
   componentWillUnmount() {
     window.removeEventListener('click', this.sildeEvent);
-  }
-
-  _handleGetMoreLog() {
-    let date = this.props.msgList.first().get('date');
-    let { userUUID, selectedUUID } = this.props;
-    this.props.dispatch(getMoreChatLog(userUUID, selectedUUID, date));
   }
 
   _handleShowSlidePanel(title, content) {
@@ -212,68 +179,6 @@ class GroupDetail extends React.Component {
     })
   }
 
-  getMsgList() {
-    if(!this.props.msgList) {
-      return null;
-    }else {
-      let userUUID = this.props.userUUID;
-      let usercache = this.props.usercache;
-      return (
-        <div className="msg-items">
-        {
-          this.props.msgList.map((item, index) => {
-            let defaultAvatar = item.get('sender_uuid') === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.group;
-            let data = item.get('data');
-
-            // data 预处理
-            if(data && item.get('type') === 'card') {
-              if(data.get('type') === 'friendInvite') {
-                let inviteUUID = data.getIn(['invite', 'uuid']);
-                let from_uuid = data.getIn(['invite', 'from_uuid']);
-                let inviteIndex = this.props.friendRequests.findIndex((item) => {
-                  if(item.get('uuid') === inviteUUID) {
-                    return true
-                  }else {
-                    return false
-                  }
-                });
-                if(inviteIndex >= 0) {
-                  // 尚未处理
-                  data = data.set('actionState', 0);
-                }else {
-                  let friendIndex = this.props.friendList.indexOf(from_uuid);
-                  if(friendIndex >= 0) {
-                    // 已同意是好友
-                    data = data.set('actionState', 1);
-                  }else {
-                    // 已拒绝好友邀请
-                    data = data.set('actionState', 2);
-                  }
-                }
-              }
-            }
-
-            return (
-              <MsgItem
-                key={item.get('uuid')+'+'+index}
-                uuid={item.get('uuid')}
-                icon={usercache.getIn([item.get('sender_uuid'), 'avatar']) || defaultAvatar}
-                name={usercache.getIn([item.get('sender_uuid'), 'username']) || usercache.getIn([item.get('sender_uuid'), 'nickname']) || ''}
-                type={item.get('type')}
-                content={item.get('message')}
-                data={data}
-                time={dateHelper.getMsgDate(item.get('date'))}
-                me={userUUID===item.get('sender_uuid')}
-                isGroupMsg={true}
-              />
-            )
-          })
-        }
-        </div>
-      )
-    }
-  }
-
   render() {
     let inputType = this.state.inputType;
     let { selfGroupActors } = this.props;
@@ -309,16 +214,7 @@ class GroupDetail extends React.Component {
             {this.getHeaderActions()}
           </div>
         </div>
-        <div className="group-content" ref="container">
-          {
-            this.state.nomore ? (
-              <button className="get-more-log-btn" disabled={true}>没有更多记录了</button>
-            ) : (
-              <button className="get-more-log-btn" onClick={() => this._handleGetMoreLog()}>点击获取更多记录</button>
-            )
-          }
-          {this.getMsgList()}
-        </div>
+        <MsgContainer className="group-content" converseUUID={this.props.selectedUUID} />
         <MsgSendBox
           conversesUUID={this.props.selectedUUID}
           isGroup={true}
