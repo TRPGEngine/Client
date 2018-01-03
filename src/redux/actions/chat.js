@@ -176,6 +176,18 @@ let removeConverse = function removeConverse(converseUUID) {
   }
 }
 
+let getMoreChatLog = function getMoreChatLog(userUUID, converseUUID, offsetDate) {
+  return function(dispatch, getState) {
+    api.emit('chat::getChatLog', {uuid1: userUUID, uuid2: converseUUID, offsetDate}, function(data) {
+      if(data.result === true) {
+        dispatch({type: UPDATE_CONVERSES_SUCCESS, payload: data.list, convUUID: converseUUID});
+      }else {
+        console.log(data);
+      }
+    })
+  }
+}
+
 let updateSystemCardChatData = function(chatUUID, newData) {
   return function(dispatch, getState) {
     return api.emit('chat::updateSystemCardChatData', {chatUUID, newData}, function(data) {
@@ -195,4 +207,5 @@ exports.sendMsg = sendMsg;
 exports.getConverses = getConverses;
 exports.createConverse = createConverse;
 exports.removeConverse = removeConverse;
+exports.getMoreChatLog = getMoreChatLog;
 exports.updateSystemCardChatData = updateSystemCardChatData;

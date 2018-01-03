@@ -70,6 +70,19 @@
       flex: 1;
       @include auto-scroll-bar;
 
+      .get-more-log-btn {
+        @include link-btn;
+        display: block;
+        text-align: center;
+        width: 100%;
+        padding: 0;
+        margin: 10px 0;
+        font-size: 12px;
+        &:after {
+          width: 0 !important;
+        }
+      }
+
       .msg-items {
         padding: 4px 16px 16px 16px;
       }

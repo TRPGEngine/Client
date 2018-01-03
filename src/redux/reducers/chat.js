@@ -105,7 +105,8 @@ module.exports = function chat(state = initialState, action) {
         let convUUID = action.convUUID;
         payload = immutable.fromJS(action.payload);
         if(payload.size > 0) {
-          let lastLog = payload.last();
+          let oldList = state.getIn(['converses', convUUID, 'msgList']);
+          let lastLog = payload.concat(oldList).sortBy((item) => item.get('date')).last();
           return state.updateIn(['converses', convUUID, 'msgList'], (list) => new immutable.List(new immutable.Set(list.concat(payload))))//添加一步去重操作
             .setIn(['converses', convUUID, 'lastMsg'], lastLog.get('message'))
             .setIn(['converses', convUUID, 'lastTime'], lastLog.get('date'));

@@ -120,7 +120,7 @@ class ConverseList extends React.Component {
           {
             this.props.selectedUUID
             ? (
-              <ConverseDetail converseUUID={this.props.selectedUUID} list={this.props.converses.getIn([this.props.selectedUUID, 'msgList'])}/>
+              <ConverseDetail converseUUID={this.props.selectedUUID}/>
             )
             : (
               <div className="nocontent">

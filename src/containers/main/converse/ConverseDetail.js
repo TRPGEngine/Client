@@ -7,7 +7,7 @@ const MsgItem = require('../../../components/MsgItem');
 const scrollTo = require('../../../utils/animatedScrollTo.js');
 const ReactTooltip = require('react-tooltip');
 const { showModal, hideModal } = require('../../../redux/actions/ui');
-const { sendMsg } = require('../../../redux/actions/chat');
+const { sendMsg, getMoreChatLog } = require('../../../redux/actions/chat');
 const { sendDiceRequest } = require('../../../redux/actions/dice');
 const DiceRequest = require('../dice/DiceRequest');
 
@@ -16,16 +16,37 @@ require('./ConverseDetail.scss');
 class ConverseDetail extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      nomore: false,
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.msgList.size === 0 || nextProps.msgList.size === this.props.msgList.size) {
+      this.setState({nomore: true});
+    }else {
+      this.setState({nomore: false});
+    }
   }
 
   componentDidMount() {
     let container = this.refs.container;
     scrollTo.bottom(container, 400);
+
+    if(this.props.msgList.size === 0) {
+      this.setState({nomore: true});
+    }else {
+      this.setState({nomore: false});
+    }
   }
 
-  componentDidUpdate() {
-    let container = this.refs.container;
-    scrollTo.bottom(container, 400, false);
+  componentWillUpdate(nextProps, nextState) {
+    if(this.props.nextState && this.props.nextState.size > 0 && nextProps.msgList.last().get('date') !== this.props.msgList.last().get('date')) {
+      let container = this.refs.container;
+      setTimeout(function() {
+        scrollTo.bottom(container, 100);
+      }, 0);
+    }
   }
 
   _handleSendMsg(message, type) {
@@ -40,6 +61,12 @@ class ConverseDetail extends React.Component {
   _handleSendDiceInv() {
     // TODO
     console.log("发送投骰邀请");
+  }
+
+  _handleGetMoreLog() {
+    let date = this.props.msgList.first().get('date');
+    let { userUUID, converseUUID } = this.props;
+    this.props.dispatch(getMoreChatLog(userUUID, converseUUID, date));
   }
 
   prepareMsgItemCardData(data) {
@@ -101,7 +128,7 @@ class ConverseDetail extends React.Component {
       return (
         <div className="msg-items">
         {
-          list.sortBy((item) => item.get('date')).map((item, index) => {
+          list.map((item, index) => {
             let defaultAvatar = item.get('sender_uuid') === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.user;
             let data = item.get('data');
             let isMe = userUUID===item.get('sender_uuid');
@@ -148,7 +175,14 @@ class ConverseDetail extends React.Component {
     return (
       <div className="conv-detail">
         <div className="conv-container" ref="container">
-          {this.getMsgList(list)}
+          {
+            this.state.nomore ? (
+              <button className="get-more-log-btn" disabled={true}>没有更多记录了</button>
+            ) : (
+              <button className="get-more-log-btn" onClick={() => this._handleGetMoreLog()}>点击获取更多记录</button>
+            )
+          }
+          {this.getMsgList(this.props.msgList)}
         </div>
         <MsgSendBox
           conversesUUID={this.props.conversesUUID}
@@ -162,14 +196,18 @@ class ConverseDetail extends React.Component {
 }
 
 module.exports = connect(
-  state => ({
-    userUUID: state.getIn(['user','info','uuid']),
-    selfInfo: state.getIn(['user', 'info']),
-    usercache: state.getIn(['cache', 'user']),
-    conversesUUID: state.getIn(['chat', 'selectedConversesUUID']),
-    friendRequests: state.getIn(['user', 'friendRequests']),
-    friendList: state.getIn(['user', 'friendList']),
-    groupInvites: state.getIn(['group', 'invites']),
-    groupUUIDList: state.getIn(['group', 'groups']).map((item) => item.get('uuid')),
-  })
+  state => {
+    let conversesUUID = state.getIn(['chat', 'selectedConversesUUID']);
+    return {
+      userUUID: state.getIn(['user','info','uuid']),
+      selfInfo: state.getIn(['user', 'info']),
+      usercache: state.getIn(['cache', 'user']),
+      conversesUUID,
+      msgList: state.getIn(['chat', 'converses', conversesUUID, 'msgList']).sortBy((item) => item.get('date')),
+      friendRequests: state.getIn(['user', 'friendRequests']),
+      friendList: state.getIn(['user', 'friendList']),
+      groupInvites: state.getIn(['group', 'invites']),
+      groupUUIDList: state.getIn(['group', 'groups']).map((item) => item.get('uuid')),
+    }
+  }
 )(ConverseDetail);

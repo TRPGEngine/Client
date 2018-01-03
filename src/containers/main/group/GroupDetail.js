@@ -5,7 +5,7 @@ const dateHelper = require('../../../utils/dateHelper');
 const Select = require('react-select');
 const ReactTooltip = require('react-tooltip');
 const { showModal, hideModal, showAlert } = require('../../../redux/actions/ui');
-const { sendMsg } = require('../../../redux/actions/chat');
+const { sendMsg, getMoreChatLog } = require('../../../redux/actions/chat');
 const { changeSelectGroupActor } = require('../../../redux/actions/group');
 const { sendDiceRequest, sendDiceInvite } = require('../../../redux/actions/dice');
 const MsgSendBox = require('../../../components/MsgSendBox');
@@ -28,6 +28,7 @@ class GroupDetail extends React.Component {
       isSlidePanelShow: false,
       slidePanelTitle: '',
       slidePanelContent: null,
+      nomore: false,
     }
     this.sildeEvent = () => {
       console.log('close slide panel with click');
@@ -36,19 +37,41 @@ class GroupDetail extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.msgList.size === 0 || nextProps.msgList.size === this.props.msgList.size) {
+      this.setState({nomore: true});
+    }
+  }
+
   componentDidMount() {
     let container = this.refs.container;
     scrollTo.bottom(container, 400);
     console.log('curGroupInfo', this.props.groupInfo?this.props.groupInfo.toJS():'None');
+
+    if(this.props.msgList.size === 0) {
+      this.setState({nomore: true});
+    }else {
+      this.setState({nomore: false});
+    }
   }
 
-  componentDidUpdate() {
-    let container = this.refs.container;
-    scrollTo.bottom(container, 400, false);
+  componentWillUpdate(nextProps, nextState) {
+    if(this.props.nextState && this.props.nextState.size > 0 && nextProps.msgList.last().get('date') !== this.props.msgList.last().get('date')) {
+      let container = this.refs.container;
+      setTimeout(function() {
+        scrollTo.bottom(container, 100);
+      }, 0);
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('click', this.sildeEvent);
+  }
+
+  _handleGetMoreLog() {
+    let date = this.props.msgList.first().get('date');
+    let { userUUID, selectedUUID } = this.props;
+    this.props.dispatch(getMoreChatLog(userUUID, selectedUUID, date));
   }
 
   _handleShowSlidePanel(title, content) {
@@ -198,7 +221,7 @@ class GroupDetail extends React.Component {
       return (
         <div className="msg-items">
         {
-          this.props.msgList.sortBy((item) => item.get('date')).map((item, index) => {
+          this.props.msgList.map((item, index) => {
             let defaultAvatar = item.get('sender_uuid') === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.group;
             let data = item.get('data');
 
@@ -287,6 +310,13 @@ class GroupDetail extends React.Component {
           </div>
         </div>
         <div className="group-content" ref="container">
+          {
+            this.state.nomore ? (
+              <button className="get-more-log-btn" disabled={true}>没有更多记录了</button>
+            ) : (
+              <button className="get-more-log-btn" onClick={() => this._handleGetMoreLog()}>点击获取更多记录</button>
+            )
+          }
           {this.getMsgList()}
         </div>
         <MsgSendBox
@@ -329,7 +359,7 @@ module.exports = connect(
     return {
       selectedUUID,
       groupInfo,
-      msgList: state.getIn(['chat', 'converses', selectedUUID, 'msgList']),
+      msgList: state.getIn(['chat', 'converses', selectedUUID, 'msgList']).sortBy((item) => item.get('date')),
       userUUID: state.getIn(['user','info','uuid']),
       usercache: state.getIn(['cache', 'user']),
       selfGroupActors: groupInfo.get('group_actors').filter(i => i.get('enabled')&&selfActors.indexOf(i.get('actor_uuid'))>=0),
