@@ -22,7 +22,7 @@ function configureStore(initialState) {
   const devTool = config.environment !== 'production'
     ? require('redux-devtools-extension').composeWithDevTools({actionCreators: require('../actions')})(
       applyMiddleware(thunk)
-    ) : null;
+    ) : undefined;
   const store = createStoreWithMiddleware(reducer, initialState, devTool);
 
   return store;

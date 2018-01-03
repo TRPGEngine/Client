@@ -126,7 +126,7 @@ module.exports = function ui(state = initialState, action) {
         }
       })
     case ADD_FRIEND_INVITE:
-      return state.update('friendRequests', (list) => list.push(action.payload))
+      return state.update('friendRequests', (list) => list.push(immutable.fromJS(action.payload)))
     default:
       return state;
   }

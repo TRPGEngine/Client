@@ -203,7 +203,7 @@ exports.getFriends = function() {
 
 exports.sendFriendInvite = function(uuid) {
   return function(dispatch, getState) {
-    return api.emit('player::invite', {to: uuid}, function(data) {
+    return api.emit('player::sendFriendInvite', {to: uuid}, function(data) {
       if(data.result) {
         dispatch({type: SEND_FRIEND_INVITE_SUCCESS, payload: data.invite, uuid});
       }else {
