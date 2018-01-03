@@ -1,18 +1,9 @@
-import {
-  EXAMPLE
-} from '../constants'
-
-function example(val){
-  return {
-    type: EXAMPLE,
-    payload: {
-      title: val
-    }
-  }
-}
-
-export function changeTitle(val){
-  return (dispatch, getState) => {
-    dispatch(example(val))
-  }
+module.exports = {
+  ui: require('./ui'),
+  chat: require('./chat'),
+  user: require('./user'),
+  cache: require('./cache'),
+  note: require('./note'),
+  actor: require('./actor'),
+  group: require('./group'),
 }
