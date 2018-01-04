@@ -99,62 +99,8 @@
         color: $color-dove-gray;
       }
 
-      > input {
-        background-color: transparent;
-        font-size: 16px;
-        border: 1px solid $color-bon-jour;
-        outline: 0;
-        padding: 4px 6px;
-        border-radius: 3px;
-
-        &:focus {
-          border-color: $color-tobacco-brown;
-        }
-
-        &:disabled {
-          cursor: not-allowed;
-        }
-
-        &[type="checkbox"] {
-          -webkit-appearance: none;
-          background-color: white;
-          background-image: url('/src/assets/img/checkbox.png');
-          height: 22px;
-          vertical-align: middle;
-          width: 22px;
-          outline: none;
-          border: 0;
-          transition: initial;
-          padding: 0;
-
-          &:focus,
-          &:hover {
-            background-position: -24px 0;
-          }
-          &:checked {
-            background-position: -48px 0;
-          }
-          &[disabled] {
-            background-position: -72px 0;
-          }
-          &[disabled]:checked {
-            background-position: -96px 0;
-          }
-        }
-      }
-
-      > textarea {
-        resize: none;
-        background-color: transparent;
-        font-size: 16px;
-        border: 1px solid $color-bon-jour;
-        outline: 0;
-        padding: 4px 6px;
-        border-radius: 3px;
-
-        &:focus {
-          border-color: $color-tobacco-brown;
-        }
+      > input, > textarea {
+        @include block-input;
       }
 
       .func-select {

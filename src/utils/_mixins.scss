@@ -173,6 +173,36 @@
 
   &:disabled {
     cursor: not-allowed;
+    background-color: rgba(0, 0, 0, 0.1);
     color: #999999;
+    // background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    // background-size: 20px 20px;
+  }
+
+  &[type="checkbox"] {
+    -webkit-appearance: none;
+    background-color: white;
+    background-image: url('/src/assets/img/checkbox.png');
+    height: 22px;
+    vertical-align: middle;
+    width: 22px;
+    outline: none;
+    border: 0;
+    transition: initial;
+    padding: 0;
+
+    &:focus,
+    &:hover {
+      background-position: -24px 0;
+    }
+    &:checked {
+      background-position: -48px 0;
+    }
+    &[disabled] {
+      background-position: -72px 0;
+    }
+    &[disabled]:checked {
+      background-position: -96px 0;
+    }
   }
 }
