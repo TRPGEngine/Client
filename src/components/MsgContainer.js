@@ -31,7 +31,7 @@ class MsgContainer extends React.Component {
       this.setState({nomore: false});
     }
 
-    if(nextProps.msgList.last().get('date') !== this.props.msgList.last().get('date')) {
+    if(nextProps.msgList.size === 0 || this.props.msgList.size === 0 || nextProps.msgList.last().get('date') !== this.props.msgList.last().get('date')) {
       setTimeout(() => {
         scrollTo.bottom(this.refs.container, 100);
       }, 0);
@@ -148,6 +148,7 @@ module.exports = connect(
   (state, ownProps) => {
     let converseUUID = ownProps.converseUUID;
     let msgList = state.getIn(['chat', 'converses', converseUUID, 'msgList']);
+    console.log(msgList);
 
     return {
       msgList: msgList && msgList.sortBy((item) => item.get('date')),
