@@ -202,7 +202,7 @@ class GroupDetail extends React.Component {
           </div>
           <Select
             name="actor-select"
-            className="actor-select"
+            className="group-actor-select"
             value={this.props.selectedGroupActorUUID}
             options={options}
             clearable={false}
