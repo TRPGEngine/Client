@@ -19,6 +19,7 @@ const immutable = require('immutable');
 
 const initialState = immutable.fromJS({
   selectedConversesUUID: '',
+  conversesDesc: '',// 获取会话列表的提示信息
   converses: {
     // "systemUUID": {
     //   uuid: 'systemUUID',
@@ -84,6 +85,10 @@ module.exports = function chat(state = initialState, action) {
 
           return msgList;
         })
+      case GET_CONVERSES_REQUEST:
+        return state.set('conversesDesc', '正在获取会话列表...');
+      case CREATE_CONVERSES_FAILED:
+        return state.set('conversesDesc', '获取会话列表失败, 请重试');
       case GET_CONVERSES_SUCCESS:
         let list = action.payload;
         if(list instanceof Array && list.length > 0) {

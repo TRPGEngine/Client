@@ -8,6 +8,13 @@
     width: 240px;
     background-color: $color-soapstone;
     border-right: 1px solid $color-bon-jour;
+
+    .converses-list .converses-tip {
+      margin-top: 40px;
+      font-size: 14px;
+      color: $color-dusty-gray;
+      text-align: center;
+    }
   }
 
   .detail {

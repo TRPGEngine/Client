@@ -35,35 +35,43 @@ class ConverseList extends React.Component {
   }
 
   getConverseList() {
-    let converses = this.props.converses
-      .valueSeq()
-      .filter((item) => item.get('type')==='user'||item.get('type')==='system')
-      .sortBy((item) => new Date(item.get('lastTime')))
-      .reverse()
-      .map((item, index) => {
-        let uuid = item.get('uuid');
-        let defaultIcon = uuid === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.user;
-        return (
-          <ConvItem
-            key={'converses#'+index}
-            icon={item.get('icon') || defaultIcon}
-            title={item.get('name')}
-            content={item.get('lastMsg')}
-            time={item.get('lastTime')?dateHelper.getShortDate(item.get('lastTime')):''}
-            uuid={uuid}
-            unread={item.get('unread')}
-            isSelected={this.props.selectedUUID === uuid}
-            onClick={() => this._handleSelectConverse(uuid)}
-            hideCloseBtn={false}
-          />
-        )
-      });
+    if(this.props.converses.size > 10) {
+      let converses = this.props.converses
+        .valueSeq()
+        .filter((item) => item.get('type')==='user'||item.get('type')==='system')
+        .sortBy((item) => new Date(item.get('lastTime')))
+        .reverse()
+        .map((item, index) => {
+          let uuid = item.get('uuid');
+          let defaultIcon = uuid === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.user;
+          return (
+            <ConvItem
+              key={'converses#'+index}
+              icon={item.get('icon') || defaultIcon}
+              title={item.get('name')}
+              content={item.get('lastMsg')}
+              time={item.get('lastTime')?dateHelper.getShortDate(item.get('lastTime')):''}
+              uuid={uuid}
+              unread={item.get('unread')}
+              isSelected={this.props.selectedUUID === uuid}
+              onClick={() => this._handleSelectConverse(uuid)}
+              hideCloseBtn={false}
+            />
+          )
+        });
 
-    return (
-      <div className="converses-list">
-        {converses}
-      </div>
-    );
+      return (
+        <div className="converses-list">
+          {converses}
+        </div>
+      );
+    }else {
+      return (
+        <div className="converses-list">
+          <div className="converses-tip">{this.props.conversesDesc}</div>
+        </div>
+      )
+    }
   }
 
   getFriendList() {
@@ -138,6 +146,7 @@ class ConverseList extends React.Component {
 module.exports = connect(
   state => ({
     selectedUUID: state.getIn(['chat', 'selectedConversesUUID']),
+    conversesDesc: state.getIn(['chat', 'conversesDesc']),
     converses: state.getIn(['chat', 'converses']),
     friends: state.getIn(['user', 'friendList']),
     usercache: state.getIn(['cache', 'user']),

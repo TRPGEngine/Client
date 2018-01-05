@@ -148,7 +148,6 @@ module.exports = connect(
   (state, ownProps) => {
     let converseUUID = ownProps.converseUUID;
     let msgList = state.getIn(['chat', 'converses', converseUUID, 'msgList']);
-    console.log(msgList);
 
     return {
       msgList: msgList && msgList.sortBy((item) => item.get('date')),
