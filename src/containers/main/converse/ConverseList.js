@@ -35,7 +35,7 @@ class ConverseList extends React.Component {
   }
 
   getConverseList() {
-    if(this.props.converses.size > 10) {
+    if(this.props.converses.size > 0) {
       let converses = this.props.converses
         .valueSeq()
         .filter((item) => item.get('type')==='user'||item.get('type')==='system')
