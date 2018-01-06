@@ -39,8 +39,8 @@ function bindEventFunc(store) {
     let converseUUID = data.room || data.sender_uuid;
     store.dispatch(addMsg(converseUUID, data));
 
-    // web通知
-    if(document.hidden || config.platform === 'electron') {
+    // web||electron通知
+    if(document.hidden) {
       let notificationPermission = store.getState().getIn(['ui', 'notificationPermission']);
       if(notificationPermission === 'granted') {
         let usercache = store.getState().getIn(['cache', 'user']);
