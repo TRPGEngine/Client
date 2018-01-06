@@ -27,9 +27,9 @@ function getApiInstance() {
 }
 
 function bindEventFunc(store) {
-  const { addMsg } = require('../redux/actions/chat');
+  const { addMsg, switchConverse } = require('../redux/actions/chat');
   const { addFriendInvite, loginWithToken, logout } = require('../redux/actions/user');
-  const { changeNetworkStatue, showAlert } = require('../redux/actions/ui');
+  const { changeNetworkStatue, showAlert, switchMenuPannel } = require('../redux/actions/ui');
 
   if(!(this instanceof API)) {
     throw new Error('bindEventFunc shound a API object class');
@@ -46,14 +46,20 @@ function bindEventFunc(store) {
         let usercache = store.getState().getIn(['cache', 'user']);
         let userinfo = usercache.get(data.sender_uuid);
         let username = userinfo.get('nickname') || userinfo.get('username');
+        let uuid = userinfo.get('uuid');
         let notification = new Notification(username + ':', {
           body: data.message,
           icon: userinfo.get('avatar') || config.defaultImg.trpgsystem,
           tag: 'trpg-msg',
           renotify: true,
+          data: {uuid}
         });
 
-        // TODO: 增加notification点击回调
+        notification.onclick = function() {
+          window.focus();
+          store.dispatch(switchMenuPannel(0));
+          store.dispatch(switchConverse(this.data.uuid));
+        }
       }
     }
   });
