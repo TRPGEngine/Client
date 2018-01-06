@@ -40,7 +40,7 @@ function bindEventFunc(store) {
     store.dispatch(addMsg(converseUUID, data));
 
     // web通知
-    if(document.hidden) {
+    if(document.hidden || config.platform === 'electron') {
       let notificationPermission = store.getState().getIn(['ui', 'notificationPermission']);
       if(notificationPermission === 'granted') {
         let usercache = store.getState().getIn(['cache', 'user']);
