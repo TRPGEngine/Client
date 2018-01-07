@@ -28,6 +28,7 @@ const {
 } = require('../constants');
 const md5 = require('md5');
 const trpgApi = require('../../api/trpg.api.js');
+const config = require('../../../config/project.config');
 const api = trpgApi.getInstance();
 const { showLoading, hideLoading, showAlert } = require('./ui');
 const { checkUser } = require('../../utils/usercache');
@@ -36,7 +37,7 @@ exports.login = function(username, password) {
   password = md5(password);
   return function(dispatch, getState) {
     dispatch({type:LOGIN_REQUEST});
-    return api.emit('player::login', {username, password}, function(data) {
+    return api.emit('player::login', {username, password, platform: config.platform}, function(data) {
       dispatch(hideLoading());
       if(data.result) {
         dispatch({type:LOGIN_SUCCESS, payload: data.info});
@@ -54,7 +55,7 @@ exports.login = function(username, password) {
 
 exports.loginWithToken = function(uuid, token) {
   return function(dispatch, getState) {
-    return api.emit('player::loginWithToken', {uuid, token}, function(data) {
+    return api.emit('player::loginWithToken', {uuid, token, platform: config.platform}, function(data) {
       if(data.result) {
         dispatch({type:LOGIN_SUCCESS, payload: data.info});
       }else {
