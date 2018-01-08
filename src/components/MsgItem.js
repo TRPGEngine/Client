@@ -3,7 +3,7 @@ const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const immutable = require('immutable');
 const config = require('../../config/project.config');
-const { emojify } = require('../utils/emoji');
+const msgParser = require('../utils/msgParser');
 const { agreeFriendInvite, refuseFriendInvite } = require('../redux/actions/user');
 const { agreeGroupRequest, refuseGroupRequest, agreeGroupInvite, refuseGroupInvite } = require('../redux/actions/group');
 const { acceptDiceRequest, acceptDiceInvite } = require('../redux/actions/dice');
@@ -198,7 +198,7 @@ class MsgItem extends React.Component {
       )
     }else {
       return (
-        <pre className="bubble">{emojify(this.props.content)}</pre>
+        <pre className="bubble">{msgParser(this.props.content)}</pre>
       )
     }
   }
