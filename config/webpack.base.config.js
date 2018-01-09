@@ -9,7 +9,7 @@ const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
 const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
 
 module.exports = {
-  entry: path.resolve(APP_PATH, 'index.js'),
+  entry: path.resolve(APP_PATH, './web/index.js'),
   output: {
     path: DIST_PATH,
     filename: 'bundle.js'

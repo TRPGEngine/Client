@@ -1,0 +1,53 @@
+@import "../../../utils/mixins";
+@import "../../../utils/color";
+
+.group-add {
+  height: 480px;
+  width: 640px;
+  display: flex;
+  flex-direction: column;
+  .group-search {
+    height: 44px;
+    min-height: 44px;
+    padding: 0 24px;
+    display: flex;
+    margin: 6px 0;
+
+    input {
+      height: 100%;
+      flex: 1;
+      font-size: 16px;
+      background-color: transparent;
+      border: 0;
+      border-bottom: 1px solid $color-bon-jour;
+      margin: 0 12px;
+      padding: 6px 12px;
+      outline: 0;
+
+      &:focus {
+        border-bottom-color: $color-tobacco-brown;
+      }
+    }
+
+    .group-search-method {
+      height: 100%;
+      padding-top: 4px;
+      min-width: 150px;
+      margin-right: 10px;
+    }
+
+    button {
+      @include block-btn;
+      height: 100%;
+      width: 80px;
+      font-size: 14px;
+    }
+  }
+
+  .group-search-result {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+}

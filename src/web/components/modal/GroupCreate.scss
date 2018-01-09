@@ -1,0 +1,25 @@
+@import "../../../utils/mixins";
+
+.group-create {
+  > div {
+    text-align: left;
+    display: flex;
+    margin-bottom: 10px;
+
+    > label {
+      width: 80px;
+      // display: flex;
+      // align-items: center;
+      padding-top: 4px;
+
+      &:after {
+        content: ':';
+      }
+    }
+
+    > input, > textarea {
+      flex: 1;
+      @include block-input;
+    }
+  }
+}

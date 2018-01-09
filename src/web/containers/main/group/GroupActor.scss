@@ -1,0 +1,91 @@
+@import "../../../../utils/color";
+@import "../../../../utils/mixins";
+
+.group-actor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  button {
+    @include block-btn;
+  }
+
+  @mixin cardlist {
+    height: 120px;
+    display: flex;
+    margin: 6px 0;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 0 6px;
+    border: 1px solid $color-bon-jour;
+    height: 120px;
+    padding: 10px;
+    position: relative;
+
+    &:hover {
+      box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
+    }
+
+    .avatar {
+      width: 80px;
+      height: 100px;
+      margin-right: 8px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .info {
+      flex: 1;
+      overflow: hidden;
+
+      .name {
+        color: $color-cod-gray;
+      }
+
+      .desc {
+        color: $color-dusty-gray;
+      }
+
+      .action {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        button {
+          @include icon-btn;
+        }
+      }
+    }
+  }
+
+  .group-actor-action {
+    padding: 4px 10px;
+  }
+
+  .group-actor-items {
+    flex: 1;
+    padding: 0 10px;
+    @include auto-scroll-bar;
+    .group-actor-item {
+      @include cardlist;
+    }
+  }
+
+  .group-actor-check-items {
+    flex: 1;
+    padding: 0 10px;
+    @include auto-scroll-bar;
+    .group-actor-check-item {
+      @include cardlist;
+    }
+  }
+
+  .group-actor-info {
+    p {
+      margin: 6px 0;
+    }
+  }
+
+  .no-content {
+    text-align: center;
+    color: $color-dove-gray;
+    margin-top: 50px;
+  }
+}

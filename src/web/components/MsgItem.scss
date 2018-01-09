@@ -1,0 +1,245 @@
+@import "../../utils/mixins";
+@import "../../utils/color";
+
+.msg-item {
+  margin-top: 20px;
+  margin-bottom: 22px;
+
+  &:hover > .profile .time {
+    visibility: visible;
+  }
+
+  &.me {
+    .profile, .content {
+      flex-direction: row-reverse;
+    }
+
+    .content {
+      .avatar {
+        margin-right: 0;
+        margin-left: 7px;
+      }
+
+      > .body {
+        margin-right: 0;
+        margin-left: 140px;
+
+        .bubble {
+          float: right;
+        }
+      }
+    }
+  }
+
+  &.occ {
+    .content>.body>.bubble {
+      color: #ccc;
+      border-style: dashed;
+      &:before{
+        content: '（';
+      }
+      &:after{
+        content: '）';
+      }
+    }
+  }
+
+  &.speak {
+    .content>.body>.bubble {
+      padding-left: 22px;
+      padding-right: 22px;
+      border-color: #bec9ff;
+      box-shadow: 0px 0px 2px 0px #bec9ff;
+      &:before{
+        content: '\e605';
+        top: 0;
+        left: 6px;
+      }
+      &:after{
+        content: '\e601';
+        bottom: 16px;
+        right: 6px;
+      }
+      &:before, &:after{
+        font-family: "iconfont";
+        color: #ccc;
+        position: absolute;
+        font-size: 12px;
+      }
+    }
+  }
+
+  &.action {
+    & .content>.body>.bubble {
+      border-color: #ffa787;
+      box-shadow: 0px 0px 2px 0px #ffa787;
+
+      &:after {
+        content: '\e619';
+        font-family: "iconfont";
+        color: #ccc;
+        margin-left: 4px;
+      }
+    }
+
+    &.me .content>.body>.bubble {
+      &:after {
+        content: '';
+      }
+      &:before {
+        content: '\e619';
+        font-family: "iconfont";
+        color: #ccc;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  &.card {
+    & .content>.body>.bubble {
+      padding: 0;
+      min-width: 230px;
+      max-width: 467px;
+
+      > .card-title {
+        @include one-line;
+        color: white;
+        line-height: 30px;
+        padding: 0 6px;
+        background-color: $color-tan;
+      }
+
+      > .card-content {
+        padding: 10px 6px;
+        color: $color-tundora;
+        min-height: 60px;
+      }
+
+      > .card-action {
+        margin: 0 6px;
+        padding: 4px 0;
+        border-top: 1px solid $color-bon-jour;
+
+        button {
+          @include link-btn;
+        }
+
+        .no-support {
+          color: $color-dusty-gray;
+          font-size: 12px;
+          user-select: none;
+        }
+      }
+
+      > .card-content-actor {
+        width: 420px;
+        height: 160px;
+        display: flex;
+
+        > .card-content-avatar {
+          display: flex;
+          height: 100%;
+          width: 110px;
+          overflow: hidden;
+          align-items: center;
+          justify-content: center;
+          background-position: center;
+          background-size: cover;
+        }
+
+        > .card-content-profile {
+          flex: 1;
+          padding: 10px;
+          display: flex;
+          flex-direction: column;
+          > h3 {
+            margin: 0;
+            margin-bottom: 4px;
+          }
+
+          > p {
+            margin: 0;
+            flex: 1;
+            @include auto-scroll-bar;
+          }
+        }
+      }
+    }
+  }
+
+  .profile {
+    padding: 0 45px;
+    margin: 2px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .name {
+      @include one-line;
+      color: #8e97a1;
+      max-width: 180px;
+      word-wrap: normal;
+      font-size: 12px;
+    }
+    .time {
+      visibility: hidden;
+      color: $color-silver-sand;
+      font-size: 12px;
+      margin: 0 6px;
+      // transform: scale(0.9);
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: row;
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 7px;
+
+      > img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    > .body {
+      flex: 1;
+      margin-right: 140px;
+      .bubble {
+        min-width: 0;
+        padding: 5px 11px;
+        border: 1px solid #e1e0e4;
+        border-radius: 6px;
+        background-color: #fff;
+        line-height: 1.5;
+        word-break: break-all;
+        float: left;
+        position: relative;
+        overflow: hidden;
+      }
+    }
+
+  }
+}
+
+.msg-item-tip {
+  text-align: center;
+  margin: 10px 0;
+  .content {
+    display: inline-block;
+    background-color: rgba(black, 0.1);
+    color: $color-dove-gray;
+    max-width: 360px;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 5px;
+    word-break: break-all;
+    padding: 6px 12px;
+    font-size: 12px;
+    vertical-align: middle;
+  }
+}

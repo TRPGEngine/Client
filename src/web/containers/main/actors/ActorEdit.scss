@@ -1,0 +1,76 @@
+@import "../../../../utils/mixins";
+
+.actor-edit {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  width: 700px;
+  max-height: 560px;
+  .actor-edit-header {
+    text-align:left;
+    display: flex;
+    input {
+      flex: 1;
+      margin: 0 5px;
+      @include bottom-line-input;
+    }
+
+    button {
+      @include link-btn;
+    }
+  }
+
+  .actor-edit-body {
+    display: flex;
+    .actor-edit-profile {
+      margin-right: 20px;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+      .avatar {
+        background-image: url(/src/assets/img/actor.jpeg);
+        display: flex;
+        height: 240px;
+        width: 100%;
+        overflow: hidden;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #DDDCDD;
+        background-position: center;
+        background-size: cover;
+      }
+
+      .desc {
+        flex: 1;
+        margin-top: 10px;
+        textarea {
+          height: 100%;
+          @include block-input;
+        }
+      }
+    }
+
+    .actor-edit-property {
+      @include auto-scroll-bar;
+      margin-top: 10px;
+      padding-right: 12px;
+      flex: 1;
+      .actor-property-cell {
+        display: flex;
+        align-items: center;
+        margin-bottom: 6px;
+
+        .cell-name {
+          width: 50%;
+          text-align: left;
+        }
+        .cell-value {
+          input {
+            @include block-input;
+          }
+        }
+      }
+    }
+  }
+}

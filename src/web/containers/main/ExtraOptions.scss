@@ -1,0 +1,72 @@
+@import "../../../utils/mixins";
+@import "../../../utils/color";
+
+.extra-options {
+  position: relative;
+  .extra-item {
+    margin-bottom: 10px;
+    cursor: pointer;
+
+    .iconfont {
+      font-size: 18px;
+      color: rgb(112, 114, 117);
+    }
+  }
+
+  .extra-menu {
+    border-radius: 3px;
+    min-width: 72px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 0 8px;
+    background-color: white;
+    position: absolute;
+    left: 2px;
+    padding: 0;
+    display: none;
+    z-index: 1;
+
+    &:after {
+      content: ' ';
+      border-width: 5px;
+      border-style: solid dashed dashed dashed;
+      border-color: $color-saltpan transparent transparent transparent;
+      // left: 14px;
+      position: absolute;
+      left: 2px;
+    }
+
+    &.active {
+      display: block;
+    }
+
+    &.add {
+      bottom: 70px;
+    }
+
+    &.more {
+      bottom: 38px;
+    }
+
+    > ul {
+      > li {
+        @include one-line;
+        border-bottom: 1px solid rgba(220, 220, 220, 0.5);
+        line-height: 31px;
+        cursor: pointer;
+        text-align: left;
+        text-indent: 10px;
+        font-size: 12px;
+        color: #222;
+        padding-right: 10px;
+        word-wrap: normal;
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        &:hover {
+          background-color: $color-seashell-peach;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+@import "../../../../utils/mixins";
+
+.note-detail {
+  height: 100%;
+
+  .title input {
+    @include bottom-line-input;
+    width: 100%;
+    // margin-bottom: 10px;
+  }
+}

@@ -1,0 +1,13 @@
+@import "../../utils/color";
+
+.is-developing {
+  display: flex;
+  flex-direction: column !important;
+  text-align: center;
+  color: $color-silver;
+  padding-top: 40px;
+  i.iconfont {
+    font-size: 100px;
+    color: inherit;
+  }
+}

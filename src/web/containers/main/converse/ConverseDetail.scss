@@ -1,0 +1,29 @@
+@import "../../../../utils/mixins";
+@import "../../../../utils/color";
+
+.conv-detail {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  .conv-container {
+    @include auto-scroll-bar;
+    flex: 1;
+
+    .get-more-log-btn {
+      @include link-btn;
+      display: block;
+      text-align: center;
+      width: 100%;
+      padding: 0;
+      margin: 10px 0;
+      font-size: 12px;
+      &:after {
+        width: 0 !important;
+      }
+    }
+
+    .msg-items {
+      padding: 4px 16px 16px 16px;
+    }
+  }
+}

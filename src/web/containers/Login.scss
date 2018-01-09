@@ -1,0 +1,45 @@
+@import "../../utils/color";
+@import "../../utils/mixins";
+
+.login-screen {
+  width: 372px;
+  height: 343px;
+  background-color: rgba(230, 242, 248, 0.5);
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 0 8px;
+  padding: 25px 30px 0;
+
+  h2 {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    color: #333333;
+  }
+
+  input {
+    color: #222;
+    font-size: 14px;
+    width: 312px;
+    height: 40px;
+    border: 1px solid $color-dusty-gray;
+    border-radius: 3px;
+    background-color: rgba(240, 248, 255, 0.5);
+    margin: 0;
+    padding: 10px;
+    outline: 0;
+    margin: 0 0 5px;
+  }
+
+  button {
+    width: 312px;
+    height: 40px;
+    margin: 8px 0 5px;
+
+    @include block-btn;
+  }
+
+  a, a:link, a:visited {
+    float: right;
+    @include link-btn;
+  }
+}

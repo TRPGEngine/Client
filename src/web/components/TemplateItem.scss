@@ -1,0 +1,59 @@
+@import "../../utils/mixins";
+
+.template-item {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 0 6px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  text-align: left;
+  padding: 6px 10px;
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
+  }
+
+  .header {
+    font-size: 16px;
+    border-bottom: 1px solid #dddcdd;
+    padding: 6px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: flex;
+    .name {
+      flex: 1;
+    }
+    .actions {
+      button {
+        @include icon-btn;
+      }
+    }
+  }
+
+  .desc {
+    font-size: 14px;
+    padding: 6px 0;
+    color: #333;
+  }
+
+  .footer {
+    font-size: 12px;
+    display: flex;
+    color: #999;
+    padding-bottom: 4px;
+
+    .creator {
+      flex: 1;
+      text-align: left;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  }
+}

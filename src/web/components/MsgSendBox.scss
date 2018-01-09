@@ -1,0 +1,98 @@
+@import "../../utils/mixins";
+@import "../../utils/color";
+
+.send-msg-box {
+  height: 106px;
+  background-color: $color-soapstone;
+  border-top: 1px solid $color-bon-jour;
+  display: flex;
+
+  .input-area {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    .tool-area {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      height: 34px;
+      padding: 0 10px;
+      user-select: none;
+      position: relative;
+
+      .tool-item {
+        @include icon-btn;
+        margin-right: 8px;
+        width: 18px;
+        height: 18px;
+      }
+
+      .btn-group, .type-select, .input-actions {
+        display: flex;
+      }
+
+      .type-select {
+        flex: 1;
+      }
+    }
+
+    .input-msg {
+      @include auto-scroll-bar;
+      background-color: transparent;
+      resize: none;
+      border: 0;
+      padding: 6px 10px 6px 6px;
+      line-height: 1.2em;
+      flex: 1;
+      color: $color-cod-gray;
+      font-size: 14px;
+      outline: 0;
+    }
+  }
+
+  .action-area {
+    width: 78px;
+    border-left: 1px solid $color-bon-jour;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      border: 0;
+      outline: 0;
+      cursor: pointer;
+
+      &:disabled {
+        cursor: default;
+      }
+    }
+  }
+
+  .popup.emoticon {
+    border-radius: 3px;
+    min-width: 72px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 0 8px;
+    background-color: white;
+    position: absolute;
+    left: 12px;
+    bottom: 32px;
+    padding: 0;
+    z-index: 1;
+    display: none;
+    &.active {
+      display: block;
+    }
+
+    &:after {
+      content: ' ';
+      border-width: 5px;
+      border-style: solid dashed dashed dashed;
+      border-color: #F9FCFA transparent transparent transparent;
+      position: absolute;
+      left: 2px;
+    }
+  }
+}
