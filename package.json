@@ -10,6 +10,7 @@
     "pcdev": "cross-env PLATFORM=electron npm run dev & gulp assets --gulpfile build/gulpfile.js && cross-env NODE_ENV=development electron .",
     "package": "cross-env PLATFORM=electron NODE_ENV=production gulp package --gulpfile build/gulpfile.js",
     "package-all": "cross-env PLATFORM=electron NODE_ENV=production gulp package:all --gulpfile build/gulpfile.js",
+    "app": "node node_modules/react-native/local-cli/cli.js start --root ./src/app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -34,10 +35,11 @@
     "md5": "^2.2.1",
     "moment": "^2.20.1",
     "nprogress": "^0.2.0",
-    "react": "^15.6.1",
+    "react": "16.2.0",
     "react-dom": "^15.6.1",
     "react-emojione2": "^2.2.18",
     "react-fileupload": "^2.4.0",
+    "react-native": "0.52.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.1.2",
     "react-router-redux": "^4.0.8",
