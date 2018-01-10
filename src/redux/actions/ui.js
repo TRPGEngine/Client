@@ -58,7 +58,10 @@ exports.switchMenuPannel = function(index, pannel = null) {
 exports.changeNetworkStatue = function(isOnline, msg, tryReconnect = false) {
   return {type: CHANGE_NETWORK_STATE, payload: {isOnline, msg, tryReconnect}}
 }
-exports.setNotification = function(target) {
+exports.setNotification = function(notification) {
+  return {type: UPDATE_NOTIFICATION_PERMISSION, payload: notification};
+}
+exports.requestNotification = function(target) {
   return function(dispatch, getState) {
     if(target === false) {
       dispatch({type: UPDATE_NOTIFICATION_PERMISSION, payload: 'denied'});

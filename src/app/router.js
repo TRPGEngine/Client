@@ -11,11 +11,15 @@ import {
 } from 'react-native';
 const { StackNavigator, TabNavigator } = require('react-navigation');
 const HomeScreen = require('./screens/HomeScreen');
+const AccountScreen = require('./screens/AccountScreen');
 
 const MainScreen = TabNavigator({
-  Home: {
+  TRPG: {
     screen: HomeScreen,
-  }
+  },
+  Account: {
+    screen: AccountScreen,
+  },
 });
 
 const DetailsScreen = () => (
@@ -28,7 +32,7 @@ const RootNavigator = StackNavigator({
   Main: {
     screen: MainScreen,
     navigationOptions: {
-      headerTitle: 'Home',
+      headerTitle: 'TRPG Game',
     },
   },
   Details: {

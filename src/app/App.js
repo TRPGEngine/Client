@@ -12,18 +12,16 @@ import {
   View
 } from 'react-native';
 const { RootNavigator } = require('./router');
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload1,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+const { Provider } = require('react-redux');
+const configureStore = require('../redux/configureStore');
+const store = configureStore();
 
 export default class App extends Component {
   render() {
     return (
-      <RootNavigator />
+      <Provider store={store}>
+        <RootNavigator />
+      </Provider>
     );
   }
 }
@@ -34,15 +32,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });

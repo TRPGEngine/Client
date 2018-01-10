@@ -13,6 +13,7 @@ const {
   UPDATE_NOTIFICATION_PERMISSION,
 } = require('../constants');
 const immutable = require('immutable');
+const config = require('../../../config/project.config');
 
 const initialState = immutable.fromJS({
   showAlert: false,
@@ -30,7 +31,7 @@ const initialState = immutable.fromJS({
     tryReconnect: false,
     msg: '',
   },
-  notificationPermission: Notification.permission,// granted, denied, default
+  notificationPermission: '',// granted, denied, default in web
 })
 
 module.exports = function ui(state = initialState, action) {

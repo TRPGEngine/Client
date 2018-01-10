@@ -20,6 +20,7 @@ let token = sessionStorage.get('token');
 if(!!token && !!uuid) {
   store.dispatch(require('../redux/actions/user').loginWithToken(uuid, token));
 }
+store.dispatch(require('../redux/actions/ui').setNotification(Notification.permission));
 
 // 检查版本, 网页版跳过检查
 if(config.platform !== 'web') {

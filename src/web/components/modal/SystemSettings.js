@@ -2,11 +2,11 @@ const React = require('react');
 const { connect } = require('react-redux');
 const ModalPanel = require('../ModalPanel');
 const Checkbox = require('../Checkbox');
-const { setNotification } = require('../../../redux/actions/ui');
+const { requestNotification } = require('../../../redux/actions/ui');
 
 class SystemSettings extends React.Component {
   _handleRequestNotificationPermission(isChecked) {
-    this.props.dispatch(setNotification(isChecked));
+    this.props.dispatch(requestNotification(isChecked));
   }
 
   render() {
