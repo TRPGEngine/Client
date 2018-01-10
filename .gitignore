@@ -1,6 +1,8 @@
 .DS_Store
 dist/
 package-lock.json
+yarn.lock
+android/app/src/main/assets/fonts/
 
 # Logs
 logs
