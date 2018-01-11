@@ -3,7 +3,10 @@ const { connect } = require('react-redux');
 const {
   View,
   Text,
+  ListView,
 } = require('react-native');
+const sb = require('react-native-style-block');
+const ConvItem = require('../components/ConvItem');
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -14,18 +17,28 @@ class HomeScreen extends React.Component {
   };
 
   render() {
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    let items = ds.cloneWithRows(Array.from({length:100}));
+
     return (
       <View>
-        <Text>home screen</Text>
-        <Text>redux测试:{this.props.showLoadingText}</Text>
-        <Text>平台信息获取:{require('../../../config/project.config').platform}</Text>
+        <ListView
+          style={styles.convList}
+          dataSource={items}
+          renderRow={(rowData) => (
+            <ConvItem />
+          )}
+        />
       </View>
     )
   }
 }
 
-module.exports = connect(
-  state => ({
-    showLoadingText: state.getIn(['ui', 'showLoadingText']),
-  })
-)(HomeScreen);
+const styles = {
+  convList: [
+    sb.bgColor(),
+    // sb.size('100%', 400),
+  ]
+}
+
+module.exports = connect()(HomeScreen);

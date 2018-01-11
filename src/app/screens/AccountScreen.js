@@ -1,4 +1,5 @@
 const React = require('react');
+const { connect } = require('react-redux');
 const {
   View,
   Text,
@@ -16,9 +17,15 @@ class AccountScreen extends React.Component {
     return (
       <View>
         <Text>account screen</Text>
+          <Text>redux测试:{this.props.showLoadingText}</Text>
+          <Text>平台信息获取:{require('../../../config/project.config').platform}</Text>
       </View>
     )
   }
 }
 
-module.exports = AccountScreen;
+module.exports = connect(
+  state => ({
+    showLoadingText: state.getIn(['ui', 'showLoadingText']),
+  })
+)(AccountScreen);

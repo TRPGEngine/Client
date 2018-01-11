@@ -62,8 +62,9 @@ gulp.task('package:all', ['assets', 'webpack', 'redirect'], function(callback) {
   })
 })
 
-// 将字体文件复制到安卓对应目录
+// 将字体文件复制到设备对应目录
 gulp.task('copyIconfont', function() {
-  return gulp.src('../src/assets/fonts/*')
-    .pipe(gulp.dest('../android/app/src/main/assets/fonts/'));
+  return gulp.src('../src/assets/fonts/iconfont.ttf')
+    .pipe(gulp.dest('../android/app/src/main/assets/fonts/'))
+    .pipe(gulp.dest('../ios/trpg/Images.xcassets/iconfont.dataset/'))
 })
