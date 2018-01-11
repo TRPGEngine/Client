@@ -3,7 +3,9 @@ const { connect } = require('react-redux');
 const {
   View,
   Text,
+  Alert,
 } = require('react-native');
+const ListCell = require('../components/ListCell');
 
 class AccountScreen extends React.Component {
   static navigationOptions = {
@@ -17,8 +19,14 @@ class AccountScreen extends React.Component {
     return (
       <View>
         <Text>account screen</Text>
-          <Text>redux测试:{this.props.showLoadingText}</Text>
-          <Text>平台信息获取:{require('../../../config/project.config').platform}</Text>
+        <Text>redux测试:{this.props.showLoadingText}</Text>
+        <Text>平台信息获取:{require('../../../config/project.config').platform}</Text>
+        <ListCell
+          title="测试项"
+          icon="&#xe648;"
+          color="gold"
+          onClick={() => Alert.alert('', 'test')}
+        />
       </View>
     )
   }

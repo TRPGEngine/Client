@@ -6,25 +6,25 @@ const {
   Image,
 } = require('react-native');
 const sb = require('react-native-style-block');
-console.log("aaaa");
+
 class ConvItem extends React.Component {
   render() {
     return (
-      <View style={style.container}>
-        <Image style={style.avatar} source={{uri: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1881776517,987084327&fm=27&gp=0.jpg'}} />
-        <View style={style.body}>
-          <View style={style.title}>
-            <Text style={style.name}>人名{Math.random()}</Text>
-            <Text style={style.time}>2天前</Text>
+      <View style={styles.container}>
+        <Image style={styles.avatar} source={{uri: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1881776517,987084327&fm=27&gp=0.jpg'}} />
+        <View style={styles.body}>
+          <View style={styles.title}>
+            <Text style={styles.name}>人名{Math.random()}</Text>
+            <Text style={styles.time}>2天前</Text>
           </View>
-          <Text style={style.msg}>最近消息</Text>
+          <Text style={styles.msg}>最近消息</Text>
         </View>
       </View>
     )
   }
 }
 
-const style = {
+const styles = {
   container: [
     sb.border('Bottom', 0.5, '#ccc', 'solid'),
     sb.direction('row'),
