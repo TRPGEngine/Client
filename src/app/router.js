@@ -22,6 +22,9 @@ const MainNavigator = TabNavigator({
   Account: {
     screen: AccountScreen,
   },
+}, {
+  headerTitle: 'TRPG Game',
+  tabBarPosition: 'bottom',
 });
 
 const DetailsScreen = () => (
@@ -33,9 +36,6 @@ const DetailsScreen = () => (
 const AppNavigator = StackNavigator({
   Main: {
     screen: MainNavigator,
-    navigationOptions: {
-      headerTitle: 'TRPG Game',
-    },
   },
   Details: {
     screen: DetailsScreen,

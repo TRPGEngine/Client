@@ -11,6 +11,7 @@ const ConvItem = require('../components/ConvItem');
 class HomeScreen extends React.Component {
   static navigationOptions = {
     tabBarLabel: 'TRPG',
+    headerTitle: 'TRPG',
     tabBarIcon: ({ tintColor }) => (
       <Text style={{fontFamily:'iconfont', fontSize: 26, color: tintColor}}>&#xe648;</Text>
     ),

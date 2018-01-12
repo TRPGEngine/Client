@@ -11,6 +11,7 @@ const ListCell = require('../components/ListCell');
 class AccountScreen extends React.Component {
   static navigationOptions = {
     tabBarLabel: '我',
+    headerTitle: '我',
     tabBarIcon: ({ tintColor }) => (
       <Text style={{fontFamily:'iconfont', fontSize: 26, color: tintColor}}>&#xe60d;</Text>
     ),
