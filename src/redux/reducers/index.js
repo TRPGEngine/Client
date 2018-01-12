@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux-immutable';
 const config = require('../../../config/project.config');
 
-const reducers = combineReducers({
+const reducers = {
   ui: require('./ui'),
   chat: require('./chat'),
   user: require('./user'),
@@ -9,7 +9,10 @@ const reducers = combineReducers({
   note: require('./note'),
   actor: require('./actor'),
   group: require('./group'),
-  nav: config.platform==='app' ? require('./nav') : null,
-})
+}
 
-module.exports = reducers;
+if(config.platform==='app') {
+  reducers.nav = require('./nav')
+}
+
+module.exports = combineReducers(reducers);
