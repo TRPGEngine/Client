@@ -35,6 +35,7 @@ module.exports = {
 
   externals: {
     electron: "require('electron')",
+    "./nav": "require('./nav')",
   },
 
   plugins: [
