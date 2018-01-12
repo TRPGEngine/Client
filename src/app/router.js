@@ -1,4 +1,5 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 import {
   Platform,
   ScrollView,
@@ -9,11 +10,12 @@ import {
   View,
   Button,
 } from 'react-native';
-const { StackNavigator, TabNavigator } = require('react-navigation');
+const { connect } = require('react-redux');
+const { StackNavigator, TabNavigator, addNavigationHelpers } = require('react-navigation');
 const HomeScreen = require('./screens/HomeScreen');
 const AccountScreen = require('./screens/AccountScreen');
 
-const MainScreen = TabNavigator({
+const MainNavigator = TabNavigator({
   TRPG: {
     screen: HomeScreen,
   },
@@ -28,9 +30,9 @@ const DetailsScreen = () => (
   </View>
 );
 
-const RootNavigator = StackNavigator({
+const AppNavigator = StackNavigator({
   Main: {
-    screen: MainScreen,
+    screen: MainNavigator,
     navigationOptions: {
       headerTitle: 'TRPG Game',
     },
@@ -43,6 +45,25 @@ const RootNavigator = StackNavigator({
   },
 });
 
+// redux state
+const AppWithNavigationState = ({dispatch, nav}) => (
+  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
+)
+
+AppWithNavigationState.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  nav: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = state => {
+  console.log('state', state.get('nav'));
+  return {
+    nav: state.get('nav'),
+  }
+};
+
 module.exports = {
-  RootNavigator,
+  MainNavigator,
+  AppNavigator,
+  AppWithNavigationState: connect(mapStateToProps)(AppWithNavigationState),
 }

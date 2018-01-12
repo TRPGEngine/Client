@@ -5,6 +5,7 @@ const {
   Text,
   Alert,
 } = require('react-native');
+const { NavigationActions } = require('react-navigation');
 const ListCell = require('../components/ListCell');
 
 class AccountScreen extends React.Component {
@@ -21,11 +22,14 @@ class AccountScreen extends React.Component {
         <Text>account screen</Text>
         <Text>redux测试:{this.props.showLoadingText}</Text>
         <Text>平台信息获取:{require('../../../config/project.config').platform}</Text>
+        <Text>{JSON.stringify(this.props)}</Text>
         <ListCell
           title="测试项"
           icon="&#xe648;"
           color="gold"
-          onClick={() => Alert.alert('', 'test')}
+          onClick={() => {
+            this.props.dispatch(NavigationActions.navigate({ routeName: 'Details' }));
+          }}
         />
       </View>
     )

@@ -4,23 +4,23 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import {
+const React = require('react');
+const {
   Platform,
   StyleSheet,
   Text,
   View
-} from 'react-native';
-const { RootNavigator } = require('./router');
+} = require('react-native');
+const { AppWithNavigationState } = require('./router');
 const { Provider } = require('react-redux');
 const configureStore = require('../redux/configureStore');
 const store = configureStore();
 
-export default class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <RootNavigator />
+        <AppWithNavigationState />
       </Provider>
     );
   }
@@ -34,3 +34,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
 });
+
+module.exports = App;
