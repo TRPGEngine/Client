@@ -2,7 +2,7 @@
 dist/
 package-lock.json
 yarn.lock
-android/app/src/main/assets/fonts/
+
 
 # Logs
 logs
@@ -90,6 +90,7 @@ project.xcworkspace
 # Android/IntelliJ
 #
 android/build/
+android/app/build/
 .idea
 .gradle
 local.properties
