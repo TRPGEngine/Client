@@ -8,8 +8,9 @@ const scrollTo = require('../../../../utils/animatedScrollTo.js');
 const ReactTooltip = require('react-tooltip');
 const { showModal, hideModal } = require('../../../../redux/actions/ui');
 const { sendMsg, getMoreChatLog } = require('../../../../redux/actions/chat');
-const { sendDiceRequest } = require('../../../../redux/actions/dice');
+const { sendDiceRequest, sendDiceInvite } = require('../../../../redux/actions/dice');
 const DiceRequest = require('../dice/DiceRequest');
+const DiceInvite = require('../dice/DiceInvite');
 const MsgContainer = require('../../../components/MsgContainer');
 
 require('./ConverseDetail.scss');
@@ -29,8 +30,20 @@ class ConverseDetail extends React.Component {
   }
 
   _handleSendDiceInv() {
-    // TODO
     console.log("发送投骰邀请");
+    let uuid = this.props.conversesUUID;
+    let usercache = this.props.usercache;
+    let name = usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username']);
+    this.props.dispatch(showModal(
+      <DiceInvite
+        inviteList={[name]}
+        onSendDiceInvite={(diceReason, diceExp) => {
+          console.log("diceReason, diceExp",diceReason, diceExp);
+          this.props.dispatch(sendDiceInvite(uuid, false, diceExp, diceReason, [uuid], [name]));
+          this.props.dispatch(hideModal());
+        }}
+      />
+    ))
   }
 
   render() {

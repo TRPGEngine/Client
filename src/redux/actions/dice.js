@@ -22,6 +22,7 @@ exports.acceptDiceRequest = function(uuid) {
   return function(dispatch, getState) {
     return api.emit('dice::acceptDiceRequest', {msg_card_uuid: uuid} ,function(data) {
       if(data.result) {
+        // TODO: 修复同意者接受投骰结果信息的方法
         let log = data.log;
         dispatch({type: UPDATE_MSG, converseUUID: log.to_uuid, msgUUID: log.uuid, payload: log});
       }else {
@@ -43,12 +44,13 @@ exports.sendDiceInvite = function(to_uuid, is_group, dice_request, reason, invit
   }
 }
 
-exports.acceptDiceInvite = function(uuid) {
+exports.acceptDiceInvite = function(uuid, isGroupMsg) {
   return function(dispatch, getState) {
     return api.emit('dice::acceptDiceInvite', {msg_card_uuid: uuid} ,function(data) {
       if(data.result) {
+        // TODO: 修复同意者接受投骰结果信息的方法
         let log = data.log;
-        dispatch({type: UPDATE_MSG, converseUUID: log.to_uuid, msgUUID: log.uuid, payload: log});
+        dispatch({type: UPDATE_MSG, converseUUID: log.to_uuid , msgUUID: log.uuid, payload: log});
       }else {
         console.error(data);
       }

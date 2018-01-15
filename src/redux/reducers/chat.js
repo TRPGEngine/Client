@@ -75,12 +75,16 @@ module.exports = function chat(state = initialState, action) {
           .setIn(['converses', converseUUID, 'unread'], action.unread);//已读未读
       case UPDATE_MSG:
         return state.updateIn(['converses', action.converseUUID, 'msgList'], (msgList) => {
-          for (var i = 0; i < msgList.size; i++) {
-            let msg = msgList.get(i);
-            if(msg.get('uuid') === action.msgUUID) {
-              msgList = msgList.set(i, immutable.fromJS(action.payload));
-              break;
+          if(msgList) {
+            for (var i = 0; i < msgList.size; i++) {
+              let msg = msgList.get(i);
+              if(msg.get('uuid') === action.msgUUID) {
+                msgList = msgList.set(i, immutable.fromJS(action.payload));
+                break;
+              }
             }
+          }else {
+            console.error("update msglist failed, not find msgList in", action.converseUUID);
           }
 
           return msgList;
