@@ -11,13 +11,17 @@ import {
   Button,
 } from 'react-native';
 const { connect } = require('react-redux');
-const { StackNavigator, TabNavigator, addNavigationHelpers } = require('react-navigation');
+const { StackNavigator, TabNavigator, TabBarBottom, addNavigationHelpers } = require('react-navigation');
 const HomeScreen = require('./screens/HomeScreen');
 const AccountScreen = require('./screens/AccountScreen');
+const ContactsScreen = require('./screens/ContactsScreen');
 
 const MainNavigator = TabNavigator({
   TRPG: {
     screen: HomeScreen,
+  },
+  Contacts: {
+    screen: ContactsScreen,
   },
   Account: {
     screen: AccountScreen,
@@ -25,6 +29,7 @@ const MainNavigator = TabNavigator({
 }, {
   headerTitle: 'TRPG Game',
   tabBarPosition: 'bottom',
+  tabBarComponent: TabBarBottom,
 });
 
 const DetailsScreen = () => (
