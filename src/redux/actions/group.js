@@ -25,7 +25,7 @@ const {
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
-const { addConverse, updateSystemCardChatData } = require('./chat');
+const { addConverse, updateCardChatData } = require('./chat');
 const { checkUser, checkTemplate } = require('../../utils/usercache');
 const { showLoading, hideLoading, showAlert, hideModal } = require('./ui');
 
@@ -140,7 +140,7 @@ exports.agreeGroupRequest = function(chatlogUUID, requestUUID) {
   return function(dispatch, getState) {
     return api.emit('group::agreeGroupRequest', {request_uuid: requestUUID}, function(data) {
       if(data.result) {
-        dispatch(updateSystemCardChatData(chatlogUUID, {is_processed: true}));
+        dispatch(updateCardChatData(chatlogUUID, {is_processed: true}));
         dispatch({type: AGREE_GROUP_REQUEST_SUCCESS, groupUUID: data.groupUUID, payload: data.members});
       }else {
         console.error(data.msg);
@@ -152,7 +152,7 @@ exports.refuseGroupRequest = function(chatlogUUID, requestUUID) {
   return function(dispatch, getState) {
     return api.emit('group::refuseGroupRequest', {request_uuid: requestUUID}, function(data) {
       if(data.result) {
-        dispatch(updateSystemCardChatData(chatlogUUID, {is_processed: true}));
+        dispatch(updateCardChatData(chatlogUUID, {is_processed: true}));
       }else {
         console.error(data.msg);
       }

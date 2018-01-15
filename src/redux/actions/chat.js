@@ -188,9 +188,9 @@ let getMoreChatLog = function getMoreChatLog(userUUID, converseUUID, offsetDate)
   }
 }
 
-let updateSystemCardChatData = function(chatUUID, newData) {
+let updateCardChatData = function(chatUUID, newData) {
   return function(dispatch, getState) {
-    return api.emit('chat::updateSystemCardChatData', {chatUUID, newData}, function(data) {
+    return api.emit('chat::updateCardChatData', {chatUUID, newData}, function(data) {
       if(data.result) {
         dispatch({type:UPDATE_SYSTEM_CARD_CHAT_DATA, chatUUID, payload: data.log});
       }else {
@@ -208,4 +208,4 @@ exports.getConverses = getConverses;
 exports.createConverse = createConverse;
 exports.removeConverse = removeConverse;
 exports.getMoreChatLog = getMoreChatLog;
-exports.updateSystemCardChatData = updateSystemCardChatData;
+exports.updateCardChatData = updateCardChatData;
