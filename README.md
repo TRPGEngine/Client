@@ -1,6 +1,14 @@
 # TRPG Game
 
 [![Build Status](https://travis-ci.org/TRPGEngine/Client.svg?branch=master)](https://travis-ci.org/TRPGEngine/Client)
+[![Release](https://img.shields.io/github/release/TRPGEngine/Client.svg)](https://github.com/TRPGEngine/Client/releases)
+[![Downloads](https://img.shields.io/github/downloads/TRPGEngine/Client/total.svg)](https://github.com/TRPGEngine/Client/releases)
+[![Windows](https://img.shields.io/badge/platform-windows-blue.svg)]()
+[![Mac](https://img.shields.io/badge/platform-mac-blue.svg)]()
+[![Linux](https://img.shields.io/badge/platform-linux-blue.svg)]()
+[![iOS](https://img.shields.io/badge/platform-ios-orange.svg)]()
+[![Android](https://img.shields.io/badge/platform-android-orange.svg)]()
+[![Web](https://img.shields.io/badge/platform-web-green.svg)]()
 
 TPRG前端网页端
 
