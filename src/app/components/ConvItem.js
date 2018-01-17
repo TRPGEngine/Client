@@ -11,7 +11,10 @@ const sb = require('react-native-style-block');
 class ConvItem extends React.Component {
   render() {
     return (
-      <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => this.props.onPress && this.props.onPress()}
+      >
         <Image style={styles.avatar} source={{uri: this.props.avatar}} />
         <View style={styles.body}>
           <View style={styles.title}>
