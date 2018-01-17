@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 const { connect } = require('react-redux');
 const { StackNavigator, TabNavigator, TabBarBottom, addNavigationHelpers } = require('react-navigation');
+const LoginScreen = require('./screens/LoginScreen');
 const HomeScreen = require('./screens/HomeScreen');
 const AccountScreen = require('./screens/AccountScreen');
 const ContactsScreen = require('./screens/ContactsScreen');
@@ -40,6 +41,9 @@ const DetailsScreen = () => (
 );
 
 const AppNavigator = StackNavigator({
+  Login: {
+    screen: LoginScreen,
+  },
   Main: {
     screen: MainNavigator,
   },
