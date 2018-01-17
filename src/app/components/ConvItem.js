@@ -3,6 +3,7 @@ const {
   Platform,
   Text,
   View,
+  TouchableOpacity,
   Image,
 } = require('react-native');
 const sb = require('react-native-style-block');
@@ -10,16 +11,16 @@ const sb = require('react-native-style-block');
 class ConvItem extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Image style={styles.avatar} source={{uri: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1881776517,987084327&fm=27&gp=0.jpg'}} />
+      <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
+        <Image style={styles.avatar} source={{uri: this.props.avatar}} />
         <View style={styles.body}>
           <View style={styles.title}>
-            <Text style={styles.name}>人名{Math.random()}</Text>
-            <Text style={styles.time}>2天前</Text>
+            <Text style={styles.name}>{this.props.name}</Text>
+            <Text style={styles.time}>{this.props.time}</Text>
           </View>
-          <Text style={styles.msg}>最近消息</Text>
+          <Text style={styles.msg}>{this.props.msg}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 }

@@ -15,6 +15,7 @@ const { StackNavigator, TabNavigator, TabBarBottom, addNavigationHelpers } = req
 const HomeScreen = require('./screens/HomeScreen');
 const AccountScreen = require('./screens/AccountScreen');
 const ContactsScreen = require('./screens/ContactsScreen');
+const ChatScreen = require('./screens/ChatScreen');
 
 const MainNavigator = TabNavigator({
   TRPG: {
@@ -48,6 +49,12 @@ const AppNavigator = StackNavigator({
       headerTitle: 'Details',
     },
   },
+  Chat: {
+    screen: ChatScreen,
+    navigationOptions: ({navigation}) => ({
+      headerTitle: navigation.state.params.name || '',
+    }),
+  },
 });
 
 // redux state
@@ -61,7 +68,6 @@ AppWithNavigationState.propTypes = {
 };
 
 const mapStateToProps = state => {
-  console.log('state', state.get('nav'));
   return {
     nav: state.get('nav'),
   }
