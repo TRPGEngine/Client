@@ -43,9 +43,15 @@ const DetailsScreen = () => (
 const AppNavigator = StackNavigator({
   Login: {
     screen: LoginScreen,
+    navigationOptions: {
+      headerLeft: null,
+    }
   },
   Main: {
     screen: MainNavigator,
+    navigationOptions: {
+      headerLeft: null,
+    }
   },
   Details: {
     screen: DetailsScreen,

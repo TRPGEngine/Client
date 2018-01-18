@@ -14,6 +14,8 @@ class TInput extends React.Component {
     return (
       <TextInput
         underlineColorAndroid="transparent"
+        autoCorrect={false}
+        autoCapitalize="none"
         {...this.props}
         style={[...styles.input, ...this.props.style]}
       />
