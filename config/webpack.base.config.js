@@ -24,7 +24,12 @@ module.exports = {
       {
         test: /\.(js|jsx)?$/,
         loader: "babel-loader",
-        include: [APP_PATH, CONFIG_PATH, path.resolve(ROOT_PATH, './node_modules/trpg-actor-template/')],
+        include: [
+          APP_PATH,
+          CONFIG_PATH,
+          path.resolve(ROOT_PATH, './node_modules/trpg-actor-template/'),
+          path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
+        ],
       },
       {
         test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf)$/,
@@ -35,6 +40,7 @@ module.exports = {
 
   externals: {
     electron: "require('electron')",
+    "react-native": "require('react-native')",
     "./nav": "require('./nav')",
   },
 
