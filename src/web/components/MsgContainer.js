@@ -115,7 +115,9 @@ class MsgContainer extends React.Component {
               let data = item.get('data');
               let isMe = userUUID===item.get('sender_uuid');
               let icon = isMe ? this.props.selfInfo.get('avatar') : usercache.getIn([item.get('sender_uuid'), 'avatar'])
-              let name = isMe ? this.props.selfInfo.get('nickname') || this.props.selfInfo.get('username') : usercache.getIn([item.get('sender_uuid'), 'username'])
+              let name = isMe
+                ? this.props.selfInfo.get('nickname') || this.props.selfInfo.get('username')
+                : usercache.getIn([item.get('sender_uuid'), 'nickname']) || usercache.getIn([item.get('sender_uuid'), 'username']);
 
               // data 预处理
               if(data && item.get('type') === 'card') {

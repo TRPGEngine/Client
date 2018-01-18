@@ -64,6 +64,8 @@ class ProfileCard extends React.Component {
   getActions() {
     let friendList = this.props.friendList.toJS();
     let disabledAddFriend = friendList.indexOf(this.props.selectedUUID)>=0 || this.props.isSelf;
+    let uuid = this.props.selectedUUID;
+    console.log(uuid);
     if(this.state.isEdited) {
       let isChanged = this.checkEditedIsChange();
       return (
