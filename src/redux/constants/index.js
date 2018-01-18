@@ -1,3 +1,5 @@
+const config = require('../../../config/project.config');
+
 module.exports = Object.assign(
   {
     RESET: 'RESET',
@@ -9,5 +11,5 @@ module.exports = Object.assign(
   require('./note'),
   require('./ui'),
   require('./user'),
-  require('./nav'),
+  config.platform==='app' ? require('./nav') : null,
 );

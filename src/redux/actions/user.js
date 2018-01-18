@@ -34,13 +34,16 @@ const { showLoading, hideLoading, showAlert } = require('./ui');
 const { checkUser } = require('../../utils/usercache');
 
 exports.login = function(username, password) {
-  password = md5(password);
   return function(dispatch, getState) {
+    password = md5(password);
+    let isApp = config.platform === 'app';
     dispatch({type:LOGIN_REQUEST});
-    return api.emit('player::login', {username, password, platform: config.platform}, function(data) {
+    return api.emit('player::login', {username, password, platform: config.platform, isApp}, function(data) {
       dispatch(hideLoading());
+
+      // TODO: for app: 多端统一使用rnStorage
       if(data.result) {
-        dispatch({type:LOGIN_SUCCESS, payload: data.info});
+        dispatch({type:LOGIN_SUCCESS, payload: data.info, isApp});
       }else {
         dispatch(showAlert({
           type: 'alert',
@@ -55,9 +58,10 @@ exports.login = function(username, password) {
 
 exports.loginWithToken = function(uuid, token) {
   return function(dispatch, getState) {
-    return api.emit('player::loginWithToken', {uuid, token, platform: config.platform}, function(data) {
+    let isApp = config.platform === 'app';
+    return api.emit('player::loginWithToken', {uuid, token, platform: config.platform, isApp}, function(data) {
       if(data.result) {
-        dispatch({type:LOGIN_SUCCESS, payload: data.info});
+        dispatch({type:LOGIN_SUCCESS, payload: data.info, isApp});
       }else {
         console.log(data);
         if(getState().getIn(['user', 'isLogin'])) {

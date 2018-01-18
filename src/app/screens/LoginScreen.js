@@ -7,6 +7,7 @@ const {
 } = require('react-native');
 const TFormGroup = require('../components/TFormGroup');
 const sb = require('react-native-style-block');
+const { login } = require('../../redux/actions/user');
 
 class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -16,19 +17,38 @@ class LoginScreen extends React.Component {
     ),
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+    };
+  }
+
+  _handleLogin() {
+    let {username, password} = this.state;
+    console.log(username, password);
+    if(!!username && !!password) {
+      this.props.dispatch(login(this.state.username, this.state.password));
+    }
+  }
+
   render() {
-    console.log('TFormGroup', TFormGroup);
     return (
       <View style={styles.container}>
         <Text style={styles.title}>欢迎来到TRPG Game</Text>
         <TFormGroup
           label="用户名"
+          value={this.state.username}
+          onChangeText={(username) => this.setState({username})}
           input={{
             placeholder: "请输入用户名",
           }}
         />
         <TFormGroup
           label="密码"
+          value={this.state.password}
+          onChangeText={(password) => this.setState({password})}
           input={{
             placeholder: "请输入密码",
             secureTextEntry: true
@@ -36,7 +56,7 @@ class LoginScreen extends React.Component {
         />
         <Button
           title="登录"
-          onPress={() => {}} 
+          onPress={() => this._handleLogin()}
         />
       </View>
     )

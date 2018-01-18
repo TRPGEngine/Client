@@ -8,6 +8,9 @@ const TInput = require('./TInput');
 
 class TFormGroup extends React.Component {
   static defaultProps = {
+    label: '',
+    value: '',
+    onChangeText: () => {},
     style: [],
     input: [],
   }
@@ -23,6 +26,8 @@ class TFormGroup extends React.Component {
       >
         <Text style={styles.label}>{this.props.label}:</Text>
         <TInput
+          value={this.props.value}
+          onChangeText={(...args) => this.props.onChangeText(...args)}
           {...this.props.input}
           style={[...styles.input, ...this.props.input.style]}
         />
