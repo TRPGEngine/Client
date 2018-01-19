@@ -30,6 +30,15 @@ module.exports = {
           path.resolve(ROOT_PATH, './node_modules/trpg-actor-template/'),
           path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
         ],
+        query: {
+          presets: ["es2015","react", "stage-3"],
+          plugins: [
+            ['transform-runtime', {
+              helpers: false,
+              polyfill: false,
+              regenerator: true, }],
+          ]
+        }
       },
       {
         test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf)$/,
