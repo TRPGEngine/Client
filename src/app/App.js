@@ -25,7 +25,6 @@ const rnStorage = require('../api/rnStorage.api.js');
 (async () => {
   let uuid = await rnStorage.get('uuid');
   let token = await rnStorage.get('token');
-
   if(!!token && !!uuid) {
     store.dispatch(require('../redux/actions/user').loginWithToken(uuid, token));
   }
