@@ -14,12 +14,15 @@ const api = trpgApi.getInstance();
 trpgApi.bindEventFunc.call(api, store);
 
 // token登录
-const sessionStorage = require('../api/sessionStorage.api.js');
-let uuid = sessionStorage.get('uuid');
-let token = sessionStorage.get('token');
-if(!!token && !!uuid) {
-  store.dispatch(require('../redux/actions/user').loginWithToken(uuid, token));
-}
+
+const rnStorage = require('../api/rnStorage.api.js');
+(async () => {
+  let uuid = await rnStorage.get('uuid');
+  let token = await rnStorage.get('token');
+  if(!!token && !!uuid) {
+    store.dispatch(require('../redux/actions/user').loginWithToken(uuid, token));
+  }
+})();
 store.dispatch(require('../redux/actions/ui').setNotification(Notification.permission));
 
 // 检查版本, 网页版跳过检查

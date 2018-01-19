@@ -28,6 +28,7 @@ const {
 } = require('../constants');
 const md5 = require('md5');
 const trpgApi = require('../../api/trpg.api.js');
+const rnStorage = require('../../api/rnStorage.api.js');
 const config = require('../../../config/project.config');
 const api = trpgApi.getInstance();
 const { showLoading, hideLoading, showAlert } = require('./ui');
@@ -41,10 +42,18 @@ exports.login = function(username, password) {
     return api.emit('player::login', {username, password, platform: config.platform, isApp}, function(data) {
       dispatch(hideLoading());
 
-      // TODO: for app: 多端统一使用rnStorage
       if(data.result) {
+        let {uuid, token, app_token} = data.info;
+        if(isApp) {
+          rnStorage.set({uuid, token: app_token});
+        }else {
+          rnStorage.set({uuid, token});
+        }
         dispatch({type:LOGIN_SUCCESS, payload: data.info, isApp});
       }else {
+        rnStorage.remove('uuid');
+        rnStorage.remove('token');
+        console.log(test);
         dispatch(showAlert({
           type: 'alert',
           title: '登录失败',
@@ -89,6 +98,8 @@ exports.logout = function() {
     api.emit('player::logout', {uuid, token} ,function(data) {
       dispatch(hideLoading());
       if(data.result) {
+        rnStorage.remove('uuid');
+        rnStorage.remove('token');
         dispatch({type: RESET});
       }else {
         dispatch(showAlert(data.msg));

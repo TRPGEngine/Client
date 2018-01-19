@@ -86,11 +86,18 @@ function bindEventFunc(store) {
 
     let isLogin = store.getState().getIn(['user', 'isLogin']);
     if(isLogin) {
-      const sessionStorage = require('./sessionStorage.api.js');
-      let uuid = sessionStorage.get('uuid');
-      let token = sessionStorage.get('token');
-      console.log('正在尝试自动重新登录');
-      store.dispatch(loginWithToken(uuid, token));
+      (async () => {
+        const rnStorage = require('./rnStorage.api.js');
+        let uuid = await rnStorage.get('uuid');
+        let token = await rnStorage.get('token');
+        let app_token = await rnStorage.get('app_token');
+        console.log('正在尝试自动重新登录');
+        if(config.platform === 'app') {
+          store.dispatch(loginWithToken(uuid, app_token));
+        }else {
+          store.dispatch(loginWithToken(uuid, token));
+        }
+      })()
     }
   });
   socket.on('reconnecting', function(data) {

@@ -1,6 +1,8 @@
 import { NavigationActions } from 'react-navigation';
 import { AppNavigator, MainNavigator } from '../../app/router';
 const {
+  LOGIN_SUCCESS,
+  LOGOUT,
   SWITCH_NAV,
 } = require('../constants');
 
@@ -15,37 +17,44 @@ let initialNavState = AppNavigator.router.getStateForAction(NavigationActions.in
 //   initialNavState
 // );
 
-console.log(initialNavState);
 module.exports = function nav(state = initialNavState, action) {
   let nextState;
-  console.log(action, state);
+  console.log('nav', action, state);
   switch (action.type) {
-    // case 'Login':
-    //   nextState = AppNavigator.router.getStateForAction(
-    //     NavigationActions.back(),
-    //     state
-    //   );
-    //   break;
-    // case 'Logout':
-    //   nextState = AppNavigator.router.getStateForAction(
-    //     NavigationActions.navigate({ routeName: 'Login' }),
-    //     state
-    //   );
-    //   break;
+    case LOGIN_SUCCESS:
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: 'Main'})
+          ]
+        }),
+        state
+      );
+      break;
+    case LOGOUT:
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: 'Main'})
+          ]
+        }),
+        state
+      );
+      break;
     case SWITCH_NAV:
-      console.log(NavigationActions.navigate({ routeName: action.routeName }));
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.navigate({ routeName: action.routeName }),
         state
       );
-      console.log(nextState);
       break;
     default:
       nextState = AppNavigator.router.getStateForAction(action, state);
       break;
   }
 
-  console.log('nextState', nextState);
+  console.log('nav', 'nextState', nextState);
 
   // Simply return the original `state` if `nextState` is null or undefined.
   return nextState || state;

@@ -42,8 +42,6 @@ module.exports = {
     }catch(e) {
       console.error(e);
     }
-
-    return this;
   },
   get: async (key) => {
     let res;
@@ -60,6 +58,5 @@ module.exports = {
   },
   remove: async (key) => {
     await storage.remove({key});
-    return this;
   }
 };
