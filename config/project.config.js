@@ -5,7 +5,12 @@ if(!!window && window.location && window.location.host) {
   currentHost = window.location.host.split(":")[0];
 }
 if(environment=='production') {
-  currentHost = process.env.TRPG_HOST || 'trpgapi.moonrailgun.com';
+  currentHost = 'trpgapi.moonrailgun.com';
+}
+
+let trpgHost = process.env.TRPG_HOST;
+if(trpgHost) {
+  currentHost = trpgHost;
 }
 
 module.exports = {
