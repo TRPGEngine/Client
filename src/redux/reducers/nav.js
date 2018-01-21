@@ -37,7 +37,7 @@ module.exports = function nav(state = initialNavState, action) {
         NavigationActions.reset({
           index: 0,
           actions: [
-            NavigationActions.navigate({ routeName: 'Main'})
+            NavigationActions.navigate({ routeName: 'Login'})
           ]
         }),
         state

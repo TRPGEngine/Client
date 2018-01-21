@@ -6,7 +6,10 @@ const {
   Alert,
 } = require('react-native');
 const { NavigationActions } = require('react-navigation');
+const sb = require('react-native-style-block');
+const { logout } = require('../../redux/actions/user');
 const ListCell = require('../components/ListCell');
+const TButton = require('../components/TButton');
 
 class AccountScreen extends React.Component {
   static navigationOptions = {
@@ -16,6 +19,10 @@ class AccountScreen extends React.Component {
       <Text style={{fontFamily:'iconfont', fontSize: 26, color: tintColor}}>&#xe60d;</Text>
     ),
   };
+
+  _handleLogout() {
+    this.props.dispatch(logout());
+  }
 
   render() {
     return (
@@ -32,9 +39,23 @@ class AccountScreen extends React.Component {
             this.props.dispatch(NavigationActions.navigate({ routeName: 'Details' }));
           }}
         />
+        <TButton
+          style={styles.logoutBtn}
+          textStyle={{color: 'white'}}
+          onPress={() => this._handleLogout()}
+        >退出</TButton>
       </View>
     )
   }
+}
+
+const styles = {
+  logoutBtn: [
+    sb.bgColor('#ff4400'),
+    sb.border('all', 0),
+    sb.radius(2),
+    sb.margin(10),
+  ]
 }
 
 module.exports = connect(
