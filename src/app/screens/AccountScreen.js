@@ -9,7 +9,7 @@ const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
 const { logout } = require('../../redux/actions/user');
 const ListCell = require('../components/ListCell');
-const TButton = require('../components/TButton');
+const { TButton } = require('../components/TComponent');
 
 class AccountScreen extends React.Component {
   static navigationOptions = {

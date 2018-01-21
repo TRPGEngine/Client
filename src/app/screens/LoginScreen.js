@@ -5,10 +5,9 @@ const {
   Text,
   Button,
 } = require('react-native');
-const TFormGroup = require('../components/TFormGroup');
 const sb = require('react-native-style-block');
 const { login } = require('../../redux/actions/user');
-const TLoading = require('../components/TLoading');
+const { TFormGroup, TLoading } = require('../components/TComponent');
 
 class LoginScreen extends React.Component {
   static navigationOptions = {
