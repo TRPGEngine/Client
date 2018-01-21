@@ -30,8 +30,6 @@ const rnStorage = require('../api/rnStorage.api.js');
   }
 })();
 
-
-
 class App extends React.Component {
   render() {
     return (

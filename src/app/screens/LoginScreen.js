@@ -8,6 +8,7 @@ const {
 const TFormGroup = require('../components/TFormGroup');
 const sb = require('react-native-style-block');
 const { login } = require('../../redux/actions/user');
+const TLoading = require('../components/TLoading');
 
 class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -36,6 +37,7 @@ class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <TLoading />
         <Text style={styles.title}>欢迎来到TRPG Game</Text>
         <TFormGroup
           label="用户名"
