@@ -53,7 +53,6 @@ exports.login = function(username, password) {
       }else {
         rnStorage.remove('uuid');
         rnStorage.remove('token');
-        console.log(test);
         dispatch(showAlert({
           type: 'alert',
           title: '登录失败',
@@ -89,13 +88,14 @@ exports.loginWithToken = function(uuid, token) {
 }
 
 exports.logout = function() {
+  let isApp = config.platform === 'app';
   return function(dispatch, getState) {
     let info = getState().getIn(['user','info']);
     let uuid = info.get('uuid');
-    let token = info.get('token');
+    let token = isApp ? info.get('app_token') : info.get('token');
     dispatch(showLoading());
     dispatch({type: LOGOUT});
-    api.emit('player::logout', {uuid, token} ,function(data) {
+    api.emit('player::logout', {uuid, token, isApp} , function(data) {
       dispatch(hideLoading());
       if(data.result) {
         rnStorage.remove('uuid');

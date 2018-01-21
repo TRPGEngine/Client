@@ -21,6 +21,7 @@ function API() {
 function getApiInstance() {
   if(!api) {
     api = new API();
+    console.log('new socket client connect created!');
   }
 
   return api;

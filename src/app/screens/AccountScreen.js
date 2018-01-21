@@ -40,6 +40,7 @@ class AccountScreen extends React.Component {
           }}
         />
         <TButton
+          type="error"
           style={styles.logoutBtn}
           textStyle={{color: 'white'}}
           onPress={() => this._handleLogout()}
@@ -51,9 +52,6 @@ class AccountScreen extends React.Component {
 
 const styles = {
   logoutBtn: [
-    sb.bgColor('#ff4400'),
-    sb.border('all', 0),
-    sb.radius(2),
     sb.margin(10),
   ]
 }

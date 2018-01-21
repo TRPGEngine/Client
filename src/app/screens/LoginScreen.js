@@ -3,11 +3,10 @@ const { connect } = require('react-redux');
 const {
   View,
   Text,
-  Button,
 } = require('react-native');
 const sb = require('react-native-style-block');
 const { login } = require('../../redux/actions/user');
-const { TFormGroup, TLoading } = require('../components/TComponent');
+const { TButton, TFormGroup, TLoading } = require('../components/TComponent');
 
 class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -55,10 +54,10 @@ class LoginScreen extends React.Component {
             secureTextEntry: true
           }}
         />
-        <Button
-          title="登录"
+        <TButton
+          style={styles.loginBtn}
           onPress={() => this._handleLogin()}
-        />
+        >登录</TButton>
       </View>
     )
   }

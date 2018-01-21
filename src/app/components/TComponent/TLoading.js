@@ -7,7 +7,7 @@ const {
   Text,
 } = require('react-native');
 const sb = require('react-native-style-block');
-const { hideLoading } = require('../../redux/actions/ui');
+const { hideLoading } = require('../../../redux/actions/ui');
 
 class TLoading extends React.Component {
   _handleClose() {
