@@ -7,9 +7,8 @@ const {
   UPDATE_NOTE,
 } = require('../constants');
 const immutable = require('immutable');
-const moment = require('moment');
 const uuid = require('uuid/v1');
-const localStorage = require('../../api/localStorage.api.js');
+const rnStorage = require('../../api/rnStorage.api.js');
 
 const initialState = immutable.fromJS({
   noteList: {},
@@ -19,8 +18,8 @@ const initialState = immutable.fromJS({
 function getBlankNote() {
   return {
     uuid: uuid(),
-    created_At: moment().valueOf(),
-    updated_At: moment().valueOf(),
+    created_At: new Date().getTime(),
+    updated_At: new Date().getTime(),
     title: '笔记标题',
     content: '欢迎使用笔记本',
   }
@@ -39,24 +38,15 @@ module.exports = function ui(state = initialState, action) {
       let saveUUID = action.payload.uuid;
       let saveTitle = action.payload.title;
       let saveContent = action.payload.content;
-      let noteObj = localStorage.get('note') || {};
 
       state = state
         .setIn(['noteList', saveUUID, 'title'], saveTitle)
         .setIn(['noteList', saveUUID, 'content'], saveContent)
-        .setIn(['noteList', saveUUID, 'updated_At'], moment().valueOf());
-
-      noteObj[saveUUID] = state.getIn(['noteList', saveUUID]).toJS();
-      localStorage.set('note', noteObj);
+        .setIn(['noteList', saveUUID, 'updated_At'], new Date().getTime());
 
       return state;
     case GET_NOTE:
-      let localNote = localStorage.get('note');
-      if(localNote) {
-        return state.set('noteList', immutable.fromJS(localNote));
-      }else {
-        return state;
-      }
+      return state.set('noteList', immutable.fromJS(action.noteList));
     case SWITCH_NOTE:
       return state.set('selectedNoteUUID', action.noteUUID);
     default:

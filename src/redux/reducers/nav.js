@@ -19,7 +19,6 @@ let initialNavState = AppNavigator.router.getStateForAction(NavigationActions.in
 
 module.exports = function nav(state = initialNavState, action) {
   let nextState;
-  console.log('nav', action, state);
   switch (action.type) {
     case LOGIN_SUCCESS:
       nextState = AppNavigator.router.getStateForAction(
@@ -53,8 +52,6 @@ module.exports = function nav(state = initialNavState, action) {
       nextState = AppNavigator.router.getStateForAction(action, state);
       break;
   }
-
-  console.log('nav', 'nextState', nextState);
 
   // Simply return the original `state` if `nextState` is null or undefined.
   return nextState || state;

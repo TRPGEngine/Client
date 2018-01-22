@@ -34,6 +34,28 @@ const api = trpgApi.getInstance();
 const { showLoading, hideLoading, showAlert } = require('./ui');
 const { checkUser } = require('../../utils/usercache');
 
+
+function loginSuccess(dispatch, getState) {
+  if(!dispatch || !getState) {
+    return;
+  }
+
+  const { getConverses } = require('./chat');
+  const { getFriends, getFriendsInvite } = require('./user');
+  const { getTemplate, getActor } = require('./actor');
+  const { getGroupList, getGroupInvite } = require('./group');
+  const { getNote } = require('./note');
+
+  dispatch(getConverses())
+  dispatch(getFriends())
+  dispatch(getFriendsInvite())
+  dispatch(getTemplate())
+  dispatch(getActor())
+  dispatch(getGroupList())
+  dispatch(getGroupInvite())
+  dispatch(getNote())
+}
+
 exports.login = function(username, password) {
   return function(dispatch, getState) {
     password = md5(password);
@@ -50,6 +72,7 @@ exports.login = function(username, password) {
           rnStorage.set({uuid, token});
         }
         dispatch({type:LOGIN_SUCCESS, payload: data.info, isApp});
+        loginSuccess(dispatch, getState); // 获取用户信息
       }else {
         rnStorage.remove('uuid');
         rnStorage.remove('token');
@@ -70,6 +93,7 @@ exports.loginWithToken = function(uuid, token) {
     return api.emit('player::loginWithToken', {uuid, token, platform: config.platform, isApp}, function(data) {
       if(data.result) {
         dispatch({type:LOGIN_SUCCESS, payload: data.info, isApp});
+        loginSuccess(dispatch, getState); // 获取用户信息
       }else {
         console.log(data);
         if(getState().getIn(['user', 'isLogin'])) {
