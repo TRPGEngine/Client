@@ -3,4 +3,5 @@ module.exports = {
   TFormGroup: require('./TFormGroup'),
   TInput: require('./TInput'),
   TLoading: require('./TLoading'),
+  TAlert: require('./TAlert'),
 }

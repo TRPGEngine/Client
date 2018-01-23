@@ -8,7 +8,7 @@ const {
 const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
 const { login } = require('../../redux/actions/user');
-const { TButton, TFormGroup, TLoading } = require('../components/TComponent');
+const { TButton, TFormGroup, TLoading, TAlert } = require('../components/TComponent');
 
 class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -28,7 +28,6 @@ class LoginScreen extends React.Component {
 
   _handleLogin() {
     let {username, password} = this.state;
-    console.log(username, password);
     if(!!username && !!password) {
       this.props.dispatch(login(this.state.username, this.state.password));
     }
@@ -38,6 +37,7 @@ class LoginScreen extends React.Component {
     return (
       <View style={styles.container}>
         <TLoading />
+        <TAlert />
         <Text style={styles.title}>欢迎来到TRPG Game</Text>
         <TFormGroup
           label="用户名"

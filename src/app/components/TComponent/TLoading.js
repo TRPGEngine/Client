@@ -17,7 +17,7 @@ class TLoading extends React.Component {
   render() {
     return (
       <Modal
-        animationType={"fade"}
+        animationType="fade"
         transparent={true}
         visible={this.props.showLoading}
         onRequestClose={() => console.log('request modal close.')}

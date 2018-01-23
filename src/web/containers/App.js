@@ -19,19 +19,13 @@ const {emojify, getCodeList} = require('../../utils/emoji');
 
 class App extends React.Component {
   render() {
-    const {showLoading, showLoadingText, showAlert, showAlertInfo} = this.props;
-    let alertInfo = showAlertInfo.toJS();
+    const {showLoading, showLoadingText} = this.props;
     return (
       <Router>
         <div>
           <Modal />
           <Loading show={showLoading} text={showLoadingText} />
-          <Alert
-            show={showAlert}
-            title={alertInfo.title || ''}
-            content={alertInfo.content}
-            type={alertInfo.type || 'alert'}
-            onConfirm={alertInfo.onConfirm} />
+          <Alert />
           <div className="app">
             <Switch>
               <Route name="login" path="/login" component={Login} />
@@ -91,7 +85,5 @@ module.exports = connect(
     playSound: state.getIn(['pc', 'playSound']),
     showLoading: state.getIn(['ui', 'showLoading']),
     showLoadingText: state.getIn(['ui', 'showLoadingText']),
-    showAlert: state.getIn(['ui', 'showAlert']),
-    showAlertInfo: state.getIn(['ui', 'showAlertInfo']),
   })
 )(App);

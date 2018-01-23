@@ -4,6 +4,7 @@ const {
   View,
   Text,
 } = require('react-native');
+const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
 const { TButton, TFormGroup, TLoading } = require('../components/TComponent');
 const { showLoading, showAlert } = require('../../redux/actions/ui');
@@ -47,13 +48,21 @@ class RegisterScreen extends React.Component {
   _handleRegister() {
     let err = this.checkInputErr();
     if(err) {
-      showAlert(err);
+      this.props.dispatch(showAlert({
+        title: '格式错误',
+        content: err
+      }));
     }else {
       this.props.dispatch(showLoading());
       let username = this.state.username;
       let password = this.state.password;
       this.props.dispatch(register(username, password, () => {
-        this.props.dispatch(showAlert('注册成功'));
+        this.props.dispatch(showAlert({
+          content: '注册成功',
+          onConfirm: () => {
+            this.props.dispatch(NavigationActions.back())
+          }
+        }));
       }));
     }
   }
@@ -61,7 +70,6 @@ class RegisterScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TLoading />
         <Text style={styles.title}>注册TRPG Game账户</Text>
         <TFormGroup
           label="用户名"
