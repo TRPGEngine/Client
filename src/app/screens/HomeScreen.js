@@ -4,6 +4,7 @@ const {
   View,
   Text,
   ListView,
+  RefreshControl,
 } = require('react-native');
 const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
@@ -17,6 +18,20 @@ class HomeScreen extends React.Component {
       <Text style={{fontFamily:'iconfont', fontSize: 26, color: tintColor}}>&#xe648;</Text>
     ),
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isRefreshing: false,
+    };
+  }
+
+  _handleRefresh() {
+    this.setState({isRefreshing: true});
+    setTimeout(() => {
+      this.setState({isRefreshing: false});
+    }, 5000);
+  }
 
   render() {
     let arr = [];
@@ -36,6 +51,15 @@ class HomeScreen extends React.Component {
       <View>
         <ListView
           style={styles.convList}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={() => this._handleRefresh()}
+              colors={['#5dd3d2', '#ffaa4d', '#2f9bd7', '#f88756']}
+              progressBackgroundColor="#ffffff"
+              title="加载中..."
+            />
+          }
           dataSource={items}
           renderRow={(rowData) => (
             <ConvItem
