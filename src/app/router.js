@@ -13,6 +13,7 @@ import {
 const { connect } = require('react-redux');
 const { StackNavigator, TabNavigator, TabBarBottom, addNavigationHelpers } = require('react-navigation');
 const LoginScreen = require('./screens/LoginScreen');
+const RegisterScreen = require('./screens/RegisterScreen');
 const HomeScreen = require('./screens/HomeScreen');
 const AccountScreen = require('./screens/AccountScreen');
 const ContactsScreen = require('./screens/ContactsScreen');
@@ -45,6 +46,12 @@ const AppNavigator = StackNavigator({
     screen: LoginScreen,
     navigationOptions: {
       headerLeft: null,
+    }
+  },
+  Register: {
+    screen: RegisterScreen,
+    navigationOptions: {
+      headerTitle: '注册',
     }
   },
   Main: {

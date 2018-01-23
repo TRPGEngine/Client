@@ -132,7 +132,7 @@ exports.logout = function() {
   }
 }
 
-exports.register = function(username, password) {
+exports.register = function(username, password, onSuccess) {
   password = md5(password);
   return function(dispatch, getState) {
     dispatch({type:REGISTER_REQUEST});
@@ -141,6 +141,7 @@ exports.register = function(username, password) {
       console.log(data);
       if(data.result) {
         dispatch({type:REGISTER_SUCCESS, payload: data.results});
+        onSuccess && onSuccess();
       }else {
         dispatch({type:REGISTER_FAILED, payload: data.msg});
         dispatch(showAlert({

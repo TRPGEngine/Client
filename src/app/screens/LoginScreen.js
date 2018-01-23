@@ -3,7 +3,9 @@ const { connect } = require('react-redux');
 const {
   View,
   Text,
+  TouchableOpacity,
 } = require('react-native');
+const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
 const { login } = require('../../redux/actions/user');
 const { TButton, TFormGroup, TLoading } = require('../components/TComponent');
@@ -55,9 +57,14 @@ class LoginScreen extends React.Component {
           }}
         />
         <TButton
-          style={styles.loginBtn}
           onPress={() => this._handleLogin()}
         >登录</TButton>
+        <TouchableOpacity
+          style={styles.registerBtn}
+          onPress={() => this.props.dispatch(NavigationActions.navigate({ routeName: 'Register' }))}
+        >
+          <Text style={styles.registerText}>没有账户？点击此处注册</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -74,11 +81,15 @@ const styles = {
     sb.font(20),
     {paddingLeft: 10, marginBottom: 20}
   ],
-  input: [
-    {
-      marginBottom: 10,
-    }
-  ]
+  registerBtn: [
+    sb.bgColor('transparent'),
+    {marginTop: 10, height: 32},
+  ],
+  registerText: [
+    sb.color('#2f9bd7'),
+    sb.textAlign('right'),
+    sb.font(14),
+  ],
 }
 
 module.exports = connect()(LoginScreen);

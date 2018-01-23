@@ -35,7 +35,7 @@ class AccountScreen extends React.Component {
           title="测试项"
           icon="&#xe648;"
           color="gold"
-          onClick={() => {
+          onPress={() => {
             this.props.dispatch(NavigationActions.navigate({ routeName: 'Details' }));
           }}
         />

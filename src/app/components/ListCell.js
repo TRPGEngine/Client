@@ -11,7 +11,7 @@ class ListCell extends React.Component {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={() => this.props.onClick && this.props.onClick()}
+        onPress={() => this.props.onPress && this.props.onPress()}
       >
         <Text style={[styles.icon, {color: this.props.color}]}>{this.props.icon}</Text>
         <Text style={styles.title}>{this.props.title}</Text>
