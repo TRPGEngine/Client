@@ -10,18 +10,19 @@ const sb = require('react-native-style-block');
 
 class ConvItem extends React.Component {
   render() {
+    let icon = typeof this.props.icon === 'number' ? this.props.icon : {uri: this.props.icon};
     return (
       <TouchableOpacity
         style={styles.container}
         onPress={() => this.props.onPress && this.props.onPress()}
       >
-        <Image style={styles.avatar} source={{uri: this.props.avatar}} />
+        <Image style={styles.avatar} source={icon} />
         <View style={styles.body}>
           <View style={styles.title}>
-            <Text style={styles.name}>{this.props.name}</Text>
+            <Text style={styles.name}>{this.props.title}</Text>
             <Text style={styles.time}>{this.props.time}</Text>
           </View>
-          <Text style={styles.msg}>{this.props.msg}</Text>
+          <Text style={styles.msg}>{this.props.content}</Text>
         </View>
       </TouchableOpacity>
     )
@@ -32,7 +33,7 @@ const styles = {
   container: [
     sb.border('Bottom', 0.5, '#ccc', 'solid'),
     sb.direction('row'),
-    sb.padding(6),
+    sb.padding(10, 6),
   ],
   avatar: [
     sb.size(40, 40),

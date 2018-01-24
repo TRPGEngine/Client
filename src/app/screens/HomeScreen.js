@@ -8,6 +8,8 @@ const {
 } = require('react-native');
 const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
+const dateHelper = require('../../utils/dateHelper');
+const appConfig = require('../config.app');
 const ConvItem = require('../components/ConvItem');
 
 class HomeScreen extends React.Component {
@@ -26,29 +28,41 @@ class HomeScreen extends React.Component {
     };
   }
 
-  _handleRefresh() {
-    this.setState({isRefreshing: true});
-    setTimeout(() => {
-      this.setState({isRefreshing: false});
-    }, 5000);
-  }
+  getList() {
+    if(this.props.converses.size > 0) {
+      let arr = this.props.converses
+        .valueSeq()
+        .sortBy((item) => new Date(item.get('lastTime')))
+        .reverse()
+        .map((item, index) => {
+          let uuid = item.get('uuid');
+          let defaultIcon = uuid === 'trpgsystem' ? appConfig.defaultImg.trpgsystem : appConfig.defaultImg.user;
+          let avatar;
+          if(item.get('type') === 'user') {
+            avatar = this.props.usercache.getIn([uuid, 'avatar']);
+          }else if(item.get('type') === 'group') {
+            let group = this.props.groups.find(g => g.get('uuid') === uuid);
+            avatar = group ? group.get('avatar') : '';
+          }
 
-  render() {
-    let arr = [];
-    for (var i = 0; i < 100; i++) {
-      arr[i] = {
-        name: "用户" + Math.random(),
-        time: '10:27',
-        uuid: '',
-        msg: '最近消息',
-        avatar: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1881776517,987084327&fm=27&gp=0.jpg',
-      }
-    }
-    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    let items = ds.cloneWithRows(arr);
+          return {
+            icon: item.get('icon') || avatar || defaultIcon,
+            title: item.get('name'),
+            content: item.get('lastMsg'),
+            time: item.get('lastTime')?dateHelper.getShortDate(item.get('lastTime')):'',
+            uuid,
+            unread: item.get('unread'),
+            onPress: () => {
+              this._handleSelectConverse(uuid, item.get('type'), item)
+            },
+          }
+        })
+        .toJS();
 
-    return (
-      <View>
+      let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+      let items = ds.cloneWithRows(arr);
+
+      return (
         <ListView
           style={styles.convList}
           refreshControl={
@@ -63,16 +77,40 @@ class HomeScreen extends React.Component {
           dataSource={items}
           renderRow={(rowData) => (
             <ConvItem
-              name={rowData.name}
-              time={rowData.time}
-              msg={rowData.msg}
-              avatar={rowData.avatar}
-              onPress={() => {
-                this.props.dispatch(NavigationActions.navigate({ routeName: 'Chat', params: {name: rowData.name} }));
-              }}
+              {...rowData}
             />
           )}
         />
+      )
+    } else {
+      return (
+        <Text>{this.props.conversesDesc}</Text>
+      )
+    }
+  }
+
+  _handleRefresh() {
+    this.setState({isRefreshing: true});
+    setTimeout(() => {
+      this.setState({isRefreshing: false});
+    }, 5000);
+  }
+
+  _handleSelectConverse(uuid, type, info) {
+    this.props.dispatch(NavigationActions.navigate({
+      routeName: 'Chat',
+      params: {
+        uuid,
+        type,
+        name: info.get('name')
+      }
+    }));
+  }
+
+  render() {
+    return (
+      <View>
+        {this.getList()}
       </View>
     )
   }
@@ -85,4 +123,11 @@ const styles = {
   ]
 }
 
-module.exports = connect()(HomeScreen);
+module.exports = connect(
+  state => ({
+    converses: state.getIn(['chat', 'converses']),
+    conversesDesc: state.getIn(['chat', 'conversesDesc']),
+    groups: state.getIn(['group', 'groups']),
+    usercache: state.getIn(['cache', 'user']),
+  })
+)(HomeScreen);

@@ -27,6 +27,7 @@ const rnStorage = require('../api/rnStorage.api.js');
   let uuid = await rnStorage.get('uuid');
   let token = await rnStorage.get('token');
   if(!!token && !!uuid) {
+    console.log('尝试登陆uuid:', uuid);
     store.dispatch(require('../redux/actions/user').loginWithToken(uuid, token));
   }
 })();
