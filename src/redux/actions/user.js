@@ -57,7 +57,7 @@ function loginSuccess(dispatch, getState) {
   dispatch(getNote())
 }
 
-exports.login = function(username, password, cb) {
+exports.login = function(username, password) {
   return function(dispatch, getState) {
     password = md5(password);
     let isApp = config.platform === 'app';
