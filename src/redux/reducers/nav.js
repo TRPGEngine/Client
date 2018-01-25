@@ -4,18 +4,10 @@ const {
   LOGIN_SUCCESS,
   LOGOUT,
   SWITCH_NAV,
+  REPLACE_NAV,
 } = require('../constants');
 
-//Force a Init of the main router
 let initialNavState = AppNavigator.router.getStateForAction(NavigationActions.init());
-
-// const firstAction = AppNavigator.router.getActionForPathAndParams("Details");
-//
-// //Then calculate the state with a navigate action to the first route, sending the previous initialized state as argument
-// initialNavState = AppNavigator.router.getStateForAction(
-//   firstAction,
-//   initialNavState
-// );
 
 module.exports = function nav(state = initialNavState, action) {
   let nextState;
@@ -45,6 +37,17 @@ module.exports = function nav(state = initialNavState, action) {
     case SWITCH_NAV:
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.navigate({ routeName: action.routeName }),
+        state
+      );
+      break;
+    case REPLACE_NAV:
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: action.routeName})
+          ]
+        }),
         state
       );
       break;

@@ -3,6 +3,7 @@ const {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  LOGIN_TOKEN_SUCCESS,
   LOGOUT,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -56,7 +57,7 @@ function loginSuccess(dispatch, getState) {
   dispatch(getNote())
 }
 
-exports.login = function(username, password) {
+exports.login = function(username, password, cb) {
   return function(dispatch, getState) {
     password = md5(password);
     let isApp = config.platform === 'app';
@@ -92,7 +93,7 @@ exports.loginWithToken = function(uuid, token) {
     let isApp = config.platform === 'app';
     return api.emit('player::loginWithToken', {uuid, token, platform: config.platform, isApp}, function(data) {
       if(data.result) {
-        dispatch({type:LOGIN_SUCCESS, payload: data.info, isApp});
+        dispatch({type:LOGIN_TOKEN_SUCCESS, payload: data.info, isApp});
         loginSuccess(dispatch, getState); // 获取用户信息
       }else {
         console.log(data);

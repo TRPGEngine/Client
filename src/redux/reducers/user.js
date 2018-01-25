@@ -4,6 +4,7 @@ const {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  LOGIN_TOKEN_SUCCESS,
   LOGOUT,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -30,6 +31,7 @@ const {
 // const sessionStorage = require('../../api/sessionStorage.api.js');
 
 const initialState = immutable.fromJS({
+  isTryLogin: false,
   isLogin: false,
   info: {},
   friendList: [],
@@ -44,14 +46,16 @@ module.exports = function ui(state = initialState, action) {
     case RESET:
       return initialState;
     case LOGIN_REQUEST:
-      return state;
+      return state.set('isTryLogin', true);
     case LOGIN_SUCCESS:
+    case LOGIN_TOKEN_SUCCESS:
       // let {uuid, token} = action.payload;
       // sessionStorage.set({uuid, token});
       return state.set('isLogin', true)
+        .set('isTryLogin', false)
         .set('info', immutable.fromJS(action.payload));
     case LOGIN_FAILED:
-      return state.set('isLogin', false).set('info', immutable.Map());
+      return state.set('isLogin', false).set('isTryLogin', false).set('info', immutable.Map());
     case LOGOUT:
       // sessionStorage.remove('uuid').remove('token');
       return state.set('isLogin', false).set('info', immutable.Map());
