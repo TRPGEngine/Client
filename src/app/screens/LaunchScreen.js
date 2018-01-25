@@ -68,7 +68,7 @@ class LaunchScreen extends React.Component {
 
   _handleFinishAnimation() {
     if(this.props.isTryLogin) {
-      this.setState({tipText: '正在尝试登陆'});
+      this.setState({tipText: '正在尝试自动登陆...'});
     }else {
       if(this.props.isLogin) {
         this.props.dispatch(replaceNav('Main'));
@@ -79,8 +79,21 @@ class LaunchScreen extends React.Component {
   }
 
   render() {
+    let network = this.props.network;
+    let networkType = 'red';
+    if(network.get('isOnline')) {
+      networkType = 'green';
+    }else if(network.get('tryReconnect')) {
+      networkType = 'yellow';
+    }
+
     return (
       <View style={styles.container}>
+        <View style={styles.networkIndicator.container}>
+          <View style={[styles.networkIndicator.common, styles.networkIndicator[networkType]]}></View>
+          <Text>当前网络状态: {network.get('msg')}</Text>
+        </View>
+
         <Animated.View
           style={{
             position: 'absolute',
@@ -128,11 +141,37 @@ const styles = {
       textShadowColor:'rgba(0,0,0,0.2)',
     }
   ],
+  networkIndicator: {
+    container: {
+      position: 'absolute',
+      left: 10,
+      right: 0,
+      top: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    common: {
+      width: 10,
+      height: 10,
+      borderRadius: 5,
+      marginRight: 4,
+    },
+    green: {
+      backgroundColor: '#2ecc71'
+    },
+    yellow: {
+      backgroundColor: '#f39c12'
+    },
+    red: {
+      backgroundColor: '#c0392b'
+    },
+  }
 }
 
 module.exports = connect(
   state => ({
     isTryLogin: state.getIn(['user', 'isTryLogin']),
     isLogin: state.getIn(['user', 'isLogin']),
+    network: state.getIn(['ui', 'network']),
   })
 )(LaunchScreen);
