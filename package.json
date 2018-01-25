@@ -42,6 +42,7 @@
     "react-emojione2": "^2.2.18",
     "react-fileupload": "^2.4.0",
     "react-native": "0.52.0",
+    "react-native-root-toast": "^3.0.0",
     "react-native-storage": "^0.2.2",
     "react-native-style-block": "0.0.4",
     "react-navigation": "1.0.0-beta.23",

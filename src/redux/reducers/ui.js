@@ -6,6 +6,8 @@ const {
   HIDE_ALERT,
   SHOW_MODAL,
   HIDE_MODAL,
+  SHOW_TOAST,
+  HIDE_TOAST,
   SHOW_PROFILE_CARD,
   HIDE_PROFILE_CARD,
   SWITCH_MENU_PANNEL,
@@ -22,6 +24,8 @@ const initialState = immutable.fromJS({
   showLoadingText: '加载中...',
   showModal: false,
   showModalBody: undefined,
+  showToast: false,
+  showToastText: '',
   showProfileCard: false,
   showProfileCardUUID: '',
   menuIndex: 0,
@@ -51,6 +55,10 @@ module.exports = function ui(state = initialState, action) {
       return state.set('showModal', true).set('showModalBody', immutable.fromJS(action.payload));
     case HIDE_MODAL:
       return state.set('showModal', false).set('showModalBody', undefined);
+    case SHOW_TOAST:
+      return state.set('showToast', true).set('showToastText', action.text || '');
+    case HIDE_TOAST:
+      return state.set('showToast', false);
     case SHOW_PROFILE_CARD:
       return state.set('showProfileCard', true).set('showProfileCardUUID', action.uuid);
     case HIDE_PROFILE_CARD:

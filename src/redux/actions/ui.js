@@ -5,6 +5,8 @@ const {
   HIDE_ALERT,
   SHOW_MODAL,
   HIDE_MODAL,
+  SHOW_TOAST,
+  HIDE_TOAST,
   SHOW_PROFILE_CARD,
   HIDE_PROFILE_CARD,
   SWITCH_MENU_PANNEL,
@@ -35,6 +37,24 @@ exports.showModal = function(body) {
 }
 exports.hideModal = function() {
   return {type: HIDE_MODAL}
+}
+
+let toastTimer;
+exports.showToast = function(msg) {
+  return (dispatch, getState) => {
+    dispatch({type: SHOW_TOAST, text: msg});
+
+    if(toastTimer) {
+      clearTimeout(toastTimer);
+    }
+    toastTimer = setTimeout(() => {
+      dispatch({type: HIDE_TOAST});
+      toastTimer = null;
+    }, 2000);
+  }
+}
+exports.hideToast = function() {
+  return {type: HIDE_TOAST}
 }
 exports.showProfileCard = function(uuid) {
   return (dispatch, getState) => {

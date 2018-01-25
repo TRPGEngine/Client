@@ -4,4 +4,5 @@ module.exports = {
   TInput: require('./TInput'),
   TLoading: require('./TLoading'),
   TAlert: require('./TAlert'),
+  TToast: require('./TToast'),
 }
