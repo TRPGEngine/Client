@@ -53,10 +53,14 @@ class LaunchScreen extends React.Component {
       .start(() => {
         this._handleFinishAnimation();
       })
-    }, 1000);
+      // this._handleFinishAnimation();
+    }, 500);
   }
 
   componentWillReceiveProps(nextProps) {
+    if(nextProps.network.get('isOnline') === false) {
+      return;
+    }
     if(this.props.isTryLogin === true && nextProps.isTryLogin === false) {
       if(nextProps.isLogin) {
         this.props.dispatch(replaceNav('Main'));
@@ -67,6 +71,10 @@ class LaunchScreen extends React.Component {
   }
 
   _handleFinishAnimation() {
+    if(this.props.network.get('isOnline') === false) {
+      return;
+    }
+
     if(this.props.isTryLogin) {
       this.setState({tipText: '正在尝试自动登陆...'});
     }else {

@@ -52,6 +52,7 @@ module.exports = {
         syncInBackground: false,
       });
     }catch(e) {
+      console.log(`get key ${key} error:`, e);
       res = '';
     }
     return res;

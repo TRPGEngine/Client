@@ -91,13 +91,8 @@ function bindEventFunc(store) {
         const rnStorage = require('./rnStorage.api.js');
         let uuid = await rnStorage.get('uuid');
         let token = await rnStorage.get('token');
-        let app_token = await rnStorage.get('app_token');
         console.log('正在尝试自动重新登录');
-        if(config.platform === 'app') {
-          store.dispatch(loginWithToken(uuid, app_token));
-        }else {
-          store.dispatch(loginWithToken(uuid, token));
-        }
+        store.dispatch(loginWithToken(uuid, token));
       })()
     }
   });
