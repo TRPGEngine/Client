@@ -97,11 +97,12 @@ let sendMsg = function sendMsg(converseUUID, payload) {
     })
   }
 }
-let getConverses = function getConverses() {
+let getConverses = function getConverses(cb) {
   return function(dispatch, getState) {
     dispatch({type:GET_CONVERSES_REQUEST});
     // 获取会话列表
     return api.emit('chat::getConverses', {}, function(data) {
+      cb && cb();
       if(data.result) {
         let list = data.list;
         dispatch({type:GET_CONVERSES_SUCCESS, payload: list});

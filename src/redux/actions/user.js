@@ -112,6 +112,15 @@ exports.loginWithToken = function(uuid, token) {
   }
 }
 
+// 重新获取一次用户登录后的数据
+exports.updateAllInfo = function() {
+  return function(dispatch, getState) {
+    if(getState().getIn(['user', 'isLogin']) === true) {
+      loginSuccess(dispatch, getState);
+    }
+  }
+}
+
 exports.logout = function() {
   let isApp = config.platform === 'app';
   return function(dispatch, getState) {
