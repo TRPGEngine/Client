@@ -30,7 +30,7 @@ function getApiInstance() {
 function bindEventFunc(store) {
   const { addMsg, switchConverse } = require('../redux/actions/chat');
   const { addFriendInvite, loginWithToken, logout } = require('../redux/actions/user');
-  const { changeNetworkStatue, showAlert, switchMenuPannel } = require('../redux/actions/ui');
+  const { changeNetworkStatue, showAlert, switchMenuPannel, updateSocketId } = require('../redux/actions/ui');
 
   if(!(this instanceof API)) {
     throw new Error('bindEventFunc shound a API object class');
@@ -75,6 +75,7 @@ function bindEventFunc(store) {
 
   socket.on('connect', function(data) {
     store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
+    store.dispatch(updateSocketId(socket.id));
     console.log('连接成功');
   });
   socket.on('connecting', function(data) {
@@ -83,6 +84,7 @@ function bindEventFunc(store) {
   });
   socket.on('reconnect', function(data) {
     store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
+    store.dispatch(updateSocketId(socket.id));
     console.log('重连成功');
 
     let isLogin = store.getState().getIn(['user', 'isLogin']);

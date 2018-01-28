@@ -13,6 +13,7 @@ const {
   SWITCH_MENU_PANNEL,
   CHANGE_NETWORK_STATE,
   UPDATE_NOTIFICATION_PERMISSION,
+  UPDATE_SOCKET_ID,
 } = require('../constants');
 const immutable = require('immutable');
 const config = require('../../../config/project.config');
@@ -36,6 +37,7 @@ const initialState = immutable.fromJS({
     msg: '',
   },
   notificationPermission: '',// granted, denied, default in web
+  socketId: '',
 })
 
 module.exports = function ui(state = initialState, action) {
@@ -71,6 +73,8 @@ module.exports = function ui(state = initialState, action) {
       return state.set('network', immutable.fromJS(action.payload));
     case UPDATE_NOTIFICATION_PERMISSION:
       return state.set('notificationPermission', action.payload);
+    case UPDATE_SOCKET_ID:
+      return state.set('socketId', action.socketId);
     default:
       return state;
   }

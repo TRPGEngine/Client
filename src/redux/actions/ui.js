@@ -12,6 +12,7 @@ const {
   SWITCH_MENU_PANNEL,
   CHANGE_NETWORK_STATE,
   UPDATE_NOTIFICATION_PERMISSION,
+  UPDATE_SOCKET_ID,
 } = require('../constants');
 const cache = require('./cache');
 
@@ -93,4 +94,8 @@ exports.requestNotification = function(target) {
       dispatch({type: UPDATE_NOTIFICATION_PERMISSION, payload: result});
     })
   }
+}
+
+exports.updateSocketId = function(socketId) {
+  return {type: UPDATE_SOCKET_ID, socketId}
 }
