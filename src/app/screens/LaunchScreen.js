@@ -9,6 +9,7 @@ const {
 } = require('react-native');
 const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
+const config = require('../../../config/project.config');
 const { replaceNav } = require('../../redux/actions/nav');
 
 class LaunchScreen extends React.Component {
@@ -28,32 +29,35 @@ class LaunchScreen extends React.Component {
 
   componentDidMount() {
     setTimeout(() => {
-      Animated.sequence([
-        Animated.parallel([
-          Animated.spring(
-            this.state.logoTop,{
+      if(config.platform === 'production') {
+        Animated.sequence([
+          Animated.parallel([
+            Animated.spring(
+              this.state.logoTop,{
+                toValue: 20,
+                duration: 3000,
+              }
+            ),
+            Animated.spring(
+              this.state.logoAlpha,{
+                toValue: 1,
+                duration: 3000,
+              }
+            ),
+          ]),
+          Animated.timing(
+            this.state.tipAlpha,{
               toValue: 20,
-              duration: 3000,
+              duration: 1000,
             }
           ),
-          Animated.spring(
-            this.state.logoAlpha,{
-              toValue: 1,
-              duration: 3000,
-            }
-          ),
-        ]),
-        Animated.timing(
-          this.state.tipAlpha,{
-            toValue: 20,
-            duration: 1000,
-          }
-        ),
-      ])
-      .start(() => {
+        ])
+        .start(() => {
+          this._handleFinishAnimation();
+        })
+      }else {
         this._handleFinishAnimation();
-      })
-      // this._handleFinishAnimation();
+      }
     }, 500);
   }
 

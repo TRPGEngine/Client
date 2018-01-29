@@ -19,6 +19,7 @@ const HomeScreen = require('./screens/HomeScreen');
 const AccountScreen = require('./screens/AccountScreen');
 const ContactsScreen = require('./screens/ContactsScreen');
 const ChatScreen = require('./screens/ChatScreen');
+const SettingsScreen = require('./screens/SettingsScreen');
 
 const MainNavigator = TabNavigator({
   TRPG: {
@@ -68,6 +69,12 @@ const AppNavigator = StackNavigator({
     screen: DetailsScreen,
     navigationOptions: {
       headerTitle: 'Details',
+    },
+  },
+  Settings: {
+    screen: SettingsScreen,
+    navigationOptions: {
+      headerTitle: '设置',
     },
   },
   Chat: {

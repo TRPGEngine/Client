@@ -3,10 +3,11 @@ const { connect } = require('react-redux');
 const {
   View,
   Text,
-  Alert,
+  Image,
 } = require('react-native');
 const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
+const appConfig = require('../config.app');
 const { logout } = require('../../redux/actions/user');
 const ListCell = require('../components/ListCell');
 const { TButton } = require('../components/TComponent');
@@ -25,18 +26,24 @@ class AccountScreen extends React.Component {
   }
 
   render() {
+    let userInfo = this.props.userInfo;
+    let avatar = userInfo.get('avatar') ? {uri: userInfo.get('avatar')} : appConfig.defaultImg.user;
     return (
       <View>
-        <Text>account screen</Text>
-        <Text>redux测试:{this.props.showLoadingText}</Text>
-        <Text>平台信息获取:{require('../../../config/project.config').platform}</Text>
-        <Text>{JSON.stringify(this.props)}</Text>
+        <View style={styles.userInfo}>
+          <Image source={avatar} style={styles.avatar} />
+          <View>
+            <Text style={styles.username}>{userInfo.get('nickname') || userInfo.get('username')}</Text>
+            <Text style={styles.userdesc}>{userInfo.get('sign')}</Text>
+          </View>
+        </View>
+
         <ListCell
-          title="测试项"
-          icon="&#xe648;"
+          title="设置"
+          icon="&#xe609;"
           color="gold"
           onPress={() => {
-            this.props.dispatch(NavigationActions.navigate({ routeName: 'Details' }));
+            this.props.dispatch(NavigationActions.navigate({ routeName: 'Settings' }));
           }}
         />
         <TButton
@@ -53,11 +60,32 @@ class AccountScreen extends React.Component {
 const styles = {
   logoutBtn: [
     sb.margin(10),
-  ]
+  ],
+  userInfo: [
+    sb.direction(),
+    sb.bgColor(),
+    sb.border('Top', 0.5, '#ccc'),
+    sb.border('Bottom', 0.5, '#ccc'),
+    sb.margin(14, 0),
+    sb.padding(4, 8),
+    sb.alignCenter(),
+    {height: 80},
+  ],
+  avatar: [
+    sb.size(60, 60),
+    sb.radius(30),
+    {marginRight: 10}
+  ],
+  username: [
+    sb.font(18),
+  ],
+  userdesc: [
+    sb.color('#999'),
+  ],
 }
 
 module.exports = connect(
   state => ({
-    showLoadingText: state.getIn(['ui', 'showLoadingText']),
+    userInfo: state.getIn(['user', 'info']),
   })
 )(AccountScreen);

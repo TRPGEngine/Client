@@ -15,7 +15,11 @@ class ListCell extends React.Component {
       >
         <Text style={[styles.icon, {color: this.props.color}]}>{this.props.icon}</Text>
         <Text style={styles.title}>{this.props.title}</Text>
-        <Text style={[styles.icon, ...styles.arrow]}>&#xe60e;</Text>
+        {
+          this.props.onPress ? (
+            <Text style={[styles.icon, ...styles.arrow]}>&#xe60e;</Text>
+          ) : null
+        }
       </TouchableOpacity>
     )
   }

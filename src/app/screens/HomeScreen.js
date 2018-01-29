@@ -92,8 +92,12 @@ class HomeScreen extends React.Component {
 
   _handleRefresh() {
     this.setState({isRefreshing: true});
+    var timer = setTimeout(() => {
+      this.setState({isRefreshing: false});
+    }, 10000);//10秒后自动取消
     this.props.dispatch(getConverses(() => {
       this.setState({isRefreshing: false});
+      clearTimeout(timer);
     }));
   }
 
