@@ -2,15 +2,18 @@ const React = require('react');
 const {
   Text,
   TouchableOpacity,
+  View,
   Image,
+  Switch,
 } = require('react-native');
 const sb = require('react-native-style-block');
 
 class ListCell extends React.Component {
   render() {
+    let Container = this.props.onPress ? TouchableOpacity : View;
     return (
-      <TouchableOpacity
-        style={styles.container}
+      <Container
+        style={[...styles.container, this.props.styles]}
         onPress={() => this.props.onPress && this.props.onPress()}
       >
         <Text style={[styles.icon, {color: this.props.color}]}>{this.props.icon}</Text>
@@ -18,9 +21,11 @@ class ListCell extends React.Component {
         {
           this.props.onPress ? (
             <Text style={[styles.icon, ...styles.arrow]}>&#xe60e;</Text>
+          ) : this.props.onChange ? (
+            <Switch value={this.props.value || false} onValueChange={(newValue) => this.props.onChange && this.props.onChange(newValue)} />
           ) : null
         }
-      </TouchableOpacity>
+      </Container>
     )
   }
 }
@@ -29,7 +34,7 @@ const styles = {
   container: [
     sb.direction(),
     sb.bgColor(),
-    sb.border('Top', 0.5, '#ccc'),
+    // sb.border('Top', 0.5, '#ccc'),
     sb.border('Bottom', 0.5, '#ccc'),
     sb.padding(4, 8),
     sb.alignCenter(),
