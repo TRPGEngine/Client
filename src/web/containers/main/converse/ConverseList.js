@@ -44,10 +44,12 @@ class ConverseList extends React.Component {
         .map((item, index) => {
           let uuid = item.get('uuid');
           let defaultIcon = uuid === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.user;
+          let attachIcon = item.get('type') === 'user' ? this.props.usercache.getIn([uuid, 'avatar']) : null;
+          
           return (
             <ConvItem
               key={'converses#'+index}
-              icon={item.get('icon') || defaultIcon}
+              icon={item.get('icon') || attachIcon || defaultIcon}
               title={item.get('name')}
               content={item.get('lastMsg')}
               time={item.get('lastTime')?dateHelper.getShortDate(item.get('lastTime')):''}
