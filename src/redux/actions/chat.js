@@ -78,9 +78,11 @@ let sendMsg = function sendMsg(converseUUID, payload) {
       room: payload.room || '',
       sender_uuid: info.get('uuid'),
       to_uuid: converseUUID,
+      converse_uuid: converseUUID,
       type: payload.type,
       message: payload.message,
       is_public: payload.is_public,
+      is_group: payload.is_group,
       date: new Date(),
       data: payload.data,
     };
@@ -113,7 +115,7 @@ let getConverses = function getConverses(cb) {
           // 获取日志
           checkUser(uuid);
           checkUser(convUUID);
-          api.emit('chat::getChatLog', {uuid1: uuid, uuid2: convUUID}, function(data) {
+          api.emit('chat::getChatLog', {converse_uuid: convUUID}, function(data) {
             if(data.result) {
               dispatch({type:UPDATE_CONVERSES_SUCCESS, payload: data.list, convUUID});
             }else {
@@ -122,6 +124,7 @@ let getConverses = function getConverses(cb) {
           })
         }
       }else {
+        console.error(data);
         dispatch({type:GET_CONVERSES_FAILED, payload: data.msg});
       }
     })
@@ -143,15 +146,13 @@ let createConverse = function createConverse(uuid, type, isSwitchToConv = true) 
         let conv = data.data;
         dispatch({type: CREATE_CONVERSES_SUCCESS, payload:conv});
 
-        let uuid = getState().getIn(['user','info','uuid']);
         let convUUID = conv.uuid;
         if(isSwitchToConv) {
           dispatch(switchToConverse(convUUID));
         }
         // 获取日志
         checkUser(uuid);
-        checkUser(convUUID);
-        api.emit('chat::getChatLog', {uuid1: uuid, uuid2: convUUID}, function(data) {
+        api.emit('chat::getChatLog', {converse_uuid: convUUID}, function(data) {
           if(data.result) {
             let list = data.list;
             dispatch({type:UPDATE_CONVERSES_SUCCESS, payload: list, convUUID});
@@ -177,9 +178,9 @@ let removeConverse = function removeConverse(converseUUID) {
   }
 }
 
-let getMoreChatLog = function getMoreChatLog(userUUID, converseUUID, offsetDate) {
+let getMoreChatLog = function getMoreChatLog(converseUUID, offsetDate) {
   return function(dispatch, getState) {
-    api.emit('chat::getChatLog', {uuid1: userUUID, uuid2: converseUUID, offsetDate}, function(data) {
+    api.emit('chat::getChatLog', {converse_uuid: converseUUID, offsetDate}, function(data) {
       if(data.result === true) {
         dispatch({type: UPDATE_CONVERSES_SUCCESS, payload: data.list, convUUID: converseUUID});
       }else {

@@ -44,8 +44,8 @@ class ConverseList extends React.Component {
         .map((item, index) => {
           let uuid = item.get('uuid');
           let defaultIcon = uuid === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.user;
-          let attachIcon = item.get('type') === 'user' ? this.props.usercache.getIn([uuid, 'avatar']) : null;
-          
+          let attachIcon = item.get('type') === 'user' ? this.props.usercache.getIn([item.get('members', 0), 'avatar']) : null;
+
           return (
             <ConvItem
               key={'converses#'+index}

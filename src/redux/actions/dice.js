@@ -24,7 +24,7 @@ exports.acceptDiceRequest = function(uuid) {
       if(data.result) {
         // TODO: 修复同意者接受投骰结果信息的方法
         let log = data.log;
-        dispatch({type: UPDATE_MSG, converseUUID: log.to_uuid, msgUUID: log.uuid, payload: log});
+        dispatch({type: UPDATE_MSG, converseUUID: log.sender_uuid, msgUUID: log.uuid, payload: log});
       }else {
         console.error(data);
       }

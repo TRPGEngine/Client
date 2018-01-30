@@ -40,8 +40,8 @@ class MsgContainer extends React.Component {
 
   _handleGetMoreLog() {
     let date = this.props.msgList.first().get('date');
-    let { userUUID, converseUUID } = this.props;
-    this.props.dispatch(getMoreChatLog(userUUID, converseUUID, date));
+    let { converseUUID } = this.props;
+    this.props.dispatch(getMoreChatLog(converseUUID, date));
   }
 
   prepareMsgItemCardData(data) {
