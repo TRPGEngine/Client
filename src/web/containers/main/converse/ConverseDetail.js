@@ -21,10 +21,11 @@ class ConverseDetail extends React.Component {
   }
 
   _handleSendMsg(message, type) {
-    console.log('send msg:', message, 'to', this.props.converseUUID);
-    this.props.dispatch(sendMsg(this.props.converseUUID ,{
+    console.log('send msg:', message, 'to', this.props.converseUserUUID, 'in converse', this.props.converseUUID);
+    this.props.dispatch(sendMsg(this.props.converseUUID, this.props.converseUserUUID, {
       message,
       is_public: false,
+      is_group: false,
       type,
     }));
   }
@@ -49,7 +50,7 @@ class ConverseDetail extends React.Component {
   render() {
     return (
       <div className="conv-detail">
-        <MsgContainer className="conv-container" converseUUID={this.props.conversesUUID} />
+        <MsgContainer className="conv-container" converseUUID={this.props.converseUUID} converseUserUUID={this.props.converseUserUUID} />
         <MsgSendBox
           conversesUUID={this.props.conversesUUID}
           isGroup={false}
@@ -63,12 +64,13 @@ class ConverseDetail extends React.Component {
 
 module.exports = connect(
   state => {
-    let conversesUUID = state.getIn(['chat', 'selectedConversesUUID']);
+    let converseUUID = state.getIn(['chat', 'selectedConversesUUID']);
     return {
       userUUID: state.getIn(['user','info','uuid']),
       selfInfo: state.getIn(['user', 'info']),
       usercache: state.getIn(['cache', 'user']),
-      conversesUUID,
+      converseUUID,
+      converseUserUUID: state.getIn(['chat', 'selectedConversesUserUUID']),
     }
   }
 )(ConverseDetail);

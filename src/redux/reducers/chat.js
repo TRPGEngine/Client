@@ -19,6 +19,7 @@ const immutable = require('immutable');
 
 const initialState = immutable.fromJS({
   selectedConversesUUID: '',
+  selectedConversesUserUUID: '',
   conversesDesc: '',// 获取会话列表的提示信息
   converses: {
     // "systemUUID": {
@@ -126,6 +127,7 @@ module.exports = function chat(state = initialState, action) {
         return state.deleteIn(['converses', action.converseUUID]);
       case SWITCH_CONVERSES:
         return state.set('selectedConversesUUID', action.converseUUID)
+          .set('selectedConversesUserUUID', action.userUUID)
           .setIn(['converses', action.converseUUID, 'unread'], false);//已读未读;
       case SWITCH_GROUP:
         return state.setIn(['converses', action.payload, 'unread'], false);

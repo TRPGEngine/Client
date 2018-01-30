@@ -16,9 +16,9 @@ class ConverseList extends React.Component {
     super(props);
   }
 
-  _handleSelectConverse(uuid) {
-    console.log("选择会话", uuid);
-    this.props.dispatch(switchConverse(uuid));
+  _handleSelectConverse(converseUUID, userUUID) {
+    console.log("选择会话", converseUUID, '对象', userUUID);
+    this.props.dispatch(switchConverse(converseUUID, userUUID));
   }
 
   getWelcomeMessage() {
@@ -45,6 +45,9 @@ class ConverseList extends React.Component {
           let uuid = item.get('uuid');
           let defaultIcon = uuid === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.user;
           let attachIcon = item.get('type') === 'user' ? this.props.usercache.getIn([item.get('members', 0), 'avatar']) : null;
+          let userUUID = item.get('members')
+            ? item.get('members').find(i => i !== this.props.userinfo.get('uuid'))
+            : uuid;
 
           return (
             <ConvItem
@@ -56,7 +59,7 @@ class ConverseList extends React.Component {
               uuid={uuid}
               unread={item.get('unread')}
               isSelected={this.props.selectedUUID === uuid}
-              onClick={() => this._handleSelectConverse(uuid)}
+              onClick={() => this._handleSelectConverse(uuid, userUUID)}
               hideCloseBtn={false}
             />
           )
@@ -152,5 +155,6 @@ module.exports = connect(
     converses: state.getIn(['chat', 'converses']),
     friends: state.getIn(['user', 'friendList']),
     usercache: state.getIn(['cache', 'user']),
+    userinfo: state.getIn(['user', 'info']),
   })
 )(ConverseList);

@@ -19,11 +19,11 @@ const api = trpgApi.getInstance();
 const { checkUser } = require('../../utils/usercache');
 const { hideProfileCard, switchMenuPannel } = require('./ui');
 
-let switchToConverse = function switchToConverse(uuid) {
+let switchToConverse = function switchToConverse(converseUUID, userUUID) {
   return function(dispatch, getState) {
     dispatch(hideProfileCard());
     dispatch(switchMenuPannel(0));
-    dispatch(switchConverse(uuid));
+    dispatch(switchConverse(converseUUID, userUUID));
   }
 }
 
@@ -35,8 +35,8 @@ let addConverse = function addConverse(payload) {
   return {type: ADD_CONVERSES, payload: payload}
 }
 
-let switchConverse = function switchConverse(uuid) {
-  return {type: SWITCH_CONVERSES, converseUUID: uuid}
+let switchConverse = function switchConverse(converseUUID, userUUID) {
+  return {type: SWITCH_CONVERSES, converseUUID, userUUID}
 }
 
 let addMsg = function addMsg(converseUUID, payload) {
@@ -70,14 +70,14 @@ let addMsg = function addMsg(converseUUID, payload) {
     dispatch({type: ADD_MSG, converseUUID, unread, payload: payload});
   }
 }
-let sendMsg = function sendMsg(converseUUID, payload) {
+let sendMsg = function sendMsg(converseUUID, toUUID, payload) {
   return function(dispatch, getState) {
     dispatch({type:SEND_MSG});
     const info = getState().getIn(['user', 'info']);
     let pkg = {
       room: payload.room || '',
       sender_uuid: info.get('uuid'),
-      to_uuid: converseUUID,
+      to_uuid: toUUID,
       converse_uuid: converseUUID,
       type: payload.type,
       message: payload.message,
@@ -86,6 +86,7 @@ let sendMsg = function sendMsg(converseUUID, payload) {
       date: new Date(),
       data: payload.data,
     };
+    console.log(pkg);
 
     dispatch(addMsg(converseUUID, pkg))
     return api.emit('chat::message', pkg, function(data) {
