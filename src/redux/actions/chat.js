@@ -191,6 +191,18 @@ let getOfflineUserConverse = function getOfflineUserConverse(lastLoginDate) {
   }
 }
 
+let getAllUserConverse = function getAllUserConverse() {
+  return function(dispatch, getState) {
+    api.emit('chat::getAllUserConverse', {}, function(data) {
+      if(data.result === true) {
+        console.log('TODO', data);
+      }else {
+        console.error(data);
+      }
+    })
+  }
+}
+
 let getMoreChatLog = function getMoreChatLog(converseUUID, offsetDate) {
   return function(dispatch, getState) {
     api.emit('chat::getChatLog', {converse_uuid: converseUUID, offsetDate}, function(data) {
@@ -222,6 +234,7 @@ exports.sendMsg = sendMsg;
 exports.getConverses = getConverses;
 exports.createConverse = createConverse;
 exports.removeConverse = removeConverse;
+exports.getAllUserConverse = getAllUserConverse;
 exports.getOfflineUserConverse = getOfflineUserConverse;
 exports.getMoreChatLog = getMoreChatLog;
 exports.updateCardChatData = updateCardChatData;
