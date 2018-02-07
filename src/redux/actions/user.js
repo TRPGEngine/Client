@@ -41,13 +41,16 @@ function loginSuccess(dispatch, getState) {
     return;
   }
 
-  const { getConverses } = require('./chat');
+  const { getConverses, getOfflineUserConverse } = require('./chat');
   const { getFriends, getFriendsInvite } = require('./user');
   const { getTemplate, getActor } = require('./actor');
   const { getGroupList, getGroupInvite } = require('./group');
   const { getNote } = require('./note');
 
+  let userInfo = getState().getIn(['user', 'info']);
+
   dispatch(getConverses())
+  dispatch(getOfflineUserConverse(userInfo.get('last_login')))
   dispatch(getFriends())
   dispatch(getFriendsInvite())
   dispatch(getTemplate())
