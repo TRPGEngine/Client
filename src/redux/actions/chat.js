@@ -72,7 +72,7 @@ let addMsg = function addMsg(converseUUID, payload) {
     dispatch({type: ADD_MSG, converseUUID, unread, payload: payload});
   }
 }
-let sendMsg = function sendMsg(converseUUID, toUUID, payload) {
+let sendMsg = function sendMsg(toUUID, payload) {
   return function(dispatch, getState) {
     dispatch({type:SEND_MSG});
     const info = getState().getIn(['user', 'info']);
@@ -80,7 +80,7 @@ let sendMsg = function sendMsg(converseUUID, toUUID, payload) {
       room: payload.room || '',
       sender_uuid: info.get('uuid'),
       to_uuid: toUUID,
-      converse_uuid: converseUUID,
+      converse_uuid: payload.converse_uuid,
       type: payload.type,
       message: payload.message,
       is_public: payload.is_public,
@@ -90,7 +90,7 @@ let sendMsg = function sendMsg(converseUUID, toUUID, payload) {
     };
     console.log(pkg);
 
-    dispatch(addMsg(converseUUID, pkg))
+    dispatch(addMsg(toUUID, pkg));
     return api.emit('chat::message', pkg, function(data) {
       // console.log(data);
       dispatch({type:SEND_MSG_COMPLETED, payload: data});

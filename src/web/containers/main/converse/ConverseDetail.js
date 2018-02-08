@@ -22,7 +22,7 @@ class ConverseDetail extends React.Component {
 
   _handleSendMsg(message, type) {
     console.log('send msg:', message, 'to', this.props.converseUserUUID, 'in converse', this.props.converseUUID);
-    this.props.dispatch(sendMsg(this.props.converseUUID, this.props.converseUserUUID, {
+    this.props.dispatch(sendMsg(this.props.converseUserUUID, {
       message,
       is_public: false,
       is_group: false,
