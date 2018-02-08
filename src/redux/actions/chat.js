@@ -4,11 +4,13 @@ const {
   GET_CONVERSES_REQUEST,
   GET_CONVERSES_SUCCESS,
   GET_CONVERSES_FAILED,
+  GET_USER_CONVERSES_SUCCESS,
   CREATE_CONVERSES_REQUEST,
   CREATE_CONVERSES_SUCCESS,
   CREATE_CONVERSES_FAILED,
-  UPDATE_CONVERSES_SUCCESS,
   REMOVE_CONVERSES_SUCCESS,
+  UPDATE_CONVERSES_INFO_SUCCESS,
+  UPDATE_CONVERSES_MSGLIST_SUCCESS,
   SWITCH_CONVERSES,
   SEND_MSG,
   SEND_MSG_COMPLETED,
@@ -118,7 +120,7 @@ let getConverses = function getConverses(cb) {
           checkUser(convUUID);
           api.emit('chat::getChatLog', {converse_uuid: convUUID}, function(data) {
             if(data.result) {
-              dispatch({type:UPDATE_CONVERSES_SUCCESS, payload: data.list, convUUID});
+              dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: data.list, convUUID});
             }else {
               console.error('获取聊天记录失败:', data.msg);
             }
@@ -156,7 +158,7 @@ let createConverse = function createConverse(uuid, type, isSwitchToConv = true) 
         api.emit('chat::getChatLog', {converse_uuid: convUUID}, function(data) {
           if(data.result) {
             let list = data.list;
-            dispatch({type:UPDATE_CONVERSES_SUCCESS, payload: list, convUUID});
+            dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: list, convUUID});
           }else {
             console.error('获取聊天记录失败:' + data.msg);
           }
@@ -195,7 +197,32 @@ let getAllUserConverse = function getAllUserConverse() {
   return function(dispatch, getState) {
     api.emit('chat::getAllUserConverse', {}, function(data) {
       if(data.result === true) {
-        console.log('TODO', data);
+        dispatch({type: GET_USER_CONVERSES_SUCCESS, payload: data.senders.map(uuid => ({uuid, type:'user'}))})
+        // TODO: 会话列表缓存到本地
+        for (let uuid of data.senders) {
+          // 更新会话信息
+          api.emit('player::getInfo', {type: 'user', uuid: uuid}, function(data) {
+            if(data.result) {
+              let info = data.info;
+              dispatch({type: UPDATE_CONVERSES_INFO_SUCCESS, uuid: info.uuid, payload: {
+                name: info.nickname || info.username,
+                icon: info.avatar,
+              }})
+            }else {
+              console.error('更新用户会话信息时出错:', data);
+            }
+          })
+
+          // 更新消息列表
+          api.emit('chat::getUserChatLog', {user_uuid: uuid}, function(data) {
+            if(data.result) {
+              let list = data.list;
+              dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: list, convUUID: uuid});
+            }else {
+              console.error('获取聊天记录失败:' + data.msg);
+            }
+          })
+        }
       }else {
         console.error(data);
       }
@@ -207,7 +234,7 @@ let getMoreChatLog = function getMoreChatLog(converseUUID, offsetDate) {
   return function(dispatch, getState) {
     api.emit('chat::getChatLog', {converse_uuid: converseUUID, offsetDate}, function(data) {
       if(data.result === true) {
-        dispatch({type: UPDATE_CONVERSES_SUCCESS, payload: data.list, convUUID: converseUUID});
+        dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: data.list, convUUID: converseUUID});
       }else {
         console.log(data);
       }

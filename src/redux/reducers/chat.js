@@ -6,10 +6,12 @@ const {
   GET_CONVERSES_REQUEST,
   GET_CONVERSES_SUCCESS,
   GET_CONVERSES_FAILED,
+  GET_USER_CONVERSES_SUCCESS,
   CREATE_CONVERSES_REQUEST,
   CREATE_CONVERSES_SUCCESS,
   CREATE_CONVERSES_FAILED,
-  UPDATE_CONVERSES_SUCCESS,
+  UPDATE_CONVERSES_INFO_SUCCESS,
+  UPDATE_CONVERSES_MSGLIST_SUCCESS,
   REMOVE_CONVERSES_SUCCESS,
   SWITCH_CONVERSES,
   SWITCH_GROUP,
@@ -95,6 +97,7 @@ module.exports = function chat(state = initialState, action) {
       case CREATE_CONVERSES_FAILED:
         return state.set('conversesDesc', '获取会话列表失败, 请重试');
       case GET_CONVERSES_SUCCESS:
+      case GET_USER_CONVERSES_SUCCESS:
         let list = action.payload;
         if(list instanceof Array && list.length > 0) {
           let converses = state.get('converses');
@@ -111,7 +114,7 @@ module.exports = function chat(state = initialState, action) {
           return state.setIn(['converses'], converses);
         }
         return state;
-      case UPDATE_CONVERSES_SUCCESS:
+      case UPDATE_CONVERSES_MSGLIST_SUCCESS:
         let convUUID = action.convUUID;
         payload = immutable.fromJS(action.payload);
         if(payload.size > 0) {
@@ -123,6 +126,14 @@ module.exports = function chat(state = initialState, action) {
         }else {
           return state;
         }
+      case UPDATE_CONVERSES_INFO_SUCCESS:
+        if(action.payload.name) {
+          state = state.setIn(['converses', action.uuid, 'name'], action.payload.name);
+        }
+        if(action.payload.icon) {
+          state = state.setIn(['converses', action.uuid, 'icon'], action.payload.icon);
+        }
+        return state;
       case REMOVE_CONVERSES_SUCCESS:
         return state.deleteIn(['converses', action.converseUUID]);
       case SWITCH_CONVERSES:

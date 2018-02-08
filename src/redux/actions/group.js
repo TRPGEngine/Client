@@ -1,6 +1,6 @@
 const {
   CREATE_GROUP_SUCCESS,
-  UPDATE_CONVERSES_SUCCESS,
+  UPDATE_CONVERSES_MSGLIST_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
   FIND_GROUP_REQUEST,
   FIND_GROUP_SUCCESS,
@@ -71,7 +71,7 @@ let initGroupInfo = function(dispatch, group) {
   // 获取团聊天日志
   api.emit('chat::getChatLog', {converse_uuid: groupUUID}, function(data) {
     if(data.result) {
-      dispatch({type: UPDATE_CONVERSES_SUCCESS, convUUID: groupUUID, payload: data.list})
+      dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, convUUID: groupUUID, payload: data.list})
     }else {
       console.error('获取团聊天记录失败:', data.msg);
     }
