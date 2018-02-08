@@ -69,7 +69,7 @@ let initGroupInfo = function(dispatch, group) {
     }
   });
   // 获取团聊天日志
-  api.emit('chat::getChatLog', {converse_uuid: groupUUID}, function(data) {
+  api.emit('chat::getConverseChatLog', {converse_uuid: groupUUID}, function(data) {
     if(data.result) {
       dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, convUUID: groupUUID, payload: data.list})
     }else {

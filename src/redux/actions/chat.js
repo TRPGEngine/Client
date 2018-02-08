@@ -118,7 +118,7 @@ let getConverses = function getConverses(cb) {
           // 获取日志
           checkUser(uuid);
           checkUser(convUUID);
-          api.emit('chat::getChatLog', {converse_uuid: convUUID}, function(data) {
+          api.emit('chat::getConverseChatLog', {converse_uuid: convUUID}, function(data) {
             if(data.result) {
               dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: data.list, convUUID});
             }else {
@@ -155,7 +155,7 @@ let createConverse = function createConverse(uuid, type, isSwitchToConv = true) 
         }
         // 获取日志
         checkUser(uuid);
-        api.emit('chat::getChatLog', {converse_uuid: convUUID}, function(data) {
+        api.emit('chat::getConverseChatLog', {converse_uuid: convUUID}, function(data) {
           if(data.result) {
             let list = data.list;
             dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: list, convUUID});
@@ -230,15 +230,25 @@ let getAllUserConverse = function getAllUserConverse() {
   }
 }
 
-let getMoreChatLog = function getMoreChatLog(converseUUID, offsetDate) {
+let getMoreChatLog = function getMoreChatLog(converseUUID, offsetDate, isUserChat = true) {
   return function(dispatch, getState) {
-    api.emit('chat::getChatLog', {converse_uuid: converseUUID, offsetDate}, function(data) {
-      if(data.result === true) {
-        dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: data.list, convUUID: converseUUID});
-      }else {
-        console.log(data);
-      }
-    })
+    if(isUserChat) {
+      api.emit('chat::getUserChatLog', {user_uuid: converseUUID, offsetDate}, function(data) {
+        if(data.result === true) {
+          dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: data.list, convUUID: converseUUID});
+        }else {
+          console.log(data);
+        }
+      })
+    }else {
+      api.emit('chat::getConverseChatLog', {converse_uuid: converseUUID, offsetDate}, function(data) {
+        if(data.result === true) {
+          dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: data.list, convUUID: converseUUID});
+        }else {
+          console.log(data);
+        }
+      })
+    }
   }
 }
 
