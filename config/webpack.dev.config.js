@@ -2,7 +2,8 @@ const webpackMerge = require('webpack-merge');
 const base = require('./webpack.base.config.js');
 
 module.exports = webpackMerge({}, base, {
-  devtool: 'cheap-module-eval-source-map', //开发环境
+  // devtool: 'cheap-module-eval-source-map', //开发环境
+  devtool: 'eval-source-map', //开发环境ss
 
   devServer: {
     compress: true, // 启用Gzip压缩
