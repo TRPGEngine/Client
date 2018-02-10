@@ -88,9 +88,9 @@ let sendMsg = function sendMsg(toUUID, payload) {
       date: new Date(),
       data: payload.data,
     };
-    console.log(pkg);
+    console.log('send msg pkg:', pkg);
 
-    dispatch(addMsg(toUUID, pkg));
+    dispatch(addMsg(payload.converse_uuid || toUUID, pkg));
     return api.emit('chat::message', pkg, function(data) {
       // console.log(data);
       dispatch({type:SEND_MSG_COMPLETED, payload: data});
@@ -138,7 +138,7 @@ let createConverse = function createConverse(uuid, type, isSwitchToConv = true) 
     if(!!getState().getIn(['chat', 'converses', uuid])) {
       console.log('已存在该会话');
       if(isSwitchToConv) {
-        dispatch(switchToConverse(uuid));
+        dispatch(switchToConverse(uuid, uuid));//TODO:CHECK
       }
       return;
     }
@@ -151,7 +151,7 @@ let createConverse = function createConverse(uuid, type, isSwitchToConv = true) 
 
         let convUUID = conv.uuid;
         if(isSwitchToConv) {
-          dispatch(switchToConverse(convUUID));
+          dispatch(switchToConverse(convUUID, convUUID));//TODO:CHECK
         }
         // 获取日志
         checkUser(uuid);

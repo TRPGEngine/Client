@@ -66,8 +66,8 @@ class GroupDetail extends React.Component {
 
   _handleSendMsg(message, type) {
     console.log('send msg:', message, 'to', this.props.selectedUUID);
-    this.props.dispatch(sendMsg(this.props.selectedUUID ,{
-      room: this.props.selectedUUID,
+    this.props.dispatch(sendMsg(null, {
+      converse_uuid: this.props.selectedUUID,
       message,
       is_public: true,
       type,
