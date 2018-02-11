@@ -41,7 +41,7 @@ class MsgContainer extends React.Component {
   _handleGetMoreLog() {
     let date = this.props.msgList.first().get('date');
     let { converseUUID } = this.props;
-    this.props.dispatch(getMoreChatLog(converseUUID, date));
+    this.props.dispatch(getMoreChatLog(converseUUID, date, !this.props.isGroup));
   }
 
   prepareMsgItemCardData(data) {
@@ -102,7 +102,7 @@ class MsgContainer extends React.Component {
     return (
       <div className={"msg-container " + this.props.className} ref="container">
         {
-          this.state.nomore ? (
+          this.state.nomore || this.props.msgList.size < 10 ? (
             <button className="get-more-log-btn" disabled={true}>没有更多记录了</button>
           ) : (
             <button className="get-more-log-btn" onClick={() => this._handleGetMoreLog()}>点击获取更多记录</button>

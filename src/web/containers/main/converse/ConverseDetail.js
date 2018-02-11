@@ -50,7 +50,7 @@ class ConverseDetail extends React.Component {
   render() {
     return (
       <div className="conv-detail">
-        <MsgContainer className="conv-container" converseUUID={this.props.converseUUID} converseUserUUID={this.props.converseUserUUID} />
+        <MsgContainer className="conv-container" converseUUID={this.props.converseUUID} converseUserUUID={this.props.converseUserUUID}  isGroup={false} />
         <MsgSendBox
           conversesUUID={this.props.conversesUUID}
           isGroup={false}

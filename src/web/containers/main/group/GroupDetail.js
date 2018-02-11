@@ -210,7 +210,7 @@ class GroupDetail extends React.Component {
             {this.getHeaderActions()}
           </div>
         </div>
-        <MsgContainer className="group-content" converseUUID={this.props.selectedUUID} />
+        <MsgContainer className="group-content" converseUUID={this.props.selectedUUID} isGroup={true} />
         <MsgSendBox
           conversesUUID={this.props.selectedUUID}
           isGroup={true}
