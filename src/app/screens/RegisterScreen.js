@@ -100,7 +100,7 @@ class RegisterScreen extends React.Component {
         <TButton
           style={styles.loginBtn}
           onPress={() => this._handleRegister()}
-        >注册账户</TButton>
+        >成为祭品</TButton>
       </View>
     )
   }

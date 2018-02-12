@@ -66,7 +66,7 @@ class Register extends React.Component {
         <input type="password" placeholder="密码" value={this.state.password} onChange={(e)=>{this.setState({password:e.target.value})}} />
         <input type="password" placeholder="重复密码" value={this.state.passwordRepeat} onChange={(e)=>{this.setState({passwordRepeat:e.target.value})}} />
         <p>{errMsg}</p>
-        <button className="active" onClick={() => {this._handleRegister()}} disabled={errMsg!==''}>注册账号</button>
+        <button className="active" onClick={() => {this._handleRegister()}} disabled={errMsg!==''}>成为祭品</button>
         <Link to="login">已有账号？现在登录</Link>
       </div>
     )
