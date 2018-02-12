@@ -86,6 +86,7 @@ exports.login = function(username, password) {
         }else {
           rnStorage.set({uuid, token});
         }
+        console.log('set user token, user:', uuid);
         dispatch({type:LOGIN_SUCCESS, payload: data.info, isApp});
         loginSuccess(dispatch, getState); // 获取用户信息
       }else {

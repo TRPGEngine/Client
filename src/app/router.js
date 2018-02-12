@@ -20,6 +20,7 @@ const AccountScreen = require('./screens/AccountScreen');
 const ContactsScreen = require('./screens/ContactsScreen');
 const ChatScreen = require('./screens/ChatScreen');
 const SettingsScreen = require('./screens/SettingsScreen');
+const ProfileScreen = require('./screens/ProfileScreen');
 
 const MainNavigator = TabNavigator({
   TRPG: {
@@ -40,12 +41,6 @@ const MainNavigator = TabNavigator({
 const DetailsScreen = () => (
   <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
     <Text>Details Screen</Text>
-  </View>
-);
-
-const ProfileScreen = () => (
-  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>Profile Screen</Text>
   </View>
 );
 
@@ -86,13 +81,13 @@ const AppNavigator = StackNavigator({
   Chat: {
     screen: ChatScreen,
     navigationOptions: ({navigation}) => ({
-      headerTitle: navigation.state.params.name || '',
+      headerTitle: '与 ' + navigation.state.params.name + ' 的聊天',
     }),
   },
   Profile: {
     screen: ProfileScreen,
     navigationOptions: ({navigation}) => ({
-      headerTitle: navigation.state.params.name || '',
+      headerTitle: navigation.state.params.name + ' 的个人信息',
     }),
   },
 });
