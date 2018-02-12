@@ -43,6 +43,12 @@ const DetailsScreen = () => (
   </View>
 );
 
+const ProfileScreen = () => (
+  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <Text>Profile Screen</Text>
+  </View>
+);
+
 const AppNavigator = StackNavigator({
   LaunchScreen: {
     screen: LaunchScreen,
@@ -79,6 +85,12 @@ const AppNavigator = StackNavigator({
   },
   Chat: {
     screen: ChatScreen,
+    navigationOptions: ({navigation}) => ({
+      headerTitle: navigation.state.params.name || '',
+    }),
+  },
+  Profile: {
+    screen: ProfileScreen,
     navigationOptions: ({navigation}) => ({
       headerTitle: navigation.state.params.name || '',
     }),

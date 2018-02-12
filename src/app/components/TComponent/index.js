@@ -5,4 +5,5 @@ module.exports = {
   TLoading: require('./TLoading'),
   TAlert: require('./TAlert'),
   TToast: require('./TToast'),
+  TIcon: require('./TIcon'),
 }

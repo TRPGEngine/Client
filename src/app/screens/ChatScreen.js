@@ -8,8 +8,22 @@ const {
   TextInput,
 } = require('react-native');
 const sb = require('react-native-style-block');
+const { TInput, TIcon } = require('../components/TComponent');
 
 class ChatScreen extends React.Component {
+  static navigationOptions = (props) => {
+    const navigation = props.navigation;
+    const { state, setParams } = navigation;
+    const { params } = state;
+    return {
+      headerRight: (
+        <View style={{marginRight: 10}}>
+          <TIcon icon="&#xe607;" onPress={() => params.headerRightFunc && params.headerRightFunc()} />
+        </View>
+      )
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +42,12 @@ class ChatScreen extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.navigation.setParams({
+      headerRightFunc: () => this.props.navigation.navigate('Profile', this.props.navigation.state.params)
+		})
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -37,7 +57,7 @@ class ChatScreen extends React.Component {
           renderItem={({item}) => (<Text>{item.msg}</Text>)}
         />
         <View style={styles.msgBox}>
-          <TextInput
+          <TInput
             style={styles.msgInput}
             onChangeText={(text) => this.setState({text})}
             value={this.state.text}
