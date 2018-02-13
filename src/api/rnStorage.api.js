@@ -42,6 +42,8 @@ module.exports = {
     }catch(e) {
       console.error(e);
     }
+
+    return data;
   },
   get: async (key) => {
     let res;

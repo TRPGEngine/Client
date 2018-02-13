@@ -18,6 +18,7 @@ const {
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
+const rnStorage = require('../../api/rnStorage.api.js');
 const { checkUser } = require('../../utils/usercache');
 const { hideProfileCard, switchMenuPannel } = require('./ui');
 
@@ -181,11 +182,52 @@ let removeConverse = function removeConverse(converseUUID) {
   }
 }
 
+let addUserConverse = function addUserConverse(senders) {
+  return function(dispatch, getState) {
+    dispatch({type: GET_USER_CONVERSES_SUCCESS, payload: senders.map(uuid => ({uuid, type:'user'}))})
+
+    // 用户信息缓存
+    let userUUID = getState().getIn(['user', 'info', 'uuid']);
+    rnStorage.get('userConverses#'+userUUID)
+      .then(function(converse) {
+        converse = Array.from(new Set([...converse, ...senders]))
+        rnStorage.set('userConverses#'+userUUID, converse).then(data => console.log('用户会话缓存完毕:', data));
+      })
+
+
+
+    for (let uuid of senders) {
+      // 更新会话信息
+      api.emit('player::getInfo', {type: 'user', uuid: uuid}, function(data) {
+        if(data.result) {
+          let info = data.info;
+          dispatch({type: UPDATE_CONVERSES_INFO_SUCCESS, uuid: info.uuid, payload: {
+            name: info.nickname || info.username,
+            icon: info.avatar,
+          }})
+        }else {
+          console.error('更新用户会话信息时出错:', data);
+        }
+      })
+
+      // 更新消息列表
+      api.emit('chat::getUserChatLog', {user_uuid: uuid}, function(data) {
+        if(data.result) {
+          let list = data.list;
+          dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: list, convUUID: uuid});
+        }else {
+          console.error('获取聊天记录失败:' + data.msg);
+        }
+      })
+    }
+  }
+}
+
 let getOfflineUserConverse = function getOfflineUserConverse(lastLoginDate) {
   return function(dispatch, getState) {
     api.emit('chat::getOfflineUserConverse', {lastLoginDate}, function(data) {
       if(data.result === true) {
-        console.log('TODO', data);
+        dispatch(addUserConverse(data.senders));
       }else {
         console.error(data);
       }
@@ -197,32 +239,7 @@ let getAllUserConverse = function getAllUserConverse() {
   return function(dispatch, getState) {
     api.emit('chat::getAllUserConverse', {}, function(data) {
       if(data.result === true) {
-        dispatch({type: GET_USER_CONVERSES_SUCCESS, payload: data.senders.map(uuid => ({uuid, type:'user'}))})
-        // TODO: 会话列表缓存到本地
-        for (let uuid of data.senders) {
-          // 更新会话信息
-          api.emit('player::getInfo', {type: 'user', uuid: uuid}, function(data) {
-            if(data.result) {
-              let info = data.info;
-              dispatch({type: UPDATE_CONVERSES_INFO_SUCCESS, uuid: info.uuid, payload: {
-                name: info.nickname || info.username,
-                icon: info.avatar,
-              }})
-            }else {
-              console.error('更新用户会话信息时出错:', data);
-            }
-          })
-
-          // 更新消息列表
-          api.emit('chat::getUserChatLog', {user_uuid: uuid}, function(data) {
-            if(data.result) {
-              let list = data.list;
-              dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: list, convUUID: uuid});
-            }else {
-              console.error('获取聊天记录失败:' + data.msg);
-            }
-          })
-        }
+        dispatch(addUserConverse(data.senders));
       }else {
         console.error(data);
       }
@@ -271,6 +288,7 @@ exports.sendMsg = sendMsg;
 exports.getConverses = getConverses;
 exports.createConverse = createConverse;
 exports.removeConverse = removeConverse;
+exports.addUserConverse = addUserConverse;
 exports.getAllUserConverse = getAllUserConverse;
 exports.getOfflineUserConverse = getOfflineUserConverse;
 exports.getMoreChatLog = getMoreChatLog;

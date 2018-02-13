@@ -41,7 +41,7 @@ function loginSuccess(dispatch, getState) {
     return;
   }
 
-  const { getConverses, getOfflineUserConverse, getAllUserConverse } = require('./chat');
+  const { getConverses, addUserConverse, getOfflineUserConverse, getAllUserConverse } = require('./chat');
   const { getFriends, getFriendsInvite } = require('./user');
   const { getTemplate, getActor } = require('./actor');
   const { getGroupList, getGroupInvite } = require('./group');
@@ -59,11 +59,11 @@ function loginSuccess(dispatch, getState) {
   dispatch(getGroupInvite())
   dispatch(getNote())
 
-  rnStorage.get('user_converses#'+userUUID)
+  rnStorage.get('userConverses#'+userUUID)
     .then(function(converse) {
       console.log('缓存中的用户会话列表:', converse);
       if(converse) {
-        // TODO 需要把用户会话加到store中
+        dispatch(addUserConverse(converse));
         dispatch(getOfflineUserConverse(userInfo.get('last_login')))
       }else {
         dispatch(getAllUserConverse())
