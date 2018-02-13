@@ -17,9 +17,13 @@ let helper = {
       return date.format('YYYY-MM-DD HH:mm:ss');
     }
   },
-  getFullDate: () => {
+  getFullDate: (str) => {
     let date = str ? moment(str) : moment();
     return date.format('YYYY-MM-DD HH:mm:ss');
+  },
+  getSamlpeDate: (str) => {
+    let date = str ? moment(str) : moment();
+    return date.format('YYYY-MM-DD');
   },
   isToday: (date) => {
     return moment().isSame(date, 'day');
