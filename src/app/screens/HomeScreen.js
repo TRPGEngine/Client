@@ -3,7 +3,7 @@ const { connect } = require('react-redux');
 const {
   View,
   Text,
-  ListView,
+  FlatList,
   RefreshControl,
 } = require('react-native');
 const { NavigationActions } = require('react-navigation');
@@ -60,11 +60,8 @@ class HomeScreen extends React.Component {
         })
         .toJS();
 
-      let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      let items = ds.cloneWithRows(arr);
-
       return (
-        <ListView
+        <FlatList
           style={styles.convList}
           refreshControl={
             <RefreshControl
@@ -75,10 +72,11 @@ class HomeScreen extends React.Component {
               title="加载中..."
             />
           }
-          dataSource={items}
-          renderRow={(rowData) => (
+          keyExtractor={(item, index) => item.uuid}
+          data={arr}
+          renderItem={({item}) => (
             <ConvItem
-              {...rowData}
+              {...item}
             />
           )}
         />
