@@ -19,8 +19,12 @@ class ContactsScreen extends React.Component {
     ),
   };
 
-  _handleShowProfile(uuid) {
-    alert(uuid);
+  _handleShowProfile(uuid, type, name) {
+    this.props.navigation.navigate('Profile', {
+      uuid,
+      type,
+      name,
+    })
   }
 
   getContactsList() {
@@ -32,13 +36,14 @@ class ContactsScreen extends React.Component {
 
       let arr = this.props.friends
         .map(uuid => {
+          let name = usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username']);
           return {
             icon: usercache.getIn([uuid, 'avatar']) || defaultAvatar,
-            title: usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username']),
+            title: name,
             content: usercache.getIn([uuid, 'sign']),
             uuid,
             onPress: () => {
-              this._handleShowProfile(uuid)
+              this._handleShowProfile(uuid, 'user', name)
             },
           }
         })
@@ -71,13 +76,13 @@ class ContactsScreen extends React.Component {
       <View>
         <View style={styles.header}>
           <TouchableOpacity style={styles.iconBtn} onPress={() => alert('添加好友')}>
-            <View>
+            <View style={styles.iconBtnView}>
               <Text style={[...styles.icon, sb.bgColor('#16a085')]}>&#xe604;</Text>
               <Text>添加好友</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconBtn} onPress={() => alert('添加团')}>
-            <View>
+            <View style={styles.iconBtnView}>
               <Text style={[...styles.icon, sb.bgColor('#d35400')]}>&#xe604;</Text>
               <Text>添加团</Text>
             </View>
@@ -107,6 +112,9 @@ const styles = {
     sb.flex(),
     sb.alignCenter(),
     sb.margin(10, 0),
+  ],
+  iconBtnView: [
+    sb.alignCenter(),
   ],
   icon: [
     {color: 'white', fontFamily: 'iconfont', fontSize: 20, textAlign: 'center', lineHeight: 40},
