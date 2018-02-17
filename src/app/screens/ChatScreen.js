@@ -10,6 +10,32 @@ const {
 const sb = require('react-native-style-block');
 const { TInput, TIcon } = require('../components/TComponent');
 
+class MsgItem extends React.Component {
+  render() {
+    let {
+      converse_uuid,
+      data,
+      date,
+      is_group,
+      is_public,
+      message,
+      sender_uuid,
+      to_uuid,
+      type,
+      uuid,
+    } = this.props.data;
+    let senderInfo = this.props.senderInfo;
+
+    // TODO
+    return (
+      <View>
+        <Text>{senderInfo.get('nickname') || senderInfo.get('username')}:</Text>
+        <Text>{message}</Text>
+      </View>
+    )
+  }
+}
+
 class ChatScreen extends React.Component {
   static navigationOptions = (props) => {
     const navigation = props.navigation;
@@ -49,26 +75,40 @@ class ChatScreen extends React.Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <FlatList
-          style={styles.list}
-          data={this.data}
-          renderItem={({item}) => (<Text>{item.msg}</Text>)}
-        />
-        <View style={styles.msgBox}>
-          <TInput
-            style={styles.msgInput}
-            onChangeText={(text) => this.setState({text})}
-            value={this.state.text}
+    if(this.props.msgList) {
+      let msgList = this.props.msgList.toJS();
+
+      return (
+        <View style={styles.container}>
+          <FlatList
+            style={styles.list}
+            data={msgList}
+            keyExtractor={(item, index) => item.uuid}
+            renderItem={({item}) => (
+              <MsgItem
+                senderInfo={this.props.usercache.get(item.sender_uuid)}
+                data={item}
+              />
+            )}
           />
-          <Button
-            onPress={() => alert(this.state.text)}
-            title="  发送  "
-          />
+          <View style={styles.msgBox}>
+            <TInput
+              style={styles.msgInput}
+              onChangeText={(text) => this.setState({text})}
+              value={this.state.text}
+            />
+            <Button
+              onPress={() => alert(this.state.text)}
+              title="  发送  "
+            />
+          </View>
         </View>
-      </View>
-    )
+      )
+    }else {
+      return (
+        <View><Text>Loading...</Text></View>
+      )
+    }
   }
 }
 
@@ -93,4 +133,14 @@ const styles = {
   ],
 }
 
-module.exports = connect()(ChatScreen);
+module.exports = connect(
+  state => {
+    let selectedConversesUUID = state.getIn(['chat', 'selectedConversesUUID']);
+
+    return {
+      selectedConversesUUID,
+      msgList: state.getIn(['chat', 'converses', selectedConversesUUID, 'msgList']),
+      usercache: state.getIn(['cache', 'user']),
+    }
+  }
+)(ChatScreen);

@@ -11,7 +11,7 @@ const sb = require('react-native-style-block');
 const dateHelper = require('../../utils/dateHelper');
 const appConfig = require('../config.app');
 const ConvItem = require('../components/ConvItem');
-const { getConverses } = require('../../redux/actions/chat');
+const { getConverses, switchConverse } = require('../../redux/actions/chat');
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -102,6 +102,7 @@ class HomeScreen extends React.Component {
   }
 
   _handleSelectConverse(uuid, type, info) {
+    this.props.dispatch(switchConverse(uuid, uuid));
     this.props.dispatch(NavigationActions.navigate({
       routeName: 'Chat',
       params: {
