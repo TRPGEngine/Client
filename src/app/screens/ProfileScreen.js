@@ -4,6 +4,7 @@ const {
   View,
   Text,
   Image,
+  TouchableOpacity,
 } = require('react-native');
 const sb = require('react-native-style-block');
 const appConfig = require('../config.app');
@@ -26,6 +27,18 @@ class ProfileScreen extends React.Component {
     super(props);
   }
 
+  _handlePressAvatar(avatar) {
+    console.log(avatar);
+    if(avatar.uri) {
+      let media = [
+        {
+          photo: avatar.uri
+        }
+      ]
+      this.props.navigation.navigate('PhotoBrowser', {media, index:0});
+    }
+  }
+
   render() {
     let userUUID = this.props.navigation.state.params.uuid;
     let userInfo = this.props.usercache.get(userUUID);
@@ -41,7 +54,9 @@ class ProfileScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Image style={styles.avatar} source={avatar} />
+          <TouchableOpacity onPress={() => this._handlePressAvatar(avatar)}>
+            <Image style={styles.avatar} source={avatar} />
+          </TouchableOpacity>
           <Text style={{fontSize: 18, marginTop: 4}}>{userInfo.get('nickname') || userInfo.get('username')}</Text>
           <Text style={{fontSize: 12, color: '#999'}}>{userInfo.get('uuid')}</Text>
         </View>

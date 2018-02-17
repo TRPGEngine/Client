@@ -21,6 +21,7 @@ const ContactsScreen = require('./screens/ContactsScreen');
 const ChatScreen = require('./screens/ChatScreen');
 const SettingsScreen = require('./screens/SettingsScreen');
 const ProfileScreen = require('./screens/ProfileScreen');
+const PhotoBrowserScene = require('./screens/PhotoBrowserScene');
 
 const MainNavigator = TabNavigator({
   TRPG: {
@@ -89,6 +90,9 @@ const AppNavigator = StackNavigator({
     navigationOptions: ({navigation}) => ({
       headerTitle: navigation.state.params.name + ' 的个人信息',
     }),
+  },
+  PhotoBrowser: {
+    screen: PhotoBrowserScene,
   },
 });
 
