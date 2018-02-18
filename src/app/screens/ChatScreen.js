@@ -3,12 +3,14 @@ const { connect } = require('react-redux');
 const {
   View,
   Text,
+  Image,
   FlatList,
   Button,
   TextInput,
 } = require('react-native');
 const sb = require('react-native-style-block');
 const { TInput, TIcon } = require('../components/TComponent');
+const appConfig = require('../config.app');
 
 class MsgItem extends React.Component {
   render() {
@@ -25,12 +27,18 @@ class MsgItem extends React.Component {
       uuid,
     } = this.props.data;
     let senderInfo = this.props.senderInfo;
+    let isSelf = this.props.isSelf;
+    let avatar = senderInfo.get('avatar') ? {uri: senderInfo.get('avatar')} : appConfig.defaultImg.user;
 
-    // TODO
     return (
-      <View>
-        <Text>{senderInfo.get('nickname') || senderInfo.get('username')}:</Text>
-        <Text>{message}</Text>
+      <View style={[...styles.itemView, isSelf?{flexDirection: 'row-reverse'}:null]}>
+        <Image style={styles.itemAvatar} source={avatar} />
+        <View style={styles.itemBody}>
+          <Text style={[...styles.itemName, isSelf?{textAlign:'right'}:null]}>
+            {senderInfo.get('nickname') || senderInfo.get('username')}
+          </Text>
+          <Text style={[...styles.itemMsg, isSelf?{alignSelf: 'flex-end'}:null]}>{message}</Text>
+        </View>
       </View>
     )
   }
@@ -86,6 +94,7 @@ class ChatScreen extends React.Component {
             keyExtractor={(item, index) => item.uuid}
             renderItem={({item}) => (
               <MsgItem
+                isSelf={item.sender_uuid===this.props.selfUUID}
                 senderInfo={this.props.usercache.get(item.sender_uuid)}
                 data={item}
               />
@@ -131,6 +140,31 @@ const styles = {
     sb.flex(),
     {marginRight: 4},
   ],
+  itemView: [
+    sb.direction(),
+    sb.padding(10, 10),
+  ],
+  itemAvatar: [
+    sb.size(40, 40),
+    sb.radius(20),
+  ],
+  itemBody: [
+    sb.padding(0, 4),
+    sb.margin(0, 6),
+    sb.flex(),
+  ],
+  itemName: [
+    {marginBottom: 4, marginTop: 4},
+    sb.font(12),
+  ],
+  itemMsg: [
+    sb.bgColor(),
+    sb.padding(6, 8),
+    sb.flex(0),
+    sb.radius(3),
+    sb.border('all', 0.5, '#ddd'),
+    sb.alignSelf('flex-start'),
+  ],
 }
 
 module.exports = connect(
@@ -139,6 +173,7 @@ module.exports = connect(
 
     return {
       selectedConversesUUID,
+      selfUUID: state.getIn(['user', 'info', 'uuid']),
       msgList: state.getIn(['chat', 'converses', selectedConversesUUID, 'msgList']),
       usercache: state.getIn(['cache', 'user']),
     }
