@@ -92,9 +92,11 @@ class TemplateSelect extends React.Component {
           </div>
           <div className="body">
             <div className="search-result">
+              <p class="title">搜索列表</p>
               { this.getFindResult() }
             </div>
             <div className="self-template">
+              <p class="title">我的模板</p>
               {
                 this.props.selfTemplate.map((item, index) => {
                   return (

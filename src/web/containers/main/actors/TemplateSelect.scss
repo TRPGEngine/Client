@@ -41,9 +41,17 @@
       flex: 1;
       overflow: hidden;
       padding: 20px;
+      padding-top: 0;
 
       &:hover {
         overflow-y: overlay;
+      }
+
+      .title {
+        font-size: 14px;
+        line-height: 20px;
+        color: $color-silver;
+        margin-bottom: 6px;
       }
 
       .no-result {
@@ -60,9 +68,17 @@
       border-left: 1px solid #dddcdd;
       padding: 20px;
       overflow: hidden;
+      padding-top: 0;
 
       &:hover {
         overflow-y: overlay;
+      }
+
+      .title {
+        font-size: 14px;
+        line-height: 20px;
+        color: $color-silver;
+        margin-bottom: 6px;
       }
     }
   }
