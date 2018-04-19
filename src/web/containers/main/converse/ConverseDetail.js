@@ -30,9 +30,22 @@ class ConverseDetail extends React.Component {
     }));
   }
 
+  // 发送投骰请求
+  _handleSendDiceReq() {
+    this.props.dispatch(showModal(
+      <DiceRequest
+        onSendDiceRequest={(diceReason, diceExp) => {
+          this.props.dispatch(sendDiceRequest(this.props.converseUserUUID, false, diceExp, diceReason));
+          this.props.dispatch(hideModal());
+        }}
+      />
+    ))
+  }
+
+  // 发送投骰邀请
   _handleSendDiceInv() {
-    console.log("发送投骰邀请");
     let uuid = this.props.conversesUUID;
+    console.log("发送投骰邀请", uuid);
     let usercache = this.props.usercache;
     let name = usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username']);
     this.props.dispatch(showModal(
@@ -97,6 +110,7 @@ class ConverseDetail extends React.Component {
           conversesUUID={this.props.conversesUUID}
           isGroup={false}
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
+          onSendDiceReq={() => this._handleSendDiceReq()}
           onSendDiceInv={() => this._handleSendDiceInv()}
         />
       </div>

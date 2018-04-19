@@ -74,6 +74,19 @@ class GroupDetail extends React.Component {
     }));
   }
 
+  // 发送投骰请求
+  _handleSendDiceReq() {
+    this.props.dispatch(showModal(
+      <DiceRequest
+        onSendDiceRequest={(diceReason, diceExp) => {
+          this.props.dispatch(sendDiceRequest(this.props.selectedUUID, true, diceExp, diceReason));
+          this.props.dispatch(hideModal());
+        }}
+      />
+    ))
+  }
+
+  // 发送投骰邀请
   _handleSendDiceInv() {
     let usercache = this.props.usercache;
     let groupMembers = this.props.groupInfo.get('group_members');
@@ -215,6 +228,7 @@ class GroupDetail extends React.Component {
           conversesUUID={this.props.selectedUUID}
           isGroup={true}
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
+          onSendDiceReq={() => this._handleSendDiceReq()}
           onSendDiceInv={() => this._handleSendDiceInv()}
         />
         <div

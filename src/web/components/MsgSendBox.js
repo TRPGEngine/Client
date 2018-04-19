@@ -59,7 +59,7 @@ class MsgSendBox extends React.Component {
         label: '请求投骰',
         type: 'dice-req',
         icon: '&#xe609;',
-        onClick: () => this._handleSendDiceReq(),
+        onClick: this.props.onSendDiceReq,
       },
       {
         label: '邀请投骰',
@@ -157,19 +157,6 @@ class MsgSendBox extends React.Component {
               desc: actorInfo.desc,
             }
           }))
-        }}
-      />
-    ))
-  }
-
-  // 发送投骰请求
-  _handleSendDiceReq() {
-    this.props.dispatch(showModal(
-      <DiceRequest
-        onSendDiceRequest={(diceReason, diceExp) => {
-          let {conversesUUID, isGroup} = this.props;
-          this.props.dispatch(sendDiceRequest(conversesUUID, isGroup, diceExp, diceReason));
-          this.props.dispatch(hideModal());
         }}
       />
     ))
