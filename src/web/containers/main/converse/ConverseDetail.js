@@ -47,10 +47,52 @@ class ConverseDetail extends React.Component {
     ))
   }
 
+  getHeaderActions() {
+    const actions = [
+      {
+        name: '个人信息',
+        icon: '&#xe611;',
+        component: (
+          <div>test</div>
+        )
+      },
+    ]
+
+    return actions.map((item, index) => {
+      return (
+        <button
+          key={"group-action-"+index}
+          data-tip={item.name}
+          onClick={(e) => {
+            e.stopPropagation();
+            alert('TODO');
+          }}
+        >
+          <i className="iconfont" dangerouslySetInnerHTML={{__html: item.icon}}></i>
+        </button>
+      )
+    })
+  }
+
   render() {
+    const userUUID = this.props.converseUserUUID;
+    const usercache = this.props.usercache;
+    let name = usercache.getIn([userUUID, 'nickname']) || usercache.getIn([userUUID, 'username']);
+    let avatar = usercache.getIn([userUUID, 'avatar']) || config.defaultImg.user;
     return (
       <div className="conv-detail">
-        <MsgContainer className="conv-container" converseUUID={this.props.converseUUID} converseUserUUID={this.props.converseUserUUID}  isGroup={false} />
+        <div className="conv-header">
+          <div className="avatar">
+            <img src={avatar} />
+          </div>
+          <div className="title">
+            <div className="main-title">{name}</div>
+          </div>
+          <div className="actions">
+            {this.getHeaderActions()}
+          </div>
+        </div>
+        <MsgContainer className="conv-container" converseUUID={this.props.converseUUID} converseUserUUID={userUUID}  isGroup={false} />
         <MsgSendBox
           conversesUUID={this.props.conversesUUID}
           isGroup={false}

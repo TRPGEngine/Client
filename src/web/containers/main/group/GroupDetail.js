@@ -111,7 +111,7 @@ class GroupDetail extends React.Component {
   }
 
   getHeaderActions() {
-    let actions = [
+    const actions = [
       {
         name: '添加团员',
         icon: '&#xe61c;',

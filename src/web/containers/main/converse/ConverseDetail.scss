@@ -5,6 +5,56 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  .conv-header {
+    height: 50px;
+    border-bottom: 1px solid $color-bon-jour;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+
+    .avatar {
+      height: 38px;
+      width: 38px;
+      border-radius: 50%;
+      margin-right: 18px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .title {
+      flex: 2;
+      .main-title {
+        @include one-line;
+        font-size: 14px;
+      }
+      .sub-title {
+        @include one-line;
+        color: $color-dusty-gray;
+        font-size: 12px;
+      }
+    }
+
+    .group-actor-select {
+      width: 140px;
+      // flex: 1;
+      margin-right: 20px;
+    }
+
+    .actions {
+      button {
+        @include icon-btn;
+
+        .iconfont {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
   .conv-container {
     @include auto-scroll-bar;
     flex: 1;
