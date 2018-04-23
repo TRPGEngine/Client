@@ -4,7 +4,7 @@ const config = require('../../../../../config/project.config.js');
 const dateHelper = require('../../../../utils/dateHelper');
 const Select = require('react-select');
 const ReactTooltip = require('react-tooltip');
-const { showModal, hideModal, showAlert } = require('../../../../redux/actions/ui');
+const { showModal, hideModal, showAlert, showSlidePanel } = require('../../../../redux/actions/ui');
 const { sendMsg, getMoreChatLog } = require('../../../../redux/actions/chat');
 const { changeSelectGroupActor } = require('../../../../redux/actions/group');
 const { sendDiceRequest, sendDiceInvite } = require('../../../../redux/actions/dice');
@@ -23,41 +23,6 @@ const IsDeveloping = require('../../../components/IsDeveloping');
 const MsgContainer = require('../../../components/MsgContainer');
 
 class GroupDetail extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isSlidePanelShow: false,
-      slidePanelTitle: '',
-      slidePanelContent: null,
-    }
-    this.sildeEvent = () => {
-      console.log('close slide panel with click');
-      window.removeEventListener('click', this.sildeEvent);
-      this.setState({isSlidePanelShow: false});
-    };
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('click', this.sildeEvent);
-  }
-
-  _handleShowSlidePanel(title, content) {
-    setTimeout(() => {
-      window.addEventListener('click', this.sildeEvent);
-    }, 500);
-    this.setState({
-      isSlidePanelShow: true,
-      slidePanelTitle: title,
-      slidePanelContent: content,
-    });
-  }
-
-  _handleHideSlidePanel() {
-    console.log('close slide panel with btn');
-    this.setState({isSlidePanelShow: false});
-    window.removeEventListener('click', this.sildeEvent);
-  }
-
   _handleSelectGroupActor(item) {
     if(item.value !== this.props.selectedGroupActorUUID) {
       this.props.dispatch(changeSelectGroupActor(this.props.selectedUUID, item.value));
@@ -179,7 +144,7 @@ class GroupDetail extends React.Component {
           data-tip={item.name}
           onClick={(e) => {
             e.stopPropagation();
-            this._handleShowSlidePanel(item.name, item.component)
+            this.props.dispatch(showSlidePanel(item.name, item.component))
           }}
         >
           <i className="iconfont" dangerouslySetInnerHTML={{__html: item.icon}}></i>
@@ -231,25 +196,6 @@ class GroupDetail extends React.Component {
           onSendDiceReq={() => this._handleSendDiceReq()}
           onSendDiceInv={() => this._handleSendDiceInv()}
         />
-        <div
-          className={"group-slide-panel" + (this.state.isSlidePanelShow?"":" hide")}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <div className="header">
-            <div className="title">{this.state.slidePanelTitle}</div>
-            <div
-              className="close"
-              onClick={() => this._handleHideSlidePanel()}
-            >
-              <i className="iconfont">&#xe70c;</i>
-            </div>
-          </div>
-          <div className="content">
-            {this.state.slidePanelContent}
-          </div>
-        </div>
       </div>
     )
   }

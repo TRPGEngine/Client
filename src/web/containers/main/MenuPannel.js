@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const { Route, Link } = require('react-router-dom')
 const config = require('../../../../config/project.config.js');
 const { showProfileCard, switchMenuPannel } = require('../../../redux/actions/ui');
+const SlidePanel = require('../../components/SlidePanel');
 const ConverseList = require('./converse/ConverseList');
 const ActorList = require('./actors/ActorList');
 const GroupList = require('./group/GroupList');
@@ -84,6 +85,7 @@ class MenuPannel extends React.Component {
         </div>
         <div className="menu-panel">
           {this.props.selectedPannel || this.menus[selectedMenu].component || null}
+          <SlidePanel />
         </div>
       </div>
     )

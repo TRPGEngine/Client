@@ -10,6 +10,8 @@ const {
   HIDE_TOAST,
   SHOW_PROFILE_CARD,
   HIDE_PROFILE_CARD,
+  SHOW_SLIDE_PANEL,
+  HIDE_SLIDE_PANEL,
   SWITCH_MENU_PANNEL,
   CHANGE_NETWORK_STATE,
   UPDATE_NOTIFICATION_PERMISSION,
@@ -29,6 +31,11 @@ const initialState = immutable.fromJS({
   showToastText: '',
   showProfileCard: false,
   showProfileCardUUID: '',
+  showSlidePanel: false,
+  showSlidePanelInfo: {
+    title: '',
+    content: '',
+  },
   menuIndex: 0,
   menuPannel: null,
   network: {
@@ -65,6 +72,10 @@ module.exports = function ui(state = initialState, action) {
       return state.set('showProfileCard', true).set('showProfileCardUUID', action.uuid);
     case HIDE_PROFILE_CARD:
       return state.set('showProfileCard', false);
+    case SHOW_SLIDE_PANEL:
+      return state.set('showSlidePanel', true).set('showSlidePanelInfo', immutable.fromJS(action.payload));
+    case HIDE_SLIDE_PANEL:
+      return state.set('showSlidePanel', false);
     case SWITCH_MENU_PANNEL:
       return state
         .set('menuIndex', action.menuIndex)

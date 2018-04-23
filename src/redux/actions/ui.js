@@ -9,6 +9,8 @@ const {
   HIDE_TOAST,
   SHOW_PROFILE_CARD,
   HIDE_PROFILE_CARD,
+  SHOW_SLIDE_PANEL,
+  HIDE_SLIDE_PANEL,
   SWITCH_MENU_PANNEL,
   CHANGE_NETWORK_STATE,
   UPDATE_NOTIFICATION_PERMISSION,
@@ -72,6 +74,12 @@ exports.showProfileCard = function(uuid) {
 }
 exports.hideProfileCard = function() {
   return {type: HIDE_PROFILE_CARD}
+}
+exports.showSlidePanel = function(title, content) {
+  return {type: SHOW_SLIDE_PANEL, payload: {title, content}}
+}
+exports.hideSlidePanel = function() {
+  return {type: HIDE_SLIDE_PANEL}
 }
 exports.switchMenuPannel = function(index, pannel = null) {
   return {type: SWITCH_MENU_PANNEL, menuIndex: index, payload: pannel}
