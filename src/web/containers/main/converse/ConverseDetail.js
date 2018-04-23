@@ -44,7 +44,7 @@ class ConverseDetail extends React.Component {
 
   // 发送投骰邀请
   _handleSendDiceInv() {
-    let uuid = this.props.conversesUUID;
+    let uuid = this.props.converseUUID;
     console.log("发送投骰邀请", uuid);
     let usercache = this.props.usercache;
     let name = usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username']);
