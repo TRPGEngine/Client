@@ -153,7 +153,6 @@ class GroupDetail extends React.Component {
   }
 
   render() {
-    let inputType = this.state.inputType;
     let { selfGroupActors } = this.props;
     let options = [];
     if(selfGroupActors && selfGroupActors.size > 0) {

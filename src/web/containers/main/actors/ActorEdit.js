@@ -126,10 +126,12 @@ class ActorEdit extends React.Component {
                           value={item.value}
                           onChange={(e) => {
                             try {
-                              this.state.cells[index].value = e.target.value;
+                              let cells = this.state.cells;
+                              cells[index].value = e.target.value
+                              this.setState({cells});
                               this.template.eval();
-                            }finally {
-                              this.setState({cells: this.state.cells});
+                            }catch(e) {
+                              console.warn(e);
                             }
                           }}
                         />
