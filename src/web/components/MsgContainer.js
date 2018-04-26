@@ -138,7 +138,7 @@ class MsgContainer extends React.Component {
                   type={item.get('type')}
                   content={item.get('message')}
                   data={data}
-                  time={dateHelper.getMsgDate(date)}
+                  time={date}
                   me={isMe}
                   isGroupMsg={false}
                   emphasizeTime={emphasizeTime}

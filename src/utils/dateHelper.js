@@ -1,12 +1,20 @@
 const moment = require('moment');
 
 let helper = {
-  getShortDate: (str) => {
+  getShortDiff: (str) => {
     let date = str ? moment(str) : moment();
     if(helper.isToday(date)) {
       return date.format('HH:mm');
     }else {
       return date.fromNow();
+    }
+  },
+  getShortDate: (str) => {
+    let date = str ? moment(str) : moment();
+    if(helper.isToday(date)) {
+      return date.format('HH:mm');
+    }else {
+      return date.format('MM-DD HH:mm');
     }
   },
   getMsgDate: (str) => {

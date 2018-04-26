@@ -9,7 +9,6 @@ const { sendMsg, getMoreChatLog } = require('../../../../redux/actions/chat');
 const { changeSelectGroupActor } = require('../../../../redux/actions/group');
 const { sendDiceRequest, sendDiceInvite } = require('../../../../redux/actions/dice');
 const MsgSendBox = require('../../../components/MsgSendBox');
-const MsgItem = require('../../../components/MsgItem');
 const scrollTo = require('../../../../utils/animatedScrollTo.js');
 const GroupMap = require('./GroupMap');
 const GroupInvite = require('./GroupInvite');

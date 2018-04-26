@@ -55,7 +55,7 @@ class ConverseList extends React.Component {
               icon={item.get('icon') || attachIcon || defaultIcon}
               title={item.get('name')}
               content={item.get('lastMsg')}
-              time={item.get('lastTime')?dateHelper.getShortDate(item.get('lastTime')):''}
+              time={item.get('lastTime')?dateHelper.getShortDiff(item.get('lastTime')):''}
               uuid={uuid}
               unread={item.get('unread')}
               isSelected={this.props.selectedUUID === uuid}

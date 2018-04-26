@@ -50,7 +50,7 @@ class HomeScreen extends React.Component {
             icon: item.get('icon') || avatar || defaultIcon,
             title: item.get('name'),
             content: item.get('lastMsg'),
-            time: item.get('lastTime')?dateHelper.getShortDate(item.get('lastTime')):'',
+            time: item.get('lastTime')?dateHelper.getShortDiff(item.get('lastTime')):'',
             uuid,
             unread: item.get('unread'),
             onPress: () => {

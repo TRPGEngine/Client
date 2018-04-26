@@ -3,7 +3,6 @@ const { connect } = require('react-redux');
 const config = require('../../../../../config/project.config.js');
 const dateHelper = require('../../../../utils/dateHelper');
 const MsgSendBox = require('../../../components/MsgSendBox');
-const MsgItem = require('../../../components/MsgItem');
 const scrollTo = require('../../../../utils/animatedScrollTo.js');
 const ReactTooltip = require('react-tooltip');
 const { showModal, hideModal } = require('../../../../redux/actions/ui');

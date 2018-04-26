@@ -4,6 +4,7 @@ const { connect } = require('react-redux');
 const immutable = require('immutable');
 const config = require('../../../config/project.config');
 const msgParser = require('../../utils/msgParser');
+const dateHelper = require('../../utils/dateHelper');
 const { agreeFriendInvite, refuseFriendInvite } = require('../../redux/actions/user');
 const { agreeGroupRequest, refuseGroupRequest, agreeGroupInvite, refuseGroupInvite } = require('../../redux/actions/group');
 const { acceptDiceRequest, acceptDiceInvite } = require('../../redux/actions/dice');
@@ -216,12 +217,12 @@ class MsgItem extends React.Component {
         <div className={"msg-item "+(this.props.me?"me ":"") + this.props.type}>
           {
             this.props.emphasizeTime ? (
-              <div className="emphasize-time"><span>{this.props.time}</span></div>
+              <div className="emphasize-time"><span>{dateHelper.getShortDate(this.props.time)}</span></div>
             ) : null
           }
           <div className="profile">
             <span className="name">{this.props.name}</span>
-            <span className="time">{this.props.time}</span>
+            <span className="time">{dateHelper.getMsgDate(this.props.time)}</span>
           </div>
           <div className="content">
             <div className="avatar"><img src={this.props.icon} /></div>

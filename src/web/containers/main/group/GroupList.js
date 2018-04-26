@@ -38,7 +38,7 @@ class GroupList extends React.Component {
           icon={item.get('avatar') || config.defaultImg.group}
           title={item.get('name')}
           content={lastMsg}
-          time={lastTime?dateHelper.getShortDate(lastTime):''}
+          time={lastTime?dateHelper.getShortDiff(lastTime):''}
           uuid={uuid}
           unread={unread}
           isSelected={this.props.selectedUUID === uuid}
