@@ -214,6 +214,11 @@ class MsgItem extends React.Component {
     }else {
       return (
         <div className={"msg-item "+(this.props.me?"me ":"") + this.props.type}>
+          {
+            this.props.emphasizeTime ? (
+              <div className="emphasize-time"><span>{this.props.time}</span></div>
+            ) : null
+          }
           <div className="profile">
             <span className="name">{this.props.name}</span>
             <span className="time">{this.props.time}</span>

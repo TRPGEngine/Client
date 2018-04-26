@@ -110,19 +110,24 @@ class MsgContainer extends React.Component {
         }
         <div className="msg-items">
           {
-            this.props.msgList.map((item, index) => {
-              let defaultAvatar = item.get('sender_uuid') === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.user;
+            this.props.msgList.map((item, index, arr) => {
+              const prevDate = index > 0 ? arr.getIn([index - 1, 'date']) : 0;
+              const defaultAvatar = item.get('sender_uuid') === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.user;
               let data = item.get('data');
               let isMe = userUUID===item.get('sender_uuid');
               let icon = isMe ? this.props.selfInfo.get('avatar') : usercache.getIn([item.get('sender_uuid'), 'avatar'])
               let name = isMe
                 ? this.props.selfInfo.get('nickname') || this.props.selfInfo.get('username')
                 : usercache.getIn([item.get('sender_uuid'), 'nickname']) || usercache.getIn([item.get('sender_uuid'), 'username']);
+              let date = item.get('date');
 
               // data 预处理
               if(data && item.get('type') === 'card') {
                 data = this.prepareMsgItemCardData(data);
               }
+
+              let diffTime = dateHelper.getDateDiff(prevDate, date);
+              let emphasizeTime = diffTime / 1000 / 60 >= 10 // 超过10分钟
 
               return (
                 <MsgItem
@@ -133,9 +138,10 @@ class MsgContainer extends React.Component {
                   type={item.get('type')}
                   content={item.get('message')}
                   data={data}
-                  time={dateHelper.getMsgDate(item.get('date'))}
+                  time={dateHelper.getMsgDate(date)}
                   me={isMe}
                   isGroupMsg={false}
+                  emphasizeTime={emphasizeTime}
                 />
               )
             })

@@ -28,6 +28,9 @@ let helper = {
   isToday: (date) => {
     return moment().isSame(date, 'day');
   },
+  getDateDiff: (prevDate, nextDate) => {
+    return new Date(nextDate) - new Date(prevDate);
+  }
 }
 
 module.exports = helper;
