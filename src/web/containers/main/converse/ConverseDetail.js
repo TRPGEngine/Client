@@ -5,7 +5,7 @@ const dateHelper = require('../../../../utils/dateHelper');
 const MsgSendBox = require('../../../components/MsgSendBox');
 const scrollTo = require('../../../../utils/animatedScrollTo.js');
 const ReactTooltip = require('react-tooltip');
-const { showModal, hideModal } = require('../../../../redux/actions/ui');
+const { showModal, hideModal, showProfileCard } = require('../../../../redux/actions/ui');
 const { sendMsg, getMoreChatLog } = require('../../../../redux/actions/chat');
 const { sendDiceRequest, sendDiceInvite } = require('../../../../redux/actions/dice');
 const DiceRequest = require('../dice/DiceRequest');
@@ -64,9 +64,9 @@ class ConverseDetail extends React.Component {
       {
         name: '个人信息',
         icon: '&#xe611;',
-        component: (
-          <div>test</div>
-        )
+        click: () => {
+          this.props.dispatch(showProfileCard(this.props.converseUserUUID))
+        }
       },
     ]
 
@@ -77,7 +77,7 @@ class ConverseDetail extends React.Component {
           data-tip={item.name}
           onClick={(e) => {
             e.stopPropagation();
-            alert('TODO');
+            item.click();
           }}
         >
           <i className="iconfont" dangerouslySetInnerHTML={{__html: item.icon}}></i>
