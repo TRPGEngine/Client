@@ -12,7 +12,9 @@
     "package-all": "cross-env PLATFORM=electron NODE_ENV=production gulp package:all --gulpfile build/gulpfile.js",
     "app": "cross-env PLATFORM=app node node_modules/react-native/local-cli/cli.js start --root ./src/app",
     "app-clear": "cross-env PLATFORM=app node node_modules/react-native/local-cli/cli.js start --root ./src/app --reset-cache",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ext .js,.jsx src",
+    "lint:fix": "eslint --fix --ext .js,.jsx src"
   },
   "repository": {
     "type": "git",
@@ -65,6 +67,7 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.25.0",
+    "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-inline-environment-variables": "^0.2.0",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -76,6 +79,8 @@
     "css-loader": "^0.28.4",
     "electron": "^1.7.9",
     "electron-packager": "^9.1.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.7.0",
     "file-loader": "^0.11.2",
     "gulp": "^3.9.1",
     "gulp-replace": "^0.6.1",
