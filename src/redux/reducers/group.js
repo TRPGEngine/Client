@@ -7,7 +7,7 @@ const {
   FIND_GROUP_SUCCESS,
   REQUEST_JOIN_GROUP_SUCCESS,
   AGREE_GROUP_REQUEST_SUCCESS,
-  SEND_GROUP_INVITE_SUCCESS,
+  // SEND_GROUP_INVITE_SUCCESS,
   AGREE_GROUP_INVITE_SUCCESS,
   REFUSE_GROUP_INVITE_SUCCESS,
   GET_GROUP_INVITE_SUCCESS,
@@ -41,9 +41,10 @@ module.exports = function group(state = initialState, action) {
       return initialState;
     case CREATE_GROUP_SUCCESS:
       return state.update('groups', (list) => list.push(immutable.fromJS(action.payload)))
-    case GET_GROUP_INFO_SUCCESS:
+    case GET_GROUP_INFO_SUCCESS: {
       let group_uuid = action.payload.uuid;
       return state.setIn(['info', group_uuid], action.payload);
+    }
     case FIND_GROUP_REQUEST:
       return state.set('isFindingGroup', true);
     case FIND_GROUP_SUCCESS:
@@ -192,6 +193,4 @@ module.exports = function group(state = initialState, action) {
     default:
       return state;
   }
-
-  return state;
 }

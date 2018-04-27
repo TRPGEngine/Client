@@ -32,7 +32,7 @@ class TemplateItem extends React.Component {
       <div className="template-item">
         <div className="header">
           <div className="name">{this.props.name}</div>
-          { this.getActions() }
+          {this.getActions()}
         </div>
         <div className="desc">{this.props.desc}</div>
         <div className="footer">

@@ -1,8 +1,6 @@
-const immutable = require('immutable');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const {
-  SET_TEMPLATE,
   GET_TEMPLATE_SUCCESS,
   FIND_TEMPLATE_SUCCESS,
   CREATE_TEMPLATE_SUCCESS,

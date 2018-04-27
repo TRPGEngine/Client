@@ -18,7 +18,6 @@ const {
   UPDATE_SOCKET_ID,
 } = require('../constants');
 const immutable = require('immutable');
-const config = require('../../../config/project.config');
 
 const initialState = immutable.fromJS({
   showAlert: false,
@@ -51,9 +50,10 @@ module.exports = function ui(state = initialState, action) {
   switch (action.type) {
     case RESET:
       return state.set('showModal', false);
-    case SHOW_ALERT:
+    case SHOW_ALERT: {
       let showAlertInfo = action.payload || {};
       return state.set('showAlert', true).set('showAlertInfo', immutable.fromJS(showAlertInfo));
+    }
     case HIDE_ALERT:
       return state.set('showAlert', false).set('showAlertInfo', immutable.Map());
     case SHOW_LOADING:

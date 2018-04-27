@@ -1,12 +1,9 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../../../../config/project.config.js');
-const dateHelper = require('../../../../utils/dateHelper');
 const MsgSendBox = require('../../../components/MsgSendBox');
-const scrollTo = require('../../../../utils/animatedScrollTo.js');
-const ReactTooltip = require('react-tooltip');
 const { showModal, hideModal, showProfileCard } = require('../../../../redux/actions/ui');
-const { sendMsg, getMoreChatLog } = require('../../../../redux/actions/chat');
+const { sendMsg } = require('../../../../redux/actions/chat');
 const { sendDiceRequest, sendDiceInvite } = require('../../../../redux/actions/dice');
 const DiceRequest = require('../dice/DiceRequest');
 const DiceInvite = require('../dice/DiceInvite');
@@ -44,14 +41,14 @@ class ConverseDetail extends React.Component {
   // 发送投骰邀请
   _handleSendDiceInv() {
     let uuid = this.props.converseUUID;
-    console.log("发送投骰邀请", uuid);
+    console.log('发送投骰邀请', uuid);
     let usercache = this.props.usercache;
     let name = usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username']);
     this.props.dispatch(showModal(
       <DiceInvite
         inviteList={[name]}
         onSendDiceInvite={(diceReason, diceExp) => {
-          console.log("diceReason, diceExp",diceReason, diceExp);
+          console.log('diceReason, diceExp',diceReason, diceExp);
           this.props.dispatch(sendDiceInvite(uuid, false, diceExp, diceReason, [uuid], [name]));
           this.props.dispatch(hideModal());
         }}
@@ -73,7 +70,7 @@ class ConverseDetail extends React.Component {
     return actions.map((item, index) => {
       return (
         <button
-          key={"group-action-"+index}
+          key={'group-action-'+index}
           data-tip={item.name}
           onClick={(e) => {
             e.stopPropagation();

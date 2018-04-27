@@ -44,7 +44,7 @@ class LoginScreen extends React.Component {
           value={this.state.username}
           onChangeText={(username) => this.setState({username})}
           input={{
-            placeholder: "请输入用户名",
+            placeholder: '请输入用户名',
           }}
         />
         <TFormGroup
@@ -52,7 +52,7 @@ class LoginScreen extends React.Component {
           value={this.state.password}
           onChangeText={(password) => this.setState({password})}
           input={{
-            placeholder: "请输入密码",
+            placeholder: '请输入密码',
             secureTextEntry: true
           }}
         />
@@ -79,7 +79,7 @@ const styles = {
   title: [
     sb.textAlign('left'),
     sb.font(20),
-    {paddingLeft: 10, marginBottom: 20}
+    {paddingLeft: 10, marginBottom: 20},
   ],
   registerBtn: [
     sb.bgColor('transparent'),

@@ -14,10 +14,6 @@ class SlidePanel extends React.Component {
     };
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('click', this.slideEvent);
-  }
-
   componentWillUpdate(nextProps, nextState) {
     if(this.props.isSlidePanelShow === false && nextProps.isSlidePanelShow === true) {
       // 检测到显示滑动面板
@@ -25,6 +21,10 @@ class SlidePanel extends React.Component {
         window.addEventListener('click', this.slideEvent);
       }, 500);
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.slideEvent);
   }
 
   _handleHideSlidePanel() {
@@ -36,7 +36,7 @@ class SlidePanel extends React.Component {
   render() {
     return (
       <div
-        className={"slide-panel" + (this.props.isSlidePanelShow?"":" hide")}
+        className={'slide-panel' + (this.props.isSlidePanelShow?'':' hide')}
         onClick={(e) => {
           e.stopPropagation();
         }}

@@ -1,6 +1,5 @@
 const React = require('react');
 const {
-  Platform,
   Text,
   View,
   TouchableOpacity,

@@ -97,7 +97,8 @@ class ActorEdit extends React.Component {
           <input
             placeholder="人物卡名"
             value={this.state.profileName}
-            onChange={(e) => this.setState({profileName: e.target.value})} />
+            onChange={(e) => this.setState({profileName: e.target.value})}
+          />
           <button onClick={() => this._handleSave()}>{this.props.selectedActorUUID?'更新':'创建'}</button>
         </div>
         <div className="actor-edit-body">
@@ -109,7 +110,8 @@ class ActorEdit extends React.Component {
               <textarea
                 placeholder="人物卡描述/背景"
                 value={this.state.profileDesc}
-                onChange={(e) => this.setState({profileDesc: e.target.value})} />
+                onChange={(e) => this.setState({profileDesc: e.target.value})}
+              />
             </div>
           </div>
             <div className="actor-edit-property">

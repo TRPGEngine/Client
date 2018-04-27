@@ -1,10 +1,8 @@
 const {
   GET_USER_INFO,
-  GET_USER_INFO_ERROR,
   GET_TEMPLATE_INFO,
   GET_ACTOR_INFO,
 } = require('../constants');
-const immutable = require('immutable');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 
@@ -18,7 +16,7 @@ exports.getUserInfo = function(uuid) {
       if(data.result) {
         dispatch({type:GET_USER_INFO, payload: data.info});
       }else {
-        dispatch({type:GET_USER_INFO_ERROR, payload: data.msg});
+        console.error(data.msg);
       }
     })
   }

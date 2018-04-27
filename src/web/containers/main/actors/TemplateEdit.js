@@ -5,7 +5,6 @@ const Select = require('react-select');
 const TemplatePropertyCell = require('../../../components/TemplatePropertyCell');
 const at = require('trpg-actor-template');
 const {
-  setTemplate,
   createTemplate,
   updateTemplate,
 } = require('../../../../redux/actions/actor');
@@ -67,7 +66,7 @@ class TemplateEdit extends React.Component {
     let inspect;
     let options = [
       { value: 'value', label: '值' },
-      { value: 'expression', label: '表达式' }
+      { value: 'expression', label: '表达式' },
     ];
 
     if(!inspectCell) {
@@ -107,7 +106,7 @@ class TemplateEdit extends React.Component {
             <textarea
               placeholder="属性描述"
               rows="3"
-              value={inspectCell.desc || ""}
+              value={inspectCell.desc || ''}
               onChange={(e) => {
                 inspectCell.desc = e.target.value;
                 this.setState({inspectCell: inspectCell});
@@ -131,7 +130,7 @@ class TemplateEdit extends React.Component {
             />
           </div>
           <div className="data">
-            <span>{inspectCell.func==="expression"?"表达式":"默认值"}:</span>
+            <span>{inspectCell.func==='expression'?'表达式':'默认值'}:</span>
             <input
               type="text"
               value={inspectCell.default}
@@ -146,7 +145,7 @@ class TemplateEdit extends React.Component {
             <input
               type="text"
               value={inspectCell.value}
-              disabled={inspectCell.func==="expression"}
+              disabled={inspectCell.func==='expression'}
               onChange={(e) => {
                 inspectCell.value = e.target.value;
                 this.setState({inspectCell: inspectCell});
@@ -173,7 +172,8 @@ class TemplateEdit extends React.Component {
             <input
               placeholder="模板名"
               value={this.state.name}
-              onChange={(e) => this.setState({name: e.target.value})} />
+              onChange={(e) => this.setState({name: e.target.value})}
+            />
             <button onClick={() => this._handleSave()}>保存</button>
           </div>
           <div className="desc">
@@ -190,7 +190,8 @@ class TemplateEdit extends React.Component {
               let newCell = at.getInitCell();
               this.state.template.insertCell(newCell);
               this.setState({template: this.state.template});
-            }}>
+            }}
+            >
               <i className="iconfont">&#xe604;</i>添加新属性
             </button>
           </div>
@@ -209,13 +210,14 @@ class TemplateEdit extends React.Component {
                   this.state.template.table.map((item, index) => {
                     return (
                       <TemplatePropertyCell
-                        key={"template-cell-"+index}
+                        key={'template-cell-'+index}
                         isActive={item===this.state.inspectCell}
                         name={item.name}
                         defaultValue={item.default}
                         value={item.value}
                         onEdit={() => this._handleEdit(item)}
-                        onRemove={() => this._handleRemove(item, index)} />
+                        onRemove={() => this._handleRemove(item, index)}
+                      />
                     )
                   })
                 }
@@ -223,7 +225,7 @@ class TemplateEdit extends React.Component {
             </table>
           </div>
         </div>
-        { this.getInspectPanel() }
+        {this.getInspectPanel()}
       </div>
     )
   }

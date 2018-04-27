@@ -4,11 +4,10 @@ const {
   GET_NOTE,
   SWITCH_NOTE,
   SAVE_NOTE,
-  UPDATE_NOTE,
+  // UPDATE_NOTE,
 } = require('../constants');
 const immutable = require('immutable');
 const uuid = require('uuid/v1');
-const rnStorage = require('../../api/rnStorage.api.js');
 
 const initialState = immutable.fromJS({
   noteList: {},
@@ -29,12 +28,13 @@ module.exports = function ui(state = initialState, action) {
   switch (action.type) {
     case RESET:
       return initialState;
-    case ADD_NOTE:
-      let showAlertInfo = action.payload || {};
+    case ADD_NOTE: {
+      // let showAlertInfo = action.payload || {};
       let blankNote = immutable.fromJS(getBlankNote());
       let blankUUID = blankNote.get('uuid');
       return state.setIn(['noteList', blankUUID], blankNote).set('selectedNoteUUID', blankUUID);
-    case SAVE_NOTE:
+    }
+    case SAVE_NOTE: {
       let saveUUID = action.payload.uuid;
       let saveTitle = action.payload.title;
       let saveContent = action.payload.content;
@@ -45,6 +45,7 @@ module.exports = function ui(state = initialState, action) {
         .setIn(['noteList', saveUUID, 'updated_At'], new Date().getTime());
 
       return state;
+    }
     case GET_NOTE:
       return state.set('noteList', immutable.fromJS(action.noteList));
     case SWITCH_NOTE:

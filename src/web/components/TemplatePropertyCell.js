@@ -12,7 +12,7 @@ class TemplatePropertyCell extends React.Component {
     let { name, defaultValue, value, onEdit, onRemove, isActive } = this.props;
 
     return (
-      <tr className={"template-property-cell" + (isActive?" active":"")}>
+      <tr className={'template-property-cell' + (isActive?' active':'')}>
         <td className="property">{name} : </td>
         <td className="defaultValue">{defaultValue}</td>
         <td className="value">{value}</td>

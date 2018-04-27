@@ -41,7 +41,7 @@ class FriendsAdd extends React.Component {
   render() {
     let options = [
       { value: 'uuid', label: '用户唯一标示符' },
-      { value: 'username', label: '用户名' }
+      { value: 'username', label: '用户名' },
     ];
     return (
       <ModalPanel title="添加好友">

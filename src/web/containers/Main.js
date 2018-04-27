@@ -97,8 +97,8 @@ class Main extends React.Component {
                 }
                 return (
                   <button
-                    key={"title-menu#" + index}
-                    className={isActive ? "active" : ""}
+                    key={'title-menu#' + index}
+                    className={isActive ? 'active' : ''}
                     onClick={() => this._handleSelectTitleMenu(index)}
                   >{menu.name}</button>
                 )

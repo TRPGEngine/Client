@@ -9,7 +9,7 @@ function checkVersion(cb) {
       let netVersion = netPackage.version;
       cb(netVersion === config.version)
     })
-    .catch(function (error) {
+    .catch(function (err) {
       console.log('网络错误\n' + err);
     });
 }

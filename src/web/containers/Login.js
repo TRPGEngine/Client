@@ -1,7 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const { Link } = require('react-router-dom');
-const { showLoading, hideLoading } = require('../../redux/actions/ui');
+const { showLoading } = require('../../redux/actions/ui');
 const { login } = require('../../redux/actions/user');
 require('./Login.scss');
 
@@ -14,17 +14,6 @@ class Login extends React.Component {
     };
   }
 
-  _handleLogin() {
-    this.props.dispatch(showLoading());
-    // setTimeout(()=>{
-    //   this.props.dispatch(hideLoading());
-    //   this.props.history.push('main');
-    // }, 2000);
-    let username = this.state.username;
-    let password = this.state.password;
-    this.props.dispatch(login(username, password));
-  }
-
   componentDidMount() {
     if(this.props.isLogin) {
       this.props.history.push('main');
@@ -35,6 +24,13 @@ class Login extends React.Component {
     if(!!nextProps.isLogin) {
       this.props.history.push('main');
     }
+  }
+
+  _handleLogin() {
+    this.props.dispatch(showLoading());
+    let username = this.state.username;
+    let password = this.state.password;
+    this.props.dispatch(login(username, password));
   }
 
   render() {

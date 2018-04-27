@@ -53,17 +53,17 @@ class TAlert extends React.Component {
       >
         <View style={styles.container}>
           <View style={styles.view}>
-            { header }
+            {header}
             <View style={styles.body}>
               <Text style={styles.text}>{content || '确认进行该操作?'}</Text>
             </View>
             <View style={styles.footer}>
-              { cancelBtn }
+              {cancelBtn}
               <TButton
                 style={styles.btn}
                 onPress={() => onConfirm ? onConfirm() : this.props.dispatch(hideAlert())}
               >
-                { confirmTitle || '确认' }
+                {confirmTitle || '确认'}
               </TButton>
             </View>
           </View>

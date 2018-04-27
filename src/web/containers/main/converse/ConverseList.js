@@ -17,20 +17,20 @@ class ConverseList extends React.Component {
   }
 
   _handleSelectConverse(converseUUID, userUUID) {
-    console.log("选择会话", converseUUID, '对象', userUUID);
+    console.log('选择会话', converseUUID, '对象', userUUID);
     this.props.dispatch(switchConverse(converseUUID, userUUID));
   }
 
   getWelcomeMessage() {
     let hours = new Date().getHours();
     if(hours < 6) {
-      return "我欲修仙，法力无边。"
+      return '我欲修仙，法力无边。'
     }else if(hours < 12) {
-      return "早上好，今天请继续加油！"
+      return '早上好，今天请继续加油！'
     }else if(hours < 18) {
-      return "下午好，喝杯茶吧，让精神抖擞起来。"
+      return '下午好，喝杯茶吧，让精神抖擞起来。'
     }else {
-      return "跑团时间到！赶紧找个团一起哈啤！"
+      return '跑团时间到！赶紧找个团一起哈啤！'
     }
   }
 
@@ -93,8 +93,8 @@ class ConverseList extends React.Component {
                 icon={usercache.getIn([uuid, 'avatar']) || config.defaultImg.user}
                 title={usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username'])}
                 content={usercache.getIn([uuid, 'sign'])}
-                time=''
-                uuid=''
+                time=""
+                uuid=""
                 isSelected={false}
                 onClick={() => this.props.dispatch(showProfileCard(uuid))}
                 hideCloseBtn={true}

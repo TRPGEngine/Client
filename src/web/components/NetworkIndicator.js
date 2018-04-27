@@ -22,7 +22,7 @@ class NetworkIndicator extends React.Component {
     }
 
     return (
-      <div className={"network-indicator " + state}>
+      <div className={'network-indicator ' + state}>
         <div className="icon">
           <i className="iconfont" dangerouslySetInnerHTML={{__html: icon}}></i>
         </div>

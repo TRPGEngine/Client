@@ -1,16 +1,14 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../../../../config/project.config.js');
-const dateHelper = require('../../../../utils/dateHelper');
 const Select = require('react-select');
 const ReactTooltip = require('react-tooltip');
 const { showModal, hideModal, showAlert, showSlidePanel } = require('../../../../redux/actions/ui');
-const { sendMsg, getMoreChatLog } = require('../../../../redux/actions/chat');
+const { sendMsg } = require('../../../../redux/actions/chat');
 const { changeSelectGroupActor } = require('../../../../redux/actions/group');
 const { sendDiceRequest, sendDiceInvite } = require('../../../../redux/actions/dice');
 const MsgSendBox = require('../../../components/MsgSendBox');
-const scrollTo = require('../../../../utils/animatedScrollTo.js');
-const GroupMap = require('./GroupMap');
+// const GroupMap = require('./GroupMap');
 const GroupInvite = require('./GroupInvite');
 const GroupActor = require('./GroupActor');
 const GroupMember = require('./GroupMember');
@@ -75,7 +73,7 @@ class GroupDetail extends React.Component {
               inviteList={inviteNameList}
               onSendDiceInvite={(diceReason, diceExp) => {
                 console.log(inviteUUIDList);
-                console.log("diceReason, diceExp",diceReason, diceExp);
+                console.log('diceReason, diceExp',diceReason, diceExp);
                 let selectedUUID = this.props.selectedUUID;
                 this.props.dispatch(sendDiceInvite(selectedUUID, true, diceExp, diceReason, inviteUUIDList, inviteNameList));
                 this.props.dispatch(hideModal());
@@ -139,7 +137,7 @@ class GroupDetail extends React.Component {
     return actions.map((item, index) => {
       return (
         <button
-          key={"group-action-"+index}
+          key={'group-action-'+index}
           data-tip={item.name}
           onClick={(e) => {
             e.stopPropagation();
@@ -163,7 +161,7 @@ class GroupDetail extends React.Component {
     }
     return (
       <div className="detail">
-        <ReactTooltip effect='solid' />
+        <ReactTooltip effect="solid" />
         <div className="group-header">
           <div className="avatar">
             <img src={this.props.groupInfo.get('avatar') || config.defaultImg.group} />

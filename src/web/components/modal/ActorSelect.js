@@ -35,7 +35,7 @@ class ActorSelect extends React.Component {
               return (
                 <div
                   key={`actor-item#${uuid}#${index}`}
-                  className={"actor-item" + (this.state.selectActorUUID===uuid?' active':'')}
+                  className={'actor-item' + (this.state.selectActorUUID===uuid?' active':'')}
                   onClick={() => this.setState({selectActorUUID: uuid})}
                 >
                   <div className="actor-avatar" style={{backgroundImage: `url(${item.get('avatar') || config.defaultImg.actor})`}}></div>

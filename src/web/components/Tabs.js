@@ -18,7 +18,7 @@ class TabsController extends React.Component {
             React.Children.map(this.props.children, (element, index) => {
               return (
                 <div
-                  className={"tab-item" + (index===this.state.selectedIndex?" active":'')}
+                  className={'tab-item' + (index===this.state.selectedIndex?' active':'')}
                   onClick={()=>this.setState({selectedIndex: index})}
                 >{element.props.name}</div>
               )
@@ -29,7 +29,7 @@ class TabsController extends React.Component {
           {
             React.Children.map(this.props.children, (element, index) => {
               return (
-                <div className={(index===this.state.selectedIndex?"active":'')}>
+                <div className={(index===this.state.selectedIndex?'active':'')}>
                   {element}
                 </div>
               )

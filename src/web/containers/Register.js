@@ -15,6 +15,12 @@ class Register extends React.Component {
     };
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    if(!!nextProps.isLogin) {
+      this.props.history.push('main');
+    }
+  }
+
   _handleRegister() {
     this.props.dispatch(showLoading());
     let username = this.state.username;
@@ -24,12 +30,6 @@ class Register extends React.Component {
         content: '注册成功',
       }))
     }));
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if(!!nextProps.isLogin) {
-      this.props.history.push('main');
-    }
   }
 
   _getErrorMsg() {

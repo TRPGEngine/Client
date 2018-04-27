@@ -1,6 +1,5 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const immutable = require('immutable');
 const { showModal } = require('../../../../redux/actions/ui');
 const { setEditedTemplate, findTemplate, selectTemplate } = require('../../../../redux/actions/actor');
 const TemplateEdit = require('./TemplateEdit');
@@ -52,7 +51,7 @@ class TemplateSelect extends React.Component {
         return findingResult.map((item, index) => {
           return (
             <TemplateItem
-              key={"template-find-result" + item.get('uuid')}
+              key={'template-find-result' + item.get('uuid')}
               canEdit={false}
               name={item.get('name')}
               desc={item.get('desc')}
@@ -92,11 +91,11 @@ class TemplateSelect extends React.Component {
           </div>
           <div className="body">
             <div className="search-result">
-              <p class="title">搜索列表</p>
-              { this.getFindResult() }
+              <p className="title">搜索列表</p>
+              {this.getFindResult()}
             </div>
             <div className="self-template">
-              <p class="title">我的模板</p>
+              <p className="title">我的模板</p>
               {
                 this.props.selfTemplate.map((item, index) => {
                   return (

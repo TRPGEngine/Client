@@ -1,6 +1,5 @@
 const React = require('react');
 const {connect} = require('react-redux');
-const PropTypes = require('prop-types');
 const {hideAlert} = require('../../redux/actions/ui');
 require('./Alert.scss');
 
@@ -31,10 +30,11 @@ class Alert extends React.Component {
           }else{
             this.props.dispatch(hideAlert());
           }
-        }}>
-          { confirmTitle || '确认' }
+        }}
+        >
+          {confirmTitle || '确认'}
         </button>
-        { cancelBtn }
+        {cancelBtn}
       </div>
     )
   }

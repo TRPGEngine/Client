@@ -33,7 +33,7 @@ class ProfileScreen extends React.Component {
       let media = [
         {
           photo: avatar.uri
-        }
+        },
       ]
       this.props.navigation.navigate('PhotoBrowser', {media, index:0});
     }

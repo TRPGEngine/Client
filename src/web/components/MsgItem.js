@@ -8,7 +8,7 @@ const dateHelper = require('../../utils/dateHelper');
 const { agreeFriendInvite, refuseFriendInvite } = require('../../redux/actions/user');
 const { agreeGroupRequest, refuseGroupRequest, agreeGroupInvite, refuseGroupInvite } = require('../../redux/actions/group');
 const { acceptDiceRequest, acceptDiceInvite } = require('../../redux/actions/dice');
-const { showActorProfile, showModal } = require('../../redux/actions/ui');
+const { showModal } = require('../../redux/actions/ui');
 const { getActorInfo } = require('../../redux/actions/cache');
 require('./MsgItem.scss');
 
@@ -194,8 +194,8 @@ class MsgItem extends React.Component {
           <div className="card-title">
             {data.get('title')}
           </div>
-          { this.getCardView(data) }
-          { this.getCardAction(data) }
+          {this.getCardView(data)}
+          {this.getCardAction(data)}
         </div>
       )
     }else {
@@ -214,7 +214,7 @@ class MsgItem extends React.Component {
       )
     }else {
       return (
-        <div className={"msg-item "+(this.props.me?"me ":"") + this.props.type}>
+        <div className={'msg-item '+(this.props.me?'me ':'') + this.props.type}>
           {
             this.props.emphasizeTime ? (
               <div className="emphasize-time"><span>{dateHelper.getShortDate(this.props.time)}</span></div>

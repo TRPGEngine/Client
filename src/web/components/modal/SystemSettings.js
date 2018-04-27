@@ -16,7 +16,8 @@ class SystemSettings extends React.Component {
           <label>桌面通知权限({this.props.notificationPermission})</label>
           <Checkbox
             value={this.props.notificationPermission==='granted'}
-            onChange={(isChecked) => this._handleRequestNotificationPermission(isChecked)} />
+            onChange={(isChecked) => this._handleRequestNotificationPermission(isChecked)}
+          />
         </div>
       </ModalPanel>
     )

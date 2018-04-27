@@ -6,10 +6,7 @@
 
 const React = require('react');
 const {
-  Platform,
-  StyleSheet,
-  Text,
-  View
+  StyleSheet
 } = require('react-native');
 const { AppWithNavigationState } = require('./router');
 const { Provider } = require('react-redux');

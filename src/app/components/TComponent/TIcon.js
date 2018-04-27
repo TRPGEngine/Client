@@ -14,7 +14,8 @@ class TIcon extends React.Component {
     return (
       <Text
         {...this.props}
-        style={styles.text}>{this.props.icon}</Text>
+        style={styles.text}
+      >{this.props.icon}</Text>
     )
   }
 }

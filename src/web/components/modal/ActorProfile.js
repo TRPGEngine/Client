@@ -9,7 +9,7 @@ require('./ActorProfile.scss');
 class ActorProfile extends React.Component {
   getActorProperty(actor, template) {
     if(!template) {
-      console.error("缺少模板信息");
+      console.error('缺少模板信息');
       return;
     }
 
@@ -38,7 +38,7 @@ class ActorProfile extends React.Component {
     // console.log(actor, template.toJS());
     return (
       <div className="actor-profile">
-        <ReactTooltip effect='solid' id="property-desc" place="left" />
+        <ReactTooltip effect="solid" id="property-desc" place="left" />
         <div className="profile">
           <div className="name">{actor.name}</div>
           <div className="uuid" title={actor.uuid}>{actor.uuid}</div>

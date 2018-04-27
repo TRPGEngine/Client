@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-const { Route, Redirect, Switch, HashRouter, BrowserRouter, Link } = require('react-router-dom');
+const { Route, Switch, HashRouter, BrowserRouter, Link } = require('react-router-dom');
 const Modal = require('../components/Modal');
 const Loading = require('../components/Loading');
 const Alert = require('../components/Alert');
@@ -72,7 +72,7 @@ class App extends React.Component {
                 <NetworkIndicator />
               ) : null
             }
-            <div className='version'>当前版本号v{appVersion}</div>
+            <div className="version">当前版本号v{appVersion}</div>
           </div>
         </div>
       </Router>

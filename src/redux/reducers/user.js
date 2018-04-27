@@ -14,18 +14,18 @@ const {
   FIND_USER_FAILED,
   UPDATE_INFO_SUCCESS,
   ADD_FRIEND_SUCCESS,
-  ADD_FRIEND_FAILED,
-  GET_FRIENDS_REQUEST,
+  // TODO:ADD_FRIEND_FAILED,
+  // TODO:GET_FRIENDS_REQUEST,
   GET_FRIENDS_SUCCESS,
-  GET_FRIENDS_FAILED,
+  // TODO:GET_FRIENDS_FAILED,
   SEND_FRIEND_INVITE_SUCCESS,
-  SEND_FRIEND_INVITE_ERROR,
+  // TODO:SEND_FRIEND_INVITE_ERROR,
   AGREE_FRIEND_INVITE_SUCCESS,
-  AGREE_FRIEND_INVITE_ERROR,
+  // TODO:AGREE_FRIEND_INVITE_ERROR,
   GET_FRIEND_INVITE_SUCCESS,
-  GET_FRIEND_INVITE_ERROR,
+  // TODO:GET_FRIEND_INVITE_ERROR,
   REFUSE_FRIEND_INVITE_SUCCESS,
-  REFUSE_FRIEND_INVITE_ERROR,
+  // TODO:REFUSE_FRIEND_INVITE_ERROR,
   ADD_FRIEND_INVITE,
 } = require('../constants');
 // const sessionStorage = require('../../api/sessionStorage.api.js');
@@ -70,7 +70,7 @@ module.exports = function ui(state = initialState, action) {
       return state.set('isFindingUser', false).set('findingResult', immutable.fromJS(action.payload || []));
     case UPDATE_INFO_SUCCESS:
       return state.set('info', immutable.fromJS(action.payload));
-    case ADD_FRIEND_SUCCESS:
+    case ADD_FRIEND_SUCCESS: {
       let friendUUID = action.friendUUID;
       return state.update('friendList', (list) => {
         if(list.indexOf(friendUUID) === -1) {
@@ -79,6 +79,7 @@ module.exports = function ui(state = initialState, action) {
           return list;
         }
       })
+    }
     case GET_FRIENDS_SUCCESS:
       return state.set('friendList', immutable.fromJS(action.payload));
     case SEND_FRIEND_INVITE_SUCCESS:
@@ -134,6 +135,4 @@ module.exports = function ui(state = initialState, action) {
     default:
       return state;
   }
-
-  return state;
 }

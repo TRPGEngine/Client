@@ -1,6 +1,5 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const { Route, Link } = require('react-router-dom')
 const config = require('../../../../config/project.config.js');
 const { showProfileCard, switchMenuPannel } = require('../../../redux/actions/ui');
 const SlidePanel = require('../../components/SlidePanel');
@@ -70,11 +69,11 @@ class MenuPannel extends React.Component {
               this.menus.map((item, index) => {
                 return (
                   <a
-                    key={"menu-"+index}
+                    key={'menu-'+index}
                     className={selectedMenu===index?'active':''}
                     onClick={() => this._handleSwitchMenu(index)}
                   >
-                    <i className='iconfont' dangerouslySetInnerHTML={{__html:(selectedMenu===index?item.icon:item.activeIcon)}}></i>
+                    <i className="iconfont" dangerouslySetInnerHTML={{__html:(selectedMenu===index?item.icon:item.activeIcon)}}></i>
                     <span>{item.text}</span>
                   </a>
                 )

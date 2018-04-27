@@ -2,7 +2,6 @@ const immutable = require('immutable');
 const {
   RESET,
   GET_USER_INFO,
-  GET_USER_INFO_ERROR,
   GET_TEMPLATE_INFO,
   GET_ACTOR_INFO,
 } = require('../constants');
@@ -26,6 +25,4 @@ module.exports = function cache(state = initialState, action) {
     default:
       return state;
   }
-
-  return state;
 }

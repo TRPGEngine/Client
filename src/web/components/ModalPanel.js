@@ -5,7 +5,7 @@ require('./ModalPanel.scss');
 class ModalPanel extends React.Component {
   render() {
     return (
-      <div className={"modal-panel "+(this.props.className||'')}>
+      <div className={'modal-panel '+(this.props.className||'')}>
         <div className="head">
           {this.props.title}
         </div>

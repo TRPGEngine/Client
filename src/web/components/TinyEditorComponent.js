@@ -20,10 +20,10 @@ class TinyEditorComponent extends React.Component {
   componentDidMount() {
     tinymce.init({
       selector: `#${this.props.id}`,
-      skin_url: `src/assets/lib/tinymce/skins/lightgray`,
+      skin_url: 'src/assets/lib/tinymce/skins/lightgray',
       plugins: 'wordcount table save link image imagetools textcolor',
-      toolbar: "undo redo | styleselect forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | link image | blockquote | save",
-      imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
+      toolbar: 'undo redo | styleselect forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | link image | blockquote | save',
+      imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions',
       height : 469-44,
       branding: false,
       statusbar: false,

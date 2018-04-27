@@ -74,7 +74,7 @@ const styles = {
   avatar: [
     sb.size(60, 60),
     sb.radius(30),
-    {marginRight: 10}
+    {marginRight: 10},
   ],
   username: [
     sb.font(18),

@@ -7,7 +7,7 @@ require('./GroupInfo.scss')
 
 class GroupInfo extends React.Component {
   _handleEditGroup() {
-    console.log("编辑团");
+    console.log('编辑团');
   }
 
   _handleDismissGroup() {

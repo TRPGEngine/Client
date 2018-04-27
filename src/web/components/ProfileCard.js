@@ -1,5 +1,4 @@
 const React = require('react');
-const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const config = require('../../../config/project.config.js');
 const Select = require('react-select');
@@ -23,7 +22,7 @@ class ProfileCard extends React.Component {
       this.setState({isEdited: true});
       this.setEditedInfo();
     }else {
-      this.props.showAlert("不是本人无法修改信息");
+      this.props.showAlert('不是本人无法修改信息');
     }
   }
 
@@ -132,7 +131,6 @@ class ProfileCard extends React.Component {
     let isShow = this.props.isShow;
     if(isShow) {
       let isSelf = this.props.isSelf;
-      let uuid = this.props.selectedUUID;
       let editBtn = this.state.isEdited ? (
         <button
           className="action"
@@ -206,17 +204,17 @@ class ProfileCard extends React.Component {
             isSelf ? (
               <div className="item">
                 <span>用户名:</span>
-                { this.props.userInfo.get('username') }
+                {this.props.userInfo.get('username')}
               </div>
             ) : null
           }
           <div className="item">
             <span>昵称:</span>
-            { this.props.userInfo.get('nickname') }
+            {this.props.userInfo.get('nickname')}
           </div>
           <div className="item">
             <span>性别:</span>
-            { this.getSexP(this.props.userInfo.get('sex')) }
+            {this.getSexP(this.props.userInfo.get('sex'))}
           </div>
           <div className="item">
             <span>个人签名:</span><span>{this.props.userInfo.get('sign')}</span>
@@ -255,9 +253,9 @@ class ProfileCard extends React.Component {
                 <i className="iconfont">&#xe70c;</i>
               </div>
             </div>
-            { bodyContent }
+            {bodyContent}
             <div className="footer">
-              { this.getActions() }
+              {this.getActions()}
             </div>
           </div>
         </div>
@@ -268,7 +266,7 @@ class ProfileCard extends React.Component {
   render() {
     return (
       <div className="profile-card">
-        { this.getBody() }
+        {this.getBody()}
       </div>
     )
   }

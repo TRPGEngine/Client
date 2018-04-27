@@ -23,13 +23,13 @@ class GroupMember extends React.Component {
         let last_login = user.get('last_login') ? moment(user.get('last_login')).format('YYYY-M-D HH:mm:ss') : '从未登录';
         let isManager = groupInfo.get('managers_uuid').indexOf(uuid) >= 0;
         let isOwner = groupInfo.get('owner_uuid') === uuid;
-        let auth = isOwner?"owner":isManager?"manager":"none";
+        let auth = isOwner?'owner':isManager?'manager':'none';
         return (
           <tr
             key={`group-member#${this.props.selectedGroupUUID}#${uuid}`}
             className="group-member-item"
           >
-            <td className={"auth "+auth}>
+            <td className={'auth '+auth}>
               <i className="iconfont">&#xe648;</i>
             </td>
             <td className="avatar">

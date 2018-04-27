@@ -17,7 +17,7 @@ class Emoticon extends React.Component {
     if(selectGroup && this.emoji[selectGroup]) {
       return this.emoji[selectGroup].map((item) => (
         <span
-          key={"emoji-cell#"+item}
+          key={'emoji-cell#'+item}
           className="emoji-cell"
           onClick={()=>this.props.onSelect(item)}
         >
@@ -43,8 +43,8 @@ class Emoticon extends React.Component {
         <div className="group">
           {Object.keys(this.emoji).map((groupName) => (
             <div
-              key={"emoji-group#" + groupName}
-              className={"group-selection" + (this.state.selectGroup===groupName?' active':'')}
+              key={'emoji-group#' + groupName}
+              className={'group-selection' + (this.state.selectGroup===groupName?' active':'')}
               onClick={() => this.setState({selectGroup: groupName})}
             >
               {emojify(this.emoji[groupName][0])}

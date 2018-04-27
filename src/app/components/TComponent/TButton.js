@@ -14,7 +14,7 @@ class TButton extends React.Component {
 }
 
 const styles = {
-  "default": {
+  'default': {
     borderWidth: 0,
     borderRadius: 2,
     backgroundColor: '#705949',

@@ -3,7 +3,7 @@ const {
   GET_NOTE,
   SWITCH_NOTE,
   SAVE_NOTE,
-  UPDATE_NOTE,
+  // UPDATE_NOTE,
 } = require('../constants');
 const rnStorage = require('../../api/rnStorage.api.js');
 

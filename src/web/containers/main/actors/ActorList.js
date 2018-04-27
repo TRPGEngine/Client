@@ -110,12 +110,12 @@ class ActorList extends React.Component {
       <div className="actor">
         <div className="actor-list">
           <div className="actor-list-collection">
-            { this.getActorList() }
-            { addNewCard }
+            {this.getActorList()}
+            {addNewCard}
           </div>
         </div>
         <div className="actor-info">
-          { this.getActorInfo() }
+          {this.getActorInfo()}
         </div>
       </div>
     )

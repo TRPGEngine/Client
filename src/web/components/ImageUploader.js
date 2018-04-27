@@ -1,5 +1,4 @@
 const React = require('react');
-const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const fileUrl = require('../../api/trpg.api.js').fileUrl;
 
@@ -11,7 +10,7 @@ class ImageUploader extends React.Component {
   }
 
   _handleSelect() {
-    let a = this.refs.file.click();
+    this.refs.file.click();
   }
 
   _handleUpload() {
@@ -33,7 +32,7 @@ class ImageUploader extends React.Component {
       }
     }
 
-    fetch(fileUrl+"/avatar", {
+    fetch(fileUrl+'/avatar', {
       method: 'POST',
       headers,
       body: formData

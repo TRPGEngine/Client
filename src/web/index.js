@@ -2,7 +2,6 @@ require('../utils/common');
 require('moment').locale('zh_CN');
 const React = require('react');
 const ReactDom = require('react-dom');
-const immutable = require('immutable');
 const { Provider } = require('react-redux');
 const config = require('../../config/project.config.js');
 const configureStore = require('../redux/configureStore');

@@ -29,7 +29,7 @@ class DiceRequest extends React.Component {
   render() {
     let diceTypeOptions = [
       { value: 'basicDice', label: '基本骰' },
-      { value: 'complexDice', label: '复合骰' }
+      { value: 'complexDice', label: '复合骰' },
     ]
     return (
       <div className="dice-request">

@@ -19,7 +19,8 @@ let _sessionStorage = {
       try {
         ls = JSON.parse(ls);
       } catch(e) {
-        ls = ls;
+        // ls = ls;
+        // is string
       }
     }else {
       ls = '';

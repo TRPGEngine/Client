@@ -12,12 +12,12 @@ const isElectron = config.platform === 'electron';
 class Webview extends React.Component {
   constructor(props) {
     super(props);
-    this.id = "webframe" + webframeIndex;
+    this.id = 'webframe' + webframeIndex;
     webframeIndex++;
   }
 
   componentDidMount() {
-    NProgress.configure({parent: "#"+this.id})
+    NProgress.configure({parent: '#'+this.id})
     NProgress.start();
     if(isElectron) {
       this.refs.webframe.src = this.props.src;

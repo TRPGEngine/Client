@@ -53,9 +53,9 @@ class GroupList extends React.Component {
     return (
       <div className="group">
         <div className="list">
-          { this.getGroupList() }
+          {this.getGroupList()}
         </div>
-        { this.props.selectedUUID ? (
+        {this.props.selectedUUID ? (
           <GroupDetail />
         ) : (
           <div className="none-select-group">
@@ -64,7 +64,7 @@ class GroupList extends React.Component {
               一直在跑团，从来不咕咕...大概
             </div>
           </div>
-        ) }
+        )}
       </div>
     )
   }

@@ -1,5 +1,5 @@
 import { NavigationActions } from 'react-navigation';
-import { AppNavigator, MainNavigator } from '../../app/router';
+import { AppNavigator } from '../../app/router';
 const {
   LOGIN_SUCCESS,
   LOGOUT,
@@ -17,7 +17,7 @@ module.exports = function nav(state = initialNavState, action) {
         NavigationActions.reset({
           index: 0,
           actions: [
-            NavigationActions.navigate({ routeName: 'Main'})
+            NavigationActions.navigate({routeName: 'Main'}),
           ]
         }),
         state
@@ -28,7 +28,7 @@ module.exports = function nav(state = initialNavState, action) {
         NavigationActions.reset({
           index: 0,
           actions: [
-            NavigationActions.navigate({ routeName: 'Login'})
+            NavigationActions.navigate({routeName: 'Login'}),
           ]
         }),
         state
@@ -36,7 +36,7 @@ module.exports = function nav(state = initialNavState, action) {
       break;
     case SWITCH_NAV:
       nextState = AppNavigator.router.getStateForAction(
-        NavigationActions.navigate({ routeName: action.routeName }),
+        NavigationActions.navigate({routeName: action.routeName }),
         state
       );
       break;
@@ -45,7 +45,7 @@ module.exports = function nav(state = initialNavState, action) {
         NavigationActions.reset({
           index: 0,
           actions: [
-            NavigationActions.navigate({ routeName: action.routeName})
+            NavigationActions.navigate({routeName: action.routeName}),
           ]
         }),
         state

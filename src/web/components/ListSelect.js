@@ -39,9 +39,10 @@ class ListSelect extends React.Component {
             this.props.list.map((item, index) => {
               return (
                 <div
-                  key={"list-select#"+index}
-                  className={"list-select-cell" + (this.state.selected.indexOf(index) >= 0 ? " active":"")}
-                  onClick={() => this._handleSelect(index)}>{item}</div>
+                  key={'list-select#'+index}
+                  className={'list-select-cell' + (this.state.selected.indexOf(index) >= 0 ? ' active':'')}
+                  onClick={() => this._handleSelect(index)}
+                >{item}</div>
               )
             })
           }

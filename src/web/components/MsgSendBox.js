@@ -5,10 +5,7 @@ const ReactTooltip = require('react-tooltip');
 const Emoticon = require('./Emoticon');
 const { sendMsg } = require('../../redux/actions/chat');
 const { showModal, hideModal } = require('../../redux/actions/ui');
-const { sendDiceRequest } = require('../../redux/actions/dice');
 const ActorSelect = require('./modal/ActorSelect');
-const DiceRequest = require('../containers/main/dice/DiceRequest');
-const DiceInvite = require('../containers/main/dice/DiceInvite');
 
 require('./MsgSendBox.scss');
 
@@ -167,15 +164,15 @@ class MsgSendBox extends React.Component {
       <div className="send-msg-box">
         <div className="input-area">
           <div className="tool-area">
-            <div className={"popup emoticon" + (this.state.showEmoticon ? ' active':'')}>
+            <div className={'popup emoticon' + (this.state.showEmoticon ? ' active':'')}>
               <Emoticon onSelect={(code) => this._handleSelectEmoticon(code)}/>
             </div>
-            <ReactTooltip effect='solid' />
+            <ReactTooltip effect="solid" />
             <div className="btn-group">
               {this.clickableBtn.map((item, index) => {
                 return (
                   <div
-                    key={"btn-group#"+index}
+                    key={'btn-group#'+index}
                     data-tip={item.label}
                     className="tool-item"
                     onClick={(e) => !!item.onClick && item.onClick(e)}
@@ -189,9 +186,9 @@ class MsgSendBox extends React.Component {
               {this.inputType.map((item, index) => {
                 return (
                   <div
-                    key={"input-type#"+index}
+                    key={'input-type#'+index}
                     data-tip={item.label}
-                    className={this.state.inputType===item.type?"tool-item active":"tool-item"}
+                    className={this.state.inputType===item.type?'tool-item active':'tool-item'}
                     onClick={() => this.setState({inputType: item.type})}
                   >
                     <i className="iconfont" dangerouslySetInnerHTML={{__html:item.icon}}></i>
@@ -203,7 +200,7 @@ class MsgSendBox extends React.Component {
               {this.actions.map((item, index) => {
                 return (
                   <div
-                    key={"input-action#"+index}
+                    key={'input-action#'+index}
                     data-tip={item.label}
                     className="tool-item"
                     onClick={() => item.onClick ? item.onClick() : ''}
@@ -220,7 +217,8 @@ class MsgSendBox extends React.Component {
             value={this.state.inputMsg}
             onChange={(e)=>this.setState({inputMsg:e.target.value})}
             onKeyDown={(e)=> this._handleMsgInputKeyDown(e)}
-            onKeyUp={(e)=> this._handleMsgInputKeyUp(e)} />
+            onKeyUp={(e)=> this._handleMsgInputKeyUp(e)}
+          />
         </div>
         <div className="action-area">
           <button onClick={() => this._handleSendMsg()} disabled={this.state.inputMsg?false:true}>发送&lt;Enter&gt;</button>

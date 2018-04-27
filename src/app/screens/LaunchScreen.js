@@ -114,7 +114,8 @@ class LaunchScreen extends React.Component {
             marginTop: 60,
             top: this.state.logoTop,
             opacity: this.state.logoAlpha,
-          }}>
+          }}
+        >
           <Text style={styles.icon}>&#xe60b;</Text>
           <Text style={{textAlign: 'center',fontSize: 22}}>TRPG Game</Text>
         </Animated.View>
@@ -126,7 +127,8 @@ class LaunchScreen extends React.Component {
             right: 0,
             bottom: 80,
             opacity: this.state.tipAlpha,
-          }}>
+          }}
+        >
           <Text style={{textAlign: 'center',fontSize: 18}}>开始跑团吧!</Text>
         </Animated.View>
         <Text style={{position: 'absolute', left: 0, right: 0, bottom: 40, textAlign: 'center',fontSize: 14}}>{this.state.tipText}</Text>
@@ -151,7 +153,7 @@ const styles = {
       textShadowOffset:{width:0,height:4},
       textShadowRadius:10,
       textShadowColor:'rgba(0,0,0,0.2)',
-    }
+    },
   ],
   networkIndicator: {
     container: {

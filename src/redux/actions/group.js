@@ -111,7 +111,7 @@ exports.getGroupInfo = function(uuid) {
 exports.findGroup = function(text, type) {
   return function(dispatch, getState) {
     dispatch({type: FIND_GROUP_REQUEST});
-    console.log("搜索团:", text, type);
+    console.log('搜索团:', text, type);
     return api.emit('group::findGroup', {text, type}, function(data) {
       console.log('findGroup', data);
       if(data.result) {

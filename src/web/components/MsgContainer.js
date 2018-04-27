@@ -100,7 +100,7 @@ class MsgContainer extends React.Component {
     let { userUUID, usercache } = this.props;
 
     return (
-      <div className={"msg-container " + this.props.className} ref="container">
+      <div className={'msg-container ' + this.props.className} ref="container">
         {
           this.state.nomore || this.props.msgList.size < 10 ? (
             <button className="get-more-log-btn" disabled={true}>没有更多记录了</button>

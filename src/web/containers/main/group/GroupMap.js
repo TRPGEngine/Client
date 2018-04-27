@@ -61,24 +61,26 @@ class GroupMap extends React.Component {
       for (let x = 0; x < map.size.x; x++) {
         let isSelected = (this.state.x === (x+1) && this.state.y === (y+1)) ? true: false;
         let _blocks = blocks[`(${x+1},${y+1})`];
-        let normalColor = "#eeeeee";
+        let normalColor = '#eeeeee';
         if(_blocks && _blocks.length === 1) {
-          normalColor = "#cccccc";
+          normalColor = '#cccccc';
         }
         if(_blocks && _blocks.length >= 2) {
-          normalColor = "#999999";
+          normalColor = '#999999';
         }
-        row.push(<rect
-          key={`map#${x},${y}`}
-          width={tileSize}
-          height={tileSize}
-          fill={isSelected?"#726155":normalColor}
-          x={x*(tileSize+2)}
-          y={y*(tileSize+2)}
-          data-tip={`${x+1},${y+1}`}
-          data-for="map"
-          onClick={() => this._handleClickMapPoint(x+1, y+1, _blocks)}
-        />);
+        row.push(
+          <rect
+            key={`map#${x},${y}`}
+            width={tileSize}
+            height={tileSize}
+            fill={isSelected?'#726155':normalColor}
+            x={x*(tileSize+2)}
+            y={y*(tileSize+2)}
+            data-tip={`${x+1},${y+1}`}
+            data-for="map"
+            onClick={() => this._handleClickMapPoint(x+1, y+1, _blocks)}
+          />
+        );
       }
       underLayer.push(
         <g key={'map#row#'+y}>
@@ -101,16 +103,16 @@ class GroupMap extends React.Component {
 
     return (
       <div className="group-map">
-        <ReactTooltip id="map" effect='solid' offset={{right: this.state.tileSize/2}} />
+        <ReactTooltip id="map" effect="solid" offset={{right: this.state.tileSize/2}} />
         <div className="map">
-          { this.getMap() }
+          {this.getMap()}
         </div>
         <div className="map-info">
           <p>坐标: {this.state.x},{this.state.y}</p>
           <p>物品: {
             blocks.map((item, index) => {
               return (
-                <span key={"map-info#"+index}>{item.name}</span>
+                <span key={'map-info#'+index}>{item.name}</span>
               )
             })
           }</p>

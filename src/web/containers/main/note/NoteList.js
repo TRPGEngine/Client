@@ -27,7 +27,7 @@ class NoteList extends React.Component {
     let content = notes?notes.toArray().map((item, index) => {
       item = item.toJS();
 
-      let summary = item.content.replace(/<\/?.+?>/g,"").replace(/ /g,"");
+      let summary = item.content.replace(/<\/?.+?>/g,'').replace(/ /g,'');
       if(summary.length > 70) {
         summary = summary.slice(0, 70) + '...';
       }
@@ -35,7 +35,7 @@ class NoteList extends React.Component {
       return (
         <div
           key={uuid}
-          className={"note-item" + (selectedNoteUUID===uuid?" active":"")}
+          className={'note-item' + (selectedNoteUUID===uuid?' active':'')}
           onClick={() => this._handleClick(uuid)}
         >
           <div className="note-title">
@@ -80,7 +80,7 @@ class NoteList extends React.Component {
       <div className="note">
         <div className="list">
           <div className="add-note" data-tip="添加笔记" onClick={() => this.props.dispatch(addNote())}>
-            <ReactTooltip effect='solid'/>
+            <ReactTooltip effect="solid"/>
             <i className="iconfont">&#xe604;</i>
           </div>
           <div className="items">

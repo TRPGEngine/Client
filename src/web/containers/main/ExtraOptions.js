@@ -1,5 +1,4 @@
 const React = require('react');
-const ReactTooltip = require('react-tooltip');
 const { connect } = require('react-redux');
 const config = require('../../../../config/project.config');
 const { logout } = require('../../../redux/actions/user');
@@ -124,7 +123,7 @@ class ExtraOptions extends React.Component {
   render() {
     return (
       <div className="extra-options">
-        <div className={"extra-menu " + this.state.show + (this.state.show?" active":"")}>
+        <div className={'extra-menu ' + this.state.show + (this.state.show?' active':'')}>
           {this._getContent()}
         </div>
         <div className="extra-item" onClick={() => this._handleClick('add')}>

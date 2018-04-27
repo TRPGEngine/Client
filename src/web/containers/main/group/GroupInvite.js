@@ -53,8 +53,8 @@ class GroupInvite extends React.Component {
 
               return (
                 <div
-                  key={"group-invite#friend#"+uuid}
-                  className={"item" + (this.state.selectedUUIDs.indexOf(uuid)>=0?' active':'')}
+                  key={'group-invite#friend#'+uuid}
+                  className={'item' + (this.state.selectedUUIDs.indexOf(uuid)>=0?' active':'')}
                   onClick={() => this._handleSelect(uuid)}
                   data-tip={user.get('nickname') || user.get('username')}
                 >
@@ -78,8 +78,8 @@ class GroupInvite extends React.Component {
 
               return (
                 <div
-                  key={"group-invite#groupMembers#"+uuid}
-                  className={"item-solid"}
+                  key={'group-invite#groupMembers#'+uuid}
+                  className={'item-solid'}
                   onClick={() => console.log(uuid)}
                   data-tip={user.get('nickname') || user.get('username')}
                 >
