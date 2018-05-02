@@ -52,6 +52,7 @@ class GroupActor extends React.Component {
     }
   }
 
+  // 正式人物卡
   getGroupActorsList() {
     let groupActors = this.props.groupInfo.get('group_actors');
     if(groupActors && groupActors.size > 0) {
@@ -66,9 +67,9 @@ class GroupActor extends React.Component {
           cells = info.getCells();
         }
 
-        let tipHtml = cells.map((item) => {
-          if(item.visibility) {
-            return `<p>${item.name}: ${item.value}</p>`;
+        let tipHtml = cells.map((cell) => {
+          if(cell.visibility) {
+            return `<p>${cell.name}: ${cell.value}</p>`;
           }else {
             return null;
           }
@@ -84,6 +85,11 @@ class GroupActor extends React.Component {
           >
             <div className="avatar" style={{backgroundImage: `url(${item.get('avatar') || originActor.get('avatar')})`}}></div>
             <div className="info">
+              {
+                item.get('uuid') === this.props.groupInfo.getIn(['extra', 'selected_group_actor_uuid']) ? (
+                  <div className="label">使用中</div>
+                ) : null
+              }
               <div className="name">{originActor.get('name')}</div>
               <div className="desc">{originActor.get('desc')}</div>
               <div className="action">
@@ -104,6 +110,7 @@ class GroupActor extends React.Component {
     }
   }
 
+  // 待审人物卡
   getGroupActorChecksList() {
     let groupActors = this.props.groupInfo.get('group_actors');
     if(groupActors && groupActors.size > 0) {
@@ -169,13 +176,16 @@ class GroupActor extends React.Component {
 }
 
 module.exports = connect(
-  state => ({
-    selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
-    groupInfo: state
-      .getIn(['group', 'groups'])
-      .find((group) => group.get('uuid')===state.getIn(['group', 'selectedGroupUUID'])),
-    templateCache: state.getIn(['cache', 'template']),
-  }),
+  state => {
+    const selectedGroupUUID = state.getIn(['group', 'selectedGroupUUID'])
+    return {
+      selectedGroupUUID,
+      groupInfo: state
+        .getIn(['group', 'groups'])
+        .find((group) => group.get('uuid') === selectedGroupUUID),
+      templateCache: state.getIn(['cache', 'template']),
+    }
+  },
   dispatch => ({
     showAlert: (...args) => dispatch(showAlert(...args)),
     showModal: (...args) => dispatch(showModal(...args)),

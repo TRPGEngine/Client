@@ -15,10 +15,11 @@
     margin: 6px 0;
     border-radius: 3px;
     box-shadow: rgba(0, 0, 0, 0.15) 0 0 6px;
-    border: 1px solid $color-bon-jour;
+    // border: 1px solid $color-bon-jour;
     height: 120px;
     padding: 10px;
     position: relative;
+    overflow: hidden;
 
     &:hover {
       box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
@@ -35,6 +36,20 @@
     .info {
       flex: 1;
       overflow: hidden;
+
+      .label {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 12px;
+        transform: rotate(45deg);
+        text-align: center;
+        background-color: $color-alizarin-crimson;
+        width: 200px;
+        margin-right: -85px;
+        margin-top: 8px;
+        color: white;
+      }
 
       .name {
         color: $color-cod-gray;
