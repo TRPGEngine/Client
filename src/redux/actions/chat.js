@@ -53,11 +53,11 @@ let getConverses = function getConverses(cb) {
         let list = data.list;
         dispatch({type:GET_CONVERSES_SUCCESS, payload: list});
         let uuid = getState().getIn(['user','info','uuid']);
+        checkUser(uuid);
         // 用户聊天记录
         for (let item of list) {
           let convUUID = item.uuid;
           // 获取日志
-          checkUser(uuid);
           checkUser(convUUID);
           api.emit('chat::getConverseChatLog', {converse_uuid: convUUID}, function(data) {
             if(data.result) {

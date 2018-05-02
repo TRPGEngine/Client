@@ -53,16 +53,7 @@ class Main extends React.Component {
   componentDidMount() {
     if(!this.props.isLogin) {
       this.props.history.push('login');
-    }/*else {
-      this.props.getConverses();
-      this.props.getFriends();
-      this.props.getFriendsInvite();
-      this.props.getSelfTemplate();
-      this.props.getSelfActor();
-      this.props.getNote();
-      this.props.getGroupList();
-      this.props.getGroupInvite();
-    }*/
+    }
   }
 
   componentWillUpdate(nextProps, nextState) {

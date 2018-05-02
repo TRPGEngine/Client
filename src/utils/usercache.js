@@ -2,6 +2,7 @@ const {
   getUserInfo,
   getTemplateInfo
 } = require('../redux/actions/cache');
+const isUUID = require('is-uuid');
 
 let _store = null;
 exports.attachStore = function(store) {
@@ -9,6 +10,10 @@ exports.attachStore = function(store) {
 }
 
 exports.checkUser = function(uuid, type = 'user') {
+  if(!isUUID.v1(uuid)) {
+    console.warn('该UUID不是一个合法的UUID', uuid);
+  }
+
   let store = _store;
   if(!!store && !!store.dispatch) {
     const state = store.getState();
