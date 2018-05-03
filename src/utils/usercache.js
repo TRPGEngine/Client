@@ -11,7 +11,7 @@ exports.attachStore = function(store) {
 
 exports.checkUser = function(uuid, type = 'user') {
   if(!isUUID.v1(uuid)) {
-    console.warn('该UUID不是一个合法的UUID', uuid);
+    console.warn('该UUID不是一个合法的UUID:', uuid);
     return;
   }
 

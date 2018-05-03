@@ -17,6 +17,7 @@ const {
   GET_GROUP_MEMBERS_SUCCESS,
   SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS,
   ADD_GROUP_ACTOR_SUCCESS,
+  REMOVE_GROUP_ACTOR_SUCCESS,
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
   QUIT_GROUP_SUCCESS,
@@ -144,6 +145,20 @@ module.exports = function group(state = initialState, action) {
 
         return list;
       })
+    case REMOVE_GROUP_ACTOR_SUCCESS: {
+      let groupIndex = state.get('groups').findIndex(i => i.get('uuid') === action.groupUUID);
+      if(groupIndex >= 0) {
+        return state.updateIn(['groups', groupIndex, 'group_actors'], (gaList) => {
+          let groupActorIndex = gaList.findIndex(ga => ga.get('uuid') === action.groupActorUUID)
+          if(groupIndex >= 0) {
+            return gaList.remove(groupActorIndex);
+          }
+          return gaList;
+        })
+      }
+
+      return state;
+    }
     case AGREE_GROUP_ACTOR_SUCCESS:
       return state.update('groups', (list) => {
         for (var i = 0; i < list.size; i++) {

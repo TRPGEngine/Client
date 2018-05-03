@@ -2,7 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const { selectActor } = require('../../../../redux/actions/actor');
 const { showAlert, showModal } = require('../../../../redux/actions/ui');
-const { addGroupActor } = require('../../../../redux/actions/group');
+const { addGroupActor, removeGroupActor } = require('../../../../redux/actions/group');
 const ReactTooltip = require('react-tooltip');
 const at = require('trpg-actor-template');
 const { TabsController, Tab } = require('../../../components/Tabs');
@@ -52,6 +52,14 @@ class GroupActor extends React.Component {
     }
   }
 
+  // 移除团人物
+  _handleRemoveGroupActor(groupActorUUID) {
+    this.props.showAlert({
+      content: '你确定要删除该人物卡么？删除后无法找回',
+      onConfirm: () => this.props.removeGroupActor(this.props.selectedGroupUUID, groupActorUUID)
+    })
+  }
+
   // 正式人物卡
   getGroupActorsList() {
     let groupActors = this.props.groupInfo.get('group_actors');
@@ -81,7 +89,7 @@ class GroupActor extends React.Component {
             className="group-actor-item"
             data-html="true"
             data-tip={tipHtml}
-            data-for="group-actor-info"
+            data-for="group-actor-info-tip"
           >
             <div className="avatar" style={{backgroundImage: `url(${item.get('avatar') || originActor.get('avatar')})`}}></div>
             <div className="info">
@@ -93,8 +101,11 @@ class GroupActor extends React.Component {
               <div className="name">{originActor.get('name')}</div>
               <div className="desc">{originActor.get('desc')}</div>
               <div className="action">
-                <button data-tip="查询" data-for="group-actor-check-action" onClick={() => this._handleShowActorProfile(originActor.toJS())}>
+                <button data-tip="查询" data-for="group-actor-action-tip" onClick={() => this._handleShowActorProfile(originActor.toJS())}>
                   <i className="iconfont">&#xe61b;</i>
+                </button>
+                <button data-tip="删除" data-for="group-actor-action-tip" onClick={() => this._handleRemoveGroupActor(item.get('uuid'))}>
+                  <i className="iconfont">&#xe76b;</i>
                 </button>
               </div>
             </div>
@@ -126,10 +137,10 @@ class GroupActor extends React.Component {
               <div className="name">{originActor.get('name')}</div>
               <div className="desc">{originActor.get('desc')}</div>
               <div className="action">
-                <button data-tip="查询" data-for="group-actor-check-action" onClick={() => this._handleShowActorProfile(originActor.toJS())}>
+                <button data-tip="查询" data-for="group-actor-action-tip" onClick={() => this._handleShowActorProfile(originActor.toJS())}>
                   <i className="iconfont">&#xe61b;</i>
                 </button>
-                <button data-tip="审批" data-for="group-actor-check-action" onClick={() => this._handleApprove(item.toJS())}>
+                <button data-tip="审批" data-for="group-actor-action-tip" onClick={() => this._handleApprove(item.toJS())}>
                   <i className="iconfont">&#xe83f;</i>
                 </button>
               </div>
@@ -149,10 +160,11 @@ class GroupActor extends React.Component {
   render() {
     return (
       <div className="group-actor">
+        <ReactTooltip effect="solid" place="top" id="group-actor-action-tip" class="group-actor-info"/>
         <TabsController>
           <Tab name="正式人物卡">
             <div className="formal-actor">
-              <ReactTooltip effect="solid" place="left" id="group-actor-info" class="group-actor-info"/>
+              <ReactTooltip effect="solid" place="left" id="group-actor-info-tip" class="group-actor-info"/>
               <div className="group-actor-action">
                 <button onClick={() => this._handleSendGroupActorCheck()}><i className="iconfont">&#xe604;</i>申请审核</button>
               </div>
@@ -164,7 +176,6 @@ class GroupActor extends React.Component {
           <Tab name="待审人物卡">
             <div className="reserve-actor">
               <div className="group-actor-check-items">
-                <ReactTooltip effect="solid" place="top" id="group-actor-check-action" class="group-actor-info"/>
                 {this.getGroupActorChecksList()}
               </div>
             </div>
@@ -191,5 +202,6 @@ module.exports = connect(
     showModal: (...args) => dispatch(showModal(...args)),
     selectActor: (actorUUID) => dispatch(selectActor(actorUUID)),
     addGroupActor: (groupUUID, actorUUID) => dispatch(addGroupActor(groupUUID, actorUUID)),
+    removeGroupActor: (groupUUID, groupActorUUID) => dispatch(removeGroupActor(groupUUID, groupActorUUID)),
   })
 )(GroupActor);

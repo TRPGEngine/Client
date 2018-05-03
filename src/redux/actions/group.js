@@ -16,6 +16,7 @@ const {
   GET_GROUP_MEMBERS_SUCCESS,
   SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS,
   ADD_GROUP_ACTOR_SUCCESS,
+  REMOVE_GROUP_ACTOR_SUCCESS,
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
   QUIT_GROUP_SUCCESS,
@@ -27,7 +28,7 @@ const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { addConverse, updateCardChatData } = require('./chat');
 const { checkUser, checkTemplate } = require('../../utils/usercache');
-const { showLoading, hideLoading, showAlert, hideModal } = require('./ui');
+const { showLoading, hideLoading, showAlert, hideModal, hideAlert } = require('./ui');
 
 // 当state->group->groups状态添加新的group时使用来初始化
 let initGroupInfo = function(dispatch, group) {
@@ -242,10 +243,25 @@ exports.changeSelectGroupActor = function(groupUUID, groupActorUUID) {
 
 exports.addGroupActor = function(groupUUID, actorUUID) {
   return function(dispatch, getState) {
-    return api.emit('group::addGroupActor', {groupUUID, actorUUID}, function(data, cb) {
+    return api.emit('group::addGroupActor', {groupUUID, actorUUID}, function(data) {
       if(data.result) {
         dispatch({type: ADD_GROUP_ACTOR_SUCCESS, groupUUID, payload: data.groupActor});
         dispatch(hideModal());
+        dispatch(showAlert('提交成功!'));
+      }else {
+        dispatch(showAlert(data.msg));
+        console.error(data);
+      }
+    })
+  }
+}
+
+exports.removeGroupActor = function(groupUUID, groupActorUUID) {
+  return function(dispatch, getState) {
+    return api.emit('group::removeGroupActor', {groupUUID, groupActorUUID}, function(data) {
+      if(data.result) {
+        dispatch({type: REMOVE_GROUP_ACTOR_SUCCESS, groupUUID, groupActorUUID});
+        dispatch(hideAlert());
         dispatch(showAlert('提交成功!'));
       }else {
         dispatch(showAlert(data.msg));
