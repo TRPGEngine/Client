@@ -165,9 +165,6 @@ class GroupActor extends React.Component {
           <Tab name="正式人物卡">
             <div className="formal-actor">
               <ReactTooltip effect="solid" place="left" id="group-actor-info-tip" class="group-actor-info"/>
-              <div className="group-actor-action">
-                <button onClick={() => this._handleSendGroupActorCheck()}><i className="iconfont">&#xe604;</i>申请审核</button>
-              </div>
               <div className="group-actor-items">
                 {this.getGroupActorsList()}
               </div>
@@ -175,6 +172,9 @@ class GroupActor extends React.Component {
           </Tab>
           <Tab name="待审人物卡">
             <div className="reserve-actor">
+              <div className="group-actor-action">
+                <button onClick={() => this._handleSendGroupActorCheck()}><i className="iconfont">&#xe604;</i>申请审核</button>
+              </div>
               <div className="group-actor-check-items">
                 {this.getGroupActorChecksList()}
               </div>
