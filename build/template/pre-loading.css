@@ -1,0 +1,23 @@
+#pre-loading {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #333333;
+  background-image: url('/src/assets/img/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-width: 100vw;
+  min-height: 100vh;
+}

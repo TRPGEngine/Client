@@ -25,14 +25,6 @@ ul, li, p {
   list-style: none;
 }
 
-body {
-  background-color: $color-mine-shaft;
-  background-image: url('/src/assets/img/bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
 a {
   &,&:link,&:visited,&:hover,&:active {
     text-decoration: none;

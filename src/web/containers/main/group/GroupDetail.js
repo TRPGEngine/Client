@@ -178,6 +178,7 @@ class GroupDetail extends React.Component {
             clearable={false}
             searchable={false}
             placeholder="请选择身份卡"
+            noResultsText="暂无身份卡..."
             onChange={(item) => this._handleSelectGroupActor(item)}
           />
           <div className="actions">

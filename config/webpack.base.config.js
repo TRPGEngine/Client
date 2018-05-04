@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const ROOT_PATH = path.resolve(__dirname, '../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
@@ -61,11 +63,19 @@ module.exports = {
         'TRPG_HOST': JSON.stringify(process.env.TRPG_HOST),
       }
     }),
+    new CopyWebpackPlugin([
+      { from: path.resolve(BUILD_PATH, './template/pre-loading.css'), to: 'pre-loading.css' }
+    ]),
     new HtmlwebpackPlugin({
       title: 'TRPG-Game',
       template: path.resolve(BUILD_PATH, './template/index.html'),
       inject: true,
-      favicon: path.resolve(APP_PATH, './assets/img/favicon.ico')
+      favicon: path.resolve(APP_PATH, './assets/img/favicon.ico'),
+      hash: true
     }),
+    new HtmlWebpackIncludeAssetsPlugin({
+      assets: [ 'pre-loading.css' ],
+      append: false
+    })
   ],
 }
