@@ -62,7 +62,7 @@
     "socket.io-client": "^2.0.3",
     "tinycon": "^0.6.8",
     "tinymce": "^4.6.5",
-    "trpg-actor-template": "0.0.10"
+    "trpg-actor-template": "^0.1.0"
   },
   "devDependencies": {
     "babel": "^6.23.0",
