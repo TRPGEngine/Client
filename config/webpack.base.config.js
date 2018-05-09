@@ -9,12 +9,36 @@ const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
 const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
+const config = require('../package.json');
+
+let vendors = Object.keys(config.dependencies);
+if(process.env.PLATFORM === 'web') {
+  function arrRemove(arr, item) {
+    let index = arr.indexOf(item);
+    if(index >= 0) {
+      arr.splice(index, 1);
+    }
+  }
+
+  arrRemove(vendors, 'apsl-react-native-button');
+  arrRemove(vendors, 'react-native');
+  arrRemove(vendors, 'react-native-photo-browser');
+  arrRemove(vendors, 'react-native-root-toast');
+  arrRemove(vendors, 'react-native-storage');
+  arrRemove(vendors, 'react-native-style-block');
+  arrRemove(vendors, 'react-navigation');
+}
+
+console.log('vendor list:', vendors);
 
 module.exports = {
-  entry: path.resolve(APP_PATH, './web/index.js'),
+  entry: {
+    vendor: vendors,
+    app: path.resolve(APP_PATH, './web/index.js')
+  },
   output: {
     path: DIST_PATH,
-    filename: 'bundle.js'
+    filename: '[name].[chunkhash:8].js'
   },
   //babel重要的loader在这里
   module: {
@@ -56,6 +80,11 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor.js',
+      minChunks: Infinity,
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
