@@ -13,17 +13,19 @@ if(trpgHost) {
   currentHost = trpgHost;
 }
 
+let isSSL = location.protocol === 'https:'
+
 module.exports = {
   version: require('../package.json').version,
   environment,
   platform,
   io: {
-    protocol: 'ws',
+    protocol: isSSL ? 'wss' : 'ws',
     host: currentHost,
     port: '23256',
   },
   file: {
-    protocol: 'http',
+    protocol: isSSL ? 'https' : 'http',
     host: currentHost,
     port: '23257',
   },
