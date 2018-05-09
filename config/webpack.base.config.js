@@ -50,12 +50,12 @@ module.exports = {
       {
         test: /\.(js|jsx)?$/,
         loader: "babel-loader",
-        include: [
-          APP_PATH,
-          CONFIG_PATH,
-          path.resolve(ROOT_PATH, './node_modules/trpg-actor-template/'),
-          path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
-        ],
+        // include: [
+        //   APP_PATH,
+        //   CONFIG_PATH,
+        //   path.resolve(ROOT_PATH, './node_modules/trpg-actor-template/'),
+        //   path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
+        // ],
         query: {
           presets: ["es2015","react", "stage-3"],
           plugins: [
