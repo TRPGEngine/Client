@@ -13,7 +13,8 @@ if(trpgHost) {
   currentHost = trpgHost;
 }
 
-let isSSL = location.protocol === 'https:'
+let isSSL = location.protocol === 'https:';
+let standardPort = isSSL ? '443' : '80';
 
 module.exports = {
   version: require('../package.json').version,
@@ -22,12 +23,12 @@ module.exports = {
   io: {
     protocol: isSSL ? 'wss' : 'ws',
     host: currentHost,
-    port: environment === 'production' ? '80' : '23256',
+    port: environment === 'production' ? standardPort : '23256',
   },
   file: {
     protocol: isSSL ? 'https' : 'http',
     host: environment === 'production' ? currentHost + '/file' : currentHost,
-    port: environment === 'production' ? '80' : '23257',
+    port: environment === 'production' ? standardPort : '23257',
   },
   defaultImg: {
     user: '/src/assets/img/gugugu1.png',
