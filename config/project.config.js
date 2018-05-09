@@ -22,12 +22,12 @@ module.exports = {
   io: {
     protocol: isSSL ? 'wss' : 'ws',
     host: currentHost,
-    port: '23256',
+    port: environment === 'production' ? '80' : '23256',
   },
   file: {
     protocol: isSSL ? 'https' : 'http',
-    host: currentHost,
-    port: '23257',
+    host: environment === 'production' ? currentHost + '/file' : currentHost,
+    port: environment === 'production' ? '80' : '23257',
   },
   defaultImg: {
     user: '/src/assets/img/gugugu1.png',
