@@ -78,7 +78,7 @@ module.exports = {
     "react/no-did-mount-set-state": 0, //防止在componentDidMount中使用setState
     "react/no-did-update-set-state": 1, //防止在componentDidUpdate中使用setState
     "react/no-direct-mutation-state": 2, //防止this.state的直接变异
-    "react/no-multi-comp": 1, //防止每个文件有多个组件定义
+    "react/no-multi-comp": 0, //防止每个文件有多个组件定义
     "react/no-set-state": 0, //防止使用setState
     "react/no-unknown-property": 2, //防止使用未知的DOM属性
     "react/prefer-es6-class": 2, //为React组件强制执行ES5或ES6类
