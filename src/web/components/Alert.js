@@ -6,7 +6,7 @@ require('./Alert.scss');
 class Alert extends React.Component {
   getAlertContent() {
     const title = this.props.showAlertInfo.get('title') || '';
-    const content = this.props.showAlertInfo.get('content');
+    let content = this.props.showAlertInfo.get('content');
     const confirmTitle = this.props.showAlertInfo.get('confirmTitle');
     const onConfirm = this.props.showAlertInfo.get('onConfirm');
     const onCancel = this.props.showAlertInfo.get('onCancel');
@@ -18,6 +18,10 @@ class Alert extends React.Component {
           取消
         </button>
       )
+    }
+    if(content && content._root) {
+      // is immutable
+      content = content.toJS();
     }
 
     return (
