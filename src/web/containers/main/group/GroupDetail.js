@@ -7,7 +7,6 @@ const { showModal, hideModal, showAlert, showSlidePanel } = require('../../../..
 const { sendMsg } = require('../../../../redux/actions/chat');
 const { changeSelectGroupActor } = require('../../../../redux/actions/group');
 const { sendDiceRequest, sendDiceInvite } = require('../../../../redux/actions/dice');
-const MsgSendBox = require('../../../components/MsgSendBox');
 // const GroupMap = require('./GroupMap');
 const GroupInvite = require('./GroupInvite');
 const GroupActor = require('./GroupActor');
@@ -18,6 +17,7 @@ const DiceInvite = require('../dice/DiceInvite');
 const ListSelect = require('../../../components/ListSelect');
 const IsDeveloping = require('../../../components/IsDeveloping');
 const MsgContainer = require('../../../components/MsgContainer');
+const MsgSendBox = require('../../../components/MsgSendBox');
 
 class GroupDetail extends React.Component {
   _handleSelectGroupActor(item) {
@@ -187,7 +187,7 @@ class GroupDetail extends React.Component {
         </div>
         <MsgContainer className="group-content" converseUUID={this.props.selectedUUID} isGroup={true} />
         <MsgSendBox
-          conversesUUID={this.props.selectedUUID}
+          converseUUID={this.props.selectedUUID}
           isGroup={true}
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
           onSendDiceReq={() => this._handleSendDiceReq()}

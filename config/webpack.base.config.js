@@ -49,7 +49,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)?$/,
-        loader: "babel-loader",
+        loader: 'babel-loader',
         // include: [
         //   APP_PATH,
         //   CONFIG_PATH,
@@ -57,26 +57,26 @@ module.exports = {
         //   path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
         // ],
         query: {
-          presets: ["es2015", "react", "stage-3"],
+          presets: ['es2015', 'react', 'stage-3'],
           plugins: [
             ['transform-runtime', {
               helpers: false,
               polyfill: false,
-              regenerator: true, }],
+              regenerator: true }],
           ]
         }
       },
       {
         test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf)$/,
         loader: 'url-loader?limit=8192&name=assets/[hash].[ext]'
-      }
+      },
     ]
   },
 
   externals: {
-    electron: "require('electron')",
-    "react-native": "require('react-native')",
-    "./nav": "require('./nav')",
+    electron: 'require(\'electron\')',
+    'react-native': 'require(\'react-native\')',
+    './nav': 'require(\'./nav\')',
   },
 
   plugins: [
@@ -93,7 +93,7 @@ module.exports = {
       }
     }),
     new CopyWebpackPlugin([
-      { from: path.resolve(BUILD_PATH, './template/pre-loading.css'), to: 'pre-loading.css' }
+      { from: path.resolve(BUILD_PATH, './template/pre-loading.css'), to: 'pre-loading.css' },
     ]),
     new HtmlwebpackPlugin({
       title: 'TRPG-Game',
@@ -105,6 +105,6 @@ module.exports = {
     new HtmlWebpackIncludeAssetsPlugin({
       assets: [ 'pre-loading.css' ],
       append: false
-    })
+    }),
   ],
 }
