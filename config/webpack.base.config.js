@@ -8,12 +8,12 @@ const ROOT_PATH = path.resolve(__dirname, '../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
-const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
+// const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
 const config = require('../package.json');
 
 let vendors = Object.keys(config.dependencies);
-if(process.env.PLATFORM === 'web') {
-  function arrRemove(arr, item) {
+if(process.env.PLATFORM !== 'app') {
+  let arrRemove = function (arr, item) {
     let index = arr.indexOf(item);
     if(index >= 0) {
       arr.splice(index, 1);
