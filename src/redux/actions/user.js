@@ -62,7 +62,7 @@ function loginSuccess(dispatch, getState) {
   rnStorage.get('userConverses#'+userUUID)
     .then(function(converse) {
       console.log('缓存中的用户会话列表:', converse);
-      if(converse) {
+      if(converse && converse.length > 0) {
         dispatch(addUserConverse(converse));
         dispatch(getOfflineUserConverse(userInfo.get('last_login')))
       }else {
