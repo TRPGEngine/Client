@@ -140,9 +140,9 @@ class MsgSendBox extends React.Component {
         onSelect={(actorUUID, actorInfo) => {
           this.props.dispatch(hideModal());
           console.log('人物卡信息', actorUUID, actorInfo);
-          let {conversesUUID, isGroup} = this.props;
-          this.props.dispatch(sendMsg(conversesUUID, {
-            room: isGroup ? conversesUUID : '',
+          let {converseUUID, isGroup} = this.props;
+          this.props.dispatch(sendMsg(converseUUID, {
+            room: isGroup ? converseUUID : '',
             type: 'card',
             message: '[人物卡]',
             is_public: isGroup,

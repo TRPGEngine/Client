@@ -1,13 +1,13 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../../../../config/project.config.js');
-const MsgSendBox = require('../../../components/MsgSendBox');
 const { showModal, hideModal, showProfileCard } = require('../../../../redux/actions/ui');
 const { sendMsg } = require('../../../../redux/actions/chat');
 const { sendDiceRequest, sendDiceInvite } = require('../../../../redux/actions/dice');
 const DiceRequest = require('../dice/DiceRequest');
 const DiceInvite = require('../dice/DiceInvite');
 const MsgContainer = require('../../../components/MsgContainer');
+const MsgSendBox = require('../../../components/MsgSendBox');
 
 require('./ConverseDetail.scss');
 
@@ -103,7 +103,7 @@ class ConverseDetail extends React.Component {
         </div>
         <MsgContainer className="conv-container" converseUUID={this.props.converseUUID} converseUserUUID={userUUID}  isGroup={false} />
         <MsgSendBox
-          conversesUUID={this.props.conversesUUID}
+          converseUUID={this.props.converseUUID}
           isGroup={false}
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
           onSendDiceReq={() => this._handleSendDiceReq()}

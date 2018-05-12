@@ -2,7 +2,7 @@ let environment = process.env.NODE_ENV || 'development';
 let platform = process.env.PLATFORM || 'web';
 let currentHost = '127.0.0.1';
 if(!!window && window.location && window.location.host) {
-  currentHost = window.location.host.split(":")[0];
+  currentHost = window.location.host.split(':')[0];
 }
 if(environment=='production') {
   currentHost = 'trpgapi.moonrailgun.com';

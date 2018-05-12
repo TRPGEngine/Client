@@ -240,7 +240,7 @@ MsgItem.propTypes = {
   icon: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,
-  time: PropTypes.string,
+  // time: PropTypes.string,
   content: PropTypes.string,
   me: PropTypes.bool,
   isGroupMsg: PropTypes.bool,

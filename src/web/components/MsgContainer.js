@@ -31,7 +31,8 @@ class MsgContainer extends React.Component {
       this.setState({nomore: false});
     }
 
-    if(nextProps.msgList.size === 0 || this.props.msgList.size === 0 || nextProps.msgList.last().get('date') !== this.props.msgList.last().get('date')) {
+    if(nextProps.converseUUID !== this.props.converseUUID) {
+      // 界面切换
       setTimeout(() => {
         scrollTo.bottom(this.refs.container, 100);
       }, 0);
