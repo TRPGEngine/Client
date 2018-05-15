@@ -20,6 +20,7 @@ const {
   REMOVE_GROUP_ACTOR_SUCCESS,
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
+  UPDATE_GROUP_ACTOR_INFO_SUCCESS,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
   TICK_MEMBER_SUCCESS,
@@ -187,6 +188,11 @@ module.exports = function group(state = initialState, action) {
 
         return list;
       })
+    case UPDATE_GROUP_ACTOR_INFO_SUCCESS: {
+      let groupIndex = state.get('groups').findIndex(i => i.uuid === action.groupUUID);
+      let groupActorIndex = state.getIn(['groups', groupIndex, 'group_actors']).findIndex(i => i.uuid === action.groupActorUUID);
+      return state.setIn(['groups', groupIndex, 'group_actors', groupActorIndex, 'actor_info'], immutable.fromJS(action.groupActorInfo));
+    }
     case QUIT_GROUP_SUCCESS:
     case DISMISS_GROUP_SUCCESS:
       return state.update('groups', (list) => {

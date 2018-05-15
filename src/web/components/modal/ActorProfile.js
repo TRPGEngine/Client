@@ -17,8 +17,6 @@ class ActorProfile extends React.Component {
       return;
     }
 
-    console.log(this.props);
-
     let templateInfo = at.parse(template.get('info'));
     templateInfo.setData(actor.info);
     // console.log(templateInfo);

@@ -3,7 +3,7 @@ const { connect } = require('react-redux');
 const PropTypes = require('prop-types');
 const ModalPanel = require('../../../../components/ModalPanel');
 const ActorProfile = require('../../../../components/modal/ActorProfile');
-const { agreeGroupActor, refuseGroupActor } = require('../../../../../redux/actions/group');
+const { agreeGroupActor, refuseGroupActor, updateGroupActorInfo } = require('../../../../../redux/actions/group');
 
 require('./GroupActorCheck.scss');
 
@@ -32,8 +32,14 @@ class GroupActorCheck extends React.Component {
   }
 
   _handleSaveActorData() {
-    console.log(this.state.editingData);
-    console.log('TODO: 更新远程团成员角色信息');
+    let groupActorInfo = {};
+    for (var key in this.state.editingData) {
+      if(this.state.editingData[key]) {
+        groupActorInfo[key] = this.state.editingData[key];
+      }
+    }
+
+    this.props.updateGroupActorInfo(this.props.selectedGroupUUID, this.props.groupActor.uuid, groupActorInfo);
   }
 
   render() {
@@ -69,5 +75,6 @@ module.exports = connect(
   dispatch => ({
     agreeGroupActor: (...args) => dispatch(agreeGroupActor(...args)),
     refuseGroupActor: (...args) => dispatch(refuseGroupActor(...args)),
+    updateGroupActorInfo: (...args) => dispatch(updateGroupActorInfo(...args)),
   })
 )(GroupActorCheck);

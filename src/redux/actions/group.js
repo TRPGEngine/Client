@@ -19,6 +19,7 @@ const {
   REMOVE_GROUP_ACTOR_SUCCESS,
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
+  UPDATE_GROUP_ACTOR_INFO_SUCCESS,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
   TICK_MEMBER_SUCCESS,
@@ -293,6 +294,21 @@ exports.refuseGroupActor = function(groupUUID, groupActorUUID) {
         dispatch({type: REFUSE_GROUP_ACTOR_SUCCESS, groupUUID, groupActorUUID});
         dispatch(hideModal());
         dispatch(showAlert('已拒绝该人物加入本团!'));
+      }else {
+        dispatch(showAlert(data.msg));
+        console.error(data);
+      }
+    })
+  }
+}
+
+exports.updateGroupActorInfo = function(groupUUID, groupActorUUID, groupActorInfo) {
+  return function(dispatch, getState) {
+    return api.emit('group::updateGroupActorInfo', {groupUUID, groupActorUUID, groupActorInfo}, function(data) {
+      if(data.result) {
+        dispatch({type: UPDATE_GROUP_ACTOR_INFO_SUCCESS, groupUUID, groupActorUUID, groupActorInfo});
+        dispatch(hideModal());
+        dispatch(showAlert('保存完毕!'));
       }else {
         dispatch(showAlert(data.msg));
         console.error(data);
