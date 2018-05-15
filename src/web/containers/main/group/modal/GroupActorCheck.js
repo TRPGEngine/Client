@@ -8,6 +8,15 @@ const { agreeGroupActor, refuseGroupActor } = require('../../../../../redux/acti
 require('./GroupActorCheck.scss');
 
 class GroupActorCheck extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(props.groupActor);
+    this.state = {
+      editingData: props.groupActor.actor_info || {},
+    }
+    console.log(this.state.editingData);
+  }
+
   _handleAgree() {
     this.props.agreeGroupActor(this.props.selectedGroupUUID, this.props.groupActor.uuid);
   }
@@ -16,19 +25,34 @@ class GroupActorCheck extends React.Component {
     this.props.refuseGroupActor(this.props.selectedGroupUUID, this.props.groupActor.uuid);
   }
 
+  _handleEditData(key, value) {
+    let tmp = Object.assign({}, this.state.editingData);
+    tmp[key] = value;
+    this.setState({editingData: tmp});
+  }
+
+  _handleSaveActorData() {
+    console.log(this.state.editingData);
+    console.log('TODO: 更新远程团成员角色信息');
+  }
+
   render() {
-    // TODO 需要允许进行修改人物属性
-    console.log(this.props.groupActor);
     let groupActor = this.props.groupActor;
     let actions = (
       <div className="actions">
+        <button onClick={() => this._handleSaveActorData()}><i className="iconfont">&#xe634;</i>保存</button>
         <button onClick={() => this._handleRefuse()}><i className="iconfont">&#xe680;</i>拒绝</button>
         <button onClick={() => this._handleAgree()}><i className="iconfont">&#xe66b;</i>通过</button>
       </div>
     )
     return (
       <ModalPanel title="人物审核" actions={actions} className="group-actor-check">
-        <ActorProfile actor={groupActor.actor}/>
+        <ActorProfile
+          actor={groupActor.actor}
+          canEdit={true}
+          editingData={this.state.editingData}
+          onEditData={(k, v) => this._handleEditData(k, v)}
+        />
       </ModalPanel>
     )
   }
