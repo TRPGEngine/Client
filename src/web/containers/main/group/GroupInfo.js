@@ -1,13 +1,18 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const { showAlert, hideAlert } = require('../../../../redux/actions/ui');
+const { showAlert, hideAlert, showModal } = require('../../../../redux/actions/ui');
 const { switchSelectGroup, quitGroup, dismissGroup } = require('../../../../redux/actions/group');
+const GroupEdit = require('../../../components/modal/GroupEdit');
+// const GroupEdit = require('./modal/GroupEdit');
 
 require('./GroupInfo.scss')
 
 class GroupInfo extends React.Component {
   _handleEditGroup() {
-    console.log('编辑团');
+    console.log('编辑团信息');
+    this.props.showModal(
+      <GroupEdit />
+    )
   }
 
   _handleDismissGroup() {
@@ -80,6 +85,7 @@ module.exports = connect(
   dispatch => ({
     showAlert: (...args) => dispatch(showAlert(...args)),
     hideAlert: () => dispatch(hideAlert()),
+    showModal: (...args) => dispatch(showModal(...args)),
     switchSelectGroup: (groupUUID) => dispatch(switchSelectGroup(groupUUID)),
     quitGroup: (groupUUID) => dispatch(quitGroup(groupUUID)),
     dismissGroup: (groupUUID) => dispatch(dismissGroup(groupUUID)),

@@ -1,0 +1,25 @@
+@import "../../../utils/mixins";
+
+.group-info-edit {
+  .body {
+    > div {
+      display: flex;
+      margin-bottom: 10px;
+
+      > span {
+        flex: 1;
+        vertical-align: top;
+
+        &:after {
+          content: ':';
+          vertical-align: top;
+        }
+      }
+
+      > input, > textarea {
+        @include block-input;
+        flex: 2;
+      }
+    }
+  }
+}
