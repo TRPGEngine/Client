@@ -41,6 +41,14 @@ class MsgContainer extends React.Component {
         scrollTo.bottom(this.refs.container, 100);
       }, 0);
     }
+
+    if(nextProps.msgList.first().get('date') !== this.props.msgList.first().get('date')) {
+      // 加载更多
+      let bottomDis = this.refs.container.scrollHeight - this.refs.container.scrollTop;
+      setTimeout(() => {
+        this.refs.container.scrollTop = this.refs.container.scrollHeight - bottomDis;
+      }, 0);
+    }
   }
 
   _handleGetMoreLog() {
@@ -108,7 +116,7 @@ class MsgContainer extends React.Component {
       <div className={'msg-container ' + this.props.className} ref="container">
         {
           this.state.nomore || this.props.msgList.size < 10 ? (
-            <button className="get-more-log-btn" disabled={true}>没有更多记录了</button>
+            <button className="get-more-log-btn" disabled={true} style={{display: this.props.msgList.size < 10 ? 'none':'block'}}>没有更多记录了</button>
           ) : (
             <button className="get-more-log-btn" onClick={() => this._handleGetMoreLog()}>点击获取更多记录</button>
           )
