@@ -2,6 +2,26 @@
 
 .group-info-edit {
   .body {
+    .image-uploader {
+      $size: 57px + 3px;
+      width: $size;
+      height: $size;
+      margin: auto;
+      margin-bottom: 10px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid white;
+
+      > .mask {
+        font-size: 14px;
+      }
+
+      > img {
+        width: $size;
+        height: $size;
+      }
+    }
+
     > div {
       display: flex;
       margin-bottom: 10px;

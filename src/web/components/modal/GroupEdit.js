@@ -1,6 +1,8 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const config = require('../../../../config/project.config.js');
 const ModalPanel = require('../ModalPanel');
+const ImageUploader = require('../ImageUploader');
 const { hideModal } = require('../../../redux/actions/ui');
 const { updateGroupInfo } = require('../../../redux/actions/group');
 
@@ -10,15 +12,21 @@ class GroupEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: props.selectedGroupInfo.get('name'),
+      avatar: props.selectedGroupInfo.get('avatar') || '',
+      name: props.selectedGroupInfo.get('name') || '',
       sub_name: props.selectedGroupInfo.get('sub_name') || '',
       desc: props.selectedGroupInfo.get('desc') || '',
     }
   }
 
   _handleSaveGroupInfo() {
-    let groupInfoData = this.state;
+    let groupInfoData = Object.assign({}, this.state);
+    delete groupInfoData.avatar;
     this.props.dispatch(updateGroupInfo(this.props.selectedGroupUUID, groupInfoData));
+  }
+
+  _handleUpdateAvatar(url) {
+    this.props.dispatch(updateGroupInfo(this.props.selectedGroupUUID, {avatar: url}));
   }
 
   render() {
@@ -31,6 +39,15 @@ class GroupEdit extends React.Component {
 
     return (
       <ModalPanel title="编辑团信息" actions={actions} className="group-info-edit">
+        <ImageUploader
+          width="57"
+          height="57"
+          type="group"
+          attachUUID={this.props.selectedGroupUUID}
+          onUploadSuccess={(json) => this._handleUpdateAvatar(json.url)}
+        >
+          <img src={this.state.avatar || config.defaultImg.group} />
+        </ImageUploader>
         <div>
           <span>团名称</span>
           <input
