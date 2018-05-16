@@ -2,6 +2,7 @@ const {
   CREATE_GROUP_SUCCESS,
   UPDATE_CONVERSES_MSGLIST_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
+  UPDATE_GROUP_INFO_SUCCESS,
   FIND_GROUP_REQUEST,
   FIND_GROUP_SUCCESS,
   REQUEST_JOIN_GROUP_SUCCESS,
@@ -105,6 +106,21 @@ exports.getGroupInfo = function(uuid) {
         dispatch({type: GET_GROUP_INFO_SUCCESS, payload: data.group});
       }else {
         console.error(data);
+      }
+    })
+  }
+}
+
+exports.updateGroupInfo = function(groupUUID, groupInfo) {
+  return function(dispatch, getState) {
+    api.emit('group::updateInfo', {groupUUID, groupInfo}, function(data) {
+      if(data.result) {
+        dispatch({type: UPDATE_GROUP_INFO_SUCCESS, payload: data.group});
+        dispatch(hideModal());
+        dispatch(showAlert('操作成功'));
+      }else {
+        console.error(data);
+        dispatch(showAlert(data.msg));
       }
     })
   }

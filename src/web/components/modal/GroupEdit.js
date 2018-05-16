@@ -2,6 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const ModalPanel = require('../ModalPanel');
 const { hideModal } = require('../../../redux/actions/ui');
+const { updateGroupInfo } = require('../../../redux/actions/group');
 
 require('./GroupEdit.scss');
 
@@ -16,9 +17,8 @@ class GroupEdit extends React.Component {
   }
 
   _handleSaveGroupInfo() {
-    let infoData = this.state;
-    console.log(infoData);
-    // TODO
+    let groupInfoData = this.state;
+    this.props.dispatch(updateGroupInfo(this.props.selectedGroupUUID, groupInfoData));
   }
 
   render() {

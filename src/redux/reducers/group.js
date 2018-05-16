@@ -3,6 +3,7 @@ const {
   RESET,
   CREATE_GROUP_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
+  UPDATE_GROUP_INFO_SUCCESS,
   FIND_GROUP_REQUEST,
   FIND_GROUP_SUCCESS,
   REQUEST_JOIN_GROUP_SUCCESS,
@@ -42,10 +43,19 @@ module.exports = function group(state = initialState, action) {
     case RESET:
       return initialState;
     case CREATE_GROUP_SUCCESS:
-      return state.update('groups', (list) => list.push(immutable.fromJS(action.payload)))
+      return state.update('groups', (list) => list.push(immutable.fromJS(action.payload)));
     case GET_GROUP_INFO_SUCCESS: {
       let group_uuid = action.payload.uuid;
       return state.setIn(['info', group_uuid], action.payload);
+    }
+    case UPDATE_GROUP_INFO_SUCCESS: {
+      let groupIndex = state.get('groups').findIndex(i => i.get('uuid') === action.payload.uuid);
+      if(groupIndex >= 0) {
+        let info = state.getIn(['groups', groupIndex]).toJS();
+        info = Object.assign({}, info, action.payload);
+        return state.setIn(['groups', groupIndex], immutable.fromJS(info));
+      }
+      return state;
     }
     case FIND_GROUP_REQUEST:
       return state.set('isFindingGroup', true);
