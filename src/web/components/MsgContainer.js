@@ -42,7 +42,11 @@ class MsgContainer extends React.Component {
       }, 0);
     }
 
-    if(nextProps.msgList.first().get('date') !== this.props.msgList.first().get('date')) {
+    if(
+      this.props.msgList.first() &&
+      nextProps.msgList.first() &&
+      nextProps.msgList.first().get('date') !== this.props.msgList.first().get('date')
+    ) {
       // 加载更多
       let bottomDis = this.refs.container.scrollHeight - this.refs.container.scrollTop;
       setTimeout(() => {
