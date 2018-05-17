@@ -6,5 +6,12 @@ module.exports = {
     minWidth: 1000,
     minHeight: 600 + 20 + 3,// 20px为标题栏
     frame: false,
-  }
+  },
+  square: {
+    width: 800,
+    height: 600,
+    minWidth: 800,
+    minHeight: 600,
+    frame: true,
+  },
 }

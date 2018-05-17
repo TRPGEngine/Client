@@ -39,7 +39,7 @@ class Webview extends React.Component {
   }
 
   _handleOpenInNewWindow() {
-    window.open(this.refs.webframe.src);
+    window.open(this.refs.webframe.src, 'square', 'frame=true');
   }
 
   render() {

@@ -41,6 +41,18 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null;
   })
+
+  mainWindow.webContents.on('new-window', (event, url, frameName, disposition, options, additionalFeatures) => {
+    if (frameName === 'square') {
+      // open window as modal
+      event.preventDefault()
+      Object.assign(options, config.square)
+      options.webPreferences.sandbox = true
+      console.log(options)
+      event.newGuest = new BrowserWindow(options)
+      event.newGuest.loadURL(url)
+    }
+  })
 }
 
 // This method will be called when Electron has finished
