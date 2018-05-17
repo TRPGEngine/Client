@@ -38,9 +38,14 @@ class Webview extends React.Component {
     }
   }
 
+  _handleOpenInNewWindow() {
+    window.open(this.refs.webframe.src);
+  }
+
   render() {
     return (
       <div className="webview" id={this.id}>
+        <div className="open-new" title="在新窗口打开" onClick={() => this._handleOpenInNewWindow()}><i className="iconfont">&#xe63c;</i></div>
         {
           isElectron ? (
             <webview ref="webframe" />
