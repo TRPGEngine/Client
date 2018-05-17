@@ -104,6 +104,7 @@
           cursor: pointer;
           color: $color-dusty-gray;
           transition: all 0.1s ease-in-out;
+          user-select: none;
 
           &:hover {
             color: $color-cod-gray;

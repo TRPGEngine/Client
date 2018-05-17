@@ -22,6 +22,7 @@
   background-color: #999;
   padding: 6px 12px;
   outline: 0;
+  user-select: none;
 
   &:hover, &:active, &.active {
     background-color: #705949;
@@ -48,6 +49,7 @@
   cursor: pointer;
   color: #333333;
   outline: 0;
+  user-select: none;
 
   &:hover {
     background-color: #8C6244;
@@ -77,6 +79,7 @@
   margin: 4px 6px;
   outline: 0;
   position: relative;
+  user-select: none;
 
   &:disabled {
     cursor: not-allowed;

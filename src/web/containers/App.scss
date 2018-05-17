@@ -39,6 +39,11 @@ pre {
   word-wrap: break-word;
 }
 
+img {
+  user-select: none;
+  pointer-events: none;
+}
+
 /* 滚动条 */
 ::-webkit-scrollbar {
   width: 8px;

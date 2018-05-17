@@ -9,6 +9,7 @@
   border-radius: 3px;
   text-align: left;
   padding: 6px 10px;
+  user-select: none;
 
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;

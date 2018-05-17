@@ -64,6 +64,7 @@
       border: 0;
       outline: 0;
       cursor: pointer;
+      user-select: none;
 
       &:disabled {
         cursor: default;
