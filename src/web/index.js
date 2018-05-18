@@ -6,7 +6,7 @@ const { Provider } = require('react-redux');
 const config = require('../../config/project.config.js');
 const configureStore = require('../redux/configureStore');
 const store = configureStore();
-require('../utils/usercache').attachStore(store);
+require('../utils/cacheHelper').attachStore(store);
 
 const trpgApi = require('../api/trpg.api.js');
 const api = trpgApi.getInstance();

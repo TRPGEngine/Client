@@ -19,7 +19,7 @@ const {
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const rnStorage = require('../../api/rnStorage.api.js');
-const { checkUser } = require('../../utils/usercache');
+const { checkUser } = require('../../utils/cacheHelper');
 const { hideProfileCard, switchMenuPannel } = require('./ui');
 
 

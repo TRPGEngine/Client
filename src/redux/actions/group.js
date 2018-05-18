@@ -29,7 +29,7 @@ const {
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { addConverse, updateCardChatData } = require('./chat');
-const { checkUser, checkTemplate } = require('../../utils/usercache');
+const { checkUser, checkTemplate } = require('../../utils/cacheHelper');
 const { showLoading, hideLoading, showAlert, hideModal, hideAlert } = require('./ui');
 
 // 当state->group->groups状态添加新的group时使用来初始化

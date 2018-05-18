@@ -57,15 +57,16 @@ class ConverseDetail extends React.Component {
   }
 
   getHeaderActions() {
-    const actions = [
-      {
+    const actions = []
+    if(this.props.usercache.get(this.props.converseUserUUID)) {
+      actions.push({
         name: '个人信息',
         icon: '&#xe611;',
         click: () => {
           this.props.dispatch(showProfileCard(this.props.converseUserUUID))
         }
-      },
-    ]
+      })
+    }
 
     return actions.map((item, index) => {
       return (
@@ -86,8 +87,16 @@ class ConverseDetail extends React.Component {
   render() {
     const userUUID = this.props.converseUserUUID;
     const usercache = this.props.usercache;
-    let name = usercache.getIn([userUUID, 'nickname']) || usercache.getIn([userUUID, 'username']);
-    let avatar = usercache.getIn([userUUID, 'avatar']) || config.defaultImg.user;
+    let name, avatar, desc;
+    if (userUUID === 'trpgsystem') {
+      name = '系统消息';
+      desc = 'TRPG Engine 系统消息';
+      avatar = config.defaultImg.trpgsystem;
+    } else {
+      name = usercache.getIn([userUUID, 'nickname']) || usercache.getIn([userUUID, 'username']);
+      desc = usercache.getIn([userUUID, 'desc'])
+      avatar = usercache.getIn([userUUID, 'avatar']) || config.defaultImg.user;
+    }
     return (
       <div className="conv-detail">
         <div className="conv-header">
@@ -96,6 +105,7 @@ class ConverseDetail extends React.Component {
           </div>
           <div className="title">
             <div className="main-title">{name}</div>
+            <div className="sub-title">{desc}</div>
           </div>
           <div className="actions">
             {this.getHeaderActions()}

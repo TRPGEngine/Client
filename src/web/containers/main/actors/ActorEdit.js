@@ -62,7 +62,7 @@ class ActorEdit extends React.Component {
       console.log('save data', {name, avatar, desc, info, template_uuid});
       let content = (
         <div>
-          <p>是否要{isCreate?'创建':'更新'}人物？数据如下:</p>
+          <p key={template_uuid+'-cell-tip'}>是否要{isCreate?'创建':'更新'}人物？数据如下:</p>
           {
             this.template.getCells().map((cell, index) => {
               return (

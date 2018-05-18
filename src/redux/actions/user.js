@@ -31,7 +31,7 @@ const rnStorage = require('../../api/rnStorage.api.js');
 const config = require('../../../config/project.config');
 const api = trpgApi.getInstance();
 const { showLoading, hideLoading, showAlert } = require('./ui');
-const { checkUser } = require('../../utils/usercache');
+const { checkUser } = require('../../utils/cacheHelper');
 
 
 function loginSuccess(dispatch, getState) {
