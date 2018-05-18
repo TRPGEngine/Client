@@ -29,7 +29,7 @@ class FindResultItem extends React.Component {
     }else if(friendInvite.indexOf(uuid) >= 0){
       return (
         <button disabled>
-          <i className="iconfont">&#xe62e;</i>已邀请
+          <i className="iconfont">&#xe62e;</i>已发送
         </button>
       )
     }else if(friendRequests.indexOf(uuid) >= 0){
