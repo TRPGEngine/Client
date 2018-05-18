@@ -18,9 +18,7 @@ const {
   GET_FRIENDS_SUCCESS,
   GET_FRIENDS_FAILED,
   SEND_FRIEND_INVITE_SUCCESS,
-  SEND_FRIEND_INVITE_ERROR,
   AGREE_FRIEND_INVITE_SUCCESS,
-  AGREE_FRIEND_INVITE_ERROR,
   GET_FRIEND_INVITE_SUCCESS,
   GET_FRIEND_INVITE_ERROR,
   REFUSE_FRIEND_INVITE_SUCCESS,
@@ -273,7 +271,8 @@ exports.sendFriendInvite = function(uuid) {
       if(data.result) {
         dispatch({type: SEND_FRIEND_INVITE_SUCCESS, payload: data.invite, uuid});
       }else {
-        dispatch({type: SEND_FRIEND_INVITE_ERROR, payload: data.msg});
+        console.error(data.msg);
+        dispatch(showAlert(data.msg));
       }
     })
   }
@@ -283,9 +282,10 @@ exports.agreeFriendInvite = function(inviteUUID) {
   return function(dispatch, getState) {
     return api.emit('player::agreeFriendInvite', {uuid: inviteUUID}, function(data) {
       if(data.result) {
-        dispatch({type: AGREE_FRIEND_INVITE_SUCCESS, payload: data.res});
+        dispatch({type: AGREE_FRIEND_INVITE_SUCCESS, payload: data.invite});
       }else {
-        dispatch({type: AGREE_FRIEND_INVITE_ERROR, payload: data.msg});
+        console.error(data.msg);
+        dispatch(showAlert(data.msg));
       }
     })
   }

@@ -59,6 +59,7 @@ let getConverses = function getConverses(cb) {
           let convUUID = item.uuid;
           // 获取日志
           checkUser(convUUID);
+          // TODO
           api.emit('chat::getConverseChatLog', {converse_uuid: convUUID}, function(data) {
             if(data.result) {
               dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: data.list, convUUID});

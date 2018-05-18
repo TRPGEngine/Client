@@ -228,7 +228,7 @@ exports.getGroupInvite = function(inviteUUID) {
 
 exports.getGroupList = function() {
   return function(dispatch, getState) {
-    return api.emit('group::getGroupList', null, function(data) {
+    return api.emit('group::getGroupList', {}, function(data) {
       if(data.result) {
         let groups = data.groups;
         dispatch({type: GET_GROUP_LIST_SUCCESS, payload: groups});
