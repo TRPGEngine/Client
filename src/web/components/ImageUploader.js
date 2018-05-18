@@ -1,5 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const PropTypes = require('prop-types');
 const fileUrl = require('../../api/trpg.api.js').fileUrl;
 
 require('./ImageUploader.scss');
@@ -70,6 +71,14 @@ class ImageUploader extends React.Component {
       </div>
     )
   }
+}
+
+ImageUploader.propTypes = {
+  onUploadSuccess: PropTypes.func,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  type: PropTypes.oneOf(['actor', 'user', 'group']),
+  attachUUID: PropTypes.string,
 }
 
 module.exports = connect(
