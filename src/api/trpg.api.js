@@ -119,4 +119,4 @@ function bindEventFunc(store) {
 exports.bindEventFunc = bindEventFunc;
 exports.getInstance = getApiInstance;
 
-exports.fileUrl = config.file.protocol + '://' + config.file.host + ':' + config.file.port;
+exports.fileUrl = config.file.protocol + '://' + config.file.host + ':' + config.file.port + '/file';

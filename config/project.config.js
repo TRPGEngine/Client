@@ -27,8 +27,8 @@ module.exports = {
   },
   file: {
     protocol: isSSL ? 'https' : 'http',
-    host: environment === 'production' ? currentHost + '/file' : currentHost,
-    port: environment === 'production' ? standardPort : '23257',
+    host: currentHost,
+    port: environment === 'production' ? standardPort : '23256',
   },
   defaultImg: {
     user: '/src/assets/img/gugugu1.png',
