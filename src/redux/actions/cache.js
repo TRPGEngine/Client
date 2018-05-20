@@ -5,6 +5,7 @@ const {
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
+const config = require('../../../config/project.config');
 
 exports.getUserInfo = function(uuid) {
   if(!uuid) {
@@ -14,6 +15,7 @@ exports.getUserInfo = function(uuid) {
   return function(dispatch, getState) {
     return api.emit('player::getInfo', {type:'user', uuid}, function(data) {
       if(data.result) {
+        data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
         dispatch({type:GET_USER_INFO, payload: data.info});
       }else {
         console.error(data.msg);

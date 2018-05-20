@@ -16,7 +16,7 @@ if(trpgHost) {
 let isSSL = location.protocol === 'https:';
 let standardPort = isSSL ? '443' : '80';
 
-module.exports = {
+let out = {
   version: require('../package.json').version,
   environment,
   platform,
@@ -45,3 +45,12 @@ module.exports = {
     blog: 'http://moonrailgun.com',
   },
 }
+out.file.url = `${out.file.protocol}://${out.file.host}:${out.file.port}`;
+out.file.getAbsolutePath = function getAbsolutePath (path) {
+  if(path && path[0] === '/') {
+    return out.file.url + path;
+  }
+  return path;
+}
+
+module.exports = out;

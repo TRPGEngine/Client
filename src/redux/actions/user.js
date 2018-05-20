@@ -85,6 +85,7 @@ exports.login = function(username, password) {
           rnStorage.set({uuid, token});
         }
         console.log('set user token, user:', uuid);
+        data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
         dispatch({type:LOGIN_SUCCESS, payload: data.info, isApp});
         loginSuccess(dispatch, getState); // 获取用户信息
       }else {
@@ -106,6 +107,7 @@ exports.loginWithToken = function(uuid, token) {
     let isApp = config.platform === 'app';
     return api.emit('player::loginWithToken', {uuid, token, platform: config.platform, isApp}, function(data) {
       if(data.result) {
+        data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
         dispatch({type:LOGIN_TOKEN_SUCCESS, payload: data.info, isApp});
         loginSuccess(dispatch, getState); // 获取用户信息
       }else {
@@ -206,6 +208,7 @@ exports.updateInfo = function(updatedData) {
   return function(dispatch, getState) {
     return api.emit('player::updateInfo', updatedData, function(data) {
       if(data.result) {
+        data.user.avatar = config.file.getAbsolutePath(data.user.avatar);
         dispatch({type: UPDATE_INFO_SUCCESS, payload: data.user});
       }else {
         console.error(data.msg);
