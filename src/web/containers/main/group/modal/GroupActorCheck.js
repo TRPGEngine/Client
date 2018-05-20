@@ -10,11 +10,9 @@ require('./GroupActorCheck.scss');
 class GroupActorCheck extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props.groupActor);
     this.state = {
       editingData: props.groupActor.actor_info || {},
     }
-    console.log(this.state.editingData);
   }
 
   _handleAgree() {

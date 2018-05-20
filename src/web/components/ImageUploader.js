@@ -59,7 +59,14 @@ class ImageUploader extends React.Component {
 
   render() {
     return (
-      <div className="image-uploader" onClick={() => this._handleSelect()}>
+      <div
+        className="image-uploader"
+        style={{
+          width: this.props.containerWidth,
+          height: this.props.containerHeight,
+        }}
+        onClick={() => this._handleSelect()}
+      >
         <input
           type="file"
           ref="file"
@@ -79,6 +86,8 @@ ImageUploader.propTypes = {
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   type: PropTypes.oneOf(['actor', 'user', 'group']),
   attachUUID: PropTypes.string,
+  containerWidth: PropTypes.string,
+  containerHeight: PropTypes.string,
 }
 
 module.exports = connect(

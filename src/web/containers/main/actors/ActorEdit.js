@@ -103,7 +103,7 @@ class ActorEdit extends React.Component {
         </div>
         <div className="actor-edit-body">
           <div className="actor-edit-profile">
-            <ImageUploader type="actor" onUploadSuccess={(json) => this.setState({profileAvatar: json.url})}>
+            <ImageUploader type="actor" containerHeight="240px" onUploadSuccess={(json) => this.setState({profileAvatar: json.url})}>
               <div className="avatar" style={{backgroundImage: `url(${this.state.profileAvatar})`}}></div>
             </ImageUploader>
             <div className="desc">
