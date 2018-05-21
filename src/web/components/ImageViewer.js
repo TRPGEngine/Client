@@ -20,19 +20,19 @@ class ImageViewer extends React.Component {
     return (
       <div className="image-viewer" onClick={() => this._handleClick()}>
         {this.props.children}
-        {this.state.isOpen ? (
+        {this.props.originImageUrl && this.state.isOpen && (
           <Lightbox
             mainSrc={this.props.originImageUrl}
             onCloseRequest={() => this.setState({ isOpen: false })}
           />
-        ) : null}
+        )}
       </div>
     )
   }
 }
 
 ImageViewer.propTypes = {
-  originImageUrl: PropTypes.string.isRequired,
+  originImageUrl: PropTypes.string,
 }
 
 module.exports = ImageViewer;

@@ -2,6 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../../config/project.config.js');
 const Select = require('react-select');
+const ImageViewer = require('./ImageViewer');
 const ImageUploader = require('./ImageUploader');
 const { showAlert, hideProfileCard } = require('../../redux/actions/ui');
 const { addFriend, updateInfo } = require('../../redux/actions/user');
@@ -222,6 +223,8 @@ class ProfileCard extends React.Component {
         </div>
       )
 
+      let avatar = this.props.userInfo.get('avatar') || '';
+
       return (
         <div className="mask" onClick={(e) => e.stopPropagation()}>
           <div className="card">
@@ -237,10 +240,12 @@ class ProfileCard extends React.Component {
                         attachUUID={this.props.selectedUUID}
                         onUploadSuccess={(json) => this._handleUpdateAvatar(json.url)}
                       >
-                        <img src={this.props.userInfo.get('avatar') || config.defaultImg.user} />
+                        <img src={avatar || config.defaultImg.user} />
                       </ImageUploader>
                     ) : (
-                      <img src={this.props.userInfo.get('avatar') || config.defaultImg.user} />
+                      <ImageViewer originImageUrl={avatar.replace('/thumbnail', '')}>
+                        <img src={avatar || config.defaultImg.user} />
+                      </ImageViewer>
                     )
                   }
                 </div>
