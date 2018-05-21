@@ -2,6 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const { showAlert, hideAlert, showModal } = require('../../../../redux/actions/ui');
 const { switchSelectGroup, quitGroup, dismissGroup } = require('../../../../redux/actions/group');
+const ImageViewer = require('../../../components/ImageViewer');
 const GroupEdit = require('../../../components/modal/GroupEdit');
 // const GroupEdit = require('./modal/GroupEdit');
 
@@ -43,10 +44,11 @@ class GroupInfo extends React.Component {
 
   render() {
     let {groupInfo, usercache} = this.props;
+    let originAvatar = groupInfo.get('avatar').replace('/thumbnail', '');
     return (
       <div className="group-info">
         <div className="group-props">
-          <div><img src={groupInfo.get('avatar')} /></div>
+          <div><ImageViewer originImageUrl={originAvatar}><img src={groupInfo.get('avatar')} /></ImageViewer></div>
           <div><span>团唯一标识: </span><span className="uuid">{groupInfo.get('uuid')}</span></div>
           <div><span>团名:</span><span>{groupInfo.get('name')}</span></div>
           <div><span>团副名:</span><span>{groupInfo.get('sub_name')}</span></div>

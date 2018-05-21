@@ -43,6 +43,7 @@
     "react-dom": "16.2.0",
     "react-emojione2": "^2.2.18",
     "react-fileupload": "^2.4.0",
+    "react-image-lightbox": "^5.0.0",
     "react-native": "0.52.0",
     "react-native-photo-browser": "^0.4.0",
     "react-native-root-toast": "^3.0.0",
