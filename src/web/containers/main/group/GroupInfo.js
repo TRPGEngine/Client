@@ -46,6 +46,7 @@ class GroupInfo extends React.Component {
     return (
       <div className="group-info">
         <div className="group-props">
+          <div><img src={groupInfo.get('avatar')} /></div>
           <div><span>团唯一标识: </span><span className="uuid">{groupInfo.get('uuid')}</span></div>
           <div><span>团名:</span><span>{groupInfo.get('name')}</span></div>
           <div><span>团副名:</span><span>{groupInfo.get('sub_name')}</span></div>
