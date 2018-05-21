@@ -26,9 +26,9 @@ const {
   ADD_FRIEND_INVITE,
 } = require('../constants');
 const md5 = require('md5');
-const trpgApi = require('../../api/trpg.api.js');
 const rnStorage = require('../../api/rnStorage.api.js');
 const config = require('../../../config/project.config');
+const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { showLoading, hideLoading, showAlert } = require('./ui');
 const { checkUser } = require('../../utils/cacheHelper');

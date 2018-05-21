@@ -26,6 +26,7 @@ const {
   TICK_MEMBER_SUCCESS,
   SET_MEMBER_TO_MANAGER_SUCCESS,
 } = require('../constants');
+const config = require('../../../config/project.config');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { addConverse, updateCardChatData } = require('./chat');
@@ -103,7 +104,9 @@ exports.getGroupInfo = function(uuid) {
   return function(dispatch, getState) {
     api.emit('group::getInfo', {uuid} ,function(data) {
       if(data.result) {
-        dispatch({type: GET_GROUP_INFO_SUCCESS, payload: data.group});
+        let group = data.group;
+        group.avatar = config.file.getAbsolutePath(group.avatar);
+        dispatch({type: GET_GROUP_INFO_SUCCESS, payload: group});
       }else {
         console.error(data);
       }
@@ -115,7 +118,9 @@ exports.updateGroupInfo = function(groupUUID, groupInfo) {
   return function(dispatch, getState) {
     api.emit('group::updateInfo', {groupUUID, groupInfo}, function(data) {
       if(data.result) {
-        dispatch({type: UPDATE_GROUP_INFO_SUCCESS, payload: data.group});
+        let group = data.group;
+        group.avatar = config.file.getAbsolutePath(group.avatar);
+        dispatch({type: UPDATE_GROUP_INFO_SUCCESS, payload: group});
         dispatch(hideModal());
         dispatch(showAlert('操作成功'));
       }else {
@@ -131,8 +136,11 @@ exports.findGroup = function(text, type) {
     dispatch({type: FIND_GROUP_REQUEST});
     console.log('搜索团:', text, type);
     return api.emit('group::findGroup', {text, type}, function(data) {
-      console.log('findGroup', data);
+      console.log('团搜索结果', data);
       if(data.result) {
+        for (let group of data.results) {
+          group.avatar = config.file.getAbsolutePath(group.avatar);
+        }
         dispatch({type: FIND_GROUP_SUCCESS, payload: data.results});
       }else {
         console.error(data.msg);
@@ -193,9 +201,11 @@ exports.agreeGroupInvite = function(inviteUUID) {
   return function(dispatch, getState) {
     api.emit('group::agreeGroupInvite', {uuid: inviteUUID}, function(data) {
       if(data.result) {
-        dispatch({type: AGREE_GROUP_INVITE_SUCCESS, payload: data.res});
-        if(data.res && data.res.group) {
-          initGroupInfo(dispatch, data.res.group);
+        let {uuid, group} = data.res;
+        group.avatar = config.file.getAbsolutePath(group.avatar);
+        dispatch({type: AGREE_GROUP_INVITE_SUCCESS, payload: {uuid, group}});
+        if(group) {
+          initGroupInfo(dispatch, group);
         }
       }else {
         console.error(data);
@@ -231,10 +241,12 @@ exports.getGroupList = function() {
     return api.emit('group::getGroupList', {}, function(data) {
       if(data.result) {
         let groups = data.groups;
-        dispatch({type: GET_GROUP_LIST_SUCCESS, payload: groups});
         for (let group of groups) {
+          group.avatar = config.file.getAbsolutePath(group.avatar);
           initGroupInfo(dispatch, group);
         }
+        dispatch({type: GET_GROUP_LIST_SUCCESS, payload: groups});
+
       }else {
         console.error(data.msg);
       }
