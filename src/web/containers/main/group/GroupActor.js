@@ -29,11 +29,12 @@ class GroupActor extends React.Component {
   }
 
   // 查看人物卡
-  _handleShowActorProfile(actor) {
+  _handleShowActorProfile(actor, data) {
     if(actor) {
+      console.log(actor);
       this.props.showModal(
         <ModalPanel title="人物属性">
-          <ActorProfile actor={actor}/>
+          <ActorProfile actor={actor} overwritedActorData={data}/>
         </ModalPanel>
       )
     }else {
@@ -127,6 +128,7 @@ class GroupActor extends React.Component {
     if(groupActors && groupActors.size > 0) {
       return groupActors.filter(item => item.get('passed')===false).map((item) => {
         let originActor = item.get('actor');
+        let actorData = item.get('actor_info');
         return (
           <div
             key={'group-actor-check#'+item.get('uuid')}
@@ -137,7 +139,7 @@ class GroupActor extends React.Component {
               <div className="name">{originActor.get('name')}</div>
               <div className="desc">{originActor.get('desc')}</div>
               <div className="action">
-                <button data-tip="查询" data-for="group-actor-action-tip" onClick={() => this._handleShowActorProfile(originActor.toJS())}>
+                <button data-tip="查询" data-for="group-actor-action-tip" onClick={() => this._handleShowActorProfile(originActor.toJS(), actorData.toJS())}>
                   <i className="iconfont">&#xe61b;</i>
                 </button>
                 <button data-tip="审批" data-for="group-actor-action-tip" onClick={() => this._handleApprove(item.toJS())}>
@@ -164,6 +166,9 @@ class GroupActor extends React.Component {
         <TabsController>
           <Tab name="正式人物卡">
             <div className="formal-actor">
+              <div className="group-actor-action">
+                <button onClick={() => this._handleSendGroupActorCheck()}><i className="iconfont">&#xe604;</i>申请审核</button>
+              </div>
               <ReactTooltip effect="solid" place="left" id="group-actor-info-tip" class="group-actor-info"/>
               <div className="group-actor-items">
                 {this.getGroupActorsList()}
@@ -172,9 +177,6 @@ class GroupActor extends React.Component {
           </Tab>
           <Tab name="待审人物卡">
             <div className="reserve-actor">
-              <div className="group-actor-action">
-                <button onClick={() => this._handleSendGroupActorCheck()}><i className="iconfont">&#xe604;</i>申请审核</button>
-              </div>
               <div className="group-actor-check-items">
                 {this.getGroupActorChecksList()}
               </div>

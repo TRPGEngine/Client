@@ -25,6 +25,7 @@ class ActorProfile extends React.Component {
 
     return templateInfo.getCells().map((item, index) => {
       let name = item.name;
+      let value = this.props.overwritedActorData[name] || item.value;
       return (
         <div
           key={`actor-property#${actor.uuid}#${index}`}
@@ -37,9 +38,9 @@ class ActorProfile extends React.Component {
             style={{
               textDecoration: this.props.editingData[name] ? 'line-through' : 'initial',
             }}
-          >{item.value}</span>
+          >{value}</span>
           {
-            this.props.canEdit ? (
+            this.props.canEdit && (
               <input
                 type="text"
                 value={this.props.editingData[name] || ''}
@@ -48,7 +49,7 @@ class ActorProfile extends React.Component {
                   this.props.onEditData && this.props.onEditData(name, e.target.value)
                 }}
               />
-            ) : null
+            )
           }
         </div>
       )
@@ -79,12 +80,15 @@ class ActorProfile extends React.Component {
 ActorProfile.defaultProps = {
   canEdit: false,
   editingData: {},
+  overwritedActorData: {},
 }
 
 ActorProfile.propTypes = {
   actor: PropTypes.object.isRequired,
   canEdit: PropTypes.bool,
   editingData: PropTypes.object,
+  onEditData: PropTypes.func,
+  overwritedActorData: PropTypes.object,// 一般用于团角色的人物信息, 只读
 }
 
 module.exports = connect(
