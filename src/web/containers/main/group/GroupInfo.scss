@@ -11,6 +11,7 @@
 
   .group-props {
     flex: 1;
+    @include auto-scroll-bar;
 
     > div {
       margin-bottom: 4px;
@@ -23,10 +24,7 @@
         &:nth-child(2) {
           flex: 2;
           flex-wrap: wrap;
-          overflow: hidden;
           word-wrap: break-word;
-          max-height: 200px;
-          @include auto-scroll-bar;
         }
 
         &.uuid {

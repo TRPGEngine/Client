@@ -31,7 +31,7 @@ const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { addConverse, updateCardChatData } = require('./chat');
 const { checkUser, checkTemplate } = require('../../utils/cacheHelper');
-const { showLoading, hideLoading, showAlert, hideModal, hideAlert } = require('./ui');
+const { showLoading, hideLoading, showAlert, hideModal, hideAlert, hideSlidePanel } = require('./ui');
 
 // 当state->group->groups状态添加新的group时使用来初始化
 let initGroupInfo = function(dispatch, group) {
@@ -190,8 +190,11 @@ exports.sendGroupInvite = function(group_uuid, to_uuid) {
   return function(dispatch, getState) {
     api.emit('group::sendGroupInvite', {group_uuid, to_uuid}, function(data) {
       if(data.result) {
+        dispatch(showAlert('发送邀请成功!'));
+        dispatch(hideSlidePanel());
         dispatch({type: SEND_GROUP_INVITE_SUCCESS, payload: data.invite});
       }else {
+        dispatch(showAlert(data.msg));
         console.error(data);
       }
     })
