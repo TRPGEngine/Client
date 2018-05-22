@@ -151,13 +151,19 @@ class GroupDetail extends React.Component {
   }
 
   render() {
-    let { selfGroupActors } = this.props;
+    let { selfGroupActors, selectedGroupActorUUID } = this.props;
     let options = [];
     if(selfGroupActors && selfGroupActors.size > 0) {
       options = selfGroupActors.map((item, index) => ({
         value: item.get('uuid'),
         label: item.getIn(['actor', 'name']),
       })).toJS();
+    }
+    if(selectedGroupActorUUID) {
+      options.unshift({
+        value: null,
+        label: '取消选择',
+      })
     }
     return (
       <div className="detail">
@@ -173,7 +179,7 @@ class GroupDetail extends React.Component {
           <Select
             name="actor-select"
             className="group-actor-select"
-            value={this.props.selectedGroupActorUUID}
+            value={selectedGroupActorUUID}
             options={options}
             clearable={false}
             searchable={false}
