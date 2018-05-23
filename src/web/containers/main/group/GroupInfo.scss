@@ -3,6 +3,7 @@
 
 .group-info {
   padding: 20px;
+  padding-top: 0;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -11,6 +12,7 @@
 
   .group-props {
     flex: 1;
+    padding-top: 20px;
     @include auto-scroll-bar;
 
     > div {
