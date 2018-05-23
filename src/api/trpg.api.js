@@ -35,8 +35,8 @@ function bindEventFunc(store) {
   if(!(this instanceof API)) {
     throw new Error('bindEventFunc shound a API object class');
   }
-  let socket = this;
-  socket.on('chat::message', function(data) {
+  let api = this;
+  api.on('chat::message', function(data) {
     let converseUUID = data.room || data.sender_uuid;
     store.dispatch(addMsg(converseUUID, data));
 
@@ -65,26 +65,26 @@ function bindEventFunc(store) {
     }
   });
 
-  socket.on('player::invite', function(data) {
+  api.on('player::invite', function(data) {
     store.dispatch(addFriendInvite(data));
   })
-  socket.on('player::tick', function(data) {
+  api.on('player::tick', function(data) {
     store.dispatch(showAlert(data.msg));
     store.dispatch({type: RESET});
   })
 
-  socket.on('connect', function(data) {
+  api.on('connect', function(data) {
     store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
-    store.dispatch(updateSocketId(socket.id));
+    store.dispatch(updateSocketId(api.socket.id));
     console.log('连接成功');
   });
-  socket.on('connecting', function(data) {
+  api.on('connecting', function(data) {
     store.dispatch(changeNetworkStatue(false, '正在连接...', true));
     console.log('正在连接');
   });
-  socket.on('reconnect', function(data) {
+  api.on('reconnect', function(data) {
     store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
-    store.dispatch(updateSocketId(socket.id));
+    store.dispatch(updateSocketId(api.socket.id));
     console.log('重连成功');
 
     let isLogin = store.getState().getIn(['user', 'isLogin']);
@@ -98,19 +98,19 @@ function bindEventFunc(store) {
       })()
     }
   });
-  socket.on('reconnecting', function(data) {
+  api.on('reconnecting', function(data) {
     store.dispatch(changeNetworkStatue(false, '正在连接...', true));
     console.log('重连中...');
   });
-  socket.on('disconnect', function(data) {
+  api.on('disconnect', function(data) {
     store.dispatch(changeNetworkStatue(false, '已断开连接'));
     console.log('已断开连接');
   });
-  socket.on('connect_failed', function(data) {
+  api.on('connect_failed', function(data) {
     store.dispatch(changeNetworkStatue(false, '连接失败'));
     console.log('连接失败');
   });
-  socket.on('error', function(data) {
+  api.on('error', function(data) {
     store.dispatch(changeNetworkStatue(false, '网络出现异常'));
     console.log('网络出现异常', data);
   });
