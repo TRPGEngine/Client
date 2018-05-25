@@ -13,6 +13,8 @@ const ChangePassword = require('../../components/ChangePassword');
 const FriendsAdd = require('../../components/modal/FriendsAdd');
 const GroupAdd = require('../../components/modal/GroupAdd');
 const SystemSettings = require('../../components/modal/SystemSettings');
+const ModalPanel = require('../../components/ModalPanel');
+const Webview = require('../../components/Webview');
 
 require('./ExtraOptions.scss');
 
@@ -80,7 +82,9 @@ class ExtraOptions extends React.Component {
       ));
     }else if(menu === 'help') {
       this.props.dispatch(showModal(
-        <IsDeveloping />
+        <ModalPanel title="帮助反馈" className="help">
+          <Webview src={config.file.url + '/help/feedback'} allowExopen={false} />
+        </ModalPanel>
       ));
     }else if(menu === 'blog') {
       window.open(config.url.blog);

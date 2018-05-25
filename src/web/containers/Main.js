@@ -37,7 +37,7 @@ class Main extends React.Component {
         name: '广场',
         menuIndex: -1,
         component: (
-          <Webview src={config.url.goddessfantasy} />
+          <Webview src={config.url.goddessfantasy} allowExopen={true} />
         ),
       },
       {
