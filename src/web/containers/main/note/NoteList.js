@@ -42,7 +42,7 @@ class NoteList extends React.Component {
             {item.title}
           </div>
           <div className="note-update-time">
-            {moment(item.updated_At).fromNow()}
+            {moment(item.updatedAt).fromNow()}
           </div>
           <div className="note-summary">
             {summary}

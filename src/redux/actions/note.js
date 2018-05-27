@@ -18,7 +18,7 @@ exports.saveNote = function saveNote(uuid, title, content) {
       uuid,
       title,
       content,
-      updated_At: new Date().getTime()
+      updatedAt: new Date().getTime()
     })
     rnStorage.set('note', noteObj);
   })();

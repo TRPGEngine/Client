@@ -17,8 +17,8 @@ const initialState = immutable.fromJS({
 function getBlankNote() {
   return {
     uuid: uuid(),
-    created_At: new Date().getTime(),
-    updated_At: new Date().getTime(),
+    createdAt: new Date().getTime(),
+    updatedAt: new Date().getTime(),
     title: '笔记标题',
     content: '欢迎使用笔记本',
   }
@@ -42,7 +42,7 @@ module.exports = function ui(state = initialState, action) {
       state = state
         .setIn(['noteList', saveUUID, 'title'], saveTitle)
         .setIn(['noteList', saveUUID, 'content'], saveContent)
-        .setIn(['noteList', saveUUID, 'updated_At'], new Date().getTime());
+        .setIn(['noteList', saveUUID, 'updatedAt'], new Date().getTime());
 
       return state;
     }
