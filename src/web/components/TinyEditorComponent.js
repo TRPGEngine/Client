@@ -8,6 +8,7 @@ require('tinymce/plugins/link');
 require('tinymce/plugins/image');
 require('tinymce/plugins/imagetools');
 require('tinymce/plugins/textcolor');
+require('tinymce/plugins/hr');
 require('../../assets/lib/tinymce/zh_CN');
 
 require('./TinyEditorComponent.scss');
@@ -21,17 +22,41 @@ class TinyEditorComponent extends React.Component {
     tinymce.init({
       selector: `#${this.props.id}`,
       skin_url: 'src/assets/lib/tinymce/skins/lightgray',
-      plugins: 'wordcount table save link image imagetools textcolor',
+      plugins: 'wordcount table save link image imagetools textcolor hr',
       toolbar: 'undo redo | styleselect forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | link image | blockquote | save',
       imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions',
-      height : 469-44,
+      height : 469 - 44,
       branding: false,
       statusbar: false,
+      menu: {
+        file: {title: 'File', items: 'newdocument trpgsavetocloud trpgsharenote'},
+        edit: {title: 'Edit', items: 'undo redo | cut copy paste | selectall'},
+        insert: {title: 'Insert', items: 'link image | hr'},
+        view: {title: 'View', items: 'visualaid'},
+        format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'},
+        table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
+      },
       setup: editor => {
         this.editor = editor;
         editor.on('keyup change', () => {
           const content = editor.getContent();
           this.props.onEditorChange(content);
+        });
+        editor.addMenuItem('trpgsavetocloud', {
+          text: '保存到云端',
+          context: 'tools',
+          onclick: function() {
+            // TODO
+            console.log('保存到云端');
+          }
+        });
+        editor.addMenuItem('trpgsharenote', {
+          text: '分享笔记',
+          context: 'tools',
+          onclick: function() {
+            // TODO
+            console.log('分享笔记');
+          }
         });
       },
       save_onsavecallback: () => this.props.onEditorSave(this.editor.getContent()),

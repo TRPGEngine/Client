@@ -15,6 +15,7 @@ exports.saveNote = function saveNote(uuid, title, content) {
   (async () => {
     let noteObj = await rnStorage.get('note') || {};
     noteObj[uuid] = Object.assign({}, noteObj[uuid], {
+      uuid,
       title,
       content,
       updated_At: new Date().getTime()
