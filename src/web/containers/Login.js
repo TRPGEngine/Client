@@ -39,7 +39,7 @@ class Login extends React.Component {
       <div className="login-screen">
         <h2>欢迎来到TRPG的世界</h2>
         <input type="text" placeholder="用户名" value={this.state.username} onChange={(e)=>{this.setState({username:e.target.value})}} />
-        <input type="password" placeholder="密码" value={this.state.password} onChange={(e)=>{this.setState({password:e.target.value})}} />
+        <input type="password" placeholder="密码" value={this.state.password} onChange={(e)=>{this.setState({password:e.target.value})}} onKeyUp={(e) => e.keyCode===13 && this._handleLogin()} />
         <button className={canLogin?'active':''} onClick={() => {this._handleLogin()}} disabled={!canLogin}>登录</button>
         <Link to="register">没有账号？现在注册</Link>
       </div>
