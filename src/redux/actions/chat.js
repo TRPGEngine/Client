@@ -149,7 +149,7 @@ let addUserConverse = function addUserConverse(senders) {
           let info = data.info;
           dispatch({type: UPDATE_CONVERSES_INFO_SUCCESS, uuid: info.uuid, payload: {
             name: info.nickname || info.username,
-            icon: info.avatar,
+            // icon: info.avatar,
           }})
         }else {
           console.error('更新用户会话信息时出错:', data);

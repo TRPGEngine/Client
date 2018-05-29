@@ -36,6 +36,7 @@ class ConverseList extends React.Component {
 
   getConverseList() {
     if(this.props.converses.size > 0) {
+      let usercache = this.props.usercache;
       let converses = this.props.converses
         .valueSeq()
         .filter((item) => item.get('type')==='user'||item.get('type')==='system')
@@ -48,11 +49,13 @@ class ConverseList extends React.Component {
           let userUUID = item.get('members')
             ? item.get('members').find(i => i !== this.props.userinfo.get('uuid'))
             : uuid;
+          let icon = item.get('icon') || usercache.getIn([uuid, 'avatar']) || attachIcon;
+          icon = config.file.getAbsolutePath(icon) || defaultIcon;
 
           return (
             <ConvItem
               key={'converses#'+index}
-              icon={item.get('icon') || attachIcon || defaultIcon}
+              icon={icon}
               title={item.get('name')}
               content={item.get('lastMsg')}
               time={item.get('lastTime')?dateHelper.getShortDiff(item.get('lastTime')):''}
