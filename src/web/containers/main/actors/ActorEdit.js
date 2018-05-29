@@ -1,6 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const at = require('trpg-actor-template');
+const config = require('../../../../../config/project.config');
 const { showAlert } = require('../../../../redux/actions/ui');
 const { createActor, updateActor } = require('../../../../redux/actions/actor');
 const ImageUploader = require('../../../components/ImageUploader');
@@ -104,7 +105,7 @@ class ActorEdit extends React.Component {
         <div className="actor-edit-body">
           <div className="actor-edit-profile">
             <ImageUploader type="actor" containerHeight="240px" onUploadSuccess={(json) => this.setState({profileAvatar: json.url})}>
-              <div className="avatar" style={{backgroundImage: `url(${this.state.profileAvatar})`}}></div>
+              <div className="avatar" style={{backgroundImage: `url(${config.file.getAbsolutePath(this.state.profileAvatar)})`}}></div>
             </ImageUploader>
             <div className="desc">
               <textarea

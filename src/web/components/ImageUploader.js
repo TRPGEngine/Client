@@ -2,15 +2,23 @@ const React = require('react');
 const { connect } = require('react-redux');
 const PropTypes = require('prop-types');
 const fileUrl = require('../../api/trpg.api.js').fileUrl;
+const { showAlert } = require('../../redux/actions/ui');
 
 require('./ImageUploader.scss');
 
 class ImageUploader extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isUploading: false,
+    }
   }
 
   _handleSelect() {
+    if(this.state.isUploading) {
+      this.props.dispatch(showAlert('图片正在上传中, 请稍后...'));
+      return;
+    }
     this.refs.file.click();
   }
 
@@ -32,6 +40,7 @@ class ImageUploader extends React.Component {
         headers.height = this.props.height;
       }
     }
+    this.setState({isUploading: true});
 
     fetch(fileUrl+'/avatar', {
       method: 'POST',
@@ -44,15 +53,18 @@ class ImageUploader extends React.Component {
         return response.text();
       }
     }).then((json) => {
-      if(typeof json === 'object'){
+      this.setState({isUploading: false});
+      if(typeof json === 'object') {
         console.log('上传成功', json);
         if(this.props.onUploadSuccess) {
           this.props.onUploadSuccess(json)
         }
       }else {
+        this.props.dispatch(showAlert('图片上传失败:' + json));
         console.error(json);
       }
     }).catch((e) => {
+      this.props.dispatch(showAlert('图片上传失败:' + e));
       console.error(e);
     })
   }
@@ -73,7 +85,7 @@ class ImageUploader extends React.Component {
           accept="image/*"
           onChange={(e) => this._handleUpload()}
         />
-        <div className="mask">点击上传图片</div>
+      <div className="mask">{this.state.isUploading ? '图片上传中...' : '点击上传图片'}</div>
         {this.props.children}
       </div>
     )
