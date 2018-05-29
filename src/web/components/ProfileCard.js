@@ -6,7 +6,7 @@ const ImageViewer = require('./ImageViewer');
 const ImageUploader = require('./ImageUploader');
 const { showAlert, hideProfileCard } = require('../../redux/actions/ui');
 const { addFriend, updateInfo } = require('../../redux/actions/user');
-const { createConverse } = require('../../redux/actions/chat');
+const { addUserConverse, switchToConverse } = require('../../redux/actions/chat');
 require('./ProfileCard.scss');
 
 class ProfileCard extends React.Component {
@@ -87,7 +87,7 @@ class ProfileCard extends React.Component {
         <div className="actions">
           <button
             className="footer-item active"
-            onClick={() => this.props.createConverse(uuid, 'user')}
+            onClick={() => this.props.addUserConverse(uuid)}
           ><i className="iconfont">&#xe61f;</i>发消息</button>
           <button
             className="footer-item active"
@@ -295,7 +295,11 @@ module.exports = connect(
   dispatch => ({
     showAlert: (...args) => dispatch(showAlert(...args)),
     hideProfileCard: () => dispatch(hideProfileCard()),
-    createConverse: (uuid, type, isSwitchToConv = true) => dispatch(createConverse(uuid, type, isSwitchToConv)),
+    addUserConverse: (uuid) => {
+      dispatch(addUserConverse(uuid));
+      dispatch(switchToConverse(uuid, uuid));
+    },
+    // createConverse: (uuid, type, isSwitchToConv = true) => dispatch(createConverse(uuid, type, isSwitchToConv)),
     addFriend: (uuid) => dispatch(addFriend(uuid)),
     updateInfo: (updatedData) => dispatch(updateInfo(updatedData)),
   }),

@@ -75,6 +75,8 @@ let getConverses = function getConverses(cb) {
     })
   }
 }
+
+// 弃用
 let createConverse = function createConverse(uuid, type, isSwitchToConv = true) {
   return function(dispatch, getState) {
     if(!!getState().getIn(['chat', 'converses', uuid])) {
@@ -125,6 +127,9 @@ let removeConverse = function removeConverse(converseUUID) {
 
 let addUserConverse = function addUserConverse(senders) {
   return function(dispatch, getState) {
+    if(typeof senders === 'string') {
+      senders = [senders];
+    }
     dispatch({type: GET_USER_CONVERSES_SUCCESS, payload: senders.map(uuid => ({uuid, type:'user'}))})
 
     // 用户信息缓存
@@ -284,6 +289,7 @@ let updateCardChatData = function(chatUUID, newData) {
   }
 }
 
+exports.switchToConverse = switchToConverse;
 exports.addConverse = addConverse;
 exports.switchConverse = switchConverse;
 exports.getConverses = getConverses;
