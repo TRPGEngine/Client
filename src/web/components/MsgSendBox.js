@@ -37,7 +37,7 @@ class MsgSendBox extends React.Component {
       },
       {
         label: '吐槽信息',
-        type: 'occ',
+        type: 'ooc',
         icon: '&#xe64d;',
       },
       {
