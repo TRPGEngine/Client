@@ -4,6 +4,8 @@ const ModalPanel = require('../ModalPanel');
 const Checkbox = require('../Checkbox');
 const { requestNotification } = require('../../../redux/actions/ui');
 
+require('./SystemSettings.scss');
+
 class SystemSettings extends React.Component {
   _handleRequestNotificationPermission(isChecked) {
     this.props.dispatch(requestNotification(isChecked));
@@ -12,7 +14,7 @@ class SystemSettings extends React.Component {
   render() {
     return (
       <ModalPanel title="系统设置" className="system-settings">
-        <div>
+        <div className="setting-cell">
           <label>桌面通知权限({this.props.notificationPermission})</label>
           <Checkbox
             value={this.props.notificationPermission==='granted'}
