@@ -72,7 +72,7 @@
     }
   }
 
-  .popup.emoticon {
+  .popup.emoticon, .popup.dice {
     border-radius: 3px;
     min-width: 72px;
     box-shadow: rgba(0, 0, 0, 0.15) 0 0 8px;
@@ -94,6 +94,32 @@
       border-color: #F9FCFA transparent transparent transparent;
       position: absolute;
       left: 2px;
+    }
+  }
+
+  .popup.dice {
+    left: auto;
+    right: -36px;
+
+    > ul > li {
+      @include one-line;
+      border-bottom: 1px solid rgba(220, 220, 220, 0.5);
+      line-height: 31px;
+      cursor: pointer;
+      text-align: left;
+      text-indent: 10px;
+      font-size: 12px;
+      color: #222;
+      padding-right: 10px;
+      word-wrap: normal;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      &:hover {
+        background-color: $color-seashell-peach;
+      }
     }
   }
 }

@@ -16,6 +16,7 @@ class MsgSendBox extends React.Component {
       inputMsg: '',
       inputType: 'normal',
       showEmoticon: false,
+      showDiceMethods: false,
     };
     this.clickableBtn = [
       {
@@ -53,21 +54,26 @@ class MsgSendBox extends React.Component {
     ];
     this.actions = [
       {
-        label: '请求投骰',
-        type: 'dice-req',
-        icon: '&#xe609;',
-        onClick: this.props.onSendDiceReq,
-      },
-      {
-        label: '邀请投骰',
+        label: '',
         type: 'dice-inv',
         icon: '&#xe631;',
-        onClick: this.props.onSendDiceInv,
+        onClick: () => this._handleShowDiceMethods(),
       },
     ];
-    this.hideEmoticon = () => {
-      window.removeEventListener('click', this.hideEmoticon);
-      this.setState({showEmoticon: false});
+    if(this.props.onFreeDice) {
+      this.actions.unshift({
+        label: '自由投骰',
+        type: 'dice-req',
+        icon: '&#xe609;',
+        onClick: () => this.props.onFreeDice(),
+      })
+    }
+    this.hidePopup = () => {
+      window.removeEventListener('click', this.hidePopup);
+      this.setState({
+        showEmoticon: false,
+        showDiceMethods: false,
+      });
     }
   }
 
@@ -76,7 +82,7 @@ class MsgSendBox extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('click', this.hideEmoticon);
+    window.removeEventListener('click', this.hidePopup);
   }
 
   _handleMsgInputKeyDown(e) {
@@ -116,20 +122,22 @@ class MsgSendBox extends React.Component {
     }
   }
 
+  // 显示选择表情弹出框
   _handleShowEmoticon() {
-    let isShow = this.state.showEmoticon;
-    if(isShow === false) {
-      this.setState({showEmoticon: true});
-    }else {
-      this.setState({showEmoticon: false});
-    }
-    setTimeout(() => window.addEventListener('click', this.hideEmoticon), 0);
+    this.setState({showEmoticon: !this.state.showEmoticon});
+    setTimeout(() => window.addEventListener('click', this.hidePopup), 0);
   }
 
   _handleSelectEmoticon(code) {
     this.setState({inputMsg: this.state.inputMsg + code});
-    this.hideEmoticon();
+    this.hidePopup();
     this.refs.inputMsg.focus();
+  }
+
+  // 显示投骰方式弹出框
+  _handleShowDiceMethods() {
+    this.setState({showDiceMethods: !this.state.showDiceMethods});
+    setTimeout(() => window.addEventListener('click', this.hidePopup), 0);
   }
 
   // 发送人物卡
@@ -166,6 +174,12 @@ class MsgSendBox extends React.Component {
           <div className="tool-area">
             <div className={'popup emoticon' + (this.state.showEmoticon ? ' active':'')}>
               <Emoticon onSelect={(code) => this._handleSelectEmoticon(code)}/>
+            </div>
+            <div className={'popup dice' + (this.state.showDiceMethods ? ' active':'')}>
+              <ul>
+                <li onClick={() => this.props.onSendDiceReq && this.props.onSendDiceReq()}>请求投骰</li>
+                <li onClick={() => this.props.onSendDiceInv && this.props.onSendDiceInv()}>邀请投骰</li>
+              </ul>
             </div>
             <ReactTooltip effect="solid" />
             <div className="btn-group">
