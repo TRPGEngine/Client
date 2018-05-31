@@ -30,12 +30,21 @@
     margin: 0 0 5px;
   }
 
-  button {
-    width: 312px;
-    height: 40px;
-    margin: 8px 0 5px;
+  .loginArea {
+    display: flex;
 
-    @include block-btn;
+    button {
+      height: 40px;
+      margin: 8px 0 5px;
+      @include block-btn;
+
+      &:nth-of-type(1) {
+        flex: 1;
+      }
+      &:nth-of-type(2) {
+        margin-left: 6px;
+      }
+    }
   }
 
   a, a:link, a:visited {
