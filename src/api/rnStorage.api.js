@@ -10,7 +10,7 @@ let storage = new Storage({
   storageBackend: config.platform==='app' ? require('react-native').AsyncStorage : localStorage,
 
   // 数据过期时间，默认一整天（1000 * 3600 * 24 毫秒），设为null则永不过期
-  defaultExpires: 1000 * 3600 * 24,
+  defaultExpires: null,
 
   // 读写时在内存中缓存数据。默认启用。
   enableCache: true,
@@ -34,7 +34,8 @@ module.exports = {
           if (key.hasOwnProperty(subKey)) {
             await storage.save({
               key: subKey,
-              data: key[subKey]
+              data: key[subKey],
+              expires: 1000 * 3600 * 24
             });
           }
         }
@@ -61,5 +62,27 @@ module.exports = {
   },
   remove: async (key) => {
     await storage.remove({key});
-  }
+  },
+  save: async (key, data) => {
+    // 持久化存储数据。设置为永不过期
+    try {
+      if(!!key && !!data) {
+        await storage.save({key, data});
+      }else if(!!key && typeof key === 'object' && !data) {
+        for (var subKey in key) {
+          if (key.hasOwnProperty(subKey)) {
+            await storage.save({
+              key: subKey,
+              data: key[subKey],
+              expires: null
+            });
+          }
+        }
+      }
+    }catch(e) {
+      console.error(e);
+    }
+
+    return data;
+  },
 };
