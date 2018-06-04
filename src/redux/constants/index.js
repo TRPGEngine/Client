@@ -11,5 +11,6 @@ module.exports = Object.assign(
   require('./note'),
   require('./ui'),
   require('./user'),
+  require('./settings'),
   config.platform==='app' ? require('./nav') : null,
 );

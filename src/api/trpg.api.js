@@ -42,8 +42,8 @@ function bindEventFunc(store) {
 
     // web||electron通知
     if(document.hidden) {
-      let notificationPermission = store.getState().getIn(['ui', 'notificationPermission']);
-      if(notificationPermission === 'granted') {
+      let isNotify = store.getState().getIn(['settings', 'notification']);
+      if(isNotify) {
         let usercache = store.getState().getIn(['cache', 'user']);
         let userinfo = usercache.get(data.sender_uuid);
         let username = userinfo.get('nickname') || userinfo.get('username');

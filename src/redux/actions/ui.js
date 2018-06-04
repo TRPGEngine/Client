@@ -13,7 +13,6 @@ const {
   HIDE_SLIDE_PANEL,
   SWITCH_MENU_PANNEL,
   CHANGE_NETWORK_STATE,
-  UPDATE_NOTIFICATION_PERMISSION,
   UPDATE_SOCKET_ID,
 } = require('../constants');
 const cache = require('./cache');
@@ -86,22 +85,6 @@ exports.switchMenuPannel = function(index, pannel = null) {
 }
 exports.changeNetworkStatue = function(isOnline, msg, tryReconnect = false) {
   return {type: CHANGE_NETWORK_STATE, payload: {isOnline, msg, tryReconnect}}
-}
-exports.setNotification = function(notification) {
-  return {type: UPDATE_NOTIFICATION_PERMISSION, payload: notification};
-}
-exports.requestNotification = function(target) {
-  return function(dispatch, getState) {
-    if(target === false) {
-      dispatch({type: UPDATE_NOTIFICATION_PERMISSION, payload: 'denied'});
-      return;
-    }
-
-    Notification.requestPermission(result => {
-      console.log('授权结果', result);
-      dispatch({type: UPDATE_NOTIFICATION_PERMISSION, payload: result});
-    })
-  }
 }
 
 exports.updateSocketId = function(socketId) {

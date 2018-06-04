@@ -13,17 +13,24 @@ const trpgApi = require('../api/trpg.api.js');
 const api = trpgApi.getInstance();
 trpgApi.bindEventFunc.call(api, store);
 
-// token登录
-
+// 加载本地存储数据进行应用初始化
 const rnStorage = require('../api/rnStorage.api.js');
 (async () => {
+  // token登录
   let uuid = await rnStorage.get('uuid');
   let token = await rnStorage.get('token');
   if(!!token && !!uuid) {
     store.dispatch(require('../redux/actions/user').loginWithToken(uuid, token));
   }
+
+  // 系统设置
+  store.dispatch(require('../redux/actions/settings').setNotificationPermission(Notification.permission));
+  let systemSettings = await rnStorage.get('systemSettings');
+  if(systemSettings) {
+    store.dispatch(require('../redux/actions/settings').setSystemSettings(systemSettings));
+  }
 })();
-store.dispatch(require('../redux/actions/ui').setNotification(Notification.permission));
+
 
 // 检查版本, 网页版跳过检查
 if(config.platform !== 'web') {

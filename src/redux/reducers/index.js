@@ -9,6 +9,7 @@ const reducers = {
   note: require('./note'),
   actor: require('./actor'),
   group: require('./group'),
+  settings: require('./settings'),
 }
 
 if(config.platform==='app') {
