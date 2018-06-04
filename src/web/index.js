@@ -25,7 +25,7 @@ const rnStorage = require('../api/rnStorage.api.js');
 
   // 系统设置
   store.dispatch(require('../redux/actions/settings').setNotificationPermission(Notification.permission));
-  let systemSettings = await rnStorage.get('systemSettings');
+  let systemSettings = await rnStorage.get('systemSettings') || config.defaultSettings.system;
   if(systemSettings) {
     store.dispatch(require('../redux/actions/settings').setSystemSettings(systemSettings));
   }

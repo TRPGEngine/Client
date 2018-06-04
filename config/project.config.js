@@ -44,6 +44,12 @@ let out = {
     goddessfantasy: 'http://www.goddessfantasy.net/',
     blog: 'http://moonrailgun.com',
   },
+  defaultSettings: {
+    user: {},
+    system: {
+      notification: true,
+    }
+  },
 }
 out.file.url = `${out.file.protocol}://${out.file.host}:${out.file.port}`;
 out.file.getAbsolutePath = function getAbsolutePath (path) {

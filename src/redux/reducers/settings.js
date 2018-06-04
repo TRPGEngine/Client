@@ -4,13 +4,11 @@ const {
   SET_SYSTEM_SETTINGS,
   UPDATE_NOTIFICATION_PERMISSION,
 } = require('../constants');
+const config = require('../../../config/project.config');
 
 const immutable = require('immutable');
 const initialState = immutable.fromJS({
-  user: {},
-  system: {
-    notification: true,
-  },
+  ...config.defaultSettings,
   notificationPermission: 'default', // granted, denied, default in web
 });
 
