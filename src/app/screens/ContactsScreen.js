@@ -12,8 +12,8 @@ const ConvItem = require('../components/ConvItem');
 
 class ContactsScreen extends React.Component {
   static navigationOptions = {
-    tabBarLabel: '通讯录',
-    headerTitle: '通讯录',
+    // tabBarLabel: '通讯录',
+    title: '通讯录',
     tabBarIcon: ({ tintColor }) => (
       <Text style={{fontFamily:'iconfont', fontSize: 26, color: tintColor}}>&#xe958;</Text>
     ),

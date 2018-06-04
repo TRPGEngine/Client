@@ -61,25 +61,24 @@ class ChatScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: '',
+      inputMsg: '',
     };
-    this.data = [];
-    for (var i = 0; i < 10; i++) {
-      let uuid = Math.random();
-      this.data[i] = {
-        key: uuid,
-        uuid,
-        msg: Math.random(),
-        name: '222',
-        avatar: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2897990660,3885762068&fm=27&gp=0.jpg',
-      }
-    }
   }
 
   componentDidMount() {
     this.props.navigation.setParams({
       headerRightFunc: () => this.props.navigation.navigate('Profile', this.props.navigation.state.params)
 		})
+  }
+
+  _handleSendMsg() {
+    let message = this.state.inputMsg.trim();
+    let type = this.state.inputType;
+    if(!!message) {
+      // this.props.onSendMsg(message, type);
+      // console.log(this.props.navigation.getParams);
+      this.setState({inputMsg: ''});
+    }
   }
 
   render() {
@@ -103,11 +102,11 @@ class ChatScreen extends React.Component {
           <View style={styles.msgBox}>
             <TInput
               style={styles.msgInput}
-              onChangeText={(text) => this.setState({text})}
-              value={this.state.text}
+              onChangeText={(inputMsg) => this.setState({inputMsg})}
+              value={this.state.inputMsg}
             />
             <Button
-              onPress={() => alert(this.state.text)}
+              onPress={() => this._handleSendMsg()}
               title="  发送  "
             />
           </View>

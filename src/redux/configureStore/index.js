@@ -12,11 +12,17 @@ const logger = createLogger({
 })
 console.log('当前环境:', config.environment);
 console.log('当前平台:', config.platform);
-const createStoreWithMiddleware = config.environment !== 'production' ? applyMiddleware(
-  thunk, logger
-)(createStore) : applyMiddleware(
-  thunk
-)(createStore)
+
+let middlewares = [
+  thunk,
+];
+if(config.environment !== 'production') {
+  middlewares.push(logger);
+}
+if(config.platform === 'app') {
+  middlewares.push(require('react-navigation-redux-helpers').createReactNavigationReduxMiddleware('root', state => state.nav));
+}
+const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
 
 function configureStore(initialState) {
   const devTool = config.environment !== 'production'

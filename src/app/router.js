@@ -12,8 +12,13 @@ import {
   BackHandler,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
+import {
+  createNavigationPropConstructor,
+  initializeListeners
+} from 'react-navigation-redux-helpers';
 const { connect } = require('react-redux');
-const { StackNavigator, TabNavigator, TabBarBottom, addNavigationHelpers } = require('react-navigation');
+const { createStackNavigator, createBottomTabNavigator } = require('react-navigation');
+
 const LaunchScreen = require('./screens/LaunchScreen');
 const LoginScreen = require('./screens/LoginScreen');
 const RegisterScreen = require('./screens/RegisterScreen');
@@ -25,7 +30,7 @@ const SettingsScreen = require('./screens/SettingsScreen');
 const ProfileScreen = require('./screens/ProfileScreen');
 const PhotoBrowserScene = require('./screens/PhotoBrowserScene');
 
-const MainNavigator = TabNavigator({
+const MainNavigator = createBottomTabNavigator({
   TRPG: {
     screen: HomeScreen,
   },
@@ -35,10 +40,6 @@ const MainNavigator = TabNavigator({
   Account: {
     screen: AccountScreen,
   },
-}, {
-  headerTitle: 'TRPG Game',
-  tabBarPosition: 'bottom',
-  tabBarComponent: TabBarBottom,
 });
 
 const DetailsScreen = () => (
@@ -47,7 +48,7 @@ const DetailsScreen = () => (
   </View>
 );
 
-const AppNavigator = StackNavigator({
+const AppNavigator = createStackNavigator({
   LaunchScreen: {
     screen: LaunchScreen,
   },
@@ -67,6 +68,7 @@ const AppNavigator = StackNavigator({
     screen: MainNavigator,
     navigationOptions: {
       headerLeft: null,
+      title: 'TRPG Game',
     }
   },
   Details: {
@@ -103,7 +105,13 @@ const AppNavigator = StackNavigator({
 //   <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
 // )
 class AppWithNavigationState extends React.Component {
+  constructor(props) {
+    super(props);
+    this.navigationPropConstructor = createNavigationPropConstructor("root");
+  }
+
   componentDidMount() {
+    initializeListeners("root", this.props.nav);
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
   }
 
@@ -123,8 +131,9 @@ class AppWithNavigationState extends React.Component {
 
   render() {
     const {dispatch, nav} = this.props;
+    const navigation = this.navigationPropConstructor(dispatch, nav);
     return (
-      <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
+      <AppNavigator navigation={navigation} />
     )
   }
 }
