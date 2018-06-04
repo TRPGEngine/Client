@@ -4,10 +4,13 @@ const {
   UPDATE_NOTIFICATION_PERMISSION,
 } = require('../constants');
 const {showAlert} = require('./ui');
-// const rnStorage = require('../../api/rnStorage.api.js');
+const rnStorage = require('../../api/rnStorage.api.js');
 
 exports.setUserSettings = function setUserSettings(payload) {
-  return {type: SET_USER_SETTINGS, payload};
+  return function(dispatch, getState) {
+    rnStorage.save('userSettings', getState().getIn(['settings', 'user']).merge(payload)); // 异步
+    dispatch({type: SET_USER_SETTINGS, payload});
+  }
 }
 
 exports.setSystemSettings = function setSystemSettings(payload) {
@@ -21,6 +24,7 @@ exports.setSystemSettings = function setSystemSettings(payload) {
       }
     }
 
+    rnStorage.save('systemSettings', getState().getIn(['settings', 'system']).merge(payload)); // 异步
     dispatch({type: SET_SYSTEM_SETTINGS, payload});
   }
 }
@@ -32,7 +36,7 @@ exports.setNotificationPermission = function setNotificationPermission(notificat
 exports.requestNotificationPermission = function requestNotificationPermission() {
   return function(dispatch, getState) {
     Notification.requestPermission(result => {
-      console.log('授权结果', result);
+      console.log('授权结果:', result);
       dispatch(exports.setNotificationPermission(result));
 
       if(result !== 'granted') {

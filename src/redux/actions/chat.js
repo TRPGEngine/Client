@@ -132,15 +132,13 @@ let addUserConverse = function addUserConverse(senders) {
     }
     dispatch({type: GET_USER_CONVERSES_SUCCESS, payload: senders.map(uuid => ({uuid, type:'user'}))})
 
-    // 用户信息缓存
+    // 用户会话缓存
     let userUUID = getState().getIn(['user', 'info', 'uuid']);
     rnStorage.get('userConverses#'+userUUID)
       .then(function(converse) {
         converse = Array.from(new Set([...converse, ...senders]))
         rnStorage.set('userConverses#'+userUUID, converse).then(data => console.log('用户会话缓存完毕:', data));
       })
-
-
 
     for (let uuid of senders) {
       // 更新会话信息
