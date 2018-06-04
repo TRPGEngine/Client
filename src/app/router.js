@@ -9,7 +9,9 @@ import {
   StatusBar,
   View,
   Button,
+  BackHandler,
 } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 const { connect } = require('react-redux');
 const { StackNavigator, TabNavigator, TabBarBottom, addNavigationHelpers } = require('react-navigation');
 const LaunchScreen = require('./screens/LaunchScreen');
@@ -97,9 +99,35 @@ const AppNavigator = StackNavigator({
 });
 
 // redux state
-const AppWithNavigationState = ({dispatch, nav}) => (
-  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
-)
+// const AppWithNavigationState = ({dispatch, nav}) => (
+//   <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
+// )
+class AppWithNavigationState extends React.Component {
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  onBackPress = () => {
+    const { dispatch, nav } = this.props;
+    if (nav.index === 0) {
+      return false;
+    }
+
+    dispatch(NavigationActions.back());
+    return true;
+  }
+
+  render() {
+    const {dispatch, nav} = this.props;
+    return (
+      <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
+    )
+  }
+}
 
 AppWithNavigationState.propTypes = {
   dispatch: PropTypes.func.isRequired,

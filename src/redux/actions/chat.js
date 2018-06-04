@@ -43,6 +43,7 @@ let addConverse = function addConverse(payload) {
   return {type: ADD_CONVERSES, payload: payload}
 }
 
+// 获取多人会话
 let getConverses = function getConverses(cb) {
   return function(dispatch, getState) {
     dispatch({type:GET_CONVERSES_REQUEST});
@@ -58,7 +59,10 @@ let getConverses = function getConverses(cb) {
         for (let item of list) {
           let convUUID = item.uuid;
           // 获取日志
-          checkUser(convUUID);
+          if(!/^trpg/.test(convUUID)) {
+            checkUser(convUUID);
+          }
+
           // TODO
           api.emit('chat::getConverseChatLog', {converse_uuid: convUUID}, function(data) {
             if(data.result) {

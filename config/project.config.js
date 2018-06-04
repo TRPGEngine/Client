@@ -1,8 +1,10 @@
 let environment = process.env.NODE_ENV || 'development';
 let platform = process.env.PLATFORM || 'web';
 let currentHost = '127.0.0.1';
+let isSSL = false;
 if(!!window && window.location && window.location.host) {
   currentHost = window.location.host.split(':')[0];
+  isSSL = window.location.protocol === 'https:';
 }
 if(environment=='production') {
   currentHost = 'trpgapi.moonrailgun.com';
@@ -13,7 +15,6 @@ if(trpgHost) {
   currentHost = trpgHost;
 }
 
-let isSSL = location.protocol === 'https:';
 let standardPort = isSSL ? '443' : '80';
 
 let out = {
