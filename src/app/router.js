@@ -10,6 +10,7 @@ import {
   View,
   Button,
   BackHandler,
+  ToastAndroid,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import {
@@ -112,21 +113,33 @@ class AppWithNavigationState extends React.Component {
 
   componentDidMount() {
     initializeListeners("root", this.props.nav);
-    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+    if(Platform.OS === 'android') {
+      BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+    }
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+    if(Platform.OS === 'android') {
+      BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+    }
   }
 
   onBackPress = () => {
     const { dispatch, nav } = this.props;
-    if (nav.index === 0) {
-      return false;
-    }
+    if (nav.index !== 0) {
+      dispatch(NavigationActions.back());
+      return true;
+    } else {
+      // 到达主页
+      if(this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+        // 最近两秒内按过back 可以退出应用
+        return false;
+      }
 
-    dispatch(NavigationActions.back());
-    return true;
+      this.lastBackPressed = Date.now();
+      ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
+      return true;
+    }
   }
 
   render() {
