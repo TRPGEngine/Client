@@ -32,6 +32,7 @@ class GroupDetail extends React.Component {
       converse_uuid: this.props.selectedUUID,
       message,
       is_public: true,
+      is_group: true,
       type,
     }));
   }

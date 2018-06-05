@@ -10,6 +10,7 @@ const sb = require('react-native-style-block');
 const appConfig = require('../config.app');
 const { getSamlpeDate } = require('../../utils/dateHelper');
 const { TButton } = require('../components/TComponent');
+const { getUserInfo } = require('../../redux/actions/cache');
 
 class ProfileInfoItem extends React.Component {
   render() {
@@ -25,6 +26,15 @@ class ProfileInfoItem extends React.Component {
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    let uuid = this.props.navigation.state.params.uuid;
+    if(uuid) {
+      console.log('获取最新用户信息', uuid);
+      this.props.dispatch(getUserInfo(uuid));
+    }
+
   }
 
   _handlePressAvatar(avatar) {

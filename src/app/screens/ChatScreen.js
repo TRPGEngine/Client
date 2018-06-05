@@ -11,6 +11,7 @@ const {
 const sb = require('react-native-style-block');
 const { TInput, TIcon } = require('../components/TComponent');
 const appConfig = require('../config.app');
+const { sendMsg } = require('../../redux/actions/chat');
 
 class MsgItem extends React.Component {
   render() {
@@ -72,11 +73,28 @@ class ChatScreen extends React.Component {
   }
 
   _handleSendMsg() {
+    const uuid = this.props.navigation.getParam('uuid', '');
+    const converseType = this.props.navigation.getParam('type', 'user');
     let message = this.state.inputMsg.trim();
-    let type = this.state.inputType;
     if(!!message) {
       // this.props.onSendMsg(message, type);
-      // console.log(this.props.navigation.getParams);
+      if(!!uuid) {
+        let payload = {
+          message,
+          type: 'normal',
+          is_public: false,
+          is_group: false,
+        }
+
+        if(converseType === 'user') {
+          this.props.dispatch(sendMsg(uuid, payload))
+        }else if(converseType === 'group') {
+          payload.converse_uuid = uuid;
+          payload.is_public = true;
+          payload.is_group = true;
+          this.props.dispatch(sendMsg(null, payload))
+        }
+      }
       this.setState({inputMsg: ''});
     }
   }
@@ -90,7 +108,7 @@ class ChatScreen extends React.Component {
           <FlatList
             style={styles.list}
             data={msgList}
-            keyExtractor={(item, index) => item.uuid}
+            keyExtractor={(item, index) => item.uuid + '#' + index}
             renderItem={({item}) => (
               <MsgItem
                 isSelf={item.sender_uuid===this.props.selfUUID}
