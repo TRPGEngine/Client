@@ -12,3 +12,10 @@ window.onOAuthFinished = async function(uuid, token) {
 
   window.location.reload();
 }
+
+window.addEventListener('message',function(event){
+  let data = event.data;
+  if(data.type === 'onOAuthFinished') {
+    window.onOAuthFinished(data.uuid, data.token);
+  }
+})
