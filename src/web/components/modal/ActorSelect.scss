@@ -70,6 +70,15 @@
     }
   }
 
+  .no-actor {
+    color: #999;
+
+    > span {
+      color: $color-atomic-tangerine;
+      cursor: pointer;
+    }
+  }
+
   .action {
     button {
       @include block-btn;

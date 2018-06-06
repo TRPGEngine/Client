@@ -42,13 +42,13 @@ function bindEventFunc(store) {
 
     // web||electron通知
     if(document && document.hidden) {
-      let isNotify = store.getState().getIn(['settings', 'notification']);
+      let isNotify = store.getState().getIn(['settings', 'system', 'notification']);
       if(isNotify) {
         let usercache = store.getState().getIn(['cache', 'user']);
         let userinfo = usercache.get(data.sender_uuid);
         let username = userinfo.get('nickname') || userinfo.get('username');
         let uuid = userinfo.get('uuid');
-        let notification = new Notification(username + ':', {
+        let notification = new Notification(`来自 ${username}:`, {
           body: data.message,
           icon: userinfo.get('avatar') || config.defaultImg.trpgsystem,
           tag: 'trpg-msg',

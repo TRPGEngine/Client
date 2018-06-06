@@ -1,7 +1,8 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../../../config/project.config.js');
-const { showAlert } = require('../../../redux/actions/ui');
+const { showAlert, showModal } = require('../../../redux/actions/ui');
+const TemplateSelect = require('../../containers/main/actors/TemplateSelect');
 
 require('./ActorSelect.scss')
 
@@ -24,13 +25,19 @@ class ActorSelect extends React.Component {
     }
   }
 
+  _handleActorCreate() {
+    this.props.showModal(
+      <TemplateSelect />
+    );
+  }
+
   render() {
     return (
       <div className="actor-select">
         <h3>请选择人物卡</h3>
         <div className="actor-list">
           {
-            this.props.selfActors.map((item, index) => {
+            this.props.selfActors.size > 0 ? this.props.selfActors.map((item, index) => {
               let uuid = item.get('uuid');
               return (
                 <div
@@ -48,7 +55,11 @@ class ActorSelect extends React.Component {
                   </div>
                 </div>
               )
-            })
+            }) : (
+              <div className="no-actor">
+                尚无人物卡, 现在去<span onClick={() => this._handleActorCreate()}>创建</span>
+              </div>
+            )
           }
         </div>
         <div className="action">
@@ -65,5 +76,6 @@ module.exports = connect(
   }),
   dispatch => ({
     showAlert: (...args) => dispatch(showAlert(...args)),
+    showModal: (...args) => dispatch(showModal(...args)),
   })
 )(ActorSelect);
