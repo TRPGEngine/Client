@@ -58,7 +58,7 @@ class Login extends React.Component {
 
   _handleQQLogin() {
     console.log('qq登录');
-    window.open(config.file.url + '/oauth/qq/login', 'TencentLogin', 'width=450,height=320');
+    window.open(config.file.url + '/oauth/qq/login', 'TencentLogin', 'width=450,height=600');
   }
 
   render() {

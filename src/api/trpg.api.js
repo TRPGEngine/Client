@@ -37,7 +37,7 @@ function bindEventFunc(store) {
   }
   let api = this;
   api.on('chat::message', function(data) {
-    let converseUUID = data.room || data.sender_uuid;
+    let converseUUID = data.converse_uuid || data.sender_uuid;
     store.dispatch(addMsg(converseUUID, data));
 
     // web||electron通知
