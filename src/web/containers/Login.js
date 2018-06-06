@@ -14,6 +14,21 @@ class Login extends React.Component {
       username: '',
       password: '',
     };
+    this.onQQConnectFinished = (e) => {
+      let {type, uuid, token} = event.data;
+      if(type === 'onOAuthFinished') {
+        if(!uuid || !token) {
+          console.error('oauth登录失败, 缺少必要参数', uuid, token);
+          return;
+        }
+
+        // 注册新的uuid与token并刷新
+        rnStorage.set('uuid', uuid);
+        rnStorage.set('token', token);
+
+        this.props.dispatch(loginWithToken(uuid, token));
+      }
+    }
   }
 
   componentDidMount() {
@@ -32,22 +47,6 @@ class Login extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('message', this.onQQConnectFinished);
-  }
-
-  onQQConnectFinished = (e) => {
-    let {type, uuid, token} = event.data;
-    if(type === 'onOAuthFinished') {
-      if(!uuid || !token) {
-        console.error('oauth登录失败, 缺少必要参数', uuid, token);
-        return;
-      }
-
-      // 注册新的uuid与token并刷新
-      rnStorage.set('uuid', uuid);
-      rnStorage.set('token', token);
-
-      this.props.dispatch(loginWithToken(uuid, token));
-    }
   }
 
   _handleLogin() {
