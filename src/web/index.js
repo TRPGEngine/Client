@@ -1,6 +1,5 @@
 require('moment').locale('zh_CN');
 require('../utils/common');
-require('./global');
 const React = require('react');
 const ReactDom = require('react-dom');
 const { Provider } = require('react-redux');

@@ -78,6 +78,7 @@ module.exports = {
     electron: 'require(\'electron\')',
     'react-native': 'require(\'react-native\')',
     './nav': 'require(\'./nav\')',
+    'react-navigation-redux-helpers': 'require(\'react-navigation-redux-helpers\')',
   },
 
   plugins: [

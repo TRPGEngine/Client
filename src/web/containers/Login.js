@@ -2,8 +2,9 @@ const React = require('react');
 const { connect } = require('react-redux');
 const { Link } = require('react-router-dom');
 const { showLoading } = require('../../redux/actions/ui');
-const { login } = require('../../redux/actions/user');
+const { login, loginWithToken } = require('../../redux/actions/user');
 const config = require('../../../config/project.config.js');
+const rnStorage = require('../../api/rnStorage.api.js');
 require('./Login.scss');
 
 class Login extends React.Component {
@@ -16,14 +17,36 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    if(this.props.isLogin) {
+    if(!!this.props.isLogin) {
       this.props.history.push('main');
+    }else {
+      window.addEventListener('message', this.onQQConnectFinished);
     }
   }
 
   componentWillUpdate(nextProps, nextState) {
     if(!!nextProps.isLogin) {
       this.props.history.push('main');
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('message', this.onQQConnectFinished);
+  }
+
+  onQQConnectFinished = (e) => {
+    let {type, uuid, token} = event.data;
+    if(type === 'onOAuthFinished') {
+      if(!uuid || !token) {
+        console.error('oauth登录失败, 缺少必要参数', uuid, token);
+        return;
+      }
+
+      // 注册新的uuid与token并刷新
+      rnStorage.set('uuid', uuid);
+      rnStorage.set('token', token);
+
+      this.props.dispatch(loginWithToken(uuid, token));
     }
   }
 
