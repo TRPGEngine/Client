@@ -15,7 +15,7 @@ class Login extends React.Component {
       password: '',
     };
     this.onQQConnectFinished = (e) => {
-      let {type, uuid, token} = event.data;
+      let {type, uuid, token} = e.data;
       if(type === 'onOAuthFinished') {
         if(!uuid || !token) {
           console.error('oauth登录失败, 缺少必要参数', uuid, token);

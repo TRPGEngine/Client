@@ -9,7 +9,7 @@ exports.sendDiceRequest = function(to_uuid, is_group, dice_request, reason) {
   return function(dispatch, getState) {
     return api.emit('dice::sendDiceRequest', {to_uuid, is_group, dice_request, reason} ,function(data) {
       if(data.result) {
-        // console.log('pkg', data.pkg);
+        console.log('pkg', data.pkg);
         dispatch({type: ADD_MSG, converseUUID: to_uuid, payload: data.pkg});
       }else {
         console.error(data);
@@ -22,9 +22,10 @@ exports.acceptDiceRequest = function(uuid) {
   return function(dispatch, getState) {
     return api.emit('dice::acceptDiceRequest', {msg_card_uuid: uuid} ,function(data) {
       if(data.result) {
-        // TODO: 修复同意者接受投骰结果信息的方法
+        // TODO: 修复需要让所有人都更新卡片信息
         let log = data.log;
-        dispatch({type: UPDATE_MSG, converseUUID: log.sender_uuid, msgUUID: log.uuid, payload: log});
+        let converseUUID = log.is_group ? log.converse_uuid : log.sender_uuid;
+        dispatch({type: UPDATE_MSG, converseUUID: converseUUID, msgUUID: log.uuid, payload: log});
       }else {
         console.error(data);
       }
@@ -48,9 +49,10 @@ exports.acceptDiceInvite = function(uuid, isGroupMsg) {
   return function(dispatch, getState) {
     return api.emit('dice::acceptDiceInvite', {msg_card_uuid: uuid} ,function(data) {
       if(data.result) {
-        // TODO: 修复同意者接受投骰结果信息的方法
+        // TODO: 修复需要让所有人都更新卡片信息
         let log = data.log;
-        dispatch({type: UPDATE_MSG, converseUUID: log.to_uuid , msgUUID: log.uuid, payload: log});
+        let converseUUID = log.is_group ? log.converse_uuid : log.sender_uuid;
+        dispatch({type: UPDATE_MSG, converseUUID: converseUUID, msgUUID: log.uuid, payload: log});
       }else {
         console.error(data);
       }
