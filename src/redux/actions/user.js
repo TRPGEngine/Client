@@ -102,10 +102,10 @@ exports.login = function(username, password) {
   }
 }
 
-exports.loginWithToken = function(uuid, token) {
+exports.loginWithToken = function(uuid, token, channel = null) {
   return function(dispatch, getState) {
     let isApp = config.platform === 'app';
-    return api.emit('player::loginWithToken', {uuid, token, platform: config.platform, isApp}, function(data) {
+    return api.emit('player::loginWithToken', {uuid, token, platform: config.platform, isApp, channel}, function(data) {
       if(data.result) {
         data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
         dispatch({type:LOGIN_TOKEN_SUCCESS, payload: data.info, isApp});

@@ -26,7 +26,7 @@ class Login extends React.Component {
         rnStorage.set('uuid', uuid);
         rnStorage.set('token', token);
 
-        this.props.dispatch(loginWithToken(uuid, token));
+        this.props.dispatch(loginWithToken(uuid, token, 'qq'));
       }
     }
   }
