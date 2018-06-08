@@ -95,7 +95,7 @@ class MsgItem extends React.Component {
       if(is_accept) {
         return (
           <div className="card-action">
-            <button disabled={true}>已接受</button>
+            <button disabled={true}>已通过</button>
           </div>
         )
       }else {
@@ -116,7 +116,7 @@ class MsgItem extends React.Component {
       let uuid = this.props.uuid;
       let is_accept_list = data.get('is_accept_list');
       let allow_accept_list = data.get('allow_accept_list');
-      let canAccept = allow_accept_list.includes(this.props.selfUUID);
+      let canAccept = allow_accept_list.includes(this.props.selfUUID) && allow_accept_list.size !== is_accept_list.size;
       let isGroupMsg = this.props.isGroupMsg;
       if(canAccept && is_accept_list.includes(this.props.selfUUID)) {
         return (
@@ -125,12 +125,15 @@ class MsgItem extends React.Component {
           </div>
         )
       }else {
+        let text = allow_accept_list.size === is_accept_list.size ? '已完成' : (
+          this.props.me?'等待对方处理':'等待处理'
+        );
         return (
           <div className="card-action">
             {canAccept ? (
               <button onClick={() => this.props.acceptDiceInvite(uuid, isGroupMsg)}>接受</button>
             ) : (
-              <button disabled={true}>{this.props.me?'等待对方处理':'等待处理'}</button>
+              <button disabled={true}>{text}</button>
             )}
           </div>
         )

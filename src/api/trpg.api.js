@@ -28,7 +28,7 @@ function getApiInstance() {
 }
 
 function bindEventFunc(store) {
-  const { addMsg, switchConverse } = require('../redux/actions/chat');
+  const { addMsg, updateMsg, switchConverse } = require('../redux/actions/chat');
   const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
   const { changeNetworkStatue, showAlert, switchMenuPannel, updateSocketId } = require('../redux/actions/ui');
 
@@ -63,6 +63,12 @@ function bindEventFunc(store) {
         }
       }
     }
+  });
+
+  api.on('chat::updateMessage', function(data) {
+    let converseUUID = data.converseUUID;
+    let payload = data.payload;
+    store.dispatch(updateMsg(converseUUID, payload));
   });
 
   api.on('player::invite', function(data) {

@@ -1,6 +1,7 @@
 const {
   ADD_CONVERSES,
   ADD_MSG,
+  UPDATE_MSG,
   GET_CONVERSES_REQUEST,
   GET_CONVERSES_SUCCESS,
   GET_CONVERSES_FAILED,
@@ -256,6 +257,15 @@ let sendMsg = function sendMsg(toUUID, payload) {
     })
   }
 }
+let updateMsg = function updateMsg(converseUUID, payload) {
+  console.log('try to update message', converseUUID, payload);
+  return {
+    type: UPDATE_MSG,
+    converseUUID,
+    msgUUID: payload.uuid,
+    payload,
+  }
+}
 
 let getMoreChatLog = function getMoreChatLog(converseUUID, offsetDate, isUserChat = true) {
   return function(dispatch, getState) {
@@ -302,5 +312,6 @@ exports.getAllUserConverse = getAllUserConverse;
 exports.getOfflineUserConverse = getOfflineUserConverse;
 exports.addMsg = addMsg;
 exports.sendMsg = sendMsg;
+exports.updateMsg = updateMsg;
 exports.getMoreChatLog = getMoreChatLog;
 exports.updateCardChatData = updateCardChatData;

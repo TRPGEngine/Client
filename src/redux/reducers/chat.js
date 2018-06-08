@@ -83,7 +83,7 @@ module.exports = function chat(state = initialState, action) {
             for (var i = 0; i < msgList.size; i++) {
               let msg = msgList.get(i);
               if(msg.get('uuid') === action.msgUUID) {
-                msgList = msgList.set(i, immutable.fromJS(action.payload));
+                msgList = msgList.set(i, msg.merge(immutable.fromJS(action.payload)));
                 break;
               }
             }
