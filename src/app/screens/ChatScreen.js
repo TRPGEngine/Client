@@ -7,43 +7,12 @@ const {
   FlatList,
   Button,
   TextInput,
+  Keyboard,
 } = require('react-native');
 const sb = require('react-native-style-block');
 const { TInput, TIcon } = require('../components/TComponent');
-const appConfig = require('../config.app');
+const MsgItem = require('../components/MsgItem');
 const { sendMsg } = require('../../redux/actions/chat');
-
-class MsgItem extends React.Component {
-  render() {
-    let {
-      converse_uuid,
-      data,
-      date,
-      is_group,
-      is_public,
-      message,
-      sender_uuid,
-      to_uuid,
-      type,
-      uuid,
-    } = this.props.data;
-    let senderInfo = this.props.senderInfo;
-    let isSelf = this.props.isSelf;
-    let avatar = senderInfo.get('avatar') ? {uri: senderInfo.get('avatar')} : appConfig.defaultImg.user;
-
-    return (
-      <View style={[...styles.itemView, isSelf?{flexDirection: 'row-reverse'}:null]}>
-        <Image style={styles.itemAvatar} source={avatar} />
-        <View style={styles.itemBody}>
-          <Text style={[...styles.itemName, isSelf?{textAlign:'right'}:null]}>
-            {senderInfo.get('nickname') || senderInfo.get('username')}
-          </Text>
-          <Text style={[...styles.itemMsg, isSelf?{alignSelf: 'flex-end'}:null]}>{message}</Text>
-        </View>
-      </View>
-    )
-  }
-}
 
 class ChatScreen extends React.Component {
   static navigationOptions = (props) => {
@@ -68,8 +37,32 @@ class ChatScreen extends React.Component {
 
   componentDidMount() {
     this.props.navigation.setParams({
-      headerRightFunc: () => this.props.navigation.navigate('Profile', this.props.navigation.state.params)
-		})
+      headerRightFunc: () => {
+        if(type === 'user') {
+          this.props.navigation.navigate('Profile', this.props.navigation.state.params)
+        }else {
+          alert('TODO: 显示团信息');
+        }
+      }
+		});
+    this.keyboardListener = Keyboard.addListener('keyboardDidShow', this._scrollToBottom.bind(this));
+    this._scrollToBottom();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.msgList.size !== this.props.msgList.size) {
+      this._scrollToBottom();
+    }
+  }
+
+  componentWillUnmount() {
+    this.keyboardListener.remove();
+  }
+
+  _scrollToBottom() {
+    setTimeout(() => {
+      this.refs.list.scrollToEnd();
+    }, 130);
   }
 
   _handleSendMsg() {
@@ -107,15 +100,20 @@ class ChatScreen extends React.Component {
         <View style={styles.container}>
           <FlatList
             style={styles.list}
+            ref="list"
             data={msgList}
             keyExtractor={(item, index) => item.uuid + '#' + index}
-            renderItem={({item}) => (
-              <MsgItem
-                isSelf={item.sender_uuid===this.props.selfUUID}
-                senderInfo={this.props.usercache.get(item.sender_uuid)}
-                data={item}
-              />
-            )}
+            renderItem={({item}) => {
+              let isSelf = item.sender_uuid === this.props.selfInfo.get('uuid');
+              let senderInfo = isSelf ? this.props.selfInfo : this.props.usercache.get(item.sender_uuid);
+              return (
+                <MsgItem
+                  isSelf={isSelf}
+                  senderInfo={senderInfo}
+                  data={item}
+                />
+              )
+            }}
           />
           <View style={styles.msgBox}>
             <TInput
@@ -157,31 +155,6 @@ const styles = {
     sb.flex(),
     {marginRight: 4},
   ],
-  itemView: [
-    sb.direction(),
-    sb.padding(10, 10),
-  ],
-  itemAvatar: [
-    sb.size(40, 40),
-    sb.radius(20),
-  ],
-  itemBody: [
-    sb.padding(0, 4),
-    sb.margin(0, 6),
-    sb.flex(),
-  ],
-  itemName: [
-    {marginBottom: 4, marginTop: 4},
-    sb.font(12),
-  ],
-  itemMsg: [
-    sb.bgColor(),
-    sb.padding(6, 8),
-    sb.flex(0),
-    sb.radius(3),
-    sb.border('all', 0.5, '#ddd'),
-    sb.alignSelf('flex-start'),
-  ],
 }
 
 module.exports = connect(
@@ -190,6 +163,7 @@ module.exports = connect(
 
     return {
       selectedConversesUUID,
+      selfInfo: state.getIn(['user', 'info']),
       selfUUID: state.getIn(['user', 'info', 'uuid']),
       msgList: state.getIn(['chat', 'converses', selectedConversesUUID, 'msgList']),
       usercache: state.getIn(['cache', 'user']),

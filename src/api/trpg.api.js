@@ -41,7 +41,7 @@ function bindEventFunc(store) {
     store.dispatch(addMsg(converseUUID, data));
 
     // web||electron通知
-    if(document && document.hidden) {
+    if(window.document && document.hidden) {
       let isNotify = store.getState().getIn(['settings', 'system', 'notification']);
       if(isNotify) {
         let usercache = store.getState().getIn(['cache', 'user']);
