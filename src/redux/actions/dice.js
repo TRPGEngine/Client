@@ -19,7 +19,6 @@ exports.acceptDiceRequest = function(uuid) {
   return function(dispatch, getState) {
     return api.emit('dice::acceptDiceRequest', {msg_card_uuid: uuid} ,function(data) {
       if(data.result) {
-        // TODO: 修复需要让所有人都更新卡片信息
         // let log = data.log;
         // let converseUUID = log.is_group ? log.converse_uuid : log.sender_uuid;
         // dispatch(updateMsg(converseUUID, log));
@@ -47,7 +46,6 @@ exports.acceptDiceInvite = function(uuid, isGroupMsg) {
   return function(dispatch, getState) {
     return api.emit('dice::acceptDiceInvite', {msg_card_uuid: uuid} ,function(data) {
       if(data.result) {
-        // TODO: 修复需要让所有人都更新卡片信息
         // let log = data.log;
         // let converseUUID = log.is_group ? log.converse_uuid : log.sender_uuid;
         // dispatch(updateMsg(converseUUID, log));

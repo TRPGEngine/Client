@@ -53,10 +53,12 @@ class GroupDetail extends React.Component {
   _handleSendDiceInv() {
     let usercache = this.props.usercache;
     let groupMembers = this.props.groupInfo.get('group_members');
-    let list = groupMembers.map((i) => ({
-      name: usercache.getIn([i, 'nickname']) || usercache.getIn([i, 'username']),
-      uuid: usercache.getIn([i, 'uuid']),
-    }));
+    let list = groupMembers
+      .filter(uuid => uuid !== this.props.userUUID)
+      .map(uuid => ({
+        name: usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username']),
+        uuid: usercache.getIn([uuid, 'uuid']),
+      }));
     this.props.dispatch(showModal(
       <ListSelect
         list={list.map((i)=>i.name)}
