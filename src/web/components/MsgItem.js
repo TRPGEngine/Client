@@ -161,7 +161,7 @@ class MsgItem extends React.Component {
         }else {
           return (
             <div className="card-action">
-              <button onClick={() => this.props.agreeGroupRequest(chatlogUUID, requestUUID)}>同意</button>
+              <button onClick={() => this.props.agreeGroupRequest(chatlogUUID, requestUUID, fromUUID)}>同意</button>
               <button onClick={() => this.props.refuseGroupRequest(chatlogUUID, requestUUID)}>拒绝</button>
             </div>
           )

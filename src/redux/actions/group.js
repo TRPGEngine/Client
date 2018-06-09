@@ -162,8 +162,10 @@ exports.requestJoinGroup = function(group_uuid) {
   }
 }
 
-exports.agreeGroupRequest = function(chatlogUUID, requestUUID) {
-  return function(dispatch, getState) {
+exports.agreeGroupRequest = function(chatlogUUID, requestUUID, fromUUID) {
+  checkUser(fromUUID);
+
+  return function(dispatch, getState) {  
     return api.emit('group::agreeGroupRequest', {request_uuid: requestUUID}, function(data) {
       if(data.result) {
         dispatch(updateCardChatData(chatlogUUID, {is_processed: true}));
