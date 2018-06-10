@@ -42,6 +42,11 @@ $ npm run package # 打包当前平台的pc端文件
 **开发服务器访问`http://127.0.0.1:8080/`即可访问客户端**  
 **客户端需要配合服务端才能正常运行, 具体可以查看服务端项目[TRPGEngine/DevTool](https://github.com/TRPGEngine/DevTool)**
 
+## 关于环境变量
+- `PLATFORM` : 编译的平台, 可选:`web`, `app`, `electron`
+- `NODE_ENV` : 编译环境, 可选:`production`, `development`
+- `TRPG_HOST` : 编制指定的服务端地址
+
 ## 部分截图
 ![](./doc/login.png)
 ![](./doc/converse.png)
@@ -49,6 +54,8 @@ $ npm run package # 打包当前平台的pc端文件
 ![](./doc/group.png)
 ![](./doc/note.png)
 
+## 关于贡献
+欢迎发送pr，请在发起pr时详细描述改动的目的，这样会更加方便进行审核
 
 ## 关于开源
 本作品基于[GPLv3开源协议](./LICENSE)。不允许任何未经授权的商业行为。
