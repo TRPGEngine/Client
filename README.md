@@ -40,7 +40,7 @@ $ npm run package # 打包当前平台的pc端文件
 ```
 
 **开发服务器访问`http://127.0.0.1:8080/`即可访问客户端**  
-**客户端需要配合服务端才能正常运行, 可以添加环境变量`NODE_ENV=production`访问官方服务器**
+**客户端需要配合服务端才能正常运行, 具体可以查看服务端项目[TRPGEngine/DevTool](https://github.com/TRPGEngine/DevTool)**
 
 ## 部分截图
 ![](./doc/login.png)
