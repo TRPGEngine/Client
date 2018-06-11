@@ -41,7 +41,7 @@ class DiceRequest extends React.Component {
           value={this.state.diceReason}
           onChange={(e) => this.setState({diceReason: e.target.value})}
         />
-      <span>请求投骰<i className="iconfont">&#xe609;</i></span>
+        <span>请求投骰<i className="iconfont">&#xe609;</i></span>
         <Select
           name="dice-select"
           className="dice-select"

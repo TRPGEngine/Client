@@ -41,11 +41,13 @@ class DiceInvite extends React.Component {
           value={this.state.diceReason}
           onChange={(e) => this.setState({diceReason: e.target.value})}
         />
-      <span>邀请
-      {
-        this.props.inviteList ? this.props.inviteList.join(',') : '所有人'
-      }
-      投骰<i className="iconfont">&#xe609;</i></span>
+        <span>
+          邀请
+          {
+            this.props.inviteList ? this.props.inviteList.join(',') : '所有人'
+          }
+          投骰<i className="iconfont">&#xe609;</i>
+        </span>
         <Select
           name="dice-select"
           className="dice-select"
