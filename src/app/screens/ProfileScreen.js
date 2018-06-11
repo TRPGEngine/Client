@@ -43,7 +43,7 @@ class ProfileScreen extends React.Component {
     if(avatar.uri) {
       let media = [
         {
-          photo: avatar.uri
+          photo: avatar.uri.replace('/thumbnail', '')
         },
       ]
       this.props.navigation.navigate('PhotoBrowser', {media, index:0});
@@ -76,8 +76,8 @@ class ProfileScreen extends React.Component {
           <ProfileInfoItem name="用户名" value={userInfo.get('username')} />
           <ProfileInfoItem name="性别" value={userInfo.get('sex')} />
           <ProfileInfoItem name="简介" value={userInfo.get('desc') || '这个人很懒什么都没有留下'} />
-          <ProfileInfoItem name="上次登录" value={userInfo.get('last_login') || '无记录'} />
-          <ProfileInfoItem name="注册时间" value={getSamlpeDate(userInfo.get('createdAt'))} />
+          <ProfileInfoItem name="上次登录" value={getSamlpeDate(userInfo.get('last_login')) || '无记录'} />
+          <ProfileInfoItem name="注册时间" value={getSamlpeDate(userInfo.get('createAt'))} />
         </View>
         <View style={styles.actions}>
           {
@@ -86,7 +86,7 @@ class ProfileScreen extends React.Component {
                 发送消息
               </TButton>
             ) : (
-              <TButton onClick={() => this.props.dispatch(addFriend(userUUID))}>
+              <TButton onPress={() => this.props.dispatch(addFriend(userUUID))}>
                 加为好友
               </TButton>
             )
