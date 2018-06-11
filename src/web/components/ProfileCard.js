@@ -97,7 +97,6 @@ class ProfileCard extends React.Component {
         </div>
       )
     }
-
   }
 
   getSexP(sex) {

@@ -36,9 +36,10 @@ class ChatScreen extends React.Component {
   }
 
   componentDidMount() {
+    const converseType = this.props.navigation.getParam('type', 'user');
     this.props.navigation.setParams({
       headerRightFunc: () => {
-        if(type === 'user') {
+        if(converseType === 'user') {
           this.props.navigation.navigate('Profile', this.props.navigation.state.params)
         }else {
           alert('TODO: 显示团信息');

@@ -11,6 +11,7 @@ const appConfig = require('../config.app');
 const { getSamlpeDate } = require('../../utils/dateHelper');
 const { TButton } = require('../components/TComponent');
 const { getUserInfo } = require('../../redux/actions/cache');
+const { addFriend } = require('../../redux/actions/user');
 
 class ProfileInfoItem extends React.Component {
   render() {
@@ -52,6 +53,7 @@ class ProfileScreen extends React.Component {
   render() {
     let userUUID = this.props.navigation.state.params.uuid;
     let userInfo = this.props.usercache.get(userUUID);
+    let hasFriend = this.props.friendList.includes(userUUID);
 
     if(!userInfo) {
       return (
@@ -78,9 +80,17 @@ class ProfileScreen extends React.Component {
           <ProfileInfoItem name="注册时间" value={getSamlpeDate(userInfo.get('createdAt'))} />
         </View>
         <View style={styles.actions}>
-          <TButton>
-            加为好友
-          </TButton>
+          {
+            hasFriend ? (
+              <TButton>
+                发送消息
+              </TButton>
+            ) : (
+              <TButton onClick={() => this.props.dispatch(addFriend(userUUID))}>
+                加为好友
+              </TButton>
+            )
+          }
         </View>
       </View>
     )
@@ -114,5 +124,6 @@ const styles = {
 module.exports = connect(
   state => ({
     usercache: state.getIn(['cache', 'user']),
+    friendList: state.getIn(['user', 'friendList']),
   })
 )(ProfileScreen);
