@@ -1,6 +1,7 @@
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
-const { addMsg, updateMsg } = require('./chat');
+const { addMsg } = require('./chat');
+const { showAlert } = require('./ui');
 
 exports.sendDiceRequest = function(to_uuid, is_group, dice_request, reason) {
   return function(dispatch, getState) {
@@ -51,6 +52,19 @@ exports.acceptDiceInvite = function(uuid, isGroupMsg) {
         // dispatch(updateMsg(converseUUID, log));
       }else {
         console.error(data);
+      }
+    })
+  }
+}
+
+exports.sendQuickDice = function(to_uuid, is_group, dice_request, reason) {
+  return function(dispatch, getState) {
+    return api.emit('dice::sendQuickDice', {to_uuid, is_group, dice_request, reason}, function(data) {
+      if(data.result) {
+        // console.log('pkg', data);
+      } else {
+        console.error(data);
+        dispatch(showAlert('快速投骰失败'));
       }
     })
   }

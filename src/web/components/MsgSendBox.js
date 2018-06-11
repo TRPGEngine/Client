@@ -55,17 +55,15 @@ class MsgSendBox extends React.Component {
     this.actions = [
       {
         label: '',
-        type: 'dice-inv',
         icon: '&#xe631;',
         onClick: () => this._handleShowDiceMethods(),
       },
     ];
-    if(this.props.onFreeDice) {
+    if(this.props.onQuickDice) {
       this.actions.unshift({
-        label: '自由投骰',
-        type: 'dice-req',
+        label: '快速投骰',
         icon: '&#xe609;',
-        onClick: () => this.props.onFreeDice(),
+        onClick: () => this.props.onQuickDice(),
       })
     }
     this.hidePopup = () => {

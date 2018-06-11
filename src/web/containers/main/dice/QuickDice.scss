@@ -1,0 +1,53 @@
+@import "../../../../utils/mixins";
+@import "../../../../utils/color";
+
+.quick-dice {
+  display: flex;
+  flex-direction: column;
+  padding: 10%;
+  overflow: hidden;
+
+  > span {
+    margin-bottom: 10px;
+  }
+
+  .dice-reason {
+    @include block-input;
+    margin-bottom: 10px;
+  }
+
+  .Select {
+    margin-bottom: 20px;
+  }
+
+  .dice {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    input {
+      @include block-input;
+      flex: 1;
+    }
+
+    &.basicDice {
+      input {
+        width: 120px;
+      }
+
+      span {
+        margin: 0 6px;
+      }
+    }
+
+    &.complexDice {
+      input {
+        width: 240px;
+      }
+    }
+  }
+
+  button {
+    @include block-btn;
+  }
+}

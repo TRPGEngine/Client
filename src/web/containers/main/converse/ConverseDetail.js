@@ -3,9 +3,10 @@ const { connect } = require('react-redux');
 const config = require('../../../../../config/project.config.js');
 const { showModal, hideModal, showProfileCard } = require('../../../../redux/actions/ui');
 const { sendMsg } = require('../../../../redux/actions/chat');
-const { sendDiceRequest, sendDiceInvite } = require('../../../../redux/actions/dice');
+const { sendDiceRequest, sendDiceInvite, sendQuickDice } = require('../../../../redux/actions/dice');
 const DiceRequest = require('../dice/DiceRequest');
 const DiceInvite = require('../dice/DiceInvite');
+const QuickDice = require('../dice/QuickDice');
 const MsgContainer = require('../../../components/MsgContainer');
 const MsgSendBox = require('../../../components/MsgSendBox');
 
@@ -50,6 +51,21 @@ class ConverseDetail extends React.Component {
         onSendDiceInvite={(diceReason, diceExp) => {
           console.log('diceReason, diceExp',diceReason, diceExp);
           this.props.dispatch(sendDiceInvite(uuid, false, diceExp, diceReason, [uuid], [name]));
+          this.props.dispatch(hideModal());
+        }}
+      />
+    ))
+  }
+
+  // 发送自由投骰
+  _handleQuickDice() {
+    console.log('快速投骰');
+    let uuid = this.props.converseUUID;
+    this.props.dispatch(showModal(
+      <QuickDice
+        onSendQuickDice={(diceReason, diceExp) => {
+          console.log('diceReason, diceExp',diceReason, diceExp);
+          this.props.dispatch(sendQuickDice(uuid, false, diceExp, diceReason));
           this.props.dispatch(hideModal());
         }}
       />
@@ -118,6 +134,7 @@ class ConverseDetail extends React.Component {
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
           onSendDiceReq={() => this._handleSendDiceReq()}
           onSendDiceInv={() => this._handleSendDiceInv()}
+          onQuickDice={() => this._handleQuickDice()}
         />
       </div>
     )
