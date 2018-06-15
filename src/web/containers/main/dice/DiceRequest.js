@@ -1,5 +1,7 @@
 const React = require('react');
+const { connect } = require('react-redux');
 const Select = require('react-select');
+const { setLastDiceType } = require('../../../../redux/actions/ui');
 
 require('./DiceRequest.scss');
 
@@ -7,7 +9,7 @@ class DiceRequest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      diceType: 'basicDice',
+      diceType: this.props.lastDiceType || 'basicDice',
       diceReason: '',
     }
   }
@@ -24,6 +26,10 @@ class DiceRequest extends React.Component {
     if(this.props.onSendDiceRequest) {
       this.props.onSendDiceRequest(this.state.diceReason, diceExp);
     }
+  }
+  _handleChangeDiceType(type) {
+    this.setState({diceType: type});
+    this.props.dispatch(setLastDiceType(type));
   }
 
   render() {
@@ -50,7 +56,7 @@ class DiceRequest extends React.Component {
           clearable={false}
           searchable={false}
           placeholder="请选择骰子类型..."
-          onChange={(item) => this.setState({diceType: item.value})}
+          onChange={(item) => this._handleChangeDiceType(item.value)}
         />
         {
           this.state.diceType === 'complexDice' ? (
@@ -71,4 +77,8 @@ class DiceRequest extends React.Component {
   }
 }
 
-module.exports = DiceRequest;
+module.exports = connect(
+  state => ({
+    lastDiceType: state.getIn(['ui', 'lastDiceType']),
+  })
+)(DiceRequest);

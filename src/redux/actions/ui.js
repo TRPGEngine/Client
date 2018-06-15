@@ -12,6 +12,7 @@ const {
   SHOW_SLIDE_PANEL,
   HIDE_SLIDE_PANEL,
   SWITCH_MENU_PANNEL,
+  SET_LAST_DICE_TYPE,
   CHANGE_NETWORK_STATE,
   UPDATE_SOCKET_ID,
 } = require('../constants');
@@ -82,6 +83,9 @@ exports.hideSlidePanel = function() {
 }
 exports.switchMenuPannel = function(index, pannel = null) {
   return {type: SWITCH_MENU_PANNEL, menuIndex: index, payload: pannel}
+}
+exports.setLastDiceType = function(type = 'basicDice') {
+  return {type: SET_LAST_DICE_TYPE, payload: type}
 }
 exports.changeNetworkStatue = function(isOnline, msg, tryReconnect = false) {
   return {type: CHANGE_NETWORK_STATE, payload: {isOnline, msg, tryReconnect}}

@@ -13,6 +13,7 @@ const {
   SHOW_SLIDE_PANEL,
   HIDE_SLIDE_PANEL,
   SWITCH_MENU_PANNEL,
+  SET_LAST_DICE_TYPE,
   CHANGE_NETWORK_STATE,
   UPDATE_SOCKET_ID,
 } = require('../constants');
@@ -42,6 +43,7 @@ const initialState = immutable.fromJS({
     msg: '',
   },
   socketId: '',
+  lastDiceType: 'basicDice',
 })
 
 module.exports = function ui(state = initialState, action) {
@@ -78,6 +80,9 @@ module.exports = function ui(state = initialState, action) {
       return state
         .set('menuIndex', action.menuIndex)
         .set('menuPannel', action.payload);
+    case SET_LAST_DICE_TYPE:
+      return state
+        .set('lastDiceType', action.payload);
     case CHANGE_NETWORK_STATE:
       return state.set('network', immutable.fromJS(action.payload));
     case UPDATE_SOCKET_ID:
