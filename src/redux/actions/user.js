@@ -32,6 +32,7 @@ const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { showLoading, hideLoading, showAlert } = require('./ui');
 const { checkUser } = require('../../utils/cacheHelper');
+const { setUserSettings, setSystemSettings } = require('./settings');
 
 
 function loginSuccess(dispatch, getState) {
@@ -40,7 +41,7 @@ function loginSuccess(dispatch, getState) {
   }
 
   const { getConverses, addUserConverse, getOfflineUserConverse, getAllUserConverse } = require('./chat');
-  const { getFriends, getFriendsInvite } = require('./user');
+  const { getFriends, getFriendsInvite, getSettings } = require('./user');
   const { getTemplate, getActor } = require('./actor');
   const { getGroupList, getGroupInvite } = require('./group');
   const { getNote } = require('./note');
@@ -56,6 +57,7 @@ function loginSuccess(dispatch, getState) {
   dispatch(getGroupList())
   dispatch(getGroupInvite())
   dispatch(getNote())
+  dispatch(getSettings())// 获取服务器上的设置信息
 
   rnStorage.get('userConverses#'+userUUID)
     .then(function(converse) {
@@ -323,4 +325,32 @@ exports.refuseFriendInvite = function(inviteUUID) {
 
 exports.addFriendInvite = function(invite) {
   return {type: ADD_FRIEND_INVITE, payload: invite}
+}
+
+exports.getSettings = function() {
+  return function(dispatch, getState) {
+    return api.emit('player::getSettings', {}, function(data) {
+      if(data.result) {
+        let {userSettings, systemSettings} = data;
+        dispatch(setUserSettings(userSettings));
+        dispatch(setSystemSettings(systemSettings));
+      }else {
+        console.error(data);
+      }
+    })
+  }
+}
+
+exports.saveSettings = function() {
+  return function(dispatch, getState) {
+    const settings = getState().get('settings');
+    return api.emit('player::saveSettings', {
+      userSettings: settings.user,
+      systemSettings: settings.system,
+    }, function(data) {
+      if(!data.result) {
+        console.error(data);
+      }
+    })
+  }
 }

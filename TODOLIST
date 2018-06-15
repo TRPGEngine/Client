@@ -1,6 +1,10 @@
 尚未将react-router整合到redux环境中
 reducer应为纯函数。将一些状态检测放到action中（通过redux-thunk)
 
+服务器上笔记的存储
+设置保存到服务器
+个人设置添加常用投骰列表
+
 electron:
 electron 注册menu 解决mac下复制粘贴问题
 
