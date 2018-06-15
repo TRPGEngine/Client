@@ -7,6 +7,7 @@ const config = require('../../config/project.config.js');
 const configureStore = require('../redux/configureStore');
 const store = configureStore();
 require('../utils/cacheHelper').attachStore(store);
+require('../utils/errorReport').web();
 
 const trpgApi = require('../api/trpg.api.js');
 const api = trpgApi.getInstance();
@@ -29,7 +30,6 @@ const rnStorage = require('../api/rnStorage.api.js');
     store.dispatch(require('../redux/actions/settings').setSystemSettings(systemSettings));
   }
 })();
-
 
 // 检查版本, 网页版跳过检查
 if(config.platform !== 'web') {
