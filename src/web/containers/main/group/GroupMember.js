@@ -4,6 +4,7 @@ const config = require('../../../../../config/project.config.js');
 const moment = require('moment');
 const { showModal, showProfileCard } = require('../../../../redux/actions/ui');
 const GroupMemberManage = require('./modal/GroupMemberManage');
+const { getUserInfoCache } = require('../../../../utils/cacheHelper');
 
 require('./GroupMember.scss')
 
@@ -19,7 +20,7 @@ class GroupMember extends React.Component {
     let hasManagerAuth = groupInfo.get('managers_uuid').indexOf(this.props.userUUID) >= 0;
     if(groupInfo.get('group_members')) {
       return groupInfo.get('group_members').map((uuid) => {
-        let user = this.props.usercache.get(uuid);
+        let user = getUserInfoCache(uuid);
         let last_login = user.get('last_login') ? moment(user.get('last_login')).format('YYYY-M-D HH:mm:ss') : '从未登录';
         let isManager = groupInfo.get('managers_uuid').indexOf(uuid) >= 0;
         let isOwner = groupInfo.get('owner_uuid') === uuid;

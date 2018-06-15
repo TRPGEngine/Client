@@ -31,6 +31,7 @@ function bindEventFunc(store) {
   const { addMsg, updateMsg, switchConverse } = require('../redux/actions/chat');
   const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
   const { changeNetworkStatue, showAlert, switchMenuPannel, updateSocketId } = require('../redux/actions/ui');
+  const { getUserInfoCache } = require('../utils/cacheHelper');
 
   if(!(this instanceof API)) {
     throw new Error('bindEventFunc shound a API object class');
@@ -44,8 +45,7 @@ function bindEventFunc(store) {
     if(window.document && document.hidden) {
       let isNotify = store.getState().getIn(['settings', 'system', 'notification']);
       if(isNotify) {
-        let usercache = store.getState().getIn(['cache', 'user']);
-        let userinfo = usercache.get(data.sender_uuid);
+        let userinfo = getUserInfoCache(data.sender_uuid);
         let username = userinfo.get('nickname') || userinfo.get('username');
         let uuid = userinfo.get('uuid');
         let notification = new Notification(`来自 ${username}:`, {

@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const { tickMember, setMemberToManager } = require('../../../../../redux/actions/group');
 const ModalPanel = require('../../../../components/ModalPanel');
 const config = require('../../../../../../config/project.config');
+const { getUserInfoCache } = require('../../../../../utils/cacheHelper');
 
 require('./GroupMemberManage.scss')
 
@@ -16,7 +17,7 @@ class GroupMemberManage extends React.Component {
   }
 
   render() {
-    let userInfo = this.props.usercache.get(this.props.uuid);
+    let userInfo = getUserInfoCache(this.props.uuid);
     let actions = (
       <div>
         <button onClick={() => this._handleRaiseManager()}>提升为管理</button>

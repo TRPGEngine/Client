@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const config = require('../../../../../config/project.config.js');
 const ReactTooltip = require('react-tooltip');
 const { sendGroupInvite } = require('../../../../redux/actions/group');
+const { getUserInfoCache } = require('../../../../utils/cacheHelper');
 
 require('./GroupInvite.scss')
 
@@ -46,10 +47,7 @@ class GroupInvite extends React.Component {
                 return;
               }
 
-              let user = this.props.usercache.get(uuid);
-              if(!user) {
-                return;
-              }
+              let user = getUserInfoCache(uuid);
 
               return (
                 <div
@@ -71,10 +69,7 @@ class GroupInvite extends React.Component {
         <div className="invite-list">
           {
             this.props.groupMembers.map((uuid) => {
-              let user = this.props.usercache.get(uuid);
-              if(!user) {
-                return;
-              }
+              let user = getUserInfoCache(uuid);
 
               return (
                 <div

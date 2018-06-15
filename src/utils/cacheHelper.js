@@ -1,8 +1,9 @@
 const {
   getUserInfo,
-  getTemplateInfo
+  getTemplateInfo,
 } = require('../redux/actions/cache');
 const isUUID = require('is-uuid');
+const immutable = require('immutable');
 
 let _store = null;
 exports.attachStore = function(store) {
@@ -48,4 +49,21 @@ exports.savecache = function() {
 
 exports.loadcache = function() {
   // TODO
+}
+
+exports.getUserInfoCache = function(uuid) {
+  let store = _store;
+  if(!!store && !!store.dispatch) {
+    const state = store.getState();
+    let info = state.getIn(['cache', 'user', uuid]);
+    if(!info) {
+      console.log('没有检测到该用户缓存记录, 自动获取');
+      store.dispatch(getUserInfo(uuid));
+      return immutable.Map();
+    }else {
+      return info;
+    }
+  }else {
+    throw new Error('checkUser func should bind store');
+  }
 }

@@ -13,6 +13,7 @@ const sb = require('react-native-style-block');
 const { TInput, TIcon } = require('../components/TComponent');
 const MsgItem = require('../components/MsgItem');
 const { sendMsg } = require('../../redux/actions/chat');
+const { getUserInfoCache } = require('../../utils/cacheHelper');
 
 class ChatScreen extends React.Component {
   static navigationOptions = (props) => {
@@ -106,7 +107,7 @@ class ChatScreen extends React.Component {
             keyExtractor={(item, index) => item.uuid + '#' + index}
             renderItem={({item}) => {
               let isSelf = item.sender_uuid === this.props.selfInfo.get('uuid');
-              let senderInfo = isSelf ? this.props.selfInfo : this.props.usercache.get(item.sender_uuid);
+              let senderInfo = isSelf ? this.props.selfInfo : getUserInfoCache(item.sender_uuid);
               return (
                 <MsgItem
                   isSelf={isSelf}

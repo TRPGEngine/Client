@@ -12,6 +12,7 @@ const { getSamlpeDate } = require('../../utils/dateHelper');
 const { TButton } = require('../components/TComponent');
 const { getUserInfo } = require('../../redux/actions/cache');
 const { addFriend } = require('../../redux/actions/user');
+const { getUserInfoCache } = rqeuire('../../utils/cacheHelper');
 
 class ProfileInfoItem extends React.Component {
   render() {
@@ -52,7 +53,7 @@ class ProfileScreen extends React.Component {
 
   render() {
     let userUUID = this.props.navigation.state.params.uuid;
-    let userInfo = this.props.usercache.get(userUUID);
+    let userInfo = getUserInfoCache(userUUID);
     let hasFriend = this.props.friendList.includes(userUUID);
 
     if(!userInfo) {
