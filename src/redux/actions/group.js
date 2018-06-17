@@ -25,6 +25,7 @@ const {
   DISMISS_GROUP_SUCCESS,
   TICK_MEMBER_SUCCESS,
   SET_MEMBER_TO_MANAGER_SUCCESS,
+  UPDATE_GROUP_STATUS,
 } = require('../constants');
 const config = require('../../../config/project.config');
 const trpgApi = require('../../api/trpg.api.js');
@@ -165,7 +166,7 @@ exports.requestJoinGroup = function(group_uuid) {
 exports.agreeGroupRequest = function(chatlogUUID, requestUUID, fromUUID) {
   checkUser(fromUUID);
 
-  return function(dispatch, getState) {  
+  return function(dispatch, getState) {
     return api.emit('group::agreeGroupRequest', {request_uuid: requestUUID}, function(data) {
       if(data.result) {
         dispatch(updateCardChatData(chatlogUUID, {is_processed: true}));
@@ -400,6 +401,34 @@ exports.setMemberToManager = function(groupUUID, memberUUID) {
       }else {
         console.error(data);
         dispatch(showAlert(data.msg));
+      }
+    })
+  }
+}
+
+exports.updateGroupStatus(groupUUID, groupStatus) {
+  return {type: UPDATE_GROUP_STATUS, groupUUID, groupStatus};
+}
+
+exports.getGroupStatus = function(groupUUID) {
+  return function(dispatch, getState) {
+    return api.emit('group::getGroupStatus', {groupUUID}, function(data) {
+      if(data.result) {
+        dispatch(exports.updateGroupStatus(groupUUID, data.status))
+      }else {
+        console.error(data);
+      }
+    })
+  }
+}
+
+exports.setGroupStatus = function(groupUUID, groupStatus) {
+  return function(dispatch, getState) {
+    return api.emit('group::setGroupStatus', {groupUUID, groupStatus}, function(data) {
+      if(data.result) {
+        dispatch(exports.updateGroupStatus(groupUUID, groupStatus))
+      }else {
+        console.error(data);
       }
     })
   }
