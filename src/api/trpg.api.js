@@ -30,6 +30,7 @@ function getApiInstance() {
 function bindEventFunc(store) {
   const { addMsg, updateMsg, switchConverse } = require('../redux/actions/chat');
   const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
+  const { updateGroupStatus } = require('../redux/actions/group');
   const { changeNetworkStatue, showAlert, switchMenuPannel, updateSocketId } = require('../redux/actions/ui');
   const { getUserInfoCache } = require('../utils/cacheHelper');
 
@@ -77,6 +78,9 @@ function bindEventFunc(store) {
   api.on('player::tick', function(data) {
     store.dispatch(showAlert(data.msg));
     store.dispatch({type: RESET});
+  })
+  api.on('group::updateGroupStatus', function(data) {
+    store.dispatch(updateGroupStatus(data.groupUUID, data.groupStatus));
   })
 
   api.on('connect', function(data) {
