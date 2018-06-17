@@ -1,7 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const { showAlert, hideAlert, showModal } = require('../../../../redux/actions/ui');
-const { switchSelectGroup, quitGroup, dismissGroup } = require('../../../../redux/actions/group');
+const { switchSelectGroup, quitGroup, dismissGroup, setGroupStatus } = require('../../../../redux/actions/group');
 const ImageViewer = require('../../../components/ImageViewer');
 const GroupEdit = require('../../../components/modal/GroupEdit');
 // const GroupEdit = require('./modal/GroupEdit');
@@ -42,6 +42,10 @@ class GroupInfo extends React.Component {
     })
   }
 
+  _handleSwitchGroupStatus(status = false) {
+    this.props.setGroupStatus(groupInfo.get('uuid'), status);
+  }
+
   render() {
     let {groupInfo, usercache} = this.props;
     let originAvatar = groupInfo.get('avatar').replace('/thumbnail', '');
@@ -52,6 +56,7 @@ class GroupInfo extends React.Component {
           <div><span>团唯一标识: </span><span className="uuid">{groupInfo.get('uuid')}</span></div>
           <div><span>团名:</span><span>{groupInfo.get('name')}</span></div>
           <div><span>团副名:</span><span>{groupInfo.get('sub_name')}</span></div>
+          <div><span>团状态:</span><span>{groupInfo.get('status') ? '开团中' : '闭团中'}</span></div>
           <div><span>团主:</span><span>{usercache.getIn([groupInfo.get('owner_uuid'), 'nickname'])}</span></div>
           <div><span>团人物卡数:</span><span>{groupInfo.get('group_actors').size} 张</span></div>
           <div><span>团成员数:</span><span>{groupInfo.get('group_members').size} 人</span></div>
@@ -62,6 +67,13 @@ class GroupInfo extends React.Component {
         {
           this.props.userUUID === groupInfo.get('owner_uuid') ? (
             <div className="group-actions">
+              {
+                groupInfo.get('status') ? (
+                  <button onClick={() => this._handleSwitchGroupStatus(false)}>闭团</button>
+                ) : (
+                  <button onClick={() => this._handleSwitchGroupStatus(true)}>开团</button>
+                )
+              }
               <button onClick={() => this._handleEditGroup()}>编辑团</button>
               <button onClick={() => this._handleDismissGroup()}>解散团</button>
             </div>
@@ -92,5 +104,6 @@ module.exports = connect(
     switchSelectGroup: (groupUUID) => dispatch(switchSelectGroup(groupUUID)),
     quitGroup: (groupUUID) => dispatch(quitGroup(groupUUID)),
     dismissGroup: (groupUUID) => dispatch(dismissGroup(groupUUID)),
+    setGroupStatus: (groupUUID, groupStatus) => dispatch(setGroupStatus(groupUUID, groupStatus)),
   })
 )(GroupInfo);

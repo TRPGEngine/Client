@@ -154,7 +154,7 @@ class GroupDetail extends React.Component {
   }
 
   render() {
-    let { selfGroupActors, selectedGroupActorUUID } = this.props;
+    let { selfGroupActors, selectedGroupActorUUID, groupInfo } = this.props;
     let options = [];
     if(selfGroupActors && selfGroupActors.size > 0) {
       options = selfGroupActors.map((item, index) => ({
@@ -173,11 +173,11 @@ class GroupDetail extends React.Component {
         <ReactTooltip effect="solid" />
         <div className="group-header">
           <div className="avatar">
-            <img src={this.props.groupInfo.get('avatar') || config.defaultImg.group} />
+            <img src={groupInfo.get('avatar') || config.defaultImg.group} />
           </div>
           <div className="title">
-            <div className="main-title">{this.props.groupInfo.get('name')}</div>
-            <div className="sub-title">{this.props.groupInfo.get('sub_name')}</div>
+            <div className="main-title">{groupInfo.get('name')}{groupInfo.get('status') && '(开团中...)'}</div>
+            <div className="sub-title">{groupInfo.get('sub_name')}</div>
           </div>
           <Select
             name="actor-select"
