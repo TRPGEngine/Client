@@ -103,11 +103,12 @@ exports.createGroup = function(name, subname, desc) {
 
 exports.getGroupInfo = function(uuid) {
   return function(dispatch, getState) {
-    api.emit('group::getInfo', {uuid} ,function(data) {
+    return api.emit('group::getInfo', {uuid} ,function(data) {
       if(data.result) {
         let group = data.group;
         group.avatar = config.file.getAbsolutePath(group.avatar);
         dispatch({type: GET_GROUP_INFO_SUCCESS, payload: group});
+        dispatch(exports.getGroupStatus(uuid));// 获取团信息后再获取团状态作为补充
       }else {
         console.error(data);
       }
@@ -247,12 +248,13 @@ exports.getGroupList = function() {
     return api.emit('group::getGroupList', {}, function(data) {
       if(data.result) {
         let groups = data.groups;
+        dispatch({type: GET_GROUP_LIST_SUCCESS, payload: groups});
         for (let group of groups) {
           group.avatar = config.file.getAbsolutePath(group.avatar);
           initGroupInfo(dispatch, group);
-        }
-        dispatch({type: GET_GROUP_LIST_SUCCESS, payload: groups});
 
+          dispatch(exports.getGroupStatus(group.uuid));
+        }
       }else {
         console.error(data.msg);
       }
@@ -406,7 +408,7 @@ exports.setMemberToManager = function(groupUUID, memberUUID) {
   }
 }
 
-exports.updateGroupStatus(groupUUID, groupStatus) {
+exports.updateGroupStatus = function(groupUUID, groupStatus) {
   return {type: UPDATE_GROUP_STATUS, groupUUID, groupStatus};
 }
 

@@ -43,7 +43,7 @@ class GroupInfo extends React.Component {
   }
 
   _handleSwitchGroupStatus(status = false) {
-    this.props.setGroupStatus(groupInfo.get('uuid'), status);
+    this.props.setGroupStatus(this.props.groupInfo.get('uuid'), status);
   }
 
   render() {

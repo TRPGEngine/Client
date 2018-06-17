@@ -223,9 +223,9 @@ module.exports = function group(state = initialState, action) {
         return list.updateIn([index, 'managers_uuid'], (list) => list.push(action.memberUUID));
       })
     case UPDATE_GROUP_STATUS:
-      return status.update('groups', (list) => {
+      return state.update('groups', (list) => {
         let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
-        return list.updateIn([index, 'status'], action.groupStatus);
+        return list.setIn([index, 'status'], action.groupStatus);
       })
     default:
       return state;
