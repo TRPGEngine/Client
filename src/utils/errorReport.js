@@ -11,11 +11,11 @@ function sendErrorReport(data) {
 }
 
 exports.web = function() {
-  window.onerror = function(message, source, lineno, colno, error) {
-    console.log('error report:');
-    console.log(message, source, lineno, colno, error);
-    console.log('=============');
-  }
+  // window.onerror = function(message, source, lineno, colno, error) {
+  //   console.log('error report:');
+  //   console.log(message, source, lineno, colno, error);
+  //   console.log('=============');
+  // }
 
   console.error = (function(oriLogFunc){
     return function(err) {
