@@ -1,0 +1,27 @@
+@import "../../../utils/color";
+
+.user-settings {
+  p {
+    text-align: left;
+  }
+
+  .user-favorite-list {
+    min-height: 120px;
+    border: 1px solid $color-bon-jour;
+
+    button {
+      display: block;
+      width: 100%;
+      background-color: transparent;
+      border: 1px solid transparent;
+      color: $color-atomic-tangerine;
+      outline: 0;
+      cursor: pointer;
+
+      &:hover {
+        border: 1px solid $color-tan;
+        background-color: rgba($color-silver, 0.1);
+      }
+    }
+  }
+}

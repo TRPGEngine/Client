@@ -7,6 +7,10 @@ const { setSystemSettings } = require('../../../redux/actions/settings');
 require('./SystemSettings.scss');
 
 class SystemSettings extends React.Component {
+  componentWillUnmount() {
+    // TODO: 把设置上传到服务器
+  }
+
   _handleRequestNotificationPermission(isChecked) {
     this.props.dispatch(setSystemSettings({notification: isChecked}));
   }

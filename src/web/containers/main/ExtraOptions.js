@@ -7,11 +7,12 @@ const { setEditedTemplate } = require('../../../redux/actions/actor');
 const { addNote } = require('../../../redux/actions/note');
 const TemplateSelect = require('./actors/TemplateSelect');
 const TemplateEdit = require('./actors/TemplateEdit');
-const IsDeveloping = require('../../components/IsDeveloping');
+// const IsDeveloping = require('../../components/IsDeveloping');
 const GroupCreate = require('../../components/modal/GroupCreate');
 const ChangePassword = require('../../components/ChangePassword');
 const FriendsAdd = require('../../components/modal/FriendsAdd');
 const GroupAdd = require('../../components/modal/GroupAdd');
+const UserSettings = require('../../components/modal/UserSettings');
 const SystemSettings = require('../../components/modal/SystemSettings');
 const ModalPanel = require('../../components/ModalPanel');
 const Webview = require('../../components/Webview');
@@ -70,7 +71,7 @@ class ExtraOptions extends React.Component {
       ))
     }else if(menu === 'userSettings') {
       this.props.dispatch(showModal(
-        <IsDeveloping />
+        <UserSettings />
       ));
     }else if(menu === 'systemSettings') {
       this.props.dispatch(showModal(
