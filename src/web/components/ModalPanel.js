@@ -1,4 +1,5 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 
 require('./ModalPanel.scss');
 
@@ -23,6 +24,12 @@ class ModalPanel extends React.Component {
       </div>
     )
   }
+}
+
+ModalPanel.propTypes = {
+  title: PropTypes.string,
+  children: PropTypes.node,
+  actions: PropTypes.element,
 }
 
 module.exports = ModalPanel;
