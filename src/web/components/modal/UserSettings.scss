@@ -1,4 +1,5 @@
 @import "../../../utils/color";
+@import "../../../utils/mixins";
 
 .user-settings {
   p {
@@ -6,8 +7,37 @@
   }
 
   .user-favorite-list {
-    min-height: 120px;
+    $height: 23px + 27px * 3;
+    min-height: $height;
+    max-height: $height;
     border: 1px solid $color-bon-jour;
+    @include auto-scroll-bar;
+
+    .user-favorite-item {
+      text-align: left;
+      padding: 2px 4px;
+      input {
+        outline: 0;
+        border: 1px solid transparent;
+        background-color: transparent;
+
+        &:focus {
+          background-color: white;
+          border-color: $color-tan;
+        }
+      }
+
+      button {
+        width: auto;
+        display: inline-block;
+        border: 0;
+        float: right;
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
 
     button {
       display: block;
@@ -19,7 +49,7 @@
       cursor: pointer;
 
       &:hover {
-        border: 1px solid $color-tan;
+        border-color: $color-tan;
         background-color: rgba($color-silver, 0.1);
       }
     }

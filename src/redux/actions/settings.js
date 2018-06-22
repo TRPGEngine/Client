@@ -3,6 +3,7 @@ const {
   SET_SYSTEM_SETTINGS,
   UPDATE_NOTIFICATION_PERMISSION,
   ADD_FAVORITE_DICE,
+  REMOVE_FAVORITE_DICE,
   UPDATE_FAVORITE_DICE,
 } = require('../constants');
 const {showAlert} = require('./ui');
@@ -61,6 +62,10 @@ exports.requestNotificationPermission = function requestNotificationPermission()
 
 exports.addFavoriteDice = function addFavoriteDice() {
   return {type: ADD_FAVORITE_DICE};
+}
+
+exports.removeFavoriteDice = function removeFavoriteDice(index) {
+  return {type: REMOVE_FAVORITE_DICE, index};
 }
 
 exports.updateFavoriteDice = function updateFavoriteDice(index, payload) {
