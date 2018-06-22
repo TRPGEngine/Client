@@ -8,6 +8,16 @@ const {
 const {showAlert} = require('./ui');
 const rnStorage = require('../../api/rnStorage.api.js');
 
+exports.saveSettings = function saveSettings() {
+  return function(dispatch, getState) {
+    rnStorage.save('userSettings', getState().getIn(['settings', 'user']));
+    rnStorage.save('systemSettings', getState().getIn(['settings', 'system']));
+
+    // TODO: 存储到服务器
+    console.log('设置保存成功');
+  }
+}
+
 exports.setUserSettings = function setUserSettings(payload) {
   return function(dispatch, getState) {
     rnStorage.save('userSettings', getState().getIn(['settings', 'user']).merge(payload)); // 异步

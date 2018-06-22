@@ -1,7 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const ModalPanel = require('../ModalPanel');
-const { addFavoriteDice, updateFavoriteDice } = require('../../../redux/actions/settings');
+const { addFavoriteDice, updateFavoriteDice, saveSettings } = require('../../../redux/actions/settings');
 
 require('./UserSettings.scss');
 
@@ -11,12 +11,10 @@ class UserSettings extends React.Component {
   }
 
   componentWillUnmount() {
-    // TODO: 把设置上传到服务器
+    this.props.dispatch(saveSettings());
   }
 
   _handleAddFavoriteDice() {
-    // TODO
-    console.log('add dice');
     this.props.dispatch(addFavoriteDice());
   }
 
