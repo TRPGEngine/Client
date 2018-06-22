@@ -19,9 +19,9 @@ module.exports = function settings(state = initialState, action) {
     case RESET:
       return initialState;
     case SET_USER_SETTINGS:
-      return state.set('user', state.get('user').merge(immutable.Map(action.payload)));
+      return state.set('user', state.get('user').merge(immutable.fromJS(action.payload)));
     case SET_SYSTEM_SETTINGS:
-      return state.set('system', state.get('system').merge(immutable.Map(action.payload)));
+      return state.set('system', state.get('system').merge(immutable.fromJS(action.payload)));
     case UPDATE_NOTIFICATION_PERMISSION:
       return state.set('notificationPermission', action.payload);
     case ADD_FAVORITE_DICE:

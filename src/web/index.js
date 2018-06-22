@@ -29,6 +29,12 @@ const rnStorage = require('../api/rnStorage.api.js');
   if(systemSettings) {
     store.dispatch(require('../redux/actions/settings').setSystemSettings(systemSettings));
   }
+
+  // 个人设置
+  let userSettings = await rnStorage.get('userSettings') || config.defaultSettings.user;
+  if(userSettings) {
+    store.dispatch(require('../redux/actions/settings').setUserSettings(userSettings));
+  }
 })();
 
 // 检查版本, 网页版跳过检查
