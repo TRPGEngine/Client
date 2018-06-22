@@ -46,7 +46,9 @@ let out = {
     blog: 'http://moonrailgun.com',
   },
   defaultSettings: {
-    user: {},
+    user: {
+      favoriteDice: [],
+    },
     system: {
       notification: true,
     }

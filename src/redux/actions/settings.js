@@ -2,6 +2,8 @@ const {
   SET_USER_SETTINGS,
   SET_SYSTEM_SETTINGS,
   UPDATE_NOTIFICATION_PERMISSION,
+  ADD_FAVORITE_DICE,
+  UPDATE_FAVORITE_DICE,
 } = require('../constants');
 const {showAlert} = require('./ui');
 const rnStorage = require('../../api/rnStorage.api.js');
@@ -45,4 +47,12 @@ exports.requestNotificationPermission = function requestNotificationPermission()
       }
     })
   }
+}
+
+exports.addFavoriteDice = function addFavoriteDice() {
+  return {type: ADD_FAVORITE_DICE};
+}
+
+exports.updateFavoriteDice = function updateFavoriteDice(index, payload) {
+  return {type: UPDATE_FAVORITE_DICE, index, payload}
 }
