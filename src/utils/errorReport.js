@@ -10,6 +10,9 @@ function sendErrorReport(data) {
     })
 }
 
+exports.sendErrorReport = sendErrorReport;
+
+// 弃用, 改为组件发起
 exports.web = function() {
   // window.onerror = function(message, source, lineno, colno, error) {
   //   console.log('error report:');

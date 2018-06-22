@@ -7,7 +7,6 @@ const config = require('../../config/project.config.js');
 const configureStore = require('../redux/configureStore');
 const store = configureStore();
 require('../utils/cacheHelper').attachStore(store);
-require('../utils/errorReport').web();
 
 const trpgApi = require('../api/trpg.api.js');
 const api = trpgApi.getInstance();

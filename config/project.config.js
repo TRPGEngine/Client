@@ -56,6 +56,9 @@ let out = {
 }
 out.file.url = `${out.file.protocol}://${out.file.host}:${out.file.port}`;
 out.file.getAbsolutePath = function getAbsolutePath (path) {
+  if(!path) {
+    path = ''; // 设置默认值
+  }
   if(path && path[0] === '/') {
     return out.file.url + path;
   }
