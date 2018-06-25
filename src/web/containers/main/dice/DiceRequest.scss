@@ -45,6 +45,19 @@
         width: 240px;
       }
     }
+
+    &.favoriteDice {
+      .dice-favorite-select {
+        width: 200px;
+        margin: 0;
+      }
+
+      input {
+        width: 80px;
+        margin-left: 10px;
+        height: 36px;
+      }
+    }
   }
 
   button {

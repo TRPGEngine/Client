@@ -11,6 +11,7 @@ class QuickDice extends React.Component {
     this.state = {
       diceType: this.props.lastDiceType || 'basicDice',
       diceReason: '',
+      favoriteDiceValue: '',
     }
   }
 
@@ -18,8 +19,10 @@ class QuickDice extends React.Component {
     let diceExp = '';
     if(this.state.diceType === 'basicDice') {
       diceExp = this.refs.diceNum.value + 'd' + this.refs.diceFace.value;
-    }else {
+    }else if(this.state.diceType === 'complexDice') {
       diceExp = this.refs.diceExp.value;
+    }else if(this.state.diceType === 'favoriteDice') {
+      diceExp = this.props.favoriteDiceValue + (this.refs.diceTempAdd.value || 0)
     }
 
     console.log(`因为 ${this.state.diceReason} 请求投出: ${diceExp}`);
@@ -37,7 +40,9 @@ class QuickDice extends React.Component {
     let diceTypeOptions = [
       { value: 'basicDice', label: '基本骰' },
       { value: 'complexDice', label: '复合骰' },
+      { value: 'favoriteDice', label: '常用骰' },
     ]
+    let favoriteDice = this.props.favoriteDice.map(i => ({value:i.get('value'), label: `${i.get('title')}(${i.get('value')})`})).toJS();
 
     return (
       <div className="quick-dice">
@@ -61,15 +66,29 @@ class QuickDice extends React.Component {
           onChange={(item) => this._handleChangeDiceType(item.value)}
         />
         {
-          this.state.diceType === 'complexDice' ? (
-            <div className="dice complexDice">
-              <input key="dicereq-diceExp" type="text" placeholder="请输入骰子表达式" ref="diceExp" defaultValue="1d100" />
-            </div>
-          ) : (
+          this.state.diceType === 'basicDice' ? (
             <div className="dice basicDice">
               <input key="dicereq-diceNum" type="number" placeholder="骰数" defaultValue="1" ref="diceNum" />
               <span>d</span>
               <input key="dicereq-diceFace" type="number" placeholder="骰面" defaultValue="100" ref="diceFace" />
+            </div>
+          ) : this.state.diceType === 'complexDice' ? (
+            <div className="dice complexDice">
+              <input key="dicereq-diceExp" type="text" placeholder="请输入骰子表达式" ref="diceExp" defaultValue="1d100" />
+            </div>
+          ) : (
+            <div className="dice favoriteDice">
+              <Select
+                name="dice-favorite-select"
+                className="dice-favorite-select"
+                value={this.state.favoriteDiceValue}
+                options={favoriteDice}
+                clearable={false}
+                searchable={false}
+                placeholder="请选择常用骰"
+                onChange={(item) => this.setState({favoriteDiceValue: item.value})}
+              />
+            <input key="dicereq-diceTempAdd" type="number" placeholder="临时加值" ref="diceTempAdd" defaultValue="0" />
             </div>
           )
         }
@@ -82,5 +101,6 @@ class QuickDice extends React.Component {
 module.exports = connect(
   state => ({
     lastDiceType: state.getIn(['ui', 'lastDiceType']),
+    favoriteDice: state.getIn(['settings', 'user', 'favoriteDice']),
   })
 )(QuickDice);
