@@ -22,7 +22,7 @@ class DiceRequest extends React.Component {
     }else if(this.state.diceType === 'complexDice') {
       diceExp = this.refs.diceExp.value;
     }else if(this.state.diceType === 'favoriteDice') {
-      diceExp = this.props.favoriteDiceValue + (this.refs.diceTempAdd.value || 0)
+      diceExp = this.state.favoriteDiceValue + '+' + (this.refs.diceTempAdd.value || 0)
     }
 
     console.log(`因为 ${this.state.diceReason} 请求投出: ${diceExp}`);
