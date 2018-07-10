@@ -52,7 +52,7 @@ class ExtraOptions extends React.Component {
       ));
     }else if(menu === 'templateCreate') {
       this.props.dispatch(setEditedTemplate({}));
-      this.props.dispatch(showModal(<TemplateEdit />));
+      this.props.dispatch(showModal(<TemplateEdit isEdit={false} />));
     }else if(menu === 'noteCreate') {
       this.props.dispatch(switchMenuPannel(3));
       this.props.dispatch(addNote());

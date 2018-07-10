@@ -1,6 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux')
-const { showModal } = require('../../../../redux/actions/ui');
+const { showModal, showAlert, hideAlert } = require('../../../../redux/actions/ui');
 const Select = require('react-select');
 const TemplatePropertyCell = require('../../../components/TemplatePropertyCell');
 const at = require('trpg-actor-template');
@@ -20,11 +20,13 @@ class TemplateEdit extends React.Component {
       desc: '',
       inspectCell: undefined,
     }
-    if(this.props.currentEditedTemplate.get('uuid')) {
+    if(this.props.isEdit && this.props.currentEditedTemplate.get('uuid')) {
+      // 编辑模板
       this.state.template = at.parse(this.props.currentEditedTemplate.get('info'));
       this.state.name = this.props.currentEditedTemplate.get('name');
       this.state.desc = this.props.currentEditedTemplate.get('desc');
     }else {
+      // 新建模板
       this.state.template = at.getInitTemplate();
     }
   }
@@ -59,6 +61,18 @@ class TemplateEdit extends React.Component {
     }
     this.state.template.table.splice(index, 1);
     this.setState({template: this.state.template});
+  }
+
+  _handleCreateAdvancedTemplate() {
+    this.props.showAlert({
+      title: '切换到进阶模式',
+      content: '当前编辑的内容不会被保存。是否确定切换到进阶模式?',
+      onConfirm: () => {
+        this.props.hideAlert();
+        const TemplateAdvancedCreate = require('./TemplateAdvancedCreate');
+        this.props.showModal(<TemplateAdvancedCreate />);
+      }
+    });
   }
 
   getInspectPanel() {
@@ -194,6 +208,13 @@ class TemplateEdit extends React.Component {
             >
               <i className="iconfont">&#xe604;</i>添加新属性
             </button>
+            {
+              !this.props.isEdit && (
+                <button onClick={() => this._handleCreateAdvancedTemplate()}>
+                  <i className="iconfont">&#xe9b7;</i>切换到进阶模式
+                </button>
+              )
+            }
           </div>
           <div className="property-list">
             <table cellSpacing="0" cellPadding="0">
@@ -237,6 +258,8 @@ module.exports = connect(
   }),
   dispatch => ({
     showModal: (body) => dispatch(showModal(body)),
+    showAlert: (payload) => dispatch(showAlert(payload)),
+    hideAlert: () => dispatch(hideAlert()),
     createTemplate: (name, desc, avatar, info) => dispatch(createTemplate(name, desc, avatar, info)),
     updateTemplate: (uuid, name, desc, avatar, info) => dispatch(updateTemplate(uuid, name, desc, avatar, info)),
   })

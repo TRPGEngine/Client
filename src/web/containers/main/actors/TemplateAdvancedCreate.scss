@@ -1,0 +1,18 @@
+@import "../../../../utils/mixins";
+@import "../../../../utils/color";
+
+.template-advanced-create {
+  .body {
+    p {
+      text-align: left;
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      @include block-input;
+      width: 100%;
+      min-height: 200px;
+      background-color: white;
+    }
+  }
+}

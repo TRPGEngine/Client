@@ -26,7 +26,7 @@ class TemplateSelect extends React.Component {
 
   _handleCreateTemplate() {
     this.props.setEditedTemplate({});
-    this.props.showModal(<TemplateEdit />);
+    this.props.showModal(<TemplateEdit isEdit={false} />);
   }
 
   _handleCreateActor(template) {
@@ -37,7 +37,7 @@ class TemplateSelect extends React.Component {
 
   _handleEdit(item) {
     this.props.setEditedTemplate(item.toJS());
-    this.props.showModal(<TemplateEdit />);
+    this.props.showModal(<TemplateEdit isEdit={true} />);
   }
 
   getFindResult() {
