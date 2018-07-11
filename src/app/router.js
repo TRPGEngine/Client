@@ -100,6 +100,24 @@ const AppNavigator = createStackNavigator({
     screen: PhotoBrowserScene,
   },
 });
+// // 重写goback(有性能问题)
+// const defaultGetStateForAction = AppNavigator.router.getStateForAction;
+// AppNavigator.router.getStateForAction = (action, state) => {
+//   // goBack返回指定页面
+//   if (state && action.type === 'Navigation/BACK' && action.key) {
+//     const backRoute = state.routes.find((route) => route.routeName === action.key);
+//     if (backRoute) {
+//       const backRouteIndex = state.routes.indexOf(backRoute);
+//       const purposeState = {
+//         ...state,
+//         routes: state.routes.slice(0, backRouteIndex + 1),
+//         index: backRouteIndex,
+//       };
+//       return purposeState;
+//     }
+//   }
+//   return defaultGetStateForAction(action, state)
+// };
 
 // redux state
 // const AppWithNavigationState = ({dispatch, nav}) => (

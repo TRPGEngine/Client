@@ -12,6 +12,7 @@ const { getSamlpeDate } = require('../../utils/dateHelper');
 const { TButton } = require('../components/TComponent');
 const { getUserInfo } = require('../../redux/actions/cache');
 const { addFriend } = require('../../redux/actions/user');
+const { switchToConverseApp } = require('../../redux/actions/nav');
 const { getUserInfoCache } = require('../../utils/cacheHelper');
 
 class ProfileInfoItem extends React.Component {
@@ -51,6 +52,13 @@ class ProfileScreen extends React.Component {
     }
   }
 
+  _handlePressSendMsg() {
+    let type = this.props.navigation.state.params.type;
+    let userUUID = this.props.navigation.state.params.uuid;
+    let userInfo = getUserInfoCache(userUUID);
+    this.props.dispatch(switchToConverseApp(userUUID, type, userInfo.get('nickname') || userInfo.get('username')));
+  }
+
   render() {
     let userUUID = this.props.navigation.state.params.uuid;
     let userInfo = getUserInfoCache(userUUID);
@@ -83,7 +91,7 @@ class ProfileScreen extends React.Component {
         <View style={styles.actions}>
           {
             hasFriend ? (
-              <TButton>
+              <TButton onPress={() => this._handlePressSendMsg()}>
                 发送消息
               </TButton>
             ) : (

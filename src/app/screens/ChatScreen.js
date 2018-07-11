@@ -63,7 +63,7 @@ class ChatScreen extends React.Component {
 
   _scrollToBottom() {
     setTimeout(() => {
-      this.refs.list.scrollToEnd();
+      this.refs.list && this.refs.list.scrollToEnd();
     }, 130);
   }
 

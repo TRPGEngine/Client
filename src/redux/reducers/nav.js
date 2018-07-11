@@ -5,6 +5,7 @@ const {
   LOGOUT,
   SWITCH_NAV,
   REPLACE_NAV,
+  BACK_NAV,
 } = require('../constants');
 
 let initialNavState = AppNavigator.router.getStateForAction(NavigationActions.init());
@@ -37,7 +38,7 @@ module.exports = function nav(state = initialNavState, action) {
       break;
     case SWITCH_NAV:
       nextState = AppNavigator.router.getStateForAction(
-        NavigationActions.navigate({routeName: action.routeName }),
+        NavigationActions.navigate({routeName: action.routeName, params: action.params || {} }),
         state
       );
       break;
@@ -49,6 +50,12 @@ module.exports = function nav(state = initialNavState, action) {
             NavigationActions.navigate({routeName: action.routeName}),
           ]
         }),
+        state
+      );
+      break;
+    case BACK_NAV:
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.back({key: action.key || null}),
         state
       );
       break;

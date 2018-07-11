@@ -1,12 +1,30 @@
 const {
   SWITCH_NAV,
   REPLACE_NAV,
+  BACK_NAV,
 } = require('../constants');
 
-exports.switchNav = function switchNav(routeName) {
-  return {type: SWITCH_NAV, routeName}
+exports.switchNav = function switchNav(routeName, params = {}) {
+  return {type: SWITCH_NAV, routeName, params}
 }
 
-exports.replaceNav = function switchNav(routeName) {
+exports.replaceNav = function replaceNav(routeName) {
   return {type: REPLACE_NAV, routeName}
+}
+
+exports.backNav = function backNav(key = null) {
+  return {type: BACK_NAV, key}
+}
+
+exports.switchToConverseApp = function switchToConverseApp(converseUUID, type = 'user', name) {
+  return function(dispatch, getState) {
+    // 多级返回到首页
+    dispatch(exports.backNav());
+    dispatch(exports.backNav());
+    dispatch(exports.switchNav('Chat', {
+      uuid: converseUUID,
+      type,
+      name
+    }))
+  }
 }
