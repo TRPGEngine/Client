@@ -12,7 +12,7 @@ const { getSamlpeDate } = require('../../utils/dateHelper');
 const { TButton } = require('../components/TComponent');
 const { getUserInfo } = require('../../redux/actions/cache');
 const { addFriend } = require('../../redux/actions/user');
-const { getUserInfoCache } = rqeuire('../../utils/cacheHelper');
+const { getUserInfoCache } = require('../../utils/cacheHelper');
 
 class ProfileInfoItem extends React.Component {
   render() {
@@ -115,7 +115,7 @@ const styles = {
   item: [
     {flexDirection: 'row'},
     sb.padding(10, 4),
-    sb.border('Bottom', 0.5, '#ccc'),
+    sb.border('Bottom', 0.5, '#eee'),
   ],
   actions: [
     sb.padding(10),
