@@ -11,10 +11,15 @@ class TIcon extends React.Component {
   }
 
   render() {
+    let style = this.props.style;
+    if(!(style instanceof Array)) {
+      style = [style]
+    }
+
     return (
       <Text
         {...this.props}
-        style={styles.text}
+        style={[styles.text, ...style]}
       >{this.props.icon}</Text>
     )
   }
@@ -23,7 +28,6 @@ class TIcon extends React.Component {
 const styles = {
   text: {
     fontFamily:'iconfont',
-    fontSize: 26,
   },
 }
 

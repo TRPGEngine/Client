@@ -23,7 +23,7 @@ class ChatScreen extends React.Component {
     return {
       headerRight: (
         <View style={{marginRight: 10}}>
-          <TIcon icon="&#xe607;" onPress={() => params.headerRightFunc && params.headerRightFunc()} />
+          <TIcon icon="&#xe607;" style={{fontSize: 26}} onPress={() => params.headerRightFunc && params.headerRightFunc()} />
         </View>
       )
     }
