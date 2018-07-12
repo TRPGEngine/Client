@@ -82,7 +82,8 @@ exports.login = function(username, password) {
       if(data.result) {
         let {uuid, token, app_token} = data.info;
         if(isApp) {
-          rnStorage.set({uuid, token: app_token});
+          // 如果是app的话，则永久储存
+          rnStorage.save({uuid, token: app_token});
         }else {
           rnStorage.set({uuid, token});
         }
