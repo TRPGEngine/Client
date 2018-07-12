@@ -37,7 +37,6 @@ class ProfileScreen extends React.Component {
       console.log('获取最新用户信息', uuid);
       this.props.dispatch(getUserInfo(uuid));
     }
-
   }
 
   _handlePressAvatar(avatar) {

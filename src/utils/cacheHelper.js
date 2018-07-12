@@ -51,6 +51,7 @@ exports.loadcache = function() {
   // TODO
 }
 
+// 更加优化的用户信息缓存获取
 exports.getUserInfoCache = function(uuid) {
   let store = _store;
   if(!!store && !!store.dispatch) {

@@ -7,8 +7,7 @@ const {
   TouchableOpacity,
 } = require('react-native');
 const sb = require('react-native-style-block');
-const appConfig = require('../config.app');
-const ConvItem = require('../components/ConvItem');
+const ContactsList = require('../components/ContactsList');
 
 class ContactsScreen extends React.Component {
   static navigationOptions = {
@@ -19,59 +18,7 @@ class ContactsScreen extends React.Component {
     ),
   };
 
-  _handleShowProfile(uuid, type, name) {
-    this.props.navigation.navigate('Profile', {
-      uuid,
-      type,
-      name,
-    })
-  }
-
-  getContactsList() {
-    let friends = this.props.friends;
-    let usercache = this.props.usercache;
-
-    if(friends.size > 0) {
-      let defaultAvatar = appConfig.defaultImg.user;
-
-      let arr = this.props.friends
-        .map(uuid => {
-          let name = usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username']);
-          return {
-            icon: usercache.getIn([uuid, 'avatar']) || defaultAvatar,
-            title: name,
-            content: usercache.getIn([uuid, 'sign']),
-            uuid,
-            onPress: () => {
-              this._handleShowProfile(uuid, 'user', name)
-            },
-          }
-        })
-        .toJS();
-
-      let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      let items = ds.cloneWithRows(arr);
-
-      return (
-        <ListView
-          style={styles.contactsList}
-          dataSource={items}
-          renderRow={(rowData) => (
-            <ConvItem
-              {...rowData}
-            />
-          )}
-        />
-      )
-    }else {
-      return (
-        <View><Text>暂无会话信息</Text></View>
-      )
-    }
-  }
-
   render() {
-
     return (
       <View>
         <View style={styles.header}>
@@ -90,7 +37,7 @@ class ContactsScreen extends React.Component {
         </View>
 
         <View>
-          {this.getContactsList()}
+          <ContactsList />
         </View>
       </View>
     )
@@ -123,9 +70,4 @@ const styles = {
   ]
 }
 
-module.exports = connect(
-  state => ({
-    friends: state.getIn(['user', 'friendList']),
-    usercache: state.getIn(['cache', 'user']),
-  })
-)(ContactsScreen);
+module.exports = ContactsScreen;
