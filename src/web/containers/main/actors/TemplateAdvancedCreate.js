@@ -1,5 +1,7 @@
 const React = require('react');
+const { connect } = require('react-redux');
 const ModalPanel = require('../../../components/ModalPanel');
+const { createTemplateAdvanced } = require('../../../../redux/actions/actor');
 
 require('./TemplateAdvancedCreate.scss');
 
@@ -12,8 +14,7 @@ class TemplateAdvancedCreate extends React.Component {
   }
 
   _handleCreateTemplate() {
-    console.log('TODO');
-    console.log(this.state.templateStr);
+    this.props.dispatch(createTemplateAdvanced('', '', '', this.state.templateStr));
   }
 
   getActions() {
@@ -34,4 +35,4 @@ class TemplateAdvancedCreate extends React.Component {
   }
 }
 
-module.exports = TemplateAdvancedCreate;
+module.exports = connect()(TemplateAdvancedCreate);

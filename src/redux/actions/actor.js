@@ -68,6 +68,46 @@ let createTemplate = function createTemplate(name, desc, avatar, info) {
   }
 }
 
+let createTemplateAdvanced = function createTemplateAdvanced(name, desc, avatar, info) {
+  return function(dispatch, getState) {
+    dispatch(showLoading('创建中...'));
+    if(!name) {
+      // 如果没有给模板名则从info里面取模板名
+      try {
+        let _data = JSON.parse(info);
+        name = _data.name;
+      }catch(err) {
+        dispatch(hideLoading());
+        dispatch(showAlert({title: '创建失败', content: '请检查输入模板信息'}));
+        return;
+      }
+    }
+    if(!desc) {
+      // 如果没有给模板描述则从info里面取模板描述
+      try {
+        let _data = JSON.parse(info);
+        desc = _data.desc;
+      }catch(err) {
+        dispatch(hideLoading());
+        dispatch(showAlert({title: '创建失败', content: '请检查输入模板信息'}));
+        return;
+      }
+    }
+
+    return api.emit('actor::createTemplateAdvanced', {name, desc, avatar, info}, function(data) {
+      dispatch(hideLoading());
+      dispatch(hideModal());
+      dispatch(showAlert({title: '成功', content: '模板创建完毕'}));
+      if(data.result) {
+        dispatch({type:CREATE_TEMPLATE_SUCCESS, payload: data.template});
+      }else {
+        console.error(data.msg);
+        dispatch(showAlert(data.msg));
+      }
+    })
+  }
+}
+
 let updateTemplate = function updateTemplate(uuid, name, desc, avatar, info) {
   return function(dispatch, getState) {
     dispatch(showLoading('保存中...'));
@@ -162,6 +202,7 @@ module.exports = {
   getTemplate,
   findTemplate,
   createTemplate,
+  createTemplateAdvanced,
   updateTemplate,
   setEditedTemplate,
   selectTemplate,

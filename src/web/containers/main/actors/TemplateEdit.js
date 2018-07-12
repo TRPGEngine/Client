@@ -1,5 +1,5 @@
 const React = require('react');
-const { connect } = require('react-redux')
+const { connect } = require('react-redux');
 const { showModal, showAlert, hideAlert } = require('../../../../redux/actions/ui');
 const Select = require('react-select');
 const TemplatePropertyCell = require('../../../components/TemplatePropertyCell');
