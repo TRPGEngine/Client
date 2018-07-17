@@ -12,7 +12,7 @@
 
 TPRG前端网页端
 
-## 开发版下载
+<!-- ## 开发版下载
 
 **开发版不一定是一个稳定可用版本。请下载时候注意**
 
@@ -22,7 +22,7 @@ TPRG前端网页端
 - [trpg-game-client-linux-ia32](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/TRPGEngine/Client/tree/gh-pages/app/trpg-game-client-linux-ia32)
 - [trpg-game-client-linux-x64](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/TRPGEngine/Client/tree/gh-pages/app/trpg-game-client-linux-x64)
 - [trpg-game-client-linux-arm64](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/TRPGEngine/Client/tree/gh-pages/app/trpg-game-client-linux-arm64)
-- [trpg-game-client-linux-armv7l](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/TRPGEngine/Client/tree/gh-pages/app/trpg-game-client-linux-armv7l)
+- [trpg-game-client-linux-armv7l](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/TRPGEngine/Client/tree/gh-pages/app/trpg-game-client-linux-armv7l) -->
 
 ## 打包&运行
 
@@ -39,7 +39,7 @@ $ npm run build # 打包js文件
 $ npm run package # 打包当前平台的pc端文件
 ```
 
-**开发服务器访问`http://127.0.0.1:8080/`即可访问客户端**  
+**开发服务器访问`http://127.0.0.1:8080/`即可访问客户端**
 **客户端需要配合服务端才能正常运行, 具体可以查看服务端项目[TRPGEngine/DevTool](https://github.com/TRPGEngine/DevTool)**
 
 ## 关于环境变量
