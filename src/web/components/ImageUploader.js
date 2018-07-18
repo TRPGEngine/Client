@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const PropTypes = require('prop-types');
 const fileUrl = require('../../api/trpg.api.js').fileUrl;
 const { showAlert } = require('../../redux/actions/ui');
+const axios = require('axios');
 
 require('./ImageUploader.scss');
 
@@ -11,6 +12,7 @@ class ImageUploader extends React.Component {
     super(props);
     this.state = {
       isUploading: false,
+      uploadProgress: 0,
     }
   }
 
@@ -42,17 +44,22 @@ class ImageUploader extends React.Component {
     }
     this.setState({isUploading: true});
 
-    fetch(fileUrl+'/avatar', {
-      method: 'POST',
+    axios({
+      url: fileUrl+'/avatar',
+      method: 'post',
       headers,
-      body: formData
-    }).then((response) => {
-      if(response.ok) {
-        return response.json();
-      }else {
-        return response.text();
+      data: formData,
+      onUploadProgress: (progressEvent) => {
+        if(progressEvent.lengthComputable) {
+          console.log(`进度:${progressEvent.loaded}/${progressEvent.total}`);
+          let uploadProgress = (progressEvent.loaded / progressEvent.total * 100).toFixed();
+          this.setState({uploadProgress});
+        }
       }
-    }).then((json) => {
+    }).then(res => {
+      this.setState({uploadProgress: 0});
+      return res.data
+    }).then(json => {
       this.setState({isUploading: false});
       if(typeof json === 'object') {
         console.log('上传成功', json);
@@ -63,7 +70,7 @@ class ImageUploader extends React.Component {
         this.props.dispatch(showAlert('图片上传失败:' + json));
         console.error(json);
       }
-    }).catch((e) => {
+    }).catch(e => {
       this.props.dispatch(showAlert('图片上传失败:' + e));
       console.error(e);
     })
@@ -85,7 +92,9 @@ class ImageUploader extends React.Component {
           accept="image/*"
           onChange={(e) => this._handleUpload()}
         />
-      <div className="mask">{this.state.isUploading ? '图片上传中...' : '点击上传图片'}</div>
+        <div className={'mask' + (this.state.isUploading?' active':'')}>
+          {this.state.isUploading ? (this.state.uploadProgress?`${this.state.uploadProgress}%`:'图片上传中...') : '点击上传图片'}
+        </div>
         {this.props.children}
       </div>
     )

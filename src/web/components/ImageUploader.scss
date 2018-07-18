@@ -16,7 +16,7 @@
     color: white;
     cursor: pointer;
 
-    &:hover {
+    &:hover, &.active {
       opacity: 1;
     }
   }
