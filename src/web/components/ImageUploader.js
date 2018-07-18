@@ -57,10 +57,12 @@ class ImageUploader extends React.Component {
         }
       }
     }).then(res => {
-      this.setState({uploadProgress: 0});
       return res.data
     }).then(json => {
-      this.setState({isUploading: false});
+      this.setState({
+        isUploading: false,
+        uploadProgress: 0
+      });
       if(typeof json === 'object') {
         console.log('上传成功', json);
         if(this.props.onUploadSuccess) {
@@ -71,6 +73,10 @@ class ImageUploader extends React.Component {
         console.error(json);
       }
     }).catch(e => {
+      this.setState({
+        isUploading: false,
+        uploadProgress: 0
+      });
       this.props.dispatch(showAlert('图片上传失败:' + e));
       console.error(e);
     })
