@@ -57,9 +57,9 @@ exports.acceptDiceInvite = function(uuid, isGroupMsg) {
   }
 }
 
-exports.sendQuickDice = function(to_uuid, is_group, dice_request, reason) {
+exports.sendQuickDice = function(to_uuid, is_group, dice_request) {
   return function(dispatch, getState) {
-    return api.emit('dice::sendQuickDice', {to_uuid, is_group, dice_request, reason}, function(data) {
+    return api.emit('dice::sendQuickDice', {to_uuid, is_group, dice_request}, function(data) {
       if(data.result) {
         // console.log('pkg', data);
       } else {

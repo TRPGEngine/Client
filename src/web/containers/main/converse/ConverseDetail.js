@@ -63,9 +63,8 @@ class ConverseDetail extends React.Component {
     let uuid = this.props.converseUUID;
     this.props.dispatch(showModal(
       <QuickDice
-        onSendQuickDice={(diceReason, diceExp) => {
-          console.log('diceReason, diceExp',diceReason, diceExp);
-          this.props.dispatch(sendQuickDice(uuid, false, diceExp, diceReason));
+        onSendQuickDice={(diceExp) => {
+          this.props.dispatch(sendQuickDice(uuid, false, diceExp));
           this.props.dispatch(hideModal());
         }}
       />

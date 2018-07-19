@@ -10,7 +10,6 @@ class QuickDice extends React.Component {
     super(props);
     this.state = {
       diceType: this.props.lastDiceType || 'basicDice',
-      diceReason: '',
       favoriteDiceValue: '',
     }
   }
@@ -25,9 +24,9 @@ class QuickDice extends React.Component {
       diceExp = this.state.favoriteDiceValue + '+' + (this.refs.diceTempAdd.value || 0)
     }
 
-    console.log(`因为 ${this.state.diceReason} 请求投出: ${diceExp}`);
+    console.log(`请求投出: ${diceExp}`);
     if(this.props.onSendQuickDice) {
-      this.props.onSendQuickDice(this.state.diceReason, diceExp);
+      this.props.onSendQuickDice(diceExp);
     }
   }
 
@@ -46,14 +45,6 @@ class QuickDice extends React.Component {
 
     return (
       <div className="quick-dice">
-        <span>因为</span>
-        <input
-          type="text"
-          className="dice-reason"
-          placeholder="投骰理由"
-          value={this.state.diceReason}
-          onChange={(e) => this.setState({diceReason: e.target.value})}
-        />
         <span>发起快速投骰<i className="iconfont">&#xe609;</i></span>
         <Select
           name="dice-select"
