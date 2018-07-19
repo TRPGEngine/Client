@@ -8,14 +8,21 @@ const {
 } = require('../constants');
 const {showAlert} = require('./ui');
 const rnStorage = require('../../api/rnStorage.api.js');
+const trpgApi = require('../../api/trpg.api.js');
+const api = trpgApi.getInstance();
 
 exports.saveSettings = function saveSettings() {
-  return function(dispatch, getState) {
-    rnStorage.save('userSettings', getState().getIn(['settings', 'user']));
-    rnStorage.save('systemSettings', getState().getIn(['settings', 'system']));
+  return async function(dispatch, getState) {
+    let userSettings = await rnStorage.save('userSettings', getState().getIn(['settings', 'user']));
+    let systemSettings = await rnStorage.save('systemSettings', getState().getIn(['settings', 'system']));
 
-    // TODO: 存储到服务器
     console.log('设置保存成功');
+
+    return api.emit('player::saveSettings', {userSettings, systemSettings}, function(data) {
+      if(data.result) {
+        console.log('设置成功保存到远程服务器');
+      }
+    });
   }
 }
 
