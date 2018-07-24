@@ -14,8 +14,8 @@ class ErrorBoundary extends React.Component {
     this.setState({ hasError: true });
     console.warn('捕获错误, 等待发送错误报告\n', error, info);
     sendErrorReport({
-      message: error,
-      stack: info.componentStack
+      message:  String(error),
+      stack: String(info.componentStack)
     })
   }
 
