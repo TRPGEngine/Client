@@ -1,7 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../../../../config/project.config');
-const { showAlert, hideAlert, showModal } = require('../../../../redux/actions/ui');
+const { showAlert, hideAlert, showModal, hideSlidePanel } = require('../../../../redux/actions/ui');
 const { switchSelectGroup, quitGroup, dismissGroup, setGroupStatus } = require('../../../../redux/actions/group');
 const ImageViewer = require('../../../components/ImageViewer');
 const GroupEdit = require('../../../components/modal/GroupEdit');
@@ -26,6 +26,7 @@ class GroupInfo extends React.Component {
         let groupUUID = this.props.groupInfo.get('uuid');
         this.props.switchSelectGroup('');
         this.props.dismissGroup(groupUUID);
+        this.props.hideSlidePanel();
       }
     })
   }
@@ -39,6 +40,7 @@ class GroupInfo extends React.Component {
         let groupUUID = this.props.groupInfo.get('uuid');
         this.props.switchSelectGroup('');
         this.props.quitGroup(groupUUID);
+        this.props.hideSlidePanel();
       }
     })
   }
@@ -49,6 +51,9 @@ class GroupInfo extends React.Component {
 
   render() {
     let {groupInfo, usercache} = this.props;
+    if (!groupInfo) {
+      return null;
+    }
     let avatar = groupInfo.get('avatar') || '';
     let originAvatar = avatar.replace('/thumbnail', '');
     return (
@@ -107,5 +112,6 @@ module.exports = connect(
     quitGroup: (groupUUID) => dispatch(quitGroup(groupUUID)),
     dismissGroup: (groupUUID) => dispatch(dismissGroup(groupUUID)),
     setGroupStatus: (groupUUID, groupStatus) => dispatch(setGroupStatus(groupUUID, groupStatus)),
+    hideSlidePanel: () => dispatch(hideSlidePanel()),
   })
 )(GroupInfo);
