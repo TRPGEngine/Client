@@ -49,11 +49,12 @@ class GroupInfo extends React.Component {
 
   render() {
     let {groupInfo, usercache} = this.props;
-    let originAvatar = groupInfo.get('avatar').replace('/thumbnail', '');
+    let avatar = groupInfo.get('avatar') || '';
+    let originAvatar = avatar.replace('/thumbnail', '');
     return (
       <div className="group-info">
         <div className="group-props">
-          <div><ImageViewer originImageUrl={originAvatar}><img src={groupInfo.get('avatar') || config.defaultImg.group} /></ImageViewer></div>
+          <div><ImageViewer originImageUrl={originAvatar}><img src={avatar || config.defaultImg.group} /></ImageViewer></div>
           <div><span>团唯一标识: </span><span className="uuid">{groupInfo.get('uuid')}</span></div>
           <div><span>团名:</span><span>{groupInfo.get('name')}</span></div>
           <div><span>团副名:</span><span>{groupInfo.get('sub_name')}</span></div>
