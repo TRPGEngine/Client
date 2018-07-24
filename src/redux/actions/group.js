@@ -248,11 +248,12 @@ exports.getGroupList = function() {
     return api.emit('group::getGroupList', {}, function(data) {
       if(data.result) {
         let groups = data.groups;
-        dispatch({type: GET_GROUP_LIST_SUCCESS, payload: groups});
         for (let group of groups) {
           group.avatar = config.file.getAbsolutePath(group.avatar);
+        }
+        dispatch({type: GET_GROUP_LIST_SUCCESS, payload: groups});
+        for (let group of groups) {
           initGroupInfo(dispatch, group);
-
           dispatch(exports.getGroupStatus(group.uuid));
         }
       }else {
