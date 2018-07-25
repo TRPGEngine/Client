@@ -23,7 +23,7 @@ class ActorList extends React.Component {
   _handleRemoveActor(uuid) {
     this.props.selectActor('');
     this.props.showAlert({
-      content: '你确定要删除该人物卡么？删除后无法找回',
+      content: '你确定要删除该人物卡么？删除后会同时删除相关的团人物并无法找回',
       onConfirm: () => this.props.removeActor(uuid)
     })
   }

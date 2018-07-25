@@ -1,7 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const { showModal } = require('../../../../redux/actions/ui');
-const { setEditedTemplate, findTemplate, selectTemplate } = require('../../../../redux/actions/actor');
+const { setEditedTemplate, findTemplate, selectTemplate, removeTemplate } = require('../../../../redux/actions/actor');
 const TemplateEdit = require('./TemplateEdit');
 const ActorEdit = require('./ActorEdit');
 const TemplateItem = require('../../../components/TemplateItem');
@@ -40,6 +40,11 @@ class TemplateSelect extends React.Component {
     this.props.showModal(<TemplateEdit isEdit={true} />);
   }
 
+  _handleDelete(item) {
+    let template_uuid = item.get('uuid');
+    this.props.removeTemplate(template_uuid);
+  }
+
   getFindResult() {
     let findingResult = this.props.findingResult;
     if(findingResult) {
@@ -57,7 +62,6 @@ class TemplateSelect extends React.Component {
               desc={item.get('desc')}
               creator={item.get('creator_name') || '未知'}
               time={item.get('updateAt')}
-              onEdit={() => this._handleEdit(item)}
               onCreate={() => this._handleCreateActor(item)}
             />
           )
@@ -108,6 +112,7 @@ class TemplateSelect extends React.Component {
                       time={item.get('updateAt')}
                       onEdit={() => this._handleEdit(item)}
                       onCreate={() => this._handleCreateActor(item)}
+                      onDelete={() => this._handleDelete(item)}
                     />
                   )
                 })
@@ -131,5 +136,6 @@ module.exports = connect(
     setEditedTemplate: (obj) => dispatch(setEditedTemplate(obj)),
     findTemplate: (name) => dispatch(findTemplate(name)),
     selectTemplate: (template) => dispatch(selectTemplate(template)),
+    removeTemplate: (uuid) => dispatch(removeTemplate(uuid)),
   })
 )(TemplateSelect)

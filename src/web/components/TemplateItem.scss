@@ -29,6 +29,7 @@
       flex: 1;
     }
     .actions {
+      display: flex;
       button {
         @include icon-btn;
       }

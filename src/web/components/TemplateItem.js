@@ -14,9 +14,14 @@ class TemplateItem extends React.Component {
         {
           this.props.canEdit
           ? (
-            <button data-tip="编辑模板" onClick={this.props.onEdit}>
-              <i className="iconfont">&#xe83f;</i>
-            </button>
+            <div>
+              <button data-tip="删除模板" onClick={this.props.onDelete}>
+                <i className="iconfont">&#xe76b;</i>
+              </button>
+              <button data-tip="编辑模板" onClick={this.props.onEdit}>
+                <i className="iconfont">&#xe83f;</i>
+              </button>
+            </div>
           )
           : null
         }

@@ -5,6 +5,7 @@ const {
   FIND_TEMPLATE_SUCCESS,
   CREATE_TEMPLATE_SUCCESS,
   UPDATE_TEMPLATE_SUCCESS,
+  REMOVE_TEMPLATE_SUCCESS,
   SET_EDITED_TEMPLATE,
   SELECT_TEMPLATE,
   CREATE_ACTOR_SUCCESS,
@@ -61,6 +62,15 @@ module.exports = function actor(state = initialState, action) {
       return state
         .set('currentEditedTemplate', immutable.fromJS(action.payload))
         .update('selfTemplate', (list) => updateSelfTemplate(list, action.payload.uuid, action.payload));
+    case REMOVE_TEMPLATE_SUCCESS:
+      return state.update('selfTemplate', (list) => {
+        for (var i = 0; i < list.size; i++) {
+          if(list.getIn([i, 'uuid']) === action.uuid) {
+            return list.delete(i);
+          }
+        }
+        return list;
+      })
     case GET_TEMPLATE_SUCCESS:
       if(action.uuid) {
         return state.update('selfTemplate', (list) => updateSelfTemplate(list, action.uuid, action.payload))

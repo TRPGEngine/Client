@@ -5,6 +5,7 @@ const {
   FIND_TEMPLATE_SUCCESS,
   CREATE_TEMPLATE_SUCCESS,
   UPDATE_TEMPLATE_SUCCESS,
+  REMOVE_TEMPLATE_SUCCESS,
   SET_EDITED_TEMPLATE,
   SELECT_TEMPLATE,
   CREATE_ACTOR_SUCCESS,
@@ -124,6 +125,19 @@ let updateTemplate = function updateTemplate(uuid, name, desc, avatar, info) {
   }
 }
 
+let removeTemplate = function removeTemplate(uuid) {
+  return function(dispatch, getState) {
+    dispatch(showLoading());
+    return api.emit('actor::removeTemplate', {uuid}, function(data) {
+      dispatch(hideLoading());
+      dispatch(showAlert('模板删除成功'));
+      if(data.result) {
+        dispatch({type: REMOVE_TEMPLATE_SUCCESS, uuid})
+      }
+    })
+  }
+}
+
 let setEditedTemplate = function setEditedTemplate(obj) {
   return {type: SET_EDITED_TEMPLATE, payload: obj}
 }
@@ -171,8 +185,7 @@ let removeActor = function removeActor(uuid) {
     return api.emit('actor::removeActor', {uuid}, function(data) {
       dispatch(hideAlert());
       if(data.result) {
-        let payload = data.remove;
-        dispatch({type: REMOVE_ACTOR_SUCCESS, uuid, payload})
+        dispatch({type: REMOVE_ACTOR_SUCCESS, uuid})
       }else {
         console.error(data.msg);
       }
@@ -204,6 +217,7 @@ module.exports = {
   createTemplate,
   createTemplateAdvanced,
   updateTemplate,
+  removeTemplate,
   setEditedTemplate,
   selectTemplate,
   createActor,
