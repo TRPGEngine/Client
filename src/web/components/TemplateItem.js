@@ -36,7 +36,7 @@ class TemplateItem extends React.Component {
         </div>
         <div className="desc">{this.props.desc}</div>
         <div className="footer">
-          <div className="creator" title="moonrailgun">{this.props.creator}</div>
+          <div className="creator" title={this.props.creator}>{this.props.creator}</div>
           <div className="time">{moment(this.props.time).format('YYYY-MM-DD HH:mm:ss')}</div>
         </div>
       </div>
