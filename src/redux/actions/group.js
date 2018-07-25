@@ -356,10 +356,12 @@ exports.updateGroupActorInfo = function(groupUUID, groupActorUUID, groupActorInf
 
 exports.quitGroup = function(groupUUID) {
   return function(dispatch, getState) {
+    dispatch(showLoading());
     return api.emit('group::quitGroup', {groupUUID}, function(data) {
       if(data.result) {
         dispatch({type: QUIT_GROUP_SUCCESS, groupUUID});
         dispatch(showAlert('已退出本群!'));
+        dispatch(hideLoading());
       }else {
         console.error(data);
       }
@@ -369,10 +371,12 @@ exports.quitGroup = function(groupUUID) {
 
 exports.dismissGroup = function(groupUUID) {
   return function(dispatch, getState) {
+    dispatch(showLoading());
     return api.emit('group::dismissGroup', {groupUUID}, function(data) {
       if(data.result) {
         dispatch({type: DISMISS_GROUP_SUCCESS, groupUUID});
         dispatch(showAlert('已解散本群!'));
+        dispatch(hideLoading());
       }else {
         console.error(data);
       }
