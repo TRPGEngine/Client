@@ -1,6 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const { showModal } = require('../../../../redux/actions/ui');
+const { showModal, showAlert } = require('../../../../redux/actions/ui');
 const { setEditedTemplate, findTemplate, selectTemplate, removeTemplate } = require('../../../../redux/actions/actor');
 const TemplateEdit = require('./TemplateEdit');
 const ActorEdit = require('./ActorEdit');
@@ -42,7 +42,10 @@ class TemplateSelect extends React.Component {
 
   _handleDelete(item) {
     let template_uuid = item.get('uuid');
-    this.props.removeTemplate(template_uuid);
+    this.props.showAlert({
+      content: '你确定要删除该模板么？删除后仍会保留相关联的人物卡与团人物',
+      onConfirm: () => this.props.removeTemplate(template_uuid)
+    })
   }
 
   getFindResult() {
@@ -133,6 +136,7 @@ module.exports = connect(
   }),
   dispatch => ({
     showModal: (body) => dispatch(showModal(body)),
+    showAlert: (body) => dispatch(showAlert(body)),
     setEditedTemplate: (obj) => dispatch(setEditedTemplate(obj)),
     findTemplate: (name) => dispatch(findTemplate(name)),
     selectTemplate: (template) => dispatch(selectTemplate(template)),

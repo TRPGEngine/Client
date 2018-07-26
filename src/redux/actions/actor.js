@@ -133,6 +133,9 @@ let removeTemplate = function removeTemplate(uuid) {
       dispatch(showAlert('模板删除成功'));
       if(data.result) {
         dispatch({type: REMOVE_TEMPLATE_SUCCESS, uuid})
+      }else {
+        console.error(data.msg);
+        dispatch(showAlert(data.msg));
       }
     })
   }
