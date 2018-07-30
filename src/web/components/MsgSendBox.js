@@ -3,6 +3,8 @@ const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const ReactTooltip = require('react-tooltip');
 const Emoticon = require('./Emoticon');
+const msgParser = require('../../utils/msgParser');
+const pasteUtils = require('../../utils/pasteUtils');
 const { sendMsg } = require('../../redux/actions/chat');
 const { showModal, hideModal } = require('../../redux/actions/ui');
 const ActorSelect = require('./modal/ActorSelect');
@@ -107,6 +109,22 @@ class MsgSendBox extends React.Component {
   _handleMsgInputKeyUp(e) {
     if(e.keyCode===13 && !e.shiftKey) {
       this._handleSendMsg();
+    }
+  }
+
+  async _handlePaste(e) {
+    if(e.clipboardData && e.clipboardData.items) {
+      let image = pasteUtils.isPasteImage(e.clipboardData.items);
+      if(image) {
+        // 上传图片
+        e.preventDefault();
+        let file = image.getAsFile();
+        let data = await pasteUtils.upload(this.props.userUUID, file);
+        if(data && data.chatimg) {
+          console.log(data);
+          this.setState({inputMsg: this.state.inputMsg + `[img]${data.chatimg.url}[/img]`});
+        }
+      }
     }
   }
 
@@ -230,6 +248,7 @@ class MsgSendBox extends React.Component {
             onChange={(e)=>this.setState({inputMsg:e.target.value})}
             onKeyDown={(e)=> this._handleMsgInputKeyDown(e)}
             onKeyUp={(e)=> this._handleMsgInputKeyUp(e)}
+            onPaste={(e)=> this._handlePaste(e)}
           />
         </div>
         <div className="action-area">
@@ -245,4 +264,8 @@ MsgSendBox.propTypes = {
   isRoom: PropTypes.bool,
 }
 
-module.exports = connect()(MsgSendBox);
+module.exports = connect(
+  state => ({
+    userUUID: state.getIn(['user', 'info', 'uuid'])
+  })
+)(MsgSendBox);
