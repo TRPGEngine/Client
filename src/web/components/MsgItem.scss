@@ -220,6 +220,10 @@
         float: left;
         position: relative;
         overflow: hidden;
+
+        img {
+          max-width: 100%;
+        }
       }
     }
 
