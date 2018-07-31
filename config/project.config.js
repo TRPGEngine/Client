@@ -36,6 +36,7 @@ let out = {
     group: '/src/assets/img/gugugu1.png',
     trpgsystem: '/src/assets/img/system_notice.png',
     actor: '',
+    chatimg_fail: '/src/assets/img/img_fail.png',
   },
   github: {
     projectUrl: 'https://github.com/TRPGEngine/Client',
