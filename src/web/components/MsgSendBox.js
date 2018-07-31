@@ -3,7 +3,6 @@ const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const ReactTooltip = require('react-tooltip');
 const Emoticon = require('./Emoticon');
-const msgParser = require('../../utils/msgParser');
 const pasteUtils = require('../../utils/pasteUtils');
 const { sendMsg } = require('../../redux/actions/chat');
 const { showModal, hideModal } = require('../../redux/actions/ui');
