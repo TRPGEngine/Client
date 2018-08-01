@@ -2,6 +2,7 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
 const ReactTooltip = require('react-tooltip');
+const config = require('../../../config/project.config.js');
 const Emoticon = require('./Emoticon');
 const pasteUtils = require('../../utils/pasteUtils');
 const { sendMsg } = require('../../redux/actions/chat');
@@ -31,6 +32,13 @@ class MsgSendBox extends React.Component {
         onClick: (e) => this._handleShowSendActor(),
       },
     ];
+    if(config.platform === 'electron') {
+      this.clickableBtn.push({
+        label: '截图',
+        icon: '&#xe615;',
+        onClick: (e) => console.log('TODO'),
+      })
+    }
     this.inputType = [
       {
         label: '普通信息',
