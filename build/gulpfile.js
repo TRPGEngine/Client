@@ -8,6 +8,9 @@ gulp.task('assets', function() {
   gulp.src('../src/assets/**/*')
     .pipe(gulp.dest('../dist/assets/'))
 
+  gulp.src('../build/electron/**/*')
+    .pipe(gulp.dest('../dist/electron/'))
+
   gulp.src('../build/entry.js')
     .pipe(gulp.dest('../dist/'))
 })

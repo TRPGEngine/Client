@@ -8,10 +8,12 @@ const ipcMain = electron.ipcMain;
 const path = require('path');
 const url = require('url');
 const config = require('../config/electron.config');
+const ShortcutCapture = require('./electron/screenshot/index.js');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+let shortcutCapture;
 
 if (!!process.env.NODE_ENV){
   // null
@@ -53,6 +55,10 @@ function createWindow () {
       event.newGuest.loadURL(url)
     }
   })
+
+  mainWindow.webContents.on('did-finish-load', () => {
+    shortcutCapture = new ShortcutCapture();
+  });
 }
 
 // This method will be called when Electron has finished

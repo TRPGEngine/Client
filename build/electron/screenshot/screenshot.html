@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <meta name=viewport content="width=device-width,initial-scale=1">
+  <title>截图</title>
+  <link rel="stylesheet" type="text/css" href="./static/css/canvastools.css" />
+  <link href="./static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+  <style>
+    html, body {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    body {
+      -webkit-user-select: none;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .capture{
+      position: absolute;
+    }
+
+    .mask {
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: 0;
+      padding: 0;
+      position: fixed
+    }
+
+    img {
+      background-color: transparent;
+    }
+
+    .mask {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    #canvas {
+      position: fixed;
+      border: 2px dashed #333;
+    }
+
+    .capture-toolbar {
+      position: absolute;
+      left: 50%;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      visibility: hidden;
+    }
+
+    canvas, .capture-toolbar {
+      transform: translateZ(0);
+    }
+
+    .icon {
+      display: none;
+      position: absolute;
+      width: 0px;
+      height: 0px;
+      background: transparent;
+      border: 3px solid red;
+      /* border-radius:3px; */
+      z-index: 99;
+      cursor: nwse-resize;
+    }
+    .icon_two {
+      display: inline-block;
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: transparent;
+      border: 3px solid red;
+      display: none;
+      z-index: 99;
+    }
+    .icon_horizontal_left,.icon_horizontal_right{
+      cursor: ew-resize;
+    }
+
+    .icon_vertical_top,.icon_vertical_bottom {
+      cursor: n-resize;
+    }
+
+
+    .left_top {
+      /* left:10px;
+      top:10px; */
+      border-bottom: 0;
+      border-right: 0;
+      cursor: nwse-resize;
+    }
+
+    .left_bottom {
+      /* left:80px;
+      top:10px; */
+      border-top: 0;
+      border-right: 0;
+      cursor: nesw-resize;
+    }
+
+    .right_top {
+      /* left:10px;
+      top:80px; */
+      border-bottom: 0;
+      border-left: 0;
+      cursor: nesw-resize;
+    }
+
+    .right_bottom {
+      /* left:80px;
+      top:80px; */
+      border-top: 0;
+      border-left: 0;
+      cursor: nwse-resize;
+    }
+  </style>
+</head>
+<body>
+  <!-- <img id="capture" class="capture"> -->
+  <canvas id="imagecanvas" class="capture" ></canvas>
+  <div class="mask" title="按住鼠标左键选择截图区域，ESC退出截屏"></div>
+  <canvas id="canvas"  data-drag='drag'   width="0" height="0"></canvas>
+  <div class="capture-toolbar" id="tools1"></div>
+  <span data-zoom='zoomtop' class="icon icon_vertical_top"></span>
+  <span data-zoom='zoomright' class="icon icon_horizontal_right"></span>
+  <span data-zoom='zoomleft' class="icon icon_horizontal_left"></span>
+  <span data-zoom='zoombottom' class="icon icon_vertical_bottom"></span>
+  <span data-zoom='zoomlefttop' class="icon_two left_top"></span>
+  <span data-zoom='zoomrighttop' class="icon_two right_top"></span>
+  <span data-zoom='zoomleftbottom' class="icon_two left_bottom"></span>
+  <span data-zoom='zoomrightbottom' class="icon_two right_bottom"></span>
+  <script src="./canvastools.js"></script>
+</body>
+</html>

@@ -8,6 +8,7 @@ const pasteUtils = require('../../utils/pasteUtils');
 const { sendMsg } = require('../../redux/actions/chat');
 const { showModal, hideModal } = require('../../redux/actions/ui');
 const ActorSelect = require('./modal/ActorSelect');
+const electronScreenshot = require('../../utils/electronScreenshot');
 
 require('./MsgSendBox.scss');
 
@@ -36,7 +37,7 @@ class MsgSendBox extends React.Component {
       this.clickableBtn.push({
         label: '截图',
         icon: '&#xe615;',
-        onClick: (e) => console.log('TODO'),
+        onClick: (e) => this._handleScreenshot(),
       })
     }
     this.inputType = [
@@ -188,6 +189,12 @@ class MsgSendBox extends React.Component {
         }}
       />
     ))
+  }
+
+  // 创建截图
+  _handleScreenshot() {
+    console.log('创建截图');
+    electronScreenshot();
   }
 
   render() {
