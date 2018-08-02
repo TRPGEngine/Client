@@ -6,6 +6,7 @@ reducer应为纯函数。将一些状态检测放到action中（通过redux-thun
 
 electron:
 electron 注册menu 解决mac下复制粘贴问题
+增加截图功能(electron-screenshot分支)
 
 版本更新
 react升级到最新版
