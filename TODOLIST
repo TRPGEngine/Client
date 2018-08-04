@@ -3,6 +3,7 @@ reducer应为纯函数。将一些状态检测放到action中（通过redux-thun
 
 服务器上笔记的存储
 修改团信息的样式
+需要修复一下人物卡列表无法正常显示上传头像的问题
 
 electron:
 electron 注册menu 解决mac下复制粘贴问题
