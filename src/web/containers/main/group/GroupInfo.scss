@@ -2,24 +2,55 @@
 @import "../../../../utils/mixins";
 
 .group-info {
-  padding: 20px;
-  padding-top: 0;
+  padding: 0 20px 10px 20px;
   display: flex;
   flex-direction: column;
-  height: 100%;
   position: relative;
-  padding-bottom: 20px;
 
-  .group-props {
-    flex: 1;
-    padding-top: 20px;
-    @include auto-scroll-bar;
+  .group-info-cells {
+    border-bottom: 1px solid $color-bon-jour;
+    padding: 10px 4px;
 
-    > div {
-      margin-bottom: 4px;
+    .group-info-cell {
       display: flex;
+      align-items: flex-start;
+      line-height: 1.5em;
+      margin-top: 6px;
 
-      span{
+      &:first-of-type {
+        margin-top: 0;
+      }
+
+      &.group-avatar {
+        align-items: center;
+
+        > div {
+          overflow: hidden;
+
+          > p {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+
+        .image-viewer {
+          margin-right: 10px;
+          overflow: initial;
+          > img {
+            border-radius: 50%;
+            max-height: 60px;
+            max-width: 60px;
+          }
+        }
+
+        .group-subname {
+          font-size: 12px;
+          color: $color-dusty-gray;
+        }
+      }
+
+      > span {
         &:nth-child(1) {
           flex: 1;
         }
@@ -39,33 +70,31 @@
         }
       }
 
-      .image-viewer {
-        margin: auto;
+      > button {
+        width: 100%;
+        background: transparent;
+        border: 0;
+        padding: 4px 6px;
+        text-align: left;
+        font-size: 16px;
+        outline: 0;
+        cursor: pointer;
+        position: relative;
+        border-radius: 3px;
 
-        > img {
-          border-radius: 50%;
-          max-height: 60px;
-          max-width: 60px;
-          margin-bottom: 10px;
+        &:active {
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        &::after {
+          content: '\e60e';
+          font-family: 'iconfont';
+          position: absolute;
+          right: 4px;
+          top: ((30 - 17) / 2) + px;
+          color: $color-silver;
         }
       }
-    }
-  }
-
-  .group-actions {
-    // position: absolute;
-    // bottom: 20px;
-    // left: 20px;
-    // right: 20px;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-
-    button {
-      @include block-btn-dangerous;
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
     }
   }
 }

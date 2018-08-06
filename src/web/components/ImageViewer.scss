@@ -1,5 +1,9 @@
 .image-viewer {
   cursor: pointer;
+
+  img {
+    display: block;
+  }
 }
 
 // react-image-lightbox
