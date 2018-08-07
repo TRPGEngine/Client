@@ -14,6 +14,7 @@ const {
   REMOVE_ACTOR_SUCCESS,
   UPDATE_ACTOR_SUCCESS,
 } = require('../constants');
+const config = require('../../../config/project.config');
 const { showLoading, hideLoading, showAlert, hideAlert, hideModal } = require('./ui');
 
 let setTemplate = function setTemplate(uuid, name, desc, avatar, info) {
@@ -171,7 +172,12 @@ let getActor = function getActor(uuid = '') {
     return api.emit('actor::getActor', {uuid}, function(data) {
       if(data.result) {
         let payload = uuid ? data.actor : data.actors;
-        dispatch({type: GET_ACTOR_SUCCESS, uuid, payload})
+        if(data.actors) {
+          for (let i of payload) {
+            i.avatar = config.file.getAbsolutePath(i.avatar);
+          }
+        }
+        dispatch({type: GET_ACTOR_SUCCESS, uuid, payload});
       }else {
         console.error(data.msg);
       }
@@ -204,7 +210,9 @@ let updateActor = function updateActor(uuid, name, avatar, desc, info) {
       dispatch(hideAlert());
       dispatch(hideModal());
       if(data.result) {
-        dispatch({type: UPDATE_ACTOR_SUCCESS, payload: data.actor});
+        let actor = data.actor;
+        actor.avatar = config.file.getAbsolutePath(actor.avatar);
+        dispatch({type: UPDATE_ACTOR_SUCCESS, payload: actor});
       }else {
         dispatch(showAlert(data.msg));
         console.error(data.msg);
