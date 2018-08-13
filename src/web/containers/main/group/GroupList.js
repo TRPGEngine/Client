@@ -39,11 +39,15 @@ class GroupList extends React.Component {
       .reverse()
       .map((item, index) => {
         let uuid = item.get('uuid');
+        let name = item.get('name');
+        if(item.get('status')) {
+          name += '(开团中...)';
+        }
         return (
           <ConvItem
             key={uuid+'#'+index}
             icon={item.get('avatar') || config.defaultImg.group}
-            title={item.get('name')}
+            title={name}
             content={item.get('lastMsg')}
             time={item.get('lastTime')?dateHelper.getShortDiff(item.get('lastTime')):''}
             uuid={uuid}
