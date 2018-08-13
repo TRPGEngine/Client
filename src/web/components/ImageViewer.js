@@ -13,7 +13,9 @@ class ImageViewer extends React.Component {
   }
 
   _handleClick() {
-    this.setState({isOpen: true});
+    if(this.props.originImageUrl) {
+      this.setState({isOpen: true});
+    }
   }
 
   render() {
