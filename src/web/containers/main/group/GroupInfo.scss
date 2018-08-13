@@ -16,6 +16,7 @@
       align-items: flex-start;
       line-height: 1.5em;
       margin-top: 6px;
+      font-size: 14px;
 
       &:first-of-type {
         margin-top: 0;
@@ -23,6 +24,7 @@
 
       &.group-avatar {
         align-items: center;
+        font-size: 16px;
 
         > div {
           overflow: hidden;
