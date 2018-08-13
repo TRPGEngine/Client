@@ -27,26 +27,33 @@ class GroupList extends React.Component {
   }
 
   getGroupList() {
-    return this.props.groups.map((item, index) => {
-      let uuid = item.get('uuid');
-      let lastTime = this.props.converses.getIn([uuid, 'lastTime']);
-      let lastMsg = this.props.converses.getIn([uuid, 'lastMsg']);
-      let unread = this.props.converses.getIn([uuid, 'unread']);
-      return (
-        <ConvItem
-          key={uuid+'#'+index}
-          icon={item.get('avatar') || config.defaultImg.group}
-          title={item.get('name')}
-          content={lastMsg}
-          time={lastTime?dateHelper.getShortDiff(lastTime):''}
-          uuid={uuid}
-          unread={unread}
-          isSelected={this.props.selectedUUID === uuid}
-          onClick={() => this.props.switchSelectGroup(uuid)}
-          hideCloseBtn={true}
-        />
-      )
-    })
+    return this.props.groups
+      .map((item) => {
+        let uuid = item.get('uuid');
+        return item
+          .set('lastTime', this.props.converses.getIn([uuid, 'lastTime']) || 0)
+          .set('lastMsg', this.props.converses.getIn([uuid, 'lastMsg']))
+          .set('unread', this.props.converses.getIn([uuid, 'unread']))
+      })
+      .sortBy((item) => new Date(item.get('lastTime')))
+      .reverse()
+      .map((item, index) => {
+        let uuid = item.get('uuid');
+        return (
+          <ConvItem
+            key={uuid+'#'+index}
+            icon={item.get('avatar') || config.defaultImg.group}
+            title={item.get('name')}
+            content={item.get('lastMsg')}
+            time={item.get('lastTime')?dateHelper.getShortDiff(item.get('lastTime')):''}
+            uuid={uuid}
+            unread={item.get('unread')}
+            isSelected={this.props.selectedUUID === uuid}
+            onClick={() => this.props.switchSelectGroup(uuid)}
+            hideCloseBtn={true}
+          />
+        )
+      })
   }
 
   render() {
