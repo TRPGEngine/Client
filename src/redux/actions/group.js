@@ -66,7 +66,9 @@ let initGroupInfo = function(dispatch, group) {
     if(data.result) {
       let actors = data.actors;
       for (let ga of actors) {
-        checkTemplate(ga.actor.template_uuid)
+        ga.avatar = config.file.getAbsolutePath(ga.avatar);
+        ga.actor.avatar = config.file.getAbsolutePath(ga.actor.avatar);
+        checkTemplate(ga.actor.template_uuid);
       }
       dispatch({type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors})
     }else {
@@ -283,7 +285,10 @@ exports.addGroupActor = function(groupUUID, actorUUID) {
   return function(dispatch, getState) {
     return api.emit('group::addGroupActor', {groupUUID, actorUUID}, function(data) {
       if(data.result) {
-        dispatch({type: ADD_GROUP_ACTOR_SUCCESS, groupUUID, payload: data.groupActor});
+        let groupActor = data.groupActor;
+        groupActor.avatar = config.file.getAbsolutePath(groupActor.avatar);
+        groupActor.actor.avatar = config.file.getAbsolutePath(groupActor.actor.avatar);
+        dispatch({type: ADD_GROUP_ACTOR_SUCCESS, groupUUID, payload: groupActor});
         dispatch(hideModal());
         dispatch(showAlert('提交成功!'));
       }else {
