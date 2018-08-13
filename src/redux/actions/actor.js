@@ -15,6 +15,7 @@ const {
   UPDATE_ACTOR_SUCCESS,
 } = require('../constants');
 const config = require('../../../config/project.config');
+const { checkTemplate } = require('../../utils/cacheHelper');
 const { showLoading, hideLoading, showAlert, hideAlert, hideModal } = require('./ui');
 
 let setTemplate = function setTemplate(uuid, name, desc, avatar, info) {
@@ -175,7 +176,11 @@ let getActor = function getActor(uuid = '') {
         if(data.actors) {
           for (let i of payload) {
             i.avatar = config.file.getAbsolutePath(i.avatar);
+            checkTemplate(i.template_uuid);
           }
+        } else if(data.actor) {
+          payload.avatar = config.file.getAbsolutePath(payload.avatar);
+          checkTemplate(payload.template_uuid);
         }
         dispatch({type: GET_ACTOR_SUCCESS, uuid, payload});
       }else {
