@@ -1,5 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
+const at = require('trpg-actor-template');
 const TemplateSelect = require('./TemplateSelect');
 const ActorEdit = require('./ActorEdit');
 const apiHelper = require('../../../../utils/apiHelper');
@@ -73,16 +74,20 @@ class ActorList extends React.Component {
       }
     }
 
-    if(actor) {
+    if(actor && actor.get('info')) {
+      let template = this.props.templateCache.get(actor.get('template_uuid'), {});
+      let info = at.parse(template.get('info', '{}'));
+      info.setData(actor.get('info').toJS());
+      let cells = info.getCells();
       return (
         <div>
           <p><span>人物卡:</span><span>{actor.get('name')}</span></p>
-          <p><span>背景:</span><span>{actor.get('desc')}</span></p>
+          <p><span>说明:</span><span>{actor.get('desc')}</span></p>
           {
-            actor.get('info').entrySeq().map((item, index) => {
+            cells.map((item, index) => {
               return (
                 <p key={actor.get('uuid')+index}>
-                  <span>{item[0]}:</span><span>{item[1]}</span>
+                  <span>{item['name']}:</span><span>{item['value']}</span>
                 </p>
               )
             })
@@ -126,6 +131,7 @@ module.exports = connect(
   state => ({
     actors: state.getIn(['actor', 'selfActors']),
     selectedActorUUID: state.getIn(['actor', 'selectedActorUUID']),
+    templateCache: state.getIn(['cache', 'template'])
   }),
   dispatch => ({
     showModal: (body) => dispatch(showModal(body)),
