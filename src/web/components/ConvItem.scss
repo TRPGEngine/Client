@@ -7,6 +7,7 @@
   padding: 8px 0;
   cursor: pointer;
   position: relative;
+  align-items: center;
 
   &.active {
     background-color: $color-white-linen;
