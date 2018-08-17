@@ -33,6 +33,9 @@ let out = {
   },
   defaultImg: {
     user: '/src/assets/img/gugugu1.png',
+    getUser (name) {
+      return `${out.file.url}/file/avatar/svg?name=${name || ''}`
+    },
     group: '/src/assets/img/gugugu1.png',
     trpgsystem: '/src/assets/img/system_notice.png',
     actor: '',

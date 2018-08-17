@@ -127,13 +127,13 @@ class MsgContainer extends React.Component {
           {
             this.props.msgList.map((item, index, arr) => {
               const prevDate = index > 0 ? arr.getIn([index - 1, 'date']) : 0;
-              const defaultAvatar = item.get('sender_uuid') === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.user;
               let data = item.get('data');
               let isMe = userUUID===item.get('sender_uuid');
               let icon = isMe ? this.props.selfInfo.get('avatar') : usercache.getIn([item.get('sender_uuid'), 'avatar'])
               let name = isMe
                 ? this.props.selfInfo.get('nickname') || this.props.selfInfo.get('username')
                 : usercache.getIn([item.get('sender_uuid'), 'nickname']) || usercache.getIn([item.get('sender_uuid'), 'username']);
+              let defaultAvatar = item.get('sender_uuid') === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.getUser(name);
               let date = item.get('date');
 
               // data 预处理

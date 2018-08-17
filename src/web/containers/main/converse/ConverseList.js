@@ -44,7 +44,7 @@ class ConverseList extends React.Component {
         .reverse()
         .map((item, index) => {
           let uuid = item.get('uuid');
-          let defaultIcon = uuid === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.user;
+          let defaultIcon = uuid === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.getUser(item.get('name'));
           let attachIcon = item.get('type') === 'user' ? this.props.usercache.getIn([item.get('members', 0), 'avatar']) : null;
           let userUUID = item.get('members')
             ? item.get('members').find(i => i !== this.props.userinfo.get('uuid'))
@@ -90,11 +90,12 @@ class ConverseList extends React.Component {
         {
           friends.length > 0 ? friends.map((item, index) => {
             let uuid = item;
+            let name = usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username']);
             return (
               <ConvItem
                 key={`friends#${uuid}#${index}`}
-                icon={usercache.getIn([uuid, 'avatar']) || config.defaultImg.user}
-                title={usercache.getIn([uuid, 'nickname']) || usercache.getIn([uuid, 'username'])}
+                icon={usercache.getIn([uuid, 'avatar']) || config.defaultImg.getUser(name)}
+                title={name}
                 content={usercache.getIn([uuid, 'sign'])}
                 time=""
                 uuid=""

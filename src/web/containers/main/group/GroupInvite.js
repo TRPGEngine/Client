@@ -48,16 +48,17 @@ class GroupInvite extends React.Component {
               }
 
               let user = getUserInfoCache(uuid);
+              let name = user.get('nickname') || user.get('username');
 
               return (
                 <div
                   key={'group-invite#friend#'+uuid}
                   className={'item' + (this.state.selectedUUIDs.indexOf(uuid)>=0?' active':'')}
                   onClick={() => this._handleSelect(uuid)}
-                  data-tip={user.get('nickname') || user.get('username')}
+                  data-tip={name}
                 >
                   <div className="avatar">
-                    <img src={user.get('avatar') || config.defaultImg.user} />
+                    <img src={user.get('avatar') || config.defaultImg.getUser(name)} />
                   </div>
                   <div className="mask"></div>
                 </div>
@@ -70,16 +71,17 @@ class GroupInvite extends React.Component {
           {
             this.props.groupMembers.map((uuid) => {
               let user = getUserInfoCache(uuid);
+              let name = user.get('nickname') || user.get('username');
 
               return (
                 <div
                   key={'group-invite#groupMembers#'+uuid}
                   className={'item-solid'}
                   onClick={() => console.log(uuid)}
-                  data-tip={user.get('nickname') || user.get('username')}
+                  data-tip={name}
                 >
                   <div className="avatar">
-                    <img src={user.get('avatar') || config.defaultImg.user} />
+                    <img src={user.get('avatar') || config.defaultImg.getUser(name)} />
                   </div>
                   <div className="mask"></div>
                 </div>
