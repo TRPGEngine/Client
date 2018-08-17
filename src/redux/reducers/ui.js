@@ -49,7 +49,9 @@ const initialState = immutable.fromJS({
 module.exports = function ui(state = initialState, action) {
   switch (action.type) {
     case RESET:
-      return state.set('showModal', false);
+      return state
+        .set('showModal', false)
+        .set('showSlidePanel', false);
     case SHOW_ALERT: {
       let showAlertInfo = action.payload || {};
       return state.set('showAlert', true).set('showAlertInfo', immutable.fromJS(showAlertInfo));

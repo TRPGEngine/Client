@@ -47,7 +47,7 @@ let addConverse = function addConverse(payload) {
 // 获取多人会话
 let getConverses = function getConverses(cb) {
   return function(dispatch, getState) {
-    dispatch({type:GET_CONVERSES_REQUEST});
+    dispatch({type: GET_CONVERSES_REQUEST});
     // 获取会话列表
     return api.emit('chat::getConverses', {}, function(data) {
       cb && cb();
@@ -135,7 +135,12 @@ let addUserConverse = function addUserConverse(senders) {
     if(typeof senders === 'string') {
       senders = [senders];
     }
-    dispatch({type: GET_USER_CONVERSES_SUCCESS, payload: senders.map(uuid => ({uuid, type:'user'}))})
+    dispatch({
+      type: GET_USER_CONVERSES_SUCCESS,
+      payload: senders
+        .map(uuid => ({uuid, type:'user'}))
+        .concat([{uuid: 'trpgsystem', type: 'system', name: '系统消息'}])
+    })
 
     // 用户会话缓存
     let userUUID = getState().getIn(['user', 'info', 'uuid']);
@@ -155,7 +160,7 @@ let addUserConverse = function addUserConverse(senders) {
             // icon: info.avatar,
           }})
         }else {
-          console.error('更新用户会话信息时出错:', data);
+          console.error('更新用户会话信息时出错:', data, '| uuid:', uuid);
         }
       })
 
@@ -169,6 +174,16 @@ let addUserConverse = function addUserConverse(senders) {
         }
       })
     }
+
+    // 更新系统消息
+    api.emit('chat::getUserChatLog', {user_uuid: 'trpgsystem'}, function(data) {
+      if(data.result) {
+        let list = data.list;
+        dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: list, convUUID: 'trpgsystem'});
+      }else {
+        console.error('获取聊天记录失败:' + data.msg);
+      }
+    })
   }
 }
 
