@@ -197,6 +197,7 @@ exports.findUser = function(text, type) {
             if(!!uuid) {
               checkUser(uuid);
             }
+            user.avatar = config.file.getAbsolutePath(user.avatar);
           }
         }
         dispatch({type: FIND_USER_SUCCESS, payload: list});
