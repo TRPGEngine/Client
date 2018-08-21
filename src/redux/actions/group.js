@@ -6,6 +6,7 @@ const {
   FIND_GROUP_REQUEST,
   FIND_GROUP_SUCCESS,
   REQUEST_JOIN_GROUP_SUCCESS,
+  ADD_GROUP_SUCCESS,
   AGREE_GROUP_REQUEST_SUCCESS,
   SEND_GROUP_INVITE_SUCCESS,
   AGREE_GROUP_INVITE_SUCCESS,
@@ -163,6 +164,17 @@ exports.requestJoinGroup = function(group_uuid) {
         console.error(data.msg);
       }
     })
+  }
+}
+
+// 加入团
+exports.addGroup = function(group) {
+  return function(dispatch, getState) {
+    if(group) {
+      group.avatar = config.file.getAbsolutePath(group.avatar);
+      dispatch({type: ADD_GROUP_SUCCESS, payload: group});
+      initGroupInfo(dispatch, group);
+    }
   }
 }
 

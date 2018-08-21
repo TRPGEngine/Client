@@ -30,7 +30,7 @@ function getApiInstance() {
 function bindEventFunc(store) {
   const { addMsg, updateMsg, switchConverse } = require('../redux/actions/chat');
   const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
-  const { updateGroupStatus } = require('../redux/actions/group');
+  const { updateGroupStatus, addGroup } = require('../redux/actions/group');
   const { changeNetworkStatue, showAlert, switchMenuPannel, updateSocketId } = require('../redux/actions/ui');
   const { getUserInfoCache } = require('../utils/cacheHelper');
 
@@ -81,6 +81,9 @@ function bindEventFunc(store) {
   })
   api.on('group::updateGroupStatus', function(data) {
     store.dispatch(updateGroupStatus(data.groupUUID, data.groupStatus));
+  })
+  api.on('group::addGroupSuccess', function(data) {
+    store.dispatch(addGroup(data.group));
   })
 
   api.on('connect', function(data) {
