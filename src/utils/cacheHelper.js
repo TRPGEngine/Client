@@ -11,6 +11,11 @@ exports.attachStore = function(store) {
 }
 
 exports.checkUser = function(uuid, type = 'user') {
+  if(uuid.toString().substr(0, 4) === 'trpg') {
+    // 不检测trpg开头的内置系统用户
+    return;
+  }
+
   if(!isUUID.v1(uuid)) {
     console.warn('该UUID不是一个合法的UUID:', uuid);
     return;

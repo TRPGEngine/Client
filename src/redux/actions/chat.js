@@ -44,6 +44,17 @@ let addConverse = function addConverse(payload) {
   return {type: ADD_CONVERSES, payload: payload}
 }
 
+let updateConversesMsglist = function updateConversesMsglist(convUUID, list) {
+  return function(dispatch, getState) {
+    for(let item of list) {
+      if(item.sender_uuid) {
+        checkUser(item.sender_uuid);
+      }
+    }
+    dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, convUUID, payload: list});
+  }
+}
+
 // 获取多人会话
 let getConverses = function getConverses(cb) {
   return function(dispatch, getState) {
@@ -67,7 +78,7 @@ let getConverses = function getConverses(cb) {
           // TODO
           api.emit('chat::getConverseChatLog', {converse_uuid: convUUID}, function(data) {
             if(data.result) {
-              dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: data.list, convUUID});
+              dispatch(updateConversesMsglist(convUUID, data.list));
             }else {
               console.error('获取聊天记录失败:', data.msg);
             }
@@ -107,7 +118,7 @@ let createConverse = function createConverse(uuid, type, isSwitchToConv = true) 
         api.emit('chat::getConverseChatLog', {converse_uuid: convUUID}, function(data) {
           if(data.result) {
             let list = data.list;
-            dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: list, convUUID});
+            dispatch(updateConversesMsglist(convUUID, list));
           }else {
             console.error('获取聊天记录失败:' + data.msg);
           }
@@ -168,7 +179,7 @@ let addUserConverse = function addUserConverse(senders) {
       api.emit('chat::getUserChatLog', {user_uuid: uuid}, function(data) {
         if(data.result) {
           let list = data.list;
-          dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: list, convUUID: uuid});
+          dispatch(updateConversesMsglist(uuid, list))
         }else {
           console.error('获取聊天记录失败:' + data.msg);
         }
@@ -179,7 +190,7 @@ let addUserConverse = function addUserConverse(senders) {
     api.emit('chat::getUserChatLog', {user_uuid: 'trpgsystem'}, function(data) {
       if(data.result) {
         let list = data.list;
-        dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: list, convUUID: 'trpgsystem'});
+        dispatch(updateConversesMsglist('trpgsystem', list))
       }else {
         console.error('获取聊天记录失败:' + data.msg);
       }
@@ -229,6 +240,8 @@ let addMsg = function addMsg(converseUUID, payload) {
         dispatch(createConverse(payload.sender_uuid, 'user', false))
       }
     }
+
+    checkUser(payload.sender_uuid); // 检查用户信息，保证每一条信息都能有信息来源
 
     let unread = true;
     if(converseUUID === getState().getIn(['chat', 'selectedConversesUUID']) || converseUUID === getState().getIn(['group', 'selectedGroupUUID'])) {
@@ -287,7 +300,7 @@ let getMoreChatLog = function getMoreChatLog(converseUUID, offsetDate, isUserCha
     if(isUserChat) {
       api.emit('chat::getUserChatLog', {user_uuid: converseUUID, offsetDate}, function(data) {
         if(data.result === true) {
-          dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: data.list, convUUID: converseUUID});
+          dispatch(updateConversesMsglist(converseUUID, data.list))
         }else {
           console.log(data);
         }
@@ -295,7 +308,7 @@ let getMoreChatLog = function getMoreChatLog(converseUUID, offsetDate, isUserCha
     }else {
       api.emit('chat::getConverseChatLog', {converse_uuid: converseUUID, offsetDate}, function(data) {
         if(data.result === true) {
-          dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: data.list, convUUID: converseUUID});
+          dispatch(updateConversesMsglist(converseUUID, data.list))
         }else {
           console.log(data);
         }
@@ -318,6 +331,7 @@ let updateCardChatData = function(chatUUID, newData) {
 
 exports.switchToConverse = switchToConverse;
 exports.addConverse = addConverse;
+exports.updateConversesMsglist = updateConversesMsglist;
 exports.switchConverse = switchConverse;
 exports.getConverses = getConverses;
 exports.createConverse = createConverse;
