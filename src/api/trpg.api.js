@@ -46,9 +46,12 @@ function bindEventFunc(store) {
     if(window.document && document.hidden) {
       let isNotify = store.getState().getIn(['settings', 'system', 'notification']);
       if(isNotify) {
+        let uuid = data.sender_uuid;
         let userinfo = getUserInfoCache(data.sender_uuid);
         let username = userinfo.get('nickname') || userinfo.get('username');
-        let uuid = userinfo.get('uuid');
+        if (uuid && uuid.substr(0, 4) === 'trpg') {
+          username = '系统消息';
+        }
         let notification = new Notification(`来自 ${username}:`, {
           body: data.message,
           icon: userinfo.get('avatar') || config.defaultImg.trpgsystem,
