@@ -3,15 +3,14 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
 const React = require('react');
 const {
   StyleSheet
 } = require('react-native');
-const { AppWithNavigationState } = require('./router');
-const { Provider } = require('react-redux');
 const configureStore = require('../redux/configureStore');
 const store = configureStore();
+const { AppWithNavigationState } = require('./router');
+const { Provider } = require('react-redux');
 require('../utils/cacheHelper').attachStore(store);
 
 const trpgApi = require('../api/trpg.api.js');

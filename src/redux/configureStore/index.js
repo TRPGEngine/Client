@@ -1,6 +1,5 @@
 import thunk from 'redux-thunk';
 const {createStore, applyMiddleware} = require('redux');
-const reducer = require('../reducers');
 const { createLogger } = require('redux-logger');
 const config = require('../../../config/project.config');
 
@@ -20,7 +19,8 @@ if(config.environment !== 'production') {
   middlewares.push(logger);
 }
 if(config.platform === 'app') {
-  middlewares.push(require('react-navigation-redux-helpers').createReactNavigationReduxMiddleware('root', state => state.nav));
+  const routerMiddleware = require('../../app/router').middleware;
+  middlewares.push(routerMiddleware);
 }
 const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
 
@@ -29,7 +29,8 @@ function configureStore(initialState) {
     ? require('redux-devtools-extension').composeWithDevTools({actionCreators: require('../actions')})(
       applyMiddleware(thunk)
     ) : undefined;
-  const store = createStoreWithMiddleware(reducer, initialState, devTool);
+  const reducers = require('../reducers');
+  const store = createStoreWithMiddleware(reducers, initialState, devTool);
 
   return store;
 }

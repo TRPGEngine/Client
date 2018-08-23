@@ -7,6 +7,7 @@ const {
   UPDATE_FAVORITE_DICE,
 } = require('../constants');
 const {showAlert} = require('./ui');
+const config = require('../../../config/project.config.js');
 const rnStorage = require('../../api/rnStorage.api.js');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
@@ -35,7 +36,7 @@ exports.setUserSettings = function setUserSettings(payload) {
 
 exports.setSystemSettings = function setSystemSettings(payload) {
   return function(dispatch, getState) {
-    if(payload.notification !== undefined && payload.notification === true) {
+    if(config.platform !=='app' && payload.notification !== undefined && payload.notification === true) {
       if(Notification.permission === 'denied') {
         dispatch(showAlert('桌面通知权限已被禁止, 请手动修改后刷新应用'))
         payload.notification = false;

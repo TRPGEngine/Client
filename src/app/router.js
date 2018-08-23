@@ -14,8 +14,8 @@ import {
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import {
-  createNavigationPropConstructor,
-  initializeListeners
+  createReactNavigationReduxMiddleware,
+  reduxifyNavigator,
 } from 'react-navigation-redux-helpers';
 const { connect } = require('react-redux');
 const { createStackNavigator, createBottomTabNavigator } = require('react-navigation');
@@ -100,88 +100,89 @@ const AppNavigator = createStackNavigator({
     screen: PhotoBrowserScene,
   },
 });
-// // 重写goback(有性能问题)
-// const defaultGetStateForAction = AppNavigator.router.getStateForAction;
-// AppNavigator.router.getStateForAction = (action, state) => {
-//   // goBack返回指定页面
-//   if (state && action.type === 'Navigation/BACK' && action.key) {
-//     const backRoute = state.routes.find((route) => route.routeName === action.key);
-//     if (backRoute) {
-//       const backRouteIndex = state.routes.indexOf(backRoute);
-//       const purposeState = {
-//         ...state,
-//         routes: state.routes.slice(0, backRouteIndex + 1),
-//         index: backRouteIndex,
-//       };
-//       return purposeState;
+
+// class HomeScreen1 extends React.Component {
+//   render() {
+//     return (
+//       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//         <Text>Home Screen</Text>
+//       </View>
+//     );
+//   }
+// }
+
+// const AppNavigator = createStackNavigator({
+//   Home: {
+//     screen: HomeScreen1
+//   },
+// });
+
+// class App extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.navigationPropConstructor = createNavigationPropConstructor("root");
+//   }
+
+//   componentDidMount() {
+//     if(Platform.OS === 'android') {
+//       BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
 //     }
 //   }
-//   return defaultGetStateForAction(action, state)
+
+//   componentWillUnmount() {
+//     if(Platform.OS === 'android') {
+//       BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+//     }
+//   }
+
+//   onBackPress = () => {
+//     const { dispatch, nav } = this.props;
+//     if (nav.index !== 0) {
+//       dispatch(NavigationActions.back());
+//       return true;
+//     } else {
+//       // 到达主页
+//       if(this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+//         // 最近两秒内按过back 可以退出应用
+//         return false;
+//       }
+
+//       this.lastBackPressed = Date.now();
+//       ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
+//       return true;
+//     }
+//   }
+
+//   render() {
+//     const {dispatch, nav} = this.props;
+//     const navigation = this.navigationPropConstructor(dispatch, nav);
+//     return (
+//       <AppNavigator navigation={navigation} />
+//     )
+//   }
+// }
+
+// App.propTypes = {
+//   dispatch: PropTypes.func.isRequired,
+//   nav: PropTypes.object.isRequired,
 // };
 
-// redux state
-// const AppWithNavigationState = ({dispatch, nav}) => (
-//   <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
-// )
-class AppWithNavigationState extends React.Component {
-  constructor(props) {
-    super(props);
-    this.navigationPropConstructor = createNavigationPropConstructor("root");
-  }
+const middleware = createReactNavigationReduxMiddleware(
+  "root",
+  state => state.get('nav'),
+);
 
-  componentDidMount() {
-    initializeListeners("root", this.props.nav);
-    if(Platform.OS === 'android') {
-      BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
-    }
-  }
-
-  componentWillUnmount() {
-    if(Platform.OS === 'android') {
-      BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
-    }
-  }
-
-  onBackPress = () => {
-    const { dispatch, nav } = this.props;
-    if (nav.index !== 0) {
-      dispatch(NavigationActions.back());
-      return true;
-    } else {
-      // 到达主页
-      if(this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
-        // 最近两秒内按过back 可以退出应用
-        return false;
-      }
-
-      this.lastBackPressed = Date.now();
-      ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
-      return true;
-    }
-  }
-
-  render() {
-    const {dispatch, nav} = this.props;
-    const navigation = this.navigationPropConstructor(dispatch, nav);
-    return (
-      <AppNavigator navigation={navigation} />
-    )
-  }
-}
-
-AppWithNavigationState.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  nav: PropTypes.object.isRequired,
-};
+const App = reduxifyNavigator(AppNavigator, "root")
 
 const mapStateToProps = state => {
   return {
-    nav: state.get('nav'),
+    state: state.get('nav')
   }
 };
 
 module.exports = {
+  middleware,
   MainNavigator,
   AppNavigator,
-  AppWithNavigationState: connect(mapStateToProps)(AppWithNavigationState),
+  AppWithNavigationState: connect(mapStateToProps)(App),
 }
