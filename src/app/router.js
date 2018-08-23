@@ -101,22 +101,6 @@ const AppNavigator = createStackNavigator({
   },
 });
 
-// class HomeScreen1 extends React.Component {
-//   render() {
-//     return (
-//       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//         <Text>Home Screen</Text>
-//       </View>
-//     );
-//   }
-// }
-
-// const AppNavigator = createStackNavigator({
-//   Home: {
-//     screen: HomeScreen1
-//   },
-// });
-
 // class App extends React.Component {
 //   constructor(props) {
 //     super(props);
