@@ -101,62 +101,48 @@ const AppNavigator = createStackNavigator({
   },
 });
 
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.navigationPropConstructor = createNavigationPropConstructor("root");
-//   }
-
-//   componentDidMount() {
-//     if(Platform.OS === 'android') {
-//       BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
-//     }
-//   }
-
-//   componentWillUnmount() {
-//     if(Platform.OS === 'android') {
-//       BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
-//     }
-//   }
-
-//   onBackPress = () => {
-//     const { dispatch, nav } = this.props;
-//     if (nav.index !== 0) {
-//       dispatch(NavigationActions.back());
-//       return true;
-//     } else {
-//       // 到达主页
-//       if(this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
-//         // 最近两秒内按过back 可以退出应用
-//         return false;
-//       }
-
-//       this.lastBackPressed = Date.now();
-//       ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
-//       return true;
-//     }
-//   }
-
-//   render() {
-//     const {dispatch, nav} = this.props;
-//     const navigation = this.navigationPropConstructor(dispatch, nav);
-//     return (
-//       <AppNavigator navigation={navigation} />
-//     )
-//   }
-// }
-
-// App.propTypes = {
-//   dispatch: PropTypes.func.isRequired,
-//   nav: PropTypes.object.isRequired,
-// };
-
 const middleware = createReactNavigationReduxMiddleware(
   "root",
   state => state.get('nav'),
 );
 
 const App = reduxifyNavigator(AppNavigator, "root")
+
+class ReduxNavigation extends React.Component {
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  onBackPress = () => {
+    const { dispatch, state } = this.props;
+
+    if (state.index !== 0) {
+      dispatch(NavigationActions.back());
+      return true;
+    } else {
+      // 到达主页
+      if(this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+        // 最近两秒内按过back 可以退出应用
+        return false;
+      }
+
+      this.lastBackPressed = Date.now();
+      ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
+      return true;
+    }
+  };
+
+  render() {
+    const { dispatch, state } = this.props;
+    return (
+      <App dispatch={dispatch} state={state} />
+    );
+  }
+}
 
 const mapStateToProps = state => {
   return {
@@ -168,5 +154,5 @@ module.exports = {
   middleware,
   MainNavigator,
   AppNavigator,
-  AppWithNavigationState: connect(mapStateToProps)(App),
+  AppWithNavigationState: connect(mapStateToProps)(ReduxNavigation),
 }
