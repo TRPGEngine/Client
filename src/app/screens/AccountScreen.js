@@ -4,6 +4,7 @@ const {
   View,
   Text,
   Image,
+  TouchableOpacity,
 } = require('react-native');
 const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
@@ -30,13 +31,14 @@ class AccountScreen extends React.Component {
     let avatar = userInfo.get('avatar') ? {uri: userInfo.get('avatar')} : appConfig.defaultImg.user;
     return (
       <View>
-        <View style={styles.userInfo}>
+        <TouchableOpacity style={styles.userInfo}>
           <Image source={avatar} style={styles.avatar} />
-          <View>
+          <View style={{flex: 1}}>
             <Text style={styles.username}>{userInfo.get('nickname') || userInfo.get('username')}</Text>
             <Text style={styles.userdesc}>{userInfo.get('sign')}</Text>
           </View>
-        </View>
+          <Text style={styles.arrow}>&#xe60e;</Text>
+        </TouchableOpacity>
 
         <ListCell
           title="设置"
@@ -81,6 +83,11 @@ const styles = {
   ],
   userdesc: [
     sb.color('#999'),
+  ],
+  arrow: [
+    {fontFamily: 'iconfont', marginRight: 6},
+    sb.font(18),
+    sb.color('#ccc'),
   ],
 }
 
