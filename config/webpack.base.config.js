@@ -78,6 +78,7 @@ module.exports = {
     electron: 'require(\'electron\')',
     'react-native': 'require(\'react-native\')',
     './nav': 'require(\'./nav\')',
+    '../../app/router': 'require(\'../../app/router\')', // for redux.configureStore
     'react-navigation-redux-helpers': 'require(\'react-navigation-redux-helpers\')',
   },
 
