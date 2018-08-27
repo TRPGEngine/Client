@@ -36,7 +36,7 @@ class ContactsScreen extends React.Component {
           </TouchableOpacity>
         </View>
 
-        <View style={{width: '100%', flex: 1}}>
+        <View style={styles.list}>
           <ContactsList />
         </View>
       </View>
@@ -47,9 +47,7 @@ class ContactsScreen extends React.Component {
 
 const styles = {
   container: [
-    sb.layout(),
     sb.flex(),
-    sb.direction('column')
   ],
   header: [
     sb.direction(),
@@ -69,7 +67,10 @@ const styles = {
     {color: 'white', fontFamily: 'iconfont', fontSize: 20, textAlign: 'center', lineHeight: 40},
     sb.size(40, 40),
     sb.radius(20),
-  ]
+  ],
+  list: [
+    sb.flex()
+  ],
 }
 
 module.exports = ContactsScreen;
