@@ -9,7 +9,7 @@ const {
 const sb = require('react-native-style-block');
 const appConfig = require('../config.app');
 const { getSamlpeDate } = require('../../utils/dateHelper');
-const { TButton } = require('../components/TComponent');
+const { TButton, TAvatar } = require('../components/TComponent');
 const { getUserInfo } = require('../../redux/actions/cache');
 const { addFriend } = require('../../redux/actions/user');
 const { switchToConverseApp } = require('../../redux/actions/nav');
@@ -40,11 +40,10 @@ class ProfileScreen extends React.Component {
   }
 
   _handlePressAvatar(avatar) {
-    console.log(avatar);
-    if(avatar.uri) {
+    if(avatar) {
       let media = [
         {
-          photo: avatar.uri.replace('/thumbnail', '')
+          photo: avatar.replace('/thumbnail', '')
         },
       ]
       this.props.navigation.navigate('PhotoBrowser', {media, index:0});
@@ -69,15 +68,16 @@ class ProfileScreen extends React.Component {
       )
     }
 
-    let avatar = userInfo.get('avatar') ? {uri: userInfo.get('avatar')} : appConfig.defaultImg.user;
+    let avatar = userInfo.get('avatar') ? userInfo.get('avatar') : appConfig.defaultImg.user;
+    let name = userInfo.get('nickname') || userInfo.get('username');
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => this._handlePressAvatar(avatar)}>
-            <Image style={styles.avatar} source={avatar} />
+            <TAvatar style={styles.avatar} uri={avatar} name={name} capitalSize={40} />
           </TouchableOpacity>
-          <Text style={{fontSize: 18, marginTop: 4}}>{userInfo.get('nickname') || userInfo.get('username')}</Text>
+          <Text style={{fontSize: 18, marginTop: 4}}>{name}</Text>
           <Text style={{fontSize: 12, color: '#999'}}>{userInfo.get('uuid')}</Text>
         </View>
         <View style={{paddingLeft: 10, backgroundColor: 'white'}}>
