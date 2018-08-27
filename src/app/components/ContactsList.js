@@ -17,8 +17,8 @@ class ContactList extends React.Component {
     super(props);
     this.state = {
       list: [
-        {name: '好友', data: [], isShow: false, list: props.friends},
-        {name: '团', data: [], isShow: false, list: props.groups},
+        {name: '好友', data: props.friends.toJS(), isShow: true, list: props.friends},
+        {name: '团', data: props.groups.toJS(), isShow: true, list: props.groups},
       ]
     }
   }

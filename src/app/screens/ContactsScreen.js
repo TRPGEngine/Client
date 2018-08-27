@@ -20,7 +20,7 @@ class ContactsScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity style={styles.iconBtn} onPress={() => alert('添加好友')}>
             <View style={styles.iconBtnView}>
@@ -36,7 +36,7 @@ class ContactsScreen extends React.Component {
           </TouchableOpacity>
         </View>
 
-        <View>
+        <View style={{width: '100%', flex: 1}}>
           <ContactsList />
         </View>
       </View>
@@ -46,8 +46,10 @@ class ContactsScreen extends React.Component {
 }
 
 const styles = {
-  contactsList: [
-    sb.bgColor(),
+  container: [
+    sb.layout(),
+    sb.flex(),
+    sb.direction('column')
   ],
   header: [
     sb.direction(),
