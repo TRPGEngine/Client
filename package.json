@@ -45,6 +45,7 @@
     "react-fileupload": "^2.4.0",
     "react-image-lightbox": "^5.0.0",
     "react-native": "0.52.0",
+    "react-native-image-picker": "^0.26.10",
     "react-native-photo-browser": "^0.4.0",
     "react-native-root-toast": "^3.0.1",
     "react-native-storage": "^0.2.2",

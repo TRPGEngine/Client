@@ -23,6 +23,7 @@ if(process.env.PLATFORM !== 'app') {
   arrRemove(vendors, 'apsl-react-native-button');
   arrRemove(vendors, 'react-native');
   arrRemove(vendors, 'react-native-photo-browser');
+  arrRemove(vendors, 'react-native-image-picker');
   arrRemove(vendors, 'react-native-root-toast');
   arrRemove(vendors, 'react-native-storage');
   arrRemove(vendors, 'react-native-style-block');
