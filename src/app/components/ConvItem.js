@@ -6,20 +6,21 @@ const {
   Image,
 } = require('react-native');
 const sb = require('react-native-style-block');
+const { TAvatar } = require('./TComponent');
 
 class ConvItem extends React.Component {
   render() {
-    let icon = typeof this.props.icon === 'number' ? this.props.icon : {uri: this.props.icon};
     let style = this.props.style;
     if(!(style instanceof Array)) {
       style = [style]
     }
+
     return (
       <TouchableOpacity
         style={[styles.container, ...style]}
         onPress={() => this.props.onPress && this.props.onPress()}
       >
-        <Image style={styles.avatar} source={icon} />
+        <TAvatar style={styles.avatar} uri={this.props.icon} name={this.props.title} />
         <View style={styles.body}>
           <View style={styles.title}>
             <Text style={styles.name}>{this.props.title}</Text>

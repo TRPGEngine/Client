@@ -6,4 +6,5 @@ module.exports = {
   TAlert: require('./TAlert'),
   TToast: require('./TToast'),
   TIcon: require('./TIcon'),
+  TAvatar: require('./TAvatar'),
 }
