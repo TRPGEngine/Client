@@ -23,12 +23,8 @@ exports.checkUser = function(uuid, type = 'user') {
 
   let store = _store;
   if(!!store && !!store.dispatch) {
-    const state = store.getState();
     if(type === 'user') {
-      let info = state.getIn(['cache', 'user', uuid]);
-      if(!info) {
-        store.dispatch(getUserInfo(uuid));
-      }
+      exports.getUserInfoCache(uuid);
     }
   }else {
     throw new Error('checkUser func should bind store');
@@ -66,7 +62,7 @@ exports.getUserInfoCache = function(uuid) {
     if(!info) {
       if(isGettingUserInfoUUID.indexOf(uuid) === -1) {
         // 没有正在获取
-        console.log('没有检测到该用户缓存记录, 自动获取', uuid);
+        console.log('没有检测到该用户缓存记录, 自动获取', 'uuid:', uuid);
         store.dispatch(getUserInfo(uuid, () => {
           let index = isGettingUserInfoUUID.indexOf(uuid);
           if(index !== -1) {
