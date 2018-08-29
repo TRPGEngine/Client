@@ -7,7 +7,7 @@ const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const config = require('../../../config/project.config');
 
-exports.getUserInfo = function(uuid) {
+exports.getUserInfo = function(uuid, onCompleted) {
   if(!uuid) {
     throw new Error('getUserInfo need uuid');
   }
@@ -20,6 +20,8 @@ exports.getUserInfo = function(uuid) {
       }else {
         console.error(data.msg);
       }
+
+      onCompleted && onCompleted(data);
     })
   }
 }
