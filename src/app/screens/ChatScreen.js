@@ -111,6 +111,7 @@ class ChatScreen extends React.Component {
               return (
                 <MsgItem
                   isSelf={isSelf}
+                  senderUUID={item.sender_uuid}
                   senderInfo={senderInfo}
                   data={item}
                 />

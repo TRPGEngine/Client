@@ -32,8 +32,10 @@ class MsgItem extends React.Component {
       )
     }else {
       let senderInfo = this.props.senderInfo;
+      let senderUUID = this.props.senderUUID;
       let isSelf = this.props.isSelf;
-      let avatar = senderInfo.get('avatar') ? senderInfo.get('avatar') : appConfig.defaultImg.user;
+      let defaultIcon = senderUUID === 'trpgsystem' ? appConfig.defaultImg.trpgsystem : appConfig.defaultImg.user;
+      let avatar = senderInfo.get('avatar') ? senderInfo.get('avatar') : defaultIcon;
       let name = senderInfo.get('nickname') || senderInfo.get('username');
 
       return (
