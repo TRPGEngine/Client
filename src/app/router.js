@@ -29,7 +29,7 @@ const ContactsScreen = require('./screens/ContactsScreen');
 const ChatScreen = require('./screens/ChatScreen');
 const SettingsScreen = require('./screens/SettingsScreen');
 const ProfileScreen = require('./screens/ProfileScreen');
-const PhotoBrowserScene = require('./screens/PhotoBrowserScene');
+const PhotoBrowserScreen = require('./screens/PhotoBrowserScreen');
 
 const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -97,7 +97,7 @@ const AppNavigator = createStackNavigator({
     }),
   },
   PhotoBrowser: {
-    screen: PhotoBrowserScene,
+    screen: PhotoBrowserScreen,
   },
 });
 
