@@ -11,7 +11,7 @@ const sb = require('react-native-style-block');
 const appConfig = require('../config.app');
 const { logout } = require('../../redux/actions/user');
 const ListCell = require('../components/ListCell');
-const { TButton } = require('../components/TComponent');
+const { TButton, TAvatar } = require('../components/TComponent');
 
 class AccountScreen extends React.Component {
   static navigationOptions = {
@@ -22,19 +22,24 @@ class AccountScreen extends React.Component {
     ),
   };
 
+  _handleModifyProfile() {
+    this.props.dispatch(NavigationActions.navigate({routeName: 'ProfileModify'}));
+  }
+
   _handleLogout() {
     this.props.dispatch(logout());
   }
 
   render() {
-    let userInfo = this.props.userInfo;
-    let avatar = userInfo.get('avatar') ? {uri: userInfo.get('avatar')} : appConfig.defaultImg.user;
+    const userInfo = this.props.userInfo;
+    let avatar = userInfo.get('avatar') || appConfig.defaultImg.user;
+    let name = userInfo.get('nickname') || userInfo.get('username');
     return (
       <View>
-        <TouchableOpacity style={styles.userInfo}>
-          <Image source={avatar} style={styles.avatar} />
+        <TouchableOpacity style={styles.userInfo} onPress={() => this._handleModifyProfile()}>
+          <TAvatar uri={avatar} style={styles.avatar} name={name} height={60} width={60} />
           <View style={{flex: 1}}>
-            <Text style={styles.username}>{userInfo.get('nickname') || userInfo.get('username')}</Text>
+            <Text style={styles.username}>{name}</Text>
             <Text style={styles.userdesc}>{userInfo.get('sign')}</Text>
           </View>
           <Text style={styles.arrow}>&#xe60e;</Text>
@@ -74,7 +79,6 @@ const styles = {
     {height: 80},
   ],
   avatar: [
-    sb.size(60, 60),
     sb.radius(30),
     {marginRight: 10},
   ],

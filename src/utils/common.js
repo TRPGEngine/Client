@@ -23,3 +23,5 @@ Array.prototype.remove = function(val) {
 
   return arr;
 };
+
+console.log('common utils loaded!');

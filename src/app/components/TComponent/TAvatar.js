@@ -9,6 +9,15 @@ const config = require('../../../../config/project.config');
 const str2int = require('str2int');
 
 class TAvatar extends React.Component {
+  static defaultProps = {
+    uri: '',
+    name: '',
+    style: [],
+    capitalSize: 20,
+    height: 100,
+    width: 100,
+  }
+
   getColor(name) {
     const color = config.defaultImg.color;
     const id = str2int(name);
@@ -18,11 +27,11 @@ class TAvatar extends React.Component {
   render() {
     let {
       uri,
-      name = '',
+      name,
       style,
-      capitalSize = 20,
-      height = 100,
-      width = 100,
+      capitalSize,
+      height,
+      width,
     } = this.props;
 
     if(!style instanceof Array) {

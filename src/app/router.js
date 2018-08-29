@@ -30,6 +30,7 @@ const ChatScreen = require('./screens/ChatScreen');
 const SettingsScreen = require('./screens/SettingsScreen');
 const ProfileScreen = require('./screens/ProfileScreen');
 const PhotoBrowserScreen = require('./screens/PhotoBrowserScreen');
+const ProfileModifyScreen = require('./screens/ProfileModifyScreen');
 
 const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -98,6 +99,12 @@ const AppNavigator = createStackNavigator({
   },
   PhotoBrowser: {
     screen: PhotoBrowserScreen,
+  },
+  ProfileModify: {
+    screen: ProfileModifyScreen,
+    navigationOptions: {
+      headerTitle: '编辑资料'
+    },
   },
 });
 
