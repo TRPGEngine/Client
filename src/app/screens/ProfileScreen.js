@@ -75,7 +75,7 @@ class ProfileScreen extends React.Component {
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => this._handlePressAvatar(avatar)}>
-            <TAvatar style={styles.avatar} uri={avatar} name={name} capitalSize={40} />
+            <TAvatar style={styles.avatar} uri={avatar} name={name} capitalSize={40} height={100} width={100} />
           </TouchableOpacity>
           <Text style={{fontSize: 18, marginTop: 4}}>{name}</Text>
           <Text style={{fontSize: 12, color: '#999'}}>{userInfo.get('uuid')}</Text>
@@ -116,7 +116,6 @@ const styles = {
     sb.padding(20, 0),
   ],
   avatar: [
-    sb.size(100, 100),
     sb.radius(50),
   ],
   item: [

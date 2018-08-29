@@ -20,7 +20,7 @@ class ConvItem extends React.Component {
         style={[styles.container, ...style]}
         onPress={() => this.props.onPress && this.props.onPress()}
       >
-        <TAvatar style={styles.avatar} uri={this.props.icon} name={this.props.title} />
+        <TAvatar style={styles.avatar} uri={this.props.icon} name={this.props.title} height={40} width={40} />
         <View style={styles.body}>
           <View style={styles.title}>
             <Text style={styles.name}>{this.props.title}</Text>
@@ -42,7 +42,6 @@ const styles = {
     sb.padding(10, 6),
   ],
   avatar: [
-    sb.size(40, 40),
     sb.radius(20),
   ],
   body: [

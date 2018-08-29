@@ -16,13 +16,20 @@ class TAvatar extends React.Component {
   }
 
   render() {
-    let {uri, name = '', style, capitalSize = 20} = this.props;
+    let {
+      uri,
+      name = '',
+      style,
+      capitalSize = 20,
+      height = 100,
+      width = 100,
+    } = this.props;
 
     if(!style instanceof Array) {
       style = [style];
     }
 
-    if(uri && typeof uri !== 'number') {
+    if(uri && typeof uri === 'string') {
       uri = {uri};
     }
 
@@ -34,11 +41,11 @@ class TAvatar extends React.Component {
 
     if(uri) {
       return (
-        <Image style={style} source={uri} />
+        <Image style={[...style, {height, width}]} source={uri} />
       )
     }else {
       return (
-        <View style={[...style, {backgroundColor: color}, sb.center()]}>
+        <View style={[...style, {backgroundColor: color, height, width}, sb.center()]}>
           <Text style={[...styles.capital, {fontSize: capitalSize}]}>{capital}</Text>
         </View>
       )

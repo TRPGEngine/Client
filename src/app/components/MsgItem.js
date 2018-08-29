@@ -40,7 +40,7 @@ class MsgItem extends React.Component {
 
       return (
         <View style={[...styles.itemView, isSelf?{flexDirection: 'row-reverse'}:null]}>
-          <TAvatar style={styles.itemAvatar} uri={avatar} name={name} />
+          <TAvatar style={styles.itemAvatar} uri={avatar} name={name} height={40} width={40} />
           <View style={styles.itemBody}>
             <Text style={[...styles.itemName, isSelf?{textAlign:'right'}:null]}>{name}</Text>
             <Text style={[...styles.itemMsg, isSelf?{alignSelf: 'flex-end'}:null]}>{message}</Text>
@@ -57,7 +57,6 @@ const styles = {
     sb.padding(10, 10),
   ],
   itemAvatar: [
-    sb.size(40, 40),
     sb.radius(20),
   ],
   itemBody: [
