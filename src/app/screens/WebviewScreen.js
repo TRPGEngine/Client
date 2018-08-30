@@ -5,6 +5,7 @@ const {
   Text,
   WebView,
   ActivityIndicator,
+  BackHandler,
 } = require('react-native');
 const sb = require('react-native-style-block');
 
@@ -38,12 +39,33 @@ class WebviewScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.canGoBack = false;
   }
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  onBackPress = () => {
+    if(this.canGoBack) {
+      // 可以回退
+      this.refs.webview.goBack();
+      return true;
+    }else {
+      // 不能回退
+      return false;
+    }
+  };
 
   _handleStateChange(state) {
     let {loading, title, url, canGoForward, canGoBack, target} = state;
 
     this.props.navigation.setParams({ title });
+    this.canGoBack = canGoBack;
   }
 
   render() {
@@ -51,13 +73,13 @@ class WebviewScreen extends React.Component {
 
     return (
       <WebView
+        ref="webview"
         source={{uri: url}}
         startInLoadingState={true}
         renderLoading={() => (<Loading />)}
         renderError={() => (<LoadError url={url} />)}
         mixedContentMode={'compatibility'}
         onNavigationStateChange={(state) => this._handleStateChange(state)}
-        onLoadEnd={(data) => console.log(data)}
       />
     )
   }
