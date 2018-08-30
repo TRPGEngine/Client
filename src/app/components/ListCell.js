@@ -20,7 +20,11 @@ class ListCell extends React.Component {
         <Text style={styles.title}>{this.props.title}</Text>
         {
           this.props.onPress ? (
-            <Text style={[styles.icon, ...styles.arrow]}>&#xe60e;</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.value}>{this.props.value}</Text>
+              <Text style={[styles.icon, ...styles.arrow]}>&#xe60e;</Text>
+            </View>
+
           ) : this.props.onChange ? (
             <Switch value={this.props.value || false} onValueChange={(newValue) => this.props.onChange && this.props.onChange(newValue)} />
           ) : null
@@ -36,9 +40,9 @@ const styles = {
     sb.bgColor(),
     // sb.border('Top', 0.5, '#ccc'),
     sb.border('Bottom', 0.5, '#ccc'),
-    sb.padding(4, 8),
+    sb.padding(0, 4, 0, 6),
     sb.alignCenter(),
-    {height: 44},
+    {height: 48},
   ],
   icon: {
     fontFamily: 'iconfont',
@@ -47,12 +51,17 @@ const styles = {
   },
   title: [
     sb.flex(),
-    sb.font(16),
+    sb.font(18),
   ],
   arrow: [
     sb.font(18),
     sb.color('#ccc'),
-  ]
+  ],
+  value: [
+    sb.font(18),
+    sb.color('#ccc'),
+    sb.margin(0, 4, 0, 0),
+  ],
 }
 
 module.exports = ListCell;

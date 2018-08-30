@@ -8,12 +8,13 @@ const { connect } = require('react-redux');
 const sb = require('react-native-style-block');
 const ImagePicker = require('react-native-image-picker');
 const axios = require('axios');
-const {
-  TAvatar
-} = require('../components/TComponent');
 const fileUrl = require('../../api/trpg.api.js').fileUrl;
 const { toast } = require('../../utils/apputils');
 const { updateInfo } = require('../../redux/actions/user');
+const {
+  TAvatar
+} = require('../components/TComponent');
+const ListCell = require('../components/ListCell');
 
 class ProfileModifyScreen extends React.Component {
   _uploadAvatar(uri, type, name, size, width, height) {
@@ -99,12 +100,16 @@ class ProfileModifyScreen extends React.Component {
           <TouchableOpacity onPress={() => this._handleSelectAvatar()}>
             <TAvatar style={styles.avatar} uri={userInfo.get('avatar', '')} name={name} height={100} width={100} />
           </TouchableOpacity>
-          <Text>{userInfo.get('username')}</Text>
-          <Text>{userInfo.get('uuid')}</Text>
+          <Text style={styles.username}>{userInfo.get('username')}</Text>
+          <Text style={styles.uuid}>{userInfo.get('uuid')}</Text>
         </View>
 
         <View>
-
+          <ListCell
+            title="昵称"
+            value={userInfo.get('nickname')}
+            onPress={() => {}}
+          />
         </View>
       </View>
     );
@@ -123,6 +128,13 @@ const styles = {
   ],
   avatar: [
     sb.radius(50),
+  ],
+  username: [
+    sb.font(18),
+    sb.margin(10, 0, 0, 0),
+  ],
+  uuid: [
+    sb.font(12),
   ],
   // item: [
   //   {flexDirection: 'row'},
