@@ -31,6 +31,7 @@ const SettingsScreen = require('./screens/SettingsScreen');
 const ProfileScreen = require('./screens/ProfileScreen');
 const PhotoBrowserScreen = require('./screens/PhotoBrowserScreen');
 const ProfileModifyScreen = require('./screens/ProfileModifyScreen');
+const WebviewScreen = require('./screens/WebviewScreen');
 
 const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -105,6 +106,9 @@ const AppNavigator = createStackNavigator({
     navigationOptions: {
       headerTitle: '编辑资料'
     },
+  },
+  Webview: {
+    screen: WebviewScreen,
   },
 });
 

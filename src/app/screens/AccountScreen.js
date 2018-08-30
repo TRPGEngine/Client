@@ -8,6 +8,7 @@ const {
 } = require('react-native');
 const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
+const config = require('../../../config/project.config');
 const appConfig = require('../config.app');
 const { logout } = require('../../redux/actions/user');
 const ListCell = require('../components/ListCell');
@@ -45,14 +46,26 @@ class AccountScreen extends React.Component {
           <Text style={styles.arrow}>&#xe60e;</Text>
         </TouchableOpacity>
 
-        <ListCell
-          title="设置"
-          icon="&#xe609;"
-          color="gold"
-          onPress={() => {
-            this.props.dispatch(NavigationActions.navigate({ routeName: 'Settings' }));
-          }}
-        />
+        <View>
+          <ListCell
+            title="发现"
+            icon="&#xe60b;"
+            color="cornflowerblue"
+            onPress={() => {
+              this.props.dispatch(NavigationActions.navigate({ routeName: 'Webview', params: {url: config.url.goddessfantasy} }));
+            }}
+          />
+          <ListCell
+            title="设置"
+            icon="&#xe609;"
+            color="gold"
+            onPress={() => {
+              this.props.dispatch(NavigationActions.navigate({ routeName: 'Settings' }));
+            }}
+          />
+        </View>
+
+
         <TButton
           type="error"
           style={styles.logoutBtn}
