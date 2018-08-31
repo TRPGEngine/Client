@@ -5,6 +5,7 @@ const {
   Text,
   Image,
   TouchableOpacity,
+  Linking,
 } = require('react-native');
 const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
@@ -13,6 +14,8 @@ const appConfig = require('../config.app');
 const { logout } = require('../../redux/actions/user');
 const ListCell = require('../components/ListCell');
 const { TButton, TAvatar } = require('../components/TComponent');
+const checkVersion = require('../../utils/checkVersion');
+const appUtils = require('../../utils/apputils');
 
 class AccountScreen extends React.Component {
   static navigationOptions = {
@@ -46,7 +49,7 @@ class AccountScreen extends React.Component {
           <Text style={styles.arrow}>&#xe60e;</Text>
         </TouchableOpacity>
 
-        <View>
+        <View style={styles.listView}>
           <ListCell
             title="发现"
             icon="&#xe60b;"
@@ -64,7 +67,24 @@ class AccountScreen extends React.Component {
             }}
           />
         </View>
-
+        <View style={styles.listView}>
+          <ListCell
+            title="当前版本"
+            value={config.version}
+            onPress={() => {
+              checkVersion(function(isLatest) {
+                if(isLatest) {
+                  appUtils.toast('当前版本为最新版');
+                }else {
+                  appUtils.toast('检测到有新的版本, 1秒后自动跳转到项目主页');
+                  setTimeout(function() {
+                    Linking.openURL(config.github.projectUrl);
+                  }, 1000);
+                }
+              })
+            }}
+          />
+        </View>
 
         <TButton
           type="error"
@@ -105,6 +125,9 @@ const styles = {
     {fontFamily: 'iconfont', marginRight: 6},
     sb.font(18),
     sb.color('#ccc'),
+  ],
+  listView: [
+    {marginBottom: 10}
   ],
 }
 
