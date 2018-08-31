@@ -222,6 +222,25 @@ let getAllUserConverse = function getAllUserConverse() {
   }
 }
 
+let reloadConverseList = function reloadConverseList() {
+  return function(dispatch, getState) {
+    let userInfo = getState().getIn(['user', 'info']);
+    let userUUID = userInfo.get('uuid');
+
+    dispatch(getConverses())
+    rnStorage.get('userConverses#'+userUUID)
+      .then(function(converse) {
+        console.log('缓存中的用户会话列表:', converse);
+        if(converse && converse.length > 0) {
+          dispatch(addUserConverse(converse));
+          dispatch(getOfflineUserConverse(userInfo.get('last_login')))
+        }else {
+          dispatch(getAllUserConverse())
+        }
+      })
+  }
+}
+
 let addMsg = function addMsg(converseUUID, payload) {
   return (dispatch, getState) => {
     if(!(converseUUID && typeof converseUUID === 'string')) {
@@ -339,6 +358,7 @@ exports.removeConverse = removeConverse;
 exports.addUserConverse = addUserConverse;
 exports.getAllUserConverse = getAllUserConverse;
 exports.getOfflineUserConverse = getOfflineUserConverse;
+exports.reloadConverseList = reloadConverseList;
 exports.addMsg = addMsg;
 exports.sendMsg = sendMsg;
 exports.updateMsg = updateMsg;

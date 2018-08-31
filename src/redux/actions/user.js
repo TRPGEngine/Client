@@ -40,16 +40,13 @@ function loginSuccess(dispatch, getState) {
     return;
   }
 
-  const { getConverses, addUserConverse, getOfflineUserConverse, getAllUserConverse } = require('./chat');
+  const { reloadConverseList } = require('./chat');
   const { getFriends, getFriendsInvite, getSettings } = require('./user');
   const { getTemplate, getActor } = require('./actor');
   const { getGroupList, getGroupInvite } = require('./group');
   const { getNote } = require('./note');
 
-  let userInfo = getState().getIn(['user', 'info']);
-  let userUUID = userInfo.get('uuid');
-
-  dispatch(getConverses())
+  dispatch(reloadConverseList()) // 重新加载所有会员列表
   dispatch(getFriends())
   dispatch(getFriendsInvite())
   dispatch(getTemplate())
@@ -58,17 +55,6 @@ function loginSuccess(dispatch, getState) {
   dispatch(getGroupInvite())
   dispatch(getNote())
   dispatch(getSettings())// 获取服务器上的设置信息
-
-  rnStorage.get('userConverses#'+userUUID)
-    .then(function(converse) {
-      console.log('缓存中的用户会话列表:', converse);
-      if(converse && converse.length > 0) {
-        dispatch(addUserConverse(converse));
-        dispatch(getOfflineUserConverse(userInfo.get('last_login')))
-      }else {
-        dispatch(getAllUserConverse())
-      }
-    })
 }
 
 exports.login = function(username, password) {
