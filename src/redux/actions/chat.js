@@ -222,12 +222,14 @@ let getAllUserConverse = function getAllUserConverse() {
   }
 }
 
-let reloadConverseList = function reloadConverseList() {
+// 重新加载会话列表
+// TODO: 暂时先把cb放在getConverses，以后再想办法优化
+let reloadConverseList = function reloadConverseList(cb) {
   return function(dispatch, getState) {
     let userInfo = getState().getIn(['user', 'info']);
     let userUUID = userInfo.get('uuid');
 
-    dispatch(getConverses())
+    dispatch(getConverses(cb))
     rnStorage.get('userConverses#'+userUUID)
       .then(function(converse) {
         console.log('缓存中的用户会话列表:', converse);
