@@ -3,12 +3,14 @@ const { connect } = require('react-redux');
 const {
   View,
   Text,
+  Image,
   TouchableOpacity,
 } = require('react-native');
 const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
 const { login } = require('../../redux/actions/user');
 const { TButton, TFormGroup, TLoading, TAlert } = require('../components/TComponent');
+const appConfig = require('../config.app');
 
 class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -65,6 +67,17 @@ class LoginScreen extends React.Component {
         >
           <Text style={styles.registerText}>没有账户？点击此处注册</Text>
         </TouchableOpacity>
+
+        <View style={styles.oauth}>
+          <Text style={styles.oauthTip}>第三方登录</Text>
+          <View style={styles.oauthBtnContainer}>
+            <TouchableOpacity
+              onPress={() => alert('TODO')}
+            >
+              <Image style={styles.oauthBtnImage} source={appConfig.oauth.qq.icon} />
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     )
   }
@@ -89,6 +102,23 @@ const styles = {
     sb.color('#2f9bd7'),
     sb.textAlign('right'),
     sb.font(14),
+  ],
+  oauth: [
+    {justifyContent: 'flex-end'},
+    sb.flex(),
+    sb.padding(0, 0, 10, 0),
+  ],
+  oauthTip: [
+    sb.textAlign('center'),
+    sb.font(12),
+  ],
+  oauthBtnContainer: [
+    sb.alignCenter(),
+    sb.margin(10, 0),
+  ],
+  oauthBtnImage: [
+    sb.size(40, 40),
+    sb.radius(20),
   ],
 }
 
