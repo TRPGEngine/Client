@@ -13,16 +13,11 @@ const {
   FIND_USER_FAILED,
   UPDATE_INFO_SUCCESS,
   ADD_FRIEND_SUCCESS,
-  ADD_FRIEND_FAILED,
-  GET_FRIENDS_REQUEST,
   GET_FRIENDS_SUCCESS,
-  GET_FRIENDS_FAILED,
   SEND_FRIEND_INVITE_SUCCESS,
   AGREE_FRIEND_INVITE_SUCCESS,
   GET_FRIEND_INVITE_SUCCESS,
-  GET_FRIEND_INVITE_ERROR,
   REFUSE_FRIEND_INVITE_SUCCESS,
-  REFUSE_FRIEND_INVITE_ERROR,
   ADD_FRIEND_INVITE,
 } = require('../constants');
 const md5 = require('md5');
@@ -213,12 +208,11 @@ exports.changePassword = function(oldPassword, newPassword, success, error) {
   return function(dispatch, getState) {
     return api.emit('player::changePassword', {oldPassword, newPassword}, function(data) {
       if(data.result) {
-        // TODO
-        success();
-        // dispatch({type: UPDATE_INFO_SUCCESS, payload: data.user});
+        console.log('密码修改成功');
+        success && success();
       }else {
         console.error(data.msg);
-        error(data.msg);
+        error && error(data.msg);
       }
     })
   }
@@ -232,7 +226,7 @@ exports.addFriend = function(uuid) {
         dispatch({type: ADD_FRIEND_SUCCESS, friendUUID: uuid});
       }else {
         console.error(data.msg);
-        dispatch({type: ADD_FRIEND_FAILED, payload: data.msg});
+        dispatch(showAlert(data.msg));
       }
     });
   }
@@ -240,7 +234,6 @@ exports.addFriend = function(uuid) {
 
 exports.getFriends = function() {
   return function(dispatch, getState) {
-    dispatch({type: GET_FRIENDS_REQUEST});
     return api.emit('player::getFriends', {}, function(data) {
       if(data.result) {
         let uuidList = [];
@@ -252,7 +245,7 @@ exports.getFriends = function() {
 
         dispatch({type: GET_FRIENDS_SUCCESS, payload: uuidList});
       }else {
-        dispatch({type: GET_FRIENDS_FAILED, payload: data.msg});
+        console.error(data.msg);
       }
     })
   }
@@ -293,7 +286,7 @@ exports.getFriendsInvite = function() {
         }
         dispatch({type: GET_FRIEND_INVITE_SUCCESS, payload: data.res});
       }else {
-        dispatch({type: GET_FRIEND_INVITE_ERROR, payload: data.msg});
+        console.error(data.msg);
       }
     })
   }
@@ -305,7 +298,7 @@ exports.refuseFriendInvite = function(inviteUUID) {
       if(data.result) {
         dispatch({type: REFUSE_FRIEND_INVITE_SUCCESS, payload: data.res});
       }else {
-        dispatch({type: REFUSE_FRIEND_INVITE_ERROR, payload: data.msg});
+        dispatch(showAlert(data.msg));
       }
     })
   }
