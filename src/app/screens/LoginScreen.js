@@ -9,7 +9,9 @@ const {
 const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
 const { login } = require('../../redux/actions/user');
+const { openWebview } = require('../../redux/actions/nav');
 const { TButton, TFormGroup, TLoading, TAlert } = require('../components/TComponent');
+const config = require('../../../config/project.config');
 const appConfig = require('../config.app');
 
 class LoginScreen extends React.Component {
@@ -33,6 +35,10 @@ class LoginScreen extends React.Component {
     if(!!username && !!password) {
       this.props.dispatch(login(this.state.username, this.state.password));
     }
+  }
+
+  _handleQQLogin() {
+    this.props.dispatch(openWebview(config.file.url + '/oauth/qq/login'));
   }
 
   render() {
@@ -72,7 +78,7 @@ class LoginScreen extends React.Component {
           <Text style={styles.oauthTip}>第三方登录</Text>
           <View style={styles.oauthBtnContainer}>
             <TouchableOpacity
-              onPress={() => alert('TODO')}
+              onPress={() => this._handleQQLogin()}
             >
               <Image style={styles.oauthBtnImage} source={appConfig.oauth.qq.icon} />
             </TouchableOpacity>

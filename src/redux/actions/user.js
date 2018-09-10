@@ -96,10 +96,10 @@ exports.loginWithToken = function(uuid, token, channel = null) {
         loginSuccess(dispatch, getState); // 获取用户信息
       }else {
         console.log(data);
+        dispatch({type:LOGIN_FAILED, payload: data.msg});
         if(getState().getIn(['user', 'isLogin'])) {
           // 登录超时
           dispatch({type:RESET});// 登录超时以后重置数据内容。需要重新获取
-          dispatch({type:LOGIN_FAILED, payload: data.msg});
           dispatch(showAlert({
             type: 'alert',
             title: '登录失败',

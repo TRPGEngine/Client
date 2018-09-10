@@ -8,6 +8,9 @@ const {
   BackHandler,
 } = require('react-native');
 const sb = require('react-native-style-block');
+const rnStorage = require('../../api/rnStorage.api.js');
+const { loginWithToken } = require('../../redux/actions/user');
+const { backNav } = require('../../redux/actions/nav');
 
 class Loading extends React.Component {
   render() {
@@ -68,6 +71,29 @@ class WebviewScreen extends React.Component {
     this.canGoBack = canGoBack;
   }
 
+  _handleMessage(e) {
+    console.log('On Message Data:', e.nativeEvent.data);
+    let data = e.nativeEvent.data;
+    try {
+      data = JSON.parse(data);
+      if (data.type === 'onOAuthFinished') {
+        let {uuid, token} = data;
+        if(!uuid || !token) {
+          console.error('oauth登录失败, 缺少必要参数', uuid, token);
+          return;
+        }
+
+        // 注册新的uuid与token并刷新
+        rnStorage.set('uuid', uuid);
+        rnStorage.set('token', token);
+
+        this.props.dispatch(loginWithToken(uuid, token, 'qq'));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   render() {
     let { url } = this.props.navigation.state.params;
 
@@ -80,6 +106,7 @@ class WebviewScreen extends React.Component {
         renderError={() => (<LoadError url={url} />)}
         mixedContentMode={'compatibility'}
         onNavigationStateChange={(state) => this._handleStateChange(state)}
+        onMessage={(e) => this._handleMessage(e)}
       />
     )
   }
