@@ -12,6 +12,7 @@ const sb = require('react-native-style-block');
 const config = require('../../../config/project.config');
 const appConfig = require('../config.app');
 const { logout } = require('../../redux/actions/user');
+const { openWebview } = require('../../redux/actions/nav');
 const ListCell = require('../components/ListCell');
 const { TButton, TAvatar } = require('../components/TComponent');
 const checkVersion = require('../../utils/checkVersion');
@@ -55,7 +56,7 @@ class AccountScreen extends React.Component {
             icon="&#xe60b;"
             color="cornflowerblue"
             onPress={() => {
-              this.props.dispatch(NavigationActions.navigate({ routeName: 'Webview', params: {url: config.url.goddessfantasy} }));
+              this.props.dispatch(openWebview(config.url.goddessfantasy));
             }}
           />
           <ListCell
