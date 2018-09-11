@@ -38,7 +38,7 @@ class LoginScreen extends React.Component {
   }
 
   _handleQQLogin() {
-    this.props.dispatch(openWebview(config.file.url + '/oauth/qq/login'));
+    this.props.dispatch(openWebview(config.file.url + '/oauth/qq/login?platform=app'));
   }
 
   render() {
