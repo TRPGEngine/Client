@@ -1,4 +1,4 @@
-package com.trpg;
+package com.moonrailgun.trpg;
 
 import com.facebook.react.ReactActivity;
 
