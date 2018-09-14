@@ -64,7 +64,7 @@ const AppNavigator = createStackNavigator({
   Register: {
     screen: RegisterScreen,
     navigationOptions: {
-      headerTitle: '注册',
+      headerTitle: '注册TRPG Game账户',
     }
   },
   Main: {
