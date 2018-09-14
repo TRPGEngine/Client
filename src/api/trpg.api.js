@@ -116,7 +116,7 @@ function bindEventFunc(store) {
   });
   api.on('reconnecting', function(data) {
     store.dispatch(changeNetworkStatue(false, '正在连接...', true));
-    console.log('重连中...');
+    console.log('重连中...', api.serverUrl);
   });
   api.on('disconnect', function(data) {
     store.dispatch(changeNetworkStatue(false, '已断开连接'));
