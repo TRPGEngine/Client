@@ -18,6 +18,13 @@ class TAvatar extends React.Component {
     width: 100,
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      loadError: false,
+    }
+  }
+
   getColor(name) {
     const color = config.defaultImg.color;
     const id = str2int(name);
@@ -48,9 +55,9 @@ class TAvatar extends React.Component {
     }
     let color = this.getColor(name);
 
-    if(uri) {
+    if(uri && !this.state.loadError) {
       return (
-        <Image style={[...style, {height, width}]} source={uri} />
+        <Image style={[...style, {height, width}]} source={uri} onError={() => this.setState({loadError: true})} />
       )
     }else {
       return (
