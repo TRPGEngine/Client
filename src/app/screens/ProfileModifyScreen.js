@@ -98,7 +98,7 @@ class ProfileModifyScreen extends React.Component {
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => this._handleSelectAvatar()}>
-            <TAvatar style={styles.avatar} uri={userInfo.get('avatar', '')} name={name} height={100} width={100} />
+            <TAvatar style={styles.avatar} uri={userInfo.get('avatar', '')} name={name} capitalSize={40} height={100} width={100} />
           </TouchableOpacity>
           <Text style={styles.username}>{userInfo.get('username')}</Text>
           <Text style={styles.uuid}>{userInfo.get('uuid')}</Text>
