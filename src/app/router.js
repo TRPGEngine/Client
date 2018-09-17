@@ -27,6 +27,7 @@ const HomeScreen = require('./screens/HomeScreen');
 const AccountScreen = require('./screens/AccountScreen');
 const ContactsScreen = require('./screens/ContactsScreen');
 const ChatScreen = require('./screens/ChatScreen');
+const AddFriendScreen = require('./screens/AddFriendScreen');
 const SettingsScreen = require('./screens/SettingsScreen');
 const ProfileScreen = require('./screens/ProfileScreen');
 const PhotoBrowserScreen = require('./screens/PhotoBrowserScreen');
@@ -91,6 +92,12 @@ const AppNavigator = createStackNavigator({
     navigationOptions: ({navigation}) => ({
       headerTitle: '与 ' + navigation.state.params.name + ' 的聊天',
     }),
+  },
+  AddFriend: {
+    screen: AddFriendScreen,
+    navigationOptions: {
+      headerTitle: '添加朋友'
+    },
   },
   Profile: {
     screen: ProfileScreen,
