@@ -110,6 +110,16 @@ class ProfileModifyScreen extends React.Component {
             value={userInfo.get('nickname')}
             onPress={() => {}}
           />
+          <ListCell
+            title="性别"
+            value={userInfo.get('sex')}
+            onPress={() => {}}
+          />
+          <ListCell
+            title="个性签名"
+            value={userInfo.get('sign')}
+            onPress={() => {}}
+          />
         </View>
       </View>
     );
