@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const { addNote, switchNote } = require('../../../../redux/actions/note');
 const moment = require('moment');
 const ReactTooltip = require('react-tooltip');
+const Spinner = require('../../../components/Spinner');
 
 const NoteDetail = require('./NoteDetail');
 
@@ -39,8 +40,10 @@ class NoteList extends React.Component {
           onClick={() => this._handleClick(uuid)}
         >
           <div className="note-title">
-            {item.title}
+            <span>{item.title}</span>
+            <Spinner visible={this.props.isNoteSync && uuid === this.props.isNoteSyncUUID} />
           </div>
+
           <div className="note-update-time">
             {moment(item.updatedAt).fromNow()}
           </div>
@@ -98,5 +101,7 @@ module.exports = connect(
   state => ({
     selectedNoteUUID: state.getIn(['note', 'selectedNoteUUID']),
     noteList: state.getIn(['note', 'noteList']),
+    isNoteSync: state.getIn(['note', 'isSync']),
+    isNoteSyncUUID: state.getIn(['note', 'isSyncUUID']),
   })
 )(NoteList);

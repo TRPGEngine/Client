@@ -2,6 +2,8 @@
 
 .note-detail {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 
   .title input {
     @include bottom-line-input;
