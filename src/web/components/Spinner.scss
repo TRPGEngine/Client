@@ -1,0 +1,24 @@
+@keyframes spinner-animation {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border-color: transparent;
+  border-left-color: rgba(0, 0, 0, 0.4);
+  border-width: 2px;
+  border-style: solid;
+  animation-name: spinner-animation;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
