@@ -21,7 +21,6 @@
       }
 
       .note-title {
-        @include one-line;
         font-size: 16px;
         font-weight: 400;
         color: $color-tundora;
@@ -32,6 +31,13 @@
         word-wrap: break-word;
         line-height: 20px;
         min-height: 20px;
+        display: flex;
+        justify-content: space-between;
+
+        span {
+          flex: 1;
+          @include one-line;
+        }
       }
 
       .note-update-time {

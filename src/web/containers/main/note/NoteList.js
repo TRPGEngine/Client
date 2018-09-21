@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const { addNote, switchNote } = require('../../../../redux/actions/note');
 const moment = require('moment');
 const ReactTooltip = require('react-tooltip');
+const Spinner = require('../../../components/Spinner');
 
 const NoteDetail = require('./NoteDetail');
 
@@ -39,8 +40,11 @@ class NoteList extends React.Component {
           onClick={() => this._handleClick(uuid)}
         >
           <div className="note-title">
-            {item.title}
+            <span>{item.title}</span>
+            {/*TODO: 菊花用于笔记同步云端*/}
+            <Spinner />
           </div>
+
           <div className="note-update-time">
             {moment(item.updatedAt).fromNow()}
           </div>
