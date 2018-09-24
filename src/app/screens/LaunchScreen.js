@@ -28,8 +28,8 @@ class LaunchScreen extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      if(config.platform === 'production') {
+    this.animationTimer = setTimeout(() => {
+      if(config.environment === 'production') {
         Animated.sequence([
           Animated.parallel([
             Animated.spring(
@@ -72,6 +72,10 @@ class LaunchScreen extends React.Component {
         this.props.dispatch(replaceNav('Login'));
       }
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.animationTimer);
   }
 
   _handleFinishAnimation() {

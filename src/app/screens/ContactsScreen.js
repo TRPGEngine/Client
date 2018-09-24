@@ -7,6 +7,7 @@ const {
   TouchableOpacity,
 } = require('react-native');
 const sb = require('react-native-style-block');
+const { NavigationActions } = require('react-navigation');
 const ContactsList = require('../components/ContactsList');
 
 class ContactsScreen extends React.Component {
@@ -18,11 +19,15 @@ class ContactsScreen extends React.Component {
     ),
   };
 
+  _handlePressAddFriend() {
+    this.props.dispatch(NavigationActions.navigate({routeName: 'AddFriend'}))
+  }
+
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity style={styles.iconBtn} onPress={() => alert('添加好友')}>
+          <TouchableOpacity style={styles.iconBtn} onPress={() => this._handlePressAddFriend()}>
             <View style={styles.iconBtnView}>
               <Text style={[...styles.icon, sb.bgColor('#16a085')]}>&#xe604;</Text>
               <Text>添加好友</Text>
@@ -30,13 +35,13 @@ class ContactsScreen extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconBtn} onPress={() => alert('添加团')}>
             <View style={styles.iconBtnView}>
-              <Text style={[...styles.icon, sb.bgColor('#d35400')]}>&#xe604;</Text>
+              <Text style={[...styles.icon, sb.bgColor('#d35400')]}>&#xe61c;</Text>
               <Text>添加团</Text>
             </View>
           </TouchableOpacity>
         </View>
 
-        <View>
+        <View style={styles.list}>
           <ContactsList />
         </View>
       </View>
@@ -46,8 +51,8 @@ class ContactsScreen extends React.Component {
 }
 
 const styles = {
-  contactsList: [
-    sb.bgColor(),
+  container: [
+    sb.flex(),
   ],
   header: [
     sb.direction(),
@@ -67,7 +72,10 @@ const styles = {
     {color: 'white', fontFamily: 'iconfont', fontSize: 20, textAlign: 'center', lineHeight: 40},
     sb.size(40, 40),
     sb.radius(20),
-  ]
+  ],
+  list: [
+    sb.flex()
+  ],
 }
 
-module.exports = ContactsScreen;
+module.exports = connect()(ContactsScreen);

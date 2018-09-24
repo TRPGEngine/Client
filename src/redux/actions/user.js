@@ -13,16 +13,11 @@ const {
   FIND_USER_FAILED,
   UPDATE_INFO_SUCCESS,
   ADD_FRIEND_SUCCESS,
-  ADD_FRIEND_FAILED,
-  GET_FRIENDS_REQUEST,
   GET_FRIENDS_SUCCESS,
-  GET_FRIENDS_FAILED,
   SEND_FRIEND_INVITE_SUCCESS,
   AGREE_FRIEND_INVITE_SUCCESS,
   GET_FRIEND_INVITE_SUCCESS,
-  GET_FRIEND_INVITE_ERROR,
   REFUSE_FRIEND_INVITE_SUCCESS,
-  REFUSE_FRIEND_INVITE_ERROR,
   ADD_FRIEND_INVITE,
 } = require('../constants');
 const md5 = require('md5');
@@ -40,16 +35,13 @@ function loginSuccess(dispatch, getState) {
     return;
   }
 
-  const { getConverses, addUserConverse, getOfflineUserConverse, getAllUserConverse } = require('./chat');
+  const { reloadConverseList } = require('./chat');
   const { getFriends, getFriendsInvite, getSettings } = require('./user');
   const { getTemplate, getActor } = require('./actor');
   const { getGroupList, getGroupInvite } = require('./group');
   const { getNote } = require('./note');
 
-  let userInfo = getState().getIn(['user', 'info']);
-  let userUUID = userInfo.get('uuid');
-
-  dispatch(getConverses())
+  dispatch(reloadConverseList()) // 重新加载所有会员列表
   dispatch(getFriends())
   dispatch(getFriendsInvite())
   dispatch(getTemplate())
@@ -58,17 +50,6 @@ function loginSuccess(dispatch, getState) {
   dispatch(getGroupInvite())
   dispatch(getNote())
   dispatch(getSettings())// 获取服务器上的设置信息
-
-  rnStorage.get('userConverses#'+userUUID)
-    .then(function(converse) {
-      console.log('缓存中的用户会话列表:', converse);
-      if(converse && converse.length > 0) {
-        dispatch(addUserConverse(converse));
-        dispatch(getOfflineUserConverse(userInfo.get('last_login')))
-      }else {
-        dispatch(getAllUserConverse())
-      }
-    })
 }
 
 exports.login = function(username, password) {
@@ -108,6 +89,7 @@ exports.login = function(username, password) {
 exports.loginWithToken = function(uuid, token, channel = null) {
   return function(dispatch, getState) {
     let isApp = config.platform === 'app';
+    dispatch({type:LOGIN_REQUEST});
     return api.emit('player::loginWithToken', {uuid, token, platform: config.platform, isApp, channel}, function(data) {
       if(data.result) {
         data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
@@ -115,10 +97,10 @@ exports.loginWithToken = function(uuid, token, channel = null) {
         loginSuccess(dispatch, getState); // 获取用户信息
       }else {
         console.log(data);
+        dispatch({type:LOGIN_FAILED, payload: data.msg});
         if(getState().getIn(['user', 'isLogin'])) {
           // 登录超时
           dispatch({type:RESET});// 登录超时以后重置数据内容。需要重新获取
-          dispatch({type:LOGIN_FAILED, payload: data.msg});
           dispatch(showAlert({
             type: 'alert',
             title: '登录失败',
@@ -197,6 +179,7 @@ exports.findUser = function(text, type) {
             if(!!uuid) {
               checkUser(uuid);
             }
+            user.avatar = config.file.getAbsolutePath(user.avatar);
           }
         }
         dispatch({type: FIND_USER_SUCCESS, payload: list});
@@ -226,12 +209,11 @@ exports.changePassword = function(oldPassword, newPassword, success, error) {
   return function(dispatch, getState) {
     return api.emit('player::changePassword', {oldPassword, newPassword}, function(data) {
       if(data.result) {
-        // TODO
-        success();
-        // dispatch({type: UPDATE_INFO_SUCCESS, payload: data.user});
+        console.log('密码修改成功');
+        success && success();
       }else {
         console.error(data.msg);
-        error(data.msg);
+        error && error(data.msg);
       }
     })
   }
@@ -245,7 +227,7 @@ exports.addFriend = function(uuid) {
         dispatch({type: ADD_FRIEND_SUCCESS, friendUUID: uuid});
       }else {
         console.error(data.msg);
-        dispatch({type: ADD_FRIEND_FAILED, payload: data.msg});
+        dispatch(showAlert(data.msg));
       }
     });
   }
@@ -253,7 +235,6 @@ exports.addFriend = function(uuid) {
 
 exports.getFriends = function() {
   return function(dispatch, getState) {
-    dispatch({type: GET_FRIENDS_REQUEST});
     return api.emit('player::getFriends', {}, function(data) {
       if(data.result) {
         let uuidList = [];
@@ -265,7 +246,7 @@ exports.getFriends = function() {
 
         dispatch({type: GET_FRIENDS_SUCCESS, payload: uuidList});
       }else {
-        dispatch({type: GET_FRIENDS_FAILED, payload: data.msg});
+        console.error(data.msg);
       }
     })
   }
@@ -306,7 +287,7 @@ exports.getFriendsInvite = function() {
         }
         dispatch({type: GET_FRIEND_INVITE_SUCCESS, payload: data.res});
       }else {
-        dispatch({type: GET_FRIEND_INVITE_ERROR, payload: data.msg});
+        console.error(data.msg);
       }
     })
   }
@@ -318,7 +299,7 @@ exports.refuseFriendInvite = function(inviteUUID) {
       if(data.result) {
         dispatch({type: REFUSE_FRIEND_INVITE_SUCCESS, payload: data.res});
       }else {
-        dispatch({type: REFUSE_FRIEND_INVITE_ERROR, payload: data.msg});
+        dispatch(showAlert(data.msg));
       }
     })
   }

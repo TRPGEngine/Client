@@ -30,7 +30,7 @@ function getApiInstance() {
 function bindEventFunc(store) {
   const { addMsg, updateMsg, switchConverse } = require('../redux/actions/chat');
   const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
-  const { updateGroupStatus } = require('../redux/actions/group');
+  const { updateGroupStatus, addGroup } = require('../redux/actions/group');
   const { changeNetworkStatue, showAlert, switchMenuPannel, updateSocketId } = require('../redux/actions/ui');
   const { getUserInfoCache } = require('../utils/cacheHelper');
 
@@ -46,9 +46,12 @@ function bindEventFunc(store) {
     if(window.document && document.hidden) {
       let isNotify = store.getState().getIn(['settings', 'system', 'notification']);
       if(isNotify) {
+        let uuid = data.sender_uuid;
         let userinfo = getUserInfoCache(data.sender_uuid);
         let username = userinfo.get('nickname') || userinfo.get('username');
-        let uuid = userinfo.get('uuid');
+        if (uuid && uuid.substr(0, 4) === 'trpg') {
+          username = '系统消息';
+        }
         let notification = new Notification(`来自 ${username}:`, {
           body: data.message,
           icon: userinfo.get('avatar') || config.defaultImg.trpgsystem,
@@ -82,6 +85,9 @@ function bindEventFunc(store) {
   api.on('group::updateGroupStatus', function(data) {
     store.dispatch(updateGroupStatus(data.groupUUID, data.groupStatus));
   })
+  api.on('group::addGroupSuccess', function(data) {
+    store.dispatch(addGroup(data.group));
+  })
 
   api.on('connect', function(data) {
     store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
@@ -110,7 +116,7 @@ function bindEventFunc(store) {
   });
   api.on('reconnecting', function(data) {
     store.dispatch(changeNetworkStatue(false, '正在连接...', true));
-    console.log('重连中...');
+    console.log('重连中...', api.serverUrl);
   });
   api.on('disconnect', function(data) {
     store.dispatch(changeNetworkStatue(false, '已断开连接'));

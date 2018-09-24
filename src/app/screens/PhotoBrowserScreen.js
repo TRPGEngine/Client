@@ -1,7 +1,7 @@
 const React = require('react');
 import PhotoBrowser from 'react-native-photo-browser';
 
-class PhotoBrowserScene extends React.Component {
+class PhotoBrowserScreen extends React.Component {
     static navigationOptions = {
       //1.隐藏导航头部
       header: null,
@@ -28,4 +28,4 @@ class PhotoBrowserScene extends React.Component {
     }
 }
 
-module.exports = PhotoBrowserScene;
+module.exports = PhotoBrowserScreen;

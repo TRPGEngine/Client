@@ -33,10 +33,31 @@ let out = {
   },
   defaultImg: {
     user: '/src/assets/img/gugugu1.png',
+    getUser (name) {
+      return `${out.file.url}/file/avatar/svg?name=${name || ''}`
+    },
     group: '/src/assets/img/gugugu1.png',
     trpgsystem: '/src/assets/img/system_notice.png',
     actor: '',
     chatimg_fail: '/src/assets/img/img_fail.png',
+    color: [
+      '#333333',
+      '#2c3e50',
+      '#8e44ad',
+      '#2980b9',
+      '#27ae60',
+      '#16a085',
+      '#f39c12',
+      '#d35400',
+      '#c0392b',
+      '#3498db',
+      '#9b59b6',
+      '#2ecc71',
+      '#1abc9c',
+      '#f1c40f',
+      '#e74c3c',
+      '#e67e22',
+    ]
   },
   github: {
     projectUrl: 'https://github.com/TRPGEngine/Client',

@@ -14,8 +14,8 @@ import {
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import {
-  createNavigationPropConstructor,
-  initializeListeners
+  createReactNavigationReduxMiddleware,
+  reduxifyNavigator,
 } from 'react-navigation-redux-helpers';
 const { connect } = require('react-redux');
 const { createStackNavigator, createBottomTabNavigator } = require('react-navigation');
@@ -27,9 +27,12 @@ const HomeScreen = require('./screens/HomeScreen');
 const AccountScreen = require('./screens/AccountScreen');
 const ContactsScreen = require('./screens/ContactsScreen');
 const ChatScreen = require('./screens/ChatScreen');
+const AddFriendScreen = require('./screens/AddFriendScreen');
 const SettingsScreen = require('./screens/SettingsScreen');
 const ProfileScreen = require('./screens/ProfileScreen');
-const PhotoBrowserScene = require('./screens/PhotoBrowserScene');
+const PhotoBrowserScreen = require('./screens/PhotoBrowserScreen');
+const ProfileModifyScreen = require('./screens/ProfileModifyScreen');
+const WebviewScreen = require('./screens/WebviewScreen');
 
 const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -62,7 +65,7 @@ const AppNavigator = createStackNavigator({
   Register: {
     screen: RegisterScreen,
     navigationOptions: {
-      headerTitle: '注册',
+      headerTitle: '注册TRPG Game账户',
     }
   },
   Main: {
@@ -90,6 +93,12 @@ const AppNavigator = createStackNavigator({
       headerTitle: '与 ' + navigation.state.params.name + ' 的聊天',
     }),
   },
+  AddFriend: {
+    screen: AddFriendScreen,
+    navigationOptions: {
+      headerTitle: '添加朋友'
+    },
+  },
   Profile: {
     screen: ProfileScreen,
     navigationOptions: ({navigation}) => ({
@@ -97,54 +106,39 @@ const AppNavigator = createStackNavigator({
     }),
   },
   PhotoBrowser: {
-    screen: PhotoBrowserScene,
+    screen: PhotoBrowserScreen,
+  },
+  ProfileModify: {
+    screen: ProfileModifyScreen,
+    navigationOptions: {
+      headerTitle: '编辑资料'
+    },
+  },
+  Webview: {
+    screen: WebviewScreen,
   },
 });
-// // 重写goback(有性能问题)
-// const defaultGetStateForAction = AppNavigator.router.getStateForAction;
-// AppNavigator.router.getStateForAction = (action, state) => {
-//   // goBack返回指定页面
-//   if (state && action.type === 'Navigation/BACK' && action.key) {
-//     const backRoute = state.routes.find((route) => route.routeName === action.key);
-//     if (backRoute) {
-//       const backRouteIndex = state.routes.indexOf(backRoute);
-//       const purposeState = {
-//         ...state,
-//         routes: state.routes.slice(0, backRouteIndex + 1),
-//         index: backRouteIndex,
-//       };
-//       return purposeState;
-//     }
-//   }
-//   return defaultGetStateForAction(action, state)
-// };
 
-// redux state
-// const AppWithNavigationState = ({dispatch, nav}) => (
-//   <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
-// )
-class AppWithNavigationState extends React.Component {
-  constructor(props) {
-    super(props);
-    this.navigationPropConstructor = createNavigationPropConstructor("root");
-  }
+const middleware = createReactNavigationReduxMiddleware(
+  "root",
+  state => state.get('nav'),
+);
 
+const App = reduxifyNavigator(AppNavigator, "root")
+
+class ReduxNavigation extends React.Component {
   componentDidMount() {
-    initializeListeners("root", this.props.nav);
-    if(Platform.OS === 'android') {
-      BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
-    }
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
   }
 
   componentWillUnmount() {
-    if(Platform.OS === 'android') {
-      BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
-    }
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
   }
 
   onBackPress = () => {
-    const { dispatch, nav } = this.props;
-    if (nav.index !== 0) {
+    const { dispatch, state } = this.props;
+
+    if (state.index !== 0) {
       dispatch(NavigationActions.back());
       return true;
     } else {
@@ -158,30 +152,25 @@ class AppWithNavigationState extends React.Component {
       ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
       return true;
     }
-  }
+  };
 
   render() {
-    const {dispatch, nav} = this.props;
-    const navigation = this.navigationPropConstructor(dispatch, nav);
+    const { dispatch, state } = this.props;
     return (
-      <AppNavigator navigation={navigation} />
-    )
+      <App dispatch={dispatch} state={state} />
+    );
   }
 }
 
-AppWithNavigationState.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  nav: PropTypes.object.isRequired,
-};
-
 const mapStateToProps = state => {
   return {
-    nav: state.get('nav'),
+    state: state.get('nav')
   }
 };
 
 module.exports = {
+  middleware,
   MainNavigator,
   AppNavigator,
-  AppWithNavigationState: connect(mapStateToProps)(AppWithNavigationState),
+  AppWithNavigationState: connect(mapStateToProps)(ReduxNavigation),
 }

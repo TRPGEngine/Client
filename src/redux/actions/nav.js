@@ -3,6 +3,7 @@ const {
   REPLACE_NAV,
   BACK_NAV,
 } = require('../constants');
+import { NavigationActions } from 'react-navigation';
 
 exports.switchNav = function switchNav(routeName, params = {}) {
   return {type: SWITCH_NAV, routeName, params}
@@ -27,4 +28,8 @@ exports.switchToConverseApp = function switchToConverseApp(converseUUID, type = 
       name
     }))
   }
+}
+
+exports.openWebview = function openWebview(url) {
+  return NavigationActions.navigate({ routeName: 'Webview', params: {url} })
 }

@@ -110,7 +110,7 @@ class ConverseDetail extends React.Component {
     } else {
       name = usercache.getIn([userUUID, 'nickname']) || usercache.getIn([userUUID, 'username']);
       desc = usercache.getIn([userUUID, 'desc'])
-      avatar = usercache.getIn([userUUID, 'avatar']) || config.defaultImg.user;
+      avatar = usercache.getIn([userUUID, 'avatar']) || config.defaultImg.getUser(name);
     }
     return (
       <div className="conv-detail">

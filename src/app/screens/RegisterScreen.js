@@ -70,7 +70,6 @@ class RegisterScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>注册TRPG Game账户</Text>
         <TFormGroup
           label="用户名"
           value={this.state.username}
@@ -111,11 +110,6 @@ const styles = {
     // sb.alignCenter(),
     sb.flex(),
     sb.padding(20, 20, 0),
-  ],
-  title: [
-    sb.textAlign('left'),
-    sb.font(20),
-    {paddingLeft: 10, marginBottom: 20},
   ],
 }
 

@@ -44,10 +44,21 @@ let addConverse = function addConverse(payload) {
   return {type: ADD_CONVERSES, payload: payload}
 }
 
+let updateConversesMsglist = function updateConversesMsglist(convUUID, list) {
+  return function(dispatch, getState) {
+    for(let item of list) {
+      if(item.sender_uuid) {
+        checkUser(item.sender_uuid);
+      }
+    }
+    dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, convUUID, payload: list});
+  }
+}
+
 // 获取多人会话
 let getConverses = function getConverses(cb) {
   return function(dispatch, getState) {
-    dispatch({type:GET_CONVERSES_REQUEST});
+    dispatch({type: GET_CONVERSES_REQUEST});
     // 获取会话列表
     return api.emit('chat::getConverses', {}, function(data) {
       cb && cb();
@@ -67,7 +78,7 @@ let getConverses = function getConverses(cb) {
           // TODO
           api.emit('chat::getConverseChatLog', {converse_uuid: convUUID}, function(data) {
             if(data.result) {
-              dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: data.list, convUUID});
+              dispatch(updateConversesMsglist(convUUID, data.list));
             }else {
               console.error('获取聊天记录失败:', data.msg);
             }
@@ -107,7 +118,7 @@ let createConverse = function createConverse(uuid, type, isSwitchToConv = true) 
         api.emit('chat::getConverseChatLog', {converse_uuid: convUUID}, function(data) {
           if(data.result) {
             let list = data.list;
-            dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: list, convUUID});
+            dispatch(updateConversesMsglist(convUUID, list));
           }else {
             console.error('获取聊天记录失败:' + data.msg);
           }
@@ -135,7 +146,12 @@ let addUserConverse = function addUserConverse(senders) {
     if(typeof senders === 'string') {
       senders = [senders];
     }
-    dispatch({type: GET_USER_CONVERSES_SUCCESS, payload: senders.map(uuid => ({uuid, type:'user'}))})
+    dispatch({
+      type: GET_USER_CONVERSES_SUCCESS,
+      payload: senders
+        .map(uuid => ({uuid, type:'user'}))
+        .concat([{uuid: 'trpgsystem', type: 'system', name: '系统消息'}])
+    })
 
     // 用户会话缓存
     let userUUID = getState().getIn(['user', 'info', 'uuid']);
@@ -155,7 +171,7 @@ let addUserConverse = function addUserConverse(senders) {
             // icon: info.avatar,
           }})
         }else {
-          console.error('更新用户会话信息时出错:', data);
+          console.error('更新用户会话信息时出错:', data, '| uuid:', uuid);
         }
       })
 
@@ -163,12 +179,22 @@ let addUserConverse = function addUserConverse(senders) {
       api.emit('chat::getUserChatLog', {user_uuid: uuid}, function(data) {
         if(data.result) {
           let list = data.list;
-          dispatch({type:UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: list, convUUID: uuid});
+          dispatch(updateConversesMsglist(uuid, list))
         }else {
           console.error('获取聊天记录失败:' + data.msg);
         }
       })
     }
+
+    // 更新系统消息
+    api.emit('chat::getUserChatLog', {user_uuid: 'trpgsystem'}, function(data) {
+      if(data.result) {
+        let list = data.list;
+        dispatch(updateConversesMsglist('trpgsystem', list))
+      }else {
+        console.error('获取聊天记录失败:' + data.msg);
+      }
+    })
   }
 }
 
@@ -196,6 +222,27 @@ let getAllUserConverse = function getAllUserConverse() {
   }
 }
 
+// 重新加载会话列表
+// TODO: 暂时先把cb放在getConverses，以后再想办法优化
+let reloadConverseList = function reloadConverseList(cb) {
+  return function(dispatch, getState) {
+    let userInfo = getState().getIn(['user', 'info']);
+    let userUUID = userInfo.get('uuid');
+
+    dispatch(getConverses(cb))
+    rnStorage.get('userConverses#'+userUUID)
+      .then(function(converse) {
+        console.log('缓存中的用户会话列表:', converse);
+        if(converse && converse.length > 0) {
+          dispatch(addUserConverse(converse));
+          dispatch(getOfflineUserConverse(userInfo.get('last_login')))
+        }else {
+          dispatch(getAllUserConverse())
+        }
+      })
+  }
+}
+
 let addMsg = function addMsg(converseUUID, payload) {
   return (dispatch, getState) => {
     if(!(converseUUID && typeof converseUUID === 'string')) {
@@ -214,6 +261,8 @@ let addMsg = function addMsg(converseUUID, payload) {
         dispatch(createConverse(payload.sender_uuid, 'user', false))
       }
     }
+
+    checkUser(payload.sender_uuid); // 检查用户信息，保证每一条信息都能有信息来源
 
     let unread = true;
     if(converseUUID === getState().getIn(['chat', 'selectedConversesUUID']) || converseUUID === getState().getIn(['group', 'selectedGroupUUID'])) {
@@ -272,7 +321,7 @@ let getMoreChatLog = function getMoreChatLog(converseUUID, offsetDate, isUserCha
     if(isUserChat) {
       api.emit('chat::getUserChatLog', {user_uuid: converseUUID, offsetDate}, function(data) {
         if(data.result === true) {
-          dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: data.list, convUUID: converseUUID});
+          dispatch(updateConversesMsglist(converseUUID, data.list))
         }else {
           console.log(data);
         }
@@ -280,7 +329,7 @@ let getMoreChatLog = function getMoreChatLog(converseUUID, offsetDate, isUserCha
     }else {
       api.emit('chat::getConverseChatLog', {converse_uuid: converseUUID, offsetDate}, function(data) {
         if(data.result === true) {
-          dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, payload: data.list, convUUID: converseUUID});
+          dispatch(updateConversesMsglist(converseUUID, data.list))
         }else {
           console.log(data);
         }
@@ -303,6 +352,7 @@ let updateCardChatData = function(chatUUID, newData) {
 
 exports.switchToConverse = switchToConverse;
 exports.addConverse = addConverse;
+exports.updateConversesMsglist = updateConversesMsglist;
 exports.switchConverse = switchConverse;
 exports.getConverses = getConverses;
 exports.createConverse = createConverse;
@@ -310,6 +360,7 @@ exports.removeConverse = removeConverse;
 exports.addUserConverse = addUserConverse;
 exports.getAllUserConverse = getAllUserConverse;
 exports.getOfflineUserConverse = getOfflineUserConverse;
+exports.reloadConverseList = reloadConverseList;
 exports.addMsg = addMsg;
 exports.sendMsg = sendMsg;
 exports.updateMsg = updateMsg;

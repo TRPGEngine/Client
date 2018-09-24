@@ -98,7 +98,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.trpg"
+        applicationId "com.moonrailgun.trpg"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -116,21 +116,21 @@ android {
         }
     }
 
-    // 签名相关
-    signingConfigs {
-        release {
-            storeFile file(MYAPP_RELEASE_STORE_FILE)
-            storePassword MYAPP_RELEASE_STORE_PASSWORD
-            keyAlias MYAPP_RELEASE_KEY_ALIAS
-            keyPassword MYAPP_RELEASE_KEY_PASSWORD
-        }
-    }
+    // // 签名相关
+    // signingConfigs {
+    //     release {
+    //         storeFile file(MYAPP_RELEASE_STORE_FILE)
+    //         storePassword MYAPP_RELEASE_STORE_PASSWORD
+    //         keyAlias MYAPP_RELEASE_KEY_ALIAS
+    //         keyPassword MYAPP_RELEASE_KEY_PASSWORD
+    //     }
+    // }
 
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.release // 使用签名
+            // signingConfig signingConfigs.release // 使用签名
         }
     }
     // applicationVariants are e.g. debug, release
@@ -149,6 +149,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-image-picker')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules

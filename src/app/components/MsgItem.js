@@ -6,6 +6,7 @@ const {
 } = require('react-native');
 const sb = require('react-native-style-block');
 const appConfig = require('../config.app');
+const { TAvatar } = require('./TComponent');
 
 class MsgItem extends React.Component {
   render() {
@@ -31,17 +32,17 @@ class MsgItem extends React.Component {
       )
     }else {
       let senderInfo = this.props.senderInfo;
+      let senderUUID = this.props.senderUUID;
       let isSelf = this.props.isSelf;
-      // let avatar = isSelf ? selfInfo.get('avatar') : usercache.getIn([item.get('sender_uuid'), 'avatar'])
-      let avatar = senderInfo.get('avatar') ? {uri: senderInfo.get('avatar')} : appConfig.defaultImg.user;
+      let defaultIcon = senderUUID === 'trpgsystem' ? appConfig.defaultImg.trpgsystem : appConfig.defaultImg.user;
+      let avatar = senderInfo.get('avatar') ? senderInfo.get('avatar') : defaultIcon;
+      let name = senderInfo.get('nickname') || senderInfo.get('username');
 
       return (
         <View style={[...styles.itemView, isSelf?{flexDirection: 'row-reverse'}:null]}>
-          <Image style={styles.itemAvatar} source={avatar} />
+          <TAvatar style={styles.itemAvatar} uri={avatar} name={name} height={40} width={40} />
           <View style={styles.itemBody}>
-            <Text style={[...styles.itemName, isSelf?{textAlign:'right'}:null]}>
-              {senderInfo.get('nickname') || senderInfo.get('username')}
-            </Text>
+            <Text style={[...styles.itemName, isSelf?{textAlign:'right'}:null]}>{name}</Text>
             <Text style={[...styles.itemMsg, isSelf?{alignSelf: 'flex-end'}:null]}>{message}</Text>
           </View>
         </View>
@@ -56,7 +57,6 @@ const styles = {
     sb.padding(10, 10),
   ],
   itemAvatar: [
-    sb.size(40, 40),
     sb.radius(20),
   ],
   itemBody: [

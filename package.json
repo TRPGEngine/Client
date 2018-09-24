@@ -1,6 +1,6 @@
 {
   "name": "trpg-game-client",
-  "version": "0.0.6",
+  "version": "0.0.9",
   "description": "",
   "main": "./dist/entry.js",
   "scripts": {
@@ -45,12 +45,13 @@
     "react-fileupload": "^2.4.0",
     "react-image-lightbox": "^5.0.0",
     "react-native": "0.52.0",
+    "react-native-image-picker": "^0.26.10",
     "react-native-photo-browser": "^0.4.0",
     "react-native-root-toast": "^3.0.1",
     "react-native-storage": "^0.2.2",
     "react-native-style-block": "0.0.4",
-    "react-navigation": "^2.6.2",
-    "react-navigation-redux-helpers": "^1.1.2",
+    "react-navigation": "^2.12.0",
+    "react-navigation-redux-helpers": "^2.0.5",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^4.0.8",
@@ -62,9 +63,11 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "socket.io-client": "^2.1.1",
+    "str2int": "^1.0.0",
     "tinycon": "^0.6.8",
     "tinymce": "^4.8.0",
-    "trpg-actor-template": "github:TRPGEngine/ActorTemplate"
+    "trpg-actor-template": "github:TRPGEngine/ActorTemplate",
+    "wangeditor": "^3.1.1"
   },
   "devDependencies": {
     "babel": "^6.23.0",
@@ -73,10 +76,10 @@
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-inline-environment-variables": "^0.2.0",
     "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-native": "^4.0.0",
-    "babel-preset-stage-3": "^6.24.1",
     "copy-webpack-plugin": "^4.5.2",
     "cross-env": "^5.2.0",
     "css-loader": "^0.28.11",

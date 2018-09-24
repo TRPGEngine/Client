@@ -11,7 +11,7 @@ const sb = require('react-native-style-block');
 const dateHelper = require('../../utils/dateHelper');
 const appConfig = require('../config.app');
 const ConvItem = require('../components/ConvItem');
-const { getConverses, switchConverse } = require('../../redux/actions/chat');
+const { reloadConverseList, switchConverse } = require('../../redux/actions/chat');
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -93,7 +93,7 @@ class HomeScreen extends React.Component {
     var timer = setTimeout(() => {
       this.setState({isRefreshing: false});
     }, 10000);//10秒后自动取消
-    this.props.dispatch(getConverses(() => {
+    this.props.dispatch(reloadConverseList(() => {
       this.setState({isRefreshing: false});
       clearTimeout(timer);
     }));

@@ -17,7 +17,7 @@ const options = {
 }
 
 exports.emojify = function(str, opt) {
-  return emojify(str, Object.assign({}, opt, options));
+  return emojify(str, Object.assign({}, options, opt));
 }
 
 exports.getCodeList = function() {

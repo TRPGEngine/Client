@@ -2,6 +2,7 @@ import { NavigationActions, StackActions } from 'react-navigation';
 import { AppNavigator } from '../../app/router';
 const {
   LOGIN_SUCCESS,
+  LOGIN_TOKEN_SUCCESS,
   LOGOUT,
   SWITCH_NAV,
   REPLACE_NAV,
@@ -15,6 +16,7 @@ module.exports = function nav(state = initialNavState, action) {
   let nextState;
   switch (action.type) {
     case LOGIN_SUCCESS:
+    case LOGIN_TOKEN_SUCCESS:
       nextState = AppNavigator.router.getStateForAction(
         StackActions.reset({
           index: 0,

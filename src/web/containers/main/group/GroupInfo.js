@@ -58,35 +58,82 @@ class GroupInfo extends React.Component {
     let originAvatar = avatar.replace('/thumbnail', '');
     return (
       <div className="group-info">
-        <div className="group-props">
-          <div><ImageViewer originImageUrl={originAvatar}><img src={avatar || config.defaultImg.group} /></ImageViewer></div>
-          <div><span>团唯一标识: </span><span className="uuid">{groupInfo.get('uuid')}</span></div>
-          <div><span>团名:</span><span>{groupInfo.get('name')}</span></div>
-          <div><span>团副名:</span><span>{groupInfo.get('sub_name')}</span></div>
-          <div><span>团状态:</span><span>{groupInfo.get('status') ? '开团中' : '闭团中'}</span></div>
-          <div><span>团主:</span><span>{usercache.getIn([groupInfo.get('owner_uuid'), 'nickname'])}</span></div>
-          <div><span>团人物卡数:</span><span>{groupInfo.get('group_actors').size} 张</span></div>
-          <div><span>团成员数:</span><span>{groupInfo.get('group_members').size} 人</span></div>
-          <div><span>团管理数:</span><span>{groupInfo.get('managers_uuid').size} 人</span></div>
-          <div><span>团地图数:</span><span>{groupInfo.get('maps_uuid').size} 张</span></div>
-          <div><span>团简介:</span><span className="desc"><pre>{groupInfo.get('desc')}</pre></span></div>
+        <div className="group-info-cells">
+          <div className="group-info-cell group-avatar">
+            <ImageViewer originImageUrl={originAvatar}><img src={avatar || config.defaultImg.group} /></ImageViewer>
+            <div>
+              <p>{groupInfo.get('name')}</p>
+              <p className="group-subname" title={groupInfo.get('sub_name')}>{groupInfo.get('sub_name')}</p>
+            </div>
+          </div>
         </div>
+        <div className="group-info-cells">
+          <div className="group-info-cell">
+            <span>团唯一标识:</span>
+            <span className="uuid">{groupInfo.get('uuid')}</span>
+          </div>
+          <div className="group-info-cell">
+            <span>团状态:</span>
+            <span>{groupInfo.get('status') ? '开团中' : '闭团中'}</span>
+          </div>
+        </div>
+        <div className="group-info-cells">
+          <div className="group-info-cell">
+            <span>团长:</span>
+            <span>{usercache.getIn([groupInfo.get('owner_uuid'), 'nickname'])}</span>
+          </div>
+          <div className="group-info-cell">
+            <span>团管理数:</span>
+            <span>{groupInfo.get('managers_uuid').size} 人</span>
+          </div>
+          <div className="group-info-cell">
+            <span>团成员数:</span>
+            <span>{groupInfo.get('group_members').size} 人</span>
+          </div>
+          <div className="group-info-cell">
+            <span>团人物卡数:</span>
+            <span>{groupInfo.get('group_actors').size} 张</span>
+          </div>
+          <div className="group-info-cell">
+            <span>团地图数:</span>
+            <span>{groupInfo.get('maps_uuid').size} 张</span>
+          </div>
+          <div className="group-info-cell">
+            <span>团简介:</span>
+            <span className="desc"><pre>{groupInfo.get('desc')}</pre></span>
+          </div>
+        </div>
+
         {
           this.props.userUUID === groupInfo.get('owner_uuid') ? (
-            <div className="group-actions">
-              {
-                groupInfo.get('status') ? (
-                  <button onClick={() => this._handleSwitchGroupStatus(false)}>闭团</button>
-                ) : (
-                  <button onClick={() => this._handleSwitchGroupStatus(true)}>开团</button>
-                )
-              }
-              <button onClick={() => this._handleEditGroup()}>编辑团</button>
-              <button onClick={() => this._handleDismissGroup()}>解散团</button>
+            <div>
+              <div className="group-info-cells">
+                <div className="group-info-cell">
+                  {
+                    groupInfo.get('status') ? (
+                      <button onClick={() => this._handleSwitchGroupStatus(false)}>闭团</button>
+                    ) : (
+                      <button onClick={() => this._handleSwitchGroupStatus(true)}>开团</button>
+                    )
+                  }
+                </div>
+              </div>
+              <div className="group-info-cells">
+                <div className="group-info-cell">
+                  <button onClick={() => this._handleEditGroup()}>编辑团</button>
+                </div>
+                <div className="group-info-cell">
+                  <button onClick={() => this._handleDismissGroup()}>解散团</button>
+                </div>
+              </div>
             </div>
           ) : (
-            <div className="group-actions">
-              <button onClick={() => this._handleQuitGroup()}>退出团</button>
+            <div>
+              <div className="group-info-cells">
+                <div className="group-info-cell">
+                  <button onClick={() => this._handleQuitGroup()}>退出团</button>
+                </div>
+              </div>
             </div>
           )
         }

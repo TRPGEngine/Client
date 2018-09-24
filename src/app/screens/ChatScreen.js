@@ -111,6 +111,7 @@ class ChatScreen extends React.Component {
               return (
                 <MsgItem
                   isSelf={isSelf}
+                  senderUUID={item.sender_uuid}
                   senderInfo={senderInfo}
                   data={item}
                 />
@@ -121,8 +122,10 @@ class ChatScreen extends React.Component {
             <TInput
               style={styles.msgInput}
               onChangeText={(inputMsg) => this.setState({inputMsg})}
+              multiline={true}
               value={this.state.inputMsg}
             />
+            {/* TODO: 需要修改为微信那种没有文本内容则是+如果有则是发送按钮 */}
             <Button
               onPress={() => this._handleSendMsg()}
               title="  发送  "

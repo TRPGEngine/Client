@@ -25,6 +25,7 @@ class GroupMember extends React.Component {
         let isManager = groupInfo.get('managers_uuid').indexOf(uuid) >= 0;
         let isOwner = groupInfo.get('owner_uuid') === uuid;
         let auth = isOwner?'owner':isManager?'manager':'none';
+        let name = user.get('nickname') || user.get('username');
         return (
           <tr
             key={`group-member#${this.props.selectedGroupUUID}#${uuid}`}
@@ -34,10 +35,10 @@ class GroupMember extends React.Component {
               <i className="iconfont">&#xe648;</i>
             </td>
             <td className="avatar">
-              <img src={user.get('avatar') || config.defaultImg.user} />
+              <img src={user.get('avatar') || config.defaultImg.getUser(name)} />
             </td>
             <td className="name">
-              {user.get('nickname') || user.get('username')}
+              {name}
             </td>
             <td className="last-login">
               {last_login}

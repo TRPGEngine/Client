@@ -76,13 +76,14 @@ class FindResultItem extends React.Component {
     let type = this.props.type || 'user';
 
     if(type === 'user') {
+      let name = info.nickname || info.username
       return (
         <div className="find-result-item">
           <div className="avatar">
-            <img src={info.avatar || config.defaultImg.user} />
+            <img src={info.avatar || config.defaultImg.getUser(name)} />
           </div>
           <div className="profile">
-            <span className="username">{info.nickname || info.username}</span>
+            <span className="username">{name}</span>
             <span className="uuid">{info.uuid}</span>
           </div>
           <div className="action">

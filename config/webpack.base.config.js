@@ -23,6 +23,7 @@ if(process.env.PLATFORM !== 'app') {
   arrRemove(vendors, 'apsl-react-native-button');
   arrRemove(vendors, 'react-native');
   arrRemove(vendors, 'react-native-photo-browser');
+  arrRemove(vendors, 'react-native-image-picker');
   arrRemove(vendors, 'react-native-root-toast');
   arrRemove(vendors, 'react-native-storage');
   arrRemove(vendors, 'react-native-style-block');
@@ -58,7 +59,7 @@ module.exports = {
         //   path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
         // ],
         query: {
-          presets: ['es2015', 'react', 'stage-3'],
+          presets: ['env', 'react'],
           plugins: [
             ['transform-runtime', {
               helpers: false,
@@ -78,6 +79,7 @@ module.exports = {
     electron: 'require(\'electron\')',
     'react-native': 'require(\'react-native\')',
     './nav': 'require(\'./nav\')',
+    '../../app/router': 'require(\'../../app/router\')', // for redux.configureStore
     'react-navigation-redux-helpers': 'require(\'react-navigation-redux-helpers\')',
   },
 

@@ -1,5 +1,6 @@
 const React = require('react');
 const { sendErrorReport } = require('../../utils/errorReport');
+const config = require('../../../config/project.config.js');
 
 require('./ErrorBoundary.scss');
 
@@ -14,8 +15,9 @@ class ErrorBoundary extends React.Component {
     this.setState({ hasError: true });
     console.warn('捕获错误, 等待发送错误报告\n', error, info);
     sendErrorReport({
-      message:  String(error),
-      stack: String(info.componentStack)
+      message: String(error),
+      stack: String(info.componentStack),
+      version: config.version,
     })
   }
 

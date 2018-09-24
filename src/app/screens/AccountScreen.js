@@ -4,13 +4,19 @@ const {
   View,
   Text,
   Image,
+  TouchableOpacity,
+  Linking,
 } = require('react-native');
 const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
+const config = require('../../../config/project.config');
 const appConfig = require('../config.app');
 const { logout } = require('../../redux/actions/user');
+const { openWebview } = require('../../redux/actions/nav');
 const ListCell = require('../components/ListCell');
-const { TButton } = require('../components/TComponent');
+const { TButton, TAvatar } = require('../components/TComponent');
+const checkVersion = require('../../utils/checkVersion');
+const appUtils = require('../../utils/apputils');
 
 class AccountScreen extends React.Component {
   static navigationOptions = {
@@ -21,31 +27,66 @@ class AccountScreen extends React.Component {
     ),
   };
 
+  _handleModifyProfile() {
+    this.props.dispatch(NavigationActions.navigate({routeName: 'ProfileModify'}));
+  }
+
   _handleLogout() {
     this.props.dispatch(logout());
   }
 
   render() {
-    let userInfo = this.props.userInfo;
-    let avatar = userInfo.get('avatar') ? {uri: userInfo.get('avatar')} : appConfig.defaultImg.user;
+    const userInfo = this.props.userInfo;
+    let avatar = userInfo.get('avatar') || appConfig.defaultImg.user;
+    let name = userInfo.get('nickname') || userInfo.get('username');
     return (
       <View>
-        <View style={styles.userInfo}>
-          <Image source={avatar} style={styles.avatar} />
-          <View>
-            <Text style={styles.username}>{userInfo.get('nickname') || userInfo.get('username')}</Text>
+        <TouchableOpacity style={styles.userInfo} onPress={() => this._handleModifyProfile()}>
+          <TAvatar uri={avatar} style={styles.avatar} name={name} height={60} width={60} />
+          <View style={{flex: 1}}>
+            <Text style={styles.username}>{name}</Text>
             <Text style={styles.userdesc}>{userInfo.get('sign')}</Text>
           </View>
+          <Text style={styles.arrow}>&#xe60e;</Text>
+        </TouchableOpacity>
+
+        <View style={styles.listView}>
+          <ListCell
+            title="发现"
+            icon="&#xe60b;"
+            color="cornflowerblue"
+            onPress={() => {
+              this.props.dispatch(openWebview(config.url.goddessfantasy));
+            }}
+          />
+          <ListCell
+            title="设置"
+            icon="&#xe609;"
+            color="gold"
+            onPress={() => {
+              this.props.dispatch(NavigationActions.navigate({ routeName: 'Settings' }));
+            }}
+          />
+        </View>
+        <View style={styles.listView}>
+          <ListCell
+            title="当前版本"
+            value={config.version}
+            onPress={() => {
+              checkVersion(function(isLatest) {
+                if(isLatest) {
+                  appUtils.toast('当前版本为最新版');
+                }else {
+                  appUtils.toast('检测到有新的版本, 1秒后自动跳转到项目主页');
+                  setTimeout(function() {
+                    Linking.openURL(config.github.projectUrl);
+                  }, 1000);
+                }
+              })
+            }}
+          />
         </View>
 
-        <ListCell
-          title="设置"
-          icon="&#xe609;"
-          color="gold"
-          onPress={() => {
-            this.props.dispatch(NavigationActions.navigate({ routeName: 'Settings' }));
-          }}
-        />
         <TButton
           type="error"
           style={styles.logoutBtn}
@@ -72,7 +113,6 @@ const styles = {
     {height: 80},
   ],
   avatar: [
-    sb.size(60, 60),
     sb.radius(30),
     {marginRight: 10},
   ],
@@ -81,6 +121,14 @@ const styles = {
   ],
   userdesc: [
     sb.color('#999'),
+  ],
+  arrow: [
+    {fontFamily: 'iconfont', marginRight: 6},
+    sb.font(18),
+    sb.color('#ccc'),
+  ],
+  listView: [
+    {marginBottom: 10}
   ],
 }
 

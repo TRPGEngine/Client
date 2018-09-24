@@ -1,11 +1,11 @@
 const {
   CREATE_GROUP_SUCCESS,
-  UPDATE_CONVERSES_MSGLIST_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
   UPDATE_GROUP_INFO_SUCCESS,
   FIND_GROUP_REQUEST,
   FIND_GROUP_SUCCESS,
   REQUEST_JOIN_GROUP_SUCCESS,
+  ADD_GROUP_SUCCESS,
   AGREE_GROUP_REQUEST_SUCCESS,
   SEND_GROUP_INVITE_SUCCESS,
   AGREE_GROUP_INVITE_SUCCESS,
@@ -30,7 +30,7 @@ const {
 const config = require('../../../config/project.config');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
-const { addConverse, updateCardChatData } = require('./chat');
+const { addConverse, updateConversesMsglist, updateCardChatData } = require('./chat');
 const { checkUser, checkTemplate } = require('../../utils/cacheHelper');
 const { showLoading, hideLoading, showAlert, hideModal, hideAlert, hideSlidePanel } = require('./ui');
 
@@ -66,7 +66,9 @@ let initGroupInfo = function(dispatch, group) {
     if(data.result) {
       let actors = data.actors;
       for (let ga of actors) {
-        checkTemplate(ga.actor.template_uuid)
+        ga.avatar = config.file.getAbsolutePath(ga.avatar);
+        ga.actor.avatar = config.file.getAbsolutePath(ga.actor.avatar);
+        checkTemplate(ga.actor.template_uuid);
       }
       dispatch({type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors})
     }else {
@@ -76,7 +78,7 @@ let initGroupInfo = function(dispatch, group) {
   // 获取团聊天日志
   api.emit('chat::getConverseChatLog', {converse_uuid: groupUUID}, function(data) {
     if(data.result) {
-      dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, convUUID: groupUUID, payload: data.list})
+      dispatch(updateConversesMsglist(groupUUID, data.list));
     }else {
       console.error('获取团聊天记录失败:', data.msg);
     }
@@ -161,6 +163,17 @@ exports.requestJoinGroup = function(group_uuid) {
         console.error(data.msg);
       }
     })
+  }
+}
+
+// 加入团
+exports.addGroup = function(group) {
+  return function(dispatch, getState) {
+    if(group) {
+      group.avatar = config.file.getAbsolutePath(group.avatar);
+      dispatch({type: ADD_GROUP_SUCCESS, payload: group});
+      initGroupInfo(dispatch, group);
+    }
   }
 }
 
@@ -283,7 +296,10 @@ exports.addGroupActor = function(groupUUID, actorUUID) {
   return function(dispatch, getState) {
     return api.emit('group::addGroupActor', {groupUUID, actorUUID}, function(data) {
       if(data.result) {
-        dispatch({type: ADD_GROUP_ACTOR_SUCCESS, groupUUID, payload: data.groupActor});
+        let groupActor = data.groupActor;
+        groupActor.avatar = config.file.getAbsolutePath(groupActor.avatar);
+        groupActor.actor.avatar = config.file.getAbsolutePath(groupActor.actor.avatar);
+        dispatch({type: ADD_GROUP_ACTOR_SUCCESS, groupUUID, payload: groupActor});
         dispatch(hideModal());
         dispatch(showAlert('提交成功!'));
       }else {

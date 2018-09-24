@@ -223,6 +223,7 @@ class ProfileCard extends React.Component {
       )
 
       let avatar = this.props.userInfo.get('avatar') || '';
+      let name = this.props.userInfo.get('nickname') || this.props.userInfo.get('username');
 
       return (
         <div className="mask" onClick={(e) => e.stopPropagation()}>
@@ -239,11 +240,11 @@ class ProfileCard extends React.Component {
                         attachUUID={this.props.selectedUUID}
                         onUploadSuccess={(json) => this._handleUpdateAvatar(json.url)}
                       >
-                        <img src={avatar || config.defaultImg.user} />
+                        <img src={avatar || config.defaultImg.getUser(name)} />
                       </ImageUploader>
                     ) : (
                       <ImageViewer originImageUrl={avatar.replace('/thumbnail', '')}>
-                        <img src={avatar || config.defaultImg.user} />
+                        <img src={avatar || config.defaultImg.getUser(name)} />
                       </ImageViewer>
                     )
                   }

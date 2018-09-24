@@ -1,6 +1,4 @@
-const axios = require('axios');
-const fileUrl = require('../api/trpg.api.js').fileUrl;
-const uploadPicHost = 'https://sm.ms/api/upload';
+const imageUploader = require('./imageUploader');
 
 exports.isPasteImage = function(items) {
   let i = 0
@@ -15,26 +13,6 @@ exports.isPasteImage = function(items) {
   return false
 }
 
-// https://sm.ms/api/upload
 exports.upload = function(userUUID, file) {
-  let form = new FormData();
-  form.append('smfile', file);
-  form.append('ssl', true);
-  form.append('format', 'json');
-  return axios({
-    url: uploadPicHost,
-    method: 'post',
-    data: form,
-  }).then(res => {
-    let data = res.data;
-    if(data.code === 'success') {
-      return axios.post(fileUrl + '/chatimg/smms', data.data, {headers: {'user-uuid': userUUID}}).then(res => res.data);
-    }else {
-      console.error(data);
-      return false;
-    }
-  }).catch(err => {
-    console.error(err);
-    return false;
-  });
+  return imageUploader.toNetwork(userUUID, file);
 }

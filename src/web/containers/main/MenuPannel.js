@@ -55,13 +55,13 @@ class MenuPannel extends React.Component {
   }
 
   render() {
-    let { className, avatar, selectedMenu } = this.props;
+    let { className, avatar, name, selectedMenu } = this.props;
     return (
       <div className={className}>
         <div className="sidebar">
           <div className="profile">
             <div className="avatar" onClick={() => this.props.dispatch(showProfileCard())}>
-              <img src={avatar || config.defaultImg.user} />
+              <img src={avatar || config.defaultImg.getUser(name)} />
             </div>
           </div>
           <div className="menus">
@@ -94,6 +94,7 @@ class MenuPannel extends React.Component {
 module.exports = connect(
   state => ({
     avatar: state.getIn(['user', 'info', 'avatar']),
+    name: state.getIn(['user', 'info', 'nickname']) || state.getIn(['user', 'info', 'username']),
     selectedMenu: state.getIn(['ui', 'menuIndex']),
     selectedPannel: state.getIn(['ui', 'menuPannel'])
   })

@@ -220,7 +220,7 @@ module.exports = connect(
       msgList: state.getIn(['chat', 'converses', selectedUUID, 'msgList']).sortBy((item) => item.get('date')),
       userUUID: state.getIn(['user','info','uuid']),
       usercache: state.getIn(['cache', 'user']),
-      selfGroupActors: groupInfo.get('group_actors').filter(i => i.get('enabled')&&selfActors.indexOf(i.get('actor_uuid'))>=0),
+      selfGroupActors: groupInfo.get('group_actors', []).filter(i => i.get('enabled')&&selfActors.indexOf(i.get('actor_uuid'))>=0),
       selectedGroupActorUUID: groupInfo.getIn(['extra', 'selected_group_actor_uuid']),
     }
   }
