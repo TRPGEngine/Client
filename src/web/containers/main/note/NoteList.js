@@ -41,8 +41,7 @@ class NoteList extends React.Component {
         >
           <div className="note-title">
             <span>{item.title}</span>
-            {/*TODO: 菊花用于笔记同步云端*/}
-            <Spinner />
+            <Spinner visible={this.props.isNoteSync} />
           </div>
 
           <div className="note-update-time">
@@ -102,5 +101,6 @@ module.exports = connect(
   state => ({
     selectedNoteUUID: state.getIn(['note', 'selectedNoteUUID']),
     noteList: state.getIn(['note', 'noteList']),
+    isNoteSync: state.getIn(['note', 'isSync']),
   })
 )(NoteList);
