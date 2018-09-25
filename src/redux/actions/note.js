@@ -51,7 +51,7 @@ let syncList = [];
 let trySyncNote = function(dispatch, payload) {
   if(isSync === false) {
     isSync = true;
-    dispatch({type: SYNC_NOTE_REQUEST});
+    dispatch({type: SYNC_NOTE_REQUEST, uuid: payload.uuid});
     api.emit('note::save', {
       noteUUID: payload.uuid,
       noteTitle: payload.title,

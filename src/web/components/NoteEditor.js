@@ -8,7 +8,7 @@ class NoteEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorContent: props.value,
+      editorContent: '',
     }
   }
 
@@ -52,6 +52,7 @@ class NoteEditor extends React.Component {
     };
 
     editor.create();
+    editor.txt.html(this.props.value); // 赋值内容
   }
 
   render() {

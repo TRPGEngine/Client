@@ -16,6 +16,7 @@ const initialState = immutable.fromJS({
   noteList: {},
   selectedNoteUUID: '',
   isSync: false,
+  isSyncUUID: '',
 })
 
 function getBlankNote() {
@@ -55,10 +56,10 @@ module.exports = function ui(state = initialState, action) {
     case SWITCH_NOTE:
       return state.set('selectedNoteUUID', action.noteUUID);
     case SYNC_NOTE_REQUEST:
-      return state.set('isSync', true);
+      return state.set('isSync', true).set('isSyncUUID', action.uuid);
     case SYNC_NOTE_SUCCESS:
     case SYNC_NOTE_FAILED:
-      return state.set('isSync', false);
+      return state.set('isSync', false).set('isSyncUUID', '');
     default:
       return state;
   }
