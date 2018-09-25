@@ -8,7 +8,7 @@ class Spinner extends React.Component {
       visible = true;
     }
     return visible ? (
-      <div className="spinner" style={this.props.style}></div>
+      <div className="single-spinner" style={this.props.style}></div>
     ) : null
   }
 }
