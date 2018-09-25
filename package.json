@@ -36,6 +36,8 @@
     "chalk": "^2.4.1",
     "immutable": "^3.8.2",
     "is-uuid": "^1.0.2",
+    "jcore-react-native": "^1.2.10",
+    "jpush-react-native": "^2.2.9",
     "md5": "^2.2.1",
     "moment": "^2.22.2",
     "nprogress": "^0.2.0",

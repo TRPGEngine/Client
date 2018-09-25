@@ -9,6 +9,10 @@ electron:
 electron 注册menu 解决mac下复制粘贴问题
 增加截图功能(electron-screenshot分支)
 
+react-native:
+ios:
+极光推送ios部分没有处理:https://www.npmjs.com/package/jpush-react-native
+
 版本更新
 react升级到最新版
 处理一下react-select写法

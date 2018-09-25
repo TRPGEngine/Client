@@ -103,6 +103,11 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [
+                JPUSH_APPKEY: "4ebde26529796c17dcffb886",
+                APP_CHANNEL : "default"
+        ]
+
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -149,6 +154,8 @@ android {
 }
 
 dependencies {
+    compile project(':jcore-react-native')
+    compile project(':jpush-react-native')
     compile project(':react-native-image-picker')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
