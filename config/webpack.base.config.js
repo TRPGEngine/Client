@@ -29,6 +29,8 @@ if(process.env.PLATFORM !== 'app') {
   arrRemove(vendors, 'react-native-style-block');
   arrRemove(vendors, 'react-navigation');
   arrRemove(vendors, 'react-navigation-redux-helpers');
+  arrRemove(vendors, 'jcore-react-native');
+  arrRemove(vendors, 'jpush-react-native');
 }
 
 console.log('vendor list:', vendors);
