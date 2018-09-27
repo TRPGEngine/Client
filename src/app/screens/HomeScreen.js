@@ -83,7 +83,7 @@ class HomeScreen extends React.Component {
       )
     } else {
       return (
-        <Text>{this.props.conversesDesc}</Text>
+        <Text style={styles.tipText}>{this.props.conversesDesc}</Text>
       )
     }
   }
@@ -124,7 +124,12 @@ const styles = {
   convList: [
     sb.bgColor(),
     // sb.size('100%', 400),
-  ]
+  ],
+  tipText: [
+    sb.textAlign('center'),
+    sb.margin(80, 0, 0, 0),
+    sb.color('#999'),
+  ],
 }
 
 module.exports = connect(
