@@ -62,7 +62,6 @@ class HomeScreen extends React.Component {
 
       return (
         <FlatList
-          style={styles.convList}
           refreshControl={
             <RefreshControl
               refreshing={this.state.isRefreshing}
@@ -113,7 +112,7 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         {this.getList()}
       </View>
     )
@@ -121,9 +120,8 @@ class HomeScreen extends React.Component {
 }
 
 const styles = {
-  convList: [
-    sb.bgColor(),
-    // sb.size('100%', 400),
+  container: [
+    sb.flex(),
   ],
   tipText: [
     sb.textAlign('center'),

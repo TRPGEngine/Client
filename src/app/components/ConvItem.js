@@ -40,6 +40,7 @@ const styles = {
     sb.border('Bottom', 0.5, '#eeeeee', 'solid'),
     sb.direction('row'),
     sb.padding(10, 6),
+    sb.bgColor(),
   ],
   avatar: [
     sb.radius(20),
