@@ -96,7 +96,7 @@ const AppNavigator = createStackNavigator({
   AddFriend: {
     screen: AddFriendScreen,
     navigationOptions: {
-      headerTitle: '添加朋友'
+      headerTitle: '添加联系人'
     },
   },
   Profile: {

@@ -15,6 +15,7 @@ const {
   TAvatar,
 } = require('../components/TComponent');
 const { findUser } = require('../../redux/actions/user');
+const { findGroup } = require('../../redux/actions/group');
 
 class AddFriendScreen extends React.Component {
   constructor(props) {
@@ -22,19 +23,25 @@ class AddFriendScreen extends React.Component {
     this.state = {
       searchValue: '',
       showSearchResult: false,
+      searchType: 'user',
     };
   }
 
   _handleSearchUser() {
-    console.log('搜索用户:', this.state.searchValue);
+    let searchValue = this.state.searchValue.trim();
+    console.log('搜索用户:', searchValue);
     Keyboard.dismiss();
-    this.setState({showSearchResult: true});
-    this.props.dispatch(findUser(this.state.searchValue, 'username'));
+    this.setState({showSearchResult: true, searchType: 'user'});
+    this.props.dispatch(findUser(searchValue, 'username'));
   }
 
   _handleSearchGroup() {
-    console.log('搜索团:', this.state.searchValue);
+    let searchValue = this.state.searchValue.trim();
+    console.log('搜索团:', searchValue);
     Keyboard.dismiss();
+
+    this.setState({showSearchResult: true, searchType: 'group'});
+    this.props.dispatch(findGroup(searchValue, 'groupname'));
   }
 
   getSearchResult() {
@@ -61,27 +68,57 @@ class AddFriendScreen extends React.Component {
           <Text style={styles.searchResultTip}>正在搜索中...</Text>
         )
       }else {
-        let findingResult = this.props.findingResult ? this.props.findingResult.toJS() : [];
+        // 显示搜索结果列表
+        if(this.state.searchType === 'user') {
+          let userFindingResult = this.props.userFindingResult ? this.props.userFindingResult.toJS() : [];
 
-        return (
-          <FlatList
-            style={styles.searchResultList}
-            data={findingResult}
-            keyExtractor={(item, index) => item.uuid + index}
-            renderItem={({item}) => {
-              let name = item.nickname || item.username;
-              return (
-                <TouchableOpacity
-                  style={styles.searchResultListItem}
-                  onPress={() => alert('TODO:显示资料' + item.uuid)}
-                >
-                  <TAvatar style={styles.searchResultListItemAvatar} uri={item.avatar} name={name} width={36} height={36} />
-                  <Text>{name}</Text>
-                </TouchableOpacity>
-              )
-            }}
-          />
-        )
+          return (
+            <FlatList
+              style={styles.searchResultList}
+              data={userFindingResult}
+              keyExtractor={(item, index) => item.uuid + index}
+              renderItem={({item}) => {
+                let name = item.nickname || item.username;
+                return (
+                  <TouchableOpacity
+                    style={styles.searchResultListItem}
+                    onPress={() => alert('TODO:显示用户资料' + item.uuid)}
+                  >
+                    <TAvatar style={styles.searchResultListItemAvatar} uri={item.avatar} name={name} width={36} height={36} />
+                    <Text>{name}</Text>
+                  </TouchableOpacity>
+                )
+              }}
+            />
+          )
+        }else if(this.state.searchType === 'group') {
+          let resultList = this.props.groupFindingResult ? this.props.groupFindingResult.toJS() : [];
+
+          return (
+            <FlatList
+              style={styles.searchResultList}
+              data={resultList}
+              keyExtractor={(item, index) => item.uuid + index}
+              renderItem={({item}) => {
+                let name = item.name;
+                return (
+                  <TouchableOpacity
+                    style={styles.searchResultListItem}
+                    onPress={() => alert('TODO:显示团资料' + item.uuid)}
+                  >
+                    <TAvatar style={styles.searchResultListItemAvatar} uri={item.avatar} name={name} width={36} height={36} />
+                    <Text>{name}</Text>
+                  </TouchableOpacity>
+                )
+              }}
+            />
+          )
+        }else {
+          return (
+            <Text>搜索结果异常</Text>
+          )
+        }
+
       }
     }
   }
@@ -173,7 +210,8 @@ const styles = {
 
 module.exports = connect(
   state => ({
-    isFinding: state.getIn(['user', 'isFindingUser']),
-    findingResult: state.getIn(['user', 'findingResult']),
+    isFinding: state.getIn(['user', 'isFindingUser']) || state.getIn(['group', 'isFindingGroup']),
+    userFindingResult: state.getIn(['user', 'findingResult']),
+    groupFindingResult: state.getIn(['group', 'findingResult']),
   })
 )(AddFriendScreen);
