@@ -1,10 +1,11 @@
+注意:
 尚未将react-router整合到redux环境中
 reducer应为纯函数。将一些状态检测放到action中（通过redux-thunk)
 需要加上极光推送的服务（主要是本地通知这一块。原生相关的rn没有直接只是时限本地通知的）
 
-服务器上笔记的存储
-修改团信息的样式
-需要修复一下人物卡列表无法正常显示上传头像的问题
+桌面版:
+需要做笔记分享相关代码
+需要做笔记本图片上传的处理
 
 electron:
 electron 注册menu 解决mac下复制粘贴问题
@@ -14,6 +15,6 @@ react-native:
 ios:
 极光推送ios部分没有处理:https://www.npmjs.com/package/jpush-react-native
 
-版本更新
+版本更新:
 react升级到最新版
 处理一下react-select写法
