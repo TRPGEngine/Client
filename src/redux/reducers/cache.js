@@ -5,12 +5,14 @@ const {
   GET_TEMPLATE_INFO,
   GET_ACTOR_INFO,
   GET_TEMPLATE_SUCCESS,
+  GET_GROUP_INFO_SUCCESS,
 } = require('../constants');
 
 const initialState = immutable.fromJS({
   user: {},
   template: {},
   actor: {},
+  group: {},
 });
 
 module.exports = function cache(state = initialState, action) {
@@ -32,6 +34,8 @@ module.exports = function cache(state = initialState, action) {
         }
         return state;
       }
+    case GET_GROUP_INFO_SUCCESS:
+      return state.setIn(['group', action.payload.uuid], immutable.fromJS(action.payload));
     default:
       return state;
   }

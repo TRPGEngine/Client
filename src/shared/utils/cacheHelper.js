@@ -1,5 +1,6 @@
 const {
   getUserInfo,
+  getGroupInfo,
   getTemplateInfo,
 } = require('../../redux/actions/cache');
 const isUUID = require('is-uuid');
@@ -65,7 +66,7 @@ exports.getUserInfoCache = function(uuid) {
     let info = state.getIn(['cache', 'user', uuid]);
     if(!info) {
       if(isGettingUserInfoUUID.indexOf(uuid) === -1) {
-        // 没有正在获取
+        // 没有正在获取用户信息
         console.log('没有检测到该用户缓存记录, 自动获取', 'uuid:', uuid);
         store.dispatch(getUserInfo(uuid, () => {
           let index = isGettingUserInfoUUID.indexOf(uuid);
@@ -81,6 +82,34 @@ exports.getUserInfoCache = function(uuid) {
       return info;
     }
   }else {
-    throw new Error('checkUser func should bind store');
+    throw new Error('getUserInfoCache func should bind store');
+  }
+}
+
+let isGettingGroupInfoUUID = []; // 用于防止同时请求多个相同内容
+exports.getGroupInfoCache = function(uuid) {
+  let store = _store;
+  if(!!store && !!store.dispatch) {
+    const state = store.getState();
+    let info = state.getIn(['cache', 'group', uuid]);
+    if(!info) {
+      if(isGettingGroupInfoUUID,indexOf(uuid) === -1) {
+        // 没有正在获取团信息
+        console.log('没有检测到该团的缓存记录, 自动获取'， 'uuid:', uuid);
+        store.dispatch(getGroupInfo(uuid, () => {
+          let index = isGettingGroupInfoUUID.indexOf(uuid);
+          if(index !== -1) {
+            isGettingUserInfoUUID.splice(index, 1);
+          }
+        }));
+        isGettingGroupInfoUUID.push(uuid);
+      }
+
+      return immutable.Map();
+    }else {
+      return info;
+    }
+  }else {
+    throw new Error('getGroupInfoCache func should bind store');
   }
 }

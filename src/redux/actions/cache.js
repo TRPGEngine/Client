@@ -2,6 +2,7 @@ const {
   GET_USER_INFO,
   GET_TEMPLATE_INFO,
   GET_ACTOR_INFO,
+  GET_GROUP_INFO_SUCCESS,
 } = require('../constants');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
@@ -55,6 +56,25 @@ exports.getActorInfo = function(uuid) {
       }else {
         console.error(data.msg)
       }
+    })
+  }
+}
+
+exports.getGroupInfo = function(uuid, onCompleted) {
+  if(!uuid) {
+    throw new Error('getGroupInfo need uuid');
+  }
+
+  return function(dispatch, getState) {
+    return api.emit('group::getInfo', {uuid}, function(data) {
+      if(data.result) {
+        data.group.avatar = config.file.getAbsolutePath(data.group.avatar);
+        dispatch({type:GET_GROUP_INFO_SUCCESS, payload: data.group});
+      }else {
+        console.error(data.msg);
+      }
+
+      onCompleted && onCompleted(data);
     })
   }
 }

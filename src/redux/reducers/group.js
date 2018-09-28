@@ -31,7 +31,7 @@ const {
 } = require('../constants');
 
 const initialState = immutable.fromJS({
-  info: {},// 所有的group信息。包括加入的和未加入的
+  info: {},// 所有的group信息。包括加入的和未加入的 // TODO: 修改到cache里管理
   invites: [],// 邀请列表。里面是邀请对象
   groups: [],// 个人所有组的信息
   selectedGroupUUID: '',
