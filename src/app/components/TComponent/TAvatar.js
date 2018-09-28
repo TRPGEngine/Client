@@ -26,6 +26,10 @@ class TAvatar extends React.Component {
   }
 
   getColor(name) {
+    if (!name) {
+      return '#ffffff'; // 如果获取不到名字，则返回白色
+    }
+
     const color = config.defaultImg.color;
     const id = str2int(name);
     return color[id % color.length];
