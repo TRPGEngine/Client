@@ -41,9 +41,9 @@ class ChatScreen extends React.Component {
     this.props.navigation.setParams({
       headerRightFunc: () => {
         if(converseType === 'user') {
-          this.props.navigation.navigate('Profile', this.props.navigation.state.params)
+          this.props.navigation.navigate('Profile', this.props.navigation.state.params);
         }else {
-          alert('TODO: 显示团信息');
+          this.props.navigation.navigate('GroupProfile', this.props.navigation.state.params);
         }
       }
 		});

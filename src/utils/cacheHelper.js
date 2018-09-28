@@ -55,6 +55,10 @@ exports.loadcache = function() {
 // 更加优化的用户信息缓存获取
 let isGettingUserInfoUUID = []; // 用于防止同时请求多个相同内容
 exports.getUserInfoCache = function(uuid) {
+  if(uuid.toString().substr(0, 4) === 'trpg') {
+    return; // 不检测trpg开头的内置系统用户
+  }
+
   let store = _store;
   if(!!store && !!store.dispatch) {
     const state = store.getState();

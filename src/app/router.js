@@ -30,6 +30,7 @@ const ChatScreen = require('./screens/ChatScreen');
 const AddFriendScreen = require('./screens/AddFriendScreen');
 const SettingsScreen = require('./screens/SettingsScreen');
 const ProfileScreen = require('./screens/ProfileScreen');
+const GroupProfileScreen = require('./screens/GroupProfileScreen');
 const PhotoBrowserScreen = require('./screens/PhotoBrowserScreen');
 const ProfileModifyScreen = require('./screens/ProfileModifyScreen');
 const WebviewScreen = require('./screens/WebviewScreen');
@@ -103,6 +104,12 @@ const AppNavigator = createStackNavigator({
     screen: ProfileScreen,
     navigationOptions: ({navigation}) => ({
       headerTitle: navigation.state.params.name + ' 的个人信息',
+    }),
+  },
+  GroupProfile: {
+    screen: GroupProfileScreen,
+    navigationOptions: ({navigation}) => ({
+      headerTitle: navigation.state.params.name + ' 可以公开的情报',
     }),
   },
   PhotoBrowser: {
