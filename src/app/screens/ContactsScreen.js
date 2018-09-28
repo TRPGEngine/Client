@@ -8,6 +8,9 @@ const {
 } = require('react-native');
 const sb = require('react-native-style-block');
 const { NavigationActions } = require('react-navigation');
+const {
+  TIcon,
+} = require('../components/TComponent');
 const ContactsList = require('../components/ContactsList');
 
 class ContactsScreen extends React.Component {
@@ -29,14 +32,8 @@ class ContactsScreen extends React.Component {
         <View style={styles.header}>
           <TouchableOpacity style={styles.iconBtn} onPress={() => this._handlePressAddFriend()}>
             <View style={styles.iconBtnView}>
-              <Text style={[...styles.icon, sb.bgColor('#16a085')]}>&#xe604;</Text>
-              <Text>添加好友</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconBtn} onPress={() => alert('添加团')}>
-            <View style={styles.iconBtnView}>
-              <Text style={[...styles.icon, sb.bgColor('#d35400')]}>&#xe61c;</Text>
-              <Text>添加团</Text>
+              <TIcon style={[...styles.icon, sb.bgColor('#16a085')]} icon="&#xe61d;" />
+              <Text>寻找基友/姬友</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -62,16 +59,18 @@ const styles = {
   ],
   iconBtn: [
     sb.flex(),
-    sb.alignCenter(),
     sb.margin(10, 0),
+    sb.padding(0, 20),
   ],
   iconBtnView: [
+    sb.direction(),
     sb.alignCenter(),
   ],
   icon: [
     {color: 'white', fontFamily: 'iconfont', fontSize: 20, textAlign: 'center', lineHeight: 40},
     sb.size(40, 40),
-    sb.radius(20),
+    sb.radius(3),
+    sb.margin(0, 10, 0, 0),
   ],
   list: [
     sb.flex()

@@ -95,7 +95,7 @@ exports.getGroupInfoCache = function(uuid) {
     if(!info) {
       if(isGettingGroupInfoUUID,indexOf(uuid) === -1) {
         // 没有正在获取团信息
-        console.log('没有检测到该团的缓存记录, 自动获取'， 'uuid:', uuid);
+        console.log('没有检测到该团的缓存记录, 自动获取', 'uuid:', uuid);
         store.dispatch(getGroupInfo(uuid, () => {
           let index = isGettingGroupInfoUUID.indexOf(uuid);
           if(index !== -1) {
