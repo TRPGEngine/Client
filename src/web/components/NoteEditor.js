@@ -18,6 +18,7 @@ class NoteEditor extends React.Component {
     editor.customConfig.pasteFilterStyle = true;
     editor.customConfig.pasteIgnoreImg = false;
     editor.customConfig.debug = location.href.indexOf('wangeditor_debug_mode=1') > 0;
+    editor.customConfig.zIndex = 50;
     editor.customConfig.menus = [
       'head',  // 标题
       'bold',  // 粗体
