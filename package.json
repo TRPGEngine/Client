@@ -67,7 +67,6 @@
     "socket.io-client": "^2.1.1",
     "str2int": "^1.0.0",
     "tinycon": "^0.6.8",
-    "tinymce": "^4.8.0",
     "trpg-actor-template": "github:TRPGEngine/ActorTemplate",
     "wangeditor": "^3.1.1"
   },

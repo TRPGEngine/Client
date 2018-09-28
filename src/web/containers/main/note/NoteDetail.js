@@ -1,6 +1,5 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const TinyMCE = require('../../../components/TinyEditorComponent');
 const NoteEditor = require('../../../components/NoteEditor');
 const { saveNote } = require('../../../../redux/actions/note');
 
@@ -35,12 +34,6 @@ class NoteDetail extends React.Component {
             onBlur={() => this._handleSave()}
           />
         </div>
-        {/*<TinyMCE
-          id="note-editor"
-          content={this.props.note.content}
-          onEditorChange={(content) => this.setState({content: content})}
-          onEditorSave={content => this._handleSave()}
-        />*/}
         <NoteEditor
           value={this.state.content}
           onChange={(content) => this.setState({content})}
