@@ -1,5 +1,5 @@
 const axios = require('axios');
-const fileUrl = require('../api/trpg.api.js').fileUrl;
+const fileUrl = require('../../api/trpg.api.js').fileUrl;
 const uploadPicHost = 'https://sm.ms/api/upload';
 
 // https://sm.ms/api/upload

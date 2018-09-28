@@ -15,8 +15,8 @@ const { logout } = require('../../redux/actions/user');
 const { openWebview } = require('../../redux/actions/nav');
 const ListCell = require('../components/ListCell');
 const { TButton, TAvatar } = require('../components/TComponent');
-const checkVersion = require('../../utils/checkVersion');
-const appUtils = require('../../utils/apputils');
+const checkVersion = require('../../shared/utils/checkVersion');
+const appUtils = require('../../shared/utils/apputils');
 
 class AccountScreen extends React.Component {
   static navigationOptions = {

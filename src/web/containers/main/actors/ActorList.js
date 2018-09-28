@@ -3,7 +3,7 @@ const { connect } = require('react-redux');
 const at = require('trpg-actor-template');
 const TemplateSelect = require('./TemplateSelect');
 const ActorEdit = require('./ActorEdit');
-const apiHelper = require('../../../../utils/apiHelper');
+const apiHelper = require('../../../../shared/utils/apiHelper');
 const { showModal, showAlert } = require('../../../../redux/actions/ui');
 const { selectActor, removeActor, selectTemplate } = require('../../../../redux/actions/actor');
 

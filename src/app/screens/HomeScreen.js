@@ -8,7 +8,7 @@ const {
 } = require('react-native');
 const { NavigationActions } = require('react-navigation');
 const sb = require('react-native-style-block');
-const dateHelper = require('../../utils/dateHelper');
+const dateHelper = require('../../shared/utils/dateHelper');
 const appConfig = require('../config.app');
 const ConvItem = require('../components/ConvItem');
 const { reloadConverseList, switchConverse } = require('../../redux/actions/chat');

@@ -1,5 +1,5 @@
 const axios = require('axios');
-const config = require('../../config/project.config.js')
+const config = require('../../../config/project.config.js')
 
 function checkVersion(cb) {
   console.log('正在检查版本...');

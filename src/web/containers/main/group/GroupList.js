@@ -2,7 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../../../../config/project.config.js');
 const ConvItem = require('../../../components/ConvItem');
-const dateHelper = require('../../../../utils/dateHelper');
+const dateHelper = require('../../../../shared/utils/dateHelper');
 const { switchSelectGroup } = require('../../../../redux/actions/group');
 const GroupDetail = require('./GroupDetail');
 

@@ -15,7 +15,7 @@ const {
   UPDATE_ACTOR_SUCCESS,
 } = require('../constants');
 const config = require('../../../config/project.config');
-const { checkTemplate } = require('../../utils/cacheHelper');
+const { checkTemplate } = require('../../shared/utils/cacheHelper');
 const { showLoading, hideLoading, showAlert, hideAlert, hideModal } = require('./ui');
 
 let setTemplate = function setTemplate(uuid, name, desc, avatar, info) {

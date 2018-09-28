@@ -26,7 +26,7 @@ const config = require('../../../config/project.config');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const { showLoading, hideLoading, showAlert } = require('./ui');
-const { checkUser } = require('../../utils/cacheHelper');
+const { checkUser } = require('../../shared/utils/cacheHelper');
 const { setUserSettings, setSystemSettings } = require('./settings');
 
 

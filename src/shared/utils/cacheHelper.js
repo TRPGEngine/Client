@@ -1,7 +1,7 @@
 const {
   getUserInfo,
   getTemplateInfo,
-} = require('../redux/actions/cache');
+} = require('../../redux/actions/cache');
 const isUUID = require('is-uuid');
 const immutable = require('immutable');
 

@@ -9,7 +9,7 @@ const sb = require('react-native-style-block');
 const ImagePicker = require('react-native-image-picker');
 const axios = require('axios');
 const fileUrl = require('../../api/trpg.api.js').fileUrl;
-const { toast } = require('../../utils/apputils');
+const { toast } = require('../../shared/utils/apputils');
 const { updateInfo } = require('../../redux/actions/user');
 const {
   TAvatar

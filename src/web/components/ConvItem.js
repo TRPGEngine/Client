@@ -1,7 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const { connect } = require('react-redux');
-const { isUserUUID } = require('../../utils/uuid');
+const { isUserUUID } = require('../../shared/utils/uuid');
 const { removeConverse } = require('../../redux/actions/chat');
 const { showProfileCard } = require('../../redux/actions/ui');
 require('./ConvItem.scss');

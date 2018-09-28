@@ -1,6 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const dateHelper = require('../../../../utils/dateHelper');
+const dateHelper = require('../../../../shared/utils/dateHelper');
 const config = require('../../../../../config/project.config.js');
 const ConverseDetail = require('./ConverseDetail');
 // const Tab = require('../../../components/Tab');

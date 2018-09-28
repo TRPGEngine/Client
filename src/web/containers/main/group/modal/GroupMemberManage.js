@@ -3,7 +3,7 @@ const { connect } = require('react-redux');
 const { tickMember, setMemberToManager } = require('../../../../../redux/actions/group');
 const ModalPanel = require('../../../../components/ModalPanel');
 const config = require('../../../../../../config/project.config');
-const { getUserInfoCache } = require('../../../../../utils/cacheHelper');
+const { getUserInfoCache } = require('../../../../../shared/utils/cacheHelper');
 
 require('./GroupMemberManage.scss')
 

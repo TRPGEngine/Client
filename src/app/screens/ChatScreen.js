@@ -13,7 +13,7 @@ const sb = require('react-native-style-block');
 const { TInput, TIcon } = require('../components/TComponent');
 const MsgItem = require('../components/MsgItem');
 const { sendMsg } = require('../../redux/actions/chat');
-const { getUserInfoCache } = require('../../utils/cacheHelper');
+const { getUserInfoCache } = require('../../shared/utils/cacheHelper');
 
 class ChatScreen extends React.Component {
   static navigationOptions = (props) => {

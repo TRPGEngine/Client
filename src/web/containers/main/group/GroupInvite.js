@@ -3,7 +3,7 @@ const { connect } = require('react-redux');
 const config = require('../../../../../config/project.config.js');
 const ReactTooltip = require('react-tooltip');
 const { sendGroupInvite } = require('../../../../redux/actions/group');
-const { getUserInfoCache } = require('../../../../utils/cacheHelper');
+const { getUserInfoCache } = require('../../../../shared/utils/cacheHelper');
 
 require('./GroupInvite.scss')
 

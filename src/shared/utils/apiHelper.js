@@ -1,4 +1,4 @@
-const trpgApi = require('../api/trpg.api.js');
+const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 
 exports.getTemplate = function(template_uuid, cb) {

@@ -1,7 +1,7 @@
 const React = require('react');
 const parser = require('bbcode-to-react');
 const { emojify } = require('./emoji');
-const Image = require('../web/components/Image');
+const Image = require('../../web/components/Image');
 
 class EmojiTag extends parser.Tag {
   toReact() {

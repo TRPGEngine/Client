@@ -1,12 +1,12 @@
 require('moment').locale('zh_CN');
-require('../utils/common');
+require('../shared/utils/common');
 const React = require('react');
 const ReactDom = require('react-dom');
 const { Provider } = require('react-redux');
 const config = require('../../config/project.config.js');
 const configureStore = require('../redux/configureStore');
 const store = configureStore();
-require('../utils/cacheHelper').attachStore(store);
+require('../shared/utils/cacheHelper').attachStore(store);
 
 const trpgApi = require('../api/trpg.api.js');
 const api = trpgApi.getInstance();
@@ -38,7 +38,7 @@ const rnStorage = require('../api/rnStorage.api.js');
 
 // 检查版本, 网页版跳过检查
 if(config.platform !== 'web') {
-  const checkVersion = require('../utils/checkVersion.js');
+  const checkVersion = require('../shared/utils/checkVersion.js');
   checkVersion(function(isLatest) {
     if(isLatest) {
       console.log('当前版本为最新版');

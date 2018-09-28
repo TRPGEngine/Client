@@ -1,5 +1,5 @@
 const axios = require('axios');
-const config = require('../../config/project.config');
+const config = require('../../../config/project.config');
 
 function sendErrorReport(data) {
   axios.post(config.file.getAbsolutePath('/report/error'), data)

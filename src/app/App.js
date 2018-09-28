@@ -11,7 +11,7 @@ const configureStore = require('../redux/configureStore');
 const store = configureStore();
 const { AppWithNavigationState } = require('./router');
 const { Provider } = require('react-redux');
-require('../utils/cacheHelper').attachStore(store);
+require('../shared/utils/cacheHelper').attachStore(store);
 
 const trpgApi = require('../api/trpg.api.js');
 const api = trpgApi.getInstance();

@@ -1,5 +1,5 @@
 const React = require('react');
-const { sendErrorReport } = require('../../utils/errorReport');
+const { sendErrorReport } = require('../../shared/utils/errorReport');
 const config = require('../../../config/project.config.js');
 
 require('./ErrorBoundary.scss');

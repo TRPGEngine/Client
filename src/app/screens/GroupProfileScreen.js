@@ -8,12 +8,12 @@ const {
 } = require('react-native');
 const sb = require('react-native-style-block');
 const appConfig = require('../config.app');
-const { getSamlpeDate } = require('../../utils/dateHelper');
+const { getSamlpeDate } = require('../../shared/utils/dateHelper');
 const { TButton, TAvatar } = require('../components/TComponent');
 const { getUserInfo } = require('../../redux/actions/cache');
 const { addFriend } = require('../../redux/actions/user');
 const { switchToConverseApp } = require('../../redux/actions/nav');
-const { getUserInfoCache } = require('../../utils/cacheHelper');
+const { getUserInfoCache } = require('../../shared/utils/cacheHelper');
 
 class ProfileInfoItem extends React.Component {
   render() {

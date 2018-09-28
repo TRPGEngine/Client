@@ -2,8 +2,8 @@ const React = require('react');
 const { connect } = require('react-redux');
 const MsgItem = require('./MsgItem');
 const config = require('../../../config/project.config.js');
-const dateHelper = require('../../utils/dateHelper');
-const scrollTo = require('../../utils/animatedScrollTo.js');
+const dateHelper = require('../../shared/utils/dateHelper');
+const scrollTo = require('../../shared/utils/animatedScrollTo.js');
 const { getMoreChatLog } = require('../../redux/actions/chat')
 
 class MsgContainer extends React.Component {

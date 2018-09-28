@@ -1,5 +1,5 @@
 const React = require('react');
-const { emojify, getCodeList } = require('../../utils/emoji');
+const { emojify, getCodeList } = require('../../shared/utils/emoji');
 
 require('./Emoticon.scss');
 

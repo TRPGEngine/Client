@@ -16,7 +16,7 @@ const appVersion = config.version;
 const Login = require('./Login');
 const Register = require('./Register');
 const Main = require('./Main');
-const {emojify, getCodeList} = require('../../utils/emoji');
+const {emojify, getCodeList} = require('../../shared/utils/emoji');
 
 class App extends React.Component {
   render() {

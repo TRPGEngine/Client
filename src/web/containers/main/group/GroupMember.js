@@ -4,7 +4,7 @@ const config = require('../../../../../config/project.config.js');
 const moment = require('moment');
 const { showModal, showProfileCard } = require('../../../../redux/actions/ui');
 const GroupMemberManage = require('./modal/GroupMemberManage');
-const { getUserInfoCache } = require('../../../../utils/cacheHelper');
+const { getUserInfoCache } = require('../../../../shared/utils/cacheHelper');
 
 require('./GroupMember.scss')
 
