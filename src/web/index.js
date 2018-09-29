@@ -3,15 +3,20 @@ require('../shared/utils/common');
 const React = require('react');
 const ReactDom = require('react-dom');
 const { Provider } = require('react-redux');
+const { attachStore, getUserInfoCache } = require('../shared/utils/cacheHelper');
 const config = require('../../config/project.config.js');
 const configureStore = require('../redux/configureStore');
 const store = configureStore();
-require('../shared/utils/cacheHelper').attachStore(store);
+attachStore(store);
+
+const { switchConverse } = require('../redux/actions/chat');
+const { switchMenuPannel } = require('../redux/actions/ui');
 
 const trpgApi = require('../api/trpg.api.js');
 const api = trpgApi.getInstance();
 trpgApi.bindEventFunc.call(api, store, {
-  onReceiveMessage: function (){
+  onReceiveMessage: function (data){
+
     // web||electron通知
     if(window.document && document.hidden) {
       let isNotify = store.getState().getIn(['settings', 'system', 'notification']);

@@ -35,7 +35,6 @@ function bindEventFunc(store, { onReceiveMessage }) {
   const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
   const { updateGroupStatus, addGroup } = require('../redux/actions/group');
   const { changeNetworkStatue, showAlert, switchMenuPannel, updateSocketId } = require('../redux/actions/ui');
-  const { getUserInfoCache } = require('../shared/utils/cacheHelper');
 
   if(!(this instanceof API)) {
     throw new Error('bindEventFunc shound a API object class');
