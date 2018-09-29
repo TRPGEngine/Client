@@ -1,6 +1,9 @@
 const io = require('socket.io-client');
 const config = require('../../config/project.config.js');
-const { RESET } = require('../redux/constants');
+const {
+  RESET,
+  ADD_FRIEND_SUCCESS,
+} = require('../redux/constants');
 
 let api = null;
 const platformSocketParam = {
@@ -51,6 +54,9 @@ function bindEventFunc(store, { onReceiveMessage }) {
     store.dispatch(updateMsg(converseUUID, payload));
   });
 
+  api.on('player::addFriend', function(data) {
+    store.dispatch({type: ADD_FRIEND_SUCCESS, friendUUID: data.uuid});
+  })
   api.on('player::invite', function(data) {
     store.dispatch(addFriendInvite(data));
   })

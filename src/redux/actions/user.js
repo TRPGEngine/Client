@@ -269,6 +269,7 @@ exports.agreeFriendInvite = function(inviteUUID) {
   return function(dispatch, getState) {
     return api.emit('player::agreeFriendInvite', {uuid: inviteUUID}, function(data) {
       if(data.result) {
+        checkUser(data.invite.from_uuid);
         dispatch({type: AGREE_FRIEND_INVITE_SUCCESS, payload: data.invite});
       }else {
         console.error(data.msg);
