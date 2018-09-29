@@ -27,7 +27,7 @@ function getApiInstance() {
   return api;
 }
 
-function bindEventFunc(store) {
+function bindEventFunc(store, { onReceiveMessage }) {
   const { addMsg, updateMsg, switchConverse } = require('../redux/actions/chat');
   const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
   const { updateGroupStatus, addGroup } = require('../redux/actions/group');
@@ -42,31 +42,7 @@ function bindEventFunc(store) {
     let converseUUID = data.converse_uuid || data.sender_uuid;
     store.dispatch(addMsg(converseUUID, data));
 
-    // web||electron通知
-    if(window.document && document.hidden) {
-      let isNotify = store.getState().getIn(['settings', 'system', 'notification']);
-      if(isNotify) {
-        let uuid = data.sender_uuid;
-        let userinfo = getUserInfoCache(data.sender_uuid);
-        let username = userinfo.get('nickname') || userinfo.get('username');
-        if (uuid && uuid.substr(0, 4) === 'trpg') {
-          username = '系统消息';
-        }
-        let notification = new Notification(`来自 ${username}:`, {
-          body: data.message,
-          icon: userinfo.get('avatar') || config.defaultImg.trpgsystem,
-          tag: 'trpg-msg',
-          renotify: true,
-          data: {uuid}
-        });
-
-        notification.onclick = function() {
-          window.focus();
-          store.dispatch(switchMenuPannel(0));
-          store.dispatch(switchConverse(this.data.uuid));
-        }
-      }
-    }
+    onReceiveMessage && onReceiveMessage(data);
   });
 
   api.on('chat::updateMessage', function(data) {

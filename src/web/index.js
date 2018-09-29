@@ -10,7 +10,35 @@ require('../shared/utils/cacheHelper').attachStore(store);
 
 const trpgApi = require('../api/trpg.api.js');
 const api = trpgApi.getInstance();
-trpgApi.bindEventFunc.call(api, store);
+trpgApi.bindEventFunc.call(api, store, {
+  onReceiveMessage: function (){
+    // web||electron通知
+    if(window.document && document.hidden) {
+      let isNotify = store.getState().getIn(['settings', 'system', 'notification']);
+      if(isNotify) {
+        let uuid = data.sender_uuid;
+        let userinfo = getUserInfoCache(data.sender_uuid);
+        let username = userinfo.get('nickname') || userinfo.get('username');
+        if (uuid && uuid.substr(0, 4) === 'trpg') {
+          username = '系统消息';
+        }
+        let notification = new Notification(`来自 ${username}:`, {
+          body: data.message,
+          icon: userinfo.get('avatar') || config.defaultImg.trpgsystem,
+          tag: 'trpg-msg',
+          renotify: true,
+          data: {uuid}
+        });
+
+        notification.onclick = function() {
+          window.focus();
+          store.dispatch(switchMenuPannel(0));
+          store.dispatch(switchConverse(this.data.uuid));
+        }
+      }
+    }
+  }
+});
 
 // 加载本地存储数据进行应用初始化
 const rnStorage = require('../api/rnStorage.api.js');
