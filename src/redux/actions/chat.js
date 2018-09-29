@@ -253,12 +253,17 @@ let addMsg = function addMsg(converseUUID, payload) {
     if(!getState().getIn(['chat', 'converses', converseUUID])) {
       // 会话不存在，则创建会话
       console.log('创建会话', payload);
-      if(!!payload.is_group) {
-        // 群聊
-        dispatch(createConverse(payload.room, 'group', false));
-      }else {
+      // if(!!payload.is_group) {
+      //   // 群聊
+      //   dispatch(createConverse(payload.room, 'group', false));
+      // }else {
+      //   // 单聊
+      //   dispatch(createConverse(payload.sender_uuid, 'user', false))
+      // }
+
+      if(!payload.is_group) {
         // 单聊
-        dispatch(createConverse(payload.sender_uuid, 'user', false))
+        dispatch(addConverse({uuid: converseUUID, type:'user'}))
       }
     }
 

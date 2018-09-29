@@ -56,7 +56,12 @@ module.exports = function chat(state = initialState, action) {
       case ADD_CONVERSES: {
         let uuid = action.payload.uuid;
         if(!state.getIn(['converses', uuid])) {
-          return state.setIn(['converses', uuid], immutable.fromJS(action.payload));
+          let payload = Object.assign({}, {
+            msgList:[],
+            lastMsg: '',
+            lastTime: '',
+          }, action.payload)
+          return state.setIn(['converses', uuid], immutable.fromJS(payload));
         }else {
           // 如果有会话了直接返回
           return state;
