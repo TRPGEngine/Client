@@ -1,4 +1,5 @@
 const React = require('react');
+const dateHelper = require('../../../shared/utils/dateHelper');
 
 class Base extends React.Component {
   getContent() {

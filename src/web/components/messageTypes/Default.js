@@ -1,3 +1,4 @@
+const React = require('react');
 const Base = require('./base');
 
 class Default extends Base {

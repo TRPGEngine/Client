@@ -1,16 +1,16 @@
 const React = require('react');
 
 class MessageHandler extends React.Component {
-  static messageHander = {}
+  static messageHandlers = {}
 
   static registerMessageHander(messageType, messageHandler) {
     if(typeof messageType !== 'string') {
       throw new Error('[registerMessageHander] messageType mustbe a string');
     }
-    if(typeof messageHander instanceof React.Component) {
-      throw new Error('[registerMessageHander] messageHander mustbe a react componet');
+    if(typeof messageHandler instanceof React.Component) {
+      throw new Error('[registerMessageHander] messageHandler mustbe a react componet');
     }
-    MessageHandler.messageType[messageType] = messageHander;
+    MessageHandler.messageHandlers[messageType] = messageHandler;
   }
 
   static registerDefaultMessageHander(messageHandler) {
@@ -20,12 +20,12 @@ class MessageHandler extends React.Component {
   render() {
     let messageType = this.props.type;
     let data = this.props.data;
-    let messageHander = MessageHandler.messageHander[messageType] || MessageHandler.messageHander['default'];
+    let Handler = MessageHandler.messageHandlers[messageType] || MessageHandler.messageHandlers['default'];
 
     return (
-      <messageHander data={data} />
+      <Handler data={data} />
     )
   }
 }
 
-module.exports = name;
+module.exports = MessageHandler;
