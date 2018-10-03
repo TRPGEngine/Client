@@ -1,11 +1,12 @@
 const React = require('react');
 const Base = require('./base');
+const msgParser = require('../../../shared/utils/msgParser');
 
 class Default extends Base {
   getContent() {
-    const data = this.props.data;
+    const info = this.props.info || {};
     return (
-      <pre>{data.content}</pre>
+      <pre className="bubble">{msgParser(info.message)}</pre>
     )
   }
 }

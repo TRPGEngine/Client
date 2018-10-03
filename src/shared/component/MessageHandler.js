@@ -19,11 +19,11 @@ class MessageHandler extends React.Component {
 
   render() {
     let messageType = this.props.type;
-    let data = this.props.data;
+    let info = this.props.info;
     let Handler = MessageHandler.messageHandlers[messageType] || MessageHandler.messageHandlers['default'];
 
     return (
-      <Handler data={data} />
+      <Handler {...this.props} />
     )
   }
 }

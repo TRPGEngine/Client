@@ -1,26 +1,43 @@
 const React = require('react');
 const dateHelper = require('../../../shared/utils/dateHelper');
+const config = require('../../../../config/project.config');
 
 class Base extends React.Component {
+  static defaultProps = {
+    type: 'normal',
+    me: false,
+    name: '',
+    info: {},
+    emphasizeTime: false,
+  }
+
   getContent() {
     return null;
   }
 
   render() {
-    // TODO
+    const {
+      type,
+      me,
+      name,
+      info,
+      emphasizeTime,
+    } = this.props;
+    let defaultAvatar = info.sender_uuid === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.getUser(name);
+
     return (
-      <div className={'msg-item '+(this.props.me?'me ':'') + this.props.type}>
+      <div className={'msg-item '+(me?'me ':'') + type}>
         {
-          this.props.emphasizeTime ? (
-            <div className="emphasize-time"><span>{dateHelper.getShortDate(this.props.time)}</span></div>
+          emphasizeTime ? (
+            <div className="emphasize-time"><span>{dateHelper.getShortDate(info.date)}</span></div>
           ) : null
         }
         <div className="profile">
-          <span className="name">{this.props.name}</span>
-          <span className="time">{dateHelper.getMsgDate(this.props.time)}</span>
+          <span className="name">{name}</span>
+          <span className="time">{dateHelper.getMsgDate(info.date)}</span>
         </div>
         <div className="content">
-          <div className="avatar"><img src={this.props.icon} /></div>
+          <div className="avatar"><img src={info.icon || defaultAvatar} /></div>
           <div className="body">
             {this.getContent()}
           </div>

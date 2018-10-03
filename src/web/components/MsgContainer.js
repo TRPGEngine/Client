@@ -6,6 +6,9 @@ const dateHelper = require('../../shared/utils/dateHelper');
 const scrollTo = require('../../shared/utils/animatedScrollTo.js');
 const { getMoreChatLog } = require('../../redux/actions/chat')
 
+const MessageHandler = require('../../shared/component/MessageHandler');
+MessageHandler.registerDefaultMessageHander(require('./messageTypes/Default'));
+
 class MsgContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -144,6 +147,18 @@ class MsgContainer extends React.Component {
               let diffTime = dateHelper.getDateDiff(prevDate, date);
               let emphasizeTime = diffTime / 1000 / 60 >= 10 // 超过10分钟
 
+              return (
+                <MessageHandler
+                  key={item.get('uuid')}
+                  type={item.get('type')}
+                  me={isMe}
+                  name={name}
+                  emphasizeTime={emphasizeTime}
+                  info={item.toJS()}
+                />
+              )
+
+              // TODO
               return (
                 <MsgItem
                   key={item.get('uuid')+'+'+index}
