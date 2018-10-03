@@ -67,6 +67,7 @@ module.exports = {
               helpers: false,
               polyfill: false,
               regenerator: true }],
+            'transform-class-properties',
           ]
         }
       },
