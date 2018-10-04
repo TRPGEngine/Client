@@ -1,5 +1,5 @@
 const React = require('react');
-const Base = require('./base');
+const Base = require('./Base');
 const msgParser = require('../../../shared/utils/msgParser');
 
 class Default extends Base {
