@@ -20,6 +20,7 @@ class Base extends React.Component {
       type,
       me,
       name,
+      avatar,
       info,
       emphasizeTime,
     } = this.props;
@@ -37,7 +38,7 @@ class Base extends React.Component {
           <span className="time">{dateHelper.getMsgDate(info.date)}</span>
         </div>
         <div className="content">
-          <div className="avatar"><img src={info.icon || defaultAvatar} /></div>
+          <div className="avatar"><img src={avatar || defaultAvatar} /></div>
           <div className="body">
             {this.getContent()}
           </div>
