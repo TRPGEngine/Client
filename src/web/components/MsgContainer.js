@@ -8,6 +8,7 @@ const { getMoreChatLog } = require('../../redux/actions/chat')
 
 const MessageHandler = require('../../shared/component/MessageHandler');
 MessageHandler.registerDefaultMessageHandler(require('./messageTypes/Default'));
+MessageHandler.registerMessageHandler('tip', require('./messageTypes/Tip'));
 
 class MsgContainer extends React.Component {
   constructor(props) {
