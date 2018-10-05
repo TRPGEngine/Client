@@ -7,7 +7,7 @@ const scrollTo = require('../../shared/utils/animatedScrollTo.js');
 const { getMoreChatLog } = require('../../redux/actions/chat')
 
 const MessageHandler = require('../../shared/component/MessageHandler');
-MessageHandler.registerDefaultMessageHander(require('./messageTypes/Default'));
+MessageHandler.registerDefaultMessageHandler(require('./messageTypes/Default'));
 
 class MsgContainer extends React.Component {
   constructor(props) {

@@ -3,18 +3,18 @@ const React = require('react');
 class MessageHandler extends React.Component {
   static messageHandlers = {}
 
-  static registerMessageHander(messageType, messageHandler) {
+  static registerMessageHandler(messageType, messageHandler) {
     if(typeof messageType !== 'string') {
-      throw new Error('[registerMessageHander] messageType mustbe a string');
+      throw new Error('[registerMessageHandler] messageType mustbe a string');
     }
     if(typeof messageHandler instanceof React.Component) {
-      throw new Error('[registerMessageHander] messageHandler mustbe a react componet');
+      throw new Error('[registerMessageHandler] messageHandler mustbe a react componet');
     }
     MessageHandler.messageHandlers[messageType] = messageHandler;
   }
 
-  static registerDefaultMessageHander(messageHandler) {
-    MessageHandler.registerMessageHander('default', messageHandler);
+  static registerDefaultMessageHandler(messageHandler) {
+    MessageHandler.registerMessageHandler('default', messageHandler);
   }
 
   render() {
