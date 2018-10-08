@@ -294,7 +294,7 @@ let sendMsg = function sendMsg(toUUID, payload) {
       message: payload.message,
       is_public: payload.is_public,
       is_group: payload.is_group,
-      date: new Date(),
+      date: new Date().toISOString(),
       data: payload.data,
     };
     console.log('send msg pkg:', pkg);
