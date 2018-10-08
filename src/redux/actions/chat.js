@@ -23,6 +23,10 @@ const rnStorage = require('../../api/rnStorage.api.js');
 const { checkUser } = require('../../shared/utils/cacheHelper');
 const { hideProfileCard, switchMenuPannel } = require('./ui');
 
+let localIndex = 0;
+let getLocalUUID = function getLocalUUID() {
+  return 'local#' + localIndex++;
+}
 
 let switchConverse = function switchConverse(converseUUID, userUUID) {
   return {type: SWITCH_CONVERSES, converseUUID, userUUID}
@@ -285,6 +289,7 @@ let sendMsg = function sendMsg(toUUID, payload) {
   return function(dispatch, getState) {
     dispatch({type:SEND_MSG});
     const info = getState().getIn(['user', 'info']);
+    const localUUID = getLocalUUID();
     let pkg = {
       room: payload.room || '',
       sender_uuid: info.get('uuid'),
@@ -296,13 +301,15 @@ let sendMsg = function sendMsg(toUUID, payload) {
       is_group: payload.is_group,
       date: new Date().toISOString(),
       data: payload.data,
+      uuid: localUUID,
     };
     console.log('send msg pkg:', pkg);
 
     dispatch(addMsg(payload.converse_uuid || toUUID, pkg));
     return api.emit('chat::message', pkg, function(data) {
       // console.log(data);
-      dispatch({type:SEND_MSG_COMPLETED, payload: data});
+      // TODO: 待实现SEND_MSG_COMPLETED的数据处理方法(用于送达提示)
+      dispatch({type:SEND_MSG_COMPLETED, payload: data, localUUID});
       if(data.result) {
         console.log('发送成功');
       }else {
