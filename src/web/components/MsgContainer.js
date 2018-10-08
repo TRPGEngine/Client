@@ -27,7 +27,7 @@ class MsgContainer extends React.Component {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if(nextProps.msgList.size === 0 || nextProps.msgList.size === this.props.msgList.size) {
       this.setState({nomore: true});
     }else {
