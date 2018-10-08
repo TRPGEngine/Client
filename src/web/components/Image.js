@@ -13,7 +13,6 @@ class Image extends React.Component {
     return (
       <img
         {...this.props}
-        role="presentation"
         src={this.state.src}
         onError={() => {
           this.setState({src: config.defaultImg.chatimg_fail});

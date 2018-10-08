@@ -14,6 +14,7 @@ MessageHandler.registerMessageHandler('card', require('./messageTypes/Card'));
 class MsgContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.isSeekingLog = false;
     this.state = {
       nomore: false,
     }
@@ -51,9 +52,35 @@ class MsgContainer extends React.Component {
     let date = this.props.msgList.first().get('date');
     let { converseUUID } = this.props;
     this.props.dispatch(getMoreChatLog(converseUUID, date, !this.props.isGroup));
+    this.isSeekingLog = true;
   }
 
-  _handleContainerLoad() {
+  _handleContainerLoad(el) {
+    if(this.isSeekingLog === true) {
+      return;
+    }
+
+    if(el && el.nodeName.toLowerCase() === 'img' && el.getAttribute('role') === 'chatimage') {
+      // 仅当加载完毕的元素为聊天图片时
+      // 进度条滚动到底部
+      setTimeout(() => {
+        scrollTo.bottom(this.refs.container, 100);
+      }, 0);
+    }
+  }
+
+  _handleContainerScroll(el) {
+    if(el.scrollHeight - el.scrollTop <= el.offsetHeight) {
+      console.log('滚动容器接触到底部!');
+      this.isSeekingLog = false;
+    }
+  }
+
+  componentDidUpdate() {
+    if(this.isSeekingLog === true) {
+      return;
+    }
+
     // 进度条滚动到底部
     setTimeout(() => {
       scrollTo.bottom(this.refs.container, 100);
@@ -119,7 +146,8 @@ class MsgContainer extends React.Component {
       <div
         className={'msg-container ' + this.props.className}
         ref="container"
-        onLoad={() => this._handleContainerLoad()}
+        onLoad={(e) => this._handleContainerLoad(e.target)}
+        onScroll={(e) => this._handleContainerScroll(e.target)}
       >
         {
           this.state.nomore || this.props.msgList.size < 10 ? (

@@ -35,6 +35,7 @@ class ImageTag extends parser.Tag {
         src={src}
         width={this.params.width}
         height={this.params.height}
+        role="chatimage"
       />
     );
   }
