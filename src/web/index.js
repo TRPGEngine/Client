@@ -1,3 +1,4 @@
+require('moment/locale/zh-cn');
 require('moment').locale('zh_CN');
 require('../shared/utils/common');
 const React = require('react');

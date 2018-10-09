@@ -113,5 +113,6 @@ module.exports = {
       assets: [ 'pre-loading.css' ],
       append: false
     }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ],
 }
