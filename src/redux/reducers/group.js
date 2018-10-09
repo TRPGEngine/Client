@@ -65,8 +65,15 @@ module.exports = function group(state = initialState, action) {
       return state.set('isFindingGroup', false).set('findingResult', immutable.fromJS(action.payload));
     case REQUEST_JOIN_GROUP_SUCCESS:
       return state.update('requestingGroupUUID', l => l.push(action.payload.group_uuid));
-    case ADD_GROUP_SUCCESS:
-      return state.update('groups', l => l.push(immutable.fromJS(action.payload)))
+    case ADD_GROUP_SUCCESS: {
+      let payload = action.payload;
+      if(state.get('groups').findIndex(l => l.get('uuid') === payload.uuid) >= 0) {
+        // 已存在, 不处理
+        return state;
+      }else {
+        return state.update('groups', l => l.push(immutable.fromJS(payload)))
+      }
+    }
     case AGREE_GROUP_REQUEST_SUCCESS:
       return state.update('groups', (list) => {
         for (let i = 0; i < list.size; i++) {
@@ -96,7 +103,7 @@ module.exports = function group(state = initialState, action) {
         }else {
           return list;
         }
-      }).update('groups', (list) => list.push(immutable.fromJS(action.payload.group)));
+      });
     case REFUSE_GROUP_INVITE_SUCCESS:
       return state.update('invites', (list) => {
         // same as agree
