@@ -22,6 +22,10 @@ function scrollTo(element, to, duration, isAnimatied = true) {
 }
 
 function scrollToBottom(element, duration, isAnimatied = true) {
+  if(!element) {
+    return;
+  }
+
   var to = element.scrollHeight - element.clientHeight;
   scrollTo(element, to, duration, isAnimatied);
 }
