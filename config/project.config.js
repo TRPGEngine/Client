@@ -34,7 +34,11 @@ let out = {
   defaultImg: {
     user: '/src/assets/img/gugugu1.png',
     getUser (name) {
-      return `${out.file.url}/file/avatar/svg?name=${name || ''}`
+      if(name) {
+        return `${out.file.url}/file/avatar/svg?name=${name}`
+      }else {
+        return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' // 一像素透明图片
+      }
     },
     group: '/src/assets/img/gugugu1.png',
     trpgsystem: '/src/assets/img/system_notice.png',
