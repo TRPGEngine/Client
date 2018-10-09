@@ -51,7 +51,8 @@ module.exports = function ui(state = initialState, action) {
     case RESET:
       return state
         .set('showModal', false)
-        .set('showSlidePanel', false);
+        .set('showSlidePanel', false)
+        .set('showSlidePanelInfo', initialState.get('showSlidePanelInfo'));
     case SHOW_ALERT: {
       let showAlertInfo = action.payload || {};
       return state.set('showAlert', true).set('showAlertInfo', immutable.fromJS(showAlertInfo));
