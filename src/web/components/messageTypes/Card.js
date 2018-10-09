@@ -3,6 +3,7 @@ const Base = require('./Base');
 
 const CardType = {
   'default': require('./card/BaseCard'),
+  'friendInvite': require('./card/FriendInvite'),
 }
 
 class Card extends Base {
