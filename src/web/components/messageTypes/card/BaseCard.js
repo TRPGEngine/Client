@@ -8,7 +8,7 @@ class BaseCard extends React.Component {
 
     return (
       <pre className="card-content">
-        {data.content}
+        {info.message}
       </pre>
     )
   }
