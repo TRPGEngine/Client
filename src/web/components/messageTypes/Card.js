@@ -2,7 +2,7 @@ const React = require('react');
 const Base = require('./Base');
 
 const CardType = {
-  'default': require('./card/BaseCard'),
+  'default': require('./card/DefaultCard'),
   'friendInvite': require('./card/FriendInvite'),
   'groupInvite': require('./card/GroupInvite'),
   'diceRequest': require('./card/DiceRequest'),
