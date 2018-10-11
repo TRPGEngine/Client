@@ -6,6 +6,7 @@ const CardType = {
   'friendInvite': require('./card/FriendInvite'),
   'groupInvite': require('./card/GroupInvite'),
   'diceRequest': require('./card/DiceRequest'),
+  'diceInvite': require('./card/DiceInvite'),
 }
 
 class Card extends Base {
