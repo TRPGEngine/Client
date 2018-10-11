@@ -7,6 +7,7 @@ const CardType = {
   'groupInvite': require('./card/GroupInvite'),
   'diceRequest': require('./card/DiceRequest'),
   'diceInvite': require('./card/DiceInvite'),
+  'actor': require('./card/Actor'),
 }
 
 class Card extends Base {
