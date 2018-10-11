@@ -12,8 +12,4 @@ class DefaultCard extends BaseCard {
   }
 }
 
-module.exports = connect(
-  state => ({
-    selfUUID: state.getIn(['user', 'info', 'uuid']),
-  })
-)(DefaultCard);
+module.exports = DefaultCard;
