@@ -49,6 +49,17 @@ class MsgContainer extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    if(this.isSeekingLog === true) {
+      return;
+    }
+
+    // 进度条滚动到底部
+    setTimeout(() => {
+      scrollTo.bottom(this.refs.container, 100);
+    }, 0);
+  }
+
   _handleGetMoreLog() {
     let date = this.props.msgList.first().get('date');
     let { converseUUID } = this.props;
@@ -75,17 +86,6 @@ class MsgContainer extends React.Component {
       console.log('滚动容器接触到底部!');
       this.isSeekingLog = false;
     }
-  }
-
-  componentDidUpdate() {
-    if(this.isSeekingLog === true) {
-      return;
-    }
-
-    // 进度条滚动到底部
-    setTimeout(() => {
-      scrollTo.bottom(this.refs.container, 100);
-    }, 0);
   }
 
   render() {

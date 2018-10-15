@@ -1,4 +1,3 @@
-const React = require('react');
 const BaseCard = require('./BaseCard');
 const { connect } = require('react-redux');
 const { agreeGroupInvite, refuseGroupInvite } = require('../../../../redux/actions/group');

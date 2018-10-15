@@ -17,7 +17,6 @@ const trpgApi = require('../api/trpg.api.js');
 const api = trpgApi.getInstance();
 trpgApi.bindEventFunc.call(api, store, {
   onReceiveMessage: function (data){
-
     // web||electron通知
     if(window.document && document.hidden) {
       let isNotify = store.getState().getIn(['settings', 'system', 'notification']);
