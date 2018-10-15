@@ -11,6 +11,7 @@ MessageHandler.registerDefaultMessageHandler(require('./messageTypes/Default'));
 MessageHandler.registerMessageHandler('tip', require('./messageTypes/Tip'));
 MessageHandler.registerMessageHandler('card', require('./messageTypes/Card'));
 
+require('./MsgContainer.scss');
 class MsgContainer extends React.Component {
   constructor(props) {
     super(props);

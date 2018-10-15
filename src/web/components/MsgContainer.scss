@@ -1,4 +1,10 @@
+@import "../../shared/utils/mixins";
+@import "../../shared/utils/color";
+
 .msg-container {
+  flex: 1;
+  @include auto-scroll-bar;
+
   .get-more-log-btn {
     @include link-btn;
     display: block;
