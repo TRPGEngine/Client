@@ -43,9 +43,23 @@ $ npm run package # 打包当前平台的pc端文件
 **客户端需要配合服务端才能正常运行, 具体可以查看服务端项目[TRPGEngine/DevTool](https://github.com/TRPGEngine/DevTool)**
 
 ## 关于环境变量
-- `PLATFORM` : 编译的平台, 可选:`web`, `app`, `electron`
-- `NODE_ENV` : 编译环境, 可选:`production`, `development`
-- `TRPG_HOST` : 编制指定的服务端地址
+- `PLATFORM` : 编译的平台, 可选:`web`, `app`, `electron`, 默认为`web`
+- `NODE_ENV` : 编译环境, 可选:`production`, `development`, 默认为`development`
+- `TRPG_HOST` : 编译指定的后端服务端地址, 默认值:(编译环境`development`为`127.0.0.1`, `production`为`trpgapi.moonrailgun.com`)
+
+## NPM命令解释
+详见package.json
+
+- `dev`: web端开发环境
+- `build`: web端编译
+- `pc`: 客户端生产环境本地运行
+- `pcdev`: 客户端开发环境
+- `package`: 客户端打包(当前系统)
+- `package-all`: 客户端打包(全环境, window,mac,linux)
+- `app`: app端开发环境(需要配合`react-native run-android`或`react-native run-ios`先编译一份基本运行的壳)
+- `app-clear`: app端开发环境(清理缓存)
+- `lint`: eslint检测
+- `lint:fix`: eslint检测并尝试自动修复
 
 ## 部分截图
 ![](./doc/login.png)
