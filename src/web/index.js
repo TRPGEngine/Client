@@ -4,7 +4,7 @@ require('../shared/utils/common');
 const React = require('react');
 const ReactDom = require('react-dom');
 const { Provider } = require('react-redux');
-const { attachStore, getUserInfoCache } = require('../shared/utils/cacheHelper');
+const { attachStore } = require('../shared/utils/cacheHelper');
 const config = require('../../config/project.config.js');
 const configureStore = require('../redux/configureStore');
 const store = configureStore();
