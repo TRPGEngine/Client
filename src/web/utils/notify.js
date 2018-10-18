@@ -1,4 +1,6 @@
 const tinycon = require('tinycon');
+const { getUserInfoCache } = require('../../shared/utils/cacheHelper');
+const config = require('../../../config/project.config.js');
 let num = 0;
 
 var hiddenProperty = 'hidden' in document ? 'hidden' :
