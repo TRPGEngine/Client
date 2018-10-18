@@ -39,7 +39,7 @@ class NoteEditor extends React.Component {
       'video',  // 插入视频
       // 'code',  // 插入代码
       'undo',  // 撤销
-      'redo'  // 重复
+      'redo',  // 重复
     ]
 
     editor.customConfig.onchange = html => {

@@ -4,7 +4,6 @@ class BaseCard extends React.Component {
   // 获取卡片视图
   getCardView() {
     let info = this.props.info;
-    let data = info.data;
 
     return (
       <pre className="card-content">
@@ -31,15 +30,16 @@ class BaseCard extends React.Component {
           btns.map((btn, index) => {
             let {
               label = '',
-              onClick
+              onClick,
+              attrs
             } = btn;
             return (
               <button
-                key={`${index}#${btn.label}`}
-                {...btn.attrs}
-                onClick={btn.onClick}
-                disabled={!btn.onClick}
-              >{btn.label}</button>
+                key={`${index}#${label}`}
+                {...attrs}
+                onClick={onClick}
+                disabled={!onClick}
+              >{label}</button>
             )
           })
         }
@@ -61,9 +61,6 @@ class BaseCard extends React.Component {
   }
 
   render() {
-    let info = this.props.info;
-    let data = info.data;
-
     return (
       <div className="bubble">
         {this.getCardTitle()}

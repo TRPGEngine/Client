@@ -32,14 +32,15 @@ function getApiInstance() {
 }
 
 function bindEventFunc(store, { onReceiveMessage }) {
-  const { addMsg, updateMsg, switchConverse } = require('../redux/actions/chat');
+  const { addMsg, updateMsg } = require('../redux/actions/chat');
   const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
   const { updateGroupStatus, addGroup } = require('../redux/actions/group');
-  const { changeNetworkStatue, showAlert, switchMenuPannel, updateSocketId } = require('../redux/actions/ui');
+  const { changeNetworkStatue, showAlert, updateSocketId } = require('../redux/actions/ui');
 
   if(!(this instanceof API)) {
     throw new Error('bindEventFunc shound a API object class');
   }
+
   let api = this;
   api.on('chat::message', function(data) {
     let converseUUID = data.converse_uuid || data.sender_uuid;
