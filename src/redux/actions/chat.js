@@ -347,6 +347,12 @@ let sendFile = function sendFile(toUUID, payload, file) {
 
     // 通过该方法发送的文件均为会话文件，存到临时文件夹
     uploadHelper.toTemporary(selfUserUUID, file, {
+      onProgress: function(progress) {
+        dispatch(updateMsg(payload.converse_uuid || toUUID, {
+          uuid: pkg.uuid,
+          data: Object.assign({}, pkg.data, {progress})
+        }))
+      },
       onCompleted: function(fileinfo) {
         let filedata = Object.assign({}, pkg.data, fileinfo)
         pkg = Object.assign({}, pkg, {data: filedata}, {progress: 1});

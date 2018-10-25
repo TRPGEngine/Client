@@ -18,7 +18,12 @@ let _upload = function(path, userUUID, file, cb) {
     url: fileUrl + path,
     method: 'post',
     data: form,
-    headers: {'user-uuid': userUUID}
+    headers: {'user-uuid': userUUID},
+    onUploadProgress: (progressEvent) => {
+      if(progressEvent.lengthComputable) {
+        cb && cb.onProgress && cb.onProgress(progressEvent.loaded / progressEvent.total);
+      }
+    },
   }).then(res => {
     cb && cb.onCompleted && cb.onCompleted(res.data);
   }).catch(err => {
