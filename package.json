@@ -34,6 +34,7 @@
     "axios": "^0.17.1",
     "bbcode-to-react": "^0.2.9",
     "chalk": "^2.4.1",
+    "filesize": "^3.6.1",
     "immutable": "^3.8.2",
     "is-uuid": "^1.0.2",
     "jcore-react-native": "^1.2.10",

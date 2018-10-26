@@ -167,6 +167,68 @@
     }
   }
 
+  &.file {
+    .content>.body>.bubble {
+      width: 260px;
+
+      .file-info {
+        display: flex;
+        padding: 7px 0;
+
+        .file-avatar {
+          margin-right: 10px;
+          width: 50px;
+          height: 50px;
+          border-radius: 3px;
+          background-size: 100% 100%;
+          background-position: center;
+          background-repeat: no-repeat;
+          overflow: hidden;
+        }
+
+        .file-prop {
+          flex: 1;
+          overflow: hidden;
+          h3 {
+            @include one-line;
+            display: inline-block;
+            width: 100%;
+            color: #333;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: normal;
+            margin: 0;
+          }
+
+          p {
+            color: $color-silver;
+            line-height: 18px;
+          }
+        }
+      }
+
+      .file-action {
+        display: flex;
+        margin-top: 10px;
+        border-top: 1px solid $color-silver;
+
+        button {
+          @include link-btn;
+          flex: 1;
+          border-right: 1px solid $color-silver;
+
+          &:last-child {
+            border-right: 0;
+          }
+
+          &:after {
+            content: none !important;
+          }
+        }
+      }
+    }
+  }
+
   .profile {
     padding: 0 45px;
     margin: 2px 0;

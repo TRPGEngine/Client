@@ -9,6 +9,7 @@ const MessageHandler = require('../../shared/component/MessageHandler');
 MessageHandler.registerDefaultMessageHandler(require('./messageTypes/Default'));
 MessageHandler.registerMessageHandler('tip', require('./messageTypes/Tip'));
 MessageHandler.registerMessageHandler('card', require('./messageTypes/Card'));
+MessageHandler.registerMessageHandler('file', require('./messageTypes/File'));
 require('./messageTypes/MsgItem.scss');
 
 require('./MsgContainer.scss');
