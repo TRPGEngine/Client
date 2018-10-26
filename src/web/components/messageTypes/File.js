@@ -1,7 +1,9 @@
 const React = require('react');
+const { connect } = require('react-redux');
 const Base = require('./Base');
 const filesize = require('filesize');
-const config = require('../../../../config/project.config')
+const config = require('../../../../config/project.config');
+const { downloadFile } = require('../../../redux/actions/file');
 
 class File extends Base {
   _handlePreview() {
@@ -9,7 +11,8 @@ class File extends Base {
   }
 
   _handleDownload() {
-    console.log('TODO: download')
+    let data = this.props.info.data;
+    this.props.dispatch(downloadFile(data.fileuuid))
   }
 
   getContent() {
@@ -30,11 +33,11 @@ class File extends Base {
               <button><i className="iconfont">&#xe6a2;</i>预览</button>
             ) : null
           }
-          <button><i className="iconfont">&#xe688;</i>下载</button>
+          <button onClick={() => this._handleDownload()}><i className="iconfont">&#xe688;</i>下载</button>
         </div>
       </div>
     )
   }
 }
 
-module.exports = File;
+module.exports = connect()(File);
