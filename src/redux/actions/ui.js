@@ -11,6 +11,8 @@ const {
   HIDE_PROFILE_CARD,
   SHOW_SLIDE_PANEL,
   HIDE_SLIDE_PANEL,
+  SHOW_LIGHTBOX,
+  HIDE_LIGHTBOX,
   SWITCH_MENU_PANNEL,
   SET_LAST_DICE_TYPE,
   CHANGE_NETWORK_STATE,
@@ -80,6 +82,12 @@ exports.showSlidePanel = function(title, content) {
 }
 exports.hideSlidePanel = function() {
   return {type: HIDE_SLIDE_PANEL}
+}
+exports.showLigthbox = function(src) {
+  return {type: SHOW_LIGHTBOX, payload: {src}}
+}
+exports.hideLightbox = function() {
+  return {type: HIDE_LIGHTBOX}
 }
 exports.switchMenuPannel = function(index, pannel = null) {
   return {type: SWITCH_MENU_PANNEL, menuIndex: index, payload: pannel}

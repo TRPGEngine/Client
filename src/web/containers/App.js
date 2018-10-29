@@ -16,6 +16,7 @@ const appVersion = config.version;
 const Login = require('./Login');
 const Register = require('./Register');
 const Main = require('./Main');
+const GlobalUI = require('./GlobalUI');
 const {emojify, getCodeList} = require('../../shared/utils/emoji');
 
 class App extends React.Component {
@@ -27,6 +28,7 @@ class App extends React.Component {
           <Modal />
           <Loading show={showLoading} text={showLoadingText} />
           <Alert />
+          <GlobalUI />
           <div className="app">
             <Switch>
               <Route name="login" path="/login" component={Login} />
