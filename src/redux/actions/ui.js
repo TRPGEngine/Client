@@ -83,7 +83,7 @@ exports.showSlidePanel = function(title, content) {
 exports.hideSlidePanel = function() {
   return {type: HIDE_SLIDE_PANEL}
 }
-exports.showLigthbox = function(src) {
+exports.showLightbox = function(src) {
   return {type: SHOW_LIGHTBOX, payload: {src}}
 }
 exports.hideLightbox = function() {
