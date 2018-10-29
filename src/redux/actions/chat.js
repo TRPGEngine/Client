@@ -306,11 +306,12 @@ let sendMsg = function sendMsg(toUUID, payload) {
     };
     console.log('send msg pkg:', pkg);
 
-    dispatch(addMsg(payload.converse_uuid || toUUID, pkg));
+    let converseUUID = payload.converse_uuid || toUUID;
+    dispatch(addMsg(converseUUID, pkg))
     return api.emit('chat::message', pkg, function(data) {
       // console.log(data);
       // TODO: 待实现SEND_MSG_COMPLETED的数据处理方法(用于送达提示)
-      dispatch({type:SEND_MSG_COMPLETED, payload: data, localUUID});
+      dispatch({type:SEND_MSG_COMPLETED, payload: data, localUUID, converseUUID});
       if(data.result) {
         console.log('发送成功');
       }else {
@@ -343,7 +344,8 @@ let sendFile = function sendFile(toUUID, payload, file) {
       data: uploadHelper.generateFileMsgData(file),
       uuid: localUUID,
     };
-    dispatch(addMsg(payload.converse_uuid || toUUID, pkg))
+    let converseUUID = payload.converse_uuid || toUUID;
+    dispatch(addMsg(converseUUID, pkg))
 
     // 通过该方法发送的文件均为会话文件，存到临时文件夹
     uploadHelper.toTemporary(selfUserUUID, file, {
@@ -358,7 +360,7 @@ let sendFile = function sendFile(toUUID, payload, file) {
         pkg = Object.assign({}, pkg, {data: filedata}, {progress: 1});
         // 文件上传完毕。正式发送文件消息
         api.emit('chat::message', pkg, function(data) {
-          dispatch({type:SEND_MSG_COMPLETED, payload: data, localUUID});
+          dispatch({type:SEND_MSG_COMPLETED, payload: data, localUUID, converseUUID});
           if(data.result) {
             console.log('发送成功');
           }else {
