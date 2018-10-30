@@ -32,7 +32,7 @@ class MsgSendBox extends React.Component {
       },
       {
         label: '发送文件',
-        icon: '&#xe62f;',
+        icon: '&#xe640;',
         onClick: (e) => this.refs.fileUploader && this.refs.fileUploader.click(),
       }
     ];
