@@ -207,6 +207,16 @@
         }
       }
 
+      .file-progress {
+        width: 100%;
+        padding-bottom: 10px;
+
+        > div {
+          border-top: 3px solid $color-tan;
+          transition: width 0.4s;
+        }
+      }
+
       .file-action {
         display: flex;
         margin-top: 10px;

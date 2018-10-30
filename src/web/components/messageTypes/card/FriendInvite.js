@@ -7,7 +7,7 @@ class FriendInvite extends BaseCard {
   getCardBtn() {
     let info = this.props.info;
     let data = info.data;
-    let invite = data.invite;
+    let invite = data.invite || {};
     let inviteIndex = this.props.friendRequests.findIndex(item => item.get('uuid') === invite.uuid);
     if(inviteIndex >= 0) {
       // 尚未处理

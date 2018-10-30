@@ -356,8 +356,8 @@ let sendFile = function sendFile(toUUID, payload, file) {
         }))
       },
       onCompleted: function(fileinfo) {
-        let filedata = Object.assign({}, pkg.data, fileinfo)
-        pkg = Object.assign({}, pkg, {data: filedata}, {progress: 1});
+        let filedata = Object.assign({}, pkg.data, fileinfo, {progress: 1})
+        pkg = Object.assign({}, pkg, {data: filedata});
         // 文件上传完毕。正式发送文件消息
         api.emit('chat::message', pkg, function(data) {
           dispatch({type:SEND_MSG_COMPLETED, payload: data, localUUID, converseUUID});
