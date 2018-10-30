@@ -22,6 +22,7 @@ const api = trpgApi.getInstance();
 const rnStorage = require('../../api/rnStorage.api.js');
 const { checkUser } = require('../../shared/utils/cacheHelper');
 const { hideProfileCard, switchMenuPannel } = require('./ui');
+const uploadHelper = require('../../shared/utils/uploadHelper');
 
 let localIndex = 0;
 let getLocalUUID = function getLocalUUID() {
@@ -305,11 +306,12 @@ let sendMsg = function sendMsg(toUUID, payload) {
     };
     console.log('send msg pkg:', pkg);
 
-    dispatch(addMsg(payload.converse_uuid || toUUID, pkg));
+    let converseUUID = payload.converse_uuid || toUUID;
+    dispatch(addMsg(converseUUID, pkg))
     return api.emit('chat::message', pkg, function(data) {
       // console.log(data);
       // TODO: 待实现SEND_MSG_COMPLETED的数据处理方法(用于送达提示)
-      dispatch({type:SEND_MSG_COMPLETED, payload: data, localUUID});
+      dispatch({type:SEND_MSG_COMPLETED, payload: data, localUUID, converseUUID});
       if(data.result) {
         console.log('发送成功');
       }else {
@@ -318,6 +320,58 @@ let sendMsg = function sendMsg(toUUID, payload) {
     })
   }
 }
+let sendFile = function sendFile(toUUID, payload, file) {
+  if(!file) {
+    console.error('发送文件错误。没有找到要发送的文件');
+    return;
+  }
+
+  return function(dispatch, getState) {
+    dispatch({type: SEND_MSG})
+    const info = getState().getIn(['user', 'info']);
+    const selfUserUUID = info.get('uuid');
+    const localUUID = getLocalUUID();
+    let pkg = {
+      room: payload.room || '',
+      sender_uuid: selfUserUUID,
+      to_uuid: toUUID,
+      converse_uuid: payload.converse_uuid,
+      type: 'file',
+      message: payload.message || '[文件]',
+      is_public: payload.is_public,
+      is_group: payload.is_group,
+      date: new Date().toISOString(),
+      data: uploadHelper.generateFileMsgData(file),
+      uuid: localUUID,
+    };
+    let converseUUID = payload.converse_uuid || toUUID;
+    dispatch(addMsg(converseUUID, pkg))
+
+    // 通过该方法发送的文件均为会话文件，存到临时文件夹
+    uploadHelper.toTemporary(selfUserUUID, file, {
+      onProgress: function(progress) {
+        dispatch(updateMsg(payload.converse_uuid || toUUID, {
+          uuid: pkg.uuid,
+          data: Object.assign({}, pkg.data, {progress})
+        }))
+      },
+      onCompleted: function(fileinfo) {
+        let filedata = Object.assign({}, pkg.data, fileinfo, {progress: 1})
+        pkg = Object.assign({}, pkg, {data: filedata});
+        // 文件上传完毕。正式发送文件消息
+        api.emit('chat::message', pkg, function(data) {
+          dispatch({type:SEND_MSG_COMPLETED, payload: data, localUUID, converseUUID});
+          if(data.result) {
+            console.log('发送成功');
+          }else {
+            console.log('发送失败', pkg);
+          }
+        })
+      }
+    })
+  }
+}
+
 let updateMsg = function updateMsg(converseUUID, payload) {
   console.log('try to update message', converseUUID, payload);
   return {
@@ -375,6 +429,7 @@ exports.getOfflineUserConverse = getOfflineUserConverse;
 exports.reloadConverseList = reloadConverseList;
 exports.addMsg = addMsg;
 exports.sendMsg = sendMsg;
+exports.sendFile = sendFile;
 exports.updateMsg = updateMsg;
 exports.getMoreChatLog = getMoreChatLog;
 exports.updateCardChatData = updateCardChatData;

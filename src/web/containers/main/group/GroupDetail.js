@@ -4,7 +4,7 @@ const config = require('../../../../../config/project.config.js');
 const Select = require('react-select');
 const ReactTooltip = require('react-tooltip');
 const { showModal, hideModal, showAlert, showSlidePanel } = require('../../../../redux/actions/ui');
-const { sendMsg } = require('../../../../redux/actions/chat');
+const { sendMsg, sendFile } = require('../../../../redux/actions/chat');
 const { changeSelectGroupActor } = require('../../../../redux/actions/group');
 const { sendDiceRequest, sendDiceInvite } = require('../../../../redux/actions/dice');
 // const GroupMap = require('./GroupMap');
@@ -35,6 +35,15 @@ class GroupDetail extends React.Component {
       is_group: true,
       type,
     }));
+  }
+
+  _handleSendFile(file) {
+    console.log('send file to', this.props.selectedUUID, file);
+    this.props.dispatch(sendFile(null, {
+      converse_uuid: this.props.selectedUUID,
+      is_public: true,
+      is_group: true,
+    }, file));
   }
 
   // 发送投骰请求
@@ -199,6 +208,7 @@ class GroupDetail extends React.Component {
           converseUUID={this.props.selectedUUID}
           isGroup={true}
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
+          onSendFile={(file) => this._handleSendFile(file)}
           onSendDiceReq={() => this._handleSendDiceReq()}
           onSendDiceInv={() => this._handleSendDiceInv()}
         />

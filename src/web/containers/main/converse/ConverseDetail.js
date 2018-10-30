@@ -2,7 +2,7 @@ const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../../../../config/project.config.js');
 const { showModal, hideModal, showProfileCard } = require('../../../../redux/actions/ui');
-const { sendMsg } = require('../../../../redux/actions/chat');
+const { sendMsg, sendFile } = require('../../../../redux/actions/chat');
 const { sendDiceRequest, sendDiceInvite, sendQuickDice } = require('../../../../redux/actions/dice');
 const DiceRequest = require('../dice/DiceRequest');
 const DiceInvite = require('../dice/DiceInvite');
@@ -25,6 +25,14 @@ class ConverseDetail extends React.Component {
       is_group: false,
       type,
     }));
+  }
+
+  _handleSendFile(file) {
+    console.log('send file to', this.props.converseUserUUID, file);
+    this.props.dispatch(sendFile(this.props.converseUserUUID, {
+      is_public: false,
+      is_group: false,
+    }, file));
   }
 
   // 发送投骰请求
@@ -131,6 +139,7 @@ class ConverseDetail extends React.Component {
           converseUUID={this.props.converseUUID}
           isGroup={false}
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
+          onSendFile={(file) => this._handleSendFile(file)}
           onSendDiceReq={() => this._handleSendDiceReq()}
           onSendDiceInv={() => this._handleSendDiceInv()}
           onQuickDice={() => this._handleQuickDice()}

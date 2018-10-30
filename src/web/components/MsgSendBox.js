@@ -30,6 +30,11 @@ class MsgSendBox extends React.Component {
         icon: '&#xe61b;',
         onClick: (e) => this._handleShowSendActor(),
       },
+      {
+        label: '发送文件',
+        icon: '&#xe640;',
+        onClick: (e) => this.refs.fileUploader && this.refs.fileUploader.click(),
+      }
     ];
     this.inputType = [
       {
@@ -182,9 +187,28 @@ class MsgSendBox extends React.Component {
     ))
   }
 
+  _handleContainerDrop(e) {
+    e.preventDefault();
+    let files = e.dataTransfer.files;
+    for (let f of files) {
+      this.props.onSendFile && this.props.onSendFile(f);
+    }
+  }
+
+  _handleFileUploaderChange() {
+    let files = this.refs.fileUploader.files;
+    for (let f of files) {
+      this.props.onSendFile && this.props.onSendFile(f);
+    }
+  }
+
   render() {
     return (
-      <div className="send-msg-box">
+      <div
+        className="send-msg-box"
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => this._handleContainerDrop(e)}
+      >
         <div className="input-area">
           <div className="tool-area">
             <div className={'popup emoticon' + (this.state.showEmoticon ? ' active':'')}>
@@ -197,6 +221,12 @@ class MsgSendBox extends React.Component {
               </ul>
             </div>
             <ReactTooltip effect="solid" />
+            <input
+              type="file"
+              ref="fileUploader"
+              onChange={() => this._handleFileUploaderChange()}
+              style={{display: 'none'}}
+            />
             <div className="btn-group">
               {this.clickableBtn.map((item, index) => {
                 return (

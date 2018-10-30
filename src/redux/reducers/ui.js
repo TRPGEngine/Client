@@ -12,6 +12,8 @@ const {
   HIDE_PROFILE_CARD,
   SHOW_SLIDE_PANEL,
   HIDE_SLIDE_PANEL,
+  SHOW_LIGHTBOX,
+  HIDE_LIGHTBOX,
   SWITCH_MENU_PANNEL,
   SET_LAST_DICE_TYPE,
   CHANGE_NETWORK_STATE,
@@ -35,6 +37,8 @@ const initialState = immutable.fromJS({
     title: '',
     content: '',
   },
+  showLigthbox: false,
+  showLigthboxInfo: {},
   menuIndex: 0,
   menuPannel: null,
   network: {
@@ -79,6 +83,10 @@ module.exports = function ui(state = initialState, action) {
       return state.set('showSlidePanel', true).set('showSlidePanelInfo', immutable.fromJS(action.payload));
     case HIDE_SLIDE_PANEL:
       return state.set('showSlidePanel', false);
+    case SHOW_LIGHTBOX:
+      return state.set('showLigthbox', true).set('showLigthboxInfo', immutable.fromJS(action.payload));
+    case HIDE_LIGHTBOX:
+      return state.set('showLigthbox', false);
     case SWITCH_MENU_PANNEL:
       return state
         .set('menuIndex', action.menuIndex)

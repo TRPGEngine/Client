@@ -30,6 +30,28 @@ let out = {
     protocol: isSSL ? 'https' : 'http',
     host: currentHost,
     port: environment === 'production' ? standardPort : '23256',
+    getFileImage: function(ext) {
+      if(ext === 'jpg' || ext === 'png' || ext === 'gif') {
+        return out.defaultImg.file.pic;
+      }
+      if(ext === 'doc' || ext === 'docx') {
+        return out.defaultImg.file.word;
+      }
+      if(ext === 'xls' || ext === 'xlsx') {
+        return out.defaultImg.file.excel;
+      }
+      if(ext === 'ppt' || ext === 'pptx') {
+        return out.defaultImg.file.ppt;
+      }
+      if(ext === 'pdf') {
+        return out.defaultImg.file.pdf;
+      }
+      if(ext === 'txt') {
+        return out.defaultImg.file.txt;
+      }
+
+      return out.defaultImg.file.default;
+    },
   },
   defaultImg: {
     user: '/src/assets/img/gugugu1.png',
@@ -44,6 +66,15 @@ let out = {
     trpgsystem: '/src/assets/img/system_notice.png',
     actor: '',
     chatimg_fail: '/src/assets/img/img_fail.png',
+    file: {
+      default: '/src/assets/img/file/default.png',
+      pdf: '/src/assets/img/file/pdf.png',
+      excel: '/src/assets/img/file/excel.png',
+      ppt: '/src/assets/img/file/ppt.png',
+      word: '/src/assets/img/file/word.png',
+      txt: '/src/assets/img/file/txt.png',
+      pic: '/src/assets/img/file/pic.png',
+    },
     color: [
       '#333333',
       '#2c3e50',

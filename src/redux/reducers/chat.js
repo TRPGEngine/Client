@@ -13,6 +13,7 @@ const {
   UPDATE_CONVERSES_MSGLIST_SUCCESS,
   REMOVE_CONVERSES_SUCCESS,
   SWITCH_CONVERSES,
+  SEND_MSG_COMPLETED,
   SWITCH_GROUP,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
 } = require('../constants');
@@ -148,6 +149,28 @@ module.exports = function chat(state = initialState, action) {
         return state.set('selectedConversesUUID', action.converseUUID)
           .set('selectedConversesUserUUID', action.userUUID)
           .setIn(['converses', action.converseUUID, 'unread'], false);//已读未读;
+      case SEND_MSG_COMPLETED: {
+        let converseUUID = action.converseUUID;
+        let localUUID = action.localUUID;
+        let payload = action.payload;
+        let result = payload.result; // TODO: 送达提示
+        let pkg = payload.pkg; // 服务端信息
+        return state.updateIn(['converses', converseUUID, 'msgList'], (list) => {
+          if(list) {
+            for (var i = 0; i < list.size; i++) {
+              let msg = list.get(i);
+              if(msg.get('uuid') === localUUID) {
+                list = list.set(i, msg.merge(immutable.fromJS(pkg)));
+                break;
+              }
+            }
+          }else {
+            console.error('update msglist failed, not find msgList in', converseUUID);
+          }
+
+          return list;
+        })
+      }
       case SWITCH_GROUP:
         return state.setIn(['converses', action.payload, 'unread'], false);
       case CREATE_CONVERSES_SUCCESS: {
