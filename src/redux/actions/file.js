@@ -2,7 +2,7 @@ const React = require('react');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const config = require('../../../config/project.config');
-const {showSlidePanel} = require('./ui');
+const { showSlidePanel, showLightbox } = require('./ui');
 
 exports.previewFile = function(fileuuid) {
   return function(dispatch, getState) {
@@ -11,7 +11,7 @@ exports.previewFile = function(fileuuid) {
         console.log('打开预览', data);
         if(data.mimetype.indexOf('image/') >= 0) {
           console.log('是图片')
-          // TODO: 图片预览
+          dispatch(showLightbox(data.previewUrl));
         }else {
           console.log('在侧边栏打开')
           if(config.platform === 'web' || config.platform === 'electron') {
