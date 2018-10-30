@@ -1,9 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 const { Route, Switch, HashRouter, BrowserRouter, Link } = require('react-router-dom');
-const Modal = require('../components/Modal');
-const Loading = require('../components/Loading');
-const Alert = require('../components/Alert');
 const NetworkIndicator = require('../components/NetworkIndicator');
 const config = require('../../../config/project.config.js');
 require('./App.scss');
@@ -21,13 +18,9 @@ const {emojify, getCodeList} = require('../../shared/utils/emoji');
 
 class App extends React.Component {
   render() {
-    const {showLoading, showLoadingText} = this.props;
     return (
       <Router>
         <div>
-          <Modal />
-          <Loading show={showLoading} text={showLoadingText} />
-          <Alert />
           <GlobalUI />
           <div className="app">
             <Switch>
@@ -83,10 +76,4 @@ class App extends React.Component {
   }
 }
 
-module.exports = connect(
-  state => ({
-    playSound: state.getIn(['pc', 'playSound']),
-    showLoading: state.getIn(['ui', 'showLoading']),
-    showLoadingText: state.getIn(['ui', 'showLoadingText']),
-  })
-)(App);
+module.exports = connect()(App);
