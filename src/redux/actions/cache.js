@@ -7,6 +7,29 @@ const {
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
 const config = require('../../../config/project.config');
+const rnStorage = require('../../api/rnStorage.api.js');
+
+// 加载本地缓存信息
+exports.loadLocalCache = function() {
+  return function(dispatch, getState) {
+    // TODO: 用户缓存，列表缓存，等等等等
+    rnStorage.get('localCache')
+      .then(res => {
+        console.log('loadLocalCache', res); // TODO: 待实现
+      })
+  }
+}
+
+exports.saveLocalCache = function() {
+  return function(dispatch, getState) {
+    console.log('save local cache');
+    let usercache = getState().getIn(['cache', 'user']);
+    let templatecache = getState().getIn(['cache', 'template']);
+
+    let saveData = {usercache, templatecache};
+    rnStorage.save('localCache', saveData); // TODO: 可能需要一个优化。用一个存储列表来处理短时间多次请求保存本地缓存的问题
+  }
+}
 
 exports.getUserInfo = function(uuid, onCompleted) {
   if(!uuid) {
@@ -18,6 +41,7 @@ exports.getUserInfo = function(uuid, onCompleted) {
       if(data.result) {
         data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
         dispatch({type:GET_USER_INFO, payload: data.info});
+        dispatch(exports.saveLocalCache()); // 保存到本地缓存
       }else {
         console.error(data.msg);
       }
@@ -35,7 +59,7 @@ exports.getTemplateInfo = function(uuid) {
   return function(dispatch, getState) {
     return api.emit('actor::getTemplate', {uuid}, function(data) {
       if(data.result) {
-        dispatch({type:GET_TEMPLATE_INFO, payload: data.template});
+        dispatch({type: GET_TEMPLATE_INFO, payload: data.template});
       }else {
         console.error(data.msg)
       }

@@ -40,7 +40,9 @@ function loginSuccess(dispatch, getState) {
   const { getTemplate, getActor } = require('./actor');
   const { getGroupList, getGroupInvite } = require('./group');
   const { getNote } = require('./note');
+  const { loadLocalCache } = require('./cache');
 
+  dispatch(loadLocalCache()) // 加载本地缓存信息
   dispatch(reloadConverseList()) // 重新加载所有会员列表
   dispatch(getFriends())
   dispatch(getFriendsInvite())
