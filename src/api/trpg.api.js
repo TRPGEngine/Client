@@ -4,7 +4,6 @@ const {
   RESET,
   ADD_FRIEND_SUCCESS,
 } = require('../redux/constants');
-const { getUserInfoCache } = require('../shared/utils/cacheHelper');
 
 let api = null;
 const platformSocketParam = {
@@ -31,7 +30,7 @@ function getApiInstance() {
   return api;
 }
 
-function bindEventFunc(store, { onReceiveMessage }) {
+function bindEventFunc(store, { onReceiveMessage } = {}) {
   const { addMsg, updateMsg } = require('../redux/actions/chat');
   const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
   const { updateGroupStatus, addGroup } = require('../redux/actions/group');
@@ -56,6 +55,8 @@ function bindEventFunc(store, { onReceiveMessage }) {
   });
 
   api.on('player::addFriend', function(data) {
+    const { getUserInfoCache } = require('../shared/utils/cacheHelper');
+
     let uuid = data.uuid;
     getUserInfoCache(uuid);
     store.dispatch({type: ADD_FRIEND_SUCCESS, friendUUID: uuid});
