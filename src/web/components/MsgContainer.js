@@ -5,7 +5,7 @@ const dateHelper = require('../../shared/utils/dateHelper');
 const scrollTo = require('../../shared/utils/animatedScrollTo.js');
 const { getMoreChatLog } = require('../../redux/actions/chat')
 
-const MessageHandler = require('../../shared/component/MessageHandler');
+const MessageHandler = require('../../shared/components/MessageHandler');
 MessageHandler.registerDefaultMessageHandler(require('./messageTypes/Default'));
 MessageHandler.registerMessageHandler('tip', require('./messageTypes/Tip'));
 MessageHandler.registerMessageHandler('card', require('./messageTypes/Card'));
