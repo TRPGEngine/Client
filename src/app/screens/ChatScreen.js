@@ -11,9 +11,16 @@ const {
 } = require('react-native');
 const sb = require('react-native-style-block');
 const { TInput, TIcon } = require('../components/TComponent');
-const MsgItem = require('../components/MsgItem');
+const config = require('../../../config/project.config');
 const { sendMsg } = require('../../redux/actions/chat');
 const { getUserInfoCache } = require('../../shared/utils/cacheHelper');
+const dateHelper = require('../../shared/utils/dateHelper');
+
+const MessageHandler = require('../../shared/components/MessageHandler');
+MessageHandler.registerDefaultMessageHandler(require('../components/messageTypes/Default'));
+// TODO: MessageHandler.registerMessageHandler('tip', require('../components/messageTypes/Tip'));
+// TODO: MessageHandler.registerMessageHandler('card', require('../components/messageTypes/Card'));
+// TODO: MessageHandler.registerMessageHandler('file', require('../components/messageTypes/File'));
 
 class ChatScreen extends React.Component {
   static navigationOptions = (props) => {
@@ -105,15 +112,27 @@ class ChatScreen extends React.Component {
             ref="list"
             data={msgList}
             keyExtractor={(item, index) => item.uuid + '#' + index}
-            renderItem={({item}) => {
-              let isSelf = item.sender_uuid === this.props.selfInfo.get('uuid');
-              let senderInfo = isSelf ? this.props.selfInfo : getUserInfoCache(item.sender_uuid);
+            renderItem={({item, index}) => {
+              const prevDate = index > 0 ? this.props.msgList.getIn([index - 1, 'date']) : 0;
+              let isMe = item.sender_uuid === this.props.selfInfo.get('uuid');
+              let senderInfo = isMe ? this.props.selfInfo : getUserInfoCache(item.sender_uuid);
+              let name = senderInfo.get('nickname') || senderInfo.get('username');
+              let avatar = senderInfo.get('avatar');
+              let defaultAvatar = item.sender_uuid === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.getUser(name);
+              let date = item.date;
+
+              let diffTime = dateHelper.getDateDiff(prevDate, date);
+              let emphasizeTime = diffTime / 1000 / 60 >= 10 // 超过10分钟
+
               return (
-                <MsgItem
-                  isSelf={isSelf}
-                  senderUUID={item.sender_uuid}
-                  senderInfo={senderInfo}
-                  data={item}
+                <MessageHandler
+                  key={item.uuid}
+                  type={item.type}
+                  me={isMe}
+                  name={name}
+                  avatar={avatar || defaultAvatar}
+                  emphasizeTime={emphasizeTime}
+                  info={item}
                 />
               )
             }}

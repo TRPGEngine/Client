@@ -3,6 +3,7 @@ const { connect } = require('react-redux');
 const config = require('../../../config/project.config.js');
 const dateHelper = require('../../shared/utils/dateHelper');
 const scrollTo = require('../../shared/utils/animatedScrollTo.js');
+const { getUserInfoCache } = require('../../shared/utils/cacheHelper');
 const { getMoreChatLog } = require('../../redux/actions/chat')
 
 const MessageHandler = require('../../shared/components/MessageHandler');
@@ -110,11 +111,11 @@ class MsgContainer extends React.Component {
           {
             this.props.msgList.map((item, index, arr) => {
               const prevDate = index > 0 ? arr.getIn([index - 1, 'date']) : 0;
-              let isMe = userUUID===item.get('sender_uuid');
-              let avatar = isMe ? this.props.selfInfo.get('avatar') : usercache.getIn([item.get('sender_uuid'), 'avatar'])
-              let name = isMe
-                ? this.props.selfInfo.get('nickname') || this.props.selfInfo.get('username')
-                : usercache.getIn([item.get('sender_uuid'), 'nickname']) || usercache.getIn([item.get('sender_uuid'), 'username']);
+              let senderUUID = item.get('sender_uuid');
+              let isMe = userUUID === senderUUID;
+              let senderInfo = isMe ? this.props.selfInfo : getUserInfoCache(senderUUID);
+              let name = senderInfo.get('nickname') || senderInfo.get('username');
+              let avatar = senderInfo.get('avatar');
               let defaultAvatar = item.get('sender_uuid') === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.getUser(name);
               let date = item.get('date');
 
