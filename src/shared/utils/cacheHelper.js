@@ -57,7 +57,7 @@ exports.loadcache = function() {
 let isGettingUserInfoUUID = []; // 用于防止同时请求多个相同内容
 exports.getUserInfoCache = function(uuid) {
   if(uuid.toString().substr(0, 4) === 'trpg') {
-    return; // 不检测trpg开头的内置系统用户
+    return immutable.Map(); // 不检测trpg开头的内置系统用户
   }
 
   let store = _store;
