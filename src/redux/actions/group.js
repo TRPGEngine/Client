@@ -44,7 +44,7 @@ let initGroupInfo = function(dispatch, group) {
     type: 'group',
     msgList: [],
     lastMsg: '',
-    lastTime: '',
+    lastTime: 0, // 设定初始化的团时间为0方便排序
   }));
   // 获取团成员
   api.emit('group::getGroupMembers', {groupUUID}, function(data) {
