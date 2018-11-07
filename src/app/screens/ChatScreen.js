@@ -40,6 +40,7 @@ class ChatScreen extends React.Component {
     super(props);
     this.state = {
       inputMsg: '',
+      showExtraPanel: false,
     };
   }
 
@@ -101,6 +102,18 @@ class ChatScreen extends React.Component {
     }
   }
 
+  _handleShowExtraPanel() {
+    if(this.state.showExtraPanel === true) {
+      this.setState({showExtraPanel: false});
+      this.refs['input'].focus();
+    }else {
+      this.setState({showExtraPanel: true});
+      this.refs['input'].blur();
+
+      console.log('TODO: 打开拓展面板');
+    }
+  }
+
   render() {
     if(this.props.msgList) {
       let msgList = this.props.msgList.toJS();
@@ -139,16 +152,25 @@ class ChatScreen extends React.Component {
           />
           <View style={styles.msgBox}>
             <TInput
+              ref="input"
               style={styles.msgInput}
               onChangeText={(inputMsg) => this.setState({inputMsg})}
               multiline={true}
               value={this.state.inputMsg}
             />
-            {/* TODO: 需要修改为微信那种没有文本内容则是+如果有则是发送按钮 */}
-            <Button
-              onPress={() => this._handleSendMsg()}
-              title="  发送  "
-            />
+            {
+              this.state.inputMsg ? (
+                <Button
+                  onPress={() => this._handleSendMsg()}
+                  title="  发送  "
+                />
+              ) : (
+                <Button
+                  onPress={() => this._handleShowExtraPanel()}
+                  title="   ＋   "
+                />
+              )
+            }
           </View>
         </View>
       )

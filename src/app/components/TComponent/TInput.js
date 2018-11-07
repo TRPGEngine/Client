@@ -10,9 +10,18 @@ class TInput extends React.Component {
     style: [],
   }
 
+  focus() {
+    this.refs.input.focus();
+  }
+
+  blur() {
+    this.refs.input.blur();
+  }
+
   render() {
     return (
       <TextInput
+        ref="input"
         underlineColorAndroid="transparent"
         autoCorrect={false}
         autoCapitalize="none"
