@@ -49,10 +49,6 @@ class TAvatar extends React.Component {
       style = [style];
     }
 
-    if(uri && typeof uri === 'string') {
-      uri = {uri};
-    }
-
     let capital = name[0];
     if(capital) {
       capital = capital.toUpperCase();
@@ -60,6 +56,9 @@ class TAvatar extends React.Component {
     let color = this.getColor(name);
 
     if(uri && !this.state.loadError) {
+      if(typeof uri === 'string') {
+        uri = {uri};
+      }
       return (
         <Image style={[...style, {height, width}]} source={uri} onError={() => this.setState({loadError: true})} />
       )
