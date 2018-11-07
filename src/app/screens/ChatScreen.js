@@ -15,6 +15,7 @@ const config = require('../../../config/project.config');
 const { sendMsg } = require('../../redux/actions/chat');
 const { getUserInfoCache } = require('../../shared/utils/cacheHelper');
 const dateHelper = require('../../shared/utils/dateHelper');
+const ExtraPanelItem = require('../components/ExtraPanelItem');
 
 const MessageHandler = require('../../shared/components/MessageHandler');
 MessageHandler.registerDefaultMessageHandler(require('../components/messageTypes/Default'));
@@ -109,9 +110,16 @@ class ChatScreen extends React.Component {
     }else {
       this.setState({showExtraPanel: true});
       this.refs['input'].blur();
-
-      console.log('TODO: 打开拓展面板');
+      this._scrollToBottom();
     }
+  }
+
+  getExtraPanel() {
+    return (
+      <View style={styles.extraPanel}>
+        <ExtraPanelItem text="发送图片" icon="&#xe621;" onPress={() => alert('未实现')} />
+      </View>
+    )
   }
 
   render() {
@@ -156,6 +164,7 @@ class ChatScreen extends React.Component {
               style={styles.msgInput}
               onChangeText={(inputMsg) => this.setState({inputMsg})}
               multiline={true}
+              maxLength={100}
               value={this.state.inputMsg}
             />
             {
@@ -172,6 +181,9 @@ class ChatScreen extends React.Component {
               )
             }
           </View>
+          {
+            this.state.showExtraPanel && this.getExtraPanel()
+          }
         </View>
       )
     }else {
@@ -200,6 +212,11 @@ const styles = {
     // sb.border('Bottom', 1, '#ccc'),
     sb.flex(),
     {marginRight: 4},
+  ],
+  extraPanel: [
+    sb.size(null, 265),
+    sb.bgColor(),
+    sb.border('Top', 0.5, '#ccc'),
   ],
 }
 
