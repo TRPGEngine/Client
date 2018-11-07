@@ -10,7 +10,7 @@
 [![Android](https://img.shields.io/badge/platform-android-orange.svg)]()
 [![Web](https://img.shields.io/badge/platform-web-green.svg)]()
 
-TPRG前端网页端
+TPRG前端网页端与手机端RN端(开发中)
 
 <!-- ## 开发版下载
 
