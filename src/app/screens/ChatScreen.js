@@ -18,7 +18,7 @@ const dateHelper = require('../../shared/utils/dateHelper');
 
 const MessageHandler = require('../../shared/components/MessageHandler');
 MessageHandler.registerDefaultMessageHandler(require('../components/messageTypes/Default'));
-// TODO: MessageHandler.registerMessageHandler('tip', require('../components/messageTypes/Tip'));
+MessageHandler.registerMessageHandler('tip', require('../components/messageTypes/Tip'));
 // TODO: MessageHandler.registerMessageHandler('card', require('../components/messageTypes/Card'));
 // TODO: MessageHandler.registerMessageHandler('file', require('../components/messageTypes/File'));
 
