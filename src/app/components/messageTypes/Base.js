@@ -73,18 +73,6 @@ const styles = {
     sb.border('all', 0.5, '#ddd'),
     sb.alignSelf('flex-start'),
   ],
-  itemTip: [
-    sb.bgColor('#ccc'),
-    sb.size(200, null),
-    sb.alignSelf('center'),
-    sb.padding(6, 10),
-    sb.radius(3),
-    sb.margin(5, 0),
-  ],
-  itemTipText: [
-    sb.font(12, 16),
-    sb.textAlign(),
-  ],
 }
 
 module.exports = Base;
