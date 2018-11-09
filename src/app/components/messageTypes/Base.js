@@ -57,12 +57,10 @@ class Base extends React.Component {
 
 const styles = {
   itemTime: [
-    sb.margin('auto'),
-    sb.color('white'),
-    sb.bgColor('rgba(0, 0, 0, 0.1)'),
+    sb.margin(10, 'auto', 0),
+    sb.color('rgba(0, 0, 0, 0.2)'),
     sb.padding(4, 10),
-    sb.font(12, 16),
-    sb.radius(3),
+    sb.font(10, 14),
   ],
   itemView: [
     sb.direction(),
