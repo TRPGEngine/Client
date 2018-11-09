@@ -12,7 +12,7 @@ let helper = {
   getShortDate: (str) => {
     let date = str ? moment(str) : moment();
     if(helper.isToday(date)) {
-      return date.format('HH:mm');
+      return date.format('A hh:mm');
     }else {
       return date.format('MM-DD HH:mm');
     }
