@@ -223,12 +223,13 @@ const styles = {
 module.exports = connect(
   state => {
     let selectedConversesUUID = state.getIn(['chat', 'selectedConversesUUID']);
+    let msgList = state.getIn(['chat', 'converses', selectedConversesUUID, 'msgList']);
 
     return {
       selectedConversesUUID,
       selfInfo: state.getIn(['user', 'info']),
       selfUUID: state.getIn(['user', 'info', 'uuid']),
-      msgList: state.getIn(['chat', 'converses', selectedConversesUUID, 'msgList']),
+      msgList: msgList && msgList.sortBy((item) => item.get('date')),
       usercache: state.getIn(['cache', 'user']),
     }
   }
