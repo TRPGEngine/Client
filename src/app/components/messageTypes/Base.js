@@ -35,12 +35,19 @@ class Base extends React.Component {
     let defaultAvatar = info.sender_uuid === 'trpgsystem' ? config.defaultImg.trpgsystem : config.defaultImg.getUser(name);
 
     return (
-      <View style={[...styles.itemView, me ? {flexDirection: 'row-reverse'}:null]}>
-        <TAvatar style={styles.itemAvatar} uri={avatar} name={name} height={40} width={40} />
-        <View style={styles.itemBody}>
-          <Text style={[...styles.itemName, me ? {textAlign:'right'}:null]}>{name}</Text>
-          <View style={[...styles.itemMsg, me ? {alignSelf: 'flex-end'}:null]}>
-            {this.getContent()}
+      <View>
+        {
+          emphasizeTime ? (
+            <Text style={styles.itemTime}>{dateHelper.getShortDate(info.date)}</Text>
+          ) : null
+        }
+        <View style={[...styles.itemView, me ? {flexDirection: 'row-reverse'}:null]}>
+          <TAvatar style={styles.itemAvatar} uri={avatar} name={name} height={40} width={40} />
+          <View style={styles.itemBody}>
+            <Text style={[...styles.itemName, me ? {textAlign:'right'}:null]}>{name}</Text>
+            <View style={[...styles.itemMsg, me ? {alignSelf: 'flex-end'}:null]}>
+              {this.getContent()}
+            </View>
           </View>
         </View>
       </View>
@@ -49,6 +56,14 @@ class Base extends React.Component {
 }
 
 const styles = {
+  itemTime: [
+    sb.margin('auto'),
+    sb.color('white'),
+    sb.bgColor('rgba(0, 0, 0, 0.1)'),
+    sb.padding(4, 10),
+    sb.font(12, 16),
+    sb.radius(3),
+  ],
   itemView: [
     sb.direction(),
     sb.padding(10, 10),
