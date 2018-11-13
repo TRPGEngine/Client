@@ -1,0 +1,85 @@
+const React = require('react');
+const {
+  View,
+  Text,
+} = require('react-native');
+const {
+  TButton,
+} = require('../../TComponent');
+
+class BaseCard extends React.Component {
+  // 获取卡片视图
+  getCardView() {
+    let info = this.props.info;
+
+    return (
+      <Text>{info.message}</Text>
+    )
+  }
+
+  // 返回一个形如:[{label: '按钮1', onClick:()=>{}}]的数组
+  getCardBtn() {
+    return [];
+  }
+
+  // 获取卡片动作
+  getCardAction() {
+    let btns = this.getCardBtn();
+    if(!btns || btns.length === 0) {
+      return null;
+    }
+
+    return (
+      <View>
+        {
+          btns.map((btn, index) => {
+            let {
+              label = '',
+              onClick,
+              attrs
+            } = btn;
+            return (
+              <TButton
+                key={`${index}#${label}`}
+                {...attrs}
+                onPress={onClick}
+                disabled={!onClick}
+              />
+            )
+          })
+        }
+      </View>
+    )
+  }
+
+  // 获取卡片标题
+  getCardTitle() {
+    if(this.props.info && this.props.info.data && this.props.info.data.title) {
+      return (
+        <View>
+          <Text style={styles.titleText}>{this.props.info.data.title}</Text>
+        </View>
+      )
+    }
+
+    return null;
+  }
+
+  render() {
+    return (
+      <View>
+        {this.getCardTitle()}
+        {this.getCardView()}
+        {this.getCardAction()}
+      </View>
+    )
+  }
+}
+
+const styles = {
+  titleText: [
+    {fontWeight:'bold', fontSize: 16, marginBottom: 4},
+  ]
+}
+
+module.exports = BaseCard;

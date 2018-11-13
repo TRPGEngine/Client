@@ -20,7 +20,7 @@ const ExtraPanelItem = require('../components/ExtraPanelItem');
 const MessageHandler = require('../../shared/components/MessageHandler');
 MessageHandler.registerDefaultMessageHandler(require('../components/messageTypes/Default'));
 MessageHandler.registerMessageHandler('tip', require('../components/messageTypes/Tip'));
-// TODO: MessageHandler.registerMessageHandler('card', require('../components/messageTypes/Card'));
+MessageHandler.registerMessageHandler('card', require('../components/messageTypes/Card'));
 MessageHandler.registerMessageHandler('file', require('../components/messageTypes/File'));
 
 class ChatScreen extends React.Component {
