@@ -41,10 +41,13 @@ class BaseCard extends React.Component {
             return (
               <TButton
                 key={`${index}#${label}`}
+                type={'inline'}
+                style={styles.cardActionBtn}
+                textStyle={{fontSize: 16}}
                 {...attrs}
                 onPress={onClick}
                 disabled={!onClick}
-              />
+              >{label}</TButton>
             )
           })
         }
@@ -79,7 +82,14 @@ class BaseCard extends React.Component {
 const styles = {
   titleText: [
     {fontWeight:'bold', fontSize: 16, marginBottom: 4},
-  ]
+  ],
+  cardActionBtn: {
+    borderTopWidth: 0.5,
+    borderTopColor: '#ccc',
+    height: 32,
+    marginBottom: -2,
+    marginTop: 8
+  },
 }
 
 module.exports = BaseCard;
