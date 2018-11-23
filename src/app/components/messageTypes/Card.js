@@ -6,7 +6,7 @@ const CardType = {
   'friendInvite': require('./card/FriendInvite'),
   // 'groupRequest': require('./card/GroupRequest'),
   // 'groupInvite': require('./card/GroupInvite'),
-  // 'diceRequest': require('./card/DiceRequest'),
+  'diceRequest': require('./card/DiceRequest'),
   'diceInvite': require('./card/DiceInvite'),
   // 'actor': require('./card/Actor'),
 }
