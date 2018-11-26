@@ -4,7 +4,7 @@ const Base = require('./Base');
 const CardType = {
   'default': require('./card/DefaultCard'),
   'friendInvite': require('./card/FriendInvite'),
-  // 'groupRequest': require('./card/GroupRequest'),
+  'groupRequest': require('./card/GroupRequest'),
   // 'groupInvite': require('./card/GroupInvite'),
   'diceRequest': require('./card/DiceRequest'),
   'diceInvite': require('./card/DiceInvite'),
