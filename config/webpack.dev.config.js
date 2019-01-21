@@ -13,4 +13,14 @@ module.exports = webpackMerge({}, base, {
     noInfo: true, // 只在热加载错误和警告
     // ...
   },
-})
+
+  proxy: {
+    '/api': {
+      target: 'https://127.0.0.1:23256/',
+      changeOrigin: true, // 是否跨域
+      pathRewrite: {
+        '^/api': '',
+      },
+    },
+  },
+});
