@@ -16,7 +16,7 @@ module.exports = webpackMerge({}, base, {
 
   proxy: {
     '/api': {
-      target: 'https://127.0.0.1:23256/',
+      target: 'http://127.0.0.1:23256/',
       changeOrigin: true, // 是否跨域
       pathRewrite: {
         '^/api': '',
