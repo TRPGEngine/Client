@@ -7,6 +7,7 @@ const pasteUtils = require('../../shared/utils/pasteUtils');
 const { sendMsg } = require('../../redux/actions/chat');
 const { showModal, hideModal } = require('../../redux/actions/ui');
 const ActorSelect = require('./modal/ActorSelect');
+const config = require('../../../../config/project.config');
 
 require('./MsgSendBox.scss');
 
@@ -187,7 +188,7 @@ class MsgSendBox extends React.Component {
                 data: {
                   type: 'actor',
                   uuid: actorUUID,
-                  avatar: actorInfo.avatar, // TODO: 修复一个会发送绝对路径的bug
+                  avatar: config.getRelativePath(actorInfo.avatar),
                   name: actorInfo.name,
                   desc: actorInfo.desc,
                 },

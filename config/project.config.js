@@ -112,6 +112,8 @@ let out = {
   },
 }
 out.file.url = `${out.file.protocol}://${out.file.host}:${out.file.port}`;
+
+// 获取基于API的绝对路径
 out.file.getAbsolutePath = function getAbsolutePath (path) {
   if(!path) {
     path = ''; // 设置默认值
@@ -120,6 +122,14 @@ out.file.getAbsolutePath = function getAbsolutePath (path) {
     return out.file.url + path;
   }
   return path;
+}
+
+// 获取基于APi的相对路径
+out.file.getRelativePath = function getAbsolutePath (path) {
+  if(!path) {
+    path = ''; // 设置默认值
+  }
+  return path.replace(out.file.url, '');
 }
 
 module.exports = out;
