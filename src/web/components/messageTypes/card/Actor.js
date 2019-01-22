@@ -23,9 +23,10 @@ class Actor extends BaseCard {
   getCardView() {
     let info = this.props.info;
     let data = info.data;
+    let url = config.file.getAbsolutePath(data.avatar) || config.defaultImg.actor;
     return (
       <div className="card-content-actor">
-        <div className="card-content-avatar" style={{backgroundImage: `url(${data.avatar || config.defaultImg.actor})`}}></div>
+        <div className="card-content-avatar" style={{backgroundImage: `url(${url})`}}></div>
         <div className="card-content-profile">
           <h3>{data.name}</h3>
           <p>{data.desc}</p>

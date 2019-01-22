@@ -7,7 +7,7 @@ const pasteUtils = require('../../shared/utils/pasteUtils');
 const { sendMsg } = require('../../redux/actions/chat');
 const { showModal, hideModal } = require('../../redux/actions/ui');
 const ActorSelect = require('./modal/ActorSelect');
-const config = require('../../../../config/project.config');
+const config = require('../../../config/project.config');
 
 require('./MsgSendBox.scss');
 
@@ -188,7 +188,7 @@ class MsgSendBox extends React.Component {
                 data: {
                   type: 'actor',
                   uuid: actorUUID,
-                  avatar: config.getRelativePath(actorInfo.avatar),
+                  avatar: config.file.getRelativePath(actorInfo.avatar),
                   name: actorInfo.name,
                   desc: actorInfo.desc,
                 },
