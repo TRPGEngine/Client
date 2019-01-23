@@ -18,33 +18,33 @@ const out = {
   },
   file: {
     getFileImage: function(ext) {
-      if(ext === 'jpg' || ext === 'png' || ext === 'gif') {
+      if (ext === 'jpg' || ext === 'png' || ext === 'gif') {
         return out.defaultImg.file.pic;
       }
-      if(ext === 'doc' || ext === 'docx') {
+      if (ext === 'doc' || ext === 'docx') {
         return out.defaultImg.file.word;
       }
-      if(ext === 'xls' || ext === 'xlsx') {
+      if (ext === 'xls' || ext === 'xlsx') {
         return out.defaultImg.file.excel;
       }
-      if(ext === 'ppt' || ext === 'pptx') {
+      if (ext === 'ppt' || ext === 'pptx') {
         return out.defaultImg.file.ppt;
       }
-      if(ext === 'pdf') {
+      if (ext === 'pdf') {
         return out.defaultImg.file.pdf;
       }
-      if(ext === 'txt') {
+      if (ext === 'txt') {
         return out.defaultImg.file.txt;
       }
 
       return out.defaultImg.file.default;
-    }
+    },
   },
   oauth: {
     qq: {
       icon: require('../assets/img/oauth/qqconnect.png'),
-    }
-  }
-}
+    },
+  },
+};
 
 module.exports = out;

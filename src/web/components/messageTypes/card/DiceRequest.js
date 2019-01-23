@@ -11,25 +11,31 @@ class DiceRequest extends BaseCard {
     let is_accept = data.is_accept;
     let allow_accept_list = data.allow_accept_list;
 
-    if(is_accept) {
-      return [{
-        label: '已通过'
-      }];
-    }else {
+    if (is_accept) {
+      return [
+        {
+          label: '已通过',
+        },
+      ];
+    } else {
       let canAccept = allow_accept_list.includes(this.props.selfUUID);
 
-      return canAccept ? [{
-        label: '接受',
-        onClick: () => this.props.dispatch(acceptDiceRequest(uuid)),
-      }] : [{
-        label: this.props.me?'等待对方处理':'等待处理',
-      }]
+      return canAccept
+        ? [
+            {
+              label: '接受',
+              onClick: () => this.props.dispatch(acceptDiceRequest(uuid)),
+            },
+          ]
+        : [
+            {
+              label: this.props.me ? '等待对方处理' : '等待处理',
+            },
+          ];
     }
   }
 }
 
-module.exports = connect(
-  state => ({
-    selfUUID: state.getIn(['user', 'info', 'uuid']),
-  })
-)(DiceRequest);
+module.exports = connect((state) => ({
+  selfUUID: state.getIn(['user', 'info', 'uuid']),
+}))(DiceRequest);

@@ -20,18 +20,31 @@ module.exports = function settings(state = initialState, action) {
     case RESET:
       return initialState;
     case SET_USER_SETTINGS:
-      return state.set('user', state.get('user').merge(immutable.fromJS(action.payload)));
+      return state.set(
+        'user',
+        state.get('user').merge(immutable.fromJS(action.payload))
+      );
     case SET_SYSTEM_SETTINGS:
-      return state.set('system', state.get('system').merge(immutable.fromJS(action.payload)));
+      return state.set(
+        'system',
+        state.get('system').merge(immutable.fromJS(action.payload))
+      );
     case UPDATE_NOTIFICATION_PERMISSION:
       return state.set('notificationPermission', action.payload);
     case ADD_FAVORITE_DICE:
-      return state.updateIn(['user', 'favoriteDice'], list => list.push(immutable.fromJS({title: '常用骰', value: '1d100'})));
+      return state.updateIn(['user', 'favoriteDice'], (list) =>
+        list.push(immutable.fromJS({ title: '常用骰', value: '1d100' }))
+      );
     case REMOVE_FAVORITE_DICE:
-      return state.updateIn(['user', 'favoriteDice'], list => list.delete(action.index));
+      return state.updateIn(['user', 'favoriteDice'], (list) =>
+        list.delete(action.index)
+      );
     case UPDATE_FAVORITE_DICE:
-      return state.setIn(['user', 'favoriteDice', action.index], immutable.fromJS(action.payload));
+      return state.setIn(
+        ['user', 'favoriteDice', action.index],
+        immutable.fromJS(action.payload)
+      );
     default:
       return state;
   }
-}
+};

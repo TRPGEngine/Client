@@ -3,25 +3,25 @@ const moment = require('moment');
 let helper = {
   getShortDiff: (str) => {
     let date = str ? moment(str) : moment();
-    if(helper.isToday(date)) {
+    if (helper.isToday(date)) {
       return date.format('HH:mm');
-    }else {
+    } else {
       return date.fromNow();
     }
   },
   getShortDate: (str) => {
     let date = str ? moment(str) : moment();
-    if(helper.isToday(date)) {
+    if (helper.isToday(date)) {
       return date.format('A hh:mm');
-    }else {
+    } else {
       return date.format('MM-DD HH:mm');
     }
   },
   getMsgDate: (str) => {
     let date = str ? moment(str) : moment();
-    if(helper.isToday(date)) {
+    if (helper.isToday(date)) {
       return date.format('HH:mm:ss');
-    }else {
+    } else {
       return date.format('YYYY-MM-DD HH:mm:ss');
     }
   },
@@ -38,7 +38,7 @@ let helper = {
   },
   getDateDiff: (prevDate, nextDate) => {
     return new Date(nextDate) - new Date(prevDate);
-  }
-}
+  },
+};
 
 module.exports = helper;

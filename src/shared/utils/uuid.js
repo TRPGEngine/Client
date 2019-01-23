@@ -7,4 +7,4 @@ module.exports = {
   isGroupUUID: (uuid) => {
     return isUUID.v4(uuid);
   },
-}
+};

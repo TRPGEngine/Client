@@ -27,205 +27,228 @@ const uploadHelper = require('../../shared/utils/uploadHelper');
 let localIndex = 0;
 let getLocalUUID = function getLocalUUID() {
   return 'local#' + localIndex++;
-}
+};
 
 let switchConverse = function switchConverse(converseUUID, userUUID) {
-  return {type: SWITCH_CONVERSES, converseUUID, userUUID}
-}
+  return { type: SWITCH_CONVERSES, converseUUID, userUUID };
+};
 
 let switchToConverse = function switchToConverse(converseUUID, userUUID) {
   return function(dispatch, getState) {
     dispatch(hideProfileCard());
     dispatch(switchMenuPannel(0));
     dispatch(switchConverse(converseUUID, userUUID));
-  }
-}
+  };
+};
 
 let addConverse = function addConverse(payload) {
   // if(!payload.uuid) {
   //   console.error('[addConverse]payload need uuid', payload);
   //   return;
   // }
-  return {type: ADD_CONVERSES, payload: payload}
-}
+  return { type: ADD_CONVERSES, payload: payload };
+};
 
 let updateConversesMsglist = function updateConversesMsglist(convUUID, list) {
   return function(dispatch, getState) {
-    for(let item of list) {
-      if(item.sender_uuid) {
+    for (let item of list) {
+      if (item.sender_uuid) {
         checkUser(item.sender_uuid);
       }
     }
-    dispatch({type: UPDATE_CONVERSES_MSGLIST_SUCCESS, convUUID, payload: list});
-  }
-}
+    dispatch({
+      type: UPDATE_CONVERSES_MSGLIST_SUCCESS,
+      convUUID,
+      payload: list,
+    });
+  };
+};
 
 // 获取多人会话
 let getConverses = function getConverses(cb) {
   return function(dispatch, getState) {
-    dispatch({type: GET_CONVERSES_REQUEST});
+    dispatch({ type: GET_CONVERSES_REQUEST });
     // 获取会话列表
     return api.emit('chat::getConverses', {}, function(data) {
       cb && cb();
-      if(data.result) {
+      if (data.result) {
         let list = data.list;
-        dispatch({type:GET_CONVERSES_SUCCESS, payload: list});
-        let uuid = getState().getIn(['user','info','uuid']);
+        dispatch({ type: GET_CONVERSES_SUCCESS, payload: list });
+        let uuid = getState().getIn(['user', 'info', 'uuid']);
         checkUser(uuid);
         // 用户聊天记录
         for (let item of list) {
           let convUUID = item.uuid;
           // 获取日志
-          if(!/^trpg/.test(convUUID)) {
+          if (!/^trpg/.test(convUUID)) {
             checkUser(convUUID);
           }
 
           // TODO
-          api.emit('chat::getConverseChatLog', {converse_uuid: convUUID}, function(data) {
-            if(data.result) {
-              dispatch(updateConversesMsglist(convUUID, data.list));
-            }else {
-              console.error('获取聊天记录失败:', data.msg);
+          api.emit(
+            'chat::getConverseChatLog',
+            { converse_uuid: convUUID },
+            function(data) {
+              if (data.result) {
+                dispatch(updateConversesMsglist(convUUID, data.list));
+              } else {
+                console.error('获取聊天记录失败:', data.msg);
+              }
             }
-          })
+          );
         }
-      }else {
+      } else {
         console.error(data);
-        dispatch({type:GET_CONVERSES_FAILED, payload: data.msg});
+        dispatch({ type: GET_CONVERSES_FAILED, payload: data.msg });
       }
-    })
-  }
-}
+    });
+  };
+};
 
 // 弃用
-let createConverse = function createConverse(uuid, type, isSwitchToConv = true) {
+let createConverse = function createConverse(
+  uuid,
+  type,
+  isSwitchToConv = true
+) {
   return function(dispatch, getState) {
-    if(!!getState().getIn(['chat', 'converses', uuid])) {
+    if (!!getState().getIn(['chat', 'converses', uuid])) {
       console.log('已存在该会话');
-      if(isSwitchToConv) {
-        dispatch(switchToConverse(uuid, uuid));//TODO:CHECK
+      if (isSwitchToConv) {
+        dispatch(switchToConverse(uuid, uuid)); //TODO:CHECK
       }
       return;
     }
-    dispatch({type: CREATE_CONVERSES_REQUEST});
-    return api.emit('chat::createConverse', {uuid, type}, function(data) {
+    dispatch({ type: CREATE_CONVERSES_REQUEST });
+    return api.emit('chat::createConverse', { uuid, type }, function(data) {
       console.log('chat::createConverse', data);
-      if(data.result) {
+      if (data.result) {
         let conv = data.data;
-        dispatch({type: CREATE_CONVERSES_SUCCESS, payload:conv});
+        dispatch({ type: CREATE_CONVERSES_SUCCESS, payload: conv });
 
         let convUUID = conv.uuid;
-        if(isSwitchToConv) {
-          dispatch(switchToConverse(convUUID, convUUID));//TODO:CHECK
+        if (isSwitchToConv) {
+          dispatch(switchToConverse(convUUID, convUUID)); //TODO:CHECK
         }
         // 获取日志
         checkUser(uuid);
-        api.emit('chat::getConverseChatLog', {converse_uuid: convUUID}, function(data) {
-          if(data.result) {
-            let list = data.list;
-            dispatch(updateConversesMsglist(convUUID, list));
-          }else {
-            console.error('获取聊天记录失败:' + data.msg);
+        api.emit(
+          'chat::getConverseChatLog',
+          { converse_uuid: convUUID },
+          function(data) {
+            if (data.result) {
+              let list = data.list;
+              dispatch(updateConversesMsglist(convUUID, list));
+            } else {
+              console.error('获取聊天记录失败:' + data.msg);
+            }
           }
-        })
-      }else {
-        dispatch({type: CREATE_CONVERSES_FAILED, payload:data.msg});
+        );
+      } else {
+        dispatch({ type: CREATE_CONVERSES_FAILED, payload: data.msg });
       }
-    })
-  }
-}
+    });
+  };
+};
 let removeConverse = function removeConverse(converseUUID) {
   return function(dispatch, getState) {
-    return api.emit('chat::removeConverse', {converseUUID}, function(data) {
-      if(data.result) {
-        dispatch({type:REMOVE_CONVERSES_SUCCESS, converseUUID});
-      }else {
+    return api.emit('chat::removeConverse', { converseUUID }, function(data) {
+      if (data.result) {
+        dispatch({ type: REMOVE_CONVERSES_SUCCESS, converseUUID });
+      } else {
         console.error(data);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 let addUserConverse = function addUserConverse(senders) {
   return function(dispatch, getState) {
-    if(typeof senders === 'string') {
+    if (typeof senders === 'string') {
       senders = [senders];
     }
     dispatch({
       type: GET_USER_CONVERSES_SUCCESS,
       payload: senders
-        .map(uuid => ({uuid, type:'user'}))
-        .concat([{uuid: 'trpgsystem', type: 'system', name: '系统消息'}])
-    })
+        .map((uuid) => ({ uuid, type: 'user' }))
+        .concat([{ uuid: 'trpgsystem', type: 'system', name: '系统消息' }]),
+    });
 
     // 用户会话缓存
     let userUUID = getState().getIn(['user', 'info', 'uuid']);
-    rnStorage.get('userConverses#'+userUUID)
-      .then(function(converse) {
-        converse = Array.from(new Set([...converse, ...senders]))
-        rnStorage.set('userConverses#'+userUUID, converse).then(data => console.log('用户会话缓存完毕:', data));
-      })
+    rnStorage.get('userConverses#' + userUUID).then(function(converse) {
+      converse = Array.from(new Set([...converse, ...senders]));
+      rnStorage
+        .set('userConverses#' + userUUID, converse)
+        .then((data) => console.log('用户会话缓存完毕:', data));
+    });
 
     for (let uuid of senders) {
       // 更新会话信息
-      api.emit('player::getInfo', {type: 'user', uuid: uuid}, function(data) {
-        if(data.result) {
+      api.emit('player::getInfo', { type: 'user', uuid: uuid }, function(data) {
+        if (data.result) {
           let info = data.info;
-          dispatch({type: UPDATE_CONVERSES_INFO_SUCCESS, uuid: info.uuid, payload: {
-            name: info.nickname || info.username,
-            // icon: info.avatar,
-          }})
-        }else {
+          dispatch({
+            type: UPDATE_CONVERSES_INFO_SUCCESS,
+            uuid: info.uuid,
+            payload: {
+              name: info.nickname || info.username,
+              // icon: info.avatar,
+            },
+          });
+        } else {
           console.error('更新用户会话信息时出错:', data, '| uuid:', uuid);
         }
-      })
+      });
 
       // 更新消息列表
-      api.emit('chat::getUserChatLog', {user_uuid: uuid}, function(data) {
-        if(data.result) {
+      api.emit('chat::getUserChatLog', { user_uuid: uuid }, function(data) {
+        if (data.result) {
           let list = data.list;
-          dispatch(updateConversesMsglist(uuid, list))
-        }else {
+          dispatch(updateConversesMsglist(uuid, list));
+        } else {
           console.error('获取聊天记录失败:' + data.msg);
         }
-      })
+      });
     }
 
     // 更新系统消息
-    api.emit('chat::getUserChatLog', {user_uuid: 'trpgsystem'}, function(data) {
-      if(data.result) {
+    api.emit('chat::getUserChatLog', { user_uuid: 'trpgsystem' }, function(
+      data
+    ) {
+      if (data.result) {
         let list = data.list;
-        dispatch(updateConversesMsglist('trpgsystem', list))
-      }else {
+        dispatch(updateConversesMsglist('trpgsystem', list));
+      } else {
         console.error('获取聊天记录失败:' + data.msg);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 let getOfflineUserConverse = function getOfflineUserConverse(lastLoginDate) {
   return function(dispatch, getState) {
-    api.emit('chat::getOfflineUserConverse', {lastLoginDate}, function(data) {
-      if(data.result === true) {
+    api.emit('chat::getOfflineUserConverse', { lastLoginDate }, function(data) {
+      if (data.result === true) {
         dispatch(addUserConverse(data.senders));
-      }else {
+      } else {
         console.error(data);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 let getAllUserConverse = function getAllUserConverse() {
   return function(dispatch, getState) {
     api.emit('chat::getAllUserConverse', {}, function(data) {
-      if(data.result === true) {
+      if (data.result === true) {
         dispatch(addUserConverse(data.senders));
-      }else {
+      } else {
         console.error(data);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 // 重新加载会话列表
 // TODO: 暂时先把cb放在getConverses，以后再想办法优化
@@ -234,28 +257,27 @@ let reloadConverseList = function reloadConverseList(cb) {
     let userInfo = getState().getIn(['user', 'info']);
     let userUUID = userInfo.get('uuid');
 
-    dispatch(getConverses(cb))
-    rnStorage.get('userConverses#'+userUUID)
-      .then(function(converse) {
-        console.log('缓存中的用户会话列表:', converse);
-        if(converse && converse.length > 0) {
-          dispatch(addUserConverse(converse));
-          dispatch(getOfflineUserConverse(userInfo.get('last_login')))
-        }else {
-          dispatch(getAllUserConverse())
-        }
-      })
-  }
-}
+    dispatch(getConverses(cb));
+    rnStorage.get('userConverses#' + userUUID).then(function(converse) {
+      console.log('缓存中的用户会话列表:', converse);
+      if (converse && converse.length > 0) {
+        dispatch(addUserConverse(converse));
+        dispatch(getOfflineUserConverse(userInfo.get('last_login')));
+      } else {
+        dispatch(getAllUserConverse());
+      }
+    });
+  };
+};
 
 let addMsg = function addMsg(converseUUID, payload) {
   return (dispatch, getState) => {
-    if(!(converseUUID && typeof converseUUID === 'string')) {
+    if (!(converseUUID && typeof converseUUID === 'string')) {
       console.error('[addMsg]add message need converseUUID:', converseUUID);
       return;
     }
 
-    if(!getState().getIn(['chat', 'converses', converseUUID])) {
+    if (!getState().getIn(['chat', 'converses', converseUUID])) {
       // 会话不存在，则创建会话
       console.log('创建会话', payload);
       // if(!!payload.is_group) {
@@ -266,16 +288,19 @@ let addMsg = function addMsg(converseUUID, payload) {
       //   dispatch(createConverse(payload.sender_uuid, 'user', false))
       // }
 
-      if(!payload.is_group) {
+      if (!payload.is_group) {
         // 单聊
-        dispatch(addConverse({uuid: converseUUID, type:'user'}))
+        dispatch(addConverse({ uuid: converseUUID, type: 'user' }));
       }
     }
 
     checkUser(payload.sender_uuid); // 检查用户信息，保证每一条信息都能有信息来源
 
     let unread = true;
-    if(converseUUID === getState().getIn(['chat', 'selectedConversesUUID']) || converseUUID === getState().getIn(['group', 'selectedGroupUUID'])) {
+    if (
+      converseUUID === getState().getIn(['chat', 'selectedConversesUUID']) ||
+      converseUUID === getState().getIn(['group', 'selectedGroupUUID'])
+    ) {
       unread = false;
     }
 
@@ -283,12 +308,12 @@ let addMsg = function addMsg(converseUUID, payload) {
     //   console.error('[addMsg]payload need uuid:', payload);
     //   return;
     // }
-    dispatch({type: ADD_MSG, converseUUID, unread, payload: payload});
-  }
-}
+    dispatch({ type: ADD_MSG, converseUUID, unread, payload: payload });
+  };
+};
 let sendMsg = function sendMsg(toUUID, payload) {
   return function(dispatch, getState) {
-    dispatch({type:SEND_MSG});
+    dispatch({ type: SEND_MSG });
     const info = getState().getIn(['user', 'info']);
     const localUUID = getLocalUUID();
     let pkg = {
@@ -307,27 +332,32 @@ let sendMsg = function sendMsg(toUUID, payload) {
     console.log('send msg pkg:', pkg);
 
     let converseUUID = payload.converse_uuid || toUUID;
-    dispatch(addMsg(converseUUID, pkg))
+    dispatch(addMsg(converseUUID, pkg));
     return api.emit('chat::message', pkg, function(data) {
       // console.log(data);
       // TODO: 待实现SEND_MSG_COMPLETED的数据处理方法(用于送达提示)
-      dispatch({type:SEND_MSG_COMPLETED, payload: data, localUUID, converseUUID});
-      if(data.result) {
+      dispatch({
+        type: SEND_MSG_COMPLETED,
+        payload: data,
+        localUUID,
+        converseUUID,
+      });
+      if (data.result) {
         console.log('发送成功');
-      }else {
+      } else {
         console.log('发送失败', pkg);
       }
-    })
-  }
-}
+    });
+  };
+};
 let sendFile = function sendFile(toUUID, payload, file) {
-  if(!file) {
+  if (!file) {
     console.error('发送文件错误。没有找到要发送的文件');
     return;
   }
 
   return function(dispatch, getState) {
-    dispatch({type: SEND_MSG})
+    dispatch({ type: SEND_MSG });
     const info = getState().getIn(['user', 'info']);
     const selfUserUUID = info.get('uuid');
     const localUUID = getLocalUUID();
@@ -345,32 +375,39 @@ let sendFile = function sendFile(toUUID, payload, file) {
       uuid: localUUID,
     };
     let converseUUID = payload.converse_uuid || toUUID;
-    dispatch(addMsg(converseUUID, pkg))
+    dispatch(addMsg(converseUUID, pkg));
 
     // 通过该方法发送的文件均为会话文件，存到临时文件夹
     uploadHelper.toTemporary(selfUserUUID, file, {
       onProgress: function(progress) {
-        dispatch(updateMsg(payload.converse_uuid || toUUID, {
-          uuid: pkg.uuid,
-          data: Object.assign({}, pkg.data, {progress})
-        }))
+        dispatch(
+          updateMsg(payload.converse_uuid || toUUID, {
+            uuid: pkg.uuid,
+            data: Object.assign({}, pkg.data, { progress }),
+          })
+        );
       },
       onCompleted: function(fileinfo) {
-        let filedata = Object.assign({}, pkg.data, fileinfo, {progress: 1})
-        pkg = Object.assign({}, pkg, {data: filedata});
+        let filedata = Object.assign({}, pkg.data, fileinfo, { progress: 1 });
+        pkg = Object.assign({}, pkg, { data: filedata });
         // 文件上传完毕。正式发送文件消息
         api.emit('chat::message', pkg, function(data) {
-          dispatch({type:SEND_MSG_COMPLETED, payload: data, localUUID, converseUUID});
-          if(data.result) {
+          dispatch({
+            type: SEND_MSG_COMPLETED,
+            payload: data,
+            localUUID,
+            converseUUID,
+          });
+          if (data.result) {
             console.log('发送成功');
-          }else {
+          } else {
             console.log('发送失败', pkg);
           }
-        })
-      }
-    })
-  }
-}
+        });
+      },
+    });
+  };
+};
 
 let updateMsg = function updateMsg(converseUUID, payload) {
   console.log('try to update message', converseUUID, payload);
@@ -379,42 +416,60 @@ let updateMsg = function updateMsg(converseUUID, payload) {
     converseUUID,
     msgUUID: payload.uuid,
     payload,
-  }
-}
+  };
+};
 
-let getMoreChatLog = function getMoreChatLog(converseUUID, offsetDate, isUserChat = true) {
+let getMoreChatLog = function getMoreChatLog(
+  converseUUID,
+  offsetDate,
+  isUserChat = true
+) {
   return function(dispatch, getState) {
-    if(isUserChat) {
-      api.emit('chat::getUserChatLog', {user_uuid: converseUUID, offsetDate}, function(data) {
-        if(data.result === true) {
-          dispatch(updateConversesMsglist(converseUUID, data.list))
-        }else {
-          console.log(data);
+    if (isUserChat) {
+      api.emit(
+        'chat::getUserChatLog',
+        { user_uuid: converseUUID, offsetDate },
+        function(data) {
+          if (data.result === true) {
+            dispatch(updateConversesMsglist(converseUUID, data.list));
+          } else {
+            console.log(data);
+          }
         }
-      })
-    }else {
-      api.emit('chat::getConverseChatLog', {converse_uuid: converseUUID, offsetDate}, function(data) {
-        if(data.result === true) {
-          dispatch(updateConversesMsglist(converseUUID, data.list))
-        }else {
-          console.log(data);
+      );
+    } else {
+      api.emit(
+        'chat::getConverseChatLog',
+        { converse_uuid: converseUUID, offsetDate },
+        function(data) {
+          if (data.result === true) {
+            dispatch(updateConversesMsglist(converseUUID, data.list));
+          } else {
+            console.log(data);
+          }
         }
-      })
+      );
     }
-  }
-}
+  };
+};
 
 let updateCardChatData = function(chatUUID, newData) {
   return function(dispatch, getState) {
-    return api.emit('chat::updateCardChatData', {chatUUID, newData}, function(data) {
-      if(data.result) {
-        dispatch({type:UPDATE_SYSTEM_CARD_CHAT_DATA, chatUUID, payload: data.log});
-      }else {
+    return api.emit('chat::updateCardChatData', { chatUUID, newData }, function(
+      data
+    ) {
+      if (data.result) {
+        dispatch({
+          type: UPDATE_SYSTEM_CARD_CHAT_DATA,
+          chatUUID,
+          payload: data.log,
+        });
+      } else {
         console.error(data.msg);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.switchToConverse = switchToConverse;
 exports.addConverse = addConverse;

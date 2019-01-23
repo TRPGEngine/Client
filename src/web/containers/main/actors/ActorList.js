@@ -5,7 +5,11 @@ const TemplateSelect = require('./TemplateSelect');
 const ActorEdit = require('./ActorEdit');
 const apiHelper = require('../../../../shared/utils/apiHelper');
 const { showModal, showAlert } = require('../../../../redux/actions/ui');
-const { selectActor, removeActor, selectTemplate } = require('../../../../redux/actions/actor');
+const {
+  selectActor,
+  removeActor,
+  selectTemplate,
+} = require('../../../../redux/actions/actor');
 
 require('./ActorList.scss');
 
@@ -16,17 +20,15 @@ class ActorList extends React.Component {
 
   _handleAddNewActor() {
     this.props.selectActor('');
-    this.props.showModal(
-      <TemplateSelect />
-    )
+    this.props.showModal(<TemplateSelect />);
   }
 
   _handleRemoveActor(uuid) {
     this.props.selectActor('');
     this.props.showAlert({
       content: '你确定要删除该人物卡么？删除后会同时删除相关的团人物并无法找回',
-      onConfirm: () => this.props.removeActor(uuid)
-    })
+      onConfirm: () => this.props.removeActor(uuid),
+    });
   }
 
   _handleEditActor(uuid, template_uuid) {
@@ -43,74 +45,94 @@ class ActorList extends React.Component {
     return this.props.actors.map((item, index) => {
       let uuid = item.get('uuid');
       let backgroundStyle = {
-        backgroundImage: `url(${item.get('avatar')})`
+        backgroundImage: `url(${item.get('avatar')})`,
       };
       let actorname = item.get('name');
       let desc = item.get('desc');
       let template_uuid = item.get('template_uuid');
       return (
         <div className="actor-card" key={uuid + '-' + index}>
-          <div className="avatar" style={backgroundStyle}></div>
+          <div className="avatar" style={backgroundStyle} />
           <div className="profile">
-            <p><span>角色:</span><span title={actorname}>{actorname}</span></p>
-            <p><span>说明:</span><span title={desc}>{desc}</span></p>
+            <p>
+              <span>角色:</span>
+              <span title={actorname}>{actorname}</span>
+            </p>
+            <p>
+              <span>说明:</span>
+              <span title={desc}>{desc}</span>
+            </p>
             <p className="action">
-              <button onClick={() => this._handleRemoveActor(uuid)}>删除</button>
-              <button onClick={() => this._handleEditActor(uuid, template_uuid)}>编辑</button>
+              <button onClick={() => this._handleRemoveActor(uuid)}>
+                删除
+              </button>
+              <button
+                onClick={() => this._handleEditActor(uuid, template_uuid)}
+              >
+                编辑
+              </button>
               <button onClick={() => this.props.selectActor(uuid)}>查看</button>
             </p>
           </div>
         </div>
-      )
-    })
+      );
+    });
   }
 
   getActorInfo() {
     let actor;
     for (let _actor of this.props.actors) {
-      if(_actor.get('uuid') === this.props.selectedActorUUID) {
+      if (_actor.get('uuid') === this.props.selectedActorUUID) {
         actor = _actor;
         break;
       }
     }
 
-    if(actor && actor.get('info')) {
-      let template = this.props.templateCache.get(actor.get('template_uuid'), {});
+    if (actor && actor.get('info')) {
+      let template = this.props.templateCache.get(
+        actor.get('template_uuid'),
+        {}
+      );
       let info = at.parse(template.get('info', '{}'));
       info.setData(actor.get('info').toJS());
       let cells = info.getCells();
       return (
         <div>
-          <p><span>人物卡:</span><span>{actor.get('name')}</span></p>
-          <p><span>说明:</span><span>{actor.get('desc')}</span></p>
-          {
-            cells.map((item, index) => {
-              return (
-                <p key={actor.get('uuid')+index}>
-                  <span>{item['name']}:</span><span>{item['value']}</span>
-                </p>
-              )
-            })
-          }
+          <p>
+            <span>人物卡:</span>
+            <span>{actor.get('name')}</span>
+          </p>
+          <p>
+            <span>说明:</span>
+            <span>{actor.get('desc')}</span>
+          </p>
+          {cells.map((item, index) => {
+            return (
+              <p key={actor.get('uuid') + index}>
+                <span>{item['name']}:</span>
+                <span>{item['value']}</span>
+              </p>
+            );
+          })}
         </div>
-      )
-    }else {
-      return (
-        <div className="no-content">
-          没有信息
-        </div>
-      )
+      );
+    } else {
+      return <div className="no-content">没有信息</div>;
     }
   }
 
   render() {
     let addNewCard = (
       <div className="actor-card">
-        <div className="actor-card-new" onClick={() => this._handleAddNewActor()}>
-          <i className="iconfont">&#xe604;</i><span>添加新人物</span>
+        <div
+          className="actor-card-new"
+          onClick={() => this._handleAddNewActor()}
+        >
+          <i className="iconfont">&#xe604;</i>
+          <span>添加新人物</span>
         </div>
       </div>
-    )
+    );
     return (
       <div className="actor">
         <div className="actor-list">
@@ -119,21 +141,19 @@ class ActorList extends React.Component {
             {addNewCard}
           </div>
         </div>
-        <div className="actor-info">
-          {this.getActorInfo()}
-        </div>
+        <div className="actor-info">{this.getActorInfo()}</div>
       </div>
-    )
+    );
   }
 }
 
 module.exports = connect(
-  state => ({
+  (state) => ({
     actors: state.getIn(['actor', 'selfActors']),
     selectedActorUUID: state.getIn(['actor', 'selectedActorUUID']),
-    templateCache: state.getIn(['cache', 'template'])
+    templateCache: state.getIn(['cache', 'template']),
   }),
-  dispatch => ({
+  (dispatch) => ({
     showModal: (body) => dispatch(showModal(body)),
     showAlert: (...args) => dispatch(showAlert(...args)),
     selectActor: (uuid) => dispatch(selectActor(uuid)),

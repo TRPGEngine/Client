@@ -13,12 +13,11 @@ const rnStorage = require('../../api/rnStorage.api.js');
 exports.loadLocalCache = function() {
   return function(dispatch, getState) {
     // TODO: 用户缓存，列表缓存，等等等等
-    rnStorage.get('localCache')
-      .then(res => {
-        console.log('loadLocalCache', res); // TODO: 待实现
-      })
-  }
-}
+    rnStorage.get('localCache').then((res) => {
+      console.log('loadLocalCache', res); // TODO: 待实现
+    });
+  };
+};
 
 exports.saveLocalCache = function() {
   return function(dispatch, getState) {
@@ -26,80 +25,80 @@ exports.saveLocalCache = function() {
     let usercache = getState().getIn(['cache', 'user']);
     let templatecache = getState().getIn(['cache', 'template']);
 
-    let saveData = {usercache, templatecache};
+    let saveData = { usercache, templatecache };
     rnStorage.save('localCache', saveData); // TODO: 可能需要一个优化。用一个存储列表来处理短时间多次请求保存本地缓存的问题
-  }
-}
+  };
+};
 
 exports.getUserInfo = function(uuid, onCompleted) {
-  if(!uuid) {
+  if (!uuid) {
     throw new Error('getUserInfo need uuid');
   }
 
   return function(dispatch, getState) {
-    return api.emit('player::getInfo', {type:'user', uuid}, function(data) {
-      if(data.result) {
+    return api.emit('player::getInfo', { type: 'user', uuid }, function(data) {
+      if (data.result) {
         data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
-        dispatch({type:GET_USER_INFO, payload: data.info});
+        dispatch({ type: GET_USER_INFO, payload: data.info });
         dispatch(exports.saveLocalCache()); // 保存到本地缓存
-      }else {
+      } else {
         console.error(data.msg);
       }
 
       onCompleted && onCompleted(data);
-    })
-  }
-}
+    });
+  };
+};
 
 exports.getTemplateInfo = function(uuid) {
-  if(!uuid) {
+  if (!uuid) {
     throw new Error('getTemplateInfo need uuid');
   }
 
   return function(dispatch, getState) {
-    return api.emit('actor::getTemplate', {uuid}, function(data) {
-      if(data.result) {
-        dispatch({type: GET_TEMPLATE_INFO, payload: data.template});
-      }else {
-        console.error(data.msg)
+    return api.emit('actor::getTemplate', { uuid }, function(data) {
+      if (data.result) {
+        dispatch({ type: GET_TEMPLATE_INFO, payload: data.template });
+      } else {
+        console.error(data.msg);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.getActorInfo = function(uuid) {
-  if(!uuid) {
+  if (!uuid) {
     throw new Error('getActorInfo need uuid');
   }
 
   return function(dispatch, getState) {
-    return api.emit('actor::getActor', {uuid}, function(data) {
-      if(data.result) {
+    return api.emit('actor::getActor', { uuid }, function(data) {
+      if (data.result) {
         let actor = data.actor ? data.actor : data.actors[0];
         actor.avatar = config.file.getAbsolutePath(actor.avatar);
-        dispatch({type:GET_ACTOR_INFO, payload: actor});
-      }else {
-        console.error(data.msg)
+        dispatch({ type: GET_ACTOR_INFO, payload: actor });
+      } else {
+        console.error(data.msg);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.getGroupInfo = function(uuid, onCompleted) {
-  if(!uuid) {
+  if (!uuid) {
     throw new Error('getGroupInfo need uuid');
   }
 
   return function(dispatch, getState) {
-    return api.emit('group::getInfo', {uuid}, function(data) {
-      if(data.result) {
+    return api.emit('group::getInfo', { uuid }, function(data) {
+      if (data.result) {
         data.group.avatar = config.file.getAbsolutePath(data.group.avatar);
-        dispatch({type:GET_GROUP_INFO_SUCCESS, payload: data.group});
-      }else {
+        dispatch({ type: GET_GROUP_INFO_SUCCESS, payload: data.group });
+      } else {
         console.error(data.msg);
       }
 
       onCompleted && onCompleted(data);
-    })
-  }
-}
+    });
+  };
+};

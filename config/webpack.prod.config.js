@@ -13,7 +13,7 @@ module.exports = webpackMerge({}, base, {
       sourceMap: false,
       mangle: {
         except: ['$super', '$', 'exports', 'require'], // 排除关键字
-      }
+      },
     }),
-  ]
-})
+  ],
+});

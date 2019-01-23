@@ -9,7 +9,7 @@ class IsDeveloping extends React.Component {
         <i className="iconfont">&#xe6bb;</i>
         <p>工程师正在开发中...</p>
       </div>
-    )
+    );
   }
 }
 

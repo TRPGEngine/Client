@@ -9,12 +9,12 @@ class ImageViewer extends React.Component {
     super(props);
     this.state = {
       isOpen: false,
-    }
+    };
   }
 
   _handleClick() {
-    if(this.props.originImageUrl) {
-      this.setState({isOpen: true});
+    if (this.props.originImageUrl) {
+      this.setState({ isOpen: true });
     }
   }
 
@@ -29,12 +29,12 @@ class ImageViewer extends React.Component {
           />
         )}
       </div>
-    )
+    );
   }
 }
 
 ImageViewer.propTypes = {
   originImageUrl: PropTypes.string,
-}
+};
 
 module.exports = ImageViewer;

@@ -10,10 +10,10 @@ const reducers = {
   actor: require('./actor'),
   group: require('./group'),
   settings: require('./settings'),
-}
+};
 
-if(config.platform==='app') {
-  reducers.nav = require('./nav')
+if (config.platform === 'app') {
+  reducers.nav = require('./nav');
 }
 
 module.exports = combineReducers(reducers);

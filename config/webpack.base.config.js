@@ -12,13 +12,13 @@ const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
 const config = require('../package.json');
 
 let vendors = Object.keys(config.dependencies);
-if(process.env.PLATFORM !== 'app') {
-  let arrRemove = function (arr, item) {
+if (process.env.PLATFORM !== 'app') {
+  let arrRemove = function(arr, item) {
     let index = arr.indexOf(item);
-    if(index >= 0) {
+    if (index >= 0) {
       arr.splice(index, 1);
     }
-  }
+  };
 
   arrRemove(vendors, 'apsl-react-native-button');
   arrRemove(vendors, 'react-native');
@@ -38,11 +38,11 @@ console.log('vendor list:', vendors);
 module.exports = {
   entry: {
     vendor: vendors,
-    app: path.resolve(APP_PATH, './web/index.js')
+    app: path.resolve(APP_PATH, './web/index.js'),
   },
   output: {
     path: DIST_PATH,
-    filename: '[name].[chunkhash:8].js'
+    filename: '[name].[chunkhash:8].js',
   },
   //babel重要的loader在这里
   module: {
@@ -63,27 +63,32 @@ module.exports = {
         query: {
           presets: ['env', 'react'],
           plugins: [
-            ['transform-runtime', {
-              helpers: false,
-              polyfill: false,
-              regenerator: true }],
+            [
+              'transform-runtime',
+              {
+                helpers: false,
+                polyfill: false,
+                regenerator: true,
+              },
+            ],
             'transform-class-properties',
-          ]
-        }
+          ],
+        },
       },
       {
         test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf)$/,
-        loader: 'url-loader?limit=8192&name=assets/[hash].[ext]'
+        loader: 'url-loader?limit=8192&name=assets/[hash].[ext]',
       },
-    ]
+    ],
   },
 
   externals: {
-    electron: 'require(\'electron\')',
-    'react-native': 'require(\'react-native\')',
-    './nav': 'require(\'./nav\')',
-    '../../app/router': 'require(\'../../app/router\')', // for redux.configureStore
-    'react-navigation-redux-helpers': 'require(\'react-navigation-redux-helpers\')',
+    electron: "require('electron')",
+    'react-native': "require('react-native')",
+    './nav': "require('./nav')",
+    '../../app/router': "require('../../app/router')", // for redux.configureStore
+    'react-navigation-redux-helpers':
+      "require('react-navigation-redux-helpers')",
   },
 
   plugins: [
@@ -94,25 +99,28 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        'PLATFORM': JSON.stringify(process.env.PLATFORM),
-        'TRPG_HOST': JSON.stringify(process.env.TRPG_HOST),
-      }
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        PLATFORM: JSON.stringify(process.env.PLATFORM),
+        TRPG_HOST: JSON.stringify(process.env.TRPG_HOST),
+      },
     }),
     new CopyWebpackPlugin([
-      { from: path.resolve(BUILD_PATH, './template/pre-loading.css'), to: 'pre-loading.css' },
+      {
+        from: path.resolve(BUILD_PATH, './template/pre-loading.css'),
+        to: 'pre-loading.css',
+      },
     ]),
     new HtmlwebpackPlugin({
       title: 'TRPG-Game',
       template: path.resolve(BUILD_PATH, './template/index.html'),
       inject: true,
       favicon: path.resolve(APP_PATH, './assets/img/favicon.ico'),
-      hash: true
+      hash: true,
     }),
     new HtmlWebpackIncludeAssetsPlugin({
-      assets: [ 'pre-loading.css' ],
-      append: false
+      assets: ['pre-loading.css'],
+      append: false,
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ],
-}
+};

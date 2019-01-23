@@ -18,7 +18,7 @@ class ErrorBoundary extends React.Component {
       message: String(error),
       stack: String(info.componentStack),
       version: config.version,
-    })
+    });
   }
 
   render() {
@@ -26,7 +26,10 @@ class ErrorBoundary extends React.Component {
       return (
         <div className="error-boundary">
           <h1>啊哦Σ(ﾟдﾟ;), 出现了一些错误.</h1>
-          <h2>错误已经汇报给TRPG后台, 请<span onClick={() => location.reload()}>刷新</span>一下页面重试哦.</h2>
+          <h2>
+            错误已经汇报给TRPG后台, 请
+            <span onClick={() => location.reload()}>刷新</span>一下页面重试哦.
+          </h2>
         </div>
       );
     }

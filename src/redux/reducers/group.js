@@ -31,9 +31,9 @@ const {
 } = require('../constants');
 
 const initialState = immutable.fromJS({
-  info: {},// 所有的group信息。包括加入的和未加入的 // TODO: 修改到cache里管理
-  invites: [],// 邀请列表。里面是邀请对象
-  groups: [],// 个人所有组的信息
+  info: {}, // 所有的group信息。包括加入的和未加入的 // TODO: 修改到cache里管理
+  invites: [], // 邀请列表。里面是邀请对象
+  groups: [], // 个人所有组的信息
   selectedGroupUUID: '',
   isFindingGroup: false,
   findingResult: [],
@@ -45,14 +45,18 @@ module.exports = function group(state = initialState, action) {
     case RESET:
       return initialState;
     case CREATE_GROUP_SUCCESS:
-      return state.update('groups', (list) => list.push(immutable.fromJS(action.payload)));
+      return state.update('groups', (list) =>
+        list.push(immutable.fromJS(action.payload))
+      );
     case GET_GROUP_INFO_SUCCESS: {
       let group_uuid = action.payload.uuid;
       return state.setIn(['info', group_uuid], action.payload);
     }
     case UPDATE_GROUP_INFO_SUCCESS: {
-      let groupIndex = state.get('groups').findIndex(i => i.get('uuid') === action.payload.uuid);
-      if(groupIndex >= 0) {
+      let groupIndex = state
+        .get('groups')
+        .findIndex((i) => i.get('uuid') === action.payload.uuid);
+      if (groupIndex >= 0) {
         let info = state.getIn(['groups', groupIndex]).toJS();
         info = Object.assign({}, info, action.payload);
         return state.setIn(['groups', groupIndex], immutable.fromJS(info));
@@ -62,23 +66,33 @@ module.exports = function group(state = initialState, action) {
     case FIND_GROUP_REQUEST:
       return state.set('isFindingGroup', true);
     case FIND_GROUP_SUCCESS:
-      return state.set('isFindingGroup', false).set('findingResult', immutable.fromJS(action.payload));
+      return state
+        .set('isFindingGroup', false)
+        .set('findingResult', immutable.fromJS(action.payload));
     case REQUEST_JOIN_GROUP_SUCCESS:
-      return state.update('requestingGroupUUID', l => l.push(action.payload.group_uuid));
+      return state.update('requestingGroupUUID', (l) =>
+        l.push(action.payload.group_uuid)
+      );
     case ADD_GROUP_SUCCESS: {
       let payload = action.payload;
-      if(state.get('groups').findIndex(l => l.get('uuid') === payload.uuid) >= 0) {
+      if (
+        state.get('groups').findIndex((l) => l.get('uuid') === payload.uuid) >=
+        0
+      ) {
         // 已存在, 不处理
         return state;
-      }else {
-        return state.update('groups', l => l.push(immutable.fromJS(payload)))
+      } else {
+        return state.update('groups', (l) => l.push(immutable.fromJS(payload)));
       }
     }
     case AGREE_GROUP_REQUEST_SUCCESS:
       return state.update('groups', (list) => {
         for (let i = 0; i < list.size; i++) {
-          if(list.getIn([i, 'uuid']) === action.groupUUID) {
-            list = list.setIn([i, 'group_members'], immutable.fromJS(action.payload));
+          if (list.getIn([i, 'uuid']) === action.groupUUID) {
+            list = list.setIn(
+              [i, 'group_members'],
+              immutable.fromJS(action.payload)
+            );
           }
         }
 
@@ -92,15 +106,15 @@ module.exports = function group(state = initialState, action) {
         let index = -1;
         for (let i = 0; i < list.size; i++) {
           let item = list.get(i);
-          if(item.get('uuid') === agreeUUID) {
+          if (item.get('uuid') === agreeUUID) {
             index = i;
             break;
           }
         }
 
-        if(index >= 0) {
+        if (index >= 0) {
           return list.delete(index);
-        }else {
+        } else {
           return list;
         }
       });
@@ -111,18 +125,18 @@ module.exports = function group(state = initialState, action) {
         let index = -1;
         for (let i = 0; i < list.size; i++) {
           let item = list.get(i);
-          if(item.get('uuid') === agreeUUID) {
+          if (item.get('uuid') === agreeUUID) {
             index = i;
             break;
           }
         }
 
-        if(index >= 0) {
+        if (index >= 0) {
           return list.delete(index);
-        }else {
+        } else {
           return list;
         }
-      })
+      });
     case GET_GROUP_LIST_SUCCESS:
       return state.set('groups', immutable.fromJS(action.payload));
     case SWITCH_GROUP:
@@ -131,52 +145,70 @@ module.exports = function group(state = initialState, action) {
       return state.update('groups', (list) => {
         for (var i = 0; i < list.size; i++) {
           if (list.getIn([i, 'uuid']) === action.groupUUID) {
-            list = list.setIn([i, 'group_actors'], immutable.fromJS(action.payload));
+            list = list.setIn(
+              [i, 'group_actors'],
+              immutable.fromJS(action.payload)
+            );
           }
         }
 
         return list;
-      })
+      });
     case GET_GROUP_MEMBERS_SUCCESS:
       return state.update('groups', (list) => {
         for (var i = 0; i < list.size; i++) {
           if (list.getIn([i, 'uuid']) === action.groupUUID) {
-            list = list.setIn([i, 'group_members'], immutable.fromJS(action.payload));
+            list = list.setIn(
+              [i, 'group_members'],
+              immutable.fromJS(action.payload)
+            );
           }
         }
 
         return list;
-      })
+      });
     case SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS:
       return state.update('groups', (list) => {
         for (var i = 0; i < list.size; i++) {
           if (list.getIn([i, 'uuid']) === action.payload.groupUUID) {
-            list = list.setIn([i, 'extra', 'selected_group_actor_uuid'], action.payload.groupActorUUID);
+            list = list.setIn(
+              [i, 'extra', 'selected_group_actor_uuid'],
+              action.payload.groupActorUUID
+            );
           }
         }
 
         return list;
-      })
+      });
     case ADD_GROUP_ACTOR_SUCCESS:
       return state.update('groups', (list) => {
         for (var i = 0; i < list.size; i++) {
           if (list.getIn([i, 'uuid']) === action.groupUUID) {
-            list = list.updateIn([i, 'group_actors'], (i) => i.push(immutable.fromJS(action.payload)));
+            list = list.updateIn([i, 'group_actors'], (i) =>
+              i.push(immutable.fromJS(action.payload))
+            );
           }
         }
 
         return list;
-      })
+      });
     case REMOVE_GROUP_ACTOR_SUCCESS: {
-      let groupIndex = state.get('groups').findIndex(i => i.get('uuid') === action.groupUUID);
-      if(groupIndex >= 0) {
-        return state.updateIn(['groups', groupIndex, 'group_actors'], (gaList) => {
-          let groupActorIndex = gaList.findIndex(ga => ga.get('uuid') === action.groupActorUUID)
-          if(groupIndex >= 0) {
-            return gaList.remove(groupActorIndex);
+      let groupIndex = state
+        .get('groups')
+        .findIndex((i) => i.get('uuid') === action.groupUUID);
+      if (groupIndex >= 0) {
+        return state.updateIn(
+          ['groups', groupIndex, 'group_actors'],
+          (gaList) => {
+            let groupActorIndex = gaList.findIndex(
+              (ga) => ga.get('uuid') === action.groupActorUUID
+            );
+            if (groupIndex >= 0) {
+              return gaList.remove(groupActorIndex);
+            }
+            return gaList;
           }
-          return gaList;
-        })
+        );
       }
 
       return state;
@@ -187,57 +219,70 @@ module.exports = function group(state = initialState, action) {
           if (list.getIn([i, 'uuid']) === action.groupUUID) {
             let groupActorUUID = action.payload.uuid;
             list = list.updateIn([i, 'group_actors'], (_list) => {
-              let _index = list.findIndex((_item) => _item.uuid === groupActorUUID);
+              let _index = list.findIndex(
+                (_item) => _item.uuid === groupActorUUID
+              );
               return _list.setIn([_index, 'passed'], true);
             });
           }
         }
 
         return list;
-      })
+      });
     case REFUSE_GROUP_ACTOR_SUCCESS:
       return state.update('groups', (list) => {
         for (var i = 0; i < list.size; i++) {
           if (list.getIn([i, 'uuid']) === action.groupUUID) {
             let groupActorUUID = action.groupActorUUID;
             list = list.updateIn([i, 'group_actors'], (_list) => {
-              let _index = list.findIndex((_item) => _item.uuid === groupActorUUID);
+              let _index = list.findIndex(
+                (_item) => _item.uuid === groupActorUUID
+              );
               return _list.delete(_index);
             });
           }
         }
 
         return list;
-      })
+      });
     case UPDATE_GROUP_ACTOR_INFO_SUCCESS: {
-      let groupIndex = state.get('groups').findIndex(i => i.uuid === action.groupUUID);
-      let groupActorIndex = state.getIn(['groups', groupIndex, 'group_actors']).findIndex(i => i.uuid === action.groupActorUUID);
-      return state.setIn(['groups', groupIndex, 'group_actors', groupActorIndex, 'actor_info'], immutable.fromJS(action.groupActorInfo));
+      let groupIndex = state
+        .get('groups')
+        .findIndex((i) => i.uuid === action.groupUUID);
+      let groupActorIndex = state
+        .getIn(['groups', groupIndex, 'group_actors'])
+        .findIndex((i) => i.uuid === action.groupActorUUID);
+      return state.setIn(
+        ['groups', groupIndex, 'group_actors', groupActorIndex, 'actor_info'],
+        immutable.fromJS(action.groupActorInfo)
+      );
     }
     case QUIT_GROUP_SUCCESS:
     case DISMISS_GROUP_SUCCESS:
       return state.update('groups', (list) => {
         let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
         return list.delete(index);
-      })
+      });
     case TICK_MEMBER_SUCCESS:
       return state.update('groups', (list) => {
         let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
         return list.updateIn([index, 'group_members'], (gml) => {
-          return gml.delete(gml.findIndex(i => i === action.memberUUID));
+          return gml.delete(gml.findIndex((i) => i === action.memberUUID));
         });
-      })
+      });
     case SET_MEMBER_TO_MANAGER_SUCCESS:
       return state.update('groups', (list) => {
         let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
-        return list.updateIn([index, 'managers_uuid'], (list) => list.push(action.memberUUID));
-      })
+        return list.updateIn([index, 'managers_uuid'], (list) =>
+          list.push(action.memberUUID)
+        );
+      });
     case UPDATE_GROUP_STATUS:
       return state.update('groups', (list) => {
         let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
         return list.setIn([index, 'status'], action.groupStatus);
-      })
+      });
     default:
       return state;
   }
-}
+};

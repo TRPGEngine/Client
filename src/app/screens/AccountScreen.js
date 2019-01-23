@@ -23,12 +23,16 @@ class AccountScreen extends React.Component {
     tabBarLabel: '我',
     headerTitle: '我',
     tabBarIcon: ({ tintColor }) => (
-      <Text style={{fontFamily:'iconfont', fontSize: 26, color: tintColor}}>&#xe60d;</Text>
+      <Text style={{ fontFamily: 'iconfont', fontSize: 26, color: tintColor }}>
+        &#xe60d;
+      </Text>
     ),
   };
 
   _handleModifyProfile() {
-    this.props.dispatch(NavigationActions.navigate({routeName: 'ProfileModify'}));
+    this.props.dispatch(
+      NavigationActions.navigate({ routeName: 'ProfileModify' })
+    );
   }
 
   _handleLogout() {
@@ -41,9 +45,18 @@ class AccountScreen extends React.Component {
     let name = userInfo.get('nickname') || userInfo.get('username');
     return (
       <View>
-        <TouchableOpacity style={styles.userInfo} onPress={() => this._handleModifyProfile()}>
-          <TAvatar uri={avatar} style={styles.avatar} name={name} height={60} width={60} />
-          <View style={{flex: 1}}>
+        <TouchableOpacity
+          style={styles.userInfo}
+          onPress={() => this._handleModifyProfile()}
+        >
+          <TAvatar
+            uri={avatar}
+            style={styles.avatar}
+            name={name}
+            height={60}
+            width={60}
+          />
+          <View style={{ flex: 1 }}>
             <Text style={styles.username}>{name}</Text>
             <Text style={styles.userdesc}>{userInfo.get('sign')}</Text>
           </View>
@@ -64,7 +77,9 @@ class AccountScreen extends React.Component {
             icon="&#xe609;"
             color="gold"
             onPress={() => {
-              this.props.dispatch(NavigationActions.navigate({ routeName: 'Settings' }));
+              this.props.dispatch(
+                NavigationActions.navigate({ routeName: 'Settings' })
+              );
             }}
           />
         </View>
@@ -74,15 +89,15 @@ class AccountScreen extends React.Component {
             value={config.version}
             onPress={() => {
               checkVersion(function(isLatest) {
-                if(isLatest) {
+                if (isLatest) {
                   appUtils.toast('当前版本为最新版');
-                }else {
+                } else {
                   appUtils.toast('检测到有新的版本, 1秒后自动跳转到项目主页');
                   setTimeout(function() {
                     Linking.openURL(config.github.projectUrl);
                   }, 1000);
                 }
-              })
+              });
             }}
           />
         </View>
@@ -90,18 +105,18 @@ class AccountScreen extends React.Component {
         <TButton
           type="error"
           style={styles.logoutBtn}
-          textStyle={{color: 'white'}}
+          textStyle={{ color: 'white' }}
           onPress={() => this._handleLogout()}
-        >退出</TButton>
+        >
+          退出
+        </TButton>
       </View>
-    )
+    );
   }
 }
 
 const styles = {
-  logoutBtn: [
-    sb.margin(10),
-  ],
+  logoutBtn: [sb.margin(10)],
   userInfo: [
     sb.direction(),
     sb.bgColor(),
@@ -110,30 +125,19 @@ const styles = {
     sb.margin(14, 0),
     sb.padding(4, 8),
     sb.alignCenter(),
-    {height: 80},
+    { height: 80 },
   ],
-  avatar: [
-    sb.radius(30),
-    {marginRight: 10},
-  ],
-  username: [
-    sb.font(18),
-  ],
-  userdesc: [
-    sb.color('#999'),
-  ],
+  avatar: [sb.radius(30), { marginRight: 10 }],
+  username: [sb.font(18)],
+  userdesc: [sb.color('#999')],
   arrow: [
-    {fontFamily: 'iconfont', marginRight: 6},
+    { fontFamily: 'iconfont', marginRight: 6 },
     sb.font(18),
     sb.color('#ccc'),
   ],
-  listView: [
-    {marginBottom: 10}
-  ],
-}
+  listView: [{ marginBottom: 10 }],
+};
 
-module.exports = connect(
-  state => ({
-    userInfo: state.getIn(['user', 'info']),
-  })
-)(AccountScreen);
+module.exports = connect((state) => ({
+  userInfo: state.getIn(['user', 'info']),
+}))(AccountScreen);

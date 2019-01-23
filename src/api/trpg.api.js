@@ -1,28 +1,27 @@
 const io = require('socket.io-client');
 const config = require('../../config/project.config.js');
-const {
-  RESET,
-  ADD_FRIEND_SUCCESS,
-} = require('../redux/constants');
+const { RESET, ADD_FRIEND_SUCCESS } = require('../redux/constants');
 
 let api = null;
 const platformSocketParam = {
-  jsonp: false
-}
+  jsonp: false,
+};
 function API() {
-  this.serverUrl = `${config.io.protocol}://${config.io.host}:${config.io.port}`;
+  this.serverUrl = `${config.io.protocol}://${config.io.host}:${
+    config.io.port
+  }`;
   this.socket = io(this.serverUrl, platformSocketParam);
   this.emit = (event, data, cb) => {
-    if(this.socket.disconnected) {
+    if (this.socket.disconnected) {
       this.socket.connect();
     }
     return this.socket.emit(event, data, cb);
-  }
+  };
   this.on = this.socket.on.bind(this.socket);
 }
 
 function getApiInstance() {
-  if(!api) {
+  if (!api) {
     api = new API();
     console.log('new socket client connect created!');
   }
@@ -34,9 +33,13 @@ function bindEventFunc(store, { onReceiveMessage } = {}) {
   const { addMsg, updateMsg } = require('../redux/actions/chat');
   const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
   const { updateGroupStatus, addGroup } = require('../redux/actions/group');
-  const { changeNetworkStatue, showAlert, updateSocketId } = require('../redux/actions/ui');
+  const {
+    changeNetworkStatue,
+    showAlert,
+    updateSocketId,
+  } = require('../redux/actions/ui');
 
-  if(!(this instanceof API)) {
+  if (!(this instanceof API)) {
     throw new Error('bindEventFunc shound a API object class');
   }
 
@@ -59,21 +62,21 @@ function bindEventFunc(store, { onReceiveMessage } = {}) {
 
     let uuid = data.uuid;
     getUserInfoCache(uuid);
-    store.dispatch({type: ADD_FRIEND_SUCCESS, friendUUID: uuid});
-  })
+    store.dispatch({ type: ADD_FRIEND_SUCCESS, friendUUID: uuid });
+  });
   api.on('player::invite', function(data) {
     store.dispatch(addFriendInvite(data));
-  })
+  });
   api.on('player::tick', function(data) {
     store.dispatch(showAlert(data.msg));
-    store.dispatch({type: RESET});
-  })
+    store.dispatch({ type: RESET });
+  });
   api.on('group::updateGroupStatus', function(data) {
     store.dispatch(updateGroupStatus(data.groupUUID, data.groupStatus));
-  })
+  });
   api.on('group::addGroupSuccess', function(data) {
     store.dispatch(addGroup(data.group));
-  })
+  });
 
   api.on('connect', function(data) {
     store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
@@ -90,14 +93,14 @@ function bindEventFunc(store, { onReceiveMessage } = {}) {
     console.log('重连成功');
 
     let isLogin = store.getState().getIn(['user', 'isLogin']);
-    if(isLogin) {
+    if (isLogin) {
       (async () => {
         const rnStorage = require('./rnStorage.api.js');
         let uuid = await rnStorage.get('uuid');
         let token = await rnStorage.get('token');
         console.log('正在尝试自动重新登录');
         store.dispatch(loginWithToken(uuid, token));
-      })()
+      })();
     }
   });
   api.on('reconnecting', function(data) {

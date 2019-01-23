@@ -8,8 +8,8 @@ exports.generateFileMsgData = function(file) {
     size: file.size,
     ext: tmp[tmp.length - 1],
     progress: 0,
-  }
-}
+  };
+};
 
 let _upload = function(path, userUUID, file, cb) {
   let form = new FormData();
@@ -18,24 +18,28 @@ let _upload = function(path, userUUID, file, cb) {
     url: fileUrl + path,
     method: 'post',
     data: form,
-    headers: {'user-uuid': userUUID},
+    headers: { 'user-uuid': userUUID },
     onUploadProgress: (progressEvent) => {
-      if(progressEvent.lengthComputable) {
-        cb && cb.onProgress && cb.onProgress(progressEvent.loaded / progressEvent.total);
+      if (progressEvent.lengthComputable) {
+        cb &&
+          cb.onProgress &&
+          cb.onProgress(progressEvent.loaded / progressEvent.total);
       }
     },
-  }).then(res => {
-    cb && cb.onCompleted && cb.onCompleted(res.data);
-  }).catch(err => {
-    console.error(err);
-    return false;
-  });
-}
+  })
+    .then((res) => {
+      cb && cb.onCompleted && cb.onCompleted(res.data);
+    })
+    .catch((err) => {
+      console.error(err);
+      return false;
+    });
+};
 
 exports.toTemporary = function(userUUID, file, cb) {
   _upload('/upload/temporary', userUUID, file, cb);
-}
+};
 
 exports.toPersistence = function(userUUID, file, cb) {
   _upload('/upload/persistence', userUUID, file, cb);
-}
+};

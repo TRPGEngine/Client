@@ -10,14 +10,14 @@ class ActorCacheProfile extends React.Component {
     let actorcache = this.props.actorcache;
     return (
       <ModalPanel title="人物信息">
-        <ActorProfile actor={actorcache.get(uuid) ? actorcache.get(uuid).toJS() : {}} />
+        <ActorProfile
+          actor={actorcache.get(uuid) ? actorcache.get(uuid).toJS() : {}}
+        />
       </ModalPanel>
-    )
+    );
   }
 }
 
-module.exports = connect(
-  state => ({
-    actorcache: state.getIn(['cache', 'actor']),
-  })
-)(ActorCacheProfile);
+module.exports = connect((state) => ({
+  actorcache: state.getIn(['cache', 'actor']),
+}))(ActorCacheProfile);

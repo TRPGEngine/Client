@@ -1,6 +1,9 @@
 const BaseCard = require('./BaseCard');
 const { connect } = require('react-redux');
-const { agreeFriendInvite, refuseFriendInvite } = require('../../../../redux/actions/user');
+const {
+  agreeFriendInvite,
+  refuseFriendInvite,
+} = require('../../../../redux/actions/user');
 
 // 好友邀请
 class FriendInvite extends BaseCard {
@@ -8,22 +11,27 @@ class FriendInvite extends BaseCard {
     let info = this.props.info;
     let data = info.data;
     let invite = data.invite || {};
-    let inviteIndex = this.props.friendRequests.findIndex(item => item.get('uuid') === invite.uuid);
-    if(inviteIndex >= 0) {
+    let inviteIndex = this.props.friendRequests.findIndex(
+      (item) => item.get('uuid') === invite.uuid
+    );
+    if (inviteIndex >= 0) {
       // 尚未处理
-      return [{
-        label: '拒绝',
-        onClick: () => this.props.dispatch(refuseFriendInvite(invite.uuid)),
-      },{
-        label: '同意',
-        onClick: () => this.props.dispatch(agreeFriendInvite(invite.uuid)),
-      }];
+      return [
+        {
+          label: '拒绝',
+          onClick: () => this.props.dispatch(refuseFriendInvite(invite.uuid)),
+        },
+        {
+          label: '同意',
+          onClick: () => this.props.dispatch(agreeFriendInvite(invite.uuid)),
+        },
+      ];
     } else {
       let friendIndex = this.props.friendList.indexOf(invite.from_uuid);
-      if(friendIndex >= 0) {
+      if (friendIndex >= 0) {
         // 已同意是好友
         return [{ label: '已同意' }];
-      }else {
+      } else {
         // 已拒绝好友邀请
         return [{ label: '已拒绝' }];
       }
@@ -31,9 +39,7 @@ class FriendInvite extends BaseCard {
   }
 }
 
-module.exports = connect(
-  state => ({
-    friendList: state.getIn(['user', 'friendList']),
-    friendRequests: state.getIn(['user', 'friendRequests']),
-  })
-)(FriendInvite);
+module.exports = connect((state) => ({
+  friendList: state.getIn(['user', 'friendList']),
+  friendRequests: state.getIn(['user', 'friendRequests']),
+}))(FriendInvite);

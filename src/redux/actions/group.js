@@ -30,25 +30,38 @@ const {
 const config = require('../../../config/project.config');
 const trpgApi = require('../../api/trpg.api.js');
 const api = trpgApi.getInstance();
-const { addConverse, updateConversesMsglist, updateCardChatData } = require('./chat');
+const {
+  addConverse,
+  updateConversesMsglist,
+  updateCardChatData,
+} = require('./chat');
 const { checkUser, checkTemplate } = require('../../shared/utils/cacheHelper');
-const { showLoading, hideLoading, showAlert, hideModal, hideAlert, hideSlidePanel } = require('./ui');
+const {
+  showLoading,
+  hideLoading,
+  showAlert,
+  hideModal,
+  hideAlert,
+  hideSlidePanel,
+} = require('./ui');
 
 // 当state->group->groups状态添加新的group时使用来初始化
 let initGroupInfo = function(dispatch, group) {
   let groupUUID = group.uuid;
-  dispatch(addConverse({
-    uuid: groupUUID,
-    id: group.id,
-    name: group.name,
-    type: 'group',
-    msgList: [],
-    lastMsg: '',
-    lastTime: 0, // 设定初始化的团时间为0方便排序
-  }));
+  dispatch(
+    addConverse({
+      uuid: groupUUID,
+      id: group.id,
+      name: group.name,
+      type: 'group',
+      msgList: [],
+      lastMsg: '',
+      lastTime: 0, // 设定初始化的团时间为0方便排序
+    })
+  );
   // 获取团成员
-  api.emit('group::getGroupMembers', {groupUUID}, function(data) {
-    if(data.result) {
+  api.emit('group::getGroupMembers', { groupUUID }, function(data) {
+    if (data.result) {
       let members = data.members;
       let uuidList = [];
       for (let member of members) {
@@ -56,403 +69,490 @@ let initGroupInfo = function(dispatch, group) {
         uuidList.push(uuid);
         checkUser(uuid);
       }
-      dispatch({type: GET_GROUP_MEMBERS_SUCCESS, groupUUID, payload: uuidList})
-    }else {
+      dispatch({
+        type: GET_GROUP_MEMBERS_SUCCESS,
+        groupUUID,
+        payload: uuidList,
+      });
+    } else {
       console.error('获取团成员失败:', data.msg);
     }
   });
   // 获取团人物
-  api.emit('group::getGroupActors', {groupUUID}, function(data) {
-    if(data.result) {
+  api.emit('group::getGroupActors', { groupUUID }, function(data) {
+    if (data.result) {
       let actors = data.actors;
       for (let ga of actors) {
         ga.avatar = config.file.getAbsolutePath(ga.avatar);
         ga.actor.avatar = config.file.getAbsolutePath(ga.actor.avatar);
         checkTemplate(ga.actor.template_uuid);
       }
-      dispatch({type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors})
-    }else {
+      dispatch({ type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors });
+    } else {
       console.error('获取团人物失败:', data.msg);
     }
   });
   // 获取团聊天日志
-  api.emit('chat::getConverseChatLog', {converse_uuid: groupUUID}, function(data) {
-    if(data.result) {
+  api.emit('chat::getConverseChatLog', { converse_uuid: groupUUID }, function(
+    data
+  ) {
+    if (data.result) {
       dispatch(updateConversesMsglist(groupUUID, data.list));
-    }else {
+    } else {
       console.error('获取团聊天记录失败:', data.msg);
     }
   });
-}
+};
 
 exports.createGroup = function(name, subname, desc) {
   return function(dispatch, getState) {
     dispatch(showLoading());
-    api.emit('group::create', {name, subname, desc}, function(data) {
+    api.emit('group::create', { name, subname, desc }, function(data) {
       dispatch(hideLoading());
-      if(data.result) {
+      if (data.result) {
         dispatch(hideModal());
         dispatch(showAlert('创建成功'));
-        dispatch({type: CREATE_GROUP_SUCCESS, payload: data.group});
-        initGroupInfo(dispatch, data.group);// 创建成功后直接初始化
-      }else {
+        dispatch({ type: CREATE_GROUP_SUCCESS, payload: data.group });
+        initGroupInfo(dispatch, data.group); // 创建成功后直接初始化
+      } else {
         console.error(data);
         dispatch(showAlert(data.msg));
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.getGroupInfo = function(uuid) {
   return function(dispatch, getState) {
-    return api.emit('group::getInfo', {uuid} ,function(data) {
-      if(data.result) {
+    return api.emit('group::getInfo', { uuid }, function(data) {
+      if (data.result) {
         let group = data.group;
         group.avatar = config.file.getAbsolutePath(group.avatar);
-        dispatch({type: GET_GROUP_INFO_SUCCESS, payload: group});
-        dispatch(exports.getGroupStatus(uuid));// 获取团信息后再获取团状态作为补充
-      }else {
+        dispatch({ type: GET_GROUP_INFO_SUCCESS, payload: group });
+        dispatch(exports.getGroupStatus(uuid)); // 获取团信息后再获取团状态作为补充
+      } else {
         console.error(data);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.updateGroupInfo = function(groupUUID, groupInfo) {
   return function(dispatch, getState) {
-    api.emit('group::updateInfo', {groupUUID, groupInfo}, function(data) {
-      if(data.result) {
+    api.emit('group::updateInfo', { groupUUID, groupInfo }, function(data) {
+      if (data.result) {
         let group = data.group;
         group.avatar = config.file.getAbsolutePath(group.avatar);
-        dispatch({type: UPDATE_GROUP_INFO_SUCCESS, payload: group});
+        dispatch({ type: UPDATE_GROUP_INFO_SUCCESS, payload: group });
         dispatch(hideModal());
         dispatch(showAlert('操作成功'));
-      }else {
+      } else {
         console.error(data);
         dispatch(showAlert(data.msg));
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.findGroup = function(text, type) {
   return function(dispatch, getState) {
-    dispatch({type: FIND_GROUP_REQUEST});
+    dispatch({ type: FIND_GROUP_REQUEST });
     console.log('搜索团:', text, type);
-    return api.emit('group::findGroup', {text, type}, function(data) {
+    return api.emit('group::findGroup', { text, type }, function(data) {
       console.log('团搜索结果', data);
-      if(data.result) {
+      if (data.result) {
         for (let group of data.results) {
           group.avatar = config.file.getAbsolutePath(group.avatar);
         }
-        dispatch({type: FIND_GROUP_SUCCESS, payload: data.results});
-      }else {
+        dispatch({ type: FIND_GROUP_SUCCESS, payload: data.results });
+      } else {
         console.error(data.msg);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.requestJoinGroup = function(group_uuid) {
   return function(dispatch, getState) {
-    return api.emit('group::requestJoinGroup', {group_uuid}, function(data) {
-      if(data.result) {
-        dispatch({type: REQUEST_JOIN_GROUP_SUCCESS, payload: data.request});
-      }else {
+    return api.emit('group::requestJoinGroup', { group_uuid }, function(data) {
+      if (data.result) {
+        dispatch({ type: REQUEST_JOIN_GROUP_SUCCESS, payload: data.request });
+      } else {
         dispatch(showAlert(data.msg));
         console.error(data.msg);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 // 加入团
 exports.addGroup = function(group) {
   return function(dispatch, getState) {
-    if(group) {
+    if (group) {
       group.avatar = config.file.getAbsolutePath(group.avatar);
-      dispatch({type: ADD_GROUP_SUCCESS, payload: group});
+      dispatch({ type: ADD_GROUP_SUCCESS, payload: group });
       initGroupInfo(dispatch, group);
     }
-  }
-}
+  };
+};
 
 exports.agreeGroupRequest = function(chatlogUUID, requestUUID, fromUUID) {
   checkUser(fromUUID);
 
   return function(dispatch, getState) {
-    return api.emit('group::agreeGroupRequest', {request_uuid: requestUUID}, function(data) {
-      if(data.result) {
-        dispatch(updateCardChatData(chatlogUUID, {is_processed: true}));
-        dispatch({type: AGREE_GROUP_REQUEST_SUCCESS, groupUUID: data.groupUUID, payload: data.members});
-      }else {
-        console.error(data.msg);
+    return api.emit(
+      'group::agreeGroupRequest',
+      { request_uuid: requestUUID },
+      function(data) {
+        if (data.result) {
+          dispatch(updateCardChatData(chatlogUUID, { is_processed: true }));
+          dispatch({
+            type: AGREE_GROUP_REQUEST_SUCCESS,
+            groupUUID: data.groupUUID,
+            payload: data.members,
+          });
+        } else {
+          console.error(data.msg);
+        }
       }
-    })
-  }
-}
+    );
+  };
+};
 exports.refuseGroupRequest = function(chatlogUUID, requestUUID) {
   return function(dispatch, getState) {
-    return api.emit('group::refuseGroupRequest', {request_uuid: requestUUID}, function(data) {
-      if(data.result) {
-        dispatch(updateCardChatData(chatlogUUID, {is_processed: true}));
-      }else {
-        console.error(data.msg);
+    return api.emit(
+      'group::refuseGroupRequest',
+      { request_uuid: requestUUID },
+      function(data) {
+        if (data.result) {
+          dispatch(updateCardChatData(chatlogUUID, { is_processed: true }));
+        } else {
+          console.error(data.msg);
+        }
       }
-    })
-  }
-}
+    );
+  };
+};
 
 exports.sendGroupInvite = function(group_uuid, to_uuid) {
   return function(dispatch, getState) {
-    api.emit('group::sendGroupInvite', {group_uuid, to_uuid}, function(data) {
-      if(data.result) {
+    api.emit('group::sendGroupInvite', { group_uuid, to_uuid }, function(data) {
+      if (data.result) {
         dispatch(showAlert('发送邀请成功!'));
         dispatch(hideSlidePanel());
-        dispatch({type: SEND_GROUP_INVITE_SUCCESS, payload: data.invite});
-      }else {
+        dispatch({ type: SEND_GROUP_INVITE_SUCCESS, payload: data.invite });
+      } else {
         dispatch(showAlert(data.msg));
         console.error(data);
       }
-    })
-  }
-}
+    });
+  };
+};
 exports.agreeGroupInvite = function(inviteUUID) {
   return function(dispatch, getState) {
-    api.emit('group::agreeGroupInvite', {uuid: inviteUUID}, function(data) {
-      if(data.result) {
-        let {uuid, group} = data.res;
+    api.emit('group::agreeGroupInvite', { uuid: inviteUUID }, function(data) {
+      if (data.result) {
+        let { uuid, group } = data.res;
         group.avatar = config.file.getAbsolutePath(group.avatar);
-        dispatch({type: AGREE_GROUP_INVITE_SUCCESS, payload: {uuid, group}});
-        if(group) {
+        dispatch({
+          type: AGREE_GROUP_INVITE_SUCCESS,
+          payload: { uuid, group },
+        });
+        if (group) {
           initGroupInfo(dispatch, group);
         }
-      }else {
+      } else {
         console.error(data);
       }
-    })
-  }
-}
+    });
+  };
+};
 exports.refuseGroupInvite = function(inviteUUID) {
   return function(dispatch, getState) {
-    api.emit('group::refuseGroupInvite', {uuid: inviteUUID}, function(data) {
-      if(data.result) {
-        dispatch({type: REFUSE_GROUP_INVITE_SUCCESS, payload: data.res});
-      }else {
+    api.emit('group::refuseGroupInvite', { uuid: inviteUUID }, function(data) {
+      if (data.result) {
+        dispatch({ type: REFUSE_GROUP_INVITE_SUCCESS, payload: data.res });
+      } else {
         console.error(data);
       }
-    })
-  }
-}
+    });
+  };
+};
 exports.getGroupInvite = function(inviteUUID) {
   return function(dispatch, getState) {
-    api.emit('group::getGroupInvite', {uuid: inviteUUID}, function(data) {
-      if(data.result) {
-        dispatch({type: GET_GROUP_INVITE_SUCCESS, payload: data.res});
-      }else {
+    api.emit('group::getGroupInvite', { uuid: inviteUUID }, function(data) {
+      if (data.result) {
+        dispatch({ type: GET_GROUP_INVITE_SUCCESS, payload: data.res });
+      } else {
         console.error(data);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.getGroupList = function() {
   return function(dispatch, getState) {
     return api.emit('group::getGroupList', {}, function(data) {
-      if(data.result) {
+      if (data.result) {
         let groups = data.groups;
         for (let group of groups) {
           group.avatar = config.file.getAbsolutePath(group.avatar);
         }
-        dispatch({type: GET_GROUP_LIST_SUCCESS, payload: groups});
+        dispatch({ type: GET_GROUP_LIST_SUCCESS, payload: groups });
         for (let group of groups) {
           initGroupInfo(dispatch, group);
           dispatch(exports.getGroupStatus(group.uuid));
         }
-      }else {
+      } else {
         console.error(data.msg);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.switchSelectGroup = function(uuid) {
-  return {type: SWITCH_GROUP, payload: uuid}
-}
+  return { type: SWITCH_GROUP, payload: uuid };
+};
 
 exports.changeSelectGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
-    return api.emit('group::setPlayerSelectedGroupActor', {groupUUID, groupActorUUID}, function(data) {
-      if(data.result) {
-        dispatch({type: SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS, payload: data.data});
-      }else {
-        console.error(data);
+    return api.emit(
+      'group::setPlayerSelectedGroupActor',
+      { groupUUID, groupActorUUID },
+      function(data) {
+        if (data.result) {
+          dispatch({
+            type: SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS,
+            payload: data.data,
+          });
+        } else {
+          console.error(data);
+        }
       }
-    })
-  }
-}
+    );
+  };
+};
 
 exports.addGroupActor = function(groupUUID, actorUUID) {
   return function(dispatch, getState) {
-    return api.emit('group::addGroupActor', {groupUUID, actorUUID}, function(data) {
-      if(data.result) {
+    return api.emit('group::addGroupActor', { groupUUID, actorUUID }, function(
+      data
+    ) {
+      if (data.result) {
         let groupActor = data.groupActor;
         groupActor.avatar = config.file.getAbsolutePath(groupActor.avatar);
-        groupActor.actor.avatar = config.file.getAbsolutePath(groupActor.actor.avatar);
-        dispatch({type: ADD_GROUP_ACTOR_SUCCESS, groupUUID, payload: groupActor});
+        groupActor.actor.avatar = config.file.getAbsolutePath(
+          groupActor.actor.avatar
+        );
+        dispatch({
+          type: ADD_GROUP_ACTOR_SUCCESS,
+          groupUUID,
+          payload: groupActor,
+        });
         dispatch(hideModal());
         dispatch(showAlert('提交成功!'));
-      }else {
+      } else {
         dispatch(showAlert(data.msg));
         console.error(data);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.removeGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
-    return api.emit('group::removeGroupActor', {groupUUID, groupActorUUID}, function(data) {
-      if(data.result) {
-        dispatch({type: REMOVE_GROUP_ACTOR_SUCCESS, groupUUID, groupActorUUID});
-        dispatch(hideAlert());
-        dispatch(showAlert('提交成功!'));
-      }else {
-        dispatch(showAlert(data.msg));
-        console.error(data);
+    return api.emit(
+      'group::removeGroupActor',
+      { groupUUID, groupActorUUID },
+      function(data) {
+        if (data.result) {
+          dispatch({
+            type: REMOVE_GROUP_ACTOR_SUCCESS,
+            groupUUID,
+            groupActorUUID,
+          });
+          dispatch(hideAlert());
+          dispatch(showAlert('提交成功!'));
+        } else {
+          dispatch(showAlert(data.msg));
+          console.error(data);
+        }
       }
-    })
-  }
-}
+    );
+  };
+};
 
 exports.agreeGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
-    return api.emit('group::agreeGroupActor', {groupUUID, groupActorUUID}, function(data) {
-      if(data.result) {
-        dispatch({type: AGREE_GROUP_ACTOR_SUCCESS, groupUUID, payload: data.groupActor});
-        dispatch(hideModal());
-        dispatch(showAlert('已同意该人物加入本团!'));
-      }else {
-        dispatch(showAlert(data.msg));
-        console.error(data);
+    return api.emit(
+      'group::agreeGroupActor',
+      { groupUUID, groupActorUUID },
+      function(data) {
+        if (data.result) {
+          dispatch({
+            type: AGREE_GROUP_ACTOR_SUCCESS,
+            groupUUID,
+            payload: data.groupActor,
+          });
+          dispatch(hideModal());
+          dispatch(showAlert('已同意该人物加入本团!'));
+        } else {
+          dispatch(showAlert(data.msg));
+          console.error(data);
+        }
       }
-    })
-  }
-}
+    );
+  };
+};
 
 exports.refuseGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
-    return api.emit('group::refuseGroupActor', {groupUUID, groupActorUUID}, function(data) {
-      if(data.result) {
-        dispatch({type: REFUSE_GROUP_ACTOR_SUCCESS, groupUUID, groupActorUUID});
-        dispatch(hideModal());
-        dispatch(showAlert('已拒绝该人物加入本团!'));
-      }else {
-        dispatch(showAlert(data.msg));
-        console.error(data);
+    return api.emit(
+      'group::refuseGroupActor',
+      { groupUUID, groupActorUUID },
+      function(data) {
+        if (data.result) {
+          dispatch({
+            type: REFUSE_GROUP_ACTOR_SUCCESS,
+            groupUUID,
+            groupActorUUID,
+          });
+          dispatch(hideModal());
+          dispatch(showAlert('已拒绝该人物加入本团!'));
+        } else {
+          dispatch(showAlert(data.msg));
+          console.error(data);
+        }
       }
-    })
-  }
-}
+    );
+  };
+};
 
-exports.updateGroupActorInfo = function(groupUUID, groupActorUUID, groupActorInfo) {
+exports.updateGroupActorInfo = function(
+  groupUUID,
+  groupActorUUID,
+  groupActorInfo
+) {
   return function(dispatch, getState) {
-    return api.emit('group::updateGroupActorInfo', {groupUUID, groupActorUUID, groupActorInfo}, function(data) {
-      if(data.result) {
-        dispatch({type: UPDATE_GROUP_ACTOR_INFO_SUCCESS, groupUUID, groupActorUUID, groupActorInfo});
-        dispatch(hideModal());
-        dispatch(showAlert('保存完毕!'));
-      }else {
-        dispatch(showAlert(data.msg));
-        console.error(data);
+    return api.emit(
+      'group::updateGroupActorInfo',
+      { groupUUID, groupActorUUID, groupActorInfo },
+      function(data) {
+        if (data.result) {
+          dispatch({
+            type: UPDATE_GROUP_ACTOR_INFO_SUCCESS,
+            groupUUID,
+            groupActorUUID,
+            groupActorInfo,
+          });
+          dispatch(hideModal());
+          dispatch(showAlert('保存完毕!'));
+        } else {
+          dispatch(showAlert(data.msg));
+          console.error(data);
+        }
       }
-    })
-  }
-}
+    );
+  };
+};
 
 exports.quitGroup = function(groupUUID) {
   return function(dispatch, getState) {
     dispatch(showLoading());
-    return api.emit('group::quitGroup', {groupUUID}, function(data) {
-      if(data.result) {
-        dispatch({type: QUIT_GROUP_SUCCESS, groupUUID});
+    return api.emit('group::quitGroup', { groupUUID }, function(data) {
+      if (data.result) {
+        dispatch({ type: QUIT_GROUP_SUCCESS, groupUUID });
         dispatch(showAlert('已退出本群!'));
         dispatch(hideLoading());
-      }else {
+      } else {
         console.error(data);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.dismissGroup = function(groupUUID) {
   return function(dispatch, getState) {
     dispatch(showLoading());
-    return api.emit('group::dismissGroup', {groupUUID}, function(data) {
-      if(data.result) {
-        dispatch({type: DISMISS_GROUP_SUCCESS, groupUUID});
+    return api.emit('group::dismissGroup', { groupUUID }, function(data) {
+      if (data.result) {
+        dispatch({ type: DISMISS_GROUP_SUCCESS, groupUUID });
         dispatch(showAlert('已解散本群!'));
         dispatch(hideLoading());
-      }else {
+      } else {
         console.error(data);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.tickMember = function(groupUUID, memberUUID) {
   return function(dispatch, getState) {
-    return api.emit('group::tickMember', {groupUUID, memberUUID}, function(data) {
-      if(data.result) {
-        dispatch({type: TICK_MEMBER_SUCCESS, groupUUID, memberUUID});
+    return api.emit('group::tickMember', { groupUUID, memberUUID }, function(
+      data
+    ) {
+      if (data.result) {
+        dispatch({ type: TICK_MEMBER_SUCCESS, groupUUID, memberUUID });
         dispatch(showAlert('操作成功'));
         dispatch(hideModal());
-      }else {
+      } else {
         console.error(data);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.setMemberToManager = function(groupUUID, memberUUID) {
   return function(dispatch, getState) {
-    return api.emit('group::setMemberToManager', {groupUUID, memberUUID}, function(data) {
-      if(data.result) {
-        dispatch({type: SET_MEMBER_TO_MANAGER_SUCCESS, groupUUID, memberUUID});
-        dispatch(showAlert('操作成功'));
-        dispatch(hideModal());
-      }else {
-        console.error(data);
-        dispatch(showAlert(data.msg));
+    return api.emit(
+      'group::setMemberToManager',
+      { groupUUID, memberUUID },
+      function(data) {
+        if (data.result) {
+          dispatch({
+            type: SET_MEMBER_TO_MANAGER_SUCCESS,
+            groupUUID,
+            memberUUID,
+          });
+          dispatch(showAlert('操作成功'));
+          dispatch(hideModal());
+        } else {
+          console.error(data);
+          dispatch(showAlert(data.msg));
+        }
       }
-    })
-  }
-}
+    );
+  };
+};
 
 exports.updateGroupStatus = function(groupUUID, groupStatus) {
-  return {type: UPDATE_GROUP_STATUS, groupUUID, groupStatus};
-}
+  return { type: UPDATE_GROUP_STATUS, groupUUID, groupStatus };
+};
 
 exports.getGroupStatus = function(groupUUID) {
   return function(dispatch, getState) {
-    return api.emit('group::getGroupStatus', {groupUUID}, function(data) {
-      if(data.result) {
-        dispatch(exports.updateGroupStatus(groupUUID, data.status))
-      }else {
+    return api.emit('group::getGroupStatus', { groupUUID }, function(data) {
+      if (data.result) {
+        dispatch(exports.updateGroupStatus(groupUUID, data.status));
+      } else {
         console.error(data);
       }
-    })
-  }
-}
+    });
+  };
+};
 
 exports.setGroupStatus = function(groupUUID, groupStatus) {
   return function(dispatch, getState) {
-    return api.emit('group::setGroupStatus', {groupUUID, groupStatus}, function(data) {
-      if(data.result) {
-        dispatch(exports.updateGroupStatus(groupUUID, groupStatus))
-      }else {
-        console.error(data);
+    return api.emit(
+      'group::setGroupStatus',
+      { groupUUID, groupStatus },
+      function(data) {
+        if (data.result) {
+          dispatch(exports.updateGroupStatus(groupUUID, groupStatus));
+        } else {
+          console.error(data);
+        }
       }
-    })
-  }
-}
+    );
+  };
+};

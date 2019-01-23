@@ -15,21 +15,35 @@ const { backNav } = require('../../redux/actions/nav');
 class Loading extends React.Component {
   render() {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 100}}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: 100,
+        }}
+      >
         <ActivityIndicator size="large" />
       </View>
-    )
+    );
   }
 }
 
 class LoadError extends React.Component {
   render() {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 100}}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: 100,
+        }}
+      >
         <Text>加载出错啦!</Text>
         <Text>请检查地址: {this.props.url}</Text>
       </View>
-    )
+    );
   }
 }
 
@@ -46,26 +60,26 @@ class WebviewScreen extends React.Component {
   }
 
   componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+    BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
   }
 
   onBackPress = () => {
-    if(this.canGoBack) {
+    if (this.canGoBack) {
       // 可以回退
       this.refs.webview.goBack();
       return true;
-    }else {
+    } else {
       // 不能回退
       return false;
     }
   };
 
   _handleStateChange(state) {
-    let {loading, title, url, canGoForward, canGoBack, target} = state;
+    let { loading, title, url, canGoForward, canGoBack, target } = state;
 
     this.props.navigation.setParams({ title });
     this.canGoBack = canGoBack;
@@ -77,8 +91,8 @@ class WebviewScreen extends React.Component {
     try {
       data = JSON.parse(data);
       if (data.type === 'onOAuthFinished') {
-        let {uuid, token} = data;
-        if(!uuid || !token) {
+        let { uuid, token } = data;
+        if (!uuid || !token) {
           console.error('oauth登录失败, 缺少必要参数', uuid, token);
           return;
         }
@@ -100,15 +114,15 @@ class WebviewScreen extends React.Component {
     return (
       <WebView
         ref="webview"
-        source={{uri: url}}
+        source={{ uri: url }}
         startInLoadingState={true}
-        renderLoading={() => (<Loading />)}
-        renderError={() => (<LoadError url={url} />)}
+        renderLoading={() => <Loading />}
+        renderError={() => <LoadError url={url} />}
         mixedContentMode={'compatibility'}
         onNavigationStateChange={(state) => this._handleStateChange(state)}
         onMessage={(e) => this._handleMessage(e)}
       />
-    )
+    );
   }
 }
 

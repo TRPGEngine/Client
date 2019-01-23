@@ -14,7 +14,8 @@
     "app-clear": "cross-env PLATFORM=app node node_modules/react-native/local-cli/cli.js start --root ./src/app --reset-cache",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .js,.jsx src",
-    "lint:fix": "eslint --fix --ext .js,.jsx src"
+    "lint:fix": "eslint --fix --ext .js,.jsx src",
+    "prettier": "prettier --write \"src/**/*.js\""
   },
   "repository": {
     "type": "git",

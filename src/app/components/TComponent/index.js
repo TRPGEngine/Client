@@ -7,4 +7,4 @@ module.exports = {
   TToast: require('./TToast'),
   TIcon: require('./TIcon'),
   TAvatar: require('./TAvatar'),
-}
+};

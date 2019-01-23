@@ -18,7 +18,10 @@ import {
   reduxifyNavigator,
 } from 'react-navigation-redux-helpers';
 const { connect } = require('react-redux');
-const { createStackNavigator, createBottomTabNavigator } = require('react-navigation');
+const {
+  createStackNavigator,
+  createBottomTabNavigator,
+} = require('react-navigation');
 
 const LaunchScreen = require('./screens/LaunchScreen');
 const LoginScreen = require('./screens/LoginScreen');
@@ -61,20 +64,20 @@ const AppNavigator = createStackNavigator({
     screen: LoginScreen,
     navigationOptions: {
       headerLeft: null,
-    }
+    },
   },
   Register: {
     screen: RegisterScreen,
     navigationOptions: {
       headerTitle: '注册TRPG Game账户',
-    }
+    },
   },
   Main: {
     screen: MainNavigator,
     navigationOptions: {
       headerLeft: null,
       title: 'TRPG Game',
-    }
+    },
   },
   Details: {
     screen: DetailsScreen,
@@ -90,25 +93,25 @@ const AppNavigator = createStackNavigator({
   },
   Chat: {
     screen: ChatScreen,
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       headerTitle: '与 ' + navigation.state.params.name + ' 的聊天',
     }),
   },
   AddFriend: {
     screen: AddFriendScreen,
     navigationOptions: {
-      headerTitle: '添加联系人'
+      headerTitle: '添加联系人',
     },
   },
   Profile: {
     screen: ProfileScreen,
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       headerTitle: navigation.state.params.name + ' 的个人信息',
     }),
   },
   GroupProfile: {
     screen: GroupProfileScreen,
-    navigationOptions: ({navigation}) => ({
+    navigationOptions: ({ navigation }) => ({
       headerTitle: navigation.state.params.name + ' 可以公开的情报',
     }),
   },
@@ -118,7 +121,7 @@ const AppNavigator = createStackNavigator({
   ProfileModify: {
     screen: ProfileModifyScreen,
     navigationOptions: {
-      headerTitle: '编辑资料'
+      headerTitle: '编辑资料',
     },
   },
   Webview: {
@@ -126,20 +129,19 @@ const AppNavigator = createStackNavigator({
   },
 });
 
-const middleware = createReactNavigationReduxMiddleware(
-  "root",
-  state => state.get('nav'),
+const middleware = createReactNavigationReduxMiddleware('root', (state) =>
+  state.get('nav')
 );
 
-const App = reduxifyNavigator(AppNavigator, "root")
+const App = reduxifyNavigator(AppNavigator, 'root');
 
 class ReduxNavigation extends React.Component {
   componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+    BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
   }
 
   onBackPress = () => {
@@ -150,7 +152,7 @@ class ReduxNavigation extends React.Component {
       return true;
     } else {
       // 到达主页
-      if(this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+      if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
         // 最近两秒内按过back 可以退出应用
         return false;
       }
@@ -163,16 +165,14 @@ class ReduxNavigation extends React.Component {
 
   render() {
     const { dispatch, state } = this.props;
-    return (
-      <App dispatch={dispatch} state={state} />
-    );
+    return <App dispatch={dispatch} state={state} />;
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    state: state.get('nav')
-  }
+    state: state.get('nav'),
+  };
 };
 
 module.exports = {
@@ -180,4 +180,4 @@ module.exports = {
   MainNavigator,
   AppNavigator,
   AppWithNavigationState: connect(mapStateToProps)(ReduxNavigation),
-}
+};

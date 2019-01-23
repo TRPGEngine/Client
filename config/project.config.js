@@ -2,16 +2,16 @@ let environment = process.env.NODE_ENV || 'development';
 let platform = process.env.PLATFORM || 'web';
 let currentHost = '127.0.0.1';
 let isSSL = false;
-if(!!window && window.location && window.location.host) {
+if (!!window && window.location && window.location.host) {
   currentHost = window.location.host.split(':')[0];
   isSSL = window.location.protocol === 'https:';
 }
-if(environment=='production') {
+if (environment == 'production') {
   currentHost = 'trpgapi.moonrailgun.com';
 }
 
 let trpgHost = process.env.TRPG_HOST;
-if(trpgHost) {
+if (trpgHost) {
   currentHost = trpgHost;
 }
 
@@ -31,22 +31,22 @@ let out = {
     host: currentHost,
     port: environment === 'production' ? standardPort : '23256',
     getFileImage: function(ext) {
-      if(ext === 'jpg' || ext === 'png' || ext === 'gif') {
+      if (ext === 'jpg' || ext === 'png' || ext === 'gif') {
         return out.defaultImg.file.pic;
       }
-      if(ext === 'doc' || ext === 'docx') {
+      if (ext === 'doc' || ext === 'docx') {
         return out.defaultImg.file.word;
       }
-      if(ext === 'xls' || ext === 'xlsx') {
+      if (ext === 'xls' || ext === 'xlsx') {
         return out.defaultImg.file.excel;
       }
-      if(ext === 'ppt' || ext === 'pptx') {
+      if (ext === 'ppt' || ext === 'pptx') {
         return out.defaultImg.file.ppt;
       }
-      if(ext === 'pdf') {
+      if (ext === 'pdf') {
         return out.defaultImg.file.pdf;
       }
-      if(ext === 'txt') {
+      if (ext === 'txt') {
         return out.defaultImg.file.txt;
       }
 
@@ -55,11 +55,11 @@ let out = {
   },
   defaultImg: {
     user: '/src/assets/img/gugugu1.png',
-    getUser (name) {
-      if(name) {
-        return `${out.file.url}/file/avatar/svg?name=${name}`
-      }else {
-        return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' // 一像素透明图片
+    getUser(name) {
+      if (name) {
+        return `${out.file.url}/file/avatar/svg?name=${name}`;
+      } else {
+        return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; // 一像素透明图片
       }
     },
     group: '/src/assets/img/gugugu1.png',
@@ -92,11 +92,12 @@ let out = {
       '#f1c40f',
       '#e74c3c',
       '#e67e22',
-    ]
+    ],
   },
   github: {
     projectUrl: 'https://github.com/TRPGEngine/Client',
-    projectPackageUrl: 'https://raw.githubusercontent.com/TRPGEngine/Client/master/package.json',
+    projectPackageUrl:
+      'https://raw.githubusercontent.com/TRPGEngine/Client/master/package.json',
   },
   url: {
     goddessfantasy: 'http://www.goddessfantasy.net/',
@@ -108,28 +109,28 @@ let out = {
     },
     system: {
       notification: true,
-    }
+    },
   },
-}
+};
 out.file.url = `${out.file.protocol}://${out.file.host}:${out.file.port}`;
 
 // 获取基于API的绝对路径
-out.file.getAbsolutePath = function getAbsolutePath (path) {
-  if(!path) {
+out.file.getAbsolutePath = function getAbsolutePath(path) {
+  if (!path) {
     path = ''; // 设置默认值
   }
-  if(path && path[0] === '/') {
+  if (path && path[0] === '/') {
     return out.file.url + path;
   }
   return path;
-}
+};
 
 // 获取基于APi的相对路径
-out.file.getRelativePath = function getAbsolutePath (path) {
-  if(!path) {
+out.file.getRelativePath = function getAbsolutePath(path) {
+  if (!path) {
     path = ''; // 设置默认值
   }
   return path.replace(out.file.url, '');
-}
+};
 
 module.exports = out;

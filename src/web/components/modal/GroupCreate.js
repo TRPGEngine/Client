@@ -12,11 +12,17 @@ class GroupCreate extends React.Component {
       groupName: '',
       groupSubName: '',
       groupDesc: '',
-    }
+    };
   }
 
   _handleCreate() {
-    this.props.dispatch(createGroup(this.state.groupName, this.state.groupSubName, this.state.groupDesc));
+    this.props.dispatch(
+      createGroup(
+        this.state.groupName,
+        this.state.groupSubName,
+        this.state.groupDesc
+      )
+    );
   }
 
   render() {
@@ -24,7 +30,7 @@ class GroupCreate extends React.Component {
       <div>
         <button onClick={() => this._handleCreate()}>创建</button>
       </div>
-    )
+    );
     return (
       <ModalPanel title="创建团" actions={actions}>
         <div className="group-create">
@@ -34,7 +40,7 @@ class GroupCreate extends React.Component {
               type="text"
               maxLength="16"
               value={this.state.groupName}
-              onChange={e=>this.setState({groupName:e.target.value})}
+              onChange={(e) => this.setState({ groupName: e.target.value })}
             />
           </div>
           <div>
@@ -44,7 +50,7 @@ class GroupCreate extends React.Component {
               placeholder="选填"
               maxLength="32"
               value={this.state.groupSubName}
-              onChange={e=>this.setState({groupSubName:e.target.value})}
+              onChange={(e) => this.setState({ groupSubName: e.target.value })}
             />
           </div>
           <div>
@@ -55,12 +61,12 @@ class GroupCreate extends React.Component {
               maxLength="100"
               rows="4"
               value={this.state.groupDesc}
-              onChange={e=>this.setState({groupDesc:e.target.value})}
+              onChange={(e) => this.setState({ groupDesc: e.target.value })}
             />
           </div>
         </div>
       </ModalPanel>
-    )
+    );
   }
 }
 

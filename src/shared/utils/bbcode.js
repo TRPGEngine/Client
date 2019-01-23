@@ -25,7 +25,7 @@ class ImageTag extends parser.Tag {
       attributes.height = this.params.height;
     }
 
-    return `<img ${(this.renderer.htmlAttributes(attributes))} />`;
+    return `<img ${this.renderer.htmlAttributes(attributes)} />`;
   }
 
   toReact() {

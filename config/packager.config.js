@@ -7,4 +7,4 @@ module.exports = {
   mirror: 'https://npm.taobao.org/mirrors/electron/',
   icon: '../build/icon/icon',
   ignore: ['src', 'build', 'TODOLIST', 'package-lock.json', 'node_modules'],
-}
+};

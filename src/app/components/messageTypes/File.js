@@ -1,14 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-} = require('react-native');
-const {
-  TButton,
-} = require('../TComponent');
+const { View, Text, Image, TouchableOpacity } = require('react-native');
+const { TButton } = require('../TComponent');
 const sb = require('react-native-style-block');
 const Base = require('./Base');
 const filesize = require('filesize');
@@ -39,47 +32,37 @@ class File extends Base {
     const info = this.props.info;
     const data = info.data;
     return (
-      <TouchableOpacity style={styles.container} onPress={() => this._handleClick()}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => this._handleClick()}
+      >
         <View style={styles.fileInfo}>
-          <Image style={styles.fileImage} source={appConfig.file.getFileImage(data.ext)} />
+          <Image
+            style={styles.fileImage}
+            source={appConfig.file.getFileImage(data.ext)}
+          />
           <View style={styles.fileProps}>
-            <Text style={styles.fileName} numberOfLines={1}>{data.originalname}</Text>
+            <Text style={styles.fileName} numberOfLines={1}>
+              {data.originalname}
+            </Text>
             <Text style={styles.fileSize}>{filesize(data.size)}</Text>
           </View>
         </View>
-        {
-          data.progress !== 1 ? (
-            <View style={{width: (data.progress * 100) + '%'}}></View>
-          ) : null
-        }
+        {data.progress !== 1 ? (
+          <View style={{ width: data.progress * 100 + '%' }} />
+        ) : null}
       </TouchableOpacity>
-    )
+    );
   }
 }
 
 const styles = {
-  container: [
-    {width: 180},
-    sb.padding(4, 2),
-  ],
-  fileInfo: [
-    sb.direction(),
-  ],
-  fileImage: [
-    sb.size(50, 50),
-    sb.radius(3),
-    {marginRight: 8},
-  ],
-  fileProps: [
-    sb.flex(),
-  ],
-  fileName: [
-    {marginBottom: 10, marginTop: 2},
-  ],
-  fileSize: [
-    sb.font(14),
-    sb.color('#ccc'),
-  ]
-}
+  container: [{ width: 180 }, sb.padding(4, 2)],
+  fileInfo: [sb.direction()],
+  fileImage: [sb.size(50, 50), sb.radius(3), { marginRight: 8 }],
+  fileProps: [sb.flex()],
+  fileName: [{ marginBottom: 10, marginTop: 2 }],
+  fileSize: [sb.font(14), sb.color('#ccc')],
+};
 
 module.exports = connect()(File);

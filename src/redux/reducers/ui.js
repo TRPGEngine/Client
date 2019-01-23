@@ -48,7 +48,7 @@ const initialState = immutable.fromJS({
   },
   socketId: '',
   lastDiceType: 'basicDice',
-})
+});
 
 module.exports = function ui(state = initialState, action) {
   switch (action.type) {
@@ -59,32 +59,48 @@ module.exports = function ui(state = initialState, action) {
         .set('showSlidePanelInfo', initialState.get('showSlidePanelInfo'));
     case SHOW_ALERT: {
       let showAlertInfo = action.payload || {};
-      return state.set('showAlert', true).set('showAlertInfo', immutable.fromJS(showAlertInfo));
+      return state
+        .set('showAlert', true)
+        .set('showAlertInfo', immutable.fromJS(showAlertInfo));
     }
     case HIDE_ALERT:
-      return state.set('showAlert', false).set('showAlertInfo', immutable.Map());
+      return state
+        .set('showAlert', false)
+        .set('showAlertInfo', immutable.Map());
     case SHOW_LOADING:
-      return state.set('showLoading', true).set('showLoadingText', action.text || '加载中...');
+      return state
+        .set('showLoading', true)
+        .set('showLoadingText', action.text || '加载中...');
     case HIDE_LOADING:
       return state.set('showLoading', false);
     case SHOW_MODAL:
-      return state.set('showModal', true).set('showModalBody', immutable.fromJS(action.payload));
+      return state
+        .set('showModal', true)
+        .set('showModalBody', immutable.fromJS(action.payload));
     case HIDE_MODAL:
       return state.set('showModal', false).set('showModalBody', undefined);
     case SHOW_TOAST:
-      return state.set('showToast', true).set('showToastText', action.text || '');
+      return state
+        .set('showToast', true)
+        .set('showToastText', action.text || '');
     case HIDE_TOAST:
       return state.set('showToast', false);
     case SHOW_PROFILE_CARD:
-      return state.set('showProfileCard', true).set('showProfileCardUUID', action.uuid);
+      return state
+        .set('showProfileCard', true)
+        .set('showProfileCardUUID', action.uuid);
     case HIDE_PROFILE_CARD:
       return state.set('showProfileCard', false);
     case SHOW_SLIDE_PANEL:
-      return state.set('showSlidePanel', true).set('showSlidePanelInfo', immutable.fromJS(action.payload));
+      return state
+        .set('showSlidePanel', true)
+        .set('showSlidePanelInfo', immutable.fromJS(action.payload));
     case HIDE_SLIDE_PANEL:
       return state.set('showSlidePanel', false);
     case SHOW_LIGHTBOX:
-      return state.set('showLigthbox', true).set('showLigthboxInfo', immutable.fromJS(action.payload));
+      return state
+        .set('showLigthbox', true)
+        .set('showLigthboxInfo', immutable.fromJS(action.payload));
     case HIDE_LIGHTBOX:
       return state.set('showLigthbox', false);
     case SWITCH_MENU_PANNEL:
@@ -92,8 +108,7 @@ module.exports = function ui(state = initialState, action) {
         .set('menuIndex', action.menuIndex)
         .set('menuPannel', action.payload);
     case SET_LAST_DICE_TYPE:
-      return state
-        .set('lastDiceType', action.payload);
+      return state.set('lastDiceType', action.payload);
     case CHANGE_NETWORK_STATE:
       return state.set('network', immutable.fromJS(action.payload));
     case UPDATE_SOCKET_ID:
@@ -101,4 +116,4 @@ module.exports = function ui(state = initialState, action) {
     default:
       return state;
   }
-}
+};

@@ -13,28 +13,32 @@ class GroupAdd extends React.Component {
     this.state = {
       selectValue: 'groupname',
       searchText: '',
-    }
+    };
   }
 
   _handleSearch() {
     let text = this.state.searchText.trim();
     let type = this.state.selectValue;
-    if(!!text) {
+    if (!!text) {
       this.props.dispatch(findGroup(text, type));
-    }else {
+    } else {
       console.log('搜索内容不能为空');
     }
   }
 
   getFriendResult(findingResult) {
-    if(!findingResult) {
+    if (!findingResult) {
       findingResult = [];
     }
 
     return findingResult.map(function(item, index) {
       return (
-        <FindResultItem key={item.uuid + '#' + index} info={item} type="group" />
-      )
+        <FindResultItem
+          key={item.uuid + '#' + index}
+          info={item}
+          type="group"
+        />
+      );
     });
   }
 
@@ -53,7 +57,7 @@ class GroupAdd extends React.Component {
               placeholder="请输入你要添加的团信息"
               spellCheck="false"
               value={this.state.searchText}
-              onChange={(e) => this.setState({searchText: e.target.value})}
+              onChange={(e) => this.setState({ searchText: e.target.value })}
             />
             <div className="group-search-method">
               <Select
@@ -63,25 +67,23 @@ class GroupAdd extends React.Component {
                 clearable={false}
                 searchable={false}
                 placeholder="请选择搜索方式..."
-                onChange={(item) => this.setState({selectValue: item.value})}
+                onChange={(item) => this.setState({ selectValue: item.value })}
               />
             </div>
             <button onClick={() => this._handleSearch()}>搜索</button>
           </div>
           <div className="group-search-result">
-            {
-              this.props.isFinding ? '正在查询...' : this.getFriendResult(this.props.findingResult.toJS())
-            }
+            {this.props.isFinding
+              ? '正在查询...'
+              : this.getFriendResult(this.props.findingResult.toJS())}
           </div>
         </div>
       </ModalPanel>
-    )
+    );
   }
 }
 
-module.exports = connect(
-  state => ({
-    isFinding: state.getIn(['group', 'isFindingGroup']),
-    findingResult: state.getIn(['group', 'findingResult']),
-  })
-)(GroupAdd);
+module.exports = connect((state) => ({
+  isFinding: state.getIn(['group', 'isFindingGroup']),
+  findingResult: state.getIn(['group', 'findingResult']),
+}))(GroupAdd);

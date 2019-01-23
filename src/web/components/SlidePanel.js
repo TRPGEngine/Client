@@ -15,7 +15,10 @@ class SlidePanel extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if(this.props.isSlidePanelShow === false && nextProps.isSlidePanelShow === true) {
+    if (
+      this.props.isSlidePanelShow === false &&
+      nextProps.isSlidePanelShow === true
+    ) {
       // 检测到显示滑动面板
       setTimeout(() => {
         window.addEventListener('click', this.slideEvent);
@@ -36,38 +39,31 @@ class SlidePanel extends React.Component {
   render() {
     return (
       <div
-        className={'slide-panel' + (this.props.isSlidePanelShow?'':' hide')}
+        className={'slide-panel' + (this.props.isSlidePanelShow ? '' : ' hide')}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
         <div className="header">
           <div className="title">{this.props.slidePanelTitle}</div>
-          <div
-            className="close"
-            onClick={() => this._handleHideSlidePanel()}
-          >
+          <div className="close" onClick={() => this._handleHideSlidePanel()}>
             <i className="iconfont">&#xe70c;</i>
           </div>
         </div>
-        <div className="content">
-          {this.props.slidePanelContent}
-        </div>
+        <div className="content">{this.props.slidePanelContent}</div>
       </div>
-    )
+    );
   }
 }
 
-module.exports = connect(
-  state => {
-    let slidePanelContent = state.getIn(['ui', 'showSlidePanelInfo', 'content']);
-    if(typeof slidePanelContent === 'object') {
-      slidePanelContent = slidePanelContent.toJS();
-    }
-    return {
-      isSlidePanelShow: state.getIn(['ui', 'showSlidePanel']),
-      slidePanelTitle: state.getIn(['ui', 'showSlidePanelInfo', 'title']),
-      slidePanelContent,
-    }
+module.exports = connect((state) => {
+  let slidePanelContent = state.getIn(['ui', 'showSlidePanelInfo', 'content']);
+  if (typeof slidePanelContent === 'object') {
+    slidePanelContent = slidePanelContent.toJS();
   }
-)(SlidePanel);
+  return {
+    isSlidePanelShow: state.getIn(['ui', 'showSlidePanel']),
+    slidePanelTitle: state.getIn(['ui', 'showSlidePanelInfo', 'title']),
+    slidePanelContent,
+  };
+})(SlidePanel);

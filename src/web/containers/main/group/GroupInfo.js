@@ -1,20 +1,28 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const config = require('../../../../../config/project.config');
-const { showAlert, hideAlert, showModal, hideSlidePanel } = require('../../../../redux/actions/ui');
-const { switchSelectGroup, quitGroup, dismissGroup, setGroupStatus } = require('../../../../redux/actions/group');
+const {
+  showAlert,
+  hideAlert,
+  showModal,
+  hideSlidePanel,
+} = require('../../../../redux/actions/ui');
+const {
+  switchSelectGroup,
+  quitGroup,
+  dismissGroup,
+  setGroupStatus,
+} = require('../../../../redux/actions/group');
 const ImageViewer = require('../../../components/ImageViewer');
 const GroupEdit = require('../../../components/modal/GroupEdit');
 // const GroupEdit = require('./modal/GroupEdit');
 
-require('./GroupInfo.scss')
+require('./GroupInfo.scss');
 
 class GroupInfo extends React.Component {
   _handleEditGroup() {
     console.log('编辑团信息');
-    this.props.showModal(
-      <GroupEdit />
-    )
+    this.props.showModal(<GroupEdit />);
   }
 
   _handleDismissGroup() {
@@ -27,8 +35,8 @@ class GroupInfo extends React.Component {
         this.props.switchSelectGroup('');
         this.props.dismissGroup(groupUUID);
         this.props.hideSlidePanel();
-      }
-    })
+      },
+    });
   }
 
   _handleQuitGroup() {
@@ -41,8 +49,8 @@ class GroupInfo extends React.Component {
         this.props.switchSelectGroup('');
         this.props.quitGroup(groupUUID);
         this.props.hideSlidePanel();
-      }
-    })
+      },
+    });
   }
 
   _handleSwitchGroupStatus(status = false) {
@@ -50,7 +58,7 @@ class GroupInfo extends React.Component {
   }
 
   render() {
-    let {groupInfo, usercache} = this.props;
+    let { groupInfo, usercache } = this.props;
     if (!groupInfo) {
       return null;
     }
@@ -60,10 +68,14 @@ class GroupInfo extends React.Component {
       <div className="group-info">
         <div className="group-info-cells">
           <div className="group-info-cell group-avatar">
-            <ImageViewer originImageUrl={originAvatar}><img src={avatar || config.defaultImg.group} /></ImageViewer>
+            <ImageViewer originImageUrl={originAvatar}>
+              <img src={avatar || config.defaultImg.group} />
+            </ImageViewer>
             <div>
               <p>{groupInfo.get('name')}</p>
-              <p className="group-subname" title={groupInfo.get('sub_name')}>{groupInfo.get('sub_name')}</p>
+              <p className="group-subname" title={groupInfo.get('sub_name')}>
+                {groupInfo.get('sub_name')}
+              </p>
             </div>
           </div>
         </div>
@@ -80,7 +92,9 @@ class GroupInfo extends React.Component {
         <div className="group-info-cells">
           <div className="group-info-cell">
             <span>团长:</span>
-            <span>{usercache.getIn([groupInfo.get('owner_uuid'), 'nickname'])}</span>
+            <span>
+              {usercache.getIn([groupInfo.get('owner_uuid'), 'nickname'])}
+            </span>
           </div>
           <div className="group-info-cell">
             <span>团管理数:</span>
@@ -100,65 +114,73 @@ class GroupInfo extends React.Component {
           </div>
           <div className="group-info-cell">
             <span>团简介:</span>
-            <span className="desc"><pre>{groupInfo.get('desc')}</pre></span>
+            <span className="desc">
+              <pre>{groupInfo.get('desc')}</pre>
+            </span>
           </div>
         </div>
 
-        {
-          this.props.userUUID === groupInfo.get('owner_uuid') ? (
-            <div>
-              <div className="group-info-cells">
-                <div className="group-info-cell">
-                  {
-                    groupInfo.get('status') ? (
-                      <button onClick={() => this._handleSwitchGroupStatus(false)}>闭团</button>
-                    ) : (
-                      <button onClick={() => this._handleSwitchGroupStatus(true)}>开团</button>
-                    )
-                  }
-                </div>
-              </div>
-              <div className="group-info-cells">
-                <div className="group-info-cell">
-                  <button onClick={() => this._handleEditGroup()}>编辑团</button>
-                </div>
-                <div className="group-info-cell">
-                  <button onClick={() => this._handleDismissGroup()}>解散团</button>
-                </div>
+        {this.props.userUUID === groupInfo.get('owner_uuid') ? (
+          <div>
+            <div className="group-info-cells">
+              <div className="group-info-cell">
+                {groupInfo.get('status') ? (
+                  <button onClick={() => this._handleSwitchGroupStatus(false)}>
+                    闭团
+                  </button>
+                ) : (
+                  <button onClick={() => this._handleSwitchGroupStatus(true)}>
+                    开团
+                  </button>
+                )}
               </div>
             </div>
-          ) : (
-            <div>
-              <div className="group-info-cells">
-                <div className="group-info-cell">
-                  <button onClick={() => this._handleQuitGroup()}>退出团</button>
-                </div>
+            <div className="group-info-cells">
+              <div className="group-info-cell">
+                <button onClick={() => this._handleEditGroup()}>编辑团</button>
+              </div>
+              <div className="group-info-cell">
+                <button onClick={() => this._handleDismissGroup()}>
+                  解散团
+                </button>
               </div>
             </div>
-          )
-        }
+          </div>
+        ) : (
+          <div>
+            <div className="group-info-cells">
+              <div className="group-info-cell">
+                <button onClick={() => this._handleQuitGroup()}>退出团</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    )
+    );
   }
 }
 
 module.exports = connect(
-  state => ({
+  (state) => ({
     userUUID: state.getIn(['user', 'info', 'uuid']),
     usercache: state.getIn(['cache', 'user']),
     selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
     groupInfo: state
       .getIn(['group', 'groups'])
-      .find((group) => group.get('uuid')===state.getIn(['group', 'selectedGroupUUID'])),
+      .find(
+        (group) =>
+          group.get('uuid') === state.getIn(['group', 'selectedGroupUUID'])
+      ),
   }),
-  dispatch => ({
+  (dispatch) => ({
     showAlert: (...args) => dispatch(showAlert(...args)),
     hideAlert: () => dispatch(hideAlert()),
     showModal: (...args) => dispatch(showModal(...args)),
     switchSelectGroup: (groupUUID) => dispatch(switchSelectGroup(groupUUID)),
     quitGroup: (groupUUID) => dispatch(quitGroup(groupUUID)),
     dismissGroup: (groupUUID) => dispatch(dismissGroup(groupUUID)),
-    setGroupStatus: (groupUUID, groupStatus) => dispatch(setGroupStatus(groupUUID, groupStatus)),
+    setGroupStatus: (groupUUID, groupStatus) =>
+      dispatch(setGroupStatus(groupUUID, groupStatus)),
     hideSlidePanel: () => dispatch(hideSlidePanel()),
   })
 )(GroupInfo);

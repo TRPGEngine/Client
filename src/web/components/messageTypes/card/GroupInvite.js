@@ -1,6 +1,9 @@
 const BaseCard = require('./BaseCard');
 const { connect } = require('react-redux');
-const { agreeGroupInvite, refuseGroupInvite } = require('../../../../redux/actions/group');
+const {
+  agreeGroupInvite,
+  refuseGroupInvite,
+} = require('../../../../redux/actions/group');
 
 // 入团邀请
 class GroupInvite extends BaseCard {
@@ -8,22 +11,27 @@ class GroupInvite extends BaseCard {
     let info = this.props.info;
     let data = info.data;
     let invite = data.invite;
-    let inviteIndex = this.props.groupInvites.findIndex(item => item.get('uuid') === invite.uuid);
-    if(inviteIndex >= 0) {
+    let inviteIndex = this.props.groupInvites.findIndex(
+      (item) => item.get('uuid') === invite.uuid
+    );
+    if (inviteIndex >= 0) {
       // 尚未处理
-      return [{
-        label: '拒绝',
-        onClick: () => this.props.dispatch(refuseGroupInvite(invite.uuid)),
-      },{
-        label: '同意',
-        onClick: () => this.props.dispatch(agreeGroupInvite(invite.uuid)),
-      }];
+      return [
+        {
+          label: '拒绝',
+          onClick: () => this.props.dispatch(refuseGroupInvite(invite.uuid)),
+        },
+        {
+          label: '同意',
+          onClick: () => this.props.dispatch(agreeGroupInvite(invite.uuid)),
+        },
+      ];
     } else {
       let groupIndex = this.props.groupUUIDList.indexOf(invite.group_uuid);
-      if(groupIndex >= 0) {
+      if (groupIndex >= 0) {
         // 已同意
         return [{ label: '已同意' }];
-      }else {
+      } else {
         // 已拒绝
         return [{ label: '已拒绝' }];
       }
@@ -31,9 +39,9 @@ class GroupInvite extends BaseCard {
   }
 }
 
-module.exports = connect(
-  state => ({
-    groupInvites: state.getIn(['group', 'invites']),
-    groupUUIDList: state.getIn(['group', 'groups']).map((item) => item.get('uuid')),
-  })
-)(GroupInvite);
+module.exports = connect((state) => ({
+  groupInvites: state.getIn(['group', 'invites']),
+  groupUUIDList: state
+    .getIn(['group', 'groups'])
+    .map((item) => item.get('uuid')),
+}))(GroupInvite);

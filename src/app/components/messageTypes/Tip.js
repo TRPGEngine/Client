@@ -1,8 +1,5 @@
 const React = require('react');
-const {
-  View,
-  Text,
-} = require('react-native');
+const { View, Text } = require('react-native');
 const sb = require('react-native-style-block');
 const Base = require('./Base');
 
@@ -13,7 +10,7 @@ class Tip extends Base {
       <View style={styles.tipContainer}>
         <Text style={styles.tipText}>{info.message}</Text>
       </View>
-    )
+    );
   }
 }
 
@@ -26,11 +23,7 @@ const styles = {
     sb.radius(3),
     sb.margin(5, 0),
   ],
-  tipText: [
-    sb.color('white'),
-    sb.font(12, 16),
-    sb.textAlign(),
-  ],
-}
+  tipText: [sb.color('white'), sb.font(12, 16), sb.textAlign()],
+};
 
 module.exports = Tip;
