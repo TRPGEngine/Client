@@ -8,5 +8,13 @@
   "bracketSpacing": true,
   "arrowParens": "always",
   "parser": "babylon",
-  "jsxBracketSameLine": false
+  "jsxBracketSameLine": false,
+  "overrides": [
+    {
+      "files": ["*.json", ".babelrc", ".prettierrc.json"],
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
 }
