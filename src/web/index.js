@@ -10,9 +10,6 @@ const configureStore = require('../redux/configureStore');
 const store = configureStore();
 attachStore(store);
 
-const { switchConverse } = require('../redux/actions/chat');
-const { switchMenuPannel } = require('../redux/actions/ui');
-
 const trpgApi = require('../api/trpg.api.js');
 const api = trpgApi.getInstance();
 trpgApi.bindEventFunc.call(api, store, {

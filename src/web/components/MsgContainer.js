@@ -103,7 +103,7 @@ class MsgContainer extends React.Component {
   }
 
   render() {
-    let { userUUID, usercache } = this.props;
+    let { userUUID } = this.props;
 
     return (
       <div
@@ -173,7 +173,6 @@ module.exports = connect((state, ownProps) => {
     msgList: msgList && msgList.sortBy((item) => item.get('date')),
     userUUID: state.getIn(['user', 'info', 'uuid']),
     selfInfo: state.getIn(['user', 'info']),
-    usercache: state.getIn(['cache', 'user']),
     friendRequests: state.getIn(['user', 'friendRequests']),
     friendList: state.getIn(['user', 'friendList']),
     groupInvites: state.getIn(['group', 'invites']),

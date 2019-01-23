@@ -311,6 +311,17 @@ let addMsg = function addMsg(converseUUID, payload) {
     dispatch({ type: ADD_MSG, converseUUID, unread, payload: payload });
   };
 };
+
+let updateMsg = function updateMsg(converseUUID, payload) {
+  console.log('try to update message', converseUUID, payload);
+  return {
+    type: UPDATE_MSG,
+    converseUUID,
+    msgUUID: payload.uuid,
+    payload,
+  };
+};
+
 let sendMsg = function sendMsg(toUUID, payload) {
   return function(dispatch, getState) {
     dispatch({ type: SEND_MSG });
@@ -350,6 +361,7 @@ let sendMsg = function sendMsg(toUUID, payload) {
     });
   };
 };
+
 let sendFile = function sendFile(toUUID, payload, file) {
   if (!file) {
     console.error('发送文件错误。没有找到要发送的文件');
@@ -406,16 +418,6 @@ let sendFile = function sendFile(toUUID, payload, file) {
         });
       },
     });
-  };
-};
-
-let updateMsg = function updateMsg(converseUUID, payload) {
-  console.log('try to update message', converseUUID, payload);
-  return {
-    type: UPDATE_MSG,
-    converseUUID,
-    msgUUID: payload.uuid,
-    payload,
   };
 };
 
@@ -483,8 +485,8 @@ exports.getAllUserConverse = getAllUserConverse;
 exports.getOfflineUserConverse = getOfflineUserConverse;
 exports.reloadConverseList = reloadConverseList;
 exports.addMsg = addMsg;
+exports.updateMsg = updateMsg;
 exports.sendMsg = sendMsg;
 exports.sendFile = sendFile;
-exports.updateMsg = updateMsg;
 exports.getMoreChatLog = getMoreChatLog;
 exports.updateCardChatData = updateCardChatData;

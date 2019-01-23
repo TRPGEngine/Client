@@ -1,6 +1,8 @@
 const tinycon = require('tinycon');
 const { getUserInfoCache } = require('../../shared/utils/cacheHelper');
 const config = require('../../../config/project.config.js');
+const { switchMenuPannel } = require('../../redux/actions/ui');
+const { switchConverse } = require('../../redux/actions/chat');
 let num = 0;
 
 var hiddenProperty =
