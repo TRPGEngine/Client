@@ -15,15 +15,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .js,.jsx src",
     "lint:fix": "eslint --fix --ext .js,.jsx src",
-    "prettier": "prettier --write \"src/**/*.js\""
+    "prettier:all": "prettier --write \"src/**/*.js\""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TRPGEngine/Client.git"
   },
-  "keywords": [
-    "trpg"
-  ],
+  "keywords": ["trpg"],
   "author": "moonrailgun",
   "license": "GPL-3.0",
   "bugs": {

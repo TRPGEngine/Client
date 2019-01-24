@@ -11,15 +11,13 @@ module.exports = webpackMerge({}, base, {
     hot: true, // 模块热更新，配置HotModuleReplacementPlugin
     https: false, // 适用于ssl安全证书网站
     noInfo: true, // 只在热加载错误和警告
-    // ...
-  },
-
-  proxy: {
-    '/api': {
-      target: 'http://127.0.0.1:23256/',
-      changeOrigin: true, // 是否跨域
-      pathRewrite: {
-        '^/api': '',
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:23256/',
+        changeOrigin: true, // 是否跨域
+        pathRewrite: {
+          '^/api': '',
+        },
       },
     },
   },
