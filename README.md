@@ -27,7 +27,7 @@ TPRG前端网页端与手机端RN端(开发中)
 ## 打包&运行
 
 需求环境:
-- nodejs7+
+- nodejs7.6+
 
 ```bash
 $ npm install
