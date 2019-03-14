@@ -7,5 +7,12 @@ Sentry.init({
 });
 
 export function error(err) {
-  Sentry.captureException(err);
+  let fn;
+  if (typeof err === 'string') {
+    fn = Sentry.captureMessage.bind(Sentry);
+  } else {
+    fn = Sentry.captureException.bind(Sentry);
+  }
+  const sentryId = fn(err);
+  console.warn('error: sentryId', sentryId);
 }

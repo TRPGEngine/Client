@@ -1,6 +1,7 @@
 const io = require('socket.io-client');
 const config = require('../../config/project.config.js');
 const { RESET, ADD_FRIEND_SUCCESS } = require('../redux/constants');
+import { error as sendSentry } from '../shared/utils/sentry';
 
 let api = null;
 const platformSocketParam = {
@@ -15,7 +16,16 @@ function API() {
     if (this.socket.disconnected) {
       this.socket.connect();
     }
-    return this.socket.emit(event, data, cb);
+    return this.socket.emit(event, data, (res) => {
+      cb(res);
+      if (res.result === false) {
+        // 如果检测到错误则汇报错误信息
+        const info = `${res.msg}\n事件: ${event}\n发送信息: ${JSON.stringify(
+          data
+        )}`;
+        sendSentry(info);
+      }
+    });
   };
   this.on = this.socket.on.bind(this.socket);
 }
