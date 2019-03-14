@@ -1,6 +1,7 @@
 const React = require('react');
 const { sendErrorReport } = require('../../shared/utils/errorReport');
 const config = require('../../../config/project.config.js');
+import { error as sendSentry } from '../utils/sentry';
 
 require('./ErrorBoundary.scss');
 
@@ -19,6 +20,7 @@ class ErrorBoundary extends React.Component {
       stack: String(info.componentStack),
       version: config.version,
     });
+    sendSentry(error);
   }
 
   render() {
