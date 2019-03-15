@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WebpackBar = require('webpackbar');
 
 const ROOT_PATH = path.resolve(__dirname, '../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
@@ -120,6 +121,10 @@ module.exports = {
     //   filename: 'vendor.js',
     //   minChunks: Infinity,
     // }),
+    new WebpackBar({
+      name: '🎲  TRPG Game',
+      color: '#8C6244',
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
