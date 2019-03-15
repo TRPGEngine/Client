@@ -2,6 +2,7 @@ const webpackMerge = require('webpack-merge');
 const base = require('./webpack.base.config.js');
 
 module.exports = webpackMerge({}, base, {
+  mode: 'development',
   devtool: 'cheap-module-eval-source-map', //开发环境
   // devtool: 'eval-source-map', //开发环境
 
