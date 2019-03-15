@@ -62,6 +62,7 @@ module.exports = {
         //   path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
         // ],
         query: {
+          babelrc: false,
           presets: ['env', 'react'],
           plugins: [
             [
@@ -73,6 +74,8 @@ module.exports = {
               },
             ],
             'transform-class-properties',
+            'dynamic-import-webpack',
+            'transform-object-rest-spread',
           ],
         },
       },
@@ -95,7 +98,7 @@ module.exports = {
 
   optimization: {
     splitChunks: {
-      chunks: 'async',
+      chunks: 'all', // all, async, initial
       minSize: 30000,
       maxSize: 0,
       minChunks: 1,
@@ -105,9 +108,7 @@ module.exports = {
       name: true,
       cacheGroups: {
         default: {
-          test: function(module, chunks) {
-            return true;
-          },
+          test: /[\\/]node_modules[\\/]/,
           priority: -20,
           reuseExistingChunk: true,
         },
