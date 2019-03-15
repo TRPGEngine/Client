@@ -63,6 +63,7 @@ module.exports = {
         // ],
         query: {
           babelrc: false,
+          compact: false,
           presets: ['env', 'react'],
           plugins: [
             [
