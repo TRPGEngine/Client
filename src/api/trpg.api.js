@@ -1,9 +1,9 @@
 const io = require('socket.io-client');
 const config = require('../../config/project.config.js');
 const { RESET, ADD_FRIEND_SUCCESS } = require('../redux/constants');
-import { error as sendSentry } from '../shared/utils/sentry';
 
 let api = null;
+let handleEventError = null;
 const platformSocketParam = {
   jsonp: false,
 };
@@ -23,7 +23,7 @@ function API() {
         const info = `${res.msg}\n事件: ${event}\n发送信息: ${JSON.stringify(
           data
         )}`;
-        sendSentry(info);
+        handleEventError && handleEventError(info);
       }
     });
   };
@@ -131,7 +131,12 @@ function bindEventFunc(store, { onReceiveMessage } = {}) {
   });
 }
 
+function setEventErrorHandler(cb) {
+  handleEventError = cb;
+}
+
 exports.bindEventFunc = bindEventFunc;
 exports.getInstance = getApiInstance;
+exports.setEventErrorHandler = setEventErrorHandler;
 
 exports.fileUrl = config.file.url + '/file';

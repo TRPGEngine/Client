@@ -16,6 +16,9 @@ const api = trpgApi.getInstance();
 trpgApi.bindEventFunc.call(api, store, {
   onReceiveMessage: require('./utils/notify')(store).onReceiveMessage,
 });
+trpgApi.setEventErrorHandler((info) => {
+  import('./utils/sentry').then((module) => module.error(info));
+});
 
 // 加载本地存储数据进行应用初始化
 const rnStorage = require('../api/rnStorage.api.js');
