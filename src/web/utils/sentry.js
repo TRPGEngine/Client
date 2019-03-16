@@ -1,9 +1,9 @@
 import * as Sentry from '@sentry/browser';
 import config from 'config';
-import _ from 'lodash';
+import _get from 'lodash/get';
 
 Sentry.init({
-  dsn: _.get(config, 'sentry.dsn'),
+  dsn: _get(config, 'sentry.dsn'),
 });
 
 export function error(err) {
