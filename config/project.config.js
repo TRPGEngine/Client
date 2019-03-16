@@ -1,21 +1,31 @@
-let environment = process.env.NODE_ENV || 'development';
-let platform = process.env.PLATFORM || 'web';
+import _get from 'lodash/get';
+const environment = _get(process.env, 'NODE_ENV', 'development');
+const platform = _get(process.env, 'PLATFORM', 'web');
 let currentHost = '127.0.0.1';
 let isSSL = false;
-if (!!window && window.location && window.location.host) {
-  currentHost = window.location.host.split(':')[0];
-  isSSL = window.location.protocol === 'https:';
+
+let localHost = _get(window, 'location.host');
+if (localHost) {
+  currentHost = localHost.split(':')[0];
+  isSSL = _get(window, 'location.protocol') === 'https:';
 }
 if (environment == 'production') {
   currentHost = 'trpgapi.moonrailgun.com';
 }
 
-let trpgHost = process.env.TRPG_HOST;
+let trpgHost = _get(process.env, 'TRPG_HOST');
+let trpgPort;
 if (trpgHost) {
-  currentHost = trpgHost;
+  let _tmp = trpgHost.split(':')
+  currentHost = _tmp[0];
+  trpgPort = _tmp[1];
 }
 
-let standardPort = isSSL ? '443' : '80';
+const standardPort = isSSL ? '443' : '80';
+let apiPort = environment === 'production' ? standardPort : '23256';
+if(trpgPort) {
+  apiPort = trpgPort;
+}
 
 let out = {
   version: require('../package.json').version,
@@ -24,12 +34,12 @@ let out = {
   io: {
     protocol: isSSL ? 'wss' : 'ws',
     host: currentHost,
-    port: environment === 'production' ? standardPort : '23256',
+    port: apiPort,
   },
   file: {
     protocol: isSSL ? 'https' : 'http',
     host: currentHost,
-    port: environment === 'production' ? standardPort : '23256',
+    port: apiPort,
     getFileImage: function(ext) {
       if (ext === 'jpg' || ext === 'png' || ext === 'gif') {
         return out.defaultImg.file.pic;
