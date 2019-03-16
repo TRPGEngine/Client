@@ -12,7 +12,7 @@
     "package": "cross-env PLATFORM=electron NODE_ENV=production gulp package --gulpfile build/gulpfile.js",
     "package-all": "cross-env PLATFORM=electron NODE_ENV=production gulp package:all --gulpfile build/gulpfile.js",
     "app": "cross-env PLATFORM=app node node_modules/react-native/local-cli/cli.js start",
-    "app-clear": "npm run app --reset-cache",
+    "app-clear": "npm run app -- --reset-cache",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .js,.jsx src",
     "lint:fix": "eslint --fix --ext .js,.jsx src",
