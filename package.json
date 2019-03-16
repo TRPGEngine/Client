@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --inline --progress --colors --port 8089 --host 0.0.0.0 --config ./config/webpack.config.js",
     "build": "cross-env PLATFORM=web webpack --progress --colors --display-modules --config ./config/webpack.config.js",
+    "build:pro": "cross-env NODE_ENV=production npm run build",
     "pc": "cross-env PLATFORM=electron NODE_ENV=production TRPG_HOST=localhost gulp --gulpfile build/gulpfile.js && electron .",
     "pcdev": "cross-env PLATFORM=electron npm run dev & gulp assets --gulpfile build/gulpfile.js && cross-env NODE_ENV=development electron .",
     "package": "cross-env PLATFORM=electron NODE_ENV=production gulp package --gulpfile build/gulpfile.js",
