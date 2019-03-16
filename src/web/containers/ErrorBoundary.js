@@ -19,7 +19,7 @@ class ErrorBoundary extends React.Component {
       stack: String(info.componentStack),
       version: config.version,
     });
-    import('./utils/sentry').then((module) => module.error(error));
+    import('../utils/sentry').then((module) => module.error(error));
   }
 
   render() {
