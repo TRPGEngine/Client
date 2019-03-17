@@ -7,7 +7,7 @@ const {
   parallel, // 并行
 } = gulp;
 
-gulp.task('assets', function() {
+gulp.task('assets', async function() {
   gulp.src('../src/assets/**/*').pipe(gulp.dest('../dist/assets/'));
 
   gulp.src('../build/entry.js').pipe(gulp.dest('../dist/'));
@@ -28,7 +28,7 @@ gulp.task('webpack', function(callback) {
 gulp.task(
   'redirect',
   series('webpack', function() {
-    gulp
+    return gulp
       .src('../dist/app.*.js')
       .pipe(replace('/src/assets/', './assets/'))
       .pipe(replace('//at.alicdn.com', 'https://at.alicdn.com'))
