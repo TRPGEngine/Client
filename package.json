@@ -46,6 +46,7 @@
     "moment": "^2.22.2",
     "nprogress": "^0.2.0",
     "react": "^16.8.4",
+    "react-contenteditable": "^3.2.6",
     "react-dom": "^16.8.4",
     "react-emojione2": "^2.2.18",
     "react-fileupload": "^2.4.0",
