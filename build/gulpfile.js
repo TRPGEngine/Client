@@ -29,7 +29,7 @@ gulp.task(
   'redirect',
   series('webpack', function() {
     gulp
-      .src('../dist/bundle.js')
+      .src('../dist/app.*.js')
       .pipe(replace('/src/assets/', './assets/'))
       .pipe(replace('//at.alicdn.com', 'https://at.alicdn.com'))
       .pipe(gulp.dest('../dist/'));
