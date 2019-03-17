@@ -8,12 +8,14 @@ const { sendMsg } = require('../../redux/actions/chat');
 const { showModal, hideModal } = require('../../redux/actions/ui');
 const ActorSelect = require('./modal/ActorSelect');
 const config = require('../../../config/project.config');
+import ContentEditable from 'react-contenteditable';
 
 require('./MsgSendBox.scss');
 
 class MsgSendBox extends React.Component {
   constructor(props) {
     super(props);
+    this.inputMsgRef = React.createRef();
     this.state = {
       inputMsg: '',
       inputType: 'normal',
@@ -87,7 +89,7 @@ class MsgSendBox extends React.Component {
   }
 
   componentDidMount() {
-    this.refs.inputMsg.focus();
+    this.inputMsgRef.current.focus();
   }
 
   componentWillUnmount() {
@@ -146,7 +148,7 @@ class MsgSendBox extends React.Component {
     let type = this.state.inputType;
     if (!!message) {
       this.props.onSendMsg(message, type);
-      this.refs.inputMsg.focus();
+      this.inputMsgRef.current.focus();
       this.setState({ inputMsg: '' });
     }
   }
@@ -160,7 +162,7 @@ class MsgSendBox extends React.Component {
   _handleSelectEmoticon(code) {
     this.setState({ inputMsg: this.state.inputMsg + code });
     this.hidePopup();
-    this.refs.inputMsg.focus();
+    this.inputMsgRef.current.focus();
   }
 
   // 显示投骰方式弹出框
@@ -316,10 +318,12 @@ class MsgSendBox extends React.Component {
               })}
             </div>
           </div>
-          <textarea
-            ref="inputMsg"
+          <ContentEditable
+            innerRef={this.inputMsgRef}
             className="input-msg"
-            value={this.state.inputMsg}
+            tagName="pre"
+            html={this.state.inputMsg}
+            disabled={false}
             onChange={(e) => this.setState({ inputMsg: e.target.value })}
             onKeyDown={(e) => this._handleMsgInputKeyDown(e)}
             onKeyUp={(e) => this._handleMsgInputKeyUp(e)}
