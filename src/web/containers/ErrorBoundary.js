@@ -26,7 +26,7 @@ class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       // TODO: 需要优化div结构。去除.app和#main
       return (
-        <div class="app">
+        <div className="app">
           <div id="main" className="error-boundary">
             <h1>啊哦Σ(ﾟдﾟ;), 出现了一些错误.</h1>
             <h2>
