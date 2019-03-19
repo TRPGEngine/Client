@@ -14,6 +14,7 @@ const FriendsAdd = require('../../components/modal/FriendsAdd');
 const GroupAdd = require('../../components/modal/GroupAdd');
 const UserSettings = require('../../components/modal/UserSettings');
 const SystemSettings = require('../../components/modal/SystemSettings');
+import SystemStatus from '../../components/modal/SystemStatus';
 const ModalPanel = require('../../components/ModalPanel');
 const Webview = require('../../components/Webview');
 
@@ -65,6 +66,8 @@ class ExtraOptions extends React.Component {
       this.props.dispatch(showModal(<UserSettings />));
     } else if (menu === 'systemSettings') {
       this.props.dispatch(showModal(<SystemSettings />));
+    } else if (menu === 'systemStatus') {
+      this.props.dispatch(showModal(<SystemStatus />));
     } else if (menu === 'changePassword') {
       this.props.dispatch(showModal(<ChangePassword />));
     } else if (menu === 'help') {
@@ -110,6 +113,9 @@ class ExtraOptions extends React.Component {
           </li>
           <li onClick={() => this._handleClickMenu('systemSettings')}>
             系统设置
+          </li>
+          <li onClick={() => this._handleClickMenu('systemStatus')}>
+            系统状态
           </li>
           <li onClick={() => this._handleClickMenu('changePassword')}>
             修改密码
