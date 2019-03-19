@@ -24,13 +24,16 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
+      // TODO: 需要优化div结构。去除.app和#main
       return (
-        <div className="error-boundary">
-          <h1>啊哦Σ(ﾟдﾟ;), 出现了一些错误.</h1>
-          <h2>
-            错误已经汇报给TRPG后台, 请
-            <span onClick={() => location.reload()}>刷新</span>一下页面重试哦.
-          </h2>
+        <div class="app">
+          <div id="main" className="error-boundary">
+            <h1>啊哦Σ(ﾟдﾟ;), 出现了一些错误.</h1>
+            <h2>
+              错误已经汇报给TRPG后台, 请
+              <span onClick={() => location.reload()}>刷新</span>一下页面重试哦.
+            </h2>
+          </div>
         </div>
       );
     }

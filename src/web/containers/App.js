@@ -7,6 +7,7 @@ const {
   BrowserRouter,
   Link,
 } = require('react-router-dom');
+const ErrorBoundary = require('./ErrorBoundary');
 const NetworkIndicator = require('../components/NetworkIndicator');
 const config = require('../../../config/project.config.js');
 require('./App.scss');
@@ -29,7 +30,7 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div>
+        <ErrorBoundary>
           <GlobalUI />
           <div className="app">
             <Switch>
@@ -65,7 +66,7 @@ class App extends React.Component {
             {config.platform === 'web' ? <NetworkIndicator /> : null}
             <div className="version">当前版本号v{appVersion}</div>
           </div>
-        </div>
+        </ErrorBoundary>
       </Router>
     );
   }

@@ -7,7 +7,6 @@ const config = require('../../../config/project.config');
 // const { getGroupList, getGroupInvite } = require('../../redux/actions/group');
 // const { getNote } = require('../../redux/actions/note');
 const { switchMenuPannel } = require('../../redux/actions/ui');
-const ErrorBoundary = require('./ErrorBoundary');
 const ConverseList = require('./main/converse/ConverseList');
 const MenuPannel = require('./main/MenuPannel');
 const ProfileCard = require('../components/ProfileCard');
@@ -76,34 +75,32 @@ class Main extends React.Component {
   render() {
     return (
       <div id="main">
-        <ErrorBoundary>
-          <ProfileCard />
-          <div className="head">
-            <span className="title">TRPG - 桌上角色扮演游戏客户端</span>
-            <div className="title-blank" />
-            <div className="menu">
-              {this.titleMenu.map((menu, index) => {
-                let isActive = false;
-                if (this.props.menuIndex !== -1) {
-                  isActive = index === 0;
-                } else {
-                  isActive = index === this.state.titleMenuIndex;
-                }
-                return (
-                  <button
-                    key={'title-menu#' + index}
-                    className={isActive ? 'active' : ''}
-                    onClick={() => this._handleSelectTitleMenu(index)}
-                  >
-                    {menu.name}
-                  </button>
-                );
-              })}
-            </div>
-            {TitleToolbar ? <TitleToolbar /> : null}
+        <ProfileCard />
+        <div className="head">
+          <span className="title">TRPG - 桌上角色扮演游戏客户端</span>
+          <div className="title-blank" />
+          <div className="menu">
+            {this.titleMenu.map((menu, index) => {
+              let isActive = false;
+              if (this.props.menuIndex !== -1) {
+                isActive = index === 0;
+              } else {
+                isActive = index === this.state.titleMenuIndex;
+              }
+              return (
+                <button
+                  key={'title-menu#' + index}
+                  className={isActive ? 'active' : ''}
+                  onClick={() => this._handleSelectTitleMenu(index)}
+                >
+                  {menu.name}
+                </button>
+              );
+            })}
           </div>
-          <MenuPannel className="body" />
-        </ErrorBoundary>
+          {TitleToolbar ? <TitleToolbar /> : null}
+        </div>
+        <MenuPannel className="body" />
       </div>
     );
   }
