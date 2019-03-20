@@ -33,6 +33,7 @@
   "homepage": "https://github.com/TRPGEngine/Client#readme",
   "dependencies": {
     "@sentry/browser": "^4.6.4",
+    "antd": "^3.15.1",
     "apsl-react-native-button": "^3.1.1",
     "axios": "^0.17.1",
     "bbcode-to-react": "^0.2.9",
@@ -42,6 +43,7 @@
     "is-uuid": "^1.0.2",
     "jcore-react-native": "^1.2.10",
     "jpush-react-native": "^2.2.9",
+    "lodash": "^4.17.11",
     "md5": "^2.2.1",
     "moment": "^2.22.2",
     "nprogress": "^0.2.0",
@@ -109,6 +111,7 @@
     "gulp-replace": "^0.6.1",
     "html-webpack-include-assets-plugin": "^1.0.4",
     "html-webpack-plugin": "^3.2.0",
+    "less-loader": "^4.1.0",
     "metro-react-native-babel-preset": "^0.53.1",
     "node-sass": "^4.11.0",
     "plugin-error": "^1.0.1",

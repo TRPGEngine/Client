@@ -53,6 +53,22 @@ module.exports = {
         loaders: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
+        test: /\.less$/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          {
+            loader: 'less-loader',
+            options: {
+              modifyVars: {
+                'primary-color': '#8C6244',
+              },
+              javascriptEnabled: true,
+            },
+          },
+        ],
+      },
+      {
         test: /\.(js|jsx)?$/,
         loader: 'babel-loader',
         // include: [
