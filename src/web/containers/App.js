@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import TLoadable from '../components/TLoadable';
 const {
   Route,
   Switch,
@@ -14,6 +15,8 @@ require('./App.scss');
 require('../../assets/css/iconfont.css');
 require('react-select/dist/react-select.css');
 require('react-image-lightbox/style.css');
+
+const ActorEditor = TLoadable(() => import('./actor/editor/ActorEditor'));
 
 const Router =
   config.platform === 'web' || config.environment === 'development'
@@ -37,6 +40,7 @@ class App extends React.Component {
               <Route name="login" path="/login" component={Login} />
               <Route name="register" path="/register" component={Register} />
               <Route name="main" path="/main" component={Main} />
+              <Route name="main" path="/actor-editor" component={ActorEditor} />
               <Route name="emoji" path="/emoji">
                 <div>
                   {getCodeList().people.map((item) => (
