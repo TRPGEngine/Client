@@ -2,10 +2,13 @@
 import convert from 'xml-js';
 
 const parser = (xml) => {
-  return convert.xml2js(xml, {
+  console.time('xml解析用时');
+  const js = convert.xml2js(xml, {
     compact: false,
     trim: true,
   });
+  console.timeEnd('xml解析用时');
+  return js;
 };
 
 export default parser;
