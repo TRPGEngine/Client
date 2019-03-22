@@ -19,7 +19,9 @@
     <Col>
       <Row>
         <span>{{this.value}}</span>
-        <span>/{{this.maxValue}}</span>
+        <Visible if="!!this.maxValue">
+          <span>/{{this.maxValue}}</span>
+        </Visible>
       </Row>
     </Col>
   </Define>
@@ -42,6 +44,18 @@
         <span>{{(this.initValue + this.value) / 5}}%</span>
       </Col>
     </Col>
+  </Define>
+  <Define name="weapon">
+    <td>{{this.label}}</td>
+    <td>{{this.value}}</td>
+    <td>{{this.value / 2}}</td>
+    <td>{{this.value / 5}}</td>
+    <td>{{this.isPenetrate}}</td>
+    <td>{{this.damage}}</td>
+    <td>{{this.range || '--'}}</td>
+    <td>{{this.times || 1}}</td>
+    <td>{{this.ammo || '--'}}</td>
+    <td>{{this.faultValue || '--'}}</td>
   </Define>
   <Tabs>
     <Tab label="说明">
@@ -85,6 +99,7 @@
       </Row>
       <Row>
         <!-- 技能表 -->
+        <!-- TODO: 技能的初始值会根据职业不同进行变换 -->
         <Col>
           <Use define="skill" label="会计" initValue="5" />
           <Use define="skill" label="人类学" initValue="1" />
@@ -113,6 +128,70 @@
           <Use define="skill" label="历史" initValue="5" />
           <Use define="skill" label="恐吓" initValue="15" />
           <Use define="skill" label="跳跃" initValue="20" />
+          <Use define="skill" label="语言:{{语言1}}" initValue="1" />
+          <Use define="skill" label="语言:{{语言2}}" initValue="1" />
+          <Use define="skill" label="语言:{{语言3}}" initValue="1" />
+          <Use define="skill" label="母语:{{母语}}" initValue="80" />
+        </Col>
+        <Col>
+          <Use define="skill" label="法律" initValue="5" />
+          <Use define="skill" label="图书馆使用" initValue="20" />
+          <Use define="skill" label="聆听" initValue="20" />
+          <Use define="skill" label="锁匠" initValue="1" />
+          <Use define="skill" label="机械维修" initValue="10" />
+          <Use define="skill" label="医学" initValue="1" />
+          <Use define="skill" label="博物学" initValue="10" />
+          <Use define="skill" label="领航" initValue="10" />
+          <Use define="skill" label="神秘学" initValue="5" />
+          <Use define="skill" label="操作重型机械" initValue="1" />
+          <Use define="skill" label="说服" initValue="10" />
+          <Use define="skill" label="驾驶:{{驾驶1}}" initValue="1" />
+          <Use define="skill" label="精神分析" initValue="1" />
+          <Use define="skill" label="心理学" initValue="10" />
+          <Use define="skill" label="骑术" initValue="5" />
+          <Use define="skill" label="科学:{{科学1}}" initValue="1" />
+          <Use define="skill" label="科学:{{科学2}}" initValue="1" />
+          <Use define="skill" label="科学:{{科学3}}" initValue="1" />
+          <Use define="skill" label="妙手" initValue="10" />
+          <Use define="skill" label="侦查" initValue="25" />
+          <Use define="skill" label="潜行" initValue="20" />
+          <Use define="skill" label="生存:{{生存1}}" initValue="10" />
+          <Use define="skill" label="游泳" initValue="20" />
+          <Use define="skill" label="投掷" initValue="20" />
+          <Use define="skill" label="追踪" initValue="10" />
+          <Use define="skill" label="潜水" initValue="1" />
+        </Col>
+      </Row>
+    </Tab>
+    <Tab label="战斗信息">
+      <Row>
+        <Col flex="3">
+          <table>
+            <thead>
+              <tr>
+                <td>武器</td>
+                <td colspan="3">成功率</td>
+                <td>贯穿</td>
+                <td>伤害</td>
+                <td>射程</td>
+                <td>次数</td>
+                <td>弹药</td>
+                <td>故障值</td>
+              </tr>
+            </thead>
+            <tbody>
+              <Use define="weapon" label="徒手格斗" value="{{徒手格斗}}" isPenetrate="false" damage="1D3+DB" />
+              <Use define="weapon" label="{{武器1名字}}" value="{{武器1成功率}}" isPenetrate="{{武器1贯通}}" damage="{{武器1伤害}}" range="{{武器1射程}}" times="{{武器1射程}}" ammo="{{武器1弹药}}" faultValue="{{武器1故障值}}" />
+              <Use define="weapon" label="{{武器2名字}}" value="{{武器2成功率}}" isPenetrate="{{武器2贯通}}" damage="{{武器2伤害}}" range="{{武器2射程}}" times="{{武器2射程}}" ammo="{{武器2弹药}}" faultValue="{{武器2故障值}}" />
+              <Use define="weapon" label="{{武器3名字}}" value="{{武器3成功率}}" isPenetrate="{{武器3贯通}}" damage="{{武器3伤害}}" range="{{武器3射程}}" times="{{武器3射程}}" ammo="{{武器3弹药}}" faultValue="{{武器3故障值}}" />
+              <Use define="weapon" label="{{武器4名字}}" value="{{武器4成功率}}" isPenetrate="{{武器4贯通}}" damage="{{武器4伤害}}" range="{{武器4射程}}" times="{{武器4射程}}" ammo="{{武器4弹药}}" faultValue="{{武器4故障值}}" />
+            </tbody>
+          </table>
+        </Col>
+        <Col flex="1">
+          <Input label="伤害加值\nDamage Bonus" value="{{伤害加值}}" />
+          <Input label="体格\nBuild" value="{{体格}}" />
+          <Use define="stats" label="闪避\nDodge" value="{{data.闪避}}" />
         </Col>
       </Row>
     </Tab>
