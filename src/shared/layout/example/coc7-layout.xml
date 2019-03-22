@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <Template>
   <Define name="prop">
     <!-- 定义的模板。可以被直接使用 -->

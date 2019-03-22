@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import parser from '../../../../shared/layout/parser';
+import exampleXml from '../../../../shared/layout/example/coc7-layout.xml';
 
 const EditorContainer = styled.div`
   width: 80%;
@@ -13,14 +14,7 @@ const EditorContainer = styled.div`
 `;
 
 const ActorEditor = () => {
-  const xml =
-    '<?xml version="1.0" encoding="utf-8"?>' +
-    '<note importance="high" logged="true">' +
-    '    <title>Happy</title>' +
-    '    <todo>Work<div>asd</div></todo>' +
-    '    <todo>Play</todo>' +
-    '</note>';
-  const js = parser(xml);
+  const js = parser(exampleXml);
 
   return (
     <EditorContainer>
