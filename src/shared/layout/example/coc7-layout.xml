@@ -1,0 +1,119 @@
+<Template>
+  <Define name="prop">
+    <!-- 定义的模板。可以被直接使用 -->
+    <Row>
+      <Col>
+        <Input label="{{this.label}}" value="{{this.value}}" />
+      </Col>
+      <Col>
+        <p>{{this.value / 2}}</p>
+        <p>{{this.value / 5}}</p>
+      </Col>
+    </Row>
+  </Define>
+  <Define name="state">
+    <Col>
+      <pre>{{this.label}}</pre>
+    </Col>
+    <Col>
+      <Row>
+        <span>{{this.value}}</span>
+        <span>/{{this.maxValue}}</span>
+      </Row>
+    </Col>
+  </Define>
+  <Define name="skill">
+    <Col>
+      <pre>{{this.label}}</pre>
+    </Col>
+    <Col>
+      <!-- 初始值 -->
+      <span>{{this.initValue || 1}}</span>
+    </Col>
+    <Col>
+      <Input label="" value="{{this.value}}" />
+    </Col>
+    <Col>
+      <!-- 成功率 -->
+      <Col>
+        <span>{{this.initValue + this.value}}%</span>
+        <span>{{(this.initValue + this.value) / 2}}%</span>
+        <span>{{(this.initValue + this.value) / 5}}%</span>
+      </Col>
+    </Col>
+  </Define>
+  <Tabs>
+    <Tab label="说明">
+      <div>这里是说明，应当支持        <span>html</span>格式
+      </div>
+    </Tab>
+    <Tab label="基本信息">
+      <Row>
+        <Col>
+          <Row>
+            <Col label="{{data.时代背景}} 调查员信息">
+              <Select label="时代背景" options="1890s,1920s,现代" />
+              <Input label="玩家" />
+              <Input label="职业" />
+              <Input label="年龄" />
+              <Input label="性别" />
+              <Input label="住地" />
+              <Input label="出身" />
+            </Col>
+            <Col label="属性">
+              <Use define="prop" label="力量\nSTR" value="{{data.力量}}" />
+              <Use define="prop" label="体质\nCON" value="{{data.体质}}" />
+              <Use define="prop" label="体型\nSIZ" value="{{data.体型}}" />
+              <Use define="prop" label="敏捷\nDEX" value="{{data.敏捷}}" />
+              <Use define="prop" label="外貌\nAPP" value="{{data.外貌}}" />
+              <Use define="prop" label="教育\nEDU" value="{{data.教育}}" />
+              <Use define="prop" label="智力INT\n灵感idea" value="{{data.智力}}" />
+              <Use define="prop" label="意志\nPOW" value="{{data.意志}}" />
+              <Use define="prop" label="移动\nMOV" value="{{data.移动}}" />
+            </Col>
+          </Row>
+          <Row>
+            <Use define="stats" label="生命\nHit Point" value="{{data.当前生命值}}" maxValue="{{data.最大生命值}}" />
+            <Use define="stats" label="理智\nHit Point" value="{{data.当前理智值}}" maxValue="{{data.最大理智值}}" />
+            <Use define="stats" label="幸运\nHit Point" value="{{data.幸运}}" maxValue="99" />
+          </Row>
+        </Col>
+        <Col>
+          <Avatar width="240" height="240" />
+        </Col>
+      </Row>
+      <Row>
+        <!-- 技能表 -->
+        <Col>
+          <Use define="skill" label="会计" initValue="5" />
+          <Use define="skill" label="人类学" initValue="1" />
+          <Use define="skill" label="估价" initValue="5" />
+          <Use define="skill" label="技艺:{{技艺1}}" initValue="5" />
+          <Use define="skill" label="技艺:{{技艺2}}" initValue="5" />
+          <Use define="skill" label="技艺:{{技艺3}}" initValue="5" />
+          <Use define="skill" label="魅惑" initValue="15" />
+          <Use define="skill" label="攀爬" initValue="20" />
+          <Use define="skill" label="计算机使用" initValue="5" if="{{data.时代背景 === '现代'}}" />
+          <Use define="skill" label="信用评级" initValue="0" />
+          <Use define="skill" label="克苏鲁神话" initValue="0" />
+          <Use define="skill" label="乔装" initValue="5" />
+          <Use define="skill" label="闪避" initValue="25" />
+          <Use define="skill" label="汽车驾驶" initValue="20" />
+          <Use define="skill" label="电气维修" initValue="10" />
+          <Use define="skill" label="电子学" initValue="1" />
+          <Use define="skill" label="话术" initValue="5" />
+          <Use define="skill" label="格斗:斗殴" initValue="5" />
+          <Use define="skill" label="格斗:{{格斗1}}" initValue="global.[格斗:{{格斗1}}]" />
+          <Use define="skill" label="格斗:{{格斗2}}" initValue="global.[格斗:{{格斗2}}]" />
+          <Use define="skill" label="射击:{{射击1}}" initValue="global.[射击:{{射击1}}]" />
+          <Use define="skill" label="射击:{{射击2}}" initValue="global.[射击:{{射击2}}]" />
+          <Use define="skill" label="射击:{{射击3}}" initValue="global.[射击:{{射击3}}]" />
+          <Use define="skill" label="急救" initValue="30" />
+          <Use define="skill" label="历史" initValue="5" />
+          <Use define="skill" label="恐吓" initValue="15" />
+          <Use define="skill" label="跳跃" initValue="20" />
+        </Col>
+      </Row>
+    </Tab>
+  </Tabs>
+</Template>
