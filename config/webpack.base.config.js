@@ -100,6 +100,10 @@ module.exports = {
         test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf)$/,
         loader: 'url-loader?limit=8192&name=assets/[hash].[ext]',
       },
+      {
+        test: /\.(txt|xml)$/,
+        loader: 'raw-loader',
+      },
     ],
   },
 
