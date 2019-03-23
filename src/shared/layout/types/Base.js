@@ -1,13 +1,22 @@
 import React from 'react';
+import processor from '../processor';
 
 export default class Base {
   name = 'Base';
 
-  getEditView(element, attrs, children) {
-    return React.createElement(element, attrs, children);
+  getEditView(name, attributes, elements) {
+    return React.createElement(
+      name,
+      attributes,
+      elements.map((el) => processor.render(el, 'edit'))
+    );
   }
 
-  getDetailView(element, attrs, children) {
-    return React.createElement(element, attrs, children);
+  getDetailView(name, attributes, elements) {
+    return React.createElement(
+      name,
+      attributes,
+      elements.map((el) => processor.render(el, 'edit'))
+    );
   }
 }

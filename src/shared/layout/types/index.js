@@ -1,5 +1,5 @@
 // 这个文件是用于获取与注册所有可用类型
-
+import BaseType from './Base';
 const _list = [];
 
 export const register = (Type) => {
@@ -20,5 +20,17 @@ export const register = (Type) => {
 };
 
 export const get = (name) => {
-  return _list.find((val) => val.name === name);
+  const type = _list.find((val) => val.name === name);
+  if (type) {
+    return type;
+  } else {
+    const baseType = new BaseType();
+    return {
+      name: baseType.name,
+      render: {
+        getEditorView: baseType.getEditorView,
+        getDetailView: baseType.getDetailView,
+      },
+    };
+  }
 };
