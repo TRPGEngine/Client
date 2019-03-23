@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import parser from '../../../../shared/layout/parser';
+import XMLBuilder from '../../../../shared/XMLBuilder';
 import exampleXml from '../../../../shared/layout/example/coc7-layout.xml';
 
 const EditorContainer = styled.div`
@@ -14,11 +14,10 @@ const EditorContainer = styled.div`
 `;
 
 const ActorEditor = () => {
-  const js = parser(exampleXml);
-
   return (
     <EditorContainer>
-      ActorEditor: <pre>{JSON.stringify(js, null, 4)}</pre>
+      ActorEditor:
+      <XMLBuilder xml={exampleXml} />
     </EditorContainer>
   );
 };
