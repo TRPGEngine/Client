@@ -1,5 +1,8 @@
 const React = require('react');
-const { sendErrorReport } = require('../../shared/utils/errorReport');
+const {
+  sendErrorReport,
+  // showErrorDialog,
+} = require('../../shared/utils/errorReport');
 const config = require('../../../config/project.config.js');
 
 require('./ErrorBoundary.scss');
@@ -9,6 +12,10 @@ class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false };
+  }
+
+  handleShowReportDialog() {
+    import('../utils/sentry').then((module) => module.showReportDialog());
   }
 
   componentDidCatch(error, info) {
@@ -33,6 +40,14 @@ class ErrorBoundary extends React.Component {
               错误已经汇报给TRPG后台, 请
               <span onClick={() => location.reload()}>刷新</span>一下页面重试哦.
             </h2>
+            <p>
+              <button
+                className="showErrorReport"
+                onClick={() => this.handleShowReportDialog()}
+              >
+                手动汇报详细错误
+              </button>
+            </p>
           </div>
         </div>
       );

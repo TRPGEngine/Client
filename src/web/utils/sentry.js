@@ -16,3 +16,7 @@ export function error(err) {
   const sentryId = fn(err);
   console.warn('error: sentryId', sentryId);
 }
+
+export function showReportDialog() {
+  Sentry.showReportDialog();
+}
