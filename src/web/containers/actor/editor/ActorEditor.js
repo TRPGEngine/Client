@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import XMLBuilder from '../../../../shared/XMLBuilder';
+import XMLBuilder from '../../../../shared/layout/XMLBuilder';
 import exampleXml from '../../../../shared/layout/example/coc7-layout.xml';
 
 const EditorContainer = styled.div`

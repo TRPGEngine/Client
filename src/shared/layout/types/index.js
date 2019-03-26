@@ -13,7 +13,7 @@ export const register = (Type) => {
   _list.push({
     name: type.name,
     render: {
-      getEditorView: type.getEditorView,
+      getEditView: type.getEditView,
       getDetailView: type.getDetailView,
     },
   });
@@ -28,7 +28,7 @@ export const get = (name) => {
     return {
       name: baseType.name,
       render: {
-        getEditorView: baseType.getEditorView,
+        getEditView: baseType.getEditView,
         getDetailView: baseType.getDetailView,
       },
     };
