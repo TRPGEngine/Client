@@ -20,8 +20,6 @@ module.exports = {
       },
     }),
   },
-  projectRoot: path.resolve(__dirname, './src/app/'),
-  watchFolders: [
-    path.resolve(__dirname, './'),
-  ],
+  // projectRoot: path.resolve(__dirname, './src/app/'), // 新版改为通过参数传递。很奇怪
+  watchFolders: [path.resolve(__dirname, './')],
 };

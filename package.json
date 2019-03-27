@@ -11,7 +11,7 @@
     "pcdev": "cross-env PLATFORM=electron npm run dev & gulp assets --gulpfile build/gulpfile.js && cross-env NODE_ENV=development electron .",
     "package": "cross-env PLATFORM=electron NODE_ENV=production gulp package --gulpfile build/gulpfile.js",
     "package-all": "cross-env PLATFORM=electron NODE_ENV=production gulp package:all --gulpfile build/gulpfile.js",
-    "app": "cross-env PLATFORM=app node node_modules/react-native/local-cli/cli.js start",
+    "app": "cross-env PLATFORM=app node node_modules/react-native/local-cli/cli.js start --projectRoot src/app",
     "app-clear": "npm run app -- --reset-cache",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .js,.jsx src",
