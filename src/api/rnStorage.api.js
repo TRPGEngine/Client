@@ -10,7 +10,7 @@ let storage = new Storage({
   storageBackend:
     config.platform === 'app'
       ? require('react-native').AsyncStorage
-      : localStorage,
+      : window.localStorage,
 
   // 数据过期时间，默认一整天（1000 * 3600 * 24 毫秒），设为null则永不过期
   defaultExpires: 1000 * 3600 * 24,
