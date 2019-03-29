@@ -8,14 +8,14 @@ class NetworkIndicator extends React.Component {
     let network = this.props.network.toJS();
     let icon = '';
     let state = '';
-    if(!!network.isOnline) {
+    if (!!network.isOnline) {
       state = 'ok';
       icon = '&#xe620;';
-    }else {
-      if(network.tryReconnect) {
+    } else {
+      if (network.tryReconnect) {
         state = 'loading';
         icon = '&#xeb0f;';
-      }else {
+      } else {
         state = 'close';
         icon = '&#xe70c;';
       }
@@ -24,16 +24,14 @@ class NetworkIndicator extends React.Component {
     return (
       <div className={'network-indicator ' + state}>
         <div className="icon">
-          <i className="iconfont" dangerouslySetInnerHTML={{__html: icon}}></i>
+          <i className="iconfont" dangerouslySetInnerHTML={{ __html: icon }} />
         </div>
         <div className="msg">{network.msg}</div>
       </div>
-    )
+    );
   }
 }
 
-module.exports = connect(
-  state => ({
-    network: state.getIn(['ui', 'network']),
-  })
-)(NetworkIndicator);
+module.exports = connect((state) => ({
+  network: state.getIn(['ui', 'network']),
+}))(NetworkIndicator);

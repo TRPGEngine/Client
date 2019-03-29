@@ -1,11 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-} = require('react-native');
+const { View, Text, Image, TouchableOpacity } = require('react-native');
 const sb = require('react-native-style-block');
 const appConfig = require('../config.app');
 const { getSamlpeDate } = require('../../shared/utils/dateHelper');
@@ -19,10 +14,10 @@ class ProfileInfoItem extends React.Component {
   render() {
     return (
       <View style={styles.item}>
-        <Text style={{width: 80}}>{this.props.name}:</Text>
+        <Text style={{ width: 80 }}>{this.props.name}:</Text>
         <Text>{this.props.value}</Text>
       </View>
-    )
+    );
   }
 }
 
@@ -33,92 +28,95 @@ class ProfileScreen extends React.Component {
 
   componentDidMount() {
     let uuid = this.props.navigation.state.params.uuid;
-    if(uuid) {
+    if (uuid) {
       // TODO: 获取最新团信息
     }
   }
 
   _handlePressAvatar(avatar) {
-    if(avatar) {
+    if (avatar) {
       let media = [
         {
-          photo: avatar.replace('/thumbnail', '')
+          photo: avatar.replace('/thumbnail', ''),
         },
-      ]
-      this.props.navigation.navigate('PhotoBrowser', {media, index:0});
+      ];
+      this.props.navigation.navigate('PhotoBrowser', { media, index: 0 });
     }
   }
 
   render() {
     let groupUUID = this.props.navigation.state.params.uuid;
     let hasJoined = this.props.addedGroupUUIDList.includes(groupUUID);
-    let groupInfo = {get:(a) => a}; // TODO: 等待实现团信息缓存
+    let groupInfo = { get: (a) => a }; // TODO: 等待实现团信息缓存
 
-    if(!groupInfo) {
+    if (!groupInfo) {
       return (
-        <View><Text>无内容</Text></View>
-      )
+        <View>
+          <Text>无内容</Text>
+        </View>
+      );
     }
 
-    let avatar = groupInfo.get('avatar') ? groupInfo.get('avatar') : appConfig.defaultImg.user;
+    let avatar = groupInfo.get('avatar')
+      ? groupInfo.get('avatar')
+      : appConfig.defaultImg.user;
     let name = groupInfo.get('name');
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => this._handlePressAvatar(avatar)}>
-            <TAvatar style={styles.avatar} uri={avatar} name={groupInfo.get('name')} capitalSize={40} height={100} width={100} />
+            <TAvatar
+              style={styles.avatar}
+              uri={avatar}
+              name={groupInfo.get('name')}
+              capitalSize={40}
+              height={100}
+              width={100}
+            />
           </TouchableOpacity>
-          <Text style={{fontSize: 18, marginTop: 4}}>{groupInfo.get('name')}</Text>
-          <Text style={{fontSize: 12, color: '#999'}}>{groupInfo.get('sub_name')}</Text>
+          <Text style={{ fontSize: 18, marginTop: 4 }}>
+            {groupInfo.get('name')}
+          </Text>
+          <Text style={{ fontSize: 12, color: '#999' }}>
+            {groupInfo.get('sub_name')}
+          </Text>
         </View>
-        <View style={{paddingLeft: 10, backgroundColor: 'white'}}>
+        <View style={{ paddingLeft: 10, backgroundColor: 'white' }}>
           <ProfileInfoItem name="唯一标识" value={groupInfo.get('uuid')} />
           <ProfileInfoItem name="团副名" value={groupInfo.get('username')} />
         </View>
         <View style={styles.actions}>
-          {
-            hasJoined ? (
-              <TButton>
-                发送消息
-              </TButton>
-            ) : (
-              <TButton>
-                申请加入
-              </TButton>
-            )
-          }
+          {hasJoined ? (
+            <TButton>发送消息</TButton>
+          ) : (
+            <TButton>申请加入</TButton>
+          )}
         </View>
       </View>
-    )
+    );
   }
 }
 
 const styles = {
-  container: [
-    {flex: 1},
-  ],
+  container: [{ flex: 1 }],
   header: [
-    {marginBottom: 10},
+    { marginBottom: 10 },
     sb.alignCenter(),
     sb.bgColor('white'),
     sb.padding(20, 0),
   ],
-  avatar: [
-    sb.radius(50),
-  ],
+  avatar: [sb.radius(50)],
   item: [
-    {flexDirection: 'row'},
+    { flexDirection: 'row' },
     sb.padding(10, 4),
     sb.border('Bottom', 0.5, '#eee'),
   ],
-  actions: [
-    sb.padding(10),
-  ],
-}
+  actions: [sb.padding(10)],
+};
 
-module.exports = connect(
-  state => ({
-    addedGroupUUIDList: state.getIn(['group', 'groups']).map(g => g.get('uuid')),
-  })
-)(ProfileScreen);
+module.exports = connect((state) => ({
+  addedGroupUUIDList: state
+    .getIn(['group', 'groups'])
+    .map((g) => g.get('uuid')),
+}))(ProfileScreen);

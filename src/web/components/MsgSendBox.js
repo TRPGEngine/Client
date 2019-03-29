@@ -7,12 +7,15 @@ const pasteUtils = require('../../shared/utils/pasteUtils');
 const { sendMsg } = require('../../redux/actions/chat');
 const { showModal, hideModal } = require('../../redux/actions/ui');
 const ActorSelect = require('./modal/ActorSelect');
+const config = require('../../../config/project.config');
+import ContentEditable from 'react-contenteditable';
 
 require('./MsgSendBox.scss');
 
 class MsgSendBox extends React.Component {
   constructor(props) {
     super(props);
+    this.inputMsgRef = React.createRef();
     this.state = {
       inputMsg: '',
       inputType: 'normal',
@@ -23,7 +26,10 @@ class MsgSendBox extends React.Component {
       {
         label: '发送表情',
         icon: '&#xe683;',
-        onClick: (e) => {e.stopPropagation();this._handleShowEmoticon();},
+        onClick: (e) => {
+          e.stopPropagation();
+          this._handleShowEmoticon();
+        },
       },
       {
         label: '发送人物卡',
@@ -33,8 +39,9 @@ class MsgSendBox extends React.Component {
       {
         label: '发送文件',
         icon: '&#xe640;',
-        onClick: (e) => this.refs.fileUploader && this.refs.fileUploader.click(),
-      }
+        onClick: (e) =>
+          this.refs.fileUploader && this.refs.fileUploader.click(),
+      },
     ];
     this.inputType = [
       {
@@ -65,12 +72,12 @@ class MsgSendBox extends React.Component {
         onClick: () => this._handleShowDiceMethods(),
       },
     ];
-    if(this.props.onQuickDice) {
+    if (this.props.onQuickDice) {
       this.actions.unshift({
         label: '快速投骰',
         icon: '&#xe609;',
         onClick: () => this.props.onQuickDice(),
-      })
+      });
     }
     this.hidePopup = () => {
       window.removeEventListener('click', this.hidePopup);
@@ -78,11 +85,11 @@ class MsgSendBox extends React.Component {
         showEmoticon: false,
         showDiceMethods: false,
       });
-    }
+    };
   }
 
   componentDidMount() {
-    this.refs.inputMsg.focus();
+    this.inputMsgRef.current.focus();
   }
 
   componentWillUnmount() {
@@ -90,43 +97,47 @@ class MsgSendBox extends React.Component {
   }
 
   _handleMsgInputKeyDown(e) {
-    if(e.keyCode===9) {
+    if (e.keyCode === 9) {
       e.preventDefault();
-      let index = this.inputType.findIndex((item) => item.type===this.state.inputType);
-      if(!e.shiftKey) {
+      let index = this.inputType.findIndex(
+        (item) => item.type === this.state.inputType
+      );
+      if (!e.shiftKey) {
         // 正向
         let i = (index + 1) % this.inputType.length;
-        this.setState({inputType: this.inputType[i].type});
-      }else {
+        this.setState({ inputType: this.inputType[i].type });
+      } else {
         // 反向
         let i = (index + this.inputType.length - 1) % this.inputType.length;
-        this.setState({inputType: this.inputType[i].type});
+        this.setState({ inputType: this.inputType[i].type });
       }
     }
 
-    if(e.keyCode===13 && !e.shiftKey) {
+    if (e.keyCode === 13 && !e.shiftKey) {
       // 发送信息
       e.preventDefault();
     }
   }
 
   _handleMsgInputKeyUp(e) {
-    if(e.keyCode===13 && !e.shiftKey) {
+    if (e.keyCode === 13 && !e.shiftKey) {
       this._handleSendMsg();
     }
   }
 
   async _handlePaste(e) {
-    if(e.clipboardData && e.clipboardData.items) {
+    if (e.clipboardData && e.clipboardData.items) {
       let image = pasteUtils.isPasteImage(e.clipboardData.items);
-      if(image) {
+      if (image) {
         // 上传图片
         e.preventDefault();
         let file = image.getAsFile();
         let data = await pasteUtils.upload(this.props.userUUID, file);
-        if(data && data.chatimg) {
+        if (data && data.chatimg) {
           console.log(data);
-          this.setState({inputMsg: this.state.inputMsg + `[img]${data.chatimg.url}[/img]`});
+          this.setState({
+            inputMsg: this.state.inputMsg + `[img]${data.chatimg.url}[/img]`,
+          });
         }
       }
     }
@@ -135,56 +146,60 @@ class MsgSendBox extends React.Component {
   _handleSendMsg() {
     let message = this.state.inputMsg.trim();
     let type = this.state.inputType;
-    if(!!message) {
+    if (!!message) {
       this.props.onSendMsg(message, type);
-      this.refs.inputMsg.focus();
-      this.setState({inputMsg: ''});
+      this.inputMsgRef.current.focus();
+      this.setState({ inputMsg: '' });
     }
   }
 
   // 显示选择表情弹出框
   _handleShowEmoticon() {
-    this.setState({showEmoticon: !this.state.showEmoticon});
+    this.setState({ showEmoticon: !this.state.showEmoticon });
     setTimeout(() => window.addEventListener('click', this.hidePopup), 0);
   }
 
   _handleSelectEmoticon(code) {
-    this.setState({inputMsg: this.state.inputMsg + code});
+    this.setState({ inputMsg: this.state.inputMsg + code });
     this.hidePopup();
-    this.refs.inputMsg.focus();
+    this.inputMsgRef.current.focus();
   }
 
   // 显示投骰方式弹出框
   _handleShowDiceMethods() {
-    this.setState({showDiceMethods: !this.state.showDiceMethods});
+    this.setState({ showDiceMethods: !this.state.showDiceMethods });
     setTimeout(() => window.addEventListener('click', this.hidePopup), 0);
   }
 
   // 发送人物卡
   _handleShowSendActor() {
     console.log('发送人物卡');
-    this.props.dispatch(showModal(
-      <ActorSelect
-        onSelect={(actorUUID, actorInfo) => {
-          this.props.dispatch(hideModal());
-          console.log('人物卡信息', actorUUID, actorInfo);
-          let {converseUUID, isGroup} = this.props;
-          this.props.dispatch(sendMsg(converseUUID, {
-            room: isGroup ? converseUUID : '',
-            type: 'card',
-            message: '[人物卡]',
-            is_public: isGroup,
-            data: {
-              type: 'actor',
-              uuid: actorUUID,
-              avatar: actorInfo.avatar,
-              name: actorInfo.name,
-              desc: actorInfo.desc,
-            }
-          }))
-        }}
-      />
-    ))
+    this.props.dispatch(
+      showModal(
+        <ActorSelect
+          onSelect={(actorUUID, actorInfo) => {
+            this.props.dispatch(hideModal());
+            console.log('人物卡信息', actorUUID, actorInfo);
+            let { converseUUID, isGroup } = this.props;
+            this.props.dispatch(
+              sendMsg(converseUUID, {
+                room: isGroup ? converseUUID : '',
+                type: 'card',
+                message: '[人物卡]',
+                is_public: isGroup,
+                data: {
+                  type: 'actor',
+                  uuid: actorUUID,
+                  avatar: config.file.getRelativePath(actorInfo.avatar),
+                  name: actorInfo.name,
+                  desc: actorInfo.desc,
+                },
+              })
+            );
+          }}
+        />
+      )
+    );
   }
 
   _handleContainerDrop(e) {
@@ -211,13 +226,33 @@ class MsgSendBox extends React.Component {
       >
         <div className="input-area">
           <div className="tool-area">
-            <div className={'popup emoticon' + (this.state.showEmoticon ? ' active':'')}>
-              <Emoticon onSelect={(code) => this._handleSelectEmoticon(code)}/>
+            <div
+              className={
+                'popup emoticon' + (this.state.showEmoticon ? ' active' : '')
+              }
+            >
+              <Emoticon onSelect={(code) => this._handleSelectEmoticon(code)} />
             </div>
-            <div className={'popup dice' + (this.state.showDiceMethods ? ' active':'')}>
+            <div
+              className={
+                'popup dice' + (this.state.showDiceMethods ? ' active' : '')
+              }
+            >
               <ul>
-                <li onClick={() => this.props.onSendDiceReq && this.props.onSendDiceReq()}>请求投骰</li>
-                <li onClick={() => this.props.onSendDiceInv && this.props.onSendDiceInv()}>邀请投骰</li>
+                <li
+                  onClick={() =>
+                    this.props.onSendDiceReq && this.props.onSendDiceReq()
+                  }
+                >
+                  请求投骰
+                </li>
+                <li
+                  onClick={() =>
+                    this.props.onSendDiceInv && this.props.onSendDiceInv()
+                  }
+                >
+                  邀请投骰
+                </li>
               </ul>
             </div>
             <ReactTooltip effect="solid" />
@@ -225,76 +260,94 @@ class MsgSendBox extends React.Component {
               type="file"
               ref="fileUploader"
               onChange={() => this._handleFileUploaderChange()}
-              style={{display: 'none'}}
+              style={{ display: 'none' }}
             />
             <div className="btn-group">
               {this.clickableBtn.map((item, index) => {
                 return (
                   <div
-                    key={'btn-group#'+index}
+                    key={'btn-group#' + index}
                     data-tip={item.label}
                     className="tool-item"
                     onClick={(e) => !!item.onClick && item.onClick(e)}
                   >
-                    <i className="iconfont" dangerouslySetInnerHTML={{__html:item.icon}}></i>
+                    <i
+                      className="iconfont"
+                      dangerouslySetInnerHTML={{ __html: item.icon }}
+                    />
                   </div>
-                )
+                );
               })}
             </div>
             <div className="type-select">
               {this.inputType.map((item, index) => {
                 return (
                   <div
-                    key={'input-type#'+index}
+                    key={'input-type#' + index}
                     data-tip={item.label}
-                    className={this.state.inputType===item.type?'tool-item active':'tool-item'}
-                    onClick={() => this.setState({inputType: item.type})}
+                    className={
+                      this.state.inputType === item.type
+                        ? 'tool-item active'
+                        : 'tool-item'
+                    }
+                    onClick={() => this.setState({ inputType: item.type })}
                   >
-                    <i className="iconfont" dangerouslySetInnerHTML={{__html:item.icon}}></i>
+                    <i
+                      className="iconfont"
+                      dangerouslySetInnerHTML={{ __html: item.icon }}
+                    />
                   </div>
-                )
+                );
               })}
             </div>
             <div className="input-actions">
               {this.actions.map((item, index) => {
                 return (
                   <div
-                    key={'input-action#'+index}
+                    key={'input-action#' + index}
                     data-tip={item.label}
                     className="tool-item"
-                    onClick={() => item.onClick ? item.onClick() : ''}
+                    onClick={() => (item.onClick ? item.onClick() : '')}
                   >
-                    <i className="iconfont" dangerouslySetInnerHTML={{__html:item.icon}}></i>
+                    <i
+                      className="iconfont"
+                      dangerouslySetInnerHTML={{ __html: item.icon }}
+                    />
                   </div>
-                )
+                );
               })}
             </div>
           </div>
-          <textarea
-            ref="inputMsg"
+          <ContentEditable
+            innerRef={this.inputMsgRef}
             className="input-msg"
-            value={this.state.inputMsg}
-            onChange={(e)=>this.setState({inputMsg:e.target.value})}
-            onKeyDown={(e)=> this._handleMsgInputKeyDown(e)}
-            onKeyUp={(e)=> this._handleMsgInputKeyUp(e)}
-            onPaste={(e)=> this._handlePaste(e)}
+            tagName="pre"
+            html={this.state.inputMsg}
+            disabled={false}
+            onChange={(e) => this.setState({ inputMsg: e.target.value })}
+            onKeyDown={(e) => this._handleMsgInputKeyDown(e)}
+            onKeyUp={(e) => this._handleMsgInputKeyUp(e)}
+            onPaste={(e) => this._handlePaste(e)}
           />
         </div>
         <div className="action-area">
-          <button onClick={() => this._handleSendMsg()} disabled={this.state.inputMsg?false:true}>发送&lt;Enter&gt;</button>
+          <button
+            onClick={() => this._handleSendMsg()}
+            disabled={this.state.inputMsg ? false : true}
+          >
+            发送&lt;Enter&gt;
+          </button>
         </div>
       </div>
-    )
+    );
   }
 }
 
 MsgSendBox.propTypes = {
   conversesUUID: PropTypes.string,
   isRoom: PropTypes.bool,
-}
+};
 
-module.exports = connect(
-  state => ({
-    userUUID: state.getIn(['user', 'info', 'uuid'])
-  })
-)(MsgSendBox);
+module.exports = connect((state) => ({
+  userUUID: state.getIn(['user', 'info', 'uuid']),
+}))(MsgSendBox);

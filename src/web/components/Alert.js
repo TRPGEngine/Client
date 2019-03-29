@@ -1,6 +1,6 @@
 const React = require('react');
-const {connect} = require('react-redux');
-const {hideAlert} = require('../../redux/actions/ui');
+const { connect } = require('react-redux');
+const { hideAlert } = require('../../redux/actions/ui');
 require('./Alert.scss');
 
 class Alert extends React.Component {
@@ -12,14 +12,18 @@ class Alert extends React.Component {
     const onCancel = this.props.showAlertInfo.get('onCancel');
 
     let cancelBtn;
-    if(onConfirm) {
+    if (onConfirm) {
       cancelBtn = (
-        <button onClick={() => onCancel ? onCancel() : this.props.dispatch(hideAlert())}>
+        <button
+          onClick={() =>
+            onCancel ? onCancel() : this.props.dispatch(hideAlert())
+          }
+        >
           取消
         </button>
-      )
+      );
     }
-    if(content && content._root) {
+    if (content && content._root) {
       // is immutable
       content = content.toJS();
     }
@@ -28,19 +32,20 @@ class Alert extends React.Component {
       <div>
         <div className="header">{title || ''}</div>
         <div className="body">{content || '确认进行该操作?'}</div>
-        <button onClick={() => {
-          if(!!onConfirm) {
-            onConfirm();
-          }else{
-            this.props.dispatch(hideAlert());
-          }
-        }}
+        <button
+          onClick={() => {
+            if (!!onConfirm) {
+              onConfirm();
+            } else {
+              this.props.dispatch(hideAlert());
+            }
+          }}
         >
           {confirmTitle || '确认'}
         </button>
         {cancelBtn}
       </div>
-    )
+    );
   }
 
   render() {
@@ -48,31 +53,23 @@ class Alert extends React.Component {
     const type = this.props.showAlertInfo.get('type') || 'alert';
 
     let alertContent = '';
-    if(!type || type==='alert') {
+    if (!type || type === 'alert') {
       alertContent = this.getAlertContent();
     }
     let body = '';
-    if(show) {
+    if (show) {
       body = (
         <div className="mask" onClick={(e) => e.stopPropagation()}>
-          <div className="content">
-            {alertContent}
-          </div>
+          <div className="content">{alertContent}</div>
         </div>
-      )
+      );
     }
 
-    return (
-      <div className="alert">
-        {body}
-      </div>
-    )
+    return <div className="alert">{body}</div>;
   }
 }
 
-module.exports = connect(
-  state => ({
-    showAlert: state.getIn(['ui', 'showAlert']),
-    showAlertInfo: state.getIn(['ui', 'showAlertInfo']),
-  })
-)(Alert);
+module.exports = connect((state) => ({
+  showAlert: state.getIn(['ui', 'showAlert']),
+  showAlertInfo: state.getIn(['ui', 'showAlertInfo']),
+}))(Alert);

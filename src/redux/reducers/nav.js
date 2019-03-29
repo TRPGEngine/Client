@@ -9,7 +9,9 @@ const {
   BACK_NAV,
 } = require('../constants');
 
-let initialNavState = AppNavigator.router.getStateForAction(NavigationActions.init());
+let initialNavState = AppNavigator.router.getStateForAction(
+  NavigationActions.init()
+);
 console.log(NavigationActions);
 
 module.exports = function nav(state = initialNavState, action) {
@@ -20,9 +22,7 @@ module.exports = function nav(state = initialNavState, action) {
       nextState = AppNavigator.router.getStateForAction(
         StackActions.reset({
           index: 0,
-          actions: [
-            NavigationActions.navigate({routeName: 'Main'}),
-          ]
+          actions: [NavigationActions.navigate({ routeName: 'Main' })],
         }),
         state
       );
@@ -31,16 +31,17 @@ module.exports = function nav(state = initialNavState, action) {
       nextState = AppNavigator.router.getStateForAction(
         StackActions.reset({
           index: 0,
-          actions: [
-            NavigationActions.navigate({routeName: 'Login'}),
-          ]
+          actions: [NavigationActions.navigate({ routeName: 'Login' })],
         }),
         state
       );
       break;
     case SWITCH_NAV:
       nextState = AppNavigator.router.getStateForAction(
-        NavigationActions.navigate({routeName: action.routeName, params: action.params || {} }),
+        NavigationActions.navigate({
+          routeName: action.routeName,
+          params: action.params || {},
+        }),
         state
       );
       break;
@@ -49,15 +50,15 @@ module.exports = function nav(state = initialNavState, action) {
         StackActions.reset({
           index: 0,
           actions: [
-            NavigationActions.navigate({routeName: action.routeName}),
-          ]
+            NavigationActions.navigate({ routeName: action.routeName }),
+          ],
         }),
         state
       );
       break;
     case BACK_NAV:
       nextState = AppNavigator.router.getStateForAction(
-        NavigationActions.back({key: action.key || null}),
+        NavigationActions.back({ key: action.key || null }),
         state
       );
       break;
@@ -68,4 +69,4 @@ module.exports = function nav(state = initialNavState, action) {
 
   // Simply return the original `state` if `nextState` is null or undefined.
   return nextState || state;
-}
+};

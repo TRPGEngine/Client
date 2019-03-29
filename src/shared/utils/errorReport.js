@@ -2,12 +2,14 @@ const axios = require('axios');
 const config = require('../../../config/project.config');
 
 function sendErrorReport(data) {
-  axios.post(config.file.getAbsolutePath('/report/error'), data)
-    .then(res => {
+  axios
+    .post(config.file.getAbsolutePath('/report/error'), data)
+    .then((res) => {
       console.log(res);
-    }).catch(err => {
-      console.error(err);
     })
+    .catch((err) => {
+      console.error(err);
+    });
 }
 
 exports.sendErrorReport = sendErrorReport;
@@ -20,14 +22,14 @@ exports.web = function() {
   //   console.log('=============');
   // }
 
-  console.error = (function(oriLogFunc){
+  console.error = (function(oriLogFunc) {
     return function(err) {
       oriLogFunc.call(console, err);
 
       let stack = '';
-      if(err.stack) {
+      if (err.stack) {
         stack = err.stack;
-      }else {
+      } else {
         let data = {};
         Error.captureStackTrace(data);
         stack = data.stack;
@@ -36,7 +38,7 @@ exports.web = function() {
       sendErrorReport({
         message: err.toString(),
         stack,
-      })
-    }
+      });
+    };
   })(console.error);
-}
+};

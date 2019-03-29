@@ -4,9 +4,7 @@
  * @flow
  */
 const React = require('react');
-const {
-  StyleSheet
-} = require('react-native');
+const { StyleSheet } = require('react-native');
 const configureStore = require('../redux/configureStore');
 const store = configureStore();
 const { AppWithNavigationState } = require('./router');
@@ -24,9 +22,11 @@ const rnStorage = require('../api/rnStorage.api.js');
   let uuid = await rnStorage.get('uuid');
   let token = await rnStorage.get('token');
   console.log('uuid:', uuid, 'token:', token);
-  if(!!token && !!uuid) {
+  if (!!token && !!uuid) {
     console.log('尝试登陆uuid:', uuid);
-    store.dispatch(require('../redux/actions/user').loginWithToken(uuid, token));
+    store.dispatch(
+      require('../redux/actions/user').loginWithToken(uuid, token)
+    );
   }
 })();
 

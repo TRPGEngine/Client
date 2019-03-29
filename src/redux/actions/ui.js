@@ -21,84 +21,86 @@ const {
 const cache = require('./cache');
 
 exports.showLoading = function(text = '加载中...') {
-  return {type: SHOW_LOADING, text: text}
-}
+  return { type: SHOW_LOADING, text: text };
+};
 exports.hideLoading = function() {
-  return {type: HIDE_LOADING}
-}
+  return { type: HIDE_LOADING };
+};
 exports.showAlert = function(payload) {
-  if(typeof payload === 'string') {
+  if (typeof payload === 'string') {
     payload = {
-      content: payload
-    }
+      content: payload,
+    };
   }
-  return {type: SHOW_ALERT, payload}
-}
+  return { type: SHOW_ALERT, payload };
+};
 exports.hideAlert = function() {
-  return {type: HIDE_ALERT}
-}
+  return { type: HIDE_ALERT };
+};
 exports.showModal = function(body) {
-  return {type: SHOW_MODAL, payload: body}
-}
+  return { type: SHOW_MODAL, payload: body };
+};
 exports.hideModal = function() {
-  return {type: HIDE_MODAL}
-}
+  return { type: HIDE_MODAL };
+};
 
 let toastTimer;
 exports.showToast = function(msg) {
   return (dispatch, getState) => {
-    dispatch({type: SHOW_TOAST, text: msg});
+    dispatch({ type: SHOW_TOAST, text: msg });
 
-    if(toastTimer) {
+    if (toastTimer) {
       clearTimeout(toastTimer);
     }
     toastTimer = setTimeout(() => {
-      dispatch({type: HIDE_TOAST});
+      dispatch({ type: HIDE_TOAST });
       toastTimer = null;
     }, 2000);
-  }
-}
+  };
+};
 exports.hideToast = function() {
-  return {type: HIDE_TOAST}
-}
+  return { type: HIDE_TOAST };
+};
 exports.showProfileCard = function(uuid) {
   return (dispatch, getState) => {
-    if(!uuid) {
+    if (!uuid) {
       // 获取个人信息数据
       uuid = getState().getIn(['user', 'info', 'uuid']);
     }
     // 获取最新信息
     dispatch(cache.getUserInfo(uuid));
 
-    dispatch({type: SHOW_PROFILE_CARD, uuid});
-  }
-
-}
+    dispatch({ type: SHOW_PROFILE_CARD, uuid });
+  };
+};
 exports.hideProfileCard = function() {
-  return {type: HIDE_PROFILE_CARD}
-}
+  return { type: HIDE_PROFILE_CARD };
+};
 exports.showSlidePanel = function(title, content) {
-  return {type: SHOW_SLIDE_PANEL, payload: {title, content}}
-}
+  return { type: SHOW_SLIDE_PANEL, payload: { title, content } };
+};
 exports.hideSlidePanel = function() {
-  return {type: HIDE_SLIDE_PANEL}
-}
+  return { type: HIDE_SLIDE_PANEL };
+};
 exports.showLightbox = function(src) {
-  return {type: SHOW_LIGHTBOX, payload: {src}}
-}
+  return { type: SHOW_LIGHTBOX, payload: { src } };
+};
 exports.hideLightbox = function() {
-  return {type: HIDE_LIGHTBOX}
-}
+  return { type: HIDE_LIGHTBOX };
+};
 exports.switchMenuPannel = function(index, pannel = null) {
-  return {type: SWITCH_MENU_PANNEL, menuIndex: index, payload: pannel}
-}
+  return { type: SWITCH_MENU_PANNEL, menuIndex: index, payload: pannel };
+};
 exports.setLastDiceType = function(type = 'basicDice') {
-  return {type: SET_LAST_DICE_TYPE, payload: type}
-}
+  return { type: SET_LAST_DICE_TYPE, payload: type };
+};
 exports.changeNetworkStatue = function(isOnline, msg, tryReconnect = false) {
-  return {type: CHANGE_NETWORK_STATE, payload: {isOnline, msg, tryReconnect}}
-}
+  return {
+    type: CHANGE_NETWORK_STATE,
+    payload: { isOnline, msg, tryReconnect },
+  };
+};
 
 exports.updateSocketId = function(socketId) {
-  return {type: UPDATE_SOCKET_ID, socketId}
-}
+  return { type: UPDATE_SOCKET_ID, socketId };
+};

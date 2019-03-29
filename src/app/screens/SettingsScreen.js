@@ -25,17 +25,15 @@ class SettingsScreen extends React.Component {
         <ListCell
           title="测试"
           value={this.state.test}
-          onChange={(newValue) => this.setState({test: newValue})}
+          onChange={(newValue) => this.setState({ test: newValue })}
         />
       </View>
-    )
+    );
   }
 }
 
 const styles = {
-  container: [
-    {paddingTop: 10, flex: 1},
-  ]
-}
+  container: [{ paddingTop: 10, flex: 1 }],
+};
 
 module.exports = connect()(SettingsScreen);

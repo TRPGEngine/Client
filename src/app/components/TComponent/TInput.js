@@ -1,25 +1,31 @@
 const React = require('react');
-const {
-  Text,
-  TextInput,
-} = require('react-native');
+const { Text, TextInput } = require('react-native');
 const sb = require('react-native-style-block');
 
 class TInput extends React.Component {
   static defaultProps = {
     style: [],
+  };
+
+  focus() {
+    this.refs.input.focus();
+  }
+
+  blur() {
+    this.refs.input.blur();
   }
 
   render() {
     return (
       <TextInput
+        ref="input"
         underlineColorAndroid="transparent"
         autoCorrect={false}
         autoCapitalize="none"
         {...this.props}
         style={[...styles.input, ...this.props.style]}
       />
-    )
+    );
   }
 }
 
@@ -34,6 +40,6 @@ const styles = {
     sb.border('all', 1, '#ccc'),
     sb.padding(4, 6),
   ],
-}
+};
 
 module.exports = TInput;

@@ -13,11 +13,11 @@ class ImageUploader extends React.Component {
     this.state = {
       isUploading: false,
       uploadProgress: 0,
-    }
+    };
   }
 
   _handleSelect() {
-    if(this.state.isUploading) {
+    if (this.state.isUploading) {
       this.props.dispatch(showAlert('图片正在上传中, 请稍后...'));
       return;
     }
@@ -32,54 +32,60 @@ class ImageUploader extends React.Component {
     let headers = {
       'avatar-type': this.props.type || 'actor',
       'user-uuid': this.props.user_uuid,
-    }
-    if(this.props.attachUUID) {
+    };
+    if (this.props.attachUUID) {
       headers['attach-uuid'] = this.props.attachUUID;
     }
-    if(this.props.width) {
+    if (this.props.width) {
       headers.width = this.props.width;
-      if(this.props.height) {
+      if (this.props.height) {
         headers.height = this.props.height;
       }
     }
-    this.setState({isUploading: true});
+    this.setState({ isUploading: true });
 
     axios({
-      url: fileUrl+'/avatar',
+      url: fileUrl + '/avatar',
       method: 'post',
       headers,
       data: formData,
       onUploadProgress: (progressEvent) => {
-        if(progressEvent.lengthComputable) {
+        if (progressEvent.lengthComputable) {
           console.log(`进度:${progressEvent.loaded}/${progressEvent.total}`);
-          let uploadProgress = (progressEvent.loaded / progressEvent.total * 100).toFixed();
-          this.setState({uploadProgress});
+          let uploadProgress = (
+            (progressEvent.loaded / progressEvent.total) *
+            100
+          ).toFixed();
+          this.setState({ uploadProgress });
         }
-      }
-    }).then(res => {
-      return res.data
-    }).then(json => {
-      this.setState({
-        isUploading: false,
-        uploadProgress: 0
-      });
-      if(typeof json === 'object') {
-        console.log('上传成功', json);
-        if(this.props.onUploadSuccess) {
-          this.props.onUploadSuccess(json)
-        }
-      }else {
-        this.props.dispatch(showAlert('图片上传失败:' + json));
-        console.error(json);
-      }
-    }).catch(e => {
-      this.setState({
-        isUploading: false,
-        uploadProgress: 0
-      });
-      this.props.dispatch(showAlert('图片上传失败:' + e));
-      console.error(e);
+      },
     })
+      .then((res) => {
+        return res.data;
+      })
+      .then((json) => {
+        this.setState({
+          isUploading: false,
+          uploadProgress: 0,
+        });
+        if (typeof json === 'object') {
+          console.log('上传成功', json);
+          if (this.props.onUploadSuccess) {
+            this.props.onUploadSuccess(json);
+          }
+        } else {
+          this.props.dispatch(showAlert('图片上传失败:' + json));
+          console.error(json);
+        }
+      })
+      .catch((e) => {
+        this.setState({
+          isUploading: false,
+          uploadProgress: 0,
+        });
+        this.props.dispatch(showAlert('图片上传失败:' + e));
+        console.error(e);
+      });
   }
 
   render() {
@@ -98,12 +104,16 @@ class ImageUploader extends React.Component {
           accept="image/*"
           onChange={(e) => this._handleUpload()}
         />
-        <div className={'mask' + (this.state.isUploading?' active':'')}>
-          {this.state.isUploading ? (this.state.uploadProgress?`${this.state.uploadProgress}%`:'图片上传中...') : '点击上传图片'}
+        <div className={'mask' + (this.state.isUploading ? ' active' : '')}>
+          {this.state.isUploading
+            ? this.state.uploadProgress
+              ? `${this.state.uploadProgress}%`
+              : '图片上传中...'
+            : '点击上传图片'}
         </div>
         {this.props.children}
       </div>
-    )
+    );
   }
 }
 
@@ -115,10 +125,8 @@ ImageUploader.propTypes = {
   attachUUID: PropTypes.string,
   containerWidth: PropTypes.string,
   containerHeight: PropTypes.string,
-}
+};
 
-module.exports = connect(
-  state => ({
-    user_uuid: state.getIn(['user', 'info', 'uuid'])
-  })
-)(ImageUploader);
+module.exports = connect((state) => ({
+  user_uuid: state.getIn(['user', 'info', 'uuid']),
+}))(ImageUploader);

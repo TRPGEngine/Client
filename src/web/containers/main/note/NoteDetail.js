@@ -1,7 +1,12 @@
-const React = require('react');
+import Loadable from 'react-loadable';
+import React from 'react';
+import LoadingSpinner from '../../../components/LoadingSpinner';
 const { connect } = require('react-redux');
-const NoteEditor = require('../../../components/NoteEditor');
 const { saveNote } = require('../../../../redux/actions/note');
+const NoteEditor = Loadable({
+  loader: () => import('../../../components/NoteEditor'),
+  loading: LoadingSpinner,
+});
 
 require('./NoteDetail.scss');
 
@@ -30,17 +35,17 @@ class NoteDetail extends React.Component {
             type="text"
             placeholder="笔记标题"
             value={this.state.title}
-            onChange={(e) => this.setState({title: e.target.value})}
+            onChange={(e) => this.setState({ title: e.target.value })}
             onBlur={() => this._handleSave()}
           />
         </div>
         <NoteEditor
           value={this.state.content}
-          onChange={(content) => this.setState({content})}
+          onChange={(content) => this.setState({ content })}
           onSave={() => this._handleSave()}
         />
       </div>
-    )
+    );
   }
 }
 module.exports = connect()(NoteDetail);

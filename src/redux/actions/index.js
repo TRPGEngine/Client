@@ -6,4 +6,4 @@ module.exports = {
   note: require('./note'),
   actor: require('./actor'),
   group: require('./group'),
-}
+};

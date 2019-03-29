@@ -7,42 +7,36 @@ require('./Modal.scss');
 class Modal extends React.Component {
   render() {
     let body = '';
-    if(this.props.show && this.props.body) {
+    if (this.props.show && this.props.body) {
       body = (
         <div className="modal-mask" onClick={(e) => e.stopPropagation()}>
           <div className="modal-card">
             <div className="modal-close" onClick={() => this.props.hideModal()}>
               <i className="iconfont">&#xe70c;</i>
             </div>
-            <div className="modal-content">
-              {this.props.body.toJS()}
-            </div>
+            <div className="modal-content">{this.props.body.toJS()}</div>
           </div>
         </div>
-      )
+      );
     }
 
-    return (
-      <div className="modal">
-        {body}
-      </div>
-    )
+    return <div className="modal">{body}</div>;
   }
 }
 
 Modal.propTypes = {
   show: PropTypes.bool,
   body: PropTypes.object,
-}
+};
 
 module.exports = connect(
-  state => ({
+  (state) => ({
     show: state.getIn(['ui', 'showModal']),
-    body: state.getIn(['ui', 'showModalBody'])
+    body: state.getIn(['ui', 'showModalBody']),
   }),
-  dispatch => ({
+  (dispatch) => ({
     hideModal: () => {
       dispatch(hideModal());
-    }
+    },
   })
 )(Modal);

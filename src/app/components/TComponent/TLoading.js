@@ -1,11 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const {
-  Modal,
-  ActivityIndicator,
-  View,
-  Text,
-} = require('react-native');
+const { Modal, ActivityIndicator, View, Text } = require('react-native');
 const sb = require('react-native-style-block');
 const { hideLoading } = require('../../../redux/actions/ui');
 
@@ -33,17 +28,12 @@ class TLoading extends React.Component {
           </View>
         </View>
       </Modal>
-
-    )
+    );
   }
 }
 
 const styles = {
-  container: [
-    sb.bgColor('rgba(0,0,0,0.2)'),
-    sb.flex(),
-    sb.center(),
-  ],
+  container: [sb.bgColor('rgba(0,0,0,0.2)'), sb.flex(), sb.center()],
   view: [
     {
       minWidth: 150,
@@ -60,18 +50,13 @@ const styles = {
     sb.center(),
     sb.size(null, 50),
     sb.padding(8),
-    {transform: [{scale: 1.5}]},
+    { transform: [{ scale: 1.5 }] },
     sb.flex(),
   ],
-  text: [
-    sb.color(),
-    {paddingBottom: 10},
-  ],
-}
+  text: [sb.color(), { paddingBottom: 10 }],
+};
 
-module.exports = connect(
-  state => ({
-    showLoading: state.getIn(['ui', 'showLoading']),
-    showLoadingText: state.getIn(['ui', 'showLoadingText']),
-  })
-)(TLoading);
+module.exports = connect((state) => ({
+  showLoading: state.getIn(['ui', 'showLoading']),
+  showLoadingText: state.getIn(['ui', 'showLoadingText']),
+}))(TLoading);

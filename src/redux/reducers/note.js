@@ -17,7 +17,7 @@ const initialState = immutable.fromJS({
   selectedNoteUUID: '',
   isSync: false,
   isSyncUUID: '',
-})
+});
 
 function getBlankNote() {
   return {
@@ -26,7 +26,7 @@ function getBlankNote() {
     updatedAt: new Date().getTime(),
     title: '笔记标题',
     content: '欢迎使用笔记本',
-  }
+  };
 }
 
 module.exports = function ui(state = initialState, action) {
@@ -37,7 +37,9 @@ module.exports = function ui(state = initialState, action) {
       // let showAlertInfo = action.payload || {};
       let blankNote = immutable.fromJS(getBlankNote());
       let blankUUID = blankNote.get('uuid');
-      return state.setIn(['noteList', blankUUID], blankNote).set('selectedNoteUUID', blankUUID);
+      return state
+        .setIn(['noteList', blankUUID], blankNote)
+        .set('selectedNoteUUID', blankUUID);
     }
     case SAVE_NOTE: {
       let saveUUID = action.payload.uuid;
@@ -63,4 +65,4 @@ module.exports = function ui(state = initialState, action) {
     default:
       return state;
   }
-}
+};

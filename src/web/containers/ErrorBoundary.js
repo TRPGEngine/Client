@@ -1,5 +1,8 @@
 const React = require('react');
-const { sendErrorReport } = require('../../shared/utils/errorReport');
+const {
+  sendErrorReport,
+  // showErrorDialog,
+} = require('../../shared/utils/errorReport');
 const config = require('../../../config/project.config.js');
 
 require('./ErrorBoundary.scss');
@@ -11,6 +14,10 @@ class ErrorBoundary extends React.Component {
     this.state = { hasError: false };
   }
 
+  handleShowReportDialog() {
+    import('../utils/sentry').then((module) => module.showReportDialog());
+  }
+
   componentDidCatch(error, info) {
     this.setState({ hasError: true });
     console.warn('捕获错误, 等待发送错误报告\n', error, info);
@@ -18,15 +25,30 @@ class ErrorBoundary extends React.Component {
       message: String(error),
       stack: String(info.componentStack),
       version: config.version,
-    })
+    });
+    import('../utils/sentry').then((module) => module.error(error));
   }
 
   render() {
     if (this.state.hasError) {
+      // TODO: 需要优化div结构。去除.app和#main
       return (
-        <div className="error-boundary">
-          <h1>啊哦Σ(ﾟдﾟ;), 出现了一些错误.</h1>
-          <h2>错误已经汇报给TRPG后台, 请<span onClick={() => location.reload()}>刷新</span>一下页面重试哦.</h2>
+        <div className="app">
+          <div id="main" className="error-boundary">
+            <h1>啊哦Σ(ﾟдﾟ;), 出现了一些错误.</h1>
+            <h2>
+              错误已经汇报给TRPG后台, 请
+              <span onClick={() => location.reload()}>刷新</span>一下页面重试哦.
+            </h2>
+            <p>
+              <button
+                className="showErrorReport"
+                onClick={() => this.handleShowReportDialog()}
+              >
+                手动汇报详细错误
+              </button>
+            </p>
+          </div>
         </div>
       );
     }

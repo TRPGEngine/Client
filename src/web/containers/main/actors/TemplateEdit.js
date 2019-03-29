@@ -1,6 +1,10 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const { showModal, showAlert, hideAlert } = require('../../../../redux/actions/ui');
+const {
+  showModal,
+  showAlert,
+  hideAlert,
+} = require('../../../../redux/actions/ui');
 const Select = require('react-select');
 const TemplatePropertyCell = require('../../../components/TemplatePropertyCell');
 const at = require('trpg-actor-template');
@@ -19,13 +23,15 @@ class TemplateEdit extends React.Component {
       name: '',
       desc: '',
       inspectCell: undefined,
-    }
-    if(this.props.isEdit && this.props.currentEditedTemplate.get('uuid')) {
+    };
+    if (this.props.isEdit && this.props.currentEditedTemplate.get('uuid')) {
       // 编辑模板
-      this.state.template = at.parse(this.props.currentEditedTemplate.get('info'));
+      this.state.template = at.parse(
+        this.props.currentEditedTemplate.get('info')
+      );
       this.state.name = this.props.currentEditedTemplate.get('name');
       this.state.desc = this.props.currentEditedTemplate.get('desc');
-    }else {
+    } else {
       // 新建模板
       this.state.template = at.getInitTemplate();
     }
@@ -43,24 +49,34 @@ class TemplateEdit extends React.Component {
     template.avatar = '';
     let info = at.stringify(template);
     let uuid = this.props.currentEditedTemplate.get('uuid');
-    if(!uuid) {
-      this.props.createTemplate(template.name, template.desc, template.avatar, info);
-    }else {
-      this.props.updateTemplate(uuid, template.name, template.desc, template.avatar, info);
+    if (!uuid) {
+      this.props.createTemplate(
+        template.name,
+        template.desc,
+        template.avatar,
+        info
+      );
+    } else {
+      this.props.updateTemplate(
+        uuid,
+        template.name,
+        template.desc,
+        template.avatar,
+        info
+      );
     }
-
   }
 
   _handleEdit(item) {
-    this.setState({inspectCell: item});
+    this.setState({ inspectCell: item });
   }
 
   _handleRemove(item, index) {
-    if(this.state.inspectCell === item) {
-      this.setState({inspectCell: undefined});
+    if (this.state.inspectCell === item) {
+      this.setState({ inspectCell: undefined });
     }
     this.state.template.table.splice(index, 1);
-    this.setState({template: this.state.template});
+    this.setState({ template: this.state.template });
   }
 
   _handleCreateAdvancedTemplate() {
@@ -71,7 +87,7 @@ class TemplateEdit extends React.Component {
         this.props.hideAlert();
         const TemplateAdvancedCreate = require('./TemplateAdvancedCreate');
         this.props.showModal(<TemplateAdvancedCreate />);
-      }
+      },
     });
   }
 
@@ -83,13 +99,9 @@ class TemplateEdit extends React.Component {
       { value: 'expression', label: '表达式' },
     ];
 
-    if(!inspectCell) {
-      inspect = (
-        <div className="inspect-panel">
-          选择属性进行编辑
-        </div>
-      )
-    }else {
+    if (!inspectCell) {
+      inspect = <div className="inspect-panel">选择属性进行编辑</div>;
+    } else {
       inspect = (
         <div className="inspect-panel">
           <div className="data">
@@ -100,7 +112,7 @@ class TemplateEdit extends React.Component {
               value={inspectCell.name}
               onChange={(e) => {
                 inspectCell.name = e.target.value;
-                this.setState({inspectCell: inspectCell});
+                this.setState({ inspectCell: inspectCell });
               }}
             />
           </div>
@@ -111,7 +123,7 @@ class TemplateEdit extends React.Component {
               checked={inspectCell.visibility}
               onChange={(e) => {
                 inspectCell.visibility = e.target.checked;
-                this.setState({inspectCell: inspectCell});
+                this.setState({ inspectCell: inspectCell });
               }}
             />
           </div>
@@ -123,7 +135,7 @@ class TemplateEdit extends React.Component {
               value={inspectCell.desc || ''}
               onChange={(e) => {
                 inspectCell.desc = e.target.value;
-                this.setState({inspectCell: inspectCell});
+                this.setState({ inspectCell: inspectCell });
               }}
             />
           </div>
@@ -139,18 +151,20 @@ class TemplateEdit extends React.Component {
               placeholder="属性计算方式"
               onChange={(item) => {
                 inspectCell.func = item.value;
-                this.setState({inspectCell: inspectCell});
+                this.setState({ inspectCell: inspectCell });
               }}
             />
           </div>
           <div className="data">
-            <span>{inspectCell.func==='expression'?'表达式':'默认值'}:</span>
+            <span>
+              {inspectCell.func === 'expression' ? '表达式' : '默认值'}:
+            </span>
             <input
               type="text"
               value={inspectCell.default}
               onChange={(e) => {
                 inspectCell.default = e.target.value;
-                this.setState({inspectCell: inspectCell});
+                this.setState({ inspectCell: inspectCell });
               }}
             />
           </div>
@@ -159,10 +173,10 @@ class TemplateEdit extends React.Component {
             <input
               type="text"
               value={inspectCell.value}
-              disabled={inspectCell.func==='expression'}
+              disabled={inspectCell.func === 'expression'}
               onChange={(e) => {
                 inspectCell.value = e.target.value;
-                this.setState({inspectCell: inspectCell});
+                this.setState({ inspectCell: inspectCell });
               }}
             />
           </div>
@@ -171,13 +185,13 @@ class TemplateEdit extends React.Component {
             <button>保存</button>
           </div>*/}
         </div>
-      )
+      );
     }
 
     return inspect;
   }
 
-  render()　{
+  render() {
     return (
       <div className="template-edit">
         <div className="profile-panel">
@@ -186,7 +200,7 @@ class TemplateEdit extends React.Component {
             <input
               placeholder="模板名"
               value={this.state.name}
-              onChange={(e) => this.setState({name: e.target.value})}
+              onChange={(e) => this.setState({ name: e.target.value })}
             />
             <button onClick={() => this._handleSave()}>保存</button>
           </div>
@@ -196,25 +210,24 @@ class TemplateEdit extends React.Component {
               rows="4"
               cols="60"
               value={this.state.desc}
-              onChange={(e) => this.setState({desc: e.target.value})}
+              onChange={(e) => this.setState({ desc: e.target.value })}
             />
           </div>
           <div className="actions">
-            <button onClick={() => {
-              let newCell = at.getInitCell();
-              this.state.template.insertCell(newCell);
-              this.setState({template: this.state.template});
-            }}
+            <button
+              onClick={() => {
+                let newCell = at.getInitCell();
+                this.state.template.insertCell(newCell);
+                this.setState({ template: this.state.template });
+              }}
             >
               <i className="iconfont">&#xe604;</i>添加新属性
             </button>
-            {
-              !this.props.isEdit && (
-                <button onClick={() => this._handleCreateAdvancedTemplate()}>
-                  <i className="iconfont">&#xe9b7;</i>切换到进阶模式
-                </button>
-              )
-            }
+            {!this.props.isEdit && (
+              <button onClick={() => this._handleCreateAdvancedTemplate()}>
+                <i className="iconfont">&#xe9b7;</i>切换到进阶模式
+              </button>
+            )}
           </div>
           <div className="property-list">
             <table cellSpacing="0" cellPadding="0">
@@ -227,40 +240,40 @@ class TemplateEdit extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {
-                  this.state.template.table.map((item, index) => {
-                    return (
-                      <TemplatePropertyCell
-                        key={'template-cell-'+index}
-                        isActive={item===this.state.inspectCell}
-                        name={item.name}
-                        defaultValue={item.default}
-                        value={item.value}
-                        onEdit={() => this._handleEdit(item)}
-                        onRemove={() => this._handleRemove(item, index)}
-                      />
-                    )
-                  })
-                }
+                {this.state.template.table.map((item, index) => {
+                  return (
+                    <TemplatePropertyCell
+                      key={'template-cell-' + index}
+                      isActive={item === this.state.inspectCell}
+                      name={item.name}
+                      defaultValue={item.default}
+                      value={item.value}
+                      onEdit={() => this._handleEdit(item)}
+                      onRemove={() => this._handleRemove(item, index)}
+                    />
+                  );
+                })}
               </tbody>
             </table>
           </div>
         </div>
         {this.getInspectPanel()}
       </div>
-    )
+    );
   }
 }
 
 module.exports = connect(
-  state => ({
-    currentEditedTemplate: state.getIn(['actor', 'currentEditedTemplate'])
+  (state) => ({
+    currentEditedTemplate: state.getIn(['actor', 'currentEditedTemplate']),
   }),
-  dispatch => ({
+  (dispatch) => ({
     showModal: (body) => dispatch(showModal(body)),
     showAlert: (payload) => dispatch(showAlert(payload)),
     hideAlert: () => dispatch(hideAlert()),
-    createTemplate: (name, desc, avatar, info) => dispatch(createTemplate(name, desc, avatar, info)),
-    updateTemplate: (uuid, name, desc, avatar, info) => dispatch(updateTemplate(uuid, name, desc, avatar, info)),
+    createTemplate: (name, desc, avatar, info) =>
+      dispatch(createTemplate(name, desc, avatar, info)),
+    updateTemplate: (uuid, name, desc, avatar, info) =>
+      dispatch(updateTemplate(uuid, name, desc, avatar, info)),
   })
-)(TemplateEdit)
+)(TemplateEdit);

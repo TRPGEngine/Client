@@ -1,6 +1,6 @@
 // scrollTo(document.body, 0, 1250);
 function scrollTo(element, to, duration, isAnimatied = true) {
-  if(!isAnimatied) {
+  if (!isAnimatied) {
     element.scrollTop = to;
     return;
   }
@@ -10,11 +10,11 @@ function scrollTo(element, to, duration, isAnimatied = true) {
     currentTime = 0,
     increment = 20;
 
-  var animateScroll = function(){
+  var animateScroll = function() {
     currentTime += increment;
     var val = Math.easeInOutQuad(currentTime, start, change, duration);
     element.scrollTop = val;
-    if(currentTime < duration) {
+    if (currentTime < duration) {
       setTimeout(animateScroll, increment);
     }
   };
@@ -22,7 +22,7 @@ function scrollTo(element, to, duration, isAnimatied = true) {
 }
 
 function scrollToBottom(element, duration, isAnimatied = true) {
-  if(!element) {
+  if (!element) {
     return;
   }
 
@@ -34,11 +34,11 @@ function scrollToBottom(element, duration, isAnimatied = true) {
 //b = start value
 //c = change in value
 //d = duration
-Math.easeInOutQuad = function (t, b, c, d) {
-  t /= d/2;
-	if (t < 1) return c/2*t*t + b;
-	t--;
-	return -c/2 * (t*(t-2) - 1) + b;
+Math.easeInOutQuad = function(t, b, c, d) {
+  t /= d / 2;
+  if (t < 1) return (c / 2) * t * t + b;
+  t--;
+  return (-c / 2) * (t * (t - 2) - 1) + b;
 };
 
 exports.to = scrollTo;

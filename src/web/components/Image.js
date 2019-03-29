@@ -6,7 +6,7 @@ class Image extends React.Component {
     super(props);
     this.state = {
       src: props.src,
-    }
+    };
   }
 
   render() {
@@ -15,10 +15,10 @@ class Image extends React.Component {
         {...this.props}
         src={this.state.src}
         onError={() => {
-          this.setState({src: config.defaultImg.chatimg_fail});
+          this.setState({ src: config.defaultImg.chatimg_fail });
         }}
-      ></img>
-    )
+      />
+    );
   }
 }
 

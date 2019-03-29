@@ -1,9 +1,5 @@
 const React = require('react');
-const {
-  View,
-  Text,
-  TouchableOpacity,
-} = require('react-native');
+const { View, Text, TouchableOpacity } = require('react-native');
 const { connect } = require('react-redux');
 const sb = require('react-native-style-block');
 const ImagePicker = require('react-native-image-picker');
@@ -11,14 +7,12 @@ const axios = require('axios');
 const fileUrl = require('../../api/trpg.api.js').fileUrl;
 const { toast } = require('../../shared/utils/apputils');
 const { updateInfo } = require('../../redux/actions/user');
-const {
-  TAvatar
-} = require('../components/TComponent');
+const { TAvatar } = require('../components/TComponent');
 const ListCell = require('../components/ListCell');
 
 class ProfileModifyScreen extends React.Component {
   _uploadAvatar(uri, type, name, size, width, height) {
-    const file = {uri, type, name, size};
+    const file = { uri, type, name, size };
     const formData = new FormData();
     formData.append('avatar', file);
 
@@ -28,38 +22,41 @@ class ProfileModifyScreen extends React.Component {
       'attach-uuid': this.props.userInfo.get('uuid'),
       width,
       height,
-    }
+    };
 
     axios({
-      url: fileUrl+'/avatar',
+      url: fileUrl + '/avatar',
       method: 'post',
       headers,
       data: formData,
       onUploadProgress: (progressEvent) => {
-        if(progressEvent.lengthComputable) {
+        if (progressEvent.lengthComputable) {
           console.log(`进度:${progressEvent.loaded}/${progressEvent.total}`);
         }
-      }
-    }).then(res => {
-      return res.data
-    }).then(json => {
-      this.setState({
-        isUploading: false,
-        uploadProgress: 0
-      });
-      if(typeof json === 'object') {
-        console.log('上传成功', json);
-        toast('上传成功');
-        // 更新头像
-        this.props.dispatch(updateInfo({avatar: json.url}));
-      }else {
-        console.error(json);
-        toast('图片上传失败:' + json);
-      }
-    }).catch(e => {
-      toast('图片上传失败:' + e);
-      console.error(e);
+      },
     })
+      .then((res) => {
+        return res.data;
+      })
+      .then((json) => {
+        this.setState({
+          isUploading: false,
+          uploadProgress: 0,
+        });
+        if (typeof json === 'object') {
+          console.log('上传成功', json);
+          toast('上传成功');
+          // 更新头像
+          this.props.dispatch(updateInfo({ avatar: json.url }));
+        } else {
+          console.error(json);
+          toast('图片上传失败:' + json);
+        }
+      })
+      .catch((e) => {
+        toast('图片上传失败:' + e);
+        console.error(e);
+      });
   }
 
   _handleSelectAvatar() {
@@ -73,9 +70,9 @@ class ProfileModifyScreen extends React.Component {
       maxHeight: 128,
       storageOptions: {
         skipBackup: true,
-        path: 'images'
-      }
-    }
+        path: 'images',
+      },
+    };
     ImagePicker.showImagePicker(options, (response) => {
       console.log('图片选择结果:', response);
 
@@ -86,9 +83,16 @@ class ProfileModifyScreen extends React.Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        this._uploadAvatar(response.uri, response.type, response.fileName, response.fileSize, response.width, response.height);
+        this._uploadAvatar(
+          response.uri,
+          response.type,
+          response.fileName,
+          response.fileSize,
+          response.width,
+          response.height
+        );
       }
-    })
+    });
   }
 
   render() {
@@ -98,7 +102,14 @@ class ProfileModifyScreen extends React.Component {
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => this._handleSelectAvatar()}>
-            <TAvatar style={styles.avatar} uri={userInfo.get('avatar', '')} name={name} capitalSize={40} height={100} width={100} />
+            <TAvatar
+              style={styles.avatar}
+              uri={userInfo.get('avatar', '')}
+              name={name}
+              capitalSize={40}
+              height={100}
+              width={100}
+            />
           </TouchableOpacity>
           <Text style={styles.username}>{userInfo.get('username')}</Text>
           <Text style={styles.uuid}>{userInfo.get('uuid')}</Text>
@@ -127,25 +138,16 @@ class ProfileModifyScreen extends React.Component {
 }
 
 const styles = {
-  container: [
-    {flex: 1},
-  ],
+  container: [{ flex: 1 }],
   header: [
-    {marginBottom: 10},
+    { marginBottom: 10 },
     sb.alignCenter(),
     sb.bgColor('white'),
     sb.padding(20, 0),
   ],
-  avatar: [
-    sb.radius(50),
-  ],
-  username: [
-    sb.font(18),
-    sb.margin(10, 0, 0, 0),
-  ],
-  uuid: [
-    sb.font(12),
-  ],
+  avatar: [sb.radius(50)],
+  username: [sb.font(18), sb.margin(10, 0, 0, 0)],
+  uuid: [sb.font(12)],
   // item: [
   //   {flexDirection: 'row'},
   //   sb.padding(10, 4),
@@ -154,10 +156,8 @@ const styles = {
   // actions: [
   //   sb.padding(10),
   // ],
-}
+};
 
-module.exports = connect(
-  state => ({
-    userInfo: state.getIn(['user', 'info'])
-  })
-)(ProfileModifyScreen);
+module.exports = connect((state) => ({
+  userInfo: state.getIn(['user', 'info']),
+}))(ProfileModifyScreen);

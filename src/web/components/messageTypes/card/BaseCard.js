@@ -5,11 +5,7 @@ class BaseCard extends React.Component {
   getCardView() {
     let info = this.props.info;
 
-    return (
-      <pre className="card-content">
-        {info.message}
-      </pre>
-    )
+    return <pre className="card-content">{info.message}</pre>;
   }
 
   // 返回一个形如:[{label: '按钮1', onClick:()=>{}}]的数组
@@ -20,41 +16,33 @@ class BaseCard extends React.Component {
   // 获取卡片动作
   getCardAction() {
     let btns = this.getCardBtn();
-    if(!btns || btns.length === 0) {
+    if (!btns || btns.length === 0) {
       return null;
     }
 
     return (
       <div className="card-action">
-        {
-          btns.map((btn, index) => {
-            let {
-              label = '',
-              onClick,
-              attrs
-            } = btn;
-            return (
-              <button
-                key={`${index}#${label}`}
-                {...attrs}
-                onClick={onClick}
-                disabled={!onClick}
-              >{label}</button>
-            )
-          })
-        }
+        {btns.map((btn, index) => {
+          let { label = '', onClick, attrs } = btn;
+          return (
+            <button
+              key={`${index}#${label}`}
+              {...attrs}
+              onClick={onClick}
+              disabled={!onClick}
+            >
+              {label}
+            </button>
+          );
+        })}
       </div>
-    )
+    );
   }
 
   // 获取卡片标题
   getCardTitle() {
-    if(this.props.info && this.props.info.data && this.props.info.data.title) {
-      return (
-        <div className="card-title">
-          {this.props.info.data.title}
-        </div>
-      )
+    if (this.props.info && this.props.info.data && this.props.info.data.title) {
+      return <div className="card-title">{this.props.info.data.title}</div>;
     }
 
     return null;
@@ -67,7 +55,7 @@ class BaseCard extends React.Component {
         {this.getCardView()}
         {this.getCardAction()}
       </div>
-    )
+    );
   }
 }
 

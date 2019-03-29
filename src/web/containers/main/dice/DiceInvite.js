@@ -11,25 +11,25 @@ class DiceInvite extends React.Component {
     this.state = {
       diceType: this.props.lastDiceType || 'basicDice',
       diceReason: '',
-    }
+    };
   }
 
   _handleSendReq() {
     let diceExp = '';
-    if(this.state.diceType === 'basicDice') {
+    if (this.state.diceType === 'basicDice') {
       diceExp = this.refs.diceNum.value + 'd' + this.refs.diceFace.value;
-    }else {
+    } else {
       diceExp = this.refs.diceExp.value;
     }
 
     // console.log(`因为 ${this.state.diceReason} 请求投出: ${diceExp}`);
-    if(this.props.onSendDiceInvite) {
+    if (this.props.onSendDiceInvite) {
       this.props.onSendDiceInvite(this.state.diceReason, diceExp);
     }
   }
 
   _handleChangeDiceType(type) {
-    this.setState({diceType: type});
+    this.setState({ diceType: type });
     this.props.dispatch(setLastDiceType(type));
   }
 
@@ -37,7 +37,7 @@ class DiceInvite extends React.Component {
     let diceTypeOptions = [
       { value: 'basicDice', label: '基本骰' },
       { value: 'complexDice', label: '复合骰' },
-    ]
+    ];
     return (
       <div className="dice-invite">
         <span>因为</span>
@@ -46,13 +46,11 @@ class DiceInvite extends React.Component {
           className="dice-reason"
           placeholder="投骰理由"
           value={this.state.diceReason}
-          onChange={(e) => this.setState({diceReason: e.target.value})}
+          onChange={(e) => this.setState({ diceReason: e.target.value })}
         />
         <span>
           邀请
-          {
-            this.props.inviteList ? this.props.inviteList.join(',') : '所有人'
-          }
+          {this.props.inviteList ? this.props.inviteList.join(',') : '所有人'}
           投骰<i className="iconfont">&#xe609;</i>
         </span>
         <Select
@@ -65,27 +63,41 @@ class DiceInvite extends React.Component {
           placeholder="请选择骰子类型..."
           onChange={(item) => this._handleChangeDiceType(item.value)}
         />
-        {
-          this.state.diceType === 'complexDice' ? (
-            <div className="dice complexDice">
-              <input key="dicereq-diceExp" type="text" placeholder="请输入骰子表达式" ref="diceExp" defaultValue="1d100" />
-            </div>
-          ) : (
-            <div className="dice basicDice">
-              <input key="dicereq-diceNum" type="number" placeholder="骰数" defaultValue="1" ref="diceNum" />
-              <span>d</span>
-              <input key="dicereq-diceFace" type="number" placeholder="骰面" defaultValue="100" ref="diceFace" />
-            </div>
-          )
-        }
+        {this.state.diceType === 'complexDice' ? (
+          <div className="dice complexDice">
+            <input
+              key="dicereq-diceExp"
+              type="text"
+              placeholder="请输入骰子表达式"
+              ref="diceExp"
+              defaultValue="1d100"
+            />
+          </div>
+        ) : (
+          <div className="dice basicDice">
+            <input
+              key="dicereq-diceNum"
+              type="number"
+              placeholder="骰数"
+              defaultValue="1"
+              ref="diceNum"
+            />
+            <span>d</span>
+            <input
+              key="dicereq-diceFace"
+              type="number"
+              placeholder="骰面"
+              defaultValue="100"
+              ref="diceFace"
+            />
+          </div>
+        )}
         <button onClick={() => this._handleSendReq()}>发送申请</button>
       </div>
-    )
+    );
   }
 }
 
-module.exports = connect(
-  state => ({
-    lastDiceType: state.getIn(['ui', 'lastDiceType']),
-  })
-)(DiceInvite);
+module.exports = connect((state) => ({
+  lastDiceType: state.getIn(['ui', 'lastDiceType']),
+}))(DiceInvite);

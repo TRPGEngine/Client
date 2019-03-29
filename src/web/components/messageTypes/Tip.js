@@ -8,7 +8,7 @@ class Tip extends Base {
       <div className="msg-item-tip">
         <div className="content">{info.message}</div>
       </div>
-    )
+    );
   }
 }
 

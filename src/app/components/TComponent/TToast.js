@@ -15,13 +15,11 @@ class TToast extends React.Component {
       >
         {this.props.showToastText}
       </Toast>
-    )
+    );
   }
 }
 
-module.exports = connect(
-  state => ({
-    showToast: state.getIn(['ui', 'showToast']),
-    showToastText: state.getIn(['ui', 'showToastText']),
-  })
-)(TToast);
+module.exports = connect((state) => ({
+  showToast: state.getIn(['ui', 'showToast']),
+  showToastText: state.getIn(['ui', 'showToastText']),
+}))(TToast);

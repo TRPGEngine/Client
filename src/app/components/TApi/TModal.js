@@ -1,28 +1,18 @@
 const React = require('react');
-const {
-  View,
-  Modal,
-  TouchableWithoutFeedback,
-} = require('react-native');
+const { View, Modal, TouchableWithoutFeedback } = require('react-native');
 const sb = require('react-native-style-block');
 const TPopup = require('./TPopup');
 
 const styles = {
-  container: [
-    sb.flex(),
-    sb.center(),
-  ],
-  mask: [
-    sb.position('absolute', 0, 0, 0, 0),
-    sb.bgColor('rgba(0, 0, 0, 0.2)'),
-  ],
+  container: [sb.flex(), sb.center()],
+  mask: [sb.position('absolute', 0, 0, 0, 0), sb.bgColor('rgba(0, 0, 0, 0.2)')],
   view: [
     sb.padding(10),
     sb.bgColor(),
     sb.radius(3),
-    {minWidth: 240, minHeight: 320},
-  ]
-}
+    { minWidth: 240, minHeight: 320 },
+  ],
+};
 
 class TModalContainer extends React.Component {
   render() {
@@ -33,18 +23,14 @@ class TModalContainer extends React.Component {
         onRequestClose={this.props.onRequestClose}
       >
         <View style={styles.container}>
-          <TouchableWithoutFeedback
-            onPress={this.props.onRequestClose}
-          >
-            <View style={styles.mask}></View>
+          <TouchableWithoutFeedback onPress={this.props.onRequestClose}>
+            <View style={styles.mask} />
           </TouchableWithoutFeedback>
 
-          <View style={styles.view}>
-            {this.props.children}
-          </View>
+          <View style={styles.view}>{this.props.children}</View>
         </View>
       </Modal>
-    )
+    );
   }
 }
 
@@ -58,7 +44,7 @@ const TModal = {
   },
   hide: function() {
     TPopup.hide();
-  }
-}
+  },
+};
 
 module.exports = TModal;

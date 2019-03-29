@@ -22,7 +22,7 @@ const immutable = require('immutable');
 const initialState = immutable.fromJS({
   selectedConversesUUID: '',
   selectedConversesUserUUID: '',
-  conversesDesc: '',// 获取会话列表的提示信息
+  conversesDesc: '', // 获取会话列表的提示信息
   converses: {
     // "systemUUID": {
     //   uuid: 'systemUUID',
@@ -45,7 +45,7 @@ const initialState = immutable.fromJS({
     //     }
     //   ]
     // }
-  }
+  },
 });
 
 module.exports = function chat(state = initialState, action) {
@@ -56,49 +56,66 @@ module.exports = function chat(state = initialState, action) {
         return initialState;
       case ADD_CONVERSES: {
         let uuid = action.payload.uuid;
-        if(!state.getIn(['converses', uuid])) {
-          let payload = Object.assign({}, {
-            msgList:[],
-            lastMsg: '',
-            lastTime: '',
-          }, action.payload)
+        if (!state.getIn(['converses', uuid])) {
+          let payload = Object.assign(
+            {},
+            {
+              msgList: [],
+              lastMsg: '',
+              lastTime: '',
+            },
+            action.payload
+          );
           return state.setIn(['converses', uuid], immutable.fromJS(payload));
-        }else {
+        } else {
           // 如果有会话了直接返回
           return state;
         }
       }
       case ADD_MSG: {
         let converseUUID = action.converseUUID;
-        if(!state.getIn(['converses', converseUUID])) {
-          console.warn('add msg failed: this converses is not exist', converseUUID);
+        if (!state.getIn(['converses', converseUUID])) {
+          console.warn(
+            'add msg failed: this converses is not exist',
+            converseUUID
+          );
           return state;
         }
-        payload = immutable.fromJS(action.payload)
+        payload = immutable.fromJS(action.payload);
 
-        return state.updateIn(
-            ['converses', converseUUID, 'msgList'],
-            (msgList) => msgList.push(payload)
-          ).setIn(['converses', converseUUID, 'lastMsg'], payload.get('message'))
+        return state
+          .updateIn(['converses', converseUUID, 'msgList'], (msgList) =>
+            msgList.push(payload)
+          )
+          .setIn(['converses', converseUUID, 'lastMsg'], payload.get('message'))
           .setIn(['converses', converseUUID, 'lastTime'], payload.get('date'))
-          .setIn(['converses', converseUUID, 'unread'], action.unread);//已读未读
+          .setIn(['converses', converseUUID, 'unread'], action.unread); //已读未读
       }
       case UPDATE_MSG:
-        return state.updateIn(['converses', action.converseUUID, 'msgList'], (msgList) => {
-          if(msgList) {
-            for (var i = 0; i < msgList.size; i++) {
-              let msg = msgList.get(i);
-              if(msg.get('uuid') === action.msgUUID) {
-                msgList = msgList.set(i, msg.merge(immutable.fromJS(action.payload)));
-                break;
+        return state.updateIn(
+          ['converses', action.converseUUID, 'msgList'],
+          (msgList) => {
+            if (msgList) {
+              for (var i = 0; i < msgList.size; i++) {
+                let msg = msgList.get(i);
+                if (msg.get('uuid') === action.msgUUID) {
+                  msgList = msgList.set(
+                    i,
+                    msg.merge(immutable.fromJS(action.payload))
+                  );
+                  break;
+                }
               }
+            } else {
+              console.error(
+                'update msglist failed, not find msgList in',
+                action.converseUUID
+              );
             }
-          }else {
-            console.error('update msglist failed, not find msgList in', action.converseUUID);
-          }
 
-          return msgList;
-        })
+            return msgList;
+          }
+        );
       case GET_CONVERSES_REQUEST:
         return state.set('conversesDesc', '正在获取会话列表...');
       case CREATE_CONVERSES_FAILED:
@@ -106,16 +123,20 @@ module.exports = function chat(state = initialState, action) {
       case GET_CONVERSES_SUCCESS:
       case GET_USER_CONVERSES_SUCCESS: {
         let list = action.payload;
-        if(list instanceof Array && list.length > 0) {
+        if (list instanceof Array && list.length > 0) {
           let converses = state.get('converses');
           for (var i = 0; i < list.length; i++) {
             let item = list[i];
             let uuid = item.uuid;
-            let obj = Object.assign({}, {
-              msgList:[],
-              lastMsg: '',
-              lastTime: '',
-            }, item);
+            let obj = Object.assign(
+              {},
+              {
+                msgList: [],
+                lastMsg: '',
+                lastTime: '',
+              },
+              item
+            );
             converses = converses.set(uuid, immutable.fromJS(obj));
           }
           return state.setIn(['converses'], converses);
@@ -125,73 +146,104 @@ module.exports = function chat(state = initialState, action) {
       case UPDATE_CONVERSES_MSGLIST_SUCCESS: {
         let convUUID = action.convUUID;
         payload = immutable.fromJS(action.payload);
-        if(payload.size > 0) {
+        if (payload.size > 0) {
           let oldList = state.getIn(['converses', convUUID, 'msgList']);
-          let lastLog = payload.concat(oldList).sortBy((item) => item.get('date')).last();
-          return state.updateIn(['converses', convUUID, 'msgList'], (list) => new immutable.List(new immutable.Set(list.concat(payload))))//添加一步去重操作
+          let lastLog = payload
+            .concat(oldList)
+            .sortBy((item) => item.get('date'))
+            .last();
+          return state
+            .updateIn(
+              ['converses', convUUID, 'msgList'],
+              (list) =>
+                new immutable.List(new immutable.Set(list.concat(payload)))
+            ) //添加一步去重操作
             .setIn(['converses', convUUID, 'lastMsg'], lastLog.get('message'))
             .setIn(['converses', convUUID, 'lastTime'], lastLog.get('date'));
-        }else {
+        } else {
           return state;
         }
       }
       case UPDATE_CONVERSES_INFO_SUCCESS:
-        if(action.payload.name) {
-          state = state.setIn(['converses', action.uuid, 'name'], action.payload.name);
+        if (action.payload.name) {
+          state = state.setIn(
+            ['converses', action.uuid, 'name'],
+            action.payload.name
+          );
         }
-        if(action.payload.icon) {
-          state = state.setIn(['converses', action.uuid, 'icon'], action.payload.icon);
+        if (action.payload.icon) {
+          state = state.setIn(
+            ['converses', action.uuid, 'icon'],
+            action.payload.icon
+          );
         }
         return state;
       case REMOVE_CONVERSES_SUCCESS:
         return state.deleteIn(['converses', action.converseUUID]);
       case SWITCH_CONVERSES:
-        return state.set('selectedConversesUUID', action.converseUUID)
+        return state
+          .set('selectedConversesUUID', action.converseUUID)
           .set('selectedConversesUserUUID', action.userUUID)
-          .setIn(['converses', action.converseUUID, 'unread'], false);//已读未读;
+          .setIn(['converses', action.converseUUID, 'unread'], false); //已读未读;
       case SEND_MSG_COMPLETED: {
         let converseUUID = action.converseUUID;
         let localUUID = action.localUUID;
         let payload = action.payload;
         let result = payload.result; // TODO: 送达提示
         let pkg = payload.pkg; // 服务端信息
-        return state.updateIn(['converses', converseUUID, 'msgList'], (list) => {
-          if(list) {
-            for (var i = 0; i < list.size; i++) {
-              let msg = list.get(i);
-              if(msg.get('uuid') === localUUID) {
-                list = list.set(i, msg.merge(immutable.fromJS(pkg)));
-                break;
+        return state.updateIn(
+          ['converses', converseUUID, 'msgList'],
+          (list) => {
+            if (list) {
+              for (var i = 0; i < list.size; i++) {
+                let msg = list.get(i);
+                if (msg.get('uuid') === localUUID) {
+                  list = list.set(i, msg.merge(immutable.fromJS(pkg)));
+                  break;
+                }
               }
+            } else {
+              console.error(
+                'update msglist failed, not find msgList in',
+                converseUUID
+              );
             }
-          }else {
-            console.error('update msglist failed, not find msgList in', converseUUID);
-          }
 
-          return list;
-        })
+            return list;
+          }
+        );
       }
       case SWITCH_GROUP:
         return state.setIn(['converses', action.payload, 'unread'], false);
       case CREATE_CONVERSES_SUCCESS: {
         let createConvUUID = action.payload.uuid;
-        let createConv = Object.assign({}, {
-          msgList: [],
-          lastMsg: '',
-          lastTime: '',
-        }, action.payload);
-        return state.setIn(['converses', createConvUUID], immutable.fromJS(createConv));
+        let createConv = Object.assign(
+          {},
+          {
+            msgList: [],
+            lastMsg: '',
+            lastTime: '',
+          },
+          action.payload
+        );
+        return state.setIn(
+          ['converses', createConvUUID],
+          immutable.fromJS(createConv)
+        );
       }
       case UPDATE_SYSTEM_CARD_CHAT_DATA:
-        return state.updateIn(['converses', 'trpgsystem', 'msgList'], (list) => {
-          for (var i = 0; i < list.size; i++) {
-            if(list.getIn([i, 'uuid']) === action.chatUUID) {
-              list = list.set(i, immutable.fromJS(action.payload));
+        return state.updateIn(
+          ['converses', 'trpgsystem', 'msgList'],
+          (list) => {
+            for (var i = 0; i < list.size; i++) {
+              if (list.getIn([i, 'uuid']) === action.chatUUID) {
+                list = list.set(i, immutable.fromJS(action.payload));
+              }
             }
-          }
 
-          return list;
-        })
+            return list;
+          }
+        );
       default:
         return state;
     }
@@ -199,4 +251,4 @@ module.exports = function chat(state = initialState, action) {
     console.error(e);
     return state;
   }
-}
+};

@@ -5,7 +5,7 @@ const {
   View,
   Modal,
   Button,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
 } = require('react-native');
 const sb = require('react-native-style-block');
 const TButton = require('./TButton');
@@ -14,7 +14,7 @@ const { hideAlert } = require('../../../redux/actions/ui');
 class TAlert extends React.Component {
   static defaultProps = {
     style: [],
-  }
+  };
 
   render() {
     const title = this.props.showAlertInfo.get('title') || '';
@@ -24,24 +24,26 @@ class TAlert extends React.Component {
     const onCancel = this.props.showAlertInfo.get('onCancel');
 
     let header, cancelBtn;
-    if(title) {
+    if (title) {
       header = (
         <View style={styles.header}>
           <Text style={styles.title}>{title}</Text>
         </View>
-      )
+      );
     }
 
-    if(onConfirm) {
+    if (onConfirm) {
       cancelBtn = (
         <TButton
           style={[styles.btn, styles.cancelBtn]}
-          textStyle={{color: '#666'}}
-          onPress={() => onCancel ? onCancel() : this.props.dispatch(hideAlert())}
+          textStyle={{ color: '#666' }}
+          onPress={() =>
+            onCancel ? onCancel() : this.props.dispatch(hideAlert())
+          }
         >
           取消
         </TButton>
-      )
+      );
     }
 
     return (
@@ -61,7 +63,9 @@ class TAlert extends React.Component {
               {cancelBtn}
               <TButton
                 style={styles.btn}
-                onPress={() => onConfirm ? onConfirm() : this.props.dispatch(hideAlert())}
+                onPress={() =>
+                  onConfirm ? onConfirm() : this.props.dispatch(hideAlert())
+                }
               >
                 {confirmTitle || '确认'}
               </TButton>
@@ -69,16 +73,12 @@ class TAlert extends React.Component {
           </View>
         </View>
       </Modal>
-    )
+    );
   }
 }
 
 const styles = {
-  container: [
-    sb.bgColor('rgba(0,0,0,0.2)'),
-    sb.flex(),
-    sb.center(),
-  ],
+  container: [sb.bgColor('rgba(0,0,0,0.2)'), sb.flex(), sb.center()],
   view: [
     {
       minWidth: 280,
@@ -90,38 +90,16 @@ const styles = {
     sb.radius(10),
     sb.padding(10),
   ],
-  header: [
-    sb.border('Bottom', 0.5, '#ccc'),
-    sb.padding(4, 0, 8, 0),
-  ],
-  body: [
-    sb.flex(),
-    sb.center(),
-    sb.padding(14, 0, 10, 0),
-  ],
-  title: [
-    sb.textAlign(),
-    sb.font(22),
-  ],
-  text: [
-    sb.textAlign(),
-    sb.font(16),
-  ],
-  footer: [
-    sb.direction(),
-  ],
-  btn: [
-    sb.flex(),
-    sb.margin(4, 6),
-  ],
-  cancelBtn: [
-    sb.bgColor('white'),
-  ]
-}
+  header: [sb.border('Bottom', 0.5, '#ccc'), sb.padding(4, 0, 8, 0)],
+  body: [sb.flex(), sb.center(), sb.padding(14, 0, 10, 0)],
+  title: [sb.textAlign(), sb.font(22)],
+  text: [sb.textAlign(), sb.font(16)],
+  footer: [sb.direction()],
+  btn: [sb.flex(), sb.margin(4, 6)],
+  cancelBtn: [sb.bgColor('white')],
+};
 
-module.exports = connect(
-  state => ({
-    showAlert: state.getIn(['ui', 'showAlert']),
-    showAlertInfo: state.getIn(['ui', 'showAlertInfo']),
-  })
-)(TAlert);
+module.exports = connect((state) => ({
+  showAlert: state.getIn(['ui', 'showAlert']),
+  showAlertInfo: state.getIn(['ui', 'showAlertInfo']),
+}))(TAlert);

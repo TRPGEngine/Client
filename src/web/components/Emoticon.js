@@ -8,22 +8,22 @@ class Emoticon extends React.Component {
     super(props);
     this.state = {
       selectGroup: 'people',
-    }
+    };
     this.emoji = getCodeList();
   }
 
   getEmoticonItems() {
     let selectGroup = this.state.selectGroup;
-    if(selectGroup && this.emoji[selectGroup]) {
+    if (selectGroup && this.emoji[selectGroup]) {
       return this.emoji[selectGroup].map((item) => (
         <span
-          key={'emoji-cell#'+item}
+          key={'emoji-cell#' + item}
           className="emoji-cell"
-          onClick={()=>this.props.onSelect(item)}
+          onClick={() => this.props.onSelect(item)}
         >
           {emojify(item)}
         </span>
-      ))
+      ));
     }
 
     return null;
@@ -37,22 +37,23 @@ class Emoticon extends React.Component {
           e.stopPropagation();
         }}
       >
-        <div className="items">
-          {this.getEmoticonItems()}
-        </div>
+        <div className="items">{this.getEmoticonItems()}</div>
         <div className="group">
           {Object.keys(this.emoji).map((groupName) => (
             <div
               key={'emoji-group#' + groupName}
-              className={'group-selection' + (this.state.selectGroup===groupName?' active':'')}
-              onClick={() => this.setState({selectGroup: groupName})}
+              className={
+                'group-selection' +
+                (this.state.selectGroup === groupName ? ' active' : '')
+              }
+              onClick={() => this.setState({ selectGroup: groupName })}
             >
               {emojify(this.emoji[groupName][0])}
             </div>
           ))}
         </div>
       </div>
-    )
+    );
   }
 }
 

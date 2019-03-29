@@ -1,11 +1,6 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-} = require('react-native');
+const { View, Text, Image, TouchableOpacity } = require('react-native');
 const sb = require('react-native-style-block');
 const appConfig = require('../config.app');
 const { getSamlpeDate } = require('../../shared/utils/dateHelper');
@@ -19,10 +14,10 @@ class ProfileInfoItem extends React.Component {
   render() {
     return (
       <View style={styles.item}>
-        <Text style={{width: 80}}>{this.props.name}:</Text>
+        <Text style={{ width: 80 }}>{this.props.name}:</Text>
         <Text>{this.props.value}</Text>
       </View>
-    )
+    );
   }
 }
 
@@ -33,20 +28,20 @@ class ProfileScreen extends React.Component {
 
   componentDidMount() {
     let uuid = this.props.navigation.state.params.uuid;
-    if(uuid) {
+    if (uuid) {
       console.log('获取最新用户信息', uuid);
       this.props.dispatch(getUserInfo(uuid));
     }
   }
 
   _handlePressAvatar(avatar) {
-    if(avatar) {
+    if (avatar) {
       let media = [
         {
-          photo: avatar.replace('/thumbnail', '')
+          photo: avatar.replace('/thumbnail', ''),
         },
-      ]
-      this.props.navigation.navigate('PhotoBrowser', {media, index:0});
+      ];
+      this.props.navigation.navigate('PhotoBrowser', { media, index: 0 });
     }
   }
 
@@ -54,7 +49,13 @@ class ProfileScreen extends React.Component {
     let type = this.props.navigation.state.params.type;
     let userUUID = this.props.navigation.state.params.uuid;
     let userInfo = getUserInfoCache(userUUID);
-    this.props.dispatch(switchToConverseApp(userUUID, type, userInfo.get('nickname') || userInfo.get('username')));
+    this.props.dispatch(
+      switchToConverseApp(
+        userUUID,
+        type,
+        userInfo.get('nickname') || userInfo.get('username')
+      )
+    );
   }
 
   render() {
@@ -62,75 +63,87 @@ class ProfileScreen extends React.Component {
     let userInfo = getUserInfoCache(userUUID);
     let hasFriend = this.props.friendList.includes(userUUID);
 
-    if(!userInfo) {
+    if (!userInfo) {
       return (
-        <View><Text>无内容</Text></View>
-      )
+        <View>
+          <Text>无内容</Text>
+        </View>
+      );
     }
 
-    let avatar = userInfo.get('avatar') ? userInfo.get('avatar') : appConfig.defaultImg.user;
+    let avatar = userInfo.get('avatar')
+      ? userInfo.get('avatar')
+      : appConfig.defaultImg.user;
     let name = userInfo.get('nickname') || userInfo.get('username');
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => this._handlePressAvatar(avatar)}>
-            <TAvatar style={styles.avatar} uri={avatar} name={name} capitalSize={40} height={100} width={100} />
+            <TAvatar
+              style={styles.avatar}
+              uri={avatar}
+              name={name}
+              capitalSize={40}
+              height={100}
+              width={100}
+            />
           </TouchableOpacity>
-          <Text style={{fontSize: 18, marginTop: 4}}>{name}</Text>
-          <Text style={{fontSize: 12, color: '#999'}}>{userInfo.get('uuid')}</Text>
+          <Text style={{ fontSize: 18, marginTop: 4 }}>{name}</Text>
+          <Text style={{ fontSize: 12, color: '#999' }}>
+            {userInfo.get('uuid')}
+          </Text>
         </View>
-        <View style={{paddingLeft: 10, backgroundColor: 'white'}}>
+        <View style={{ paddingLeft: 10, backgroundColor: 'white' }}>
           <ProfileInfoItem name="用户名" value={userInfo.get('username')} />
           <ProfileInfoItem name="性别" value={userInfo.get('sex')} />
-          <ProfileInfoItem name="简介" value={userInfo.get('desc') || '这个人很懒什么都没有留下'} />
-          <ProfileInfoItem name="上次登录" value={getSamlpeDate(userInfo.get('last_login')) || '无记录'} />
-          <ProfileInfoItem name="注册时间" value={getSamlpeDate(userInfo.get('createAt'))} />
+          <ProfileInfoItem
+            name="简介"
+            value={userInfo.get('desc') || '这个人很懒什么都没有留下'}
+          />
+          <ProfileInfoItem
+            name="上次登录"
+            value={getSamlpeDate(userInfo.get('last_login')) || '无记录'}
+          />
+          <ProfileInfoItem
+            name="注册时间"
+            value={getSamlpeDate(userInfo.get('createAt'))}
+          />
         </View>
         <View style={styles.actions}>
-          {
-            hasFriend ? (
-              <TButton onPress={() => this._handlePressSendMsg()}>
-                发送消息
-              </TButton>
-            ) : (
-              <TButton onPress={() => this.props.dispatch(addFriend(userUUID))}>
-                加为好友
-              </TButton>
-            )
-          }
+          {hasFriend ? (
+            <TButton onPress={() => this._handlePressSendMsg()}>
+              发送消息
+            </TButton>
+          ) : (
+            <TButton onPress={() => this.props.dispatch(addFriend(userUUID))}>
+              加为好友
+            </TButton>
+          )}
         </View>
       </View>
-    )
+    );
   }
 }
 
 const styles = {
-  container: [
-    {flex: 1},
-  ],
+  container: [{ flex: 1 }],
   header: [
-    {marginBottom: 10},
+    { marginBottom: 10 },
     sb.alignCenter(),
     sb.bgColor('white'),
     sb.padding(20, 0),
   ],
-  avatar: [
-    sb.radius(50),
-  ],
+  avatar: [sb.radius(50)],
   item: [
-    {flexDirection: 'row'},
+    { flexDirection: 'row' },
     sb.padding(10, 4),
     sb.border('Bottom', 0.5, '#eee'),
   ],
-  actions: [
-    sb.padding(10),
-  ],
-}
+  actions: [sb.padding(10)],
+};
 
-module.exports = connect(
-  state => ({
-    usercache: state.getIn(['cache', 'user']),
-    friendList: state.getIn(['user', 'friendList']),
-  })
-)(ProfileScreen);
+module.exports = connect((state) => ({
+  usercache: state.getIn(['cache', 'user']),
+  friendList: state.getIn(['user', 'friendList']),
+}))(ProfileScreen);

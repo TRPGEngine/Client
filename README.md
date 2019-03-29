@@ -10,7 +10,7 @@
 [![Android](https://img.shields.io/badge/platform-android-orange.svg)]()
 [![Web](https://img.shields.io/badge/platform-web-green.svg)]()
 
-TPRG前端网页端
+TPRG前端网页端与手机端RN端(开发中)
 
 <!-- ## 开发版下载
 
@@ -27,7 +27,7 @@ TPRG前端网页端
 ## 打包&运行
 
 需求环境:
-- nodejs7+
+- nodejs7.6+
 
 ```bash
 $ npm install
@@ -41,6 +41,12 @@ $ npm run package # 打包当前平台的pc端文件
 
 **开发服务器访问`http://127.0.0.1:8080/`即可访问客户端**
 **客户端需要配合服务端才能正常运行, 具体可以查看服务端项目[TRPGEngine/DevTool](https://github.com/TRPGEngine/DevTool)**
+
+## 关于开发进度
+
+目前项目同时有web版、桌面版（windows, linux, macos）、和移动版（ios, android）。其中web版的开发进度和桌面版的开发进度是同步的。移动版的开发进度尚处于早期版本。
+- web版开发进度: 前期测试版，属于大部分功能可用的状态，但可能会有不可预知的bug(大部分都可以通过刷新页面来解决)。
+- 移动版开发进度：内部开发版。属于一个尚不可用的状态。
 
 ## 关于环境变量
 - `PLATFORM` : 编译的平台, 可选:`web`, `app`, `electron`, 默认为`web`
