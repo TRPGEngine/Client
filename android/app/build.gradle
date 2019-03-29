@@ -154,6 +154,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-gesture-handler')
     api project(':jcore-react-native')
     api project(':jpush-react-native')
     api project(':react-native-image-picker')
