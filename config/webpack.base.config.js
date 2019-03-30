@@ -77,22 +77,22 @@ module.exports = {
         //   path.resolve(ROOT_PATH, './node_modules/trpg-actor-template/'),
         //   path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
         // ],
+        exclude: path.resolve(ROOT_PATH, './node_modules/**'),
         query: {
           babelrc: false,
           compact: false,
-          presets: ['env', 'react'],
+          presets: ['@babel/preset-env', '@babel/preset-react'],
           plugins: [
             [
-              'transform-runtime',
+              '@babel/plugin-transform-runtime',
               {
                 helpers: false,
-                polyfill: false,
-                regenerator: true,
               },
             ],
+            // '@babel/plugin-external-helpers',
             'transform-class-properties',
+            'transform-es2015-modules-commonjs',
             'dynamic-import-webpack',
-            'transform-object-rest-spread',
           ],
         },
       },
