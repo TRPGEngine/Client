@@ -7,16 +7,17 @@ const { showSlidePanel, showLightbox } = require('./ui');
 exports.previewFile = function(fileuuid) {
   return function(dispatch, getState) {
     return api.emit('file::getFileInfo', { uuid: fileuuid }, function(data) {
-      if (data.previewUrl) {
+      const previewUrl = data.previewUrl;
+      if (previewUrl) {
         console.log('打开预览', data);
         if (data.mimetype.indexOf('image/') >= 0) {
           console.log('是图片');
-          dispatch(showLightbox(data.previewUrl));
+          dispatch(showLightbox(previewUrl));
         } else {
           console.log('在侧边栏打开');
           if (config.platform === 'web' || config.platform === 'electron') {
             const Webview = require('../../web/components/Webview');
-            dispatch(showSlidePanel('文件', <Webview src={data.previewUrl} />));
+            dispatch(showSlidePanel('文件', <Webview src={previewUrl} />));
           }
         }
       } else {
@@ -29,12 +30,14 @@ exports.previewFile = function(fileuuid) {
 exports.downloadFile = function(fileuuid) {
   return function(dispatch, getState) {
     return api.emit('file::getFileInfo', { uuid: fileuuid }, function(data) {
-      if (data.downloadUrl) {
-        console.log('开始下载');
+      const url = data.downloadUrl; // 下载地址
+      if (url) {
+        console.log('开始下载:', url);
         let a = document.createElement('a');
+        // a.target = '_blank';
         a.style.display = 'none';
-        a.href = data.downloadUrl;
-        a.download = data.downloadUrl;
+        a.href = url;
+        a.download = url;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
