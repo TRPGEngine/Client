@@ -9,7 +9,7 @@ const ROOT_PATH = path.resolve(__dirname, '../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
-// const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
+const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
 const config = require('../package.json');
 
 // let vendors = Object.keys(config.dependencies);
@@ -71,13 +71,13 @@ module.exports = {
       {
         test: /\.(js|jsx)?$/,
         loader: 'babel-loader',
-        // include: [
-        //   APP_PATH,
-        //   CONFIG_PATH,
-        //   path.resolve(ROOT_PATH, './node_modules/trpg-actor-template/'),
-        //   path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
-        // ],
-        exclude: path.resolve(ROOT_PATH, './node_modules/**'),
+        include: [
+          APP_PATH,
+          CONFIG_PATH,
+          path.resolve(ROOT_PATH, './node_modules/trpg-actor-template/'),
+          path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
+        ],
+        // exclude: path.resolve(ROOT_PATH, './node_modules/**'),
         query: {
           babelrc: false,
           compact: false,
