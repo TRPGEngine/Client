@@ -71,17 +71,19 @@ module.exports = {
       {
         test: /\.(js|jsx)?$/,
         loader: 'babel-loader',
-        include: [
-          APP_PATH,
-          CONFIG_PATH,
-          path.resolve(ROOT_PATH, './node_modules/trpg-actor-template/'),
-          path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
-        ],
-        // exclude: path.resolve(ROOT_PATH, './node_modules/**'),
+        // include: [
+        //   APP_PATH,
+        //   CONFIG_PATH,
+        //   path.resolve(ROOT_PATH, './node_modules/trpg-actor-template/'),
+        //   path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
+        // ],
+        exclude: path.resolve(ROOT_PATH, './node_modules/**'),
         query: {
           babelrc: false,
           compact: false,
           presets: ['@babel/preset-env', '@babel/preset-react'],
+          //   ignore: [/[\/\\]core-js/, /@babel[\/\\]runtime/],
+          // sourceType: 'unambiguous',
           plugins: [
             [
               '@babel/plugin-transform-runtime',
@@ -91,7 +93,8 @@ module.exports = {
             ],
             // '@babel/plugin-external-helpers',
             'transform-class-properties',
-            'transform-es2015-modules-commonjs',
+            // 'transform-es2015-modules-commonjs',
+            '@babel/plugin-transform-modules-commonjs',
             'dynamic-import-webpack',
           ],
         },
