@@ -1,4 +1,4 @@
-import Storage from 'react-native-storage';
+import Storage from 'react-native-storage/src/storage';
 import config from '../../config/project.config';
 
 let storage = new Storage({

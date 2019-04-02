@@ -82,18 +82,15 @@ module.exports = {
           babelrc: false,
           compact: false,
           presets: ['@babel/preset-env', '@babel/preset-react'],
-          //   ignore: [/[\/\\]core-js/, /@babel[\/\\]runtime/],
-          // sourceType: 'unambiguous',
+          ignore: [/[\/\\]core-js/, /@babel[\/\\]runtime/],
           plugins: [
             [
               '@babel/plugin-transform-runtime',
               {
-                helpers: false,
+                helpers: true,
               },
             ],
-            // '@babel/plugin-external-helpers',
             'transform-class-properties',
-            // 'transform-es2015-modules-commonjs',
             '@babel/plugin-transform-modules-commonjs',
             'dynamic-import-webpack',
           ],

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../../../config/project.config';
 
-function sendErrorReport(data) {
+export function sendErrorReport(data) {
   axios
     .post(config.file.getAbsolutePath('/report/error'), data)
     .then((res) => {
@@ -11,8 +11,6 @@ function sendErrorReport(data) {
       console.error(err);
     });
 }
-
-export const sendErrorReport = sendErrorReport;
 
 // 弃用, 改为组件发起
 export const web = function() {
