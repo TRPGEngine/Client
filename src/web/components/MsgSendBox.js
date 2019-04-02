@@ -1,13 +1,13 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const { connect } = require('react-redux');
-const ReactTooltip = require('react-tooltip');
-const Emoticon = require('./Emoticon');
-const pasteUtils = require('../../shared/utils/pasteUtils');
-const { sendMsg } = require('../../redux/actions/chat');
-const { showModal, hideModal } = require('../../redux/actions/ui');
-const ActorSelect = require('./modal/ActorSelect');
-const config = require('../../../config/project.config');
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
+import Emoticon from './Emoticon';
+import pasteUtils from '../../shared/utils/pasteUtils';
+import { sendMsg } from '../../redux/actions/chat';
+import { showModal, hideModal } from '../../redux/actions/ui';
+import ActorSelect from './modal/ActorSelect';
+import config from '../../../config/project.config';
 import ContentEditable from 'react-contenteditable';
 
 require('./MsgSendBox.scss');
@@ -348,6 +348,6 @@ MsgSendBox.propTypes = {
   isRoom: PropTypes.bool,
 };
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   userUUID: state.getIn(['user', 'info', 'uuid']),
 }))(MsgSendBox);

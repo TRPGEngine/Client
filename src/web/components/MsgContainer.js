@@ -1,12 +1,12 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../config/project.config.js');
-const dateHelper = require('../../shared/utils/dateHelper');
-const scrollTo = require('../../shared/utils/animatedScrollTo.js');
-const { getUserInfoCache } = require('../../shared/utils/cacheHelper');
-const { getMoreChatLog } = require('../../redux/actions/chat');
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../config/project.config.js';
+import dateHelper from '../../shared/utils/dateHelper';
+import scrollTo from '../../shared/utils/animatedScrollTo.js';
+import { getUserInfoCache } from '../../shared/utils/cacheHelper';
+import { getMoreChatLog } from '../../redux/actions/chat';
 
-const MessageHandler = require('../../shared/components/MessageHandler');
+import MessageHandler from '../../shared/components/MessageHandler';
 MessageHandler.registerDefaultMessageHandler(require('./messageTypes/Default'));
 MessageHandler.registerMessageHandler('tip', require('./messageTypes/Tip'));
 MessageHandler.registerMessageHandler('card', require('./messageTypes/Card'));
@@ -165,7 +165,7 @@ class MsgContainer extends React.Component {
   }
 }
 
-module.exports = connect((state, ownProps) => {
+export default connect((state, ownProps) => {
   let converseUUID = ownProps.converseUUID;
   let msgList = state.getIn(['chat', 'converses', converseUUID, 'msgList']);
 

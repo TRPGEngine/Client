@@ -1,7 +1,7 @@
-const React = require('react');
-const parser = require('bbcode-to-react');
-const { emojify } = require('./emoji');
-const Image = require('../../web/components/Image');
+import React from 'react';
+import parser from 'bbcode-to-react';
+import { emojify } from './emoji';
+import Image from '../../web/components/Image';
 
 class EmojiTag extends parser.Tag {
   toReact() {
@@ -44,4 +44,4 @@ class ImageTag extends parser.Tag {
 parser.registerTag('emoji', EmojiTag); // add new tag
 parser.registerTag('img', ImageTag); // add new tag
 
-module.exports = parser;
+export default parser;

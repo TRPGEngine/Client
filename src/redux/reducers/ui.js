@@ -1,3 +1,6 @@
+import constants from '../constants';
+import immutable from 'immutable';
+
 const {
   RESET,
   SHOW_LOADING,
@@ -18,8 +21,7 @@ const {
   SET_LAST_DICE_TYPE,
   CHANGE_NETWORK_STATE,
   UPDATE_SOCKET_ID,
-} = require('../constants');
-const immutable = require('immutable');
+} = constants;
 
 const initialState = immutable.fromJS({
   showAlert: false,
@@ -50,7 +52,7 @@ const initialState = immutable.fromJS({
   lastDiceType: 'basicDice',
 });
 
-module.exports = function ui(state = initialState, action) {
+export default function ui(state = initialState, action) {
   switch (action.type) {
     case RESET:
       return state
@@ -116,4 +118,4 @@ module.exports = function ui(state = initialState, action) {
     default:
       return state;
   }
-};
+}

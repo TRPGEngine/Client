@@ -49,4 +49,4 @@ let _sessionStorage = {
   },
 };
 
-module.exports = _sessionStorage;
+export default _sessionStorage;

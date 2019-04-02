@@ -1,15 +1,15 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const dateHelper = require('../../../../shared/utils/dateHelper');
-const config = require('../../../../../config/project.config.js');
-const ConverseDetail = require('./ConverseDetail');
-// const Tab = require('../../../components/Tab');
-const { TabsController, Tab } = require('../../../components/Tabs');
-const ConvItem = require('../../../components/ConvItem');
-const { switchConverse } = require('../../../../redux/actions/chat');
-const { showProfileCard } = require('../../../../redux/actions/ui');
+import React from 'react';
+import { connect } from 'react-redux';
+import dateHelper from '../../../../shared/utils/dateHelper';
+import config from '../../../../../config/project.config.js';
+import ConverseDetail from './ConverseDetail';
+// import Tab from '../../../components/Tab';
+import { TabsController, Tab } from '../../../components/Tabs';
+import ConvItem from '../../../components/ConvItem';
+import { switchConverse } from '../../../../redux/actions/chat';
+import { showProfileCard } from '../../../../redux/actions/ui';
 
-require('./ConverseList.scss');
+import './ConverseList.scss';
 
 class ConverseList extends React.Component {
   constructor(props) {
@@ -170,7 +170,7 @@ class ConverseList extends React.Component {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   selectedUUID: state.getIn(['chat', 'selectedConversesUUID']),
   conversesDesc: state.getIn(['chat', 'conversesDesc']),
   converses: state.getIn(['chat', 'converses']),

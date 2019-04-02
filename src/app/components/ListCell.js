@@ -1,6 +1,6 @@
-const React = require('react');
-const { Text, TouchableOpacity, View, Image, Switch } = require('react-native');
-const sb = require('react-native-style-block');
+import React from 'react';
+import { Text, TouchableOpacity, View, Image, Switch } from 'react-native';
+import sb from 'react-native-style-block';
 
 class ListCell extends React.Component {
   render() {
@@ -52,4 +52,4 @@ const styles = {
   value: [sb.font(18), sb.color('#ccc'), sb.margin(0, 4, 0, 0)],
 };
 
-module.exports = ListCell;
+export default ListCell;

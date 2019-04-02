@@ -1,11 +1,11 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const ModalPanel = require('../ModalPanel');
-const Checkbox = require('../Checkbox');
-const {
+import React from 'react';
+import { connect } from 'react-redux';
+import ModalPanel from '../ModalPanel';
+import Checkbox from '../Checkbox';
+import {
   setSystemSettings,
   saveSettings,
-} = require('../../../redux/actions/settings');
+} from '../../../redux/actions/settings';
 
 require('./SystemSettings.scss');
 
@@ -35,7 +35,7 @@ class SystemSettings extends React.Component {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   notificationPermission: state.getIn(['settings', 'notificationPermission']),
   systemSettings: state.getIn(['settings', 'system']),
 }))(SystemSettings);

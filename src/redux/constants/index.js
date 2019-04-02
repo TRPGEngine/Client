@@ -1,16 +1,24 @@
-const config = require('../../../config/project.config');
+import config from '../../../config/project.config';
+import actor from './actor';
+import cache from './cache';
+import chat from './chat';
+import group from './group';
+import note from './note';
+import ui from './ui';
+import user from './user';
+import settings from './settings';
 
-module.exports = Object.assign(
+export default Object.assign(
   {
     RESET: 'RESET',
   },
-  require('./actor'),
-  require('./cache'),
-  require('./chat'),
-  require('./group'),
-  require('./note'),
-  require('./ui'),
-  require('./user'),
-  require('./settings'),
+  actor,
+  cache,
+  chat,
+  group,
+  note,
+  ui,
+  user,
+  settings,
   config.platform === 'app' ? require('./nav') : null
 );

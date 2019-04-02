@@ -1,4 +1,6 @@
-const immutable = require('immutable');
+import immutable from 'immutable';
+import constants from '../constants';
+// import sessionStorage from '../../api/sessionStorage.api.js';
 const {
   RESET,
   LOGIN_REQUEST,
@@ -20,8 +22,7 @@ const {
   GET_FRIEND_INVITE_SUCCESS,
   REFUSE_FRIEND_INVITE_SUCCESS,
   ADD_FRIEND_INVITE,
-} = require('../constants');
-// const sessionStorage = require('../../api/sessionStorage.api.js');
+} = constants;
 
 const initialState = immutable.fromJS({
   isTryLogin: false,
@@ -34,7 +35,7 @@ const initialState = immutable.fromJS({
   findingResult: [],
 });
 
-module.exports = function ui(state = initialState, action) {
+export default function ui(state = initialState, action) {
   switch (action.type) {
     case RESET:
       return initialState;
@@ -141,4 +142,4 @@ module.exports = function ui(state = initialState, action) {
     default:
       return state;
   }
-};
+}

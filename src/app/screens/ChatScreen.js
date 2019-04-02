@@ -1,5 +1,5 @@
-const React = require('react');
-const { connect } = require('react-redux');
+import React from 'react';
+import { connect } from 'react-redux';
 const {
   View,
   Text,
@@ -9,15 +9,15 @@ const {
   TextInput,
   Keyboard,
 } = require('react-native');
-const sb = require('react-native-style-block');
-const { TInput, TIcon } = require('../components/TComponent');
-const config = require('../../../config/project.config');
-const { sendMsg } = require('../../redux/actions/chat');
-const { getUserInfoCache } = require('../../shared/utils/cacheHelper');
-const dateHelper = require('../../shared/utils/dateHelper');
-const ExtraPanelItem = require('../components/ExtraPanelItem');
+import sb from 'react-native-style-block';
+import { TInput, TIcon } from '../components/TComponent';
+import config from '../../../config/project.config';
+import { sendMsg } from '../../redux/actions/chat';
+import { getUserInfoCache } from '../../shared/utils/cacheHelper';
+import dateHelper from '../../shared/utils/dateHelper';
+import ExtraPanelItem from '../components/ExtraPanelItem';
 
-const MessageHandler = require('../../shared/components/MessageHandler');
+import MessageHandler from '../../shared/components/MessageHandler';
 MessageHandler.registerDefaultMessageHandler(
   require('../components/messageTypes/Default')
 );
@@ -238,7 +238,7 @@ const styles = {
   extraPanel: [sb.size(null, 265), sb.bgColor(), sb.border('Top', 0.5, '#ccc')],
 };
 
-module.exports = connect((state) => {
+export default connect((state) => {
   let selectedConversesUUID = state.getIn(['chat', 'selectedConversesUUID']);
   let msgList = state.getIn([
     'chat',

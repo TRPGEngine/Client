@@ -1,18 +1,18 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { selectActor } = require('../../../../redux/actions/actor');
-const { showAlert, showModal } = require('../../../../redux/actions/ui');
-const {
+import React from 'react';
+import { connect } from 'react-redux';
+import { selectActor } from '../../../../redux/actions/actor';
+import { showAlert, showModal } from '../../../../redux/actions/ui';
+import {
   addGroupActor,
   removeGroupActor,
-} = require('../../../../redux/actions/group');
-const ReactTooltip = require('react-tooltip');
-const at = require('trpg-actor-template');
-const { TabsController, Tab } = require('../../../components/Tabs');
-const ModalPanel = require('../../../components/ModalPanel');
-const ActorProfile = require('../../../components/modal/ActorProfile');
-const ActorSelect = require('../../../components/modal/ActorSelect');
-const GroupActorCheck = require('./modal/GroupActorCheck');
+} from '../../../../redux/actions/group';
+import ReactTooltip from 'react-tooltip';
+import at from 'trpg-actor-template';
+import { TabsController, Tab } from '../../../components/Tabs';
+import ModalPanel from '../../../components/ModalPanel';
+import ActorProfile from '../../../components/modal/ActorProfile';
+import ActorSelect from '../../../components/modal/ActorSelect';
+import GroupActorCheck from './modal/GroupActorCheck';
 
 require('./GroupActor.scss');
 
@@ -239,7 +239,7 @@ class GroupActor extends React.Component {
   }
 }
 
-module.exports = connect(
+export default connect(
   (state) => {
     const selectedGroupUUID = state.getIn(['group', 'selectedGroupUUID']);
     return {

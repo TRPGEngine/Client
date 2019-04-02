@@ -1,8 +1,8 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const ModalPanel = require('./ModalPanel');
-const { changePassword } = require('../../redux/actions/user');
-const { showAlert, hideModal } = require('../../redux/actions/ui');
+import React from 'react';
+import { connect } from 'react-redux';
+import ModalPanel from './ModalPanel';
+import { changePassword } from '../../redux/actions/user';
+import { showAlert, hideModal } from '../../redux/actions/ui';
 
 require('./ChangePassword.scss');
 
@@ -88,4 +88,4 @@ class ChangePassword extends React.Component {
   }
 }
 
-module.exports = connect()(ChangePassword);
+export default connect()(ChangePassword);

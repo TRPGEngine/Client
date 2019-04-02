@@ -1,4 +1,5 @@
-const immutable = require('immutable');
+import immutable from 'immutable';
+import constants from '../constants';
 const {
   RESET,
   CREATE_GROUP_SUCCESS,
@@ -28,7 +29,7 @@ const {
   TICK_MEMBER_SUCCESS,
   SET_MEMBER_TO_MANAGER_SUCCESS,
   UPDATE_GROUP_STATUS,
-} = require('../constants');
+} = constants;
 
 const initialState = immutable.fromJS({
   info: {}, // 所有的group信息。包括加入的和未加入的 // TODO: 修改到cache里管理
@@ -40,7 +41,7 @@ const initialState = immutable.fromJS({
   requestingGroupUUID: [],
 });
 
-module.exports = function group(state = initialState, action) {
+export default function group(state = initialState, action) {
   switch (action.type) {
     case RESET:
       return initialState;
@@ -285,4 +286,4 @@ module.exports = function group(state = initialState, action) {
     default:
       return state;
   }
-};
+}

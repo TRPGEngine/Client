@@ -1,9 +1,9 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const Base = require('./Base');
-const filesize = require('filesize');
-const config = require('../../../../config/project.config');
-const { downloadFile, previewFile } = require('../../../redux/actions/file');
+import React from 'react';
+import { connect } from 'react-redux';
+import Base from './Base';
+import filesize from 'filesize';
+import config from '../../../../config/project.config';
+import { downloadFile, previewFile } from '../../../redux/actions/file';
 
 class File extends Base {
   _handlePreview() {
@@ -54,4 +54,4 @@ class File extends Base {
   }
 }
 
-module.exports = connect()(File);
+export default connect()(File);

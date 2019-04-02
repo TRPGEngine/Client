@@ -1,6 +1,6 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { hideAlert } = require('../../redux/actions/ui');
+import React from 'react';
+import { connect } from 'react-redux';
+import { hideAlert } from '../../redux/actions/ui';
 require('./Alert.scss');
 
 class Alert extends React.Component {
@@ -69,7 +69,7 @@ class Alert extends React.Component {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   showAlert: state.getIn(['ui', 'showAlert']),
   showAlertInfo: state.getIn(['ui', 'showAlertInfo']),
 }))(Alert);

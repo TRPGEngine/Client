@@ -1,4 +1,4 @@
-const config = require('../../config/project.config');
+import config from '../../config/project.config';
 
 const out = {
   defaultImg: {
@@ -47,4 +47,4 @@ const out = {
   },
 };
 
-module.exports = out;
+export default out;

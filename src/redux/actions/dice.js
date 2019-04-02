@@ -1,9 +1,9 @@
-const trpgApi = require('../../api/trpg.api.js');
+import * as trpgApi from '../../api/trpg.api.js';
 const api = trpgApi.getInstance();
-const { addMsg } = require('./chat');
-const { showAlert } = require('./ui');
+import { addMsg } from './chat';
+import { showAlert } from './ui';
 
-exports.sendDiceRequest = function(to_uuid, is_group, dice_request, reason) {
+export const sendDiceRequest = function(to_uuid, is_group, dice_request, reason) {
   return function(dispatch, getState) {
     return api.emit(
       'dice::sendDiceRequest',
@@ -20,7 +20,7 @@ exports.sendDiceRequest = function(to_uuid, is_group, dice_request, reason) {
   };
 };
 
-exports.acceptDiceRequest = function(uuid) {
+export const acceptDiceRequest = function(uuid) {
   return function(dispatch, getState) {
     return api.emit(
       'dice::acceptDiceRequest',
@@ -38,7 +38,7 @@ exports.acceptDiceRequest = function(uuid) {
   };
 };
 
-exports.sendDiceInvite = function(
+export const sendDiceInvite = function(
   to_uuid,
   is_group,
   dice_request,
@@ -69,7 +69,7 @@ exports.sendDiceInvite = function(
   };
 };
 
-exports.acceptDiceInvite = function(uuid, isGroupMsg) {
+export const acceptDiceInvite = function(uuid, isGroupMsg) {
   return function(dispatch, getState) {
     return api.emit('dice::acceptDiceInvite', { msg_card_uuid: uuid }, function(
       data
@@ -85,7 +85,7 @@ exports.acceptDiceInvite = function(uuid, isGroupMsg) {
   };
 };
 
-exports.sendQuickDice = function(to_uuid, is_group, dice_request) {
+export const sendQuickDice = function(to_uuid, is_group, dice_request) {
   return function(dispatch, getState) {
     return api.emit(
       'dice::sendQuickDice',

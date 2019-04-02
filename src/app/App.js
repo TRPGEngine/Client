@@ -3,20 +3,20 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-const React = require('react');
-const { StyleSheet } = require('react-native');
-const configureStore = require('../redux/configureStore');
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import configureStore from '../redux/configureStore';
 const store = configureStore();
-const { AppWithNavigationState } = require('./router');
-const { Provider } = require('react-redux');
+import { AppWithNavigationState } from './router';
+import { Provider } from 'react-redux';
 require('../shared/utils/cacheHelper').attachStore(store);
 
-const trpgApi = require('../api/trpg.api.js');
+import * as trpgApi from '../api/trpg.api.js';
 const api = trpgApi.getInstance();
 trpgApi.bindEventFunc.call(api, store);
 
 // token登录
-const rnStorage = require('../api/rnStorage.api.js');
+import rnStorage from '../api/rnStorage.api.js';
 (async () => {
   console.log('读取本地存储的token...');
   let uuid = await rnStorage.get('uuid');
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = App;
+export default App;

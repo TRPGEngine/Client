@@ -1,9 +1,9 @@
-const axios = require('axios');
-const fileUrl = require('../../api/trpg.api.js').fileUrl;
+import axios from 'axios';
+import { fileUrl } from '../../api/trpg.api.js';
 const uploadPicHost = 'https://sm.ms/api/upload';
 
 // https://sm.ms/api/upload
-exports.toNetwork = function(userUUID, file) {
+export const toNetwork = function(userUUID, file) {
   let form = new FormData();
   form.append('smfile', file);
   form.append('ssl', true);

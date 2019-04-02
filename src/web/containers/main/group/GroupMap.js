@@ -1,6 +1,6 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const ReactTooltip = require('react-tooltip');
+import React from 'react';
+import { connect } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
 
 require('./GroupMap.scss');
 
@@ -123,4 +123,4 @@ class GroupMap extends React.Component {
   }
 }
 
-module.exports = connect()(GroupMap);
+export default connect()(GroupMap);

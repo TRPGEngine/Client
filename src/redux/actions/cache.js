@@ -1,16 +1,17 @@
+import constants from '../constants';
 const {
   GET_USER_INFO,
   GET_TEMPLATE_INFO,
   GET_ACTOR_INFO,
   GET_GROUP_INFO_SUCCESS,
-} = require('../constants');
-const trpgApi = require('../../api/trpg.api.js');
+} = constants;
+import * as trpgApi from '../../api/trpg.api.js';
 const api = trpgApi.getInstance();
-const config = require('../../../config/project.config');
-const rnStorage = require('../../api/rnStorage.api.js');
+import config from '../../../config/project.config';
+import rnStorage from '../../api/rnStorage.api.js';
 
 // 加载本地缓存信息
-exports.loadLocalCache = function() {
+export const loadLocalCache = function() {
   return function(dispatch, getState) {
     // TODO: 用户缓存，列表缓存，等等等等
     rnStorage.get('localCache').then((res) => {
@@ -19,7 +20,7 @@ exports.loadLocalCache = function() {
   };
 };
 
-exports.saveLocalCache = function() {
+export const saveLocalCache = function() {
   return function(dispatch, getState) {
     console.log('save local cache');
     let usercache = getState().getIn(['cache', 'user']);
@@ -30,7 +31,7 @@ exports.saveLocalCache = function() {
   };
 };
 
-exports.getUserInfo = function(uuid, onCompleted) {
+export const getUserInfo = function(uuid, onCompleted) {
   if (!uuid) {
     throw new Error('getUserInfo need uuid');
   }
@@ -50,7 +51,7 @@ exports.getUserInfo = function(uuid, onCompleted) {
   };
 };
 
-exports.getTemplateInfo = function(uuid) {
+export const getTemplateInfo = function(uuid) {
   if (!uuid) {
     throw new Error('getTemplateInfo need uuid');
   }
@@ -66,7 +67,7 @@ exports.getTemplateInfo = function(uuid) {
   };
 };
 
-exports.getActorInfo = function(uuid) {
+export const getActorInfo = function(uuid) {
   if (!uuid) {
     throw new Error('getActorInfo need uuid');
   }
@@ -84,7 +85,7 @@ exports.getActorInfo = function(uuid) {
   };
 };
 
-exports.getGroupInfo = function(uuid, onCompleted) {
+export const getGroupInfo = function(uuid, onCompleted) {
   if (!uuid) {
     throw new Error('getGroupInfo need uuid');
   }

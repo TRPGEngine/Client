@@ -1,9 +1,9 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const Select = require('react-select');
-const { findUser } = require('../../../redux/actions/user');
-const ModalPanel = require('../ModalPanel');
-const FindResultItem = require('../FindResultItem');
+import React from 'react';
+import { connect } from 'react-redux';
+import Select from 'react-select';
+import { findUser } from '../../../redux/actions/user';
+import ModalPanel from '../ModalPanel';
+import FindResultItem from '../FindResultItem';
 
 require('./FriendsAdd.scss');
 
@@ -77,7 +77,7 @@ class FriendsAdd extends React.Component {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   isFinding: state.getIn(['user', 'isFindingUser']),
   findingResult: state.getIn(['user', 'findingResult']),
 }))(FriendsAdd);

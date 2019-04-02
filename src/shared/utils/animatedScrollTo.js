@@ -41,5 +41,5 @@ Math.easeInOutQuad = function(t, b, c, d) {
   return (-c / 2) * (t * (t - 2) - 1) + b;
 };
 
-exports.to = scrollTo;
-exports.bottom = scrollToBottom;
+export const to = scrollTo;
+export const bottom = scrollToBottom;

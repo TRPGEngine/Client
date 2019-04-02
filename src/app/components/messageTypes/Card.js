@@ -1,5 +1,5 @@
-const React = require('react');
-const Base = require('./Base');
+import React from 'react';
+import Base from './Base';
 
 const CardType = {
   default: require('./card/DefaultCard'),
@@ -21,4 +21,4 @@ class Card extends Base {
   }
 }
 
-module.exports = Card;
+export default Card;

@@ -1,7 +1,7 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const ModalPanel = require('../ModalPanel');
-const { createGroup } = require('../../../redux/actions/group');
+import React from 'react';
+import { connect } from 'react-redux';
+import ModalPanel from '../ModalPanel';
+import { createGroup } from '../../../redux/actions/group';
 
 require('./GroupCreate.scss');
 
@@ -70,4 +70,4 @@ class GroupCreate extends React.Component {
   }
 }
 
-module.exports = connect()(GroupCreate);
+export default connect()(GroupCreate);

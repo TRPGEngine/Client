@@ -1,5 +1,5 @@
-const React = require('react');
-const { connect } = require('react-redux');
+import React from 'react';
+import { connect } from 'react-redux';
 const {
   View,
   Text,
@@ -8,10 +8,10 @@ const {
   Keyboard,
   FlatList,
 } = require('react-native');
-const sb = require('react-native-style-block');
-const { TIcon, TInput, TAvatar } = require('../components/TComponent');
-const { findUser } = require('../../redux/actions/user');
-const { findGroup } = require('../../redux/actions/group');
+import sb from 'react-native-style-block';
+import { TIcon, TInput, TAvatar } from '../components/TComponent';
+import { findUser } from '../../redux/actions/user';
+import { findGroup } from '../../redux/actions/group';
 
 class AddFriendScreen extends React.Component {
   constructor(props) {
@@ -218,7 +218,7 @@ const styles = {
   searchResultListItemAvatar: [sb.margin(0, 10, 0, 0)],
 };
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   isFinding:
     state.getIn(['user', 'isFindingUser']) ||
     state.getIn(['group', 'isFindingGroup']),

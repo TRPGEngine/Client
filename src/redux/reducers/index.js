@@ -1,19 +1,27 @@
 import { combineReducers } from 'redux-immutable';
-const config = require('../../../config/project.config');
+import config from '../../../config/project.config';
+import ui from './ui';
+import chat from './chat';
+import user from './user';
+import cache from './cache';
+import note from './note';
+import actor from './actor';
+import group from './group';
+import settings from './settings';
 
 const reducers = {
-  ui: require('./ui'),
-  chat: require('./chat'),
-  user: require('./user'),
-  cache: require('./cache'),
-  note: require('./note'),
-  actor: require('./actor'),
-  group: require('./group'),
-  settings: require('./settings'),
+  ui,
+  chat,
+  user,
+  cache,
+  note,
+  actor,
+  group,
+  settings,
 };
 
 if (config.platform === 'app') {
   reducers.nav = require('./nav');
 }
 
-module.exports = combineReducers(reducers);
+export default combineReducers(reducers);

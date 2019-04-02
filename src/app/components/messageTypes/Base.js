@@ -1,9 +1,9 @@
-const React = require('react');
-const { View, Text } = require('react-native');
-const sb = require('react-native-style-block');
-const { TAvatar } = require('../TComponent');
-const dateHelper = require('../../../shared/utils/dateHelper');
-const config = require('../../../../config/project.config');
+import React from 'react';
+import { View, Text } from 'react-native';
+import sb from 'react-native-style-block';
+import { TAvatar } from '../TComponent';
+import dateHelper from '../../../shared/utils/dateHelper';
+import config from '../../../../config/project.config';
 
 class Base extends React.Component {
   static defaultProps = {
@@ -84,4 +84,4 @@ const styles = {
   ],
 };
 
-module.exports = Base;
+export default Base;

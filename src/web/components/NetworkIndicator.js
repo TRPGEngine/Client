@@ -1,5 +1,5 @@
-const React = require('react');
-const { connect } = require('react-redux');
+import React from 'react';
+import { connect } from 'react-redux';
 
 require('./NetworkIndicator.scss');
 
@@ -32,6 +32,6 @@ class NetworkIndicator extends React.Component {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   network: state.getIn(['ui', 'network']),
 }))(NetworkIndicator);

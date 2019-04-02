@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TLoadable from '../components/TLoadable';
-const {
+import {
   Route,
   Switch,
   HashRouter,
   BrowserRouter,
   Link,
-} = require('react-router-dom');
-const ErrorBoundary = require('./ErrorBoundary');
-const NetworkIndicator = require('../components/NetworkIndicator');
-const config = require('../../../config/project.config.js');
+} from 'react-router-dom';
+import ErrorBoundary from './ErrorBoundary';
+import NetworkIndicator from '../components/NetworkIndicator';
+import config from '../../../config/project.config.js';
 require('./App.scss');
 require('../../assets/css/iconfont.css');
 require('react-select/dist/react-select.css');
@@ -23,11 +23,11 @@ const Router =
     ? BrowserRouter
     : HashRouter;
 const appVersion = config.version;
-const Login = require('./Login');
-const Register = require('./Register');
-const Main = require('./Main');
-const GlobalUI = require('./GlobalUI');
-const { emojify, getCodeList } = require('../../shared/utils/emoji');
+import Login from './Login';
+import Register from './Register';
+import Main from './Main';
+import GlobalUI from './GlobalUI';
+import { emojify, getCodeList } from '../../shared/utils/emoji';
 
 class App extends React.Component {
   render() {
@@ -76,4 +76,4 @@ class App extends React.Component {
   }
 }
 
-module.exports = connect()(App);
+export default connect()(App);

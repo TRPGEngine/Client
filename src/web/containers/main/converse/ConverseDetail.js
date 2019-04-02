@@ -1,22 +1,22 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../../../config/project.config.js');
-const {
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../../../config/project.config.js';
+import {
   showModal,
   hideModal,
   showProfileCard,
-} = require('../../../../redux/actions/ui');
-const { sendMsg, sendFile } = require('../../../../redux/actions/chat');
-const {
+} from '../../../../redux/actions/ui';
+import { sendMsg, sendFile } from '../../../../redux/actions/chat';
+import {
   sendDiceRequest,
   sendDiceInvite,
   sendQuickDice,
-} = require('../../../../redux/actions/dice');
-const DiceRequest = require('../dice/DiceRequest');
-const DiceInvite = require('../dice/DiceInvite');
-const QuickDice = require('../dice/QuickDice');
-const MsgContainer = require('../../../components/MsgContainer');
-const MsgSendBox = require('../../../components/MsgSendBox');
+} from '../../../../redux/actions/dice';
+import DiceRequest from '../dice/DiceRequest';
+import DiceInvite from '../dice/DiceInvite';
+import QuickDice from '../dice/QuickDice';
+import MsgContainer from '../../../components/MsgContainer';
+import MsgSendBox from '../../../components/MsgSendBox';
 
 require('./ConverseDetail.scss');
 
@@ -199,7 +199,7 @@ class ConverseDetail extends React.Component {
   }
 }
 
-module.exports = connect((state) => {
+export default connect((state) => {
   let converseUUID = state.getIn(['chat', 'selectedConversesUUID']);
   return {
     userUUID: state.getIn(['user', 'info', 'uuid']),

@@ -1,5 +1,5 @@
-const React = require('react');
-const config = require('../../../config/project.config.js');
+import React from 'react';
+import config from '../../../config/project.config.js';
 
 class Image extends React.Component {
   constructor(props) {
@@ -22,4 +22,4 @@ class Image extends React.Component {
   }
 }
 
-module.exports = Image;
+export default Image;

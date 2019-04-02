@@ -1,9 +1,9 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const { connect } = require('react-redux');
-const { isUserUUID } = require('../../shared/utils/uuid');
-const { removeConverse } = require('../../redux/actions/chat');
-const { showProfileCard } = require('../../redux/actions/ui');
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { isUserUUID } from '../../shared/utils/uuid';
+import { removeConverse } from '../../redux/actions/chat';
+import { showProfileCard } from '../../redux/actions/ui';
 require('./ConvItem.scss');
 
 class ConvItem extends React.Component {
@@ -60,4 +60,4 @@ ConvItem.propTypes = {
   uuid: PropTypes.string,
 };
 
-module.exports = connect()(ConvItem);
+export default connect()(ConvItem);

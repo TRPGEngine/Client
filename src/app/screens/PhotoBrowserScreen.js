@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 import PhotoBrowser from 'react-native-photo-browser';
 
 class PhotoBrowserScreen extends React.Component {
@@ -28,4 +28,4 @@ class PhotoBrowserScreen extends React.Component {
   }
 }
 
-module.exports = PhotoBrowserScreen;
+export default PhotoBrowserScreen;

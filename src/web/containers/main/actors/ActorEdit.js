@@ -1,10 +1,10 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const at = require('trpg-actor-template');
-const config = require('../../../../../config/project.config');
-const { showAlert } = require('../../../../redux/actions/ui');
-const { createActor, updateActor } = require('../../../../redux/actions/actor');
-const ImageUploader = require('../../../components/ImageUploader');
+import React from 'react';
+import { connect } from 'react-redux';
+import at from 'trpg-actor-template';
+import config from '../../../../../config/project.config';
+import { showAlert } from '../../../../redux/actions/ui';
+import { createActor, updateActor } from '../../../../redux/actions/actor';
+import ImageUploader from '../../../components/ImageUploader';
 
 require('./ActorEdit.scss');
 
@@ -171,7 +171,7 @@ class ActorEdit extends React.Component {
   }
 }
 
-module.exports = connect(
+export default connect(
   (state) => ({
     selectedTemplate: state.getIn(['actor', 'selectedTemplate']),
     selectedActorUUID: state.getIn(['actor', 'selectedActorUUID']),

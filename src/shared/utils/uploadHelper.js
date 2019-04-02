@@ -1,7 +1,7 @@
-const axios = require('axios');
-const fileUrl = require('../../api/trpg.api.js').fileUrl;
+import axios from 'axios';
+import { fileUrl } from '../../api/trpg.api.js';
 
-exports.generateFileMsgData = function(file) {
+export const generateFileMsgData = function(file) {
   let tmp = file.name.split('.');
   return {
     originalname: file.name,
@@ -36,10 +36,10 @@ let _upload = function(path, userUUID, file, cb) {
     });
 };
 
-exports.toTemporary = function(userUUID, file, cb) {
+export const toTemporary = function(userUUID, file, cb) {
   _upload('/upload/temporary', userUUID, file, cb);
 };
 
-exports.toPersistence = function(userUUID, file, cb) {
+export const toPersistence = function(userUUID, file, cb) {
   _upload('/upload/persistence', userUUID, file, cb);
 };

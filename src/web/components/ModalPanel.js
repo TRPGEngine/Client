@@ -1,5 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 
 require('./ModalPanel.scss');
 
@@ -23,4 +23,4 @@ ModalPanel.propTypes = {
   actions: PropTypes.element,
 };
 
-module.exports = ModalPanel;
+export default ModalPanel;

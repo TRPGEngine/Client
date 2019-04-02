@@ -1,5 +1,5 @@
-const React = require('react');
-const BaseCard = require('./BaseCard');
+import React from 'react';
+import BaseCard from './BaseCard';
 
 // 默认卡片
 class DefaultCard extends BaseCard {
@@ -8,4 +8,4 @@ class DefaultCard extends BaseCard {
   }
 }
 
-module.exports = DefaultCard;
+export default DefaultCard;

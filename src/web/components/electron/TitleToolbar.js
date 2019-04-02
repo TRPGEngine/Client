@@ -50,4 +50,4 @@ class TitleToolbar extends React.Component {
   }
 }
 
-module.exports = TitleToolbar;
+export default TitleToolbar;

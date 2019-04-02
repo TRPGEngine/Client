@@ -1,12 +1,12 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const ModalPanel = require('../ModalPanel');
-const {
+import React from 'react';
+import { connect } from 'react-redux';
+import ModalPanel from '../ModalPanel';
+import {
   addFavoriteDice,
   removeFavoriteDice,
   updateFavoriteDice,
   saveSettings,
-} = require('../../../redux/actions/settings');
+} from '../../../redux/actions/settings';
 
 require('./UserSettings.scss');
 
@@ -75,6 +75,6 @@ class UserSettings extends React.Component {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   userSettings: state.getIn(['settings', 'user']),
 }))(UserSettings);

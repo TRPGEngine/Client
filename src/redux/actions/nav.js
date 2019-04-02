@@ -1,19 +1,19 @@
-const { SWITCH_NAV, REPLACE_NAV, BACK_NAV } = require('../constants');
+import { SWITCH_NAV, REPLACE_NAV, BACK_NAV } from '../constants';
 import { NavigationActions } from 'react-navigation';
 
-exports.switchNav = function switchNav(routeName, params = {}) {
+export const switchNav = function switchNav(routeName, params = {}) {
   return { type: SWITCH_NAV, routeName, params };
 };
 
-exports.replaceNav = function replaceNav(routeName) {
+export const replaceNav = function replaceNav(routeName) {
   return { type: REPLACE_NAV, routeName };
 };
 
-exports.backNav = function backNav(key = null) {
+export const backNav = function backNav(key = null) {
   return { type: BACK_NAV, key };
 };
 
-exports.switchToConverseApp = function switchToConverseApp(
+export const switchToConverseApp = function switchToConverseApp(
   converseUUID,
   type = 'user',
   name
@@ -32,6 +32,6 @@ exports.switchToConverseApp = function switchToConverseApp(
   };
 };
 
-exports.openWebview = function openWebview(url) {
+export const openWebview = function openWebview(url) {
   return NavigationActions.navigate({ routeName: 'Webview', params: { url } });
 };

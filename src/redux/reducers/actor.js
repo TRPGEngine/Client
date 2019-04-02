@@ -1,4 +1,5 @@
-const immutable = require('immutable');
+import immutable from 'immutable';
+import constants from '../constants';
 const {
   RESET,
   GET_TEMPLATE_SUCCESS,
@@ -13,7 +14,8 @@ const {
   SELECT_ACTOR,
   REMOVE_ACTOR_SUCCESS,
   UPDATE_ACTOR_SUCCESS,
-} = require('../constants');
+} = constants;
+
 const initialState = immutable.fromJS({
   isFindingTemplate: false, // 模板查询页面
   findingResult: [], // 模板查询结果
@@ -48,7 +50,7 @@ function updateSelfActor(list, uuid, actor) {
   return list;
 }
 
-module.exports = function actor(state = initialState, action) {
+export default function actor(state = initialState, action) {
   switch (action.type) {
     case RESET:
       return initialState;
@@ -122,4 +124,4 @@ module.exports = function actor(state = initialState, action) {
     default:
       return state;
   }
-};
+}

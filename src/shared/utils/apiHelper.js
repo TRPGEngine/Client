@@ -1,7 +1,7 @@
-const trpgApi = require('../../api/trpg.api.js');
+import * as trpgApi from '../../api/trpg.api.js';
 const api = trpgApi.getInstance();
 
-exports.getTemplate = function(template_uuid, cb) {
+export const getTemplate = function(template_uuid, cb) {
   if (!template_uuid) {
     console.error('have not template_uuid:', template_uuid);
     return;

@@ -1,7 +1,7 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const { connect } = require('react-redux');
-const { hideModal } = require('../../redux/actions/ui');
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { hideModal } from '../../redux/actions/ui';
 require('./Modal.scss');
 
 class Modal extends React.Component {
@@ -29,7 +29,7 @@ Modal.propTypes = {
   body: PropTypes.object,
 };
 
-module.exports = connect(
+export default connect(
   (state) => ({
     show: state.getIn(['ui', 'showModal']),
     body: state.getIn(['ui', 'showModalBody']),

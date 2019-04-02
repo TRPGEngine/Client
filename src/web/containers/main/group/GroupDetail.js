@@ -1,31 +1,31 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../../../config/project.config.js');
-const Select = require('react-select');
-const ReactTooltip = require('react-tooltip');
-const {
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../../../config/project.config.js';
+import Select from 'react-select';
+import ReactTooltip from 'react-tooltip';
+import {
   showModal,
   hideModal,
   showAlert,
   showSlidePanel,
-} = require('../../../../redux/actions/ui');
-const { sendMsg, sendFile } = require('../../../../redux/actions/chat');
-const { changeSelectGroupActor } = require('../../../../redux/actions/group');
-const {
+} from '../../../../redux/actions/ui';
+import { sendMsg, sendFile } from '../../../../redux/actions/chat';
+import { changeSelectGroupActor } from '../../../../redux/actions/group';
+import {
   sendDiceRequest,
   sendDiceInvite,
-} = require('../../../../redux/actions/dice');
-// const GroupMap = require('./GroupMap');
-const GroupInvite = require('./GroupInvite');
-const GroupActor = require('./GroupActor');
-const GroupMember = require('./GroupMember');
-const GroupInfo = require('./GroupInfo');
-const DiceRequest = require('../dice/DiceRequest');
-const DiceInvite = require('../dice/DiceInvite');
-const ListSelect = require('../../../components/ListSelect');
-const IsDeveloping = require('../../../components/IsDeveloping');
-const MsgContainer = require('../../../components/MsgContainer');
-const MsgSendBox = require('../../../components/MsgSendBox');
+} from '../../../../redux/actions/dice';
+// import GroupMap from './GroupMap';
+import GroupInvite from './GroupInvite';
+import GroupActor from './GroupActor';
+import GroupMember from './GroupMember';
+import GroupInfo from './GroupInfo';
+import DiceRequest from '../dice/DiceRequest';
+import DiceInvite from '../dice/DiceInvite';
+import ListSelect from '../../../components/ListSelect';
+import IsDeveloping from '../../../components/IsDeveloping';
+import MsgContainer from '../../../components/MsgContainer';
+import MsgSendBox from '../../../components/MsgSendBox';
 
 class GroupDetail extends React.Component {
   _handleSelectGroupActor(item) {
@@ -259,7 +259,7 @@ class GroupDetail extends React.Component {
   }
 }
 
-module.exports = connect((state) => {
+export default connect((state) => {
   let selectedUUID = state.getIn(['group', 'selectedGroupUUID']);
   let groupInfo = state
     .getIn(['group', 'groups'])

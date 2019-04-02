@@ -1,6 +1,6 @@
-const React = require('react');
-const { Text } = require('react-native');
-const sb = require('react-native-style-block');
+import React from 'react';
+import { Text } from 'react-native';
+import sb from 'react-native-style-block';
 
 class TIcon extends React.Component {
   static defaultProps = {
@@ -28,4 +28,4 @@ const styles = {
   },
 };
 
-module.exports = TIcon;
+export default TIcon;

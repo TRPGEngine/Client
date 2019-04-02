@@ -1,3 +1,4 @@
+import constants from '../constants';
 const {
   SHOW_LOADING,
   HIDE_LOADING,
@@ -17,16 +18,16 @@ const {
   SET_LAST_DICE_TYPE,
   CHANGE_NETWORK_STATE,
   UPDATE_SOCKET_ID,
-} = require('../constants');
-const cache = require('./cache');
+} = constants;
+import cache from './cache';
 
-exports.showLoading = function(text = '加载中...') {
+export const showLoading = function(text = '加载中...') {
   return { type: SHOW_LOADING, text: text };
 };
-exports.hideLoading = function() {
+export const hideLoading = function() {
   return { type: HIDE_LOADING };
 };
-exports.showAlert = function(payload) {
+export const showAlert = function(payload) {
   if (typeof payload === 'string') {
     payload = {
       content: payload,
@@ -34,18 +35,18 @@ exports.showAlert = function(payload) {
   }
   return { type: SHOW_ALERT, payload };
 };
-exports.hideAlert = function() {
+export const hideAlert = function() {
   return { type: HIDE_ALERT };
 };
-exports.showModal = function(body) {
+export const showModal = function(body) {
   return { type: SHOW_MODAL, payload: body };
 };
-exports.hideModal = function() {
+export const hideModal = function() {
   return { type: HIDE_MODAL };
 };
 
 let toastTimer;
-exports.showToast = function(msg) {
+export const showToast = function(msg) {
   return (dispatch, getState) => {
     dispatch({ type: SHOW_TOAST, text: msg });
 
@@ -58,10 +59,10 @@ exports.showToast = function(msg) {
     }, 2000);
   };
 };
-exports.hideToast = function() {
+export const hideToast = function() {
   return { type: HIDE_TOAST };
 };
-exports.showProfileCard = function(uuid) {
+export const showProfileCard = function(uuid) {
   return (dispatch, getState) => {
     if (!uuid) {
       // 获取个人信息数据
@@ -73,34 +74,38 @@ exports.showProfileCard = function(uuid) {
     dispatch({ type: SHOW_PROFILE_CARD, uuid });
   };
 };
-exports.hideProfileCard = function() {
+export const hideProfileCard = function() {
   return { type: HIDE_PROFILE_CARD };
 };
-exports.showSlidePanel = function(title, content) {
+export const showSlidePanel = function(title, content) {
   return { type: SHOW_SLIDE_PANEL, payload: { title, content } };
 };
-exports.hideSlidePanel = function() {
+export const hideSlidePanel = function() {
   return { type: HIDE_SLIDE_PANEL };
 };
-exports.showLightbox = function(src) {
+export const showLightbox = function(src) {
   return { type: SHOW_LIGHTBOX, payload: { src } };
 };
-exports.hideLightbox = function() {
+export const hideLightbox = function() {
   return { type: HIDE_LIGHTBOX };
 };
-exports.switchMenuPannel = function(index, pannel = null) {
+export const switchMenuPannel = function(index, pannel = null) {
   return { type: SWITCH_MENU_PANNEL, menuIndex: index, payload: pannel };
 };
-exports.setLastDiceType = function(type = 'basicDice') {
+export const setLastDiceType = function(type = 'basicDice') {
   return { type: SET_LAST_DICE_TYPE, payload: type };
 };
-exports.changeNetworkStatue = function(isOnline, msg, tryReconnect = false) {
+export const changeNetworkStatue = function(
+  isOnline,
+  msg,
+  tryReconnect = false
+) {
   return {
     type: CHANGE_NETWORK_STATE,
     payload: { isOnline, msg, tryReconnect },
   };
 };
 
-exports.updateSocketId = function(socketId) {
+export const updateSocketId = function(socketId) {
   return { type: UPDATE_SOCKET_ID, socketId };
 };

@@ -1,5 +1,5 @@
-const React = require('react');
-const { connect } = require('react-redux');
+import React from 'react';
+import { connect } from 'react-redux';
 const {
   Text,
   View,
@@ -7,9 +7,9 @@ const {
   Button,
   TouchableNativeFeedback,
 } = require('react-native');
-const sb = require('react-native-style-block');
-const TButton = require('./TButton');
-const { hideAlert } = require('../../../redux/actions/ui');
+import sb from 'react-native-style-block';
+import TButton from './TButton';
+import { hideAlert } from '../../../redux/actions/ui';
 
 class TAlert extends React.Component {
   static defaultProps = {
@@ -99,7 +99,7 @@ const styles = {
   cancelBtn: [sb.bgColor('white')],
 };
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   showAlert: state.getIn(['ui', 'showAlert']),
   showAlertInfo: state.getIn(['ui', 'showAlertInfo']),
 }))(TAlert);

@@ -143,4 +143,4 @@ out.file.getRelativePath = function getAbsolutePath(path) {
   return path.replace(out.file.url, '');
 };
 
-module.exports = out;
+export default out;

@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 require('./IsDeveloping.scss');
 
@@ -13,4 +13,4 @@ class IsDeveloping extends React.Component {
   }
 }
 
-module.exports = IsDeveloping;
+export default IsDeveloping;

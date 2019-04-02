@@ -27,4 +27,4 @@ Loading.propTypes = {
   text: PropTypes.string,
 };
 
-module.exports = Loading;
+export default Loading;

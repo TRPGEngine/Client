@@ -1,3 +1,7 @@
+import constants from '../constants';
+import immutable from 'immutable';
+import uuid from 'uuid/v1';
+
 const {
   RESET,
   ADD_NOTE,
@@ -8,9 +12,7 @@ const {
   SYNC_NOTE_REQUEST,
   SYNC_NOTE_SUCCESS,
   SYNC_NOTE_FAILED,
-} = require('../constants');
-const immutable = require('immutable');
-const uuid = require('uuid/v1');
+} = constants;
 
 const initialState = immutable.fromJS({
   noteList: {},
@@ -29,7 +31,7 @@ function getBlankNote() {
   };
 }
 
-module.exports = function ui(state = initialState, action) {
+export default function ui(state = initialState, action) {
   switch (action.type) {
     case RESET:
       return initialState;
@@ -65,4 +67,4 @@ module.exports = function ui(state = initialState, action) {
     default:
       return state;
   }
-};
+}

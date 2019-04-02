@@ -1,7 +1,7 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const Select = require('react-select');
-const { setLastDiceType } = require('../../../../redux/actions/ui');
+import React from 'react';
+import { connect } from 'react-redux';
+import Select from 'react-select';
+import { setLastDiceType } from '../../../../redux/actions/ui';
 
 require('./QuickDice.scss');
 
@@ -121,7 +121,7 @@ class QuickDice extends React.Component {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   lastDiceType: state.getIn(['ui', 'lastDiceType']),
   favoriteDice: state.getIn(['settings', 'user', 'favoriteDice']),
 }))(QuickDice);

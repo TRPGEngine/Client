@@ -1,5 +1,4 @@
-const trpgApi = require('../../api/trpg.api.js');
-const api = trpgApi.getInstance();
+import constants from '../constants';
 const {
   GET_TEMPLATE_SUCCESS,
   FIND_TEMPLATE_SUCCESS,
@@ -13,16 +12,19 @@ const {
   SELECT_ACTOR,
   REMOVE_ACTOR_SUCCESS,
   UPDATE_ACTOR_SUCCESS,
-} = require('../constants');
-const config = require('../../../config/project.config');
-const { checkTemplate } = require('../../shared/utils/cacheHelper');
-const {
+} = constants;
+import config from '../../../config/project.config';
+import { checkTemplate } from '../../shared/utils/cacheHelper';
+import {
   showLoading,
   hideLoading,
   showAlert,
   hideAlert,
   hideModal,
-} = require('./ui');
+} from './ui';
+
+import * as trpgApi from '../../api/trpg.api.js';
+const api = trpgApi.getInstance();
 
 let setTemplate = function setTemplate(uuid, name, desc, avatar, info) {
   return {
@@ -269,7 +271,7 @@ let updateActor = function updateActor(uuid, name, avatar, desc, info) {
   };
 };
 
-module.exports = {
+export {
   setTemplate,
   getTemplate,
   findTemplate,

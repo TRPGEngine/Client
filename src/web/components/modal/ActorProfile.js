@@ -1,8 +1,8 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const PropTypes = require('prop-types');
-const at = require('trpg-actor-template');
-const ReactTooltip = require('react-tooltip');
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import at from 'trpg-actor-template';
+import ReactTooltip from 'react-tooltip';
 
 require('./ActorProfile.scss');
 
@@ -97,6 +97,6 @@ ActorProfile.propTypes = {
   overwritedActorData: PropTypes.object, // 一般用于团角色的人物信息, 只读
 };
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   templateCache: state.getIn(['cache', 'template']),
 }))(ActorProfile);

@@ -1,3 +1,4 @@
+import constants from '../constants';
 const {
   CREATE_GROUP_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
@@ -26,24 +27,25 @@ const {
   TICK_MEMBER_SUCCESS,
   SET_MEMBER_TO_MANAGER_SUCCESS,
   UPDATE_GROUP_STATUS,
-} = require('../constants');
-const config = require('../../../config/project.config');
-const trpgApi = require('../../api/trpg.api.js');
-const api = trpgApi.getInstance();
-const {
+} = constants;
+import config from '../../../config/project.config';
+import {
   addConverse,
   updateConversesMsglist,
   updateCardChatData,
-} = require('./chat');
-const { checkUser, checkTemplate } = require('../../shared/utils/cacheHelper');
-const {
+} from './chat';
+import { checkUser, checkTemplate } from '../../shared/utils/cacheHelper';
+import {
   showLoading,
   hideLoading,
   showAlert,
   hideModal,
   hideAlert,
   hideSlidePanel,
-} = require('./ui');
+} from './ui';
+
+import * as trpgApi from '../../api/trpg.api.js';
+const api = trpgApi.getInstance();
 
 // 当state->group->groups状态添加新的group时使用来初始化
 let initGroupInfo = function(dispatch, group) {
@@ -104,7 +106,7 @@ let initGroupInfo = function(dispatch, group) {
   });
 };
 
-exports.createGroup = function(name, subname, desc) {
+export const createGroup = function(name, subname, desc) {
   return function(dispatch, getState) {
     dispatch(showLoading());
     api.emit('group::create', { name, subname, desc }, function(data) {
@@ -122,7 +124,7 @@ exports.createGroup = function(name, subname, desc) {
   };
 };
 
-exports.getGroupInfo = function(uuid) {
+export const getGroupInfo = function(uuid) {
   return function(dispatch, getState) {
     return api.emit('group::getInfo', { uuid }, function(data) {
       if (data.result) {
@@ -137,7 +139,7 @@ exports.getGroupInfo = function(uuid) {
   };
 };
 
-exports.updateGroupInfo = function(groupUUID, groupInfo) {
+export const updateGroupInfo = function(groupUUID, groupInfo) {
   return function(dispatch, getState) {
     api.emit('group::updateInfo', { groupUUID, groupInfo }, function(data) {
       if (data.result) {
@@ -154,7 +156,7 @@ exports.updateGroupInfo = function(groupUUID, groupInfo) {
   };
 };
 
-exports.findGroup = function(text, type) {
+export const findGroup = function(text, type) {
   return function(dispatch, getState) {
     dispatch({ type: FIND_GROUP_REQUEST });
     console.log('搜索团:', text, type);
@@ -172,7 +174,7 @@ exports.findGroup = function(text, type) {
   };
 };
 
-exports.requestJoinGroup = function(group_uuid) {
+export const requestJoinGroup = function(group_uuid) {
   return function(dispatch, getState) {
     return api.emit('group::requestJoinGroup', { group_uuid }, function(data) {
       if (data.result) {
@@ -186,7 +188,7 @@ exports.requestJoinGroup = function(group_uuid) {
 };
 
 // 加入团
-exports.addGroup = function(group) {
+export const addGroup = function(group) {
   return function(dispatch, getState) {
     if (group) {
       group.avatar = config.file.getAbsolutePath(group.avatar);
@@ -196,7 +198,7 @@ exports.addGroup = function(group) {
   };
 };
 
-exports.agreeGroupRequest = function(chatlogUUID, requestUUID, fromUUID) {
+export const agreeGroupRequest = function(chatlogUUID, requestUUID, fromUUID) {
   checkUser(fromUUID);
 
   return function(dispatch, getState) {
@@ -218,7 +220,7 @@ exports.agreeGroupRequest = function(chatlogUUID, requestUUID, fromUUID) {
     );
   };
 };
-exports.refuseGroupRequest = function(chatlogUUID, requestUUID) {
+export const refuseGroupRequest = function(chatlogUUID, requestUUID) {
   return function(dispatch, getState) {
     return api.emit(
       'group::refuseGroupRequest',
@@ -234,7 +236,7 @@ exports.refuseGroupRequest = function(chatlogUUID, requestUUID) {
   };
 };
 
-exports.sendGroupInvite = function(group_uuid, to_uuid) {
+export const sendGroupInvite = function(group_uuid, to_uuid) {
   return function(dispatch, getState) {
     api.emit('group::sendGroupInvite', { group_uuid, to_uuid }, function(data) {
       if (data.result) {
@@ -248,7 +250,7 @@ exports.sendGroupInvite = function(group_uuid, to_uuid) {
     });
   };
 };
-exports.agreeGroupInvite = function(inviteUUID) {
+export const agreeGroupInvite = function(inviteUUID) {
   return function(dispatch, getState) {
     api.emit('group::agreeGroupInvite', { uuid: inviteUUID }, function(data) {
       if (data.result) {
@@ -267,7 +269,7 @@ exports.agreeGroupInvite = function(inviteUUID) {
     });
   };
 };
-exports.refuseGroupInvite = function(inviteUUID) {
+export const refuseGroupInvite = function(inviteUUID) {
   return function(dispatch, getState) {
     api.emit('group::refuseGroupInvite', { uuid: inviteUUID }, function(data) {
       if (data.result) {
@@ -278,7 +280,7 @@ exports.refuseGroupInvite = function(inviteUUID) {
     });
   };
 };
-exports.getGroupInvite = function(inviteUUID) {
+export const getGroupInvite = function(inviteUUID) {
   return function(dispatch, getState) {
     api.emit('group::getGroupInvite', { uuid: inviteUUID }, function(data) {
       if (data.result) {
@@ -290,7 +292,7 @@ exports.getGroupInvite = function(inviteUUID) {
   };
 };
 
-exports.getGroupList = function() {
+export const getGroupList = function() {
   return function(dispatch, getState) {
     return api.emit('group::getGroupList', {}, function(data) {
       if (data.result) {
@@ -310,11 +312,11 @@ exports.getGroupList = function() {
   };
 };
 
-exports.switchSelectGroup = function(uuid) {
+export const switchSelectGroup = function(uuid) {
   return { type: SWITCH_GROUP, payload: uuid };
 };
 
-exports.changeSelectGroupActor = function(groupUUID, groupActorUUID) {
+export const changeSelectGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
     return api.emit(
       'group::setPlayerSelectedGroupActor',
@@ -333,7 +335,7 @@ exports.changeSelectGroupActor = function(groupUUID, groupActorUUID) {
   };
 };
 
-exports.addGroupActor = function(groupUUID, actorUUID) {
+export const addGroupActor = function(groupUUID, actorUUID) {
   return function(dispatch, getState) {
     return api.emit('group::addGroupActor', { groupUUID, actorUUID }, function(
       data
@@ -359,7 +361,7 @@ exports.addGroupActor = function(groupUUID, actorUUID) {
   };
 };
 
-exports.removeGroupActor = function(groupUUID, groupActorUUID) {
+export const removeGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
     return api.emit(
       'group::removeGroupActor',
@@ -382,7 +384,7 @@ exports.removeGroupActor = function(groupUUID, groupActorUUID) {
   };
 };
 
-exports.agreeGroupActor = function(groupUUID, groupActorUUID) {
+export const agreeGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
     return api.emit(
       'group::agreeGroupActor',
@@ -405,7 +407,7 @@ exports.agreeGroupActor = function(groupUUID, groupActorUUID) {
   };
 };
 
-exports.refuseGroupActor = function(groupUUID, groupActorUUID) {
+export const refuseGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
     return api.emit(
       'group::refuseGroupActor',
@@ -428,7 +430,7 @@ exports.refuseGroupActor = function(groupUUID, groupActorUUID) {
   };
 };
 
-exports.updateGroupActorInfo = function(
+export const updateGroupActorInfo = function(
   groupUUID,
   groupActorUUID,
   groupActorInfo
@@ -456,7 +458,7 @@ exports.updateGroupActorInfo = function(
   };
 };
 
-exports.quitGroup = function(groupUUID) {
+export const quitGroup = function(groupUUID) {
   return function(dispatch, getState) {
     dispatch(showLoading());
     return api.emit('group::quitGroup', { groupUUID }, function(data) {
@@ -471,7 +473,7 @@ exports.quitGroup = function(groupUUID) {
   };
 };
 
-exports.dismissGroup = function(groupUUID) {
+export const dismissGroup = function(groupUUID) {
   return function(dispatch, getState) {
     dispatch(showLoading());
     return api.emit('group::dismissGroup', { groupUUID }, function(data) {
@@ -486,7 +488,7 @@ exports.dismissGroup = function(groupUUID) {
   };
 };
 
-exports.tickMember = function(groupUUID, memberUUID) {
+export const tickMember = function(groupUUID, memberUUID) {
   return function(dispatch, getState) {
     return api.emit('group::tickMember', { groupUUID, memberUUID }, function(
       data
@@ -502,7 +504,7 @@ exports.tickMember = function(groupUUID, memberUUID) {
   };
 };
 
-exports.setMemberToManager = function(groupUUID, memberUUID) {
+export const setMemberToManager = function(groupUUID, memberUUID) {
   return function(dispatch, getState) {
     return api.emit(
       'group::setMemberToManager',
@@ -525,11 +527,11 @@ exports.setMemberToManager = function(groupUUID, memberUUID) {
   };
 };
 
-exports.updateGroupStatus = function(groupUUID, groupStatus) {
+export const updateGroupStatus = function(groupUUID, groupStatus) {
   return { type: UPDATE_GROUP_STATUS, groupUUID, groupStatus };
 };
 
-exports.getGroupStatus = function(groupUUID) {
+export const getGroupStatus = function(groupUUID) {
   return function(dispatch, getState) {
     return api.emit('group::getGroupStatus', { groupUUID }, function(data) {
       if (data.result) {
@@ -541,7 +543,7 @@ exports.getGroupStatus = function(groupUUID) {
   };
 };
 
-exports.setGroupStatus = function(groupUUID, groupStatus) {
+export const setGroupStatus = function(groupUUID, groupStatus) {
   return function(dispatch, getState) {
     return api.emit(
       'group::setGroupStatus',

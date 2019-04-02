@@ -1,8 +1,8 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../../config/project.config.js');
-const { showAlert, showModal } = require('../../../redux/actions/ui');
-const TemplateSelect = require('../../containers/main/actors/TemplateSelect');
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../../config/project.config.js';
+import { showAlert, showModal } from '../../../redux/actions/ui';
+import TemplateSelect from '../../containers/main/actors/TemplateSelect';
 
 require('./ActorSelect.scss');
 
@@ -84,7 +84,7 @@ class ActorSelect extends React.Component {
   }
 }
 
-module.exports = connect(
+export default connect(
   (state) => ({
     selfActors: state.getIn(['actor', 'selfActors']),
   }),

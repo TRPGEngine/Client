@@ -1,4 +1,4 @@
-const moment = require('moment');
+import moment from 'moment';
 
 let helper = {
   getShortDiff: (str) => {
@@ -41,4 +41,4 @@ let helper = {
   },
 };
 
-module.exports = helper;
+export default helper;

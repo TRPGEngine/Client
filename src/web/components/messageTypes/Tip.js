@@ -1,5 +1,5 @@
-const React = require('react');
-const Base = require('./Base');
+import React from 'react';
+import Base from './Base';
 
 class Tip extends Base {
   render() {
@@ -12,4 +12,4 @@ class Tip extends Base {
   }
 }
 
-module.exports = Tip;
+export default Tip;

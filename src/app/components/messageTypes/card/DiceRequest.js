@@ -1,6 +1,6 @@
-const BaseCard = require('./BaseCard');
-const { connect } = require('react-redux');
-const { acceptDiceRequest } = require('../../../../redux/actions/dice');
+import BaseCard from './BaseCard';
+import { connect } from 'react-redux';
+import { acceptDiceRequest } from '../../../../redux/actions/dice';
 
 // 投骰请求
 class DiceRequest extends BaseCard {
@@ -36,6 +36,6 @@ class DiceRequest extends BaseCard {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   selfUUID: state.getIn(['user', 'info', 'uuid']),
 }))(DiceRequest);

@@ -1,7 +1,7 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const NProgress = require('nprogress');
-const config = require('../../../config/project.config');
+import React from 'react';
+import PropTypes from 'prop-types';
+import NProgress from 'nprogress';
+import config from '../../../config/project.config';
 
 require('nprogress/nprogress.css');
 require('./Webview.scss');
@@ -65,4 +65,4 @@ Webview.propTypes = {
   allowExopen: PropTypes.bool,
 };
 
-module.exports = Webview;
+export default Webview;

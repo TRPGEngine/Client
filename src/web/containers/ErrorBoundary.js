@@ -1,9 +1,9 @@
-const React = require('react');
-const {
+import React from 'react';
+import {
   sendErrorReport,
   // showErrorDialog,
-} = require('../../shared/utils/errorReport');
-const config = require('../../../config/project.config.js');
+} from '../../shared/utils/errorReport';
+import config from '../../../config/project.config.js';
 
 require('./ErrorBoundary.scss');
 
@@ -56,4 +56,4 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-module.exports = ErrorBoundary;
+export default ErrorBoundary;

@@ -1,9 +1,10 @@
-const React = require('react');
-const BaseCard = require('./BaseCard');
-const { connect } = require('react-redux');
-const { showModal } = require('../../../../redux/actions/ui');
-const { getActorInfo } = require('../../../../redux/actions/cache');
-const config = require('../../../../../config/project.config');
+import React from 'react';
+import BaseCard from './BaseCard';
+import { connect } from 'react-redux';
+import { showModal } from '../../../../redux/actions/ui';
+import { getActorInfo } from '../../../../redux/actions/cache';
+import config from '../../../../../config/project.config';
+import ActorCacheProfile from '../../modal/ActorCacheProfile';
 
 // 投骰请求
 class Actor extends BaseCard {
@@ -13,7 +14,6 @@ class Actor extends BaseCard {
       return;
     }
     // 获取最新信息
-    const ActorCacheProfile = require('../../modal/ActorCacheProfile');
     this.props.dispatch(getActorInfo(uuid)); // TODO: 需要实现actor的缓存工具
     this.props.dispatch(showModal(<ActorCacheProfile uuid={uuid} />));
   }
@@ -49,4 +49,4 @@ class Actor extends BaseCard {
   }
 }
 
-module.exports = connect()(Actor);
+export default connect()(Actor);

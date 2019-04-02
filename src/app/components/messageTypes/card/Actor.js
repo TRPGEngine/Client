@@ -1,11 +1,11 @@
-const React = require('react');
-const { Text, View, Image } = require('react-native');
-const sb = require('react-native-style-block');
-const BaseCard = require('./BaseCard');
-const { connect } = require('react-redux');
-const { showModal } = require('../../../../redux/actions/ui');
-const { getActorInfo } = require('../../../../redux/actions/cache');
-const config = require('../../../../../config/project.config');
+import React from 'react';
+import { Text, View, Image } from 'react-native';
+import sb from 'react-native-style-block';
+import BaseCard from './BaseCard';
+import { connect } from 'react-redux';
+import { showModal } from '../../../../redux/actions/ui';
+import { getActorInfo } from '../../../../redux/actions/cache';
+import config from '../../../../../config/project.config';
 
 // TODO: 设置为APP可用的消息类型渲染
 // 投骰请求
@@ -19,7 +19,7 @@ class Actor extends BaseCard {
     alert('TODO: 查看人物卡');
     // 获取最新信息
     // TODO: 打开网页显示人物卡信息
-    // const ActorCacheProfile = require('../../modal/ActorCacheProfile');
+    // import ActorCacheProfile from '../../modal/ActorCacheProfile';
     // this.props.dispatch(getActorInfo(uuid));// TODO: 需要实现actor的缓存工具
     // this.props.dispatch(showModal(
     //   <ActorCacheProfile uuid={uuid} />
@@ -61,4 +61,4 @@ const styles = {
   props: [sb.flex(), sb.padding(4)],
 };
 
-module.exports = connect()(Actor);
+export default connect()(Actor);

@@ -1,3 +1,7 @@
+import immutable from 'immutable';
+import constants from '../constants';
+import config from '../../../config/project.config';
+
 const {
   RESET,
   SET_USER_SETTINGS,
@@ -6,16 +10,14 @@ const {
   ADD_FAVORITE_DICE,
   REMOVE_FAVORITE_DICE,
   UPDATE_FAVORITE_DICE,
-} = require('../constants');
-const config = require('../../../config/project.config');
+} = constants;
 
-const immutable = require('immutable');
 const initialState = immutable.fromJS({
   ...config.defaultSettings,
   notificationPermission: 'default', // granted, denied, default in web
 });
 
-module.exports = function settings(state = initialState, action) {
+export default function settings(state = initialState, action) {
   switch (action.type) {
     case RESET:
       return initialState;
@@ -47,4 +49,4 @@ module.exports = function settings(state = initialState, action) {
     default:
       return state;
   }
-};
+}

@@ -1,5 +1,5 @@
-const axios = require('axios');
-const config = require('../../../config/project.config');
+import axios from 'axios';
+import config from '../../../config/project.config';
 
 function sendErrorReport(data) {
   axios
@@ -12,10 +12,10 @@ function sendErrorReport(data) {
     });
 }
 
-exports.sendErrorReport = sendErrorReport;
+export const sendErrorReport = sendErrorReport;
 
 // 弃用, 改为组件发起
-exports.web = function() {
+export const web = function() {
   // window.onerror = function(message, source, lineno, colno, error) {
   //   console.log('error report:');
   //   console.log(message, source, lineno, colno, error);

@@ -1,5 +1,5 @@
-const React = require('react');
-const ModalPanel = require('./ModalPanel');
+import React from 'react';
+import ModalPanel from './ModalPanel';
 
 require('./ListSelect.scss');
 
@@ -57,4 +57,4 @@ ListSelect.defaultProps = {
   list: [],
 };
 
-module.exports = ListSelect;
+export default ListSelect;

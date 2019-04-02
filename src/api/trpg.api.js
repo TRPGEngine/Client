@@ -1,6 +1,13 @@
-const io = require('socket.io-client');
-const config = require('../../config/project.config.js');
-const { RESET, ADD_FRIEND_SUCCESS } = require('../redux/constants');
+import io from 'socket.io-client';
+import config from '../../config/project.config.js';
+import { RESET, ADD_FRIEND_SUCCESS } from '../redux/constants';
+
+import { addMsg, updateMsg } from '../redux/actions/chat';
+import { addFriendInvite, loginWithToken } from '../redux/actions/user';
+import { updateGroupStatus, addGroup } from '../redux/actions/group';
+
+import { getUserInfoCache } from '../shared/utils/cacheHelper';
+import rnStorage from './rnStorage.api.js';
 
 let api = null;
 let handleEventError = null;
@@ -30,7 +37,7 @@ function API() {
   this.on = this.socket.on.bind(this.socket);
 }
 
-function getApiInstance() {
+export function getInstance() {
   if (!api) {
     api = new API();
     console.log('new socket client connect created!');
@@ -39,10 +46,7 @@ function getApiInstance() {
   return api;
 }
 
-function bindEventFunc(store, { onReceiveMessage } = {}) {
-  const { addMsg, updateMsg } = require('../redux/actions/chat');
-  const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
-  const { updateGroupStatus, addGroup } = require('../redux/actions/group');
+export function bindEventFunc(store, { onReceiveMessage } = {}) {
   const {
     changeNetworkStatue,
     showAlert,
@@ -68,8 +72,6 @@ function bindEventFunc(store, { onReceiveMessage } = {}) {
   });
 
   api.on('player::addFriend', function(data) {
-    const { getUserInfoCache } = require('../shared/utils/cacheHelper');
-
     let uuid = data.uuid;
     getUserInfoCache(uuid);
     store.dispatch({ type: ADD_FRIEND_SUCCESS, friendUUID: uuid });
@@ -105,7 +107,6 @@ function bindEventFunc(store, { onReceiveMessage } = {}) {
     let isLogin = store.getState().getIn(['user', 'isLogin']);
     if (isLogin) {
       (async () => {
-        const rnStorage = require('./rnStorage.api.js');
         let uuid = await rnStorage.get('uuid');
         let token = await rnStorage.get('token');
         console.log('正在尝试自动重新登录');
@@ -131,12 +132,8 @@ function bindEventFunc(store, { onReceiveMessage } = {}) {
   });
 }
 
-function setEventErrorHandler(cb) {
+export function setEventErrorHandler(cb) {
   handleEventError = cb;
 }
 
-exports.bindEventFunc = bindEventFunc;
-exports.getInstance = getApiInstance;
-exports.setEventErrorHandler = setEventErrorHandler;
-
-exports.fileUrl = config.file.url + '/file';
+export const fileUrl = config.file.url + '/file';

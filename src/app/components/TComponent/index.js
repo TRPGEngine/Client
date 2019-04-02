@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   TButton: require('./TButton'),
   TFormGroup: require('./TFormGroup'),
   TInput: require('./TInput'),

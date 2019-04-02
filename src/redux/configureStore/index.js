@@ -1,7 +1,10 @@
 import thunk from 'redux-thunk';
-const { createStore, applyMiddleware } = require('redux');
-const { createLogger } = require('redux-logger');
-const config = require('../../../config/project.config');
+import { createStore, applyMiddleware } from 'redux';
+import { createLogger } from 'redux-logger';
+import config from '../../../config/project.config';
+import reducers from '../reducers';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import * as actionCreators from '../actions';
 
 const logger = createLogger({
   level: 'info',
@@ -17,22 +20,20 @@ if (config.environment !== 'production') {
   middlewares.push(logger);
 }
 if (config.platform === 'app') {
-  const routerMiddleware = require('../../app/router').middleware;
-  middlewares.push(routerMiddleware);
+  middlewares.push(require('../../app/router').routerMiddleware);
 }
 const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
 
 function configureStore(initialState) {
   const devTool =
     config.environment !== 'production'
-      ? require('redux-devtools-extension').composeWithDevTools({
-          actionCreators: require('../actions'),
+      ? composeWithDevTools({
+          actionCreators,
         })(applyMiddleware(thunk))
       : undefined;
-  const reducers = require('../reducers');
   const store = createStoreWithMiddleware(reducers, initialState, devTool);
 
   return store;
 }
 
-module.exports = configureStore;
+export default configureStore;

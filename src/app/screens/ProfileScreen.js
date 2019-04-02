@@ -1,14 +1,14 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { View, Text, Image, TouchableOpacity } = require('react-native');
-const sb = require('react-native-style-block');
-const appConfig = require('../config.app');
-const { getSamlpeDate } = require('../../shared/utils/dateHelper');
-const { TButton, TAvatar } = require('../components/TComponent');
-const { getUserInfo } = require('../../redux/actions/cache');
-const { addFriend } = require('../../redux/actions/user');
-const { switchToConverseApp } = require('../../redux/actions/nav');
-const { getUserInfoCache } = require('../../shared/utils/cacheHelper');
+import React from 'react';
+import { connect } from 'react-redux';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import sb from 'react-native-style-block';
+import appConfig from '../config.app';
+import { getSamlpeDate } from '../../shared/utils/dateHelper';
+import { TButton, TAvatar } from '../components/TComponent';
+import { getUserInfo } from '../../redux/actions/cache';
+import { addFriend } from '../../redux/actions/user';
+import { switchToConverseApp } from '../../redux/actions/nav';
+import { getUserInfoCache } from '../../shared/utils/cacheHelper';
 
 class ProfileInfoItem extends React.Component {
   render() {
@@ -143,7 +143,7 @@ const styles = {
   actions: [sb.padding(10)],
 };
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   usercache: state.getIn(['cache', 'user']),
   friendList: state.getIn(['user', 'friendList']),
 }))(ProfileScreen);

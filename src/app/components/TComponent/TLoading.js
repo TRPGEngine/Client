@@ -1,8 +1,8 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { Modal, ActivityIndicator, View, Text } = require('react-native');
-const sb = require('react-native-style-block');
-const { hideLoading } = require('../../../redux/actions/ui');
+import React from 'react';
+import { connect } from 'react-redux';
+import { Modal, ActivityIndicator, View, Text } from 'react-native';
+import sb from 'react-native-style-block';
+import { hideLoading } from '../../../redux/actions/ui';
 
 class TLoading extends React.Component {
   _handleClose() {
@@ -56,7 +56,7 @@ const styles = {
   text: [sb.color(), { paddingBottom: 10 }],
 };
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   showLoading: state.getIn(['ui', 'showLoading']),
   showLoadingText: state.getIn(['ui', 'showLoadingText']),
 }))(TLoading);

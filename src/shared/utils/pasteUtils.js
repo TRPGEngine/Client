@@ -1,6 +1,6 @@
-const imageUploader = require('./imageUploader');
+import imageUploader from './imageUploader';
 
-exports.isPasteImage = function(items) {
+export const isPasteImage = function(items) {
   let i = 0;
   let item;
   while (i < items.length) {
@@ -13,6 +13,6 @@ exports.isPasteImage = function(items) {
   return false;
 };
 
-exports.upload = function(userUUID, file) {
+export const upload = function(userUUID, file) {
   return imageUploader.toNetwork(userUUID, file);
 };

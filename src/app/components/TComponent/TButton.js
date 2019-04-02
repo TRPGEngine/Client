@@ -1,6 +1,6 @@
-const React = require('react');
-const Button = require('apsl-react-native-button');
-const { TouchableOpacity, TouchableNativeFeedback } = require('react-native');
+import React from 'react';
+import Button from 'apsl-react-native-button';
+import { TouchableOpacity, TouchableNativeFeedback } from 'react-native';
 
 class TButton extends React.Component {
   render() {
@@ -44,4 +44,4 @@ const textStyles = {
   },
 };
 
-module.exports = TButton;
+export default TButton;

@@ -1,11 +1,11 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { View, Text } = require('react-native');
-const { NavigationActions } = require('react-navigation');
-const sb = require('react-native-style-block');
-const { TButton, TFormGroup, TLoading } = require('../components/TComponent');
-const { showLoading, showAlert } = require('../../redux/actions/ui');
-const { register } = require('../../redux/actions/user');
+import React from 'react';
+import { connect } from 'react-redux';
+import { View, Text } from 'react-native';
+import { NavigationActions } from 'react-navigation';
+import sb from 'react-native-style-block';
+import { TButton, TFormGroup, TLoading } from '../components/TComponent';
+import { showLoading, showAlert } from '../../redux/actions/ui';
+import { register } from '../../redux/actions/user';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -115,4 +115,4 @@ const styles = {
   ],
 };
 
-module.exports = connect()(RegisterScreen);
+export default connect()(RegisterScreen);

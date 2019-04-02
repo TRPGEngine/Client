@@ -1,3 +1,5 @@
+import constants from '../constants';
+import immutable from 'immutable';
 const {
   RESET,
   ADD_CONVERSES,
@@ -16,8 +18,7 @@ const {
   SEND_MSG_COMPLETED,
   SWITCH_GROUP,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
-} = require('../constants');
-const immutable = require('immutable');
+} = constants;
 
 const initialState = immutable.fromJS({
   selectedConversesUUID: '',
@@ -48,7 +49,7 @@ const initialState = immutable.fromJS({
   },
 });
 
-module.exports = function chat(state = initialState, action) {
+export default function chat(state = initialState, action) {
   try {
     let payload;
     switch (action.type) {
@@ -251,4 +252,4 @@ module.exports = function chat(state = initialState, action) {
     console.error(e);
     return state;
   }
-};
+}

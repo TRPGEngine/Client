@@ -1,5 +1,5 @@
-const React = require('react');
-const { connect } = require('react-redux');
+import React from 'react';
+import { connect } from 'react-redux';
 const {
   View,
   Text,
@@ -7,16 +7,16 @@ const {
   TouchableOpacity,
   Linking,
 } = require('react-native');
-const { NavigationActions } = require('react-navigation');
-const sb = require('react-native-style-block');
-const config = require('../../../config/project.config');
-const appConfig = require('../config.app');
-const { logout } = require('../../redux/actions/user');
-const { openWebview } = require('../../redux/actions/nav');
-const ListCell = require('../components/ListCell');
-const { TButton, TAvatar } = require('../components/TComponent');
-const checkVersion = require('../../shared/utils/checkVersion');
-const appUtils = require('../../shared/utils/apputils');
+import { NavigationActions } from 'react-navigation';
+import sb from 'react-native-style-block';
+import config from '../../../config/project.config';
+import appConfig from '../config.app';
+import { logout } from '../../redux/actions/user';
+import { openWebview } from '../../redux/actions/nav';
+import ListCell from '../components/ListCell';
+import { TButton, TAvatar } from '../components/TComponent';
+import checkVersion from '../../shared/utils/checkVersion';
+import appUtils from '../../shared/utils/apputils';
 
 class AccountScreen extends React.Component {
   static navigationOptions = {
@@ -138,6 +138,6 @@ const styles = {
   listView: [{ marginBottom: 10 }],
 };
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   userInfo: state.getIn(['user', 'info']),
 }))(AccountScreen);

@@ -1,10 +1,12 @@
-const React = require('react');
-const trpgApi = require('../../api/trpg.api.js');
-const api = trpgApi.getInstance();
-const config = require('../../../config/project.config');
-const { showSlidePanel, showLightbox } = require('./ui');
+import React from 'react';
+import * as trpgApi from '../../api/trpg.api.js';
+import config from '../../../config/project.config';
+import { showSlidePanel, showLightbox } from './ui';
+import Webview from '../../web/components/Webview';
 
-exports.previewFile = function(fileuuid) {
+const api = trpgApi.getInstance();
+
+export const previewFile = function(fileuuid) {
   return function(dispatch, getState) {
     return api.emit('file::getFileInfo', { uuid: fileuuid }, function(data) {
       const previewUrl = data.previewUrl;
@@ -16,7 +18,6 @@ exports.previewFile = function(fileuuid) {
         } else {
           console.log('在侧边栏打开');
           if (config.platform === 'web' || config.platform === 'electron') {
-            const Webview = require('../../web/components/Webview');
             dispatch(showSlidePanel('文件', <Webview src={previewUrl} />));
           }
         }
@@ -27,7 +28,7 @@ exports.previewFile = function(fileuuid) {
   };
 };
 
-exports.downloadFile = function(fileuuid) {
+export const downloadFile = function(fileuuid) {
   return function(dispatch, getState) {
     return api.emit('file::getFileInfo', { uuid: fileuuid }, function(data) {
       const url = data.downloadUrl; // 下载地址

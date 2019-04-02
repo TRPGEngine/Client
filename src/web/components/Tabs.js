@@ -1,8 +1,8 @@
-const React = require('react');
+import React from 'react';
 
 require('./Tabs.scss');
 
-class TabsController extends React.Component {
+export class TabsController extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,10 +44,8 @@ class TabsController extends React.Component {
   }
 }
 
-class Tab extends React.Component {
+export class Tab extends React.Component {
   render() {
     return <div className="tab-items">{this.props.children}</div>;
   }
 }
-
-module.exports = { TabsController, Tab };

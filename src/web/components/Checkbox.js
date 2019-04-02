@@ -1,5 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 
 require('./Checkbox.scss');
 
@@ -26,4 +26,4 @@ Checkbox.propTypes = {
   onChange: PropTypes.func,
 };
 
-module.exports = Checkbox;
+export default Checkbox;

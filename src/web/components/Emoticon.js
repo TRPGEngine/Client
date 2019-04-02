@@ -1,5 +1,5 @@
-const React = require('react');
-const { emojify, getCodeList } = require('../../shared/utils/emoji');
+import React from 'react';
+import { emojify, getCodeList } from '../../shared/utils/emoji';
 
 require('./Emoticon.scss');
 
@@ -57,4 +57,4 @@ class Emoticon extends React.Component {
   }
 }
 
-module.exports = Emoticon;
+export default Emoticon;

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-const ModalPanel = require('../ModalPanel');
-const config = require('../../../../config/project.config');
-const dateHelper = require('../../../shared/utils/dateHelper');
+import ModalPanel from '../ModalPanel';
+import config from '../../../../config/project.config';
+import dateHelper from '../../../shared/utils/dateHelper';
 
 const SystemStatusPanel = styled(ModalPanel)`
   width: 420px;

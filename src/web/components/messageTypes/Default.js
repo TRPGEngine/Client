@@ -1,6 +1,6 @@
-const React = require('react');
-const Base = require('./Base');
-const msgParser = require('../../../shared/utils/msgParser');
+import React from 'react';
+import Base from './Base';
+import msgParser from '../../../shared/utils/msgParser';
 
 class Default extends Base {
   getContent() {
@@ -9,4 +9,4 @@ class Default extends Base {
   }
 }
 
-module.exports = Default;
+export default Default;

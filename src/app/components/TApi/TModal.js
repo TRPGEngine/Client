@@ -1,7 +1,7 @@
-const React = require('react');
-const { View, Modal, TouchableWithoutFeedback } = require('react-native');
-const sb = require('react-native-style-block');
-const TPopup = require('./TPopup');
+import React from 'react';
+import { View, Modal, TouchableWithoutFeedback } from 'react-native';
+import sb from 'react-native-style-block';
+import TPopup from './TPopup';
 
 const styles = {
   container: [sb.flex(), sb.center()],
@@ -47,4 +47,4 @@ const TModal = {
   },
 };
 
-module.exports = TModal;
+export default TModal;

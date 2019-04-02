@@ -1,8 +1,8 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { Link } = require('react-router-dom');
-const { showLoading, showAlert } = require('../../redux/actions/ui');
-const { register } = require('../../redux/actions/user');
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { showLoading, showAlert } from '../../redux/actions/ui';
+import { register } from '../../redux/actions/user';
 require('./Register.scss');
 
 class Register extends React.Component {
@@ -106,4 +106,4 @@ class Register extends React.Component {
   }
 }
 
-module.exports = connect()(Register);
+export default connect()(Register);

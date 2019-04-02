@@ -1,6 +1,6 @@
-const React = require('react');
-const { View, Text } = require('react-native');
-const { TButton } = require('../../TComponent');
+import React from 'react';
+import { View, Text } from 'react-native';
+import { TButton } from '../../TComponent';
 
 class BaseCard extends React.Component {
   // 获取卡片视图
@@ -79,4 +79,4 @@ const styles = {
   },
 };
 
-module.exports = BaseCard;
+export default BaseCard;

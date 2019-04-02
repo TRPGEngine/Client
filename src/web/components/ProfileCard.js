@@ -1,15 +1,12 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../config/project.config.js');
-const Select = require('react-select');
-const ImageViewer = require('./ImageViewer');
-const ImageUploader = require('./ImageUploader');
-const { showAlert, hideProfileCard } = require('../../redux/actions/ui');
-const { addFriend, updateInfo } = require('../../redux/actions/user');
-const {
-  addUserConverse,
-  switchToConverse,
-} = require('../../redux/actions/chat');
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../config/project.config.js';
+import Select from 'react-select';
+import ImageViewer from './ImageViewer';
+import ImageUploader from './ImageUploader';
+import { showAlert, hideProfileCard } from '../../redux/actions/ui';
+import { addFriend, updateInfo } from '../../redux/actions/user';
+import { addUserConverse, switchToConverse } from '../../redux/actions/chat';
 require('./ProfileCard.scss');
 
 class ProfileCard extends React.Component {
@@ -299,7 +296,7 @@ class ProfileCard extends React.Component {
   }
 }
 
-module.exports = connect(
+export default connect(
   (state) => {
     let selfUUID = state.getIn(['user', 'info', 'uuid']);
     let selectedUUID = state.getIn(['ui', 'showProfileCardUUID']);

@@ -1,6 +1,6 @@
-const parser = require('./bbcode');
+import parser from './bbcode';
 
-module.exports = function(str) {
+export default function(str) {
   str = str.replace(/:(\S*?):/g, '[emoji]$1[/emoji]');
 
   return parser.toReact(str);

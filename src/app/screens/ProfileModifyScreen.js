@@ -1,14 +1,14 @@
-const React = require('react');
-const { View, Text, TouchableOpacity } = require('react-native');
-const { connect } = require('react-redux');
-const sb = require('react-native-style-block');
-const ImagePicker = require('react-native-image-picker');
-const axios = require('axios');
-const fileUrl = require('../../api/trpg.api.js').fileUrl;
-const { toast } = require('../../shared/utils/apputils');
-const { updateInfo } = require('../../redux/actions/user');
-const { TAvatar } = require('../components/TComponent');
-const ListCell = require('../components/ListCell');
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import sb from 'react-native-style-block';
+import ImagePicker from 'react-native-image-picker';
+import axios from 'axios';
+import fileUrl from '../../api/trpg.api.js'.fileUrl;
+import { toast } from '../../shared/utils/apputils';
+import { updateInfo } from '../../redux/actions/user';
+import { TAvatar } from '../components/TComponent';
+import ListCell from '../components/ListCell';
 
 class ProfileModifyScreen extends React.Component {
   _uploadAvatar(uri, type, name, size, width, height) {
@@ -158,6 +158,6 @@ const styles = {
   // ],
 };
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   userInfo: state.getIn(['user', 'info']),
 }))(ProfileModifyScreen);
