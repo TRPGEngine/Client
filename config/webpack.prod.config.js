@@ -1,3 +1,4 @@
+const path = require('path');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
