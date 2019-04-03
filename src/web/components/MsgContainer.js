@@ -7,10 +7,14 @@ import { getUserInfoCache } from '../../shared/utils/cacheHelper';
 import { getMoreChatLog } from '../../redux/actions/chat';
 
 import MessageHandler from '../../shared/components/MessageHandler';
-MessageHandler.registerDefaultMessageHandler(require('./messageTypes/Default'));
-MessageHandler.registerMessageHandler('tip', require('./messageTypes/Tip'));
-MessageHandler.registerMessageHandler('card', require('./messageTypes/Card'));
-MessageHandler.registerMessageHandler('file', require('./messageTypes/File'));
+import Default from './messageTypes/Default';
+import Tip from './messageTypes/Tip';
+import Card from './messageTypes/Card';
+import File from './messageTypes/File';
+MessageHandler.registerDefaultMessageHandler(Default);
+MessageHandler.registerMessageHandler('tip', Tip);
+MessageHandler.registerMessageHandler('card', Card);
+MessageHandler.registerMessageHandler('file', File);
 require('./messageTypes/MsgItem.scss');
 
 require('./MsgContainer.scss');
