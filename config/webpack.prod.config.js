@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
 const base = require('./webpack.base.config.js');
+const config = require('../package.json');
 
 const ROOT_PATH = path.resolve(__dirname, '../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
