@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
+const SentryCliPlugin = require('@sentry/webpack-plugin');
 const base = require('./webpack.base.config.js');
 
 module.exports = webpackMerge({}, base, {
@@ -17,4 +18,14 @@ module.exports = webpackMerge({}, base, {
   //     },
   //   }),
   // ],
+  plugins: [
+    // Sentry
+    new SentryCliPlugin({
+      include: APP_PATH,
+      ignoreFile: '.sentrycliignore',
+      ignore: ['app'],
+      configFile: 'sentry.properties',
+      release: `v${config.version}-${process.env.NODE_ENV}`,
+    }),
+  ],
 });
