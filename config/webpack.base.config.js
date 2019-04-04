@@ -138,11 +138,6 @@ module.exports = {
   },
 
   plugins: [
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'vendor',
-    //   filename: 'vendor.js',
-    //   minChunks: Infinity,
-    // }),
     new WebpackBar({
       name: '🎲  TRPG Game',
       color: '#8C6244',

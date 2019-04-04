@@ -3,34 +3,27 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
 const base = require('./webpack.base.config.js');
-const config = require('../package.json');
+const package = require('../package.json');
+const sentryConfig = require('config').get('sentry');
 
 const ROOT_PATH = path.resolve(__dirname, '../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 
-module.exports = webpackMerge({}, base, {
-  mode: 'production',
-  // plugins: [
-  //   new webpack.optimize.UglifyJsPlugin({
-  //     compress: {
-  //       warnings: false,
-  //       drop_debugger: true,
-  //       drop_console: true,
-  //     },
-  //     sourceMap: false,
-  //     mangle: {
-  //       except: ['$super', '$', 'exports', 'require'], // 排除关键字
-  //     },
-  //   }),
-  // ],
-  plugins: [
-    // Sentry
+const plugins = [];
+if (sentryConfig.pushRelease === true) {
+  // 增加推送插件
+  plugins.push(
     new SentryCliPlugin({
       include: APP_PATH,
       ignoreFile: '.sentrycliignore',
       ignore: ['app'],
       configFile: 'sentry.properties',
-      release: `v${config.version}-${process.env.NODE_ENV}`,
-    }),
-  ],
+      release: `v${package.version}-${process.env.NODE_ENV}`,
+    })
+  );
+}
+
+module.exports = webpackMerge({}, base, {
+  mode: 'production',
+  plugins,
 });
