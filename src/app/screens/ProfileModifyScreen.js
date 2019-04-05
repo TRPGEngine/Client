@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import sb from 'react-native-style-block';
 import ImagePicker from 'react-native-image-picker';
 import axios from 'axios';
-import fileUrl from '../../api/trpg.api.js'.fileUrl;
+import { fileUrl } from '../../api/trpg.api.js';
 import { toast } from '../../shared/utils/apputils';
 import { updateInfo } from '../../redux/actions/user';
 import { TAvatar } from '../components/TComponent';

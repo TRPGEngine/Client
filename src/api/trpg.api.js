@@ -9,7 +9,7 @@ import { updateGroupStatus, addGroup } from '../redux/actions/group';
 import { getUserInfoCache } from '../shared/utils/cacheHelper';
 import rnStorage from './rnStorage.api.js';
 
-let api = null;
+let api; // IDEA: 不能写为null。esmodule会因未知的行为可能会在第一次取到undefined，重新赋值new API()后将其再设为null
 let handleEventError = null;
 const platformSocketParam = {
   jsonp: false,
@@ -40,7 +40,7 @@ function API() {
 export function getInstance() {
   if (!api) {
     api = new API();
-    console.log('new socket client connect created!');
+    console.log('new socket client connect created!', api);
   }
 
   return api;

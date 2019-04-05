@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import at from 'trpg-actor-template';
 import TemplateSelect from './TemplateSelect';
 import ActorEdit from './ActorEdit';
-import apiHelper from '../../../../shared/utils/apiHelper';
+import * as apiHelper from '../../../../shared/utils/apiHelper';
 import { showModal, showAlert } from '../../../../redux/actions/ui';
 import {
   selectActor,
