@@ -1,13 +1,11 @@
 const path = require('path');
+const _ = require('lodash');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
 const base = require('./webpack.base.config.js');
 const package = require('../package.json');
 const config = require('config');
-const _ = require('lodash');
-
-console.log('config', config);
 
 const ROOT_PATH = path.resolve(__dirname, '../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
