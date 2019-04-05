@@ -19,7 +19,7 @@ const {
   CHANGE_NETWORK_STATE,
   UPDATE_SOCKET_ID,
 } = constants;
-import cache from './cache';
+import * as cache from './cache';
 
 export const showLoading = function(text = '加载中...') {
   return { type: SHOW_LOADING, text: text };
