@@ -37,6 +37,7 @@ import { loadLocalCache } from './cache';
 
 const api = trpgApi.getInstance();
 
+// 登录成功后获取数据
 function loginSuccess(dispatch, getState) {
   if (!dispatch || !getState) {
     return;

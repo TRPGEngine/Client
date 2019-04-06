@@ -7,11 +7,11 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.6);
-    z-index: 100;
+    z-index: 1000;
     .content {
       padding: 20px;
       border-radius: 4px;
-      background-color: rgba(white,0.6);
+      background-color: rgba(white, 1);
       text-align: center;
 
       span {
