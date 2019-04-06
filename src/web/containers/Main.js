@@ -19,7 +19,7 @@ const TitleToolbar =
 
 import './Main.scss';
 if (config.platform === 'electron') {
-  import './Main.electron.scss';
+  import('./Main.electron.scss');
 }
 
 class Main extends React.Component {
