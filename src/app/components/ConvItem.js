@@ -1,7 +1,7 @@
-const React = require('react');
-const { Text, View, TouchableOpacity, Image } = require('react-native');
-const sb = require('react-native-style-block');
-const { TAvatar } = require('./TComponent');
+import React from 'react';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
+import sb from 'react-native-style-block';
+import { TAvatar } from './TComponent';
 
 class ConvItem extends React.Component {
   render() {
@@ -60,4 +60,4 @@ const styles = {
   ],
 };
 
-module.exports = ConvItem;
+export default ConvItem;

@@ -1,11 +1,11 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const Select = require('react-select');
-const { findGroup } = require('../../../redux/actions/group');
-const ModalPanel = require('../ModalPanel');
-const FindResultItem = require('../FindResultItem');
+import React from 'react';
+import { connect } from 'react-redux';
+import Select from 'react-select';
+import { findGroup } from '../../../redux/actions/group';
+import ModalPanel from '../ModalPanel';
+import FindResultItem from '../FindResultItem';
 
-require('./GroupAdd.scss');
+import './GroupAdd.scss';
 
 class GroupAdd extends React.Component {
   constructor(props) {
@@ -83,7 +83,7 @@ class GroupAdd extends React.Component {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   isFinding: state.getIn(['group', 'isFindingGroup']),
   findingResult: state.getIn(['group', 'findingResult']),
 }))(GroupAdd);

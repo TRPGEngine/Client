@@ -1,5 +1,5 @@
 // scrollTo(document.body, 0, 1250);
-function scrollTo(element, to, duration, isAnimatied = true) {
+export function scrollTo(element, to, duration, isAnimatied = true) {
   if (!isAnimatied) {
     element.scrollTop = to;
     return;
@@ -21,7 +21,7 @@ function scrollTo(element, to, duration, isAnimatied = true) {
   animateScroll();
 }
 
-function scrollToBottom(element, duration, isAnimatied = true) {
+export function scrollToBottom(element, duration, isAnimatied = true) {
   if (!element) {
     return;
   }
@@ -41,5 +41,7 @@ Math.easeInOutQuad = function(t, b, c, d) {
   return (-c / 2) * (t * (t - 2) - 1) + b;
 };
 
-exports.to = scrollTo;
-exports.bottom = scrollToBottom;
+export default {
+  to: scrollTo,
+  bottom: scrollToBottom,
+};

@@ -1,12 +1,12 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { View, Text, Image, TouchableOpacity } = require('react-native');
-const { TButton } = require('../TComponent');
-const sb = require('react-native-style-block');
-const Base = require('./Base');
-const filesize = require('filesize');
-const config = require('../../../../config/project.config');
-const appConfig = require('../../config.app');
+import React from 'react';
+import { connect } from 'react-redux';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { TButton } from '../TComponent';
+import sb from 'react-native-style-block';
+import Base from './Base';
+import filesize from 'filesize';
+import config from '../../../../config/project.config';
+import appConfig from '../../config.app';
 
 class File extends Base {
   _handlePreview() {
@@ -65,4 +65,4 @@ const styles = {
   fileSize: [sb.font(14), sb.color('#ccc')],
 };
 
-module.exports = connect()(File);
+export default connect()(File);

@@ -1,9 +1,9 @@
-module.exports = {
-  ui: require('./ui'),
-  chat: require('./chat'),
-  user: require('./user'),
-  cache: require('./cache'),
-  note: require('./note'),
-  actor: require('./actor'),
-  group: require('./group'),
-};
+import * as ui from './ui';
+import * as chat from './chat';
+import * as user from './user';
+import * as cache from './cache';
+import * as note from './note';
+import * as actor from './actor';
+import * as group from './group';
+
+export default { ui, chat, user, cache, note, actor, group };

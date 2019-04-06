@@ -1,6 +1,6 @@
-const React = require('react');
-const dateHelper = require('../../../shared/utils/dateHelper');
-const config = require('../../../../config/project.config');
+import React from 'react';
+import dateHelper from '../../../shared/utils/dateHelper';
+import config from '../../../../config/project.config';
 
 class Base extends React.Component {
   static defaultProps = {
@@ -44,4 +44,4 @@ class Base extends React.Component {
   }
 }
 
-module.exports = Base;
+export default Base;

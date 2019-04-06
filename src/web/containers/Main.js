@@ -1,25 +1,25 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../config/project.config');
-// const { getConverses } = require('../../redux/actions/chat');
-// const { getFriends, getFriendsInvite } = require('../../redux/actions/user');
-// const { getTemplate, getActor } = require('../../redux/actions/actor');
-// const { getGroupList, getGroupInvite } = require('../../redux/actions/group');
-// const { getNote } = require('../../redux/actions/note');
-const { switchMenuPannel } = require('../../redux/actions/ui');
-const ConverseList = require('./main/converse/ConverseList');
-const MenuPannel = require('./main/MenuPannel');
-const ProfileCard = require('../components/ProfileCard');
-const IsDeveloping = require('../components/IsDeveloping');
-const Webview = require('../components/Webview');
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../config/project.config';
+// import { getConverses } from '../../redux/actions/chat';
+// import { getFriends, getFriendsInvite } from '../../redux/actions/user';
+// import { getTemplate, getActor } from '../../redux/actions/actor';
+// import { getGroupList, getGroupInvite } from '../../redux/actions/group';
+// import { getNote } from '../../redux/actions/note';
+import { switchMenuPannel } from '../../redux/actions/ui';
+import ConverseList from './main/converse/ConverseList';
+import MenuPannel from './main/MenuPannel';
+import ProfileCard from '../components/ProfileCard';
+import IsDeveloping from '../components/IsDeveloping';
+import Webview from '../components/Webview';
 const TitleToolbar =
   config.platform === 'electron'
     ? require('../components/electron/TitleToolbar')
     : null;
 
-require('./Main.scss');
+import './Main.scss';
 if (config.platform === 'electron') {
-  require('./Main.electron.scss');
+  import('./Main.electron.scss');
 }
 
 class Main extends React.Component {
@@ -106,7 +106,7 @@ class Main extends React.Component {
   }
 }
 
-module.exports = connect(
+export default connect(
   (state) => ({
     isLogin: state.getIn(['user', 'isLogin']),
     menuIndex: state.getIn(['ui', 'menuIndex']),

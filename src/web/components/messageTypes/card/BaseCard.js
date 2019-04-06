@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class BaseCard extends React.Component {
   // 获取卡片视图
@@ -59,4 +59,4 @@ class BaseCard extends React.Component {
   }
 }
 
-module.exports = BaseCard;
+export default BaseCard;

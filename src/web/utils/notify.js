@@ -1,11 +1,11 @@
-const tinycon = require('tinycon');
-const { getUserInfoCache } = require('../../shared/utils/cacheHelper');
-const config = require('../../../config/project.config.js');
-const { switchMenuPannel } = require('../../redux/actions/ui');
-const { switchConverse } = require('../../redux/actions/chat');
+import tinycon from 'tinycon';
+import { getUserInfoCache } from '../../shared/utils/cacheHelper';
+import config from '../../../config/project.config.js';
+import { switchMenuPannel } from '../../redux/actions/ui';
+import { switchConverse } from '../../redux/actions/chat';
 let num = 0;
 
-var hiddenProperty =
+const hiddenProperty =
   'hidden' in document
     ? 'hidden'
     : 'webkitHidden' in document
@@ -13,11 +13,11 @@ var hiddenProperty =
     : 'mozHidden' in document
     ? 'mozHidden'
     : null;
-var visibilityChangeEvent = hiddenProperty.replace(
+const visibilityChangeEvent = hiddenProperty.replace(
   /hidden/i,
   'visibilitychange'
 );
-var onVisibilityChange = function() {
+const onVisibilityChange = function() {
   if (!document[hiddenProperty]) {
     // 显示标签页
     tinycon.setBubble(null);
@@ -28,7 +28,7 @@ var onVisibilityChange = function() {
 };
 document.addEventListener(visibilityChangeEvent, onVisibilityChange); // TODO: 需要在electron环境下测试是否可以运行
 
-module.exports = function(store) {
+export default function(store) {
   return {
     onReceiveMessage: function(data) {
       // web||electron通知
@@ -65,4 +65,4 @@ module.exports = function(store) {
       }
     },
   };
-};
+}

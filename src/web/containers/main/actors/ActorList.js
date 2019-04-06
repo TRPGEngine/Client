@@ -1,17 +1,17 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const at = require('trpg-actor-template');
-const TemplateSelect = require('./TemplateSelect');
-const ActorEdit = require('./ActorEdit');
-const apiHelper = require('../../../../shared/utils/apiHelper');
-const { showModal, showAlert } = require('../../../../redux/actions/ui');
-const {
+import React from 'react';
+import { connect } from 'react-redux';
+import at from 'trpg-actor-template';
+import TemplateSelect from './TemplateSelect';
+import ActorEdit from './ActorEdit';
+import * as apiHelper from '../../../../shared/utils/apiHelper';
+import { showModal, showAlert } from '../../../../redux/actions/ui';
+import {
   selectActor,
   removeActor,
   selectTemplate,
-} = require('../../../../redux/actions/actor');
+} from '../../../../redux/actions/actor';
 
-require('./ActorList.scss');
+import './ActorList.scss';
 
 class ActorList extends React.Component {
   constructor(props) {
@@ -147,7 +147,7 @@ class ActorList extends React.Component {
   }
 }
 
-module.exports = connect(
+export default connect(
   (state) => ({
     actors: state.getIn(['actor', 'selfActors']),
     selectedActorUUID: state.getIn(['actor', 'selectedActorUUID']),

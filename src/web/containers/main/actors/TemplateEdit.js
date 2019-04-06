@@ -1,19 +1,17 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const {
-  showModal,
-  showAlert,
-  hideAlert,
-} = require('../../../../redux/actions/ui');
-const Select = require('react-select');
-const TemplatePropertyCell = require('../../../components/TemplatePropertyCell');
-const at = require('trpg-actor-template');
-const {
+import React from 'react';
+import { connect } from 'react-redux';
+import { showModal, showAlert, hideAlert } from '../../../../redux/actions/ui';
+import Select from 'react-select';
+import TemplatePropertyCell from '../../../components/TemplatePropertyCell';
+import at from 'trpg-actor-template';
+import {
   createTemplate,
   updateTemplate,
-} = require('../../../../redux/actions/actor');
+} from '../../../../redux/actions/actor';
+import TemplateSelect from './TemplateSelect';
+import TemplateAdvancedCreate from './TemplateAdvancedCreate';
 
-require('./TemplateEdit.scss');
+import './TemplateEdit.scss';
 
 class TemplateEdit extends React.Component {
   constructor(props) {
@@ -38,7 +36,6 @@ class TemplateEdit extends React.Component {
   }
 
   _handleBack() {
-    const TemplateSelect = require('./TemplateSelect');
     this.props.showModal(<TemplateSelect />);
   }
 
@@ -85,7 +82,6 @@ class TemplateEdit extends React.Component {
       content: '当前编辑的内容不会被保存。是否确定切换到进阶模式?',
       onConfirm: () => {
         this.props.hideAlert();
-        const TemplateAdvancedCreate = require('./TemplateAdvancedCreate');
         this.props.showModal(<TemplateAdvancedCreate />);
       },
     });
@@ -263,7 +259,7 @@ class TemplateEdit extends React.Component {
   }
 }
 
-module.exports = connect(
+export default connect(
   (state) => ({
     currentEditedTemplate: state.getIn(['actor', 'currentEditedTemplate']),
   }),

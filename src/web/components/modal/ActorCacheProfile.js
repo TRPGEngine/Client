@@ -1,7 +1,7 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const ModalPanel = require('../ModalPanel.js');
-const ActorProfile = require('./ActorProfile.js');
+import React from 'react';
+import { connect } from 'react-redux';
+import ModalPanel from '../ModalPanel.js';
+import ActorProfile from './ActorProfile.js';
 
 // 从缓存中获取actor信息的中间组件
 class ActorCacheProfile extends React.Component {
@@ -18,6 +18,6 @@ class ActorCacheProfile extends React.Component {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   actorcache: state.getIn(['cache', 'actor']),
 }))(ActorCacheProfile);

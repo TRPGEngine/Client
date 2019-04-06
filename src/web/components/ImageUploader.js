@@ -1,11 +1,11 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const PropTypes = require('prop-types');
-const fileUrl = require('../../api/trpg.api.js').fileUrl;
-const { showAlert } = require('../../redux/actions/ui');
-const axios = require('axios');
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fileUrl } from '../../api/trpg.api.js';
+import { showAlert } from '../../redux/actions/ui';
+import axios from 'axios';
 
-require('./ImageUploader.scss');
+import './ImageUploader.scss';
 
 class ImageUploader extends React.Component {
   constructor(props) {
@@ -127,6 +127,6 @@ ImageUploader.propTypes = {
   containerHeight: PropTypes.string,
 };
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   user_uuid: state.getIn(['user', 'info', 'uuid']),
 }))(ImageUploader);

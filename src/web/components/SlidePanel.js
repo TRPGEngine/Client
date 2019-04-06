@@ -1,8 +1,8 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { hideSlidePanel } = require('../../redux/actions/ui');
+import React from 'react';
+import { connect } from 'react-redux';
+import { hideSlidePanel } from '../../redux/actions/ui';
 
-require('./SlidePanel.scss');
+import './SlidePanel.scss';
 
 class SlidePanel extends React.Component {
   constructor(props) {
@@ -56,7 +56,7 @@ class SlidePanel extends React.Component {
   }
 }
 
-module.exports = connect((state) => {
+export default connect((state) => {
   let slidePanelContent = state.getIn(['ui', 'showSlidePanelInfo', 'content']);
   if (typeof slidePanelContent === 'object') {
     slidePanelContent = slidePanelContent.toJS();

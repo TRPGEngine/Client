@@ -1,12 +1,12 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../../config/project.config.js');
-const ModalPanel = require('../ModalPanel');
-const ImageUploader = require('../ImageUploader');
-const { hideModal } = require('../../../redux/actions/ui');
-const { updateGroupInfo } = require('../../../redux/actions/group');
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../../config/project.config.js';
+import ModalPanel from '../ModalPanel';
+import ImageUploader from '../ImageUploader';
+import { hideModal } from '../../../redux/actions/ui';
+import { updateGroupInfo } from '../../../redux/actions/group';
 
-require('./GroupEdit.scss');
+import './GroupEdit.scss';
 
 class GroupEdit extends React.Component {
   constructor(props) {
@@ -86,7 +86,7 @@ class GroupEdit extends React.Component {
   }
 }
 
-module.exports = connect((state) => {
+export default connect((state) => {
   let selectedGroupUUID = state.getIn(['group', 'selectedGroupUUID']);
   let selectedGroupIndex = state
     .getIn(['group', 'groups'])

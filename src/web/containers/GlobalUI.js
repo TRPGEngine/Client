@@ -1,10 +1,10 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const Lightbox = require('react-image-lightbox').default;
-const Modal = require('../components/Modal');
-const Loading = require('../components/Loading');
-const Alert = require('../components/Alert');
-const { hideLightbox } = require('../../redux/actions/ui');
+import React from 'react';
+import { connect } from 'react-redux';
+import Lightbox from 'react-image-lightbox';
+import Modal from '../components/Modal';
+import Loading from '../components/Loading';
+import Alert from '../components/Alert';
+import { hideLightbox } from '../../redux/actions/ui';
 
 class GlobalUI extends React.Component {
   render() {
@@ -27,7 +27,7 @@ class GlobalUI extends React.Component {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   showLoading: state.getIn(['ui', 'showLoading']),
   showLoadingText: state.getIn(['ui', 'showLoadingText']),
   showLigthbox: state.getIn(['ui', 'showLigthbox']),

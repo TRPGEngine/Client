@@ -1,6 +1,6 @@
-const React = require('react');
-const { Text, TextInput } = require('react-native');
-const sb = require('react-native-style-block');
+import React from 'react';
+import { Text, TextInput } from 'react-native';
+import sb from 'react-native-style-block';
 
 class TInput extends React.Component {
   static defaultProps = {
@@ -42,4 +42,4 @@ const styles = {
   ],
 };
 
-module.exports = TInput;
+export default TInput;

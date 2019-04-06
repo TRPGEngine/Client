@@ -1,6 +1,6 @@
 import Toast from 'react-native-root-toast';
 
-module.exports = {
+export default {
   // 用于全局，一般情况下使用组件形式：<TToast />
   toast: function(message, options) {
     let toast = Toast.show(

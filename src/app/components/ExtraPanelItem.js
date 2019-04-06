@@ -1,7 +1,7 @@
-const React = require('react');
-const { View, Text, TouchableOpacity } = require('react-native');
-const sb = require('react-native-style-block');
-const { TIcon } = require('./TComponent');
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import sb from 'react-native-style-block';
+import { TIcon } from './TComponent';
 
 class ExtraPanelItem extends React.Component {
   render() {
@@ -31,4 +31,4 @@ const styles = {
   text: [sb.color('#666'), sb.textAlign(), sb.font(12)],
 };
 
-module.exports = ExtraPanelItem;
+export default ExtraPanelItem;

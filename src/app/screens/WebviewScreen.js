@@ -1,5 +1,5 @@
-const React = require('react');
-const { connect } = require('react-redux');
+import React from 'react';
+import { connect } from 'react-redux';
 const {
   View,
   Text,
@@ -7,10 +7,10 @@ const {
   ActivityIndicator,
   BackHandler,
 } = require('react-native');
-const sb = require('react-native-style-block');
-const rnStorage = require('../../api/rnStorage.api.js');
-const { loginWithToken } = require('../../redux/actions/user');
-const { backNav } = require('../../redux/actions/nav');
+import sb from 'react-native-style-block';
+import rnStorage from '../../api/rnStorage.api.js';
+import { loginWithToken } from '../../redux/actions/user';
+import { backNav } from '../../redux/actions/nav';
 
 class Loading extends React.Component {
   render() {
@@ -126,4 +126,4 @@ class WebviewScreen extends React.Component {
   }
 }
 
-module.exports = connect()(WebviewScreen);
+export default connect()(WebviewScreen);

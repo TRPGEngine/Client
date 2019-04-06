@@ -1,5 +1,5 @@
-const React = require('react');
-const { connect } = require('react-redux');
+import React from 'react';
+import { connect } from 'react-redux';
 const {
   View,
   Text,
@@ -7,10 +7,10 @@ const {
   Animated,
   Alert,
 } = require('react-native');
-const { NavigationActions } = require('react-navigation');
-const sb = require('react-native-style-block');
-const config = require('../../../config/project.config');
-const { replaceNav } = require('../../redux/actions/nav');
+import { NavigationActions } from 'react-navigation';
+import sb from 'react-native-style-block';
+import config from '../../../config/project.config';
+import { replaceNav } from '../../redux/actions/nav';
 
 class LaunchScreen extends React.Component {
   static navigationOptions = {
@@ -195,7 +195,7 @@ const styles = {
   },
 };
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   isTryLogin: state.getIn(['user', 'isTryLogin']),
   isLogin: state.getIn(['user', 'isLogin']),
   network: state.getIn(['ui', 'network']),

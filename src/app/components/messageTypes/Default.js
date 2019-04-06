@@ -1,6 +1,6 @@
-const React = require('react');
-const { Text } = require('react-native');
-const Base = require('./Base');
+import React from 'react';
+import { Text } from 'react-native';
+import Base from './Base';
 
 class Default extends Base {
   getContent() {
@@ -9,4 +9,4 @@ class Default extends Base {
   }
 }
 
-module.exports = Default;
+export default Default;

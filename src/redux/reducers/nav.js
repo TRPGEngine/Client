@@ -1,5 +1,6 @@
 import { NavigationActions, StackActions } from 'react-navigation';
 import { AppNavigator } from '../../app/router';
+import constants from '../constants';
 const {
   LOGIN_SUCCESS,
   LOGIN_TOKEN_SUCCESS,
@@ -7,14 +8,14 @@ const {
   SWITCH_NAV,
   REPLACE_NAV,
   BACK_NAV,
-} = require('../constants');
+} = constants;
 
 let initialNavState = AppNavigator.router.getStateForAction(
   NavigationActions.init()
 );
 console.log(NavigationActions);
 
-module.exports = function nav(state = initialNavState, action) {
+export default function nav(state = initialNavState, action) {
   let nextState;
   switch (action.type) {
     case LOGIN_SUCCESS:
@@ -69,4 +70,4 @@ module.exports = function nav(state = initialNavState, action) {
 
   // Simply return the original `state` if `nextState` is null or undefined.
   return nextState || state;
-};
+}

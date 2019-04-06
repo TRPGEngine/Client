@@ -1,7 +1,7 @@
 const React = require('react');
 const ipcRenderer = require('electron').ipcRenderer;
 
-require('./TitleToolbar.scss');
+import './TitleToolbar.scss';
 
 class TitleToolbar extends React.Component {
   constructor(props) {
@@ -50,4 +50,4 @@ class TitleToolbar extends React.Component {
   }
 }
 
-module.exports = TitleToolbar;
+export default TitleToolbar;

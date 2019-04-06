@@ -4,7 +4,7 @@ require('moment/locale/zh-cn');
 require('moment').locale('zh_CN');
 require('../shared/utils/common');
 
-const { AppRegistry } = require('react-native');
-const App = require('./App');
+import { AppRegistry } from 'react-native';
+import App from './App';
 
 AppRegistry.registerComponent('trpg', () => App);

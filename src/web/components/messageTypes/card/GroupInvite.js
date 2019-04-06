@@ -1,9 +1,9 @@
-const BaseCard = require('./BaseCard');
-const { connect } = require('react-redux');
-const {
+import BaseCard from './BaseCard';
+import { connect } from 'react-redux';
+import {
   agreeGroupInvite,
   refuseGroupInvite,
-} = require('../../../../redux/actions/group');
+} from '../../../../redux/actions/group';
 
 // 入团邀请
 class GroupInvite extends BaseCard {
@@ -39,7 +39,7 @@ class GroupInvite extends BaseCard {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   groupInvites: state.getIn(['group', 'invites']),
   groupUUIDList: state
     .getIn(['group', 'groups'])

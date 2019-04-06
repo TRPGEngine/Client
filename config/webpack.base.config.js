@@ -9,7 +9,7 @@ const ROOT_PATH = path.resolve(__dirname, '../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
-// const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
+const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
 const config = require('../package.json');
 
 // let vendors = Object.keys(config.dependencies);
@@ -77,22 +77,22 @@ module.exports = {
         //   path.resolve(ROOT_PATH, './node_modules/trpg-actor-template/'),
         //   path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
         // ],
+        exclude: path.resolve(ROOT_PATH, './node_modules/**'),
         query: {
           babelrc: false,
           compact: false,
-          presets: ['env', 'react'],
+          presets: ['@babel/preset-env', '@babel/preset-react'],
+          ignore: [/[\/\\]core-js/, /@babel[\/\\]runtime/],
           plugins: [
             [
-              'transform-runtime',
+              '@babel/plugin-transform-runtime',
               {
-                helpers: false,
-                polyfill: false,
-                regenerator: true,
+                helpers: true,
               },
             ],
             'transform-class-properties',
+            '@babel/plugin-transform-modules-commonjs',
             'dynamic-import-webpack',
-            'transform-object-rest-spread',
           ],
         },
       },
@@ -138,11 +138,6 @@ module.exports = {
   },
 
   plugins: [
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'vendor',
-    //   filename: 'vendor.js',
-    //   minChunks: Infinity,
-    // }),
     new WebpackBar({
       name: '🎲  TRPG Game',
       color: '#8C6244',

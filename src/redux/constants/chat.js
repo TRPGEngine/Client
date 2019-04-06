@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   ADD_CONVERSES: 'ADD_CONVERSES',
   ADD_MSG: 'ADD_MSG',
   UPDATE_MSG: 'UPDATE_MSG',

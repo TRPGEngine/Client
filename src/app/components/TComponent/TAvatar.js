@@ -1,8 +1,8 @@
-const React = require('react');
-const { View, Text, Image } = require('react-native');
-const sb = require('react-native-style-block');
-const config = require('../../../../config/project.config');
-const str2int = require('str2int');
+import React from 'react';
+import { View, Text, Image } from 'react-native';
+import sb from 'react-native-style-block';
+import config from '../../../../config/project.config';
+import str2int from 'str2int';
 
 class TAvatar extends React.Component {
   static defaultProps = {
@@ -83,4 +83,4 @@ const styles = {
   ],
 };
 
-module.exports = TAvatar;
+export default TAvatar;

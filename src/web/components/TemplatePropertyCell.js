@@ -1,7 +1,7 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 
-require('./TemplatePropertyCell.scss');
+import './TemplatePropertyCell.scss';
 
 class TemplatePropertyCell extends React.Component {
   constructor(props) {
@@ -36,4 +36,4 @@ TemplatePropertyCell.propTypes = {
   onRemove: PropTypes.func,
 };
 
-module.exports = TemplatePropertyCell;
+export default TemplatePropertyCell;

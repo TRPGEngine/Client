@@ -1,7 +1,7 @@
-const React = require('react');
-const { View, Text } = require('react-native');
-const sb = require('react-native-style-block');
-const TInput = require('./TInput');
+import React from 'react';
+import { View, Text } from 'react-native';
+import sb from 'react-native-style-block';
+import TInput from './TInput';
 
 class TFormGroup extends React.Component {
   static defaultProps = {
@@ -53,4 +53,4 @@ const styles = {
   ],
 };
 
-module.exports = TFormGroup;
+export default TFormGroup;

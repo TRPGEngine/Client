@@ -1,3 +1,4 @@
+import constants from '../constants';
 const {
   SET_USER_SETTINGS,
   SET_SYSTEM_SETTINGS,
@@ -5,14 +6,14 @@ const {
   ADD_FAVORITE_DICE,
   REMOVE_FAVORITE_DICE,
   UPDATE_FAVORITE_DICE,
-} = require('../constants');
-const { showAlert } = require('./ui');
-const config = require('../../../config/project.config.js');
-const rnStorage = require('../../api/rnStorage.api.js');
-const trpgApi = require('../../api/trpg.api.js');
+} = constants;
+import { showAlert } from './ui';
+import config from '../../../config/project.config.js';
+import rnStorage from '../../api/rnStorage.api.js';
+import * as trpgApi from '../../api/trpg.api.js';
 const api = trpgApi.getInstance();
 
-exports.saveSettings = function saveSettings() {
+export const saveSettings = function saveSettings() {
   return async function(dispatch, getState) {
     let userSettings = await rnStorage.save(
       'userSettings',
@@ -37,7 +38,7 @@ exports.saveSettings = function saveSettings() {
   };
 };
 
-exports.setUserSettings = function setUserSettings(payload) {
+export const setUserSettings = function setUserSettings(payload) {
   return function(dispatch, getState) {
     rnStorage.save(
       'userSettings',
@@ -49,7 +50,7 @@ exports.setUserSettings = function setUserSettings(payload) {
   };
 };
 
-exports.setSystemSettings = function setSystemSettings(payload) {
+export const setSystemSettings = function setSystemSettings(payload) {
   return function(dispatch, getState) {
     if (
       config.platform !== 'app' &&
@@ -60,7 +61,7 @@ exports.setSystemSettings = function setSystemSettings(payload) {
         dispatch(showAlert('桌面通知权限已被禁止, 请手动修改后刷新应用'));
         payload.notification = false;
       } else if (Notification.permission === 'default') {
-        dispatch(exports.requestNotificationPermission());
+        dispatch(requestNotificationPermission());
       }
     }
 
@@ -74,34 +75,34 @@ exports.setSystemSettings = function setSystemSettings(payload) {
   };
 };
 
-exports.setNotificationPermission = function setNotificationPermission(
+export const setNotificationPermission = function setNotificationPermission(
   notification
 ) {
   return { type: UPDATE_NOTIFICATION_PERMISSION, payload: notification };
 };
 
-exports.requestNotificationPermission = function requestNotificationPermission() {
+export const requestNotificationPermission = function requestNotificationPermission() {
   return function(dispatch, getState) {
     Notification.requestPermission((result) => {
       console.log('授权结果:', result);
-      dispatch(exports.setNotificationPermission(result));
+      dispatch(setNotificationPermission(result));
 
       if (result !== 'granted') {
         // 如果授权不成功, 则回退设置
-        dispatch(exports.setSystemSettings({ notification: false }));
+        dispatch(setSystemSettings({ notification: false }));
       }
     });
   };
 };
 
-exports.addFavoriteDice = function addFavoriteDice() {
+export const addFavoriteDice = function addFavoriteDice() {
   return { type: ADD_FAVORITE_DICE };
 };
 
-exports.removeFavoriteDice = function removeFavoriteDice(index) {
+export const removeFavoriteDice = function removeFavoriteDice(index) {
   return { type: REMOVE_FAVORITE_DICE, index };
 };
 
-exports.updateFavoriteDice = function updateFavoriteDice(index, payload) {
+export const updateFavoriteDice = function updateFavoriteDice(index, payload) {
   return { type: UPDATE_FAVORITE_DICE, index, payload };
 };

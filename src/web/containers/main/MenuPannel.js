@@ -1,18 +1,15 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../../config/project.config.js');
-const {
-  showProfileCard,
-  switchMenuPannel,
-} = require('../../../redux/actions/ui');
-const SlidePanel = require('../../components/SlidePanel');
-const ConverseList = require('./converse/ConverseList');
-const ActorList = require('./actors/ActorList');
-const GroupList = require('./group/GroupList');
-const NoteList = require('./note/NoteList');
-const ExtraOptions = require('./ExtraOptions');
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../../config/project.config.js';
+import { showProfileCard, switchMenuPannel } from '../../../redux/actions/ui';
+import SlidePanel from '../../components/SlidePanel';
+import ConverseList from './converse/ConverseList';
+import ActorList from './actors/ActorList';
+import GroupList from './group/GroupList';
+import NoteList from './note/NoteList';
+import ExtraOptions from './ExtraOptions';
 
-require('./MenuPannel.scss');
+import './MenuPannel.scss';
 
 class MenuPannel extends React.Component {
   constructor(props) {
@@ -95,7 +92,7 @@ class MenuPannel extends React.Component {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   avatar: state.getIn(['user', 'info', 'avatar']),
   name:
     state.getIn(['user', 'info', 'nickname']) ||

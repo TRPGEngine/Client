@@ -1,9 +1,9 @@
-const BaseCard = require('./BaseCard');
-const { connect } = require('react-redux');
-const {
+import BaseCard from './BaseCard';
+import { connect } from 'react-redux';
+import {
   agreeFriendInvite,
   refuseFriendInvite,
-} = require('../../../../redux/actions/user');
+} from '../../../../redux/actions/user';
 
 // 好友邀请
 class FriendInvite extends BaseCard {
@@ -39,7 +39,7 @@ class FriendInvite extends BaseCard {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   friendList: state.getIn(['user', 'friendList']),
   friendRequests: state.getIn(['user', 'friendRequests']),
 }))(FriendInvite);

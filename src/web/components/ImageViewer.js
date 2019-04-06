@@ -1,8 +1,8 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const Lightbox = require('react-image-lightbox').default;
+import React from 'react';
+import PropTypes from 'prop-types';
+import Lightbox from 'react-image-lightbox';
 
-require('./ImageViewer.scss');
+import './ImageViewer.scss';
 
 class ImageViewer extends React.Component {
   constructor(props) {
@@ -37,4 +37,4 @@ ImageViewer.propTypes = {
   originImageUrl: PropTypes.string,
 };
 
-module.exports = ImageViewer;
+export default ImageViewer;

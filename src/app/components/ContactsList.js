@@ -1,11 +1,11 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { View, Text, SectionList, TouchableOpacity } = require('react-native');
-const sb = require('react-native-style-block');
-const appConfig = require('../config.app');
-const { TIcon } = require('./TComponent');
-const ConvItem = require('./ConvItem');
-const { switchNav } = require('../../redux/actions/nav');
+import React from 'react';
+import { connect } from 'react-redux';
+import { View, Text, SectionList, TouchableOpacity } from 'react-native';
+import sb from 'react-native-style-block';
+import appConfig from '../config.app';
+import { TIcon } from './TComponent';
+import ConvItem from './ConvItem';
+import { switchNav } from '../../redux/actions/nav';
 
 class ContactList extends React.Component {
   constructor(props) {
@@ -123,7 +123,7 @@ const styles = {
   cell: [{ marginLeft: 20, paddingLeft: 10 }],
 };
 
-module.exports = connect((state) => {
+export default connect((state) => {
   let usercache = state.getIn(['cache', 'user']);
   let friends = state.getIn(['user', 'friendList']);
   let groups = state.getIn(['group', 'groups']);

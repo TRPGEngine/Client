@@ -1,7 +1,7 @@
-const React = require('react');
-const ModalPanel = require('./ModalPanel');
+import React from 'react';
+import ModalPanel from './ModalPanel';
 
-require('./ListSelect.scss');
+import './ListSelect.scss';
 
 class ListSelect extends React.Component {
   constructor(props) {
@@ -57,4 +57,4 @@ ListSelect.defaultProps = {
   list: [],
 };
 
-module.exports = ListSelect;
+export default ListSelect;

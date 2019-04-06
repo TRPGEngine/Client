@@ -1,14 +1,14 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const {
+import React from 'react';
+import { connect } from 'react-redux';
+import {
   tickMember,
   setMemberToManager,
-} = require('../../../../../redux/actions/group');
-const ModalPanel = require('../../../../components/ModalPanel');
-const config = require('../../../../../../config/project.config');
-const { getUserInfoCache } = require('../../../../../shared/utils/cacheHelper');
+} from '../../../../../redux/actions/group';
+import ModalPanel from '../../../../components/ModalPanel';
+import config from '../../../../../../config/project.config';
+import { getUserInfoCache } from '../../../../../shared/utils/cacheHelper';
 
-require('./GroupMemberManage.scss');
+import './GroupMemberManage.scss';
 
 class GroupMemberManage extends React.Component {
   _handleRaiseManager() {
@@ -49,7 +49,7 @@ class GroupMemberManage extends React.Component {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   usercache: state.getIn(['cache', 'user']),
   selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
 }))(GroupMemberManage);

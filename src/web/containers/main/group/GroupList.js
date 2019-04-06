@@ -1,12 +1,12 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../../../config/project.config.js');
-const ConvItem = require('../../../components/ConvItem');
-const dateHelper = require('../../../../shared/utils/dateHelper');
-const { switchSelectGroup } = require('../../../../redux/actions/group');
-const GroupDetail = require('./GroupDetail');
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../../../config/project.config.js';
+import ConvItem from '../../../components/ConvItem';
+import dateHelper from '../../../../shared/utils/dateHelper';
+import { switchSelectGroup } from '../../../../redux/actions/group';
+import GroupDetail from './GroupDetail';
 
-require('./GroupList.scss');
+import './GroupList.scss';
 
 class GroupList extends React.Component {
   constructor(props) {
@@ -81,7 +81,7 @@ class GroupList extends React.Component {
   }
 }
 
-module.exports = connect(
+export default connect(
   (state) => ({
     groups: state.getIn(['group', 'groups']),
     selectedUUID: state.getIn(['group', 'selectedGroupUUID']),

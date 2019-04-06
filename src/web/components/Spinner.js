@@ -1,5 +1,5 @@
-const React = require('react');
-require('./Spinner.scss');
+import React from 'react';
+import './Spinner.scss';
 
 class Spinner extends React.Component {
   render() {
@@ -13,4 +13,4 @@ class Spinner extends React.Component {
   }
 }
 
-module.exports = Spinner;
+export default Spinner;

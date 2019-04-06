@@ -1,7 +1,7 @@
-const React = require('react');
-const moment = require('moment');
+import React from 'react';
+import moment from 'moment';
 
-require('./TemplateItem.scss');
+import './TemplateItem.scss';
 
 class TemplateItem extends React.Component {
   constructor(props) {
@@ -49,4 +49,4 @@ class TemplateItem extends React.Component {
   }
 }
 
-module.exports = TemplateItem;
+export default TemplateItem;

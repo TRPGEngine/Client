@@ -1,23 +1,23 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../../../config/project.config');
-const {
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../../../config/project.config';
+import {
   showAlert,
   hideAlert,
   showModal,
   hideSlidePanel,
-} = require('../../../../redux/actions/ui');
-const {
+} from '../../../../redux/actions/ui';
+import {
   switchSelectGroup,
   quitGroup,
   dismissGroup,
   setGroupStatus,
-} = require('../../../../redux/actions/group');
-const ImageViewer = require('../../../components/ImageViewer');
-const GroupEdit = require('../../../components/modal/GroupEdit');
-// const GroupEdit = require('./modal/GroupEdit');
+} from '../../../../redux/actions/group';
+import ImageViewer from '../../../components/ImageViewer';
+import GroupEdit from '../../../components/modal/GroupEdit';
+// import GroupEdit from './modal/GroupEdit';
 
-require('./GroupInfo.scss');
+import './GroupInfo.scss';
 
 class GroupInfo extends React.Component {
   _handleEditGroup() {
@@ -160,7 +160,7 @@ class GroupInfo extends React.Component {
   }
 }
 
-module.exports = connect(
+export default connect(
   (state) => ({
     userUUID: state.getIn(['user', 'info', 'uuid']),
     usercache: state.getIn(['cache', 'user']),

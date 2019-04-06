@@ -1,11 +1,11 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { Link } = require('react-router-dom');
-const { showLoading } = require('../../redux/actions/ui');
-const { login, loginWithToken } = require('../../redux/actions/user');
-const config = require('../../../config/project.config.js');
-const rnStorage = require('../../api/rnStorage.api.js');
-require('./Login.scss');
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { showLoading } from '../../redux/actions/ui';
+import { login, loginWithToken } from '../../redux/actions/user';
+import config from '../../../config/project.config.js';
+import rnStorage from '../../api/rnStorage.api.js';
+import './Login.scss';
 
 class Login extends React.Component {
   constructor(props) {
@@ -114,4 +114,4 @@ function mapStateToProps(state) {
   };
 }
 
-module.exports = connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(Login);

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   SHOW_ALERT: 'SHOW_ALERT',
   HIDE_ALERT: 'HIDE_ALERT',
   SHOW_LOADING: 'SHOW_LOADING',

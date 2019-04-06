@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class MessageHandler extends React.Component {
   static messageHandlers = {};
@@ -29,4 +29,4 @@ class MessageHandler extends React.Component {
   }
 }
 
-module.exports = MessageHandler;
+export default MessageHandler;

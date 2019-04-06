@@ -48,4 +48,4 @@ let _localStorage = {
   },
 };
 
-module.exports = _localStorage;
+export default _localStorage;

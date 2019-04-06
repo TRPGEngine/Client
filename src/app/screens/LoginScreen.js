@@ -1,18 +1,18 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { View, Text, Image, TouchableOpacity } = require('react-native');
-const { NavigationActions } = require('react-navigation');
-const sb = require('react-native-style-block');
-const { login } = require('../../redux/actions/user');
-const { openWebview } = require('../../redux/actions/nav');
+import React from 'react';
+import { connect } from 'react-redux';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { NavigationActions } from 'react-navigation';
+import sb from 'react-native-style-block';
+import { login } from '../../redux/actions/user';
+import { openWebview } from '../../redux/actions/nav';
 const {
   TButton,
   TFormGroup,
   TLoading,
   TAlert,
 } = require('../components/TComponent');
-const config = require('../../../config/project.config');
-const appConfig = require('../config.app');
+import config from '../../../config/project.config';
+import appConfig from '../config.app';
 
 class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -115,4 +115,4 @@ const styles = {
   oauthBtnImage: [sb.size(40, 40), sb.radius(20)],
 };
 
-module.exports = connect()(LoginScreen);
+export default connect()(LoginScreen);

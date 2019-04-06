@@ -1,19 +1,23 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../config/project.config.js');
-const dateHelper = require('../../shared/utils/dateHelper');
-const scrollTo = require('../../shared/utils/animatedScrollTo.js');
-const { getUserInfoCache } = require('../../shared/utils/cacheHelper');
-const { getMoreChatLog } = require('../../redux/actions/chat');
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../config/project.config.js';
+import dateHelper from '../../shared/utils/dateHelper';
+import scrollTo from '../../shared/utils/animatedScrollTo.js';
+import { getUserInfoCache } from '../../shared/utils/cacheHelper';
+import { getMoreChatLog } from '../../redux/actions/chat';
 
-const MessageHandler = require('../../shared/components/MessageHandler');
-MessageHandler.registerDefaultMessageHandler(require('./messageTypes/Default'));
-MessageHandler.registerMessageHandler('tip', require('./messageTypes/Tip'));
-MessageHandler.registerMessageHandler('card', require('./messageTypes/Card'));
-MessageHandler.registerMessageHandler('file', require('./messageTypes/File'));
-require('./messageTypes/MsgItem.scss');
+import MessageHandler from '../../shared/components/MessageHandler';
+import Default from './messageTypes/Default';
+import Tip from './messageTypes/Tip';
+import Card from './messageTypes/Card';
+import File from './messageTypes/File';
+MessageHandler.registerDefaultMessageHandler(Default);
+MessageHandler.registerMessageHandler('tip', Tip);
+MessageHandler.registerMessageHandler('card', Card);
+MessageHandler.registerMessageHandler('file', File);
+import './messageTypes/MsgItem.scss';
 
-require('./MsgContainer.scss');
+import './MsgContainer.scss';
 class MsgContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -165,7 +169,7 @@ class MsgContainer extends React.Component {
   }
 }
 
-module.exports = connect((state, ownProps) => {
+export default connect((state, ownProps) => {
   let converseUUID = ownProps.converseUUID;
   let msgList = state.getIn(['chat', 'converses', converseUUID, 'msgList']);
 

@@ -1,8 +1,8 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 import E from 'wangeditor';
 
-require('./NoteEditor.scss');
+import './NoteEditor.scss';
 
 class NoteEditor extends React.Component {
   constructor(props) {
@@ -73,4 +73,4 @@ NoteEditor.propTypes = {
   onSave: PropTypes.func,
 };
 
-module.exports = NoteEditor;
+export default NoteEditor;

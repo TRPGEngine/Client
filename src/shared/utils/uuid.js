@@ -1,6 +1,6 @@
-const isUUID = require('is-uuid');
+import isUUID from 'is-uuid';
 
-module.exports = {
+export default {
   isUserUUID: (uuid) => {
     return isUUID.v1(uuid);
   },

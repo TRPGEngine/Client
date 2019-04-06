@@ -1,12 +1,12 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../../../config/project.config.js');
-const moment = require('moment');
-const { showModal, showProfileCard } = require('../../../../redux/actions/ui');
-const GroupMemberManage = require('./modal/GroupMemberManage');
-const { getUserInfoCache } = require('../../../../shared/utils/cacheHelper');
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../../../config/project.config.js';
+import moment from 'moment';
+import { showModal, showProfileCard } from '../../../../redux/actions/ui';
+import GroupMemberManage from './modal/GroupMemberManage';
+import { getUserInfoCache } from '../../../../shared/utils/cacheHelper';
 
-require('./GroupMember.scss');
+import './GroupMember.scss';
 
 class GroupMember extends React.Component {
   _handleManageMember(uuid) {
@@ -76,7 +76,7 @@ class GroupMember extends React.Component {
   }
 }
 
-module.exports = connect(
+export default connect(
   (state) => ({
     userUUID: state.getIn(['user', 'info', 'uuid']),
     selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),

@@ -1,13 +1,13 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { addNote, switchNote } = require('../../../../redux/actions/note');
-const moment = require('moment');
-const ReactTooltip = require('react-tooltip');
-const Spinner = require('../../../components/Spinner');
+import React from 'react';
+import { connect } from 'react-redux';
+import { addNote, switchNote } from '../../../../redux/actions/note';
+import moment from 'moment';
+import ReactTooltip from 'react-tooltip';
+import Spinner from '../../../components/Spinner';
 
-const NoteDetail = require('./NoteDetail');
+import NoteDetail from './NoteDetail';
 
-require('./NoteList.scss');
+import './NoteList.scss';
 
 class NoteList extends React.Component {
   constructor(props) {
@@ -119,7 +119,7 @@ class NoteList extends React.Component {
     );
   }
 }
-module.exports = connect((state) => ({
+export default connect((state) => ({
   selectedNoteUUID: state.getIn(['note', 'selectedNoteUUID']),
   noteList: state.getIn(['note', 'noteList']),
   isNoteSync: state.getIn(['note', 'isSync']),

@@ -1,3 +1,4 @@
+const path = require('path');
 const gulp = require('gulp');
 const replace = require('gulp-replace');
 const log = require('fancy-log');
@@ -6,6 +7,10 @@ const {
   series, //顺序
   parallel, // 并行
 } = gulp;
+
+const ROOT_PATH = path.resolve(__dirname, '../');
+const CONFIG_PATH = path.resolve(ROOT_PATH, './config');
+process.env['NODE_CONFIG_DIR'] = CONFIG_PATH; // 手动设置配置文件目录， 否则会在build文件夹里面找
 
 gulp.task('assets', async function() {
   gulp.src('../src/assets/**/*').pipe(gulp.dest('../dist/assets/'));

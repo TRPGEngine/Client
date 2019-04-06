@@ -1,5 +1,5 @@
-import Storage from 'react-native-storage';
-const config = require('../../config/project.config');
+import Storage from 'react-native-storage/src/storage';
+import config from '../../config/project.config';
 
 let storage = new Storage({
   // 最大容量，默认值1000条数据循环存储
@@ -27,7 +27,7 @@ let storage = new Storage({
   // sync: require('你可以另外写一个文件专门处理sync')
 });
 
-module.exports = {
+export default {
   set: async (key, data) => {
     try {
       if (!!key && !!data) {

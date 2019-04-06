@@ -1,24 +1,24 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../../config/project.config');
-const { logout } = require('../../../redux/actions/user');
-const { showModal, switchMenuPannel } = require('../../../redux/actions/ui');
-const { setEditedTemplate } = require('../../../redux/actions/actor');
-const { addNote } = require('../../../redux/actions/note');
-const TemplateSelect = require('./actors/TemplateSelect');
-const TemplateEdit = require('./actors/TemplateEdit');
-// const IsDeveloping = require('../../components/IsDeveloping');
-const GroupCreate = require('../../components/modal/GroupCreate');
-const ChangePassword = require('../../components/ChangePassword');
-const FriendsAdd = require('../../components/modal/FriendsAdd');
-const GroupAdd = require('../../components/modal/GroupAdd');
-const UserSettings = require('../../components/modal/UserSettings');
-const SystemSettings = require('../../components/modal/SystemSettings');
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../../config/project.config';
+import { logout } from '../../../redux/actions/user';
+import { showModal, switchMenuPannel } from '../../../redux/actions/ui';
+import { setEditedTemplate } from '../../../redux/actions/actor';
+import { addNote } from '../../../redux/actions/note';
+import TemplateSelect from './actors/TemplateSelect';
+import TemplateEdit from './actors/TemplateEdit';
+// import IsDeveloping from '../../components/IsDeveloping';
+import GroupCreate from '../../components/modal/GroupCreate';
+import ChangePassword from '../../components/ChangePassword';
+import FriendsAdd from '../../components/modal/FriendsAdd';
+import GroupAdd from '../../components/modal/GroupAdd';
+import UserSettings from '../../components/modal/UserSettings';
+import SystemSettings from '../../components/modal/SystemSettings';
 import SystemStatus from '../../components/modal/SystemStatus';
-const ModalPanel = require('../../components/ModalPanel');
-const Webview = require('../../components/Webview');
+import ModalPanel from '../../components/ModalPanel';
+import Webview from '../../components/Webview';
 
-require('./ExtraOptions.scss');
+import './ExtraOptions.scss';
 
 class ExtraOptions extends React.Component {
   constructor(props) {
@@ -151,4 +151,4 @@ class ExtraOptions extends React.Component {
   }
 }
 
-module.exports = connect()(ExtraOptions);
+export default connect()(ExtraOptions);

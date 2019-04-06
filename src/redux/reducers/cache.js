@@ -1,4 +1,5 @@
-const immutable = require('immutable');
+import immutable from 'immutable';
+import constants from '../constants';
 const {
   RESET,
   GET_USER_INFO,
@@ -6,7 +7,7 @@ const {
   GET_ACTOR_INFO,
   GET_TEMPLATE_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
-} = require('../constants');
+} = constants;
 
 const initialState = immutable.fromJS({
   user: {},
@@ -15,7 +16,7 @@ const initialState = immutable.fromJS({
   group: {},
 });
 
-module.exports = function cache(state = initialState, action) {
+export default function cache(state = initialState, action) {
   switch (action.type) {
     case RESET:
       return initialState;
@@ -57,4 +58,4 @@ module.exports = function cache(state = initialState, action) {
     default:
       return state;
   }
-};
+}

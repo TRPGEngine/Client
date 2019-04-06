@@ -1,14 +1,14 @@
 import Loadable from 'react-loadable';
 import React from 'react';
 import LoadingSpinner from '../../../components/LoadingSpinner';
-const { connect } = require('react-redux');
-const { saveNote } = require('../../../../redux/actions/note');
+import { connect } from 'react-redux';
+import { saveNote } from '../../../../redux/actions/note';
 const NoteEditor = Loadable({
   loader: () => import('../../../components/NoteEditor'),
   loading: LoadingSpinner,
 });
 
-require('./NoteDetail.scss');
+import './NoteDetail.scss';
 
 class NoteDetail extends React.Component {
   constructor(props) {
@@ -48,4 +48,4 @@ class NoteDetail extends React.Component {
     );
   }
 }
-module.exports = connect()(NoteDetail);
+export default connect()(NoteDetail);

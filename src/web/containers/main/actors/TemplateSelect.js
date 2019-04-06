@@ -1,19 +1,19 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { showModal, showAlert } = require('../../../../redux/actions/ui');
-const {
+import React from 'react';
+import { connect } from 'react-redux';
+import { showModal, showAlert } from '../../../../redux/actions/ui';
+import {
   setEditedTemplate,
   findTemplate,
   selectTemplate,
   removeTemplate,
-} = require('../../../../redux/actions/actor');
-const TemplateEdit = require('./TemplateEdit');
-const ActorEdit = require('./ActorEdit');
-const TemplateItem = require('../../../components/TemplateItem');
-const ModalPanel = require('../../../components/ModalPanel');
-const ReactTooltip = require('react-tooltip');
+} from '../../../../redux/actions/actor';
+import TemplateEdit from './TemplateEdit';
+import ActorEdit from './ActorEdit';
+import TemplateItem from '../../../components/TemplateItem';
+import ModalPanel from '../../../components/ModalPanel';
+import ReactTooltip from 'react-tooltip';
 
-require('./TemplateSelect.scss');
+import './TemplateSelect.scss';
 
 class TemplateSelect extends React.Component {
   constructor(props) {
@@ -129,7 +129,7 @@ class TemplateSelect extends React.Component {
   }
 }
 
-module.exports = connect(
+export default connect(
   (state) => ({
     username: state.getIn(['user', 'info', 'username']),
     findingResult: state.getIn(['actor', 'findingResult']),

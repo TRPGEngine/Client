@@ -1,11 +1,11 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const config = require('../../../../../config/project.config.js');
-const ReactTooltip = require('react-tooltip');
-const { sendGroupInvite } = require('../../../../redux/actions/group');
-const { getUserInfoCache } = require('../../../../shared/utils/cacheHelper');
+import React from 'react';
+import { connect } from 'react-redux';
+import config from '../../../../../config/project.config.js';
+import ReactTooltip from 'react-tooltip';
+import { sendGroupInvite } from '../../../../redux/actions/group';
+import { getUserInfoCache } from '../../../../shared/utils/cacheHelper';
 
-require('./GroupInvite.scss');
+import './GroupInvite.scss';
 
 class GroupInvite extends React.Component {
   constructor(props) {
@@ -98,7 +98,7 @@ class GroupInvite extends React.Component {
   }
 }
 
-module.exports = connect(
+export default connect(
   (state) => {
     let selectedGroupUUID = state.getIn(['group', 'selectedGroupUUID']);
     let groupInfo = state

@@ -16,14 +16,14 @@ if (environment == 'production') {
 let trpgHost = _get(process.env, 'TRPG_HOST');
 let trpgPort;
 if (trpgHost) {
-  let _tmp = trpgHost.split(':')
+  let _tmp = trpgHost.split(':');
   currentHost = _tmp[0];
   trpgPort = _tmp[1];
 }
 
 const standardPort = isSSL ? '443' : '80';
 let apiPort = environment === 'production' ? standardPort : '23256';
-if(trpgPort) {
+if (trpgPort) {
   apiPort = trpgPort;
 }
 
@@ -143,4 +143,4 @@ out.file.getRelativePath = function getAbsolutePath(path) {
   return path.replace(out.file.url, '');
 };
 
-module.exports = out;
+export default out;

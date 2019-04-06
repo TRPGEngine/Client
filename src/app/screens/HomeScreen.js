@@ -1,11 +1,11 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const { View, Text, FlatList, RefreshControl } = require('react-native');
-const { NavigationActions } = require('react-navigation');
-const sb = require('react-native-style-block');
-const dateHelper = require('../../shared/utils/dateHelper');
-const appConfig = require('../config.app');
-const ConvItem = require('../components/ConvItem');
+import React from 'react';
+import { connect } from 'react-redux';
+import { View, Text, FlatList, RefreshControl } from 'react-native';
+import { NavigationActions } from 'react-navigation';
+import sb from 'react-native-style-block';
+import dateHelper from '../../shared/utils/dateHelper';
+import appConfig from '../config.app';
+import ConvItem from '../components/ConvItem';
 const {
   reloadConverseList,
   switchConverse,
@@ -123,7 +123,7 @@ const styles = {
   tipText: [sb.textAlign('center'), sb.margin(80, 0, 0, 0), sb.color('#999')],
 };
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   converses: state.getIn(['chat', 'converses']),
   conversesDesc: state.getIn(['chat', 'conversesDesc']),
   groups: state.getIn(['group', 'groups']),

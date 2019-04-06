@@ -1,3 +1,4 @@
+import constants from '../constants';
 const {
   RESET,
   LOGIN_REQUEST,
@@ -19,27 +20,28 @@ const {
   GET_FRIEND_INVITE_SUCCESS,
   REFUSE_FRIEND_INVITE_SUCCESS,
   ADD_FRIEND_INVITE,
-} = require('../constants');
-const md5 = require('md5');
-const rnStorage = require('../../api/rnStorage.api.js');
-const config = require('../../../config/project.config');
-const trpgApi = require('../../api/trpg.api.js');
-const api = trpgApi.getInstance();
-const { showLoading, hideLoading, showAlert } = require('./ui');
-const { checkUser } = require('../../shared/utils/cacheHelper');
-const { setUserSettings, setSystemSettings } = require('./settings');
+} = constants;
+import md5 from 'md5';
+import rnStorage from '../../api/rnStorage.api.js';
+import config from '../../../config/project.config';
+import * as trpgApi from '../../api/trpg.api.js';
+import { showLoading, hideLoading, showAlert } from './ui';
+import { checkUser } from '../../shared/utils/cacheHelper';
+import { setUserSettings, setSystemSettings } from './settings';
 
+import { reloadConverseList } from './chat';
+import { getTemplate, getActor } from './actor';
+import { getGroupList, getGroupInvite } from './group';
+import { getNote } from './note';
+import { loadLocalCache } from './cache';
+
+const api = trpgApi.getInstance();
+
+// 登录成功后获取数据
 function loginSuccess(dispatch, getState) {
   if (!dispatch || !getState) {
     return;
   }
-
-  const { reloadConverseList } = require('./chat');
-  const { getFriends, getFriendsInvite, getSettings } = require('./user');
-  const { getTemplate, getActor } = require('./actor');
-  const { getGroupList, getGroupInvite } = require('./group');
-  const { getNote } = require('./note');
-  const { loadLocalCache } = require('./cache');
 
   dispatch(loadLocalCache()); // 加载本地缓存信息
   dispatch(reloadConverseList()); // 重新加载所有会员列表
@@ -53,7 +55,7 @@ function loginSuccess(dispatch, getState) {
   dispatch(getSettings()); // 获取服务器上的设置信息
 }
 
-exports.login = function(username, password) {
+export const login = function(username, password) {
   return function(dispatch, getState) {
     password = md5(password);
     let isApp = config.platform === 'app';
@@ -93,7 +95,7 @@ exports.login = function(username, password) {
   };
 };
 
-exports.loginWithToken = function(uuid, token, channel = null) {
+export const loginWithToken = function(uuid, token, channel = null) {
   return function(dispatch, getState) {
     let isApp = config.platform === 'app';
     dispatch({ type: LOGIN_REQUEST });
@@ -126,7 +128,7 @@ exports.loginWithToken = function(uuid, token, channel = null) {
 };
 
 // 重新获取一次用户登录后的数据
-exports.updateAllInfo = function() {
+export const updateAllInfo = function() {
   return function(dispatch, getState) {
     if (getState().getIn(['user', 'isLogin']) === true) {
       loginSuccess(dispatch, getState);
@@ -134,7 +136,7 @@ exports.updateAllInfo = function() {
   };
 };
 
-exports.logout = function() {
+export const logout = function() {
   let isApp = config.platform === 'app';
   return function(dispatch, getState) {
     let info = getState().getIn(['user', 'info']);
@@ -155,7 +157,7 @@ exports.logout = function() {
   };
 };
 
-exports.register = function(username, password, onSuccess) {
+export const register = function(username, password, onSuccess) {
   password = md5(password);
   return function(dispatch, getState) {
     dispatch({ type: REGISTER_REQUEST });
@@ -179,7 +181,7 @@ exports.register = function(username, password, onSuccess) {
   };
 };
 
-exports.findUser = function(text, type) {
+export const findUser = function(text, type) {
   return function(dispatch, getState) {
     dispatch({ type: FIND_USER_REQUEST });
 
@@ -205,7 +207,7 @@ exports.findUser = function(text, type) {
   };
 };
 
-exports.updateInfo = function(updatedData) {
+export const updateInfo = function(updatedData) {
   return function(dispatch, getState) {
     return api.emit('player::updateInfo', updatedData, function(data) {
       if (data.result) {
@@ -218,7 +220,12 @@ exports.updateInfo = function(updatedData) {
   };
 };
 
-exports.changePassword = function(oldPassword, newPassword, success, error) {
+export const changePassword = function(
+  oldPassword,
+  newPassword,
+  success,
+  error
+) {
   oldPassword = md5(oldPassword);
   newPassword = md5(newPassword);
   return function(dispatch, getState) {
@@ -238,7 +245,7 @@ exports.changePassword = function(oldPassword, newPassword, success, error) {
   };
 };
 
-exports.addFriend = function(uuid) {
+export const addFriend = function(uuid) {
   return function(dispatch, getState) {
     console.log('addFriend:', uuid);
     return api.emit('player::addFriend', { uuid }, function(data) {
@@ -252,7 +259,7 @@ exports.addFriend = function(uuid) {
   };
 };
 
-exports.getFriends = function() {
+export const getFriends = function() {
   return function(dispatch, getState) {
     return api.emit('player::getFriends', {}, function(data) {
       if (data.result) {
@@ -271,7 +278,7 @@ exports.getFriends = function() {
   };
 };
 
-exports.sendFriendInvite = function(uuid) {
+export const sendFriendInvite = function(uuid) {
   return function(dispatch, getState) {
     return api.emit('player::sendFriendInvite', { to: uuid }, function(data) {
       if (data.result) {
@@ -288,7 +295,7 @@ exports.sendFriendInvite = function(uuid) {
   };
 };
 
-exports.agreeFriendInvite = function(inviteUUID) {
+export const agreeFriendInvite = function(inviteUUID) {
   return function(dispatch, getState) {
     return api.emit('player::agreeFriendInvite', { uuid: inviteUUID }, function(
       data
@@ -304,7 +311,7 @@ exports.agreeFriendInvite = function(inviteUUID) {
   };
 };
 
-exports.getFriendsInvite = function() {
+export const getFriendsInvite = function() {
   return function(dispatch, getState) {
     return api.emit('player::getFriendsInvite', {}, function(data) {
       if (data.result) {
@@ -319,7 +326,7 @@ exports.getFriendsInvite = function() {
   };
 };
 
-exports.refuseFriendInvite = function(inviteUUID) {
+export const refuseFriendInvite = function(inviteUUID) {
   return function(dispatch, getState) {
     return api.emit(
       'player::refuseFriendInvite',
@@ -335,11 +342,11 @@ exports.refuseFriendInvite = function(inviteUUID) {
   };
 };
 
-exports.addFriendInvite = function(invite) {
+export const addFriendInvite = function(invite) {
   return { type: ADD_FRIEND_INVITE, payload: invite };
 };
 
-exports.getSettings = function() {
+export const getSettings = function() {
   return function(dispatch, getState) {
     return api.emit('player::getSettings', {}, function(data) {
       if (data.result) {
@@ -353,7 +360,7 @@ exports.getSettings = function() {
   };
 };
 
-exports.saveSettings = function() {
+export const saveSettings = function() {
   return function(dispatch, getState) {
     const settings = getState().get('settings');
     return api.emit(

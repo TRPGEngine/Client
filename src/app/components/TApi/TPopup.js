@@ -1,5 +1,5 @@
-const React = require('react');
-const { View } = require('react-native');
+import React from 'react';
+import { View } from 'react-native';
 import RootSiblings from 'react-native-root-siblings';
 
 const styles = {
@@ -36,4 +36,4 @@ const TPopup = {
   },
 };
 
-module.exports = TPopup;
+export default TPopup;

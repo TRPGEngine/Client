@@ -1,4 +1,4 @@
-const { emojify } = require('react-emojione2');
+import { emojify as _emojify } from 'react-emojione2';
 const options = {
   convertShortnames: true,
   convertUnicode: true,
@@ -14,12 +14,12 @@ const options = {
   // handleClick: event => console.log(event.target.title)
 };
 
-exports.emojify = function(str, opt) {
-  return emojify(str, Object.assign({}, options, opt));
+export const emojify = function(str, opt) {
+  return _emojify(str, Object.assign({}, options, opt));
 };
 
-exports.getCodeList = function() {
-  // const data = require('react-emojione2/lib/data/emoji-data').default;
+export const getCodeList = function() {
+  // import data from 'react-emojione2/lib/data/emoji-data'.default;
   // return data.map((item) => item[2]);
   let people = [
     ':smile:',

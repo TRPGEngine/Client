@@ -1,17 +1,17 @@
-const {
+import {
   getUserInfo,
   getGroupInfo,
   getTemplateInfo,
-} = require('../../redux/actions/cache');
-const isUUID = require('is-uuid');
-const immutable = require('immutable');
+} from '../../redux/actions/cache';
+import isUUID from 'is-uuid';
+import immutable from 'immutable';
 
 let _store = null;
-exports.attachStore = function(store) {
+export const attachStore = function(store) {
   _store = store;
 };
 
-exports.checkUser = function(uuid, type = 'user') {
+export const checkUser = function(uuid, type = 'user') {
   if (uuid.toString().substr(0, 4) === 'trpg') {
     // 不检测trpg开头的内置系统用户
     return;
@@ -32,7 +32,7 @@ exports.checkUser = function(uuid, type = 'user') {
   }
 };
 
-exports.checkTemplate = function(uuid) {
+export const checkTemplate = function(uuid) {
   let store = _store;
   if (!!store && !!store.dispatch) {
     const state = store.getState();
@@ -45,17 +45,17 @@ exports.checkTemplate = function(uuid) {
   }
 };
 
-exports.savecache = function() {
+export const savecache = function() {
   // TODO
 };
 
-exports.loadcache = function() {
+export const loadcache = function() {
   // TODO
 };
 
 // 更加优化的用户信息缓存获取
 let isGettingUserInfoUUID = []; // 用于防止同时请求多个相同内容
-exports.getUserInfoCache = function(uuid) {
+export const getUserInfoCache = function(uuid) {
   if (uuid.toString().substr(0, 4) === 'trpg') {
     return immutable.Map(); // 不检测trpg开头的内置系统用户
   }
@@ -89,7 +89,7 @@ exports.getUserInfoCache = function(uuid) {
 };
 
 let isGettingGroupInfoUUID = []; // 用于防止同时请求多个相同内容
-exports.getGroupInfoCache = function(uuid) {
+export const getGroupInfoCache = function(uuid) {
   let store = _store;
   if (!!store && !!store.dispatch) {
     const state = store.getState();

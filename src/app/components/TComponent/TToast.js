@@ -1,6 +1,6 @@
 import Toast from 'react-native-root-toast';
-const React = require('react');
-const { connect } = require('react-redux');
+import React from 'react';
+import { connect } from 'react-redux';
 
 class TToast extends React.Component {
   render() {
@@ -19,7 +19,7 @@ class TToast extends React.Component {
   }
 }
 
-module.exports = connect((state) => ({
+export default connect((state) => ({
   showToast: state.getIn(['ui', 'showToast']),
   showToastText: state.getIn(['ui', 'showToastText']),
 }))(TToast);

@@ -1,3 +1,4 @@
+import constants from '../constants';
 const {
   ADD_NOTE,
   GET_NOTE,
@@ -7,9 +8,9 @@ const {
   SYNC_NOTE_REQUEST,
   SYNC_NOTE_SUCCESS,
   SYNC_NOTE_FAILED,
-} = require('../constants');
-const rnStorage = require('../../api/rnStorage.api.js');
-const trpgApi = require('../../api/trpg.api.js');
+} = constants;
+import rnStorage from '../../api/rnStorage.api.js';
+import * as trpgApi from '../../api/trpg.api.js';
 const api = trpgApi.getInstance();
 
 // 同步到服务器
@@ -47,11 +48,11 @@ let trySyncNote = function(dispatch, payload) {
   }
 };
 
-exports.addNote = function addNote() {
+export const addNote = function addNote() {
   return { type: ADD_NOTE };
 };
 
-exports.saveNote = function saveNote(uuid, title, content) {
+export const saveNote = function saveNote(uuid, title, content) {
   return async function(dispatch, getState) {
     let noteObj = (await rnStorage.get('note')) || {};
     noteObj[uuid] = Object.assign({}, noteObj[uuid], {
@@ -67,7 +68,7 @@ exports.saveNote = function saveNote(uuid, title, content) {
   };
 };
 
-exports.getNote = function getNote() {
+export const getNote = function getNote() {
   return async function(dispatch, getState) {
     let localNote = await rnStorage.get('note');
     if (localNote) {
@@ -76,6 +77,6 @@ exports.getNote = function getNote() {
   };
 };
 
-exports.switchNote = function switchNote(uuid) {
+export const switchNote = function switchNote(uuid) {
   return { type: SWITCH_NOTE, noteUUID: uuid };
 };

@@ -1,7 +1,7 @@
-const React = require('react');
-const { View, Text } = require('react-native');
-const sb = require('react-native-style-block');
-const Base = require('./Base');
+import React from 'react';
+import { View, Text } from 'react-native';
+import sb from 'react-native-style-block';
+import Base from './Base';
 
 class Tip extends Base {
   render() {
@@ -26,4 +26,4 @@ const styles = {
   tipText: [sb.color('white'), sb.font(12, 16), sb.textAlign()],
 };
 
-module.exports = Tip;
+export default Tip;

@@ -1,5 +1,5 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Platform,
   ScrollView,
@@ -17,26 +17,26 @@ import {
   createReactNavigationReduxMiddleware,
   reduxifyNavigator,
 } from 'react-navigation-redux-helpers';
-const { connect } = require('react-redux');
+import { connect } from 'react-redux';
 const {
   createStackNavigator,
   createBottomTabNavigator,
 } = require('react-navigation');
 
-const LaunchScreen = require('./screens/LaunchScreen');
-const LoginScreen = require('./screens/LoginScreen');
-const RegisterScreen = require('./screens/RegisterScreen');
-const HomeScreen = require('./screens/HomeScreen');
-const AccountScreen = require('./screens/AccountScreen');
-const ContactsScreen = require('./screens/ContactsScreen');
-const ChatScreen = require('./screens/ChatScreen');
-const AddFriendScreen = require('./screens/AddFriendScreen');
-const SettingsScreen = require('./screens/SettingsScreen');
-const ProfileScreen = require('./screens/ProfileScreen');
-const GroupProfileScreen = require('./screens/GroupProfileScreen');
-const PhotoBrowserScreen = require('./screens/PhotoBrowserScreen');
-const ProfileModifyScreen = require('./screens/ProfileModifyScreen');
-const WebviewScreen = require('./screens/WebviewScreen');
+import LaunchScreen from './screens/LaunchScreen';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import HomeScreen from './screens/HomeScreen';
+import AccountScreen from './screens/AccountScreen';
+import ContactsScreen from './screens/ContactsScreen';
+import ChatScreen from './screens/ChatScreen';
+import AddFriendScreen from './screens/AddFriendScreen';
+import SettingsScreen from './screens/SettingsScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import GroupProfileScreen from './screens/GroupProfileScreen';
+import PhotoBrowserScreen from './screens/PhotoBrowserScreen';
+import ProfileModifyScreen from './screens/ProfileModifyScreen';
+import WebviewScreen from './screens/WebviewScreen';
 
 const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -175,7 +175,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = {
+export default {
   middleware,
   MainNavigator,
   AppNavigator,

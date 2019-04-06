@@ -1,8 +1,8 @@
-const React = require('react');
-const { View, Text, Image } = require('react-native');
-const sb = require('react-native-style-block');
-const appConfig = require('../config.app');
-const { TAvatar } = require('./TComponent');
+import React from 'react';
+import { View, Text, Image } from 'react-native';
+import sb from 'react-native-style-block';
+import appConfig from '../config.app';
+import { TAvatar } from './TComponent';
 
 class MsgItem extends React.Component {
   render() {
@@ -100,4 +100,4 @@ const styles = {
   itemTipText: [sb.font(12, 16), sb.textAlign()],
 };
 
-module.exports = MsgItem;
+export default MsgItem;

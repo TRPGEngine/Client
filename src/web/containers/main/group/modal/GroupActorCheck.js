@@ -1,15 +1,15 @@
-const React = require('react');
-const { connect } = require('react-redux');
-const PropTypes = require('prop-types');
-const ModalPanel = require('../../../../components/ModalPanel');
-const ActorProfile = require('../../../../components/modal/ActorProfile');
-const {
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import ModalPanel from '../../../../components/ModalPanel';
+import ActorProfile from '../../../../components/modal/ActorProfile';
+import {
   agreeGroupActor,
   refuseGroupActor,
   updateGroupActorInfo,
-} = require('../../../../../redux/actions/group');
+} from '../../../../../redux/actions/group';
 
-require('./GroupActorCheck.scss');
+import './GroupActorCheck.scss';
 
 class GroupActorCheck extends React.Component {
   constructor(props) {
@@ -90,7 +90,7 @@ GroupActorCheck.propTypes = {
   groupActor: PropTypes.object.isRequired,
 };
 
-module.exports = connect(
+export default connect(
   (state) => ({
     selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
   }),

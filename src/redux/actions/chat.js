@@ -1,3 +1,4 @@
+import constants from '../constants';
 const {
   ADD_CONVERSES,
   ADD_MSG,
@@ -16,24 +17,27 @@ const {
   SEND_MSG,
   SEND_MSG_COMPLETED,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
-} = require('../constants');
-const trpgApi = require('../../api/trpg.api.js');
+} = constants;
+import * as trpgApi from '../../api/trpg.api.js';
 const api = trpgApi.getInstance();
-const rnStorage = require('../../api/rnStorage.api.js');
-const { checkUser } = require('../../shared/utils/cacheHelper');
-const { hideProfileCard, switchMenuPannel } = require('./ui');
-const uploadHelper = require('../../shared/utils/uploadHelper');
+import rnStorage from '../../api/rnStorage.api.js';
+import { checkUser } from '../../shared/utils/cacheHelper';
+import { hideProfileCard, switchMenuPannel } from './ui';
+import uploadHelper from '../../shared/utils/uploadHelper';
 
 let localIndex = 0;
 let getLocalUUID = function getLocalUUID() {
   return 'local#' + localIndex++;
 };
 
-let switchConverse = function switchConverse(converseUUID, userUUID) {
+export let switchConverse = function switchConverse(converseUUID, userUUID) {
   return { type: SWITCH_CONVERSES, converseUUID, userUUID };
 };
 
-let switchToConverse = function switchToConverse(converseUUID, userUUID) {
+export let switchToConverse = function switchToConverse(
+  converseUUID,
+  userUUID
+) {
   return function(dispatch, getState) {
     dispatch(hideProfileCard());
     dispatch(switchMenuPannel(0));
@@ -41,7 +45,7 @@ let switchToConverse = function switchToConverse(converseUUID, userUUID) {
   };
 };
 
-let addConverse = function addConverse(payload) {
+export let addConverse = function addConverse(payload) {
   // if(!payload.uuid) {
   //   console.error('[addConverse]payload need uuid', payload);
   //   return;
@@ -49,7 +53,10 @@ let addConverse = function addConverse(payload) {
   return { type: ADD_CONVERSES, payload: payload };
 };
 
-let updateConversesMsglist = function updateConversesMsglist(convUUID, list) {
+export let updateConversesMsglist = function updateConversesMsglist(
+  convUUID,
+  list
+) {
   return function(dispatch, getState) {
     for (let item of list) {
       if (item.sender_uuid) {
@@ -65,7 +72,7 @@ let updateConversesMsglist = function updateConversesMsglist(convUUID, list) {
 };
 
 // 获取多人会话
-let getConverses = function getConverses(cb) {
+export let getConverses = function getConverses(cb) {
   return function(dispatch, getState) {
     dispatch({ type: GET_CONVERSES_REQUEST });
     // 获取会话列表
@@ -106,7 +113,7 @@ let getConverses = function getConverses(cb) {
 };
 
 // 弃用
-let createConverse = function createConverse(
+export let createConverse = function createConverse(
   uuid,
   type,
   isSwitchToConv = true
@@ -150,7 +157,7 @@ let createConverse = function createConverse(
     });
   };
 };
-let removeConverse = function removeConverse(converseUUID) {
+export let removeConverse = function removeConverse(converseUUID) {
   return function(dispatch, getState) {
     return api.emit('chat::removeConverse', { converseUUID }, function(data) {
       if (data.result) {
@@ -162,7 +169,7 @@ let removeConverse = function removeConverse(converseUUID) {
   };
 };
 
-let addUserConverse = function addUserConverse(senders) {
+export let addUserConverse = function addUserConverse(senders) {
   return function(dispatch, getState) {
     if (typeof senders === 'string') {
       senders = [senders];
@@ -226,7 +233,9 @@ let addUserConverse = function addUserConverse(senders) {
   };
 };
 
-let getOfflineUserConverse = function getOfflineUserConverse(lastLoginDate) {
+export let getOfflineUserConverse = function getOfflineUserConverse(
+  lastLoginDate
+) {
   return function(dispatch, getState) {
     api.emit('chat::getOfflineUserConverse', { lastLoginDate }, function(data) {
       if (data.result === true) {
@@ -238,7 +247,7 @@ let getOfflineUserConverse = function getOfflineUserConverse(lastLoginDate) {
   };
 };
 
-let getAllUserConverse = function getAllUserConverse() {
+export let getAllUserConverse = function getAllUserConverse() {
   return function(dispatch, getState) {
     api.emit('chat::getAllUserConverse', {}, function(data) {
       if (data.result === true) {
@@ -252,7 +261,7 @@ let getAllUserConverse = function getAllUserConverse() {
 
 // 重新加载会话列表
 // TODO: 暂时先把cb放在getConverses，以后再想办法优化
-let reloadConverseList = function reloadConverseList(cb) {
+export let reloadConverseList = function reloadConverseList(cb) {
   return function(dispatch, getState) {
     let userInfo = getState().getIn(['user', 'info']);
     let userUUID = userInfo.get('uuid');
@@ -270,7 +279,7 @@ let reloadConverseList = function reloadConverseList(cb) {
   };
 };
 
-let addMsg = function addMsg(converseUUID, payload) {
+export let addMsg = function addMsg(converseUUID, payload) {
   return (dispatch, getState) => {
     if (!(converseUUID && typeof converseUUID === 'string')) {
       console.error('[addMsg]add message need converseUUID:', converseUUID);
@@ -312,7 +321,7 @@ let addMsg = function addMsg(converseUUID, payload) {
   };
 };
 
-let updateMsg = function updateMsg(converseUUID, payload) {
+export let updateMsg = function updateMsg(converseUUID, payload) {
   console.log('try to update message', converseUUID, payload);
   return {
     type: UPDATE_MSG,
@@ -322,7 +331,7 @@ let updateMsg = function updateMsg(converseUUID, payload) {
   };
 };
 
-let sendMsg = function sendMsg(toUUID, payload) {
+export let sendMsg = function sendMsg(toUUID, payload) {
   return function(dispatch, getState) {
     dispatch({ type: SEND_MSG });
     const info = getState().getIn(['user', 'info']);
@@ -362,7 +371,7 @@ let sendMsg = function sendMsg(toUUID, payload) {
   };
 };
 
-let sendFile = function sendFile(toUUID, payload, file) {
+export let sendFile = function sendFile(toUUID, payload, file) {
   if (!file) {
     console.error('发送文件错误。没有找到要发送的文件');
     return;
@@ -421,7 +430,7 @@ let sendFile = function sendFile(toUUID, payload, file) {
   };
 };
 
-let getMoreChatLog = function getMoreChatLog(
+export let getMoreChatLog = function getMoreChatLog(
   converseUUID,
   offsetDate,
   isUserChat = true
@@ -455,7 +464,7 @@ let getMoreChatLog = function getMoreChatLog(
   };
 };
 
-let updateCardChatData = function(chatUUID, newData) {
+export let updateCardChatData = function(chatUUID, newData) {
   return function(dispatch, getState) {
     return api.emit('chat::updateCardChatData', { chatUUID, newData }, function(
       data
@@ -472,21 +481,3 @@ let updateCardChatData = function(chatUUID, newData) {
     });
   };
 };
-
-exports.switchToConverse = switchToConverse;
-exports.addConverse = addConverse;
-exports.updateConversesMsglist = updateConversesMsglist;
-exports.switchConverse = switchConverse;
-exports.getConverses = getConverses;
-exports.createConverse = createConverse;
-exports.removeConverse = removeConverse;
-exports.addUserConverse = addUserConverse;
-exports.getAllUserConverse = getAllUserConverse;
-exports.getOfflineUserConverse = getOfflineUserConverse;
-exports.reloadConverseList = reloadConverseList;
-exports.addMsg = addMsg;
-exports.updateMsg = updateMsg;
-exports.sendMsg = sendMsg;
-exports.sendFile = sendFile;
-exports.getMoreChatLog = getMoreChatLog;
-exports.updateCardChatData = updateCardChatData;

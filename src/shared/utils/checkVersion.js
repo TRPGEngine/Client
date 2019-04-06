@@ -1,5 +1,5 @@
-const axios = require('axios');
-const config = require('../../../config/project.config.js');
+import axios from 'axios';
+import config from '../../../config/project.config.js';
 
 function checkVersion(cb) {
   console.log('正在检查版本...');
@@ -15,4 +15,4 @@ function checkVersion(cb) {
     });
 }
 
-module.exports = checkVersion;
+export default checkVersion;
