@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 
-require('./GroupMap.scss');
+import './GroupMap.scss';
 
 class GroupMap extends React.Component {
   constructor(props) {

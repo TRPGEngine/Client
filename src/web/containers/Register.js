@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { showLoading, showAlert } from '../../redux/actions/ui';
 import { register } from '../../redux/actions/user';
-require('./Register.scss');
+import './Register.scss';
 
 class Register extends React.Component {
   constructor(props) {

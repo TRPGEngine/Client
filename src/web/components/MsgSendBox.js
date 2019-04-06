@@ -10,7 +10,7 @@ import ActorSelect from './modal/ActorSelect';
 import config from '../../../config/project.config';
 import ContentEditable from 'react-contenteditable';
 
-require('./MsgSendBox.scss');
+import './MsgSendBox.scss';
 
 class MsgSendBox extends React.Component {
   constructor(props) {

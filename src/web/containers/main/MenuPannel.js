@@ -9,7 +9,7 @@ import GroupList from './group/GroupList';
 import NoteList from './note/NoteList';
 import ExtraOptions from './ExtraOptions';
 
-require('./MenuPannel.scss');
+import './MenuPannel.scss';
 
 class MenuPannel extends React.Component {
   constructor(props) {

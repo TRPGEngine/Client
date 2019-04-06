@@ -9,7 +9,7 @@ import {
   updateGroupActorInfo,
 } from '../../../../../redux/actions/group';
 
-require('./GroupActorCheck.scss');
+import './GroupActorCheck.scss';
 
 class GroupActorCheck extends React.Component {
   constructor(props) {

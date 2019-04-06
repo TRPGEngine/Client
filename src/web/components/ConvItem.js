@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { isUserUUID } from '../../shared/utils/uuid';
 import { removeConverse } from '../../redux/actions/chat';
 import { showProfileCard } from '../../redux/actions/ui';
-require('./ConvItem.scss');
+import './ConvItem.scss';
 
 class ConvItem extends React.Component {
   _handleCloseConv(e) {

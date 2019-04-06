@@ -6,7 +6,7 @@ import { showModal, showProfileCard } from '../../../../redux/actions/ui';
 import GroupMemberManage from './modal/GroupMemberManage';
 import { getUserInfoCache } from '../../../../shared/utils/cacheHelper';
 
-require('./GroupMember.scss');
+import './GroupMember.scss';
 
 class GroupMember extends React.Component {
   _handleManageMember(uuid) {

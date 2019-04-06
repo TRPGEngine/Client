@@ -5,7 +5,7 @@ import { fileUrl } from '../../api/trpg.api.js';
 import { showAlert } from '../../redux/actions/ui';
 import axios from 'axios';
 
-require('./ImageUploader.scss');
+import './ImageUploader.scss';
 
 class ImageUploader extends React.Component {
   constructor(props) {

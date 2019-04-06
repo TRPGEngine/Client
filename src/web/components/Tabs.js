@@ -1,6 +1,6 @@
 import React from 'react';
 
-require('./Tabs.scss');
+import './Tabs.scss';
 
 export class TabsController extends React.Component {
   constructor(props) {

@@ -5,7 +5,7 @@ import ReactTooltip from 'react-tooltip';
 import { sendGroupInvite } from '../../../../redux/actions/group';
 import { getUserInfoCache } from '../../../../shared/utils/cacheHelper';
 
-require('./GroupInvite.scss');
+import './GroupInvite.scss';
 
 class GroupInvite extends React.Component {
   constructor(props) {

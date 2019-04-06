@@ -5,7 +5,7 @@ import { findGroup } from '../../../redux/actions/group';
 import ModalPanel from '../ModalPanel';
 import FindResultItem from '../FindResultItem';
 
-require('./GroupAdd.scss');
+import './GroupAdd.scss';
 
 class GroupAdd extends React.Component {
   constructor(props) {

@@ -17,7 +17,7 @@ import ImageViewer from '../../../components/ImageViewer';
 import GroupEdit from '../../../components/modal/GroupEdit';
 // import GroupEdit from './modal/GroupEdit';
 
-require('./GroupInfo.scss');
+import './GroupInfo.scss';
 
 class GroupInfo extends React.Component {
   _handleEditGroup() {

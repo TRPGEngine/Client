@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-require('./NetworkIndicator.scss');
+import './NetworkIndicator.scss';
 
 class NetworkIndicator extends React.Component {
   render() {

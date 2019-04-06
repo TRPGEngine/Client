@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { hideAlert } from '../../redux/actions/ui';
-require('./Alert.scss');
+import './Alert.scss';
 
 class Alert extends React.Component {
   getAlertContent() {

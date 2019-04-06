@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-require('./TemplatePropertyCell.scss');
+import './TemplatePropertyCell.scss';
 
 class TemplatePropertyCell extends React.Component {
   constructor(props) {

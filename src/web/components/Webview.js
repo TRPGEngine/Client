@@ -4,7 +4,7 @@ import NProgress from 'nprogress';
 import config from '../../../config/project.config';
 
 require('nprogress/nprogress.css');
-require('./Webview.scss');
+import './Webview.scss';
 
 let webframeIndex = 0;
 const isElectron = config.platform === 'electron';

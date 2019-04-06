@@ -11,7 +11,7 @@ import {
 import ErrorBoundary from './ErrorBoundary';
 import NetworkIndicator from '../components/NetworkIndicator';
 import config from '../../../config/project.config.js';
-require('./App.scss');
+import './App.scss';
 require('../../assets/css/iconfont.css');
 require('react-select/dist/react-select.css');
 require('react-image-lightbox/style.css');

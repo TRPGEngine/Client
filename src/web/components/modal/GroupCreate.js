@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ModalPanel from '../ModalPanel';
 import { createGroup } from '../../../redux/actions/group';
 
-require('./GroupCreate.scss');
+import './GroupCreate.scss';
 
 class GroupCreate extends React.Component {
   constructor(props) {

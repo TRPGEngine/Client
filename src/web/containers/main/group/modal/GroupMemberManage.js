@@ -8,7 +8,7 @@ import ModalPanel from '../../../../components/ModalPanel';
 import config from '../../../../../../config/project.config';
 import { getUserInfoCache } from '../../../../../shared/utils/cacheHelper';
 
-require('./GroupMemberManage.scss');
+import './GroupMemberManage.scss';
 
 class GroupMemberManage extends React.Component {
   _handleRaiseManager() {

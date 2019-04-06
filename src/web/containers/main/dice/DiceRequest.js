@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 import { setLastDiceType } from '../../../../redux/actions/ui';
 
-require('./DiceRequest.scss');
+import './DiceRequest.scss';
 
 class DiceRequest extends React.Component {
   constructor(props) {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Lightbox from 'react-image-lightbox';
 
-require('./ImageViewer.scss');
+import './ImageViewer.scss';
 
 class ImageViewer extends React.Component {
   constructor(props) {

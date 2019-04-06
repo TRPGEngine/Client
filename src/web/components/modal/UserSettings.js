@@ -8,7 +8,7 @@ import {
   saveSettings,
 } from '../../../redux/actions/settings';
 
-require('./UserSettings.scss');
+import './UserSettings.scss';
 
 class UserSettings extends React.Component {
   constructor(props) {

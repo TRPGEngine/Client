@@ -1,7 +1,7 @@
 import React from 'react';
 import { emojify, getCodeList } from '../../shared/utils/emoji';
 
-require('./Emoticon.scss');
+import './Emoticon.scss';
 
 class Emoticon extends React.Component {
   constructor(props) {

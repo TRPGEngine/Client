@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LoadingSpinner from './LoadingSpinner';
 
-require('./Loading.scss');
+import './Loading.scss';
 
 class Loading extends React.Component {
   render() {

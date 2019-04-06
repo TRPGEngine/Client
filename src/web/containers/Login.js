@@ -5,7 +5,7 @@ import { showLoading } from '../../redux/actions/ui';
 import { login, loginWithToken } from '../../redux/actions/user';
 import config from '../../../config/project.config.js';
 import rnStorage from '../../api/rnStorage.api.js';
-require('./Login.scss');
+import './Login.scss';
 
 class Login extends React.Component {
   constructor(props) {

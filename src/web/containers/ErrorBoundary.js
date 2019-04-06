@@ -5,7 +5,7 @@ import {
 } from '../../shared/utils/errorReport';
 import config from '../../../config/project.config.js';
 
-require('./ErrorBoundary.scss');
+import './ErrorBoundary.scss';
 
 // https://reactjs.org/docs/error-boundaries.html
 class ErrorBoundary extends React.Component {

@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-require('./TemplateItem.scss');
+import './TemplateItem.scss';
 
 class TemplateItem extends React.Component {
   constructor(props) {

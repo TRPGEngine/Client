@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import at from 'trpg-actor-template';
 import ReactTooltip from 'react-tooltip';
 
-require('./ActorProfile.scss');
+import './ActorProfile.scss';
 
 class ActorProfile extends React.Component {
   constructor(props) {

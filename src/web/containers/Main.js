@@ -17,9 +17,9 @@ const TitleToolbar =
     ? require('../components/electron/TitleToolbar')
     : null;
 
-require('./Main.scss');
+import './Main.scss';
 if (config.platform === 'electron') {
-  require('./Main.electron.scss');
+  import './Main.electron.scss';
 }
 
 class Main extends React.Component {

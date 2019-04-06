@@ -18,7 +18,7 @@ import QuickDice from '../dice/QuickDice';
 import MsgContainer from '../../../components/MsgContainer';
 import MsgSendBox from '../../../components/MsgSendBox';
 
-require('./ConverseDetail.scss');
+import './ConverseDetail.scss';
 
 class ConverseDetail extends React.Component {
   constructor(props) {

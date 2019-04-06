@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import E from 'wangeditor';
 
-require('./NoteEditor.scss');
+import './NoteEditor.scss';
 
 class NoteEditor extends React.Component {
   constructor(props) {

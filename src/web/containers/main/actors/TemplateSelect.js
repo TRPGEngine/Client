@@ -13,7 +13,7 @@ import TemplateItem from '../../../components/TemplateItem';
 import ModalPanel from '../../../components/ModalPanel';
 import ReactTooltip from 'react-tooltip';
 
-require('./TemplateSelect.scss');
+import './TemplateSelect.scss';
 
 class TemplateSelect extends React.Component {
   constructor(props) {

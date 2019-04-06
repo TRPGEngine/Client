@@ -4,7 +4,7 @@ import ModalPanel from './ModalPanel';
 import { changePassword } from '../../redux/actions/user';
 import { showAlert, hideModal } from '../../redux/actions/ui';
 
-require('./ChangePassword.scss');
+import './ChangePassword.scss';
 
 class ChangePassword extends React.Component {
   constructor(props) {

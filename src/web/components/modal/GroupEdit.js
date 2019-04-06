@@ -6,7 +6,7 @@ import ImageUploader from '../ImageUploader';
 import { hideModal } from '../../../redux/actions/ui';
 import { updateGroupInfo } from '../../../redux/actions/group';
 
-require('./GroupEdit.scss');
+import './GroupEdit.scss';
 
 class GroupEdit extends React.Component {
   constructor(props) {

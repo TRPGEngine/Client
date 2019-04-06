@@ -18,7 +18,7 @@ import SystemStatus from '../../components/modal/SystemStatus';
 import ModalPanel from '../../components/ModalPanel';
 import Webview from '../../components/Webview';
 
-require('./ExtraOptions.scss');
+import './ExtraOptions.scss';
 
 class ExtraOptions extends React.Component {
   constructor(props) {

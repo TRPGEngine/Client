@@ -8,7 +8,7 @@ const NoteEditor = Loadable({
   loading: LoadingSpinner,
 });
 
-require('./NoteDetail.scss');
+import './NoteDetail.scss';
 
 class NoteDetail extends React.Component {
   constructor(props) {

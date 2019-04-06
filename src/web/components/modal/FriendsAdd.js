@@ -5,7 +5,7 @@ import { findUser } from '../../../redux/actions/user';
 import ModalPanel from '../ModalPanel';
 import FindResultItem from '../FindResultItem';
 
-require('./FriendsAdd.scss');
+import './FriendsAdd.scss';
 
 class FriendsAdd extends React.Component {
   constructor(props) {

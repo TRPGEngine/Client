@@ -1,7 +1,7 @@
 import React from 'react';
 import ModalPanel from './ModalPanel';
 
-require('./ListSelect.scss');
+import './ListSelect.scss';
 
 class ListSelect extends React.Component {
   constructor(props) {

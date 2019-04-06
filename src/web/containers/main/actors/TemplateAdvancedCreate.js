@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ModalPanel from '../../../components/ModalPanel';
 import { createTemplateAdvanced } from '../../../../redux/actions/actor';
 
-require('./TemplateAdvancedCreate.scss');
+import './TemplateAdvancedCreate.scss';
 
 class TemplateAdvancedCreate extends React.Component {
   constructor(props) {

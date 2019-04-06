@@ -7,7 +7,7 @@ import {
   saveSettings,
 } from '../../../redux/actions/settings';
 
-require('./SystemSettings.scss');
+import './SystemSettings.scss';
 
 class SystemSettings extends React.Component {
   componentWillUnmount() {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-require('./IsDeveloping.scss');
+import './IsDeveloping.scss';
 
 class IsDeveloping extends React.Component {
   render() {

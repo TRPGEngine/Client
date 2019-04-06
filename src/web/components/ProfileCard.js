@@ -7,7 +7,7 @@ import ImageUploader from './ImageUploader';
 import { showAlert, hideProfileCard } from '../../redux/actions/ui';
 import { addFriend, updateInfo } from '../../redux/actions/user';
 import { addUserConverse, switchToConverse } from '../../redux/actions/chat';
-require('./ProfileCard.scss');
+import './ProfileCard.scss';
 
 class ProfileCard extends React.Component {
   constructor(props) {

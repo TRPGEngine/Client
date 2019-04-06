@@ -14,7 +14,7 @@ import ActorProfile from '../../../components/modal/ActorProfile';
 import ActorSelect from '../../../components/modal/ActorSelect';
 import GroupActorCheck from './modal/GroupActorCheck';
 
-require('./GroupActor.scss');
+import './GroupActor.scss';
 
 class GroupActor extends React.Component {
   _handleSendGroupActorCheck() {

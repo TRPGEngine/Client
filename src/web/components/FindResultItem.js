@@ -4,7 +4,7 @@ import config from '../../../config/project.config.js';
 import { sendFriendInvite, agreeFriendInvite } from '../../redux/actions/user';
 import { requestJoinGroup } from '../../redux/actions/group';
 
-require('./FindResultItem.scss');
+import './FindResultItem.scss';
 
 class FindResultItem extends React.Component {
   getUserAction(uuid) {

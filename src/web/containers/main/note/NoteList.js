@@ -7,7 +7,7 @@ import Spinner from '../../../components/Spinner';
 
 import NoteDetail from './NoteDetail';
 
-require('./NoteList.scss');
+import './NoteList.scss';
 
 class NoteList extends React.Component {
   constructor(props) {

@@ -4,7 +4,7 @@ import config from '../../../../config/project.config.js';
 import { showAlert, showModal } from '../../../redux/actions/ui';
 import TemplateSelect from '../../containers/main/actors/TemplateSelect';
 
-require('./ActorSelect.scss');
+import './ActorSelect.scss';
 
 class ActorSelect extends React.Component {
   constructor(props) {

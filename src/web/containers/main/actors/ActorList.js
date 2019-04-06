@@ -11,7 +11,7 @@ import {
   selectTemplate,
 } from '../../../../redux/actions/actor';
 
-require('./ActorList.scss');
+import './ActorList.scss';
 
 class ActorList extends React.Component {
   constructor(props) {

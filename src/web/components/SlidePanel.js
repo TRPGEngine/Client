@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { hideSlidePanel } from '../../redux/actions/ui';
 
-require('./SlidePanel.scss');
+import './SlidePanel.scss';
 
 class SlidePanel extends React.Component {
   constructor(props) {

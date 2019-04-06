@@ -6,7 +6,7 @@ import { showAlert } from '../../../../redux/actions/ui';
 import { createActor, updateActor } from '../../../../redux/actions/actor';
 import ImageUploader from '../../../components/ImageUploader';
 
-require('./ActorEdit.scss');
+import './ActorEdit.scss';
 
 class ActorEdit extends React.Component {
   constructor(props) {
