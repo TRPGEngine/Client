@@ -1,0 +1,9 @@
+version: 2.1
+# orbs:
+#   node: circleci/node@1.0.1
+jobs:
+  "Build Electron App":
+    docker:
+      - image: circleci/node
+    steps:
+      - run: npm run package-all
