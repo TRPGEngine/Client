@@ -10,13 +10,7 @@ export const register = (Type) => {
     return;
   }
 
-  _list.push({
-    name: type.name,
-    render: {
-      getEditView: type.getEditView,
-      getDetailView: type.getDetailView,
-    },
-  });
+  _list.push(type);
 };
 
 export const get = (name) => {
@@ -25,12 +19,6 @@ export const get = (name) => {
     return type;
   } else {
     const baseType = new BaseType();
-    return {
-      name: baseType.name,
-      render: {
-        getEditView: baseType.getEditView,
-        getDetailView: baseType.getDetailView,
-      },
-    };
+    return baseType;
   }
 };
