@@ -3,8 +3,8 @@ import {
   getGroupInfo,
   getTemplateInfo,
 } from '../../redux/actions/cache';
-import isUUID from 'is-uuid';
 import immutable from 'immutable';
+import { isUserUUID } from './uuid';
 
 let _store = null;
 export const attachStore = function(store) {
@@ -17,7 +17,7 @@ export const checkUser = function(uuid, type = 'user') {
     return;
   }
 
-  if (!isUUID.v1(uuid)) {
+  if (!isUserUUID(uuid)) {
     console.warn('该UUID不是一个合法的UUID:', uuid);
     return;
   }
