@@ -20,8 +20,8 @@ jobs:
           paths:
             - ./node_modules
       - run:
-          name: prebuild
-          command: sh ./build/ci/before_install.sh
+          name: prepare-env
+          command: chmod +x ./.circleci/prepare_env.sh && ./.circleci/prepare_env.sh
       - run:
           name: build
           command: npm run package-all
@@ -32,3 +32,8 @@ workflows:
   build:
     jobs:
       - Build Electron App
+      # - Build Electron App:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - release
