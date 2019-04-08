@@ -7,3 +7,8 @@ jobs:
       - image: circleci/node
     steps:
       - run: npm run package-all
+workflows:
+  version: 2
+  build:
+    jobs:
+      - Build Electron App
