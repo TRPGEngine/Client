@@ -19,6 +19,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
+            - ~/.cache/electron
       - run:
           name: prepare-env
           command: chmod +x ./.circleci/prepare_env.sh && ./.circleci/prepare_env.sh
