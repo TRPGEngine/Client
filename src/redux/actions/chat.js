@@ -11,6 +11,7 @@ const {
   CREATE_CONVERSES_SUCCESS,
   CREATE_CONVERSES_FAILED,
   REMOVE_CONVERSES_SUCCESS,
+  REMOVE_USER_CONVERSE,
   UPDATE_CONVERSES_INFO_SUCCESS,
   UPDATE_CONVERSES_MSGLIST_SUCCESS,
   SWITCH_CONVERSES,
@@ -24,6 +25,11 @@ import rnStorage from '../../api/rnStorage.api.js';
 import { checkUser } from '../../shared/utils/cacheHelper';
 import { hideProfileCard, switchMenuPannel } from './ui';
 import uploadHelper from '../../shared/utils/uploadHelper';
+import _without from 'lodash/without';
+
+const getUserConversesHash = (userUUID) => {
+  return `userConverses#${userUUID}`;
+};
 
 let localIndex = 0;
 let getLocalUUID = function getLocalUUID() {
@@ -157,6 +163,8 @@ export let createConverse = function createConverse(
     });
   };
 };
+
+// 移除多人会话
 export let removeConverse = function removeConverse(converseUUID) {
   return function(dispatch, getState) {
     return api.emit('chat::removeConverse', { converseUUID }, function(data) {
@@ -166,6 +174,24 @@ export let removeConverse = function removeConverse(converseUUID) {
         console.error(data);
       }
     });
+  };
+};
+
+export const removeUserConverse = (userConverseUUID) => {
+  return (dispatch, getState) => {
+    // 在当前删除
+    dispatch({ type: REMOVE_USER_CONVERSE, converseUUID: userConverseUUID });
+
+    // 在localStorage删除
+    const userUUID = getState().getIn(['user', 'info', 'uuid']);
+    const converses = getState().getIn(['chat', 'converses']);
+    const uuids = Object.keys(
+      converses.filter((c) => c.get('type') === 'user').toJS()
+    );
+    rnStorage.set(
+      getUserConversesHash(userUUID),
+      _without(uuids, userConverseUUID)
+    );
   };
 };
 
@@ -183,10 +209,10 @@ export let addUserConverse = function addUserConverse(senders) {
 
     // 用户会话缓存
     let userUUID = getState().getIn(['user', 'info', 'uuid']);
-    rnStorage.get('userConverses#' + userUUID).then(function(converse) {
+    rnStorage.get(getUserConversesHash(userUUID)).then(function(converse) {
       converse = Array.from(new Set([...converse, ...senders]));
       rnStorage
-        .set('userConverses#' + userUUID, converse)
+        .set(getUserConversesHash(userUUID), converse)
         .then((data) => console.log('用户会话缓存完毕:', data));
     });
 
@@ -266,13 +292,15 @@ export let reloadConverseList = function reloadConverseList(cb) {
     let userInfo = getState().getIn(['user', 'info']);
     let userUUID = userInfo.get('uuid');
 
-    dispatch(getConverses(cb));
-    rnStorage.get('userConverses#' + userUUID).then(function(converse) {
+    dispatch(getConverses(cb)); // 从服务端获取多人会话列表
+    rnStorage.get(getUserConversesHash(userUUID)).then(function(converse) {
       console.log('缓存中的用户会话列表:', converse);
       if (converse && converse.length > 0) {
+        // 如果本地缓存有存在用户会话，则根据上次登录时间获取这段时间内新建的用户会话
         dispatch(addUserConverse(converse));
         dispatch(getOfflineUserConverse(userInfo.get('last_login')));
       } else {
+        // 如果本地没有存在用户会话，则获取所有的用户会话
         dispatch(getAllUserConverse());
       }
     });

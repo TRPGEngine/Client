@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isUserUUID } from '../../shared/utils/uuid';
-import { removeConverse } from '../../redux/actions/chat';
+import { removeUserConverse } from '../../redux/actions/chat';
 import { showProfileCard } from '../../redux/actions/ui';
 import './ConvItem.scss';
 
@@ -10,8 +10,10 @@ class ConvItem extends React.Component {
   _handleCloseConv(e) {
     if (isUserUUID(this.props.uuid)) {
       console.log('close conv:', this.props.uuid);
-      this.props.dispatch(removeConverse(this.props.uuid));
+      this.props.dispatch(removeUserConverse(this.props.uuid));
       e.stopPropagation();
+    } else {
+      console.log('暂不支持关闭该类型的会话');
     }
   }
 
