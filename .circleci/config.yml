@@ -20,6 +20,9 @@ jobs:
           paths:
             - ./node_modules
       - run:
+          name: prebuild
+          command: sh ./build/ci/before_install.sh
+      - run:
           name: build
           command: npm run package-all
       - store_artifacts:
