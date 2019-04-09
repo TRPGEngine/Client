@@ -18,6 +18,7 @@ const {
   SEND_MSG,
   SEND_MSG_COMPLETED,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
+  UPDATE_WRITING_STATUS,
 } = constants;
 import * as trpgApi from '../../api/trpg.api.js';
 const api = trpgApi.getInstance();
@@ -25,6 +26,7 @@ import rnStorage from '../../api/rnStorage.api.js';
 import { checkUser } from '../../shared/utils/cacheHelper';
 import { hideProfileCard, switchMenuPannel } from './ui';
 import uploadHelper from '../../shared/utils/uploadHelper';
+import { renewableDelayTimer } from '../../shared/utils/timer';
 import _without from 'lodash/without';
 
 const getUserConversesHash = (userUUID) => {
@@ -507,5 +509,39 @@ export let updateCardChatData = function(chatUUID, newData) {
         console.error(data.msg);
       }
     });
+  };
+};
+
+const getWriteHash = (type = 'user', uuid) => {
+  return `${type}#${uuid}`;
+};
+export let startWriting = function(type = 'user', uuid) {
+  return function(dispatch, getState) {
+    dispatch({
+      type: UPDATE_WRITING_STATUS,
+      payload: {
+        type,
+        uuid,
+        isWriting: true,
+      },
+    });
+
+    renewableDelayTimer(
+      getWriteHash(type, uuid),
+      function() {
+        dispatch(stopWriting()); // 如果10秒后没有再次收到正在输入的信号，则视为已经停止输入了
+      },
+      10 * 1000
+    );
+  };
+};
+export let stopWriting = function(type = 'user', uuid) {
+  return {
+    type: UPDATE_WRITING_STATUS,
+    payload: {
+      type,
+      uuid,
+      isWriting: false,
+    },
   };
 };

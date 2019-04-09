@@ -19,6 +19,7 @@ const {
   SEND_MSG_COMPLETED,
   SWITCH_GROUP,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
+  UPDATE_WRITING_STATUS,
 } = constants;
 
 const initialState = immutable.fromJS({
@@ -47,6 +48,12 @@ const initialState = immutable.fromJS({
     //     }
     //   ]
     // }
+  },
+
+  // 记录正在输入的列表
+  writingList: {
+    user: [], // 用户会话: [useruuid1, useruuid2]
+    group: {}, // 团会话: {groupUUID: [useruuid1, useruuid2]}
   },
 });
 
@@ -248,6 +255,21 @@ export default function chat(state = initialState, action) {
             return list;
           }
         );
+      case UPDATE_WRITING_STATUS: {
+        const { type = 'user', isWriting = false, uuid } = action.payload;
+        if (type === 'user') {
+          // 处理用户的正在写信息
+          return state.updateIn(['writingList', 'user'], (list) => {
+            if (isWriting) {
+              return list.push(uuid);
+            } else {
+              return list.delete(list.findIndex((item) => item === uuid));
+            }
+          });
+        }
+
+        // TODO: 团正在输入待实现
+      }
       default:
         return state;
     }

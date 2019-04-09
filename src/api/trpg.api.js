@@ -2,7 +2,12 @@ import io from 'socket.io-client';
 import config from '../../config/project.config.js';
 import { RESET, ADD_FRIEND_SUCCESS } from '../redux/constants';
 
-import { addMsg, updateMsg } from '../redux/actions/chat';
+import {
+  addMsg,
+  updateMsg,
+  startWriting,
+  stopWriting,
+} from '../redux/actions/chat';
 import { addFriendInvite, loginWithToken } from '../redux/actions/user';
 import { updateGroupStatus, addGroup } from '../redux/actions/group';
 
@@ -69,6 +74,18 @@ export function bindEventFunc(store, { onReceiveMessage } = {}) {
     let converseUUID = data.converseUUID;
     let payload = data.payload;
     store.dispatch(updateMsg(converseUUID, payload));
+  });
+
+  api.on('chat::startWriting', function(data) {
+    const { type = 'user', from } = data;
+    const uuid = from;
+    store.dispatch(startWriting(type, uuid));
+  });
+
+  api.on('chat::stopWriting', function(data) {
+    const { type = 'user', from } = data;
+    const uuid = from;
+    store.dispatch(stopWriting(type, uuid));
   });
 
   api.on('player::addFriend', function(data) {
