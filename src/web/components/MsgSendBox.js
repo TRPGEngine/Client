@@ -96,6 +96,11 @@ class MsgSendBox extends React.Component {
     window.removeEventListener('click', this.hidePopup);
   }
 
+  _handleMsgInputChange(e) {
+    this.setState({ inputMsg: e.target.value });
+    this.props.onChange && this.props.onChange(e.target.value); // 事件向上传递
+  }
+
   _handleMsgInputKeyDown(e) {
     if (e.keyCode === 9) {
       e.preventDefault();
@@ -324,7 +329,7 @@ class MsgSendBox extends React.Component {
             tagName="pre"
             html={this.state.inputMsg}
             disabled={false}
-            onChange={(e) => this.setState({ inputMsg: e.target.value })}
+            onChange={(e) => this._handleMsgInputChange(e)}
             onKeyDown={(e) => this._handleMsgInputKeyDown(e)}
             onKeyUp={(e) => this._handleMsgInputKeyUp(e)}
             onPaste={(e) => this._handlePaste(e)}

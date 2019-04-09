@@ -17,25 +17,50 @@ import DiceInvite from '../dice/DiceInvite';
 import QuickDice from '../dice/QuickDice';
 import MsgContainer from '../../../components/MsgContainer';
 import MsgSendBox from '../../../components/MsgSendBox';
+import { isUserUUID } from '../../../../shared/utils/uuid.js';
+import { sendStartWriting, sendStopWriting } from '../../../../api/event';
+import _throttle from 'lodash/throttle';
 
 import './ConverseDetail.scss';
 
 class ConverseDetail extends React.Component {
   constructor(props) {
     super(props);
+    this.sendWritingThrottled = _throttle(
+      () => {
+        // 发送正在输入信号
+        sendStartWriting('user', this.props.converseUserUUID);
+      },
+      2000,
+      { leading: true, trailing: false }
+    );
+  }
+
+  _handleSendBoxChange(text) {
+    if (isUserUUID(this.props.converseUserUUID)) {
+      // 通知服务器告知converseUserUUID当前用户正在输入
+      // 增加一个2秒的节流防止频繁发送
+      this.sendWritingThrottled();
+    }
   }
 
   _handleSendMsg(message, type) {
+    const { converseUUID, converseUserUUID } = this.props;
+
     console.log(
       'send msg:',
       message,
       'to',
-      this.props.converseUserUUID,
+      converseUserUUID,
       'in converse',
-      this.props.converseUUID
+      converseUUID
     );
+    if (isUserUUID(converseUserUUID)) {
+      // 通知服务器告知converseUserUUID当前用户停止输入
+      sendStopWriting('user', converseUserUUID);
+    }
     this.props.dispatch(
-      sendMsg(this.props.converseUserUUID, {
+      sendMsg(converseUserUUID, {
         message,
         is_public: false,
         is_group: false,
@@ -188,6 +213,7 @@ class ConverseDetail extends React.Component {
         <MsgSendBox
           converseUUID={this.props.converseUUID}
           isGroup={false}
+          onChange={(text) => this._handleSendBoxChange(text)}
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
           onSendFile={(file) => this._handleSendFile(file)}
           onSendDiceReq={() => this._handleSendDiceReq()}

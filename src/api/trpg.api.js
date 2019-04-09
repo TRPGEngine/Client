@@ -29,7 +29,7 @@ function API() {
       this.socket.connect();
     }
     return this.socket.emit(event, data, (res) => {
-      cb(res);
+      cb && cb(res);
       if (res.result === false) {
         // 如果检测到错误则汇报错误信息
         const info = `${res.msg}\n事件: ${event}\n发送信息: ${JSON.stringify(
