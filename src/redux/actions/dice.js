@@ -3,7 +3,12 @@ const api = trpgApi.getInstance();
 import { addMsg } from './chat';
 import { showAlert } from './ui';
 
-export const sendDiceRequest = function(to_uuid, is_group, dice_request, reason) {
+export const sendDiceRequest = function(
+  to_uuid,
+  is_group,
+  dice_request,
+  reason
+) {
   return function(dispatch, getState) {
     return api.emit(
       'dice::sendDiceRequest',

@@ -8,12 +8,15 @@ const XMLBuilder = (props) => {
   const { xml = '' } = props;
   const [layout, setLayout] = useState({});
 
-  useEffect(() => {
-    const data = parser(xml);
-    data.type = 'root';
-    console.log('data', data);
-    setLayout(data);
-  }, [xml]);
+  useEffect(
+    () => {
+      const data = parser(xml);
+      data.type = 'root';
+      console.log('data', data);
+      setLayout(data);
+    },
+    [xml]
+  );
 
   if (_isEmpty(layout)) {
     return null;

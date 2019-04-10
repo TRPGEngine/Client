@@ -7,8 +7,12 @@ import { showProfileCard } from '../../redux/actions/ui';
 import './ConvItem.scss';
 
 class ConvItem extends React.Component {
+  get allowClose() {
+    return isUserUUID(this.props.uuid);
+  }
+
   _handleCloseConv(e) {
-    if (isUserUUID(this.props.uuid)) {
+    if (this.allowClose) {
       console.log('close conv:', this.props.uuid);
       this.props.dispatch(removeUserConverse(this.props.uuid));
       e.stopPropagation();
@@ -18,7 +22,7 @@ class ConvItem extends React.Component {
   }
 
   _handleShowInfo(e) {
-    if (isUserUUID(this.props.uuid)) {
+    if (this.allowClose) {
       e.stopPropagation();
       this.props.dispatch(showProfileCard(this.props.uuid));
     }
@@ -27,7 +31,7 @@ class ConvItem extends React.Component {
   render() {
     let closeBtn = !this.props.hideCloseBtn ? (
       <div className="close" onClick={(e) => this._handleCloseConv(e)}>
-        <i className="iconfont">&#xe70c;</i>
+        {this.allowClose ? <i className="iconfont">&#xe70c;</i> : null}
       </div>
     ) : null;
 
