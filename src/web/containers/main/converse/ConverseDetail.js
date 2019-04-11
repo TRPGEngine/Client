@@ -178,6 +178,8 @@ class ConverseDetail extends React.Component {
   render() {
     const userUUID = this.props.converseUserUUID;
     const usercache = this.props.usercache;
+    const isWriting = this.props.isWriting;
+
     let name, avatar, desc;
     if (userUUID === 'trpgsystem') {
       name = '系统消息';
@@ -199,7 +201,10 @@ class ConverseDetail extends React.Component {
             <img src={avatar} />
           </div>
           <div className="title">
-            <div className="main-title">{name}</div>
+            <div className="main-title">
+              {name}
+              {isWriting ? <small>(正在输入...)</small> : null}
+            </div>
             <div className="sub-title">{desc}</div>
           </div>
           <div className="actions">{this.getHeaderActions()}</div>
@@ -226,12 +231,16 @@ class ConverseDetail extends React.Component {
 }
 
 export default connect((state) => {
-  let converseUUID = state.getIn(['chat', 'selectedConversesUUID']);
+  const converseUUID = state.getIn(['chat', 'selectedConversesUUID']);
+  const converseUserUUID = state.getIn(['chat', 'selectedConversesUserUUID']);
+  const userWritingList = state.getIn(['chat', 'writingList', 'user'], []);
+
   return {
     userUUID: state.getIn(['user', 'info', 'uuid']),
     selfInfo: state.getIn(['user', 'info']),
     usercache: state.getIn(['cache', 'user']),
     converseUUID,
-    converseUserUUID: state.getIn(['chat', 'selectedConversesUserUUID']),
+    converseUserUUID,
+    isWriting: userWritingList.includes(converseUserUUID),
   };
 })(ConverseDetail);

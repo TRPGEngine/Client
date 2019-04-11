@@ -51,7 +51,13 @@ class ConvItem extends React.Component {
             <p>{this.props.title}</p>
             <span>{this.props.time}</span>
           </div>
-          <div className="content">{this.props.content}</div>
+          <div className="content">
+            {this.props.isWriting ? (
+              <small>(正在输入...)</small>
+            ) : (
+              this.props.content
+            )}
+          </div>
         </div>
       </div>
     );
@@ -64,6 +70,7 @@ ConvItem.propTypes = {
   time: PropTypes.string,
   content: PropTypes.string,
   uuid: PropTypes.string,
+  isWriting: PropTypes.bool,
 };
 
 export default connect()(ConvItem);

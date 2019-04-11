@@ -36,6 +36,7 @@ class ConverseList extends React.Component {
 
   getConverseList() {
     if (this.props.converses.size > 0) {
+      const userWritingList = this.props.userWritingList;
       let usercache = this.props.usercache;
       let converses = this.props.converses
         .valueSeq()
@@ -76,6 +77,7 @@ class ConverseList extends React.Component {
               }
               uuid={uuid}
               unread={item.get('unread')}
+              isWriting={userWritingList.includes(userUUID)}
               isSelected={this.props.selectedUUID === uuid}
               onClick={() => this._handleSelectConverse(uuid, userUUID)}
               hideCloseBtn={false}
@@ -96,6 +98,7 @@ class ConverseList extends React.Component {
   getFriendList() {
     let friends = this.props.friends.toJS();
     let usercache = this.props.usercache;
+
     return (
       <div className="friend-list">
         {friends.length > 0 ? (
@@ -177,4 +180,5 @@ export default connect((state) => ({
   friends: state.getIn(['user', 'friendList']),
   usercache: state.getIn(['cache', 'user']),
   userinfo: state.getIn(['user', 'info']),
+  userWritingList: state.getIn(['chat', 'writingList', 'user'], []),
 }))(ConverseList);

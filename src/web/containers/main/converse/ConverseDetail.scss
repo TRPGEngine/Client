@@ -30,6 +30,12 @@
       .main-title {
         @include one-line;
         font-size: 14px;
+
+        small {
+          margin-left: 4px;
+          user-select: none;
+          color: $color-dusty-gray;
+        }
       }
       .sub-title {
         @include one-line;
