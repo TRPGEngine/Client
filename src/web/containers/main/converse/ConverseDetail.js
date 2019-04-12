@@ -31,7 +31,7 @@ class ConverseDetail extends React.Component {
         // 发送正在输入信号
         sendStartWriting('user', this.props.converseUserUUID);
       },
-      2000,
+      1500,
       { leading: true, trailing: false }
     );
   }
