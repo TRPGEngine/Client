@@ -36,6 +36,12 @@ let out = {
     host: currentHost,
     port: apiPort,
   },
+  chat: {
+    isWriting: {
+      throttle: 1500, // 节流时间，即至少多少毫秒才会发出一个正在写的信息
+      timeout: 3000, // 超时时间，即多少毫秒后仍未接收到正在写操作则自动视为已经停止写
+    },
+  },
   file: {
     protocol: isSSL ? 'https' : 'http',
     host: currentHost,

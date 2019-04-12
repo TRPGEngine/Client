@@ -31,7 +31,7 @@ class ConverseDetail extends React.Component {
         // 发送正在输入信号
         sendStartWriting('user', this.props.converseUserUUID);
       },
-      1500,
+      config.chat.isWriting.throttle,
       { leading: true, trailing: false }
     );
   }
