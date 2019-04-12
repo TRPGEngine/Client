@@ -27,6 +27,7 @@ import { checkUser } from '../../shared/utils/cacheHelper';
 import { hideProfileCard, switchMenuPannel } from './ui';
 import uploadHelper from '../../shared/utils/uploadHelper';
 import { renewableDelayTimer } from '../../shared/utils/timer';
+import config from '../../../config/project.config';
 import _without from 'lodash/without';
 
 const getUserConversesHash = (userUUID) => {
@@ -531,7 +532,7 @@ export let startWriting = function(type = 'user', uuid) {
       function() {
         dispatch(stopWriting()); // 如果10秒后没有再次收到正在输入的信号，则视为已经停止输入了
       },
-      4 * 1000
+      config.chat.isWriting.timeout
     );
   };
 };
