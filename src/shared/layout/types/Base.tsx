@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
-import processor from '../processor';
-import _get from 'lodash/get';
-import _set from 'lodash/set';
+import * as React from 'react';
+const Fragment = React.Fragment;
+import processor from '../processor/';
+import { get as _get, set as _set } from 'lodash';
 
 export default class Base {
   name = 'Base';

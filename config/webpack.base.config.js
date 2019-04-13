@@ -45,6 +45,19 @@ module.exports = {
     path: DIST_PATH,
     filename: '[name].[hash].js',
   },
+  resolve: {
+    extensions: [
+      '.web.js',
+      '.mjs',
+      '.js',
+      '.ts',
+      '.json',
+      '.web.jsx',
+      '.jsx',
+      '.web.tsx',
+      '.tsx',
+    ],
+  },
   //babel重要的loader在这里
   module: {
     rules: [
@@ -70,7 +83,8 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader',
+        // loader: 'ts-loader',
+        loader: 'babel-loader!ts-loader',
       },
       {
         test: /\.jsx?$/,

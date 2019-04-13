@@ -1,7 +1,14 @@
 {
   "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "node",
     "sourceMap": true,
     "jsx": "react",
     "allowJs": true
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*"
+  ]
 }
