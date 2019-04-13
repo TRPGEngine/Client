@@ -2,21 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isUserUUID } from '../../shared/utils/uuid';
-import { removeConverse } from '../../redux/actions/chat';
+import { removeUserConverse } from '../../redux/actions/chat';
 import { showProfileCard } from '../../redux/actions/ui';
 import './ConvItem.scss';
 
 class ConvItem extends React.Component {
+  get allowClose() {
+    return isUserUUID(this.props.uuid);
+  }
+
   _handleCloseConv(e) {
-    if (isUserUUID(this.props.uuid)) {
+    if (this.allowClose) {
       console.log('close conv:', this.props.uuid);
-      this.props.dispatch(removeConverse(this.props.uuid));
+      this.props.dispatch(removeUserConverse(this.props.uuid));
       e.stopPropagation();
+    } else {
+      console.log('暂不支持关闭该类型的会话');
     }
   }
 
   _handleShowInfo(e) {
-    if (isUserUUID(this.props.uuid)) {
+    if (this.allowClose) {
       e.stopPropagation();
       this.props.dispatch(showProfileCard(this.props.uuid));
     }
@@ -25,7 +31,7 @@ class ConvItem extends React.Component {
   render() {
     let closeBtn = !this.props.hideCloseBtn ? (
       <div className="close" onClick={(e) => this._handleCloseConv(e)}>
-        <i className="iconfont">&#xe70c;</i>
+        {this.allowClose ? <i className="iconfont">&#xe70c;</i> : null}
       </div>
     ) : null;
 
@@ -45,7 +51,13 @@ class ConvItem extends React.Component {
             <p>{this.props.title}</p>
             <span>{this.props.time}</span>
           </div>
-          <div className="content">{this.props.content}</div>
+          <div className="content">
+            {this.props.isWriting ? (
+              <small>(正在输入...)</small>
+            ) : (
+              this.props.content
+            )}
+          </div>
         </div>
       </div>
     );
@@ -58,6 +70,7 @@ ConvItem.propTypes = {
   time: PropTypes.string,
   content: PropTypes.string,
   uuid: PropTypes.string,
+  isWriting: PropTypes.bool,
 };
 
 export default connect()(ConvItem);

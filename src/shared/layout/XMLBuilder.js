@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import parser from './parser';
 import processor from './processor';
 import _isEmpty from 'lodash/isEmpty';
+import './types/__all__';
 
 const XMLBuilder = (props) => {
   const { xml = '' } = props;

@@ -3,6 +3,7 @@ dist/
 package-lock.json
 yarn.lock
 config/local.js
+.sentryclirc
 
 
 # Logs

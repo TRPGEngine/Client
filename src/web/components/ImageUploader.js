@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fileUrl } from '../../api/trpg.api.js';
 import { showAlert } from '../../redux/actions/ui';
-import axios from 'axios';
+import { request } from '../utils/request';
 
 import './ImageUploader.scss';
 
@@ -44,7 +44,7 @@ class ImageUploader extends React.Component {
     }
     this.setState({ isUploading: true });
 
-    axios({
+    request({
       url: fileUrl + '/avatar',
       method: 'post',
       headers,

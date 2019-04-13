@@ -8,12 +8,12 @@ export function render(data, layoutType = 'edit') {
     return;
   }
 
-  let { render } = types.get(name);
+  let _type = types.get(name);
 
   if (layoutType === 'edit') {
-    return render.getEditView(name, attributes, elements);
+    return _type.getEditView(name, attributes, elements);
   } else {
-    return render.getDetailView(name, attributes, elements);
+    return _type.getDetailView(name, attributes, elements);
   }
 }
 
