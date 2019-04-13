@@ -69,7 +69,11 @@ module.exports = {
         ],
       },
       {
-        test: /\.(js|jsx)?$/,
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+      },
+      {
+        test: /\.jsx?$/,
         loader: 'babel-loader',
         // include: [
         //   APP_PATH,

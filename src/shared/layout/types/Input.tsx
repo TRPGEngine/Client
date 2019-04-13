@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Base from './Base';
 
 export default class Input extends Base {

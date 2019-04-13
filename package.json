@@ -115,6 +115,8 @@
     "raw-loader": "^2.0.0",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.18.2",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.4.3",
     "url-loader": "^1.1.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
