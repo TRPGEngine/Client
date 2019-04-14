@@ -5,7 +5,10 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "jsx": "react",
-    "allowJs": true
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitThis": true
   },
   "exclude": [
     "node_modules",

@@ -170,7 +170,7 @@
             <thead>
               <tr>
                 <td>武器</td>
-                <td colspan="3">成功率</td>
+                <td colSpan="3">成功率</td>
                 <td>贯穿</td>
                 <td>伤害</td>
                 <td>射程</td>
