@@ -83,8 +83,25 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        // loader: 'ts-loader',
-        loader: 'babel-loader!ts-loader',
+        use: [
+          {
+            loader: 'babel-loader',
+            query: {
+              babelrc: false,
+              plugins: [
+                [
+                  'import',
+                  {
+                    libraryName: 'antd',
+                    libraryDirectory: 'es',
+                    style: true, // `style: true` 会加载 less 文件, css 只会加载css文件
+                  },
+                ],
+              ],
+            },
+          },
+          { loader: 'ts-loader' },
+        ],
       },
       {
         test: /\.jsx?$/,
@@ -106,6 +123,14 @@ module.exports = {
               '@babel/plugin-transform-runtime',
               {
                 helpers: true,
+              },
+            ],
+            [
+              'import',
+              {
+                libraryName: 'antd',
+                libraryDirectory: 'es',
+                style: 'css', // `style: true` 会加载 less 文件
               },
             ],
             'transform-class-properties',
