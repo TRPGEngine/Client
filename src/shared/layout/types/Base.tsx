@@ -3,6 +3,8 @@ const Fragment = React.Fragment;
 import processor from '../processor/';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
+import { Row } from 'antd';
+import styled from 'styled-components';
 
 export default class Base {
   name = 'Base';
@@ -52,3 +54,7 @@ export default class Base {
     return React.createElement(name, attributes, this.renderChildren(elements));
   }
 }
+
+export const BaseTypeRow = styled(Row)`
+  margin-bottom: 0.5rem;
+`;

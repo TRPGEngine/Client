@@ -1,11 +1,14 @@
 @import '../../shared/utils/mixins';
 
 .error-boundary {
-  color: white;
   background-color: #705949;
   padding: 50px;
   height: 360px;
   padding-top: 100px;
+
+  h1, h2, p {
+    color: white;
+  }
 
   span {
     cursor: pointer;
