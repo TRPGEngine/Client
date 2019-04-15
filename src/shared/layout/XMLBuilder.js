@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import parser from './parser';
 import processor from './processor';
 import _isEmpty from 'lodash/isEmpty';
+import _isUndefined from 'lodash/isUndefined';
 import './types/__all__';
+
+const context = React.createContext(null);
 
 const XMLBuilder = (props) => {
   const { xml = '' } = props;
@@ -18,11 +21,17 @@ const XMLBuilder = (props) => {
     [xml]
   );
 
-  if (_isEmpty(layout)) {
+  if (_isEmpty(layout) || _isUndefined(context)) {
     return null;
   }
 
-  return <div>xmlbuilder:{processor.render(layout)}</div>;
+  const Provider = context.Provider;
+  return (
+    <div>
+      xmlbuilder:
+      <Provider>{processor.render(layout, context)}</Provider>
+    </div>
+  );
 };
 
 export default XMLBuilder;
