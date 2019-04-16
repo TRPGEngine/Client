@@ -5,12 +5,12 @@ import { XMLBuilderContext } from '../XMLBuilder';
 export default class TDefine extends Base {
   name = 'Define';
 
-  getEditView(name, attributes, elements, context: XMLBuilderContext) {
-    const attrName = attributes.name;
+  getEditView(tagName, attributes, elements, context: XMLBuilderContext) {
+    const name = attributes.name;
 
-    if (context.defines[attrName]) {
+    if (context.defines[name]) {
       // TODO: 需要处理里面的逻辑, 暂时先弄个不处理数据的
-      context.defines[attrName] = (props): any => {
+      context.defines[name] = (props): any => {
         return React.createElement(
           Fragment,
           {},

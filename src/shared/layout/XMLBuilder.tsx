@@ -9,17 +9,29 @@ interface DefineType {
   [name: string]: React.ComponentType;
 }
 
+interface GlobalType {
+  [name: string]: number | string | null;
+}
+
+interface DataType {
+  [name: string]: number | string | null;
+}
+
 export interface XMLBuilderContext {
   defines: DefineType;
+  global: GlobalType;
+  data: DataType;
 }
 
 const XMLBuilder = (props) => {
   const { xml = '' } = props;
   const [layout, setLayout] = useState({});
-  const context = React.createContext(null);
   const contextValue: XMLBuilderContext = {
     defines: {},
+    global: {},
+    data: {},
   };
+  const context = React.createContext(contextValue);
 
   useEffect(
     () => {

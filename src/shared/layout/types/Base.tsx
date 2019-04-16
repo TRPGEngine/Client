@@ -12,18 +12,18 @@ export default class Base {
   name: string;
 
   // 预处理tag name
-  parseName(name: string) {
+  parseTagName(tagName: string) {
     // 如果是首字母开头。视为没有做定义的内置操作。改为t-xxx的格式防止抛出命名警告
-    if (typeof name === 'string' && /[A-Z]/.test(name[0])) {
-      name = 't-' + name.toLowerCase();
+    if (typeof tagName === 'string' && /[A-Z]/.test(tagName[0])) {
+      tagName = 't-' + tagName.toLowerCase();
     }
 
     // 如果是空字符串或者undefined。使用react的Fragment
-    if (!name) {
+    if (!tagName) {
       return Fragment;
     }
 
-    return name;
+    return tagName;
   }
 
   // 生成子元素唯一key
@@ -44,13 +44,13 @@ export default class Base {
 
   // 获取编辑视图
   getEditView(
-    name: string,
+    tagName: string,
     attributes: XMLElementAttributes,
     elements: Array<XMLElement>,
     context: XMLBuilderContext
   ) {
     return React.createElement(
-      this.parseName(name),
+      this.parseTagName(tagName),
       attributes,
       this.renderChildren(elements, context)
     );
@@ -58,13 +58,13 @@ export default class Base {
 
   // 获取详情视图
   getDetailView(
-    name: string,
+    tagName: string,
     attributes: XMLElementAttributes,
     elements: Array<XMLElement>,
     context: XMLBuilderContext
   ) {
     return React.createElement(
-      this.parseName(name),
+      this.parseTagName(tagName),
       attributes,
       this.renderChildren(elements, context)
     );
