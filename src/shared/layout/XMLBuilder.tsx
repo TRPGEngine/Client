@@ -5,10 +5,15 @@ import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
 import './types/__all__';
 
+export interface XMLBuilderContext {
+  defines?: any;
+}
+
 const XMLBuilder = (props) => {
   const { xml = '' } = props;
   const [layout, setLayout] = useState({});
   const context = React.createContext(null);
+  const contextValue: XMLBuilderContext = {};
 
   useEffect(
     () => {
@@ -28,7 +33,9 @@ const XMLBuilder = (props) => {
   return (
     <div>
       xmlbuilder:
-      <Provider>{processor.render(layout, context)}</Provider>
+      <Provider value={contextValue}>
+        {processor.render(layout, context)}
+      </Provider>
     </div>
   );
 };
