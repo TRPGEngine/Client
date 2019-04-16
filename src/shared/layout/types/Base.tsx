@@ -1,5 +1,7 @@
 import * as React from 'react';
 const Fragment = React.Fragment;
+import { XMLElement, XMLElementAttributes } from '../parser/';
+import { XMLBuilderContext } from '../XMLBuilder';
 import processor from '../processor/';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
@@ -7,10 +9,10 @@ import { Row } from 'antd';
 import styled from 'styled-components';
 
 export default class Base {
-  name = 'Base';
+  name: string;
 
   // 预处理tag name
-  parseName(name) {
+  parseName(name: string) {
     // 如果是首字母开头。视为没有做定义的内置操作。改为t-xxx的格式防止抛出命名警告
     if (typeof name === 'string' && /[A-Z]/.test(name[0])) {
       name = 't-' + name.toLowerCase();
@@ -18,7 +20,7 @@ export default class Base {
 
     // 如果是空字符串或者undefined。使用react的Fragment
     if (!name) {
-      name = Fragment;
+      return Fragment;
     }
 
     return name;
@@ -41,22 +43,28 @@ export default class Base {
   }
 
   // 获取编辑视图
-  getEditView(name, attributes, elements, context) {
-    name = this.parseName(name);
-
+  getEditView(
+    name: string,
+    attributes: XMLElementAttributes,
+    elements: Array<XMLElement>,
+    context: XMLBuilderContext
+  ) {
     return React.createElement(
-      name,
+      this.parseName(name),
       attributes,
       this.renderChildren(elements, context)
     );
   }
 
   // 获取详情视图
-  getDetailView(name, attributes, elements, context) {
-    name = this.parseName(name);
-
+  getDetailView(
+    name: string,
+    attributes: XMLElementAttributes,
+    elements: Array<XMLElement>,
+    context: XMLBuilderContext
+  ) {
     return React.createElement(
-      name,
+      this.parseName(name),
       attributes,
       this.renderChildren(elements, context)
     );

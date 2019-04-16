@@ -5,6 +5,9 @@ const _list = [];
 export const register = (Type) => {
   const type = new Type();
   const name = type.name;
+  if (!name) {
+    console.warn('register type Error name is require!', Type);
+  }
   const isExist = _list.findIndex((val) => val.name === name);
   if (isExist >= 0) {
     return;

@@ -1,19 +1,25 @@
 import React, { useEffect, useState, useContext } from 'react';
-import parser from './parser';
+import parser, { XMLElement } from './parser';
 import processor from './processor';
 import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
 import './types/__all__';
 
+interface DefineType {
+  [name: string]: React.ComponentType;
+}
+
 export interface XMLBuilderContext {
-  defines?: any;
+  defines: DefineType;
 }
 
 const XMLBuilder = (props) => {
   const { xml = '' } = props;
   const [layout, setLayout] = useState({});
   const context = React.createContext(null);
-  const contextValue: XMLBuilderContext = {};
+  const contextValue: XMLBuilderContext = {
+    defines: {},
+  };
 
   useEffect(
     () => {
