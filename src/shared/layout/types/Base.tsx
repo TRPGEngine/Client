@@ -1,6 +1,6 @@
 import * as React from 'react';
 const Fragment = React.Fragment;
-import { XMLElement, XMLElementAttributes } from '../parser/';
+import { XMLElement, XMLElementAttributes } from '../parser/xml-parser';
 import { XMLBuilderContext } from '../XMLBuilder';
 import processor from '../processor/';
 import _get from 'lodash/get';

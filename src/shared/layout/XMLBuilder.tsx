@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import parser, { XMLElement } from './parser';
+import parser, { XMLElement } from './parser/xml-parser';
 import processor from './processor';
 import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
