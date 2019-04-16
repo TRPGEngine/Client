@@ -5,11 +5,10 @@ import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
 import './types/__all__';
 
-const context = React.createContext(null);
-
 const XMLBuilder = (props) => {
   const { xml = '' } = props;
   const [layout, setLayout] = useState({});
+  const context = React.createContext(null);
 
   useEffect(
     () => {
