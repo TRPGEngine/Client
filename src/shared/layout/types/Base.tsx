@@ -47,7 +47,7 @@ export default class Base {
     tagName: string,
     attributes: XMLElementAttributes,
     elements: Array<XMLElement>,
-    context: XMLBuilderContext
+    context: React.Context<XMLBuilderContext>
   ) {
     return React.createElement(
       this.parseTagName(tagName),
@@ -61,7 +61,7 @@ export default class Base {
     tagName: string,
     attributes: XMLElementAttributes,
     elements: Array<XMLElement>,
-    context: XMLBuilderContext
+    context: React.Context<XMLBuilderContext>
   ) {
     return React.createElement(
       this.parseTagName(tagName),

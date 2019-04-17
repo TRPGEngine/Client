@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Base, { BaseTypeRow } from './Base';
 import { Input, Col } from 'antd';
 import { XMLBuilderContext } from '../XMLBuilder';
@@ -11,12 +11,13 @@ export default class TInput extends Base {
     tagName,
     attributes: XMLElementAttributes,
     elements,
-    context: XMLBuilderContext
+    context
   ) {
     const label = attributes.label as string;
     const name = attributes.name as string;
-    const { data } = context;
     const bindingName = name || label;
+    const {state, dispatch} = context;
+    const {data} = state;
 
     const parsedLabel = label.replace(new RegExp('\\\\n', 'g'), '\n'); // 支持\n的渲染 拿到的换行符为\\n
 
@@ -29,7 +30,10 @@ export default class TInput extends Base {
           <Input
             placeholder={label}
             value={data[bindingName]}
-            onChange={(e) => (data[bindingName] = e.target.value)}
+            onChange={(e) => {
+              data[bindingName] = e.target.value
+              dispatch({type: 'update_data', payload: data})
+            }}
           />
         </Col>
       </BaseTypeRow>
