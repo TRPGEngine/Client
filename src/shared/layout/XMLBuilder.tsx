@@ -18,37 +18,63 @@ interface DataType {
   [name: string]: number | string | null;
 }
 
-export interface XMLBuilderContext {
+export interface XMLBuilderState {
   defines: DefineType;
   global: GlobalType;
   data: DataType;
 }
 
-const XMLBuilderReducer = (prevState: any, action: any): any => {
-  const type = action.type;
-  const payload = action.payload;
-  const newState = _clone(prevState);
+export interface XMLBuilderAction {
+  type: string;
+  payload: {};
+  [others: string]: any;
+}
 
-  switch (type) {
-    case 'update_data':
-      newState.data = payload;
-      break;
-  }
+export interface XMLBuilderContext {
+  state: XMLBuilderState;
+  dispatch: React.Dispatch<XMLBuilderAction>;
+}
 
-  return newState;
+type stateChangeHandler = (newState: React.ReducerState<any>) => void;
+
+interface Props {
+  xml: string;
+  onChange?: stateChangeHandler;
+}
+
+enum ActionType {
+  UpdateData = 'update_data'
+}
+
+const buildReducer = (onChange?: stateChangeHandler) => {
+  const XMLBuilderReducer = (prevState: XMLBuilderState, action: XMLBuilderAction): any => {
+    const type = action.type;
+    const payload = action.payload;
+    const newState = _clone(prevState);
+
+    switch (type) {
+      case ActionType.UpdateData:
+        newState.data = payload;
+        break;
+    }
+
+    onChange && onChange(newState);
+
+    return newState;
+  };
+  return XMLBuilderReducer;
 };
 
-const XMLBuilder = (props) => {
-  const { xml = '' } = props;
+const XMLBuilder = (props: Props) => {
+  const { xml = '', onChange } = props;
   const [layout, setLayout] = useState({});
 
-  const contextValue: XMLBuilderContext = {
+  const initialState: XMLBuilderState = {
     defines: {},
     global: {},
     data: {},
   };
-  const [state, dispatch] = useReducer(XMLBuilderReducer, contextValue);
-  // const context = React.createContext(contextValue);
+  const [state, dispatch] = useReducer(buildReducer(onChange), initialState);
 
   useEffect(
     () => {
@@ -64,13 +90,10 @@ const XMLBuilder = (props) => {
     return null;
   }
 
-  // const Provider = context.Provider;
   return (
     <div>
       xmlbuilder:
-      {/* <Provider value={contextValue}> */}
       {processor.render(layout, { state, dispatch })}
-      {/* </Provider> */}
     </div>
   );
 };

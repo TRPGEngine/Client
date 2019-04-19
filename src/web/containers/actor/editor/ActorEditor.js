@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import XMLBuilder from '../../../../shared/layout/XMLBuilder';
 import exampleXml from '../../../../shared/layout/example/coc7-layout.xml';
+import { Button } from 'antd';
 
 const EditorContainer = styled.div`
   width: 80%;
@@ -14,10 +15,18 @@ const EditorContainer = styled.div`
 `;
 
 const ActorEditor = () => {
+  const [builderState, setBuilderState] = useState({});
+
   return (
     <EditorContainer>
       ActorEditor:
-      <XMLBuilder xml={exampleXml} />
+      <XMLBuilder
+        xml={exampleXml}
+        onChange={(newState) => {
+          setBuilderState(newState);
+        }}
+      />
+      <Button onClick={() => console.log('状态:', builderState)}>保存</Button>
     </EditorContainer>
   );
 };

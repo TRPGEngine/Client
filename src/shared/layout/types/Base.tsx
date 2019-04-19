@@ -1,12 +1,12 @@
 import * as React from 'react';
 const Fragment = React.Fragment;
 import { XMLElement, XMLElementAttributes } from '../parser/xml-parser';
-import { XMLBuilderContext } from '../XMLBuilder';
 import processor from '../processor/';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
 import { Row } from 'antd';
 import styled from 'styled-components';
+import { XMLBuilderContext } from '../XMLBuilder';
 
 export default class Base {
   name: string;
@@ -47,7 +47,7 @@ export default class Base {
     tagName: string,
     attributes: XMLElementAttributes,
     elements: Array<XMLElement>,
-    context: React.Context<XMLBuilderContext>
+    context: XMLBuilderContext
   ) {
     return React.createElement(
       this.parseTagName(tagName),
@@ -61,7 +61,7 @@ export default class Base {
     tagName: string,
     attributes: XMLElementAttributes,
     elements: Array<XMLElement>,
-    context: React.Context<XMLBuilderContext>
+    context: XMLBuilderContext
   ) {
     return React.createElement(
       this.parseTagName(tagName),
