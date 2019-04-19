@@ -2,7 +2,6 @@ import * as types from '../types';
 
 export function render(data, context, layoutType = 'edit') {
   const { type } = data;
-  console.log(type, data);
 
   // 仅渲染元素类型与文本类型与根节点
   if (!(type === 'element' || type === 'text' || type === 'root')) {
