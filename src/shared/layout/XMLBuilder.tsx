@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import parser, { XMLElement } from './parser/xml-parser';
-import processor from './processor';
+import * as processor from './processor';
 import _clone from 'lodash/clone';
 import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
@@ -43,11 +43,14 @@ interface Props {
 }
 
 enum ActionType {
-  UpdateData = 'update_data'
+  UpdateData = 'update_data',
 }
 
 const buildReducer = (onChange?: stateChangeHandler) => {
-  const XMLBuilderReducer = (prevState: XMLBuilderState, action: XMLBuilderAction): any => {
+  const XMLBuilderReducer = (
+    prevState: XMLBuilderState,
+    action: XMLBuilderAction
+  ): any => {
     const type = action.type;
     const payload = action.payload;
     const newState = _clone(prevState);
