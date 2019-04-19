@@ -75,6 +75,7 @@ module.exports = {
             options: {
               modifyVars: {
                 'primary-color': '#8C6244',
+                'text-selection-bg': '#1890ff',
               },
               javascriptEnabled: true,
             },
