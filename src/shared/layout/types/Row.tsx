@@ -5,11 +5,11 @@ import { Row } from 'antd';
 export default class TRow extends Base {
   name = 'Row';
 
-  getEditView(name, attributes, elements, context) {
+  getEditView(tagName, attributes, elements, context) {
     return <Row>{this.renderChildren(elements, context)}</Row>;
   }
 
-  getDetailView(name, attributes, elements, context) {
+  getDetailView(tagName, attributes, elements, context) {
     return <Row>{this.renderChildren(elements, context)}</Row>;
   }
 }

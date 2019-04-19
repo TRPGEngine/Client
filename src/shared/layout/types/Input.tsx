@@ -19,7 +19,7 @@ export default class TInput extends Base {
     const { state, dispatch } = context;
     const { data } = state;
 
-    const parsedLabel = label.replace(new RegExp('\\\\n', 'g'), '\n'); // 支持\n的渲染 拿到的换行符为\\n
+    const parsedLabel = this.parseMultilineText(label);
 
     return (
       <BaseTypeRow>

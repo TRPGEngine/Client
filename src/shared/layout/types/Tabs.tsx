@@ -1,5 +1,5 @@
 import React from 'react';
-import Base, { BaseTypeRow } from './Base';
+import Base from './Base';
 import { Tabs } from 'antd';
 import { XMLElement } from '../parser/xml-parser';
 const TabPane = Tabs.TabPane;
@@ -7,7 +7,7 @@ const TabPane = Tabs.TabPane;
 export default class TTabs extends Base {
   name = 'Tabs';
 
-  getEditView(name, attributes, elements: Array<XMLElement>, context) {
+  getEditView(tagName, attributes, elements: Array<XMLElement>, context) {
     const position = attributes.position || 'top';
     const childrens = elements
       .filter((el) => el.name === 'Tab')

@@ -26,6 +26,11 @@ export default class Base {
     return tagName;
   }
 
+  parseMultilineText(text: string) {
+    // 支持\n的渲染 拿到的换行符为\\n
+    return text.replace(new RegExp('\\\\n', 'g'), '\n');
+  }
+
   // 生成子元素唯一key
   childrenKey(parentName, childrenName, index) {
     return `${parentName}-${childrenName}-${index}`;
