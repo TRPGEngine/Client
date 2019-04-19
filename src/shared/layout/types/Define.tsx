@@ -5,8 +5,9 @@ import { XMLBuilderContext } from '../XMLBuilder';
 export default class TDefine extends Base {
   name = 'Define';
 
-  getEditView(tagName, attributes, elements, context: React.Context<XMLBuilderContext>) {
+  getEditView(tagName, attributes, elements, context: XMLBuilderContext) {
     const name = attributes.name;
+    // TODO
 
     // if (context.defines[name]) {
     //   // TODO: 需要处理里面的逻辑, 暂时先弄个不处理数据的
