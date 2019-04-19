@@ -1,8 +1,12 @@
 // 这个文件是用于获取与注册所有可用类型
 import BaseType from './Base';
-const _list = [];
+const _list: Array<any> = [];
 
-export const register = (Type) => {
+interface RegisterType {
+  new (): BaseType;
+}
+
+export const register = (Type: RegisterType) => {
   const type = new Type();
   const name = type.name;
   if (!name) {
@@ -16,7 +20,7 @@ export const register = (Type) => {
   _list.push(type);
 };
 
-export const get = (name) => {
+export const get = (name: string) => {
   const type = _list.find((val) => val.name === name);
   if (type) {
     return type;
