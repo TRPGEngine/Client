@@ -25,7 +25,7 @@ export default class TSelect extends Base {
     // TODO: 数据处理还没做
 
     return (
-      <BaseTypeRow>
+      <BaseTypeRow key={attributes.key}>
         <Col span={6}>
           <pre>{parsedLabel}</pre>
         </Col>

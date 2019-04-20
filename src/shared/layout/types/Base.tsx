@@ -43,6 +43,7 @@ export default class Base {
         _set(el, 'attributes.key', this.childrenKey(this.name, el.name, index)); // 增加一个默认的key
       }
 
+      // NOTE: 所有的组件返回的实例都应当有key. 因为这个元素是map出来的
       return processor.render(el, context, 'edit');
     });
   }

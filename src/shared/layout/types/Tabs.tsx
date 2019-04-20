@@ -9,7 +9,7 @@ export default class TTabs extends Base {
 
   getEditView(tagName, attributes, elements: Array<XMLElement>, context) {
     const position = attributes.position || 'top';
-    const childrens = elements
+    const childrens = (elements || [])
       .filter((el) => el.name === 'Tab')
       .map((el, index) => {
         const label = el.attributes.label || '';
@@ -20,6 +20,10 @@ export default class TTabs extends Base {
         );
       });
 
-    return <Tabs tabPosition={position}>{childrens}</Tabs>;
+    return (
+      <Tabs key={attributes.key} tabPosition={position}>
+        {childrens}
+      </Tabs>
+    );
   }
 }

@@ -22,7 +22,7 @@ export default class TInput extends Base {
     const parsedLabel = this.parseMultilineText(label);
 
     return (
-      <BaseTypeRow>
+      <BaseTypeRow key={attributes.key}>
         <Col span={6}>
           <pre>{parsedLabel}</pre>
         </Col>

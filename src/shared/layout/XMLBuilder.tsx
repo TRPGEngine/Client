@@ -94,12 +94,7 @@ const XMLBuilder = (props: Props) => {
     return null;
   }
 
-  return (
-    <div>
-      xmlbuilder:
-      {processor.render(layout, { state, dispatch })}
-    </div>
-  );
+  return <div>{processor.render(layout, { state, dispatch })}</div>;
 };
 
 export default XMLBuilder;

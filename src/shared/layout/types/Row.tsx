@@ -6,10 +6,14 @@ export default class TRow extends Base {
   name = 'Row';
 
   getEditView(tagName, attributes, elements, context) {
-    return <Row>{this.renderChildren(elements, context)}</Row>;
+    return (
+      <Row key={attributes.key}>{this.renderChildren(elements, context)}</Row>
+    );
   }
 
   getDetailView(tagName, attributes, elements, context) {
-    return <Row>{this.renderChildren(elements, context)}</Row>;
+    return (
+      <Row key={attributes.key}>{this.renderChildren(elements, context)}</Row>
+    );
   }
 }
