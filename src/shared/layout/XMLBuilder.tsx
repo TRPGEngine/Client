@@ -14,7 +14,7 @@ interface GlobalType {
   [name: string]: number | string | null;
 }
 
-interface DataType {
+export interface DataType {
   [name: string]: number | string | null;
 }
 
@@ -26,7 +26,7 @@ export interface XMLBuilderState {
 
 export interface XMLBuilderAction {
   type: string;
-  payload: {};
+  payload: { [name: string]: any };
   [others: string]: any;
 }
 
@@ -42,8 +42,9 @@ interface Props {
   onChange?: stateChangeHandler;
 }
 
-enum ActionType {
+export enum ActionType {
   UpdateData = 'update_data',
+  AddDefine = 'add_define',
 }
 
 const buildReducer = (onChange?: stateChangeHandler) => {
@@ -58,6 +59,9 @@ const buildReducer = (onChange?: stateChangeHandler) => {
     switch (type) {
       case ActionType.UpdateData:
         newState.data = payload;
+        break;
+      case ActionType.AddDefine:
+        newState.defines[payload.name] = payload.componentFn;
         break;
     }
 
@@ -79,15 +83,12 @@ const XMLBuilder = (props: Props) => {
   };
   const [state, dispatch] = useReducer(buildReducer(onChange), initialState);
 
-  useEffect(
-    () => {
-      const layout = parser(xml);
-      layout.type = 'root';
-      console.log('layout', layout);
-      setLayout(layout);
-    },
-    [xml]
-  );
+  useEffect(() => {
+    const layout = parser(xml);
+    layout.type = 'root';
+    console.log('layout', layout);
+    setLayout(layout);
+  }, [xml]);
 
   if (_isEmpty(layout)) {
     return null;

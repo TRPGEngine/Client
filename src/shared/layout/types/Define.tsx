@@ -1,24 +1,67 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useReducer } from 'react';
 import Base from './Base';
-import { XMLBuilderContext } from '../XMLBuilder';
+import {
+  XMLBuilderContext,
+  ActionType,
+  XMLBuilderAction,
+  XMLBuilderState,
+  DataType,
+} from '../XMLBuilder';
+
+const useDefineComponentReducer = (
+  prevState: WrappedStateType,
+  action: XMLBuilderAction
+) => {
+  // TODO: 局部context dispatch方法待实现
+  console.log(prevState, action);
+
+  return prevState;
+};
+
+type WrappedStateType = {
+  data: DataType;
+  this: DataType;
+};
+
+type WrappedContextType = {
+  state: WrappedStateType;
+  dispatch: React.Dispatch<XMLBuilderAction>;
+};
 
 export default class TDefine extends Base {
   name = 'Define';
 
+  buildComponentFn(elements, context: XMLBuilderContext) {
+    (context: XMLBuilderContext) => {
+      const [localState, localDispatch] = useReducer(
+        useDefineComponentReducer,
+        { data: context.state.data, this: {} }
+      );
+      const wrappedContext: WrappedContextType = {
+        state: localState,
+        dispatch: localDispatch,
+      };
+
+      return React.createElement(
+        Fragment,
+        {},
+        this.renderChildren(elements, wrappedContext as any) // 先直接放个any回头再修
+      );
+    };
+  }
+
   getEditView(tagName, attributes, elements, context: XMLBuilderContext) {
     const name = attributes.name;
-    // TODO
 
-    // if (context.defines[name]) {
-    //   // TODO: 需要处理里面的逻辑, 暂时先弄个不处理数据的
-    //   context.defines[name] = (props): any => {
-    //     return React.createElement(
-    //       Fragment,
-    //       {},
-    //       this.renderChildren(elements, context)
-    //     );
-    //   };
-    // }
+    if (!context.state.defines[name]) {
+      context.dispatch({
+        type: ActionType.AddDefine,
+        payload: {
+          name,
+          componentFn: (_context) => this.buildComponentFn(elements, _context),
+        },
+      });
+    }
 
     return null;
   }
