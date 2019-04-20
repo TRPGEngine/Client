@@ -20,7 +20,7 @@ export const register = (Type: RegisterType) => {
   _list.push(type);
 };
 
-export const get = (name: string) => {
+export const get = (name: string): BaseType => {
   const type = _list.find((val) => val.name === name);
   if (type) {
     return type;
