@@ -1,6 +1,12 @@
 import * as types from '../types';
+import { XMLElement } from '../parser/xml-parser';
+import { XMLBuilderContext } from '../XMLBuilder';
 
-export function render(data, context, layoutType = 'edit') {
+export function render(
+  data: XMLElement,
+  context: XMLBuilderContext,
+  layoutType = 'edit'
+) {
   const { type } = data;
 
   // 仅渲染元素类型与文本类型与根节点

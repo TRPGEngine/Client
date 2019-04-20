@@ -37,10 +37,10 @@ export default class Base {
   }
 
   // 渲染子元素的方法
-  renderChildren(childElements = [], context) {
+  renderChildren(childElements = [], context: XMLBuilderContext) {
     return childElements.map((el, index) => {
       if (!_get(el, 'attributes.key')) {
-        _set(el, 'attributes.key', this.childrenKey(name, el.name, index)); // 增加一个默认的key
+        _set(el, 'attributes.key', this.childrenKey(this.name, el.name, index)); // 增加一个默认的key
       }
 
       return processor.render(el, context, 'edit');
