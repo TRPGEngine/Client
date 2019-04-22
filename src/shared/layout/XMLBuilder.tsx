@@ -7,7 +7,9 @@ import _isUndefined from 'lodash/isUndefined';
 import './types/__all__';
 
 interface DefineType {
-  [name: string]: React.ComponentType;
+  [name: string]: (
+    context: XMLBuilderContext
+  ) => React.FunctionComponentElement<{}>;
 }
 
 interface GlobalType {
@@ -83,12 +85,15 @@ const XMLBuilder = (props: Props) => {
   };
   const [state, dispatch] = useReducer(buildReducer(onChange), initialState);
 
-  useEffect(() => {
-    const layout = parser(xml);
-    layout.type = 'root';
-    console.log('layout', layout);
-    setLayout(layout);
-  }, [xml]);
+  useEffect(
+    () => {
+      const layout = parser(xml);
+      layout.type = 'root';
+      console.log('layout', layout);
+      setLayout(layout);
+    },
+    [xml]
+  );
 
   if (_isEmpty(layout)) {
     return null;

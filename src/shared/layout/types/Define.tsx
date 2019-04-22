@@ -32,7 +32,7 @@ export default class TDefine extends Base {
   name = 'Define';
 
   buildComponentFn(elements, context: XMLBuilderContext) {
-    (context: XMLBuilderContext) => {
+    return (context: XMLBuilderContext): React.FunctionComponentElement<{}> => {
       const [localState, localDispatch] = useReducer(
         useDefineComponentReducer,
         { data: context.state.data, this: {} }
@@ -58,7 +58,8 @@ export default class TDefine extends Base {
         type: ActionType.AddDefine,
         payload: {
           name,
-          componentFn: (_context) => this.buildComponentFn(elements, _context),
+          componentFn: (_context: XMLBuilderContext) =>
+            this.buildComponentFn(elements, _context),
         },
       });
     }
