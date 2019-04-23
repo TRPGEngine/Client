@@ -15,11 +15,11 @@ export default class TUse extends Base {
   ) {
     const { state } = context;
     const defines = state.defines;
-    const { name } = attributes;
+    const { define, ...otherProps } = attributes;
 
-    const componentFn = defines[name];
+    const componentFn = defines[define];
     if (componentFn) {
-      return componentFn(context);
+      return componentFn(context, otherProps);
     } else {
       return null;
     }

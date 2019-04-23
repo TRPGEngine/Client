@@ -8,7 +8,8 @@ import './types/__all__';
 
 interface DefineType {
   [name: string]: (
-    context: XMLBuilderContext
+    context: XMLBuilderContext,
+    otherProps: {}
   ) => React.FunctionComponentElement<{}>;
 }
 

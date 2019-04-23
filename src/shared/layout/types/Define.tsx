@@ -31,23 +31,24 @@ type WrappedContextType = {
 export default class TDefine extends Base {
   name = 'Define';
 
-  buildComponentFn(elements, context: XMLBuilderContext) {
-    return (context: XMLBuilderContext): React.FunctionComponentElement<{}> => {
-      const [localState, localDispatch] = useReducer(
-        useDefineComponentReducer,
-        { data: context.state.data, this: {} }
-      );
-      const wrappedContext: WrappedContextType = {
-        state: localState,
-        dispatch: localDispatch,
-      };
-
-      return React.createElement(
-        Fragment,
-        {},
-        this.renderChildren(elements, wrappedContext as any) // 先直接放个any回头再修
-      );
+  buildComponentFn(
+    elements,
+    context: XMLBuilderContext,
+    otherProps = {}
+  ): React.FunctionComponentElement<{}> {
+    const wrappedContext: WrappedContextType = {
+      state: {
+        ...context.state,
+        this: otherProps,
+      },
+      dispatch: context.dispatch,
     };
+
+    return React.createElement(
+      Fragment,
+      {},
+      this.renderChildren(elements, wrappedContext as any) // 先直接放个any回头再修
+    );
   }
 
   getEditView(tagName, attributes, elements, context: XMLBuilderContext) {
