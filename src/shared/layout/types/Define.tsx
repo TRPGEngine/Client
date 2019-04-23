@@ -45,8 +45,6 @@ export default class TDefine extends Base {
       dispatch: context.dispatch,
     };
 
-    console.log('otherProps', otherProps);
-
     return React.createElement(
       Fragment,
       { key: otherProps.key },
