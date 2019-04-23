@@ -6,6 +6,7 @@ import {
   XMLBuilderAction,
   XMLBuilderState,
   DataType,
+  DefinePropsType,
 } from '../XMLBuilder';
 
 const useDefineComponentReducer = (
@@ -34,7 +35,7 @@ export default class TDefine extends Base {
   buildComponentFn(
     elements,
     context: XMLBuilderContext,
-    otherProps = {}
+    otherProps: DefinePropsType = {}
   ): React.FunctionComponentElement<{}> {
     const wrappedContext: WrappedContextType = {
       state: {
@@ -44,9 +45,11 @@ export default class TDefine extends Base {
       dispatch: context.dispatch,
     };
 
+    console.log('otherProps', otherProps);
+
     return React.createElement(
       Fragment,
-      {},
+      { key: otherProps.key },
       this.renderChildren(elements, wrappedContext as any) // 先直接放个any回头再修
     );
   }
@@ -59,8 +62,10 @@ export default class TDefine extends Base {
         type: ActionType.AddDefine,
         payload: {
           name,
-          componentFn: (_context: XMLBuilderContext) =>
-            this.buildComponentFn(elements, _context),
+          componentFn: (
+            _context: XMLBuilderContext,
+            otherProps: DefinePropsType
+          ) => this.buildComponentFn(elements, _context, otherProps),
         },
       });
     }

@@ -6,10 +6,13 @@ import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
 import './types/__all__';
 
+export type DefinePropsType = {
+  [name: string]: any;
+};
 interface DefineType {
   [name: string]: (
     context: XMLBuilderContext,
-    otherProps: {}
+    otherProps: DefinePropsType
   ) => React.FunctionComponentElement<{}>;
 }
 
