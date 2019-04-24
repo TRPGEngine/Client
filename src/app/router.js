@@ -15,7 +15,7 @@ import {
 import { NavigationActions } from 'react-navigation';
 import {
   createReactNavigationReduxMiddleware,
-  reduxifyNavigator,
+  createReduxContainer,
 } from 'react-navigation-redux-helpers';
 import { connect } from 'react-redux';
 const {
@@ -38,7 +38,7 @@ import PhotoBrowserScreen from './screens/PhotoBrowserScreen';
 import ProfileModifyScreen from './screens/ProfileModifyScreen';
 import WebviewScreen from './screens/WebviewScreen';
 
-const MainNavigator = createBottomTabNavigator({
+export const MainNavigator = createBottomTabNavigator({
   TRPG: {
     screen: HomeScreen,
   },
@@ -56,7 +56,7 @@ const DetailsScreen = () => (
   </View>
 );
 
-const AppNavigator = createStackNavigator({
+export const AppNavigator = createStackNavigator({
   LaunchScreen: {
     screen: LaunchScreen,
   },
@@ -129,11 +129,12 @@ const AppNavigator = createStackNavigator({
   },
 });
 
-const middleware = createReactNavigationReduxMiddleware('root', (state) =>
-  state.get('nav')
+export const middleware = createReactNavigationReduxMiddleware(
+  (state) => state.get('nav'),
+  'root'
 );
 
-const App = reduxifyNavigator(AppNavigator, 'root');
+const App = createReduxContainer(AppNavigator, 'root');
 
 class ReduxNavigation extends React.Component {
   componentDidMount() {
@@ -175,9 +176,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default {
-  middleware,
-  MainNavigator,
-  AppNavigator,
-  AppWithNavigationState: connect(mapStateToProps)(ReduxNavigation),
-};
+export const AppWithNavigationState = connect(mapStateToProps)(ReduxNavigation);
