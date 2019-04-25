@@ -80,6 +80,27 @@ gulp.task(
   })
 );
 
+gulp.task(
+  'package:builder',
+  series('default', function(callback) {
+    const builder = require('electron-builder');
+    const Platform = builder.Platform;
+    const builderConfig = require('../config/builder.config.js');
+    log('[electron-builder]', 'start building...');
+
+    builder({
+      targets: Platform.MAC.createTarget(),
+      config: builderConfig,
+    })
+      .then(() => {
+        log('[electron-builder]', 'building completed!');
+      })
+      .catch((err) => {
+        log('[electron-builder]', 'building error:', err);
+      });
+  })
+);
+
 // 将字体文件复制到设备对应目录
 gulp.task('copyIconfont', function() {
   return gulp
