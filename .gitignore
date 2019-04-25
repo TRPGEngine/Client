@@ -4,6 +4,7 @@ package-lock.json
 yarn.lock
 config/local.js
 .sentryclirc
+.buildcache/
 
 
 # Logs

@@ -1,6 +1,7 @@
 const path = require('path');
 const gulp = require('gulp');
 const replace = require('gulp-replace');
+const jeditor = require("gulp-json-editor");
 const log = require('fancy-log');
 const PluginError = require('plugin-error');
 const {
@@ -80,6 +81,13 @@ gulp.task(
   })
 );
 
+gulp.task('build:createBuilderPackage', function() {
+  return gulp.src('../package.json').pipe(jeditor((json) => {
+    json.main = './entry.js';
+    return json;
+  })).pipe(gulp.dest('../.buildcache/'))
+})
+
 gulp.task(
   'package:builder',
   series('default', function(callback) {
@@ -88,15 +96,18 @@ gulp.task(
     const builderConfig = require('../config/builder.config.js');
     log('[electron-builder]', 'start building...');
 
-    builder({
-      targets: Platform.MAC.createTarget(),
-      config: builderConfig,
-    })
+    builder
+      .build({
+        targets: Platform.MAC.createTarget(),
+        config: builderConfig,
+      })
       .then(() => {
         log('[electron-builder]', 'building completed!');
+        callback();
       })
       .catch((err) => {
-        log('[electron-builder]', 'building error:', err);
+        log('[electron-builder]', 'building error:');
+        throw new Error(err);
       });
   })
 );
