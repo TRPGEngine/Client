@@ -1,12 +1,12 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import configureStore from '../redux/configureStore';
-const store = configureStore();
+import navReducer from '../redux/reducers/nav';
+const store = configureStore({
+  additionReducer: {
+    nav: navReducer,
+  },
+});
 import { AppWithNavigationState } from './router';
 import { Provider } from 'react-redux';
 require('../shared/utils/cacheHelper').attachStore(store);

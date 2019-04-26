@@ -20,8 +20,7 @@ const reducers = {
   settings,
 };
 
-if (config.platform === 'app') {
-  reducers.nav = require('./nav');
+// 可以从外部传入额外的reducer
+export function getCombineReducers(otherReducers = {}) {
+  return combineReducers({ ...reducers, ...otherReducers });
 }
-
-export default combineReducers(reducers);
