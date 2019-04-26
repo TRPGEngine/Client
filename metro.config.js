@@ -21,5 +21,5 @@ module.exports = {
     }),
   },
   // projectRoot: path.resolve(__dirname, './src/app/'), // 新版改为通过参数传递。很奇怪
-  watchFolders: [path.resolve(__dirname, './')],
+  // watchFolders: [path.resolve(__dirname, './')], // 改为使用REACT_NATIVE_APP_ROOT环境变量
 };
