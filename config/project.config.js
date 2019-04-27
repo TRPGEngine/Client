@@ -1,6 +1,6 @@
 import _get from 'lodash/get';
-const environment = _get(process.env, 'NODE_ENV', 'development');
-const platform = _get(process.env, 'PLATFORM', 'web');
+const environment = process.env.NODE_ENV || 'development';
+const platform = process.env.PLATFORM || 'web';
 let currentHost = '127.0.0.1';
 let isSSL = false;
 
@@ -13,7 +13,7 @@ if (environment == 'production') {
   currentHost = 'trpgapi.moonrailgun.com';
 }
 
-let trpgHost = _get(process.env, 'TRPG_HOST');
+let trpgHost = process.env.TRPG_HOST;
 let trpgPort;
 if (trpgHost) {
   let _tmp = trpgHost.split(':');
