@@ -7,5 +7,6 @@ module.exports = {
         include: ['NODE_ENV', 'PLATFORM', 'TRPG_HOST'],
       },
     ],
+    ['import', { libraryName: '@ant-design/react-native' }],
   ],
 };
