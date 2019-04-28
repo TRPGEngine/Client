@@ -18,6 +18,7 @@
     "app:proserver": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:80 npm run app",
     "app-clear": "npm run app -- --reset-cache",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "app:codepush": "appcenter codepush release-react -e ./src/app/index.js -a moonrailgun/TRPG-IM -d Staging",
     "lint": "eslint --ext .js,.jsx src",
     "lint:fix": "eslint --fix --ext .js,.jsx src",
     "prettier:all": "prettier --write \"src/**/*.js\""
@@ -59,6 +60,7 @@
     "react-image-lightbox": "^5.0.0",
     "react-loadable": "^5.5.0",
     "react-native": "0.59.2",
+    "react-native-code-push": "^5.6.0",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-image-picker": "^0.28.0",
     "react-native-photo-browser": "^0.4.0",

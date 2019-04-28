@@ -1,3 +1,4 @@
 <resources>
+	<string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">HmPwKOiecDiKJkPRxSotOUVl254WHJLG-sMo4</string>
     <string name="app_name">TRPG</string>
 </resources>
