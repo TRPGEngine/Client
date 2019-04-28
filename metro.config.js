@@ -13,6 +13,10 @@ module.exports = {
     blacklistRE: blacklist[/src\/web/],
   },
   transformer: {
+    babelTransformerPath: path.resolve(
+      __dirname,
+      './build/metro/babel-transformer'
+    ),
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,
