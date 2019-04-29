@@ -8,7 +8,10 @@ import ui from './ui';
 import user from './user';
 import settings from './settings';
 
-export default Object.assign(
+// app
+import nav from './nav';
+
+const constants = Object.assign(
   {
     RESET: 'RESET',
   },
@@ -20,5 +23,7 @@ export default Object.assign(
   ui,
   user,
   settings,
-  config.platform === 'app' ? require('./nav') : null
+  config.platform === 'app' ? nav : null
 );
+
+export default constants;

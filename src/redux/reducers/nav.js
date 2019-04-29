@@ -13,7 +13,6 @@ const {
 let initialNavState = AppNavigator.router.getStateForAction(
   NavigationActions.init()
 );
-console.log(NavigationActions);
 
 export default function nav(state = initialNavState, action) {
   let nextState;
