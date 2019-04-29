@@ -20,7 +20,7 @@ if (config.environment !== 'production') {
   middlewares.push(logger);
 }
 if (config.platform === 'app') {
-  middlewares.push(require('../../app/router').routerMiddleware);
+  middlewares.push(require('../../app/router').middleware);
 }
 const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
 
@@ -28,6 +28,7 @@ const defaultStoreOptions = {
   initialState: undefined,
   additionReducer: {},
 };
+
 function configureStore(options = defaultStoreOptions) {
   const initialState = options.initialState;
   const devTool =

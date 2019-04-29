@@ -10,7 +10,7 @@ const blacklist = require('metro-config/src/defaults/blacklist');
 
 module.exports = {
   resolver: {
-    blacklistRE: blacklist[/src\/web/],
+    blacklistRE: blacklist([/src\/web/]),
   },
   transformer: {
     babelTransformerPath: path.resolve(
