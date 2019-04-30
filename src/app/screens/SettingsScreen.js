@@ -1,13 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-const {
-  View,
-  Text,
-  CheckBox,
-  Switch,
-  Picker,
-  Slider,
-} = require('react-native');
+const { View, Text, CheckBox, Switch, Picker } = require('react-native');
 import ListCell from '../components/ListCell';
 import sb from 'react-native-style-block';
 
