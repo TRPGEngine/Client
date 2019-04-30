@@ -26,28 +26,35 @@ class TImageViewer extends React.Component {
     return ret;
   }
 
+  get menuContext() {
+    return { saveToLocal: '保存到相册', cancel: '取消' };
+  }
+
   _handlePressChildren() {
     this.setState({ modalVisible: true });
   }
 
+  hide() {
+    this.setState({ modalVisible: false });
+  }
+
   render() {
-    console.log(this.images);
     return (
       <View>
         <Modal
           visible={this.state.modalVisible}
           transparent={true}
-          onRequestClose={() => this.setState({ modalVisible: false })}
-          onPress={() => this.setState({ modalVisible: false })}
+          onRequestClose={() => this.hide()}
         >
           <ImageViewer
             imageUrls={this.images}
             index={this.state.index}
-            onSwipeDown={() => {
-              console.log('onSwipeDown');
-            }}
-            onMove={(data) => console.log(data)}
+            onSwipeDown={() => this.hide()}
+            onClick={() => this.hide()}
+            // TODO: 待实现保存图片到本地的功能
+            // saveToLocalByLongPress={true}
             enableSwipeDown={true}
+            menuContext={this.menuContext}
           />
         </Modal>
         <TouchableOpacity onPress={() => this._handlePressChildren()}>
