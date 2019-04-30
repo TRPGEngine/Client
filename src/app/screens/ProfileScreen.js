@@ -4,7 +4,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
 import appConfig from '../config.app';
 import { getSamlpeDate } from '../../shared/utils/dateHelper';
-import { TButton, TAvatar } from '../components/TComponent';
+import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getUserInfo } from '../../redux/actions/cache';
 import { addFriend } from '../../redux/actions/user';
 import { switchToConverseApp } from '../../redux/actions/nav';
@@ -31,17 +31,6 @@ class ProfileScreen extends React.Component {
     if (uuid) {
       console.log('获取最新用户信息', uuid);
       this.props.dispatch(getUserInfo(uuid));
-    }
-  }
-
-  _handlePressAvatar(avatar) {
-    if (avatar) {
-      let media = [
-        {
-          photo: avatar.replace('/thumbnail', ''),
-        },
-      ];
-      this.props.navigation.navigate('PhotoBrowser', { media, index: 0 });
     }
   }
 
@@ -79,7 +68,7 @@ class ProfileScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => this._handlePressAvatar(avatar)}>
+          <TImageViewer images={[avatar.replace('/thumbnail', '')]}>
             <TAvatar
               style={styles.avatar}
               uri={avatar}
@@ -88,7 +77,7 @@ class ProfileScreen extends React.Component {
               height={100}
               width={100}
             />
-          </TouchableOpacity>
+          </TImageViewer>
           <Text style={{ fontSize: 18, marginTop: 4 }}>{name}</Text>
           <Text style={{ fontSize: 12, color: '#999' }}>
             {userInfo.get('uuid')}

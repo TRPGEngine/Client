@@ -34,7 +34,6 @@ import AddFriendScreen from './screens/AddFriendScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import GroupProfileScreen from './screens/GroupProfileScreen';
-import PhotoBrowserScreen from './screens/PhotoBrowserScreen';
 import ProfileModifyScreen from './screens/ProfileModifyScreen';
 import WebviewScreen from './screens/WebviewScreen';
 
@@ -114,9 +113,6 @@ export const AppNavigator = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       headerTitle: navigation.state.params.name + ' 可以公开的情报',
     }),
-  },
-  PhotoBrowser: {
-    screen: PhotoBrowserScreen,
   },
   ProfileModify: {
     screen: ProfileModifyScreen,

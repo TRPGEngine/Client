@@ -5,6 +5,7 @@ import TLoading from './TLoading';
 import TAlert from './TAlert';
 import TToast from './TToast';
 import TIcon from './TIcon';
+import TImageViewer from './TImageViewer';
 import TAvatar from './TAvatar';
 
 export {
@@ -15,5 +16,6 @@ export {
   TAlert,
   TToast,
   TIcon,
+  TImageViewer,
   TAvatar,
 };
