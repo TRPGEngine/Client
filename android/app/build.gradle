@@ -157,9 +157,9 @@ android {
 dependencies {
     implementation project(':react-native-code-push')
     implementation project(':react-native-gesture-handler')
-    api project(':jcore-react-native')
-    api project(':jpush-react-native')
-    api project(':react-native-image-picker')
+    implementation project(':jcore-react-native')
+    implementation project(':jpush-react-native')
+    implementation project(':react-native-image-picker')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
