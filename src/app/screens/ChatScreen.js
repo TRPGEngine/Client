@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-const {
+import {
   View,
   Text,
   Image,
@@ -8,7 +8,7 @@ const {
   Button,
   TextInput,
   Keyboard,
-} = require('react-native');
+} from 'react-native';
 import sb from 'react-native-style-block';
 import { TInput, TIcon } from '../components/TComponent';
 import config from '../../../config/project.config';
@@ -18,21 +18,14 @@ import dateHelper from '../../shared/utils/dateHelper';
 import ExtraPanelItem from '../components/ExtraPanelItem';
 
 import MessageHandler from '../../shared/components/MessageHandler';
-MessageHandler.registerDefaultMessageHandler(
-  require('../components/messageTypes/Default')
-);
-MessageHandler.registerMessageHandler(
-  'tip',
-  require('../components/messageTypes/Tip')
-);
-MessageHandler.registerMessageHandler(
-  'card',
-  require('../components/messageTypes/Card')
-);
-MessageHandler.registerMessageHandler(
-  'file',
-  require('../components/messageTypes/File')
-);
+import Default from '../components/messageTypes/Default';
+import Tip from '../components/messageTypes/Tip';
+import Card from '../components/messageTypes/Card';
+import File from '../components/messageTypes/File';
+MessageHandler.registerDefaultMessageHandler(Default);
+MessageHandler.registerMessageHandler('tip', Tip);
+MessageHandler.registerMessageHandler('card', Card);
+MessageHandler.registerMessageHandler('file', File);
 
 class ChatScreen extends React.Component {
   static navigationOptions = (props) => {
