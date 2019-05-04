@@ -31,6 +31,17 @@ jobs:
           path: ~/trpg
       - attach_workspace:
           at: ~/trpg
+      # 更新node依赖
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
+      - run:
+          name: install-npm-wee
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
+      # 更新electron依赖
       - restore_cache:
           key: electron-cache-{{ checksum "package.json" }}-{{ arch }}
       - run:
@@ -57,6 +68,16 @@ jobs:
           path: ~/trpg
       - attach_workspace:
           at: ~/trpg
+      # 更新node依赖
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
+      - run:
+          name: install-npm-wee
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
       - run:
           name: installDebug
           command: ./gradlew app:installDebug
