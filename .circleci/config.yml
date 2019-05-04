@@ -72,10 +72,16 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
           paths:
             - node_modules
-      # TODO: 需要cache ~/.gradle
+      # cache gradle
+      - restore_cache:
+          key: gradle-cache-{{ checksum "build.gradle" }}-{{ arch }}
       - run:
-          name: installDebug
-          command: cd ./android && ./gradlew app:installDebug
+          name: packageDebug
+          command: cd ./android && ./gradlew app:packageDebug
+      - save_cache:
+          key: gradle-cache-{{ checksum "build.gradle" }}-{{ arch }}
+          paths:
+            - ~/.gradle/
 workflows:
   version: 2
   build:
