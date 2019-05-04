@@ -1,5 +1,6 @@
 # TRPG Game
 
+[![CircleCI](https://circleci.com/gh/TRPGEngine/Client/tree/release.svg?style=svg)](https://circleci.com/gh/TRPGEngine/Client/tree/release)
 [![Build Status](https://travis-ci.org/TRPGEngine/Client.svg?branch=master)](https://travis-ci.org/TRPGEngine/Client)
 [![Release](https://img.shields.io/github/release/TRPGEngine/Client.svg)](https://github.com/TRPGEngine/Client/releases)
 [![Downloads](https://img.shields.io/github/downloads/TRPGEngine/Client/total.svg)](https://github.com/TRPGEngine/Client/releases)
