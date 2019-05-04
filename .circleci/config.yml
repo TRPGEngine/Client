@@ -9,17 +9,17 @@ jobs:
     steps:
       - checkout
       - run:
-        name: update-npm
-        command: 'sudo npm install -g npm@latest'
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
       - restore_cache:
-        key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
+          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
       - run:
-        name: install-npm-wee
-        command: npm install
+          name: install-npm-wee
+          command: npm install
       - save_cache:
-        key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
-        paths:
-          - node_modules
+          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
 
   "Build Electron App":
     # TODO: 需要重新测试一下
@@ -32,14 +32,14 @@ jobs:
       - attach_workspace:
           at: ~/trpg
       - restore_cache:
-        key: electron-cache-{{ checksum "package.json" }}-{{ arch }}
+          key: electron-cache-{{ checksum "package.json" }}-{{ arch }}
       - run:
-        name: install-npm-wee
-        command: npm install
+          name: install-npm-wee
+          command: npm install
       - save_cache:
-        key: electron-cache-{{ checksum "package.json" }}-{{ arch }}
-        paths:
-          - ~/.cache/electron
+          key: electron-cache-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - ~/.cache/electron
       - run:
           name: prepare-env
           command: chmod +x ./.circleci/prepare_env.sh && ./.circleci/prepare_env.sh
