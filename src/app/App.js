@@ -16,12 +16,12 @@ const api = trpgApi.getInstance();
 trpgApi.bindEventFunc.call(api, store);
 
 import { injectLoginSuccessCallback } from '../shared/utils/inject';
-import { init as initNotify, setAlias } from './notify';
+import { init as initNotify, bindInfo } from './notify';
 initNotify();
 injectLoginSuccessCallback(() => {
   // 登录成功
   const userUUID = store.getState().getIn(['user', 'info', 'uuid']);
-  setAlias(userUUID);
+  bindInfo(userUUID);
 });
 
 // token登录
