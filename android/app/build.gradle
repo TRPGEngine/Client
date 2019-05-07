@@ -77,6 +77,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-sentry/sentry.gradle"
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
@@ -155,6 +156,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-sentry')
     implementation project(':react-native-code-push')
     implementation project(':react-native-gesture-handler')
     implementation project(':jcore-react-native')

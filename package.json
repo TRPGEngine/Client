@@ -67,6 +67,7 @@
     "react-native-image-picker": "^0.28.0",
     "react-native-image-zoom-viewer": "^2.2.25",
     "react-native-root-toast": "^3.0.1",
+    "react-native-sentry": "^0.42.0",
     "react-native-storage": "^1.0.1",
     "react-native-style-block": "0.0.4",
     "react-native-webview": "^5.7.2",
