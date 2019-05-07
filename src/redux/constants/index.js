@@ -23,7 +23,7 @@ const constants = Object.assign(
   ui,
   user,
   settings,
-  config.platform === 'app' ? nav : null
+  nav,
 );
 
 export default constants;
