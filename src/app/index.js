@@ -4,7 +4,7 @@ require('moment/locale/zh-cn');
 require('moment').locale('zh_CN');
 require('../shared/utils/common');
 
-import { AppRegistry } from 'react-native';
+import { AppRegistry, YellowBox } from 'react-native';
 import App from './App';
 import _get from 'lodash/get';
 
@@ -15,5 +15,7 @@ const dsn = _get(Config, 'sentry.dsn');
 if (dsn) {
   Sentry.config(dsn).install();
 }
+
+YellowBox.ignoreWarnings(['Require cycle:']); // Metro warning, Specific for Sentry
 
 AppRegistry.registerComponent('trpg', () => App);
