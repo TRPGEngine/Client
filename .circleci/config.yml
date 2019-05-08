@@ -88,7 +88,7 @@ workflows:
   version: 2
   build:
     jobs:
-      - node
+      - node:
           filters:
             branches:
               only:
