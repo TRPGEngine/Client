@@ -21,7 +21,8 @@ export async function setAlias(alias) {
 }
 
 export function bindInfo(userUUID) {
-  const registrationID = JPushModule.getRegistrationID();
-  bindNotifyInfo({ userUUID, registrationID });
-  setAlias(userUUID);
+  JPushModule.getRegistrationID((registrationID) => {
+    bindNotifyInfo({ userUUID, registrationID });
+    setAlias(userUUID);
+  });
 }
