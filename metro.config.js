@@ -7,6 +7,11 @@
  */
 const path = require('path');
 const blacklist = require('metro-config/src/defaults/blacklist');
+const config = require('config');
+const fs = require('fs-extra');
+const configFilePath = path.resolve(__dirname, './build/metro/', 'conf.json');
+
+fs.writeJson(configFilePath, config);
 
 module.exports = {
   resolver: {

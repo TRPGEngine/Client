@@ -8,5 +8,14 @@ module.exports = {
       },
     ],
     ['import', { libraryName: '@ant-design/react-native' }],
+    [
+      'module-resolver',
+      {
+        alias: {
+          // 从src/app开始
+          config: '../../build/metro/conf.json',
+        },
+      },
+    ],
   ],
 };
