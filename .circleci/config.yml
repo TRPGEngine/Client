@@ -89,6 +89,10 @@ workflows:
   build:
     jobs:
       - node
+          filters:
+            branches:
+              only:
+                - release
       - Build Electron App:
           requires:
             - node
@@ -99,3 +103,7 @@ workflows:
       - Build Android App:
           requires:
             - node
+          filters:
+            branches:
+              only:
+                - release
