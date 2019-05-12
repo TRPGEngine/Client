@@ -9,14 +9,18 @@ const store = configureStore({
 });
 import { AppWithNavigationState } from './router';
 import { Provider } from 'react-redux';
+import { injectLoginSuccessCallback } from '../shared/utils/inject';
+import { init as initNotify, bindInfo, tryLocalNotify } from './notify';
 require('../shared/utils/cacheHelper').attachStore(store);
 
 import * as trpgApi from '../api/trpg.api.js';
 const api = trpgApi.getInstance();
-trpgApi.bindEventFunc.call(api, store);
+trpgApi.bindEventFunc.call(api, store, {
+  onReceiveMessage(messageData) {
+    tryLocalNotify(messageData);
+  },
+});
 
-import { injectLoginSuccessCallback } from '../shared/utils/inject';
-import { init as initNotify, bindInfo } from './notify';
 initNotify();
 injectLoginSuccessCallback(() => {
   // 登录成功

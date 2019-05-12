@@ -1,3 +1,4 @@
+import { AppState } from 'react-native';
 import JPushModule from 'jpush-react-native';
 import { bindNotifyInfo } from '../redux/actions/notify';
 import rnStorage from '../api/rnStorage.api.js';
@@ -27,4 +28,24 @@ export function bindInfo(userUUID) {
     bindNotifyInfo({ userUUID, registrationID });
     setAlias(userUUID);
   });
+}
+
+// 监测app状态
+let appState; // active 前台 background 后台 inactive 切换过程中或来电或多任务
+AppState.addEventListener('change', (nextAppState) => {
+  appState = nextAppState;
+});
+export function tryLocalNotify(messageData) {
+  if (appState === 'background') {
+    // 仅当应用在后台时。发起本地推送
+
+    const sender_uuid = messageData.sender_uuid;
+    const message = messageData.message;
+
+    console.log('messageData', messageData);
+    JPushModule.sendLocalNotification({
+      title: '信息',
+      content: messageData,
+    });
+  }
 }
