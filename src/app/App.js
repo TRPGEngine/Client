@@ -11,6 +11,9 @@ import { AppWithNavigationState } from './router';
 import { Provider } from 'react-redux';
 import { injectLoginSuccessCallback } from '../shared/utils/inject';
 import { init as initNotify, bindInfo, tryLocalNotify } from './notify';
+import codePush from 'react-native-code-push';
+import appConfig from './config.app';
+
 require('../shared/utils/cacheHelper').attachStore(store);
 
 import * as trpgApi from '../api/trpg.api.js';
@@ -62,4 +65,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+let out = App;
+if (appConfig.codePush.enabled) {
+  out = codePush(appConfig.codePush.options)(App);
+}
+
+export default out;

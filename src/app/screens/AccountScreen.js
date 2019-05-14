@@ -39,6 +39,22 @@ class AccountScreen extends React.Component {
     this.props.dispatch(logout());
   }
 
+  _handleCheckVersion() {
+    // Pending: 国内网速比较慢，微软服务几乎不可用，可以考虑自己搭一个codepush服务器
+    // appConfig.codePush.sync();
+
+    checkVersion(function(isLatest) {
+      if (isLatest) {
+        appUtils.toast('当前版本为最新版');
+      } else {
+        appUtils.toast('检测到有新的版本, 1秒后自动跳转到项目主页');
+        setTimeout(function() {
+          Linking.openURL(config.github.projectUrl);
+        }, 1000);
+      }
+    });
+  }
+
   render() {
     const userInfo = this.props.userInfo;
     let avatar = userInfo.get('avatar') || appConfig.defaultImg.user;
@@ -87,18 +103,7 @@ class AccountScreen extends React.Component {
           <ListCell
             title="当前版本"
             value={config.version}
-            onPress={() => {
-              checkVersion(function(isLatest) {
-                if (isLatest) {
-                  appUtils.toast('当前版本为最新版');
-                } else {
-                  appUtils.toast('检测到有新的版本, 1秒后自动跳转到项目主页');
-                  setTimeout(function() {
-                    Linking.openURL(config.github.projectUrl);
-                  }, 1000);
-                }
-              });
-            }}
+            onPress={() => this._handleCheckVersion()}
           />
         </View>
 

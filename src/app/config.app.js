@@ -1,4 +1,5 @@
 import config from '../../config/project.config';
+import codePush from 'react-native-code-push';
 
 const out = {
   defaultImg: {
@@ -38,6 +39,18 @@ const out = {
       }
 
       return out.defaultImg.file.default;
+    },
+  },
+  codePush: {
+    enabled: true,
+    options: {
+      checkFrequency: codePush.CheckFrequency.ON_APP_START,
+    },
+    sync() {
+      codePush.sync({
+        updateDialog: true,
+        installMode: codePush.InstallMode.IMMEDIATE,
+      });
     },
   },
   oauth: {
