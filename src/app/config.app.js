@@ -42,7 +42,7 @@ const out = {
     },
   },
   codePush: {
-    enabled: true,
+    enabled: false,
     options: {
       checkFrequency: codePush.CheckFrequency.ON_APP_START,
     },
