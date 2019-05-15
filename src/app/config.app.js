@@ -55,7 +55,7 @@ const out = {
   },
   oauth: {
     qq: {
-      icon: require('../assets/img/oauth/qqconnect.png'),
+      icon: require('./assets/img/oauth/qqconnect.png'),
     },
   },
 };
