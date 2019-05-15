@@ -8,9 +8,6 @@ import ui from './ui';
 import user from './user';
 import settings from './settings';
 
-// app
-import nav from './nav';
-
 const constants = Object.assign(
   {
     RESET: 'RESET',
@@ -22,8 +19,7 @@ const constants = Object.assign(
   note,
   ui,
   user,
-  settings,
-  nav,
+  settings
 );
 
 export default constants;

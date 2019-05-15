@@ -7,7 +7,7 @@ import { getSamlpeDate } from '../../shared/utils/dateHelper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getUserInfo } from '../../redux/actions/cache';
 import { addFriend } from '../../redux/actions/user';
-import { switchToConverseApp } from '../../redux/actions/nav';
+import { switchToConverseApp } from '../redux/actions/nav';
 import { getUserInfoCache } from '../../shared/utils/cacheHelper';
 
 class ProfileInfoItem extends React.Component {

@@ -12,7 +12,7 @@ import sb from 'react-native-style-block';
 import config from '../../../config/project.config';
 import appConfig from '../config.app';
 import { logout } from '../../redux/actions/user';
-import { openWebview } from '../../redux/actions/nav';
+import { openWebview } from '../redux/actions/nav';
 import ListCell from '../components/ListCell';
 import { TButton, TAvatar } from '../components/TComponent';
 import checkVersion from '../../shared/utils/checkVersion';

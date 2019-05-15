@@ -1,14 +1,17 @@
 import { NavigationActions, StackActions } from 'react-navigation';
-import { AppNavigator } from '../../app/router';
-import constants from '../constants';
+import { AppNavigator } from '../../router';
+import constants from '../../../redux/constants';
 const {
   LOGIN_SUCCESS,
   LOGIN_TOKEN_SUCCESS,
   LOGOUT,
+} = constants;
+import navConstants from '../constants/nav';
+const {
   SWITCH_NAV,
   REPLACE_NAV,
   BACK_NAV,
-} = constants;
+} = navConstants;
 
 let initialNavState = AppNavigator.router.getStateForAction(
   NavigationActions.init()

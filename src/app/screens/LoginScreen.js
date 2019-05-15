@@ -4,7 +4,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
 import { login } from '../../redux/actions/user';
-import { openWebview } from '../../redux/actions/nav';
+import { openWebview } from '../redux/actions/nav';
 const {
   TButton,
   TFormGroup,

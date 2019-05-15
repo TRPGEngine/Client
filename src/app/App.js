@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import configureStore from '../redux/configureStore';
-import navReducer from '../redux/reducers/nav';
+import navReducer from './redux/reducers/nav';
 const store = configureStore({
   additionReducer: {
     nav: navReducer,

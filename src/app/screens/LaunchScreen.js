@@ -10,7 +10,7 @@ const {
 import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
 import config from '../../../config/project.config';
-import { replaceNav } from '../../redux/actions/nav';
+import { replaceNav } from '../redux/actions/nav';
 
 class LaunchScreen extends React.Component {
   static navigationOptions = {
