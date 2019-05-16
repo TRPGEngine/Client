@@ -50,6 +50,7 @@ class ChatScreen extends React.Component {
     this.state = {
       inputMsg: '',
       showExtraPanel: false,
+      isKeyboardShow: false,
     };
   }
 
@@ -70,9 +71,18 @@ class ChatScreen extends React.Component {
         }
       },
     });
-    this.keyboardListener = Keyboard.addListener(
+    this.keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
-      this._scrollToBottom.bind(this)
+      () => {
+        this.setState({ isKeyboardShow: true });
+        this._scrollToBottom.bind(this);
+      }
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        this.setState({ isKeyboardShow: false });
+      }
     );
     this._scrollToBottom();
   }
@@ -84,13 +94,19 @@ class ChatScreen extends React.Component {
   }
 
   componentWillUnmount() {
-    this.keyboardListener.remove();
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
   }
 
   _scrollToBottom() {
     setTimeout(() => {
       this.refs.list && this.refs.list.scrollToEnd();
     }, 130);
+  }
+
+  _handleFocus() {
+    // 输入框focus时收起ExtraPanel
+    this.setState({ showExtraPanel: false });
   }
 
   _handleSendMsg() {
@@ -191,6 +207,7 @@ class ChatScreen extends React.Component {
               ref="input"
               style={styles.msgInput}
               onChangeText={(inputMsg) => this.setState({ inputMsg })}
+              onFocus={() => this._handleFocus()}
               multiline={true}
               maxLength={100}
               value={this.state.inputMsg}
@@ -204,7 +221,9 @@ class ChatScreen extends React.Component {
               />
             )}
           </View>
-          {this.state.showExtraPanel && this.getExtraPanel()}
+          {this.state.showExtraPanel &&
+            !this.state.isKeyboardShow &&
+            this.getExtraPanel()}
         </View>
       );
     } else {
