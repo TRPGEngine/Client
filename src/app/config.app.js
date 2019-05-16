@@ -3,7 +3,7 @@ import codePush from 'react-native-code-push';
 
 const out = {
   defaultImg: {
-    user: null, // 让系统系统生成
+    user: '', // 让系统系统生成
     group: require('../assets/img/gugugu1.png'),
     trpgsystem: require('../assets/img/system_notice.png'),
     actor: null,
