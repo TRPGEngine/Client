@@ -60,8 +60,8 @@
   <Tabs>
     <Tab label="说明">
       <div>
-        <img src="/src/assets/img/dice.png" />
-        <center>欢迎使用COC 7版人物卡</center>
+        <center><img src="/src/assets/img/dice.png" /></center>
+        <center><h2>欢迎使用COC 7版人物卡</h2></center>
         <p>本人物卡由TRPG Engine官方提供</p>
         <p>完全自动</p>
         <p>如有bug请提交反馈，谢谢配合</p>

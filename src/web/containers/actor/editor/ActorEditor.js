@@ -19,7 +19,6 @@ const ActorEditor = () => {
 
   return (
     <EditorContainer>
-      ActorEditor:
       <XMLBuilder
         xml={exampleXml}
         onChange={(newState) => {
