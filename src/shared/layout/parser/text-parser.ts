@@ -1,14 +1,18 @@
 const tagRE = /\{\{((?:.|\r?\n)+?)\}\}/g;
 
 type TextParseResult = {
-  expression: string,
-  tokens: Array<string | { '@binding': string }>,
+  expression: string;
+  tokens: Array<string | { '@binding': string }>;
 };
 
 // 处理{{data}}格式的数据
-const parseText = (text: string) => {
+const parseText = (text: string): TextParseResult => {
   if (!tagRE.test(text)) {
-    return;
+    // 如果没有检测到{{}}格式的数据。则返回纯文本
+    return {
+      expression: `"${text}"`,
+      tokens: [text],
+    };
   }
   const tokens = [];
   const rawTokens = [];
@@ -37,3 +41,5 @@ const parseText = (text: string) => {
     tokens: rawTokens,
   };
 };
+
+export default parseText;
