@@ -8,6 +8,27 @@ import { Row } from 'antd';
 import styled from 'styled-components';
 import { XMLBuilderContext } from '../XMLBuilder';
 
+// defined from facebook/react/packages/react-dom/src/shared/voidElementTags.js
+// https://github.com/facebook/react/blob/b0657fde6a/packages/react-dom/src/shared/voidElementTags.js
+const voidElementTags = [
+  'menuitem',
+  'area',
+  'base',
+  'br',
+  'col',
+  'embed',
+  'hr',
+  'img',
+  'input',
+  'keygen',
+  'link',
+  'meta',
+  'param',
+  'source',
+  'track',
+  'wbr',
+];
+
 export default class Base {
   name: string;
 
@@ -55,10 +76,17 @@ export default class Base {
     elements: Array<XMLElement>,
     context: XMLBuilderContext
   ) {
+    let childrens = [];
+    if (voidElementTags.includes(tagName)) {
+      childrens = undefined;
+    } else {
+      childrens = this.renderChildren(elements, context);
+    }
+
     return React.createElement(
       this.parseTagName(tagName),
       attributes,
-      this.renderChildren(elements, context)
+      childrens
     );
   }
 
@@ -69,10 +97,17 @@ export default class Base {
     elements: Array<XMLElement>,
     context: XMLBuilderContext
   ) {
+    let childrens = [];
+    if (voidElementTags.includes(tagName)) {
+      childrens = undefined;
+    } else {
+      childrens = this.renderChildren(elements, context);
+    }
+
     return React.createElement(
       this.parseTagName(tagName),
       attributes,
-      this.renderChildren(elements, context)
+      childrens
     );
   }
 }
