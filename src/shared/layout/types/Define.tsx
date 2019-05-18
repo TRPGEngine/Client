@@ -21,7 +21,7 @@ const useDefineComponentReducer = (
 
 type WrappedStateType = {
   data: DataType;
-  this: DataType;
+  props: DataType;
 };
 
 type WrappedContextType = {
@@ -40,7 +40,7 @@ export default class TDefine extends Base {
     const wrappedContext: WrappedContextType = {
       state: {
         ...context.state,
-        this: otherProps,
+        props: otherProps,
       },
       dispatch: context.dispatch,
     };

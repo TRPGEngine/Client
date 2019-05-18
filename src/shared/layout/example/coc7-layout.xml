@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Template>
-  <Define name="prop">
-    <!-- 定义的模板。可以被直接使用 -->
+  <!-- 定义的模板。可以被直接使用 -->
+  <!-- <Define name="prop">
     <Row>
       <Col>
-        <Input label="{{this.label}}" value="{{this.value}}" />
+        <Input label="{{props.label}}" value="{{props.value}}" />
       </Col>
       <Col>
-        <p>{{this.value / 2}}</p>
-        <p>{{this.value / 5}}</p>
+        <p>{{props.value / 2}}</p>
+        <p>{{props.value / 5}}</p>
       </Col>
     </Row>
   </Define>
   <Define name="state">
     <Col>
-      <pre>{{this.label}}</pre>
+      <pre>{{props.label}}</pre>
     </Col>
     <Col>
       <Row>
-        <span>{{this.value}}</span>
-        <Visible if="!!this.maxValue">
-          <span>/{{this.maxValue}}</span>
+        <span>{{props.value}}</span>
+        <Visible if="!!props.maxValue">
+          <span>/{{props.maxValue}}</span>
         </Visible>
       </Row>
     </Col>
-  </Define>
+  </Define> -->
   <Define name="skill">
     <Col>
-      <pre>{{this.label}}</pre>
+      <pre>{{props.label}}</pre>
     </Col>
     <Col>
       <!-- 初始值 -->
-      <span>{{this.initValue || 1}}</span>
+      <span>{{props.initValue || 1}}</span>
     </Col>
     <Col>
-      <Input label="" value="{{this.value}}" />
+      <Input label="" value="{{props.value}}" />
     </Col>
     <Col>
       <!-- 成功率 -->
       <Col>
-        <span>{{this.initValue + this.value}}%</span>
-        <span>{{(this.initValue + this.value) / 2}}%</span>
-        <span>{{(this.initValue + this.value) / 5}}%</span>
+        <span>{{props.initValue + props.value}}%</span>
+        <span>{{(props.initValue + props.value) / 2}}%</span>
+        <span>{{(props.initValue + props.value) / 5}}%</span>
       </Col>
     </Col>
   </Define>
   <Define name="weapon">
-    <td>{{this.label}}</td>
-    <td>{{this.value}}</td>
-    <td>{{this.value / 2}}</td>
-    <td>{{this.value / 5}}</td>
-    <td>{{this.isPenetrate}}</td>
-    <td>{{this.damage}}</td>
-    <td>{{this.range || '--'}}</td>
-    <td>{{this.times || 1}}</td>
-    <td>{{this.ammo || '--'}}</td>
-    <td>{{this.faultValue || '--'}}</td>
+    <td>{{props.label}}</td>
+    <td>{{props.value}}</td>
+    <td>{{props.value / 2}}</td>
+    <td>{{props.value / 5}}</td>
+    <td>{{props.isPenetrate}}</td>
+    <td>{{props.damage}}</td>
+    <td>{{props.range || '--'}}</td>
+    <td>{{props.times || 1}}</td>
+    <td>{{props.ammo || '--'}}</td>
+    <td>{{props.faultValue || '--'}}</td>
   </Define>
   <Tabs>
-    <Tab label="说明">
+    <!-- <Tab label="说明">
       <div>
         <center><img src="/src/assets/img/dice.png" /></center>
         <center><h2>欢迎使用COC 7版人物卡</h2></center>
@@ -69,9 +69,9 @@
         <p>《克苏鲁的呼唤》（The Call of Cthulhu）是美国小说家霍华德·菲利普·洛夫克拉夫特的短篇小说，故事由追查一个奇异的艺术品开始，这个创作是由旧日支配者（Great old ones）克苏鲁所启发，经过仔细的调查之后发现藏在其后的恐怖秘密。</p>
         <p>克苏鲁的呼唤也是一个角色扮演游戏，由混沌元素出版，其特色是以凡人去追查神秘现象并发现超越人类理解的宇宙真相，在越知道世界的真面目后，调查员（investigator，CoC对角色的称呼）就越接近疯狂，故事背景主要是真实世界混合克苏鲁神话，因此在游戏过程中克苏鲁神话是一个极有用的技能，但是由于系统的设计，追求被禁止的知识是发狂的前一歩，习得克苏鲁神话的调查员将渐渐变成非一般人的存在。</p>
       </div>
-    </Tab>
+    </Tab> -->
     <Tab label="基本信息">
-      <Row>
+      <!-- <Row>
         <Col>
           <Row>
             <Col label="{{data.时代背景}} 调查员信息">
@@ -104,13 +104,13 @@
         <Col>
           <Avatar width="240" height="240" />
         </Col>
-      </Row>
+      </Row> -->
       <Row>
         <!-- 技能表 -->
         <!-- TODO: 技能的初始值会根据职业不同进行变换 -->
         <Col>
           <Use define="skill" label="会计" initValue="5" />
-          <Use define="skill" label="人类学" initValue="1" />
+          <!-- <Use define="skill" label="人类学" initValue="1" />
           <Use define="skill" label="估价" initValue="5" />
           <Use define="skill" label="技艺:{{技艺1}}" initValue="5" />
           <Use define="skill" label="技艺:{{技艺2}}" initValue="5" />
@@ -139,9 +139,9 @@
           <Use define="skill" label="语言:{{语言1}}" initValue="1" />
           <Use define="skill" label="语言:{{语言2}}" initValue="1" />
           <Use define="skill" label="语言:{{语言3}}" initValue="1" />
-          <Use define="skill" label="母语:{{母语}}" initValue="80" />
+          <Use define="skill" label="母语:{{母语}}" initValue="80" /> -->
         </Col>
-        <Col>
+        <!-- <Col>
           <Use define="skill" label="法律" initValue="5" />
           <Use define="skill" label="图书馆使用" initValue="20" />
           <Use define="skill" label="聆听" initValue="20" />
@@ -168,10 +168,10 @@
           <Use define="skill" label="投掷" initValue="20" />
           <Use define="skill" label="追踪" initValue="10" />
           <Use define="skill" label="潜水" initValue="1" />
-        </Col>
+        </Col> -->
       </Row>
     </Tab>
-    <Tab label="战斗信息">
+    <!-- <Tab label="战斗信息">
       <Row>
         <Col flex="3">
           <table>
@@ -202,6 +202,6 @@
           <Use define="stats" label="闪避\nDodge" value="{{data.闪避}}" />
         </Col>
       </Row>
-    </Tab>
+    </Tab> -->
   </Tabs>
 </Template>
