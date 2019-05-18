@@ -3,7 +3,7 @@ type Sandbox = {};
 const sandboxProxies = new WeakMap<Sandbox, Sandbox>();
 
 /**
- * Usage: compileCode(srcCode)(context)
+ * Usage: compileCode(srcCode)(sandbox)
  * @param src 要执行的代码
  */
 export function compileCode(src: string) {
