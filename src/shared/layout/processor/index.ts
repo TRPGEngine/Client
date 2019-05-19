@@ -7,7 +7,10 @@ import { compileCode } from './sandbox';
 
 // 解析带数据的文本信息。根据state返回实际文本内容
 // 格式为{{text}}
-function parseDataText(text: string, context: XMLBuilderContext): string {
+export function parseDataText(
+  text: string,
+  context: XMLBuilderContext
+): string {
   const { expression, tokens } = parseText(text);
   const sandbox = context.state;
 

@@ -61,7 +61,10 @@ export default class Base {
   onMounted() {}
 
   // 渲染子元素的方法
-  renderChildren(childElements = [], context: XMLBuilderContext) {
+  renderChildren(
+    childElements: Array<XMLElement> = [],
+    context: XMLBuilderContext
+  ) {
     return childElements.map((el, index) => {
       if (!_get(el, 'attributes.key')) {
         _set(el, 'attributes.key', this.childrenKey(this.name, el.name, index)); // 增加一个默认的key

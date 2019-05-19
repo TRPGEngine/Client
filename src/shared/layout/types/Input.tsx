@@ -5,6 +5,7 @@ import { XMLBuilderContext } from '../XMLBuilder';
 import { XMLElementAttributes } from '../parser/xml-parser';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
+import { parseDataText } from '../processor';
 
 type OperationDataType = {
   scope: string;
@@ -45,12 +46,16 @@ export default class TInput extends Base {
     const label = attributes.label as string;
     const name = attributes.name as string;
     const changeValue = attributes.changeValue as string; // 指定要被修改的变量
-    const bindingName = name || label; // 可以为a.b的格式
+    const bindingName = parseDataText(name || label, context); // 可以为a.b的格式
     const { state, dispatch } = context;
-    const { data } = state;
 
     const parsedLabel = this.parseMultilineText(label);
 
+    const getInputValue = () => {
+      const { scope, field } = getOperationData(bindingName);
+
+      return _get(state, [scope, field].join('.'));
+    };
     return (
       <BaseTypeRow key={attributes.key}>
         <Col span={6}>
@@ -59,9 +64,11 @@ export default class TInput extends Base {
         <Col span={18}>
           <Input
             placeholder={label}
-            value={_get(data, bindingName)}
+            value={getInputValue()}
             onChange={(e) => {
-              const { scope, field } = getOperationData(changeValue);
+              const { scope, field } = getOperationData(
+                changeValue || bindingName
+              );
 
               _set(state[scope], field, e.target.value);
 
