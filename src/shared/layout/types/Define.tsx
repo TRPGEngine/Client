@@ -1,4 +1,4 @@
-import React, { Fragment, useReducer } from 'react';
+import React, { Fragment } from 'react';
 import Base from './Base';
 import {
   XMLBuilderContext,
@@ -8,6 +8,7 @@ import {
   DataType,
   DefinePropsType,
 } from '../XMLBuilder';
+import _set from 'lodash/set';
 
 const useDefineComponentReducer = (
   prevState: WrappedStateType,
@@ -29,6 +30,62 @@ type WrappedContextType = {
   dispatch: React.Dispatch<XMLBuilderAction>;
 };
 
+type DefineConstructorProps = {
+  elements: any[];
+  attributes: DefinePropsType;
+  context: XMLBuilderContext;
+  renderChildrenFn: any;
+};
+
+let globalInstanceId = 0;
+class DefineConstructor extends React.Component<DefineConstructorProps> {
+  instanceId: number;
+
+  componentDidMount() {
+    this.instanceId = ++globalInstanceId;
+  }
+
+  getPrivateScopeName() {
+    return `sub-${this.instanceId}`;
+  }
+
+  render() {
+    const props = this.props;
+    const { elements, context, attributes, renderChildrenFn } = props;
+
+    const wrappedContext: WrappedContextType = {
+      state: {
+        ...context.state,
+        props: {
+          ...attributes,
+          ...context.state[this.getPrivateScopeName()],
+        },
+      },
+      dispatch: (action: XMLBuilderAction) => {
+        const { type } = action;
+        switch (type) {
+          case ActionType.UpdateData:
+            // 如果是更新变量。需要在该实例的下子对象进行修改以保证不会影响到全局
+            if (action.scope === 'props') {
+              action.scope = this.getPrivateScopeName();
+            }
+            context.dispatch(action);
+            break;
+          default:
+            context.dispatch(action);
+            break;
+        }
+      },
+    };
+
+    return React.createElement(
+      Fragment,
+      { key: attributes.key },
+      renderChildrenFn(elements, wrappedContext as any) // 先直接放个any回头再修
+    );
+  }
+}
+
 export default class TDefine extends Base {
   name = 'Define';
 
@@ -36,20 +93,16 @@ export default class TDefine extends Base {
     elements,
     context: XMLBuilderContext,
     otherProps: DefinePropsType = {}
-  ): React.FunctionComponentElement<{}> {
-    const wrappedContext: WrappedContextType = {
-      state: {
-        ...context.state,
-        props: otherProps,
-      },
-      dispatch: context.dispatch,
-    };
-
-    return React.createElement(
-      Fragment,
-      { key: otherProps.key },
-      this.renderChildren(elements, wrappedContext as any) // 先直接放个any回头再修
-    );
+  ) {
+    // wrappedContext 是一个局部的小型作用域
+    return React.createElement(DefineConstructor, {
+      key: otherProps.key,
+      elements,
+      attributes: otherProps,
+      context,
+      renderChildrenFn: (elements, wrappedContext) =>
+        this.renderChildren(elements, wrappedContext),
+    });
   }
 
   getEditView(tagName, attributes, elements, context: XMLBuilderContext) {

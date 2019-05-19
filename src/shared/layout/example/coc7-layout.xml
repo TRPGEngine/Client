@@ -34,7 +34,7 @@
       <span>{{props.initValue || 1}}</span>
     </Col>
     <Col>
-      <Input label="" value="{{props.value}}" />
+      <Input label="" name="props.value" changeValue="props.value" />
     </Col>
     <Col>
       <!-- 成功率 -->
