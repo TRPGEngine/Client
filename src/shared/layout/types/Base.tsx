@@ -53,15 +53,22 @@ export default class Base {
   }
 
   // 生成子元素唯一key
-  childrenKey(parentName, childrenName, index) {
+  childrenKey(parentName: string, childrenName: string, index: number) {
     return `${parentName}-${childrenName}-${index}`;
   }
+
+  // 当挂载时回调
+  onMounted() {}
 
   // 渲染子元素的方法
   renderChildren(childElements = [], context: XMLBuilderContext) {
     return childElements.map((el, index) => {
       if (!_get(el, 'attributes.key')) {
         _set(el, 'attributes.key', this.childrenKey(this.name, el.name, index)); // 增加一个默认的key
+      }
+
+      if (!_get(el, 'attributes.ref')) {
+        _set(el, 'attributes.ref', () => this.onMounted()); // 增加挂载回调
       }
 
       // NOTE: 所有的组件返回的实例都应当有key. 因为这个元素是map出来的
