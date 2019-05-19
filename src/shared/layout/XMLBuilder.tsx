@@ -63,9 +63,11 @@ const buildReducer = (onChange?: stateChangeHandler) => {
     const newState = _clone(prevState);
 
     switch (type) {
-      case ActionType.UpdateData:
-        newState.data = payload;
+      case ActionType.UpdateData: {
+        const scope = action.scope || 'data';
+        newState[scope] = payload;
         break;
+      }
       case ActionType.AddDefine:
         newState.defines[payload.name] = payload.componentFn;
         break;
@@ -89,15 +91,12 @@ const XMLBuilder = (props: Props) => {
   };
   const [state, dispatch] = useReducer(buildReducer(onChange), initialState);
 
-  useEffect(
-    () => {
-      const layout = parser(xml);
-      layout.type = 'root';
-      console.log('layout', layout);
-      setLayout(layout);
-    },
-    [xml]
-  );
+  useEffect(() => {
+    const layout = parser(xml);
+    layout.type = 'root';
+    console.log('layout', layout);
+    setLayout(layout);
+  }, [xml]);
 
   if (_isEmpty(layout)) {
     return null;
