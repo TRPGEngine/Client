@@ -98,6 +98,13 @@ class ChatScreen extends React.Component {
     this.keyboardDidHideListener.remove();
   }
 
+  dismissAll() {
+    Keyboard.dismiss();
+    this.setState({
+      showExtraPanel: false,
+    });
+  }
+
   _scrollToBottom() {
     setTimeout(() => {
       this.refs.list && this.refs.list.scrollToEnd();
@@ -170,6 +177,7 @@ class ChatScreen extends React.Component {
             ref="list"
             data={msgList}
             keyExtractor={(item, index) => item.uuid + '#' + index}
+            onTouchStart={() => this.dismissAll()}
             renderItem={({ item, index }) => {
               const prevDate =
                 index > 0 ? this.props.msgList.getIn([index - 1, 'date']) : 0;
