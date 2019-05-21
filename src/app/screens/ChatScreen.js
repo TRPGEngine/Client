@@ -8,7 +8,9 @@ import {
   Button,
   TextInput,
   Keyboard,
+  TouchableOpacity,
 } from 'react-native';
+import { Icon } from '@ant-design/react-native';
 import sb from 'react-native-style-block';
 import { TInput, TIcon } from '../components/TComponent';
 import config from '../../../config/project.config';
@@ -221,12 +223,22 @@ class ChatScreen extends React.Component {
               value={this.state.inputMsg}
             />
             {this.state.inputMsg ? (
-              <Button onPress={() => this._handleSendMsg()} title="  发送  " />
+              <TouchableOpacity
+                style={{ alignSelf: 'stretch', justifyContent: 'center' }}
+                onPress={() => this._handleSendMsg()}
+              >
+                <Text style={{ textAlign: 'center' }}>{'发送'}</Text>
+              </TouchableOpacity>
             ) : (
-              <Button
+              <TouchableOpacity
+                style={{
+                  alignSelf: 'stretch',
+                  justifyContent: 'center',
+                }}
                 onPress={() => this._handleShowExtraPanel()}
-                title="   ＋   "
-              />
+              >
+                <Icon name="plus-circle" size={26} />
+              </TouchableOpacity>
             )}
           </View>
           {this.state.showExtraPanel &&
