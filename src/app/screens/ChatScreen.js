@@ -24,10 +24,26 @@ import Default from '../components/messageTypes/Default';
 import Tip from '../components/messageTypes/Tip';
 import Card from '../components/messageTypes/Card';
 import File from '../components/messageTypes/File';
+import styled from 'styled-components/native';
 MessageHandler.registerDefaultMessageHandler(Default);
 MessageHandler.registerMessageHandler('tip', Tip);
 MessageHandler.registerMessageHandler('card', Card);
 MessageHandler.registerMessageHandler('file', File);
+
+const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度 TODO: 未实装
+const EMOJI_PANEL_HEIGHT = 190; // 表情面板高度
+
+const ActionBtn = styled.TouchableOpacity`
+  align-self: stretch;
+  justify-content: center;
+`;
+
+const EmoticonPanel = styled.View`
+  height: ${EMOJI_PANEL_HEIGHT};
+  background-color: white;
+  border-top-width: 1px;
+  border-top-color: #ccc;
+`;
 
 class ChatScreen extends React.Component {
   static navigationOptions = (props) => {
@@ -52,6 +68,7 @@ class ChatScreen extends React.Component {
     this.state = {
       inputMsg: '',
       showExtraPanel: false,
+      showEmoticonPanel: false,
       isKeyboardShow: false,
     };
   }
@@ -145,15 +162,30 @@ class ChatScreen extends React.Component {
     }
   }
 
-  _handleShowExtraPanel() {
-    if (this.state.showExtraPanel === true) {
-      this.setState({ showExtraPanel: false });
+  // 显示表情面板
+  _handleShowEmoticonPanel() {
+    if (this.state.showEmoticonPanel === true) {
+      this.setState({ showEmoticonPanel: false, showExtraPanel: false });
       this.refs['input'].focus();
     } else {
-      this.setState({ showExtraPanel: true });
+      this.setState({ showEmoticonPanel: true, showExtraPanel: false });
       this.refs['input'].blur();
-      this._scrollToBottom();
     }
+  }
+
+  // 显示额外面板
+  _handleShowExtraPanel() {
+    if (this.state.showExtraPanel === true) {
+      this.setState({ showExtraPanel: false, showEmoticonPanel: false });
+      this.refs['input'].focus();
+    } else {
+      this.setState({ showExtraPanel: true, showEmoticonPanel: false });
+      this.refs['input'].blur();
+    }
+  }
+
+  getEmoticonPanel() {
+    return <EmoticonPanel />;
   }
 
   getExtraPanel() {
@@ -223,26 +255,25 @@ class ChatScreen extends React.Component {
               maxLength={100}
               value={this.state.inputMsg}
             />
+            <ActionBtn onPress={() => this._handleShowEmoticonPanel()}>
+              <Icon name="smile" size={26} />
+            </ActionBtn>
             {this.state.inputMsg ? (
-              <TouchableOpacity
-                style={{ alignSelf: 'stretch', justifyContent: 'center' }}
-                onPress={() => this._handleSendMsg()}
-              >
+              <ActionBtn onPress={() => this._handleSendMsg()}>
                 <Text style={{ textAlign: 'center' }}>{'发送'}</Text>
-              </TouchableOpacity>
+              </ActionBtn>
             ) : (
-              <TouchableOpacity
-                style={{
-                  alignSelf: 'stretch',
-                  justifyContent: 'center',
-                }}
-                onPress={() => this._handleShowExtraPanel()}
-              >
+              <ActionBtn onPress={() => this._handleShowExtraPanel()}>
                 <Icon name="plus-circle" size={26} />
-              </TouchableOpacity>
+              </ActionBtn>
             )}
           </View>
+          {this.state.showEmoticonPanel &&
+            !this.state.showExtraPanel &&
+            !this.state.isKeyboardShow &&
+            this.getEmoticonPanel()}
           {this.state.showExtraPanel &&
+            !this.state.showEmoticonPanel &&
             !this.state.isKeyboardShow &&
             this.getExtraPanel()}
         </View>
