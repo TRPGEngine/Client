@@ -30,16 +30,25 @@ MessageHandler.registerMessageHandler('tip', Tip);
 MessageHandler.registerMessageHandler('card', Card);
 MessageHandler.registerMessageHandler('file', File);
 
-const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度 TODO: 未实装
+const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 const EMOJI_PANEL_HEIGHT = 190; // 表情面板高度
 
 const ActionBtn = styled.TouchableOpacity`
   align-self: stretch;
   justify-content: center;
+  margin-horizontal: 3;
 `;
 
 const EmoticonPanel = styled.View`
   height: ${EMOJI_PANEL_HEIGHT};
+  background-color: white;
+  border-top-width: 1px;
+  border-top-color: #ccc;
+`;
+
+const ExtraPanel = styled.View`
+  /* height: 265; */
+  height: 220;
   background-color: white;
   border-top-width: 1px;
   border-top-color: #ccc;
@@ -121,6 +130,7 @@ class ChatScreen extends React.Component {
     Keyboard.dismiss();
     this.setState({
       showExtraPanel: false,
+      showEmoticonPanel: false,
     });
   }
 
@@ -190,13 +200,13 @@ class ChatScreen extends React.Component {
 
   getExtraPanel() {
     return (
-      <View style={styles.extraPanel}>
+      <ExtraPanel>
         <ExtraPanelItem
           text="发送图片"
           icon="&#xe621;"
           onPress={() => alert('未实现')}
         />
-      </View>
+      </ExtraPanel>
     );
   }
 
