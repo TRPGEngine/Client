@@ -109,7 +109,7 @@ class ChatScreen extends React.Component {
 
   _scrollToBottom() {
     setTimeout(() => {
-      this.refs.list && this.refs.list.scrollToEnd();
+      this.refs.list && this.refs.list.scrollToIndex(0); // 因为使用了inverted属性因此滚到底部对于list的逻辑是滚到顶部
     }, 130);
   }
 
@@ -170,7 +170,7 @@ class ChatScreen extends React.Component {
 
   render() {
     if (this.props.msgList) {
-      let msgList = this.props.msgList.toJS();
+      let msgList = this.props.msgList.reverse().toJS();
 
       return (
         <View style={styles.container}>
@@ -178,6 +178,7 @@ class ChatScreen extends React.Component {
             style={styles.list}
             ref="list"
             data={msgList}
+            inverted={true}
             keyExtractor={(item, index) => item.uuid + '#' + index}
             onTouchStart={() => this.dismissAll()}
             renderItem={({ item, index }) => {
