@@ -112,7 +112,6 @@ class ChatScreen extends React.Component {
         this.setState({ isKeyboardShow: false });
       }
     );
-    this._scrollToBottom();
   }
 
   componentDidUpdate(prevProps, prevState) {
