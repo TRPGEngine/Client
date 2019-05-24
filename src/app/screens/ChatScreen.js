@@ -12,12 +12,15 @@ import {
 } from 'react-native';
 import { Icon } from '@ant-design/react-native';
 import sb from 'react-native-style-block';
+import ImagePicker from 'react-native-image-picker';
 import { TInput, TIcon } from '../components/TComponent';
 import config from '../../../config/project.config';
 import { sendMsg } from '../../redux/actions/chat';
 import { getUserInfoCache } from '../../shared/utils/cacheHelper';
 import dateHelper from '../../shared/utils/dateHelper';
 import ExtraPanelItem from '../components/ExtraPanelItem';
+import { toNetwork } from '../../shared/utils/imageUploader';
+import { toTemporary } from '../../shared/utils/uploadHelper';
 
 import MessageHandler from '../../shared/components/MessageHandler';
 import Default from '../components/messageTypes/Default';
@@ -193,6 +196,70 @@ class ChatScreen extends React.Component {
     }
   }
 
+  _handleSendImage() {
+    ImagePicker.launchImageLibrary(
+      {
+        mediaType: 'photo',
+        allowsEditing: true,
+        maxWidth: 120,
+        maxHeight: 1200,
+      },
+      (response) => {
+        this.dismissAll();
+
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          const file = {
+            uri: response.uri,
+            type: response.type,
+            name: response.fileName,
+            data: response.data,
+          };
+
+          // TODO: 暂时先放在服务器上，看看为什么smms不能正常上传
+          toTemporary(this.props.selfUUID, file, {
+            onCompleted: (res) => {
+              // TODO: 上传完毕。发送图片
+              console.log('res', res);
+
+              // TODO: 待完善: 在聊天界面显示loading
+              // TODO: 临时处理方案。会有bug
+              // const targetUUID = this.props.navigation.getParam('uuid', '');
+              // const converseType = this.props.navigation.getParam(
+              //   'type',
+              //   'user'
+              // );
+              // const filename = res.fileuuid + '.jpg';
+              // const message = `[img]${config.file.getUploadsImagePath(
+              //   filename,
+              //   true
+              // )}[/img]`;
+              // let payload = {
+              //   message,
+              //   type: 'normal',
+              //   is_public: false,
+              //   is_group: false,
+              // };
+              // if (converseType === 'user') {
+              //   this.props.dispatch(sendMsg(uuid, payload));
+              // } else if (converseType === 'group') {
+              //   payload.converse_uuid = uuid;
+              //   payload.is_public = true;
+              //   payload.is_group = true;
+              //   this.props.dispatch(sendMsg(null, payload));
+              // }
+            },
+          });
+        }
+      }
+    );
+  }
+
   getEmoticonPanel() {
     return <EmoticonPanel />;
   }
@@ -203,7 +270,7 @@ class ChatScreen extends React.Component {
         <ExtraPanelItem
           text="发送图片"
           icon="&#xe621;"
-          onPress={() => alert('未实现')}
+          onPress={() => this._handleSendImage()}
         />
       </ExtraPanel>
     );

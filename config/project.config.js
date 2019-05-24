@@ -149,4 +149,18 @@ out.file.getRelativePath = function getAbsolutePath(path) {
   return path.replace(out.file.url, '');
 };
 
+out.file.getUploadsImagePath = function getUploadsImagePath(
+  filename,
+  isTemporary = false
+) {
+  let relativePath = '';
+  if (isTemporary) {
+    relativePath = `/uploads/temporary/${filename}`;
+  } else {
+    relativePath = `/uploads/persistence/${filename}`;
+  }
+
+  return out.file.url + relativePath;
+};
+
 export default out;
