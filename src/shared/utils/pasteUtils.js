@@ -1,4 +1,4 @@
-import imageUploader from './imageUploader';
+import { toNetwork } from './imageUploader';
 
 export const isPasteImage = function(items) {
   let i = 0;
@@ -14,5 +14,5 @@ export const isPasteImage = function(items) {
 };
 
 export const upload = function(userUUID, file) {
-  return imageUploader.toNetwork(userUUID, file);
+  return toNetwork(userUUID, file);
 };

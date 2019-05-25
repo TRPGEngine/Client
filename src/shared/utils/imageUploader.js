@@ -27,7 +27,7 @@ export const toNetwork = function(userUUID, file) {
       }
     })
     .catch((err) => {
-      console.error(err);
+      console.error(err, err.request, err.config);
       return false;
     });
 };
