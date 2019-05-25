@@ -22,16 +22,9 @@ import ExtraPanelItem from '../components/ExtraPanelItem';
 import { toNetwork } from '../../shared/utils/imageUploader';
 import { toTemporary } from '../../shared/utils/uploadHelper';
 
-import MessageHandler from '../../shared/components/MessageHandler';
-import Default from '../components/messageTypes/Default';
-import Tip from '../components/messageTypes/Tip';
-import Card from '../components/messageTypes/Card';
-import File from '../components/messageTypes/File';
+import MessageHandler from '../components/messageTypes/__all__';
+
 import styled from 'styled-components/native';
-MessageHandler.registerDefaultMessageHandler(Default);
-MessageHandler.registerMessageHandler('tip', Tip);
-MessageHandler.registerMessageHandler('card', Card);
-MessageHandler.registerMessageHandler('file', File);
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 const EMOJI_PANEL_HEIGHT = 190; // 表情面板高度
