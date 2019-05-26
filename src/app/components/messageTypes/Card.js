@@ -1,14 +1,22 @@
 import React from 'react';
 import Base from './Base';
 
+import Default from './card/DefaultCard';
+import FriendInvite from './card/FriendInvite';
+import GroupRequest from './card/GroupRequest';
+import GroupInvite from './card/GroupInvite';
+import DiceRequest from './card/DiceRequest';
+import DiceInvite from './card/DiceInvite';
+import Actor from './card/Actor';
+
 const CardType = {
-  default: require('./card/DefaultCard'),
-  friendInvite: require('./card/FriendInvite'),
-  groupRequest: require('./card/GroupRequest'),
-  groupInvite: require('./card/GroupInvite'),
-  diceRequest: require('./card/DiceRequest'),
-  diceInvite: require('./card/DiceInvite'),
-  actor: require('./card/Actor'),
+  default: Default,
+  friendInvite: FriendInvite,
+  groupRequest: GroupRequest,
+  groupInvite: GroupInvite,
+  diceRequest: DiceRequest,
+  diceInvite: DiceInvite,
+  actor: Actor,
 };
 
 class Card extends Base {

@@ -2,7 +2,7 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import config from '../../../config/project.config';
-import reducers from '../reducers';
+import { getCombineReducers } from '../reducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import * as actionCreators from '../actions';
 
@@ -20,18 +20,28 @@ if (config.environment !== 'production') {
   middlewares.push(logger);
 }
 if (config.platform === 'app') {
-  middlewares.push(require('../../app/router').routerMiddleware);
+  middlewares.push(require('../../app/router').middleware);
 }
 const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
 
-function configureStore(initialState) {
+const defaultStoreOptions = {
+  initialState: undefined,
+  additionReducer: {},
+};
+
+function configureStore(options = defaultStoreOptions) {
+  const initialState = options.initialState;
   const devTool =
     config.environment !== 'production'
       ? composeWithDevTools({
           actionCreators,
         })(applyMiddleware(thunk))
       : undefined;
-  const store = createStoreWithMiddleware(reducers, initialState, devTool);
+  const store = createStoreWithMiddleware(
+    getCombineReducers(options.additionReducer),
+    initialState,
+    devTool
+  );
 
   return store;
 }

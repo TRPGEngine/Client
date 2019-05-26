@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import Emoticon from './Emoticon';
-import pasteUtils from '../../shared/utils/pasteUtils';
+import * as pasteUtils from '../../shared/utils/pasteUtils';
 import { sendMsg } from '../../redux/actions/chat';
 import { showModal, hideModal } from '../../redux/actions/ui';
 import ActorSelect from './modal/ActorSelect';

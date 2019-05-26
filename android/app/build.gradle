@@ -77,6 +77,8 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-sentry/sentry.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -154,10 +156,13 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-webview')
+    implementation project(':react-native-sentry')
+    implementation project(':react-native-code-push')
     implementation project(':react-native-gesture-handler')
-    api project(':jcore-react-native')
-    api project(':jpush-react-native')
-    api project(':react-native-image-picker')
+    implementation project(':jcore-react-native')
+    implementation project(':jpush-react-native')
+    implementation project(':react-native-image-picker')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules

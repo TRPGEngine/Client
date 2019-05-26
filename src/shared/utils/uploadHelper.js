@@ -31,7 +31,7 @@ let _upload = function(path, userUUID, file, cb) {
       cb && cb.onCompleted && cb.onCompleted(res.data);
     })
     .catch((err) => {
-      console.error(err);
+      console.error(err, JSON.stringify(err));
       return false;
     });
 };

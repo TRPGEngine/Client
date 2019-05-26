@@ -25,7 +25,7 @@ const api = trpgApi.getInstance();
 import rnStorage from '../../api/rnStorage.api.js';
 import { checkUser } from '../../shared/utils/cacheHelper';
 import { hideProfileCard, switchMenuPannel } from './ui';
-import uploadHelper from '../../shared/utils/uploadHelper';
+import * as uploadHelper from '../../shared/utils/uploadHelper';
 import { renewableDelayTimer } from '../../shared/utils/timer';
 import config from '../../../config/project.config';
 import _without from 'lodash/without';

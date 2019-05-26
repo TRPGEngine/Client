@@ -2,7 +2,8 @@ version: 2.1
 # orbs:
 #   node: circleci/node@1.0.1
 jobs:
-  "Build Electron App":
+  node:
+    working_directory: ~/trpg
     docker:
       - image: circleci/node
     steps:
@@ -11,14 +12,41 @@ jobs:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
       - run:
           name: install-npm-wee
           command: npm install
-      - save_cache: # special step to save the dependency cache
-          key: dependency-cache-{{ checksum "package.json" }}
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
           paths:
-            - ./node_modules
+            - node_modules
+
+  "Build Electron App":
+    # TODO: 需要重新测试一下
+    working_directory: ~/trpg
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      # 更新node依赖
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
+      - run:
+          name: install-npm-wee
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
+      # 更新electron依赖
+      - restore_cache:
+          key: electron-cache-{{ checksum "package.json" }}-{{ arch }}
+      - run:
+          name: install-npm-wee
+          command: npm install
+      - save_cache:
+          key: electron-cache-{{ checksum "package.json" }}-{{ arch }}
+          paths:
             - ~/.cache/electron
       - run:
           name: prepare-env
@@ -28,12 +56,53 @@ jobs:
           command: npm run package-all
       - store_artifacts:
           path: ./dist
+  "Build Android App":
+    working_directory: ~/trpg
+    docker:
+      - image: circleci/android:api-28-node8-alpha
+    steps:
+      - checkout
+      # 更新node依赖
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
+      - run:
+          name: install-npm-wee
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
+      # cache gradle
+      - restore_cache:
+          key: gradle-cache-{{ checksum "android/build.gradle" }}-{{ arch }}
+      - run:
+          name: packageDebug
+          command: cd ./android && ./gradlew app:packageDebug
+      - save_cache:
+          key: gradle-cache-{{ checksum "android/build.gradle" }}-{{ arch }}
+          paths:
+            - ~/.gradle/
+      - store_artifacts:
+          path: ./android/app/build/outputs/apk/
 workflows:
   version: 2
   build:
     jobs:
-      # - Build Electron App
+      - node:
+          filters:
+            branches:
+              only:
+                - release
       - Build Electron App:
+          requires:
+            - node
+          filters:
+            branches:
+              only:
+                - release
+      - Build Android App:
+          requires:
+            - node
           filters:
             branches:
               only:

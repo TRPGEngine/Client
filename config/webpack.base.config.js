@@ -45,6 +45,19 @@ module.exports = {
     path: DIST_PATH,
     filename: '[name].[hash].js',
   },
+  resolve: {
+    extensions: [
+      '.web.js',
+      '.mjs',
+      '.js',
+      '.ts',
+      '.json',
+      '.web.jsx',
+      '.jsx',
+      '.web.tsx',
+      '.tsx',
+    ],
+  },
   //babel重要的loader在这里
   module: {
     rules: [
@@ -62,6 +75,7 @@ module.exports = {
             options: {
               modifyVars: {
                 'primary-color': '#8C6244',
+                'text-selection-bg': '#1890ff',
               },
               javascriptEnabled: true,
             },
@@ -69,7 +83,29 @@ module.exports = {
         ],
       },
       {
-        test: /\.(js|jsx)?$/,
+        test: /\.tsx?$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            query: {
+              babelrc: false,
+              plugins: [
+                [
+                  'import',
+                  {
+                    libraryName: 'antd',
+                    libraryDirectory: 'es',
+                    style: true, // `style: true` 会加载 less 文件, css 只会加载css文件
+                  },
+                ],
+              ],
+            },
+          },
+          { loader: 'ts-loader' },
+        ],
+      },
+      {
+        test: /\.jsx?$/,
         loader: 'babel-loader',
         // include: [
         //   APP_PATH,
@@ -88,6 +124,14 @@ module.exports = {
               '@babel/plugin-transform-runtime',
               {
                 helpers: true,
+              },
+            ],
+            [
+              'import',
+              {
+                libraryName: 'antd',
+                libraryDirectory: 'es',
+                style: 'css', // `style: true` 会加载 less 文件
               },
             ],
             'transform-class-properties',
@@ -110,7 +154,6 @@ module.exports = {
   externals: {
     electron: "require('electron')",
     'react-native': "require('react-native')",
-    './nav': "require('./nav')",
     '../../app/router': "require('../../app/router')", // for redux.configureStore
     'react-navigation-redux-helpers':
       "require('react-navigation-redux-helpers')",

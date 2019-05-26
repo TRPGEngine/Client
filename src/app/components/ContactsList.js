@@ -5,7 +5,7 @@ import sb from 'react-native-style-block';
 import appConfig from '../config.app';
 import { TIcon } from './TComponent';
 import ConvItem from './ConvItem';
-import { switchNav } from '../../redux/actions/nav';
+import { switchNav } from '../redux/actions/nav';
 
 class ContactList extends React.Component {
   constructor(props) {

@@ -1,19 +1,35 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import configureStore from '../redux/configureStore';
-const store = configureStore();
+import navReducer from './redux/reducers/nav';
+const store = configureStore({
+  additionReducer: {
+    nav: navReducer,
+  },
+});
 import { AppWithNavigationState } from './router';
 import { Provider } from 'react-redux';
+import { injectLoginSuccessCallback } from '../shared/utils/inject';
+import { init as initNotify, bindInfo, tryLocalNotify } from './notify';
+import codePush from 'react-native-code-push';
+import appConfig from './config.app';
+
 require('../shared/utils/cacheHelper').attachStore(store);
 
 import * as trpgApi from '../api/trpg.api.js';
 const api = trpgApi.getInstance();
-trpgApi.bindEventFunc.call(api, store);
+trpgApi.bindEventFunc.call(api, store, {
+  onReceiveMessage(messageData) {
+    tryLocalNotify(messageData);
+  },
+});
+
+initNotify();
+injectLoginSuccessCallback(() => {
+  // 登录成功
+  const userUUID = store.getState().getIn(['user', 'info', 'uuid']);
+  bindInfo(userUUID);
+});
 
 // token登录
 import rnStorage from '../api/rnStorage.api.js';
@@ -49,4 +65,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+let out = App;
+if (appConfig.codePush.enabled) {
+  out = codePush(appConfig.codePush.options)(App);
+}
+
+export default out;

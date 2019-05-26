@@ -1,8 +1,9 @@
 import config from '../../config/project.config';
+import codePush from 'react-native-code-push';
 
 const out = {
   defaultImg: {
-    user: null, // 让系统系统生成
+    user: '', // 让系统系统生成
     group: require('../assets/img/gugugu1.png'),
     trpgsystem: require('../assets/img/system_notice.png'),
     actor: null,
@@ -40,9 +41,21 @@ const out = {
       return out.defaultImg.file.default;
     },
   },
+  codePush: {
+    enabled: false,
+    options: {
+      checkFrequency: codePush.CheckFrequency.ON_APP_START,
+    },
+    sync() {
+      codePush.sync({
+        updateDialog: true,
+        installMode: codePush.InstallMode.IMMEDIATE,
+      });
+    },
+  },
   oauth: {
     qq: {
-      icon: require('../assets/img/oauth/qqconnect.png'),
+      icon: require('./assets/img/oauth/qqconnect.png'),
     },
   },
 };

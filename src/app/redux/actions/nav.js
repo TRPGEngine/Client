@@ -1,4 +1,5 @@
-import { SWITCH_NAV, REPLACE_NAV, BACK_NAV } from '../constants';
+import navConstants from '../constants/nav';
+const { SWITCH_NAV, REPLACE_NAV, BACK_NAV } = navConstants;
 import { NavigationActions } from 'react-navigation';
 
 export const switchNav = function switchNav(routeName, params = {}) {

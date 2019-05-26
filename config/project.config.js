@@ -1,6 +1,6 @@
 import _get from 'lodash/get';
-const environment = _get(process.env, 'NODE_ENV', 'development');
-const platform = _get(process.env, 'PLATFORM', 'web');
+const environment = process.env.NODE_ENV || 'development';
+const platform = process.env.PLATFORM || 'web';
 let currentHost = '127.0.0.1';
 let isSSL = false;
 
@@ -13,7 +13,7 @@ if (environment == 'production') {
   currentHost = 'trpgapi.moonrailgun.com';
 }
 
-let trpgHost = _get(process.env, 'TRPG_HOST');
+let trpgHost = process.env.TRPG_HOST;
 let trpgPort;
 if (trpgHost) {
   let _tmp = trpgHost.split(':');
@@ -147,6 +147,20 @@ out.file.getRelativePath = function getAbsolutePath(path) {
     path = ''; // 设置默认值
   }
   return path.replace(out.file.url, '');
+};
+
+out.file.getUploadsImagePath = function getUploadsImagePath(
+  filename,
+  isTemporary = false
+) {
+  let relativePath = '';
+  if (isTemporary) {
+    relativePath = `/uploads/temporary/${filename}`;
+  } else {
+    relativePath = `/uploads/persistence/${filename}`;
+  }
+
+  return out.file.url + relativePath;
 };
 
 export default out;

@@ -27,6 +27,7 @@ import config from '../../../config/project.config';
 import * as trpgApi from '../../api/trpg.api.js';
 import { showLoading, hideLoading, showAlert } from './ui';
 import { checkUser } from '../../shared/utils/cacheHelper';
+import { runLoginSuccessCallback } from '../../shared/utils/inject';
 import { setUserSettings, setSystemSettings } from './settings';
 
 import { reloadConverseList } from './chat';
@@ -53,6 +54,8 @@ function loginSuccess(dispatch, getState) {
   dispatch(getGroupInvite());
   dispatch(getNote());
   dispatch(getSettings()); // 获取服务器上的设置信息
+
+  runLoginSuccessCallback();
 }
 
 export const login = function(username, password) {

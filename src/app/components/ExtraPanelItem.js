@@ -6,7 +6,6 @@ import { TIcon } from './TComponent';
 class ExtraPanelItem extends React.Component {
   render() {
     const { icon, text, onPress } = this.props;
-    console.log('icon', icon);
 
     return (
       <TouchableOpacity onPress={onPress} style={styles.container}>

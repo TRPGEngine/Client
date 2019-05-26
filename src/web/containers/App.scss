@@ -3,7 +3,7 @@
 * {
   box-sizing: border-box;
   font-family: PingFang SC, "Microsoft YaHei", arial, serif;
-  transition: all 0.1s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
 }
 
 .Select * {
@@ -19,29 +19,31 @@ html, body {
   overflow: hidden;
 }
 
-ul, li, p {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-a {
-  &,&:link,&:visited,&:hover,&:active {
-    text-decoration: none;
-    color: #2596e5;
-    font-size: 14px;
+.app {
+  ul, li, p {
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
-}
 
-pre {
-  margin: 0;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
+  a {
+    &,&:link,&:visited,&:hover,&:active {
+      text-decoration: none;
+      color: #2596e5;
+      font-size: 14px;
+    }
+  }
 
-img {
-  user-select: none;
-  pointer-events: none;
+  pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  img {
+    user-select: none;
+    pointer-events: none;
+  }
 }
 
 /* 滚动条 */

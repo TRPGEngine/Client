@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-const {
+import {
   View,
   Text,
   Image,
@@ -8,31 +8,47 @@ const {
   Button,
   TextInput,
   Keyboard,
-} = require('react-native');
+  TouchableOpacity,
+} from 'react-native';
+import { Icon } from '@ant-design/react-native';
 import sb from 'react-native-style-block';
+import ImagePicker from 'react-native-image-picker';
 import { TInput, TIcon } from '../components/TComponent';
 import config from '../../../config/project.config';
 import { sendMsg } from '../../redux/actions/chat';
 import { getUserInfoCache } from '../../shared/utils/cacheHelper';
 import dateHelper from '../../shared/utils/dateHelper';
 import ExtraPanelItem from '../components/ExtraPanelItem';
+import { toNetwork } from '../../shared/utils/imageUploader';
+import { toTemporary } from '../../shared/utils/uploadHelper';
 
-import MessageHandler from '../../shared/components/MessageHandler';
-MessageHandler.registerDefaultMessageHandler(
-  require('../components/messageTypes/Default')
-);
-MessageHandler.registerMessageHandler(
-  'tip',
-  require('../components/messageTypes/Tip')
-);
-MessageHandler.registerMessageHandler(
-  'card',
-  require('../components/messageTypes/Card')
-);
-MessageHandler.registerMessageHandler(
-  'file',
-  require('../components/messageTypes/File')
-);
+import MessageHandler from '../components/messageTypes/__all__';
+
+import styled from 'styled-components/native';
+
+const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
+const EMOJI_PANEL_HEIGHT = 190; // 表情面板高度
+
+const ActionBtn = styled.TouchableOpacity`
+  align-self: stretch;
+  justify-content: center;
+  margin-horizontal: 3;
+`;
+
+const EmoticonPanel = styled.View`
+  height: ${EMOJI_PANEL_HEIGHT};
+  background-color: white;
+  border-top-width: 1px;
+  border-top-color: #ccc;
+`;
+
+const ExtraPanel = styled.View`
+  /* height: 265; */
+  height: 220;
+  background-color: white;
+  border-top-width: 1px;
+  border-top-color: #ccc;
+`;
 
 class ChatScreen extends React.Component {
   static navigationOptions = (props) => {
@@ -57,6 +73,8 @@ class ChatScreen extends React.Component {
     this.state = {
       inputMsg: '',
       showExtraPanel: false,
+      showEmoticonPanel: false,
+      isKeyboardShow: false,
     };
   }
 
@@ -77,11 +95,19 @@ class ChatScreen extends React.Component {
         }
       },
     });
-    this.keyboardListener = Keyboard.addListener(
+    this.keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
-      this._scrollToBottom.bind(this)
+      () => {
+        this.setState({ isKeyboardShow: true });
+        this._scrollToBottom.bind(this);
+      }
     );
-    this._scrollToBottom();
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        this.setState({ isKeyboardShow: false });
+      }
+    );
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -91,13 +117,27 @@ class ChatScreen extends React.Component {
   }
 
   componentWillUnmount() {
-    this.keyboardListener.remove();
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  dismissAll() {
+    Keyboard.dismiss();
+    this.setState({
+      showExtraPanel: false,
+      showEmoticonPanel: false,
+    });
   }
 
   _scrollToBottom() {
     setTimeout(() => {
-      this.refs.list && this.refs.list.scrollToEnd();
+      this.refs.list && this.refs.list.scrollToIndex({ index: 0 }); // 因为使用了inverted属性因此滚到底部对于list的逻辑是滚到顶部
     }, 130);
+  }
+
+  _handleFocus() {
+    // 输入框focus时收起ExtraPanel
+    this.setState({ showExtraPanel: false });
   }
 
   _handleSendMsg() {
@@ -114,7 +154,7 @@ class ChatScreen extends React.Component {
           is_group: false,
         };
 
-        if (converseType === 'user') {
+        if (converseType === 'user' || converseType === 'system') {
           this.props.dispatch(sendMsg(uuid, payload));
         } else if (converseType === 'group') {
           payload.converse_uuid = uuid;
@@ -127,32 +167,112 @@ class ChatScreen extends React.Component {
     }
   }
 
-  _handleShowExtraPanel() {
-    if (this.state.showExtraPanel === true) {
-      this.setState({ showExtraPanel: false });
+  // 显示表情面板
+  _handleShowEmoticonPanel() {
+    if (this.state.showEmoticonPanel === true) {
+      this.setState({ showEmoticonPanel: false, showExtraPanel: false });
       this.refs['input'].focus();
     } else {
-      this.setState({ showExtraPanel: true });
+      this.setState({ showEmoticonPanel: true, showExtraPanel: false });
       this.refs['input'].blur();
-      this._scrollToBottom();
     }
+  }
+
+  // 显示额外面板
+  _handleShowExtraPanel() {
+    if (this.state.showExtraPanel === true) {
+      this.setState({ showExtraPanel: false, showEmoticonPanel: false });
+      this.refs['input'].focus();
+    } else {
+      this.setState({ showExtraPanel: true, showEmoticonPanel: false });
+      this.refs['input'].blur();
+    }
+  }
+
+  _handleSendImage() {
+    ImagePicker.launchImageLibrary(
+      {
+        mediaType: 'photo',
+        allowsEditing: true,
+        maxWidth: 1200,
+        maxHeight: 1200,
+      },
+      (response) => {
+        this.dismissAll();
+
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          const selfUUID = this.props.selfUUID;
+          const file = {
+            uri: response.uri,
+            type: response.type,
+            name: response.fileName,
+          };
+
+          // TODO: 上传到sm.ms
+          // toNetwork(this.props.selfUUID, file).then((res) => {
+          //   console.log('res', res);
+          // });
+
+          // TODO: 暂时先放在服务器上，看看为什么smms不能正常上传(会返回403)
+          toTemporary(selfUUID, file, {
+            onCompleted: (res) => {
+              // TODO: 待完善: 在聊天界面显示loading
+              // 上传完毕。发送图片
+              const upload_url = res.upload_url;
+              const imageUrl = config.file.getAbsolutePath(upload_url);
+              const message = `[img]${imageUrl}[/img]`;
+
+              const targetUUID = this.props.navigation.getParam('uuid', '');
+              const converseType = this.props.navigation.getParam(
+                'type',
+                'user'
+              );
+              const payload = {
+                message,
+                type: 'normal',
+                is_public: false,
+                is_group: false,
+              };
+              if (converseType === 'user') {
+                this.props.dispatch(sendMsg(targetUUID, payload));
+              } else if (converseType === 'group') {
+                payload.converse_uuid = targetUUID;
+                payload.is_public = true;
+                payload.is_group = true;
+                this.props.dispatch(sendMsg(null, payload));
+              }
+            },
+          });
+        }
+      }
+    );
+  }
+
+  getEmoticonPanel() {
+    return <EmoticonPanel />;
   }
 
   getExtraPanel() {
     return (
-      <View style={styles.extraPanel}>
+      <ExtraPanel>
         <ExtraPanelItem
           text="发送图片"
           icon="&#xe621;"
-          onPress={() => alert('未实现')}
+          onPress={() => this._handleSendImage()}
         />
-      </View>
+      </ExtraPanel>
     );
   }
 
   render() {
     if (this.props.msgList) {
-      let msgList = this.props.msgList.toJS();
+      let msgList = this.props.msgList.reverse().toJS();
 
       return (
         <View style={styles.container}>
@@ -160,7 +280,9 @@ class ChatScreen extends React.Component {
             style={styles.list}
             ref="list"
             data={msgList}
+            inverted={true}
             keyExtractor={(item, index) => item.uuid + '#' + index}
+            onTouchStart={() => this.dismissAll()}
             renderItem={({ item, index }) => {
               const prevDate =
                 index > 0 ? this.props.msgList.getIn([index - 1, 'date']) : 0;
@@ -198,20 +320,32 @@ class ChatScreen extends React.Component {
               ref="input"
               style={styles.msgInput}
               onChangeText={(inputMsg) => this.setState({ inputMsg })}
+              onFocus={() => this._handleFocus()}
               multiline={true}
               maxLength={100}
               value={this.state.inputMsg}
             />
+            <ActionBtn onPress={() => this._handleShowEmoticonPanel()}>
+              <Icon name="smile" size={26} />
+            </ActionBtn>
             {this.state.inputMsg ? (
-              <Button onPress={() => this._handleSendMsg()} title="  发送  " />
+              <ActionBtn onPress={() => this._handleSendMsg()}>
+                <Text style={{ textAlign: 'center' }}>{'发送'}</Text>
+              </ActionBtn>
             ) : (
-              <Button
-                onPress={() => this._handleShowExtraPanel()}
-                title="   ＋   "
-              />
+              <ActionBtn onPress={() => this._handleShowExtraPanel()}>
+                <Icon name="plus-circle" size={26} />
+              </ActionBtn>
             )}
           </View>
-          {this.state.showExtraPanel && this.getExtraPanel()}
+          {this.state.showEmoticonPanel &&
+            !this.state.showExtraPanel &&
+            !this.state.isKeyboardShow &&
+            this.getEmoticonPanel()}
+          {this.state.showExtraPanel &&
+            !this.state.showEmoticonPanel &&
+            !this.state.isKeyboardShow &&
+            this.getExtraPanel()}
         </View>
       );
     } else {

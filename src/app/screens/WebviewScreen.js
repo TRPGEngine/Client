@@ -1,16 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-const {
-  View,
-  Text,
-  WebView,
-  ActivityIndicator,
-  BackHandler,
-} = require('react-native');
+import { View, Text, ActivityIndicator, BackHandler } from 'react-native';
+import { WebView } from 'react-native-webview';
 import sb from 'react-native-style-block';
 import rnStorage from '../../api/rnStorage.api.js';
 import { loginWithToken } from '../../redux/actions/user';
-import { backNav } from '../../redux/actions/nav';
+import { backNav } from '../redux/actions/nav';
 
 class Loading extends React.Component {
   render() {

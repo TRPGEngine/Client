@@ -4,6 +4,8 @@ package-lock.json
 yarn.lock
 config/local.js
 .sentryclirc
+.buildcache/
+build/metro/conf.json
 
 
 # Logs

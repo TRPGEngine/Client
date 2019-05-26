@@ -28,7 +28,9 @@ class ConvItem extends React.Component {
             <Text style={styles.time}>{this.props.time}</Text>
           </View>
           {this.props.content ? (
-            <Text style={styles.msg}>{this.props.content}</Text>
+            <Text style={styles.msg} numberOfLines={1}>
+              {this.props.content}
+            </Text>
           ) : null}
         </View>
       </TouchableOpacity>

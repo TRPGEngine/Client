@@ -1,10 +1,21 @@
-export default {
-  TButton: require('./TButton'),
-  TFormGroup: require('./TFormGroup'),
-  TInput: require('./TInput'),
-  TLoading: require('./TLoading'),
-  TAlert: require('./TAlert'),
-  TToast: require('./TToast'),
-  TIcon: require('./TIcon'),
-  TAvatar: require('./TAvatar'),
+import TButton from './TButton';
+import TFormGroup from './TFormGroup';
+import TInput from './TInput';
+import TLoading from './TLoading';
+import TAlert from './TAlert';
+import TToast from './TToast';
+import TIcon from './TIcon';
+import TImageViewer from './TImageViewer';
+import TAvatar from './TAvatar';
+
+export {
+  TButton,
+  TFormGroup,
+  TInput,
+  TLoading,
+  TAlert,
+  TToast,
+  TIcon,
+  TImageViewer,
+  TAvatar,
 };

@@ -4,10 +4,10 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
 import appConfig from '../config.app';
 import { getSamlpeDate } from '../../shared/utils/dateHelper';
-import { TButton, TAvatar } from '../components/TComponent';
+import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getUserInfo } from '../../redux/actions/cache';
 import { addFriend } from '../../redux/actions/user';
-import { switchToConverseApp } from '../../redux/actions/nav';
+import { switchToConverseApp } from '../redux/actions/nav';
 import { getUserInfoCache } from '../../shared/utils/cacheHelper';
 
 class ProfileInfoItem extends React.Component {
@@ -33,17 +33,6 @@ class ProfileScreen extends React.Component {
     }
   }
 
-  _handlePressAvatar(avatar) {
-    if (avatar) {
-      let media = [
-        {
-          photo: avatar.replace('/thumbnail', ''),
-        },
-      ];
-      this.props.navigation.navigate('PhotoBrowser', { media, index: 0 });
-    }
-  }
-
   render() {
     let groupUUID = this.props.navigation.state.params.uuid;
     let hasJoined = this.props.addedGroupUUIDList.includes(groupUUID);
@@ -65,7 +54,7 @@ class ProfileScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => this._handlePressAvatar(avatar)}>
+          <TImageViewer images={[avatar.replace('/thumbnail', '')]}>
             <TAvatar
               style={styles.avatar}
               uri={avatar}
@@ -74,7 +63,7 @@ class ProfileScreen extends React.Component {
               height={100}
               width={100}
             />
-          </TouchableOpacity>
+          </TImageViewer>
           <Text style={{ fontSize: 18, marginTop: 4 }}>
             {groupInfo.get('name')}
           </Text>
