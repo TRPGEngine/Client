@@ -131,7 +131,7 @@ class ChatScreen extends React.Component {
 
   _scrollToBottom() {
     setTimeout(() => {
-      this.refs.list && this.refs.list.scrollToIndex(0); // 因为使用了inverted属性因此滚到底部对于list的逻辑是滚到顶部
+      this.refs.list && this.refs.list.scrollToIndex({ index: 0 }); // 因为使用了inverted属性因此滚到底部对于list的逻辑是滚到顶部
     }, 130);
   }
 
