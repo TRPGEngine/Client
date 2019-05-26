@@ -19,6 +19,11 @@ const cacheKeyParts = [
   require('babel-preset-fbjs/package.json').version,
 ];
 
+const { NODE_ENV, PLATFORM, TRPG_HOST } = process.env;
+console.log(
+  `环境变量:\n\tNODE_ENV：${NODE_ENV}\n\tPLATFORM:${PLATFORM}\n\tTRPG_HOST:${TRPG_HOST}`
+);
+
 /**
  * Return a memoized function that checks for the existence of a
  * project level .babelrc file, and if it doesn't exist, reads the

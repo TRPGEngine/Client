@@ -7,13 +7,18 @@ require('../shared/utils/common');
 import { AppRegistry, YellowBox } from 'react-native';
 import App from './App';
 import _get from 'lodash/get';
+import projectConfig from '../../config/project.config';
 
 // Sentry
-import { Sentry } from 'react-native-sentry';
+// import { Sentry } from 'react-native-sentry';
 import Config from 'config';
 const dsn = _get(Config, 'sentry.dsn');
-if (dsn) {
-  Sentry.config(dsn).install();
+if (dsn && projectConfig.environment === 'production') {
+  import('react-native-sentry')
+    .then((module) => module.Sentry)
+    .then((Sentry) => {
+      Sentry.config(dsn).install();
+    });
 }
 
 YellowBox.ignoreWarnings(['Require cycle:']); // Metro warning, Specific for Sentry
