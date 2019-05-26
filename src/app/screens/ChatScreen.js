@@ -154,7 +154,7 @@ class ChatScreen extends React.Component {
           is_group: false,
         };
 
-        if (converseType === 'user') {
+        if (converseType === 'user' || converseType === 'system') {
           this.props.dispatch(sendMsg(uuid, payload));
         } else if (converseType === 'group') {
           payload.converse_uuid = uuid;
