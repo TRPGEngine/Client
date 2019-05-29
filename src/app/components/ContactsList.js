@@ -47,13 +47,23 @@ class ContactList extends React.Component {
   }
 
   _handleShowProfile(uuid, type, name) {
-    this.props.dispatch(
-      switchNav('Profile', {
-        uuid,
-        type,
-        name,
-      })
-    );
+    if (type === 'user') {
+      this.props.dispatch(
+        switchNav('Profile', {
+          uuid,
+          type,
+          name,
+        })
+      );
+    } else if (type === 'group') {
+      this.props.dispatch(
+        switchNav('GroupProfile', {
+          uuid,
+          type,
+          name,
+        })
+      );
+    }
   }
 
   getHeader(section) {
