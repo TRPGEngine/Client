@@ -5,12 +5,7 @@ import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
 import { login } from '../../redux/actions/user';
 import { openWebview } from '../redux/actions/nav';
-const {
-  TButton,
-  TFormGroup,
-  TLoading,
-  TAlert,
-} = require('../components/TComponent');
+const { TButton, TFormGroup, TLoading } = require('../components/TComponent');
 import config from '../../../config/project.config';
 import appConfig from '../config.app';
 
@@ -49,7 +44,6 @@ class LoginScreen extends React.Component {
     return (
       <View style={styles.container}>
         <TLoading />
-        <TAlert />
         <Text style={styles.title}>欢迎来到TRPG Game</Text>
         <TFormGroup
           label="用户名"

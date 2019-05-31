@@ -22,7 +22,8 @@ const AlertView = styled.View`
 `;
 
 const Header = styled.View`
-  border-bottom: 0.5px solid #ccc;
+  border-bottom-width: 0.5px;
+  border-bottom-color: #ccc;
   padding: 4px 0 8px 0;
 `;
 
