@@ -13,6 +13,7 @@ import {
 import { Icon } from '@ant-design/react-native';
 import sb from 'react-native-style-block';
 import ImagePicker from 'react-native-image-picker';
+import Emoji from 'react-native-emoji';
 import { TInput, TIcon } from '../components/TComponent';
 import config from '../../../config/project.config';
 import { sendMsg } from '../../redux/actions/chat';
@@ -21,6 +22,7 @@ import dateHelper from '../../shared/utils/dateHelper';
 import ExtraPanelItem from '../components/ExtraPanelItem';
 import { toNetwork } from '../../shared/utils/imageUploader';
 import { toTemporary } from '../../shared/utils/uploadHelper';
+import { emojiMap } from '../utils/emoji';
 
 import MessageHandler from '../components/messageTypes/__all__';
 
@@ -48,6 +50,15 @@ const ExtraPanel = styled.View`
   background-color: white;
   border-top-width: 1px;
   border-top-color: #ccc;
+`;
+
+const EmojiText = styled.Text`
+  align-items: center;
+  justify-content: center;
+  font-size: 25;
+  padding-left: 4;
+  padding-bottom: 1;
+  color: #fff;
 `;
 
 class ChatScreen extends React.Component {
@@ -255,7 +266,23 @@ class ChatScreen extends React.Component {
   }
 
   getEmoticonPanel() {
-    return <EmoticonPanel />;
+    const emojis = Object.keys(emojiMap).map((code, index) => {
+      const name = emojiMap[code];
+      return (
+        <TouchableOpacity
+          key={code + index}
+          onPress={() => {
+            alert();
+          }}
+        >
+          <EmojiText>
+            <Emoji name={name} />
+          </EmojiText>
+        </TouchableOpacity>
+      );
+    });
+
+    return <EmoticonPanel>{emojis}</EmoticonPanel>;
   }
 
   getExtraPanel() {

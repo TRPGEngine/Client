@@ -6,6 +6,7 @@ config/local.js
 .sentryclirc
 .buildcache/
 build/metro/conf.json
+build/emoji/emoji/
 
 
 # Logs
