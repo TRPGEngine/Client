@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import configureStore from '../redux/configureStore';
 import navReducer from './redux/reducers/nav';
 const store = configureStore({
@@ -55,15 +54,6 @@ class App extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});
 
 let out = App;
 if (appConfig.codePush.enabled) {

@@ -7,10 +7,12 @@ import axios from 'axios';
 import { fileUrl } from '../../api/trpg.api.js';
 import { toast } from '../../shared/utils/apputils';
 import { updateInfo } from '../../redux/actions/user';
+import { showAlert } from '../../redux/actions/ui';
 import { TAvatar } from '../components/TComponent';
 import ListCell from '../components/ListCell';
 
 class ProfileModifyScreen extends React.Component {
+  // TODO: 应当使用通用上传逻辑
   _uploadAvatar(uri, type, name, size, width, height) {
     const file = { uri, type, name, size };
     const formData = new FormData();
@@ -119,17 +121,23 @@ class ProfileModifyScreen extends React.Component {
           <ListCell
             title="昵称"
             value={userInfo.get('nickname')}
-            onPress={() => {}}
+            onPress={() => {
+              this.props.dispatch(showAlert('未实现'));
+            }}
           />
           <ListCell
             title="性别"
             value={userInfo.get('sex')}
-            onPress={() => {}}
+            onPress={() => {
+              this.props.dispatch(showAlert('未实现'));
+            }}
           />
           <ListCell
             title="个性签名"
             value={userInfo.get('sign')}
-            onPress={() => {}}
+            onPress={() => {
+              this.props.dispatch(showAlert('未实现'));
+            }}
           />
         </View>
       </View>

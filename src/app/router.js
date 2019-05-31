@@ -36,6 +36,9 @@ import ProfileScreen from './screens/ProfileScreen';
 import GroupProfileScreen from './screens/GroupProfileScreen';
 import ProfileModifyScreen from './screens/ProfileModifyScreen';
 import WebviewScreen from './screens/WebviewScreen';
+import TAlert from './components/TApi/TAlert';
+
+import { hideAlert } from '../redux/actions/ui';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -141,6 +144,31 @@ class ReduxNavigation extends React.Component {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
   }
 
+  componentDidUpdate(prevProps) {
+    this.handleUIChange(prevProps.ui, this.props.ui);
+  }
+
+  // 处理UI的状态
+  handleUIChange(prevUI, currentUI) {
+    if (
+      prevUI.get('showAlert') === false &&
+      currentUI.get('showAlert') === true
+    ) {
+      // 当alert打开
+      TAlert.show(currentUI.get('showAlertInfo'), {
+        onRequestClose: () => this.props.dispatch(hideAlert()),
+      });
+    }
+
+    if (
+      prevUI.get('showAlert') === true &&
+      currentUI.get('showAlert') === false
+    ) {
+      // 当alert关闭
+      TAlert.hide();
+    }
+  }
+
   onBackPress = () => {
     const { dispatch, state } = this.props;
 
@@ -169,6 +197,7 @@ class ReduxNavigation extends React.Component {
 const mapStateToProps = (state) => {
   return {
     state: state.get('nav'),
+    ui: state.get('ui'),
   };
 };
 
