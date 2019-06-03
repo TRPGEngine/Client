@@ -10,7 +10,7 @@ import {
   Keyboard,
   TouchableOpacity,
 } from 'react-native';
-import { Icon } from '@ant-design/react-native';
+import { Icon, Carousel } from '@ant-design/react-native';
 import sb from 'react-native-style-block';
 import ImagePicker from 'react-native-image-picker';
 import Emoji from 'react-native-emoji';
@@ -50,6 +50,24 @@ const ExtraPanel = styled.View`
   background-color: white;
   border-top-width: 1px;
   border-top-color: #ccc;
+`;
+
+const EmojiCarousel = styled(Carousel)`
+  height: ${EMOJI_PANEL_HEIGHT - 35};
+`;
+
+const EmojiView = styled.View`
+  display: flex;
+  /* TODO: 上下散开 */
+  /* flex-direction: column; */
+  /* justify-content: space-around; */
+  align-content: space-around;
+`;
+
+const EmojiViewRow = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 `;
 
 const EmojiText = styled.Text`
@@ -282,7 +300,32 @@ class ChatScreen extends React.Component {
       );
     });
 
-    return <EmoticonPanel>{emojis}</EmoticonPanel>;
+    const row = 3;
+    const col = 7;
+    const page = Math.ceil(emojis.length / (row * col));
+
+    return (
+      <EmoticonPanel>
+        <EmojiCarousel>
+          {Array.from({ length: page }).map((_, pageIndex) => {
+            const startIndex = pageIndex * row * col;
+            return (
+              <EmojiView key={pageIndex}>
+                <EmojiViewRow>
+                  {emojis.slice(startIndex, startIndex + 7)}
+                </EmojiViewRow>
+                <EmojiViewRow>
+                  {emojis.slice(startIndex + 7, startIndex + 14)}
+                </EmojiViewRow>
+                <EmojiViewRow>
+                  {emojis.slice(startIndex + 14, startIndex + 21)}
+                </EmojiViewRow>
+              </EmojiView>
+            );
+          })}
+        </EmojiCarousel>
+      </EmoticonPanel>
+    );
   }
 
   getExtraPanel() {
