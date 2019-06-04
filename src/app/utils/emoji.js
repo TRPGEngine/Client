@@ -1,47 +1,22 @@
-const emoji = require('node-emoji');
-const emojis = [
-  'grinning',
-  'smiley',
-  'wink',
-  'sweat_smile',
-  'yum',
-  'sunglasses',
-  'rage',
-  'confounded',
-  'flushed',
-  'disappointed',
-  'sob',
-  'neutral_face',
-  'innocent',
-  'grin',
-  'smirk',
-  'scream',
-  'sleeping',
-  'flushed',
-  'confused',
-  'mask',
-  'blush',
-  'worried',
-  'hushed',
-  'heartbeat',
-  'broken_heart',
-  'crescent_moon',
-  'star2',
-  'sunny',
-  'rainbow',
-  'heart_eyes',
-  'kissing_smiling_eyes',
-  'lips',
-  'rose',
-  'rose',
-  '+1',
+import emoji from 'node-emoji';
+import { getCodeList } from '../../shared/utils/emoji';
+import _forEach from 'lodash/forEach';
+
+const codeList = getCodeList();
+
+export const emojiMap = _forEach(getCodeList(), (list, catalog, map) => {
+  map[catalog] = list
+    .filter((name) => emoji.hasEmoji(name))
+    .map((name) => ({
+      name,
+      code: emoji.get(name),
+    }));
+});
+
+export const emojiCatalog = [
+  'people',
+  'nature',
+  'objects',
+  'places',
+  'symbols',
 ];
-
-const map = {};
-for (let i in emojis) {
-  const name = emojis[i];
-  const code = emoji.get(name);
-  map[code] = name;
-}
-
-export const emojiMap = map;

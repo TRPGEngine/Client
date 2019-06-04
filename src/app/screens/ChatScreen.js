@@ -22,7 +22,8 @@ import dateHelper from '../../shared/utils/dateHelper';
 import ExtraPanelItem from '../components/ExtraPanelItem';
 import { toNetwork } from '../../shared/utils/imageUploader';
 import { toTemporary } from '../../shared/utils/uploadHelper';
-import { emojiMap } from '../utils/emoji';
+import { emojiMap, emojiCatalog } from '../utils/emoji';
+import _get from 'lodash/get';
 
 import MessageHandler from '../components/messageTypes/__all__';
 
@@ -54,6 +55,11 @@ const ExtraPanel = styled.View`
 
 const EmojiCarousel = styled(Carousel)`
   height: ${EMOJI_PANEL_HEIGHT - 35};
+`;
+
+const EmoticonCatalog = styled.View`
+  height: 35;
+  flex-direction: row;
 `;
 
 const EmojiView = styled.View`
@@ -104,6 +110,7 @@ class ChatScreen extends React.Component {
       showExtraPanel: false,
       showEmoticonPanel: false,
       isKeyboardShow: false,
+      emoticonCatalog: emojiCatalog[0],
     };
   }
 
@@ -284,21 +291,23 @@ class ChatScreen extends React.Component {
   }
 
   getEmoticonPanel() {
-    const emojis = Object.keys(emojiMap).map((code, index) => {
-      const name = emojiMap[code];
-      return (
-        <TouchableOpacity
-          key={code + index}
-          onPress={() => {
-            alert();
-          }}
-        >
-          <EmojiText>
-            <Emoji name={name} />
-          </EmojiText>
-        </TouchableOpacity>
-      );
-    });
+    const emoticonCatalog = this.state.emoticonCatalog;
+    const emojis = _get(emojiMap, emoticonCatalog, []).map(
+      ({ name, code }, index) => {
+        return (
+          <TouchableOpacity
+            key={name + index}
+            onPress={() => {
+              alert(code);
+            }}
+          >
+            <EmojiText>
+              <Emoji name={name} />
+            </EmojiText>
+          </TouchableOpacity>
+        );
+      }
+    );
 
     const row = 3;
     const col = 7;
@@ -307,7 +316,7 @@ class ChatScreen extends React.Component {
     return (
       <EmoticonPanel>
         <EmojiCarousel>
-          {Array.from({ length: page }).map((_, pageIndex) => {
+          {Array.from({ length: page }, (_, pageIndex) => {
             const startIndex = pageIndex * row * col;
             return (
               <EmojiView key={pageIndex}>
@@ -324,6 +333,22 @@ class ChatScreen extends React.Component {
             );
           })}
         </EmojiCarousel>
+        <EmoticonCatalog>
+          {emojiCatalog.map((catalog) => {
+            const { name, code } = _get(emojiMap, [catalog, 0]); // 取目录第一个表情作为目录图标
+
+            return (
+              <TouchableOpacity
+                key={catalog + name}
+                onPress={() => this.setState({ emoticonCatalog: catalog })}
+              >
+                <EmojiText>
+                  <Emoji name={name} />
+                </EmojiText>
+              </TouchableOpacity>
+            );
+          })}
+        </EmoticonCatalog>
       </EmoticonPanel>
     );
   }
