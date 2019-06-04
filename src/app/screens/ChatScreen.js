@@ -46,8 +46,7 @@ const EmoticonPanel = styled.View`
 `;
 
 const ExtraPanel = styled.View`
-  /* height: 265; */
-  height: 220;
+  height: ${EXTRA_PANEL_HEIGHT};
   background-color: white;
   border-top-width: 1px;
   border-top-color: #ccc;
@@ -58,8 +57,19 @@ const EmojiCarousel = styled(Carousel)`
 `;
 
 const EmoticonCatalog = styled.View`
-  height: 35;
+  height: 35px;
   flex-direction: row;
+  border-top-width: 0.5;
+  border-top-color: #eee;
+  padding: 0 10px;
+`;
+
+const EmoticonCatalogItem = styled.TouchableOpacity`
+  padding: 0 10px;
+  border-right-width: 0.5px;
+  border-right-color: #eee;
+  background-color: ${(props) => (props.isSelected ? '#ccc' : 'white')};
+  justify-content: center;
 `;
 
 const EmojiView = styled.View`
@@ -78,11 +88,8 @@ const EmojiItem = styled.TouchableOpacity`
 `;
 
 const EmojiText = styled.Text`
-  align-items: center;
-  justify-content: center;
-  font-size: 25;
-  padding-left: 4;
-  padding-bottom: 1;
+  text-align: center;
+  font-size: 18;
   color: #fff;
 `;
 
@@ -340,14 +347,15 @@ class ChatScreen extends React.Component {
             const { name, code } = _get(emojiMap, [catalog, 0]); // 取目录第一个表情作为目录图标
 
             return (
-              <TouchableOpacity
+              <EmoticonCatalogItem
                 key={catalog + name}
+                isSelected={this.state.emoticonCatalog === catalog}
                 onPress={() => this.setState({ emoticonCatalog: catalog })}
               >
                 <EmojiText>
                   <Emoji name={name} />
                 </EmojiText>
-              </TouchableOpacity>
+              </EmoticonCatalogItem>
             );
           })}
         </EmoticonCatalog>
