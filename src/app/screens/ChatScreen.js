@@ -63,17 +63,18 @@ const EmoticonCatalog = styled.View`
 `;
 
 const EmojiView = styled.View`
-  display: flex;
-  /* TODO: 上下散开 */
-  /* flex-direction: column; */
-  /* justify-content: space-around; */
-  align-content: space-around;
+  flex-direction: column;
+  justify-content: space-around;
+  height: ${EMOJI_PANEL_HEIGHT - 35 - 30};
 `;
 
 const EmojiViewRow = styled.View`
-  display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  padding: 0 10px;
+`;
+
+const EmojiItem = styled.TouchableOpacity`
+  flex: 1;
 `;
 
 const EmojiText = styled.Text`
@@ -290,12 +291,13 @@ class ChatScreen extends React.Component {
     );
   }
 
+  // 表情面板的渲染函数
   getEmoticonPanel() {
     const emoticonCatalog = this.state.emoticonCatalog;
     const emojis = _get(emojiMap, emoticonCatalog, []).map(
       ({ name, code }, index) => {
         return (
-          <TouchableOpacity
+          <EmojiItem
             key={name + index}
             onPress={() => {
               alert(code);
@@ -304,7 +306,7 @@ class ChatScreen extends React.Component {
             <EmojiText>
               <Emoji name={name} />
             </EmojiText>
-          </TouchableOpacity>
+          </EmojiItem>
         );
       }
     );
@@ -353,6 +355,7 @@ class ChatScreen extends React.Component {
     );
   }
 
+  // 额外面板的渲染函数
   getExtraPanel() {
     return (
       <ExtraPanel>
