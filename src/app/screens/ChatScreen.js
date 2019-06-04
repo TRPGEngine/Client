@@ -180,8 +180,11 @@ class ChatScreen extends React.Component {
   }
 
   _handleFocus() {
-    // 输入框focus时收起ExtraPanel
-    this.setState({ showExtraPanel: false });
+    // 输入框focus时收起所有面板
+    this.setState({
+      showExtraPanel: false,
+      showEmoticonPanel: false,
+    });
   }
 
   _handleSendMsg() {
