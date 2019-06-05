@@ -18,10 +18,11 @@ import {
   createReduxContainer,
 } from 'react-navigation-redux-helpers';
 import { connect } from 'react-redux';
-const {
+import {
   createStackNavigator,
   createBottomTabNavigator,
-} = require('react-navigation');
+} from 'react-navigation';
+import { StackViewStyleInterpolator } from 'react-navigation-stack';
 
 import LaunchScreen from './screens/LaunchScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -58,75 +59,87 @@ const DetailsScreen = () => (
   </View>
 );
 
-export const AppNavigator = createStackNavigator({
-  LaunchScreen: {
-    screen: LaunchScreen,
-  },
-  Login: {
-    screen: LoginScreen,
-    navigationOptions: {
-      headerLeft: null,
+export const AppNavigator = createStackNavigator(
+  {
+    LaunchScreen: {
+      screen: LaunchScreen,
+    },
+    Login: {
+      screen: LoginScreen,
+      navigationOptions: {
+        headerLeft: null,
+      },
+    },
+    Register: {
+      screen: RegisterScreen,
+      navigationOptions: {
+        headerTitle: '注册TRPG Game账户',
+      },
+    },
+    Main: {
+      screen: MainNavigator,
+      navigationOptions: {
+        headerLeft: null,
+        title: 'TRPG Game',
+      },
+    },
+    Details: {
+      screen: DetailsScreen,
+      navigationOptions: {
+        headerTitle: 'Details',
+      },
+    },
+    Settings: {
+      screen: SettingsScreen,
+      navigationOptions: {
+        headerTitle: '设置',
+      },
+    },
+    Chat: {
+      screen: ChatScreen,
+      navigationOptions: ({ navigation }) => ({
+        headerTitle: '与 ' + navigation.state.params.name + ' 的聊天',
+        gesturesEnabled: true,
+      }),
+    },
+    AddFriend: {
+      screen: AddFriendScreen,
+      navigationOptions: {
+        headerTitle: '添加联系人',
+      },
+    },
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: ({ navigation }) => ({
+        headerTitle: navigation.state.params.name + ' 的个人信息',
+      }),
+    },
+    GroupProfile: {
+      screen: GroupProfileScreen,
+      navigationOptions: ({ navigation }) => ({
+        headerTitle: navigation.state.params.name + ' 可以公开的情报',
+      }),
+    },
+    ProfileModify: {
+      screen: ProfileModifyScreen,
+      navigationOptions: {
+        headerTitle: '编辑资料',
+      },
+    },
+    Webview: {
+      screen: WebviewScreen,
     },
   },
-  Register: {
-    screen: RegisterScreen,
-    navigationOptions: {
-      headerTitle: '注册TRPG Game账户',
+  {
+    mode: 'card',
+    defaultNavigationOptions: {
+      gesturesEnabled: false,
     },
-  },
-  Main: {
-    screen: MainNavigator,
-    navigationOptions: {
-      headerLeft: null,
-      title: 'TRPG Game',
-    },
-  },
-  Details: {
-    screen: DetailsScreen,
-    navigationOptions: {
-      headerTitle: 'Details',
-    },
-  },
-  Settings: {
-    screen: SettingsScreen,
-    navigationOptions: {
-      headerTitle: '设置',
-    },
-  },
-  Chat: {
-    screen: ChatScreen,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: '与 ' + navigation.state.params.name + ' 的聊天',
+    transitionConfig: () => ({
+      screenInterpolator: StackViewStyleInterpolator.forHorizontal,
     }),
-  },
-  AddFriend: {
-    screen: AddFriendScreen,
-    navigationOptions: {
-      headerTitle: '添加联系人',
-    },
-  },
-  Profile: {
-    screen: ProfileScreen,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: navigation.state.params.name + ' 的个人信息',
-    }),
-  },
-  GroupProfile: {
-    screen: GroupProfileScreen,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: navigation.state.params.name + ' 可以公开的情报',
-    }),
-  },
-  ProfileModify: {
-    screen: ProfileModifyScreen,
-    navigationOptions: {
-      headerTitle: '编辑资料',
-    },
-  },
-  Webview: {
-    screen: WebviewScreen,
-  },
-});
+  }
+);
 
 export const middleware = createReactNavigationReduxMiddleware(
   (state) => state.get('nav'),
