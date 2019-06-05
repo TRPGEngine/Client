@@ -310,7 +310,9 @@ class ChatScreen extends React.Component {
           <EmojiItem
             key={name + index}
             onPress={() => {
-              alert(code);
+              // 增加到输入框
+              const newMsg = this.state.inputMsg + code;
+              this.setState({ inputMsg: newMsg });
             }}
           >
             <EmojiText>
