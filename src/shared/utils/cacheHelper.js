@@ -55,6 +55,10 @@ export const loadcache = function() {
 
 // 更加优化的用户信息缓存获取
 let isGettingUserInfoUUID = []; // 用于防止同时请求多个相同内容
+/**
+ * 获取用户信息并缓存，如果缓存中已经有记录了则从缓存中获取
+ * @param {string} uuid 用户UUID
+ */
 export const getUserInfoCache = function(uuid) {
   if (uuid.toString().substr(0, 4) === 'trpg') {
     return immutable.Map(); // 不检测trpg开头的内置系统用户
@@ -89,6 +93,10 @@ export const getUserInfoCache = function(uuid) {
 };
 
 let isGettingGroupInfoUUID = []; // 用于防止同时请求多个相同内容
+/**
+ * 获取团信息并缓存，如果缓存中已经有记录了则从缓存中获取
+ * @param {string} uuid 团UUID
+ */
 export const getGroupInfoCache = function(uuid) {
   let store = _store;
   if (!!store && !!store.dispatch) {

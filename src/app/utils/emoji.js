@@ -20,3 +20,19 @@ export const emojiCatalog = [
   'places',
   'symbols',
 ];
+
+/**
+ * 将带有emoji代码的文本转化为标准文本
+ * @param {string} code 带有emoji代码的文本
+ */
+export function unemojify(code) {
+  return emoji.unemojify(code);
+}
+
+/**
+ * 将标准字符串转化为表情
+ * @param {string} plainText 无格式字符串
+ */
+export function emojify(plainText) {
+  return emoji.emojify(plainText);
+}

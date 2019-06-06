@@ -85,6 +85,11 @@ export const getActorInfo = function(uuid) {
   };
 };
 
+/**
+ * 获取团信息
+ * @param {string} uuid 团唯一标识
+ * @param {function} onCompleted 完成后回调
+ */
 export const getGroupInfo = function(uuid, onCompleted) {
   if (!uuid) {
     throw new Error('getGroupInfo need uuid');
