@@ -22,7 +22,7 @@ import dateHelper from '../../shared/utils/dateHelper';
 import ExtraPanelItem from '../components/ExtraPanelItem';
 import { toNetwork } from '../../shared/utils/imageUploader';
 import { toTemporary } from '../../shared/utils/uploadHelper';
-import { emojiMap, emojiCatalog } from '../utils/emoji';
+import { emojiMap, emojiCatalog, unemojify } from '../utils/emoji';
 import _get from 'lodash/get';
 
 import MessageHandler from '../components/messageTypes/__all__';
@@ -173,27 +173,18 @@ class ChatScreen extends React.Component {
     });
   }
 
-  _scrollToBottom() {
-    setTimeout(() => {
-      this.refs.list && this.refs.list.scrollToIndex({ index: 0 }); // 因为使用了inverted属性因此滚到底部对于list的逻辑是滚到顶部
-    }, 130);
-  }
-
-  _handleFocus() {
-    // 输入框focus时收起所有面板
-    this.setState({
-      showExtraPanel: false,
-      showEmoticonPanel: false,
-    });
-  }
-
-  _handleSendMsg() {
+  /**
+   * 向服务器发送信息
+   * @param {string} message 要发送的文本
+   */
+  sendMsg(message) {
     const uuid = this.props.navigation.getParam('uuid', '');
     const converseType = this.props.navigation.getParam('type', 'user');
-    let message = this.state.inputMsg.trim();
     if (!!message) {
       // this.props.onSendMsg(message, type);
       if (!!uuid) {
+        message = unemojify(message); // 转成标准文本
+
         let payload = {
           message,
           type: 'normal',
@@ -210,6 +201,29 @@ class ChatScreen extends React.Component {
           this.props.dispatch(sendMsg(null, payload));
         }
       }
+    } else {
+      console.warn('require message to send');
+    }
+  }
+
+  _scrollToBottom() {
+    setTimeout(() => {
+      this.refs.list && this.refs.list.scrollToIndex({ index: 0 }); // 因为使用了inverted属性因此滚到底部对于list的逻辑是滚到顶部
+    }, 130);
+  }
+
+  _handleFocus() {
+    // 输入框focus时收起所有面板
+    this.setState({
+      showExtraPanel: false,
+      showEmoticonPanel: false,
+    });
+  }
+
+  _handleSendMsg() {
+    let message = this.state.inputMsg.trim();
+    if (!!message) {
+      this.sendMsg(message);
       this.setState({ inputMsg: '' });
     }
   }
@@ -236,6 +250,9 @@ class ChatScreen extends React.Component {
     }
   }
 
+  /**
+   * 额外面板的发送图片功能
+   */
   _handleSendImage() {
     ImagePicker.launchImageLibrary(
       {
@@ -268,6 +285,9 @@ class ChatScreen extends React.Component {
 
           // TODO: 暂时先放在服务器上，看看为什么smms不能正常上传(会返回403)
           toTemporary(selfUUID, file, {
+            onProgress: (percent) => {
+              console.log('percent', percent);
+            },
             onCompleted: (res) => {
               // TODO: 待完善: 在聊天界面显示loading
               // 上传完毕。发送图片
@@ -275,25 +295,29 @@ class ChatScreen extends React.Component {
               const imageUrl = config.file.getAbsolutePath(upload_url);
               const message = `[img]${imageUrl}[/img]`;
 
-              const targetUUID = this.props.navigation.getParam('uuid', '');
-              const converseType = this.props.navigation.getParam(
-                'type',
-                'user'
-              );
-              const payload = {
-                message,
-                type: 'normal',
-                is_public: false,
-                is_group: false,
-              };
-              if (converseType === 'user') {
-                this.props.dispatch(sendMsg(targetUUID, payload));
-              } else if (converseType === 'group') {
-                payload.converse_uuid = targetUUID;
-                payload.is_public = true;
-                payload.is_group = true;
-                this.props.dispatch(sendMsg(null, payload));
-              }
+              console.log('message', message);
+              this.sendMsg(message);
+              // const targetUUID = this.props.navigation.getParam('uuid', '');
+              // const converseType = this.props.navigation.getParam(
+              //   'type',
+              //   'user'
+              // );
+              // const payload = {
+              //   message,
+              //   type: 'normal',
+              //   is_public: false,
+              //   is_group: false,
+              // };
+
+              // console.log('payload', payload);
+              // if (converseType === 'user') {
+              //   this.props.dispatch(sendMsg(targetUUID, payload));
+              // } else if (converseType === 'group') {
+              //   payload.converse_uuid = targetUUID;
+              //   payload.is_public = true;
+              //   payload.is_group = true;
+              //   this.props.dispatch(sendMsg(null, payload));
+              // }
             },
           });
         }
