@@ -419,8 +419,12 @@ class ChatScreen extends React.Component {
             keyExtractor={(item, index) => item.uuid + '#' + index}
             onTouchStart={() => this.dismissAll()}
             renderItem={({ item, index }) => {
+              // 因为列表是倒转的。所以第一条数据是最下面那条
+              // UI中的上一条数据应为msgList的下一条
               const prevDate =
-                index > 0 ? this.props.msgList.getIn([index - 1, 'date']) : 0;
+                index < msgList.length - 1
+                  ? _get(msgList, [index + 1, 'date'])
+                  : 0;
               let isMe = item.sender_uuid === this.props.selfInfo.get('uuid');
               let senderInfo = isMe
                 ? this.props.selfInfo
