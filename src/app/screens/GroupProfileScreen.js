@@ -5,10 +5,11 @@ import sb from 'react-native-style-block';
 import appConfig from '../config.app';
 import { getSamlpeDate } from '../../shared/utils/dateHelper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
-import { getUserInfo } from '../../redux/actions/cache';
+import { getGroupInfo } from '../../redux/actions/cache';
 import { addFriend } from '../../redux/actions/user';
 import { switchToConverseApp } from '../redux/actions/nav';
 import { getUserInfoCache } from '../../shared/utils/cacheHelper';
+import immutable from 'immutable';
 
 class ProfileInfoItem extends React.Component {
   render() {
@@ -29,19 +30,20 @@ class ProfileScreen extends React.Component {
   componentDidMount() {
     let uuid = this.props.navigation.state.params.uuid;
     if (uuid) {
-      // TODO: 获取最新团信息
+      // 获取最新团信息
+      this.props.dispatch(getGroupInfo(uuid));
     }
   }
 
   render() {
-    let groupUUID = this.props.navigation.state.params.uuid;
-    let hasJoined = this.props.addedGroupUUIDList.includes(groupUUID);
-    let groupInfo = { get: (a) => a }; // TODO: 等待实现团信息缓存
+    const groupUUID = this.props.navigation.state.params.uuid;
+    const hasJoined = this.props.addedGroupUUIDList.includes(groupUUID);
+    const groupInfo = this.props.groupcache.get(groupUUID);
 
     if (!groupInfo) {
       return (
         <View>
-          <Text>无内容</Text>
+          <Text>Loading...</Text>
         </View>
       );
     }
@@ -108,4 +110,5 @@ export default connect((state) => ({
   addedGroupUUIDList: state
     .getIn(['group', 'groups'])
     .map((g) => g.get('uuid')),
+  groupcache: state.getIn(['cache', 'group']),
 }))(ProfileScreen);
