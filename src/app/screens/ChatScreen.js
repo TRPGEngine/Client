@@ -297,27 +297,6 @@ class ChatScreen extends React.Component {
 
               console.log('message', message);
               this.sendMsg(message);
-              // const targetUUID = this.props.navigation.getParam('uuid', '');
-              // const converseType = this.props.navigation.getParam(
-              //   'type',
-              //   'user'
-              // );
-              // const payload = {
-              //   message,
-              //   type: 'normal',
-              //   is_public: false,
-              //   is_group: false,
-              // };
-
-              // console.log('payload', payload);
-              // if (converseType === 'user') {
-              //   this.props.dispatch(sendMsg(targetUUID, payload));
-              // } else if (converseType === 'group') {
-              //   payload.converse_uuid = targetUUID;
-              //   payload.is_public = true;
-              //   payload.is_group = true;
-              //   this.props.dispatch(sendMsg(null, payload));
-              // }
             },
           });
         }

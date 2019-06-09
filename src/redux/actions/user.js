@@ -30,7 +30,7 @@ import { checkUser } from '../../shared/utils/cacheHelper';
 import { runLoginSuccessCallback } from '../../shared/utils/inject';
 import { setUserSettings, setSystemSettings } from './settings';
 
-import { reloadConverseList } from './chat';
+import { reloadConverseList, getUserEmotion } from './chat';
 import { getTemplate, getActor } from './actor';
 import { getGroupList, getGroupInvite } from './group';
 import { getNote } from './note';
@@ -53,7 +53,9 @@ function loginSuccess(dispatch, getState) {
   dispatch(getGroupList());
   dispatch(getGroupInvite());
   dispatch(getNote());
-  dispatch(getSettings()); // 获取服务器上的设置信息
+  dispatch(getSettings()); // 获取服务器上的用户设置信息
+
+  dispatch(getUserEmotion()); // 获取用户表情数据
 
   runLoginSuccessCallback();
 }

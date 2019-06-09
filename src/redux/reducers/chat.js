@@ -20,6 +20,7 @@ const {
   SWITCH_GROUP,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
   UPDATE_WRITING_STATUS,
+  UPDATE_USER_CHAT_EMOTION_CATALOG,
 } = constants;
 
 const initialState = immutable.fromJS({
@@ -54,6 +55,12 @@ const initialState = immutable.fromJS({
   writingList: {
     user: [], // 用户会话: [useruuid1, useruuid2]
     group: {}, // 团会话: {groupUUID: [useruuid1, useruuid2]}
+  },
+
+  // 当前用户的所有表情包(除了emoji)
+  emotions: {
+    catalogs: [], // 用户的表情包列表
+    favorites: [], // 收藏的单个表情图
   },
 });
 
@@ -269,6 +276,13 @@ export default function chat(state = initialState, action) {
         }
 
         // TODO: 团正在输入待实现
+      }
+      case UPDATE_USER_CHAT_EMOTION_CATALOG: {
+        const catalogs = action.payload;
+        return state.setIn(
+          ['emotions', 'catalogs'],
+          immutable.fromJS(catalogs)
+        );
       }
       default:
         return state;

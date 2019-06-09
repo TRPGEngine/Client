@@ -19,6 +19,7 @@ const {
   SEND_MSG_COMPLETED,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
   UPDATE_WRITING_STATUS,
+  UPDATE_USER_CHAT_EMOTION_CATALOG,
 } = constants;
 import * as trpgApi from '../../api/trpg.api.js';
 const api = trpgApi.getInstance();
@@ -544,5 +545,20 @@ export let stopWriting = function(type = 'user', uuid) {
       uuid,
       isWriting: false,
     },
+  };
+};
+
+export const getUserEmotion = function() {
+  return function(dispatch, getState) {
+    return api.emit('chatemotion::getUserEmotionCatalog', null, function(data) {
+      if (data.result) {
+        dispatch({
+          type: UPDATE_USER_CHAT_EMOTION_CATALOG,
+          payload: data.catalogs,
+        });
+      } else {
+        console.error(data.msg);
+      }
+    });
   };
 };
