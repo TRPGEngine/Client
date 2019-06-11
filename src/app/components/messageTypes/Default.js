@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { View } from 'react-native';
 import Base from './Base';
 import { parse } from '../../utils/textParser';
 
 class Default extends Base {
   getContent() {
     const info = this.props.info || {};
-    return <Text>{parse(info.message)}</Text>;
+    return <View>{parse(info.message)}</View>;
   }
 }
 
