@@ -24,6 +24,7 @@ import { toNetwork } from '../../shared/utils/imageUploader';
 import { toTemporary } from '../../shared/utils/uploadHelper';
 import { emojiMap, emojiCatalog, unemojify } from '../utils/emoji';
 import _get from 'lodash/get';
+import _chunk from 'lodash/chunk';
 
 import MessageHandler from '../components/messageTypes/__all__';
 
@@ -74,17 +75,20 @@ const EmoticonCatalogItem = styled.TouchableOpacity`
 
 const EmojiView = styled.View`
   flex-direction: column;
-  justify-content: space-around;
   height: ${EMOJI_PANEL_HEIGHT - 35 - 30};
 `;
 
 const EmojiViewRow = styled.View`
   flex-direction: row;
   padding: 0 10px;
+  height: ${100 / 3}%;
 `;
 
 const EmojiItem = styled.TouchableOpacity`
-  flex: 1;
+  width: ${100 / 7}%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
 const EmojiText = styled.Text`
@@ -326,26 +330,22 @@ class ChatScreen extends React.Component {
       }
     );
 
-    const row = 3;
-    const col = 7;
-    const page = Math.ceil(emojis.length / (row * col));
+    const rowNum = 3;
+    const colNum = 7;
+    // const page = Math.ceil(emojis.length / (row * col));
+    const emojiPages = _chunk(emojis, rowNum * colNum);
 
     return (
       <EmoticonPanel>
         <EmojiCarousel>
-          {Array.from({ length: page }, (_, pageIndex) => {
-            const startIndex = pageIndex * row * col;
+          {emojiPages.map((emojiPage, index) => {
+            const rows = _chunk(emojiPage, colNum);
+
             return (
-              <EmojiView key={pageIndex}>
-                <EmojiViewRow>
-                  {emojis.slice(startIndex, startIndex + 7)}
-                </EmojiViewRow>
-                <EmojiViewRow>
-                  {emojis.slice(startIndex + 7, startIndex + 14)}
-                </EmojiViewRow>
-                <EmojiViewRow>
-                  {emojis.slice(startIndex + 14, startIndex + 21)}
-                </EmojiViewRow>
+              <EmojiView key={index}>
+                {rows.map((emojis, index) => (
+                  <EmojiViewRow key={index}>{emojis}</EmojiViewRow>
+                ))}
               </EmojiView>
             );
           })}
