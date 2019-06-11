@@ -28,7 +28,8 @@ class BBCodeParser {
       }
 
       if (typeof node === 'object' && node.tag && tagMap[node.tag]) {
-        return tagMap[node.tag](node, { key: index });
+        const Component = tagMap[node.tag];
+        return <Component node={node} attrs={{ key: index }} />;
       }
 
       return null;

@@ -1,19 +1,39 @@
-import React from 'react';
-import { Text } from 'react-native';
+import React, { useState } from 'react';
 import FastImage from 'react-native-fast-image';
 import { AstNodeObj } from './types';
 import config from '../../../../config/project.config';
 
-export default function ImageTag(node: AstNodeObj, attrs: {}) {
+interface Props {
+  node: AstNodeObj;
+  attrs: {};
+}
+
+const maxWidth = 180;
+const maxHeight = 120;
+
+const ImageTag = (props: Props) => {
+  const { node, attrs } = props;
+  const [width, setWidth] = useState(180);
+  const [height, setHeight] = useState(120);
+
+  // 等比例缩放图片
+  const setImageSize = (targetWidth: number, targetHeight: number) => {
+    const radioWidth = maxWidth / targetWidth;
+    const radioHeight = maxHeight / targetHeight;
+    const radioTarget = Math.min(radioWidth, radioHeight);
+
+    setWidth(radioTarget * targetWidth);
+    setHeight(radioTarget * targetHeight);
+  };
+
   let url = node.content.join('');
   url = config.file.getAbsolutePath(url);
-  // return <Text>{url}</Text>;
 
   return (
     <FastImage
       style={{
-        width: 180,
-        height: 120,
+        width,
+        height,
       }}
       {...attrs}
       source={{
@@ -22,6 +42,12 @@ export default function ImageTag(node: AstNodeObj, attrs: {}) {
         cache: FastImage.cacheControl.web,
       }}
       resizeMode={FastImage.resizeMode.contain}
+      onLoad={(e) => {
+        const { width, height } = e.nativeEvent;
+        setImageSize(width, height);
+      }}
     />
   );
-}
+};
+
+export default ImageTag;
