@@ -94,7 +94,7 @@ const EmojiItem = styled.TouchableOpacity`
 const EmojiText = styled.Text`
   text-align: center;
   font-size: 18;
-  color: #fff;
+  color: #333;
 `;
 
 class ChatScreen extends React.Component {
@@ -308,6 +308,13 @@ class ChatScreen extends React.Component {
     );
   }
 
+  /**
+   * 点击增加表情包功能
+   */
+  _handleAddEmotionCatalog() {
+    alert('TODO: 未实现')
+  }
+
   // 表情面板的渲染函数
   getEmoticonPanel() {
     const emoticonCatalog = this.state.emoticonCatalog;
@@ -332,7 +339,6 @@ class ChatScreen extends React.Component {
 
     const rowNum = 3;
     const colNum = 7;
-    // const page = Math.ceil(emojis.length / (row * col));
     const emojiPages = _chunk(emojis, rowNum * colNum);
 
     return (
@@ -351,6 +357,11 @@ class ChatScreen extends React.Component {
           })}
         </EmojiCarousel>
         <EmoticonCatalog>
+          <EmoticonCatalogItem onPress={() => this._handleAddEmotionCatalog()}>
+            <EmojiText>
+              <Text>+</Text>
+            </EmojiText>
+          </EmoticonCatalogItem>
           {emojiCatalog.map((catalog) => {
             const { name, code } = _get(emojiMap, [catalog, 0]); // 取目录第一个表情作为目录图标
 
