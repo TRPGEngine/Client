@@ -38,8 +38,8 @@ const ImageTag = (props: Props) => {
       {...attrs}
       source={{
         uri: url,
-        priority: FastImage.priority.low,
-        cache: FastImage.cacheControl.web,
+        priority: FastImage.priority.normal,
+        cache: FastImage.cacheControl.immutable,
       }}
       resizeMode={FastImage.resizeMode.contain}
       onLoad={(e) => {
