@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Icon, Carousel, Modal } from '@ant-design/react-native';
-import modelStyles from '@ant-design/react-native/es/modal/style/index';
 import sb from 'react-native-style-block';
 import ImagePicker from 'react-native-image-picker';
 import Emoji from 'react-native-emoji';
@@ -124,7 +123,6 @@ class ChatScreen extends React.Component {
       showEmoticonPanel: false,
       isKeyboardShow: false,
       emotionCatalog: emojiCatalog[0],
-      operation: null, // 用于显示操作modal， [text, onPress, style]
     };
   }
 
@@ -314,53 +312,10 @@ class ChatScreen extends React.Component {
    * 点击增加表情包功能
    */
   _handleAddEmotionCatalog() {
-    this.setState({
-      operation: [
-        { text: '暗号', onPress: () => console.log('TODO: 暗号') },
-        { text: '暗号', onPress: () => console.log('TODO: 暗号') },
-      ],
-    });
-  }
-
-  /**
-   * 操作UI组件
-   */
-  getOperationUI() {
-    const actions = this.state.operation || [];
-
-    const handleClose = () => {
-      this.setState({ operation: null });
-    };
-
-    const footer = actions.map((button) => {
-      // tslint:disable-next-line:only-arrow-functions
-      const orginPress = button.onPress || function() {};
-      button.onPress = () => {
-        const res = orginPress();
-        if (res && res.then) {
-          res.then(() => {
-            handleClose();
-          });
-        } else {
-          handleClose();
-        }
-      };
-      return button;
-    });
-
-    return (
-      <Modal
-        operation
-        transparent
-        maskClosable
-        visible={this.state.operation}
-        title="添加表情"
-        onClose={handleClose}
-        style={modelStyles.operationContainer}
-        bodyStyle={modelStyles.operationBody}
-        footer={footer}
-      />
-    );
+    Modal.operation([
+      { text: '暗号', onPress: () => console.log('TODO: 暗号') },
+      { text: '暗号', onPress: () => console.log('TODO: 暗号') },
+    ]);
   }
 
   // 表情面板的渲染函数
@@ -523,7 +478,6 @@ class ChatScreen extends React.Component {
             !this.state.showEmoticonPanel &&
             !this.state.isKeyboardShow &&
             this.getExtraPanel()}
-          {this.getOperationUI()}
         </View>
       );
     } else {

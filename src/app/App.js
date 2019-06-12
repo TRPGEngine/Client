@@ -7,7 +7,8 @@ const store = configureStore({
   },
 });
 import { AppWithNavigationState } from './router';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
+import { Provider as AntdProvider } from '@ant-design/react-native';
 import { injectLoginSuccessCallback } from '../shared/utils/inject';
 import { init as initNotify, bindInfo, tryLocalNotify } from './notify';
 import codePush from 'react-native-code-push';
@@ -48,9 +49,11 @@ import rnStorage from '../api/rnStorage.api.js';
 class App extends React.Component {
   render() {
     return (
-      <Provider store={store}>
-        <AppWithNavigationState />
-      </Provider>
+      <ReduxProvider store={store}>
+        <AntdProvider>
+          <AppWithNavigationState />
+        </AntdProvider>
+      </ReduxProvider>
     );
   }
 }
