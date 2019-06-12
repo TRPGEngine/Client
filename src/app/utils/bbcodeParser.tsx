@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Text } from 'react-native';
 import { parse } from '@bbob/parser';
 import ImageTag from './bbcode/ImageTag';
@@ -19,10 +19,10 @@ class BBCodeParser {
     },
   };
 
-  parse(input: string): React.SFC {
-    const ast = parse(input, this.options);
+  parse(input: string): ReactElement[] {
+    const ast = parse(input, this.options) as AstNode[];
 
-    return ast.map((node: AstNode, index: number) => {
+    return ast.map<ReactElement>((node, index) => {
       if (typeof node === 'string') {
         return <Text key={index}>{node}</Text>;
       }
