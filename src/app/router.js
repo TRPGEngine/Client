@@ -12,16 +12,16 @@ import {
   BackHandler,
   ToastAndroid,
 } from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import {
+  NavigationActions,
+  createStackNavigator,
+  createBottomTabNavigator,
+} from 'react-navigation';
 import {
   createReactNavigationReduxMiddleware,
   createReduxContainer,
 } from 'react-navigation-redux-helpers';
 import { connect } from 'react-redux';
-import {
-  createStackNavigator,
-  createBottomTabNavigator,
-} from 'react-navigation';
 import { StackViewStyleInterpolator } from 'react-navigation-stack';
 
 import LaunchScreen from './screens/LaunchScreen';

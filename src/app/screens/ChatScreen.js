@@ -10,7 +10,8 @@ import {
   Keyboard,
   TouchableOpacity,
 } from 'react-native';
-import { Icon, Carousel } from '@ant-design/react-native';
+import { Icon, Carousel, Modal } from '@ant-design/react-native';
+import modelStyles from '@ant-design/react-native/es/modal/style/index';
 import sb from 'react-native-style-block';
 import ImagePicker from 'react-native-image-picker';
 import Emoji from 'react-native-emoji';
@@ -122,7 +123,8 @@ class ChatScreen extends React.Component {
       showExtraPanel: false,
       showEmoticonPanel: false,
       isKeyboardShow: false,
-      emoticonCatalog: emojiCatalog[0],
+      emotionCatalog: emojiCatalog[0],
+      operation: null, // 用于显示操作modal， [text, onPress, style]
     };
   }
 
@@ -312,13 +314,59 @@ class ChatScreen extends React.Component {
    * 点击增加表情包功能
    */
   _handleAddEmotionCatalog() {
-    alert('TODO: 未实现')
+    this.setState({
+      operation: [
+        { text: '暗号', onPress: () => console.log('TODO: 暗号') },
+        { text: '暗号', onPress: () => console.log('TODO: 暗号') },
+      ],
+    });
+  }
+
+  /**
+   * 操作UI组件
+   */
+  getOperationUI() {
+    const actions = this.state.operation || [];
+
+    const handleClose = () => {
+      this.setState({ operation: null });
+    };
+
+    const footer = actions.map((button) => {
+      // tslint:disable-next-line:only-arrow-functions
+      const orginPress = button.onPress || function() {};
+      button.onPress = () => {
+        const res = orginPress();
+        if (res && res.then) {
+          res.then(() => {
+            handleClose();
+          });
+        } else {
+          handleClose();
+        }
+      };
+      return button;
+    });
+
+    return (
+      <Modal
+        operation
+        transparent
+        maskClosable
+        visible={this.state.operation}
+        title="添加表情"
+        onClose={handleClose}
+        style={modelStyles.operationContainer}
+        bodyStyle={modelStyles.operationBody}
+        footer={footer}
+      />
+    );
   }
 
   // 表情面板的渲染函数
   getEmoticonPanel() {
-    const emoticonCatalog = this.state.emoticonCatalog;
-    const emojis = _get(emojiMap, emoticonCatalog, []).map(
+    const emotionCatalog = this.state.emotionCatalog;
+    const emojis = _get(emojiMap, emotionCatalog, []).map(
       ({ name, code }, index) => {
         return (
           <EmojiItem
@@ -368,8 +416,8 @@ class ChatScreen extends React.Component {
             return (
               <EmoticonCatalogItem
                 key={catalog + name}
-                isSelected={this.state.emoticonCatalog === catalog}
-                onPress={() => this.setState({ emoticonCatalog: catalog })}
+                isSelected={this.state.emotionCatalog === catalog}
+                onPress={() => this.setState({ emotionCatalog: catalog })}
               >
                 <EmojiText>
                   <Emoji name={name} />
@@ -475,6 +523,7 @@ class ChatScreen extends React.Component {
             !this.state.showEmoticonPanel &&
             !this.state.isKeyboardShow &&
             this.getExtraPanel()}
+          {this.getOperationUI()}
         </View>
       );
     } else {
@@ -516,5 +565,6 @@ export default connect((state) => {
     selfUUID: state.getIn(['user', 'info', 'uuid']),
     msgList: msgList && msgList.sortBy((item) => item.get('date')),
     usercache: state.getIn(['cache', 'user']),
+    emotionCatalog: state.getIn(['chat', 'emotions', 'catalogs'], []),
   };
 })(ChatScreen);
