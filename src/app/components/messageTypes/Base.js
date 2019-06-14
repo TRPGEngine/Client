@@ -14,6 +14,13 @@ class Base extends React.Component {
     emphasizeTime: false,
   };
 
+  /**
+   * 是否应用消息内边距
+   */
+  get isMsgPadding() {
+    return true;
+  }
+
   getContent() {
     return null;
   }
@@ -52,7 +59,11 @@ class Base extends React.Component {
               {name}
             </Text>
             <View
-              style={[...styles.itemMsg, me ? { alignSelf: 'flex-end' } : null]}
+              style={[
+                ...styles.itemMsg,
+                me ? { alignSelf: 'flex-end' } : null,
+                !this.isMsgPadding ? sb.padding(0) : null,
+              ]}
             >
               {this.getContent()}
             </View>
