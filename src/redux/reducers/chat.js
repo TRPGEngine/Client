@@ -21,6 +21,7 @@ const {
   UPDATE_SYSTEM_CARD_CHAT_DATA,
   UPDATE_WRITING_STATUS,
   UPDATE_USER_CHAT_EMOTION_CATALOG,
+  ADD_USER_CHAT_EMOTION_CATALOG,
 } = constants;
 
 const initialState = immutable.fromJS({
@@ -283,6 +284,19 @@ export default function chat(state = initialState, action) {
           ['emotions', 'catalogs'],
           immutable.fromJS(catalogs)
         );
+      }
+      case ADD_USER_CHAT_EMOTION_CATALOG: {
+        const catalog = action.payload;
+        return state.updateIn(['emotions', 'catalogs'], (list) => {
+          for (let i = 0; i < list.size; i++) {
+            if (list.getIn([i, 'uuid']) === catalog.uuid) {
+              console.log('该表情包已添加');
+              return list;
+            }
+          }
+
+          return list.push(immutable.fromJS(catalog));
+        });
       }
       default:
         return state;

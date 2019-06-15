@@ -20,6 +20,7 @@ const {
   UPDATE_SYSTEM_CARD_CHAT_DATA,
   UPDATE_WRITING_STATUS,
   UPDATE_USER_CHAT_EMOTION_CATALOG,
+  ADD_USER_CHAT_EMOTION_CATALOG,
 } = constants;
 import * as trpgApi from '../../api/trpg.api.js';
 const api = trpgApi.getInstance();
@@ -560,5 +561,34 @@ export const getUserEmotion = function() {
         console.error(data.msg);
       }
     });
+  };
+};
+
+/**
+ * 根据表情包暗号添加用户表情包
+ * @param {string} code 表情包暗号
+ */
+export const addUserEmotionCatalogWithSecretSignal = function(code) {
+  return function(dispatch, getState) {
+    code = String(code).toUpperCase();
+    return api.emit(
+      'chatemotion::addUserEmotionWithSecretSignal',
+      {
+        code,
+      },
+      function(data) {
+        if (data.result) {
+          const catalog = data.catalog;
+          // TODO: 提示添加成功
+          dispatch({
+            type: ADD_USER_CHAT_EMOTION_CATALOG,
+            payload: catalog,
+          });
+        } else {
+          // TODO: 提示添加失败
+          console.error(data.msg);
+        }
+      }
+    );
   };
 };
