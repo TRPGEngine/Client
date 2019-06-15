@@ -16,7 +16,10 @@ import ImagePicker from 'react-native-image-picker';
 import Emoji from 'react-native-emoji';
 import { TInput, TIcon } from '../components/TComponent';
 import config from '../../../config/project.config';
-import { sendMsg } from '../../redux/actions/chat';
+import {
+  sendMsg,
+  addUserEmotionCatalogWithSecretSignal,
+} from '../../redux/actions/chat';
 import { getUserInfoCache } from '../../shared/utils/cacheHelper';
 import dateHelper from '../../shared/utils/dateHelper';
 import ExtraPanelItem from '../components/ExtraPanelItem';
@@ -313,8 +316,15 @@ class ChatScreen extends React.Component {
    */
   _handleAddEmotionCatalog() {
     Modal.operation([
-      { text: '暗号', onPress: () => console.log('TODO: 暗号') },
-      { text: '暗号', onPress: () => console.log('TODO: 暗号') },
+      {
+        text: '暗号',
+        onPress: () => {
+          // 打开输入框
+          Modal.prompt('表情包暗号', '请输入暗号，大小写任意', (message) => {
+            this.props.dispatch(addUserEmotionCatalogWithSecretSignal(message));
+          });
+        },
+      },
     ]);
   }
 
