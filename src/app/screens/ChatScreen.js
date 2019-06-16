@@ -14,6 +14,7 @@ import { Icon, Carousel, Modal } from '@ant-design/react-native';
 import sb from 'react-native-style-block';
 import ImagePicker from 'react-native-image-picker';
 import Emoji from 'react-native-emoji';
+import FastImage from 'react-native-fast-image';
 import { TInput, TIcon } from '../components/TComponent';
 import config from '../../../config/project.config';
 import {
@@ -76,12 +77,12 @@ const EmoticonCatalogItem = styled.TouchableOpacity`
   justify-content: center;
 `;
 
-const EmojiView = styled.View`
+const EmotionPageView = styled.View`
   flex-direction: column;
   height: ${EMOJI_PANEL_HEIGHT - 35 - 30};
 `;
 
-const EmojiViewRow = styled.View`
+const EmojiPageRow = styled.View`
   flex-direction: row;
   padding: 0 10px;
   height: ${100 / 3}%;
@@ -98,6 +99,25 @@ const EmojiText = styled.Text`
   text-align: center;
   font-size: 18;
   color: #333;
+`;
+
+const EmotionPageRow = styled.View`
+  flex-direction: row;
+  padding: 0 10px;
+  height: ${100 / 2}%;
+`;
+
+const EmotionItem = styled.TouchableOpacity`
+  width: ${100 / 4}%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+`;
+
+const EmotionItemImage = styled(FastImage)`
+  width: 100%;
+  height: 100%;
 `;
 
 class ChatScreen extends React.Component {
@@ -329,7 +349,7 @@ class ChatScreen extends React.Component {
   }
 
   // 表情面板的渲染函数
-  getEmoticonPanel() {
+  getEmotionPanel() {
     const selectedEmotionCatalog = this.state.selectedEmotionCatalog;
     const isEmoji = Object.keys(emojiMap).includes(selectedEmotionCatalog); // 监测是否为emoji表情
 
@@ -362,11 +382,52 @@ class ChatScreen extends React.Component {
         const rows = _chunk(emojiPage, colNum);
 
         return (
-          <EmojiView key={index}>
-            {rows.map((emojis, index) => (
-              <EmojiViewRow key={index}>{emojis}</EmojiViewRow>
+          <EmotionPageView key={selectedEmotionCatalog + index}>
+            {rows.map((emojis, i) => (
+              <EmojiPageRow key={i}>{emojis}</EmojiPageRow>
             ))}
-          </EmojiView>
+          </EmotionPageView>
+        );
+      });
+    };
+
+    // 返回当前页的表情包
+    const getEmotionPage = () => {
+      // 该表情包下所有表情
+      const items = this.props.emotionCatalog
+        .find((catalog) => catalog.get('uuid') === selectedEmotionCatalog)
+        .get('items')
+        .toJS();
+
+      const rowNum = 2;
+      const colNum = 4;
+      const pages = _chunk(items, rowNum * colNum);
+
+      return pages.map((page, index) => {
+        const rows = _chunk(page, colNum);
+
+        return (
+          <EmotionPageView key={selectedEmotionCatalog + index}>
+            {rows.map((items, i) => (
+              <EmotionPageRow key={i}>
+                {items.map((item, _i) => {
+                  const imageUrl = config.file.getAbsolutePath(item.url);
+
+                  return (
+                    <EmotionItem
+                      key={_i}
+                      onPress={() => this.sendMsg(`[img]${imageUrl}[/img]`)}
+                    >
+                      <EmotionItemImage
+                        source={{ uri: imageUrl }}
+                        resizeMode={FastImage.resizeMode.contain}
+                      />
+                    </EmotionItem>
+                  );
+                })}
+              </EmotionPageRow>
+            ))}
+          </EmotionPageView>
         );
       });
     };
@@ -374,7 +435,7 @@ class ChatScreen extends React.Component {
     return (
       <EmoticonPanel>
         <EmotionCarousel>
-          {isEmoji ? getEmojiPage() : <Text>TODO</Text>}
+          {isEmoji ? getEmojiPage() : getEmotionPage()}
         </EmotionCarousel>
         <EmoticonCatalog>
           <EmoticonCatalogItem onPress={() => this._handleAddEmotionCatalog()}>
@@ -402,14 +463,17 @@ class ChatScreen extends React.Component {
           })}
           {/* 自定义表情包 */}
           {this.props.emotionCatalog.map((catalog) => {
+            const catalogUUID = catalog.get('uuid');
+
             return (
               <EmoticonCatalogItem
-                key={catalog.get('uuid')}
+                key={catalogUUID}
+                isSelected={this.state.selectedEmotionCatalog === catalogUUID}
                 onPress={() =>
-                  this.setState({ selectedEmotionCatalog: catalog.get('uuid') })
+                  this.setState({ selectedEmotionCatalog: catalogUUID })
                 }
               >
-                <Icon name="star" />
+                <Icon name="star" color="#999" />
               </EmoticonCatalogItem>
             );
           })}
@@ -506,7 +570,7 @@ class ChatScreen extends React.Component {
           {this.state.showEmoticonPanel &&
             !this.state.showExtraPanel &&
             !this.state.isKeyboardShow &&
-            this.getEmoticonPanel()}
+            this.getEmotionPanel()}
           {this.state.showExtraPanel &&
             !this.state.showEmoticonPanel &&
             !this.state.isKeyboardShow &&
