@@ -139,6 +139,10 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             // signingConfig signingConfigs.release // 使用签名
         }
+
+        debug {
+            applicationIdSuffix ".test"
+        }
     }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
