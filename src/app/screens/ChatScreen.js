@@ -18,7 +18,7 @@ import config from '../../../config/project.config';
 import { sendMsg } from '../../redux/actions/chat';
 import { getUserInfoCache } from '../../shared/utils/cacheHelper';
 import dateHelper from '../../shared/utils/dateHelper';
-import ExtraPanelItem from '../components/ExtraPanelItem';
+import ExtraPanelItem from '../components/chat/ExtraPanelItem';
 import EmotionPanel from '../components/chat/EmotionPanel';
 import { toNetwork } from '../../shared/utils/imageUploader';
 import { toTemporary } from '../../shared/utils/uploadHelper';

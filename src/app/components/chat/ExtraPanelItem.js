@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
-import { TIcon } from './TComponent';
+import { TIcon } from '../TComponent';
 
 class ExtraPanelItem extends React.Component {
   render() {
