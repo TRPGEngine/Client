@@ -56,7 +56,7 @@ const ExtraPanel = styled.View`
   border-top-color: #ccc;
 `;
 
-const EmojiCarousel = styled(Carousel)`
+const EmotionCarousel = styled(Carousel)`
   height: ${EMOJI_PANEL_HEIGHT - 35};
 `;
 
@@ -125,7 +125,7 @@ class ChatScreen extends React.Component {
       showExtraPanel: false,
       showEmoticonPanel: false,
       isKeyboardShow: false,
-      emotionCatalog: emojiCatalog[0],
+      selectedEmotionCatalog: emojiCatalog[0],
     };
   }
 
@@ -330,63 +330,86 @@ class ChatScreen extends React.Component {
 
   // 表情面板的渲染函数
   getEmoticonPanel() {
-    const emotionCatalog = this.state.emotionCatalog;
-    const emojis = _get(emojiMap, emotionCatalog, []).map(
-      ({ name, code }, index) => {
-        return (
-          <EmojiItem
-            key={name + index}
-            onPress={() => {
-              // 增加到输入框
-              const newMsg = this.state.inputMsg + code;
-              this.setState({ inputMsg: newMsg });
-            }}
-          >
-            <EmojiText>
-              <Emoji name={name} />
-            </EmojiText>
-          </EmojiItem>
-        );
-      }
-    );
+    const selectedEmotionCatalog = this.state.selectedEmotionCatalog;
+    const isEmoji = Object.keys(emojiMap).includes(selectedEmotionCatalog); // 监测是否为emoji表情
 
-    const rowNum = 3;
-    const colNum = 7;
-    const emojiPages = _chunk(emojis, rowNum * colNum);
+    // 返回当前页的emoji表情列表
+    const getEmojiPage = () => {
+      const emojis = _get(emojiMap, selectedEmotionCatalog, []).map(
+        ({ name, code }, index) => {
+          return (
+            <EmojiItem
+              key={name + index}
+              onPress={() => {
+                // 增加到输入框
+                const newMsg = this.state.inputMsg + code;
+                this.setState({ inputMsg: newMsg });
+              }}
+            >
+              <EmojiText>
+                <Emoji name={name} />
+              </EmojiText>
+            </EmojiItem>
+          );
+        }
+      );
+
+      const rowNum = 3;
+      const colNum = 7;
+      const emojiPages = _chunk(emojis, rowNum * colNum);
+
+      return emojiPages.map((emojiPage, index) => {
+        const rows = _chunk(emojiPage, colNum);
+
+        return (
+          <EmojiView key={index}>
+            {rows.map((emojis, index) => (
+              <EmojiViewRow key={index}>{emojis}</EmojiViewRow>
+            ))}
+          </EmojiView>
+        );
+      });
+    };
 
     return (
       <EmoticonPanel>
-        <EmojiCarousel>
-          {emojiPages.map((emojiPage, index) => {
-            const rows = _chunk(emojiPage, colNum);
-
-            return (
-              <EmojiView key={index}>
-                {rows.map((emojis, index) => (
-                  <EmojiViewRow key={index}>{emojis}</EmojiViewRow>
-                ))}
-              </EmojiView>
-            );
-          })}
-        </EmojiCarousel>
+        <EmotionCarousel>
+          {isEmoji ? getEmojiPage() : <Text>TODO</Text>}
+        </EmotionCarousel>
         <EmoticonCatalog>
           <EmoticonCatalogItem onPress={() => this._handleAddEmotionCatalog()}>
             <EmojiText>
               <Text>+</Text>
             </EmojiText>
           </EmoticonCatalogItem>
+          {/* emoji表情包 */}
           {emojiCatalog.map((catalog) => {
             const { name, code } = _get(emojiMap, [catalog, 0]); // 取目录第一个表情作为目录图标
 
             return (
               <EmoticonCatalogItem
                 key={catalog + name}
-                isSelected={this.state.emotionCatalog === catalog}
-                onPress={() => this.setState({ emotionCatalog: catalog })}
+                isSelected={this.state.selectedEmotionCatalog === catalog}
+                onPress={() =>
+                  this.setState({ selectedEmotionCatalog: catalog })
+                }
               >
                 <EmojiText>
                   <Emoji name={name} />
                 </EmojiText>
+              </EmoticonCatalogItem>
+            );
+          })}
+          {/* 自定义表情包 */}
+          {this.props.emotionCatalog.map((catalog) => {
+            return (
+              <EmoticonCatalogItem
+                key={catalog.get('uuid')}
+                onPress={() =>
+                  this.setState({ selectedEmotionCatalog: catalog.get('uuid') })
+                }
+              >
+                <Icon name="star" />
               </EmoticonCatalogItem>
             );
           })}
