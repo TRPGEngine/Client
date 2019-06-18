@@ -157,6 +157,18 @@ android {
                 output.versionCodeOverride =
                         versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
             }
+
+            // 定义输出文件命名
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName
+                if (variant.buildType.name.equals('release')) {
+                    fileName = "TRPGEngine-v${defaultConfig.versionName}_${defaultConfig.versionCode}.apk"
+                } else {
+                    fileName = "TRPGEngine-v${defaultConfig.versionName}-beta.apk"
+                }
+                output.apkData.outputFileName = fileName
+            }
         }
     }
 }
