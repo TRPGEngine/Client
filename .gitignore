@@ -7,7 +7,7 @@ config/local.js
 .buildcache/
 build/metro/conf.json
 build/emoji/emoji/
-
+android/gradle.properties
 
 # Logs
 logs
