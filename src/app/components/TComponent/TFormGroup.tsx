@@ -1,9 +1,17 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TextInputProps, StyleProp } from 'react-native';
 import sb from 'react-native-style-block';
-import TInput from './TInput';
+import TInput, { TInputProps } from './TInput';
 
-class TFormGroup extends React.Component {
+interface Props {
+  label: string;
+  value: string;
+  style: StyleProp<View>;
+  input: TInputProps;
+  onChangeText: (text: string) => void;
+}
+
+class TFormGroup extends React.Component<Props> {
   static defaultProps = {
     label: '',
     value: '',
@@ -21,7 +29,7 @@ class TFormGroup extends React.Component {
         <Text style={styles.label}>{this.props.label}:</Text>
         <TInput
           value={this.props.value}
-          onChangeText={(...args) => this.props.onChangeText(...args)}
+          onChangeText={(text: string) => this.props.onChangeText(text)}
           {...this.props.input}
           style={[...styles.input, ...this.props.input.style]}
         />

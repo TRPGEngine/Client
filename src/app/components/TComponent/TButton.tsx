@@ -1,8 +1,22 @@
 import React from 'react';
 import Button from 'apsl-react-native-button';
-import { TouchableOpacity, TouchableNativeFeedback } from 'react-native';
+import {
+  TouchableOpacity,
+  TouchableNativeFeedback,
+  StyleProp,
+  Text,
+  Button as OriButton,
+} from 'react-native';
 
-class TButton extends React.Component {
+type Props = {
+  type?: 'default' | 'error' | 'inline';
+  style?: any;
+  textStyle?: StyleProp<Text>;
+  disabled?: boolean;
+  [other: string]: any;
+};
+
+class TButton extends React.Component<Props> {
   render() {
     return (
       <Button

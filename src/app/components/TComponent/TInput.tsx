@@ -1,18 +1,20 @@
 import React from 'react';
-import { Text, TextInput } from 'react-native';
+import { Text, TextInput, TextInputProps } from 'react-native';
 import sb from 'react-native-style-block';
 
-class TInput extends React.Component {
+export type TInputProps = TextInputProps & { style?: any };
+
+class TInput extends React.Component<TInputProps> {
   static defaultProps = {
     style: [],
   };
 
   focus() {
-    this.refs.input.focus();
+    (this.refs.input as TextInput).focus();
   }
 
   blur() {
-    this.refs.input.blur();
+    (this.refs.input as TextInput).blur();
   }
 
   render() {

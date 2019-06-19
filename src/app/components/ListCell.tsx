@@ -1,10 +1,28 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, Image, Switch } from 'react-native';
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  Switch,
+  StyleProp,
+} from 'react-native';
 import sb from 'react-native-style-block';
 
-class ListCell extends React.Component {
+interface Props {
+  style?: StyleProp<View>;
+  icon?: string;
+  title: string;
+  color?: string;
+  value: boolean | string;
+  onPress?: () => void;
+  onChange?: (newValue: boolean) => void;
+}
+
+class ListCell extends React.Component<Props> {
   render() {
-    let Container = this.props.onPress ? TouchableOpacity : View;
+    const Container: any = this.props.onPress ? TouchableOpacity : View;
+
     return (
       <Container
         style={[...styles.container, this.props.style]}
@@ -21,7 +39,7 @@ class ListCell extends React.Component {
           </View>
         ) : this.props.onChange ? (
           <Switch
-            value={this.props.value || false}
+            value={Boolean(this.props.value) || false}
             onValueChange={(newValue) =>
               this.props.onChange && this.props.onChange(newValue)
             }

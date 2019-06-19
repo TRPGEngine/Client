@@ -7,7 +7,17 @@ import { TButton, TFormGroup, TLoading } from '../components/TComponent';
 import { showLoading, showAlert } from '../../redux/actions/ui';
 import { register } from '../../redux/actions/user';
 
-class RegisterScreen extends React.Component {
+interface Props {
+  dispatch: any;
+}
+
+interface State {
+  username: string;
+  password: string;
+  passwordRepeat: string;
+}
+
+class RegisterScreen extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -99,9 +109,7 @@ class RegisterScreen extends React.Component {
             secureTextEntry: true,
           }}
         />
-        <TButton style={styles.loginBtn} onPress={() => this._handleRegister()}>
-          成为祭品
-        </TButton>
+        <TButton onPress={() => this._handleRegister()}>成为祭品</TButton>
       </View>
     );
   }

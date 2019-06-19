@@ -1,11 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { View, Text, ActivityIndicator, BackHandler } from 'react-native';
 import { WebView } from 'react-native-webview';
 import sb from 'react-native-style-block';
 import rnStorage from '../../api/rnStorage.api.js';
 import { loginWithToken } from '../../redux/actions/user';
 import { backNav } from '../redux/actions/nav';
+import { NavigationScreenProps } from 'react-navigation';
 
 class Loading extends React.Component {
   render() {
@@ -24,7 +25,7 @@ class Loading extends React.Component {
   }
 }
 
-class LoadError extends React.Component {
+class LoadError extends React.Component<{ url: string }> {
   render() {
     return (
       <View
@@ -42,16 +43,19 @@ class LoadError extends React.Component {
   }
 }
 
-class WebviewScreen extends React.Component {
+type WebviewScreenProps = NavigationScreenProps & DispatchProp<any>;
+class WebviewScreen extends React.Component<WebviewScreenProps> {
   static navigationOptions = ({ navigation }) => {
     return {
       headerTitle: navigation.getParam('title', '加载中...'),
     };
   };
 
+  canGoBack = false;
+  webview: WebView;
+
   constructor(props) {
     super(props);
-    this.canGoBack = false;
   }
 
   componentDidMount() {
@@ -63,9 +67,9 @@ class WebviewScreen extends React.Component {
   }
 
   onBackPress = () => {
-    if (this.canGoBack) {
+    if (this.canGoBack && this.webview) {
       // 可以回退
-      this.refs.webview.goBack();
+      this.webview.goBack();
       return true;
     } else {
       // 不能回退
@@ -108,7 +112,7 @@ class WebviewScreen extends React.Component {
 
     return (
       <WebView
-        ref="webview"
+        ref={(ref) => (this.webview = ref)}
         source={{ uri: url }}
         startInLoadingState={true}
         renderLoading={() => <Loading />}
