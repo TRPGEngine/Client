@@ -9,6 +9,7 @@ const {
 } = require('react-native');
 import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
+import styled from 'styled-components/native';
 import config from '../../../config/project.config';
 import appConfig from '../config.app';
 import { logout } from '../../redux/actions/user';
@@ -17,6 +18,20 @@ import ListCell from '../components/ListCell';
 import { TButton, TAvatar } from '../components/TComponent';
 import checkVersion from '../../shared/utils/checkVersion';
 import appUtils from '../../shared/utils/apputils';
+import { TIcon } from '../components/TComponent';
+
+import { List } from '@ant-design/react-native';
+const Item = List.Item;
+
+const AccountList = styled(List)`
+  margin-top: 10px;
+`;
+
+const AccountListThumb = styled(TIcon)`
+  font-size: 22px;
+  margin-right: 10px;
+  color: ${(props) => props.color};
+`;
 
 class AccountScreen extends React.Component {
   static navigationOptions = {
@@ -79,33 +94,37 @@ class AccountScreen extends React.Component {
           <Text style={styles.arrow}>&#xe60e;</Text>
         </TouchableOpacity>
 
-        <View style={styles.listView}>
-          <ListCell
-            title="发现"
-            icon="&#xe60b;"
-            color="cornflowerblue"
+        <AccountList>
+          <Item
+            thumb={<AccountListThumb color="cornflowerblue" icon="&#xe60b;" />}
+            arrow="horizontal"
             onPress={() => {
               this.props.dispatch(openWebview(config.url.goddessfantasy));
             }}
-          />
-          <ListCell
-            title="设置"
-            icon="&#xe609;"
-            color="gold"
+          >
+            发现
+          </Item>
+          <Item
+            thumb={<AccountListThumb color="gold" icon="&#xe609;" />}
+            arrow="horizontal"
             onPress={() => {
               this.props.dispatch(
                 NavigationActions.navigate({ routeName: 'Settings' })
               );
             }}
-          />
-        </View>
-        <View style={styles.listView}>
-          <ListCell
-            title="当前版本"
-            value={config.version}
+          >
+            设置
+          </Item>
+        </AccountList>
+
+        <AccountList>
+          <Item
+            extra={config.version}
             onPress={() => this._handleCheckVersion()}
-          />
-        </View>
+          >
+            当前版本
+          </Item>
+        </AccountList>
 
         <TButton
           type="error"
@@ -140,7 +159,6 @@ const styles = {
     sb.font(18),
     sb.color('#ccc'),
   ],
-  listView: [{ marginBottom: 10 }],
 };
 
 export default connect((state) => ({
