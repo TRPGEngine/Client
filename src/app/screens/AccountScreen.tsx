@@ -1,12 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-const {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Linking,
-} = require('react-native');
+import { connect, DispatchProp } from 'react-redux';
+import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
 import styled from 'styled-components/native';
@@ -14,7 +8,6 @@ import config from '../../../config/project.config';
 import appConfig from '../config.app';
 import { logout } from '../../redux/actions/user';
 import { openWebview } from '../redux/actions/nav';
-import ListCell from '../components/ListCell';
 import { TButton, TAvatar } from '../components/TComponent';
 import checkVersion from '../../shared/utils/checkVersion';
 import appUtils from '../../shared/utils/apputils';
@@ -27,13 +20,17 @@ const AccountList = styled(List)`
   margin-top: 10px;
 `;
 
-const AccountListThumb = styled(TIcon)`
+const AccountListThumb = styled(TIcon)<{ color: string }>`
   font-size: 22px;
   margin-right: 10px;
   color: ${(props) => props.color};
 `;
 
-class AccountScreen extends React.Component {
+interface Props extends DispatchProp {
+  userInfo: any;
+}
+
+class AccountScreen extends React.Component<Props> {
   static navigationOptions = {
     tabBarLabel: '我',
     headerTitle: '我',
@@ -161,6 +158,6 @@ const styles = {
   ],
 };
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   userInfo: state.getIn(['user', 'info']),
 }))(AccountScreen);
