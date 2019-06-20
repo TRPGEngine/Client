@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import sb from 'react-native-style-block';
 import ImagePicker from 'react-native-image-picker';
 import axios from 'axios';
@@ -11,12 +11,15 @@ import { showAlert } from '../../redux/actions/ui';
 import { TAvatar } from '../components/TComponent';
 import ListCell from '../components/ListCell';
 
-class ProfileModifyScreen extends React.Component {
+interface Props extends DispatchProp {
+  userInfo: any;
+}
+class ProfileModifyScreen extends React.Component<Props> {
   // TODO: 应当使用通用上传逻辑
   _uploadAvatar(uri, type, name, size, width, height) {
     const file = { uri, type, name, size };
     const formData = new FormData();
-    formData.append('avatar', file);
+    formData.append('avatar', file as any);
 
     const headers = {
       'avatar-type': 'user',
@@ -62,7 +65,7 @@ class ProfileModifyScreen extends React.Component {
   }
 
   _handleSelectAvatar() {
-    const options = {
+    const options: any = {
       title: '选择头像',
       cancelButtonTitle: '取消',
       takePhotoButtonTitle: '拍一张照片',

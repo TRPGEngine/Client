@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
@@ -9,7 +9,8 @@ const { TButton, TFormGroup, TLoading } = require('../components/TComponent');
 import config from '../../../config/project.config';
 import appConfig from '../config.app';
 
-class LoginScreen extends React.Component {
+interface Props extends DispatchProp {}
+class LoginScreen extends React.Component<Props> {
   static navigationOptions = {
     header: null,
     tabBarIcon: ({ tintColor }) => (
@@ -19,13 +20,10 @@ class LoginScreen extends React.Component {
     ),
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: '',
-    };
-  }
+  state = {
+    username: '',
+    password: '',
+  };
 
   _handleLogin() {
     let { username, password } = this.state;

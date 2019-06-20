@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 const {
   View,
   Text,
@@ -12,20 +12,23 @@ import sb from 'react-native-style-block';
 import config from '../../../config/project.config';
 import { replaceNav } from '../redux/actions/nav';
 
-class LaunchScreen extends React.Component {
+interface Props extends DispatchProp {
+  isTryLogin: boolean;
+  isLogin: boolean;
+  network: any;
+}
+class LaunchScreen extends React.Component<Props> {
   static navigationOptions = {
     header: null,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      tipText: '',
-      logoTop: new Animated.Value(0), //logo动画高度
-      logoAlpha: new Animated.Value(0), //logo动画渐变
-      tipAlpha: new Animated.Value(0), //文字渐变
-    };
-  }
+  animationTimer: number;
+  state = {
+    tipText: '',
+    logoTop: new Animated.Value(0), //logo动画高度
+    logoAlpha: new Animated.Value(0), //logo动画渐变
+    tipAlpha: new Animated.Value(0), //文字渐变
+  };
 
   componentDidMount() {
     this.animationTimer = setTimeout(() => {
@@ -195,7 +198,7 @@ const styles = {
   },
 };
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   isTryLogin: state.getIn(['user', 'isTryLogin']),
   isLogin: state.getIn(['user', 'isLogin']),
   network: state.getIn(['ui', 'network']),

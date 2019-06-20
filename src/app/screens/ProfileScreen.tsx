@@ -1,7 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
 import sb from 'react-native-style-block';
+import immutable from 'immutable';
 import appConfig from '../config.app';
 import { getSamlpeDate } from '../../shared/utils/dateHelper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
@@ -10,7 +12,11 @@ import { addFriend } from '../../redux/actions/user';
 import { switchToConverseApp } from '../redux/actions/nav';
 import { getUserInfoCache } from '../../shared/utils/cacheHelper';
 
-class ProfileInfoItem extends React.Component {
+interface ItemProps {
+  name: string;
+  value: string;
+}
+class ProfileInfoItem extends React.Component<ItemProps> {
   render() {
     return (
       <View style={styles.item}>
@@ -21,7 +27,16 @@ class ProfileInfoItem extends React.Component {
   }
 }
 
-class ProfileScreen extends React.Component {
+interface NavigationParams {
+  uuid: string;
+  type: 'user' | 'group';
+}
+interface ScreenProps
+  extends DispatchProp,
+    NavigationScreenProps<NavigationParams> {
+  friendList: immutable.List<string>;
+}
+class ProfileScreen extends React.Component<ScreenProps> {
   constructor(props) {
     super(props);
   }
@@ -132,7 +147,7 @@ const styles = {
   actions: [sb.padding(10)],
 };
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   usercache: state.getIn(['cache', 'user']),
   friendList: state.getIn(['user', 'friendList']),
 }))(ProfileScreen);

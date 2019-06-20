@@ -2,28 +2,38 @@ import React from 'react';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { View, Modal, TouchableOpacity } from 'react-native';
 
-class TImageViewer extends React.Component {
+interface Props {
+  /**
+   * 图片地址列表
+   * 可以为单个字符串，也可以是一个字符串列表
+   */
+  images: string | string[];
+}
+
+class TImageViewer extends React.Component<Props> {
   state = {
     index: 0,
     modalVisible: false,
   };
 
   get images() {
-    let ret = [];
-    if (this.props.images) {
-      ret = this.props.images;
-      if (!Array.isArray(ret)) {
-        ret = [ret];
+    const images = this.props.images;
+    if (images) {
+      let list: string[] = [];
+      if (!Array.isArray(images)) {
+        list = [images];
+      } else {
+        list = images;
       }
 
-      ret = ret.map((r) => {
+      return list.map((r) => {
         if (typeof r === 'string') {
           return { url: r };
         }
       });
+    } else {
+      return [];
     }
-
-    return ret;
   }
 
   get menuContext() {

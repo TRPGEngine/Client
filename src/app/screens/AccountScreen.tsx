@@ -26,9 +26,9 @@ const AccountListThumb = styled(TIcon)<{ color: string }>`
   color: ${(props) => props.color};
 `;
 
-interface Props extends DispatchProp {
+type Props = DispatchProp & {
   userInfo: any;
-}
+};
 
 class AccountScreen extends React.Component<Props> {
   static navigationOptions = {
