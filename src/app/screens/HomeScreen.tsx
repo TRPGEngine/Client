@@ -1,17 +1,20 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { View, Text, FlatList, RefreshControl } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
 import dateHelper from '../../shared/utils/dateHelper';
 import appConfig from '../config.app';
 import ConvItem from '../components/ConvItem';
-const {
-  reloadConverseList,
-  switchConverse,
-} = require('../../redux/actions/chat');
+import { reloadConverseList, switchConverse } from '../../redux/actions/chat';
 
-class HomeScreen extends React.Component {
+interface Props extends DispatchProp {
+  converses: any;
+  conversesDesc: any;
+  groups: any;
+  usercache: any;
+}
+class HomeScreen extends React.Component<Props> {
   static navigationOptions = {
     headerTitle: 'TRPG',
     // tabBarLabel: 'TRPG',
@@ -22,16 +25,13 @@ class HomeScreen extends React.Component {
     ),
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isRefreshing: false,
-    };
-  }
+  state = {
+    isRefreshing: false,
+  };
 
   getList() {
     if (this.props.converses.size > 0) {
-      let arr = this.props.converses
+      let arr: any[] = this.props.converses
         .valueSeq()
         .sortBy((item) => new Date(item.get('lastTime')))
         .reverse()
@@ -123,7 +123,7 @@ const styles = {
   tipText: [sb.textAlign('center'), sb.margin(80, 0, 0, 0), sb.color('#999')],
 };
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   converses: state.getIn(['chat', 'converses']),
   conversesDesc: state.getIn(['chat', 'conversesDesc']),
   groups: state.getIn(['group', 'groups']),

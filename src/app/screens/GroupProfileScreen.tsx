@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
 import appConfig from '../config.app';
@@ -9,9 +9,14 @@ import { getGroupInfo } from '../../redux/actions/cache';
 import { addFriend } from '../../redux/actions/user';
 import { switchToConverseApp } from '../redux/actions/nav';
 import { getUserInfoCache } from '../../shared/utils/cacheHelper';
-import immutable from 'immutable';
+import { List } from 'immutable';
+import { NavigationScreenProps } from 'react-navigation';
 
-class ProfileInfoItem extends React.Component {
+interface ItemProps {
+  name: string;
+  value: string;
+}
+class ProfileInfoItem extends React.Component<ItemProps> {
   render() {
     return (
       <View style={styles.item}>
@@ -22,16 +27,16 @@ class ProfileInfoItem extends React.Component {
   }
 }
 
-class ProfileScreen extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+interface Props extends DispatchProp, NavigationScreenProps<{ uuid: string }> {
+  addedGroupUUIDList: List<string>;
+  groupcache: any;
+}
+class ProfileScreen extends React.Component<Props> {
   componentDidMount() {
     let uuid = this.props.navigation.state.params.uuid;
     if (uuid) {
       // 获取最新团信息
-      this.props.dispatch(getGroupInfo(uuid));
+      this.props.dispatch(getGroupInfo(uuid, undefined));
     }
   }
 
@@ -106,7 +111,7 @@ const styles = {
   actions: [sb.padding(10)],
 };
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   addedGroupUUIDList: state
     .getIn(['group', 'groups'])
     .map((g) => g.get('uuid')),

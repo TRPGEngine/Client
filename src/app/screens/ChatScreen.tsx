@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import {
   View,
   Text,
@@ -9,10 +9,12 @@ import {
   TextInput,
   Keyboard,
   TouchableOpacity,
+  EmitterSubscription,
 } from 'react-native';
 import { Icon } from '@ant-design/react-native';
 import sb from 'react-native-style-block';
 import ImagePicker from 'react-native-image-picker';
+import { NavigationScreenProps } from 'react-navigation';
 import { TInput, TIcon } from '../components/TComponent';
 import config from '../../../config/project.config';
 import { sendMsg } from '../../redux/actions/chat';
@@ -34,7 +36,7 @@ const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 const ActionBtn = styled.TouchableOpacity`
   align-self: stretch;
   justify-content: center;
-  margin-horizontal: 3;
+  margin: 0 3;
 `;
 
 const ExtraPanel = styled.View`
@@ -44,7 +46,10 @@ const ExtraPanel = styled.View`
   border-top-color: #ccc;
 `;
 
-class ChatScreen extends React.Component {
+interface Props extends DispatchProp, NavigationScreenProps {
+  msgList: any;
+}
+class ChatScreen extends React.Component<Props> {
   static navigationOptions = (props) => {
     const navigation = props.navigation;
     const { state, setParams } = navigation;
@@ -62,15 +67,17 @@ class ChatScreen extends React.Component {
     };
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputMsg: '',
-      showExtraPanel: false,
-      showEmoticonPanel: false,
-      isKeyboardShow: false,
-    };
-  }
+  state = {
+    inputMsg: '',
+    showExtraPanel: false,
+    showEmoticonPanel: false,
+    isKeyboardShow: false,
+  };
+
+  keyboardDidShowListener: EmitterSubscription;
+  keyboardDidHideListener: EmitterSubscription;
+  inputRef: TInput;
+  listRef: FlatList<any>;
 
   componentDidMount() {
     const converseType = this.props.navigation.getParam('type', 'user');
@@ -127,7 +134,7 @@ class ChatScreen extends React.Component {
    * 向服务器发送信息
    * @param {string} message 要发送的文本
    */
-  sendMsg(message) {
+  sendMsg(message: string) {
     const uuid = this.props.navigation.getParam('uuid', '');
     const converseType = this.props.navigation.getParam('type', 'user');
     if (!!message) {
