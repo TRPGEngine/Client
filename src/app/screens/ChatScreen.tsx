@@ -46,8 +46,10 @@ const ExtraPanel = styled.View`
   border-top-color: #ccc;
 `;
 
-interface Props extends DispatchProp, NavigationScreenProps {
+interface Props extends DispatchProp<any>, NavigationScreenProps {
   msgList: any;
+  selfInfo: any;
+  selfUUID: string;
 }
 class ChatScreen extends React.Component<Props> {
   static navigationOptions = (props) => {
@@ -59,7 +61,7 @@ class ChatScreen extends React.Component<Props> {
         <View style={{ marginRight: 10 }}>
           <TIcon
             icon="&#xe607;"
-            style={{ fontSize: 26 }}
+            style={{ fontSize: 26 } as any}
             onPress={() => params.headerRightFunc && params.headerRightFunc()}
           />
         </View>
@@ -142,7 +144,7 @@ class ChatScreen extends React.Component<Props> {
       if (!!uuid) {
         message = unemojify(message); // 转成标准文本
 
-        let payload = {
+        let payload: any = {
           message,
           type: 'normal',
           is_public: false,
@@ -165,7 +167,7 @@ class ChatScreen extends React.Component<Props> {
 
   _scrollToBottom() {
     setTimeout(() => {
-      this.refs.list && this.refs.list.scrollToIndex({ index: 0 }); // 因为使用了inverted属性因此滚到底部对于list的逻辑是滚到顶部
+      this.listRef && this.listRef.scrollToIndex({ index: 0 }); // 因为使用了inverted属性因此滚到底部对于list的逻辑是滚到顶部
     }, 130);
   }
 
@@ -189,10 +191,10 @@ class ChatScreen extends React.Component<Props> {
   _handleShowEmoticonPanel() {
     if (this.state.showEmoticonPanel === true) {
       this.setState({ showEmoticonPanel: false, showExtraPanel: false });
-      this.refs['input'].focus();
+      this.inputRef.focus();
     } else {
       this.setState({ showEmoticonPanel: true, showExtraPanel: false });
-      this.refs['input'].blur();
+      this.inputRef.blur();
     }
   }
 
@@ -200,10 +202,10 @@ class ChatScreen extends React.Component<Props> {
   _handleShowExtraPanel() {
     if (this.state.showExtraPanel === true) {
       this.setState({ showExtraPanel: false, showEmoticonPanel: false });
-      this.refs['input'].focus();
+      this.inputRef.focus();
     } else {
       this.setState({ showExtraPanel: true, showEmoticonPanel: false });
-      this.refs['input'].blur();
+      this.inputRef.blur();
     }
   }
 
@@ -292,13 +294,13 @@ class ChatScreen extends React.Component<Props> {
 
   render() {
     if (this.props.msgList) {
-      let msgList = this.props.msgList.reverse().toJS();
+      let msgList: any[] = this.props.msgList.reverse().toJS();
 
       return (
         <View style={styles.container}>
           <FlatList
             style={styles.list}
-            ref="list"
+            ref={(ref) => (this.listRef = ref)}
             data={msgList}
             inverted={true}
             keyExtractor={(item, index) => item.uuid + '#' + index}
@@ -341,7 +343,7 @@ class ChatScreen extends React.Component<Props> {
           />
           <View style={styles.msgBox}>
             <TInput
-              ref="input"
+              ref={(ref) => (this.inputRef = ref)}
               style={styles.msgInput}
               onChangeText={(inputMsg) => this.setState({ inputMsg })}
               onFocus={() => this._handleFocus()}
@@ -396,7 +398,7 @@ const styles = {
   extraPanel: [sb.size(null, 265), sb.bgColor(), sb.border('Top', 0.5, '#ccc')],
 };
 
-export default connect((state) => {
+export default connect((state: any) => {
   let selectedConversesUUID = state.getIn(['chat', 'selectedConversesUUID']);
   let msgList = state.getIn([
     'chat',

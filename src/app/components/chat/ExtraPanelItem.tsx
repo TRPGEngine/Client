@@ -3,7 +3,13 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
 import { TIcon } from '../TComponent';
 
-class ExtraPanelItem extends React.Component {
+interface Props {
+  icon: string;
+  text: string;
+  onPress: () => void;
+}
+
+class ExtraPanelItem extends React.Component<Props> {
   render() {
     const { icon, text, onPress } = this.props;
 

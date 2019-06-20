@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 const {
   View,
   Text,
@@ -13,15 +13,18 @@ import { TIcon, TInput, TAvatar } from '../components/TComponent';
 import { findUser } from '../../redux/actions/user';
 import { findGroup } from '../../redux/actions/group';
 
-class AddFriendScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchValue: '',
-      showSearchResult: false,
-      searchType: 'user',
-    };
-  }
+interface Props extends DispatchProp<any> {
+  isFinding: boolean;
+  userFindingResult: any;
+  groupFindingResult: any;
+}
+
+class AddFriendScreen extends React.Component<Props> {
+  state = {
+    searchValue: '',
+    showSearchResult: false,
+    searchType: 'user',
+  };
 
   _handleSearchUser() {
     let searchValue = this.state.searchValue.trim();
@@ -218,7 +221,7 @@ const styles = {
   searchResultListItemAvatar: [sb.margin(0, 10, 0, 0)],
 };
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   isFinding:
     state.getIn(['user', 'isFindingUser']) ||
     state.getIn(['group', 'isFindingGroup']),

@@ -2,7 +2,10 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { TButton } from '../../TComponent';
 
-class BaseCard extends React.Component {
+export interface BaseCardProps {
+  info: any;
+}
+class BaseCard<P = BaseCardProps> extends React.Component<P> {
   // 获取卡片视图
   getCardView() {
     let info = this.props.info;

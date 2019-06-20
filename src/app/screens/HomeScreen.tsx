@@ -8,7 +8,7 @@ import appConfig from '../config.app';
 import ConvItem from '../components/ConvItem';
 import { reloadConverseList, switchConverse } from '../../redux/actions/chat';
 
-interface Props extends DispatchProp {
+interface Props extends DispatchProp<any> {
   converses: any;
   conversesDesc: any;
   groups: any;

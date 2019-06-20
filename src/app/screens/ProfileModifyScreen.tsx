@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { Dispatch } from 'redux';
 import { connect, DispatchProp } from 'react-redux';
 import sb from 'react-native-style-block';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker, { ImagePickerOptions } from 'react-native-image-picker';
 import axios from 'axios';
 import { fileUrl } from '../../api/trpg.api.js';
 import { toast } from '../../shared/utils/apputils';
@@ -11,7 +12,7 @@ import { showAlert } from '../../redux/actions/ui';
 import { TAvatar } from '../components/TComponent';
 import ListCell from '../components/ListCell';
 
-interface Props extends DispatchProp {
+interface Props extends DispatchProp<any> {
   userInfo: any;
 }
 class ProfileModifyScreen extends React.Component<Props> {
@@ -65,7 +66,7 @@ class ProfileModifyScreen extends React.Component<Props> {
   }
 
   _handleSelectAvatar() {
-    const options: any = {
+    const options: ImagePickerOptions = {
       title: '选择头像',
       cancelButtonTitle: '取消',
       takePhotoButtonTitle: '拍一张照片',
@@ -159,16 +160,8 @@ const styles = {
   avatar: [sb.radius(50)],
   username: [sb.font(18), sb.margin(10, 0, 0, 0)],
   uuid: [sb.font(12)],
-  // item: [
-  //   {flexDirection: 'row'},
-  //   sb.padding(10, 4),
-  //   sb.border('Bottom', 0.5, '#eee'),
-  // ],
-  // actions: [
-  //   sb.padding(10),
-  // ],
 };
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   userInfo: state.getIn(['user', 'info']),
 }))(ProfileModifyScreen);

@@ -32,7 +32,7 @@ interface NavigationParams {
   type: 'user' | 'group';
 }
 interface ScreenProps
-  extends DispatchProp,
+  extends DispatchProp<any>,
     NavigationScreenProps<NavigationParams> {
   friendList: immutable.List<string>;
 }

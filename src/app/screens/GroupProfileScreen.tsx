@@ -27,7 +27,9 @@ class ProfileInfoItem extends React.Component<ItemProps> {
   }
 }
 
-interface Props extends DispatchProp, NavigationScreenProps<{ uuid: string }> {
+interface Props
+  extends DispatchProp<any>,
+    NavigationScreenProps<{ uuid: string }> {
   addedGroupUUIDList: List<string>;
   groupcache: any;
 }

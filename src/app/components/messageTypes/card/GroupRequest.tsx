@@ -1,12 +1,15 @@
-import BaseCard from './BaseCard';
-import { connect } from 'react-redux';
-const {
+import BaseCard, { BaseCardProps } from './BaseCard';
+import { connect, DispatchProp } from 'react-redux';
+import {
   agreeGroupRequest,
   refuseGroupRequest,
-} = require('../../../../redux/actions/group');
+} from '../../../../redux/actions/group';
 
 // 入团申请
-class GroupRequest extends BaseCard {
+interface Props extends DispatchProp<any>, BaseCardProps {
+  groups: any;
+}
+class GroupRequest extends BaseCard<Props> {
   getCardBtn() {
     let info = this.props.info;
     let data = info.data;
@@ -42,6 +45,6 @@ class GroupRequest extends BaseCard {
   }
 }
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   groups: state.getIn(['group', 'groups']),
 }))(GroupRequest);

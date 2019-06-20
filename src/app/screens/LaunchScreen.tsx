@@ -12,7 +12,7 @@ import sb from 'react-native-style-block';
 import config from '../../../config/project.config';
 import { replaceNav } from '../redux/actions/nav';
 
-interface Props extends DispatchProp {
+interface Props extends DispatchProp<any> {
   isTryLogin: boolean;
   isLogin: boolean;
   network: any;

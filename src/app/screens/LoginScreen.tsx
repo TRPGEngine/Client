@@ -9,7 +9,7 @@ const { TButton, TFormGroup, TLoading } = require('../components/TComponent');
 import config from '../../../config/project.config';
 import appConfig from '../config.app';
 
-interface Props extends DispatchProp {}
+interface Props extends DispatchProp<any> {}
 class LoginScreen extends React.Component<Props> {
   static navigationOptions = {
     header: null,

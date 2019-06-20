@@ -26,7 +26,7 @@ const AccountListThumb = styled(TIcon)<{ color: string }>`
   color: ${(props) => props.color};
 `;
 
-type Props = DispatchProp & {
+type Props = DispatchProp<any> & {
   userInfo: any;
 };
 

@@ -1,8 +1,13 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, TextProps } from 'react-native';
 import sb from 'react-native-style-block';
 
-class TIcon extends React.Component {
+interface Props extends TextProps {
+  style: any;
+  icon: any;
+}
+
+class TIcon extends React.Component<Props> {
   static defaultProps = {
     style: [],
     icon: '',
