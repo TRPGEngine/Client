@@ -1,12 +1,16 @@
-import BaseCard from './BaseCard';
-import { connect } from 'react-redux';
+import BaseCard, { BaseCardProps } from './BaseCard';
+import { connect, DispatchProp } from 'react-redux';
 const {
   agreeFriendInvite,
   refuseFriendInvite,
 } = require('../../../../redux/actions/user');
 
 // 好友邀请
-class FriendInvite extends BaseCard {
+interface Props extends BaseCardProps, DispatchProp<any> {
+  friendRequests: any;
+  friendList: any;
+}
+class FriendInvite extends BaseCard<Props> {
   getCardBtn() {
     let info = this.props.info;
     let data = info.data;
@@ -39,7 +43,7 @@ class FriendInvite extends BaseCard {
   }
 }
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   friendList: state.getIn(['user', 'friendList']),
   friendRequests: state.getIn(['user', 'friendRequests']),
 }))(FriendInvite);

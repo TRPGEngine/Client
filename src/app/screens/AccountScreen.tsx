@@ -10,7 +10,7 @@ import { logout } from '../../redux/actions/user';
 import { openWebview } from '../redux/actions/nav';
 import { TButton, TAvatar } from '../components/TComponent';
 import checkVersion from '../../shared/utils/checkVersion';
-import appUtils from '../../shared/utils/apputils';
+import * as appUtils from '../../shared/utils/apputils';
 import { TIcon } from '../components/TComponent';
 
 import { List } from '@ant-design/react-native';
@@ -126,7 +126,7 @@ class AccountScreen extends React.Component<Props> {
         <TButton
           type="error"
           style={styles.logoutBtn}
-          textStyle={{ color: 'white' }}
+          textStyle={{ color: 'white' } as any}
           onPress={() => this._handleLogout()}
         >
           退出

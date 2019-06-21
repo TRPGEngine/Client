@@ -10,20 +10,20 @@ import appConfig from '../../config.app';
 
 class File extends Base {
   _handlePreview() {
-    let data = this.props.info.data;
-    fileuuid = data.fileuuid;
+    const data = this.props.info.data;
+    const fileuuid = data.fileuuid;
     // TODO: 等待实现
   }
 
   _handleDownload() {
-    let data = this.props.info.data;
-    fileuuid = data.fileuuid;
+    const data = this.props.info.data;
+    const fileuuid = data.fileuuid;
     // TODO: 等待实现
   }
 
   _handleClick() {
-    let data = this.props.info.data;
-    fileuuid = data.fileuuid;
+    const data = this.props.info.data;
+    const fileuuid = data.fileuuid;
     // TODO: 等待实现
     alert('打开文件页');
   }

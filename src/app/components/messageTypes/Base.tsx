@@ -5,7 +5,17 @@ import { TAvatar } from '../TComponent';
 import dateHelper from '../../../shared/utils/dateHelper';
 import config from '../../../../config/project.config';
 
-class Base extends React.Component {
+export interface BaseMessageProps {
+  type: string;
+  me: boolean;
+  name: string;
+  avatar: string;
+  emphasizeTime: boolean;
+  info: any;
+}
+class Base<
+  P extends BaseMessageProps = BaseMessageProps
+> extends React.Component<P> {
   static defaultProps = {
     type: 'normal',
     me: false,

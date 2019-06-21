@@ -58,7 +58,11 @@ const Footer = styled.View`
   flex-direction: row;
 `;
 
-class TAlertContainer extends React.Component {
+interface Props {
+  showAlertInfo: any;
+  onRequestClose: any;
+}
+class TAlertContainer extends React.Component<Props> {
   render() {
     const { showAlertInfo, onRequestClose } = this.props;
     const title = showAlertInfo.get('title') || '';

@@ -1,12 +1,16 @@
-import BaseCard from './BaseCard';
-import { connect } from 'react-redux';
-const {
+import BaseCard, { BaseCardProps } from './BaseCard';
+import { connect, DispatchProp } from 'react-redux';
+import {
   agreeGroupInvite,
   refuseGroupInvite,
-} = require('../../../../redux/actions/group');
+} from '../../../../redux/actions/group';
 
 // 入团邀请
-class GroupInvite extends BaseCard {
+interface Props extends BaseCardProps, DispatchProp<any> {
+  groupInvites: any;
+  groupUUIDList: any;
+}
+class GroupInvite extends BaseCard<Props> {
   getCardBtn() {
     let info = this.props.info;
     let data = info.data;
@@ -39,7 +43,7 @@ class GroupInvite extends BaseCard {
   }
 }
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   groupInvites: state.getIn(['group', 'invites']),
   groupUUIDList: state
     .getIn(['group', 'groups'])

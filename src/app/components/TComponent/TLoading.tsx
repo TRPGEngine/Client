@@ -1,10 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { Modal, ActivityIndicator, View, Text } from 'react-native';
 import sb from 'react-native-style-block';
 import { hideLoading } from '../../../redux/actions/ui';
 
-class TLoading extends React.Component {
+interface Props extends DispatchProp<any> {
+  showLoading: boolean;
+  showLoadingText: string;
+}
+class TLoading extends React.Component<Props> {
   _handleClose() {
     this.props.dispatch(hideLoading());
   }
@@ -56,7 +60,7 @@ const styles = {
   text: [sb.color(), { paddingBottom: 10 }],
 };
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   showLoading: state.getIn(['ui', 'showLoading']),
   showLoadingText: state.getIn(['ui', 'showLoadingText']),
 }))(TLoading);

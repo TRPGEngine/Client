@@ -5,7 +5,9 @@ import { TButton } from '../../TComponent';
 export interface BaseCardProps {
   info: any;
 }
-class BaseCard<P = BaseCardProps> extends React.Component<P> {
+class BaseCard<P extends BaseCardProps = BaseCardProps> extends React.Component<
+  P
+> {
   // 获取卡片视图
   getCardView() {
     let info = this.props.info;
@@ -52,7 +54,9 @@ class BaseCard<P = BaseCardProps> extends React.Component<P> {
     if (this.props.info && this.props.info.data && this.props.info.data.title) {
       return (
         <View>
-          <Text style={styles.titleText}>{this.props.info.data.title}</Text>
+          <Text style={styles.titleText as any}>
+            {this.props.info.data.title}
+          </Text>
         </View>
       );
     }

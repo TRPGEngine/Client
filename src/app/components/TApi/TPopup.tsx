@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import RootSiblings from 'react-native-root-siblings';
 
 const styles = {
@@ -9,7 +9,7 @@ const styles = {
     right: 0,
     justifyContent: 'center',
     alignItems: 'center',
-  },
+  } as ViewStyle,
 };
 
 class TPopupContainer extends React.Component {
