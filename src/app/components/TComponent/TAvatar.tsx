@@ -1,10 +1,18 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, ImageSourcePropType } from 'react-native';
 import sb from 'react-native-style-block';
 import config from '../../../../config/project.config';
 import str2int from 'str2int';
 
-class TAvatar extends React.Component {
+interface Props {
+  uri: string | ImageSourcePropType;
+  name: string;
+  style: any;
+  capitalSize: number;
+  height: number;
+  width: number;
+}
+class TAvatar extends React.Component<Props> {
   static defaultProps = {
     uri: '',
     name: '',
@@ -14,12 +22,9 @@ class TAvatar extends React.Component {
     width: 100,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      loadError: false,
-    };
-  }
+  state = {
+    loadError: false,
+  };
 
   getColor(name) {
     if (!name) {
@@ -34,7 +39,7 @@ class TAvatar extends React.Component {
   render() {
     let { uri, name, style, capitalSize, height, width } = this.props;
 
-    if (!style instanceof Array) {
+    if (!(style instanceof Array)) {
       style = [style];
     }
 

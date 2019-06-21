@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 const {
   Text,
   View,
@@ -11,7 +11,12 @@ import sb from 'react-native-style-block';
 import TButton from './TButton';
 import { hideAlert } from '../../../redux/actions/ui';
 
-class TAlert extends React.Component {
+interface Props extends DispatchProp<any> {
+  showAlertInfo: any;
+  showAlert: boolean;
+  style: any;
+}
+class TAlert extends React.Component<Props> {
   static defaultProps = {
     style: [],
   };
@@ -36,7 +41,7 @@ class TAlert extends React.Component {
       cancelBtn = (
         <TButton
           style={[styles.btn, styles.cancelBtn]}
-          textStyle={{ color: '#666' }}
+          textStyle={{ color: '#666' } as any}
           onPress={() =>
             onCancel ? onCancel() : this.props.dispatch(hideAlert())
           }
@@ -99,7 +104,7 @@ const styles = {
   cancelBtn: [sb.bgColor('white')],
 };
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   showAlert: state.getIn(['ui', 'showAlert']),
   showAlertInfo: state.getIn(['ui', 'showAlertInfo']),
 }))(TAlert);

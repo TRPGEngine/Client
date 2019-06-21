@@ -25,7 +25,10 @@ class TFormGroup extends React.Component<Props> {
       this.props.input.style = [];
     }
     return (
-      <View {...this.props} style={[...styles.container, ...this.props.style]}>
+      <View
+        {...this.props}
+        style={[...styles.container, ...(this.props.style as any)]}
+      >
         <Text style={styles.label}>{this.props.label}:</Text>
         <TInput
           value={this.props.value}

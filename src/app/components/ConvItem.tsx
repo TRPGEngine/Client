@@ -3,7 +3,16 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import sb from 'react-native-style-block';
 import { TAvatar } from './TComponent';
 
-class ConvItem extends React.Component {
+interface Props {
+  style: any;
+  onPress?: () => void;
+  icon: string;
+  uuid: string;
+  title: string;
+  time?: string;
+  content?: string;
+}
+class ConvItem extends React.Component<Props> {
   render() {
     let style = this.props.style;
     if (!(style instanceof Array)) {

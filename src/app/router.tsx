@@ -21,7 +21,7 @@ import {
   createReactNavigationReduxMiddleware,
   createReduxContainer,
 } from 'react-navigation-redux-helpers';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { StackViewStyleInterpolator } from 'react-navigation-stack';
 
 import LaunchScreen from './screens/LaunchScreen';
@@ -142,13 +142,19 @@ export const AppNavigator = createStackNavigator(
 );
 
 export const middleware = createReactNavigationReduxMiddleware(
-  (state) => state.get('nav'),
+  (state: any) => state.get('nav'),
   'root'
 );
 
 const App = createReduxContainer(AppNavigator, 'root');
 
-class ReduxNavigation extends React.Component {
+interface ReduxNavigationProps extends DispatchProp<any> {
+  ui: any;
+  state: any;
+}
+class ReduxNavigation extends React.Component<ReduxNavigationProps> {
+  lastBackPressed: any;
+
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
   }

@@ -14,7 +14,10 @@ const styles = {
   ],
 };
 
-class TModalContainer extends React.Component {
+interface Props {
+  onRequestClose: () => void;
+}
+class TModalContainer extends React.Component<Props> {
   render() {
     return (
       <Modal

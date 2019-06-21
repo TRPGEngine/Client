@@ -5,7 +5,7 @@ const store = configureStore({
   additionReducer: {
     nav: navReducer,
   },
-});
+} as any);
 import { AppWithNavigationState } from './router';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as AntdProvider } from '@ant-design/react-native';

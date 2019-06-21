@@ -39,13 +39,15 @@ export function tryLocalNotify(messageData) {
   if (appState === 'background') {
     // 仅当应用在后台时。发起本地推送
 
+    // TODO: 待处理
     const sender_uuid = messageData.sender_uuid;
     const message = messageData.message;
 
     console.log('messageData', messageData);
+    // TODO: wait To fix type
     JPushModule.sendLocalNotification({
       title: '信息',
       content: messageData,
-    });
+    } as any);
   }
 }

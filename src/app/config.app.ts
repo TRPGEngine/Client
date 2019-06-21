@@ -47,8 +47,9 @@ const out = {
       checkFrequency: codePush.CheckFrequency.ON_APP_START,
     },
     sync() {
+      // TODO: wait to fix type
       codePush.sync({
-        updateDialog: true,
+        updateDialog: true as any,
         installMode: codePush.InstallMode.IMMEDIATE,
       });
     },

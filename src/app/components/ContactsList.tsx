@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { View, Text, SectionList, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
 import appConfig from '../config.app';
@@ -7,7 +7,14 @@ import { TIcon } from './TComponent';
 import ConvItem from './ConvItem';
 import { switchNav } from '../redux/actions/nav';
 
-class ContactList extends React.Component {
+interface Props extends DispatchProp<any> {
+  friends: any;
+  groups: any;
+}
+interface State {
+  list: any;
+}
+class ContactList extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -133,7 +140,7 @@ const styles = {
   cell: [{ marginLeft: 20, paddingLeft: 10 }],
 };
 
-export default connect((state) => {
+export default connect((state: any) => {
   let usercache = state.getIn(['cache', 'user']);
   let friends = state.getIn(['user', 'friendList']);
   let groups = state.getIn(['group', 'groups']);
