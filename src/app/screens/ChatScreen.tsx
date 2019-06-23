@@ -36,7 +36,7 @@ const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 const ActionBtn = styled.TouchableOpacity`
   align-self: stretch;
   justify-content: center;
-  margin: 0 3;
+  margin: 0px 3px;
 `;
 
 const ExtraPanel = styled.View`
