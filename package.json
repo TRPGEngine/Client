@@ -25,6 +25,11 @@
     "lint:fix": "eslint --fix --ext .js,.jsx src",
     "prettier:all": "prettier --write \"src/**/*.js\""
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "node ./build/husky/commit-msg.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TRPGEngine/Client.git"
@@ -135,6 +140,7 @@
     "gulp-replace": "^0.6.1",
     "html-webpack-include-assets-plugin": "^1.0.4",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^2.4.1",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "metro-react-native-babel-preset": "^0.53.1",
