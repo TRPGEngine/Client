@@ -18,7 +18,7 @@ export function parseDataText(
 }
 
 /**
- * XML渲染引擎，是一个入口
+ * XML渲染引擎，每次渲染组件都会循环调用该方法
  * 返回一个react vdom
  * @param data XML的ast
  * @param context 上下文，包括状态和dispatch
@@ -44,6 +44,19 @@ export function render(
   // type 为 element 或 root
   const { name, attributes, elements } = data;
   const _type = types.get(name);
+
+  // 预处理attributes。 将: 开头的参数作为变量处理
+  if (attributes && typeof attributes === 'object') {
+    Object.keys(attributes)
+      .filter((key) => key.startsWith(':'))
+      .forEach((key) => {
+        const value = attributes[key];
+        const realKey = key.substr(1);
+        const realVal = parseDataText(`{{${value}}}`, context);
+        attributes[realKey] = realVal;
+        console.log(realKey, realVal, typeof realVal);
+      });
+  }
 
   if (layoutType === 'edit') {
     return _type.getEditView(name, attributes, elements || [], context);
