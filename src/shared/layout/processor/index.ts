@@ -54,7 +54,6 @@ export function render(
         const realKey = key.substr(1);
         const realVal = parseDataText(`{{${value}}}`, context);
         attributes[realKey] = realVal;
-        console.log(realKey, realVal, typeof realVal);
       });
   }
 

@@ -57,6 +57,15 @@ export default class Base {
     return `${parentName}-${childrenName}-${index}`;
   }
 
+  /**
+   * 尝试将文本转化为数字
+   * @param str 要转换的文本
+   */
+  tryToNumber(str: string): number | string {
+    const num = Number(str);
+    return !isNaN(num) ? num : str;
+  }
+
   // 当挂载时回调
   onMounted() {}
 

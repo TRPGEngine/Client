@@ -66,8 +66,7 @@ const buildReducer = (onChange?: stateChangeHandler) => {
     switch (type) {
       case ActionType.UpdateData: {
         const scope = action.scope || 'data';
-        const numerData = Number(payload);
-        newState[scope] = !isNaN(numerData) ? numerData : payload; // 尝试转化为数字
+        newState[scope] = payload;
         break;
       }
       case ActionType.AddDefine:

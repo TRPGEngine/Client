@@ -35,7 +35,7 @@
         <span>{{props.initValue || 1}}</span>
       </Col>
       <Col :span="12">
-        <Input label="" name="props.value" changeValue="props.value" />
+        <Input :isNumber="true" label="" name="props.value" changeValue="props.value" />
       </Col>
       <Col :span="4">
         <!-- 成功率 -->
