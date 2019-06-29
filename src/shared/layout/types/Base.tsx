@@ -60,7 +60,11 @@ export default class Base {
   // 当挂载时回调
   onMounted() {}
 
-  // 渲染子元素的方法
+  /**
+   * 渲染子节点的方法
+   * @param childElements 子节点自己的相关参数
+   * @param context 通用上下文
+   */
   renderChildren(
     childElements: Array<XMLElement> = [],
     context: XMLBuilderContext

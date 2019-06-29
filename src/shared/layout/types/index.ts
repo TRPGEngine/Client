@@ -1,6 +1,6 @@
 // 这个文件是用于获取与注册所有可用类型
 import BaseType from './Base';
-const _list: Array<any> = [];
+const _list: Array<BaseType> = [];
 
 interface RegisterType {
   new (): BaseType;

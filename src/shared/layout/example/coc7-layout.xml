@@ -26,6 +26,7 @@
     </Col>
   </Define> -->
   <Define name="skill">
+    <Row>
     <Col>
       <pre>{{props.label}}</pre>
     </Col>
@@ -44,6 +45,7 @@
         <span>{{(props.initValue + props.value) / 5}}%</span>
       </Col>
     </Col>
+    </Row>
   </Define>
   <Define name="weapon">
     <td>{{props.label}}</td>

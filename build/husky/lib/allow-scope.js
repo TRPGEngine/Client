@@ -1,1 +1,1 @@
-module.exports = ['app', 'web', 'all'];
+module.exports = ['app', 'web', 'all', 'layout'];

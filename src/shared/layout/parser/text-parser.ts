@@ -17,7 +17,9 @@ const parseText = (text: string): TextParseResult => {
   const tokens = [];
   const rawTokens = [];
   let lastIndex = (tagRE.lastIndex = 0);
-  let match, index, tokenValue;
+  let match: RegExpExecArray;
+  let index: number;
+  let tokenValue: string;
   while ((match = tagRE.exec(text))) {
     index = match.index;
     // push text token

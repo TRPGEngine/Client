@@ -34,6 +34,13 @@ const getOperationData = (str: string): OperationDataType => {
   }
 };
 
+/**
+ * Input 组件
+ * 接受参数:
+ * - label: 标题
+ * - name: 显示的数据名。如果为空则取label
+ * - changeValue: 要被修改的变量。如果为空则取name
+ */
 export default class TInput extends Base {
   name = 'Input';
 
@@ -45,17 +52,22 @@ export default class TInput extends Base {
   ) {
     const label = attributes.label as string;
     const name = attributes.name as string;
+
     const changeValue = attributes.changeValue as string; // 指定要被修改的变量
     const bindingName = parseDataText(name || label, context); // 可以为a.b的格式
     const { state, dispatch } = context;
 
-    const parsedLabel = this.parseMultilineText(label);
+    const parsedLabel = this.parseMultilineText(label); // Input标题
 
+    /**
+     * 获取输入的数据
+     */
     const getInputValue = () => {
       const { scope, field } = getOperationData(bindingName);
 
       return _get(state, [scope, field].join('.'));
     };
+
     return (
       <BaseTypeRow key={attributes.key}>
         <Col span={6}>

@@ -17,15 +17,22 @@ export function parseDataText(
   return compileCode(`return ${expression}`)(sandbox);
 }
 
+/**
+ * XML渲染引擎，是一个入口
+ * 返回一个react vdom
+ * @param data XML的ast
+ * @param context 上下文，包括状态和dispatch
+ * @param layoutType 布局类型, 为edit或detail
+ */
 export function render(
   data: XMLElement,
   context: XMLBuilderContext,
-  layoutType = 'edit'
+  layoutType: string = 'edit'
 ) {
   const { type } = data;
 
   // 仅渲染元素类型与文本类型与根节点
-  if (!(type === 'element' || type === 'text' || type === 'root')) {
+  if (!['element', 'text', 'root'].includes(type)) {
     return;
   }
 

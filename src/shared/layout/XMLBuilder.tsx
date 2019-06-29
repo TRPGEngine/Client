@@ -61,11 +61,13 @@ const buildReducer = (onChange?: stateChangeHandler) => {
     const type = action.type;
     const payload = action.payload;
     const newState = _clone(prevState);
+    console.log(`[Action] ${type}:`, payload);
 
     switch (type) {
       case ActionType.UpdateData: {
         const scope = action.scope || 'data';
-        newState[scope] = payload;
+        const numerData = Number(payload);
+        newState[scope] = !isNaN(numerData) ? numerData : payload; // 尝试转化为数字
         break;
       }
       case ActionType.AddDefine:
@@ -77,6 +79,7 @@ const buildReducer = (onChange?: stateChangeHandler) => {
 
     return newState;
   };
+
   return XMLBuilderReducer;
 };
 
