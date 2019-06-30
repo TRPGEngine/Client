@@ -5,6 +5,7 @@ import Input from './Input';
 import Row from './Row';
 import Select from './Select';
 import Tabs from './Tabs';
+import TextArea from './TextArea';
 import Use from './Use';
 
 register(Col);
@@ -13,4 +14,5 @@ register(Input);
 register(Row);
 register(Select);
 register(Tabs);
+register(TextArea);
 register(Use);

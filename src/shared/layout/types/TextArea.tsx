@@ -1,22 +1,15 @@
 import React from 'react';
 import Base, { BaseTypeRow } from './Base';
-import { Input, Col } from 'antd';
-import { XMLBuilderContext } from '../XMLBuilder';
 import { XMLElementAttributes } from '../parser/xml-parser';
+import { XMLBuilderContext } from '../XMLBuilder';
+import { parseDataText } from '../processor';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
-import { parseDataText } from '../processor';
+import { Col, Input } from 'antd';
+const TextArea = Input.TextArea;
 
-/**
- * Input 组件
- * 接受参数:
- * - label: 标题
- * - name: 显示的数据名。如果为空则取label
- * - changeValue: 要被修改的变量。如果为空则取name
- * - isNumber: 如果为true则无论输入什么都尝试转化为数字
- */
-export default class TInput extends Base {
-  name = 'Input';
+export default class TTextArea extends Base {
+  name = 'TextArea';
 
   getEditView(
     tagName,
@@ -40,7 +33,7 @@ export default class TInput extends Base {
           <pre>{parsedLabel}</pre>
         </Col>
         <Col span={18}>
-          <Input
+          <TextArea
             placeholder={label}
             value={this.getStateValue(context, bindingName)}
             onChange={(e) => {

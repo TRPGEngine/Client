@@ -6,7 +6,12 @@ import _get from 'lodash/get';
 import _set from 'lodash/set';
 import { Row } from 'antd';
 import styled from 'styled-components';
-import { XMLBuilderContext } from '../XMLBuilder';
+import { XMLBuilderContext, XMLBuilderState } from '../XMLBuilder';
+
+type OperationDataType = {
+  scope: string;
+  field: string;
+};
 
 // defined from facebook/react/packages/react-dom/src/shared/voidElementTags.js
 // https://github.com/facebook/react/blob/b0657fde6a/packages/react-dom/src/shared/voidElementTags.js
@@ -64,6 +69,38 @@ export default class Base {
   tryToNumber(str: string): number | string {
     const num = Number(str);
     return !isNaN(num) ? num : str;
+  }
+
+  /**
+   * 获取需要操作的变量的作用域与操作的变量名
+   * 作用域默认为data
+   * @param str 操作参数字符串
+   */
+  getOperationData(str: string): OperationDataType {
+    const [scope, ...fields] = str.split('.');
+    if (fields.length > 0) {
+      // 如果为abc.def
+      return {
+        scope,
+        field: fields.join('.'),
+      };
+    } else {
+      // 如果为abc
+      return {
+        scope: 'data',
+        field: scope,
+      };
+    }
+  }
+
+  /**
+   * 根据上下文获取指定状态的数据
+   */
+  getStateValue(context: XMLBuilderContext, bindingName: string) {
+    const state = context.state;
+    const { scope, field } = this.getOperationData(bindingName);
+
+    return _get(state, [scope, field].join('.'));
   }
 
   // 当挂载时回调
