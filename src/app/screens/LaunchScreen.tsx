@@ -11,6 +11,8 @@ import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
 import config from '../../../config/project.config';
 import { replaceNav } from '../redux/actions/nav';
+import { Modal } from '@ant-design/react-native';
+import SystemStatus from '../components/SystemStatus';
 
 interface Props extends DispatchProp<any> {
   isTryLogin: boolean;
@@ -28,6 +30,7 @@ class LaunchScreen extends React.Component<Props> {
     logoTop: new Animated.Value(0), //logo动画高度
     logoAlpha: new Animated.Value(0), //logo动画渐变
     tipAlpha: new Animated.Value(0), //文字渐变
+    isShowSystemStatusModal: false, // 是否显示系统状态模态框
   };
 
   componentDidMount() {
@@ -61,6 +64,7 @@ class LaunchScreen extends React.Component<Props> {
     if (nextProps.network.get('isOnline') === false) {
       return;
     }
+
     if (this.props.isTryLogin === true && nextProps.isTryLogin === false) {
       if (nextProps.isLogin) {
         this.props.dispatch(replaceNav('Main'));
@@ -90,6 +94,26 @@ class LaunchScreen extends React.Component<Props> {
     }
   }
 
+  /**
+   * 服务状态框
+   * 用于查看服务器连接问题
+   */
+  getSystemStatusModal() {
+    return (
+      <Modal
+        transparent={false}
+        popup={true}
+        visible={this.state.isShowSystemStatusModal}
+        maskClosable={true}
+        onClose={() => {
+          this.setState({ isShowSystemStatusModal: false });
+        }}
+      >
+        <SystemStatus />
+      </Modal>
+    );
+  }
+
   render() {
     let network = this.props.network;
     let networkType = 'red';
@@ -101,7 +125,10 @@ class LaunchScreen extends React.Component<Props> {
 
     return (
       <View style={styles.container}>
-        <View style={styles.networkIndicator.container}>
+        <TouchableOpacity
+          style={styles.networkIndicator.container}
+          onPress={() => this.setState({ isShowSystemStatusModal: true })}
+        >
           <View
             style={[
               styles.networkIndicator.common,
@@ -109,7 +136,7 @@ class LaunchScreen extends React.Component<Props> {
             ]}
           />
           <Text>当前网络状态: {network.get('msg')}</Text>
-        </View>
+        </TouchableOpacity>
 
         <Animated.View
           style={{
@@ -148,6 +175,8 @@ class LaunchScreen extends React.Component<Props> {
         >
           {this.state.tipText}
         </Text>
+
+        {this.getSystemStatusModal()}
       </View>
     );
   }
