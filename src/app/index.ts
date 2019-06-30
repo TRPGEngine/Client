@@ -20,6 +20,9 @@ if (dsn && projectConfig.environment === 'production') {
     });
 }
 
-YellowBox.ignoreWarnings(['Require cycle:']); // Metro warning, Specific for Sentry
+YellowBox.ignoreWarnings([
+  'Require cycle:', // Metro warning, Specific for Sentry
+  'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?', // for socket.io-client
+]);
 
 AppRegistry.registerComponent('trpg', () => App);
