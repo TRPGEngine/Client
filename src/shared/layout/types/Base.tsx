@@ -13,6 +13,22 @@ type OperationDataType = {
   field: string;
 };
 
+export interface ILayoutType {
+  name: string;
+  getEditView(
+    tagName: string,
+    attributes: XMLElementAttributes,
+    elements: Array<XMLElement>,
+    context: XMLBuilderContext
+  ): React.ReactElement;
+  getDetailView(
+    tagName: string,
+    attributes: XMLElementAttributes,
+    elements: Array<XMLElement>,
+    context: XMLBuilderContext
+  ): React.ReactElement;
+}
+
 // defined from facebook/react/packages/react-dom/src/shared/voidElementTags.js
 // https://github.com/facebook/react/blob/b0657fde6a/packages/react-dom/src/shared/voidElementTags.js
 const voidElementTags = [
@@ -34,7 +50,7 @@ const voidElementTags = [
   'wbr',
 ];
 
-export default class Base {
+export default class Base implements ILayoutType {
   name: string;
 
   // 预处理tag name
