@@ -2,14 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NProgress from 'nprogress';
 import config from '../../../config/project.config';
-
 require('nprogress/nprogress.css');
 import './Webview.scss';
 
 let webframeIndex = 0;
 const isElectron = config.platform === 'electron';
 
-class Webview extends React.Component {
+interface Props {
+  src: string;
+  allowExopen?: boolean;
+}
+
+class Webview extends React.Component<Props> {
+  id: string;
+  webframe: HTMLElement & { src: string };
+
   constructor(props) {
     super(props);
     this.id = 'webframe' + webframeIndex;
@@ -20,18 +27,18 @@ class Webview extends React.Component {
     NProgress.configure({ parent: '#' + this.id });
     NProgress.start();
     if (isElectron) {
-      this.refs.webframe.src = this.props.src;
-      this.refs.webframe.addEventListener('dom-ready', function() {
+      this.webframe.src = this.props.src;
+      this.webframe.addEventListener('dom-ready', function() {
         console.log('webview loadCompleted');
         NProgress.done();
       });
-      this.refs.webframe.addEventListener('will-navigate', function(e) {
+      this.webframe.addEventListener('will-navigate', function(e: any) {
         console.log('webview change, url:', e.url);
         NProgress.start();
       });
     } else {
-      this.refs.webframe.src = this.props.src;
-      this.refs.webframe.onload = function(e) {
+      this.webframe.src = this.props.src;
+      this.webframe.onload = function(e) {
         console.log('webview loadCompleted');
         NProgress.done();
       };
@@ -39,7 +46,7 @@ class Webview extends React.Component {
   }
 
   _handleOpenInNewWindow() {
-    window.open(this.refs.webframe.src, 'square', 'frame=true');
+    window.open(this.webframe.src, 'square', 'frame=true');
   }
 
   render() {
@@ -54,15 +61,14 @@ class Webview extends React.Component {
             <i className="iconfont">&#xe63c;</i>
           </div>
         )}
-        {isElectron ? <webview ref="webframe" /> : <iframe ref="webframe" />}
+        {isElectron ? (
+          <webview ref={(ref) => (this.webframe = ref as any)} />
+        ) : (
+          <iframe ref={(ref) => (this.webframe = ref)} />
+        )}
       </div>
     );
   }
 }
-
-Webview.propTypes = {
-  src: PropTypes.string,
-  allowExopen: PropTypes.bool,
-};
 
 export default Webview;
