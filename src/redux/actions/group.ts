@@ -280,9 +280,9 @@ export const refuseGroupInvite = function(inviteUUID) {
     });
   };
 };
-export const getGroupInvite = function(inviteUUID) {
+export const getGroupInvite = function() {
   return function(dispatch, getState) {
-    api.emit('group::getGroupInvite', { uuid: inviteUUID }, function(data) {
+    api.emit('group::getGroupInvite', function(data) {
       if (data.result) {
         dispatch({ type: GET_GROUP_INVITE_SUCCESS, payload: data.res });
       } else {

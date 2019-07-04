@@ -74,7 +74,7 @@ export const sendDiceInvite = function(
   };
 };
 
-export const acceptDiceInvite = function(uuid, isGroupMsg) {
+export const acceptDiceInvite = function(uuid) {
   return function(dispatch, getState) {
     return api.emit('dice::acceptDiceInvite', { msg_card_uuid: uuid }, function(
       data

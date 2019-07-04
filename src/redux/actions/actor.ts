@@ -36,7 +36,7 @@ let setTemplate = function setTemplate(uuid, name, desc, avatar, info) {
   };
 };
 
-let getTemplate = function getTemplate(uuid) {
+let getTemplate = function getTemplate(uuid?: string) {
   return function(dispatch, getState) {
     return api.emit('actor::getTemplate', { uuid }, function(data) {
       if (data.result) {

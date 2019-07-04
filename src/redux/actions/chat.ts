@@ -83,7 +83,7 @@ export let updateConversesMsglist = function updateConversesMsglist(
 };
 
 // 获取多人会话
-export let getConverses = function getConverses(cb) {
+export let getConverses = function getConverses(cb?) {
   return function(dispatch, getState) {
     dispatch({ type: GET_CONVERSES_REQUEST });
     // 获取会话列表
@@ -292,7 +292,7 @@ export let getAllUserConverse = function getAllUserConverse() {
 
 // 重新加载会话列表
 // TODO: 暂时先把cb放在getConverses，以后再想办法优化
-export let reloadConverseList = function reloadConverseList(cb) {
+export let reloadConverseList = function reloadConverseList(cb?) {
   return function(dispatch, getState) {
     let userInfo = getState().getIn(['user', 'info']);
     let userUUID = userInfo.get('uuid');
@@ -518,7 +518,7 @@ export let updateCardChatData = function(chatUUID, newData) {
 const getWriteHash = (type = 'user', uuid) => {
   return `${type}#${uuid}`;
 };
-export let startWriting = function(type = 'user', uuid) {
+export let startWriting = function(type = 'user', uuid: string) {
   return function(dispatch, getState) {
     dispatch({
       type: UPDATE_WRITING_STATUS,
@@ -532,13 +532,13 @@ export let startWriting = function(type = 'user', uuid) {
     renewableDelayTimer(
       getWriteHash(type, uuid),
       function() {
-        dispatch(stopWriting()); // 如果10秒后没有再次收到正在输入的信号，则视为已经停止输入了
+        dispatch(stopWriting(type, uuid)); // 如果10秒后没有再次收到正在输入的信号，则视为已经停止输入了
       },
       config.chat.isWriting.timeout
     );
   };
 };
-export let stopWriting = function(type = 'user', uuid) {
+export let stopWriting = function(type = 'user', uuid: string) {
   return {
     type: UPDATE_WRITING_STATUS,
     payload: {

@@ -31,7 +31,7 @@ export const saveLocalCache = function() {
   };
 };
 
-export const getUserInfo = function(uuid, onCompleted) {
+export const getUserInfo = function(uuid, onCompleted?) {
   if (!uuid) {
     throw new Error('getUserInfo need uuid');
   }

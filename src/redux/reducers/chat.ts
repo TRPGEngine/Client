@@ -170,10 +170,8 @@ export default function chat(state = initialState, action) {
             .sortBy((item) => item.get('date'))
             .last();
           return state
-            .updateIn(
-              ['converses', convUUID, 'msgList'],
-              (list) =>
-                new immutable.List(new immutable.Set(list.concat(payload)))
+            .updateIn(['converses', convUUID, 'msgList'], (list) =>
+              immutable.List(immutable.Set(list.concat(payload)))
             ) //添加一步去重操作
             .setIn(['converses', convUUID, 'lastMsg'], lastLog.get('message'))
             .setIn(['converses', convUUID, 'lastTime'], lastLog.get('date'));
@@ -277,6 +275,7 @@ export default function chat(state = initialState, action) {
         }
 
         // TODO: 团正在输入待实现
+        break;
       }
       case UPDATE_USER_CHAT_EMOTION_CATALOG: {
         const catalogs = action.payload;

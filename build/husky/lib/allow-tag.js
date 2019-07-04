@@ -1,1 +1,1 @@
-module.exports = ['star', 'hammer', 'bug'];
+module.exports = ['star', 'hammer', 'bug', 'fire'];
