@@ -5,6 +5,8 @@ import _clone from 'lodash/clone';
 import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
 import './types/__all__';
+import Debug from 'debug';
+const debug = Debug('trpg:XMLBuilder');
 
 export type DefinePropsType = {
   [name: string]: any;
@@ -61,6 +63,7 @@ const buildReducer = (onChange?: stateChangeHandler) => {
     const type = action.type;
     const payload = action.payload;
     const newState = _clone(prevState);
+    debug(`[Action] ${type}: %o`, payload);
 
     switch (type) {
       case ActionType.UpdateData: {
@@ -77,6 +80,7 @@ const buildReducer = (onChange?: stateChangeHandler) => {
 
     return newState;
   };
+
   return XMLBuilderReducer;
 };
 

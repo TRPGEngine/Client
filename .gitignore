@@ -6,7 +6,8 @@ config/local.js
 .sentryclirc
 .buildcache/
 build/metro/conf.json
-
+build/emoji/emoji/
+android/gradle.properties
 
 # Logs
 logs

@@ -26,24 +26,26 @@
     </Col>
   </Define> -->
   <Define name="skill">
-    <Col>
-      <pre>{{props.label}}</pre>
-    </Col>
-    <Col>
-      <!-- 初始值 -->
-      <span>{{props.initValue || 1}}</span>
-    </Col>
-    <Col>
-      <Input label="" name="props.value" changeValue="props.value" />
-    </Col>
-    <Col>
-      <!-- 成功率 -->
-      <Col>
-        <span>{{props.initValue + props.value}}%</span>
-        <span>{{(props.initValue + props.value) / 2}}%</span>
-        <span>{{(props.initValue + props.value) / 5}}%</span>
+    <Row>
+      <Col :span="4">
+        <pre>{{props.label}}</pre>
       </Col>
-    </Col>
+      <Col :span="4">
+        <!-- 初始值 -->
+        <span>{{props.initValue || 1}}</span>
+      </Col>
+      <Col :span="12">
+        <Input :isNumber="true" label="" name="props.value" changeValue="props.value" />
+      </Col>
+      <Col :span="4">
+        <!-- 成功率 -->
+        <Col>
+          <span>{{props.initValue + props.value}}%</span>
+          <span>{{(props.initValue + props.value) / 2}}%</span>
+          <span>{{(props.initValue + props.value) / 5}}%</span>
+        </Col>
+      </Col>
+    </Row>
   </Define>
   <Define name="weapon">
     <td>{{props.label}}</td>
@@ -109,7 +111,7 @@
         <!-- 技能表 -->
         <!-- TODO: 技能的初始值会根据职业不同进行变换 -->
         <Col>
-          <Use define="skill" label="会计" initValue="5" />
+          <Use define="skill" label="会计" :initValue="5" />
           <!-- <Use define="skill" label="人类学" initValue="1" />
           <Use define="skill" label="估价" initValue="5" />
           <Use define="skill" label="技艺:{{技艺1}}" initValue="5" />

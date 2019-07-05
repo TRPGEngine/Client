@@ -17,15 +17,22 @@ export function parseDataText(
   return compileCode(`return ${expression}`)(sandbox);
 }
 
+/**
+ * XML渲染引擎，每次渲染组件都会循环调用该方法
+ * 返回一个react vdom
+ * @param data XML的ast
+ * @param context 上下文，包括状态和dispatch
+ * @param layoutType 布局类型, 为edit或detail
+ */
 export function render(
   data: XMLElement,
   context: XMLBuilderContext,
-  layoutType = 'edit'
+  layoutType: string = 'edit'
 ) {
   const { type } = data;
 
   // 仅渲染元素类型与文本类型与根节点
-  if (!(type === 'element' || type === 'text' || type === 'root')) {
+  if (!['element', 'text', 'root'].includes(type)) {
     return;
   }
 
@@ -37,6 +44,18 @@ export function render(
   // type 为 element 或 root
   const { name, attributes, elements } = data;
   const _type = types.get(name);
+
+  // 预处理attributes。 将: 开头的参数作为变量处理
+  if (attributes && typeof attributes === 'object') {
+    Object.keys(attributes)
+      .filter((key) => key.startsWith(':'))
+      .forEach((key) => {
+        const value = attributes[key];
+        const realKey = key.substr(1);
+        const realVal = parseDataText(`{{${value}}}`, context);
+        attributes[realKey] = realVal;
+      });
+  }
 
   if (layoutType === 'edit') {
     return _type.getEditView(name, attributes, elements || [], context);

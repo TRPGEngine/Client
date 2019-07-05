@@ -16,6 +16,7 @@ fs.writeJson(configFilePath, config);
 module.exports = {
   resolver: {
     blacklistRE: blacklist([/src\/web/]),
+    sourceExts: ['js', 'ts', 'tsx'],
   },
   transformer: {
     babelTransformerPath: path.resolve(

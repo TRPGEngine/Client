@@ -5,7 +5,10 @@ type TextParseResult = {
   tokens: Array<string | { '@binding': string }>;
 };
 
-// 处理{{data}}格式的数据
+/**
+ * 处理{{data}}格式的数据。 返回一个相关表达式和token
+ * @param text 带{{data}}的字符串
+ */
 const parseText = (text: string): TextParseResult => {
   if (!tagRE.test(text)) {
     // 如果没有检测到{{}}格式的数据。则返回纯文本
@@ -17,7 +20,9 @@ const parseText = (text: string): TextParseResult => {
   const tokens = [];
   const rawTokens = [];
   let lastIndex = (tagRE.lastIndex = 0);
-  let match, index, tokenValue;
+  let match: RegExpExecArray;
+  let index: number;
+  let tokenValue: string;
   while ((match = tagRE.exec(text))) {
     index = match.index;
     // push text token

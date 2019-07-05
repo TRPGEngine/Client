@@ -44,6 +44,9 @@ const getBabelRC = (function() {
 
     // specify babel rc path
     let projectBabelRCPath = path.resolve(__dirname, 'babel.config.js');
+    if (NODE_ENV === 'production') {
+      projectBabelRCPath = path.resolve(__dirname, 'babel.config.prod.js');
+    }
     console.log('loading babel config:', projectBabelRCPath);
     if (fs.existsSync(projectBabelRCPath)) {
       babelRC.extends = projectBabelRCPath;

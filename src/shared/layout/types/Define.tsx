@@ -38,6 +38,7 @@ type DefineConstructorProps = {
 };
 
 let globalInstanceId = 0;
+
 class DefineConstructor extends React.Component<DefineConstructorProps> {
   instanceId: number;
 
@@ -86,6 +87,9 @@ class DefineConstructor extends React.Component<DefineConstructorProps> {
   }
 }
 
+/**
+ * 定义的子组件名
+ */
 export default class TDefine extends Base {
   name = 'Define';
 
