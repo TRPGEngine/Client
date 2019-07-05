@@ -4,6 +4,7 @@ import dateHelper from '../../shared/utils/dateHelper';
 import config from '../../../config/project.config';
 
 import styled from 'styled-components/native';
+import request from '../../shared/utils/request';
 
 const LocalTimer = () => {
   const [timestamp, setTimestamp] = useState(dateHelper.getFullDate());
@@ -19,6 +20,29 @@ const LocalTimer = () => {
   }, []); // 传入空数组表示不依赖任何数据进行更新。即只会运行一次
 
   return <Text>{timestamp}</Text>;
+};
+
+const HTTPStatus = () => {
+  const [requesting, setRequesting] = useState(false);
+  const [available, setAvailable] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      setRequesting(true);
+      const res = await request('/core/health', 'get', {});
+
+      setRequesting(false);
+      if (res.status === 200) {
+        setAvailable(true);
+      } else {
+        setAvailable(false);
+      }
+    })();
+  }, []);
+
+  return (
+    <Text>{requesting ? '请求中...' : available ? '可用' : '不可用'}</Text>
+  );
 };
 
 const Container = styled.View`
@@ -49,6 +73,10 @@ export default class SystemStatus extends React.Component {
       {
         label: '本地时间',
         value: <LocalTimer />,
+      },
+      {
+        label: 'HTTP服务',
+        value: <HTTPStatus />,
       },
     ];
   }
