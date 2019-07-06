@@ -1,6 +1,7 @@
 import constants from '../constants';
 const {
   GET_TEMPLATE_SUCCESS,
+  GET_SUGGEST_TEMPLATES_SUCCESS,
   FIND_TEMPLATE_SUCCESS,
   CREATE_TEMPLATE_SUCCESS,
   UPDATE_TEMPLATE_SUCCESS,
@@ -42,6 +43,29 @@ let getTemplate = function getTemplate(uuid?: string) {
       if (data.result) {
         let payload = uuid ? data.template : data.templates;
         dispatch({ type: GET_TEMPLATE_SUCCESS, uuid, payload });
+      } else {
+        console.error(data.msg);
+      }
+    });
+  };
+};
+
+/**
+ * 获取推荐模板
+ * 只获取一次，如果之前获取过则不再重复获取
+ */
+const getSuggestTemplate = () => {
+  return function(dispatch, getState) {
+    if (getState().getIn(['actor', 'suggestTemplate']).size > 0) {
+      return;
+    }
+
+    return api.emit('actor::getSuggestTemplate', {}, function(data) {
+      if (data.result) {
+        dispatch({
+          type: GET_SUGGEST_TEMPLATES_SUCCESS,
+          payload: data.templates || [],
+        });
       } else {
         console.error(data.msg);
       }
@@ -274,6 +298,7 @@ let updateActor = function updateActor(uuid, name, avatar, desc, info) {
 export {
   setTemplate,
   getTemplate,
+  getSuggestTemplate,
   findTemplate,
   createTemplate,
   createTemplateAdvanced,
