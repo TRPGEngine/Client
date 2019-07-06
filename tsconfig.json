@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./",
+    "baseUrl": ".",
     "target": "es5",
     "lib": ["es6", "dom", "es7"],
     "module": "esnext",
@@ -11,7 +11,10 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitThis": true
+    "noImplicitThis": true,
+    "paths": {
+      "@redux/*": ["./src/redux/*"]
+    }
   },
   "exclude": [
     "node_modules",

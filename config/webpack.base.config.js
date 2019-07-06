@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const WebpackBar = require('webpackbar');
 
 const ROOT_PATH = path.resolve(__dirname, '../');
@@ -56,6 +57,11 @@ module.exports = {
       '.jsx',
       '.web.tsx',
       '.tsx',
+    ],
+    plugins: [
+      new TsconfigPathsPlugin({
+        configFile: path.resolve(ROOT_PATH, 'tsconfig.json'),
+      }),
     ],
   },
   //babel重要的loader在这里
