@@ -19,7 +19,7 @@
     "app:proserver": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:80 npm run app",
     "app:proserver:clear": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:80 npm run app:clear",
     "app:codepush": "appcenter codepush release-react -e ./src/app/index.js -a moonrailgun/TRPG-IM -d Staging",
-    "app:build:android": "cd ./android && cross-env PLATFORM=app ./gradlew assembleRelease",
+    "app:build:android": "cd ./android && cross-env PLATFORM=app SENTRY_PROJECT=trpg-client-web ./gradlew assembleRelease --info",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .js,.jsx src",
     "lint:fix": "eslint --fix --ext .js,.jsx src",
