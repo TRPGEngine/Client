@@ -5,10 +5,10 @@ const {
   GET_ACTOR_INFO,
   GET_GROUP_INFO_SUCCESS,
 } = constants;
-import * as trpgApi from '../../api/trpg.api.js';
+import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 import config from '../../../config/project.config';
-import rnStorage from '../../api/rnStorage.api.js';
+import rnStorage from '../../api/rnStorage.api';
 
 // 加载本地缓存信息
 export const loadLocalCache = function() {
@@ -41,7 +41,7 @@ export const getUserInfo = function(uuid, onCompleted?) {
       if (data.result) {
         data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
         dispatch({ type: GET_USER_INFO, payload: data.info });
-        dispatch(exports.saveLocalCache()); // 保存到本地缓存
+        dispatch(saveLocalCache()); // 保存到本地缓存
       } else {
         console.error(data.msg);
       }

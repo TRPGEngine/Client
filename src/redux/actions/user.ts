@@ -22,9 +22,9 @@ const {
   ADD_FRIEND_INVITE,
 } = constants;
 import md5 from 'md5';
-import rnStorage from '../../api/rnStorage.api.js';
+import rnStorage from '../../api/rnStorage.api';
 import config from '../../../config/project.config';
-import * as trpgApi from '../../api/trpg.api.js';
+import * as trpgApi from '../../api/trpg.api';
 import { showLoading, hideLoading, showAlert } from './ui';
 import { checkUser } from '../../shared/utils/cacheHelper';
 import { runLoginSuccessCallback } from '../../shared/utils/inject';

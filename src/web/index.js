@@ -8,9 +8,9 @@ import { Provider } from 'react-redux';
 import { attachStore } from '../shared/utils/cacheHelper';
 import config from '../../config/project.config.js';
 import configureStore from '../redux/configureStore';
-import * as trpgApi from '../api/trpg.api.js';
+import * as trpgApi from '../api/trpg.api';
 import notify from './utils/notify';
-import rnStorage from '../api/rnStorage.api.js';
+import rnStorage from '../api/rnStorage.api';
 import { showAlert } from '../redux/actions/ui';
 import { loginWithToken } from '../redux/actions/user';
 import {

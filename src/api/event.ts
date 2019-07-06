@@ -1,4 +1,4 @@
-import * as trpgApi from './trpg.api.js';
+import * as trpgApi from './trpg.api';
 const api = trpgApi.getInstance();
 
 export const sendStartWriting = (type = 'user', uuid) => {

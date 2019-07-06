@@ -5,7 +5,7 @@ import { connect, DispatchProp } from 'react-redux';
 import sb from 'react-native-style-block';
 import ImagePicker, { ImagePickerOptions } from 'react-native-image-picker';
 import axios from 'axios';
-import { fileUrl } from '../../api/trpg.api.js';
+import { fileUrl } from '../../api/trpg.api';
 import { toast } from '../../shared/utils/apputils';
 import { updateInfo } from '../../redux/actions/user';
 import { showAlert } from '../../redux/actions/ui';

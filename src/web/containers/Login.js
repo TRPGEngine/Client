@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { showLoading } from '../../redux/actions/ui';
 import { login, loginWithToken } from '../../redux/actions/user';
 import config from '../../../config/project.config.js';
-import rnStorage from '../../api/rnStorage.api.js';
+import rnStorage from '../../api/rnStorage.api';
 import './Login.scss';
 
 class Login extends React.Component {

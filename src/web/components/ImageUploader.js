@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fileUrl } from '../../api/trpg.api.js';
+import { fileUrl } from '../../api/trpg.api';
 import { showAlert } from '../../redux/actions/ui';
 import { request } from '../utils/request';
 

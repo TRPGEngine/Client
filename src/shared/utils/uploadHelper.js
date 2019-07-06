@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { fileUrl } from '../../api/trpg.api.js';
+import { fileUrl } from '../../api/trpg.api';
 
 export const generateFileMsgData = function(file) {
   let tmp = file.name.split('.');

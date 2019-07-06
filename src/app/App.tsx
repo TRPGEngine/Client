@@ -16,7 +16,7 @@ import appConfig from './config.app';
 
 require('../shared/utils/cacheHelper').attachStore(store);
 
-import * as trpgApi from '../api/trpg.api.js';
+import * as trpgApi from '../api/trpg.api';
 const api = trpgApi.getInstance();
 trpgApi.bindEventFunc.call(api, store, {
   onReceiveMessage(messageData) {
@@ -32,7 +32,7 @@ injectLoginSuccessCallback(() => {
 });
 
 // token登录
-import rnStorage from '../api/rnStorage.api.js';
+import rnStorage from '../api/rnStorage.api';
 (async () => {
   console.log('读取本地存储的token...');
   let uuid = await rnStorage.get('uuid');

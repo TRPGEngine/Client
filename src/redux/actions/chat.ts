@@ -22,9 +22,9 @@ const {
   UPDATE_USER_CHAT_EMOTION_CATALOG,
   ADD_USER_CHAT_EMOTION_CATALOG,
 } = constants;
-import * as trpgApi from '../../api/trpg.api.js';
+import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
-import rnStorage from '../../api/rnStorage.api.js';
+import rnStorage from '../../api/rnStorage.api';
 import { checkUser } from '../../shared/utils/cacheHelper';
 import { hideProfileCard, switchMenuPannel } from './ui';
 import * as uploadHelper from '../../shared/utils/uploadHelper';

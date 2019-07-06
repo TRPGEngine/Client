@@ -9,8 +9,8 @@ const {
 } = constants;
 import { showAlert } from './ui';
 import config from '../../../config/project.config.js';
-import rnStorage from '../../api/rnStorage.api.js';
-import * as trpgApi from '../../api/trpg.api.js';
+import rnStorage from '../../api/rnStorage.api';
+import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 
 export const saveSettings = function saveSettings() {

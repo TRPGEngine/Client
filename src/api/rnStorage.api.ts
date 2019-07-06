@@ -29,9 +29,9 @@ let storage = new Storage({
 });
 
 export default {
-  set: async (key, data) => {
+  set: async (key: string | {}, data?: {}) => {
     try {
-      if (!!key && !!data) {
+      if (!!key && typeof key === 'string' && !!data) {
         await storage.save({ key, data });
       } else if (!!key && typeof key === 'object' && !data) {
         for (var subKey in key) {
@@ -49,7 +49,7 @@ export default {
 
     return data;
   },
-  get: async (key, defaultVal) => {
+  get: async (key: string, defaultVal?: any) => {
     let res;
     try {
       res = await storage.load({
@@ -66,10 +66,10 @@ export default {
   remove: async (key) => {
     await storage.remove({ key });
   },
-  save: async (key, data) => {
+  save: async (key: string | {}, data?: {}) => {
     // 持久化存储数据。设置为永不过期
     try {
-      if (!!key && !!data) {
+      if (!!key && typeof key === 'string' && !!data) {
         await storage.save({
           key,
           data,

@@ -23,7 +23,7 @@ import {
   hideModal,
 } from './ui';
 
-import * as trpgApi from '../../api/trpg.api.js';
+import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 
 let setTemplate = function setTemplate(uuid, name, desc, avatar, info) {

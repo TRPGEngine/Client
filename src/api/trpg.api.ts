@@ -1,6 +1,5 @@
-import io from 'socket.io-client';
+import { API } from './socket-api';
 import config from '../../config/project.config.js';
-import { RESET, ADD_FRIEND_SUCCESS } from '../redux/constants';
 
 import {
   addMsg,
@@ -10,39 +9,13 @@ import {
 } from '../redux/actions/chat';
 import { addFriendInvite, loginWithToken } from '../redux/actions/user';
 import { updateGroupStatus, addGroup } from '../redux/actions/group';
-
 import { getUserInfoCache } from '../shared/utils/cacheHelper';
-import rnStorage from './rnStorage.api.js';
+import rnStorage from './rnStorage.api';
+import constants from '../redux/constants';
+const { RESET, ADD_FRIEND_SUCCESS } = constants;
 
-let api; // IDEA: 不能写为null。esmodule会因未知的行为可能会在第一次取到undefined，重新赋值new API()后将其再设为null
-let handleEventError = null;
-const platformSocketParam = {
-  jsonp: false,
-};
-function API() {
-  this.serverUrl = `${config.io.protocol}://${config.io.host}:${
-    config.io.port
-  }`;
-  this.socket = io(this.serverUrl, platformSocketParam);
-  this.emit = (event, data, cb) => {
-    if (this.socket.disconnected) {
-      this.socket.connect();
-    }
-    return this.socket.emit(event, data, (res) => {
-      cb && cb(res);
-      if (res.result === false) {
-        // 如果检测到错误则汇报错误信息
-        const info = `${res.msg}\n事件: ${event}\n发送信息: ${JSON.stringify(
-          data
-        )}`;
-        handleEventError && handleEventError(info);
-      }
-    });
-  };
-  this.on = this.socket.on.bind(this.socket);
-}
-
-export function getInstance() {
+let api: API; // 单例模式
+export function getInstance(): API {
   if (!api) {
     api = new API();
     console.log('new socket client connect created!', api);
@@ -51,7 +24,11 @@ export function getInstance() {
   return api;
 }
 
-export function bindEventFunc(store, { onReceiveMessage } = {}) {
+export function bindEventFunc(
+  this: API,
+  store: any,
+  { onReceiveMessage }: any = {}
+) {
   const {
     changeNetworkStatue,
     showAlert,
@@ -150,7 +127,7 @@ export function bindEventFunc(store, { onReceiveMessage } = {}) {
 }
 
 export function setEventErrorHandler(cb) {
-  handleEventError = cb;
+  getInstance().handleEventError = cb;
 }
 
 export const fileUrl = config.file.url + '/file';

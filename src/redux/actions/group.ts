@@ -44,7 +44,7 @@ import {
   hideSlidePanel,
 } from './ui';
 
-import * as trpgApi from '../../api/trpg.api.js';
+import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 
 // 当state->group->groups状态添加新的group时使用来初始化
@@ -131,7 +131,7 @@ export const getGroupInfo = function(uuid) {
         let group = data.group;
         group.avatar = config.file.getAbsolutePath(group.avatar);
         dispatch({ type: GET_GROUP_INFO_SUCCESS, payload: group });
-        dispatch(exports.getGroupStatus(uuid)); // 获取团信息后再获取团状态作为补充
+        dispatch(getGroupStatus(uuid)); // 获取团信息后再获取团状态作为补充
       } else {
         console.error(data);
       }
@@ -303,7 +303,7 @@ export const getGroupList = function() {
         dispatch({ type: GET_GROUP_LIST_SUCCESS, payload: groups });
         for (let group of groups) {
           initGroupInfo(dispatch, group);
-          dispatch(exports.getGroupStatus(group.uuid));
+          dispatch(getGroupStatus(group.uuid));
         }
       } else {
         console.error(data.msg);
@@ -535,7 +535,7 @@ export const getGroupStatus = function(groupUUID) {
   return function(dispatch, getState) {
     return api.emit('group::getGroupStatus', { groupUUID }, function(data) {
       if (data.result) {
-        dispatch(exports.updateGroupStatus(groupUUID, data.status));
+        dispatch(updateGroupStatus(groupUUID, data.status));
       } else {
         console.error(data);
       }
@@ -550,7 +550,7 @@ export const setGroupStatus = function(groupUUID, groupStatus) {
       { groupUUID, groupStatus },
       function(data) {
         if (data.result) {
-          dispatch(exports.updateGroupStatus(groupUUID, groupStatus));
+          dispatch(updateGroupStatus(groupUUID, groupStatus));
         } else {
           console.error(data);
         }
