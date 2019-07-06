@@ -9,8 +9,8 @@ import {
 } from '../redux/actions/chat';
 import { addFriendInvite, loginWithToken } from '../redux/actions/user';
 import { updateGroupStatus, addGroup } from '../redux/actions/group';
-import { getUserInfoCache } from '../shared/utils/cacheHelper';
-import rnStorage from './rnStorage.api';
+import { getUserInfoCache } from '../shared/utils/cache-helper';
+import rnStorage from './rn-storage.api';
 import constants from '../redux/constants';
 const { RESET, ADD_FRIEND_SUCCESS } = constants;
 

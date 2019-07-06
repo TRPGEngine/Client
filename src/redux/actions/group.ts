@@ -34,7 +34,7 @@ import {
   updateConversesMsglist,
   updateCardChatData,
 } from './chat';
-import { checkUser, checkTemplate } from '../../shared/utils/cacheHelper';
+import { checkUser, checkTemplate } from '../../shared/utils/cache-helper';
 import {
   showLoading,
   hideLoading,

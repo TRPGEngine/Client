@@ -9,7 +9,7 @@ const {
   SYNC_NOTE_SUCCESS,
   SYNC_NOTE_FAILED,
 } = constants;
-import rnStorage from '../../api/rnStorage.api';
+import rnStorage from '../../api/rn-storage.api';
 import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 

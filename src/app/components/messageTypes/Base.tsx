@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import sb from 'react-native-style-block';
 import { TAvatar } from '../TComponent';
-import dateHelper from '../../../shared/utils/dateHelper';
+import dateHelper from '../../../shared/utils/date-helper';
 import config from '../../../../config/project.config';
 
 export interface BaseMessageProps {

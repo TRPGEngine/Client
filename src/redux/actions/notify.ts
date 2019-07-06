@@ -1,4 +1,4 @@
-import rnStorage from '../../api/rnStorage.api';
+import rnStorage from '../../api/rn-storage.api';
 import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 

@@ -1,6 +1,5 @@
 import immutable from 'immutable';
 import constants from '../constants';
-// import sessionStorage from '../../api/sessionStorage.api.js';
 const {
   RESET,
   LOGIN_REQUEST,

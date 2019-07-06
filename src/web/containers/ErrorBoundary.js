@@ -2,7 +2,7 @@ import React from 'react';
 import {
   sendErrorReport,
   // showErrorDialog,
-} from '../../shared/utils/errorReport';
+} from '../../shared/utils/error-report';
 import config from '../../../config/project.config.js';
 
 import './ErrorBoundary.scss';

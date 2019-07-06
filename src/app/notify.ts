@@ -1,7 +1,7 @@
 import { AppState } from 'react-native';
 import JPushModule from 'jpush-react-native';
 import { bindNotifyInfo } from '../redux/actions/notify';
-import rnStorage from '../api/rnStorage.api';
+import rnStorage from '../api/rn-storage.api';
 
 export function init() {
   JPushModule.initPush();

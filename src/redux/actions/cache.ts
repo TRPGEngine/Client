@@ -8,7 +8,7 @@ const {
 import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 import config from '../../../config/project.config';
-import rnStorage from '../../api/rnStorage.api';
+import rnStorage from '../../api/rn-storage.api';
 
 // 加载本地缓存信息
 export const loadLocalCache = function() {

@@ -32,7 +32,7 @@ injectLoginSuccessCallback(() => {
 });
 
 // token登录
-import rnStorage from '../api/rnStorage.api';
+import rnStorage from '../api/rn-storage.api';
 (async () => {
   console.log('读取本地存储的token...');
   let uuid = await rnStorage.get('uuid');

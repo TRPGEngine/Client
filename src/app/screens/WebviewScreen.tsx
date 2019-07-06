@@ -3,7 +3,7 @@ import { connect, DispatchProp } from 'react-redux';
 import { View, Text, ActivityIndicator, BackHandler } from 'react-native';
 import { WebView } from 'react-native-webview';
 import sb from 'react-native-style-block';
-import rnStorage from '../../api/rnStorage.api';
+import rnStorage from '../../api/rn-storage.api';
 import { loginWithToken } from '../../redux/actions/user';
 import { backNav } from '../redux/actions/nav';
 import { NavigationScreenProps } from 'react-navigation';

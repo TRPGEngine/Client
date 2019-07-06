@@ -1,5 +1,5 @@
 import React from 'react';
-import dateHelper from '../../../shared/utils/dateHelper';
+import dateHelper from '../../../shared/utils/date-helper';
 import config from '../../../../config/project.config';
 
 class Base extends React.Component {

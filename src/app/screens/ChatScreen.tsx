@@ -18,12 +18,12 @@ import { NavigationScreenProps } from 'react-navigation';
 import { TInput, TIcon } from '../components/TComponent';
 import config from '../../../config/project.config';
 import { sendMsg } from '../../redux/actions/chat';
-import { getUserInfoCache } from '../../shared/utils/cacheHelper';
-import dateHelper from '../../shared/utils/dateHelper';
+import { getUserInfoCache } from '../../shared/utils/cache-helper';
+import dateHelper from '../../shared/utils/date-helper';
 import ExtraPanelItem from '../components/chat/ExtraPanelItem';
 import EmotionPanel from '../components/chat/EmotionPanel';
-import { toNetwork } from '../../shared/utils/imageUploader';
-import { toTemporary } from '../../shared/utils/uploadHelper';
+import { toNetwork } from '../../shared/utils/image-uploader';
+import { toTemporary } from '../../shared/utils/upload-helper';
 import { unemojify } from '../utils/emoji';
 import _get from 'lodash/get';
 

@@ -5,12 +5,12 @@ import { NavigationScreenProps } from 'react-navigation';
 import sb from 'react-native-style-block';
 import immutable from 'immutable';
 import appConfig from '../config.app';
-import { getSamlpeDate } from '../../shared/utils/dateHelper';
+import { getSamlpeDate } from '../../shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getUserInfo } from '../../redux/actions/cache';
 import { addFriend } from '../../redux/actions/user';
 import { switchToConverseApp } from '../redux/actions/nav';
-import { getUserInfoCache } from '../../shared/utils/cacheHelper';
+import { getUserInfoCache } from '../../shared/utils/cache-helper';
 
 interface ItemProps {
   name: string;

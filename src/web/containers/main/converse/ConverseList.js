@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import dateHelper from '../../../../shared/utils/dateHelper';
+import dateHelper from '../../../../shared/utils/date-helper';
 import config from '../../../../../config/project.config.js';
 import ConverseDetail from './ConverseDetail';
 // import Tab from '../../../components/Tab';

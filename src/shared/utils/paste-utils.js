@@ -1,4 +1,4 @@
-import { toNetwork } from './imageUploader';
+import { toNetwork } from './image-uploader';
 
 export const isPasteImage = function(items) {
   let i = 0;

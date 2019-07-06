@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import config from '../../../../../config/project.config.js';
 import ReactTooltip from 'react-tooltip';
 import { sendGroupInvite } from '../../../../redux/actions/group';
-import { getUserInfoCache } from '../../../../shared/utils/cacheHelper';
+import { getUserInfoCache } from '../../../../shared/utils/cache-helper';
 
 import './GroupInvite.scss';
 

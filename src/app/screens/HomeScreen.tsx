@@ -3,7 +3,7 @@ import { connect, DispatchProp } from 'react-redux';
 import { View, Text, FlatList, RefreshControl } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
-import dateHelper from '../../shared/utils/dateHelper';
+import dateHelper from '../../shared/utils/date-helper';
 import appConfig from '../config.app';
 import ConvItem from '../components/ConvItem';
 import { reloadConverseList, switchConverse } from '../../redux/actions/chat';

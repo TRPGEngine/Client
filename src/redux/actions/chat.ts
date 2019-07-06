@@ -24,10 +24,10 @@ const {
 } = constants;
 import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
-import rnStorage from '../../api/rnStorage.api';
-import { checkUser } from '../../shared/utils/cacheHelper';
+import rnStorage from '../../api/rn-storage.api';
+import { checkUser } from '../../shared/utils/cache-helper';
 import { hideProfileCard, switchMenuPannel } from './ui';
-import * as uploadHelper from '../../shared/utils/uploadHelper';
+import * as uploadHelper from '../../shared/utils/upload-helper';
 import { renewableDelayTimer } from '../../shared/utils/timer';
 import config from '../../../config/project.config';
 import _without from 'lodash/without';

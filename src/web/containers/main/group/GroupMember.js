@@ -4,7 +4,7 @@ import config from '../../../../../config/project.config.js';
 import moment from 'moment';
 import { showModal, showProfileCard } from '../../../../redux/actions/ui';
 import GroupMemberManage from './modal/GroupMemberManage';
-import { getUserInfoCache } from '../../../../shared/utils/cacheHelper';
+import { getUserInfoCache } from '../../../../shared/utils/cache-helper';
 
 import './GroupMember.scss';
 

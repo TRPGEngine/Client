@@ -3,12 +3,12 @@ import { connect, DispatchProp } from 'react-redux';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
 import appConfig from '../config.app';
-import { getSamlpeDate } from '../../shared/utils/dateHelper';
+import { getSamlpeDate } from '../../shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getGroupInfo } from '../../redux/actions/cache';
 import { addFriend } from '../../redux/actions/user';
 import { switchToConverseApp } from '../redux/actions/nav';
-import { getUserInfoCache } from '../../shared/utils/cacheHelper';
+import { getUserInfoCache } from '../../shared/utils/cache-helper';
 import { List } from 'immutable';
 import { NavigationScreenProps } from 'react-navigation';
 

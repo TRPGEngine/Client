@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import config from '../../../config/project.config.js';
-import dateHelper from '../../shared/utils/dateHelper';
-import scrollTo from '../../shared/utils/animatedScrollTo.js';
-import { getUserInfoCache } from '../../shared/utils/cacheHelper';
+import dateHelper from '../../shared/utils/date-helper';
+import scrollTo from '../../shared/utils/animated-scroll-to';
+import { getUserInfoCache } from '../../shared/utils/cache-helper';
 import { getMoreChatLog } from '../../redux/actions/chat';
 
 import MessageHandler from '../../shared/components/MessageHandler';

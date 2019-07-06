@@ -9,7 +9,7 @@ const {
 } = constants;
 import { showAlert } from './ui';
 import config from '../../../config/project.config.js';
-import rnStorage from '../../api/rnStorage.api';
+import rnStorage from '../../api/rn-storage.api';
 import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 

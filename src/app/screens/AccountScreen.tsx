@@ -9,7 +9,7 @@ import appConfig from '../config.app';
 import { logout } from '../../redux/actions/user';
 import { openWebview } from '../redux/actions/nav';
 import { TButton, TAvatar } from '../components/TComponent';
-import checkVersion from '../../shared/utils/checkVersion';
+import checkVersion from '../../shared/utils/check-version';
 import * as appUtils from '../../shared/utils/apputils';
 import { TIcon } from '../components/TComponent';
 

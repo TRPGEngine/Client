@@ -14,7 +14,7 @@ const {
   UPDATE_ACTOR_SUCCESS,
 } = constants;
 import config from '../../../config/project.config';
-import { checkTemplate } from '../../shared/utils/cacheHelper';
+import { checkTemplate } from '../../shared/utils/cache-helper';
 import {
   showLoading,
   hideLoading,
