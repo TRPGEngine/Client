@@ -200,7 +200,7 @@ export const removeUserConverse = (userConverseUUID) => {
   };
 };
 
-export let addUserConverse = function addUserConverse(senders) {
+export let addUserConverse = function addUserConverse(senders: string[]) {
   return function(dispatch, getState) {
     if (typeof senders === 'string') {
       senders = [senders];
@@ -208,18 +208,22 @@ export let addUserConverse = function addUserConverse(senders) {
     dispatch({
       type: GET_USER_CONVERSES_SUCCESS,
       payload: senders
-        .map((uuid) => ({ uuid, type: 'user' }))
+        .map((uuid) => ({ uuid, type: 'user', name: '' }))
         .concat([{ uuid: 'trpgsystem', type: 'system', name: '系统消息' }]),
     });
 
     // 用户会话缓存
     let userUUID = getState().getIn(['user', 'info', 'uuid']);
-    rnStorage.get(getUserConversesHash(userUUID)).then(function(converse) {
-      converse = Array.from(new Set([...converse, ...senders]));
-      rnStorage
-        .set(getUserConversesHash(userUUID), converse)
-        .then((data) => console.log('用户会话缓存完毕:', data));
-    });
+    rnStorage
+      .get(getUserConversesHash(userUUID), [])
+      .then(function(cachedConverse: string[]) {
+        const allConverse: string[] = Array.from(
+          new Set([...cachedConverse, ...senders])
+        );
+        rnStorage
+          .set(getUserConversesHash(userUUID), allConverse)
+          .then((data) => console.log('用户会话缓存完毕:', data));
+      });
 
     for (let uuid of senders) {
       // 更新会话信息

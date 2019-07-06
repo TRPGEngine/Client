@@ -1,5 +1,6 @@
 import Storage from 'react-native-storage';
 import config from '../../config/project.config';
+import _isNil from 'lodash/isNil';
 
 let storage = new Storage({
   // 最大容量，默认值1000条数据循环存储
@@ -48,7 +49,7 @@ export default {
 
     return data;
   },
-  get: async (key) => {
+  get: async (key, defaultVal) => {
     let res;
     try {
       res = await storage.load({
@@ -58,7 +59,7 @@ export default {
       });
     } catch (e) {
       console.log(`get key ${key} error:`, e);
-      res = '';
+      res = _isNil(defaultVal) ? null : defaultVal;
     }
     return res;
   },
