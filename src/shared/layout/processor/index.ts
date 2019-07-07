@@ -52,7 +52,7 @@ export function render(
       .forEach((key) => {
         const value = attributes[key];
         const realKey = key.substr(1);
-        const realVal = parseDataText(`{{${value}}}`, context);
+        const realVal = parseDataText(`{{(${value})}}`, context);
         attributes[realKey] = realVal;
       });
   }

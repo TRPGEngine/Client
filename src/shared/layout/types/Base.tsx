@@ -4,6 +4,7 @@ import { XMLElement, XMLElementAttributes } from '../parser/xml-parser';
 import * as processor from '../processor/';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
+import _isNil from 'lodash/isNil';
 import { Row } from 'antd';
 import styled from 'styled-components';
 import { XMLBuilderContext, XMLBuilderState } from '../XMLBuilder';
@@ -70,6 +71,10 @@ export default class Base implements ILayoutType {
 
   parseMultilineText(text: string) {
     // 支持\n的渲染 拿到的换行符为\\n
+    if (_isNil(text) || typeof text !== 'string') {
+      return '';
+    }
+
     return text.replace(new RegExp('\\\\n', 'g'), '\n');
   }
 
