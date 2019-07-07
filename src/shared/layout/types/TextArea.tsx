@@ -19,6 +19,7 @@ export default class TTextArea extends Base {
   ) {
     const label = attributes.label as string;
     const name = attributes.name as string;
+    const autosize = attributes.autosize as any;
     const isNumber: boolean = attributes.isNumber as any;
 
     const changeValue = attributes.changeValue as string; // 指定要被修改的变量
@@ -34,6 +35,7 @@ export default class TTextArea extends Base {
         </Col>
         <Col span={18}>
           <TextArea
+            autosize={autosize}
             placeholder={label}
             value={this.getStateValue(context, bindingName)}
             onChange={(e) => {
