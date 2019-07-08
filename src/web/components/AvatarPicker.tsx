@@ -48,6 +48,7 @@ function getCroppedImg(image: HTMLImageElement, crop: Crop, fileName: string) {
 }
 
 interface Props {
+  imageUrl?: string;
   onChange?: (imageUrl: string) => void;
 }
 /**
@@ -55,8 +56,8 @@ interface Props {
  */
 const AvatarPicker = (props: Props) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false); // 是否显示模态框
-  const [imageUrl, setImageUrl] = useState<string>(''); // 原始图片的url
-  const [cropUrl, setCropUrl] = useState<string>(''); // 裁剪后并使用的url
+  const [originImageUrl, setOriginImageUrl] = useState<string>(''); // 原始图片的url
+  const [cropUrl, setCropUrl] = useState<string>(props.imageUrl || ''); // 裁剪后并使用的url
   const fileRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -66,7 +67,7 @@ const AvatarPicker = (props: Props) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
       reader.addEventListener('load', () =>
-        setImageUrl(reader.result.toString())
+        setOriginImageUrl(reader.result.toString())
       );
       reader.readAsDataURL(e.target.files[0]);
     }
@@ -114,9 +115,9 @@ const AvatarPicker = (props: Props) => {
         onOk={() => makeClientCrop(cropInfo)}
       >
         <div style={{ overflow: 'hidden' }}>
-          {imageUrl !== '' && (
+          {originImageUrl !== '' && (
             <ReactCrop
-              src={imageUrl}
+              src={originImageUrl}
               crop={cropInfo}
               onImageLoaded={(ref) => (imageRef.current = ref)}
               onChange={(crop) => setCropInfo(crop)}
