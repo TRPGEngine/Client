@@ -146,7 +146,7 @@ export default class Base implements ILayoutType {
       }
 
       // NOTE: 所有的组件返回的实例都应当有key. 因为这个元素是map出来的
-      return processor.render(el, context, 'edit');
+      return processor.render(el, context);
     });
   }
 

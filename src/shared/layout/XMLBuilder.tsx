@@ -26,6 +26,8 @@ export interface DataType {
   [name: string]: number | string | null;
 }
 
+export type LayoutType = 'edit' | 'detail';
+
 export interface XMLBuilderState {
   defines: DefineType;
   global: GlobalType;
@@ -41,14 +43,10 @@ export interface XMLBuilderAction {
 export interface XMLBuilderContext {
   state: XMLBuilderState;
   dispatch: React.Dispatch<XMLBuilderAction>;
+  layoutType: LayoutType;
 }
 
-type stateChangeHandler = (newState: React.ReducerState<any>) => void;
-
-interface Props {
-  xml: string;
-  onChange?: stateChangeHandler;
-}
+type stateChangeHandler = (newState: XMLBuilderState) => void;
 
 export enum ActionType {
   UpdateData = 'update_data',
@@ -59,7 +57,7 @@ const buildReducer = (onChange?: stateChangeHandler) => {
   const XMLBuilderReducer = (
     prevState: XMLBuilderState,
     action: XMLBuilderAction
-  ): any => {
+  ): XMLBuilderState => {
     const type = action.type;
     const payload = action.payload;
     const newState = _clone(prevState);
@@ -84,14 +82,20 @@ const buildReducer = (onChange?: stateChangeHandler) => {
   return XMLBuilderReducer;
 };
 
+interface Props {
+  xml: string;
+  layoutType?: LayoutType;
+  initialData?: DataType;
+  onChange?: stateChangeHandler;
+}
 const XMLBuilder = (props: Props) => {
-  const { xml = '', onChange } = props;
+  const { xml = '', onChange, layoutType = 'edit' } = props;
   const [layout, setLayout] = useState({});
 
   const initialState: XMLBuilderState = {
     defines: {},
     global: {},
-    data: {},
+    data: props.initialData || {},
   };
   const [state, dispatch] = useReducer(buildReducer(onChange), initialState);
 
@@ -106,7 +110,7 @@ const XMLBuilder = (props: Props) => {
     return null;
   }
 
-  return <div>{processor.render(layout, { state, dispatch })}</div>;
+  return <div>{processor.render(layout, { state, dispatch, layoutType })}</div>;
 };
 
 export default XMLBuilder;
