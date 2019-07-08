@@ -61,4 +61,30 @@ export default class TInput extends Base {
       </BaseTypeRow>
     );
   }
+
+  getDetailView(
+    tagName,
+    attributes: XMLElementAttributes,
+    elements,
+    context: XMLBuilderContext
+  ) {
+    const label = attributes.label as string;
+    const name = attributes.name as string;
+
+    const bindingName = parseDataText(name || label, context); // 可以为a.b的格式
+    const { state, dispatch } = context;
+
+    const parsedLabel = this.parseMultilineText(label); // Input标题
+
+    return (
+      <BaseTypeRow key={attributes.key}>
+        <Col span={6}>
+          <pre>{parsedLabel}</pre>
+        </Col>
+        <Col span={18}>
+          <pre>{this.getStateValue(context, bindingName)}</pre>
+        </Col>
+      </BaseTypeRow>
+    );
+  }
 }

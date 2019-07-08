@@ -1,14 +1,15 @@
 import React from 'react';
-import Base, { BaseTypeRow } from './Base';
+import { BaseTypeRow } from './Base';
 import { XMLElementAttributes } from '../parser/xml-parser';
 import { XMLBuilderContext } from '../XMLBuilder';
 import { parseDataText } from '../processor';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
 import { Col, Input } from 'antd';
+import TInput from './Input';
 const TextArea = Input.TextArea;
 
-export default class TTextArea extends Base {
+export default class TTextArea extends TInput {
   name = 'TextArea';
 
   getEditView(
