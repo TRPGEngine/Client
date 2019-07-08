@@ -13,7 +13,9 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": true,
     "paths": {
-      "@redux/*": ["./src/redux/*"]
+      "@redux/*": ["./src/redux/*"],
+      "@components/*": ["./src/web/components/*"],
+      "@shared/*": ["./src/shared/*"],
     }
   },
   "exclude": [
