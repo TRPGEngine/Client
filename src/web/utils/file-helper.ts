@@ -35,7 +35,7 @@ export function blobFromUrl(blobUrl: string): Promise<Blob> {
  * @param blob Blob对象
  * @param fileName 文件名
  */
-export function blobToFile(blob: Blob, fileName: string = ''): File {
+export function blobToFile(blob: Blob, fileName: string): File {
   return new File([blob], fileName, {
     lastModified: new Date().valueOf(),
   });

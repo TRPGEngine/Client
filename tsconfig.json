@@ -16,6 +16,7 @@
       "@redux/*": ["./src/redux/*"],
       "@components/*": ["./src/web/components/*"],
       "@shared/*": ["./src/shared/*"],
+      "@web/*": ["./src/web/*"],
     }
   },
   "exclude": [

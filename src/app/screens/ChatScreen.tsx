@@ -235,7 +235,7 @@ class ChatScreen extends React.Component<Props> {
             uri: response.uri,
             type: response.type,
             name: response.fileName,
-          };
+          } as any;
 
           // TODO: 上传到sm.ms
           // toNetwork(this.props.selfUUID, file).then((res) => {
