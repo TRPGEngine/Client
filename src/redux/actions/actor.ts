@@ -206,12 +206,21 @@ let selectTemplate = function selectTemplate(template) {
   return { type: SELECT_TEMPLATE, payload: template };
 };
 
-let createActor = function createActor(
-  name,
-  avatar,
-  desc,
-  info,
-  template_uuid
+/**
+ * 创建人物
+ * 创建人物前需先上传人物卡头像
+ * @param name 人物卡名
+ * @param avatar 人物卡头像地址
+ * @param desc 人物卡描述
+ * @param info 人物卡信息
+ * @param template_uuid 人物卡关联模板
+ */
+const createActor = function createActor(
+  name: string,
+  avatar: string,
+  desc: string,
+  info: {},
+  template_uuid: string
 ) {
   return function(dispatch, getState) {
     dispatch(showLoading('创建人物中，请稍后...'));
