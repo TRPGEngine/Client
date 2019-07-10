@@ -110,10 +110,11 @@ android {
         versionCode 2
         versionName "1.1"
         manifestPlaceholders = [
-                JPUSH_APPKEY: "4ebde26529796c17dcffb886",
-                APP_CHANNEL : "default"
+            JPUSH_APPKEY: "4ebde26529796c17dcffb886",
+            APP_CHANNEL : "default"
         ]
-        }
+        vectorDrawables.useSupportLibrary = true // for react-native-image-crop-picker
+    }
     splits {
         abi {
             reset()
