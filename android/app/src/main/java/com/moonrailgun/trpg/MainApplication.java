@@ -3,6 +3,7 @@ package com.moonrailgun.trpg;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import io.sentry.RNSentryPackage;
@@ -40,6 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new PickerPackage(),
             new FastImageViewPackage(),
             new RNCWebViewPackage(),
             new RNSentryPackage(),

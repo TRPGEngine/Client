@@ -77,6 +77,7 @@
     "react-native-emoji": "git+https://github.com/TRPGEngine/react-native-emoji.git",
     "react-native-fast-image": "^6.0.3",
     "react-native-gesture-handler": "^1.2.0",
+    "react-native-image-crop-picker": "^0.24.1",
     "react-native-image-picker": "^0.28.1",
     "react-native-image-zoom-viewer": "^2.2.25",
     "react-native-root-toast": "^3.0.1",
