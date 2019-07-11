@@ -42,7 +42,7 @@ const CreateActorBase = (props: Props) => {
                 onChange={(e) => handleChange('name', e.target.value)}
               />
             </FormItem>
-            <FormItem label="描述" required>
+            <FormItem label="描述">
               <TextArea
                 autosize={{ maxRows: 8, minRows: 4 }}
                 value={_get(props, 'value.desc', '')}
