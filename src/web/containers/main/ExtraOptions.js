@@ -6,6 +6,7 @@ import { showModal, switchMenuPannel } from '../../../redux/actions/ui';
 import { setEditedTemplate } from '../../../redux/actions/actor';
 import { addNote } from '../../../redux/actions/note';
 import TemplateSelect from './actors/TemplateSelect';
+import ActorCreate from '@components/modal/ActorCreate';
 import TemplateEdit from './actors/TemplateEdit';
 // import IsDeveloping from '../../components/IsDeveloping';
 import GroupCreate from '../../components/modal/GroupCreate';
@@ -48,10 +49,10 @@ class ExtraOptions extends React.Component {
 
   _handleClickMenu(menu) {
     if (menu === 'actorCreate') {
-      this.props.dispatch(showModal(<TemplateSelect />));
-    } else if (menu === 'templateCreate') {
-      this.props.dispatch(setEditedTemplate({}));
-      this.props.dispatch(showModal(<TemplateEdit isEdit={false} />));
+      this.props.dispatch(showModal(<ActorCreate />));
+      // } else if (menu === 'templateCreate') {
+      //   this.props.dispatch(setEditedTemplate({}));
+      //   this.props.dispatch(showModal(<TemplateEdit isEdit={false} />));
     } else if (menu === 'noteCreate') {
       this.props.dispatch(switchMenuPannel(3));
       this.props.dispatch(addNote());
@@ -96,9 +97,9 @@ class ExtraOptions extends React.Component {
       return (
         <ul>
           <li onClick={() => this._handleClickMenu('actorCreate')}>创建人物</li>
-          <li onClick={() => this._handleClickMenu('templateCreate')}>
+          {/* <li onClick={() => this._handleClickMenu('templateCreate')}>
             创建模板
-          </li>
+          </li> */}
           <li onClick={() => this._handleClickMenu('groupCreate')}>创建团</li>
           <li onClick={() => this._handleClickMenu('noteCreate')}>添加笔记</li>
           <li onClick={() => this._handleClickMenu('addFriend')}>添加好友</li>

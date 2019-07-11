@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import at from 'trpg-actor-template';
 import TemplateSelect from './TemplateSelect';
+import ActorCreate from '@components/modal/ActorCreate';
 import ActorEdit from './ActorEdit';
 import * as apiHelper from '../../../../shared/utils/api-helper';
 import { showModal, showAlert } from '../../../../redux/actions/ui';
@@ -20,7 +21,7 @@ class ActorList extends React.Component {
 
   _handleAddNewActor() {
     this.props.selectActor('');
-    this.props.showModal(<TemplateSelect />);
+    this.props.showModal(<ActorCreate />);
   }
 
   _handleRemoveActor(uuid) {
