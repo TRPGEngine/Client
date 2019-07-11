@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { fileUrl } from '../../api/trpg.api';
 import { showAlert } from '../../redux/actions/ui';
 import { request } from '../utils/request';
+import _get from 'lodash/get';
 
 import './ImageUploader.scss';
 
@@ -83,7 +84,8 @@ class ImageUploader extends React.Component {
           isUploading: false,
           uploadProgress: 0,
         });
-        this.props.dispatch(showAlert('图片上传失败:' + e));
+        const errorMsg = _get(e, 'response.data.msg', e.toString());
+        this.props.dispatch(showAlert('图片上传失败:' + errorMsg));
         console.error(e);
       });
   }
