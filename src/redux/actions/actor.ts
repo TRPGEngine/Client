@@ -232,7 +232,9 @@ const createActor = function createActor(
         dispatch(hideAlert());
         dispatch(hideModal());
         if (data.result) {
-          dispatch({ type: CREATE_ACTOR_SUCCESS, payload: data.actor });
+          const actor = data.actor;
+          actor.avatar = config.file.getAbsolutePath(actor.avatar);
+          dispatch({ type: CREATE_ACTOR_SUCCESS, payload: actor });
         } else {
           dispatch(showAlert(data.msg));
           console.error(data.msg);

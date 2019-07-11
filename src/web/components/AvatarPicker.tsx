@@ -109,6 +109,7 @@ const AvatarPicker = (props: Props) => {
         <Avatar size={64} icon="user" src={cropUrl} />
       </div>
       <Modal
+        width={800}
         visible={modalVisible}
         closable={false}
         onCancel={() => setModalVisible(false)}
