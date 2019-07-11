@@ -12,13 +12,13 @@ import ErrorBoundary from './ErrorBoundary';
 import NetworkIndicator from '../components/NetworkIndicator';
 import config from '../../../config/project.config.js';
 import './App.scss';
-require('../../assets/css/iconfont.css');
-require('react-select/dist/react-select.css');
-require('react-image-lightbox/style.css');
+import '../../assets/css/iconfont.css';
+import 'react-select/dist/react-select.css';
+import 'react-image-lightbox/style.css';
 
 const ActorEditor = TLoadable(() => import('./actor/editor/ActorEditor'));
 
-const Router =
+const Router: any =
   config.platform === 'web' || config.environment === 'development'
     ? BrowserRouter
     : HashRouter;

@@ -1,19 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { showLoading, showAlert } from '../../redux/actions/ui';
 import { register } from '../../redux/actions/user';
 import './Register.scss';
 
-class Register extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: '',
-      passwordRepeat: '',
-    };
-  }
+interface Props extends DispatchProp<any> {
+  history: any;
+}
+class Register extends React.Component<Props> {
+  state = {
+    username: '',
+    password: '',
+    passwordRepeat: '',
+  };
 
   componentWillUpdate(nextProps, nextState) {
     if (!!nextProps.isLogin) {

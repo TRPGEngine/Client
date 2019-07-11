@@ -119,6 +119,7 @@
     "@types/react-dom": "^16.8.4",
     "@types/react-image-crop": "^8.1.0",
     "@types/react-redux": "^7.1.0",
+    "@types/react-router-dom": "^4.3.4",
     "@types/styled-components": "^4.1.14",
     "babel-loader": "^8.0.5",
     "babel-plugin-dynamic-import-webpack": "^1.1.0",

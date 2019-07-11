@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ErrorInfo } from 'react';
 import {
   sendErrorReport,
   // showErrorDialog,
@@ -9,16 +9,13 @@ import './ErrorBoundary.scss';
 
 // https://reactjs.org/docs/error-boundaries.html
 class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
+  state = { hasError: false };
 
   handleShowReportDialog() {
     import('../utils/sentry').then((module) => module.showReportDialog());
   }
 
-  componentDidCatch(error, info) {
+  componentDidCatch(error: Error, info: ErrorInfo) {
     this.setState({ hasError: true });
     console.warn('捕获错误, 等待发送错误报告\n', error, info);
     sendErrorReport({

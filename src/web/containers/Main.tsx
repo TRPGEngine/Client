@@ -1,11 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import config from '../../../config/project.config';
-// import { getConverses } from '../../redux/actions/chat';
-// import { getFriends, getFriendsInvite } from '../../redux/actions/user';
-// import { getTemplate, getActor } from '../../redux/actions/actor';
-// import { getGroupList, getGroupInvite } from '../../redux/actions/group';
-// import { getNote } from '../../redux/actions/note';
 import { switchMenuPannel } from '../../redux/actions/ui';
 import ConverseList from './main/converse/ConverseList';
 import MenuPannel from './main/MenuPannel';
@@ -19,35 +14,36 @@ const TitleToolbar =
 
 import './Main.scss';
 if (config.platform === 'electron') {
-  import('./Main.electron.scss');
+  require('./Main.electron.scss');
 }
 
-class Main extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      titleMenuIndex: 0,
-    };
-    this.titleMenu = [
-      {
-        name: '平台',
-        menuIndex: 0,
-        component: <ConverseList />,
-      },
-      {
-        name: '广场',
-        menuIndex: -1,
-        component: (
-          <Webview src={config.url.goddessfantasy} allowExopen={true} />
-        ),
-      },
-      {
-        name: '应用',
-        menuIndex: -1,
-        component: <IsDeveloping />,
-      },
-    ];
-  }
+interface Props {
+  isLogin: boolean;
+  history: any;
+  switchMenuPannel: any;
+  menuIndex: number;
+}
+class Main extends React.Component<Props> {
+  state = {
+    titleMenuIndex: 0,
+  };
+  titleMenu = [
+    {
+      name: '平台',
+      menuIndex: 0,
+      component: <ConverseList />,
+    },
+    {
+      name: '广场',
+      menuIndex: -1,
+      component: <Webview src={config.url.goddessfantasy} allowExopen={true} />,
+    },
+    {
+      name: '应用',
+      menuIndex: -1,
+      component: <IsDeveloping />,
+    },
+  ];
 
   componentDidMount() {
     if (!this.props.isLogin) {
@@ -107,7 +103,7 @@ class Main extends React.Component {
 }
 
 export default connect(
-  (state) => ({
+  (state: any) => ({
     isLogin: state.getIn(['user', 'isLogin']),
     menuIndex: state.getIn(['ui', 'menuIndex']),
   }),

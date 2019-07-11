@@ -1,12 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import Lightbox from 'react-image-lightbox';
 import Modal from '../components/Modal';
 import Loading from '../components/Loading';
 import Alert from '../components/Alert';
 import { hideLightbox } from '../../redux/actions/ui';
 
-class GlobalUI extends React.Component {
+interface Props extends DispatchProp<any> {
+  showLigthbox: boolean;
+  showLigthboxInfo: any;
+  showLoading: boolean;
+  showLoadingText: string;
+}
+class GlobalUI extends React.Component<Props> {
   render() {
     return (
       <React.Fragment>
@@ -27,7 +33,7 @@ class GlobalUI extends React.Component {
   }
 }
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   showLoading: state.getIn(['ui', 'showLoading']),
   showLoadingText: state.getIn(['ui', 'showLoadingText']),
   showLigthbox: state.getIn(['ui', 'showLigthbox']),

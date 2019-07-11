@@ -13,6 +13,32 @@ const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
 const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
 const config = require('../package.json');
 
+const babelQuery = {
+  babelrc: false,
+  compact: false,
+  presets: ['@babel/preset-env', '@babel/preset-react'],
+  ignore: [/[\/\\]core-js/, /@babel[\/\\]runtime/],
+  plugins: [
+    [
+      '@babel/plugin-transform-runtime',
+      {
+        helpers: true,
+      },
+    ],
+    [
+      'import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: 'css', // `style: true` 会加载 less 文件
+      },
+    ],
+    'transform-class-properties',
+    '@babel/plugin-transform-modules-commonjs',
+    'dynamic-import-webpack',
+  ],
+};
+
 // let vendors = Object.keys(config.dependencies);
 // if (process.env.PLATFORM !== 'app') {
 //   let arrRemove = function(arr, item) {
@@ -93,19 +119,7 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-            query: {
-              babelrc: false,
-              plugins: [
-                [
-                  'import',
-                  {
-                    libraryName: 'antd',
-                    libraryDirectory: 'es',
-                    style: true, // `style: true` 会加载 less 文件, css 只会加载css文件
-                  },
-                ],
-              ],
-            },
+            query: babelQuery,
           },
           { loader: 'ts-loader' },
         ],
@@ -120,31 +134,7 @@ module.exports = {
         //   path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
         // ],
         exclude: path.resolve(ROOT_PATH, './node_modules/**'),
-        query: {
-          babelrc: false,
-          compact: false,
-          presets: ['@babel/preset-env', '@babel/preset-react'],
-          ignore: [/[\/\\]core-js/, /@babel[\/\\]runtime/],
-          plugins: [
-            [
-              '@babel/plugin-transform-runtime',
-              {
-                helpers: true,
-              },
-            ],
-            [
-              'import',
-              {
-                libraryName: 'antd',
-                libraryDirectory: 'es',
-                style: 'css', // `style: true` 会加载 less 文件
-              },
-            ],
-            'transform-class-properties',
-            '@babel/plugin-transform-modules-commonjs',
-            'dynamic-import-webpack',
-          ],
-        },
+        query: babelQuery,
       },
       {
         test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf)$/,

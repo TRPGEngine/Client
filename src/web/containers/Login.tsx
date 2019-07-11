@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { showLoading } from '../../redux/actions/ui';
 import { login, loginWithToken } from '../../redux/actions/user';
@@ -7,29 +7,31 @@ import config from '../../../config/project.config.js';
 import rnStorage from '../../api/rn-storage.api';
 import './Login.scss';
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: '',
-    };
-    this.onQQConnectFinished = (e) => {
-      let { type, uuid, token } = e.data;
-      if (type === 'onOAuthFinished') {
-        if (!uuid || !token) {
-          console.error('oauth登录失败, 缺少必要参数', uuid, token);
-          return;
-        }
+interface Props extends DispatchProp<any> {
+  isLogin: boolean;
+  history: any;
+}
+class Login extends React.Component<Props> {
+  state = {
+    username: '',
+    password: '',
+  };
 
-        // 注册新的uuid与token并刷新
-        rnStorage.set('uuid', uuid);
-        rnStorage.set('token', token);
-
-        this.props.dispatch(loginWithToken(uuid, token, 'qq'));
+  onQQConnectFinished = (e: MessageEvent) => {
+    let { type, uuid, token } = e.data;
+    if (type === 'onOAuthFinished') {
+      if (!uuid || !token) {
+        console.error('oauth登录失败, 缺少必要参数', uuid, token);
+        return;
       }
-    };
-  }
+
+      // 注册新的uuid与token并刷新
+      rnStorage.set('uuid', uuid);
+      rnStorage.set('token', token);
+
+      this.props.dispatch(loginWithToken(uuid, token, 'qq'));
+    }
+  };
 
   componentDidMount() {
     if (!!this.props.isLogin) {
