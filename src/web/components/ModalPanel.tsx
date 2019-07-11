@@ -1,9 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import './ModalPanel.scss';
 
-class ModalPanel extends React.Component {
+/**
+ * 基础模态框容器
+ */
+interface Props {
+  title?: string;
+  className?: string;
+  actions?: React.ReactNode;
+  children: React.ReactNode;
+}
+class ModalPanel extends React.Component<Props> {
   render() {
     return (
       <div className={'modal-panel ' + (this.props.className || '')}>
@@ -16,11 +24,5 @@ class ModalPanel extends React.Component {
     );
   }
 }
-
-ModalPanel.propTypes = {
-  title: PropTypes.string,
-  children: PropTypes.node,
-  actions: PropTypes.element,
-};
 
 export default ModalPanel;
