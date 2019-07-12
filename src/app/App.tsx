@@ -14,7 +14,7 @@ import { init as initNotify, bindInfo, tryLocalNotify } from './notify';
 import codePush from 'react-native-code-push';
 import appConfig from './config.app';
 
-require('../shared/utils/cacheHelper').attachStore(store);
+require('../shared/utils/cache-helper').attachStore(store);
 
 import * as trpgApi from '../api/trpg.api';
 const api = trpgApi.getInstance();

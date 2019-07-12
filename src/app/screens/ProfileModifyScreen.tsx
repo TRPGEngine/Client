@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { Dispatch } from 'redux';
 import { connect, DispatchProp } from 'react-redux';
 import sb from 'react-native-style-block';
-import ImagePicker, { ImagePickerOptions } from 'react-native-image-picker';
+import ImageCropPicker, { Image } from 'react-native-image-crop-picker';
 import axios from 'axios';
 import { fileUrl } from '../../api/trpg.api';
 import { toast } from '../../shared/utils/apputils';
@@ -11,6 +11,7 @@ import { updateInfo } from '../../redux/actions/user';
 import { showAlert } from '../../redux/actions/ui';
 import { TAvatar } from '../components/TComponent';
 import ListCell from '../components/ListCell';
+import _last from 'lodash/last';
 
 interface Props extends DispatchProp<any> {
   userInfo: any;
@@ -66,39 +67,22 @@ class ProfileModifyScreen extends React.Component<Props> {
   }
 
   _handleSelectAvatar() {
-    const options: ImagePickerOptions = {
-      title: '选择头像',
-      cancelButtonTitle: '取消',
-      takePhotoButtonTitle: '拍一张照片',
-      chooseFromLibraryButtonTitle: '从相册选一张',
-      mediaType: 'photo',
-      maxWidth: 128,
-      maxHeight: 128,
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('图片选择结果:', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
+    ImageCropPicker.openPicker({
+      width: 256,
+      height: 256,
+      cropping: true,
+    })
+      .then((image: Image) => {
         this._uploadAvatar(
-          response.uri,
-          response.type,
-          response.fileName,
-          response.fileSize,
-          response.width,
-          response.height
+          image.path,
+          image.mime,
+          image.filename || _last(image.path.split('/')),
+          image.size,
+          image.width,
+          image.height
         );
-      }
-    });
+      })
+      .catch((err) => console.log(err));
   }
 
   render() {
