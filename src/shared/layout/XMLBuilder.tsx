@@ -6,6 +6,7 @@ import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
 import './types/__all__';
 import Debug from 'debug';
+import styled from 'styled-components';
 const debug = Debug('trpg:XMLBuilder');
 
 export type DefinePropsType = {
@@ -52,6 +53,10 @@ export enum ActionType {
   UpdateData = 'update_data',
   AddDefine = 'add_define',
 }
+
+const XMLBuilderContainer = styled.div`
+  text-align: left;
+`;
 
 const buildReducer = (onChange?: stateChangeHandler) => {
   const XMLBuilderReducer = (
@@ -110,7 +115,11 @@ const XMLBuilder = (props: Props) => {
     return null;
   }
 
-  return <div>{processor.render(layout, { state, dispatch, layoutType })}</div>;
+  return (
+    <XMLBuilderContainer>
+      {processor.render(layout, { state, dispatch, layoutType })}
+    </XMLBuilderContainer>
+  );
 };
 
 export default XMLBuilder;

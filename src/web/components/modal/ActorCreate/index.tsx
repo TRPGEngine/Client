@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import ModelPanel from '../../ModalPanel';
+import ModalPanel from '../../ModalPanel';
 import { Button, Steps, Row, message } from 'antd';
 import { connect, DispatchProp } from 'react-redux';
 import { DataType } from '@shared/layout/XMLBuilder';
@@ -121,7 +121,7 @@ const ActorCreate = (props: Props) => {
     props.dispatch(getSuggestTemplate());
   });
   return (
-    <ModelPanel title="创建人物" actions={actions}>
+    <ModalPanel title="创建人物" actions={actions}>
       <Container>
         <Steps current={current}>
           <Step title="选择模板" />
@@ -132,7 +132,7 @@ const ActorCreate = (props: Props) => {
 
         <ContainerBody>{steps[current]}</ContainerBody>
       </Container>
-    </ModelPanel>
+    </ModalPanel>
   );
 };
 

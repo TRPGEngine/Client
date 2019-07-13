@@ -11,8 +11,11 @@ import {
   removeActor,
   selectTemplate,
 } from '../../../../redux/actions/actor';
+import ActorInfo from '@components/modal/ActorInfo';
+import _isNil from 'lodash/isNil';
 
 import './ActorList.scss';
+import { message } from 'antd';
 
 class ActorList extends React.Component {
   constructor(props) {
@@ -40,6 +43,28 @@ class ActorList extends React.Component {
       this.props.selectTemplate(template);
       this.props.showModal(<ActorEdit />);
     });
+  }
+
+  handleOpenActorInfoModal(uuid) {
+    const actor = this.props.actors.find((a) => a.get('uuid') === uuid);
+    if (_isNil(actor)) {
+      message.error('角色不存在');
+      return;
+    }
+    const templateLayout = this.props.templateCache.getIn([
+      actor.get('template_uuid'),
+      'layout',
+    ]);
+
+    this.props.showModal(
+      <ActorInfo
+        name={actor.get('name')}
+        desc={actor.get('desc')}
+        avatar={actor.get('avatar')}
+        data={actor.get('info')}
+        layout={templateLayout}
+      />
+    );
   }
 
   getActorList() {
@@ -72,7 +97,9 @@ class ActorList extends React.Component {
               >
                 编辑
               </button>
-              <button onClick={() => this.props.selectActor(uuid)}>查看</button>
+              <button onClick={() => this.handleOpenActorInfoModal(uuid)}>
+                查看
+              </button>
             </p>
           </div>
         </div>

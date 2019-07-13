@@ -6,6 +6,12 @@ import { XMLElementAttributes } from '../parser/xml-parser';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
 import { parseDataText } from '../processor';
+import styled from 'styled-components';
+
+export const Label = styled.pre`
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 
 /**
  * Input 组件
@@ -37,7 +43,7 @@ export default class TInput extends Base {
     return (
       <BaseTypeRow key={attributes.key}>
         <Col span={6}>
-          <pre>{parsedLabel}</pre>
+          <Label title={parsedLabel}>{parsedLabel}</Label>
         </Col>
         <Col span={18}>
           <Input
@@ -79,7 +85,7 @@ export default class TInput extends Base {
     return (
       <BaseTypeRow key={attributes.key}>
         <Col span={6}>
-          <pre>{parsedLabel}</pre>
+          <Label title={parsedLabel}>{parsedLabel}</Label>
         </Col>
         <Col span={18}>
           <pre>{this.getStateValue(context, bindingName)}</pre>

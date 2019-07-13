@@ -6,7 +6,7 @@ import { parseDataText } from '../processor';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
 import { Col, Input } from 'antd';
-import TInput from './Input';
+import TInput, { Label } from './Input';
 const TextArea = Input.TextArea;
 
 export default class TTextArea extends TInput {
@@ -32,7 +32,7 @@ export default class TTextArea extends TInput {
     return (
       <BaseTypeRow key={attributes.key}>
         <Col span={6}>
-          <pre>{parsedLabel}</pre>
+          <Label title={parsedLabel}>{parsedLabel}</Label>
         </Col>
         <Col span={18}>
           <TextArea
