@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import Emoticon from './Emoticon';
 import * as pasteUtils from '../../shared/utils/paste-utils';
@@ -12,66 +12,89 @@ import ContentEditable from 'react-contenteditable';
 
 import './MsgSendBox.scss';
 
-class MsgSendBox extends React.Component {
-  constructor(props) {
-    super(props);
-    this.inputMsgRef = React.createRef();
-    this.state = {
-      inputMsg: '',
-      inputType: 'normal',
+interface Props extends DispatchProp<any> {
+  userUUID: string;
+  converseUUID: string;
+  isGroup: boolean;
+  onQuickDice: () => void;
+  onChange: (val: string) => void;
+  onSendMsg: (message: string, type: any) => void;
+  onSendFile: (file: File) => void;
+  onSendDiceReq: () => void;
+  onSendDiceInv: () => void;
+}
+class MsgSendBox extends React.Component<Props> {
+  inputMsgRef = React.createRef<HTMLElement>();
+  fileUploader = React.createRef<HTMLInputElement>();
+  state = {
+    inputMsg: '',
+    inputType: 'normal',
+    showEmoticon: false,
+    showDiceMethods: false,
+  };
+  clickableBtn = [
+    {
+      label: '发送表情',
+      icon: '&#xe683;',
+      onClick: (e) => {
+        e.stopPropagation();
+        this._handleShowEmoticon();
+      },
+    },
+    {
+      label: '发送人物卡',
+      icon: '&#xe61b;',
+      onClick: (e) => this._handleShowSendActor(),
+    },
+    {
+      label: '发送文件',
+      icon: '&#xe640;',
+      onClick: (e) =>
+        this.fileUploader &&
+        this.fileUploader.current &&
+        this.fileUploader.current.click(),
+    },
+  ];
+  inputType = [
+    {
+      label: '普通信息',
+      type: 'normal',
+      icon: '&#xe72d;',
+    },
+    {
+      label: '吐槽信息',
+      type: 'ooc',
+      icon: '&#xe64d;',
+    },
+    {
+      label: '对话信息',
+      type: 'speak',
+      icon: '&#xe61f;',
+    },
+    {
+      label: '行动信息',
+      type: 'action',
+      icon: '&#xe619;',
+    },
+  ];
+
+  actions = [
+    {
+      label: '',
+      icon: '&#xe631;',
+      onClick: () => this._handleShowDiceMethods(),
+    },
+  ];
+  hidePopup = () => {
+    window.removeEventListener('click', this.hidePopup);
+    this.setState({
       showEmoticon: false,
       showDiceMethods: false,
-    };
-    this.clickableBtn = [
-      {
-        label: '发送表情',
-        icon: '&#xe683;',
-        onClick: (e) => {
-          e.stopPropagation();
-          this._handleShowEmoticon();
-        },
-      },
-      {
-        label: '发送人物卡',
-        icon: '&#xe61b;',
-        onClick: (e) => this._handleShowSendActor(),
-      },
-      {
-        label: '发送文件',
-        icon: '&#xe640;',
-        onClick: (e) =>
-          this.refs.fileUploader && this.refs.fileUploader.click(),
-      },
-    ];
-    this.inputType = [
-      {
-        label: '普通信息',
-        type: 'normal',
-        icon: '&#xe72d;',
-      },
-      {
-        label: '吐槽信息',
-        type: 'ooc',
-        icon: '&#xe64d;',
-      },
-      {
-        label: '对话信息',
-        type: 'speak',
-        icon: '&#xe61f;',
-      },
-      {
-        label: '行动信息',
-        type: 'action',
-        icon: '&#xe619;',
-      },
-    ];
-    this.actions = [
-      {
-        label: '',
-        icon: '&#xe631;',
-        onClick: () => this._handleShowDiceMethods(),
-      },
-    ];
+    });
+  };
+
+  constructor(props) {
+    super(props);
     if (this.props.onQuickDice) {
       this.actions.unshift({
         label: '快速投骰',
@@ -79,13 +102,6 @@ class MsgSendBox extends React.Component {
         onClick: () => this.props.onQuickDice(),
       });
     }
-    this.hidePopup = () => {
-      window.removeEventListener('click', this.hidePopup);
-      this.setState({
-        showEmoticon: false,
-        showDiceMethods: false,
-      });
-    };
   }
 
   componentDidMount() {
@@ -186,6 +202,7 @@ class MsgSendBox extends React.Component {
             this.props.dispatch(hideModal());
             console.log('人物卡信息', actorUUID, actorInfo);
             let { converseUUID, isGroup } = this.props;
+            // TODO: 需要重写
             this.props.dispatch(
               sendMsg(converseUUID, {
                 room: isGroup ? converseUUID : '',
@@ -216,7 +233,7 @@ class MsgSendBox extends React.Component {
   }
 
   _handleFileUploaderChange() {
-    let files = this.refs.fileUploader.files;
+    let files = this.fileUploader.current.files as any;
     for (let f of files) {
       this.props.onSendFile && this.props.onSendFile(f);
     }
@@ -263,7 +280,7 @@ class MsgSendBox extends React.Component {
             <ReactTooltip effect="solid" />
             <input
               type="file"
-              ref="fileUploader"
+              ref={this.fileUploader}
               onChange={() => this._handleFileUploaderChange()}
               style={{ display: 'none' }}
             />
@@ -331,8 +348,9 @@ class MsgSendBox extends React.Component {
             disabled={false}
             onChange={(e) => this._handleMsgInputChange(e)}
             onKeyDown={(e) => this._handleMsgInputKeyDown(e)}
-            onKeyUp={(e) => this._handleMsgInputKeyUp(e)}
-            onPaste={(e) => this._handlePaste(e)}
+            // TODO: 下面事件可能需要实现，因为类型问题先注释掉
+            // onKeyUp={(e) => this._handleMsgInputKeyUp(e)}
+            // onPaste={(e) => this._handlePaste(e)}
           />
         </div>
         <div className="action-area">
@@ -348,11 +366,6 @@ class MsgSendBox extends React.Component {
   }
 }
 
-MsgSendBox.propTypes = {
-  conversesUUID: PropTypes.string,
-  isRoom: PropTypes.bool,
-};
-
-export default connect((state) => ({
+export default connect((state: any) => ({
   userUUID: state.getIn(['user', 'info', 'uuid']),
 }))(MsgSendBox);
