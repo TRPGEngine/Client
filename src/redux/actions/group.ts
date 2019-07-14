@@ -343,9 +343,6 @@ export const addGroupActor = function(groupUUID, actorUUID) {
       if (data.result) {
         let groupActor = data.groupActor;
         groupActor.avatar = config.file.getAbsolutePath(groupActor.avatar);
-        groupActor.actor.avatar = config.file.getAbsolutePath(
-          groupActor.actor.avatar
-        );
         dispatch({
           type: ADD_GROUP_ACTOR_SUCCESS,
           groupUUID,

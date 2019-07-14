@@ -51,7 +51,7 @@ export const getUserInfo = function(uuid, onCompleted?) {
   };
 };
 
-export const getTemplateInfo = function(uuid) {
+export const getTemplateInfo = function(uuid, onCompleted?) {
   if (!uuid) {
     throw new Error('getTemplateInfo need uuid');
   }
@@ -63,11 +63,13 @@ export const getTemplateInfo = function(uuid) {
       } else {
         console.error(data.msg);
       }
+
+      onCompleted && onCompleted(data);
     });
   };
 };
 
-export const getActorInfo = function(uuid) {
+export const getActorInfo = function(uuid, onCompleted?) {
   if (!uuid) {
     throw new Error('getActorInfo need uuid');
   }
@@ -81,6 +83,8 @@ export const getActorInfo = function(uuid) {
       } else {
         console.error(data.msg);
       }
+
+      onCompleted && onCompleted(data);
     });
   };
 };
