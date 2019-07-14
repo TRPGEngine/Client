@@ -16,7 +16,16 @@ import GroupActorCheck from './modal/GroupActorCheck';
 
 import './GroupActor.scss';
 
-class GroupActor extends React.Component {
+interface Props {
+  selectedGroupUUID: string;
+  showModal: any;
+  showAlert: any;
+  addGroupActor: any;
+  removeGroupActor: any;
+  groupInfo: any;
+  templateCache: any;
+}
+class GroupActor extends React.Component<Props> {
   _handleSendGroupActorCheck() {
     if (!this.props.selectedGroupUUID) {
       showAlert('请选择一个团来提交您的人物');
@@ -92,13 +101,12 @@ class GroupActor extends React.Component {
               return null;
             }
           });
-          tipHtml = tipHtml.join('');
           return (
             <div
               key={`group-actor#${item.get('uuid')}`}
               className="group-actor-item"
               data-html="true"
-              data-tip={tipHtml}
+              data-tip={tipHtml.join('')}
               data-for="group-actor-info-tip"
             >
               <div
@@ -123,7 +131,7 @@ class GroupActor extends React.Component {
                     data-tip="查询"
                     data-for="group-actor-action-tip"
                     onClick={() =>
-                      this._handleShowActorProfile(originActor.toJS())
+                      this._handleShowActorProfile(originActor.toJS(), {})
                     }
                   >
                     <i className="iconfont">&#xe61b;</i>
@@ -240,7 +248,7 @@ class GroupActor extends React.Component {
 }
 
 export default connect(
-  (state) => {
+  (state: any) => {
     const selectedGroupUUID = state.getIn(['group', 'selectedGroupUUID']);
     return {
       selectedGroupUUID,
@@ -250,9 +258,9 @@ export default connect(
       templateCache: state.getIn(['cache', 'template']),
     };
   },
-  (dispatch) => ({
-    showAlert: (...args) => dispatch(showAlert(...args)),
-    showModal: (...args) => dispatch(showModal(...args)),
+  (dispatch: any) => ({
+    showAlert: (payload) => dispatch(showAlert(payload)),
+    showModal: (body) => dispatch(showModal(body)),
     selectActor: (actorUUID) => dispatch(selectActor(actorUUID)),
     addGroupActor: (groupUUID, actorUUID) =>
       dispatch(addGroupActor(groupUUID, actorUUID)),
