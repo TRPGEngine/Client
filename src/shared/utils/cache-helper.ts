@@ -2,6 +2,7 @@ import {
   getUserInfo,
   getGroupInfo,
   getTemplateInfo,
+  getActorInfo,
 } from '../../redux/actions/cache';
 import immutable, { Map } from 'immutable';
 import _isNil from 'lodash/isNil';
@@ -55,10 +56,11 @@ export const loadcache = function() {
   // TODO
 };
 
-type CacheScope = 'user' | 'group';
+type CacheScope = 'user' | 'group' | 'actor' | 'template';
+type GetCacheCompletedCallback = () => void;
 type GetCacheDispatchActionFn = (
   uuid: string,
-  onCompleted: any
+  onCompleted: GetCacheCompletedCallback
 ) => (dispatch: any, getState: any) => any;
 /**
  * 一个工厂类，用于生成获取缓存的方法
@@ -112,7 +114,8 @@ function reduxCacheFactory(
  */
 export const getUserInfoCache = reduxCacheFactory(
   'user',
-  (uuid: string, onCompleted: () => void) => getUserInfo(uuid, onCompleted)
+  (uuid: string, onCompleted: GetCacheCompletedCallback) =>
+    getUserInfo(uuid, onCompleted)
 );
 
 /**
@@ -121,5 +124,26 @@ export const getUserInfoCache = reduxCacheFactory(
  */
 export const getGroupInfoCache = reduxCacheFactory(
   'group',
-  (uuid: string, onCompleted: () => void) => getGroupInfo(uuid, onCompleted)
+  (uuid: string, onCompleted: GetCacheCompletedCallback) =>
+    getGroupInfo(uuid, onCompleted)
+);
+
+/**
+ * 获取角色信息并缓存，如果缓存中已经有记录了则从缓存中获取
+ * @param {string} uuid 角色UUID
+ */
+export const getActorInfoCache = reduxCacheFactory(
+  'actor',
+  (uuid: string, onCompleted: GetCacheCompletedCallback) =>
+    getActorInfo(uuid, onCompleted)
+);
+
+/**
+ * 获取模板信息并缓存，如果缓存中已经有记录了则从缓存中获取
+ * @param {string} uuid 角色UUID
+ */
+export const getTemplateInfoCache = reduxCacheFactory(
+  'template',
+  (uuid: string, onCompleted: GetCacheCompletedCallback) =>
+    getTemplateInfo(uuid, onCompleted)
 );
