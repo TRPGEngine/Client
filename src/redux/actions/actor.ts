@@ -283,7 +283,21 @@ let removeActor = function removeActor(uuid) {
   };
 };
 
-let updateActor = function updateActor(uuid, name, avatar, desc, info) {
+/**
+ * 根据UUID更新角色信息
+ * @param uuid 角色唯一标识
+ * @param name 角色名
+ * @param avatar 角色头像
+ * @param desc 角色描述
+ * @param info 角色信息
+ */
+let updateActor = function updateActor(
+  uuid: string,
+  name: string,
+  avatar: string,
+  desc: string,
+  info: {}
+) {
   return function(dispatch, getState) {
     dispatch(showLoading('正在更新人物卡信息，请稍后...'));
     return api.emit(

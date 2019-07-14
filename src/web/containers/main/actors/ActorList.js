@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import at from 'trpg-actor-template';
 import TemplateSelect from './TemplateSelect';
 import ActorCreate from '@components/modal/ActorCreate';
-import ActorEdit from './ActorEdit';
+import ActorEdit from '@components/modal/ActorEdit';
+import { updateActor } from '@redux/actions/actor';
 import * as apiHelper from '../../../../shared/utils/api-helper';
 import { showModal, showAlert } from '../../../../redux/actions/ui';
 import {
@@ -43,6 +44,36 @@ class ActorList extends React.Component {
       this.props.selectTemplate(template);
       this.props.showModal(<ActorEdit />);
     });
+  }
+
+  handleOpenActorEditModal(uuid) {
+    // TODO
+    const actor = this.props.actors.find((a) => a.get('uuid') === uuid);
+    if (_isNil(actor)) {
+      message.error('角色不存在');
+      return;
+    }
+    const templateLayout = this.props.templateCache.getIn([
+      actor.get('template_uuid'),
+      'layout',
+    ]);
+
+    const name = actor.get('name');
+    const desc = actor.get('desc');
+    const avatar = actor.get('avatar');
+
+    this.props.showModal(
+      <ActorEdit
+        name={name}
+        desc={desc}
+        avatar={avatar}
+        data={actor.get('info')}
+        layout={templateLayout}
+        onSave={(data) =>
+          this.props.updateActor(uuid, name, avatar, desc, data)
+        }
+      />
+    );
   }
 
   handleOpenActorInfoModal(uuid) {
@@ -92,9 +123,7 @@ class ActorList extends React.Component {
               <button onClick={() => this._handleRemoveActor(uuid)}>
                 删除
               </button>
-              <button
-                onClick={() => this._handleEditActor(uuid, template_uuid)}
-              >
+              <button onClick={() => this.handleOpenActorEditModal(uuid)}>
                 编辑
               </button>
               <button onClick={() => this.handleOpenActorInfoModal(uuid)}>
@@ -186,6 +215,8 @@ export default connect(
     showAlert: (...args) => dispatch(showAlert(...args)),
     selectActor: (uuid) => dispatch(selectActor(uuid)),
     removeActor: (uuid) => dispatch(removeActor(uuid)),
+    updateActor: (uuid, name, avatar, desc, info) =>
+      dispatch(updateActor(uuid, name, avatar, desc, info)),
     selectTemplate: (template) => dispatch(selectTemplate(template)),
   })
 )(ActorList);
