@@ -1,5 +1,5 @@
 import constants from '../constants';
-import immutable from 'immutable';
+import immutable, { Record, Map } from 'immutable';
 import uuid from 'uuid/v1';
 
 const {
@@ -14,7 +14,14 @@ const {
   SYNC_NOTE_FAILED,
 } = constants;
 
-const initialState = immutable.fromJS({
+export type NoteState = Record<{
+  noteList: Map<string, any>;
+  selectedNoteUUID: string;
+  isSync: boolean;
+  isSyncUUID: string;
+}>;
+
+const initialState: NoteState = immutable.fromJS({
   noteList: {},
   selectedNoteUUID: '',
   isSync: false,

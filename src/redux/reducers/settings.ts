@@ -1,4 +1,4 @@
-import immutable from 'immutable';
+import immutable, { Record } from 'immutable';
 import constants from '../constants';
 import config from '../../../config/project.config';
 
@@ -12,7 +12,15 @@ const {
   UPDATE_FAVORITE_DICE,
 } = constants;
 
-const initialState = immutable.fromJS({
+type NotificationType = 'granted' | 'denied' | 'default';
+
+export type SettingsState = Record<{
+  user: any;
+  system: any;
+  notificationPermission: NotificationType;
+}>;
+
+const initialState: SettingsState = immutable.fromJS({
   ...config.defaultSettings,
   notificationPermission: 'default', // granted, denied, default in web
 });

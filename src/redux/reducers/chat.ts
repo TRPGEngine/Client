@@ -1,5 +1,5 @@
 import constants from '../constants';
-import immutable from 'immutable';
+import immutable, { List, Map, Record } from 'immutable';
 const {
   RESET,
   ADD_CONVERSES,
@@ -24,7 +24,20 @@ const {
   ADD_USER_CHAT_EMOTION_CATALOG,
 } = constants;
 
-const initialState = immutable.fromJS({
+type WritingListType =
+  | Map<'user', List<string>>
+  | Map<'group', Map<string, List<string>>>;
+
+export type ChatState = Record<{
+  selectedConversesUUID: string;
+  selectedConversesUserUUID: string;
+  conversesDesc: string;
+  converses: Map<string, any>;
+  writingList: WritingListType;
+  emotions: Map<'catalogs' | 'favorites', List<any>>;
+}>;
+
+const initialState: ChatState = immutable.fromJS({
   selectedConversesUUID: '',
   selectedConversesUserUUID: '',
   conversesDesc: '', // 获取会话列表的提示信息

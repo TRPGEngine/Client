@@ -1,4 +1,4 @@
-import immutable from 'immutable';
+import immutable, { Record, Map } from 'immutable';
 import constants from '../constants';
 const {
   RESET,
@@ -9,7 +9,14 @@ const {
   GET_GROUP_INFO_SUCCESS,
 } = constants;
 
-const initialState = immutable.fromJS({
+export type CacheState = Record<{
+  user: Map<string, any>;
+  template: Map<string, any>;
+  actor: Map<string, any>;
+  group: Map<string, any>;
+}>;
+
+const initialState: CacheState = immutable.fromJS({
   user: {},
   template: {},
   actor: {},
