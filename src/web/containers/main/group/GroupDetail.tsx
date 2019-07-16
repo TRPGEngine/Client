@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import config from '../../../../../config/project.config.js';
 import Select from 'react-select';
 import ReactTooltip from 'react-tooltip';
@@ -27,7 +27,15 @@ import IsDeveloping from '../../../components/IsDeveloping';
 import MsgContainer from '../../../components/MsgContainer';
 import MsgSendBox from '../../../components/MsgSendBox';
 
-class GroupDetail extends React.Component {
+interface Props extends DispatchProp<any> {
+  selectedGroupActorUUID: string;
+  selectedUUID: string;
+  userUUID: string;
+  selfGroupActors: any;
+  groupInfo: any;
+  usercache: any;
+}
+class GroupDetail extends React.Component<Props> {
   _handleSelectGroupActor(item) {
     if (item.value !== this.props.selectedGroupActorUUID) {
       this.props.dispatch(
@@ -49,6 +57,7 @@ class GroupDetail extends React.Component {
     );
   }
 
+  // 发送文件
   _handleSendFile(file) {
     console.log('send file to', this.props.selectedUUID, file);
     this.props.dispatch(
@@ -259,7 +268,7 @@ class GroupDetail extends React.Component {
   }
 }
 
-export default connect((state) => {
+export default connect((state: any) => {
   let selectedUUID = state.getIn(['group', 'selectedGroupUUID']);
   let groupInfo = state
     .getIn(['group', 'groups'])
