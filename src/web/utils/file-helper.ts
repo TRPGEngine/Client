@@ -38,5 +38,6 @@ export function blobFromUrl(blobUrl: string): Promise<Blob> {
 export function blobToFile(blob: Blob, fileName: string): File {
   return new File([blob], fileName, {
     lastModified: new Date().valueOf(),
+    type: blob.type,
   });
 }

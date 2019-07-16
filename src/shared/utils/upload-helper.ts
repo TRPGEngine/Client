@@ -48,8 +48,8 @@ const _upload = function(
       return res.data;
     })
     .catch((err) => {
-      console.error(err, JSON.stringify(err));
-      return false;
+      console.error('上传失败', err, JSON.stringify(err));
+      throw err;
     });
 };
 
