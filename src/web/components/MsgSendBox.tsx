@@ -202,22 +202,39 @@ class MsgSendBox extends React.Component<Props> {
             this.props.dispatch(hideModal());
             console.log('人物卡信息', actorUUID, actorInfo);
             let { converseUUID, isGroup } = this.props;
-            // TODO: 需要重写
-            this.props.dispatch(
-              sendMsg(converseUUID, {
-                room: isGroup ? converseUUID : '',
-                type: 'card',
-                message: '[人物卡]',
-                is_public: isGroup,
-                data: {
-                  type: 'actor',
-                  uuid: actorUUID,
-                  avatar: config.file.getRelativePath(actorInfo.avatar),
-                  name: actorInfo.name,
-                  desc: actorInfo.desc,
-                },
-              })
-            );
+            if (isGroup) {
+              // 发送到团
+              this.props.dispatch(
+                sendMsg(null, {
+                  converse_uuid: converseUUID,
+                  type: 'card',
+                  message: '[人物卡]',
+                  is_public: isGroup,
+                  data: {
+                    type: 'actor',
+                    uuid: actorUUID,
+                    avatar: config.file.getRelativePath(actorInfo.avatar),
+                    name: actorInfo.name,
+                    desc: actorInfo.desc,
+                  },
+                })
+              );
+            } else {
+              this.props.dispatch(
+                sendMsg(converseUUID, {
+                  type: 'card',
+                  message: '[人物卡]',
+                  is_public: isGroup,
+                  data: {
+                    type: 'actor',
+                    uuid: actorUUID,
+                    avatar: config.file.getRelativePath(actorInfo.avatar),
+                    name: actorInfo.name,
+                    desc: actorInfo.desc,
+                  },
+                })
+              );
+            }
           }}
         />
       )

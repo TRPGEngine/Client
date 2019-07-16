@@ -91,7 +91,7 @@ class GroupInfo extends React.Component {
         </div>
         <div className="group-info-cells">
           <div className="group-info-cell">
-            <span>团长:</span>
+            <span>团主持人:</span>
             <span>
               {usercache.getIn([groupInfo.get('owner_uuid'), 'nickname'])}
             </span>
