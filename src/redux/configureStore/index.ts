@@ -4,7 +4,7 @@ import { createLogger } from 'redux-logger';
 import config from '../../../config/project.config';
 import { getCombineReducers } from '../reducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import * as actionCreators from '../actions';
+import actionCreators from '../actions';
 
 const logger = createLogger({
   level: 'info',
@@ -33,11 +33,11 @@ function configureStore(options = defaultStoreOptions) {
   const initialState = options.initialState;
   const devTool =
     config.environment !== 'production'
-      ? composeWithDevTools({
+      ? (composeWithDevTools as any)({
           actionCreators,
         })(applyMiddleware(thunk))
       : undefined;
-  const store = createStoreWithMiddleware(
+  const store = (createStoreWithMiddleware as any)(
     getCombineReducers(options.additionReducer),
     initialState,
     devTool
