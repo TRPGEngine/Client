@@ -19,6 +19,7 @@ const {
   GET_GROUP_ACTOR_SUCCESS,
   GET_GROUP_MEMBERS_SUCCESS,
   SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS,
+  UPDATE_PLAYER_SELECTED_GROUP_ACTOR,
   ADD_GROUP_ACTOR_SUCCESS,
   REMOVE_GROUP_ACTOR_SUCCESS,
   AGREE_GROUP_ACTOR_SUCCESS,
@@ -197,6 +198,13 @@ export default function group(state = initialState, action) {
           return list;
         })
         .setIn(['groupActorMap', groupUUID, 'self'], groupActorUUID);
+    }
+    case UPDATE_PLAYER_SELECTED_GROUP_ACTOR: {
+      const { groupUUID, userUUID, groupActorUUID } = action.payload;
+      return state.setIn(
+        ['groupActorMap', groupUUID, userUUID],
+        groupActorUUID
+      );
     }
     case ADD_GROUP_ACTOR_SUCCESS:
       return state.update('groups', (list) => {

@@ -27,6 +27,7 @@ const {
   TICK_MEMBER_SUCCESS,
   SET_MEMBER_TO_MANAGER_SUCCESS,
   UPDATE_GROUP_STATUS,
+  UPDATE_PLAYER_SELECTED_GROUP_ACTOR,
 } = constants;
 import config from '../../../config/project.config';
 import {
@@ -337,6 +338,20 @@ export const changeSelectGroupActor = function(groupUUID, groupActorUUID) {
         }
       }
     );
+  };
+};
+
+/**
+ * 更新用户选择的团角色
+ */
+export const updatePlayerSelectedGroupActor = function(
+  groupUUID: string,
+  userUUID: string,
+  groupActorUUID: string
+) {
+  return {
+    type: UPDATE_PLAYER_SELECTED_GROUP_ACTOR,
+    payload: { groupUUID, userUUID, groupActorUUID },
   };
 };
 

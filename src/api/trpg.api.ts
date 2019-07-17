@@ -8,7 +8,11 @@ import {
   stopWriting,
 } from '../redux/actions/chat';
 import { addFriendInvite, loginWithToken } from '../redux/actions/user';
-import { updateGroupStatus, addGroup } from '../redux/actions/group';
+import {
+  updateGroupStatus,
+  addGroup,
+  updatePlayerSelectedGroupActor,
+} from '../redux/actions/group';
 import { getUserInfoCache } from '../shared/utils/cache-helper';
 import rnStorage from './rn-storage.api';
 import constants from '../redux/constants';
@@ -82,6 +86,15 @@ export function bindEventFunc(
   });
   api.on('group::addGroupSuccess', function(data) {
     store.dispatch(addGroup(data.group));
+  });
+  api.on('group::updatePlayerSelectedGroupActor', function(data) {
+    store.dispatch(
+      updatePlayerSelectedGroupActor(
+        data.groupUUID,
+        data.userUUID,
+        data.groupActorUUID
+      )
+    );
   });
 
   api.on('connect', function(data) {
