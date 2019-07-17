@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
-import { TButton, TFormGroup, TLoading } from '../components/TComponent';
-import { showLoading, showAlert } from '../../redux/actions/ui';
+import { TButton, TFormGroup } from '../components/TComponent';
+import { showLoading, showAlert, hideAlert } from '../../redux/actions/ui';
 import { register } from '../../redux/actions/user';
 
 interface Props {
@@ -71,6 +71,7 @@ class RegisterScreen extends React.Component<Props, State> {
             showAlert({
               content: '注册成功',
               onConfirm: () => {
+                this.props.dispatch(hideAlert());
                 this.props.dispatch(NavigationActions.back());
               },
             })
