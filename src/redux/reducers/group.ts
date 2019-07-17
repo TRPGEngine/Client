@@ -39,6 +39,7 @@ export type GroupState = Record<{
   isFindingGroup: boolean;
   findingResult: List<any>;
   requestingGroupUUID: List<string>;
+  groupActorMap: Map<string, Map<string, string>>;
 }>;
 
 const initialState: GroupState = immutable.fromJS({
@@ -49,6 +50,7 @@ const initialState: GroupState = immutable.fromJS({
   isFindingGroup: false,
   findingResult: [],
   requestingGroupUUID: [],
+  groupActorMap: {}, // {groupUUID: {userUUID: groupActorUUID}} 如果为自己，可以使用self代替userUUID
 });
 
 export default function group(state = initialState, action) {
@@ -178,19 +180,24 @@ export default function group(state = initialState, action) {
 
         return list;
       });
-    case SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS:
-      return state.update('groups', (list) => {
-        for (var i = 0; i < list.size; i++) {
-          if (list.getIn([i, 'uuid']) === action.payload.groupUUID) {
-            list = list.setIn(
-              [i, 'extra', 'selected_group_actor_uuid'],
-              action.payload.groupActorUUID
-            );
+    case SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS: {
+      const { groupUUID, groupActorUUID } = action.payload;
+      return state
+        .update('groups', (list) => {
+          for (var i = 0; i < list.size; i++) {
+            if (list.getIn([i, 'uuid']) === groupUUID) {
+              list = list.setIn(
+                [i, 'extra', 'selected_group_actor_uuid'],
+                groupActorUUID
+              );
+              break;
+            }
           }
-        }
 
-        return list;
-      });
+          return list;
+        })
+        .setIn(['groupActorMap', groupUUID, 'self'], groupActorUUID);
+    }
     case ADD_GROUP_ACTOR_SUCCESS:
       return state.update('groups', (list) => {
         for (var i = 0; i < list.size; i++) {

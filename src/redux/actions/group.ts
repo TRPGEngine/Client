@@ -316,6 +316,11 @@ export const switchSelectGroup = function(uuid) {
   return { type: SWITCH_GROUP, payload: uuid };
 };
 
+/**
+ * 修改当前选中的团角色的UUID
+ * @param groupUUID 团UUID
+ * @param groupActorUUID 团角色UUID
+ */
 export const changeSelectGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
     return api.emit(
