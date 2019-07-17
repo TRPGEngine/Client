@@ -107,8 +107,8 @@ android {
         applicationId "com.moonrailgun.trpg"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
         manifestPlaceholders = [
                 JPUSH_APPKEY: "4ebde26529796c17dcffb886",
                 APP_CHANNEL : "default"

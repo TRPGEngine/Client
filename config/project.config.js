@@ -11,6 +11,9 @@ if (localHost) {
 }
 if (environment == 'production') {
   currentHost = 'trpgapi.moonrailgun.com';
+  if (platform === 'app') {
+    isSSL = true;
+  }
 }
 
 let trpgHost = process.env.TRPG_HOST;
