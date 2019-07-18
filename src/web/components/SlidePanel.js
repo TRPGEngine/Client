@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { hideSlidePanel } from '../../redux/actions/ui';
+import { isImmutable } from 'immutable';
 
 import './SlidePanel.scss';
 
@@ -37,6 +38,14 @@ class SlidePanel extends React.Component {
   }
 
   render() {
+    const showSlidePanelInfo = this.props.showSlidePanelInfo;
+    let content = showSlidePanelInfo.get('content');
+    if (isImmutable(content)) {
+      content = content.toJS();
+    }
+
+    console.log('showSlidePanelInfo', showSlidePanelInfo);
+
     return (
       <div
         className={'slide-panel' + (this.props.isSlidePanelShow ? '' : ' hide')}
@@ -45,12 +54,12 @@ class SlidePanel extends React.Component {
         }}
       >
         <div className="header">
-          <div className="title">{this.props.slidePanelTitle}</div>
+          <div className="title">{showSlidePanelInfo.get('title')}</div>
           <div className="close" onClick={() => this._handleHideSlidePanel()}>
             <i className="iconfont">&#xe70c;</i>
           </div>
         </div>
-        <div className="content">{this.props.slidePanelContent}</div>
+        <div className="content">{content}</div>
       </div>
     );
   }
@@ -58,12 +67,10 @@ class SlidePanel extends React.Component {
 
 export default connect((state) => {
   let slidePanelContent = state.getIn(['ui', 'showSlidePanelInfo', 'content']);
-  if (typeof slidePanelContent === 'object') {
-    slidePanelContent = slidePanelContent.toJS();
-  }
+
   return {
     isSlidePanelShow: state.getIn(['ui', 'showSlidePanel']),
     slidePanelTitle: state.getIn(['ui', 'showSlidePanelInfo', 'title']),
-    slidePanelContent,
+    showSlidePanelInfo: state.getIn(['ui', 'showSlidePanelInfo']),
   };
 })(SlidePanel);
