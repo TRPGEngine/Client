@@ -16,11 +16,12 @@
       "@redux/*": ["./src/redux/*"],
       "@components/*": ["./src/web/components/*"],
       "@shared/*": ["./src/shared/*"],
-      "@web/*": ["./src/web/*"],
+      "@web/*": ["./src/web/*"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "**/node_modules/*"
+  "include": [
+    "./node_modules/@types/",
+    "config/",
+    "src/"
   ]
 }
