@@ -65,4 +65,4 @@ const styles = {
   fileSize: [sb.font(14), sb.color('#ccc')],
 };
 
-export default connect()(File);
+export default connect()(File as any);

@@ -12,8 +12,8 @@ class Default extends Base {
   }
 
   getContent() {
-    const info = this.props.info || {};
-    return <View>{parse(info.message)}</View>;
+    const info = this.props.info;
+    return <View>{parse(_get(info, 'message'))}</View>;
   }
 }
 

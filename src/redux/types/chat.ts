@@ -19,5 +19,5 @@ export interface MsgPayload {
   is_public?: boolean;
   is_group?: boolean;
   date?: string;
-  data?: {};
+  data?: any;
 }
