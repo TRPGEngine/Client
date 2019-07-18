@@ -53,7 +53,7 @@ class GroupDetail extends React.Component<Props> {
     let msgData: GroupActorMsgData;
     if (!_isNil(this.props.selectedGroupActorInfo)) {
       msgData = {
-        uuid: this.props.selectedGroupActorInfo.get('uuid'),
+        groupActorUUID: this.props.selectedGroupActorInfo.get('uuid'),
         name: this.props.selectedGroupActorInfo.get('name'),
         avatar: this.props.selectedGroupActorInfo.get('avatar'),
       };

@@ -2,6 +2,7 @@ import React from 'react';
 import dateHelper from '../../../shared/utils/date-helper';
 import config from '../../../../config/project.config';
 import { MessageProps } from '@shared/components/MessageHandler';
+import _get from 'lodash/get';
 
 class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
   static defaultProps = {
@@ -12,16 +13,36 @@ class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
     emphasizeTime: false,
   };
 
+  /**
+   * 返回信息显示的发送者的名字
+   * 获取顺序: 消息信息内发送者名 -> 传递来的名字(原始名)
+   */
+  getSenderName(): string {
+    const { name, info } = this.props;
+
+    return _get(info, 'data.name') || name;
+  }
+
+  /**
+   * 返回信息avatar的地址
+   * 获取顺序: 消息信息内头像 -> 传递来的头像(发送者) -> 默认头像
+   */
+  getAvatarUrl(): string {
+    const { avatar, info } = this.props;
+    const defaultAvatar =
+      info.sender_uuid === 'trpgsystem'
+        ? config.defaultImg.trpgsystem
+        : config.defaultImg.getUser(name);
+
+    return _get(info, 'data.avatar') || avatar || defaultAvatar;
+  }
+
   getContent() {
     return null;
   }
 
   render() {
-    const { type, me, name, avatar, info, emphasizeTime } = this.props;
-    let defaultAvatar =
-      info.sender_uuid === 'trpgsystem'
-        ? config.defaultImg.trpgsystem
-        : config.defaultImg.getUser(name);
+    const { type, me, name, info, emphasizeTime } = this.props;
 
     return (
       <div className={'msg-item ' + (me ? 'me ' : '') + type}>
@@ -31,12 +52,12 @@ class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
           </div>
         ) : null}
         <div className="profile">
-          <span className="name">{name}</span>
+          <span className="name">{this.getSenderName()}</span>
           <span className="time">{dateHelper.getMsgDate(info.date)}</span>
         </div>
         <div className="content">
           <div className="avatar">
-            <img src={avatar || defaultAvatar} />
+            <img src={this.getAvatarUrl()} />
           </div>
           <div className="body">{this.getContent()}</div>
         </div>

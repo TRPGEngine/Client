@@ -1,5 +1,5 @@
 export interface GroupActorMsgData {
-  uuid: string;
+  groupActorUUID: string;
   name: string;
   avatar: string;
 }
