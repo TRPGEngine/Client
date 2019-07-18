@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { MsgType, MsgPayload } from '@redux/types/chat';
 
 export interface MessageProps {
@@ -9,22 +9,21 @@ export interface MessageProps {
   info: MsgPayload;
   emphasizeTime: boolean;
 }
-class MessageHandler extends React.Component<MessageProps> {
+class MessageHandler extends Component<MessageProps> {
   static messageHandlers = {};
 
-  static registerMessageHandler(messageType, messageHandler) {
+  static registerMessageHandler(
+    messageType: string,
+    messageHandler: typeof Component
+  ) {
     if (typeof messageType !== 'string') {
       throw new Error('[registerMessageHandler] messageType mustbe a string');
     }
-    if (!(messageHandler instanceof React.Component)) {
-      throw new Error(
-        '[registerMessageHandler] messageHandler mustbe a react componet'
-      );
-    }
+
     MessageHandler.messageHandlers[messageType] = messageHandler;
   }
 
-  static registerDefaultMessageHandler(messageHandler) {
+  static registerDefaultMessageHandler(messageHandler: typeof Component) {
     MessageHandler.registerMessageHandler('default', messageHandler);
   }
 
