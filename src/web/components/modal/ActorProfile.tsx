@@ -6,10 +6,24 @@ import ReactTooltip from 'react-tooltip';
 
 import './ActorProfile.scss';
 
-class ActorProfile extends React.Component {
+interface Props {
+  actor: any;
+  canEdit?: boolean;
+  editingData?: any;
+  onEditData?: any;
+  overwritedActorData?: any; // 一般用于团角色的人物信息, 只读
+  templateCache: any;
+}
+class ActorProfile extends React.Component<Props> {
   constructor(props) {
     super(props);
   }
+
+  static defaultProps = {
+    canEdit: false,
+    editingData: {},
+    overwritedActorData: {},
+  };
 
   getActorProperty(actor, template) {
     if (!template) {
@@ -83,20 +97,6 @@ class ActorProfile extends React.Component {
   }
 }
 
-ActorProfile.defaultProps = {
-  canEdit: false,
-  editingData: {},
-  overwritedActorData: {},
-};
-
-ActorProfile.propTypes = {
-  actor: PropTypes.object.isRequired,
-  canEdit: PropTypes.bool,
-  editingData: PropTypes.object,
-  onEditData: PropTypes.func,
-  overwritedActorData: PropTypes.object, // 一般用于团角色的人物信息, 只读
-};
-
-export default connect((state) => ({
+export default connect((state: any) => ({
   templateCache: state.getIn(['cache', 'template']),
 }))(ActorProfile);
