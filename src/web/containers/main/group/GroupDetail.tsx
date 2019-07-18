@@ -26,14 +26,18 @@ import ListSelect from '../../../components/ListSelect';
 import IsDeveloping from '../../../components/IsDeveloping';
 import MsgContainer from '../../../components/MsgContainer';
 import MsgSendBox from '../../../components/MsgSendBox';
+import { List } from 'immutable';
+import _isNil from 'lodash/isNil';
+import { GroupActorMsgData } from '@redux/types/group';
 
 interface Props extends DispatchProp<any> {
-  selectedGroupActorUUID: string;
   selectedUUID: string;
   userUUID: string;
-  selfGroupActors: any;
   groupInfo: any;
   usercache: any;
+  selfGroupActors: any;
+  selectedGroupActorUUID: string;
+  selectedGroupActorInfo: any;
 }
 class GroupDetail extends React.Component<Props> {
   _handleSelectGroupActor(item) {
@@ -46,6 +50,14 @@ class GroupDetail extends React.Component<Props> {
 
   _handleSendMsg(message, type) {
     console.log('send msg:', message, 'to', this.props.selectedUUID);
+    let msgData: GroupActorMsgData;
+    if (!_isNil(this.props.selectedGroupActorInfo)) {
+      msgData = {
+        uuid: this.props.selectedGroupActorInfo.get('uuid'),
+        name: this.props.selectedGroupActorInfo.get('name'),
+        avatar: this.props.selectedGroupActorInfo.get('avatar'),
+      };
+    }
     this.props.dispatch(
       sendMsg(null, {
         converse_uuid: this.props.selectedUUID,
@@ -53,6 +65,7 @@ class GroupDetail extends React.Component<Props> {
         is_public: true,
         is_group: true,
         type,
+        data: msgData,
       })
     );
   }
@@ -269,13 +282,22 @@ class GroupDetail extends React.Component<Props> {
 }
 
 export default connect((state: any) => {
-  let selectedUUID = state.getIn(['group', 'selectedGroupUUID']);
-  let groupInfo = state
+  const selectedUUID = state.getIn(['group', 'selectedGroupUUID']);
+  const groupInfo = state
     .getIn(['group', 'groups'])
     .find((group) => group.get('uuid') === selectedUUID);
-  let selfActors = state
+  const selfActors = state
     .getIn(['actor', 'selfActors'])
     .map((i) => i.get('uuid'));
+  const selfGroupActors = groupInfo
+    .get('group_actors', List())
+    .filter(
+      (i) => i.get('enabled') && selfActors.indexOf(i.get('actor_uuid')) >= 0
+    );
+  const selectedGroupActorUUID = groupInfo.getIn([
+    'extra',
+    'selected_group_actor_uuid',
+  ]);
   return {
     selectedUUID,
     groupInfo,
@@ -284,14 +306,10 @@ export default connect((state: any) => {
       .sortBy((item) => item.get('date')),
     userUUID: state.getIn(['user', 'info', 'uuid']),
     usercache: state.getIn(['cache', 'user']),
-    selfGroupActors: groupInfo
-      .get('group_actors', [])
-      .filter(
-        (i) => i.get('enabled') && selfActors.indexOf(i.get('actor_uuid')) >= 0
-      ),
-    selectedGroupActorUUID: groupInfo.getIn([
-      'extra',
-      'selected_group_actor_uuid',
-    ]),
+    selfGroupActors,
+    selectedGroupActorUUID,
+    selectedGroupActorInfo: selfGroupActors.find(
+      (actor) => actor.get('uuid') === selectedGroupActorUUID
+    ),
   };
 })(GroupDetail);

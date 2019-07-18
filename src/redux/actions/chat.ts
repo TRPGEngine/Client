@@ -31,6 +31,7 @@ import * as uploadHelper from '../../shared/utils/upload-helper';
 import { renewableDelayTimer } from '../../shared/utils/timer';
 import config from '../../../config/project.config';
 import _without from 'lodash/without';
+import { MsgPayload } from '@redux/types/chat';
 
 const getUserConversesHash = (userUUID) => {
   return `userConverses#${userUUID}`;
@@ -368,13 +369,12 @@ export let updateMsg = function updateMsg(converseUUID, payload) {
   };
 };
 
-export let sendMsg = function sendMsg(toUUID, payload) {
+export let sendMsg = function sendMsg(toUUID: string, payload: MsgPayload) {
   return function(dispatch, getState) {
     dispatch({ type: SEND_MSG });
     const info = getState().getIn(['user', 'info']);
     const localUUID = getLocalUUID();
     let pkg = {
-      room: payload.room || '',
       sender_uuid: info.get('uuid'),
       to_uuid: toUUID,
       converse_uuid: payload.converse_uuid,

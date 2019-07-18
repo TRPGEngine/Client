@@ -51,6 +51,8 @@ const initialState: GroupState = immutable.fromJS({
   isFindingGroup: false,
   findingResult: [],
   requestingGroupUUID: [],
+
+  // TODO: 需要在登录后获取团所有成员映射
   groupActorMap: {}, // {groupUUID: {userUUID: groupActorUUID}} 如果为自己，可以使用self代替userUUID
 });
 
