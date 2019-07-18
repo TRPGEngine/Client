@@ -13,6 +13,7 @@ import ModalPanel from '../../../components/ModalPanel';
 import ActorProfile from '../../../components/modal/ActorProfile';
 import ActorSelect from '../../../components/modal/ActorSelect';
 import GroupActorCheck from './modal/GroupActorCheck';
+import { ActorType, ActorDataType } from '@redux/types/actor';
 
 import './GroupActor.scss';
 
@@ -41,7 +42,7 @@ class GroupActor extends React.Component<Props> {
   }
 
   // 查看人物卡
-  _handleShowActorProfile(actor, data) {
+  _handleShowActorProfile(actor: ActorType, data: ActorDataType) {
     if (actor) {
       console.log(actor);
       this.props.showModal(
