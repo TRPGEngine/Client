@@ -1,8 +1,9 @@
 import React from 'react';
 import dateHelper from '../../../shared/utils/date-helper';
 import config from '../../../../config/project.config';
+import { MessageProps } from '@shared/components/MessageHandler';
 
-class Base extends React.Component {
+class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
   static defaultProps = {
     type: 'normal',
     me: false,

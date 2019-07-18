@@ -1,13 +1,22 @@
 import React from 'react';
+import { MsgType, MsgPayload } from '@redux/types/chat';
 
-class MessageHandler extends React.Component {
+export interface MessageProps {
+  type: MsgType;
+  me: boolean;
+  name: string;
+  avatar: string;
+  info: MsgPayload;
+  emphasizeTime: boolean;
+}
+class MessageHandler extends React.Component<MessageProps> {
   static messageHandlers = {};
 
   static registerMessageHandler(messageType, messageHandler) {
     if (typeof messageType !== 'string') {
       throw new Error('[registerMessageHandler] messageType mustbe a string');
     }
-    if (typeof messageHandler instanceof React.Component) {
+    if (!(messageHandler instanceof React.Component)) {
       throw new Error(
         '[registerMessageHandler] messageHandler mustbe a react componet'
       );
