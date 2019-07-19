@@ -16,6 +16,7 @@ interface ItemProps {
   name: string;
   value: string;
 }
+/** 信息列表组件 */
 class ProfileInfoItem extends React.Component<ItemProps> {
   render() {
     return (
@@ -40,10 +41,6 @@ interface ScreenProps
  * 用户信息页面
  */
 class ProfileScreen extends React.Component<ScreenProps> {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     let uuid = this.props.navigation.state.params.uuid;
     if (uuid) {

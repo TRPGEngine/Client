@@ -12,6 +12,7 @@ import sb from 'react-native-style-block';
 import { TIcon, TInput, TAvatar } from '../components/TComponent';
 import { findUser } from '../../redux/actions/user';
 import { findGroup } from '../../redux/actions/group';
+import { switchNav } from '../redux/actions/nav';
 
 interface Props extends DispatchProp<any> {
   isFinding: boolean;
@@ -134,7 +135,10 @@ class AddFriendScreen extends React.Component<Props> {
               ...item,
               name: item.nickname || item.username,
             })),
-            (item) => alert('TODO:显示用户资料' + item.uuid)
+            (item) =>
+              this.props.dispatch(
+                switchNav('Profile', { uuid: item.uuid, type: 'user' })
+              )
           );
         } else if (this.state.searchType === 'group') {
           let resultList = this.props.groupFindingResult
@@ -142,7 +146,7 @@ class AddFriendScreen extends React.Component<Props> {
             : [];
 
           return this.getSearchList(resultList, (item) =>
-            alert('TODO:显示团资料' + item.uuid)
+            this.props.dispatch(switchNav('GroupProfile', { uuid: item.uuid }))
           );
         } else {
           return <Text>搜索结果异常</Text>;
