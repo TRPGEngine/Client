@@ -6,11 +6,11 @@ import appConfig from '../config.app';
 import { getSamlpeDate } from '../../shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getGroupInfo } from '../../redux/actions/cache';
-import { addFriend } from '../../redux/actions/user';
 import { switchToConverseApp } from '../redux/actions/nav';
-import { getUserInfoCache } from '../../shared/utils/cache-helper';
+import { getGroupInfoCache } from '../../shared/utils/cache-helper';
 import { List } from 'immutable';
 import { NavigationScreenProps } from 'react-navigation';
+import { requestJoinGroup } from '@redux/actions/group';
 
 interface ItemProps {
   name: string;
@@ -41,6 +41,21 @@ class ProfileScreen extends React.Component<Props> {
       this.props.dispatch(getGroupInfo(uuid, undefined));
     }
   }
+
+  // 处理发送信息事件
+  handlePressSendMsg = () => {
+    const groupUUID = this.props.navigation.state.params.uuid;
+    const groupInfo = getGroupInfoCache(groupUUID);
+    this.props.dispatch(
+      switchToConverseApp(groupUUID, 'group', groupInfo.get('name'))
+    );
+  };
+
+  // 处理发送入团申请事件
+  handleJoinGroup = () => {
+    const groupUUID = this.props.navigation.state.params.uuid;
+    this.props.dispatch(requestJoinGroup(groupUUID));
+  };
 
   render() {
     const groupUUID = this.props.navigation.state.params.uuid;
@@ -86,9 +101,9 @@ class ProfileScreen extends React.Component<Props> {
         </View>
         <View style={styles.actions}>
           {hasJoined ? (
-            <TButton>发送消息</TButton>
+            <TButton onPress={this.handlePressSendMsg}>发送消息</TButton>
           ) : (
-            <TButton>申请加入</TButton>
+            <TButton onPress={this.handleJoinGroup}>申请加入</TButton>
           )}
         </View>
       </View>

@@ -175,7 +175,11 @@ export const findGroup = function(text, type) {
   };
 };
 
-export const requestJoinGroup = function(group_uuid) {
+/**
+ * 发送申请加入团
+ * @param group_uuid 团UUID
+ */
+export const requestJoinGroup = function(group_uuid: string) {
   return function(dispatch, getState) {
     return api.emit('group::requestJoinGroup', { group_uuid }, function(data) {
       if (data.result) {

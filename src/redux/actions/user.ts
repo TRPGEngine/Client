@@ -250,6 +250,10 @@ export const changePassword = function(
   };
 };
 
+/**
+ * 弃用
+ * 不允许直接添加好友
+ */
 export const addFriend = function(uuid) {
   return function(dispatch, getState) {
     console.log('addFriend:', uuid);
@@ -283,7 +287,11 @@ export const getFriends = function() {
   };
 };
 
-export const sendFriendInvite = function(uuid) {
+/**
+ * 发送好友邀请
+ * @param uuid 目标用户UUID
+ */
+export const sendFriendInvite = function(uuid: string) {
   return function(dispatch, getState) {
     return api.emit('player::sendFriendInvite', { to: uuid }, function(data) {
       if (data.result) {

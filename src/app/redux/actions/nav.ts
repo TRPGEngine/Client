@@ -30,7 +30,7 @@ export const backNav = function backNav(key = null) {
 /** 切换到聊天页面 */
 export const switchToConverseApp = function switchToConverseApp(
   converseUUID: string,
-  type = 'user',
+  type: 'user' | 'group' = 'user',
   name: string
 ) {
   return function(dispatch, getState) {

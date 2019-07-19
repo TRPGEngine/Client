@@ -8,7 +8,7 @@ import appConfig from '../config.app';
 import { getSamlpeDate } from '../../shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getUserInfo } from '../../redux/actions/cache';
-import { addFriend } from '../../redux/actions/user';
+import { sendFriendInvite } from '../../redux/actions/user';
 import { switchToConverseApp } from '../redux/actions/nav';
 import { getUserInfoCache } from '../../shared/utils/cache-helper';
 
@@ -120,7 +120,9 @@ class ProfileScreen extends React.Component<ScreenProps> {
               发送消息
             </TButton>
           ) : (
-            <TButton onPress={() => this.props.dispatch(addFriend(userUUID))}>
+            <TButton
+              onPress={() => this.props.dispatch(sendFriendInvite(userUUID))}
+            >
               加为好友
             </TButton>
           )}
