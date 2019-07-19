@@ -3,7 +3,7 @@ import { connect, DispatchProp } from 'react-redux';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import sb from 'react-native-style-block';
-import immutable from 'immutable';
+import { List } from 'immutable';
 import appConfig from '../config.app';
 import { getSamlpeDate } from '../../shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
@@ -34,8 +34,11 @@ interface NavigationParams {
 interface ScreenProps
   extends DispatchProp<any>,
     NavigationScreenProps<NavigationParams> {
-  friendList: immutable.List<string>;
+  friendList: List<string>;
 }
+/**
+ * 用户信息页面
+ */
 class ProfileScreen extends React.Component<ScreenProps> {
   constructor(props) {
     super(props);
@@ -65,7 +68,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
   render() {
     let userUUID = this.props.navigation.state.params.uuid;
     let userInfo = getUserInfoCache(userUUID);
-    let hasFriend = this.props.friendList.includes(userUUID);
+    let isFriend = this.props.friendList.includes(userUUID);
 
     if (!userInfo) {
       return (
@@ -115,7 +118,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
           />
         </View>
         <View style={styles.actions}>
-          {hasFriend ? (
+          {isFriend ? (
             <TButton onPress={() => this._handlePressSendMsg()}>
               发送消息
             </TButton>

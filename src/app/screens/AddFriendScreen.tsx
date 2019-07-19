@@ -43,6 +43,42 @@ class AddFriendScreen extends React.Component<Props> {
     this.props.dispatch(findGroup(searchValue, 'groupname'));
   }
 
+  /**
+   * 搜索结果列表
+   * @param data 列表数据源
+   * @param onPress 点击后回调
+   */
+  getSearchList(data: any[], onPress: (item: any) => void) {
+    return data.length > 0 ? (
+      <FlatList
+        style={styles.searchResultList}
+        data={data}
+        keyExtractor={(item, index) => item.uuid + index}
+        renderItem={({ item }) => {
+          const name = item.name;
+
+          return (
+            <TouchableOpacity
+              style={styles.searchResultListItem}
+              onPress={() => onPress(item)}
+            >
+              <TAvatar
+                style={styles.searchResultListItemAvatar}
+                uri={item.avatar}
+                name={name}
+                width={36}
+                height={36}
+              />
+              <Text>{name}</Text>
+            </TouchableOpacity>
+          );
+        }}
+      />
+    ) : (
+      <Text>没有找到符合条件的搜索结果</Text>
+    );
+  }
+
   getSearchResult() {
     if (!this.state.searchValue) {
       return;
@@ -93,60 +129,20 @@ class AddFriendScreen extends React.Component<Props> {
             ? this.props.userFindingResult.toJS()
             : [];
 
-          return (
-            <FlatList
-              style={styles.searchResultList}
-              data={userFindingResult}
-              keyExtractor={(item, index) => item.uuid + index}
-              renderItem={({ item }) => {
-                let name = item.nickname || item.username;
-                return (
-                  <TouchableOpacity
-                    style={styles.searchResultListItem}
-                    onPress={() => alert('TODO:显示用户资料' + item.uuid)}
-                  >
-                    <TAvatar
-                      style={styles.searchResultListItemAvatar}
-                      uri={item.avatar}
-                      name={name}
-                      width={36}
-                      height={36}
-                    />
-                    <Text>{name}</Text>
-                  </TouchableOpacity>
-                );
-              }}
-            />
+          return this.getSearchList(
+            userFindingResult.map((item) => ({
+              ...item,
+              name: item.nickname || item.username,
+            })),
+            (item) => alert('TODO:显示用户资料' + item.uuid)
           );
         } else if (this.state.searchType === 'group') {
           let resultList = this.props.groupFindingResult
             ? this.props.groupFindingResult.toJS()
             : [];
 
-          return (
-            <FlatList
-              style={styles.searchResultList}
-              data={resultList}
-              keyExtractor={(item, index) => item.uuid + index}
-              renderItem={({ item }) => {
-                let name = item.name;
-                return (
-                  <TouchableOpacity
-                    style={styles.searchResultListItem}
-                    onPress={() => alert('TODO:显示团资料' + item.uuid)}
-                  >
-                    <TAvatar
-                      style={styles.searchResultListItemAvatar}
-                      uri={item.avatar}
-                      name={name}
-                      width={36}
-                      height={36}
-                    />
-                    <Text>{name}</Text>
-                  </TouchableOpacity>
-                );
-              }}
-            />
+          return this.getSearchList(resultList, (item) =>
+            alert('TODO:显示团资料' + item.uuid)
           );
         } else {
           return <Text>搜索结果异常</Text>;
