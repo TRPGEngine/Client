@@ -39,28 +39,10 @@ class GroupActorCheck extends React.Component {
     this.setState({ editingData: tmp });
   }
 
-  _handleSaveActorData() {
-    let groupActorInfo = {};
-    for (var key in this.state.editingData) {
-      if (this.state.editingData[key]) {
-        groupActorInfo[key] = this.state.editingData[key];
-      }
-    }
-
-    this.props.updateGroupActorInfo(
-      this.props.selectedGroupUUID,
-      this.props.groupActor.uuid,
-      groupActorInfo
-    );
-  }
-
   render() {
     let groupActor = this.props.groupActor;
     let actions = (
       <div className="actions">
-        <button onClick={() => this._handleSaveActorData()}>
-          <i className="iconfont">&#xe634;</i>保存
-        </button>
         <button onClick={() => this._handleRefuse()}>
           <i className="iconfont">&#xe680;</i>拒绝
         </button>
