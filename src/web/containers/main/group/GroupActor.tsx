@@ -15,8 +15,13 @@ import ActorSelect from '../../../components/modal/ActorSelect';
 import GroupActorCheck from './modal/GroupActorCheck';
 import { ActorType, ActorDataType } from '@redux/types/actor';
 import { Tooltip } from 'antd';
+import styled from 'styled-components';
 
 import './GroupActor.scss';
+
+const GroupActorAction = styled.div`
+  padding: 4px 10px;
+`;
 
 interface Props {
   selectedGroupUUID: string;
@@ -191,11 +196,6 @@ class GroupActor extends React.Component<Props> {
         <TabsController>
           <Tab name="正式人物卡">
             <div className="formal-actor">
-              <div className="group-actor-action">
-                <button onClick={() => this._handleSendGroupActorCheck()}>
-                  <i className="iconfont">&#xe604;</i>申请审核
-                </button>
-              </div>
               <div className="group-actor-items">
                 {this.getGroupActorsList()}
               </div>
@@ -207,6 +207,11 @@ class GroupActor extends React.Component<Props> {
                 {this.getGroupActorChecksList()}
               </div>
             </div>
+            <GroupActorAction>
+              <button onClick={() => this._handleSendGroupActorCheck()}>
+                <i className="iconfont">&#xe604;</i>申请审核
+              </button>
+            </GroupActorAction>
           </Tab>
         </TabsController>
       </div>
