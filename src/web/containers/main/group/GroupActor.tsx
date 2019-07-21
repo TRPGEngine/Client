@@ -14,6 +14,7 @@ import ActorProfile from '../../../components/modal/ActorProfile';
 import ActorSelect from '../../../components/modal/ActorSelect';
 import GroupActorCheck from './modal/GroupActorCheck';
 import { ActorType, ActorDataType } from '@redux/types/actor';
+import { Tooltip } from 'antd';
 
 import './GroupActor.scss';
 
@@ -84,31 +85,10 @@ class GroupActor extends React.Component<Props> {
         .filter((item) => item.get('passed') === true)
         .map((item) => {
           let originActor = item.get('actor');
-          let actorData = originActor.get('info').merge(item.get('actor_info'));
-          let template = this.props.templateCache.get(
-            originActor.get('template_uuid')
-          );
-          let cells = [];
-          if (template) {
-            let info = at.parse(template.get('info'));
-            info.setData(actorData);
-            cells = info.getCells();
-          }
-
-          let tipHtml = cells.map((cell) => {
-            if (cell.visibility) {
-              return `<p>${cell.name}: ${cell.value}</p>`;
-            } else {
-              return null;
-            }
-          });
           return (
             <div
               key={`group-actor#${item.get('uuid')}`}
               className="group-actor-item"
-              data-html="true"
-              data-tip={tipHtml.join('')}
-              data-for="group-actor-info-tip"
             >
               <div
                 className="avatar"
@@ -128,24 +108,24 @@ class GroupActor extends React.Component<Props> {
                 <div className="name">{originActor.get('name')}</div>
                 <div className="desc">{originActor.get('desc')}</div>
                 <div className="action">
-                  <button
-                    data-tip="查询"
-                    data-for="group-actor-action-tip"
-                    onClick={() =>
-                      this._handleShowActorProfile(originActor.toJS(), {})
-                    }
-                  >
-                    <i className="iconfont">&#xe61b;</i>
-                  </button>
-                  <button
-                    data-tip="删除"
-                    data-for="group-actor-action-tip"
-                    onClick={() =>
-                      this._handleRemoveGroupActor(item.get('uuid'))
-                    }
-                  >
-                    <i className="iconfont">&#xe76b;</i>
-                  </button>
+                  <Tooltip title="查询">
+                    <button
+                      onClick={() =>
+                        this._handleShowActorProfile(originActor.toJS(), {})
+                      }
+                    >
+                      <i className="iconfont">&#xe61b;</i>
+                    </button>
+                  </Tooltip>
+                  <Tooltip title="删除">
+                    <button
+                      onClick={() =>
+                        this._handleRemoveGroupActor(item.get('uuid'))
+                      }
+                    >
+                      <i className="iconfont">&#xe76b;</i>
+                    </button>
+                  </Tooltip>
                 </div>
               </div>
             </div>
@@ -178,25 +158,23 @@ class GroupActor extends React.Component<Props> {
                 <div className="name">{originActor.get('name')}</div>
                 <div className="desc">{originActor.get('desc')}</div>
                 <div className="action">
-                  <button
-                    data-tip="查询"
-                    data-for="group-actor-action-tip"
-                    onClick={() =>
-                      this._handleShowActorProfile(
-                        originActor.toJS(),
-                        actorData.toJS()
-                      )
-                    }
-                  >
-                    <i className="iconfont">&#xe61b;</i>
-                  </button>
-                  <button
-                    data-tip="审批"
-                    data-for="group-actor-action-tip"
-                    onClick={() => this._handleApprove(item.toJS())}
-                  >
-                    <i className="iconfont">&#xe83f;</i>
-                  </button>
+                  <Tooltip title="查询">
+                    <button
+                      onClick={() =>
+                        this._handleShowActorProfile(
+                          originActor.toJS(),
+                          actorData.toJS()
+                        )
+                      }
+                    >
+                      <i className="iconfont">&#xe61b;</i>
+                    </button>
+                  </Tooltip>
+                  <Tooltip title="审批">
+                    <button onClick={() => this._handleApprove(item.toJS())}>
+                      <i className="iconfont">&#xe83f;</i>
+                    </button>
+                  </Tooltip>
                 </div>
               </div>
             </div>
@@ -210,12 +188,6 @@ class GroupActor extends React.Component<Props> {
   render() {
     return (
       <div className="group-actor">
-        <ReactTooltip
-          effect="solid"
-          place="top"
-          id="group-actor-action-tip"
-          class="group-actor-info"
-        />
         <TabsController>
           <Tab name="正式人物卡">
             <div className="formal-actor">
@@ -224,12 +196,6 @@ class GroupActor extends React.Component<Props> {
                   <i className="iconfont">&#xe604;</i>申请审核
                 </button>
               </div>
-              <ReactTooltip
-                effect="solid"
-                place="left"
-                id="group-actor-info-tip"
-                class="group-actor-info"
-              />
               <div className="group-actor-items">
                 {this.getGroupActorsList()}
               </div>
