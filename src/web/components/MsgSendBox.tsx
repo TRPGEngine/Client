@@ -12,6 +12,8 @@ import ContentEditable from 'react-contenteditable';
 
 import './MsgSendBox.scss';
 
+const MsgEditor = ContentEditable as any;
+
 interface Props extends DispatchProp<any> {
   userUUID: string;
   converseUUID: string;
@@ -357,7 +359,7 @@ class MsgSendBox extends React.Component<Props> {
               })}
             </div>
           </div>
-          <ContentEditable
+          <MsgEditor
             innerRef={this.inputMsgRef}
             className="input-msg"
             tagName="pre"
@@ -365,9 +367,8 @@ class MsgSendBox extends React.Component<Props> {
             disabled={false}
             onChange={(e) => this._handleMsgInputChange(e)}
             onKeyDown={(e) => this._handleMsgInputKeyDown(e)}
-            // TODO: 下面事件可能需要实现，因为类型问题先注释掉
-            // onKeyUp={(e) => this._handleMsgInputKeyUp(e)}
-            // onPaste={(e) => this._handlePaste(e)}
+            onKeyUp={(e) => this._handleMsgInputKeyUp(e)}
+            onPaste={(e) => this._handlePaste(e)}
           />
         </div>
         <div className="action-area">

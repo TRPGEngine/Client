@@ -2,6 +2,7 @@
 @import "../../../shared/utils/color";
 
 .msg-item {
+  $font: PingFang SC, "Microsoft YaHei", arial, serif;
   margin-top: 20px;
   margin-bottom: 22px;
 
@@ -282,6 +283,7 @@
       flex: 1;
       margin-right: 140px;
       .bubble {
+        font-family: $font;
         min-width: 0;
         padding: 5px 11px;
         border: 1px solid #e1e0e4;
