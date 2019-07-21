@@ -6,6 +6,7 @@ import dateHelper from '../../../shared/utils/date-helper';
 import config from '../../../../config/project.config';
 import { MessageProps } from '@shared/components/MessageHandler';
 import _get from 'lodash/get';
+import { getAbsolutePath } from '@shared/utils/file-helper';
 
 class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
   static defaultProps = {
@@ -40,7 +41,7 @@ class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
   getAvatarUrl(): string {
     const { avatar, info } = this.props;
 
-    return _get(info, 'data.avatar') || avatar;
+    return getAbsolutePath(_get(info, 'data.avatar') || avatar);
   }
 
   getContent() {

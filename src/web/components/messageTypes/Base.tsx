@@ -3,6 +3,7 @@ import dateHelper from '../../../shared/utils/date-helper';
 import config from '../../../../config/project.config';
 import { MessageProps } from '@shared/components/MessageHandler';
 import _get from 'lodash/get';
+import { getAbsolutePath } from '@shared/utils/file-helper';
 
 class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
   static defaultProps = {
@@ -34,7 +35,9 @@ class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
         ? config.defaultImg.trpgsystem
         : config.defaultImg.getUser(name);
 
-    return _get(info, 'data.avatar') || avatar || defaultAvatar;
+    return getAbsolutePath(
+      _get(info, 'data.avatar') || avatar || defaultAvatar
+    );
   }
 
   getContent() {
