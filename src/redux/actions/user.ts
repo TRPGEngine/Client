@@ -254,19 +254,19 @@ export const changePassword = function(
  * 弃用
  * 不允许直接添加好友
  */
-export const addFriend = function(uuid) {
-  return function(dispatch, getState) {
-    console.log('addFriend:', uuid);
-    return api.emit('player::addFriend', { uuid }, function(data) {
-      if (data.result) {
-        dispatch({ type: ADD_FRIEND_SUCCESS, friendUUID: uuid });
-      } else {
-        console.error(data.msg);
-        dispatch(showAlert(data.msg));
-      }
-    });
-  };
-};
+// export const addFriend = function(uuid) {
+//   return function(dispatch, getState) {
+//     console.log('addFriend:', uuid);
+//     return api.emit('player::addFriend', { uuid }, function(data) {
+//       if (data.result) {
+//         dispatch({ type: ADD_FRIEND_SUCCESS, friendUUID: uuid });
+//       } else {
+//         console.error(data.msg);
+//         dispatch(showAlert(data.msg));
+//       }
+//     });
+//   };
+// };
 
 export const getFriends = function() {
   return function(dispatch, getState) {

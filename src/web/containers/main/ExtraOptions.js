@@ -59,7 +59,6 @@ class ExtraOptions extends React.Component {
     } else if (menu === 'groupCreate') {
       this.props.dispatch(showModal(<GroupCreate />));
     } else if (menu === 'addFriend') {
-      // this.props.dispatch(switchMenuPannel(2));
       this.props.dispatch(showModal(<FriendsAdd />));
     } else if (menu === 'addGroup') {
       this.props.dispatch(showModal(<GroupAdd />));

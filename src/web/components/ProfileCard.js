@@ -5,7 +5,7 @@ import Select from 'react-select';
 import ImageViewer from './ImageViewer';
 import ImageUploader from './ImageUploader';
 import { showAlert, hideProfileCard } from '../../redux/actions/ui';
-import { addFriend, updateInfo } from '../../redux/actions/user';
+import { sendFriendInvite, updateInfo } from '../../redux/actions/user';
 import { addUserConverse, switchToConverse } from '../../redux/actions/chat';
 import './ProfileCard.scss';
 
@@ -99,7 +99,7 @@ class ProfileCard extends React.Component {
           <button
             className="footer-item active"
             disabled={disabledAddFriend}
-            onClick={() => this.props.addFriend(uuid)}
+            onClick={() => this.props.sendFriendInvite(uuid)}
           >
             <i className="iconfont">&#xe604;</i>添加好友
           </button>
@@ -321,7 +321,7 @@ export default connect(
       dispatch(switchToConverse(uuid, uuid));
     },
     // createConverse: (uuid, type, isSwitchToConv = true) => dispatch(createConverse(uuid, type, isSwitchToConv)),
-    addFriend: (uuid) => dispatch(addFriend(uuid)),
+    sendFriendInvite: (uuid) => dispatch(sendFriendInvite(uuid)),
     updateInfo: (updatedData) => dispatch(updateInfo(updatedData)),
   })
 )(ProfileCard);

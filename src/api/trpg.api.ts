@@ -69,7 +69,7 @@ export function bindEventFunc(
     store.dispatch(stopWriting(type, uuid));
   });
 
-  api.on('player::addFriend', function(data) {
+  api.on('player::appendFriend', function(data) {
     let uuid = data.uuid;
     getUserInfoCache(uuid);
     store.dispatch({ type: ADD_FRIEND_SUCCESS, friendUUID: uuid });
