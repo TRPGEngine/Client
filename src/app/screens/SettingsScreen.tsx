@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-const { View, Text, CheckBox, Switch, Picker } = require('react-native');
+import { View } from 'react-native';
 import ListCell from '../components/ListCell';
-import sb from 'react-native-style-block';
 
 class SettingsScreen extends React.Component<{}, { test: boolean }> {
   constructor(props) {

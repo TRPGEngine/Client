@@ -114,7 +114,7 @@ class ChatScreen extends React.Component<Props> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.msgList.size !== this.props.msgList.size) {
+    if (_get(prevProps, 'msgList.size') !== _get(this.props, 'msgList.size')) {
       this._scrollToBottom();
     }
   }
