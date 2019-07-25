@@ -318,7 +318,7 @@ export default connect(
     hideProfileCard: () => dispatch(hideProfileCard()),
     addUserConverse: (uuid) => {
       dispatch(addUserConverse(uuid));
-      dispatch(switchToConverse(uuid, uuid));
+      dispatch(switchToConverse(uuid));
     },
     // createConverse: (uuid, type, isSwitchToConv = true) => dispatch(createConverse(uuid, type, isSwitchToConv)),
     sendFriendInvite: (uuid) => dispatch(sendFriendInvite(uuid)),

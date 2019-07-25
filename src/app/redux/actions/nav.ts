@@ -1,6 +1,7 @@
 import navConstants from '../constants/nav';
 const { SWITCH_NAV, REPLACE_NAV, BACK_NAV, BACK_TOP_NAV } = navConstants;
 import { NavigationActions } from 'react-navigation';
+import { switchConverse } from '@redux/actions/chat';
 
 /**
  * 跳转到新的页面
@@ -44,6 +45,7 @@ export const switchToConverseApp = function switchToConverseApp(
     // 多级返回到首页
     dispatch(backNav());
     dispatch(backNav());
+    dispatch(switchConverse(converseUUID));
     dispatch(
       switchNav('Chat', {
         uuid: converseUUID,

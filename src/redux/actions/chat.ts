@@ -42,18 +42,17 @@ let getLocalUUID = function getLocalUUID() {
   return 'local#' + localIndex++;
 };
 
-export let switchConverse = function switchConverse(converseUUID, userUUID) {
-  return { type: SWITCH_CONVERSES, converseUUID, userUUID };
+// 切换当前会话页面
+export let switchConverse = function switchConverse(converseUUID: string) {
+  return { type: SWITCH_CONVERSES, converseUUID };
 };
 
-export let switchToConverse = function switchToConverse(
-  converseUUID,
-  userUUID
-) {
+// 跳转到会话页面并切换到会话
+export let switchToConverse = function switchToConverse(converseUUID: string) {
   return function(dispatch, getState) {
     dispatch(hideProfileCard());
     dispatch(switchMenuPannel(0));
-    dispatch(switchConverse(converseUUID, userUUID));
+    dispatch(switchConverse(converseUUID));
   };
 };
 
@@ -134,7 +133,7 @@ export let createConverse = function createConverse(
     if (!!getState().getIn(['chat', 'converses', uuid])) {
       console.log('已存在该会话');
       if (isSwitchToConv) {
-        dispatch(switchToConverse(uuid, uuid)); //TODO:CHECK
+        dispatch(switchToConverse(uuid));
       }
       return;
     }
@@ -147,7 +146,7 @@ export let createConverse = function createConverse(
 
         let convUUID = conv.uuid;
         if (isSwitchToConv) {
-          dispatch(switchToConverse(convUUID, convUUID)); //TODO:CHECK
+          dispatch(switchToConverse(convUUID));
         }
         // 获取日志
         checkUser(uuid);

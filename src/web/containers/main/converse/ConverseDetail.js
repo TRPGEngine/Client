@@ -29,7 +29,7 @@ class ConverseDetail extends React.Component {
     this.sendWritingThrottled = _throttle(
       () => {
         // 发送正在输入信号
-        sendStartWriting('user', this.props.converseUserUUID);
+        sendStartWriting('user', this.props.converseUUID);
       },
       config.chat.isWriting.throttle,
       { leading: true, trailing: false }
@@ -37,30 +37,30 @@ class ConverseDetail extends React.Component {
   }
 
   _handleSendBoxChange(text) {
-    if (isUserUUID(this.props.converseUserUUID)) {
-      // 通知服务器告知converseUserUUID当前用户正在输入
+    if (isUserUUID(this.props.converseUUID)) {
+      // 通知服务器告知converseUUID当前用户正在输入
       // 增加一个2秒的节流防止频繁发送
       this.sendWritingThrottled();
     }
   }
 
   _handleSendMsg(message, type) {
-    const { converseUUID, converseUserUUID } = this.props;
+    const { converseUUID, converseUUID } = this.props;
 
     console.log(
       'send msg:',
       message,
       'to',
-      converseUserUUID,
+      converseUUID,
       'in converse',
       converseUUID
     );
-    if (isUserUUID(converseUserUUID)) {
-      // 通知服务器告知converseUserUUID当前用户停止输入
-      sendStopWriting('user', converseUserUUID);
+    if (isUserUUID(converseUUID)) {
+      // 通知服务器告知converseUUID当前用户停止输入
+      sendStopWriting('user', converseUUID);
     }
     this.props.dispatch(
-      sendMsg(converseUserUUID, {
+      sendMsg(converseUUID, {
         message,
         is_public: false,
         is_group: false,
@@ -70,10 +70,10 @@ class ConverseDetail extends React.Component {
   }
 
   _handleSendFile(file) {
-    console.log('send file to', this.props.converseUserUUID, file);
+    console.log('send file to', this.props.converseUUID, file);
     this.props.dispatch(
       sendFile(
-        this.props.converseUserUUID,
+        this.props.converseUUID,
         {
           is_public: false,
           is_group: false,
@@ -91,7 +91,7 @@ class ConverseDetail extends React.Component {
           onSendDiceRequest={(diceReason, diceExp) => {
             this.props.dispatch(
               sendDiceRequest(
-                this.props.converseUserUUID,
+                this.props.converseUUID,
                 false,
                 diceExp,
                 diceReason
@@ -146,12 +146,12 @@ class ConverseDetail extends React.Component {
 
   getHeaderActions() {
     const actions = [];
-    if (this.props.usercache.get(this.props.converseUserUUID)) {
+    if (this.props.usercache.get(this.props.converseUUID)) {
       actions.push({
         name: '个人信息',
         icon: '&#xe611;',
         click: () => {
-          this.props.dispatch(showProfileCard(this.props.converseUserUUID));
+          this.props.dispatch(showProfileCard(this.props.converseUUID));
         },
       });
     }
@@ -176,7 +176,7 @@ class ConverseDetail extends React.Component {
   }
 
   render() {
-    const userUUID = this.props.converseUserUUID;
+    const userUUID = this.props.converseUUID;
     const usercache = this.props.usercache;
     const isWriting = this.props.isWriting;
 
@@ -212,7 +212,7 @@ class ConverseDetail extends React.Component {
         <MsgContainer
           className="conv-container"
           converseUUID={this.props.converseUUID}
-          converseUserUUID={userUUID}
+          converseUUID={userUUID}
           isGroup={false}
         />
         <MsgSendBox
@@ -231,8 +231,7 @@ class ConverseDetail extends React.Component {
 }
 
 export default connect((state) => {
-  const converseUUID = state.getIn(['chat', 'selectedConversesUUID']);
-  const converseUserUUID = state.getIn(['chat', 'selectedConversesUserUUID']);
+  const converseUUID = state.getIn(['chat', 'selectedConversesUUID']); // 会话UUID在用户会话中就是用户UUID
   const userWritingList = state.getIn(['chat', 'writingList', 'user'], []);
 
   return {
@@ -240,7 +239,6 @@ export default connect((state) => {
     selfInfo: state.getIn(['user', 'info']),
     usercache: state.getIn(['cache', 'user']),
     converseUUID,
-    converseUserUUID,
-    isWriting: userWritingList.includes(converseUserUUID),
+    isWriting: userWritingList.includes(converseUUID),
   };
 })(ConverseDetail);
