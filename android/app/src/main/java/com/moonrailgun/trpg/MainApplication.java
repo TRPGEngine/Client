@@ -31,7 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected String getJSBundleFile() {
         return CodePush.getJSBundleFile();
         }
-    
+
     @Override
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
@@ -45,7 +45,7 @@ public class MainApplication extends Application implements ReactApplication {
             new FastImageViewPackage(),
             new RNCWebViewPackage(),
             new RNSentryPackage(),
-            new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
+            new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG, getResources().getString(R.string.reactNativeCodePush_androidServerUrl)),
             new RNGestureHandlerPackage(),
             new ImagePickerPackage(),
             new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG)

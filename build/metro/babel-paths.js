@@ -1,4 +1,5 @@
 const tsconfig = require('../../tsconfig.json');
+const path = require('path');
 const startDir = process.env.NODE_ENV === 'production' ? './' : '../../';
 const tspaths = tsconfig.compilerOptions.paths;
 

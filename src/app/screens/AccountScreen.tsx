@@ -52,19 +52,19 @@ class AccountScreen extends React.Component<Props> {
   }
 
   _handleCheckVersion() {
-    // Pending: 国内网速比较慢，微软服务几乎不可用，可以考虑自己搭一个codepush服务器
-    // appConfig.codePush.sync();
+    // TODO: 也许需要根据版本判断用户是否应为热更新还是下载apk更新
+    appConfig.codePush.sync();
 
-    checkVersion(function(isLatest) {
-      if (isLatest) {
-        appUtils.toast('当前版本为最新版');
-      } else {
-        appUtils.toast('检测到有新的版本, 1秒后自动跳转到项目主页');
-        setTimeout(function() {
-          Linking.openURL(config.github.projectUrl);
-        }, 1000);
-      }
-    });
+    // checkVersion(function(isLatest) {
+    //   if (isLatest) {
+    //     appUtils.toast('当前版本为最新版');
+    //   } else {
+    //     appUtils.toast('检测到有新的版本, 1秒后自动跳转到项目主页');
+    //     setTimeout(function() {
+    //       Linking.openURL(config.github.projectUrl);
+    //     }, 1000);
+    //   }
+    // });
   }
 
   render() {
