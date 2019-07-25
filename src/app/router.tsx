@@ -40,6 +40,7 @@ import WebviewScreen from './screens/WebviewScreen';
 import TAlert from './components/TApi/TAlert';
 
 import { hideAlert } from '../redux/actions/ui';
+import { alertHandler } from './utils/ui-state-handler';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -169,23 +170,9 @@ class ReduxNavigation extends React.Component<ReduxNavigationProps> {
 
   // 处理UI的状态
   handleUIChange(prevUI, currentUI) {
-    if (
-      prevUI.get('showAlert') === false &&
-      currentUI.get('showAlert') === true
-    ) {
-      // 当alert打开
-      TAlert.show(currentUI.get('showAlertInfo'), {
-        onRequestClose: () => this.props.dispatch(hideAlert()),
-      });
-    }
+    const dispatch = this.props.dispatch;
 
-    if (
-      prevUI.get('showAlert') === true &&
-      currentUI.get('showAlert') === false
-    ) {
-      // 当alert关闭
-      TAlert.hide();
-    }
+    alertHandler(prevUI, currentUI, dispatch);
   }
 
   onBackPress = () => {
