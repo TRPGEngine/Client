@@ -1,5 +1,9 @@
-import navConstants from '../constants/nav';
-const { SWITCH_NAV, REPLACE_NAV, BACK_NAV, BACK_TOP_NAV } = navConstants;
+import {
+  SWITCH_NAV,
+  REPLACE_NAV,
+  BACK_NAV,
+  BACK_TOP_NAV,
+} from '../constants/nav';
 import { NavigationActions } from 'react-navigation';
 import { switchConverse } from '@redux/actions/chat';
 
