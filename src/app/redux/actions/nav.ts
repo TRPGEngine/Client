@@ -1,5 +1,5 @@
 import navConstants from '../constants/nav';
-const { SWITCH_NAV, REPLACE_NAV, BACK_NAV } = navConstants;
+const { SWITCH_NAV, REPLACE_NAV, BACK_NAV, BACK_TOP_NAV } = navConstants;
 import { NavigationActions } from 'react-navigation';
 
 /**
@@ -25,6 +25,13 @@ export const replaceNav = function replaceNav(routeName: string) {
  */
 export const backNav = function backNav(key = null) {
   return { type: BACK_NAV, key };
+};
+
+/**
+ * 关闭所有页面返回到主屏幕
+ */
+export const backToTop = function backToTop() {
+  return { type: BACK_TOP_NAV };
 };
 
 /** 切换到聊天页面 */

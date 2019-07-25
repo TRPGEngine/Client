@@ -3,7 +3,7 @@ import { AppNavigator } from '../../router';
 import constants from '../../../redux/constants';
 const { RESET, LOGIN_SUCCESS, LOGIN_TOKEN_SUCCESS, LOGOUT } = constants;
 import navConstants from '../constants/nav';
-const { SWITCH_NAV, REPLACE_NAV, BACK_NAV } = navConstants;
+const { SWITCH_NAV, REPLACE_NAV, BACK_NAV, BACK_TOP_NAV } = navConstants;
 
 let initialNavState = AppNavigator.router.getStateForAction(
   NavigationActions.init()
@@ -64,6 +64,11 @@ export default function nav(state = initialNavState, action) {
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.back({ key: action.key || null }),
         state
+      );
+      break;
+    case BACK_TOP_NAV:
+      nextState = AppNavigator.router.getStateForAction(
+        StackActions.popToTop({})
       );
       break;
     default:
