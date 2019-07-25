@@ -25,7 +25,7 @@ import md5 from 'md5';
 import rnStorage from '../../api/rn-storage.api';
 import config from '../../../config/project.config';
 import * as trpgApi from '../../api/trpg.api';
-import { showLoading, hideLoading, showAlert } from './ui';
+import { showLoading, hideLoading, showAlert, showToast } from './ui';
 import { checkUser } from '../../shared/utils/cache-helper';
 import { runLoginSuccessCallback } from '../../shared/utils/inject';
 import { setUserSettings, setSystemSettings } from './settings';
@@ -295,6 +295,7 @@ export const sendFriendInvite = function(uuid: string) {
   return function(dispatch, getState) {
     return api.emit('player::sendFriendInvite', { to: uuid }, function(data) {
       if (data.result) {
+        dispatch(showToast('请求已发送'));
         dispatch({
           type: SEND_FRIEND_INVITE_SUCCESS,
           payload: data.invite,

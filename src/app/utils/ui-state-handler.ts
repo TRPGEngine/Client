@@ -2,6 +2,7 @@ import { Map } from 'immutable';
 import TAlert from '../components/TApi/TAlert';
 import { Dispatch } from 'redux';
 import { hideAlert } from '@redux/actions/ui';
+import { Toast, Portal } from '@ant-design/react-native';
 
 type UIMap = Map<string, any>;
 interface FactoryOptions {
@@ -42,5 +43,23 @@ export const alertHandler = uiStateSwitchFactory('showAlert', {
   },
   onDisabled: () => {
     TAlert.hide();
+  },
+});
+
+/**
+ * Toast 处理
+ */
+let currentToastKey: number = 0;
+export const toastHandler = uiStateSwitchFactory('showToast', {
+  onEnabled: (currentUI) => {
+    if (currentToastKey > 0) {
+      // 如果已存在Toast, 先把之前的移除
+      Portal.remove(currentToastKey);
+    }
+    currentToastKey = Toast.show(currentUI.get('showToastText'), 0);
+  },
+  onDisabled: () => {
+    Portal.remove(currentToastKey);
+    currentToastKey = 0;
   },
 });

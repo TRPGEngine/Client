@@ -45,7 +45,7 @@ export const hideModal = function() {
   return { type: HIDE_MODAL };
 };
 
-let toastTimer;
+let toastTimer: number;
 export const showToast = function(msg) {
   return (dispatch, getState) => {
     dispatch({ type: SHOW_TOAST, text: msg });
