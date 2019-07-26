@@ -45,16 +45,9 @@ class ConverseDetail extends React.Component {
   }
 
   _handleSendMsg(message, type) {
-    const { converseUUID, converseUUID } = this.props;
+    const { converseUUID } = this.props;
 
-    console.log(
-      'send msg:',
-      message,
-      'to',
-      converseUUID,
-      'in converse',
-      converseUUID
-    );
+    console.log('send msg:', message, 'to', converseUUID);
     if (isUserUUID(converseUUID)) {
       // 通知服务器告知converseUUID当前用户停止输入
       sendStopWriting('user', converseUUID);

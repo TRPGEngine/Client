@@ -100,7 +100,7 @@ class HomeScreen extends React.Component<Props> {
   }
 
   _handleSelectConverse(uuid, type, info) {
-    this.props.dispatch(switchConverse(uuid, uuid));
+    this.props.dispatch(switchConverse(uuid));
     this.props.dispatch(
       NavigationActions.navigate({
         routeName: 'Chat',
