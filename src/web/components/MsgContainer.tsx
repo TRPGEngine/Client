@@ -1,5 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
+import { List, Map } from 'immutable';
 import config from '../../../config/project.config.js';
 import dateHelper from '../../shared/utils/date-helper';
 import scrollTo from '../../shared/utils/animated-scroll-to';
@@ -18,14 +19,21 @@ MessageHandler.registerMessageHandler('file', File);
 import './messageTypes/MsgItem.scss';
 
 import './MsgContainer.scss';
-class MsgContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.isSeekingLog = false;
-    this.state = {
-      nomore: false,
-    };
-  }
+
+interface Props extends DispatchProp<any> {
+  msgList: List<any>;
+  converseUUID: string;
+  userUUID: string;
+  className?: string;
+  isGroup: boolean;
+  selfInfo: Map<string, any>;
+}
+class MsgContainer extends React.Component<Props> {
+  isSeekingLog = false;
+  containerRef: HTMLDivElement;
+  state = {
+    nomore: false,
+  };
 
   componentDidMount() {
     if (this.props.msgList.size === 0) {
@@ -52,12 +60,14 @@ class MsgContainer extends React.Component {
         this.props.msgList.first().get('date')
     ) {
       // 加载更多
-      let bottomDis =
-        this.refs.container.scrollHeight - this.refs.container.scrollTop;
-      setTimeout(() => {
-        this.refs.container.scrollTop =
-          this.refs.container.scrollHeight - bottomDis;
-      }, 0);
+      if (this.containerRef) {
+        let bottomDis =
+          this.containerRef.scrollHeight - this.containerRef.scrollTop;
+        setTimeout(() => {
+          this.containerRef.scrollTop =
+            this.containerRef.scrollHeight - bottomDis;
+        }, 0);
+      }
     }
   }
 
@@ -112,7 +122,7 @@ class MsgContainer extends React.Component {
     return (
       <div
         className={'msg-container ' + this.props.className}
-        ref="container"
+        ref={(ref) => (this.containerRef = ref)}
         onLoad={(e) => this._handleContainerLoad(e.target)}
         onScroll={(e) => this._handleContainerScroll(e.target)}
       >
@@ -169,7 +179,7 @@ class MsgContainer extends React.Component {
   }
 }
 
-export default connect((state, ownProps) => {
+export default connect((state: any, ownProps: any) => {
   let converseUUID = ownProps.converseUUID;
   let msgList = state.getIn(['chat', 'converses', converseUUID, 'msgList']);
 
