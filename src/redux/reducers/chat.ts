@@ -22,6 +22,7 @@ const {
   UPDATE_WRITING_STATUS,
   UPDATE_USER_CHAT_EMOTION_CATALOG,
   ADD_USER_CHAT_EMOTION_CATALOG,
+  SET_CONVERSES_MSGLOG_NOMORE,
 } = constants;
 
 type WritingListType =
@@ -306,6 +307,11 @@ export default function chat(state = initialState, action) {
 
           return list.push(immutable.fromJS(catalog));
         });
+      }
+      case SET_CONVERSES_MSGLOG_NOMORE: {
+        const converseUUID = action.converseUUID;
+        const nomore = action.nomore;
+        return state.setIn(['converses', converseUUID, 'nomore'], nomore);
       }
       default:
         return state;

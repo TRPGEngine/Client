@@ -21,6 +21,7 @@ const {
   UPDATE_WRITING_STATUS,
   UPDATE_USER_CHAT_EMOTION_CATALOG,
   ADD_USER_CHAT_EMOTION_CATALOG,
+  SET_CONVERSES_MSGLOG_NOMORE,
 } = constants;
 import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
@@ -466,9 +467,15 @@ export let sendFile = function sendFile(toUUID, payload, file) {
   };
 };
 
+/**
+ * 获取更多消息记录
+ * @param converseUUID 会话UUID
+ * @param offsetDate 起始日期
+ * @param isUserChat 是否为用户会话
+ */
 export let getMoreChatLog = function getMoreChatLog(
-  converseUUID,
-  offsetDate,
+  converseUUID: string,
+  offsetDate: string,
   isUserChat = true
 ) {
   return function(dispatch, getState) {
@@ -479,6 +486,11 @@ export let getMoreChatLog = function getMoreChatLog(
         function(data) {
           if (data.result === true) {
             dispatch(updateConversesMsglist(converseUUID, data.list));
+            dispatch({
+              type: SET_CONVERSES_MSGLOG_NOMORE,
+              converseUUID,
+              nomore: data.nomore,
+            });
           } else {
             console.log(data);
           }
@@ -491,6 +503,11 @@ export let getMoreChatLog = function getMoreChatLog(
         function(data) {
           if (data.result === true) {
             dispatch(updateConversesMsglist(converseUUID, data.list));
+            dispatch({
+              type: SET_CONVERSES_MSGLOG_NOMORE,
+              converseUUID,
+              nomore: data.nomore,
+            });
           } else {
             console.log(data);
           }

@@ -22,6 +22,7 @@ import './MsgContainer.scss';
 
 interface Props extends DispatchProp<any> {
   msgList: List<any>;
+  nomore: boolean;
   converseUUID: string;
   userUUID: string;
   className?: string;
@@ -31,9 +32,6 @@ interface Props extends DispatchProp<any> {
 class MsgContainer extends React.Component<Props> {
   isSeekingLog = false;
   containerRef: HTMLDivElement;
-  state = {
-    nomore: false,
-  };
 
   componentDidMount() {
     if (this.props.msgList.size === 0) {
@@ -44,15 +42,6 @@ class MsgContainer extends React.Component<Props> {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.msgList.size === 0 ||
-      nextProps.msgList.size === this.props.msgList.size
-    ) {
-      this.setState({ nomore: true });
-    } else {
-      this.setState({ nomore: false });
-    }
-
     if (
       this.props.msgList.first() &&
       nextProps.msgList.first() &&
@@ -78,7 +67,7 @@ class MsgContainer extends React.Component<Props> {
 
     // 进度条滚动到底部
     setTimeout(() => {
-      scrollTo.bottom(this.refs.container, 100);
+      scrollTo.bottom(this.containerRef, 100);
     }, 0);
   }
 
@@ -104,7 +93,7 @@ class MsgContainer extends React.Component<Props> {
       // 仅当加载完毕的元素为聊天图片时
       // 进度条滚动到底部
       setTimeout(() => {
-        scrollTo.bottom(this.refs.container, 100);
+        scrollTo.bottom(this.containerRef, 100);
       }, 0);
     }
   }
@@ -126,7 +115,7 @@ class MsgContainer extends React.Component<Props> {
         onLoad={(e) => this._handleContainerLoad(e.target)}
         onScroll={(e) => this._handleContainerScroll(e.target)}
       >
-        {this.state.nomore || this.props.msgList.size < 10 ? (
+        {this.props.nomore || this.props.msgList.size < 10 ? (
           <button
             className="get-more-log-btn"
             disabled={true}
@@ -185,6 +174,7 @@ export default connect((state: any, ownProps: any) => {
 
   return {
     msgList: msgList && msgList.sortBy((item) => item.get('date')),
+    nomore: state.getIn(['chat', 'converses', converseUUID, 'nomore'], false),
     userUUID: state.getIn(['user', 'info', 'uuid']),
     selfInfo: state.getIn(['user', 'info']),
     friendRequests: state.getIn(['user', 'friendRequests']),
