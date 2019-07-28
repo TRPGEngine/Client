@@ -1,4 +1,4 @@
-import Storage from 'react-native-storage';
+import Storage, { NotFoundError } from 'react-native-storage';
 import config from '../../config/project.config';
 import _isNil from 'lodash/isNil';
 
@@ -58,7 +58,11 @@ export default {
         syncInBackground: false,
       });
     } catch (e) {
-      console.log(`get key ${key} error:`, e);
+      if (!(e instanceof NotFoundError)) {
+        // 过滤NotFoundError
+        console.log(`get key ${key} error:`, e.toString());
+      }
+
       res = _isNil(defaultVal) ? null : defaultVal;
     }
     return res;
