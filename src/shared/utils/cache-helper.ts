@@ -10,7 +10,6 @@ import { isUserUUID } from './uuid';
 
 let _store;
 export const attachStore = function(store) {
-  console.log('store', store);
   _store = store;
 };
 

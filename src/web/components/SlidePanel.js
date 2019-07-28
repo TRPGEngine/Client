@@ -44,8 +44,6 @@ class SlidePanel extends React.Component {
       content = content.toJS();
     }
 
-    console.log('showSlidePanelInfo', showSlidePanelInfo);
-
     return (
       <div
         className={'slide-panel' + (this.props.isSlidePanelShow ? '' : ' hide')}
