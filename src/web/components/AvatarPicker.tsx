@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, ReactNode } from 'react';
 import ReactCrop, { Crop } from 'react-image-crop';
 import { Modal, Avatar } from 'antd';
 import 'react-image-crop/dist/ReactCrop.css';
@@ -11,8 +11,13 @@ let fileUrlTemp: string = null; // 缓存裁剪后的图片url
  * @param image 原始图片元素
  * @param crop 裁剪信息
  * @param fileName 文件名
+ * @returns 裁剪后的图片blob url
  */
-function getCroppedImg(image: HTMLImageElement, crop: Crop, fileName: string) {
+function getCroppedImg(
+  image: HTMLImageElement,
+  crop: Crop,
+  fileName: string
+): Promise<string> {
   const canvas = document.createElement('canvas');
   const scaleX = image.naturalWidth / image.width;
   const scaleY = image.naturalHeight / image.height;
@@ -48,8 +53,11 @@ function getCroppedImg(image: HTMLImageElement, crop: Crop, fileName: string) {
 }
 
 interface Props {
-  imageUrl?: string;
-  onChange?: (imageUrl: string) => void;
+  className?: string;
+  imageUrl?: string; // 初始image url, 仅children为空时生效
+  onChange?: (blobUrl: string) => void;
+  children?: ReactNode;
+  disabled?: boolean; // 禁用选择
 }
 /**
  * 头像选择器
@@ -90,23 +98,28 @@ const AvatarPicker = (props: Props) => {
   };
 
   const [cropInfo, setCropInfo] = useState<Crop>({
-    unit: '%',
-    width: 30,
+    unit: 'px',
+    width: 128,
     aspect: 1,
   });
   return (
-    <div>
+    <div className={props.className}>
       <div
         style={{ cursor: 'pointer', display: 'inline-block' }}
-        onClick={() => fileRef.current.click()}
+        onClick={() => !props.disabled && fileRef.current.click()}
       >
         <input
           ref={fileRef}
           type="file"
           style={{ display: 'none' }}
           onChange={handleSelectFile}
+          // TODO: 需要一个accept参数限制文件类型
         />
-        <Avatar size={64} icon="user" src={cropUrl} />
+        {props.children ? (
+          props.children
+        ) : (
+          <Avatar size={64} icon="user" src={cropUrl} />
+        )}
       </div>
       <Modal
         width={800}
@@ -115,7 +128,7 @@ const AvatarPicker = (props: Props) => {
         onCancel={() => setModalVisible(false)}
         onOk={() => makeClientCrop(cropInfo)}
       >
-        <div style={{ overflow: 'hidden' }}>
+        <div style={{ overflow: 'hidden', textAlign: 'center' }}>
           {originImageUrl !== '' && (
             <ReactCrop
               src={originImageUrl}
