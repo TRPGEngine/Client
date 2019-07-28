@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { createRef } from 'react';
+import { connect, DispatchProp } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fileUrl } from '../../api/trpg.api';
 import { showAlert } from '../../redux/actions/ui';
@@ -8,25 +8,36 @@ import _get from 'lodash/get';
 
 import './ImageUploader.scss';
 
-class ImageUploader extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isUploading: false,
-      uploadProgress: 0,
-    };
-  }
+type CSSUnit = number | string;
+
+interface Props extends DispatchProp {
+  type: 'actor' | 'user' | 'group';
+  attachUUID: string;
+  width?: CSSUnit;
+  height?: CSSUnit;
+  containerWidth?: CSSUnit;
+  containerHeight?: CSSUnit;
+  onUploadSuccess?: (json: string) => void;
+
+  user_uuid: string;
+}
+class ImageUploader extends React.Component<Props> {
+  state = {
+    isUploading: false,
+    uploadProgress: 0,
+  };
+  fileRef = createRef<HTMLInputElement>();
 
   _handleSelect() {
     if (this.state.isUploading) {
       this.props.dispatch(showAlert('图片正在上传中, 请稍后...'));
       return;
     }
-    this.refs.file.click();
+    this.fileRef.current.click();
   }
 
   _handleUpload() {
-    let file = this.refs.file.files[0];
+    let file = this.fileRef.current.files[0];
     let formData = new FormData();
     formData.append('avatar', file);
 
@@ -38,9 +49,9 @@ class ImageUploader extends React.Component {
       headers['attach-uuid'] = this.props.attachUUID;
     }
     if (this.props.width) {
-      headers.width = this.props.width;
+      headers['width'] = this.props.width;
       if (this.props.height) {
-        headers.height = this.props.height;
+        headers['height'] = this.props.height;
       }
     }
     this.setState({ isUploading: true });
@@ -102,7 +113,7 @@ class ImageUploader extends React.Component {
       >
         <input
           type="file"
-          ref="file"
+          ref={this.fileRef}
           accept="image/*"
           onChange={(e) => this._handleUpload()}
         />
@@ -119,16 +130,6 @@ class ImageUploader extends React.Component {
   }
 }
 
-ImageUploader.propTypes = {
-  onUploadSuccess: PropTypes.func,
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  type: PropTypes.oneOf(['actor', 'user', 'group']),
-  attachUUID: PropTypes.string,
-  containerWidth: PropTypes.string,
-  containerHeight: PropTypes.string,
-};
-
-export default connect((state) => ({
+export default connect((state: any) => ({
   user_uuid: state.getIn(['user', 'info', 'uuid']),
 }))(ImageUploader);
