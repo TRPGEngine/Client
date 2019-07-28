@@ -41,3 +41,16 @@ export function blobToFile(blob: Blob, fileName: string): File {
     type: blob.type,
   });
 }
+
+/**
+ * blobUrl 转 文件对象
+ * @param blobUrl blobUrl
+ * @param fileName 文件名
+ */
+export async function blobUrlToFile(
+  blobUrl: string,
+  fileName: string = 'image.jpg'
+): Promise<File> {
+  const blob = await blobFromUrl(blobUrl);
+  return blobToFile(blob, fileName);
+}

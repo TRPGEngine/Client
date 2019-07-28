@@ -2,8 +2,9 @@ import axios from 'axios';
 import { fileUrl } from '../../api/trpg.api';
 
 interface UploadOption {
+  headers?: {};
   uploadField?: string;
-  onProgress?: (percent: number) => void;
+  onProgress?: (percent: number, progressEvent: any) => void;
   onCompleted?: (data: any) => void;
 }
 type UploadReturn<T = any> = Promise<T>;
@@ -34,12 +35,18 @@ const _upload = function(
     url: fileUrl + path,
     method: 'post',
     data: form,
-    headers: { 'user-uuid': userUUID },
+    headers: {
+      'user-uuid': userUUID,
+      ...options.headers,
+    },
     onUploadProgress: (progressEvent) => {
       if (progressEvent.lengthComputable) {
         options &&
           options.onProgress &&
-          options.onProgress(progressEvent.loaded / progressEvent.total);
+          options.onProgress(
+            progressEvent.loaded / progressEvent.total,
+            progressEvent
+          );
       }
     },
   })
