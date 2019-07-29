@@ -1,4 +1,4 @@
-import immutable, { Record, Map, List } from 'immutable';
+import immutable, { Record, Map, List, fromJS } from 'immutable';
 import constants from '../constants';
 const {
   RESET,
@@ -25,6 +25,7 @@ const {
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
   UPDATE_GROUP_ACTOR_INFO_SUCCESS,
+  UPDATE_GROUP_ACTOR_MAPPING,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
   TICK_MEMBER_SUCCESS,
@@ -65,11 +66,11 @@ export default function group(state = initialState, action) {
         list.push(immutable.fromJS(action.payload))
       );
     case GET_GROUP_INFO_SUCCESS: {
-      let group_uuid = action.payload.uuid;
+      const group_uuid = action.payload.uuid;
       return state.setIn(['info', group_uuid], action.payload);
     }
     case UPDATE_GROUP_INFO_SUCCESS: {
-      let groupIndex = state
+      const groupIndex = state
         .get('groups')
         .findIndex((i) => i.get('uuid') === action.payload.uuid);
       if (groupIndex >= 0) {
@@ -284,6 +285,12 @@ export default function group(state = initialState, action) {
         ['groups', groupIndex, 'group_actors', groupActorIndex, 'actor_info'],
         immutable.fromJS(action.groupActorInfo)
       );
+    }
+    case UPDATE_GROUP_ACTOR_MAPPING: {
+      const groupUUID = action.groupUUID;
+      const payload = action.payload;
+
+      return state.setIn(['groupActorMap', groupUUID], fromJS(payload));
     }
     case QUIT_GROUP_SUCCESS:
     case DISMISS_GROUP_SUCCESS:

@@ -22,6 +22,7 @@ const {
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
   UPDATE_GROUP_ACTOR_INFO_SUCCESS,
+  UPDATE_GROUP_ACTOR_MAPPING,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
   TICK_MEMBER_SUCCESS,
@@ -44,6 +45,8 @@ import {
   hideAlert,
   hideSlidePanel,
 } from './ui';
+import _set from 'lodash/set';
+import _get from 'lodash/get';
 
 import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
@@ -62,6 +65,7 @@ let initGroupInfo = function(dispatch, group) {
       lastTime: 0, // 设定初始化的团时间为0方便排序
     })
   );
+
   // 获取团成员
   api.emit('group::getGroupMembers', { groupUUID }, function(data) {
     if (data.result) {
@@ -81,13 +85,18 @@ let initGroupInfo = function(dispatch, group) {
       console.error('获取团成员失败:', data.msg);
     }
   });
+
   // 获取团人物
   api.emit('group::getGroupActors', { groupUUID }, function(data) {
     if (data.result) {
       let actors = data.actors;
       for (let ga of actors) {
-        ga.avatar = config.file.getAbsolutePath(ga.avatar);
-        ga.actor.avatar = config.file.getAbsolutePath(ga.actor.avatar);
+        _set(ga, 'avatar', config.file.getAbsolutePath(_get(ga, 'avatar')));
+        _set(
+          ga,
+          'actor.avatar',
+          config.file.getAbsolutePath(_get(ga, 'actor.avatar'))
+        );
         checkTemplate(ga.actor.template_uuid);
       }
       dispatch({ type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors });
@@ -95,6 +104,22 @@ let initGroupInfo = function(dispatch, group) {
       console.error('获取团人物失败:', data.msg);
     }
   });
+
+  // 获取团选择人物的Mapping
+  api.emit('group::getGroupActorMapping', { groupUUID }, function(data) {
+    if (data.result) {
+      const { mapping } = data;
+      console.log('mapping', mapping);
+      dispatch({
+        type: UPDATE_GROUP_ACTOR_MAPPING,
+        groupUUID,
+        payload: mapping,
+      });
+    } else {
+      console.error('获取团人物选择失败:', data.msg);
+    }
+  });
+
   // 获取团聊天日志
   api.emit('chat::getConverseChatLog', { converse_uuid: groupUUID }, function(
     data
@@ -308,7 +333,7 @@ export const getGroupList = function() {
         dispatch({ type: GET_GROUP_LIST_SUCCESS, payload: groups });
         for (let group of groups) {
           initGroupInfo(dispatch, group);
-          dispatch(getGroupStatus(group.uuid));
+          dispatch(getGroupStatus(group.uuid)); // 获取团状态
         }
       } else {
         console.error(data.msg);

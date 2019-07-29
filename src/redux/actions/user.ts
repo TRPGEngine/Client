@@ -50,7 +50,7 @@ function loginSuccess(dispatch, getState) {
   dispatch(getFriendsInvite());
   dispatch(getTemplate());
   dispatch(getActor());
-  dispatch(getGroupList());
+  dispatch(getGroupList()); // 获取团列表
   dispatch(getGroupInvite());
   dispatch(getNote());
   dispatch(getSettings()); // 获取服务器上的用户设置信息
