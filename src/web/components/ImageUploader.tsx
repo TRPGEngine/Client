@@ -1,12 +1,12 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import PropTypes from 'prop-types';
-import { fileUrl } from '../../api/trpg.api';
 import { showAlert } from '../../redux/actions/ui';
-import { request } from '../utils/request';
 import _get from 'lodash/get';
 
 import './ImageUploader.scss';
+import AvatarPicker from './AvatarPicker';
+import { blobUrlToFile } from '@web/utils/file-helper';
+import { toAvatar } from '@shared/utils/upload-helper';
 
 type CSSUnit = number | string;
 
@@ -17,64 +17,43 @@ interface Props extends DispatchProp {
   height?: CSSUnit;
   containerWidth?: CSSUnit;
   containerHeight?: CSSUnit;
-  onUploadSuccess?: (json: string) => void;
+  onUploadSuccess?: (imageInfo: any) => void;
 
-  user_uuid: string;
+  user_uuid: string; // 绑定的用户UUID
 }
+
+/**
+ * 用于当前用户相关图片上传
+ */
 class ImageUploader extends React.Component<Props> {
   state = {
     isUploading: false,
     uploadProgress: 0,
   };
-  fileRef = createRef<HTMLInputElement>();
 
-  _handleSelect() {
-    if (this.state.isUploading) {
-      this.props.dispatch(showAlert('图片正在上传中, 请稍后...'));
-      return;
-    }
-    this.fileRef.current.click();
-  }
+  /**
+   * 选择图片后回调
+   */
+  handlePickImage = async (blobUrl: string) => {
+    const file = await blobUrlToFile(blobUrl);
 
-  _handleUpload() {
-    let file = this.fileRef.current.files[0];
-    let formData = new FormData();
-    formData.append('avatar', file);
-
-    let headers = {
+    const headers = {
       'avatar-type': this.props.type || 'actor',
-      'user-uuid': this.props.user_uuid,
     };
     if (this.props.attachUUID) {
       headers['attach-uuid'] = this.props.attachUUID;
     }
-    if (this.props.width) {
-      headers['width'] = this.props.width;
-      if (this.props.height) {
-        headers['height'] = this.props.height;
-      }
-    }
     this.setState({ isUploading: true });
 
-    request({
-      url: fileUrl + '/avatar',
-      method: 'post',
+    toAvatar(this.props.user_uuid, file, {
+      uploadField: 'avatar',
       headers,
-      data: formData,
-      onUploadProgress: (progressEvent) => {
-        if (progressEvent.lengthComputable) {
-          console.log(`进度:${progressEvent.loaded}/${progressEvent.total}`);
-          let uploadProgress = (
-            (progressEvent.loaded / progressEvent.total) *
-            100
-          ).toFixed();
-          this.setState({ uploadProgress });
-        }
+      onProgress: (percent) => {
+        const uploadProgress = (percent * 100).toFixed();
+        console.log(`进度:${uploadProgress}`);
+        this.setState({ uploadProgress });
       },
     })
-      .then((res) => {
-        return res.data;
-      })
       .then((json) => {
         this.setState({
           isUploading: false,
@@ -99,24 +78,15 @@ class ImageUploader extends React.Component<Props> {
         this.props.dispatch(showAlert('图片上传失败:' + errorMsg));
         console.error(e);
       });
-  }
+  };
 
   render() {
     return (
-      <div
+      <AvatarPicker
         className="image-uploader"
-        style={{
-          width: this.props.containerWidth,
-          height: this.props.containerHeight,
-        }}
-        onClick={() => this._handleSelect()}
+        disabled={this.state.isUploading}
+        onChange={this.handlePickImage}
       >
-        <input
-          type="file"
-          ref={this.fileRef}
-          accept="image/*"
-          onChange={(e) => this._handleUpload()}
-        />
         <div className={'mask' + (this.state.isUploading ? ' active' : '')}>
           {this.state.isUploading
             ? this.state.uploadProgress
@@ -125,7 +95,7 @@ class ImageUploader extends React.Component<Props> {
             : '点击上传图片'}
         </div>
         {this.props.children}
-      </div>
+      </AvatarPicker>
     );
   }
 }
