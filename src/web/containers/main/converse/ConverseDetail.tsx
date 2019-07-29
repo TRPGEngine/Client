@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import config from '../../../../../config/project.config.js';
 import {
   showModal,
@@ -23,18 +23,20 @@ import _throttle from 'lodash/throttle';
 
 import './ConverseDetail.scss';
 
-class ConverseDetail extends React.Component {
-  constructor(props) {
-    super(props);
-    this.sendWritingThrottled = _throttle(
-      () => {
-        // 发送正在输入信号
-        sendStartWriting('user', this.props.converseUUID);
-      },
-      config.chat.isWriting.throttle,
-      { leading: true, trailing: false }
-    );
-  }
+interface Props extends DispatchProp<any> {
+  usercache: any;
+  converseUUID: string;
+  isWriting: boolean;
+}
+class ConverseDetail extends React.Component<Props> {
+  sendWritingThrottled = _throttle(
+    () => {
+      // 发送正在输入信号
+      sendStartWriting('user', this.props.converseUUID);
+    },
+    config.chat.isWriting.throttle,
+    { leading: true, trailing: false }
+  );
 
   _handleSendBoxChange(text) {
     if (isUserUUID(this.props.converseUUID)) {
@@ -204,12 +206,11 @@ class ConverseDetail extends React.Component {
         </div>
         <MsgContainer
           className="conv-container"
-          converseUUID={this.props.converseUUID}
           converseUUID={userUUID}
           isGroup={false}
         />
         <MsgSendBox
-          converseUUID={this.props.converseUUID}
+          converseUUID={userUUID}
           isGroup={false}
           onChange={(text) => this._handleSendBoxChange(text)}
           onSendMsg={(message, type) => this._handleSendMsg(message, type)}
@@ -223,13 +224,11 @@ class ConverseDetail extends React.Component {
   }
 }
 
-export default connect((state) => {
+export default connect((state: any) => {
   const converseUUID = state.getIn(['chat', 'selectedConversesUUID']); // 会话UUID在用户会话中就是用户UUID
   const userWritingList = state.getIn(['chat', 'writingList', 'user'], []);
 
   return {
-    userUUID: state.getIn(['user', 'info', 'uuid']),
-    selfInfo: state.getIn(['user', 'info']),
     usercache: state.getIn(['cache', 'user']),
     converseUUID,
     isWriting: userWritingList.includes(converseUUID),

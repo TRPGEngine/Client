@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import dateHelper from '../../../../shared/utils/date-helper';
 import config from '../../../../../config/project.config.js';
 import ConverseDetail from './ConverseDetail';
@@ -11,14 +11,19 @@ import { showProfileCard } from '../../../../redux/actions/ui';
 
 import './ConverseList.scss';
 
-class ConverseList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  _handleSelectConverse(converseUUID, userUUID) {
-    console.log('选择会话', converseUUID, '对象', userUUID);
-    this.props.dispatch(switchConverse(converseUUID, userUUID));
+interface Props extends DispatchProp<any> {
+  selectedUUID: string;
+  conversesDesc: string;
+  converses: any;
+  friends: any;
+  usercache: any;
+  userInfo: any;
+  userWritingList: any;
+}
+class ConverseList extends React.Component<Props> {
+  _handleSelectConverse(converseUUID) {
+    console.log('选择会话', converseUUID);
+    this.props.dispatch(switchConverse(converseUUID));
   }
 
   getWelcomeMessage() {
@@ -58,7 +63,7 @@ class ConverseList extends React.Component {
           let userUUID = item.get('members')
             ? item
                 .get('members')
-                .find((i) => i !== this.props.userinfo.get('uuid'))
+                .find((i) => i !== this.props.userInfo.get('uuid'))
             : uuid;
           let icon =
             item.get('icon') || usercache.getIn([uuid, 'avatar']) || attachIcon;
@@ -79,7 +84,7 @@ class ConverseList extends React.Component {
               unread={item.get('unread')}
               isWriting={userWritingList.includes(userUUID)}
               isSelected={this.props.selectedUUID === uuid}
-              onClick={() => this._handleSelectConverse(uuid, userUUID)}
+              onClick={() => this._handleSelectConverse(uuid)}
               hideCloseBtn={false}
             />
           );
@@ -173,12 +178,12 @@ class ConverseList extends React.Component {
   }
 }
 
-export default connect((state) => ({
+export default connect((state: any) => ({
   selectedUUID: state.getIn(['chat', 'selectedConversesUUID']),
   conversesDesc: state.getIn(['chat', 'conversesDesc']),
   converses: state.getIn(['chat', 'converses']),
   friends: state.getIn(['user', 'friendList']),
   usercache: state.getIn(['cache', 'user']),
-  userinfo: state.getIn(['user', 'info']),
+  userInfo: state.getIn(['user', 'info']),
   userWritingList: state.getIn(['chat', 'writingList', 'user'], []),
 }))(ConverseList);
