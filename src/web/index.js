@@ -5,6 +5,8 @@ import App from './containers/App';
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
+import { getTheme } from './theme';
 import { attachStore } from '../shared/utils/cache-helper';
 import config from '../../config/project.config.js';
 import configureStore from '../redux/configureStore';
@@ -86,7 +88,9 @@ if (config.platform !== 'web') {
 
 ReactDom.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider theme={getTheme(store)}>
+      <App />
+    </ThemeProvider>
   </Provider>,
   document.querySelector('#app')
 );
