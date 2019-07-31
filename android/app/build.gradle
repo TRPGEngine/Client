@@ -83,6 +83,7 @@ project.ext.react = [
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-sentry/sentry.gradle"
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -140,6 +141,7 @@ android {
             APP_CHANNEL : "default"
         ]
         vectorDrawables.useSupportLibrary = true // for react-native-image-crop-picker
+        resValue "string", "build_config_package", "com.moonrailgun.trpg" // react-native-config
     }
     splits {
         abi {
@@ -218,6 +220,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-config')
     implementation project(':react-native-image-crop-picker')
     implementation project(':react-native-fast-image')
     implementation project(':react-native-webview')

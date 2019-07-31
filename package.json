@@ -79,6 +79,7 @@
     "react-monaco-editor": "^0.28.0",
     "react-native": "^0.60.4",
     "react-native-code-push": "^5.6.0",
+    "react-native-config": "^0.11.7",
     "react-native-emoji": "git+https://github.com/TRPGEngine/react-native-emoji.git",
     "react-native-fast-image": "^7.0.2",
     "react-native-gesture-handler": "^1.2.0",
