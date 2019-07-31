@@ -16,6 +16,9 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import cn.jpush.reactnativejpush.JPushPackage;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.soexample.invokenative.DplusReactPackage;
+import com.umeng.soexample.invokenative.RNUMConfigure;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +53,8 @@ public class MainApplication extends Application implements ReactApplication {
         new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG, getResources().getString(R.string.reactNativeCodePush_androidServerUrl)),
         new RNGestureHandlerPackage(),
         new ImagePickerPackage(),
-        new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG)
+        new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
+        new DplusReactPackage()
       );
     }
 
@@ -70,5 +74,7 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    RNUMConfigure.init(this, "5d3fbde93fc195e2350006f7", "TRPG", UMConfigure.DEVICE_TYPE_PHONE,
+            "8b4280d86c23d7e9f0f501e279881256");
   }
 }
