@@ -12,6 +12,7 @@ const fs = require('fs-extra');
 const configFilePath = path.resolve(__dirname, './build/metro/', 'conf.json');
 
 fs.writeJson(configFilePath, config);
+require('./build/metro/build-env')({}); // 生成 .env 文件, 用于react-native-config
 
 module.exports = {
   resolver: {
