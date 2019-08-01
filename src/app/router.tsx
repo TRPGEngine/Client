@@ -23,6 +23,7 @@ import {
 } from 'react-navigation-redux-helpers';
 import { connect, DispatchProp } from 'react-redux';
 import { StackViewStyleInterpolator } from 'react-navigation-stack';
+import { alertHandler, toastHandler } from './utils/ui-state-handler';
 
 import LaunchScreen from './screens/LaunchScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -37,10 +38,7 @@ import ProfileScreen from './screens/ProfileScreen';
 import GroupProfileScreen from './screens/GroupProfileScreen';
 import ProfileModifyScreen from './screens/ProfileModifyScreen';
 import WebviewScreen from './screens/WebviewScreen';
-import TAlert from './components/TApi/TAlert';
-
-import { hideAlert } from '../redux/actions/ui';
-import { alertHandler, toastHandler } from './utils/ui-state-handler';
+import DeviceInfoScreen from './screens/settings/DeviceInfoScreen';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -94,6 +92,12 @@ export const AppNavigator = createStackNavigator(
       screen: SettingsScreen,
       navigationOptions: {
         headerTitle: '设置',
+      },
+    },
+    SettingsDeviceInfo: {
+      screen: DeviceInfoScreen,
+      navigationOptions: {
+        headerTitle: '设备信息',
       },
     },
     Chat: {
