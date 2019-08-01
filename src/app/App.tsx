@@ -10,7 +10,7 @@ import { AppWithNavigationState } from './router';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as AntdProvider } from '@ant-design/react-native';
 import { injectLoginSuccessCallback } from '../shared/utils/inject';
-import { init as initNotify, bindInfo, tryLocalNotify } from './notify';
+import { initNotify, bindInfo, tryLocalNotify } from './notify';
 import codePush from 'react-native-code-push';
 import appConfig from './config.app';
 
