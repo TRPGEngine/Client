@@ -10,8 +10,8 @@ import _get from 'lodash/get';
 import projectConfig from '../../config/project.config';
 
 // Sentry
-import Config from 'config';
-const dsn = _get(Config, 'sentry.dsn');
+import Config from 'react-native-config';
+const dsn = Config.SENTRY_DSN;
 if (dsn && projectConfig.environment === 'production') {
   import('react-native-sentry')
     .then((module) => module.Sentry)
