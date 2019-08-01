@@ -7,12 +7,12 @@
  */
 const path = require('path');
 const blacklist = require('metro-config/src/defaults/blacklist');
-const config = require('config');
-const fs = require('fs-extra');
-const configFilePath = path.resolve(__dirname, './build/metro/', 'conf.json');
+const packageConfig = require('./package.json');
+const NODE_ENV = process.env.NODE_ENV;
 
-fs.writeJson(configFilePath, config);
-require('./build/metro/build-env')({}); // 生成 .env 文件, 用于react-native-config
+require('./build/metro/build-env')({
+  version: packageConfig.version,
+}); // 生成 .env 文件, 用于react-native-config
 
 module.exports = {
   resolver: {
@@ -31,6 +31,10 @@ module.exports = {
       },
     }),
   },
-  projectRoot: path.resolve(__dirname, './src/app/'),
+  // projectRoot: path.resolve(__dirname, './src/app/'),
+  projectRoot: path.resolve(
+    __dirname,
+    NODE_ENV === 'production' ? './' : './src/app/'
+  ),
   // watchFolders: [path.resolve(__dirname, './')], // 改为使用REACT_NATIVE_APP_ROOT环境变量
 };
