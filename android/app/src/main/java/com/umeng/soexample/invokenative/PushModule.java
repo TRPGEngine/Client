@@ -14,6 +14,7 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
+import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
@@ -169,6 +170,24 @@ public class PushModule extends ReactContextBaseJavaModule {
         });
     }
 
+    // 注册Push服务，成功后返回deviceToken
+    @ReactMethod
+    public void register(final Callback successCallback) {
+        mPushAgent.register(new IUmengRegisterCallback() {
+            @Override
+            public void onSuccess(String deviceToken) {
+                Log.i(TAG, "device token: " + deviceToken);
+                successCallback.invoke(SUCCESS, deviceToken);
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+                Log.i(TAG, "register failed: " + s + " " + s1);
+                successCallback.invoke(ERROR, s + " " + s1);
+            }
+        });
+    }
+
     @ReactMethod
     public void appInfo(final Callback successCallback) {
         String pkgName = context.getPackageName();
@@ -177,6 +196,13 @@ public class PushModule extends ReactContextBaseJavaModule {
             UmengMessageDeviceConfig.getAppVersionCode(context), UmengMessageDeviceConfig.getAppVersionName(context));
         successCallback.invoke("应用包名:" + pkgName + "\n" + info);
     }
+
+    @ReactMethod
+    public void getRegistrationId(final Callback successCallback) {
+        String registrationId = mPushAgent.getRegistrationId();
+        successCallback.invoke(registrationId);
+    }
+
     private WritableMap resultToMap(ITagManager.Result result){
         WritableMap map = Arguments.createMap();
         if (result!=null){
