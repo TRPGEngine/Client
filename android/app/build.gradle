@@ -134,8 +134,8 @@ android {
         applicationId "com.moonrailgun.trpg"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "1.2"
+        versionCode 4
+        versionName project.env.get("VERSION")
         manifestPlaceholders = [
             JPUSH_APPKEY: "4ebde26529796c17dcffb886",
             APP_CHANNEL : "default"
@@ -162,11 +162,11 @@ android {
         }
 
         release {
-            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
-                storeFile file(MYAPP_RELEASE_STORE_FILE)
-                storePassword MYAPP_RELEASE_STORE_PASSWORD
-                keyAlias MYAPP_RELEASE_KEY_ALIAS
-                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            if (project.env.get("RELEASE_STORE_FILE") != '') {
+                storeFile file(project.env.get("RELEASE_STORE_FILE"))
+                storePassword project.env.get("RELEASE_STORE_PASSWORD")
+                keyAlias project.env.get("RELEASE_KEY_ALIAS")
+                keyPassword project.env.get("RELEASE_KEY_PASSWORD")
             }
         }
     }
