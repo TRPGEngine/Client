@@ -73,8 +73,8 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
     RNUMConfigure.init(this, BuildConfig.UMENG_PUSH_APPKEY, BuildConfig.UMENG_PUSH_CHANNEL, UMConfigure.DEVICE_TYPE_PHONE,
             BuildConfig.UMENG_PUSH_MESSAGESECRET);
+    SoLoader.init(this, /* native exopackage */ false);
   }
 }
