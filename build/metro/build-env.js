@@ -57,3 +57,12 @@ function generateEnvFile(addonConfig) {
 }
 
 module.exports = generateEnvFile;
+
+if (require.main === module) {
+  const packageConfig = require('../../package.json');
+
+  // 生成 .env 文件, 用于react-native-config
+  generateEnvFile({
+    version: packageConfig.version,
+  });
+}

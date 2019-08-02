@@ -7,12 +7,7 @@
  */
 const path = require('path');
 const blacklist = require('metro-config/src/defaults/blacklist');
-const packageConfig = require('./package.json');
 const NODE_ENV = process.env.NODE_ENV;
-
-require('./build/metro/build-env')({
-  version: packageConfig.version,
-}); // 生成 .env 文件, 用于react-native-config
 
 module.exports = {
   resolver: {

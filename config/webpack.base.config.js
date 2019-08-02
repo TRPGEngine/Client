@@ -153,7 +153,9 @@ module.exports = {
     '../../app/router': "require('../../app/router')", // for redux.configureStore
     'react-navigation-redux-helpers':
       "require('react-navigation-redux-helpers')",
-    config: JSON.stringify(require('config')), // 用于全局使用config，config由编译时的环境变量指定
+    config: JSON.stringify({
+      sentry: require('config').get('sentry'),
+    }), // 用于全局使用config，config由编译时的环境变量指定
   },
 
   optimization: {
