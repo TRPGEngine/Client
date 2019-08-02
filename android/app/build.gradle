@@ -136,10 +136,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 4
         versionName project.env.get("VERSION")
-        manifestPlaceholders = [
-            JPUSH_APPKEY: "4ebde26529796c17dcffb886",
-            APP_CHANNEL : "default"
-        ]
         vectorDrawables.useSupportLibrary = true // for react-native-image-crop-picker
         resValue "string", "build_config_package", "com.moonrailgun.trpg" // react-native-config
     }
@@ -233,8 +229,6 @@ dependencies {
     implementation project(':react-native-sentry')
     implementation project(':react-native-code-push')
     implementation project(':react-native-gesture-handler')
-    implementation project(':jcore-react-native')
-    implementation project(':jpush-react-native')
     implementation project(':react-native-image-picker')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     // implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
