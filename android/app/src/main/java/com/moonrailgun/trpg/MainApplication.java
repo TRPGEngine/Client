@@ -46,6 +46,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
         new ReactNativeConfigPackage(),
+        new DplusReactPackage(),
         new PickerPackage(),
         new FastImageViewPackage(),
         new RNCWebViewPackage(),
@@ -53,8 +54,7 @@ public class MainApplication extends Application implements ReactApplication {
         new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG, getResources().getString(R.string.reactNativeCodePush_androidServerUrl)),
         new RNGestureHandlerPackage(),
         new ImagePickerPackage(),
-        new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
-        new DplusReactPackage()
+        new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG)
       );
     }
 

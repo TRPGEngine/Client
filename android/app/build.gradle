@@ -221,6 +221,12 @@ android {
 
 dependencies {
     implementation project(':react-native-config')
+
+    // 友盟推送
+    implementation 'com.umeng.umsdk:common:1.5.4' // PushSDK必须依赖基础组件库，所以需要加入对应依赖
+    implementation 'com.umeng.umsdk:utdid:1.1.5.3' // PushSDK必须依赖utdid库，所以需要加入对应依赖
+    implementation 'com.umeng.umsdk:push:6.0.1' // PushSDK
+
     implementation project(':react-native-image-crop-picker')
     implementation project(':react-native-fast-image')
     implementation project(':react-native-webview')
@@ -233,13 +239,6 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     // implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
-    // PushSDK必须依赖基础组件库，所以需要加入对应依赖
-    implementation 'com.umeng.umsdk:common:1.5.4'
-    // PushSDK必须依赖utdid库，所以需要加入对应依赖
-    implementation 'com.umeng.umsdk:utdid:1.1.5.3'
-    // PushSDK
-    implementation 'com.umeng.umsdk:push:6.0.1'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermesvm/android/";
