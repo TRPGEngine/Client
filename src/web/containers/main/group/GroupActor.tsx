@@ -6,7 +6,6 @@ import {
   addGroupActor,
   removeGroupActor,
 } from '../../../../redux/actions/group';
-import ReactTooltip from 'react-tooltip';
 import at from 'trpg-actor-template';
 import { TabsController, Tab } from '../../../components/Tabs';
 import ModalPanel from '../../../components/ModalPanel';
@@ -233,10 +232,10 @@ export default connect(
   (dispatch: any) => ({
     showAlert: (payload) => dispatch(showAlert(payload)),
     showModal: (body) => dispatch(showModal(body)),
-    selectActor: (actorUUID) => dispatch(selectActor(actorUUID)),
-    addGroupActor: (groupUUID, actorUUID) =>
+    selectActor: (actorUUID: string) => dispatch(selectActor(actorUUID)),
+    addGroupActor: (groupUUID: string, actorUUID: string) =>
       dispatch(addGroupActor(groupUUID, actorUUID)),
-    removeGroupActor: (groupUUID, groupActorUUID) =>
+    removeGroupActor: (groupUUID: string, groupActorUUID: string) =>
       dispatch(removeGroupActor(groupUUID, groupActorUUID)),
   })
 )(GroupActor);
