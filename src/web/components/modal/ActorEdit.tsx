@@ -37,7 +37,7 @@ const ActorEdit = (props: Props) => {
   );
 
   return (
-    <ModalPanel title={title} actions={actions}>
+    <ModalPanel title={title} actions={actions} allowMaximize={true}>
       <Container>
         <Col xs={8}>
           <Avatar shape="square" size={128} src={props.avatar} />
