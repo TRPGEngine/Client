@@ -476,10 +476,13 @@ export const refuseGroupActor = function(groupUUID, groupActorUUID) {
   };
 };
 
+/**
+ * 更新团人物的人物卡信息
+ */
 export const updateGroupActorInfo = function(
-  groupUUID,
-  groupActorUUID,
-  groupActorInfo
+  groupUUID: string,
+  groupActorUUID: string,
+  groupActorInfo: {}
 ) {
   return function(dispatch, getState) {
     return api.emit(

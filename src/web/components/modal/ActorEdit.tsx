@@ -22,7 +22,7 @@ interface Props {
   layout: string;
   onSave?: (data: any) => void;
 }
-const ActorInfo = (props: Props) => {
+const ActorEdit = (props: Props) => {
   const [actorData, setActorData] = useState(props.data);
 
   let title = '人物卡';
@@ -59,4 +59,4 @@ const ActorInfo = (props: Props) => {
   );
 };
 
-export default ActorInfo;
+export default ActorEdit;
