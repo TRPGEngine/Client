@@ -176,6 +176,11 @@ class GroupDetail extends React.Component<Props> {
         component: <GroupMember />,
       },
       {
+        name: '人物卡',
+        icon: '&#xe61b;',
+        component: <GroupActor />,
+      },
+      {
         name: '游戏地图',
         icon: '&#xe6d7;',
         // component: (
@@ -187,11 +192,6 @@ class GroupDetail extends React.Component<Props> {
         name: '游戏规则',
         icon: '&#xe621;',
         component: <IsDeveloping />,
-      },
-      {
-        name: '人物卡',
-        icon: '&#xe61b;',
-        component: <GroupActor />,
       },
       {
         name: '团信息',
