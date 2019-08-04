@@ -12,7 +12,7 @@ class ImageViewer extends React.Component {
     };
   }
 
-  _handleClick() {
+  handleClick() {
     if (this.props.originImageUrl) {
       this.setState({ isOpen: true });
     }
@@ -20,7 +20,7 @@ class ImageViewer extends React.Component {
 
   render() {
     return (
-      <div className="image-viewer" onClick={() => this._handleClick()}>
+      <div className="image-viewer" onClick={() => this.handleClick()}>
         {this.props.children}
         {this.props.originImageUrl && this.state.isOpen && (
           <Lightbox

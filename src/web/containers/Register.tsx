@@ -21,7 +21,7 @@ class Register extends React.Component<Props> {
     }
   }
 
-  _handleRegister() {
+  handleRegister() {
     this.props.dispatch(showLoading());
     let username = this.state.username;
     let password = this.state.password;
@@ -94,7 +94,7 @@ class Register extends React.Component<Props> {
         <button
           className="active"
           onClick={() => {
-            this._handleRegister();
+            this.handleRegister();
           }}
           disabled={errMsg !== ''}
         >

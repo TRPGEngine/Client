@@ -23,12 +23,12 @@ class ActorList extends React.Component {
     super(props);
   }
 
-  _handleAddNewActor() {
+  handleAddNewActor() {
     this.props.selectActor('');
     this.props.showModal(<ActorCreate />);
   }
 
-  _handleRemoveActor(uuid) {
+  handleRemoveActor(uuid) {
     this.props.selectActor('');
     this.props.showAlert({
       content: '你确定要删除该人物卡么？删除后会同时删除相关的团人物并无法找回',
@@ -36,7 +36,7 @@ class ActorList extends React.Component {
     });
   }
 
-  _handleEditActor(uuid, template_uuid) {
+  handleEditActor(uuid, template_uuid) {
     this.props.selectActor(uuid);
 
     // 获取模板信息
@@ -120,7 +120,7 @@ class ActorList extends React.Component {
               <span title={desc}>{desc}</span>
             </p>
             <p className="action">
-              <button onClick={() => this._handleRemoveActor(uuid)}>
+              <button onClick={() => this.handleRemoveActor(uuid)}>
                 删除
               </button>
               <button onClick={() => this.handleOpenActorEditModal(uuid)}>
@@ -183,7 +183,7 @@ class ActorList extends React.Component {
       <div className="actor-card">
         <div
           className="actor-card-new"
-          onClick={() => this._handleAddNewActor()}
+          onClick={() => this.handleAddNewActor()}
         >
           <i className="iconfont">&#xe604;</i>
           <span>添加新人物</span>

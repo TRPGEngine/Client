@@ -25,14 +25,14 @@ class LoginScreen extends React.Component<Props> {
     password: '',
   };
 
-  _handleLogin() {
+  handleLogin() {
     let { username, password } = this.state;
     if (!!username && !!password) {
       this.props.dispatch(login(this.state.username, this.state.password));
     }
   }
 
-  _handleQQLogin() {
+  handleQQLogin() {
     this.props.dispatch(
       openWebview(config.file.url + '/oauth/qq/login?platform=app')
     );
@@ -60,7 +60,7 @@ class LoginScreen extends React.Component<Props> {
             secureTextEntry: true,
           }}
         />
-        <TButton onPress={() => this._handleLogin()}>登录</TButton>
+        <TButton onPress={() => this.handleLogin()}>登录</TButton>
         <TouchableOpacity
           style={styles.registerBtn}
           onPress={() =>
@@ -75,7 +75,7 @@ class LoginScreen extends React.Component<Props> {
         <View style={styles.oauth}>
           <Text style={styles.oauthTip}>第三方登录</Text>
           <View style={styles.oauthBtnContainer}>
-            <TouchableOpacity onPress={() => this._handleQQLogin()}>
+            <TouchableOpacity onPress={() => this.handleQQLogin()}>
               <Image
                 style={styles.oauthBtnImage}
                 source={appConfig.oauth.qq.icon}

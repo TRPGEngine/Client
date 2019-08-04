@@ -27,7 +27,7 @@ class AddFriendScreen extends React.Component<Props> {
     searchType: 'user',
   };
 
-  _handleSearchUser() {
+  handleSearchUser() {
     let searchValue = this.state.searchValue.trim();
     console.log('搜索用户:', searchValue);
     Keyboard.dismiss();
@@ -35,7 +35,7 @@ class AddFriendScreen extends React.Component<Props> {
     this.props.dispatch(findUser(searchValue, 'username'));
   }
 
-  _handleSearchGroup() {
+  handleSearchGroup() {
     let searchValue = this.state.searchValue.trim();
     console.log('搜索团:', searchValue);
     Keyboard.dismiss();
@@ -89,7 +89,7 @@ class AddFriendScreen extends React.Component<Props> {
       return (
         <View style={styles.searchResult}>
           <TouchableOpacity
-            onPress={() => this._handleSearchUser()}
+            onPress={() => this.handleSearchUser()}
             style={styles.searchResultItem}
           >
             <TIcon
@@ -104,7 +104,7 @@ class AddFriendScreen extends React.Component<Props> {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this._handleSearchGroup()}
+            onPress={() => this.handleSearchGroup()}
             style={styles.searchResultItem}
           >
             <TIcon
@@ -168,7 +168,7 @@ class AddFriendScreen extends React.Component<Props> {
             }
             placeholder="用户名/团名/uuid"
             returnKeyType="search"
-            onSubmitEditing={() => this._handleSearchUser()}
+            onSubmitEditing={() => this.handleSearchUser()}
           />
         </View>
 

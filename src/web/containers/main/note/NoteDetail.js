@@ -19,7 +19,7 @@ class NoteDetail extends React.Component {
     };
   }
 
-  _handleSave() {
+  handleSave() {
     console.log('笔记本存储中....');
     let uuid = this.props.uuid;
     let title = this.state.title;
@@ -36,13 +36,13 @@ class NoteDetail extends React.Component {
             placeholder="笔记标题"
             value={this.state.title}
             onChange={(e) => this.setState({ title: e.target.value })}
-            onBlur={() => this._handleSave()}
+            onBlur={() => this.handleSave()}
           />
         </div>
         <NoteEditor
           value={this.state.content}
           onChange={(content) => this.setState({ content })}
-          onSave={() => this._handleSave()}
+          onSave={() => this.handleSave()}
         />
       </div>
     );

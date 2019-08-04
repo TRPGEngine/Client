@@ -45,7 +45,7 @@ class Webview extends React.Component<Props> {
     }
   }
 
-  _handleOpenInNewWindow() {
+  handleOpenInNewWindow() {
     window.open(this.webframe.src, 'square', 'frame=true');
   }
 
@@ -56,7 +56,7 @@ class Webview extends React.Component<Props> {
           <div
             className="open-new"
             title="在新窗口打开"
-            onClick={() => this._handleOpenInNewWindow()}
+            onClick={() => this.handleOpenInNewWindow()}
           >
             <i className="iconfont">&#xe63c;</i>
           </div>

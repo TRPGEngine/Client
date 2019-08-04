@@ -17,7 +17,7 @@ class NoteList extends React.Component {
     };
   }
 
-  _handleClick(uuid) {
+  handleClick(uuid) {
     this.props.dispatch(switchNote(uuid));
   }
 
@@ -46,7 +46,7 @@ class NoteList extends React.Component {
                 className={
                   'note-item' + (selectedNoteUUID === uuid ? ' active' : '')
                 }
-                onClick={() => this._handleClick(uuid)}
+                onClick={() => this.handleClick(uuid)}
               >
                 <div className="note-title">
                   <span>{item.title}</span>

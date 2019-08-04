@@ -23,29 +23,29 @@ class TemplateSelect extends React.Component {
     };
   }
 
-  _handleSearch() {
+  handleSearch() {
     // console.log(this.state.searchName);
     let searchName = this.state.searchName;
     this.props.findTemplate(searchName);
   }
 
-  _handleCreateTemplate() {
+  handleCreateTemplate() {
     this.props.setEditedTemplate({});
     this.props.showModal(<TemplateEdit isEdit={false} />);
   }
 
-  _handleCreateActor(template) {
+  handleCreateActor(template) {
     template = template.toJS();
     this.props.selectTemplate(template);
     this.props.showModal(<ActorEdit />);
   }
 
-  _handleEdit(item) {
+  handleEdit(item) {
     this.props.setEditedTemplate(item.toJS());
     this.props.showModal(<TemplateEdit isEdit={true} />);
   }
 
-  _handleDelete(item) {
+  handleDelete(item) {
     let template_uuid = item.get('uuid');
     this.props.showAlert({
       content: '你确定要删除该模板么？删除后仍会保留相关联的人物卡与团人物',
@@ -68,7 +68,7 @@ class TemplateSelect extends React.Component {
               desc={item.get('desc')}
               creator={item.get('creator_name') || '未知'}
               time={item.get('updateAt')}
-              onCreate={() => this._handleCreateActor(item)}
+              onCreate={() => this.handleCreateActor(item)}
             />
           );
         });
@@ -92,10 +92,10 @@ class TemplateSelect extends React.Component {
                 this.setState({ searchName: e.target.value });
               }}
             />
-            <button onClick={() => this._handleSearch()}>
+            <button onClick={() => this.handleSearch()}>
               <i className="iconfont">&#xe60a;</i>搜索
             </button>
-            <button onClick={() => this._handleCreateTemplate()}>
+            <button onClick={() => this.handleCreateTemplate()}>
               <i className="iconfont">&#xe604;</i>创建新的人物模板
             </button>
           </div>
@@ -115,9 +115,9 @@ class TemplateSelect extends React.Component {
                     desc={item.get('desc')}
                     creator={this.props.username}
                     time={item.get('updateAt')}
-                    onEdit={() => this._handleEdit(item)}
-                    onCreate={() => this._handleCreateActor(item)}
-                    onDelete={() => this._handleDelete(item)}
+                    onEdit={() => this.handleEdit(item)}
+                    onCreate={() => this.handleCreateActor(item)}
+                    onDelete={() => this.handleDelete(item)}
                   />
                 );
               })}

@@ -21,7 +21,7 @@ interface Props extends DispatchProp<any> {
   userWritingList: any;
 }
 class ConverseList extends React.Component<Props> {
-  _handleSelectConverse(converseUUID) {
+  handleSelectConverse(converseUUID) {
     console.log('选择会话', converseUUID);
     this.props.dispatch(switchConverse(converseUUID));
   }
@@ -84,7 +84,7 @@ class ConverseList extends React.Component<Props> {
               unread={item.get('unread')}
               isWriting={userWritingList.includes(userUUID)}
               isSelected={this.props.selectedUUID === uuid}
-              onClick={() => this._handleSelectConverse(uuid)}
+              onClick={() => this.handleSelectConverse(uuid)}
               hideCloseBtn={false}
             />
           );

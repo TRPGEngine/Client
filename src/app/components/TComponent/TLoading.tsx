@@ -9,7 +9,7 @@ interface Props extends DispatchProp<any> {
   showLoadingText: string;
 }
 class TLoading extends React.Component<Props> {
-  _handleClose() {
+  handleClose() {
     this.props.dispatch(hideLoading());
   }
 

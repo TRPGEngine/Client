@@ -71,7 +71,7 @@ class MsgContainer extends React.Component<Props> {
     }, 0);
   }
 
-  _handleGetMoreLog() {
+  handleGetMoreLog() {
     let date = this.props.msgList.first().get('date');
     let { converseUUID } = this.props;
     this.props.dispatch(
@@ -80,7 +80,7 @@ class MsgContainer extends React.Component<Props> {
     this.isSeekingLog = true;
   }
 
-  _handleContainerLoad(el) {
+  handleContainerLoad(el) {
     if (this.isSeekingLog === true) {
       return;
     }
@@ -98,7 +98,7 @@ class MsgContainer extends React.Component<Props> {
     }
   }
 
-  _handleContainerScroll(el) {
+  handleContainerScroll(el) {
     if (el.scrollHeight - el.scrollTop <= el.offsetHeight) {
       console.log('滚动容器接触到底部!');
       this.isSeekingLog = false;
@@ -112,8 +112,8 @@ class MsgContainer extends React.Component<Props> {
       <div
         className={'msg-container ' + this.props.className}
         ref={(ref) => (this.containerRef = ref)}
-        onLoad={(e) => this._handleContainerLoad(e.target)}
-        onScroll={(e) => this._handleContainerScroll(e.target)}
+        onLoad={(e) => this.handleContainerLoad(e.target)}
+        onScroll={(e) => this.handleContainerScroll(e.target)}
       >
         {this.props.nomore || this.props.msgList.size < 10 ? (
           <button
@@ -126,7 +126,7 @@ class MsgContainer extends React.Component<Props> {
         ) : (
           <button
             className="get-more-log-btn"
-            onClick={() => this._handleGetMoreLog()}
+            onClick={() => this.handleGetMoreLog()}
           >
             点击获取更多记录
           </button>

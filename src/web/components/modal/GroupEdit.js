@@ -19,7 +19,7 @@ class GroupEdit extends React.Component {
     };
   }
 
-  _handleSaveGroupInfo() {
+  handleSaveGroupInfo() {
     let groupInfoData = Object.assign({}, this.state);
     delete groupInfoData.avatar;
     this.props.dispatch(
@@ -27,7 +27,7 @@ class GroupEdit extends React.Component {
     );
   }
 
-  _handleUpdateAvatar(url) {
+  handleUpdateAvatar(url) {
     this.props.dispatch(
       updateGroupInfo(this.props.selectedGroupUUID, { avatar: url })
     );
@@ -39,7 +39,7 @@ class GroupEdit extends React.Component {
         <button onClick={() => this.props.dispatch(hideModal())}>
           <i className="iconfont">&#xe70c;</i>取消
         </button>
-        <button onClick={() => this._handleSaveGroupInfo()}>
+        <button onClick={() => this.handleSaveGroupInfo()}>
           <i className="iconfont">&#xe634;</i>保存
         </button>
       </div>
@@ -56,7 +56,7 @@ class GroupEdit extends React.Component {
           height="57"
           type="group"
           attachUUID={this.props.selectedGroupUUID}
-          onUploadSuccess={(json) => this._handleUpdateAvatar(json.url)}
+          onUploadSuccess={(json) => this.handleUpdateAvatar(json.url)}
         >
           <img src={this.state.avatar || config.defaultImg.group} />
         </ImageUploader>

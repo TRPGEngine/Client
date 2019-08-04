@@ -104,7 +104,7 @@ class EmotionPanel extends React.Component<Props> {
   /**
    * 点击增加表情包功能
    */
-  _handleAddEmotionCatalog() {
+  handleAddEmotionCatalog() {
     Modal.operation([
       {
         text: '暗号',
@@ -203,7 +203,7 @@ class EmotionPanel extends React.Component<Props> {
           {isEmoji ? getEmojiPage() : getEmotionPage()}
         </EmotionCarousel>
         <EmoticonCatalog>
-          <EmoticonCatalogItem onPress={() => this._handleAddEmotionCatalog()}>
+          <EmoticonCatalogItem onPress={() => this.handleAddEmotionCatalog()}>
             <EmojiText>
               <Text>+</Text>
             </EmojiText>

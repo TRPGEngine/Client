@@ -52,7 +52,7 @@ class RegisterScreen extends React.Component<Props, State> {
     return '';
   }
 
-  _handleRegister() {
+  handleRegister() {
     let err = this.checkInputErr();
     if (err) {
       this.props.dispatch(
@@ -110,7 +110,7 @@ class RegisterScreen extends React.Component<Props, State> {
             secureTextEntry: true,
           }}
         />
-        <TButton onPress={() => this._handleRegister()}>成为祭品</TButton>
+        <TButton onPress={() => this.handleRegister()}>成为祭品</TButton>
       </View>
     );
   }

@@ -40,7 +40,7 @@ interface Props extends DispatchProp<any> {
   selectedGroupActorInfo: any;
 }
 class GroupDetail extends React.Component<Props> {
-  _handleSelectGroupActor(item) {
+  handleSelectGroupActor(item) {
     if (item.value !== this.props.selectedGroupActorUUID) {
       this.props.dispatch(
         changeSelectGroupActor(this.props.selectedUUID, item.value)
@@ -48,7 +48,7 @@ class GroupDetail extends React.Component<Props> {
     }
   }
 
-  _handleSendMsg(message, type) {
+  handleSendMsg(message, type) {
     console.log('send msg:', message, 'to', this.props.selectedUUID);
     let msgData: GroupActorMsgData;
     if (!_isNil(this.props.selectedGroupActorInfo)) {
@@ -71,7 +71,7 @@ class GroupDetail extends React.Component<Props> {
   }
 
   // 发送文件
-  _handleSendFile(file) {
+  handleSendFile(file) {
     console.log('send file to', this.props.selectedUUID, file);
     this.props.dispatch(
       sendFile(
@@ -87,7 +87,7 @@ class GroupDetail extends React.Component<Props> {
   }
 
   // 发送投骰请求
-  _handleSendDiceReq() {
+  handleSendDiceReq() {
     this.props.dispatch(
       showModal(
         <DiceRequest
@@ -108,7 +108,7 @@ class GroupDetail extends React.Component<Props> {
   }
 
   // 发送投骰邀请
-  _handleSendDiceInv() {
+  handleSendDiceInv() {
     let usercache = this.props.usercache;
     let groupMembers = this.props.groupInfo.get('group_members');
     let list = groupMembers
@@ -259,7 +259,7 @@ class GroupDetail extends React.Component<Props> {
             searchable={false}
             placeholder="请选择身份卡"
             noResultsText="暂无身份卡..."
-            onChange={(item) => this._handleSelectGroupActor(item)}
+            onChange={(item) => this.handleSelectGroupActor(item)}
           />
           <div className="actions">{this.getHeaderActions()}</div>
         </div>
@@ -271,10 +271,10 @@ class GroupDetail extends React.Component<Props> {
         <MsgSendBox
           converseUUID={this.props.selectedUUID}
           isGroup={true}
-          onSendMsg={(message, type) => this._handleSendMsg(message, type)}
-          onSendFile={(file) => this._handleSendFile(file)}
-          onSendDiceReq={() => this._handleSendDiceReq()}
-          onSendDiceInv={() => this._handleSendDiceInv()}
+          onSendMsg={(message, type) => this.handleSendMsg(message, type)}
+          onSendFile={(file) => this.handleSendFile(file)}
+          onSendDiceReq={() => this.handleSendDiceReq()}
+          onSendDiceInv={() => this.handleSendDiceInv()}
         />
       </div>
     );

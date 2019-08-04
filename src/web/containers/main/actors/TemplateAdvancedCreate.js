@@ -13,7 +13,7 @@ class TemplateAdvancedCreate extends React.Component {
     };
   }
 
-  _handleCreateTemplate() {
+  handleCreateTemplate() {
     this.props.dispatch(
       createTemplateAdvanced('', '', '', this.state.templateStr)
     );
@@ -22,7 +22,7 @@ class TemplateAdvancedCreate extends React.Component {
   getActions() {
     return (
       <div>
-        <button onClick={() => this._handleCreateTemplate()}>创建模板</button>
+        <button onClick={() => this.handleCreateTemplate()}>创建模板</button>
       </div>
     );
   }

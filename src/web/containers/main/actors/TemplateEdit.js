@@ -35,11 +35,11 @@ class TemplateEdit extends React.Component {
     }
   }
 
-  _handleBack() {
+  handleBack() {
     this.props.showModal(<TemplateSelect />);
   }
 
-  _handleSave() {
+  handleSave() {
     let template = this.state.template;
     template.name = this.state.name;
     template.desc = this.state.desc;
@@ -64,11 +64,11 @@ class TemplateEdit extends React.Component {
     }
   }
 
-  _handleEdit(item) {
+  handleEdit(item) {
     this.setState({ inspectCell: item });
   }
 
-  _handleRemove(item, index) {
+  handleRemove(item, index) {
     if (this.state.inspectCell === item) {
       this.setState({ inspectCell: undefined });
     }
@@ -76,7 +76,7 @@ class TemplateEdit extends React.Component {
     this.setState({ template: this.state.template });
   }
 
-  _handleCreateAdvancedTemplate() {
+  handleCreateAdvancedTemplate() {
     this.props.showAlert({
       title: '切换到进阶模式',
       content: '当前编辑的内容不会被保存。是否确定切换到进阶模式?',
@@ -192,13 +192,13 @@ class TemplateEdit extends React.Component {
       <div className="template-edit">
         <div className="profile-panel">
           <div className="header">
-            <button onClick={() => this._handleBack()}>&lt;返回</button>
+            <button onClick={() => this.handleBack()}>&lt;返回</button>
             <input
               placeholder="模板名"
               value={this.state.name}
               onChange={(e) => this.setState({ name: e.target.value })}
             />
-            <button onClick={() => this._handleSave()}>保存</button>
+            <button onClick={() => this.handleSave()}>保存</button>
           </div>
           <div className="desc">
             <textarea
@@ -220,7 +220,7 @@ class TemplateEdit extends React.Component {
               <i className="iconfont">&#xe604;</i>添加新属性
             </button>
             {!this.props.isEdit && (
-              <button onClick={() => this._handleCreateAdvancedTemplate()}>
+              <button onClick={() => this.handleCreateAdvancedTemplate()}>
                 <i className="iconfont">&#xe9b7;</i>切换到进阶模式
               </button>
             )}
@@ -244,8 +244,8 @@ class TemplateEdit extends React.Component {
                       name={item.name}
                       defaultValue={item.default}
                       value={item.value}
-                      onEdit={() => this._handleEdit(item)}
-                      onRemove={() => this._handleRemove(item, index)}
+                      onEdit={() => this.handleEdit(item)}
+                      onRemove={() => this.handleRemove(item, index)}
                     />
                   );
                 })}

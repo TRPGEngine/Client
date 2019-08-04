@@ -32,7 +32,7 @@ interface Props {
   templateCache: any;
 }
 class GroupActor extends React.Component<Props> {
-  _handleSendGroupActorCheck() {
+  handleSendGroupActorCheck() {
     if (!this.props.selectedGroupUUID) {
       showAlert('请选择一个团来提交您的人物');
     }
@@ -47,7 +47,7 @@ class GroupActor extends React.Component<Props> {
   }
 
   // 查看人物卡
-  _handleShowActorProfile(actor: ActorType, data: ActorDataType) {
+  handleShowActorProfile(actor: ActorType, data: ActorDataType) {
     if (actor) {
       console.log(actor);
       this.props.showModal(
@@ -61,7 +61,7 @@ class GroupActor extends React.Component<Props> {
   }
 
   // 审批人物
-  _handleApprove(groupActorInfo) {
+  handleApprove(groupActorInfo) {
     if (groupActorInfo) {
       this.props.showModal(<GroupActorCheck groupActor={groupActorInfo} />);
     } else {
@@ -70,7 +70,7 @@ class GroupActor extends React.Component<Props> {
   }
 
   // 移除团人物
-  _handleRemoveGroupActor(groupActorUUID) {
+  handleRemoveGroupActor(groupActorUUID) {
     this.props.showAlert({
       content: '你确定要删除该人物卡么？删除后无法找回',
       onConfirm: () =>
@@ -115,7 +115,7 @@ class GroupActor extends React.Component<Props> {
                   <Tooltip title="查询">
                     <button
                       onClick={() =>
-                        this._handleShowActorProfile(originActor.toJS(), {})
+                        this.handleShowActorProfile(originActor.toJS(), {})
                       }
                     >
                       <i className="iconfont">&#xe61b;</i>
@@ -124,7 +124,7 @@ class GroupActor extends React.Component<Props> {
                   <Tooltip title="删除">
                     <button
                       onClick={() =>
-                        this._handleRemoveGroupActor(item.get('uuid'))
+                        this.handleRemoveGroupActor(item.get('uuid'))
                       }
                     >
                       <i className="iconfont">&#xe76b;</i>
@@ -165,7 +165,7 @@ class GroupActor extends React.Component<Props> {
                   <Tooltip title="查询">
                     <button
                       onClick={() =>
-                        this._handleShowActorProfile(
+                        this.handleShowActorProfile(
                           originActor.toJS(),
                           actorData.toJS()
                         )
@@ -175,7 +175,7 @@ class GroupActor extends React.Component<Props> {
                     </button>
                   </Tooltip>
                   <Tooltip title="审批">
-                    <button onClick={() => this._handleApprove(item.toJS())}>
+                    <button onClick={() => this.handleApprove(item.toJS())}>
                       <i className="iconfont">&#xe83f;</i>
                     </button>
                   </Tooltip>
@@ -207,7 +207,7 @@ class GroupActor extends React.Component<Props> {
               </div>
             </div>
             <GroupActorAction>
-              <button onClick={() => this._handleSendGroupActorCheck()}>
+              <button onClick={() => this.handleSendGroupActorCheck()}>
                 <i className="iconfont">&#xe604;</i>申请审核
               </button>
             </GroupActorAction>

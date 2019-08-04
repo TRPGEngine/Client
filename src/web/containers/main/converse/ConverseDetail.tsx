@@ -38,7 +38,7 @@ class ConverseDetail extends React.Component<Props> {
     { leading: true, trailing: false }
   );
 
-  _handleSendBoxChange(text) {
+  handleSendBoxChange(text) {
     if (isUserUUID(this.props.converseUUID)) {
       // 通知服务器告知converseUUID当前用户正在输入
       // 增加一个2秒的节流防止频繁发送
@@ -46,7 +46,7 @@ class ConverseDetail extends React.Component<Props> {
     }
   }
 
-  _handleSendMsg(message, type) {
+  handleSendMsg(message, type) {
     const { converseUUID } = this.props;
 
     console.log('send msg:', message, 'to', converseUUID);
@@ -64,7 +64,7 @@ class ConverseDetail extends React.Component<Props> {
     );
   }
 
-  _handleSendFile(file) {
+  handleSendFile(file) {
     console.log('send file to', this.props.converseUUID, file);
     this.props.dispatch(
       sendFile(
@@ -79,7 +79,7 @@ class ConverseDetail extends React.Component<Props> {
   }
 
   // 发送投骰请求
-  _handleSendDiceReq() {
+  handleSendDiceReq() {
     this.props.dispatch(
       showModal(
         <DiceRequest
@@ -100,7 +100,7 @@ class ConverseDetail extends React.Component<Props> {
   }
 
   // 发送投骰邀请
-  _handleSendDiceInv() {
+  handleSendDiceInv() {
     let uuid = this.props.converseUUID;
     console.log('发送投骰邀请', uuid);
     let usercache = this.props.usercache;
@@ -124,7 +124,7 @@ class ConverseDetail extends React.Component<Props> {
   }
 
   // 发送自由投骰
-  _handleQuickDice() {
+  handleQuickDice() {
     console.log('快速投骰');
     let uuid = this.props.converseUUID;
     this.props.dispatch(
@@ -212,12 +212,12 @@ class ConverseDetail extends React.Component<Props> {
         <MsgSendBox
           converseUUID={userUUID}
           isGroup={false}
-          onChange={(text) => this._handleSendBoxChange(text)}
-          onSendMsg={(message, type) => this._handleSendMsg(message, type)}
-          onSendFile={(file) => this._handleSendFile(file)}
-          onSendDiceReq={() => this._handleSendDiceReq()}
-          onSendDiceInv={() => this._handleSendDiceInv()}
-          onQuickDice={() => this._handleQuickDice()}
+          onChange={(text) => this.handleSendBoxChange(text)}
+          onSendMsg={(message, type) => this.handleSendMsg(message, type)}
+          onSendFile={(file) => this.handleSendFile(file)}
+          onSendDiceReq={() => this.handleSendDiceReq()}
+          onSendDiceInv={() => this.handleSendDiceInv()}
+          onQuickDice={() => this.handleQuickDice()}
         />
       </div>
     );

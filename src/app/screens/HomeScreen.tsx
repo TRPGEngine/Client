@@ -59,7 +59,7 @@ class HomeScreen extends React.Component<Props> {
             uuid,
             unread: item.get('unread'),
             onPress: () => {
-              this._handleSelectConverse(uuid, item.get('type'), item);
+              this.handleSelectConverse(uuid, item.get('type'), item);
             },
           };
         })
@@ -70,7 +70,7 @@ class HomeScreen extends React.Component<Props> {
           refreshControl={
             <RefreshControl
               refreshing={this.state.isRefreshing}
-              onRefresh={() => this._handleRefresh()}
+              onRefresh={() => this.handleRefresh()}
               colors={['#5dd3d2', '#ffaa4d', '#2f9bd7', '#f88756']}
               progressBackgroundColor="#ffffff"
               title="加载中..."
@@ -86,7 +86,7 @@ class HomeScreen extends React.Component<Props> {
     }
   }
 
-  _handleRefresh() {
+  handleRefresh() {
     this.setState({ isRefreshing: true });
     var timer = setTimeout(() => {
       this.setState({ isRefreshing: false });
@@ -99,7 +99,7 @@ class HomeScreen extends React.Component<Props> {
     );
   }
 
-  _handleSelectConverse(uuid, type, info) {
+  handleSelectConverse(uuid, type, info) {
     this.props.dispatch(switchConverse(uuid));
     this.props.dispatch(
       NavigationActions.navigate({

@@ -37,7 +37,7 @@ class ExtraOptions extends React.Component {
     document.removeEventListener('click', this.hideMenu);
   }
 
-  _handleClick(type) {
+  handleClick(type) {
     let show = this.state.show;
     if (show !== type) {
       this.setState({ show: type });
@@ -47,7 +47,7 @@ class ExtraOptions extends React.Component {
     document.addEventListener('click', this.hideMenu);
   }
 
-  _handleClickMenu(menu) {
+  handleClickMenu(menu) {
     if (menu === 'actorCreate') {
       this.props.dispatch(showModal(<ActorCreate />));
       // } else if (menu === 'templateCreate') {
@@ -95,34 +95,34 @@ class ExtraOptions extends React.Component {
     if (type === 'add') {
       return (
         <ul>
-          <li onClick={() => this._handleClickMenu('actorCreate')}>创建人物</li>
-          {/* <li onClick={() => this._handleClickMenu('templateCreate')}>
+          <li onClick={() => this.handleClickMenu('actorCreate')}>创建人物</li>
+          {/* <li onClick={() => this.handleClickMenu('templateCreate')}>
             创建模板
           </li> */}
-          <li onClick={() => this._handleClickMenu('groupCreate')}>创建团</li>
-          <li onClick={() => this._handleClickMenu('noteCreate')}>添加笔记</li>
-          <li onClick={() => this._handleClickMenu('addFriend')}>添加好友</li>
-          <li onClick={() => this._handleClickMenu('addGroup')}>添加团</li>
+          <li onClick={() => this.handleClickMenu('groupCreate')}>创建团</li>
+          <li onClick={() => this.handleClickMenu('noteCreate')}>添加笔记</li>
+          <li onClick={() => this.handleClickMenu('addFriend')}>添加好友</li>
+          <li onClick={() => this.handleClickMenu('addGroup')}>添加团</li>
         </ul>
       );
     } else if (type === 'more') {
       return (
         <ul>
-          <li onClick={() => this._handleClickMenu('userSettings')}>
+          <li onClick={() => this.handleClickMenu('userSettings')}>
             个人设置
           </li>
-          <li onClick={() => this._handleClickMenu('systemSettings')}>
+          <li onClick={() => this.handleClickMenu('systemSettings')}>
             系统设置
           </li>
-          <li onClick={() => this._handleClickMenu('systemStatus')}>
+          <li onClick={() => this.handleClickMenu('systemStatus')}>
             系统状态
           </li>
-          <li onClick={() => this._handleClickMenu('changePassword')}>
+          <li onClick={() => this.handleClickMenu('changePassword')}>
             修改密码
           </li>
-          <li onClick={() => this._handleClickMenu('help')}>帮助反馈</li>
-          <li onClick={() => this._handleClickMenu('blog')}>开发者博客</li>
-          <li onClick={() => this._handleClickMenu('logout')}>退出登录</li>
+          <li onClick={() => this.handleClickMenu('help')}>帮助反馈</li>
+          <li onClick={() => this.handleClickMenu('blog')}>开发者博客</li>
+          <li onClick={() => this.handleClickMenu('logout')}>退出登录</li>
         </ul>
       );
     } else {
@@ -140,10 +140,10 @@ class ExtraOptions extends React.Component {
         >
           {this._getContent()}
         </div>
-        <div className="extra-item" onClick={() => this._handleClick('add')}>
+        <div className="extra-item" onClick={() => this.handleClick('add')}>
           <i className="iconfont">&#xe64b;</i>
         </div>
-        <div className="extra-item" onClick={() => this._handleClick('more')}>
+        <div className="extra-item" onClick={() => this.handleClick('more')}>
           <i className="iconfont">&#xe600;</i>
         </div>
       </div>

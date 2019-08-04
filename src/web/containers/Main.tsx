@@ -57,7 +57,7 @@ class Main extends React.Component<Props> {
     }
   }
 
-  _handleSelectTitleMenu(index) {
+  handleSelectTitleMenu(index) {
     let menu = this.titleMenu[index];
     if (menu) {
       this.props.switchMenuPannel(
@@ -87,7 +87,7 @@ class Main extends React.Component<Props> {
                 <button
                   key={'title-menu#' + index}
                   className={isActive ? 'active' : ''}
-                  onClick={() => this._handleSelectTitleMenu(index)}
+                  onClick={() => this.handleSelectTitleMenu(index)}
                 >
                   {menu.name}
                 </button>

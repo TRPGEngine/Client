@@ -77,14 +77,14 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
     }
   };
 
-  _handleStateChange(state) {
+  handleStateChange(state) {
     let { loading, title, url, canGoForward, canGoBack, target } = state;
 
     this.props.navigation.setParams({ title });
     this.canGoBack = canGoBack;
   }
 
-  _handleMessage(e) {
+  handleMessage(e) {
     console.log('On Message Data:', e.nativeEvent.data);
     let data = e.nativeEvent.data;
     try {
@@ -118,8 +118,8 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
         renderLoading={() => <Loading />}
         renderError={() => <LoadError url={url} />}
         mixedContentMode={'compatibility'}
-        onNavigationStateChange={(state) => this._handleStateChange(state)}
-        onMessage={(e) => this._handleMessage(e)}
+        onNavigationStateChange={(state) => this.handleStateChange(state)}
+        onMessage={(e) => this.handleMessage(e)}
       />
     );
   }

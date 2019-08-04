@@ -14,7 +14,7 @@ class SystemSettings extends React.Component {
     this.props.dispatch(saveSettings());
   }
 
-  _handleRequestNotificationPermission(isChecked) {
+  handleRequestNotificationPermission(isChecked) {
     this.props.dispatch(setSystemSettings({ notification: isChecked }));
   }
 
@@ -26,7 +26,7 @@ class SystemSettings extends React.Component {
           <Checkbox
             value={this.props.systemSettings.get('notification')}
             onChange={(isChecked) =>
-              this._handleRequestNotificationPermission(isChecked)
+              this.handleRequestNotificationPermission(isChecked)
             }
           />
         </div>

@@ -41,17 +41,17 @@ class AccountScreen extends React.Component<Props> {
     ),
   };
 
-  _handleModifyProfile() {
+  handleModifyProfile() {
     this.props.dispatch(
       NavigationActions.navigate({ routeName: 'ProfileModify' })
     );
   }
 
-  _handleLogout() {
+  handleLogout() {
     this.props.dispatch(logout());
   }
 
-  _handleCheckVersion() {
+  handleCheckVersion() {
     // TODO: 也许需要根据版本判断用户是否应为热更新还是下载apk更新
     appConfig.codePush.sync();
 
@@ -75,7 +75,7 @@ class AccountScreen extends React.Component<Props> {
       <View>
         <TouchableOpacity
           style={styles.userInfo}
-          onPress={() => this._handleModifyProfile()}
+          onPress={() => this.handleModifyProfile()}
         >
           <TAvatar
             uri={avatar}
@@ -117,7 +117,7 @@ class AccountScreen extends React.Component<Props> {
         <AccountList>
           <Item
             extra={config.version}
-            onPress={() => this._handleCheckVersion()}
+            onPress={() => this.handleCheckVersion()}
           >
             当前版本
           </Item>
@@ -127,7 +127,7 @@ class AccountScreen extends React.Component<Props> {
           type="error"
           style={styles.logoutBtn}
           textStyle={{ color: 'white' } as any}
-          onPress={() => this._handleLogout()}
+          onPress={() => this.handleLogout()}
         >
           退出
         </TButton>

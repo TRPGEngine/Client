@@ -9,19 +9,19 @@ import config from '../../../../config/project.config';
 import appConfig from '../../config.app';
 
 class File extends Base {
-  _handlePreview() {
+  handlePreview() {
     const data = this.props.info.data;
     const fileuuid = data.fileuuid;
     // TODO: 等待实现
   }
 
-  _handleDownload() {
+  handleDownload() {
     const data = this.props.info.data;
     const fileuuid = data.fileuuid;
     // TODO: 等待实现
   }
 
-  _handleClick() {
+  handleClick() {
     const data = this.props.info.data;
     const fileuuid = data.fileuuid;
     // TODO: 等待实现
@@ -34,7 +34,7 @@ class File extends Base {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={() => this._handleClick()}
+        onPress={() => this.handleClick()}
       >
         <View style={styles.fileInfo}>
           <Image

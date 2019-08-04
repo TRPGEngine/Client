@@ -66,7 +66,7 @@ class ProfileModifyScreen extends React.Component<Props> {
       });
   }
 
-  _handleSelectAvatar() {
+  handleSelectAvatar() {
     ImageCropPicker.openPicker({
       width: 256,
       height: 256,
@@ -91,7 +91,7 @@ class ProfileModifyScreen extends React.Component<Props> {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => this._handleSelectAvatar()}>
+          <TouchableOpacity onPress={() => this.handleSelectAvatar()}>
             <TAvatar
               style={styles.avatar}
               uri={userInfo.get('avatar', '')}

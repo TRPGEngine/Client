@@ -31,7 +31,7 @@ class SlidePanel extends React.Component {
     window.removeEventListener('click', this.slideEvent);
   }
 
-  _handleHideSlidePanel() {
+  handleHideSlidePanel() {
     console.log('close slide panel with click btn');
     this.props.dispatch(hideSlidePanel());
     window.removeEventListener('click', this.slideEvent);
@@ -53,7 +53,7 @@ class SlidePanel extends React.Component {
       >
         <div className="header">
           <div className="title">{showSlidePanelInfo.get('title')}</div>
-          <div className="close" onClick={() => this._handleHideSlidePanel()}>
+          <div className="close" onClick={() => this.handleHideSlidePanel()}>
             <i className="iconfont">&#xe70c;</i>
           </div>
         </div>

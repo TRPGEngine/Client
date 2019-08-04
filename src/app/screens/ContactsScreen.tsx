@@ -17,7 +17,7 @@ class ContactsScreen extends React.Component<DispatchProp> {
     ),
   };
 
-  _handlePressAddFriend() {
+  handlePressAddFriend() {
     this.props.dispatch(NavigationActions.navigate({ routeName: 'AddFriend' }));
   }
 
@@ -27,7 +27,7 @@ class ContactsScreen extends React.Component<DispatchProp> {
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.iconBtn}
-            onPress={() => this._handlePressAddFriend()}
+            onPress={() => this.handlePressAddFriend()}
           >
             <View style={styles.iconBtnView}>
               <TIcon

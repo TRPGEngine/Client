@@ -11,13 +11,13 @@ import { getUserInfoCache } from '../../../../../shared/utils/cache-helper';
 import './GroupMemberManage.scss';
 
 class GroupMemberManage extends React.Component {
-  _handleRaiseManager() {
+  handleRaiseManager() {
     this.props.dispatch(
       setMemberToManager(this.props.selectedGroupUUID, this.props.uuid)
     );
   }
 
-  _handleTickGroup() {
+  handleTickGroup() {
     this.props.dispatch(
       tickMember(this.props.selectedGroupUUID, this.props.uuid)
     );
@@ -28,8 +28,8 @@ class GroupMemberManage extends React.Component {
     let name = userInfo.get('nickname') || userInfo.get('username');
     let actions = (
       <div>
-        <button onClick={() => this._handleRaiseManager()}>提升为管理</button>
-        <button onClick={() => this._handleTickGroup()}>踢出本团</button>
+        <button onClick={() => this.handleRaiseManager()}>提升为管理</button>
+        <button onClick={() => this.handleTickGroup()}>踢出本团</button>
       </div>
     );
     return (

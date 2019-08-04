@@ -49,7 +49,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
     }
   }
 
-  _handlePressSendMsg() {
+  handlePressSendMsg() {
     let type = this.props.navigation.state.params.type;
     let userUUID = this.props.navigation.state.params.uuid;
     let userInfo = getUserInfoCache(userUUID);
@@ -116,7 +116,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
         </View>
         <View style={styles.actions}>
           {isFriend ? (
-            <TButton onPress={() => this._handlePressSendMsg()}>
+            <TButton onPress={() => this.handlePressSendMsg()}>
               发送消息
             </TButton>
           ) : (

@@ -19,11 +19,11 @@ class UserSettings extends React.Component {
     this.props.dispatch(saveSettings());
   }
 
-  _handleAddFavoriteDice() {
+  handleAddFavoriteDice() {
     this.props.dispatch(addFavoriteDice());
   }
 
-  _handleRemoveFavoriteDice(index) {
+  handleRemoveFavoriteDice(index) {
     this.props.dispatch(removeFavoriteDice(index));
   }
 
@@ -60,13 +60,13 @@ class UserSettings extends React.Component {
               />
               <button
                 title="移除该项"
-                onClick={() => this._handleRemoveFavoriteDice(index)}
+                onClick={() => this.handleRemoveFavoriteDice(index)}
               >
                 <i className="iconfont">&#xe657;</i>
               </button>
             </div>
           ))}
-          <button onClick={() => this._handleAddFavoriteDice()}>
+          <button onClick={() => this.handleAddFavoriteDice()}>
             <i className="iconfont">&#xe604;</i>
           </button>
         </div>

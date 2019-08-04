@@ -51,14 +51,14 @@ class Login extends React.Component<Props> {
     window.removeEventListener('message', this.onQQConnectFinished);
   }
 
-  _handleLogin() {
+  handleLogin() {
     this.props.dispatch(showLoading());
     let username = this.state.username;
     let password = this.state.password;
     this.props.dispatch(login(username, password));
   }
 
-  _handleQQLogin() {
+  handleQQLogin() {
     console.log('qq登录');
     window.open(
       config.file.url + '/oauth/qq/login',
@@ -90,17 +90,17 @@ class Login extends React.Component<Props> {
           onChange={(e) => {
             this.setState({ password: e.target.value });
           }}
-          onKeyUp={(e) => e.keyCode === 13 && this._handleLogin()}
+          onKeyUp={(e) => e.keyCode === 13 && this.handleLogin()}
         />
         <div className="loginArea">
           <button
             className={canLogin ? 'active' : ''}
-            onClick={() => this._handleLogin()}
+            onClick={() => this.handleLogin()}
             disabled={!canLogin}
           >
             登录
           </button>
-          <button onClick={() => this._handleQQLogin()}>
+          <button onClick={() => this.handleQQLogin()}>
             <i className="iconfont">&#xe786;</i>
           </button>
         </div>

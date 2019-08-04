@@ -40,13 +40,13 @@ class MsgSendBox extends React.Component<Props> {
       icon: '&#xe683;',
       onClick: (e) => {
         e.stopPropagation();
-        this._handleShowEmoticon();
+        this.handleShowEmoticon();
       },
     },
     {
       label: '发送人物卡',
       icon: '&#xe61b;',
-      onClick: (e) => this._handleShowSendActor(),
+      onClick: (e) => this.handleShowSendActor(),
     },
     {
       label: '发送文件',
@@ -84,7 +84,7 @@ class MsgSendBox extends React.Component<Props> {
     {
       label: '',
       icon: '&#xe631;',
-      onClick: () => this._handleShowDiceMethods(),
+      onClick: () => this.handleShowDiceMethods(),
     },
   ];
   hidePopup = () => {
@@ -114,12 +114,12 @@ class MsgSendBox extends React.Component<Props> {
     window.removeEventListener('click', this.hidePopup);
   }
 
-  _handleMsgInputChange(e) {
+  handleMsgInputChange(e) {
     this.setState({ inputMsg: e.target.value });
     this.props.onChange && this.props.onChange(e.target.value); // 事件向上传递
   }
 
-  _handleMsgInputKeyDown(e) {
+  handleMsgInputKeyDown(e) {
     if (e.keyCode === 9) {
       e.preventDefault();
       let index = this.inputType.findIndex(
@@ -142,13 +142,13 @@ class MsgSendBox extends React.Component<Props> {
     }
   }
 
-  _handleMsgInputKeyUp(e) {
+  handleMsgInputKeyUp(e) {
     if (e.keyCode === 13 && !e.shiftKey) {
-      this._handleSendMsg();
+      this.handleSendMsg();
     }
   }
 
-  async _handlePaste(e) {
+  async handlePaste(e) {
     if (e.clipboardData && e.clipboardData.items) {
       let image = pasteUtils.isPasteImage(e.clipboardData.items);
       if (image) {
@@ -166,7 +166,7 @@ class MsgSendBox extends React.Component<Props> {
     }
   }
 
-  _handleSendMsg() {
+  handleSendMsg() {
     let message = this.state.inputMsg.trim();
     let type = this.state.inputType;
     if (!!message) {
@@ -177,25 +177,25 @@ class MsgSendBox extends React.Component<Props> {
   }
 
   // 显示选择表情弹出框
-  _handleShowEmoticon() {
+  handleShowEmoticon() {
     this.setState({ showEmoticon: !this.state.showEmoticon });
     setTimeout(() => window.addEventListener('click', this.hidePopup), 0);
   }
 
-  _handleSelectEmoticon(code) {
+  handleSelectEmoticon(code) {
     this.setState({ inputMsg: this.state.inputMsg + code });
     this.hidePopup();
     this.inputMsgRef.current.focus();
   }
 
   // 显示投骰方式弹出框
-  _handleShowDiceMethods() {
+  handleShowDiceMethods() {
     this.setState({ showDiceMethods: !this.state.showDiceMethods });
     setTimeout(() => window.addEventListener('click', this.hidePopup), 0);
   }
 
   // 发送人物卡
-  _handleShowSendActor() {
+  handleShowSendActor() {
     console.log('发送人物卡');
     this.props.dispatch(
       showModal(
@@ -243,7 +243,7 @@ class MsgSendBox extends React.Component<Props> {
     );
   }
 
-  _handleContainerDrop(e) {
+  handleContainerDrop(e) {
     e.preventDefault();
     let files = e.dataTransfer.files;
     for (let f of files) {
@@ -251,7 +251,7 @@ class MsgSendBox extends React.Component<Props> {
     }
   }
 
-  _handleFileUploaderChange() {
+  handleFileUploaderChange() {
     let files = this.fileUploader.current.files as any;
     for (let f of files) {
       this.props.onSendFile && this.props.onSendFile(f);
@@ -263,7 +263,7 @@ class MsgSendBox extends React.Component<Props> {
       <div
         className="send-msg-box"
         onDragOver={(e) => e.preventDefault()}
-        onDrop={(e) => this._handleContainerDrop(e)}
+        onDrop={(e) => this.handleContainerDrop(e)}
       >
         <div className="input-area">
           <div className="tool-area">
@@ -272,7 +272,7 @@ class MsgSendBox extends React.Component<Props> {
                 'popup emoticon' + (this.state.showEmoticon ? ' active' : '')
               }
             >
-              <Emoticon onSelect={(code) => this._handleSelectEmoticon(code)} />
+              <Emoticon onSelect={(code) => this.handleSelectEmoticon(code)} />
             </div>
             <div
               className={
@@ -300,7 +300,7 @@ class MsgSendBox extends React.Component<Props> {
             <input
               type="file"
               ref={this.fileUploader}
-              onChange={() => this._handleFileUploaderChange()}
+              onChange={() => this.handleFileUploaderChange()}
               style={{ display: 'none' }}
             />
             <div className="btn-group">
@@ -365,15 +365,15 @@ class MsgSendBox extends React.Component<Props> {
             tagName="pre"
             html={this.state.inputMsg}
             disabled={false}
-            onChange={(e) => this._handleMsgInputChange(e)}
-            onKeyDown={(e) => this._handleMsgInputKeyDown(e)}
-            onKeyUp={(e) => this._handleMsgInputKeyUp(e)}
-            onPaste={(e) => this._handlePaste(e)}
+            onChange={(e) => this.handleMsgInputChange(e)}
+            onKeyDown={(e) => this.handleMsgInputKeyDown(e)}
+            onKeyUp={(e) => this.handleMsgInputKeyUp(e)}
+            onPaste={(e) => this.handlePaste(e)}
           />
         </div>
         <div className="action-area">
           <button
-            onClick={() => this._handleSendMsg()}
+            onClick={() => this.handleSendMsg()}
             disabled={this.state.inputMsg ? false : true}
           >
             发送&lt;Enter&gt;

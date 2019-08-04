@@ -49,7 +49,7 @@ class ActorEdit extends React.Component {
     this.setState({ cells: template.getCells() });
   }
 
-  _handleSave() {
+  handleSave() {
     let isCreate = !this.props.selectedActorUUID; //是否为新建人物
 
     let name = this.state.profileName;
@@ -105,7 +105,7 @@ class ActorEdit extends React.Component {
             value={this.state.profileName}
             onChange={(e) => this.setState({ profileName: e.target.value })}
           />
-          <button onClick={() => this._handleSave()}>
+          <button onClick={() => this.handleSave()}>
             {this.props.selectedActorUUID ? '更新' : '创建'}
           </button>
         </div>

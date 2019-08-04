@@ -11,7 +11,7 @@ class ListSelect extends React.Component {
     };
   }
 
-  _handleSelect(index) {
+  handleSelect(index) {
     let _index = this.state.selected.indexOf(index);
     if (_index >= 0) {
       this.setState({
@@ -22,14 +22,14 @@ class ListSelect extends React.Component {
     }
   }
 
-  _handleSubmit() {
+  handleSubmit() {
     if (this.props.onListSelect) {
       this.props.onListSelect(this.state.selected.sort());
     }
   }
 
   render() {
-    let actions = <button onClick={() => this._handleSubmit()}>确认</button>;
+    let actions = <button onClick={() => this.handleSubmit()}>确认</button>;
     return (
       <ModalPanel title="请选择..." actions={actions}>
         <div className="list-select">
@@ -41,7 +41,7 @@ class ListSelect extends React.Component {
                   'list-select-cell' +
                   (this.state.selected.indexOf(index) >= 0 ? ' active' : '')
                 }
-                onClick={() => this._handleSelect(index)}
+                onClick={() => this.handleSelect(index)}
               >
                 {item}
               </div>

@@ -42,7 +42,7 @@ class MenuPannel extends React.Component {
     ];
   }
 
-  _handleSwitchMenu(index) {
+  handleSwitchMenu(index) {
     this.props.dispatch(switchMenuPannel(index, this.menus[index].component));
   }
 
@@ -65,7 +65,7 @@ class MenuPannel extends React.Component {
                 <a
                   key={'menu-' + index}
                   className={selectedMenu === index ? 'active' : ''}
-                  onClick={() => this._handleSwitchMenu(index)}
+                  onClick={() => this.handleSwitchMenu(index)}
                 >
                   <i
                     className="iconfont"
