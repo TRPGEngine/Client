@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { selectActor } from '../../../../redux/actions/actor';
-import { showAlert, showModal } from '../../../../redux/actions/ui';
+import { selectActor } from '@redux/actions/actor';
+import { showAlert, showModal } from '@redux/actions/ui';
 import {
   addGroupActor,
   removeGroupActor,
-} from '../../../../redux/actions/group';
+  updateGroupActorInfo,
+} from '@redux/actions/group';
 import at from 'trpg-actor-template';
 import { TabsController, Tab } from '../../../components/Tabs';
 import ModalPanel from '../../../components/ModalPanel';
@@ -13,8 +14,16 @@ import ActorProfile from '../../../components/modal/ActorProfile';
 import ActorSelect from '../../../components/modal/ActorSelect';
 import GroupActorCheck from './modal/GroupActorCheck';
 import { ActorType, ActorDataType } from '@redux/types/actor';
+import { GroupActorType } from '@src/redux/types/group';
+import ActorEdit from '@src/web/components/modal/ActorEdit';
 import { Tooltip } from 'antd';
 import styled from 'styled-components';
+import {
+  getGroupActorInfo,
+  getGroupActorField,
+} from '@src/web/utils/data-helper';
+import { getTemplateInfoCache } from '@src/shared/utils/cache-helper';
+import _get from 'lodash/get';
 
 import './GroupActor.scss';
 
@@ -30,6 +39,11 @@ interface Props {
   removeGroupActor: any;
   groupInfo: any;
   templateCache: any;
+  updateGroupActorInfo: (
+    groupUUID: string,
+    groupActorUUID: string,
+    groupActorInfo: {}
+  ) => void;
 }
 class GroupActor extends React.Component<Props> {
   handleSendGroupActorCheck() {
@@ -47,17 +61,44 @@ class GroupActor extends React.Component<Props> {
   }
 
   // 查看人物卡
-  handleShowActorProfile(actor: ActorType, data: ActorDataType) {
+  handleShowActorProfile(actor: ActorType, overwritedActorData: ActorDataType) {
     if (actor) {
-      console.log(actor);
       this.props.showModal(
         <ModalPanel title="人物属性">
-          <ActorProfile actor={actor} overwritedActorData={data} />
+          <ActorProfile
+            actor={actor}
+            overwritedActorData={overwritedActorData}
+          />
         </ModalPanel>
       );
     } else {
       console.error('需要actor');
     }
+  }
+
+  /**
+   * 处理团人物卡信息的编辑
+   * @param groupActor 团人物卡
+   */
+  handleEditActorInfo(groupActor: GroupActorType) {
+    const { showModal, groupInfo, updateGroupActorInfo } = this.props;
+    const template = getTemplateInfoCache(
+      _get(groupActor, 'actor.template_uuid')
+    );
+    const templateLayout = template.get('layout');
+
+    showModal(
+      <ActorEdit
+        name={groupActor.name}
+        avatar={groupActor.avatar}
+        desc={groupActor.desc}
+        data={getGroupActorInfo(groupActor)}
+        layout={templateLayout}
+        onSave={(data) =>
+          updateGroupActorInfo(groupInfo.get('uuid'), groupActor.uuid, data)
+        }
+      />
+    );
   }
 
   // 审批人物
@@ -83,48 +124,65 @@ class GroupActor extends React.Component<Props> {
 
   // 正式人物卡
   getGroupActorsList() {
-    let groupActors = this.props.groupInfo.get('group_actors');
+    const { groupInfo } = this.props;
+    const groupActors = this.props.groupInfo.get('group_actors');
     if (groupActors && groupActors.size > 0) {
       return groupActors
         .filter((item) => item.get('passed') === true)
         .map((item) => {
-          let originActor = item.get('actor');
+          const groupActor: GroupActorType = item.toJS(); // 团人物卡信息
+          const originActor: ActorType = groupActor.actor;
+          const groupActorUUID = groupActor.uuid;
+
           return (
             <div
-              key={`group-actor#${item.get('uuid')}`}
+              key={`group-actor#${groupActorUUID}`}
               className="group-actor-item"
             >
               <div
                 className="avatar"
                 style={{
-                  backgroundImage: `url(${item.get('avatar') ||
-                    originActor.get('avatar')})`,
+                  backgroundImage: `url(${getGroupActorField(
+                    groupActor,
+                    'avatar'
+                  )})`,
                 }}
               />
               <div className="info">
-                {item.get('uuid') ===
-                this.props.groupInfo.getIn([
-                  'extra',
-                  'selected_group_actor_uuid',
-                ]) ? (
+                {groupActorUUID ===
+                groupInfo.getIn(['extra', 'selected_group_actor_uuid']) ? (
                   <div className="label">使用中</div>
                 ) : null}
-                <div className="name">{originActor.get('name')}</div>
-                <div className="desc">{originActor.get('desc')}</div>
+                <div className="name">
+                  {getGroupActorField(groupActor, 'name')}
+                </div>
+                <div className="desc">
+                  {getGroupActorField(groupActor, 'desc')}
+                </div>
                 <div className="action">
                   <Tooltip title="查询">
                     <button
                       onClick={() =>
-                        this.handleShowActorProfile(originActor.toJS(), {})
+                        this.handleShowActorProfile(
+                          originActor,
+                          groupActor.actor_info
+                        )
                       }
                     >
                       <i className="iconfont">&#xe61b;</i>
                     </button>
                   </Tooltip>
+                  <Tooltip title="编辑">
+                    <button
+                      onClick={() => this.handleEditActorInfo(groupActor)}
+                    >
+                      <i className="iconfont">&#xe612;</i>
+                    </button>
+                  </Tooltip>
                   <Tooltip title="删除">
                     <button
                       onClick={() =>
-                        this.handleRemoveGroupActor(item.get('uuid'))
+                        this.handleRemoveGroupActor(groupActorUUID)
                       }
                     >
                       <i className="iconfont">&#xe76b;</i>
@@ -229,7 +287,7 @@ export default connect(
       templateCache: state.getIn(['cache', 'template']),
     };
   },
-  (dispatch: any) => ({
+  (dispatch: any, ownProps) => ({
     showAlert: (payload) => dispatch(showAlert(payload)),
     showModal: (body) => dispatch(showModal(body)),
     selectActor: (actorUUID: string) => dispatch(selectActor(actorUUID)),
@@ -237,5 +295,11 @@ export default connect(
       dispatch(addGroupActor(groupUUID, actorUUID)),
     removeGroupActor: (groupUUID: string, groupActorUUID: string) =>
       dispatch(removeGroupActor(groupUUID, groupActorUUID)),
+    updateGroupActorInfo: (
+      groupUUID: string,
+      groupActorUUID: string,
+      groupActorInfo: {}
+    ) =>
+      dispatch(updateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)),
   })
 )(GroupActor);
