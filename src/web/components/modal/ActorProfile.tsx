@@ -32,11 +32,17 @@ class ActorProfile extends React.Component<Props> {
       return;
     }
 
+    const initialData = Object.assign(
+      {},
+      actor.info,
+      this.props.overwritedActorData
+    );
+
     return (
       <XMLBuilder
         layoutType="detail"
         xml={template.get('layout', '')}
-        initialData={actor.info}
+        initialData={initialData}
       />
     );
   }
