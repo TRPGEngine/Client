@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Clipboard } from 'react-native';
 import { umPush } from '@app/native/push-utils';
+import { TButton } from '@src/app/components/TComponent';
+import { Toast } from '@ant-design/react-native';
 
 class DeviceInfoScreen extends React.Component {
   state = {
@@ -15,10 +17,18 @@ class DeviceInfoScreen extends React.Component {
     });
   }
 
+  handleCopyRegistrationId = () => {
+    umPush.getRegistrationId((registrationId) => {
+      Clipboard.setString(registrationId);
+      Toast.success('复制成功');
+    });
+  };
+
   render() {
     return (
       <View>
         <Text>{this.state.appInfoStr}</Text>
+        <TButton onPress={this.handleCopyRegistrationId}>复制到剪切板</TButton>
       </View>
     );
   }
