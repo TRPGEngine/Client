@@ -48,7 +48,7 @@ public class MainApplication extends Application implements ReactApplication {
         new RNSentryPackage(),
         new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG, getResources().getString(R.string.reactNativeCodePush_androidServerUrl)),
         new RNGestureHandlerPackage(),
-        new ImagePickerPackage(),
+        new ImagePickerPackage()
       );
     }
 
