@@ -170,24 +170,6 @@ public class PushModule extends ReactContextBaseJavaModule {
         });
     }
 
-    // 注册Push服务，成功后返回deviceToken
-    @ReactMethod
-    public void register(final Callback successCallback) {
-        mPushAgent.register(new IUmengRegisterCallback() {
-            @Override
-            public void onSuccess(String deviceToken) {
-                Log.i(TAG, "device token: " + deviceToken);
-                successCallback.invoke(SUCCESS, deviceToken);
-            }
-
-            @Override
-            public void onFailure(String s, String s1) {
-                Log.i(TAG, "register failed: " + s + " " + s1);
-                successCallback.invoke(ERROR, s + " " + s1);
-            }
-        });
-    }
-
     @ReactMethod
     public void appInfo(final Callback successCallback) {
         String pkgName = context.getPackageName();

@@ -1,6 +1,7 @@
 package com.moonrailgun.trpg;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.facebook.react.ReactApplication;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
@@ -18,6 +19,8 @@ import com.facebook.soloader.SoLoader;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.soexample.invokenative.DplusReactPackage;
 import com.umeng.soexample.invokenative.RNUMConfigure;
+import com.umeng.message.PushAgent;
+import com.umeng.message.IUmengRegisterCallback;
 
 import java.util.Arrays;
 import java.util.List;
@@ -69,6 +72,19 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     RNUMConfigure.init(this, BuildConfig.UMENG_PUSH_APPKEY, BuildConfig.UMENG_PUSH_CHANNEL, UMConfigure.DEVICE_TYPE_PHONE,
             BuildConfig.UMENG_PUSH_MESSAGESECRET);
+
+    // 注意: 必须在此处注册
+    PushAgent.getInstance(this).register(new IUmengRegisterCallback(){
+        @Override
+        public void onSuccess(String s) {
+            Log.i("walle", "--->>> onSuccess, s is " + s);
+        }
+
+        @Override
+        public void onFailure(String s, String s1) {
+            Log.i("walle", "--->>> onFailure, s is " + s + ", s1 is " + s1);
+        }
+    });
     SoLoader.init(this, /* native exopackage */ false);
   }
 }
