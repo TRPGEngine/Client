@@ -122,6 +122,39 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
+ext {
+    // 定义当前gradle文件的全局变量
+    isRelease = checkRelease()
+}
+
+// 检查是否是正式编译
+def checkRelease() {
+    def runTasks = gradle.startParameter.taskNames
+    for (String task : runTasks) {
+        // 我这里认为执行“assemble”和非“debug”的任务就是执行“release”的任务
+        if (task.contains("assemble") && !task.contains("Debug")) {
+            return true
+        }
+    }
+    return false
+}
+
+// 自增版本号
+def increasedVersionCode() {
+    def propFile = file('./version.properties')
+    def Properties props = new Properties()
+    props.load(new FileInputStream(propFile))
+    // 读取gradle.properties文件中定义的VERSION_CODE属性
+    def code = (props['VERSION_CODE'] != null ? props['VERSION_CODE'] : '0').toInteger()
+    if (isRelease) {
+        code++
+        props['VERSION_CODE'] = code.toString()
+        // 将最新的versionCode写入gradle.properties文件中
+        props.store(propFile.newWriter(), null)
+    }
+    return code
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -134,7 +167,7 @@ android {
         applicationId "com.moonrailgun.trpg"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 5
+        versionCode increasedVersionCode()
         versionName project.env.get("VERSION")
         vectorDrawables.useSupportLibrary = true // for react-native-image-crop-picker
         resValue "string", "build_config_package", "com.moonrailgun.trpg" // react-native-config
