@@ -219,6 +219,18 @@ dependencies {
     implementation project(':react-native-config')
 
     // 友盟推送
+    // 以下模块先注释: 因为64k dex问题 调研后有必要再一点点加
+    // implementation 'com.umeng.umsdk:vivo-push:2.3.1'
+    // implementation 'com.umeng.umsdk:vivo-umengaccs:1.0.4'
+    // implementation 'com.umeng.umsdk:oppo-push:1.0.1'
+    // implementation 'com.umeng.umsdk:oppo-umengaccs:1.0.3'
+    // implementation 'com.umeng.umsdk:meizu-push:3.8.1'
+    // implementation 'com.umeng.umsdk:meizu-umengaccs:1.0.6'
+    // implementation 'com.umeng.umsdk:huawei-basetb:2.6.3.305'
+    // implementation 'com.umeng.umsdk:huawei-pushtb:2.6.3.305'
+    // implementation 'com.umeng.umsdk:huawei-umengaccs:1.2.1'
+    implementation 'com.umeng.umsdk:xiaomi-push:3.6.17'
+    implementation 'com.umeng.umsdk:xiaomi-umengaccs:1.1.0'
     implementation 'com.umeng.umsdk:common:2.1.0' // PushSDK必须依赖基础组件库，所以需要加入对应依赖
     implementation 'com.umeng.umsdk:utdid:1.1.5.3' // PushSDK必须依赖utdid库，所以需要加入对应依赖
     implementation 'com.umeng.umsdk:push:6.0.1' // PushSDK

@@ -20,7 +20,7 @@
     "app:proserver": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:80 npm run app",
     "app:proserver:clear": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:80 npm run app:clear",
     "app:build:env": "node ./build/metro/build-env.js",
-    "app:build:android": "cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web ./gradlew assembleRelease --info",
+    "app:build:android": "npm run app:build:env && cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web ./gradlew assembleRelease --info",
     "app:bundle:android": "cross-env START_DIR='../../' PLATFORM=app REACT_NATIVE_APP_ROOT=. react-native bundle --platform android --entry-file index.js --bundle-output ./dist/index.android.bundle --dev false",
     "app:deploy:android": "code-push release TRPGEngine ./dist/index.android.bundle --d Production",
     "test": "echo \"Error: no test specified\" && exit 1",
