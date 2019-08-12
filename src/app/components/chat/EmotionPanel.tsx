@@ -30,12 +30,13 @@ const EmotionCarousel = styled(Carousel)`
   height: ${EMOJI_PANEL_HEIGHT - 35};
 `;
 
-const EmoticonCatalog = styled.View`
+const EmoticonCatalog = styled.ScrollView.attrs({
+  horizontal: true,
+})`
   height: 35px;
   flex-direction: row;
   border-top-width: 0.5;
   border-top-color: #eee;
-  padding: 0 10px;
 `;
 
 const EmoticonCatalogItem = styled.TouchableOpacity<{ isSelected?: boolean }>`
