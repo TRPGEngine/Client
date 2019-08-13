@@ -1,6 +1,6 @@
 {
   "name": "trpg-game-client",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "专注于TRPG跑团的IM即时应用聊天软件",
   "main": "./dist/entry.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "app:build:env": "node ./build/metro/build-env.js",
     "app:build:android": "npm run app:build:env && cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web ./gradlew assembleRelease --info",
     "app:bundle:android": "cross-env START_DIR='../../' PLATFORM=app REACT_NATIVE_APP_ROOT=. react-native bundle --platform android --entry-file index.js --bundle-output ./dist/index.android.bundle --dev false",
-    "app:deploy:android": "code-push release TRPGEngine ./dist/index.android.bundle --d Production",
+    "app:deploy:android": "node build/deploy/deploy-android.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .js,.jsx src",
     "lint:fix": "eslint --fix --ext .js,.jsx src",
@@ -136,6 +136,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "code-push-cli": "^2.1.9",
     "config": "^3.0.1",
     "copy-webpack-plugin": "^4.5.2",
     "cross-env": "^5.2.0",
@@ -145,6 +146,7 @@
     "electron-packager": "^9.1.0",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.10.0",
+    "execa": "^2.0.3",
     "fancy-log": "^1.3.3",
     "file-loader": "^0.11.2",
     "fs-extra": "^7.0.1",
