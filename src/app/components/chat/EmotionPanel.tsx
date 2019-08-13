@@ -108,7 +108,7 @@ class EmotionPanel extends React.Component<Props> {
   handleAddEmotionCatalog() {
     Modal.operation([
       {
-        text: '暗号',
+        text: '通过暗号添加表情包',
         onPress: () => {
           // 打开输入框
           Modal.prompt('表情包暗号', '请输入暗号，大小写任意', (message) => {
