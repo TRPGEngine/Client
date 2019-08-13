@@ -200,7 +200,7 @@ class EmotionPanel extends React.Component<Props> {
 
     return (
       <EmoticonPanel>
-        <EmotionCarousel>
+        <EmotionCarousel key={selectedEmotionCatalog}>
           {isEmoji ? getEmojiPage() : getEmotionPage()}
         </EmotionCarousel>
         <EmoticonCatalog>
@@ -216,7 +216,7 @@ class EmotionPanel extends React.Component<Props> {
             return (
               <EmoticonCatalogItem
                 key={catalog + name}
-                isSelected={this.state.selectedEmotionCatalog === catalog}
+                isSelected={selectedEmotionCatalog === catalog}
                 onPress={() =>
                   this.setState({ selectedEmotionCatalog: catalog })
                 }
@@ -234,7 +234,7 @@ class EmotionPanel extends React.Component<Props> {
             return (
               <EmoticonCatalogItem
                 key={catalogUUID}
-                isSelected={this.state.selectedEmotionCatalog === catalogUUID}
+                isSelected={selectedEmotionCatalog === catalogUUID}
                 onPress={() =>
                   this.setState({ selectedEmotionCatalog: catalogUUID })
                 }
