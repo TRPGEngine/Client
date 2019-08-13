@@ -27,7 +27,7 @@ import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 import rnStorage from '../../api/rn-storage.api';
 import { checkUser } from '../../shared/utils/cache-helper';
-import { hideProfileCard, switchMenuPannel } from './ui';
+import { hideProfileCard, switchMenuPannel, showAlert } from './ui';
 import * as uploadHelper from '../../shared/utils/upload-helper';
 import { renewableDelayTimer } from '../../shared/utils/timer';
 import config from '../../../config/project.config';
@@ -599,13 +599,13 @@ export const addUserEmotionCatalogWithSecretSignal = function(code) {
       function(data) {
         if (data.result) {
           const catalog = data.catalog;
-          // TODO: 提示添加成功
           dispatch({
             type: ADD_USER_CHAT_EMOTION_CATALOG,
             payload: catalog,
           });
+          dispatch(showAlert('添加成功'));
         } else {
-          // TODO: 提示添加失败
+          dispatch(showAlert('添加失败:' + data.msg));
           console.error(data.msg);
         }
       }

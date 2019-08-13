@@ -20,6 +20,7 @@ const {
   UPDATE_SOCKET_ID,
 } = constants;
 import * as cache from './cache';
+import { AlertPayload } from '../types/ui';
 
 export const showLoading = function(text = '加载中...') {
   return { type: SHOW_LOADING, text: text };
@@ -27,7 +28,7 @@ export const showLoading = function(text = '加载中...') {
 export const hideLoading = function() {
   return { type: HIDE_LOADING };
 };
-export const showAlert = function(payload) {
+export const showAlert = function(payload: AlertPayload) {
   if (typeof payload === 'string') {
     payload = {
       content: payload,
