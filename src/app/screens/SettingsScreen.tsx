@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { View } from 'react-native';
-import ListCell from '../components/ListCell';
 import { List } from '@ant-design/react-native';
 import { switchNav } from '../redux/actions/nav';
 const Item = List.Item;
@@ -22,12 +21,6 @@ class SettingsScreen extends React.Component<Props, State> {
   render() {
     return (
       <View style={styles.container}>
-        <ListCell
-          title="测试"
-          value={this.state.test}
-          onChange={(newValue) => this.setState({ test: newValue })}
-        />
-
         <List renderHeader={'basic'}>
           <Item
             disabled

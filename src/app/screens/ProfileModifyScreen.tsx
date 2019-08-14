@@ -12,6 +12,8 @@ import { showAlert } from '../../redux/actions/ui';
 import { TAvatar } from '../components/TComponent';
 import ListCell from '../components/ListCell';
 import _last from 'lodash/last';
+import { List } from '@ant-design/react-native';
+const Item = List.Item;
 
 interface Props extends DispatchProp<any> {
   userInfo: any;
@@ -105,29 +107,29 @@ class ProfileModifyScreen extends React.Component<Props> {
           <Text style={styles.uuid}>{userInfo.get('uuid')}</Text>
         </View>
 
-        <View>
-          <ListCell
-            title="昵称"
-            value={userInfo.get('nickname')}
-            onPress={() => {
-              this.props.dispatch(showAlert('未实现'));
-            }}
-          />
-          <ListCell
-            title="性别"
-            value={userInfo.get('sex')}
-            onPress={() => {
-              this.props.dispatch(showAlert('未实现'));
-            }}
-          />
-          <ListCell
-            title="个性签名"
-            value={userInfo.get('sign')}
-            onPress={() => {
-              this.props.dispatch(showAlert('未实现'));
-            }}
-          />
-        </View>
+        <List>
+          <Item
+            arrow="horizontal"
+            extra={userInfo.get('nickname')}
+            onPress={() => this.props.dispatch(showAlert('未实现'))}
+          >
+            昵称
+          </Item>
+          <Item
+            arrow="horizontal"
+            extra={userInfo.get('sex')}
+            onPress={() => this.props.dispatch(showAlert('未实现'))}
+          >
+            性别
+          </Item>
+          <Item
+            arrow="horizontal"
+            extra={userInfo.get('sign')}
+            onPress={() => this.props.dispatch(showAlert('未实现'))}
+          >
+            个性签名
+          </Item>
+        </List>
       </View>
     );
   }
