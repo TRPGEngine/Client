@@ -14,6 +14,7 @@ import * as appUtils from '../../shared/utils/apputils';
 import { TIcon } from '../components/TComponent';
 
 import { List } from '@ant-design/react-native';
+import { showToast } from '@src/redux/actions/ui';
 const Item = List.Item;
 
 const AccountList = styled(List)`
@@ -52,19 +53,22 @@ class AccountScreen extends React.Component<Props> {
   }
 
   handleCheckVersion() {
-    // TODO: 也许需要根据版本判断用户是否应为热更新还是下载apk更新
-    appConfig.codePush.sync();
-
-    // checkVersion(function(isLatest) {
-    //   if (isLatest) {
-    //     appUtils.toast('当前版本为最新版');
-    //   } else {
-    //     appUtils.toast('检测到有新的版本, 1秒后自动跳转到项目主页');
-    //     setTimeout(function() {
-    //       Linking.openURL(config.github.projectUrl);
-    //     }, 1000);
-    //   }
-    // });
+    const dispatch = this.props.dispatch;
+    if (appConfig.codePush.enabled) {
+      // TODO: 也许需要根据版本判断用户是否应为热更新还是下载apk更新
+      appConfig.codePush.sync();
+    } else {
+      checkVersion(function(isLatest) {
+        if (isLatest) {
+          dispatch(showToast('当前版本为最新版'));
+        } else {
+          dispatch(showToast('检测到有新的版本, 1秒后自动跳转到项目主页'));
+          setTimeout(function() {
+            Linking.openURL(config.github.projectUrl);
+          }, 1000);
+        }
+      });
+    }
   }
 
   render() {
