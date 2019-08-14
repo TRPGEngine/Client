@@ -1,8 +1,14 @@
+/**
+ * 这是一个全局UI管理处理器
+ * 用于生成将redux的状态转化为UI
+ */
+
 import { Map } from 'immutable';
 import TAlert from '../components/TApi/TAlert';
 import { Dispatch } from 'redux';
 import { hideAlert } from '@redux/actions/ui';
 import { Toast, Portal } from '@ant-design/react-native';
+import TModal from '../components/TApi/TModal';
 
 type UIMap = Map<string, any>;
 interface FactoryOptions {
@@ -63,3 +69,17 @@ export const toastHandler = uiStateSwitchFactory('showToast', {
     currentToastKey = 0;
   },
 });
+
+/**
+ * Modal 处理
+ */
+export const modelHandler = uiStateSwitchFactory('showModal', {
+  onEnabled: (currentUI) => {
+    TModal.show(currentUI.get('showModalBody'));
+  },
+  onDisabled: () => {
+    TModal.hide();
+  },
+});
+
+export const uiHandlerCollection = [alertHandler, toastHandler, modelHandler];

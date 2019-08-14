@@ -23,7 +23,7 @@ import {
 } from 'react-navigation-redux-helpers';
 import { connect, DispatchProp } from 'react-redux';
 import { StackViewStyleInterpolator } from 'react-navigation-stack';
-import { alertHandler, toastHandler } from './utils/ui-state-handler';
+import { uiHandlerCollection } from './utils/ui-state-handler';
 
 import LaunchScreen from './screens/LaunchScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -177,8 +177,7 @@ class ReduxNavigation extends React.Component<ReduxNavigationProps> {
     const dispatch = this.props.dispatch;
     const args: [any, any, any] = [prevUI, currentUI, dispatch];
 
-    alertHandler(...args);
-    toastHandler(...args);
+    uiHandlerCollection.forEach((handle) => handle(...args));
   }
 
   onBackPress = () => {

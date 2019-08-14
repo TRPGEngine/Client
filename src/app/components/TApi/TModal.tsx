@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Modal, TouchableWithoutFeedback } from 'react-native';
 import sb from 'react-native-style-block';
 import TPopup from './TPopup';
+import _get from 'lodash/get';
 
 const styles = {
   container: [sb.flex(), sb.center()],
@@ -37,10 +38,18 @@ class TModalContainer extends React.Component<Props> {
   }
 }
 
+export interface TModalOptions {
+  onRequestClose?: () => void;
+}
+
 const TModal = {
-  show: function(view) {
+  show: function(view: React.ReactNode, opts: TModalOptions = {}) {
     return TPopup.show(
-      <TModalContainer onRequestClose={() => this.hide()}>
+      <TModalContainer
+        onRequestClose={() =>
+          opts.onRequestClose ? opts.onRequestClose() : this.hide()
+        }
+      >
         {view}
       </TModalContainer>
     );
