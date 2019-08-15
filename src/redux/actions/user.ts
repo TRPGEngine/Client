@@ -212,12 +212,13 @@ export const findUser = function(text, type) {
   };
 };
 
-export const updateInfo = function(updatedData) {
+export const updateInfo = function(updatedData: {}, onSuccess?: () => void) {
   return function(dispatch, getState) {
     return api.emit('player::updateInfo', updatedData, function(data) {
       if (data.result) {
         data.user.avatar = config.file.getAbsolutePath(data.user.avatar);
         dispatch({ type: UPDATE_INFO_SUCCESS, payload: data.user });
+        onSuccess && onSuccess();
       } else {
         console.error(data.msg);
       }

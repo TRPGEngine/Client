@@ -8,11 +8,12 @@ import axios from 'axios';
 import { fileUrl } from '../../api/trpg.api';
 import { toast } from '../../shared/utils/apputils';
 import { updateInfo } from '../../redux/actions/user';
-import { showAlert } from '../../redux/actions/ui';
-import { TAvatar } from '../components/TComponent';
+import { showAlert, showModal, hideModal } from '../../redux/actions/ui';
+import { TAvatar, TInput } from '../components/TComponent';
 import ListCell from '../components/ListCell';
 import _last from 'lodash/last';
 import { List } from '@ant-design/react-native';
+import TModalPanel from '../components/TComponent/TModalPanel';
 const Item = List.Item;
 
 interface Props extends DispatchProp<any> {
@@ -87,6 +88,32 @@ class ProfileModifyScreen extends React.Component<Props> {
       .catch((err) => console.log(err));
   }
 
+  /**
+   * 更新用户信息
+   * 成功后关闭modal弹窗
+   */
+  updateUserInfo(data: {}) {
+    const { dispatch } = this.props;
+
+    dispatch(updateInfo(data, () => dispatch(hideModal())));
+  }
+
+  handleEditNickname = () => {
+    const { dispatch, userInfo } = this.props;
+    let nickname = userInfo.get('nickname');
+
+    dispatch(
+      showModal(
+        <TModalPanel onOk={() => this.updateUserInfo({ nickname })}>
+          <TInput
+            defaultValue={nickname}
+            onChangeText={(text) => (nickname = text)}
+          />
+        </TModalPanel>
+      )
+    );
+  };
+
   render() {
     const userInfo = this.props.userInfo;
     const name = userInfo.get('nickname') || userInfo.get('username');
@@ -111,7 +138,7 @@ class ProfileModifyScreen extends React.Component<Props> {
           <Item
             arrow="horizontal"
             extra={userInfo.get('nickname')}
-            onPress={() => this.props.dispatch(showAlert('未实现'))}
+            onPress={this.handleEditNickname}
           >
             昵称
           </Item>

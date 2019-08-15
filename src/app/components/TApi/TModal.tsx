@@ -11,7 +11,7 @@ const styles = {
     sb.padding(10),
     sb.bgColor(),
     sb.radius(3),
-    { minWidth: 240, minHeight: 320 },
+    { minWidth: 240, minHeight: 120 },
   ],
 };
 
@@ -22,7 +22,7 @@ class TModalContainer extends React.Component<Props> {
   render() {
     return (
       <Modal
-        animationType="fade"
+        animationType="slide"
         transparent={true}
         onRequestClose={this.props.onRequestClose}
       >
