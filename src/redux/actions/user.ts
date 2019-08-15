@@ -45,7 +45,7 @@ function loginSuccess(dispatch, getState) {
   }
 
   dispatch(loadLocalCache()); // 加载本地缓存信息
-  dispatch(reloadConverseList()); // 重新加载所有会员列表
+  dispatch(reloadConverseList()); // 重新加载所有会话列表
   dispatch(getFriends());
   dispatch(getFriendsInvite());
   dispatch(getTemplate());
@@ -249,24 +249,6 @@ export const changePassword = function(
     );
   };
 };
-
-/**
- * 弃用
- * 不允许直接添加好友
- */
-// export const addFriend = function(uuid) {
-//   return function(dispatch, getState) {
-//     console.log('addFriend:', uuid);
-//     return api.emit('player::addFriend', { uuid }, function(data) {
-//       if (data.result) {
-//         dispatch({ type: ADD_FRIEND_SUCCESS, friendUUID: uuid });
-//       } else {
-//         console.error(data.msg);
-//         dispatch(showAlert(data.msg));
-//       }
-//     });
-//   };
-// };
 
 export const getFriends = function() {
   return function(dispatch, getState) {

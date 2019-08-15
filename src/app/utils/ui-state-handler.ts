@@ -6,7 +6,7 @@
 import { Map } from 'immutable';
 import TAlert from '../components/TApi/TAlert';
 import { Dispatch } from 'redux';
-import { hideAlert } from '@redux/actions/ui';
+import { hideAlert, hideModal } from '@redux/actions/ui';
 import { Toast, Portal } from '@ant-design/react-native';
 import TModal from '../components/TApi/TModal';
 
@@ -74,8 +74,11 @@ export const toastHandler = uiStateSwitchFactory('showToast', {
  * Modal 处理
  */
 export const modelHandler = uiStateSwitchFactory('showModal', {
-  onEnabled: (currentUI) => {
-    TModal.show(currentUI.get('showModalBody'));
+  onEnabled: (currentUI, dispatch) => {
+    const body = currentUI.get('showModalBody');
+    if (body) {
+      TModal.show(body.toJS(), { onRequestClose: () => dispatch(hideModal()) });
+    }
   },
   onDisabled: () => {
     TModal.hide();

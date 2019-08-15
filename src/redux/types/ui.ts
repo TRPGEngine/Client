@@ -1,6 +1,7 @@
 export type AlertPayload =
   | string
   | {
+      type?: 'alert';
       title?: string;
       content: string;
       confirmTitle?: string;
