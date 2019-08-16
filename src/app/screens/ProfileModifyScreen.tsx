@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Dispatch } from 'redux';
 import { connect, DispatchProp } from 'react-redux';
 import sb from 'react-native-style-block';
 import ImageCropPicker, { Image } from 'react-native-image-crop-picker';
@@ -8,12 +7,12 @@ import axios from 'axios';
 import { fileUrl } from '../../api/trpg.api';
 import { toast } from '../../shared/utils/apputils';
 import { updateInfo } from '../../redux/actions/user';
-import { showAlert, showModal, hideModal } from '../../redux/actions/ui';
+import { showModal, hideModal } from '../../redux/actions/ui';
 import { TAvatar, TInput } from '../components/TComponent';
-import ListCell from '../components/ListCell';
 import _last from 'lodash/last';
 import { List } from '@ant-design/react-native';
 import TModalPanel from '../components/TComponent/TModalPanel';
+import TPicker from '../components/TComponent/TPicker';
 const Item = List.Item;
 
 interface Props extends DispatchProp<any> {
@@ -114,6 +113,46 @@ class ProfileModifyScreen extends React.Component<Props> {
     );
   };
 
+  handleEditSex = () => {
+    const { dispatch, userInfo } = this.props;
+    let sex = userInfo.get('sex');
+
+    dispatch(
+      showModal(
+        <TModalPanel onOk={() => this.updateUserInfo({ sex })}>
+          <TPicker
+            items={[
+              { label: '男', value: '男' },
+              { label: '女', value: '女' },
+              { label: '其他', value: '其他' },
+              { label: '保密', value: '保密' },
+            ]}
+            defaultValue={sex}
+            onValueChange={(val) => (sex = val)}
+          />
+        </TModalPanel>
+      )
+    );
+  };
+
+  handleEditSign = () => {
+    const { dispatch, userInfo } = this.props;
+    let sign = userInfo.get('sign');
+
+    dispatch(
+      showModal(
+        <TModalPanel onOk={() => this.updateUserInfo({ sign })}>
+          <TInput
+            multiline={true}
+            numberOfLines={4}
+            defaultValue={sign}
+            onChangeText={(text) => (sign = text)}
+          />
+        </TModalPanel>
+      )
+    );
+  };
+
   render() {
     const userInfo = this.props.userInfo;
     const name = userInfo.get('nickname') || userInfo.get('username');
@@ -145,14 +184,14 @@ class ProfileModifyScreen extends React.Component<Props> {
           <Item
             arrow="horizontal"
             extra={userInfo.get('sex')}
-            onPress={() => this.props.dispatch(showAlert('未实现'))}
+            onPress={this.handleEditSex}
           >
             性别
           </Item>
           <Item
             arrow="horizontal"
             extra={userInfo.get('sign')}
-            onPress={() => this.props.dispatch(showAlert('未实现'))}
+            onPress={this.handleEditSign}
           >
             个性签名
           </Item>
