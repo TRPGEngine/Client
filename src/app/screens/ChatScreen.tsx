@@ -3,12 +3,9 @@ import { connect, DispatchProp } from 'react-redux';
 import {
   View,
   Text,
-  Image,
   FlatList,
-  Button,
   TextInput,
   Keyboard,
-  TouchableOpacity,
   EmitterSubscription,
 } from 'react-native';
 import { Icon } from '@ant-design/react-native';
@@ -56,8 +53,9 @@ class ChatScreen extends React.Component<Props> {
     const navigation = props.navigation;
     const { state, setParams } = navigation;
     const { params } = state;
+    const type = params.type;
     return {
-      headerRight: (
+      headerRight: ['user', 'group'].includes(type) ? (
         <View style={{ marginRight: 10 }}>
           <TIcon
             icon="&#xe607;"
@@ -65,7 +63,7 @@ class ChatScreen extends React.Component<Props> {
             onPress={() => params.headerRightFunc && params.headerRightFunc()}
           />
         </View>
-      ),
+      ) : null,
     };
   };
 
@@ -78,7 +76,7 @@ class ChatScreen extends React.Component<Props> {
 
   keyboardDidShowListener: EmitterSubscription;
   keyboardDidHideListener: EmitterSubscription;
-  inputRef: TInput;
+  inputRef: TextInput;
   listRef: FlatList<any>;
 
   componentDidMount() {
