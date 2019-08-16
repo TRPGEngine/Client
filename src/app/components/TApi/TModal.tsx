@@ -1,5 +1,10 @@
 import React from 'react';
-import { View, Modal, TouchableWithoutFeedback } from 'react-native';
+import {
+  View,
+  Modal,
+  TouchableWithoutFeedback,
+  ScrollView,
+} from 'react-native';
 import sb from 'react-native-style-block';
 import TPopup from './TPopup';
 import _get from 'lodash/get';
@@ -11,7 +16,7 @@ const styles = {
     sb.padding(10),
     sb.bgColor(),
     sb.radius(3),
-    { minWidth: 240, minHeight: 120 },
+    { minWidth: 240, minHeight: 120, maxWidth: '90%', maxHeight: '90%' },
   ],
 };
 
@@ -31,7 +36,7 @@ class TModalContainer extends React.Component<Props> {
             <View style={styles.mask} />
           </TouchableWithoutFeedback>
 
-          <View style={styles.view}>{this.props.children}</View>
+          <ScrollView style={styles.view}>{this.props.children}</ScrollView>
         </View>
       </Modal>
     );

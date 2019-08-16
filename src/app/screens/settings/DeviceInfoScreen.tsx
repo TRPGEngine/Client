@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Clipboard } from 'react-native';
 import { umPush } from '@app/native/push-utils';
 import { TButton } from '@src/app/components/TComponent';
-import { Toast } from '@ant-design/react-native';
+import { Toast, WingBlank } from '@ant-design/react-native';
 
 class DeviceInfoScreen extends React.Component {
   state = {
@@ -26,10 +26,10 @@ class DeviceInfoScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <WingBlank size="md">
         <Text>{this.state.appInfoStr}</Text>
         <TButton onPress={this.handleCopyRegistrationId}>复制到剪切板</TButton>
-      </View>
+      </WingBlank>
     );
   }
 }

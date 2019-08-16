@@ -90,7 +90,9 @@ class AccountScreen extends React.Component<Props> {
           />
           <View style={{ flex: 1 }}>
             <Text style={styles.username}>{name}</Text>
-            <Text style={styles.userdesc}>{userInfo.get('sign')}</Text>
+            <Text style={styles.userdesc} numberOfLines={1}>
+              {userInfo.get('sign')}
+            </Text>
           </View>
           <Text style={styles.arrow}>&#xe60e;</Text>
         </TouchableOpacity>

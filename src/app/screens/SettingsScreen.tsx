@@ -20,8 +20,8 @@ class SettingsScreen extends React.Component<Props, State> {
 
   render() {
     return (
-      <View style={styles.container}>
-        <List renderHeader={'basic'}>
+      <View>
+        <List renderHeader="基本设置">
           <Item
             disabled
             arrow="horizontal"
@@ -34,9 +34,5 @@ class SettingsScreen extends React.Component<Props, State> {
     );
   }
 }
-
-const styles = {
-  container: [{ paddingTop: 10, flex: 1 }],
-};
 
 export default connect()(SettingsScreen);
