@@ -1,16 +1,41 @@
 import React from 'react';
 import { View, Text, TextInputProps, StyleProp } from 'react-native';
 import sb from 'react-native-style-block';
-import TInput, { TInputProps } from './TInput';
+import TInput from './TInput';
+import styled from 'styled-components/native';
+
+const FormContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 0.5px solid #ccc;
+  margin-bottom: 10px;
+  height: 44px;
+`;
+
+const FormLabel = styled.Text`
+  margin-right: 10px;
+  flex: 1;
+  text-align: right;
+  font-size: 16px;
+  min-width: 80px;
+  height: 32px;
+  line-height: 32px;
+`;
+
+const FormInput = styled(TInput)`
+  flex: 3;
+  border: 0;
+  background-color: transparent;
+  font-size: 16px;
+`;
 
 interface Props {
   label: string;
   value: string;
   style: StyleProp<View>;
-  input: TInputProps;
+  input: TextInputProps;
   onChangeText: (text: string) => void;
 }
-
 class TFormGroup extends React.Component<Props> {
   static defaultProps = {
     label: '',
@@ -25,43 +50,16 @@ class TFormGroup extends React.Component<Props> {
       this.props.input.style = [];
     }
     return (
-      <View
-        {...this.props}
-        style={[...styles.container, ...(this.props.style as any)]}
-      >
-        <Text style={styles.label}>{this.props.label}:</Text>
-        <TInput
+      <FormContainer {...(this.props as any)}>
+        <FormLabel>{this.props.label}:</FormLabel>
+        <FormInput
           value={this.props.value}
           onChangeText={(text: string) => this.props.onChangeText(text)}
           {...this.props.input}
-          style={[...styles.input, ...this.props.input.style]}
         />
-      </View>
+      </FormContainer>
     );
   }
 }
-
-const styles = {
-  container: [
-    sb.direction('row'),
-    sb.alignCenter(),
-    // sb.flex(),
-    sb.border('Bottom', 0.5, '#ccc'),
-    { marginBottom: 10, height: 44 },
-  ],
-  label: [
-    sb.margin(0, 10, 0, 0),
-    sb.flex(1),
-    sb.textAlign('right'),
-    sb.font(16),
-    { minWidth: 80, height: 32, lineHeight: 32 },
-  ],
-  input: [
-    sb.flex(3),
-    sb.border('all', 0),
-    sb.bgColor('transparent'),
-    sb.font(16),
-  ],
-};
 
 export default TFormGroup;
