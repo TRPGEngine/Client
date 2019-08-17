@@ -8,13 +8,13 @@ class Checkbox extends React.Component {
     super(props);
   }
 
-  _handleClick() {
+  handleClick() {
     this.props.onChange && this.props.onChange(!this.props.value);
   }
 
   render() {
     return (
-      <div className="check-box" onClick={() => this._handleClick()}>
+      <div className="check-box" onClick={() => this.handleClick()}>
         <label className={this.props.value ? 'checked' : 'unchecked'} />
       </div>
     );

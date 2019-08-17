@@ -2,20 +2,13 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import sb from 'react-native-style-block';
 import { TAvatar } from '../TComponent';
-import dateHelper from '../../../shared/utils/dateHelper';
+import dateHelper from '../../../shared/utils/date-helper';
 import config from '../../../../config/project.config';
+import { MessageProps } from '@shared/components/MessageHandler';
+import _get from 'lodash/get';
+import { getAbsolutePath } from '@shared/utils/file-helper';
 
-export interface BaseMessageProps {
-  type: string;
-  me: boolean;
-  name: string;
-  avatar: string;
-  emphasizeTime: boolean;
-  info: any;
-}
-class Base<
-  P extends BaseMessageProps = BaseMessageProps
-> extends React.Component<P> {
+class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
   static defaultProps = {
     type: 'normal',
     me: false,
@@ -31,16 +24,32 @@ class Base<
     return true;
   }
 
+  /**
+   * 返回信息显示的发送者的名字
+   * 获取顺序: 消息信息内发送者名 -> 传递来的名字(原始名)
+   */
+  getSenderName(): string {
+    const { name, info } = this.props;
+
+    return _get(info, 'data.name') || name;
+  }
+
+  /**
+   * 返回信息avatar的地址
+   * 获取顺序: 消息信息内头像 -> 传递来的头像(发送者)
+   */
+  getAvatarUrl(): string {
+    const { avatar, info } = this.props;
+
+    return getAbsolutePath(_get(info, 'data.avatar') || avatar);
+  }
+
   getContent() {
     return null;
   }
 
   render() {
-    const { type, me, name, avatar, info, emphasizeTime } = this.props;
-    let defaultAvatar =
-      info.sender_uuid === 'trpgsystem'
-        ? config.defaultImg.trpgsystem
-        : config.defaultImg.getUser(name);
+    const { me, name, info, emphasizeTime } = this.props;
 
     return (
       <View>
@@ -57,7 +66,7 @@ class Base<
         >
           <TAvatar
             style={styles.itemAvatar}
-            uri={avatar}
+            uri={this.getAvatarUrl()}
             name={name}
             height={40}
             width={40}
@@ -66,7 +75,7 @@ class Base<
             <Text
               style={[...styles.itemName, me ? { textAlign: 'right' } : null]}
             >
-              {name}
+              {this.getSenderName()}
             </Text>
             <View
               style={[

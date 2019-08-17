@@ -14,7 +14,7 @@ class DiceInvite extends React.Component {
     };
   }
 
-  _handleSendReq() {
+  handleSendReq() {
     let diceExp = '';
     if (this.state.diceType === 'basicDice') {
       diceExp = this.refs.diceNum.value + 'd' + this.refs.diceFace.value;
@@ -28,7 +28,7 @@ class DiceInvite extends React.Component {
     }
   }
 
-  _handleChangeDiceType(type) {
+  handleChangeDiceType(type) {
     this.setState({ diceType: type });
     this.props.dispatch(setLastDiceType(type));
   }
@@ -61,7 +61,7 @@ class DiceInvite extends React.Component {
           clearable={false}
           searchable={false}
           placeholder="请选择骰子类型..."
-          onChange={(item) => this._handleChangeDiceType(item.value)}
+          onChange={(item) => this.handleChangeDiceType(item.value)}
         />
         {this.state.diceType === 'complexDice' ? (
           <div className="dice complexDice">
@@ -92,7 +92,7 @@ class DiceInvite extends React.Component {
             />
           </div>
         )}
-        <button onClick={() => this._handleSendReq()}>发送申请</button>
+        <button onClick={() => this.handleSendReq()}>发送申请</button>
       </div>
     );
   }

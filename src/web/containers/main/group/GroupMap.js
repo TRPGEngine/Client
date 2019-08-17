@@ -33,7 +33,7 @@ class GroupMap extends React.Component {
     };
   }
 
-  _handleClickMapPoint(x, y, blocks) {
+  handleClickMapPoint(x, y, blocks) {
     this.setState({
       x: x,
       y: y,
@@ -79,7 +79,7 @@ class GroupMap extends React.Component {
             y={y * (tileSize + 2)}
             data-tip={`${x + 1},${y + 1}`}
             data-for="map"
-            onClick={() => this._handleClickMapPoint(x + 1, y + 1, _blocks)}
+            onClick={() => this.handleClickMapPoint(x + 1, y + 1, _blocks)}
           />
         );
       }

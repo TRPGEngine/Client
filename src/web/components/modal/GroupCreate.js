@@ -15,7 +15,7 @@ class GroupCreate extends React.Component {
     };
   }
 
-  _handleCreate() {
+  handleCreate() {
     this.props.dispatch(
       createGroup(
         this.state.groupName,
@@ -28,7 +28,7 @@ class GroupCreate extends React.Component {
   render() {
     let actions = (
       <div>
-        <button onClick={() => this._handleCreate()}>创建</button>
+        <button onClick={() => this.handleCreate()}>创建</button>
       </div>
     );
     return (

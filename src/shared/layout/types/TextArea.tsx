@@ -1,14 +1,15 @@
 import React from 'react';
-import Base, { BaseTypeRow } from './Base';
+import { BaseTypeRow } from './Base';
 import { XMLElementAttributes } from '../parser/xml-parser';
 import { XMLBuilderContext } from '../XMLBuilder';
 import { parseDataText } from '../processor';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
 import { Col, Input } from 'antd';
+import TInput, { Label } from './Input';
 const TextArea = Input.TextArea;
 
-export default class TTextArea extends Base {
+export default class TTextArea extends TInput {
   name = 'TextArea';
 
   getEditView(
@@ -19,6 +20,7 @@ export default class TTextArea extends Base {
   ) {
     const label = attributes.label as string;
     const name = attributes.name as string;
+    const autosize = attributes.autosize as any;
     const isNumber: boolean = attributes.isNumber as any;
 
     const changeValue = attributes.changeValue as string; // 指定要被修改的变量
@@ -30,10 +32,11 @@ export default class TTextArea extends Base {
     return (
       <BaseTypeRow key={attributes.key}>
         <Col span={6}>
-          <pre>{parsedLabel}</pre>
+          <Label title={parsedLabel}>{parsedLabel}</Label>
         </Col>
         <Col span={18}>
           <TextArea
+            autosize={autosize}
             placeholder={label}
             value={this.getStateValue(context, bindingName)}
             onChange={(e) => {

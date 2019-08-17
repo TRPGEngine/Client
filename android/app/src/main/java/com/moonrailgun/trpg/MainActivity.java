@@ -1,11 +1,20 @@
 package com.moonrailgun.trpg;
 
+import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
+import com.umeng.soexample.invokenative.PushModule;
+import com.umeng.message.PushAgent;
 
 public class MainActivity extends ReactActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        PushModule.initPushSDK(this);
+        PushAgent.getInstance(this).onAppStart();
+    }
 
     /**
      * Returns the name of the main component registered from JavaScript.

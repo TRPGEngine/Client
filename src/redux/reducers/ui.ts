@@ -1,5 +1,5 @@
 import constants from '../constants';
-import immutable from 'immutable';
+import immutable, { Record } from 'immutable';
 
 const {
   RESET,
@@ -23,7 +23,36 @@ const {
   UPDATE_SOCKET_ID,
 } = constants;
 
-const initialState = immutable.fromJS({
+export type UIState = Record<{
+  showAlert: boolean;
+  showAlertInfo: any;
+  showLoading: boolean;
+  showLoadingText: string;
+  showModal: boolean;
+  showModalBody: any;
+  showToast: boolean;
+  showToastText: string;
+  showProfileCard: boolean;
+  showProfileCardUUID: string;
+  showSlidePanel: boolean;
+  showSlidePanelInfo: Record<{
+    title: string;
+    content: string;
+  }>;
+  showLigthbox: boolean;
+  showLigthboxInfo: any;
+  menuIndex: number;
+  menuPannel: any;
+  network: Record<{
+    isOnline: boolean;
+    tryReconnect: boolean;
+    msg: string;
+  }>;
+  socketId: string;
+  lastDiceType: string;
+}>;
+
+const initialState: UIState = immutable.fromJS({
   showAlert: false,
   showAlertInfo: {},
   showLoading: false,

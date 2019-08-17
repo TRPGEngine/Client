@@ -2,28 +2,33 @@ import React from 'react';
 import { connect } from 'react-redux';
 import at from 'trpg-actor-template';
 import TemplateSelect from './TemplateSelect';
-import ActorEdit from './ActorEdit';
-import * as apiHelper from '../../../../shared/utils/apiHelper';
+import ActorCreate from '@components/modal/ActorCreate';
+import ActorEdit from '@components/modal/ActorEdit';
+import { updateActor } from '@redux/actions/actor';
+import * as apiHelper from '../../../../shared/utils/api-helper';
 import { showModal, showAlert } from '../../../../redux/actions/ui';
 import {
   selectActor,
   removeActor,
   selectTemplate,
 } from '../../../../redux/actions/actor';
+import ActorInfo from '@components/modal/ActorInfo';
+import _isNil from 'lodash/isNil';
 
 import './ActorList.scss';
+import { message } from 'antd';
 
 class ActorList extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  _handleAddNewActor() {
+  handleAddNewActor() {
     this.props.selectActor('');
-    this.props.showModal(<TemplateSelect />);
+    this.props.showModal(<ActorCreate />);
   }
 
-  _handleRemoveActor(uuid) {
+  handleRemoveActor(uuid) {
     this.props.selectActor('');
     this.props.showAlert({
       content: '你确定要删除该人物卡么？删除后会同时删除相关的团人物并无法找回',
@@ -31,7 +36,7 @@ class ActorList extends React.Component {
     });
   }
 
-  _handleEditActor(uuid, template_uuid) {
+  handleEditActor(uuid, template_uuid) {
     this.props.selectActor(uuid);
 
     // 获取模板信息
@@ -39,6 +44,58 @@ class ActorList extends React.Component {
       this.props.selectTemplate(template);
       this.props.showModal(<ActorEdit />);
     });
+  }
+
+  handleOpenActorEditModal(uuid) {
+    // TODO
+    const actor = this.props.actors.find((a) => a.get('uuid') === uuid);
+    if (_isNil(actor)) {
+      message.error('角色不存在');
+      return;
+    }
+    const templateLayout = this.props.templateCache.getIn([
+      actor.get('template_uuid'),
+      'layout',
+    ]);
+
+    const name = actor.get('name');
+    const desc = actor.get('desc');
+    const avatar = actor.get('avatar');
+
+    this.props.showModal(
+      <ActorEdit
+        name={name}
+        desc={desc}
+        avatar={avatar}
+        data={actor.get('info')}
+        layout={templateLayout}
+        onSave={(data) =>
+          this.props.updateActor(uuid, name, avatar, desc, data)
+        }
+      />
+    );
+  }
+
+  handleOpenActorInfoModal(uuid) {
+    const actor = this.props.actors.find((a) => a.get('uuid') === uuid);
+    if (_isNil(actor)) {
+      message.error('角色不存在');
+      return;
+    }
+    const templateLayout = this.props.templateCache.getIn([
+      actor.get('template_uuid'),
+      'layout',
+    ]);
+
+    this.props.showModal(
+      <ActorInfo
+        name={actor.get('name')}
+        desc={actor.get('desc')}
+        avatar={actor.get('avatar')}
+        data={actor.get('info')}
+        layout={templateLayout}
+      />
+    );
   }
 
   getActorList() {
@@ -63,15 +120,15 @@ class ActorList extends React.Component {
               <span title={desc}>{desc}</span>
             </p>
             <p className="action">
-              <button onClick={() => this._handleRemoveActor(uuid)}>
+              <button onClick={() => this.handleRemoveActor(uuid)}>
                 删除
               </button>
-              <button
-                onClick={() => this._handleEditActor(uuid, template_uuid)}
-              >
+              <button onClick={() => this.handleOpenActorEditModal(uuid)}>
                 编辑
               </button>
-              <button onClick={() => this.props.selectActor(uuid)}>查看</button>
+              <button onClick={() => this.handleOpenActorInfoModal(uuid)}>
+                查看
+              </button>
             </p>
           </div>
         </div>
@@ -126,7 +183,7 @@ class ActorList extends React.Component {
       <div className="actor-card">
         <div
           className="actor-card-new"
-          onClick={() => this._handleAddNewActor()}
+          onClick={() => this.handleAddNewActor()}
         >
           <i className="iconfont">&#xe604;</i>
           <span>添加新人物</span>
@@ -158,6 +215,8 @@ export default connect(
     showAlert: (...args) => dispatch(showAlert(...args)),
     selectActor: (uuid) => dispatch(selectActor(uuid)),
     removeActor: (uuid) => dispatch(removeActor(uuid)),
+    updateActor: (uuid, name, avatar, desc, info) =>
+      dispatch(updateActor(uuid, name, avatar, desc, info)),
     selectTemplate: (template) => dispatch(selectTemplate(template)),
   })
 )(ActorList);

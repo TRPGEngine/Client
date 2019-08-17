@@ -16,7 +16,7 @@ class GroupAdd extends React.Component {
     };
   }
 
-  _handleSearch() {
+  handleSearch() {
     let text = this.state.searchText.trim();
     let type = this.state.selectValue;
     if (!!text) {
@@ -70,7 +70,7 @@ class GroupAdd extends React.Component {
                 onChange={(item) => this.setState({ selectValue: item.value })}
               />
             </div>
-            <button onClick={() => this._handleSearch()}>搜索</button>
+            <button onClick={() => this.handleSearch()}>搜索</button>
           </div>
           <div className="group-search-result">
             {this.props.isFinding

@@ -22,11 +22,11 @@ const {
   ADD_FRIEND_INVITE,
 } = constants;
 import md5 from 'md5';
-import rnStorage from '../../api/rnStorage.api.js';
+import rnStorage from '../../api/rn-storage.api';
 import config from '../../../config/project.config';
-import * as trpgApi from '../../api/trpg.api.js';
-import { showLoading, hideLoading, showAlert } from './ui';
-import { checkUser } from '../../shared/utils/cacheHelper';
+import * as trpgApi from '../../api/trpg.api';
+import { showLoading, hideLoading, showAlert, showToast } from './ui';
+import { checkUser } from '../../shared/utils/cache-helper';
 import { runLoginSuccessCallback } from '../../shared/utils/inject';
 import { setUserSettings, setSystemSettings } from './settings';
 
@@ -45,12 +45,12 @@ function loginSuccess(dispatch, getState) {
   }
 
   dispatch(loadLocalCache()); // 加载本地缓存信息
-  dispatch(reloadConverseList()); // 重新加载所有会员列表
+  dispatch(reloadConverseList()); // 重新加载所有会话列表
   dispatch(getFriends());
   dispatch(getFriendsInvite());
   dispatch(getTemplate());
   dispatch(getActor());
-  dispatch(getGroupList());
+  dispatch(getGroupList()); // 获取团列表
   dispatch(getGroupInvite());
   dispatch(getNote());
   dispatch(getSettings()); // 获取服务器上的用户设置信息
@@ -212,12 +212,13 @@ export const findUser = function(text, type) {
   };
 };
 
-export const updateInfo = function(updatedData) {
+export const updateInfo = function(updatedData: {}, onSuccess?: () => void) {
   return function(dispatch, getState) {
     return api.emit('player::updateInfo', updatedData, function(data) {
       if (data.result) {
         data.user.avatar = config.file.getAbsolutePath(data.user.avatar);
         dispatch({ type: UPDATE_INFO_SUCCESS, payload: data.user });
+        onSuccess && onSuccess();
       } else {
         console.error(data.msg);
       }
@@ -250,20 +251,6 @@ export const changePassword = function(
   };
 };
 
-export const addFriend = function(uuid) {
-  return function(dispatch, getState) {
-    console.log('addFriend:', uuid);
-    return api.emit('player::addFriend', { uuid }, function(data) {
-      if (data.result) {
-        dispatch({ type: ADD_FRIEND_SUCCESS, friendUUID: uuid });
-      } else {
-        console.error(data.msg);
-        dispatch(showAlert(data.msg));
-      }
-    });
-  };
-};
-
 export const getFriends = function() {
   return function(dispatch, getState) {
     return api.emit('player::getFriends', {}, function(data) {
@@ -283,10 +270,15 @@ export const getFriends = function() {
   };
 };
 
-export const sendFriendInvite = function(uuid) {
+/**
+ * 发送好友邀请
+ * @param uuid 目标用户UUID
+ */
+export const sendFriendInvite = function(uuid: string) {
   return function(dispatch, getState) {
     return api.emit('player::sendFriendInvite', { to: uuid }, function(data) {
       if (data.result) {
+        dispatch(showToast('请求已发送'));
         dispatch({
           type: SEND_FRIEND_INVITE_SUCCESS,
           payload: data.invite,

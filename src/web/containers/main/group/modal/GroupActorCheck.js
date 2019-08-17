@@ -19,52 +19,34 @@ class GroupActorCheck extends React.Component {
     };
   }
 
-  _handleAgree() {
+  handleAgree() {
     this.props.agreeGroupActor(
       this.props.selectedGroupUUID,
       this.props.groupActor.uuid
     );
   }
 
-  _handleRefuse() {
+  handleRefuse() {
     this.props.refuseGroupActor(
       this.props.selectedGroupUUID,
       this.props.groupActor.uuid
     );
   }
 
-  _handleEditData(key, value) {
+  handleEditData(key, value) {
     let tmp = Object.assign({}, this.state.editingData);
     tmp[key] = value;
     this.setState({ editingData: tmp });
-  }
-
-  _handleSaveActorData() {
-    let groupActorInfo = {};
-    for (var key in this.state.editingData) {
-      if (this.state.editingData[key]) {
-        groupActorInfo[key] = this.state.editingData[key];
-      }
-    }
-
-    this.props.updateGroupActorInfo(
-      this.props.selectedGroupUUID,
-      this.props.groupActor.uuid,
-      groupActorInfo
-    );
   }
 
   render() {
     let groupActor = this.props.groupActor;
     let actions = (
       <div className="actions">
-        <button onClick={() => this._handleSaveActorData()}>
-          <i className="iconfont">&#xe634;</i>保存
-        </button>
-        <button onClick={() => this._handleRefuse()}>
+        <button onClick={() => this.handleRefuse()}>
           <i className="iconfont">&#xe680;</i>拒绝
         </button>
-        <button onClick={() => this._handleAgree()}>
+        <button onClick={() => this.handleAgree()}>
           <i className="iconfont">&#xe66b;</i>通过
         </button>
       </div>
@@ -79,7 +61,7 @@ class GroupActorCheck extends React.Component {
           actor={groupActor.actor}
           canEdit={true}
           editingData={this.state.editingData}
-          onEditData={(k, v) => this._handleEditData(k, v)}
+          onEditData={(k, v) => this.handleEditData(k, v)}
         />
       </ModalPanel>
     );

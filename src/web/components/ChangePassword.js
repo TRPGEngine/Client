@@ -17,7 +17,7 @@ class ChangePassword extends React.Component {
     };
   }
 
-  _handleChangePassword() {
+  handleChangePassword() {
     this.setState({ error: '' });
     if (!this.state.newPassword || !this.state.oldPassword) {
       this.setState({ error: '密码不能为空' });
@@ -54,7 +54,7 @@ class ChangePassword extends React.Component {
 
   render() {
     let actions = (
-      <button onClick={() => this._handleChangePassword()}>确认修改</button>
+      <button onClick={() => this.handleChangePassword()}>确认修改</button>
     );
 
     return (

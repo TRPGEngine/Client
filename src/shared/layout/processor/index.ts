@@ -21,15 +21,12 @@ export function parseDataText(
  * XML渲染引擎，每次渲染组件都会循环调用该方法
  * 返回一个react vdom
  * @param data XML的ast
- * @param context 上下文，包括状态和dispatch
+ * @param context 上下文，包括状态和dispatch和布局类型
  * @param layoutType 布局类型, 为edit或detail
  */
-export function render(
-  data: XMLElement,
-  context: XMLBuilderContext,
-  layoutType: string = 'edit'
-) {
+export function render(data: XMLElement, context: XMLBuilderContext) {
   const { type } = data;
+  const layoutType = context.layoutType || 'edit';
 
   // 仅渲染元素类型与文本类型与根节点
   if (!['element', 'text', 'root'].includes(type)) {
@@ -52,7 +49,7 @@ export function render(
       .forEach((key) => {
         const value = attributes[key];
         const realKey = key.substr(1);
-        const realVal = parseDataText(`{{${value}}}`, context);
+        const realVal = parseDataText(`{{(${value})}}`, context);
         attributes[realKey] = realVal;
       });
   }

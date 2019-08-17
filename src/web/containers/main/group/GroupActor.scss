@@ -70,10 +70,6 @@
     }
   }
 
-  .group-actor-action {
-    padding: 4px 10px;
-  }
-
   .group-actor-items {
     flex: 1;
     padding: 0 10px;
@@ -101,6 +97,6 @@
   .no-content {
     text-align: center;
     color: $color-dove-gray;
-    margin-top: 50px;
+    margin: 50px 0;
   }
 }

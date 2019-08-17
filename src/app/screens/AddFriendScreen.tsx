@@ -12,6 +12,7 @@ import sb from 'react-native-style-block';
 import { TIcon, TInput, TAvatar } from '../components/TComponent';
 import { findUser } from '../../redux/actions/user';
 import { findGroup } from '../../redux/actions/group';
+import { switchNav } from '../redux/actions/nav';
 
 interface Props extends DispatchProp<any> {
   isFinding: boolean;
@@ -26,7 +27,7 @@ class AddFriendScreen extends React.Component<Props> {
     searchType: 'user',
   };
 
-  _handleSearchUser() {
+  handleSearchUser() {
     let searchValue = this.state.searchValue.trim();
     console.log('搜索用户:', searchValue);
     Keyboard.dismiss();
@@ -34,13 +35,49 @@ class AddFriendScreen extends React.Component<Props> {
     this.props.dispatch(findUser(searchValue, 'username'));
   }
 
-  _handleSearchGroup() {
+  handleSearchGroup() {
     let searchValue = this.state.searchValue.trim();
     console.log('搜索团:', searchValue);
     Keyboard.dismiss();
 
     this.setState({ showSearchResult: true, searchType: 'group' });
     this.props.dispatch(findGroup(searchValue, 'groupname'));
+  }
+
+  /**
+   * 搜索结果列表
+   * @param data 列表数据源
+   * @param onPress 点击后回调
+   */
+  getSearchList(data: any[], onPress: (item: any) => void) {
+    return data.length > 0 ? (
+      <FlatList
+        style={styles.searchResultList}
+        data={data}
+        keyExtractor={(item, index) => item.uuid + index}
+        renderItem={({ item }) => {
+          const name = item.name;
+
+          return (
+            <TouchableOpacity
+              style={styles.searchResultListItem}
+              onPress={() => onPress(item)}
+            >
+              <TAvatar
+                style={styles.searchResultListItemAvatar}
+                uri={item.avatar}
+                name={name}
+                width={36}
+                height={36}
+              />
+              <Text>{name}</Text>
+            </TouchableOpacity>
+          );
+        }}
+      />
+    ) : (
+      <Text>没有找到符合条件的搜索结果</Text>
+    );
   }
 
   getSearchResult() {
@@ -52,7 +89,7 @@ class AddFriendScreen extends React.Component<Props> {
       return (
         <View style={styles.searchResult}>
           <TouchableOpacity
-            onPress={() => this._handleSearchUser()}
+            onPress={() => this.handleSearchUser()}
             style={styles.searchResultItem}
           >
             <TIcon
@@ -67,7 +104,7 @@ class AddFriendScreen extends React.Component<Props> {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this._handleSearchGroup()}
+            onPress={() => this.handleSearchGroup()}
             style={styles.searchResultItem}
           >
             <TIcon
@@ -93,60 +130,23 @@ class AddFriendScreen extends React.Component<Props> {
             ? this.props.userFindingResult.toJS()
             : [];
 
-          return (
-            <FlatList
-              style={styles.searchResultList}
-              data={userFindingResult}
-              keyExtractor={(item, index) => item.uuid + index}
-              renderItem={({ item }) => {
-                let name = item.nickname || item.username;
-                return (
-                  <TouchableOpacity
-                    style={styles.searchResultListItem}
-                    onPress={() => alert('TODO:显示用户资料' + item.uuid)}
-                  >
-                    <TAvatar
-                      style={styles.searchResultListItemAvatar}
-                      uri={item.avatar}
-                      name={name}
-                      width={36}
-                      height={36}
-                    />
-                    <Text>{name}</Text>
-                  </TouchableOpacity>
-                );
-              }}
-            />
+          return this.getSearchList(
+            userFindingResult.map((item) => ({
+              ...item,
+              name: item.nickname || item.username,
+            })),
+            (item) =>
+              this.props.dispatch(
+                switchNav('Profile', { uuid: item.uuid, type: 'user' })
+              )
           );
         } else if (this.state.searchType === 'group') {
           let resultList = this.props.groupFindingResult
             ? this.props.groupFindingResult.toJS()
             : [];
 
-          return (
-            <FlatList
-              style={styles.searchResultList}
-              data={resultList}
-              keyExtractor={(item, index) => item.uuid + index}
-              renderItem={({ item }) => {
-                let name = item.name;
-                return (
-                  <TouchableOpacity
-                    style={styles.searchResultListItem}
-                    onPress={() => alert('TODO:显示团资料' + item.uuid)}
-                  >
-                    <TAvatar
-                      style={styles.searchResultListItemAvatar}
-                      uri={item.avatar}
-                      name={name}
-                      width={36}
-                      height={36}
-                    />
-                    <Text>{name}</Text>
-                  </TouchableOpacity>
-                );
-              }}
-            />
+          return this.getSearchList(resultList, (item) =>
+            this.props.dispatch(switchNav('GroupProfile', { uuid: item.uuid }))
           );
         } else {
           return <Text>搜索结果异常</Text>;
@@ -168,7 +168,7 @@ class AddFriendScreen extends React.Component<Props> {
             }
             placeholder="用户名/团名/uuid"
             returnKeyType="search"
-            onSubmitEditing={() => this._handleSearchUser()}
+            onSubmitEditing={() => this.handleSearchUser()}
           />
         </View>
 

@@ -1,16 +1,19 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Dispatch } from 'redux';
 import { connect, DispatchProp } from 'react-redux';
 import sb from 'react-native-style-block';
-import ImagePicker, { ImagePickerOptions } from 'react-native-image-picker';
+import ImageCropPicker, { Image } from 'react-native-image-crop-picker';
 import axios from 'axios';
-import { fileUrl } from '../../api/trpg.api.js';
+import { fileUrl } from '../../api/trpg.api';
 import { toast } from '../../shared/utils/apputils';
 import { updateInfo } from '../../redux/actions/user';
-import { showAlert } from '../../redux/actions/ui';
-import { TAvatar } from '../components/TComponent';
-import ListCell from '../components/ListCell';
+import { showModal, hideModal } from '../../redux/actions/ui';
+import { TAvatar, TInput } from '../components/TComponent';
+import _last from 'lodash/last';
+import { List } from '@ant-design/react-native';
+import TModalPanel from '../components/TComponent/TModalPanel';
+import TPicker from '../components/TComponent/TPicker';
+const Item = List.Item;
 
 interface Props extends DispatchProp<any> {
   userInfo: any;
@@ -65,41 +68,90 @@ class ProfileModifyScreen extends React.Component<Props> {
       });
   }
 
-  _handleSelectAvatar() {
-    const options: ImagePickerOptions = {
-      title: '选择头像',
-      cancelButtonTitle: '取消',
-      takePhotoButtonTitle: '拍一张照片',
-      chooseFromLibraryButtonTitle: '从相册选一张',
-      mediaType: 'photo',
-      maxWidth: 128,
-      maxHeight: 128,
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('图片选择结果:', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
+  handleSelectAvatar() {
+    ImageCropPicker.openPicker({
+      width: 256,
+      height: 256,
+      cropping: true,
+    })
+      .then((image: Image) => {
         this._uploadAvatar(
-          response.uri,
-          response.type,
-          response.fileName,
-          response.fileSize,
-          response.width,
-          response.height
+          image.path,
+          image.mime,
+          image.filename || _last(image.path.split('/')),
+          image.size,
+          image.width,
+          image.height
         );
-      }
-    });
+      })
+      .catch((err) => console.log(err));
   }
+
+  /**
+   * 更新用户信息
+   * 成功后关闭modal弹窗
+   */
+  updateUserInfo(data: {}) {
+    const { dispatch } = this.props;
+
+    dispatch(updateInfo(data, () => dispatch(hideModal())));
+  }
+
+  handleEditNickname = () => {
+    const { dispatch, userInfo } = this.props;
+    let nickname = userInfo.get('nickname');
+
+    dispatch(
+      showModal(
+        <TModalPanel onOk={() => this.updateUserInfo({ nickname })}>
+          <TInput
+            defaultValue={nickname}
+            onChangeText={(text) => (nickname = text)}
+          />
+        </TModalPanel>
+      )
+    );
+  };
+
+  handleEditSex = () => {
+    const { dispatch, userInfo } = this.props;
+    let sex = userInfo.get('sex');
+
+    dispatch(
+      showModal(
+        <TModalPanel onOk={() => this.updateUserInfo({ sex })}>
+          <TPicker
+            items={[
+              { label: '男', value: '男' },
+              { label: '女', value: '女' },
+              { label: '其他', value: '其他' },
+              { label: '保密', value: '保密' },
+            ]}
+            defaultValue={sex}
+            onValueChange={(val) => (sex = val)}
+          />
+        </TModalPanel>
+      )
+    );
+  };
+
+  handleEditSign = () => {
+    const { dispatch, userInfo } = this.props;
+    let sign = userInfo.get('sign');
+
+    dispatch(
+      showModal(
+        <TModalPanel onOk={() => this.updateUserInfo({ sign })}>
+          <TInput
+            multiline={true}
+            numberOfLines={4}
+            defaultValue={sign}
+            onChangeText={(text) => (sign = text)}
+          />
+        </TModalPanel>
+      )
+    );
+  };
 
   render() {
     const userInfo = this.props.userInfo;
@@ -107,7 +159,7 @@ class ProfileModifyScreen extends React.Component<Props> {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => this._handleSelectAvatar()}>
+          <TouchableOpacity onPress={() => this.handleSelectAvatar()}>
             <TAvatar
               style={styles.avatar}
               uri={userInfo.get('avatar', '')}
@@ -121,29 +173,29 @@ class ProfileModifyScreen extends React.Component<Props> {
           <Text style={styles.uuid}>{userInfo.get('uuid')}</Text>
         </View>
 
-        <View>
-          <ListCell
-            title="昵称"
-            value={userInfo.get('nickname')}
-            onPress={() => {
-              this.props.dispatch(showAlert('未实现'));
-            }}
-          />
-          <ListCell
-            title="性别"
-            value={userInfo.get('sex')}
-            onPress={() => {
-              this.props.dispatch(showAlert('未实现'));
-            }}
-          />
-          <ListCell
-            title="个性签名"
-            value={userInfo.get('sign')}
-            onPress={() => {
-              this.props.dispatch(showAlert('未实现'));
-            }}
-          />
-        </View>
+        <List>
+          <Item
+            arrow="horizontal"
+            extra={userInfo.get('nickname')}
+            onPress={this.handleEditNickname}
+          >
+            昵称
+          </Item>
+          <Item
+            arrow="horizontal"
+            extra={userInfo.get('sex')}
+            onPress={this.handleEditSex}
+          >
+            性别
+          </Item>
+          <Item
+            arrow="horizontal"
+            extra={userInfo.get('sign')}
+            onPress={this.handleEditSign}
+          >
+            个性签名
+          </Item>
+        </List>
       </View>
     );
   }

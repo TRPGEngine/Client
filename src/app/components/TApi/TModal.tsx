@@ -1,7 +1,13 @@
 import React from 'react';
-import { View, Modal, TouchableWithoutFeedback } from 'react-native';
+import {
+  View,
+  Modal,
+  TouchableWithoutFeedback,
+  ScrollView,
+} from 'react-native';
 import sb from 'react-native-style-block';
 import TPopup from './TPopup';
+import _get from 'lodash/get';
 
 const styles = {
   container: [sb.flex(), sb.center()],
@@ -10,7 +16,7 @@ const styles = {
     sb.padding(10),
     sb.bgColor(),
     sb.radius(3),
-    { minWidth: 240, minHeight: 320 },
+    { minWidth: 240, minHeight: 120, maxWidth: '90%', maxHeight: '90%' },
   ],
 };
 
@@ -21,7 +27,7 @@ class TModalContainer extends React.Component<Props> {
   render() {
     return (
       <Modal
-        animationType="fade"
+        animationType="slide"
         transparent={true}
         onRequestClose={this.props.onRequestClose}
       >
@@ -30,17 +36,25 @@ class TModalContainer extends React.Component<Props> {
             <View style={styles.mask} />
           </TouchableWithoutFeedback>
 
-          <View style={styles.view}>{this.props.children}</View>
+          <ScrollView style={styles.view}>{this.props.children}</ScrollView>
         </View>
       </Modal>
     );
   }
 }
 
+export interface TModalOptions {
+  onRequestClose?: () => void;
+}
+
 const TModal = {
-  show: function(view) {
+  show: function(view: React.ReactNode, opts: TModalOptions = {}) {
     return TPopup.show(
-      <TModalContainer onRequestClose={() => this.hide()}>
+      <TModalContainer
+        onRequestClose={() =>
+          opts.onRequestClose ? opts.onRequestClose() : this.hide()
+        }
+      >
         {view}
       </TModalContainer>
     );

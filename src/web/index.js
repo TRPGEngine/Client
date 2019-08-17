@@ -5,12 +5,14 @@ import App from './containers/App';
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
-import { attachStore } from '../shared/utils/cacheHelper';
+import { ThemeProvider } from 'styled-components';
+import { getTheme } from './theme';
+import { attachStore } from '../shared/utils/cache-helper';
 import config from '../../config/project.config.js';
 import configureStore from '../redux/configureStore';
-import * as trpgApi from '../api/trpg.api.js';
+import * as trpgApi from '../api/trpg.api';
 import notify from './utils/notify';
-import rnStorage from '../api/rnStorage.api.js';
+import rnStorage from '../api/rn-storage.api';
 import { showAlert } from '../redux/actions/ui';
 import { loginWithToken } from '../redux/actions/user';
 import {
@@ -64,7 +66,7 @@ window.onerror = (event, source, fileno, columnNumber, error) => {
 
 // 检查版本, 网页版跳过检查
 if (config.platform !== 'web') {
-  import('../shared/utils/checkVersion.js').then((module) => {
+  import('../shared/utils/check-version').then((module) => {
     const checkVersion = module.default;
     checkVersion(function(isLatest) {
       if (isLatest) {
@@ -86,7 +88,9 @@ if (config.platform !== 'web') {
 
 ReactDom.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider theme={getTheme(store)}>
+      <App />
+    </ThemeProvider>
   </Provider>,
   document.querySelector('#app')
 );

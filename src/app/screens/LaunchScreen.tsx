@@ -52,10 +52,10 @@ class LaunchScreen extends React.Component<Props> {
             duration: 1000,
           }),
         ]).start(() => {
-          this._handleFinishAnimation();
+          this.handleFinishAnimation();
         });
       } else {
-        this._handleFinishAnimation();
+        this.handleFinishAnimation();
       }
     }, 500);
   }
@@ -78,7 +78,7 @@ class LaunchScreen extends React.Component<Props> {
     clearTimeout(this.animationTimer);
   }
 
-  _handleFinishAnimation() {
+  handleFinishAnimation() {
     if (this.props.network.get('isOnline') === false) {
       return;
     }

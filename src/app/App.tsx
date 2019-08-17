@@ -10,13 +10,13 @@ import { AppWithNavigationState } from './router';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as AntdProvider } from '@ant-design/react-native';
 import { injectLoginSuccessCallback } from '../shared/utils/inject';
-import { init as initNotify, bindInfo, tryLocalNotify } from './notify';
+import { bindInfo, tryLocalNotify } from './notify';
 import codePush from 'react-native-code-push';
 import appConfig from './config.app';
 
-require('../shared/utils/cacheHelper').attachStore(store);
+require('../shared/utils/cache-helper').attachStore(store);
 
-import * as trpgApi from '../api/trpg.api.js';
+import * as trpgApi from '../api/trpg.api';
 const api = trpgApi.getInstance();
 trpgApi.bindEventFunc.call(api, store, {
   onReceiveMessage(messageData) {
@@ -24,7 +24,6 @@ trpgApi.bindEventFunc.call(api, store, {
   },
 });
 
-initNotify();
 injectLoginSuccessCallback(() => {
   // 登录成功
   const userUUID = store.getState().getIn(['user', 'info', 'uuid']);
@@ -32,7 +31,7 @@ injectLoginSuccessCallback(() => {
 });
 
 // token登录
-import rnStorage from '../api/rnStorage.api.js';
+import rnStorage from '../api/rn-storage.api';
 (async () => {
   console.log('读取本地存储的token...');
   let uuid = await rnStorage.get('uuid');

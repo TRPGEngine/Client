@@ -5,7 +5,7 @@ import Select from 'react-select';
 import ImageViewer from './ImageViewer';
 import ImageUploader from './ImageUploader';
 import { showAlert, hideProfileCard } from '../../redux/actions/ui';
-import { addFriend, updateInfo } from '../../redux/actions/user';
+import { sendFriendInvite, updateInfo } from '../../redux/actions/user';
 import { addUserConverse, switchToConverse } from '../../redux/actions/chat';
 import './ProfileCard.scss';
 
@@ -18,7 +18,7 @@ class ProfileCard extends React.Component {
     };
   }
 
-  _handleEditProfile() {
+  handleEditProfile() {
     if (this.props.isSelf) {
       this.setState({ isEdited: true });
       this.setEditedInfo();
@@ -27,23 +27,23 @@ class ProfileCard extends React.Component {
     }
   }
 
-  _handleClose() {
+  handleClose() {
     this.setState({ isEdited: false });
     this.props.hideProfileCard();
   }
 
-  _handleReset() {
+  handleReset() {
     console.log('重置');
     this.setEditedInfo();
   }
 
-  _handleSave() {
+  handleSave() {
     console.log('保存修改', this.state.editedInfo);
     this.props.updateInfo(this.state.editedInfo);
     this.setState({ isEdited: false });
   }
 
-  _handleUpdateAvatar(avatarUrl) {
+  handleUpdateAvatar(avatarUrl) {
     this.props.updateInfo({ avatar: avatarUrl });
   }
 
@@ -73,14 +73,14 @@ class ProfileCard extends React.Component {
         <div className="actions">
           <button
             className="footer-item active"
-            onClick={() => this._handleReset()}
+            onClick={() => this.handleReset()}
             disabled={!isChanged}
           >
             <i className="iconfont">&#xe67c;</i>重置
           </button>
           <button
             className="footer-item active"
-            onClick={() => this._handleSave()}
+            onClick={() => this.handleSave()}
             disabled={!isChanged}
           >
             <i className="iconfont">&#xe634;</i>保存
@@ -99,7 +99,7 @@ class ProfileCard extends React.Component {
           <button
             className="footer-item active"
             disabled={disabledAddFriend}
-            onClick={() => this.props.addFriend(uuid)}
+            onClick={() => this.props.sendFriendInvite(uuid)}
           >
             <i className="iconfont">&#xe604;</i>添加好友
           </button>
@@ -148,7 +148,7 @@ class ProfileCard extends React.Component {
           <i className="iconfont">&#xe602;</i>取消编辑
         </button>
       ) : (
-        <button className="action" onClick={() => this._handleEditProfile()}>
+        <button className="action" onClick={() => this.handleEditProfile()}>
           <i className="iconfont">&#xe602;</i>编辑资料
         </button>
       );
@@ -260,7 +260,7 @@ class ProfileCard extends React.Component {
                       type="user"
                       attachUUID={this.props.selectedUUID}
                       onUploadSuccess={(json) =>
-                        this._handleUpdateAvatar(json.url)
+                        this.handleUpdateAvatar(json.url)
                       }
                     >
                       <img src={avatar || config.defaultImg.getUser(name)} />
@@ -279,7 +279,7 @@ class ProfileCard extends React.Component {
                 </span>
                 {isSelf ? editBtn : null}
               </div>
-              <div className="close" onClick={() => this._handleClose()}>
+              <div className="close" onClick={() => this.handleClose()}>
                 <i className="iconfont">&#xe70c;</i>
               </div>
             </div>
@@ -318,10 +318,10 @@ export default connect(
     hideProfileCard: () => dispatch(hideProfileCard()),
     addUserConverse: (uuid) => {
       dispatch(addUserConverse(uuid));
-      dispatch(switchToConverse(uuid, uuid));
+      dispatch(switchToConverse(uuid));
     },
     // createConverse: (uuid, type, isSwitchToConv = true) => dispatch(createConverse(uuid, type, isSwitchToConv)),
-    addFriend: (uuid) => dispatch(addFriend(uuid)),
+    sendFriendInvite: (uuid) => dispatch(sendFriendInvite(uuid)),
     updateInfo: (updatedData) => dispatch(updateInfo(updatedData)),
   })
 )(ProfileCard);

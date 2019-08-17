@@ -1,8 +1,9 @@
-import immutable from 'immutable';
+import immutable, { Record, Map, List } from 'immutable';
 import constants from '../constants';
 const {
   RESET,
   GET_TEMPLATE_SUCCESS,
+  GET_SUGGEST_TEMPLATES_SUCCESS,
   FIND_TEMPLATE_SUCCESS,
   CREATE_TEMPLATE_SUCCESS,
   UPDATE_TEMPLATE_SUCCESS,
@@ -16,8 +17,26 @@ const {
   UPDATE_ACTOR_SUCCESS,
 } = constants;
 
-const initialState = immutable.fromJS({
+export type ActorState = Record<{
+  isFindingTemplate: boolean;
+  suggestTemplate: List<any>;
+  findingResult: List<any>;
+  currentEditedTemplate: Record<{
+    uuid: string;
+    name: string;
+    desc: string;
+    avatar: string;
+    info: string;
+  }>;
+  selfTemplate: List<any>;
+  selectedTemplate: any;
+  selfActors: List<any>;
+  selectedActorUUID: string;
+}>;
+
+const initialState: ActorState = immutable.fromJS({
   isFindingTemplate: false, // 模板查询页面
+  suggestTemplate: [], // 系统推荐模板列表
   findingResult: [], // 模板查询结果
   currentEditedTemplate: {
     uuid: '',
@@ -54,6 +73,8 @@ export default function actor(state = initialState, action) {
   switch (action.type) {
     case RESET:
       return initialState;
+    case GET_SUGGEST_TEMPLATES_SUCCESS:
+      return state.set('suggestTemplate', immutable.fromJS(action.payload));
     case FIND_TEMPLATE_SUCCESS:
       return state.set('findingResult', immutable.fromJS(action.payload));
     case CREATE_TEMPLATE_SUCCESS:

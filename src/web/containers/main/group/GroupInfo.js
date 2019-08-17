@@ -20,12 +20,12 @@ import GroupEdit from '../../../components/modal/GroupEdit';
 import './GroupInfo.scss';
 
 class GroupInfo extends React.Component {
-  _handleEditGroup() {
+  handleEditGroup() {
     console.log('编辑团信息');
     this.props.showModal(<GroupEdit />);
   }
 
-  _handleDismissGroup() {
+  handleDismissGroup() {
     this.props.showAlert({
       title: '是否要解散群',
       content: '一旦确定无法撤销',
@@ -39,7 +39,7 @@ class GroupInfo extends React.Component {
     });
   }
 
-  _handleQuitGroup() {
+  handleQuitGroup() {
     this.props.showAlert({
       title: '是否要退出群',
       content: '一旦确定无法撤销',
@@ -53,7 +53,7 @@ class GroupInfo extends React.Component {
     });
   }
 
-  _handleSwitchGroupStatus(status = false) {
+  handleSwitchGroupStatus(status = false) {
     this.props.setGroupStatus(this.props.groupInfo.get('uuid'), status);
   }
 
@@ -91,7 +91,7 @@ class GroupInfo extends React.Component {
         </div>
         <div className="group-info-cells">
           <div className="group-info-cell">
-            <span>团长:</span>
+            <span>团主持人:</span>
             <span>
               {usercache.getIn([groupInfo.get('owner_uuid'), 'nickname'])}
             </span>
@@ -125,11 +125,11 @@ class GroupInfo extends React.Component {
             <div className="group-info-cells">
               <div className="group-info-cell">
                 {groupInfo.get('status') ? (
-                  <button onClick={() => this._handleSwitchGroupStatus(false)}>
+                  <button onClick={() => this.handleSwitchGroupStatus(false)}>
                     闭团
                   </button>
                 ) : (
-                  <button onClick={() => this._handleSwitchGroupStatus(true)}>
+                  <button onClick={() => this.handleSwitchGroupStatus(true)}>
                     开团
                   </button>
                 )}
@@ -137,10 +137,10 @@ class GroupInfo extends React.Component {
             </div>
             <div className="group-info-cells">
               <div className="group-info-cell">
-                <button onClick={() => this._handleEditGroup()}>编辑团</button>
+                <button onClick={() => this.handleEditGroup()}>编辑团</button>
               </div>
               <div className="group-info-cell">
-                <button onClick={() => this._handleDismissGroup()}>
+                <button onClick={() => this.handleDismissGroup()}>
                   解散团
                 </button>
               </div>
@@ -150,7 +150,7 @@ class GroupInfo extends React.Component {
           <div>
             <div className="group-info-cells">
               <div className="group-info-cell">
-                <button onClick={() => this._handleQuitGroup()}>退出团</button>
+                <button onClick={() => this.handleQuitGroup()}>退出团</button>
               </div>
             </div>
           </div>

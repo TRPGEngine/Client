@@ -6,12 +6,12 @@ import config from '../../../../config/project.config';
 import { downloadFile, previewFile } from '../../../redux/actions/file';
 
 class File extends Base {
-  _handlePreview() {
+  handlePreview() {
     let data = this.props.info.data;
     this.props.dispatch(previewFile(data.fileuuid));
   }
 
-  _handleDownload() {
+  handleDownload() {
     let data = this.props.info.data;
     this.props.dispatch(downloadFile(data.fileuuid));
   }
@@ -40,11 +40,11 @@ class File extends Base {
         ) : (
           <div className="file-action">
             {data.can_preview ? (
-              <button onClick={() => this._handlePreview()}>
+              <button onClick={() => this.handlePreview()}>
                 <i className="iconfont">&#xe6a2;</i>预览
               </button>
             ) : null}
-            <button onClick={() => this._handleDownload()}>
+            <button onClick={() => this.handleDownload()}>
               <i className="iconfont">&#xe688;</i>下载
             </button>
           </div>

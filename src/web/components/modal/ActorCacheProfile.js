@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ModalPanel from '../ModalPanel.js';
-import ActorProfile from './ActorProfile.js';
+import ModalPanel from '../ModalPanel';
+import ActorProfile from './ActorProfile';
 
 // 从缓存中获取actor信息的中间组件
 class ActorCacheProfile extends React.Component {

@@ -1,4 +1,3 @@
-import config from '../../../config/project.config';
 import actor from './actor';
 import cache from './cache';
 import chat from './chat';

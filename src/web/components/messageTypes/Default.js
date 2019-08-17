@@ -1,6 +1,6 @@
 import React from 'react';
 import Base from './Base';
-import msgParser from '../../../shared/utils/msgParser';
+import msgParser from '../../../shared/utils/msg-parser';
 
 class Default extends Base {
   getContent() {

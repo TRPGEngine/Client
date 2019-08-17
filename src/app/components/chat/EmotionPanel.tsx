@@ -30,12 +30,13 @@ const EmotionCarousel = styled(Carousel)`
   height: ${EMOJI_PANEL_HEIGHT - 35};
 `;
 
-const EmoticonCatalog = styled.View`
+const EmoticonCatalog = styled.ScrollView.attrs({
+  horizontal: true,
+})`
   height: 35px;
   flex-direction: row;
   border-top-width: 0.5;
   border-top-color: #eee;
-  padding: 0 10px;
 `;
 
 const EmoticonCatalogItem = styled.TouchableOpacity<{ isSelected?: boolean }>`
@@ -104,10 +105,10 @@ class EmotionPanel extends React.Component<Props> {
   /**
    * 点击增加表情包功能
    */
-  _handleAddEmotionCatalog() {
+  handleAddEmotionCatalog() {
     Modal.operation([
       {
-        text: '暗号',
+        text: '通过暗号添加表情包',
         onPress: () => {
           // 打开输入框
           Modal.prompt('表情包暗号', '请输入暗号，大小写任意', (message) => {
@@ -199,11 +200,11 @@ class EmotionPanel extends React.Component<Props> {
 
     return (
       <EmoticonPanel>
-        <EmotionCarousel>
+        <EmotionCarousel key={selectedEmotionCatalog}>
           {isEmoji ? getEmojiPage() : getEmotionPage()}
         </EmotionCarousel>
         <EmoticonCatalog>
-          <EmoticonCatalogItem onPress={() => this._handleAddEmotionCatalog()}>
+          <EmoticonCatalogItem onPress={() => this.handleAddEmotionCatalog()}>
             <EmojiText>
               <Text>+</Text>
             </EmojiText>
@@ -215,7 +216,7 @@ class EmotionPanel extends React.Component<Props> {
             return (
               <EmoticonCatalogItem
                 key={catalog + name}
-                isSelected={this.state.selectedEmotionCatalog === catalog}
+                isSelected={selectedEmotionCatalog === catalog}
                 onPress={() =>
                   this.setState({ selectedEmotionCatalog: catalog })
                 }
@@ -233,7 +234,7 @@ class EmotionPanel extends React.Component<Props> {
             return (
               <EmoticonCatalogItem
                 key={catalogUUID}
-                isSelected={this.state.selectedEmotionCatalog === catalogUUID}
+                isSelected={selectedEmotionCatalog === catalogUUID}
                 onPress={() =>
                   this.setState({ selectedEmotionCatalog: catalogUUID })
                 }

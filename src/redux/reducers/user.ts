@@ -1,6 +1,5 @@
-import immutable from 'immutable';
+import immutable, { Record, List } from 'immutable';
 import constants from '../constants';
-// import sessionStorage from '../../api/sessionStorage.api.js';
 const {
   RESET,
   LOGIN_REQUEST,
@@ -24,7 +23,18 @@ const {
   ADD_FRIEND_INVITE,
 } = constants;
 
-const initialState = immutable.fromJS({
+export type UserState = Record<{
+  isTryLogin: boolean;
+  isLogin: boolean;
+  info: any;
+  friendList: List<any>;
+  friendInvite: List<any>;
+  friendRequests: List<any>;
+  isFindingUser: boolean;
+  findingResult: List<any>;
+}>;
+
+const initialState: UserState = immutable.fromJS({
   isTryLogin: false,
   isLogin: false,
   info: {},

@@ -4,12 +4,12 @@ import config from '../../../../../config/project.config.js';
 import moment from 'moment';
 import { showModal, showProfileCard } from '../../../../redux/actions/ui';
 import GroupMemberManage from './modal/GroupMemberManage';
-import { getUserInfoCache } from '../../../../shared/utils/cacheHelper';
+import { getUserInfoCache } from '../../../../shared/utils/cache-helper';
 
 import './GroupMember.scss';
 
 class GroupMember extends React.Component {
-  _handleManageMember(uuid) {
+  handleManageMember(uuid) {
     this.props.showModal(<GroupMemberManage uuid={uuid} />);
   }
 
@@ -44,7 +44,7 @@ class GroupMember extends React.Component {
             <td className="last-login">{last_login}</td>
             <td className="actions">
               {hasManagerAuth ? (
-                <button onClick={() => this._handleManageMember(uuid)}>
+                <button onClick={() => this.handleManageMember(uuid)}>
                   <i className="iconfont">&#xe83f;</i>
                 </button>
               ) : null}

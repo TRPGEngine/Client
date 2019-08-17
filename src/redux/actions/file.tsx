@@ -1,5 +1,5 @@
 import React from 'react';
-import * as trpgApi from '../../api/trpg.api.js';
+import * as trpgApi from '../../api/trpg.api';
 import config from '../../../config/project.config';
 import { showSlidePanel, showLightbox } from './ui';
 import Webview from '../../web/components/Webview';

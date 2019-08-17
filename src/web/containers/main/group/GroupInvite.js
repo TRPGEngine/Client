@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import config from '../../../../../config/project.config.js';
 import ReactTooltip from 'react-tooltip';
 import { sendGroupInvite } from '../../../../redux/actions/group';
-import { getUserInfoCache } from '../../../../shared/utils/cacheHelper';
+import { getUserInfoCache } from '../../../../shared/utils/cache-helper';
 
 import './GroupInvite.scss';
 
@@ -15,7 +15,7 @@ class GroupInvite extends React.Component {
     };
   }
 
-  _handleSelect(uuid) {
+  handleSelect(uuid) {
     let selectedUUIDs = this.state.selectedUUIDs;
     let index = selectedUUIDs.indexOf(uuid);
     if (index >= 0) {
@@ -27,7 +27,7 @@ class GroupInvite extends React.Component {
     }
   }
 
-  _handleSendGroupInvite() {
+  handleSendGroupInvite() {
     console.log('handleSendGroupInvite', this.state.selectedUUIDs);
     let groupUUID = this.props.selectedGroupUUID;
     for (let uuid of this.state.selectedUUIDs) {
@@ -56,7 +56,7 @@ class GroupInvite extends React.Component {
                   'item' +
                   (this.state.selectedUUIDs.indexOf(uuid) >= 0 ? ' active' : '')
                 }
-                onClick={() => this._handleSelect(uuid)}
+                onClick={() => this.handleSelect(uuid)}
                 data-tip={name}
               >
                 <div className="avatar">
@@ -92,7 +92,7 @@ class GroupInvite extends React.Component {
             );
           })}
         </div>
-        <button onClick={() => this._handleSendGroupInvite()}>发送邀请</button>
+        <button onClick={() => this.handleSendGroupInvite()}>发送邀请</button>
       </div>
     );
   }

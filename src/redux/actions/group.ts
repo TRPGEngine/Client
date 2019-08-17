@@ -22,11 +22,13 @@ const {
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
   UPDATE_GROUP_ACTOR_INFO_SUCCESS,
+  UPDATE_GROUP_ACTOR_MAPPING,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
   TICK_MEMBER_SUCCESS,
   SET_MEMBER_TO_MANAGER_SUCCESS,
   UPDATE_GROUP_STATUS,
+  UPDATE_PLAYER_SELECTED_GROUP_ACTOR,
 } = constants;
 import config from '../../../config/project.config';
 import {
@@ -34,7 +36,7 @@ import {
   updateConversesMsglist,
   updateCardChatData,
 } from './chat';
-import { checkUser, checkTemplate } from '../../shared/utils/cacheHelper';
+import { checkUser, checkTemplate } from '../../shared/utils/cache-helper';
 import {
   showLoading,
   hideLoading,
@@ -43,8 +45,10 @@ import {
   hideAlert,
   hideSlidePanel,
 } from './ui';
+import _set from 'lodash/set';
+import _get from 'lodash/get';
 
-import * as trpgApi from '../../api/trpg.api.js';
+import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 
 // 当state->group->groups状态添加新的group时使用来初始化
@@ -61,6 +65,7 @@ let initGroupInfo = function(dispatch, group) {
       lastTime: 0, // 设定初始化的团时间为0方便排序
     })
   );
+
   // 获取团成员
   api.emit('group::getGroupMembers', { groupUUID }, function(data) {
     if (data.result) {
@@ -80,13 +85,18 @@ let initGroupInfo = function(dispatch, group) {
       console.error('获取团成员失败:', data.msg);
     }
   });
+
   // 获取团人物
   api.emit('group::getGroupActors', { groupUUID }, function(data) {
     if (data.result) {
       let actors = data.actors;
       for (let ga of actors) {
-        ga.avatar = config.file.getAbsolutePath(ga.avatar);
-        ga.actor.avatar = config.file.getAbsolutePath(ga.actor.avatar);
+        _set(ga, 'avatar', config.file.getAbsolutePath(_get(ga, 'avatar')));
+        _set(
+          ga,
+          'actor.avatar',
+          config.file.getAbsolutePath(_get(ga, 'actor.avatar'))
+        );
         checkTemplate(ga.actor.template_uuid);
       }
       dispatch({ type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors });
@@ -94,6 +104,22 @@ let initGroupInfo = function(dispatch, group) {
       console.error('获取团人物失败:', data.msg);
     }
   });
+
+  // 获取团选择人物的Mapping
+  api.emit('group::getGroupActorMapping', { groupUUID }, function(data) {
+    if (data.result) {
+      const { mapping } = data;
+      console.log('mapping', mapping);
+      dispatch({
+        type: UPDATE_GROUP_ACTOR_MAPPING,
+        groupUUID,
+        payload: mapping,
+      });
+    } else {
+      console.error('获取团人物选择失败:', data.msg);
+    }
+  });
+
   // 获取团聊天日志
   api.emit('chat::getConverseChatLog', { converse_uuid: groupUUID }, function(
     data
@@ -131,7 +157,7 @@ export const getGroupInfo = function(uuid) {
         let group = data.group;
         group.avatar = config.file.getAbsolutePath(group.avatar);
         dispatch({ type: GET_GROUP_INFO_SUCCESS, payload: group });
-        dispatch(exports.getGroupStatus(uuid)); // 获取团信息后再获取团状态作为补充
+        dispatch(getGroupStatus(uuid)); // 获取团信息后再获取团状态作为补充
       } else {
         console.error(data);
       }
@@ -174,7 +200,11 @@ export const findGroup = function(text, type) {
   };
 };
 
-export const requestJoinGroup = function(group_uuid) {
+/**
+ * 发送申请加入团
+ * @param group_uuid 团UUID
+ */
+export const requestJoinGroup = function(group_uuid: string) {
   return function(dispatch, getState) {
     return api.emit('group::requestJoinGroup', { group_uuid }, function(data) {
       if (data.result) {
@@ -303,7 +333,7 @@ export const getGroupList = function() {
         dispatch({ type: GET_GROUP_LIST_SUCCESS, payload: groups });
         for (let group of groups) {
           initGroupInfo(dispatch, group);
-          dispatch(exports.getGroupStatus(group.uuid));
+          dispatch(getGroupStatus(group.uuid)); // 获取团状态
         }
       } else {
         console.error(data.msg);
@@ -316,6 +346,11 @@ export const switchSelectGroup = function(uuid) {
   return { type: SWITCH_GROUP, payload: uuid };
 };
 
+/**
+ * 修改当前选中的团角色的UUID
+ * @param groupUUID 团UUID
+ * @param groupActorUUID 团角色UUID
+ */
 export const changeSelectGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
     return api.emit(
@@ -335,6 +370,20 @@ export const changeSelectGroupActor = function(groupUUID, groupActorUUID) {
   };
 };
 
+/**
+ * 更新用户选择的团角色
+ */
+export const updatePlayerSelectedGroupActor = function(
+  groupUUID: string,
+  userUUID: string,
+  groupActorUUID: string
+) {
+  return {
+    type: UPDATE_PLAYER_SELECTED_GROUP_ACTOR,
+    payload: { groupUUID, userUUID, groupActorUUID },
+  };
+};
+
 export const addGroupActor = function(groupUUID, actorUUID) {
   return function(dispatch, getState) {
     return api.emit('group::addGroupActor', { groupUUID, actorUUID }, function(
@@ -343,9 +392,6 @@ export const addGroupActor = function(groupUUID, actorUUID) {
       if (data.result) {
         let groupActor = data.groupActor;
         groupActor.avatar = config.file.getAbsolutePath(groupActor.avatar);
-        groupActor.actor.avatar = config.file.getAbsolutePath(
-          groupActor.actor.avatar
-        );
         dispatch({
           type: ADD_GROUP_ACTOR_SUCCESS,
           groupUUID,
@@ -430,10 +476,13 @@ export const refuseGroupActor = function(groupUUID, groupActorUUID) {
   };
 };
 
+/**
+ * 更新团人物的人物卡信息
+ */
 export const updateGroupActorInfo = function(
-  groupUUID,
-  groupActorUUID,
-  groupActorInfo
+  groupUUID: string,
+  groupActorUUID: string,
+  groupActorInfo: {}
 ) {
   return function(dispatch, getState) {
     return api.emit(
@@ -535,7 +584,7 @@ export const getGroupStatus = function(groupUUID) {
   return function(dispatch, getState) {
     return api.emit('group::getGroupStatus', { groupUUID }, function(data) {
       if (data.result) {
-        dispatch(exports.updateGroupStatus(groupUUID, data.status));
+        dispatch(updateGroupStatus(groupUUID, data.status));
       } else {
         console.error(data);
       }
@@ -550,7 +599,7 @@ export const setGroupStatus = function(groupUUID, groupStatus) {
       { groupUUID, groupStatus },
       function(data) {
         if (data.result) {
-          dispatch(exports.updateGroupStatus(groupUUID, groupStatus));
+          dispatch(updateGroupStatus(groupUUID, groupStatus));
         } else {
           console.error(data);
         }

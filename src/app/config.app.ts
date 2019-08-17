@@ -47,11 +47,24 @@ const out = {
       checkFrequency: codePush.CheckFrequency.ON_APP_START,
     },
     sync() {
-      // TODO: wait to fix type
-      codePush.sync({
-        updateDialog: true as any,
-        installMode: codePush.InstallMode.IMMEDIATE,
-      });
+      codePush.sync(
+        {
+          updateDialog: true as any, // TODO: wait to fix type
+          installMode: codePush.InstallMode.IMMEDIATE,
+        },
+        (status) => {
+          console.log('[code push status]', status);
+        },
+        (progress) => {
+          console.log(
+            '[code push process]',
+            progress.receivedBytes / progress.totalBytes
+          );
+        },
+        (update) => {
+          console.log('[code push update]', update);
+        }
+      );
     },
   },
   oauth: {

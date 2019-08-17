@@ -5,10 +5,10 @@ const {
   GET_ACTOR_INFO,
   GET_GROUP_INFO_SUCCESS,
 } = constants;
-import * as trpgApi from '../../api/trpg.api.js';
+import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 import config from '../../../config/project.config';
-import rnStorage from '../../api/rnStorage.api.js';
+import rnStorage from '../../api/rn-storage.api';
 
 // 加载本地缓存信息
 export const loadLocalCache = function() {
@@ -41,7 +41,7 @@ export const getUserInfo = function(uuid, onCompleted?) {
       if (data.result) {
         data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
         dispatch({ type: GET_USER_INFO, payload: data.info });
-        dispatch(exports.saveLocalCache()); // 保存到本地缓存
+        dispatch(saveLocalCache()); // 保存到本地缓存
       } else {
         console.error(data.msg);
       }
@@ -51,7 +51,7 @@ export const getUserInfo = function(uuid, onCompleted?) {
   };
 };
 
-export const getTemplateInfo = function(uuid) {
+export const getTemplateInfo = function(uuid, onCompleted?) {
   if (!uuid) {
     throw new Error('getTemplateInfo need uuid');
   }
@@ -63,11 +63,13 @@ export const getTemplateInfo = function(uuid) {
       } else {
         console.error(data.msg);
       }
+
+      onCompleted && onCompleted(data);
     });
   };
 };
 
-export const getActorInfo = function(uuid) {
+export const getActorInfo = function(uuid, onCompleted?) {
   if (!uuid) {
     throw new Error('getActorInfo need uuid');
   }
@@ -81,6 +83,8 @@ export const getActorInfo = function(uuid) {
       } else {
         console.error(data.msg);
       }
+
+      onCompleted && onCompleted(data);
     });
   };
 };

@@ -11,7 +11,7 @@ class ConvItem extends React.Component {
     return isUserUUID(this.props.uuid);
   }
 
-  _handleCloseConv(e) {
+  handleCloseConv(e) {
     if (this.allowClose) {
       console.log('close conv:', this.props.uuid);
       this.props.dispatch(removeUserConverse(this.props.uuid));
@@ -21,7 +21,7 @@ class ConvItem extends React.Component {
     }
   }
 
-  _handleShowInfo(e) {
+  handleShowInfo(e) {
     if (this.allowClose) {
       e.stopPropagation();
       this.props.dispatch(showProfileCard(this.props.uuid));
@@ -30,7 +30,7 @@ class ConvItem extends React.Component {
 
   render() {
     let closeBtn = !this.props.hideCloseBtn ? (
-      <div className="close" onClick={(e) => this._handleCloseConv(e)}>
+      <div className="close" onClick={(e) => this.handleCloseConv(e)}>
         {this.allowClose ? <i className="iconfont">&#xe70c;</i> : null}
       </div>
     ) : null;
@@ -43,7 +43,7 @@ class ConvItem extends React.Component {
         onClick={this.props.onClick}
       >
         {closeBtn}
-        <div className="icon" onClick={(e) => this._handleShowInfo(e)}>
+        <div className="icon" onClick={(e) => this.handleShowInfo(e)}>
           <img src={this.props.icon} />
         </div>
         <div className="body">

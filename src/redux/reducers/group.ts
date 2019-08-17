@@ -1,4 +1,4 @@
-import immutable from 'immutable';
+import immutable, { Record, Map, List, fromJS } from 'immutable';
 import constants from '../constants';
 const {
   RESET,
@@ -19,11 +19,13 @@ const {
   GET_GROUP_ACTOR_SUCCESS,
   GET_GROUP_MEMBERS_SUCCESS,
   SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS,
+  UPDATE_PLAYER_SELECTED_GROUP_ACTOR,
   ADD_GROUP_ACTOR_SUCCESS,
   REMOVE_GROUP_ACTOR_SUCCESS,
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
   UPDATE_GROUP_ACTOR_INFO_SUCCESS,
+  UPDATE_GROUP_ACTOR_MAPPING,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
   TICK_MEMBER_SUCCESS,
@@ -31,7 +33,18 @@ const {
   UPDATE_GROUP_STATUS,
 } = constants;
 
-const initialState = immutable.fromJS({
+export type GroupState = Record<{
+  info: Map<string, any>;
+  invites: List<any>;
+  groups: List<any>;
+  selectedGroupUUID: string;
+  isFindingGroup: boolean;
+  findingResult: List<any>;
+  requestingGroupUUID: List<string>;
+  groupActorMap: Map<string, Map<string, string>>;
+}>;
+
+const initialState: GroupState = immutable.fromJS({
   info: {}, // 所有的group信息。包括加入的和未加入的 // TODO: 修改到cache里管理
   invites: [], // 邀请列表。里面是邀请对象
   groups: [], // 个人所有组的信息
@@ -39,6 +52,9 @@ const initialState = immutable.fromJS({
   isFindingGroup: false,
   findingResult: [],
   requestingGroupUUID: [],
+
+  // TODO: 需要在登录后获取团所有成员映射
+  groupActorMap: {}, // {groupUUID: {userUUID: groupActorUUID}} 如果为自己，可以使用self代替userUUID
 });
 
 export default function group(state = initialState, action) {
@@ -50,11 +66,11 @@ export default function group(state = initialState, action) {
         list.push(immutable.fromJS(action.payload))
       );
     case GET_GROUP_INFO_SUCCESS: {
-      let group_uuid = action.payload.uuid;
+      const group_uuid = action.payload.uuid;
       return state.setIn(['info', group_uuid], action.payload);
     }
     case UPDATE_GROUP_INFO_SUCCESS: {
-      let groupIndex = state
+      const groupIndex = state
         .get('groups')
         .findIndex((i) => i.get('uuid') === action.payload.uuid);
       if (groupIndex >= 0) {
@@ -168,19 +184,31 @@ export default function group(state = initialState, action) {
 
         return list;
       });
-    case SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS:
-      return state.update('groups', (list) => {
-        for (var i = 0; i < list.size; i++) {
-          if (list.getIn([i, 'uuid']) === action.payload.groupUUID) {
-            list = list.setIn(
-              [i, 'extra', 'selected_group_actor_uuid'],
-              action.payload.groupActorUUID
-            );
+    case SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS: {
+      const { groupUUID, groupActorUUID } = action.payload;
+      return state
+        .update('groups', (list) => {
+          for (var i = 0; i < list.size; i++) {
+            if (list.getIn([i, 'uuid']) === groupUUID) {
+              list = list.setIn(
+                [i, 'extra', 'selected_group_actor_uuid'],
+                groupActorUUID
+              );
+              break;
+            }
           }
-        }
 
-        return list;
-      });
+          return list;
+        })
+        .setIn(['groupActorMap', groupUUID, 'self'], groupActorUUID);
+    }
+    case UPDATE_PLAYER_SELECTED_GROUP_ACTOR: {
+      const { groupUUID, userUUID, groupActorUUID } = action.payload;
+      return state.setIn(
+        ['groupActorMap', groupUUID, userUUID],
+        groupActorUUID
+      );
+    }
     case ADD_GROUP_ACTOR_SUCCESS:
       return state.update('groups', (list) => {
         for (var i = 0; i < list.size; i++) {
@@ -257,6 +285,12 @@ export default function group(state = initialState, action) {
         ['groups', groupIndex, 'group_actors', groupActorIndex, 'actor_info'],
         immutable.fromJS(action.groupActorInfo)
       );
+    }
+    case UPDATE_GROUP_ACTOR_MAPPING: {
+      const groupUUID = action.groupUUID;
+      const payload = action.payload;
+
+      return state.setIn(['groupActorMap', groupUUID], fromJS(payload));
     }
     case QUIT_GROUP_SUCCESS:
     case DISMISS_GROUP_SUCCESS:

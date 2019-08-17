@@ -14,7 +14,7 @@ class ActorSelect extends React.Component {
     };
   }
 
-  _handleSelect() {
+  handleSelect() {
     let selectActorUUID = this.state.selectActorUUID;
     if (selectActorUUID) {
       console.log('[人物卡列表]选择了' + selectActorUUID);
@@ -31,7 +31,7 @@ class ActorSelect extends React.Component {
     }
   }
 
-  _handleActorCreate() {
+  handleActorCreate() {
     this.props.showModal(<TemplateSelect />);
   }
 
@@ -72,12 +72,12 @@ class ActorSelect extends React.Component {
           ) : (
             <div className="no-actor">
               尚无人物卡, 现在去
-              <span onClick={() => this._handleActorCreate()}>创建</span>
+              <span onClick={() => this.handleActorCreate()}>创建</span>
             </div>
           )}
         </div>
         <div className="action">
-          <button onClick={() => this._handleSelect()}>确定</button>
+          <button onClick={() => this.handleSelect()}>确定</button>
         </div>
       </div>
     );

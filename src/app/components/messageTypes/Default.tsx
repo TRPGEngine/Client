@@ -1,19 +1,58 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Clipboard } from 'react-native';
 import _get from 'lodash/get';
 import Base from './Base';
 import { parse } from '../../utils/textParser';
+import { Modal } from '@ant-design/react-native';
+import styled from 'styled-components/native';
+
+const MsgContainer = styled.TouchableHighlight.attrs({
+  underlayColor: '#eee',
+})<{
+  isImage: boolean;
+}>`
+  padding: ${(props) => (props.isImage ? 0 : '6px 8px')};
+`;
 
 class Default extends Base {
   get isMsgPadding() {
-    const message = String(_get(this, 'props.info.message', ''));
-    const isImage = message.startsWith('[img]') && message.endsWith('[/img]');
-    return !isImage;
+    return false;
   }
 
+  /**
+   * 消息文本
+   */
+  get message() {
+    return _get(this.props, 'info.message', '');
+  }
+
+  /**
+   * 是否为纯图片
+   */
+  get isImage() {
+    const message = this.message;
+    const isImage = message.startsWith('[img]') && message.endsWith('[/img]');
+    return isImage;
+  }
+
+  handleLongPress = () => {
+    Modal.operation([
+      {
+        text: '复制到剪切板',
+        onPress: () => {
+          // 复制文本到剪切板
+          Clipboard.setString(this.message);
+        },
+      },
+    ]);
+  };
+
   getContent() {
-    const info = this.props.info || {};
-    return <View>{parse(info.message)}</View>;
+    return (
+      <MsgContainer isImage={this.isImage} onLongPress={this.handleLongPress}>
+        <View>{parse(this.message)}</View>
+      </MsgContainer>
+    );
   }
 }
 

@@ -1,4 +1,8 @@
 rootProject.name = 'trpg'
+include ':react-native-config'
+project(':react-native-config').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-config/android')
+include ':react-native-image-crop-picker'
+project(':react-native-image-crop-picker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-image-crop-picker/android')
 include ':react-native-fast-image'
 project(':react-native-fast-image').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fast-image/android')
 include ':react-native-webview'
@@ -12,8 +16,6 @@ project(':react-native-gesture-handler').projectDir = new File(rootProject.proje
 include ':jcore-react-native'
 project(':jcore-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/jcore-react-native/android')
 
-include ':jpush-react-native'
-project(':jpush-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/jpush-react-native/android')
 
 include ':react-native-image-picker'
 project(':react-native-image-picker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-image-picker/android')

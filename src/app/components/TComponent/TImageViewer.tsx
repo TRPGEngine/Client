@@ -40,7 +40,7 @@ class TImageViewer extends React.Component<Props> {
     return { saveToLocal: '保存到相册', cancel: '取消' };
   }
 
-  _handlePressChildren() {
+  handlePressChildren() {
     this.setState({ modalVisible: true });
   }
 
@@ -67,7 +67,7 @@ class TImageViewer extends React.Component<Props> {
             menuContext={this.menuContext}
           />
         </Modal>
-        <TouchableOpacity onPress={() => this._handlePressChildren()}>
+        <TouchableOpacity onPress={() => this.handlePressChildren()}>
           {this.props.children}
         </TouchableOpacity>
       </View>

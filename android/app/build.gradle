@@ -18,6 +18,9 @@ import com.android.build.OutputFile
  *   // the entry file for bundle generation
  *   entryFile: "index.android.js",
  *
+ *   // https://facebook.github.io/react-native/docs/performance#enable-the-ram-format
+ *   bundleCommand: "ram-bundle",
+ *
  *   // whether to bundle JS and assets in debug mode
  *   bundleInDebug: false,
  *
@@ -73,12 +76,14 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    entryFile: "src/app/index.js"
+    entryFile: "src/app/index.js",
+    enableHermes: false,
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-sentry/sentry.gradle"
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -95,6 +100,61 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
+/**
+ * The preferred build flavor of JavaScriptCore.
+ *
+ * For example, to use the international variant, you can use:
+ * `def jscFlavor = 'org.webkit:android-jsc-intl:+'`
+ *
+ * The international variant includes ICU i18n library and necessary data
+ * allowing to use e.g. `Date.toLocaleString` and `String.localeCompare` that
+ * give correct results when using with locales other than en-US.  Note that
+ * this variant is about 6MiB larger per architecture than default.
+ */
+def jscFlavor = 'org.webkit:android-jsc:+'
+
+/**
+ * Whether to enable the Hermes VM.
+ *
+ * This should be set on project.ext.react and mirrored here.  If it is not set
+ * on project.ext.react, JavaScript will not be compiled to Hermes Bytecode
+ * and the benefits of using Hermes will therefore be sharply reduced.
+ */
+def enableHermes = project.ext.react.get("enableHermes", false);
+
+ext {
+    // 定义当前gradle文件的全局变量
+    isRelease = checkRelease()
+}
+
+// 检查是否是正式编译
+def checkRelease() {
+    def runTasks = gradle.startParameter.taskNames
+    for (String task : runTasks) {
+        // 我这里认为执行“assemble”和非“debug”的任务就是执行“release”的任务
+        if (task.contains("assemble") && !task.contains("Debug")) {
+            return true
+        }
+    }
+    return false
+}
+
+// 自增版本号
+def increasedVersionCode() {
+    def propFile = file('./version.properties')
+    def Properties props = new Properties()
+    props.load(new FileInputStream(propFile))
+    // 读取gradle.properties文件中定义的VERSION_CODE属性
+    def code = (props['VERSION_CODE'] != null ? props['VERSION_CODE'] : '0').toInteger()
+    if (isRelease) {
+        code++
+        props['VERSION_CODE'] = code.toString()
+        // 将最新的versionCode写入gradle.properties文件中
+        props.store(propFile.newWriter(), null)
+    }
+    return code
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -107,13 +167,11 @@ android {
         applicationId "com.moonrailgun.trpg"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "1.2"
-        manifestPlaceholders = [
-                JPUSH_APPKEY: "4ebde26529796c17dcffb886",
-                APP_CHANNEL : "default"
-        ]
-        }
+        versionCode increasedVersionCode()
+        versionName project.env.get("VERSION")
+        vectorDrawables.useSupportLibrary = true // for react-native-image-crop-picker
+        resValue "string", "build_config_package", "com.moonrailgun.trpg" // react-native-config
+    }
     splits {
         abi {
             reset()
@@ -125,25 +183,33 @@ android {
 
     // 签名相关
     signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+
         release {
-            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
-                storeFile file(MYAPP_RELEASE_STORE_FILE)
-                storePassword MYAPP_RELEASE_STORE_PASSWORD
-                keyAlias MYAPP_RELEASE_KEY_ALIAS
-                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            if (project.env.get("RELEASE_STORE_FILE") != '') {
+                storeFile file(project.env.get("RELEASE_STORE_FILE"))
+                storePassword project.env.get("RELEASE_STORE_PASSWORD")
+                keyAlias project.env.get("RELEASE_KEY_ALIAS")
+                keyPassword project.env.get("RELEASE_KEY_PASSWORD")
             }
         }
     }
 
     buildTypes {
-        release {
-            minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.release // 使用签名
+        debug {
+            signingConfig signingConfigs.debug
+            applicationIdSuffix ".test"
         }
 
-        debug {
-            applicationIdSuffix ".test"
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
     // applicationVariants are e.g. debug, release
@@ -171,20 +237,55 @@ android {
             }
         }
     }
+
+    packagingOptions {
+        pickFirst '**/armeabi-v7a/libc++_shared.so'
+        pickFirst '**/x86/libc++_shared.so'
+        pickFirst '**/arm64-v8a/libc++_shared.so'
+        pickFirst '**/x86_64/libc++_shared.so'
+        pickFirst '**/x86/libjsc.so'
+        pickFirst '**/armeabi-v7a/libjsc.so'
+    }
 }
 
 dependencies {
+    implementation project(':react-native-config')
+
+    // 友盟推送
+    // 以下模块先注释: 因为64k dex问题 调研后有必要再一点点加
+    // implementation 'com.umeng.umsdk:vivo-push:2.3.1'
+    // implementation 'com.umeng.umsdk:vivo-umengaccs:1.0.4'
+    // implementation 'com.umeng.umsdk:oppo-push:1.0.1'
+    // implementation 'com.umeng.umsdk:oppo-umengaccs:1.0.3'
+    // implementation 'com.umeng.umsdk:meizu-push:3.8.1'
+    // implementation 'com.umeng.umsdk:meizu-umengaccs:1.0.6'
+    // implementation 'com.umeng.umsdk:huawei-basetb:2.6.3.305'
+    // implementation 'com.umeng.umsdk:huawei-pushtb:2.6.3.305'
+    // implementation 'com.umeng.umsdk:huawei-umengaccs:1.2.1'
+    implementation 'com.umeng.umsdk:xiaomi-push:3.6.17'
+    implementation 'com.umeng.umsdk:xiaomi-umengaccs:1.1.0'
+    implementation 'com.umeng.umsdk:common:2.1.0' // PushSDK必须依赖基础组件库，所以需要加入对应依赖
+    implementation 'com.umeng.umsdk:utdid:1.1.5.3' // PushSDK必须依赖utdid库，所以需要加入对应依赖
+    implementation 'com.umeng.umsdk:push:6.0.1' // PushSDK
+
+    implementation project(':react-native-image-crop-picker')
     implementation project(':react-native-fast-image')
     implementation project(':react-native-webview')
     implementation project(':react-native-sentry')
     implementation project(':react-native-code-push')
     implementation project(':react-native-gesture-handler')
-    implementation project(':jcore-react-native')
-    implementation project(':jpush-react-native')
     implementation project(':react-native-image-picker')
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    // implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    if (enableHermes) {
+        def hermesPath = "../../node_modules/hermesvm/android/";
+        debugImplementation files(hermesPath + "hermes-debug.aar")
+        releaseImplementation files(hermesPath + "hermes-release.aar")
+    } else {
+        implementation jscFlavor
+    }
 }
 
 // Run this once to be able to run the application with BUCK
@@ -193,3 +294,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

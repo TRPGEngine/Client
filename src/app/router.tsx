@@ -23,6 +23,7 @@ import {
 } from 'react-navigation-redux-helpers';
 import { connect, DispatchProp } from 'react-redux';
 import { StackViewStyleInterpolator } from 'react-navigation-stack';
+import { uiHandlerCollection } from './utils/ui-state-handler';
 
 import LaunchScreen from './screens/LaunchScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -37,9 +38,7 @@ import ProfileScreen from './screens/ProfileScreen';
 import GroupProfileScreen from './screens/GroupProfileScreen';
 import ProfileModifyScreen from './screens/ProfileModifyScreen';
 import WebviewScreen from './screens/WebviewScreen';
-import TAlert from './components/TApi/TAlert';
-
-import { hideAlert } from '../redux/actions/ui';
+import DeviceInfoScreen from './screens/settings/DeviceInfoScreen';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -93,6 +92,12 @@ export const AppNavigator = createStackNavigator(
       screen: SettingsScreen,
       navigationOptions: {
         headerTitle: '设置',
+      },
+    },
+    SettingsDeviceInfo: {
+      screen: DeviceInfoScreen,
+      navigationOptions: {
+        headerTitle: '设备信息',
       },
     },
     Chat: {
@@ -169,23 +174,10 @@ class ReduxNavigation extends React.Component<ReduxNavigationProps> {
 
   // 处理UI的状态
   handleUIChange(prevUI, currentUI) {
-    if (
-      prevUI.get('showAlert') === false &&
-      currentUI.get('showAlert') === true
-    ) {
-      // 当alert打开
-      TAlert.show(currentUI.get('showAlertInfo'), {
-        onRequestClose: () => this.props.dispatch(hideAlert()),
-      });
-    }
+    const dispatch = this.props.dispatch;
+    const args: [any, any, any] = [prevUI, currentUI, dispatch];
 
-    if (
-      prevUI.get('showAlert') === true &&
-      currentUI.get('showAlert') === false
-    ) {
-      // 当alert关闭
-      TAlert.hide();
-    }
+    uiHandlerCollection.forEach((handle) => handle(...args));
   }
 
   onBackPress = () => {

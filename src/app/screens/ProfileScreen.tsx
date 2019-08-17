@@ -3,19 +3,20 @@ import { connect, DispatchProp } from 'react-redux';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import sb from 'react-native-style-block';
-import immutable from 'immutable';
+import { List } from 'immutable';
 import appConfig from '../config.app';
-import { getSamlpeDate } from '../../shared/utils/dateHelper';
+import { getSamlpeDate } from '../../shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getUserInfo } from '../../redux/actions/cache';
-import { addFriend } from '../../redux/actions/user';
+import { sendFriendInvite } from '../../redux/actions/user';
 import { switchToConverseApp } from '../redux/actions/nav';
-import { getUserInfoCache } from '../../shared/utils/cacheHelper';
+import { getUserInfoCache } from '../../shared/utils/cache-helper';
 
 interface ItemProps {
   name: string;
   value: string;
 }
+/** 信息列表组件 */
 class ProfileInfoItem extends React.Component<ItemProps> {
   render() {
     return (
@@ -34,13 +35,12 @@ interface NavigationParams {
 interface ScreenProps
   extends DispatchProp<any>,
     NavigationScreenProps<NavigationParams> {
-  friendList: immutable.List<string>;
+  friendList: List<string>;
 }
+/**
+ * 用户信息页面
+ */
 class ProfileScreen extends React.Component<ScreenProps> {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     let uuid = this.props.navigation.state.params.uuid;
     if (uuid) {
@@ -49,7 +49,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
     }
   }
 
-  _handlePressSendMsg() {
+  handlePressSendMsg() {
     let type = this.props.navigation.state.params.type;
     let userUUID = this.props.navigation.state.params.uuid;
     let userInfo = getUserInfoCache(userUUID);
@@ -65,7 +65,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
   render() {
     let userUUID = this.props.navigation.state.params.uuid;
     let userInfo = getUserInfoCache(userUUID);
-    let hasFriend = this.props.friendList.includes(userUUID);
+    let isFriend = this.props.friendList.includes(userUUID);
 
     if (!userInfo) {
       return (
@@ -115,12 +115,14 @@ class ProfileScreen extends React.Component<ScreenProps> {
           />
         </View>
         <View style={styles.actions}>
-          {hasFriend ? (
-            <TButton onPress={() => this._handlePressSendMsg()}>
+          {isFriend ? (
+            <TButton onPress={() => this.handlePressSendMsg()}>
               发送消息
             </TButton>
           ) : (
-            <TButton onPress={() => this.props.dispatch(addFriend(userUUID))}>
+            <TButton
+              onPress={() => this.props.dispatch(sendFriendInvite(userUUID))}
+            >
               加为好友
             </TButton>
           )}

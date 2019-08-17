@@ -9,11 +9,12 @@ import appConfig from '../config.app';
 import { logout } from '../../redux/actions/user';
 import { openWebview } from '../redux/actions/nav';
 import { TButton, TAvatar } from '../components/TComponent';
-import checkVersion from '../../shared/utils/checkVersion';
+import checkVersion from '../../shared/utils/check-version';
 import * as appUtils from '../../shared/utils/apputils';
 import { TIcon } from '../components/TComponent';
 
 import { List } from '@ant-design/react-native';
+import { showToast } from '@src/redux/actions/ui';
 const Item = List.Item;
 
 const AccountList = styled(List)`
@@ -41,30 +42,33 @@ class AccountScreen extends React.Component<Props> {
     ),
   };
 
-  _handleModifyProfile() {
+  handleModifyProfile() {
     this.props.dispatch(
       NavigationActions.navigate({ routeName: 'ProfileModify' })
     );
   }
 
-  _handleLogout() {
+  handleLogout() {
     this.props.dispatch(logout());
   }
 
-  _handleCheckVersion() {
-    // Pending: 国内网速比较慢，微软服务几乎不可用，可以考虑自己搭一个codepush服务器
-    // appConfig.codePush.sync();
-
-    checkVersion(function(isLatest) {
-      if (isLatest) {
-        appUtils.toast('当前版本为最新版');
-      } else {
-        appUtils.toast('检测到有新的版本, 1秒后自动跳转到项目主页');
-        setTimeout(function() {
-          Linking.openURL(config.github.projectUrl);
-        }, 1000);
-      }
-    });
+  handleCheckVersion() {
+    const dispatch = this.props.dispatch;
+    if (appConfig.codePush.enabled) {
+      // TODO: 也许需要根据版本判断用户是否应为热更新还是下载apk更新
+      appConfig.codePush.sync();
+    } else {
+      checkVersion(function(isLatest) {
+        if (isLatest) {
+          dispatch(showToast('当前版本为最新版'));
+        } else {
+          dispatch(showToast('检测到有新的版本, 1秒后自动跳转到项目主页'));
+          setTimeout(function() {
+            Linking.openURL(config.github.projectUrl);
+          }, 1000);
+        }
+      });
+    }
   }
 
   render() {
@@ -75,7 +79,7 @@ class AccountScreen extends React.Component<Props> {
       <View>
         <TouchableOpacity
           style={styles.userInfo}
-          onPress={() => this._handleModifyProfile()}
+          onPress={() => this.handleModifyProfile()}
         >
           <TAvatar
             uri={avatar}
@@ -86,7 +90,9 @@ class AccountScreen extends React.Component<Props> {
           />
           <View style={{ flex: 1 }}>
             <Text style={styles.username}>{name}</Text>
-            <Text style={styles.userdesc}>{userInfo.get('sign')}</Text>
+            <Text style={styles.userdesc} numberOfLines={1}>
+              {userInfo.get('sign')}
+            </Text>
           </View>
           <Text style={styles.arrow}>&#xe60e;</Text>
         </TouchableOpacity>
@@ -117,7 +123,7 @@ class AccountScreen extends React.Component<Props> {
         <AccountList>
           <Item
             extra={config.version}
-            onPress={() => this._handleCheckVersion()}
+            onPress={() => this.handleCheckVersion()}
           >
             当前版本
           </Item>
@@ -127,7 +133,7 @@ class AccountScreen extends React.Component<Props> {
           type="error"
           style={styles.logoutBtn}
           textStyle={{ color: 'white' } as any}
-          onPress={() => this._handleLogout()}
+          onPress={() => this.handleLogout()}
         >
           退出
         </TButton>

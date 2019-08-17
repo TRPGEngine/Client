@@ -35,7 +35,7 @@ class ContactList extends React.Component<Props, State> {
     };
   }
 
-  _handleClickHeader(section) {
+  handleClickHeader(section) {
     if (section.isShow === false) {
       let _section = this.state.list.find((s) => s.name === section.name);
       _section.data = _section.list.toJS();
@@ -53,7 +53,7 @@ class ContactList extends React.Component<Props, State> {
     }
   }
 
-  _handleShowProfile(uuid, type, name) {
+  handleShowProfile(uuid, type, name) {
     if (type === 'user') {
       this.props.dispatch(
         switchNav('Profile', {
@@ -77,7 +77,7 @@ class ContactList extends React.Component<Props, State> {
     return (
       <TouchableOpacity
         style={styles.header}
-        onPress={() => this._handleClickHeader(section)}
+        onPress={() => this.handleClickHeader(section)}
       >
         {section.isShow ? (
           <TIcon icon="&#xe60f;" style={styles.headerIcon} />
@@ -100,7 +100,7 @@ class ContactList extends React.Component<Props, State> {
         uuid={item.uuid}
         style={styles.cell}
         onPress={() => {
-          this._handleShowProfile(item.uuid, item.type, item.name);
+          this.handleShowProfile(item.uuid, item.type, item.name);
         }}
       />
     );

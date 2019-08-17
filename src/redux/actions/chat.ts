@@ -21,16 +21,18 @@ const {
   UPDATE_WRITING_STATUS,
   UPDATE_USER_CHAT_EMOTION_CATALOG,
   ADD_USER_CHAT_EMOTION_CATALOG,
+  SET_CONVERSES_MSGLOG_NOMORE,
 } = constants;
-import * as trpgApi from '../../api/trpg.api.js';
+import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
-import rnStorage from '../../api/rnStorage.api.js';
-import { checkUser } from '../../shared/utils/cacheHelper';
-import { hideProfileCard, switchMenuPannel } from './ui';
-import * as uploadHelper from '../../shared/utils/uploadHelper';
+import rnStorage from '../../api/rn-storage.api';
+import { checkUser } from '../../shared/utils/cache-helper';
+import { hideProfileCard, switchMenuPannel, showAlert } from './ui';
+import * as uploadHelper from '../../shared/utils/upload-helper';
 import { renewableDelayTimer } from '../../shared/utils/timer';
 import config from '../../../config/project.config';
 import _without from 'lodash/without';
+import { MsgPayload } from '@redux/types/chat';
 
 const getUserConversesHash = (userUUID) => {
   return `userConverses#${userUUID}`;
@@ -41,18 +43,17 @@ let getLocalUUID = function getLocalUUID() {
   return 'local#' + localIndex++;
 };
 
-export let switchConverse = function switchConverse(converseUUID, userUUID) {
-  return { type: SWITCH_CONVERSES, converseUUID, userUUID };
+// 切换当前会话页面
+export let switchConverse = function switchConverse(converseUUID: string) {
+  return { type: SWITCH_CONVERSES, converseUUID };
 };
 
-export let switchToConverse = function switchToConverse(
-  converseUUID,
-  userUUID
-) {
+// 跳转到会话页面并切换到会话
+export let switchToConverse = function switchToConverse(converseUUID: string) {
   return function(dispatch, getState) {
     dispatch(hideProfileCard());
     dispatch(switchMenuPannel(0));
-    dispatch(switchConverse(converseUUID, userUUID));
+    dispatch(switchConverse(converseUUID));
   };
 };
 
@@ -133,7 +134,7 @@ export let createConverse = function createConverse(
     if (!!getState().getIn(['chat', 'converses', uuid])) {
       console.log('已存在该会话');
       if (isSwitchToConv) {
-        dispatch(switchToConverse(uuid, uuid)); //TODO:CHECK
+        dispatch(switchToConverse(uuid));
       }
       return;
     }
@@ -146,7 +147,7 @@ export let createConverse = function createConverse(
 
         let convUUID = conv.uuid;
         if (isSwitchToConv) {
-          dispatch(switchToConverse(convUUID, convUUID)); //TODO:CHECK
+          dispatch(switchToConverse(convUUID));
         }
         // 获取日志
         checkUser(uuid);
@@ -200,7 +201,7 @@ export const removeUserConverse = (userConverseUUID) => {
   };
 };
 
-export let addUserConverse = function addUserConverse(senders) {
+export let addUserConverse = function addUserConverse(senders: string[]) {
   return function(dispatch, getState) {
     if (typeof senders === 'string') {
       senders = [senders];
@@ -208,18 +209,22 @@ export let addUserConverse = function addUserConverse(senders) {
     dispatch({
       type: GET_USER_CONVERSES_SUCCESS,
       payload: senders
-        .map((uuid) => ({ uuid, type: 'user' }))
+        .map((uuid) => ({ uuid, type: 'user', name: '' }))
         .concat([{ uuid: 'trpgsystem', type: 'system', name: '系统消息' }]),
     });
 
     // 用户会话缓存
     let userUUID = getState().getIn(['user', 'info', 'uuid']);
-    rnStorage.get(getUserConversesHash(userUUID)).then(function(converse) {
-      converse = Array.from(new Set([...converse, ...senders]));
-      rnStorage
-        .set(getUserConversesHash(userUUID), converse)
-        .then((data) => console.log('用户会话缓存完毕:', data));
-    });
+    rnStorage
+      .get(getUserConversesHash(userUUID), [])
+      .then(function(cachedConverse: string[]) {
+        const allConverse: string[] = Array.from(
+          new Set([...cachedConverse, ...senders])
+        );
+        rnStorage
+          .set(getUserConversesHash(userUUID), allConverse)
+          .then((data) => console.log('用户会话缓存完毕:', data));
+      });
 
     for (let uuid of senders) {
       // 更新会话信息
@@ -364,13 +369,12 @@ export let updateMsg = function updateMsg(converseUUID, payload) {
   };
 };
 
-export let sendMsg = function sendMsg(toUUID, payload) {
+export let sendMsg = function sendMsg(toUUID: string, payload: MsgPayload) {
   return function(dispatch, getState) {
     dispatch({ type: SEND_MSG });
     const info = getState().getIn(['user', 'info']);
     const localUUID = getLocalUUID();
     let pkg = {
-      room: payload.room || '',
       sender_uuid: info.get('uuid'),
       to_uuid: toUUID,
       converse_uuid: payload.converse_uuid,
@@ -463,9 +467,15 @@ export let sendFile = function sendFile(toUUID, payload, file) {
   };
 };
 
+/**
+ * 获取更多消息记录
+ * @param converseUUID 会话UUID
+ * @param offsetDate 起始日期
+ * @param isUserChat 是否为用户会话
+ */
 export let getMoreChatLog = function getMoreChatLog(
-  converseUUID,
-  offsetDate,
+  converseUUID: string,
+  offsetDate: string,
   isUserChat = true
 ) {
   return function(dispatch, getState) {
@@ -476,6 +486,11 @@ export let getMoreChatLog = function getMoreChatLog(
         function(data) {
           if (data.result === true) {
             dispatch(updateConversesMsglist(converseUUID, data.list));
+            dispatch({
+              type: SET_CONVERSES_MSGLOG_NOMORE,
+              converseUUID,
+              nomore: data.nomore,
+            });
           } else {
             console.log(data);
           }
@@ -488,6 +503,11 @@ export let getMoreChatLog = function getMoreChatLog(
         function(data) {
           if (data.result === true) {
             dispatch(updateConversesMsglist(converseUUID, data.list));
+            dispatch({
+              type: SET_CONVERSES_MSGLOG_NOMORE,
+              converseUUID,
+              nomore: data.nomore,
+            });
           } else {
             console.log(data);
           }
@@ -579,13 +599,13 @@ export const addUserEmotionCatalogWithSecretSignal = function(code) {
       function(data) {
         if (data.result) {
           const catalog = data.catalog;
-          // TODO: 提示添加成功
           dispatch({
             type: ADD_USER_CHAT_EMOTION_CATALOG,
             payload: catalog,
           });
+          dispatch(showAlert('添加成功'));
         } else {
-          // TODO: 提示添加失败
+          dispatch(showAlert('添加失败:' + data.msg));
           console.error(data.msg);
         }
       }

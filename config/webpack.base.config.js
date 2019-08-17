@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const WebpackBar = require('webpackbar');
 
 const ROOT_PATH = path.resolve(__dirname, '../');
@@ -11,6 +12,32 @@ const BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
 const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
 const config = require('../package.json');
+
+const babelQuery = {
+  babelrc: false,
+  compact: false,
+  presets: ['@babel/preset-env', '@babel/preset-react'],
+  ignore: [/[\/\\]core-js/, /@babel[\/\\]runtime/],
+  plugins: [
+    [
+      '@babel/plugin-transform-runtime',
+      {
+        helpers: true,
+      },
+    ],
+    [
+      'import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true, // `style: true` 会加载 less 文件
+      },
+    ],
+    'transform-class-properties',
+    '@babel/plugin-transform-modules-commonjs',
+    'dynamic-import-webpack',
+  ],
+};
 
 // let vendors = Object.keys(config.dependencies);
 // if (process.env.PLATFORM !== 'app') {
@@ -57,6 +84,11 @@ module.exports = {
       '.web.tsx',
       '.tsx',
     ],
+    plugins: [
+      new TsconfigPathsPlugin({
+        configFile: path.resolve(ROOT_PATH, 'tsconfig.json'),
+      }),
+    ],
   },
   //babel重要的loader在这里
   module: {
@@ -87,19 +119,7 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-            query: {
-              babelrc: false,
-              plugins: [
-                [
-                  'import',
-                  {
-                    libraryName: 'antd',
-                    libraryDirectory: 'es',
-                    style: true, // `style: true` 会加载 less 文件, css 只会加载css文件
-                  },
-                ],
-              ],
-            },
+            query: babelQuery,
           },
           { loader: 'ts-loader' },
         ],
@@ -114,31 +134,7 @@ module.exports = {
         //   path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
         // ],
         exclude: path.resolve(ROOT_PATH, './node_modules/**'),
-        query: {
-          babelrc: false,
-          compact: false,
-          presets: ['@babel/preset-env', '@babel/preset-react'],
-          ignore: [/[\/\\]core-js/, /@babel[\/\\]runtime/],
-          plugins: [
-            [
-              '@babel/plugin-transform-runtime',
-              {
-                helpers: true,
-              },
-            ],
-            [
-              'import',
-              {
-                libraryName: 'antd',
-                libraryDirectory: 'es',
-                style: 'css', // `style: true` 会加载 less 文件
-              },
-            ],
-            'transform-class-properties',
-            '@babel/plugin-transform-modules-commonjs',
-            'dynamic-import-webpack',
-          ],
-        },
+        query: babelQuery,
       },
       {
         test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf)$/,
@@ -157,7 +153,9 @@ module.exports = {
     '../../app/router': "require('../../app/router')", // for redux.configureStore
     'react-navigation-redux-helpers':
       "require('react-navigation-redux-helpers')",
-    config: JSON.stringify(require('config')), // 用于全局使用config，config由编译时的环境变量指定
+    config: JSON.stringify({
+      sentry: require('config').get('sentry'),
+    }), // 用于全局使用config，config由编译时的环境变量指定
   },
 
   optimization: {

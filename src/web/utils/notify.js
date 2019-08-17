@@ -1,5 +1,5 @@
 import tinycon from 'tinycon';
-import { getUserInfoCache } from '../../shared/utils/cacheHelper';
+import { getUserInfoCache } from '../../shared/utils/cache-helper';
 import config from '../../../config/project.config.js';
 import { switchMenuPannel } from '../../redux/actions/ui';
 import { switchConverse } from '../../redux/actions/chat';

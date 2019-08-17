@@ -1,5 +1,5 @@
 import constants from '../constants';
-import immutable from 'immutable';
+import immutable, { List, Map, Record } from 'immutable';
 const {
   RESET,
   ADD_CONVERSES,
@@ -22,11 +22,23 @@ const {
   UPDATE_WRITING_STATUS,
   UPDATE_USER_CHAT_EMOTION_CATALOG,
   ADD_USER_CHAT_EMOTION_CATALOG,
+  SET_CONVERSES_MSGLOG_NOMORE,
 } = constants;
 
-const initialState = immutable.fromJS({
+type WritingListType =
+  | Map<'user', List<string>>
+  | Map<'group', Map<string, List<string>>>;
+
+export type ChatState = Record<{
+  selectedConversesUUID: string;
+  conversesDesc: string;
+  converses: Map<string, any>;
+  writingList: WritingListType;
+  emotions: Map<'catalogs' | 'favorites', List<any>>;
+}>;
+
+const initialState: ChatState = immutable.fromJS({
   selectedConversesUUID: '',
-  selectedConversesUserUUID: '',
   conversesDesc: '', // 获取会话列表的提示信息
   converses: {
     // "systemUUID": {
@@ -200,7 +212,6 @@ export default function chat(state = initialState, action) {
       case SWITCH_CONVERSES:
         return state
           .set('selectedConversesUUID', action.converseUUID)
-          .set('selectedConversesUserUUID', action.userUUID)
           .setIn(['converses', action.converseUUID, 'unread'], false); //已读未读;
       case SEND_MSG_COMPLETED: {
         let converseUUID = action.converseUUID;
@@ -296,6 +307,11 @@ export default function chat(state = initialState, action) {
 
           return list.push(immutable.fromJS(catalog));
         });
+      }
+      case SET_CONVERSES_MSGLOG_NOMORE: {
+        const converseUUID = action.converseUUID;
+        const nomore = action.nomore;
+        return state.setIn(['converses', converseUUID, 'nomore'], nomore);
       }
       default:
         return state;

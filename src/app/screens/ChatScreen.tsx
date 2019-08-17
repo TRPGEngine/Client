@@ -3,12 +3,9 @@ import { connect, DispatchProp } from 'react-redux';
 import {
   View,
   Text,
-  Image,
   FlatList,
-  Button,
   TextInput,
   Keyboard,
-  TouchableOpacity,
   EmitterSubscription,
 } from 'react-native';
 import { Icon } from '@ant-design/react-native';
@@ -18,12 +15,12 @@ import { NavigationScreenProps } from 'react-navigation';
 import { TInput, TIcon } from '../components/TComponent';
 import config from '../../../config/project.config';
 import { sendMsg } from '../../redux/actions/chat';
-import { getUserInfoCache } from '../../shared/utils/cacheHelper';
-import dateHelper from '../../shared/utils/dateHelper';
+import { getUserInfoCache } from '../../shared/utils/cache-helper';
+import dateHelper from '../../shared/utils/date-helper';
 import ExtraPanelItem from '../components/chat/ExtraPanelItem';
 import EmotionPanel from '../components/chat/EmotionPanel';
-import { toNetwork } from '../../shared/utils/imageUploader';
-import { toTemporary } from '../../shared/utils/uploadHelper';
+import { toNetwork } from '../../shared/utils/image-uploader';
+import { toTemporary } from '../../shared/utils/upload-helper';
 import { unemojify } from '../utils/emoji';
 import _get from 'lodash/get';
 
@@ -56,8 +53,9 @@ class ChatScreen extends React.Component<Props> {
     const navigation = props.navigation;
     const { state, setParams } = navigation;
     const { params } = state;
+    const type = params.type;
     return {
-      headerRight: (
+      headerRight: ['user', 'group'].includes(type) ? (
         <View style={{ marginRight: 10 }}>
           <TIcon
             icon="&#xe607;"
@@ -65,7 +63,7 @@ class ChatScreen extends React.Component<Props> {
             onPress={() => params.headerRightFunc && params.headerRightFunc()}
           />
         </View>
-      ),
+      ) : null,
     };
   };
 
@@ -78,7 +76,7 @@ class ChatScreen extends React.Component<Props> {
 
   keyboardDidShowListener: EmitterSubscription;
   keyboardDidHideListener: EmitterSubscription;
-  inputRef: TInput;
+  inputRef: TextInput;
   listRef: FlatList<any>;
 
   componentDidMount() {
@@ -114,7 +112,7 @@ class ChatScreen extends React.Component<Props> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.msgList.size !== this.props.msgList.size) {
+    if (_get(prevProps, 'msgList.size') !== _get(this.props, 'msgList.size')) {
       this._scrollToBottom();
     }
   }
@@ -171,7 +169,7 @@ class ChatScreen extends React.Component<Props> {
     }, 130);
   }
 
-  _handleFocus() {
+  handleFocus() {
     // 输入框focus时收起所有面板
     this.setState({
       showExtraPanel: false,
@@ -179,7 +177,7 @@ class ChatScreen extends React.Component<Props> {
     });
   }
 
-  _handleSendMsg() {
+  handleSendMsg() {
     let message = this.state.inputMsg.trim();
     if (!!message) {
       this.sendMsg(message);
@@ -188,7 +186,7 @@ class ChatScreen extends React.Component<Props> {
   }
 
   // 显示表情面板
-  _handleShowEmoticonPanel() {
+  handleShowEmoticonPanel() {
     if (this.state.showEmoticonPanel === true) {
       this.setState({ showEmoticonPanel: false, showExtraPanel: false });
       this.inputRef.focus();
@@ -199,7 +197,7 @@ class ChatScreen extends React.Component<Props> {
   }
 
   // 显示额外面板
-  _handleShowExtraPanel() {
+  handleShowExtraPanel() {
     if (this.state.showExtraPanel === true) {
       this.setState({ showExtraPanel: false, showEmoticonPanel: false });
       this.inputRef.focus();
@@ -212,7 +210,7 @@ class ChatScreen extends React.Component<Props> {
   /**
    * 额外面板的发送图片功能
    */
-  _handleSendImage() {
+  handleSendImage() {
     ImagePicker.launchImageLibrary(
       {
         mediaType: 'photo',
@@ -235,7 +233,7 @@ class ChatScreen extends React.Component<Props> {
             uri: response.uri,
             type: response.type,
             name: response.fileName,
-          };
+          } as any;
 
           // TODO: 上传到sm.ms
           // toNetwork(this.props.selfUUID, file).then((res) => {
@@ -286,7 +284,7 @@ class ChatScreen extends React.Component<Props> {
         <ExtraPanelItem
           text="发送图片"
           icon="&#xe621;"
-          onPress={() => this._handleSendImage()}
+          onPress={() => this.handleSendImage()}
         />
       </ExtraPanel>
     );
@@ -346,20 +344,20 @@ class ChatScreen extends React.Component<Props> {
               ref={(ref) => (this.inputRef = ref)}
               style={styles.msgInput}
               onChangeText={(inputMsg) => this.setState({ inputMsg })}
-              onFocus={() => this._handleFocus()}
+              onFocus={() => this.handleFocus()}
               multiline={true}
               maxLength={100}
               value={this.state.inputMsg}
             />
-            <ActionBtn onPress={() => this._handleShowEmoticonPanel()}>
+            <ActionBtn onPress={() => this.handleShowEmoticonPanel()}>
               <Icon name="smile" size={26} />
             </ActionBtn>
             {this.state.inputMsg ? (
-              <ActionBtn onPress={() => this._handleSendMsg()}>
+              <ActionBtn onPress={() => this.handleSendMsg()}>
                 <Text style={{ textAlign: 'center' }}>{'发送'}</Text>
               </ActionBtn>
             ) : (
-              <ActionBtn onPress={() => this._handleShowExtraPanel()}>
+              <ActionBtn onPress={() => this.handleShowExtraPanel()}>
                 <Icon name="plus-circle" size={26} />
               </ActionBtn>
             )}
