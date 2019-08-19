@@ -16,6 +16,7 @@ const PanelActionButton = styled(Button).attrs(() => ({
   size: 'small',
 }))`
   border: 0;
+  flex-shrink: 0;
 `;
 
 interface Props {
