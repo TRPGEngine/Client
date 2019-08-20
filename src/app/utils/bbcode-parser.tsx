@@ -37,4 +37,6 @@ class BBCodeParser {
   }
 }
 
-export default new BBCodeParser();
+const bbcodeParser = new BBCodeParser();
+
+export default bbcodeParser;
