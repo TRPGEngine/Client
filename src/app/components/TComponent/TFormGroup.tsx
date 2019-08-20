@@ -7,7 +7,8 @@ import styled from 'styled-components/native';
 const FormContainer = styled.View`
   flex-direction: row;
   align-items: center;
-  border-bottom: 0.5px solid #ccc;
+  border-bottom-color: #ccc;
+  border-bottom-width: 0.5;
   margin-bottom: 10px;
   height: 44px;
 `;
@@ -50,7 +51,7 @@ class TFormGroup extends React.Component<Props> {
       this.props.input.style = [];
     }
     return (
-      <FormContainer {...(this.props as any)}>
+      <FormContainer {...this.props as any}>
         <FormLabel>{this.props.label}:</FormLabel>
         <FormInput
           value={this.props.value}
