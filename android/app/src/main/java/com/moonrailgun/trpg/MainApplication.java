@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
@@ -43,6 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+        new CameraRollPackage(),
         new ReactNativeConfigPackage(),
         new DplusReactPackage(),
         new PickerPackage(),
