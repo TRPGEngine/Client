@@ -19,7 +19,7 @@ export async function setAlias(alias: string) {
         console.log('[UPush]', 'set alias success', success);
         rnStorage.save('hasSetJPushAlias', alias);
       } else {
-        console.error('[UPush]', 'set alias error');
+        console.warn('[UPush]', 'set alias error');
       }
     });
   }

@@ -1,6 +1,8 @@
 import React from 'react';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { View, Modal, TouchableOpacity } from 'react-native';
+import { saveImageToLocal } from '@src/app/utils/file-helper';
+import { Toast } from '@ant-design/react-native';
 
 interface Props {
   /**
@@ -44,6 +46,15 @@ class TImageViewer extends React.Component<Props> {
     this.setState({ modalVisible: true });
   }
 
+  handleSaveImage = (url: string) => {
+    saveImageToLocal(url)
+      .then(() => Toast.success('保存成功'))
+      .catch((e) => {
+        console.error(e);
+        Toast.fail('保存失败:' + e.toString());
+      });
+  };
+
   hide() {
     this.setState({ modalVisible: false });
   }
@@ -62,7 +73,8 @@ class TImageViewer extends React.Component<Props> {
             onSwipeDown={() => this.hide()}
             onClick={() => this.hide()}
             // TODO: 待实现保存图片到本地的功能
-            // saveToLocalByLongPress={true}
+            saveToLocalByLongPress={true}
+            onSave={this.handleSaveImage}
             enableSwipeDown={true}
             menuContext={this.menuContext}
           />
