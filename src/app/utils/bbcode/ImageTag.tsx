@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import FastImage from 'react-native-fast-image';
 import { AstNodeObj } from './types';
 import config from '../../../../config/project.config';
+import { TImageViewer } from '@src/app/components/TComponent';
 
 interface Props {
   node: AstNodeObj;
@@ -30,23 +31,25 @@ const ImageTag = (props: Props) => {
   url = config.file.getAbsolutePath(url);
 
   return (
-    <FastImage
-      style={{
-        width,
-        height,
-      }}
-      {...attrs}
-      source={{
-        uri: url,
-        priority: FastImage.priority.normal,
-        cache: FastImage.cacheControl.immutable,
-      }}
-      resizeMode={FastImage.resizeMode.contain}
-      onLoad={(e) => {
-        const { width, height } = e.nativeEvent;
-        setImageSize(width, height);
-      }}
-    />
+    <TImageViewer images={url}>
+      <FastImage
+        style={{
+          width,
+          height,
+        }}
+        {...attrs}
+        source={{
+          uri: url,
+          priority: FastImage.priority.normal,
+          cache: FastImage.cacheControl.immutable,
+        }}
+        resizeMode={FastImage.resizeMode.contain}
+        onLoad={(e) => {
+          const { width, height } = e.nativeEvent;
+          setImageSize(width, height);
+        }}
+      />
+    </TImageViewer>
   );
 };
 
