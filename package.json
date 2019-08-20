@@ -82,6 +82,7 @@
     "react-native-config": "^0.11.7",
     "react-native-emoji": "git+https://github.com/TRPGEngine/react-native-emoji.git",
     "react-native-fast-image": "^7.0.2",
+    "react-native-fs": "^2.14.1",
     "react-native-gesture-handler": "^1.2.0",
     "react-native-image-crop-picker": "^0.24.1",
     "react-native-image-picker": "^0.28.1",
