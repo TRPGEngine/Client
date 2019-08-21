@@ -3,6 +3,7 @@ import { Text } from 'react-native';
 import { parse } from '@bbob/parser';
 import ImageTag from './bbcode/ImageTag';
 import { AstNode } from './bbcode/types';
+import _has from 'lodash/has';
 
 const tagMap = {
   img: ImageTag,
@@ -27,7 +28,7 @@ class BBCodeParser {
         return <Text key={index}>{node}</Text>;
       }
 
-      if (typeof node === 'object' && node.tag && tagMap[node.tag]) {
+      if (typeof node === 'object' && _has(tagMap, node.tag)) {
         const Component = tagMap[node.tag];
         return <Component key={index} node={node} />;
       }
