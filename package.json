@@ -49,7 +49,7 @@
   "homepage": "https://github.com/TRPGEngine/Client#readme",
   "dependencies": {
     "@ant-design/icons-react-native": "^1.0.2",
-    "@ant-design/react-native": "^3.1.6",
+    "@ant-design/react-native": "^3.1.14",
     "@bbob/parser": "^2.4.0",
     "@react-native-community/cameraroll": "^1.2.1",
     "@sentry/browser": "^4.6.4",
@@ -87,6 +87,7 @@
     "react-native-image-crop-picker": "^0.24.1",
     "react-native-image-picker": "^0.28.1",
     "react-native-image-zoom-viewer": "^2.2.25",
+    "react-native-root-siblings": "^3.2.1",
     "react-native-root-toast": "^3.0.1",
     "react-native-sentry": "^0.42.0",
     "react-native-storage": "git+https://github.com/moonrailgun/react-native-storage.git",
