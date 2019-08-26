@@ -23,6 +23,7 @@ import com.umeng.soexample.invokenative.DplusReactPackage;
 import com.umeng.soexample.invokenative.RNUMConfigure;
 import com.umeng.message.PushAgent;
 import com.umeng.message.IUmengRegisterCallback;
+import org.android.agoo.xiaomi.MiPushRegistar;
 
 import java.util.Arrays;
 import java.util.List;
@@ -77,6 +78,7 @@ public class MainApplication extends Application implements ReactApplication {
     RNUMConfigure.init(this, BuildConfig.UMENG_PUSH_APPKEY, BuildConfig.UMENG_PUSH_CHANNEL, UMConfigure.DEVICE_TYPE_PHONE,
             BuildConfig.UMENG_PUSH_MESSAGESECRET);
 
+    // 注册友盟通用推送
     // 注意: 必须在此处注册
     PushAgent.getInstance(this).register(new IUmengRegisterCallback(){
         @Override
@@ -89,6 +91,9 @@ public class MainApplication extends Application implements ReactApplication {
             Log.i("walle", "--->>> onFailure, s is " + s + ", s1 is " + s1);
         }
     });
+    // 小米厂商通道
+    MiPushRegistar.register(this, BuildConfig.UMENG_MIPUSH_APPID, BuildConfig.UMENG_MIPUSH_APPKEY);
+
     SoLoader.init(this, /* native exopackage */ false);
   }
 }
