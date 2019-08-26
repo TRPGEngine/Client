@@ -16,6 +16,14 @@ public class MipushActivity extends UmengNotifyClickActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // setContentView(R.layout.activity_mipush); // 这里设置不同的页面，为了区分是友盟推送进来的，还是通道推送进来的
+        jumpToRNActivity(); // 跳转到react-native的activity
+    }
+
+    protected void jumpToRNActivity() {
+        // Intent intent = new Intent(".MainActivity");
+        Log.i(TAG, "跳转到React Native");
+        Intent intent = new Intent(MipushActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
