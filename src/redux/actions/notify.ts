@@ -15,15 +15,22 @@ const notifyEventNameMap = {
   upush: 'notify::bindUPushNotifyInfo',
 };
 
+/**
+ * 绑定当前设备与用户信息
+ * 如果当前设备不存在绑定信息或绑定信息非当前登录用户，则向远程发起绑定请求
+ * @param info 绑定信息
+ */
 export const bindNotifyInfo = async (info: NotifyInfo) => {
+  const userUUID = info.userUUID;
   const platform = info.platform;
   const storageKey = 'hasBindNotifyInfo_' + platform;
-  const hasBindNotifyInfo = await rnStorage.get(storageKey);
-  if (!hasBindNotifyInfo) {
+  const bindNotifyUserUUID = await rnStorage.get(storageKey);
+  if (!bindNotifyUserUUID || bindNotifyUserUUID !== userUUID) {
+    // 如果当前绑定记录不存在或者绑定用户UUID不匹配。则发起重新绑定
     const eventName = notifyEventNameMap[platform];
     api.emit(eventName, { info }, (data) => {
       if (data.result) {
-        rnStorage.save(storageKey, true);
+        rnStorage.save(storageKey, userUUID);
       }
     });
   }
