@@ -1,4 +1,4 @@
-import _get from 'lodash/get';
+const _get = require('lodash/get');
 const environment = process.env.NODE_ENV || 'development';
 const platform = process.env.PLATFORM || 'web';
 let currentHost = '127.0.0.1';

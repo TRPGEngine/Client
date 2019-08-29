@@ -1,5 +1,5 @@
-import io from 'socket.io-client';
-import config from '../../config/project.config.js';
+import * as io from 'socket.io-client';
+import config from '../../config/project.config';
 
 const platformSocketParam = {
   jsonp: false,
