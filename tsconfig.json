@@ -23,7 +23,8 @@
   },
   "include": [
     "./node_modules/@types/",
-    "config/",
-    "src/"
+    "./config/",
+    "./src/",
+    "./test/"
   ]
 }

@@ -1,1 +1,1 @@
-module.exports = ['app', 'web', 'all', 'layout', 'redux', 'misc'];
+module.exports = ['app', 'web', 'all', 'layout', 'redux', 'test', 'misc'];
