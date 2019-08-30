@@ -118,7 +118,7 @@ export default function chat(state = initialState, action) {
           )
           .setIn(['converses', converseUUID, 'lastMsg'], payload.get('message'))
           .setIn(['converses', converseUUID, 'lastTime'], payload.get('date'))
-          .setIn(['converses', converseUUID, 'unread'], action.unread); //已读未读
+          .setIn(['converses', converseUUID, 'unread'], action.unread || false); //已读未读
       }
       case UPDATE_MSG:
         return state.updateIn(

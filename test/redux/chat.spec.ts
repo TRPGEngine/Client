@@ -1,10 +1,14 @@
 import chatReducer from '@redux/reducers/chat';
-import { isImmutable, isMap, isList } from 'immutable';
+import { fromJS } from 'immutable';
+
+/**
+ * 获取初始状态
+ */
+const getInitState = () => chatReducer(undefined, { type: 'any' });
 
 describe('chat reducer', () => {
   it('init state', () => {
-    const state = chatReducer(undefined, { type: 'any' });
-    expect(isImmutable(state)).toBe(true);
+    const state = getInitState();
 
     // 检查默认参数
     expect(state).toBeImmutable();
@@ -40,7 +44,62 @@ describe('chat reducer', () => {
     expect(state.getIn(['converses', 'test', 'others'])).toBe('others');
   });
 
-  it.todo('ADD_MSG');
+  it('ADD_MSG', () => {
+    const date = new Date().toISOString();
+    const logFn = (console.warn = jest.fn());
+    const state = chatReducer(undefined, {
+      type: 'ADD_MSG',
+      converseUUID: 'test',
+      payload: {
+        message: 'any',
+        date,
+      },
+    });
+
+    expect(state).toBe(getInitState());
+    expect(logFn.mock.calls.length).toBe(1);
+    expect(logFn.mock.calls[0][0]).toMatch('this converses is not exist');
+    expect(logFn.mock.calls[0][1]).toBe('test');
+
+    const state2 = chatReducer(
+      fromJS({
+        converses: {
+          test: {
+            uuid: 'test',
+            lastMsg: '',
+            lastTime: '',
+            msgList: [],
+          },
+        },
+      }),
+      {
+        type: 'ADD_MSG',
+        converseUUID: 'test',
+        payload: {
+          message: 'any',
+          date,
+        },
+      }
+    );
+
+    expect(state2).toBeImmutableMap();
+    expect(state2.get('converses')).toBeImmutableMap();
+    expect(state2.getIn(['converses', 'test'])).toBeImmutableMap();
+    expect(state2.getIn(['converses', 'test', 'msgList'])).toBeImmutableList();
+    expect(state2.getIn(['converses', 'test']).toJS()).toMatchObject({
+      uuid: 'test',
+      lastMsg: 'any',
+      lastTime: date,
+      msgList: [
+        {
+          message: 'any',
+          date,
+        },
+      ],
+      unread: false,
+    });
+  });
+
   it.todo('UPDATE_MSG');
   it.todo('GET_CONVERSES_REQUEST');
   it.todo('GET_CONVERSES_SUCCESS');

@@ -201,6 +201,10 @@ export const removeUserConverse = (userConverseUUID) => {
   };
 };
 
+/**
+ * 增加用户UUID会话列表
+ * @param senders 会话UUID列表
+ */
 export let addUserConverse = function addUserConverse(senders: string[]) {
   return function(dispatch, getState) {
     if (typeof senders === 'string') {
@@ -270,7 +274,7 @@ export let addUserConverse = function addUserConverse(senders: string[]) {
 };
 
 export let getOfflineUserConverse = function getOfflineUserConverse(
-  lastLoginDate
+  lastLoginDate: string
 ) {
   return function(dispatch, getState) {
     api.emit('chat::getOfflineUserConverse', { lastLoginDate }, function(data) {

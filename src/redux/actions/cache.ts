@@ -15,7 +15,7 @@ export const loadLocalCache = function() {
   return function(dispatch, getState) {
     // TODO: 用户缓存，列表缓存，等等等等
     rnStorage.get('localCache').then((res) => {
-      console.log('loadLocalCache', res); // TODO: 待实现
+      console.log('TODO: loadLocalCache', res); // TODO: 待实现
     });
   };
 };
