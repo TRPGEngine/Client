@@ -14,7 +14,6 @@ const {
   UPDATE_CONVERSES_INFO_SUCCESS,
   UPDATE_CONVERSES_MSGLIST_SUCCESS,
   SWITCH_CONVERSES,
-  SEND_MSG,
   SEND_MSG_COMPLETED,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
   UPDATE_WRITING_STATUS,
@@ -373,7 +372,6 @@ export let updateMsg = function updateMsg(converseUUID, payload) {
 
 export let sendMsg = function sendMsg(toUUID: string, payload: MsgPayload) {
   return function(dispatch, getState) {
-    dispatch({ type: SEND_MSG });
     const info = getState().getIn(['user', 'info']);
     const localUUID = getLocalUUID();
     let pkg = {
@@ -417,7 +415,6 @@ export let sendFile = function sendFile(toUUID, payload, file) {
   }
 
   return function(dispatch, getState) {
-    dispatch({ type: SEND_MSG });
     const info = getState().getIn(['user', 'info']);
     const selfUserUUID = info.get('uuid');
     const localUUID = getLocalUUID();

@@ -119,19 +119,52 @@ describe('chat reducer', () => {
 
   it('CREATE_CONVERSES_FAILED', () => {
     const state = chatReducer(undefined, {
-      type: 'GET_CONVERSES_REQUEST',
+      type: 'CREATE_CONVERSES_FAILED',
     });
 
     expect(state.get('conversesDesc')).toBe('获取会话列表失败, 请重试');
   });
 
-  it.todo('REMOVE_CONVERSES_SUCCESS');
-  it.todo('REMOVE_USER_CONVERSE');
-  it.todo('SEND_MSG');
+  it('REMOVE_CONVERSES_SUCCESS and REMOVE_USER_CONVERSE', () => {
+    const state = chatReducer(
+      fromJS({
+        converses: {
+          test: {
+            uuid: 'test',
+          },
+        },
+      }),
+      {
+        type: 'REMOVE_CONVERSES_SUCCESS',
+        converseUUID: 'test',
+      }
+    );
+
+    expect(state.getIn(['converses', 'test'])).toBeUndefined();
+  });
+
   it.todo('SEND_MSG_COMPLETED');
   it.todo('UPDATE_SYSTEM_CARD_CHAT_DATA');
   it.todo('UPDATE_WRITING_STATUS');
   it.todo('UPDATE_USER_CHAT_EMOTION_CATALOG');
   it.todo('ADD_USER_CHAT_EMOTION_CATALOG');
-  it.todo('SET_CONVERSES_MSGLOG_NOMORE');
+
+  it('SET_CONVERSES_MSGLOG_NOMORE', () => {
+    const state = chatReducer(
+      fromJS({
+        converses: {
+          test: {
+            nomore: false,
+          },
+        },
+      }),
+      {
+        type: 'SET_CONVERSES_MSGLOG_NOMORE',
+        converseUUID: 'test',
+        nomore: true,
+      }
+    );
+
+    expect(state.getIn(['converses', 'test', 'nomore'])).toBe(true);
+  });
 });

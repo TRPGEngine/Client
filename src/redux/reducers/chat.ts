@@ -205,7 +205,6 @@ export default function chat(state = initialState, action) {
         }
         return state;
       case REMOVE_CONVERSES_SUCCESS:
-        return state.deleteIn(['converses', action.converseUUID]);
       case REMOVE_USER_CONVERSE:
         return state.deleteIn(['converses', action.converseUUID]);
       case SWITCH_CONVERSES:
