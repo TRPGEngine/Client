@@ -110,8 +110,50 @@ describe('chat reducer', () => {
     expect(state.get('conversesDesc')).toBe('正在获取会话列表...');
   });
 
-  it.todo('GET_CONVERSES_SUCCESS');
-  it.todo('GET_USER_CONVERSES_SUCCESS');
+  it('GET_CONVERSES_SUCCESS and GET_USER_CONVERSES_SUCCESS', () => {
+    const state = chatReducer(undefined, {
+      type: 'GET_CONVERSES_SUCCESS',
+      payload: [
+        {
+          uuid: 'test1',
+          others: 'others',
+        },
+        {
+          uuid: 'test2',
+          others: 'others',
+        },
+        {
+          uuid: 'test3',
+          others: 'others',
+        },
+      ],
+    });
+
+    expect(state.get('converses').toJS()).toMatchObject({
+      test1: {
+        uuid: 'test1',
+        others: 'others',
+        msgList: [],
+        lastMsg: '',
+        lastTime: '',
+      },
+      test2: {
+        uuid: 'test2',
+        others: 'others',
+        msgList: [],
+        lastMsg: '',
+        lastTime: '',
+      },
+      test3: {
+        uuid: 'test3',
+        others: 'others',
+        msgList: [],
+        lastMsg: '',
+        lastTime: '',
+      },
+    });
+  });
+
   it.todo('UPDATE_CONVERSES_INFO_SUCCESS');
   it.todo('UPDATE_CONVERSES_MSGLIST_SUCCESS');
   it.todo('SWITCH_CONVERSES');
