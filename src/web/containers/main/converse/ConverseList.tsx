@@ -48,7 +48,7 @@ class ConverseList extends React.Component<Props> {
         .filter(
           (item) => item.get('type') === 'user' || item.get('type') === 'system'
         )
-        .sortBy((item) => new Date(item.get('lastTime')))
+        .sortBy((item) => new Date(item.get('lastTime') || 0))
         .reverse()
         .map((item, index) => {
           let uuid = item.get('uuid');
