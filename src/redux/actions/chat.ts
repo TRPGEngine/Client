@@ -7,7 +7,6 @@ const {
   GET_CONVERSES_SUCCESS,
   GET_CONVERSES_FAILED,
   GET_USER_CONVERSES_SUCCESS,
-  CREATE_CONVERSES_REQUEST,
   CREATE_CONVERSES_SUCCESS,
   CREATE_CONVERSES_FAILED,
   REMOVE_CONVERSES_SUCCESS,
@@ -138,7 +137,6 @@ export let createConverse = function createConverse(
       }
       return;
     }
-    dispatch({ type: CREATE_CONVERSES_REQUEST });
     return api.emit('chat::createConverse', { uuid, type }, function(data) {
       console.log('chat::createConverse', data);
       if (data.result) {

@@ -101,15 +101,30 @@ describe('chat reducer', () => {
   });
 
   it.todo('UPDATE_MSG');
-  it.todo('GET_CONVERSES_REQUEST');
+
+  it('GET_CONVERSES_REQUEST', () => {
+    const state = chatReducer(undefined, {
+      type: 'GET_CONVERSES_REQUEST',
+    });
+
+    expect(state.get('conversesDesc')).toBe('正在获取会话列表...');
+  });
+
   it.todo('GET_CONVERSES_SUCCESS');
   it.todo('GET_USER_CONVERSES_SUCCESS');
   it.todo('UPDATE_CONVERSES_INFO_SUCCESS');
   it.todo('UPDATE_CONVERSES_MSGLIST_SUCCESS');
   it.todo('SWITCH_CONVERSES');
-  it.todo('CREATE_CONVERSES_REQUEST');
   it.todo('CREATE_CONVERSES_SUCCESS');
-  it.todo('CREATE_CONVERSES_FAILED');
+
+  it('CREATE_CONVERSES_FAILED', () => {
+    const state = chatReducer(undefined, {
+      type: 'GET_CONVERSES_REQUEST',
+    });
+
+    expect(state.get('conversesDesc')).toBe('获取会话列表失败, 请重试');
+  });
+
   it.todo('REMOVE_CONVERSES_SUCCESS');
   it.todo('REMOVE_USER_CONVERSE');
   it.todo('SEND_MSG');
