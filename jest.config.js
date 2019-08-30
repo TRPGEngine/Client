@@ -11,6 +11,9 @@ module.exports = {
   rootDir: '.',
   roots: ['<rootDir>/test/'],
   transformIgnorePatterns: ['/node_modules/'],
+  setupFilesAfterEnv: [
+    require.resolve('./test/immutable-expect.ts'), // 注册预期
+  ],
   globals: {
     window: {},
     regeneratorRuntime, // for react-native-storage
