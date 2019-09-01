@@ -1,5 +1,7 @@
-import constants from '../constants';
 import immutable, { List, Map, Record } from 'immutable';
+import _isNil from 'lodash/isNil';
+import _invoke from 'lodash/invoke';
+import constants from '../constants';
 const {
   RESET,
   ADD_CONVERSES,
@@ -150,19 +152,23 @@ export default function chat(state = initialState, action) {
         return state.set('conversesDesc', '获取会话列表失败, 请重试');
       case GET_CONVERSES_SUCCESS:
       case GET_USER_CONVERSES_SUCCESS: {
-        let list = action.payload;
+        const list = action.payload;
         if (list instanceof Array && list.length > 0) {
           let converses = state.get('converses');
           for (var i = 0; i < list.length; i++) {
-            let item = list[i];
-            let uuid = item.uuid;
-            let obj = Object.assign(
+            const item = list[i];
+            const uuid = item.uuid;
+            const oldConverseInfo = !_isNil(converses)
+              ? _invoke(converses.get(uuid), 'toJS')
+              : null;
+            const obj = Object.assign(
               {},
               {
                 msgList: [],
                 lastMsg: '',
                 lastTime: '',
               },
+              oldConverseInfo,
               item
             );
             converses = converses.set(uuid, immutable.fromJS(obj));

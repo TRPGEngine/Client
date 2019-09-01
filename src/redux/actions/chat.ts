@@ -30,7 +30,7 @@ import * as uploadHelper from '../../shared/utils/upload-helper';
 import { renewableDelayTimer } from '../../shared/utils/timer';
 import config from '../../../config/project.config';
 import _without from 'lodash/without';
-import { MsgPayload } from '@redux/types/chat';
+import { MsgPayload, ConverseInfo } from '@redux/types/chat';
 
 const getUserConversesHash = (userUUID) => {
   return `userConverses#${userUUID}`;
@@ -210,7 +210,10 @@ export let addUserConverse = function addUserConverse(senders: string[]) {
     dispatch({
       type: GET_USER_CONVERSES_SUCCESS,
       payload: senders
-        .map((uuid) => ({ uuid, type: 'user', name: '' }))
+        .map<ConverseInfo>((uuid) => ({
+          uuid,
+          type: 'user',
+        }))
         .concat([{ uuid: 'trpgsystem', type: 'system', name: '系统消息' }]),
     });
 
