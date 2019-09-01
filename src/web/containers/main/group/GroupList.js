@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../../../config/project.config.js';
+import config from '../../../../../config/project.config';
 import ConvItem from '../../../components/ConvItem';
 import dateHelper from '../../../../shared/utils/date-helper';
 import { switchSelectGroup } from '../../../../redux/actions/group';

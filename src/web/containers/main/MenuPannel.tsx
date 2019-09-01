@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import config from '../../../../config/project.config.js';
+import config from '../../../../config/project.config';
 import { showProfileCard, switchMenuPannel } from '../../../redux/actions/ui';
 import SlidePanel from '../../components/SlidePanel';
 import ConverseList from './converse/ConverseList';

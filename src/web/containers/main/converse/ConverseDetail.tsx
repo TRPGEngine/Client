@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import config from '../../../../../config/project.config.js';
+import config from '../../../../../config/project.config';
 import {
   showModal,
   hideModal,

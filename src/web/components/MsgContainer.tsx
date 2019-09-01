@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { List, Map } from 'immutable';
-import config from '../../../config/project.config.js';
+import config from '../../../config/project.config';
 import dateHelper from '../../shared/utils/date-helper';
 import scrollTo from '../../shared/utils/animated-scroll-to';
 import { getUserInfoCache } from '../../shared/utils/cache-helper';

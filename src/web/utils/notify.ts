@@ -1,6 +1,6 @@
 import tinycon from 'tinycon';
 import { getUserInfoCache } from '../../shared/utils/cache-helper';
-import config from '../../../config/project.config.js';
+import config from '@config/project.config';
 import { switchMenuPannel } from '../../redux/actions/ui';
 import { switchConverse } from '../../redux/actions/chat';
 let num = 0;

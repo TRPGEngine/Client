@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import dateHelper from '../../../../shared/utils/date-helper';
-import config from '../../../../../config/project.config.js';
+import config from '../../../../../config/project.config';
 import ConverseDetail from './ConverseDetail';
 // import Tab from '../../../components/Tab';
 import { TabsController, Tab } from '../../../components/Tabs';

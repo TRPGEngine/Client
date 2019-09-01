@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { getTheme } from './theme';
 import { attachStore } from '../shared/utils/cache-helper';
-import config from '../../config/project.config.js';
+import config from '../../config/project.config';
 import configureStore from '../redux/configureStore';
 import * as trpgApi from '../api/trpg.api';
 import notify from './utils/notify';

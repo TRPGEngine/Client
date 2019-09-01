@@ -8,7 +8,7 @@ const {
   UPDATE_FAVORITE_DICE,
 } = constants;
 import { showAlert } from './ui';
-import config from '../../../config/project.config.js';
+import config from '@config/project.config';
 import rnStorage from '../../api/rn-storage.api';
 import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
