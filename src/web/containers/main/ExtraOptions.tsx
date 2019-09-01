@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import config from '../../../../config/project.config';
 import { logout } from '../../../redux/actions/user';
 import { showModal, switchMenuPannel } from '../../../redux/actions/ui';
@@ -21,17 +21,16 @@ import Webview from '../../components/Webview';
 
 import './ExtraOptions.scss';
 
-class ExtraOptions extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: '',
-    };
-    this.hideMenu = () => {
-      document.removeEventListener('click', this.hideMenu);
-      this.setState({ show: '' });
-    };
-  }
+interface Props extends DispatchProp<any> {}
+class ExtraOptions extends React.Component<Props> {
+  state = {
+    show: '',
+  };
+
+  hideMenu = () => {
+    document.removeEventListener('click', this.hideMenu);
+    this.setState({ show: '' });
+  };
 
   componentWillUnmount() {
     document.removeEventListener('click', this.hideMenu);
@@ -47,7 +46,7 @@ class ExtraOptions extends React.Component {
     document.addEventListener('click', this.hideMenu);
   }
 
-  handleClickMenu(menu) {
+  handleClickMenu(menu: string) {
     if (menu === 'actorCreate') {
       this.props.dispatch(showModal(<ActorCreate />));
       // } else if (menu === 'templateCreate') {
@@ -108,15 +107,11 @@ class ExtraOptions extends React.Component {
     } else if (type === 'more') {
       return (
         <ul>
-          <li onClick={() => this.handleClickMenu('userSettings')}>
-            个人设置
-          </li>
+          <li onClick={() => this.handleClickMenu('userSettings')}>个人设置</li>
           <li onClick={() => this.handleClickMenu('systemSettings')}>
             系统设置
           </li>
-          <li onClick={() => this.handleClickMenu('systemStatus')}>
-            系统状态
-          </li>
+          <li onClick={() => this.handleClickMenu('systemStatus')}>系统状态</li>
           <li onClick={() => this.handleClickMenu('changePassword')}>
             修改密码
           </li>
