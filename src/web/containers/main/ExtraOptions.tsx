@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import config from '../../../../config/project.config';
-import { logout } from '../../../redux/actions/user';
+import { connect, DispatchProp } from 'react-redux';
+import config from '@config/project.config';
+import { logout, loginWithToken } from '@redux/actions/user';
 import { showModal, switchMenuPannel } from '../../../redux/actions/ui';
 import { setEditedTemplate } from '../../../redux/actions/actor';
 import { addNote } from '../../../redux/actions/note';
@@ -18,20 +18,20 @@ import SystemSettings from '../../components/modal/SystemSettings';
 import SystemStatus from '../../components/modal/SystemStatus';
 import ModalPanel from '../../components/ModalPanel';
 import Webview from '../../components/Webview';
+import rnStorage from '@src/api/rn-storage.api';
 
 import './ExtraOptions.scss';
 
-class ExtraOptions extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: '',
-    };
-    this.hideMenu = () => {
-      document.removeEventListener('click', this.hideMenu);
-      this.setState({ show: '' });
-    };
-  }
+interface Props extends DispatchProp<any> {}
+class ExtraOptions extends React.Component<Props> {
+  state = {
+    show: '',
+  };
+
+  hideMenu = () => {
+    document.removeEventListener('click', this.hideMenu);
+    this.setState({ show: '' });
+  };
 
   componentWillUnmount() {
     document.removeEventListener('click', this.hideMenu);
@@ -47,7 +47,7 @@ class ExtraOptions extends React.Component {
     document.addEventListener('click', this.hideMenu);
   }
 
-  handleClickMenu(menu) {
+  handleClickMenu(menu: string) {
     if (menu === 'actorCreate') {
       this.props.dispatch(showModal(<ActorCreate />));
       // } else if (menu === 'templateCreate') {
@@ -70,6 +70,13 @@ class ExtraOptions extends React.Component {
       this.props.dispatch(showModal(<SystemStatus />));
     } else if (menu === 'changePassword') {
       this.props.dispatch(showModal(<ChangePassword />));
+    } else if (menu === 'relogin') {
+      (async () => {
+        let uuid = await rnStorage.get('uuid');
+        let token = await rnStorage.get('token');
+        console.log('正在尝试自动重新登录');
+        this.props.dispatch(loginWithToken(uuid, token));
+      })();
     } else if (menu === 'help') {
       this.props.dispatch(
         showModal(
@@ -91,7 +98,8 @@ class ExtraOptions extends React.Component {
   }
 
   _getContent() {
-    let type = this.state.show;
+    const type = this.state.show;
+
     if (type === 'add') {
       return (
         <ul>
@@ -108,18 +116,17 @@ class ExtraOptions extends React.Component {
     } else if (type === 'more') {
       return (
         <ul>
-          <li onClick={() => this.handleClickMenu('userSettings')}>
-            个人设置
-          </li>
+          <li onClick={() => this.handleClickMenu('userSettings')}>个人设置</li>
           <li onClick={() => this.handleClickMenu('systemSettings')}>
             系统设置
           </li>
-          <li onClick={() => this.handleClickMenu('systemStatus')}>
-            系统状态
-          </li>
+          <li onClick={() => this.handleClickMenu('systemStatus')}>系统状态</li>
           <li onClick={() => this.handleClickMenu('changePassword')}>
             修改密码
           </li>
+          {config.environment === 'development' ? (
+            <li onClick={() => this.handleClickMenu('relogin')}>重新登录</li>
+          ) : null}
           <li onClick={() => this.handleClickMenu('help')}>帮助反馈</li>
           <li onClick={() => this.handleClickMenu('blog')}>开发者博客</li>
           <li onClick={() => this.handleClickMenu('logout')}>退出登录</li>

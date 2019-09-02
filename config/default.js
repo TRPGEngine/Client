@@ -20,5 +20,10 @@ module.exports = {
       appkey: '',
       messageSecret: '',
     },
+    mipush: {
+      // 小米厂商推送通道配置
+      appid: '',
+      appkey: '',
+    },
   },
 };

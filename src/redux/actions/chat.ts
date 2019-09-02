@@ -7,7 +7,6 @@ const {
   GET_CONVERSES_SUCCESS,
   GET_CONVERSES_FAILED,
   GET_USER_CONVERSES_SUCCESS,
-  CREATE_CONVERSES_REQUEST,
   CREATE_CONVERSES_SUCCESS,
   CREATE_CONVERSES_FAILED,
   REMOVE_CONVERSES_SUCCESS,
@@ -15,7 +14,6 @@ const {
   UPDATE_CONVERSES_INFO_SUCCESS,
   UPDATE_CONVERSES_MSGLIST_SUCCESS,
   SWITCH_CONVERSES,
-  SEND_MSG,
   SEND_MSG_COMPLETED,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
   UPDATE_WRITING_STATUS,
@@ -32,7 +30,7 @@ import * as uploadHelper from '../../shared/utils/upload-helper';
 import { renewableDelayTimer } from '../../shared/utils/timer';
 import config from '../../../config/project.config';
 import _without from 'lodash/without';
-import { MsgPayload } from '@redux/types/chat';
+import { MsgPayload, ConverseInfo } from '@redux/types/chat';
 
 const getUserConversesHash = (userUUID) => {
   return `userConverses#${userUUID}`;
@@ -138,7 +136,6 @@ export let createConverse = function createConverse(
       }
       return;
     }
-    dispatch({ type: CREATE_CONVERSES_REQUEST });
     return api.emit('chat::createConverse', { uuid, type }, function(data) {
       console.log('chat::createConverse', data);
       if (data.result) {
@@ -201,6 +198,10 @@ export const removeUserConverse = (userConverseUUID) => {
   };
 };
 
+/**
+ * 增加用户UUID会话列表
+ * @param senders 会话UUID列表
+ */
 export let addUserConverse = function addUserConverse(senders: string[]) {
   return function(dispatch, getState) {
     if (typeof senders === 'string') {
@@ -209,7 +210,10 @@ export let addUserConverse = function addUserConverse(senders: string[]) {
     dispatch({
       type: GET_USER_CONVERSES_SUCCESS,
       payload: senders
-        .map((uuid) => ({ uuid, type: 'user', name: '' }))
+        .map<ConverseInfo>((uuid) => ({
+          uuid,
+          type: 'user',
+        }))
         .concat([{ uuid: 'trpgsystem', type: 'system', name: '系统消息' }]),
     });
 
@@ -270,7 +274,7 @@ export let addUserConverse = function addUserConverse(senders: string[]) {
 };
 
 export let getOfflineUserConverse = function getOfflineUserConverse(
-  lastLoginDate
+  lastLoginDate: string
 ) {
   return function(dispatch, getState) {
     api.emit('chat::getOfflineUserConverse', { lastLoginDate }, function(data) {
@@ -371,7 +375,6 @@ export let updateMsg = function updateMsg(converseUUID, payload) {
 
 export let sendMsg = function sendMsg(toUUID: string, payload: MsgPayload) {
   return function(dispatch, getState) {
-    dispatch({ type: SEND_MSG });
     const info = getState().getIn(['user', 'info']);
     const localUUID = getLocalUUID();
     let pkg = {
@@ -415,7 +418,6 @@ export let sendFile = function sendFile(toUUID, payload, file) {
   }
 
   return function(dispatch, getState) {
-    dispatch({ type: SEND_MSG });
     const info = getState().getIn(['user', 'info']);
     const selfUserUUID = info.get('uuid');
     const localUUID = getLocalUUID();

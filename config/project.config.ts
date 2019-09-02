@@ -1,4 +1,4 @@
-import _get from 'lodash/get';
+const _get = require('lodash/get');
 const environment = process.env.NODE_ENV || 'development';
 const platform = process.env.PLATFORM || 'web';
 let currentHost = '127.0.0.1';
@@ -30,7 +30,61 @@ if (trpgPort) {
   apiPort = trpgPort;
 }
 
-let out = {
+interface ProjectConfig {
+  version: string;
+  environment: string;
+  platform: string;
+  io: {
+    protocol: 'wss' | 'ws';
+    host: string;
+    port: string;
+  };
+  chat: {
+    isWriting: {
+      throttle: number;
+      timeout: number;
+    };
+  };
+  file: {
+    protocol: 'https' | 'http';
+    host: string;
+    port: string;
+    url?: string;
+    getFileImage: (ext: string) => string;
+    getAbsolutePath?: (path: string) => string;
+    getRelativePath?: (path: string) => string;
+    getUploadsImagePath?: (filename: string, isTemporary: boolean) => string;
+  };
+  defaultImg: {
+    user: string;
+    getUser: (name: string) => string;
+    group: string;
+    trpgsystem: string;
+    actor: string;
+    chatimg_fail: string;
+    file: {
+      default: string;
+      pdf: string;
+      excel: string;
+      ppt: string;
+      word: string;
+      txt: string;
+      pic: string;
+    };
+    color: string[];
+  };
+  github: {
+    projectUrl: string;
+    projectPackageUrl: string;
+  };
+  url: {
+    goddessfantasy: string;
+    blog: string;
+  };
+  defaultSettings: {};
+}
+
+const config: ProjectConfig = {
   version: require('../package.json').version,
   environment,
   platform,
@@ -51,32 +105,32 @@ let out = {
     port: apiPort,
     getFileImage: function(ext) {
       if (ext === 'jpg' || ext === 'png' || ext === 'gif') {
-        return out.defaultImg.file.pic;
+        return config.defaultImg.file.pic;
       }
       if (ext === 'doc' || ext === 'docx') {
-        return out.defaultImg.file.word;
+        return config.defaultImg.file.word;
       }
       if (ext === 'xls' || ext === 'xlsx') {
-        return out.defaultImg.file.excel;
+        return config.defaultImg.file.excel;
       }
       if (ext === 'ppt' || ext === 'pptx') {
-        return out.defaultImg.file.ppt;
+        return config.defaultImg.file.ppt;
       }
       if (ext === 'pdf') {
-        return out.defaultImg.file.pdf;
+        return config.defaultImg.file.pdf;
       }
       if (ext === 'txt') {
-        return out.defaultImg.file.txt;
+        return config.defaultImg.file.txt;
       }
 
-      return out.defaultImg.file.default;
+      return config.defaultImg.file.default;
     },
   },
   defaultImg: {
     user: '/src/assets/img/gugugu1.png',
     getUser(name) {
       if (name) {
-        return `${out.file.url}/file/avatar/svg?name=${name}`;
+        return `${config.file.url}/file/avatar/svg?name=${name}`;
       } else {
         return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; // 一像素透明图片
       }
@@ -131,28 +185,28 @@ let out = {
     },
   },
 };
-out.file.url = `${out.file.protocol}://${out.file.host}:${out.file.port}`;
+config.file.url = `${config.file.protocol}://${config.file.host}:${config.file.port}`;
 
 // 获取基于API的绝对路径
-out.file.getAbsolutePath = function getAbsolutePath(path) {
+config.file.getAbsolutePath = function getAbsolutePath(path) {
   if (!path) {
     path = ''; // 设置默认值
   }
   if (path && path[0] === '/') {
-    return out.file.url + path;
+    return config.file.url + path;
   }
   return path;
 };
 
 // 获取基于APi的相对路径
-out.file.getRelativePath = function getAbsolutePath(path) {
+config.file.getRelativePath = function getAbsolutePath(path) {
   if (!path) {
     path = ''; // 设置默认值
   }
-  return path.replace(out.file.url, '');
+  return path.replace(config.file.url, '');
 };
 
-out.file.getUploadsImagePath = function getUploadsImagePath(
+config.file.getUploadsImagePath = function getUploadsImagePath(
   filename,
   isTemporary = false
 ) {
@@ -163,7 +217,7 @@ out.file.getUploadsImagePath = function getUploadsImagePath(
     relativePath = `/uploads/persistence/${filename}`;
   }
 
-  return out.file.url + relativePath;
+  return config.file.url + relativePath;
 };
 
-export default out;
+export default config;

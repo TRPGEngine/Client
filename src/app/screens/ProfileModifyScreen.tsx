@@ -97,6 +97,9 @@ class ProfileModifyScreen extends React.Component<Props> {
     dispatch(updateInfo(data, () => dispatch(hideModal())));
   }
 
+  /**
+   * 编辑昵称事件
+   */
   handleEditNickname = () => {
     const { dispatch, userInfo } = this.props;
     let nickname = userInfo.get('nickname');
@@ -113,6 +116,9 @@ class ProfileModifyScreen extends React.Component<Props> {
     );
   };
 
+  /**
+   * 编辑性别事件
+   */
   handleEditSex = () => {
     const { dispatch, userInfo } = this.props;
     let sex = userInfo.get('sex');
@@ -135,6 +141,9 @@ class ProfileModifyScreen extends React.Component<Props> {
     );
   };
 
+  /**
+   * 编辑个人签名事件
+   */
   handleEditSign = () => {
     const { dispatch, userInfo } = this.props;
     let sign = userInfo.get('sign');
@@ -147,6 +156,7 @@ class ProfileModifyScreen extends React.Component<Props> {
             numberOfLines={4}
             defaultValue={sign}
             onChangeText={(text) => (sign = text)}
+            style={{ maxHeight: 320 }}
           />
         </TModalPanel>
       )

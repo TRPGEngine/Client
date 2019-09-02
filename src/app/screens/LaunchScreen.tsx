@@ -60,13 +60,13 @@ class LaunchScreen extends React.Component<Props> {
     }, 500);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.network.get('isOnline') === false) {
+  componentDidUpdate(prevProps: Readonly<Props>) {
+    if (this.props.network.get('isOnline') === false) {
       return;
     }
 
-    if (this.props.isTryLogin === true && nextProps.isTryLogin === false) {
-      if (nextProps.isLogin) {
+    if (prevProps.isTryLogin === true && this.props.isTryLogin === false) {
+      if (this.props.isLogin) {
         this.props.dispatch(replaceNav('Main'));
       } else {
         this.props.dispatch(replaceNav('Login'));

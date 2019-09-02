@@ -28,7 +28,7 @@ let storage = new Storage({
   // sync: require('你可以另外写一个文件专门处理sync')
 });
 
-export default {
+const rnStorage = {
   set: async (key: string | {}, data?: {}) => {
     try {
       if (!!key && typeof key === 'string' && !!data) {
@@ -97,3 +97,5 @@ export default {
     return data;
   },
 };
+
+export default rnStorage;

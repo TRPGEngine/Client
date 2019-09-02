@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Clipboard } from 'react-native';
 import _get from 'lodash/get';
 import Base from './Base';
-import { parse } from '../../utils/textParser';
+import { parse } from '@src/app/utils/text-parser';
 import { Modal } from '@ant-design/react-native';
 import styled from 'styled-components/native';
 

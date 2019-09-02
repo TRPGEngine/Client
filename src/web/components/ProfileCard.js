@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../config/project.config.js';
+import config from '../../../config/project.config';
 import Select from 'react-select';
 import ImageViewer from './ImageViewer';
 import ImageUploader from './ImageUploader';

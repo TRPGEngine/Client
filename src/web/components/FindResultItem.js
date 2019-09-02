@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../config/project.config.js';
+import config from '../../../config/project.config';
 import { sendFriendInvite, agreeFriendInvite } from '../../redux/actions/user';
 import { requestJoinGroup } from '../../redux/actions/group';
 

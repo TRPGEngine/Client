@@ -32,7 +32,7 @@ const defaultStoreOptions = {
 function configureStore(options = defaultStoreOptions) {
   const initialState = options.initialState;
   const devTool =
-    config.environment !== 'production'
+    config.environment === 'development'
       ? (composeWithDevTools as any)({
           actionCreators,
         })(applyMiddleware(thunk))

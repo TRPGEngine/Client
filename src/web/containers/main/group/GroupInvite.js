@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../../../config/project.config.js';
+import config from '../../../../../config/project.config';
 import ReactTooltip from 'react-tooltip';
 import { sendGroupInvite } from '../../../../redux/actions/group';
 import { getUserInfoCache } from '../../../../shared/utils/cache-helper';

@@ -109,7 +109,6 @@ let initGroupInfo = function(dispatch, group) {
   api.emit('group::getGroupActorMapping', { groupUUID }, function(data) {
     if (data.result) {
       const { mapping } = data;
-      console.log('mapping', mapping);
       dispatch({
         type: UPDATE_GROUP_ACTOR_MAPPING,
         groupUUID,

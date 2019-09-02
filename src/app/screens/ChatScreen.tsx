@@ -301,7 +301,7 @@ class ChatScreen extends React.Component<Props> {
             ref={(ref) => (this.listRef = ref)}
             data={msgList}
             inverted={true}
-            keyExtractor={(item, index) => item.uuid + '#' + index}
+            keyExtractor={(item, index) => item.uuid}
             onTouchStart={() => this.dismissAll()}
             renderItem={({ item, index }) => {
               // 因为列表是倒转的。所以第一条数据是最下面那条
@@ -328,7 +328,6 @@ class ChatScreen extends React.Component<Props> {
 
               return (
                 <MessageHandler
-                  key={item.uuid}
                   type={item.type}
                   me={isMe}
                   name={name}

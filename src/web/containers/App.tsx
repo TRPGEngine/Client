@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 import ErrorBoundary from './ErrorBoundary';
 import NetworkIndicator from '../components/NetworkIndicator';
-import config from '../../../config/project.config.js';
+import config from '../../../config/project.config';
 import './App.scss';
 import '../../assets/css/iconfont.css';
 import 'react-select/dist/react-select.css';

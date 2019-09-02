@@ -6,6 +6,7 @@
     "lib": ["es6", "dom", "es7"],
     "module": "esnext",
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "sourceMap": true,
     "jsx": "react",
     "allowJs": true,
@@ -14,6 +15,7 @@
     "noImplicitThis": true,
     "paths": {
       "@src/*": ["./src/*"],
+      "@config/*": ["./config/*"],
       "@redux/*": ["./src/redux/*"],
       "@components/*": ["./src/web/components/*"],
       "@shared/*": ["./src/shared/*"],
@@ -23,7 +25,8 @@
   },
   "include": [
     "./node_modules/@types/",
-    "config/",
-    "src/"
+    "./config/",
+    "./src/",
+    "./test/"
   ]
 }

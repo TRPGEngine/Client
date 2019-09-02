@@ -31,9 +31,9 @@ class HomeScreen extends React.Component<Props> {
 
   getList() {
     if (this.props.converses.size > 0) {
-      let arr: any[] = this.props.converses
+      const arr: any[] = this.props.converses
         .valueSeq()
-        .sortBy((item) => new Date(item.get('lastTime')))
+        .sortBy((item) => new Date(item.get('lastTime') || 0))
         .reverse()
         .map((item, index) => {
           let uuid = item.get('uuid');
@@ -41,7 +41,7 @@ class HomeScreen extends React.Component<Props> {
             uuid === 'trpgsystem'
               ? appConfig.defaultImg.trpgsystem
               : appConfig.defaultImg.user;
-          let avatar;
+          let avatar: string;
           if (item.get('type') === 'user') {
             avatar = this.props.usercache.getIn([uuid, 'avatar']);
           } else if (item.get('type') === 'group') {

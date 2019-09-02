@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../../config/project.config.js';
+import config from '../../../../config/project.config';
 import ModalPanel from '../ModalPanel';
 import ImageUploader from '../ImageUploader';
 import { hideModal } from '../../../redux/actions/ui';

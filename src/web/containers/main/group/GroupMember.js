@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../../../config/project.config.js';
+import config from '../../../../../config/project.config';
 import moment from 'moment';
 import { showModal, showProfileCard } from '../../../../redux/actions/ui';
 import GroupMemberManage from './modal/GroupMemberManage';

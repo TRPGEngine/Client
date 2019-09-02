@@ -23,3 +23,9 @@ export interface MsgPayload {
     [key: string]: any;
   };
 }
+
+export interface ConverseInfo {
+  uuid: string;
+  type: 'user' | 'group' | 'system';
+  name?: string;
+}

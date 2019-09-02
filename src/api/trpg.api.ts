@@ -1,5 +1,15 @@
 import { API } from './socket-api';
-import config from '../../config/project.config.js';
+import config from '../../config/project.config';
+
+let api: API; // 单例模式
+export function getInstance(): API {
+  if (!api) {
+    api = new API();
+    console.log('new socket client connect created!', api);
+  }
+
+  return api;
+}
 
 import {
   addMsg,
@@ -17,16 +27,6 @@ import { getUserInfoCache } from '../shared/utils/cache-helper';
 import rnStorage from './rn-storage.api';
 import constants from '../redux/constants';
 const { RESET, ADD_FRIEND_SUCCESS } = constants;
-
-let api: API; // 单例模式
-export function getInstance(): API {
-  if (!api) {
-    api = new API();
-    console.log('new socket client connect created!', api);
-  }
-
-  return api;
-}
 
 export function bindEventFunc(
   this: API,

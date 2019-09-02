@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import dateHelper from '../../../../shared/utils/date-helper';
-import config from '../../../../../config/project.config.js';
+import config from '../../../../../config/project.config';
 import ConverseDetail from './ConverseDetail';
 // import Tab from '../../../components/Tab';
 import { TabsController, Tab } from '../../../components/Tabs';
@@ -48,7 +48,7 @@ class ConverseList extends React.Component<Props> {
         .filter(
           (item) => item.get('type') === 'user' || item.get('type') === 'system'
         )
-        .sortBy((item) => new Date(item.get('lastTime')))
+        .sortBy((item) => new Date(item.get('lastTime') || 0))
         .reverse()
         .map((item, index) => {
           let uuid = item.get('uuid');

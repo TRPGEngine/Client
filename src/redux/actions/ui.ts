@@ -63,7 +63,7 @@ export const showToast = function(msg) {
 export const hideToast = function() {
   return { type: HIDE_TOAST };
 };
-export const showProfileCard = function(uuid) {
+export const showProfileCard = function(uuid?: string) {
   return (dispatch, getState) => {
     if (!uuid) {
       // 获取个人信息数据

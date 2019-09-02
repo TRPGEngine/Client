@@ -3,7 +3,7 @@ import { connect, DispatchProp } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { showLoading } from '../../redux/actions/ui';
 import { login, loginWithToken } from '../../redux/actions/user';
-import config from '../../../config/project.config.js';
+import config from '../../../config/project.config';
 import rnStorage from '../../api/rn-storage.api';
 import './Login.scss';
 

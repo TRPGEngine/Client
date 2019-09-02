@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../../../config/project.config.js';
+import config from '../../../config/project.config';
 
 function checkVersion(cb) {
   console.log('正在检查版本...');

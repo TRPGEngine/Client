@@ -53,6 +53,8 @@
 		81E7BAF4829E4738AEDB27BC /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56B45C0546854721B24AF73F /* libimageCropPicker.a */; };
 		D038339705634106B5061F8C /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C54B61FAC3B44B3BB17C950 /* libReactNativeConfig.a */; };
 		A92316FD2B674F34B0F25035 /* libReactNativeConfig-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 503622A04AA947E98CC86497 /* libReactNativeConfig-tvOS.a */; };
+		56AB218A660A4C4E8FBE2874 /* libRNCCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E90A9326B74D07918A6430 /* libRNCCameraRoll.a */; };
+		BA2AD3ADF44F41B09BD5BE10 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D2ECC34F28743E9BD668253 /* libRNFS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -382,6 +384,10 @@
 		67A50FC1271E4D65AC538D4C /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeConfig.xcodeproj"; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		9C54B61FAC3B44B3BB17C950 /* libReactNativeConfig.a */ = {isa = PBXFileReference; name = "libReactNativeConfig.a"; path = "libReactNativeConfig.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		503622A04AA947E98CC86497 /* libReactNativeConfig-tvOS.a */ = {isa = PBXFileReference; name = "libReactNativeConfig-tvOS.a"; path = "libReactNativeConfig-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		395BDA917DDA4D6BA841E15C /* RNCCameraRoll.xcodeproj */ = {isa = PBXFileReference; name = "RNCCameraRoll.xcodeproj"; path = "../node_modules/@react-native-community/cameraroll/ios/RNCCameraRoll.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		F2E90A9326B74D07918A6430 /* libRNCCameraRoll.a */ = {isa = PBXFileReference; name = "libRNCCameraRoll.a"; path = "libRNCCameraRoll.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		891627E282FE486EBC0FB5F1 /* RNFS.xcodeproj */ = {isa = PBXFileReference; name = "RNFS.xcodeproj"; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		0D2ECC34F28743E9BD668253 /* libRNFS.a */ = {isa = PBXFileReference; name = "libRNFS.a"; path = "libRNFS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -419,6 +425,8 @@
 				B2E85485AF564F8EA63A3C92 /* libFastImage.a in Frameworks */,
 				81E7BAF4829E4738AEDB27BC /* libimageCropPicker.a in Frameworks */,
 				D038339705634106B5061F8C /* libReactNativeConfig.a in Frameworks */,
+				56AB218A660A4C4E8FBE2874 /* libRNCCameraRoll.a in Frameworks */,
+				BA2AD3ADF44F41B09BD5BE10 /* libRNFS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,6 +628,8 @@
 				46CFEDE41E444372BBE0B79D /* FastImage.xcodeproj */,
 				1DC34E87DACB43E09B52C0D7 /* imageCropPicker.xcodeproj */,
 				67A50FC1271E4D65AC538D4C /* ReactNativeConfig.xcodeproj */,
+				395BDA917DDA4D6BA841E15C /* RNCCameraRoll.xcodeproj */,
+				891627E282FE486EBC0FB5F1 /* RNFS.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1283,6 +1293,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/trpg.app/trpg";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1294,6 +1305,8 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
+					"$(SRCROOT)/../node_modules/@react-native-community/cameraroll/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Debug;
@@ -1315,6 +1328,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/trpg.app/trpg";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1326,6 +1340,8 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
+					"$(SRCROOT)/../node_modules/@react-native-community/cameraroll/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Release;
@@ -1356,6 +1372,8 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
+					"$(SRCROOT)/../node_modules/@react-native-community/cameraroll/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Debug;
@@ -1385,6 +1403,8 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
+					"$(SRCROOT)/../node_modules/@react-native-community/cameraroll/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Release;
@@ -1414,6 +1434,7 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1425,6 +1446,8 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
+					"$(SRCROOT)/../node_modules/@react-native-community/cameraroll/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Debug;
@@ -1454,6 +1477,7 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1465,6 +1489,8 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
+					"$(SRCROOT)/../node_modules/@react-native-community/cameraroll/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Release;
@@ -1493,6 +1519,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1503,6 +1530,8 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
+					"$(SRCROOT)/../node_modules/@react-native-community/cameraroll/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Debug;
@@ -1531,6 +1560,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1541,6 +1571,8 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
+					"$(SRCROOT)/../node_modules/@react-native-community/cameraroll/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Release;

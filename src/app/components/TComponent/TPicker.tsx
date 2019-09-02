@@ -40,7 +40,7 @@ class TPicker extends React.Component<Props> {
         onValueChange={this.handleValueChange}
       >
         {items.map((item) => (
-          <PickerItem label={item.label} value={item.value} />
+          <PickerItem key={item.value} label={item.label} value={item.value} />
         ))}
       </Picker>
     );
