@@ -43,6 +43,13 @@ const ExtraPanel = styled.View`
   border-top-color: #ccc;
 `;
 
+const ChatInput = styled(TInput)`
+  height: 35;
+  padding: 4px 6px;
+  flex: 1;
+  margin-right: 4px;
+`;
+
 interface Props extends DispatchProp<any>, NavigationScreenProps {
   msgList: any;
   selfInfo: any;
@@ -339,13 +346,13 @@ class ChatScreen extends React.Component<Props> {
             }}
           />
           <View style={styles.msgBox}>
-            <TInput
+            <ChatInput
               ref={(ref) => (this.inputRef = ref)}
-              style={styles.msgInput}
               onChangeText={(inputMsg) => this.setState({ inputMsg })}
               onFocus={() => this.handleFocus()}
               multiline={true}
               maxLength={100}
+              textAlignVertical="center"
               value={this.state.inputMsg}
             />
             <ActionBtn onPress={() => this.handleShowEmoticonPanel()}>
@@ -385,14 +392,6 @@ const styles = {
   container: [sb.flex()],
   list: [sb.flex()],
   msgBox: [sb.padding(6, 12), sb.bgColor(), sb.direction()],
-  msgInput: [
-    sb.size(null, 35),
-    sb.padding(4, 6),
-    // sb.border('Bottom', 1, '#ccc'),
-    sb.flex(),
-    { marginRight: 4 },
-  ],
-  extraPanel: [sb.size(null, 265), sb.bgColor(), sb.border('Top', 0.5, '#ccc')],
 };
 
 export default connect((state: any) => {
