@@ -3,6 +3,7 @@ import { View, Text, Image, ImageSourcePropType } from 'react-native';
 import sb from 'react-native-style-block';
 import config from '../../../../config/project.config';
 import str2int from 'str2int';
+import _isString from 'lodash/isString';
 
 interface Props {
   uri: string | ImageSourcePropType;
@@ -22,6 +23,8 @@ class TAvatar extends React.Component<Props> {
     width: 100,
   };
 
+  static errorImageUri: string[] = []; // 记录错误列表
+
   state = {
     loadError: false,
   };
@@ -36,6 +39,15 @@ class TAvatar extends React.Component<Props> {
     return color[id % color.length];
   }
 
+  onImageLoadError = () => {
+    const { uri } = this.props;
+
+    if (_isString(uri)) {
+      TAvatar.errorImageUri.push(uri);
+    }
+    this.setState({ loadError: true });
+  };
+
   render() {
     let { uri, name, style, capitalSize, height, width } = this.props;
 
@@ -49,7 +61,11 @@ class TAvatar extends React.Component<Props> {
     }
     let color = this.getColor(name);
 
-    if (uri && !this.state.loadError) {
+    if (
+      uri &&
+      !this.state.loadError &&
+      !TAvatar.errorImageUri.includes(String(uri))
+    ) {
       if (typeof uri === 'string') {
         uri = { uri };
       }
@@ -57,7 +73,7 @@ class TAvatar extends React.Component<Props> {
         <Image
           style={[...style, { height, width }]}
           source={uri}
-          onError={() => this.setState({ loadError: true })}
+          onError={this.onImageLoadError}
         />
       );
     } else {
