@@ -187,9 +187,18 @@ export default function chat(state = initialState, action) {
             .sortBy((item) => item.get('date'))
             .last();
           return state
-            .updateIn(['converses', convUUID, 'msgList'], (list) =>
-              immutable.List(immutable.Set(list.concat(payload)))
-            ) //添加一步去重操作
+            .updateIn(
+              ['converses', convUUID, 'msgList'],
+              (list) =>
+                list
+                  .concat(payload)
+                  .filter(
+                    (item, index, arr) =>
+                      arr.findIndex(
+                        (x) => x.get('uuid') === item.get('uuid')
+                      ) === index
+                  ) //添加一步去重操作
+            )
             .setIn(['converses', convUUID, 'lastMsg'], lastLog.get('message'))
             .setIn(['converses', convUUID, 'lastTime'], lastLog.get('date'));
         } else {
