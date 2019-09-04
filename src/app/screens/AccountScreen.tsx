@@ -52,25 +52,6 @@ class AccountScreen extends React.Component<Props> {
     this.props.dispatch(logout());
   }
 
-  handleCheckVersion() {
-    const dispatch = this.props.dispatch;
-    if (appConfig.codePush.enabled) {
-      // TODO: 也许需要根据版本判断用户是否应为热更新还是下载apk更新
-      appConfig.codePush.sync();
-    } else {
-      checkVersion(function(isLatest) {
-        if (isLatest) {
-          dispatch(showToast('当前版本为最新版'));
-        } else {
-          dispatch(showToast('检测到有新的版本, 1秒后自动跳转到项目主页'));
-          setTimeout(function() {
-            Linking.openURL(config.github.projectUrl);
-          }, 1000);
-        }
-      });
-    }
-  }
-
   render() {
     const userInfo = this.props.userInfo;
     let avatar = userInfo.get('avatar') || appConfig.defaultImg.user;
@@ -122,8 +103,13 @@ class AccountScreen extends React.Component<Props> {
 
         <AccountList>
           <Item
+            arrow="horizontal"
             extra={config.version}
-            onPress={() => this.handleCheckVersion()}
+            onPress={() => {
+              this.props.dispatch(
+                NavigationActions.navigate({ routeName: 'Version' })
+              );
+            }}
           >
             当前版本
           </Item>

@@ -39,6 +39,7 @@ import GroupProfileScreen from './screens/GroupProfileScreen';
 import ProfileModifyScreen from './screens/ProfileModifyScreen';
 import WebviewScreen from './screens/WebviewScreen';
 import DeviceInfoScreen from './screens/settings/DeviceInfoScreen';
+import VersionScreen from './screens/VersionScreen';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -129,6 +130,12 @@ export const AppNavigator = createStackNavigator(
       screen: ProfileModifyScreen,
       navigationOptions: {
         headerTitle: '编辑资料',
+      },
+    },
+    Version: {
+      screen: VersionScreen,
+      navigationOptions: {
+        headerTitle: '版本信息',
       },
     },
     Webview: {

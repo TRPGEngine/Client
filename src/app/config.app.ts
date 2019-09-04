@@ -1,5 +1,10 @@
 import config from '../../config/project.config';
-import codePush from 'react-native-code-push';
+import codePush, {
+  SyncStatusChangedCallback,
+  DownloadProgressCallback,
+  HandleBinaryVersionMismatchCallback,
+} from 'react-native-code-push';
+import _invoke from 'lodash/invoke';
 
 const out = {
   defaultImg: {
@@ -46,7 +51,11 @@ const out = {
     options: {
       checkFrequency: codePush.CheckFrequency.ON_APP_START,
     },
-    sync() {
+    sync(cb?: {
+      onStatueChanged?: SyncStatusChangedCallback;
+      onDownloadProgressChanged?: DownloadProgressCallback;
+      onHandleBinaryVersionMismatchCallback?: HandleBinaryVersionMismatchCallback;
+    }) {
       codePush.sync(
         {
           updateDialog: true as any, // TODO: wait to fix type
@@ -54,15 +63,18 @@ const out = {
         },
         (status) => {
           console.log('[code push status]', status);
+          _invoke(cb, 'onStatueChanged', status);
         },
         (progress) => {
           console.log(
             '[code push process]',
             progress.receivedBytes / progress.totalBytes
           );
+          _invoke(cb, 'onDownloadProgressChanged', progress);
         },
         (update) => {
           console.log('[code push update]', update);
+          _invoke(cb, 'onHandleBinaryVersionMismatchCallback', update);
         }
       );
     },
