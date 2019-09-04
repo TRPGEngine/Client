@@ -6,7 +6,7 @@ import { TButton } from '../components/TComponent';
 import styled from 'styled-components/native';
 import appConfig from '../config.app';
 import { connect, DispatchProp } from 'react-redux';
-import checkVersion from '@src/shared/utils/check-version';
+import checkVersion, { getLastVersion } from '@src/shared/utils/check-version';
 import { showToast } from '@src/redux/actions/ui';
 import CodePush from 'react-native-code-push';
 
@@ -24,9 +24,16 @@ const VersionInfo = styled.View`
 interface Props extends DispatchProp<any> {}
 class VersionScreen extends React.Component<Props> {
   state = {
+    lastVersion: '正在获取...',
     stateText: '',
     progressText: '',
   };
+
+  componentDidMount() {
+    getLastVersion().then((version) =>
+      this.setState({ lastVersion: `v${version}` })
+    );
+  }
 
   setText(text: string) {
     this.setState({ stateText: text });
@@ -99,6 +106,7 @@ class VersionScreen extends React.Component<Props> {
       <VersionContainer>
         <VersionInfo>
           <Text>当前版本: {config.version}</Text>
+          <Text>最新版本: {this.state.lastVersion}</Text>
           <Text>{this.state.stateText}</Text>
           {this.state.progressText !== '' && (
             <Text>下载进度: {this.state.progressText}</Text>
