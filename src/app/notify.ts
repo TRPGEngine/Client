@@ -11,13 +11,15 @@ export async function setAlias(alias: string) {
     return;
   }
 
-  const hasSetUPushAlias = await rnStorage.get('hasSetUPushAlias');
+  const hashKey = 'hasSetUPushAlias';
+
+  const hasSetUPushAlias = await rnStorage.get(hashKey);
   if (!hasSetUPushAlias || hasSetUPushAlias !== alias) {
     // 如果没有设置别名或设置的别名不为当前用户，则重新设置
     umPush.addAlias(alias, 'trpg_user', (success) => {
       if (success === Code.SUCCESS) {
         console.log('[UPush]', 'set alias success', success);
-        rnStorage.save('hasSetJPushAlias', alias);
+        rnStorage.save(hashKey, alias);
       } else {
         console.warn('[UPush]', 'set alias error');
       }
