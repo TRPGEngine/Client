@@ -8,6 +8,7 @@ import _invoke from 'lodash/invoke';
 
 const out = {
   defaultImg: {
+    logo: require('./assets/img/trpg_logo.png'),
     user: '', // 让系统系统生成
     group: require('../assets/img/gugugu1.png'),
     trpgsystem: require('./assets/img/system_notice.png'),

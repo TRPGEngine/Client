@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Linking } from 'react-native';
+import { Text, Linking, Image } from 'react-native';
 import config from '@config/project.config';
 import { WingBlank } from '@ant-design/react-native';
 import { TButton } from '../components/TComponent';
@@ -21,6 +21,15 @@ const VersionInfo = styled.View`
   overflow: hidden;
 `;
 
+const LogoImg = styled.Image.attrs((props) => ({
+  source: appConfig.defaultImg.logo,
+}))`
+  border-radius: 10px;
+  width: 72px;
+  height: 72px;
+  margin: 20px auto;
+`;
+
 interface Props extends DispatchProp<any> {}
 class VersionScreen extends React.Component<Props> {
   state = {
@@ -30,9 +39,7 @@ class VersionScreen extends React.Component<Props> {
   };
 
   componentDidMount() {
-    getLastVersion().then((version) =>
-      this.setState({ lastVersion: `v${version}` })
-    );
+    getLastVersion().then((version) => this.setState({ lastVersion: version }));
   }
 
   setText(text: string) {
@@ -105,6 +112,7 @@ class VersionScreen extends React.Component<Props> {
     return (
       <VersionContainer>
         <VersionInfo>
+          <LogoImg />
           <Text>当前版本: {config.version}</Text>
           <Text>最新版本: {this.state.lastVersion}</Text>
           <Text>{this.state.stateText}</Text>
