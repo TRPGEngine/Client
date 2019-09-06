@@ -5,6 +5,7 @@ import codePush, {
   HandleBinaryVersionMismatchCallback,
 } from 'react-native-code-push';
 import _invoke from 'lodash/invoke';
+import Config from 'react-native-config';
 
 const out = {
   defaultImg: {
@@ -59,8 +60,15 @@ const out = {
     }) {
       codePush.sync(
         {
-          updateDialog: true as any, // TODO: wait to fix type
+          updateDialog: {
+            appendReleaseDescription: true,
+            descriptionPrefix: '\n\n更新内容：\n',
+            title: '更新',
+            mandatoryUpdateMessage: '',
+            mandatoryContinueButtonLabel: '更新',
+          },
           installMode: codePush.InstallMode.IMMEDIATE,
+          deploymentKey: Config.CODEPUSH_DEPLOYMENTKEY,
         },
         (status) => {
           console.log('[code push status]', status);
