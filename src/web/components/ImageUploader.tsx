@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import { showAlert } from '../../redux/actions/ui';
+import { showAlert } from '../../shared/redux/actions/ui';
 import _get from 'lodash/get';
 
 import './ImageUploader.scss';

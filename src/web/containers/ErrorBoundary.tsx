@@ -3,7 +3,7 @@ import {
   sendErrorReport,
   // showErrorDialog,
 } from '../../shared/utils/error-report';
-import config from '../../../config/project.config';
+import config from '../../shared/project.config';
 
 import './ErrorBoundary.scss';
 

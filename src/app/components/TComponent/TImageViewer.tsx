@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { View, Modal, TouchableOpacity } from 'react-native';
-import { saveImageToLocal } from '@src/app/utils/file-helper';
+import { saveImageToLocal } from '@src/app/src/utils/file-helper';
 import { Toast } from '@ant-design/react-native';
 
 interface Props {

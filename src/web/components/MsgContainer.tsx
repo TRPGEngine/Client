@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { List, Map } from 'immutable';
-import config from '../../../config/project.config';
+import config from '../../shared/project.config';
 import dateHelper from '../../shared/utils/date-helper';
 import scrollTo from '../../shared/utils/animated-scroll-to';
 import { getUserInfoCache } from '../../shared/utils/cache-helper';
-import { getMoreChatLog } from '../../redux/actions/chat';
+import { getMoreChatLog } from '../../shared/redux/actions/chat';
 
 import MessageHandler from '../../shared/components/MessageHandler';
 import Default from './messageTypes/Default';

@@ -5,7 +5,7 @@ import Checkbox from '../Checkbox';
 import {
   setSystemSettings,
   saveSettings,
-} from '../../../redux/actions/settings';
+} from '../../../shared/redux/actions/settings';
 
 import './SystemSettings.scss';
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import BaseCard from './BaseCard';
 import { connect } from 'react-redux';
-import { showModal } from '../../../../redux/actions/ui';
-import { getActorInfo } from '../../../../redux/actions/cache';
-import config from '../../../../../config/project.config';
+import { showModal } from '../../../../shared/redux/actions/ui';
+import { getActorInfo } from '../../../../shared/redux/actions/cache';
+import config from '../../../../shared/project.config';
 import ActorCacheProfile from '../../modal/ActorCacheProfile';
 
 // 投骰请求

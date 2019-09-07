@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hideModal } from '../../redux/actions/ui';
+import { hideModal } from '../../shared/redux/actions/ui';
 import './Modal.scss';
 
 class Modal extends React.Component {

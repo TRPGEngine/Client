@@ -1,20 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { selectActor } from '@redux/actions/actor';
-import { showAlert, showModal } from '@redux/actions/ui';
+import { selectActor } from '@src/shared/redux/actions/actor';
+import { showAlert, showModal } from '@src/shared/redux/actions/ui';
 import {
   addGroupActor,
   removeGroupActor,
   updateGroupActorInfo,
-} from '@redux/actions/group';
-import at from 'trpg-actor-template';
+} from '@src/shared/redux/actions/group';
 import { TabsController, Tab } from '../../../components/Tabs';
 import ModalPanel from '../../../components/ModalPanel';
 import ActorProfile from '../../../components/modal/ActorProfile';
 import ActorSelect from '../../../components/modal/ActorSelect';
 import GroupActorCheck from './modal/GroupActorCheck';
-import { ActorType, ActorDataType } from '@redux/types/actor';
-import { GroupActorType } from '@src/redux/types/group';
+import { ActorType, ActorDataType } from '@src/shared/redux/types/actor';
+import { GroupActorType } from '@src/shared/redux/types/group';
 import ActorEdit from '@src/web/components/modal/ActorEdit';
 import { Tooltip } from 'antd';
 import styled from 'styled-components';

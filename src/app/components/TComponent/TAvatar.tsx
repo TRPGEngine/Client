@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, ImageSourcePropType } from 'react-native';
 import sb from 'react-native-style-block';
-import config from '../../../../config/project.config';
+import config from '../../../shared/project.config';
 import str2int from 'str2int';
 import _isString from 'lodash/isString';
 

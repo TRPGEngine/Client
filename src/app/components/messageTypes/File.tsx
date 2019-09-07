@@ -5,8 +5,8 @@ import { TButton } from '../TComponent';
 import sb from 'react-native-style-block';
 import Base from './Base';
 import filesize from 'filesize';
-import config from '../../../../config/project.config';
-import appConfig from '../../config.app';
+import config from '../../../shared/project.config';
+import appConfig from '../../src/config.app';
 
 class File extends Base {
   handlePreview() {

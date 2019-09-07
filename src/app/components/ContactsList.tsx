@@ -2,10 +2,10 @@ import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { View, Text, SectionList, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
-import appConfig from '../config.app';
+import appConfig from '../src/config.app';
 import { TIcon } from './TComponent';
 import ConvItem from './ConvItem';
-import { switchNav } from '../redux/actions/nav';
+import { switchNav } from '../src/redux/actions/nav';
 
 interface Props extends DispatchProp<any> {
   friends: any;

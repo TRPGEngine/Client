@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ModalPanel from '../../../components/ModalPanel';
-import { createTemplateAdvanced } from '../../../../redux/actions/actor';
+import { createTemplateAdvanced } from '../../../../shared/redux/actions/actor';
 
 import './TemplateAdvancedCreate.scss';
 

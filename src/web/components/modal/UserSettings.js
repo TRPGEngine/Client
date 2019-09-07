@@ -6,7 +6,7 @@ import {
   removeFavoriteDice,
   updateFavoriteDice,
   saveSettings,
-} from '../../../redux/actions/settings';
+} from '../../../shared/redux/actions/settings';
 
 import './UserSettings.scss';
 

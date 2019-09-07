@@ -1,6 +1,6 @@
 import BaseCard, { BaseCardProps } from './BaseCard';
 import { connect, DispatchProp } from 'react-redux';
-import { acceptDiceRequest } from '../../../../redux/actions/dice';
+import { acceptDiceRequest } from '../../../../shared/redux/actions/dice';
 
 // 投骰请求
 interface Props extends BaseCardProps, DispatchProp<any> {

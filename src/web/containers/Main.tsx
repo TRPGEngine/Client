@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../config/project.config';
-import { switchMenuPannel } from '../../redux/actions/ui';
+import config from '../../shared/project.config';
+import { switchMenuPannel } from '../../shared/redux/actions/ui';
 import ConverseList from './main/converse/ConverseList';
 import MenuPannel from './main/MenuPannel';
 import ProfileCard from '../components/ProfileCard';

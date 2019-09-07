@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import config from '@config/project.config';
-import { logout, loginWithToken } from '@redux/actions/user';
-import { showModal, switchMenuPannel } from '../../../redux/actions/ui';
-import { setEditedTemplate } from '../../../redux/actions/actor';
-import { addNote } from '../../../redux/actions/note';
+import config from '@src/shared/project.config';
+import { logout, loginWithToken } from '@src/shared/redux/actions/user';
+import { showModal, switchMenuPannel } from '../../../shared/redux/actions/ui';
+import { setEditedTemplate } from '../../../shared/redux/actions/actor';
+import { addNote } from '../../../shared/redux/actions/note';
 import TemplateSelect from './actors/TemplateSelect';
 import ActorCreate from '@components/modal/ActorCreate';
 import TemplateEdit from './actors/TemplateEdit';
@@ -18,7 +18,7 @@ import SystemSettings from '../../components/modal/SystemSettings';
 import SystemStatus from '../../components/modal/SystemStatus';
 import ModalPanel from '../../components/ModalPanel';
 import Webview from '../../components/Webview';
-import rnStorage from '@src/api/rn-storage.api';
+import rnStorage from '@src/shared/api/rn-storage.api';
 
 import './ExtraOptions.scss';
 

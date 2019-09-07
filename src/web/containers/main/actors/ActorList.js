@@ -4,14 +4,14 @@ import at from 'trpg-actor-template';
 import TemplateSelect from './TemplateSelect';
 import ActorCreate from '@components/modal/ActorCreate';
 import ActorEdit from '@components/modal/ActorEdit';
-import { updateActor } from '@redux/actions/actor';
+import { updateActor } from '@src/shared/redux/actions/actor';
 import * as apiHelper from '../../../../shared/utils/api-helper';
-import { showModal, showAlert } from '../../../../redux/actions/ui';
+import { showModal, showAlert } from '../../../../shared/redux/actions/ui';
 import {
   selectActor,
   removeActor,
   selectTemplate,
-} from '../../../../redux/actions/actor';
+} from '../../../../shared/redux/actions/actor';
 import ActorInfo from '@components/modal/ActorInfo';
 import _isNil from 'lodash/isNil';
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { showLoading } from '../../redux/actions/ui';
-import { login, loginWithToken } from '../../redux/actions/user';
-import config from '../../../config/project.config';
-import rnStorage from '../../api/rn-storage.api';
+import { showLoading } from '../../shared/redux/actions/ui';
+import { login, loginWithToken } from '../../shared/redux/actions/user';
+import config from '../../shared/project.config';
+import rnStorage from '../../shared/api/rn-storage.api';
 import './Login.scss';
 
 interface Props extends DispatchProp<any> {

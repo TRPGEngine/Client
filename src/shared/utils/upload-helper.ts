@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { fileUrl } from '../../api/trpg.api';
+import { fileUrl } from '../api/trpg.api';
 
 interface UploadOption {
   headers?: {};

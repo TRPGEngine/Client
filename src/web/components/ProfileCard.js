@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../config/project.config';
+import config from '../../shared/project.config';
 import Select from 'react-select';
 import ImageViewer from './ImageViewer';
 import ImageUploader from './ImageUploader';
-import { showAlert, hideProfileCard } from '../../redux/actions/ui';
-import { sendFriendInvite, updateInfo } from '../../redux/actions/user';
-import { addUserConverse, switchToConverse } from '../../redux/actions/chat';
+import { showAlert, hideProfileCard } from '../../shared/redux/actions/ui';
+import { sendFriendInvite, updateInfo } from '../../shared/redux/actions/user';
+import { addUserConverse, switchToConverse } from '../../shared/redux/actions/chat';
 import './ProfileCard.scss';
 
 class ProfileCard extends React.Component {

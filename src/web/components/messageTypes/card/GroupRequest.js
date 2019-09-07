@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {
   agreeGroupRequest,
   refuseGroupRequest,
-} from '../../../../redux/actions/group';
+} from '../../../../shared/redux/actions/group';
 
 // 入团申请
 class GroupRequest extends BaseCard {

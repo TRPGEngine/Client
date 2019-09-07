@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../../config/project.config';
-import { showAlert, showModal } from '../../../redux/actions/ui';
+import config from '../../../shared/project.config';
+import { showAlert, showModal } from '../../../shared/redux/actions/ui';
 import TemplateSelect from '../../containers/main/actors/TemplateSelect';
 
 import './ActorSelect.scss';

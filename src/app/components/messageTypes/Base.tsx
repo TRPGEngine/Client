@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import sb from 'react-native-style-block';
 import { TAvatar } from '../TComponent';
 import dateHelper from '../../../shared/utils/date-helper';
-import config from '../../../../config/project.config';
+import config from '../../../shared/project.config';
 import { MessageProps } from '@shared/components/MessageHandler';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';

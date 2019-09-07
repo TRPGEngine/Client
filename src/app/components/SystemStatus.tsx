@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import dateHelper from '../../shared/utils/date-helper';
-import config from '../../../config/project.config';
+import config from '../../shared/project.config';
 
 import styled from 'styled-components/native';
 import request from '../../shared/utils/request';

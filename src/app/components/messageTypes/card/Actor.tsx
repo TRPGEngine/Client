@@ -3,9 +3,9 @@ import { Text, View, Image } from 'react-native';
 import sb from 'react-native-style-block';
 import BaseCard from './BaseCard';
 import { connect } from 'react-redux';
-import { showModal } from '../../../../redux/actions/ui';
-import { getActorInfo } from '../../../../redux/actions/cache';
-import config from '../../../../../config/project.config';
+import { showModal } from '../../../../shared/redux/actions/ui';
+import { getActorInfo } from '../../../../shared/redux/actions/cache';
+import config from '../../../../shared/project.config';
 
 // TODO: 设置为APP可用的消息类型渲染
 // 投骰请求

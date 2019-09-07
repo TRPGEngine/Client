@@ -1,18 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../../../config/project.config';
+import config from '../../../../shared/project.config';
 import {
   showAlert,
   hideAlert,
   showModal,
   hideSlidePanel,
-} from '../../../../redux/actions/ui';
+} from '../../../../shared/redux/actions/ui';
 import {
   switchSelectGroup,
   quitGroup,
   dismissGroup,
   setGroupStatus,
-} from '../../../../redux/actions/group';
+} from '../../../../shared/redux/actions/group';
 import ImageViewer from '../../../components/ImageViewer';
 import GroupEdit from '../../../components/modal/GroupEdit';
 // import GroupEdit from './modal/GroupEdit';

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import NProgress from 'nprogress';
-import config from '../../../config/project.config';
+import config from '../../shared/project.config';
 require('nprogress/nprogress.css');
 import './Webview.scss';
 

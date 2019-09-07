@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../../../config/project.config';
+import config from '../../../../shared/project.config';
 import moment from 'moment';
-import { showModal, showProfileCard } from '../../../../redux/actions/ui';
+import { showModal, showProfileCard } from '../../../../shared/redux/actions/ui';
 import GroupMemberManage from './modal/GroupMemberManage';
 import { getUserInfoCache } from '../../../../shared/utils/cache-helper';
 

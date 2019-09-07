@@ -1,24 +1,24 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import config from '../../../../../config/project.config';
+import config from '../../../../shared/project.config';
 import {
   showModal,
   hideModal,
   showProfileCard,
-} from '../../../../redux/actions/ui';
-import { sendMsg, sendFile } from '../../../../redux/actions/chat';
+} from '../../../../shared/redux/actions/ui';
+import { sendMsg, sendFile } from '../../../../shared/redux/actions/chat';
 import {
   sendDiceRequest,
   sendDiceInvite,
   sendQuickDice,
-} from '../../../../redux/actions/dice';
+} from '../../../../shared/redux/actions/dice';
 import DiceRequest from '../dice/DiceRequest';
 import DiceInvite from '../dice/DiceInvite';
 import QuickDice from '../dice/QuickDice';
 import MsgContainer from '../../../components/MsgContainer';
 import MsgSendBox from '../../../components/MsgSendBox';
 import { isUserUUID } from '../../../../shared/utils/uuid.js';
-import { sendStartWriting, sendStopWriting } from '../../../../api/event';
+import { sendStartWriting, sendStopWriting } from '../../../../shared/api/event';
 import _throttle from 'lodash/throttle';
 
 import './ConverseDetail.scss';

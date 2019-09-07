@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../../config/project.config';
+import config from '../../../shared/project.config';
 import ModalPanel from '../ModalPanel';
 import ImageUploader from '../ImageUploader';
-import { hideModal } from '../../../redux/actions/ui';
-import { updateGroupInfo } from '../../../redux/actions/group';
+import { hideModal } from '../../../shared/redux/actions/ui';
+import { updateGroupInfo } from '../../../shared/redux/actions/group';
 
 import './GroupEdit.scss';
 

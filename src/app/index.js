@@ -5,9 +5,9 @@ require('moment').locale('zh_CN');
 require('../shared/utils/common');
 
 import { AppRegistry, YellowBox } from 'react-native';
-import App from './App';
+import App from './src/App';
 import _get from 'lodash/get';
-import projectConfig from '../../config/project.config';
+import projectConfig from '../shared/project.config';
 
 // Sentry
 import Config from 'react-native-config';

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import config from '../../../config/project.config';
+import config from '../project.config';
 
 const fileUrl = config.file.url;
 

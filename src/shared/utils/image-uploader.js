@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { fileUrl } from '../../api/trpg.api';
+import { fileUrl } from '../api/trpg.api';
 const uploadPicHost = 'https://sm.ms/api/upload';
 
 // https://sm.ms/api/upload

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../../../config/project.config';
+import config from '../project.config';
 import _get from 'lodash/get';
 
 export function getLastVersion(): Promise<string> {

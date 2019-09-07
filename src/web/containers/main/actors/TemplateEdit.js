@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { showModal, showAlert, hideAlert } from '../../../../redux/actions/ui';
+import { showModal, showAlert, hideAlert } from '../../../../shared/redux/actions/ui';
 import Select from 'react-select';
 import TemplatePropertyCell from '../../../components/TemplatePropertyCell';
 import at from 'trpg-actor-template';
 import {
   createTemplate,
   updateTemplate,
-} from '../../../../redux/actions/actor';
+} from '../../../../shared/redux/actions/actor';
 import TemplateSelect from './TemplateSelect';
 import TemplateAdvancedCreate from './TemplateAdvancedCreate';
 

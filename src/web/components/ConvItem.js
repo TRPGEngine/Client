@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isUserUUID } from '../../shared/utils/uuid';
-import { removeUserConverse } from '../../redux/actions/chat';
-import { showProfileCard } from '../../redux/actions/ui';
+import { removeUserConverse } from '../../shared/redux/actions/chat';
+import { showProfileCard } from '../../shared/redux/actions/ui';
 import './ConvItem.scss';
 
 class ConvItem extends React.Component {

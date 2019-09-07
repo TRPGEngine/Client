@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import {
   tickMember,
   setMemberToManager,
-} from '../../../../../redux/actions/group';
+} from '../../../../../shared/redux/actions/group';
 import ModalPanel from '../../../../components/ModalPanel';
-import config from '../../../../../../config/project.config';
+import config from '../../../../../shared/project.config';
 import { getUserInfoCache } from '../../../../../shared/utils/cache-helper';
 
 import './GroupMemberManage.scss';

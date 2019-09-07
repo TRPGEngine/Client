@@ -1,0 +1,17 @@
+{
+  "name": "trpg-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --inline --progress --colors --port 8089 --host 0.0.0.0 --config ../../config/webpack.config.js",
+    "dev:proserver": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:80 npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "moonrailgun",
+    "trpg"
+  ],
+  "author": "moonrailgun",
+  "license": "GPL-2.0"
+}

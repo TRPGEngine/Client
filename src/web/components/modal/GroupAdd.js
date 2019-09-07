@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
-import { findGroup } from '../../../redux/actions/group';
+import { findGroup } from '../../../shared/redux/actions/group';
 import ModalPanel from '../ModalPanel';
 import FindResultItem from '../FindResultItem';
 

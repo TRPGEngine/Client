@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
-import { setLastDiceType } from '../../../../redux/actions/ui';
+import { setLastDiceType } from '../../../../shared/redux/actions/ui';
 
 import './DiceInvite.scss';
 

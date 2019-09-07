@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ModalPanel from './ModalPanel';
-import { changePassword } from '../../redux/actions/user';
-import { showAlert, hideModal } from '../../redux/actions/ui';
+import { changePassword } from '../../shared/redux/actions/user';
+import { showAlert, hideModal } from '../../shared/redux/actions/ui';
 
 import './ChangePassword.scss';
 

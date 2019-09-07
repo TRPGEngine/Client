@@ -1,4 +1,4 @@
-import configureStore from '@src/redux/configureStore';
+import configureStore from '@src/shared/redux/configureStore';
 
 describe('redux basic', () => {
   it('configureStore should be ok', () => {

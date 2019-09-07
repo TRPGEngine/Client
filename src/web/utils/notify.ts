@@ -1,8 +1,8 @@
 import tinycon from 'tinycon';
 import { getUserInfoCache } from '../../shared/utils/cache-helper';
-import config from '@config/project.config';
-import { switchMenuPannel } from '../../redux/actions/ui';
-import { switchConverse } from '../../redux/actions/chat';
+import config from '@src/shared/project.config';
+import { switchMenuPannel } from '../../shared/redux/actions/ui';
+import { switchConverse } from '../../shared/redux/actions/chat';
 let num = 0;
 
 const hiddenProperty =

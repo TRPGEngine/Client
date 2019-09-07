@@ -4,10 +4,10 @@ import { connect, DispatchProp } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import Emoticon from './Emoticon';
 import * as pasteUtils from '../../shared/utils/paste-utils';
-import { sendMsg } from '../../redux/actions/chat';
-import { showModal, hideModal } from '../../redux/actions/ui';
+import { sendMsg } from '../../shared/redux/actions/chat';
+import { showModal, hideModal } from '../../shared/redux/actions/ui';
 import ActorSelect from './modal/ActorSelect';
-import config from '../../../config/project.config';
+import config from '../../shared/project.config';
 import ContentEditable from 'react-contenteditable';
 
 import './MsgSendBox.scss';

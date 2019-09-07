@@ -1,9 +1,9 @@
 import BaseCard, { BaseCardProps } from './BaseCard';
 import { connect, DispatchProp } from 'react-redux';
-const {
+import {
   agreeFriendInvite,
   refuseFriendInvite,
-} = require('../../../../redux/actions/user');
+} from '@src/shared/redux/actions/user';
 
 // 好友邀请
 interface Props extends BaseCardProps, DispatchProp<any> {

@@ -1,4 +1,4 @@
-import chatReducer from '@redux/reducers/chat';
+import chatReducer from '@src/shared/redux/reducers/chat';
 import { fromJS } from 'immutable';
 
 /**
