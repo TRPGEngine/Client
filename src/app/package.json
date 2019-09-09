@@ -4,10 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:main": "cross-env PLATFORM=app REACT_NATIVE_APP_ROOT=../../ react-native start",
+    "dev": "npm run dev:main",
+    "dev:proserver": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:80 npm run dev:main",
+    "dev:main": "npm run set:env && react-native start",
     "dev:android": "react-native run-android",
-    "build:env": "cross-env NODE_CONFIG_DIR=../../config/ node ./build/metro/build-env.js",
-    "build:android": "npm run build:env && cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web REACT_NATIVE_APP_ROOT=../../ ./gradlew assembleRelease --info",
+    "set:env": "cross-env PLATFORM=app REACT_NATIVE_APP_ROOT=../../ NODE_CONFIG_DIR=../../config/ node ./build/metro/build-env.js",
+    "build:android": "npm run set:env && cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web REACT_NATIVE_APP_ROOT=../../ ./gradlew assembleRelease --info",
+    "deploy:android": "npm run set:env && node build/deploy/deploy-android.js",
     "dump:android-home": "echo \"sdk.dir=$ANDROID_HOME\" >> ./android/local.properties",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -43,6 +46,10 @@
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
-    "cross-env": "^5.2.1"
+    "@types/inquirer": "^6.5.0",
+    "code-push-cli": "^2.1.9",
+    "cross-env": "^5.2.1",
+    "execa": "^2.0.4",
+    "inquirer": "^7.0.0"
   }
 }
