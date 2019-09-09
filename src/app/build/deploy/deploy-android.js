@@ -43,11 +43,20 @@ if (require.main === module) {
       console.log(`Uploading Version: ${version}`);
       console.log(`Code Push: ${filepath}`);
 
-      const args = `release-react TRPGEngine ${platform} -t ${version} -d ${deploymentName} --des "${desc}" ${ext
-        .map((s) => `--${s}`)
-        .join(' ')}`;
+      const args = [
+        'release-react',
+        'TRPGEngine',
+        platform,
+        '-t',
+        version,
+        '-d',
+        deploymentName,
+        '--des',
+        JSON.stringify(desc),
+        ...ext.map((s) => `--${s}`),
+      ];
 
-      console.log('发布参数:', args);
+      console.log('发布参数:', JSON.stringify(args.join(' ')));
       return inquirer
         .prompt([{ type: 'confirm', name: 'confirm', message: '确认参数?' }])
         .then((an) => {
@@ -60,7 +69,8 @@ if (require.main === module) {
     })
     .then((args) => {
       console.log('=============================');
-      execa(filepath, arguments.split(' '), {
+      console.log('args', args);
+      execa(filepath, args, {
         cwd: rootPath,
         env: {
           PLATFORM: 'app',
