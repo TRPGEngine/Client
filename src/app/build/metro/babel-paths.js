@@ -1,8 +1,6 @@
 const tsconfig = require('../../../../tsconfig.json');
 const path = require('path');
-const startDir =
-  process.env.START_DIR ||
-  (process.env.NODE_ENV === 'production' ? './' : '../../');
+const startDir = process.env.START_DIR || '../../';
 const tspaths = tsconfig.compilerOptions.paths;
 
 function stripWildword(str) {

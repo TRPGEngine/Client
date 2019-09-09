@@ -76,7 +76,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    entryFile: "src/app/index.js",
+    entryFile: "index.js",
     enableHermes: false,
 ]
 
