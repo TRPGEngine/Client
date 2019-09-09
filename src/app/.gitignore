@@ -1,1 +1,3 @@
+android/build/
 android/app/build/
+!android/app/debug.keystore
