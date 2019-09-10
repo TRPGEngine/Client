@@ -69,13 +69,16 @@ if (require.main === module) {
     })
     .then((args) => {
       console.log('=============================');
+      const env = {
+        PLATFORM: 'app',
+        NODE_ENV: 'production',
+        REACT_NATIVE_APP_ROOT: '../../', // TODO: 需要想办法收起来
+      };
       console.log('args', args);
+      console.log('env', env);
       execa(filepath, args, {
         cwd: rootPath,
-        env: {
-          PLATFORM: 'app',
-          REACT_NATIVE_APP_ROOT: '../../', // TODO: 需要想办法收起来
-        },
+        env,
       }).all.pipe(process.stdout);
     });
 }
