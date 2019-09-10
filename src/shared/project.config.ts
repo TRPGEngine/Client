@@ -1,4 +1,4 @@
-const _get = require('lodash/get');
+import _get from 'lodash/get';
 const environment = process.env.NODE_ENV || 'development';
 const platform = process.env.PLATFORM || 'web';
 let currentHost = '127.0.0.1';
@@ -185,7 +185,9 @@ const config: ProjectConfig = {
     },
   },
 };
-config.file.url = `${config.file.protocol}://${config.file.host}:${config.file.port}`;
+config.file.url = `${config.file.protocol}://${config.file.host}:${
+  config.file.port
+}`;
 
 // 获取基于API的绝对路径
 config.file.getAbsolutePath = function getAbsolutePath(path) {
