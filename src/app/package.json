@@ -1,6 +1,7 @@
 {
   "name": "trpg-game-app",
   "version": "0.2.3",
+  "appVersion": "0.2.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,7 +10,7 @@
     "dev:main": "npm run build:env && cross-env PLATFORM=app REACT_NATIVE_APP_ROOT=../../ react-native start",
     "dev:android": "react-native run-android",
     "build:env": "NODE_CONFIG_DIR=../../config/ node ./build/metro/build-env.js",
-    "build:android": "npm run build:env && cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web REACT_NATIVE_APP_ROOT=../../ ./gradlew assembleRelease --info",
+    "build:android": "npm run build:env && cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web REACT_NATIVE_APP_ROOT=../../ ./gradlew assembleRelease",
     "deploy:android": "npm run build:env && node build/deploy/deploy-android.js",
     "dump:android-home": "echo \"sdk.dir=$ANDROID_HOME\" >> ./android/local.properties",
     "test": "echo \"Error: no test specified\" && exit 1"

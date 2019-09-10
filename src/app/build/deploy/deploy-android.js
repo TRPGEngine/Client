@@ -3,7 +3,8 @@ const path = require('path');
 const inquirer = require('inquirer');
 const rootPath = path.resolve(__dirname, '../../');
 const packageConfig = require('../../package.json');
-const version = packageConfig.version;
+const version = packageConfig.version; // app版本号
+const appVersion = packageConfig.appVersion; // app版本号
 
 if (require.main === module) {
   const filepath = path.resolve(rootPath, './node_modules/.bin/code-push');
@@ -40,18 +41,19 @@ if (require.main === module) {
     .then((answers) => {
       const { deploymentName, platform, desc, ext } = answers;
 
-      console.log(`Uploading Version: ${version}`);
+      console.log(`Uploading App Version: ${appVersion}`);
+      console.log(`Uploading JS Version: ${version}`);
       console.log(`Code Push: ${filepath}`);
 
       const args = [
         'release-react',
         'TRPGEngine',
         platform,
-        '-t',
-        version,
-        '-d',
+        '--targetBinaryVersion',
+        appVersion, // 可以为范围。目前先弄具体的
+        '--deploymentName',
         deploymentName,
-        '--des',
+        '--description',
         JSON.stringify(desc),
         ...ext.map((s) => `--${s}`),
       ];

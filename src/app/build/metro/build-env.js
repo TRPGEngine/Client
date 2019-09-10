@@ -63,6 +63,7 @@ if (require.main === module) {
 
   // 生成 .env 文件, 用于react-native-config
   generateEnvFile({
-    version: packageConfig.version,
+    version: packageConfig.appVersion, // app应用版本, 并非js脚本版本
+    jsversion: packageConfig.version,
   });
 }
