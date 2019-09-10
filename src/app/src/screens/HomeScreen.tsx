@@ -10,12 +10,35 @@ import {
   reloadConverseList,
   switchConverse,
 } from '../../../shared/redux/actions/chat';
+import styled from 'styled-components/native';
+import { Spring } from 'react-spring/renderprops';
+
+const NetworkContainer = styled.View<{
+  isOnline: boolean;
+  tryReconnect: boolean;
+}>`
+  position: absolute;
+  top: -26px;
+  left: 0;
+  right: 0;
+  height: 26px;
+  background-color: ${({ isOnline, tryReconnect }) =>
+    isOnline ? '#2ecc71' : tryReconnect ? '#f39c12' : '#c0392b'};
+  color: white;
+  align-items: center;
+  justify-content: center;
+`;
+
+const NetworkText = styled.Text`
+  color: white;
+`;
 
 interface Props extends DispatchProp<any> {
   converses: any;
   conversesDesc: any;
   groups: any;
   usercache: any;
+  network: any;
 }
 class HomeScreen extends React.Component<Props> {
   static navigationOptions = {
@@ -31,6 +54,23 @@ class HomeScreen extends React.Component<Props> {
   state = {
     isRefreshing: false,
   };
+
+  getNetworkTip() {
+    const { network } = this.props;
+    return (
+      <Spring to={{ top: network.get('isOnline') ? -26 : 0 }}>
+        {(props) => (
+          <NetworkContainer
+            style={props}
+            isOnline={network.get('isOnline')}
+            tryReconnect={network.get('tryReconnect')}
+          >
+            <NetworkText>{network.get('msg')}</NetworkText>
+          </NetworkContainer>
+        )}
+      </Spring>
+    );
+  }
 
   getList() {
     if (this.props.converses.size > 0) {
@@ -117,7 +157,12 @@ class HomeScreen extends React.Component<Props> {
   }
 
   render() {
-    return <View style={styles.container}>{this.getList()}</View>;
+    return (
+      <View style={styles.container}>
+        {this.getList()}
+        {this.getNetworkTip()}
+      </View>
+    );
   }
 }
 
@@ -131,4 +176,5 @@ export default connect((state: any) => ({
   conversesDesc: state.getIn(['chat', 'conversesDesc']),
   groups: state.getIn(['group', 'groups']),
   usercache: state.getIn(['cache', 'user']),
+  network: state.getIn(['ui', 'network']),
 }))(HomeScreen);
