@@ -56,7 +56,7 @@ if (require.main === module) {
         ...ext.map((s) => `--${s}`),
       ];
 
-      console.log('发布参数:', JSON.stringify(args.join(' ')));
+      console.log('发布参数:', args.join(' '));
       return inquirer
         .prompt([{ type: 'confirm', name: 'confirm', message: '确认参数?' }])
         .then((an) => {

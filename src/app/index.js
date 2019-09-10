@@ -5,9 +5,12 @@ require('moment').locale('zh_CN');
 require('../shared/utils/common');
 
 import { AppRegistry, YellowBox } from 'react-native';
+const appLocalPackage = require('./package.json');
+import projectConfig from '../shared/project.config';
+// 将projectConfig的版本重设为app版本
+projectConfig.version = appLocalPackage.version;
 import App from './src/App';
 import _get from 'lodash/get';
-import projectConfig from '../shared/project.config';
 
 // Sentry
 import Config from 'react-native-config';

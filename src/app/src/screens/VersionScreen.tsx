@@ -113,8 +113,8 @@ class VersionScreen extends React.Component<Props> {
       <VersionContainer>
         <VersionInfo>
           <LogoImg />
-          <Text>当前版本: {config.version}</Text>
-          <Text>最新版本: {this.state.lastVersion}</Text>
+          <Text>当前版本: v{config.version}</Text>
+          <Text>最新版本: v{this.state.lastVersion}</Text>
           <Text>{this.state.stateText}</Text>
           {this.state.progressText !== '' && (
             <Text>下载进度: {this.state.progressText}</Text>
