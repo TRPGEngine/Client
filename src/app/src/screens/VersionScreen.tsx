@@ -122,7 +122,8 @@ class VersionScreen extends React.Component<Props> {
           <Text>最新版本: {this.state.lastVersion}</Text>
           <Text>当前版本标签: {this.state.codepushMeta.label}</Text>
           <Text>当前版本Hash: {this.state.codepushMeta.packageHash}</Text>
-          <Text>当前版本描述: {this.state.codepushMeta.description}</Text>
+          <Text>当前版本描述:</Text>
+          <Text>{this.state.codepushMeta.description}</Text>
 
           <Text>{this.state.stateText}</Text>
           {this.state.progressText !== '' && (

@@ -29,7 +29,7 @@ if (require.main === module) {
         type: 'editor',
         name: 'desc',
         message: '更新描述',
-        default: `版本更新 v${version}: \n\n`,
+        default: `版本更新 v${version}\n===========\n\n`,
       },
       {
         type: 'checkbox',
@@ -54,7 +54,7 @@ if (require.main === module) {
         '--deploymentName',
         deploymentName,
         '--description',
-        JSON.stringify(desc),
+        desc,
         ...ext.map((s) => `--${s}`),
       ];
 
