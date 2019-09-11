@@ -1,3 +1,15 @@
+import './date-init';
+
+declare global {
+  interface Date {
+    Format(fmt: string): string;
+  }
+
+  interface Array<T> {
+    remove(val: T): Array<T>;
+  }
+}
+
 Date.prototype.Format = function(fmt) {
   //author: meizz
   var o = {

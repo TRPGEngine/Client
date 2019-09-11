@@ -1,5 +1,3 @@
-import 'moment/locale/zh-cn';
-import moment from 'moment';
 import '../shared/utils/common';
 import App from './containers/App';
 import React from 'react';
@@ -20,8 +18,6 @@ import {
   setUserSettings,
   setSystemSettings,
 } from '../shared/redux/actions/settings';
-
-moment.locale('zh_CN');
 
 const store = configureStore();
 attachStore(store);
