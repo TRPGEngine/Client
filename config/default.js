@@ -11,7 +11,9 @@ module.exports = {
     },
   },
   codepush: {
-    deploymentKey: '',
+    url: 'http://codepush.moonrailgun.com',
+    deploymentKey: 'pafmXkZi2xoKkj7UkNrGijKJJu2c4ksvOXqog', // 正式环境
+    deploymentKeyStaging: 'puSxJ4RphFExKxLQQLvpI27e8C8r4ksvOXqog', // 生产环境
   },
   sentry: {
     dsn: '',
