@@ -8,7 +8,7 @@ import appConfig from '../config.app';
 import { connect, DispatchProp } from 'react-redux';
 import checkVersion, { getLastVersion } from '@src/shared/utils/check-version';
 import { showToast } from '@src/shared/redux/actions/ui';
-import CodePush from 'react-native-code-push';
+import CodePush, { LocalPackage } from 'react-native-code-push';
 
 // 版本信息页面
 const VersionContainer = styled(WingBlank).attrs((props) => ({ size: 'md' }))`
@@ -36,10 +36,15 @@ class VersionScreen extends React.Component<Props> {
     lastVersion: '正在获取...',
     stateText: '',
     progressText: '',
+    codepushMeta: {} as LocalPackage,
   };
 
   componentDidMount() {
     getLastVersion().then((version) => this.setState({ lastVersion: version }));
+
+    CodePush.getUpdateMetadata().then((pkg) =>
+      this.setState({ codepushMeta: pkg })
+    );
   }
 
   setText(text: string) {
@@ -57,7 +62,7 @@ class VersionScreen extends React.Component<Props> {
           }
 
           if (status === CodePush.SyncStatus.UPDATE_INSTALLED) {
-            this.setText('下载完毕');
+            this.setText('下载完毕, 重启后生效');
           }
 
           if (status === CodePush.SyncStatus.UPDATE_IGNORED) {
@@ -115,6 +120,10 @@ class VersionScreen extends React.Component<Props> {
           <LogoImg />
           <Text>当前版本: {config.version}</Text>
           <Text>最新版本: {this.state.lastVersion}</Text>
+          <Text>当前版本标签: {this.state.codepushMeta.label}</Text>
+          <Text>当前版本Hash: {this.state.codepushMeta.packageHash}</Text>
+          <Text>当前版本描述: {this.state.codepushMeta.description}</Text>
+
           <Text>{this.state.stateText}</Text>
           {this.state.progressText !== '' && (
             <Text>下载进度: {this.state.progressText}</Text>
