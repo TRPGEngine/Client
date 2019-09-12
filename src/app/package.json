@@ -13,7 +13,7 @@
     "build:android": "npm run build:env && cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web REACT_NATIVE_APP_ROOT=../../ ./gradlew assembleRelease",
     "deploy:android": "npm run build:env && node build/deploy/deploy-android.js",
     "dump:android-home": "echo \"sdk.dir=$ANDROID_HOME\" >> ./android/local.properties",
-    "test": "jest"
+    "test": "node ../../node_modules/jest/bin/jest.js"
   },
   "keywords": [
     "trpg"
