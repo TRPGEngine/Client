@@ -13,7 +13,7 @@
     "build:android": "npm run build:env && cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web REACT_NATIVE_APP_ROOT=../../ ./gradlew assembleRelease",
     "deploy:android": "npm run build:env && node build/deploy/deploy-android.js",
     "dump:android-home": "echo \"sdk.dir=$ANDROID_HOME\" >> ./android/local.properties",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "trpg"
@@ -51,6 +51,7 @@
     "code-push-cli": "^2.1.9",
     "cross-env": "^5.2.1",
     "execa": "^2.0.4",
-    "inquirer": "^7.0.0"
+    "inquirer": "^7.0.0",
+    "metro-react-native-babel-preset": "^0.56.0"
   }
 }

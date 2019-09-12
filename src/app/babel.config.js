@@ -1,4 +1,4 @@
-const paths = require('./babel-paths');
+const paths = require('./build/metro/babel-paths');
 
 module.exports = {
   presets: [

@@ -15,10 +15,10 @@ module.exports = {
     sourceExts: ['js', 'ts', 'tsx'],
   },
   transformer: {
-    babelTransformerPath: path.resolve(
-      __dirname,
-      './build/metro/babel-transformer'
-    ),
+    // babelTransformerPath: path.resolve(
+    //   __dirname,
+    //   './build/metro/babel-transformer'
+    // ),
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,

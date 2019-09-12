@@ -4,6 +4,8 @@
  *
  */
 
+// NOTE: 弃用。暂时不删
+
 'use strict';
 
 const crypto = require('crypto');
