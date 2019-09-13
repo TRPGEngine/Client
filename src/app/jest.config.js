@@ -12,15 +12,20 @@ module.exports = {
     '\\.(ts|tsx)$': 'ts-jest',
   },
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
+  transformIgnorePatterns: [], // 包括node_modules里的东西也进行转换
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>/../../',
   }),
+  setupFilesAfterEnv: [
+    require.resolve('./test/setup.ts'), // 注册全局
+  ],
   rootDir: '.',
   moduleFileExtensions: ['ts', 'tsx', 'js'],
   globals: {
     'ts-jest': {
       babelConfig: true,
     },
+    window: {},
   },
   cacheDirectory: '.jest/cache',
 };
