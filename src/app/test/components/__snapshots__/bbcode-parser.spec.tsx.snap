@@ -1,7 +1,199 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`bbcode-parser mix image and text 1`] = `
+Array [
+  <Text>
+    测试文字1
+  </Text>,
+  <View>
+    <Modal
+      hardwareAccelerated={false}
+      onRequestClose={[Function]}
+      transparent={true}
+      visible={false}
+    >
+      <ImageViewer
+        enableSwipeDown={true}
+        imageUrls={
+          Array [
+            Object {
+              "url": "http://exampleimg.com",
+            },
+          ]
+        }
+        index={0}
+        menuContext={
+          Object {
+            "cancel": "取消",
+            "saveToLocal": "保存到相册",
+          }
+        }
+        onClick={[Function]}
+        onSave={[Function]}
+        onSwipeDown={[Function]}
+        saveToLocalByLongPress={true}
+      />
+    </Modal>
+    <View
+      accessible={true}
+      clickable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            Object {
+              "height": 120,
+              "width": 180,
+            },
+          ]
+        }
+      >
+        <FastImageView
+          onFastImageLoad={[Function]}
+          resizeMode="contain"
+          source={
+            Object {
+              "cache": "immutable",
+              "priority": "normal",
+              "uri": "http://exampleimg.com",
+            }
+          }
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>,
+  <Text>
+    测试文字2
+  </Text>,
+]
+`;
+
 exports[`bbcode-parser plain text 1`] = `
 <Text>
   TestString
 </Text>
+`;
+
+exports[`bbcode-parser plain text with space 1`] = `
+Array [
+  <Text>
+    Test
+  </Text>,
+  <Text>
+     
+  </Text>,
+  <Text>
+    String
+  </Text>,
+]
+`;
+
+exports[`bbcode-parser pure image 1`] = `
+<View>
+  <Modal
+    hardwareAccelerated={false}
+    onRequestClose={[Function]}
+    transparent={true}
+    visible={false}
+  >
+    <ImageViewer
+      enableSwipeDown={true}
+      imageUrls={
+        Array [
+          Object {
+            "url": "http://exampleimg.com",
+          },
+        ]
+      }
+      index={0}
+      menuContext={
+        Object {
+          "cancel": "取消",
+          "saveToLocal": "保存到相册",
+        }
+      }
+      onClick={[Function]}
+      onSave={[Function]}
+      onSwipeDown={[Function]}
+      saveToLocalByLongPress={true}
+    />
+  </Modal>
+  <View
+    accessible={true}
+    clickable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          Object {
+            "height": 120,
+            "width": 180,
+          },
+        ]
+      }
+    >
+      <FastImageView
+        onFastImageLoad={[Function]}
+        resizeMode="contain"
+        source={
+          Object {
+            "cache": "immutable",
+            "priority": "normal",
+            "uri": "http://exampleimg.com",
+          }
+        }
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
 `;
