@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import bbcodeParser from '../src/utils/bbcode-parser';
+import bbcodeParser from '../../src/utils/bbcode-parser';
 import renderer from 'react-test-renderer';
 
 describe('bbcode-parser', () => {
