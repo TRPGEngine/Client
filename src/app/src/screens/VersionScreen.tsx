@@ -9,6 +9,7 @@ import { connect, DispatchProp } from 'react-redux';
 import checkVersion, { getLastVersion } from '@src/shared/utils/check-version';
 import { showToast } from '@src/shared/redux/actions/ui';
 import CodePush, { LocalPackage } from 'react-native-code-push';
+import rnStorage from '@src/shared/api/rn-storage.api';
 
 // 版本信息页面
 const VersionContainer = styled(WingBlank).attrs((props) => ({ size: 'md' }))`
@@ -37,6 +38,7 @@ class VersionScreen extends React.Component<Props> {
     stateText: '',
     progressText: '',
     codepushMeta: {} as LocalPackage,
+    isAlphaUser: false,
   };
 
   componentDidMount() {
@@ -45,6 +47,10 @@ class VersionScreen extends React.Component<Props> {
     CodePush.getUpdateMetadata().then((pkg) =>
       this.setState({ codepushMeta: pkg })
     );
+
+    rnStorage
+      .get('isAlphaUser', false)
+      .then((isAlphaUser) => this.setState({ isAlphaUser }));
   }
 
   setText(text: string) {
@@ -118,6 +124,7 @@ class VersionScreen extends React.Component<Props> {
       <VersionContainer>
         <VersionInfo>
           <LogoImg />
+          {this.state.isAlphaUser && <Text>内测用户</Text>}
           <Text>当前版本: {config.version}</Text>
           <Text>最新版本: {this.state.lastVersion}</Text>
           <Text>当前版本标签: {this.state.codepushMeta.label}</Text>

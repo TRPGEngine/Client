@@ -1,10 +1,24 @@
-import codePush, {
+import CodePush, {
   SyncStatusChangedCallback,
   DownloadProgressCallback,
   HandleBinaryVersionMismatchCallback,
+  CodePushOptions,
 } from 'react-native-code-push';
 import _invoke from 'lodash/invoke';
 import Config from 'react-native-config';
+import rnStorage from '@src/shared/api/rn-storage.api';
+
+/**
+ * 获取codepush的部署key
+ * 如果为内测用户则返回Staging的key
+ */
+const getCodepushDeploymentKey = async (): Promise<string> => {
+  const isAlphaUser = await rnStorage.get('isAlphaUser', false);
+
+  return isAlphaUser
+    ? Config.CODEPUSH_DEPLOYMENTKEYSTAGING
+    : Config.CODEPUSH_DEPLOYMENTKEY;
+};
 
 const out = {
   defaultImg: {
@@ -50,14 +64,14 @@ const out = {
   codePush: {
     enabled: true,
     options: {
-      checkFrequency: codePush.CheckFrequency.ON_APP_START,
-    },
-    sync(cb?: {
+      checkFrequency: CodePush.CheckFrequency.MANUAL, // 手动更新
+    } as CodePushOptions,
+    async sync(cb?: {
       onStatueChanged?: SyncStatusChangedCallback;
       onDownloadProgressChanged?: DownloadProgressCallback;
       onHandleBinaryVersionMismatchCallback?: HandleBinaryVersionMismatchCallback;
     }) {
-      codePush.sync(
+      return CodePush.sync(
         {
           updateDialog: {
             appendReleaseDescription: true,
@@ -66,8 +80,8 @@ const out = {
             mandatoryUpdateMessage: '',
             mandatoryContinueButtonLabel: '更新',
           },
-          installMode: codePush.InstallMode.IMMEDIATE,
-          deploymentKey: Config.CODEPUSH_DEPLOYMENTKEY,
+          installMode: CodePush.InstallMode.IMMEDIATE,
+          deploymentKey: await getCodepushDeploymentKey(),
         },
         (status) => {
           console.log('[code push status]', status);
