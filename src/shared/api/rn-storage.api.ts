@@ -31,7 +31,7 @@ let storage = new Storage({
 const rnStorage = {
   set: async (key: string | {}, data?: {}) => {
     try {
-      if (!!key && typeof key === 'string' && !!data) {
+      if (!!key && typeof key === 'string' && !_isNil(data)) {
         await storage.save({ key, data });
       } else if (!!key && typeof key === 'object' && !data) {
         for (var subKey in key) {
