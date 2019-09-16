@@ -4,11 +4,11 @@
  */
 
 import { Map } from 'immutable';
-import TAlert from '../../components/TApi/TAlert';
+import TAlert from '../components/TApi/TAlert';
 import { Dispatch } from 'redux';
 import { hideAlert, hideModal } from '@src/shared/redux/actions/ui';
 import { Toast, Portal } from '@ant-design/react-native';
-import TModal from '../../components/TApi/TModal';
+import TModal from '../components/TApi/TModal';
 
 type UIMap = Map<string, any>;
 interface FactoryOptions {

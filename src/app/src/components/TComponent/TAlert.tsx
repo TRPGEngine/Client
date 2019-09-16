@@ -9,7 +9,7 @@ const {
 } = require('react-native');
 import sb from 'react-native-style-block';
 import TButton from './TButton';
-import { hideAlert } from '../../../shared/redux/actions/ui';
+import { hideAlert } from '../../../../shared/redux/actions/ui';
 
 interface Props extends DispatchProp<any> {
   showAlertInfo: any;

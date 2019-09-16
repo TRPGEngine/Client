@@ -12,7 +12,7 @@ import sb from 'react-native-style-block';
 import config from '../../../shared/project.config';
 import { replaceNav } from '../redux/actions/nav';
 import { Modal } from '@ant-design/react-native';
-import SystemStatus from '../../components/SystemStatus';
+import SystemStatus from '../components/SystemStatus';
 
 interface Props extends DispatchProp<any> {
   isTryLogin: boolean;

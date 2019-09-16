@@ -9,7 +9,7 @@ const {
   FlatList,
 } = require('react-native');
 import sb from 'react-native-style-block';
-import { TIcon, TInput, TAvatar } from '../../components/TComponent';
+import { TIcon, TInput, TAvatar } from '../components/TComponent';
 import { findUser } from '../../../shared/redux/actions/user';
 import { findGroup } from '../../../shared/redux/actions/group';
 import { switchNav } from '../redux/actions/nav';

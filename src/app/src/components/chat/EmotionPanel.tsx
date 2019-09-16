@@ -11,11 +11,11 @@ import styled from 'styled-components/native';
 import { Icon, Carousel, Modal } from '@ant-design/react-native';
 import Emoji from 'react-native-emoji';
 import FastImage from 'react-native-fast-image';
-import { emojiMap, emojiCatalog } from '../../src/utils/emoji';
-import config from '../../../shared/project.config';
+import { emojiMap, emojiCatalog } from '../../utils/emoji';
+import config from '../../../../shared/project.config';
 import _get from 'lodash/get';
 import _chunk from 'lodash/chunk';
-import { addUserEmotionCatalogWithSecretSignal } from '../../../shared/redux/actions/chat';
+import { addUserEmotionCatalogWithSecretSignal } from '../../../../shared/redux/actions/chat';
 
 const EMOJI_PANEL_HEIGHT = 190; // 表情面板高度
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import FastImage from 'react-native-fast-image';
 import { AstNodeObj } from './types';
 import config from '../../../../shared/project.config';
-import { TImageViewer } from '@src/app/components/TComponent';
+import { TImageViewer } from '@src/app/src/components/TComponent';
 
 interface Props {
   node: AstNodeObj;

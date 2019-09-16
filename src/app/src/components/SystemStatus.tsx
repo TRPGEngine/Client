@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
-import dateHelper from '../../shared/utils/date-helper';
-import config from '../../shared/project.config';
+import dateHelper from '../../../shared/utils/date-helper';
+import config from '../../../shared/project.config';
 
 import styled from 'styled-components/native';
-import request from '../../shared/utils/request';
+import request from '../../../shared/utils/request';
 
 const LocalTimer = () => {
   const [timestamp, setTimestamp] = useState(dateHelper.getFullDate());

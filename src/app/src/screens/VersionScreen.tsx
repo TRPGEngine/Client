@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, Linking, Image } from 'react-native';
 import config from '@src/shared/project.config';
 import { WingBlank } from '@ant-design/react-native';
-import { TButton } from '../../components/TComponent';
+import { TButton } from '../components/TComponent';
 import styled from 'styled-components/native';
 import appConfig from '../config.app';
 import { connect, DispatchProp } from 'react-redux';

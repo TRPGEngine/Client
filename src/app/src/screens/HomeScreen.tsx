@@ -5,7 +5,7 @@ import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
 import dateHelper from '../../../shared/utils/date-helper';
 import appConfig from '../config.app';
-import ConvItem from '../../components/ConvItem';
+import ConvItem from '../components/ConvItem';
 import {
   reloadConverseList,
   switchConverse,

@@ -8,10 +8,10 @@ import config from '../../../shared/project.config';
 import appConfig from '../config.app';
 import { logout } from '../../../shared/redux/actions/user';
 import { openWebview } from '../redux/actions/nav';
-import { TButton, TAvatar } from '../../components/TComponent';
+import { TButton, TAvatar } from '../components/TComponent';
 import checkVersion from '../../../shared/utils/check-version';
 import * as appUtils from '../utils/apputils';
-import { TIcon } from '../../components/TComponent';
+import { TIcon } from '../components/TComponent';
 
 import { List } from '@ant-design/react-native';
 import { showToast } from '@src/shared/redux/actions/ui';

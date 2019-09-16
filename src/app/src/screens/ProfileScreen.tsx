@@ -6,7 +6,7 @@ import sb from 'react-native-style-block';
 import { List } from 'immutable';
 import appConfig from '../config.app';
 import { getSamlpeDate } from '../../../shared/utils/date-helper';
-import { TButton, TAvatar, TImageViewer } from '../../components/TComponent';
+import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getUserInfo } from '../../../shared/redux/actions/cache';
 import { sendFriendInvite } from '../../../shared/redux/actions/user';
 import { switchToConverseApp } from '../redux/actions/nav';

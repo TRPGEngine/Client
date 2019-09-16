@@ -4,7 +4,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
 import appConfig from '../config.app';
 import { getSamlpeDate } from '../../../shared/utils/date-helper';
-import { TButton, TAvatar, TImageViewer } from '../../components/TComponent';
+import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getGroupInfo } from '../../../shared/redux/actions/cache';
 import { switchToConverseApp } from '../redux/actions/nav';
 import { getGroupInfoCache } from '../../../shared/utils/cache-helper';

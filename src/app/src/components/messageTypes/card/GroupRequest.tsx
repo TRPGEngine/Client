@@ -3,7 +3,7 @@ import { connect, DispatchProp } from 'react-redux';
 import {
   agreeGroupRequest,
   refuseGroupRequest,
-} from '../../../../shared/redux/actions/group';
+} from '../../../../../shared/redux/actions/group';
 
 // 入团申请
 interface Props extends DispatchProp<any>, BaseCardProps {

@@ -8,11 +8,11 @@ import { fileUrl } from '../../../shared/api/trpg.api';
 import { toast } from '../utils/apputils';
 import { updateInfo } from '../../../shared/redux/actions/user';
 import { showModal, hideModal } from '../../../shared/redux/actions/ui';
-import { TAvatar, TInput } from '../../components/TComponent';
+import { TAvatar, TInput } from '../components/TComponent';
 import _last from 'lodash/last';
 import { List } from '@ant-design/react-native';
-import TModalPanel from '../../components/TComponent/TModalPanel';
-import TPicker from '../../components/TComponent/TPicker';
+import TModalPanel from '../components/TComponent/TModalPanel';
+import TPicker from '../components/TComponent/TPicker';
 const Item = List.Item;
 
 interface Props extends DispatchProp<any> {

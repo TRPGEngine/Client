@@ -2,7 +2,7 @@ import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { Modal, ActivityIndicator, View, Text } from 'react-native';
 import sb from 'react-native-style-block';
-import { hideLoading } from '../../../shared/redux/actions/ui';
+import { hideLoading } from '../../../../shared/redux/actions/ui';
 
 interface Props extends DispatchProp<any> {
   showLoading: boolean;

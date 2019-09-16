@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Clipboard } from 'react-native';
 import { umPush } from '@src/app/src/native/push-utils';
-import { TButton } from '@src/app/components/TComponent';
+import { TButton } from '@src/app/src/components/TComponent';
 import { Toast, WingBlank } from '@ant-design/react-native';
 
 class DeviceInfoScreen extends React.Component {

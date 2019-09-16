@@ -7,7 +7,7 @@ import { login } from '../../../shared/redux/actions/user';
 import { openWebview } from '../redux/actions/nav';
 import config from '../../../shared/project.config';
 import appConfig from '../config.app';
-import { TButton, TFormGroup, TLoading } from '@src/app/components/TComponent';
+import { TButton, TFormGroup, TLoading } from '@src/app/src/components/TComponent';
 
 interface Props extends DispatchProp<any> {}
 class LoginScreen extends React.Component<Props> {

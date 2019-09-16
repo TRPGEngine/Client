@@ -3,8 +3,8 @@ import { connect, DispatchProp } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
 import { NavigationActions } from 'react-navigation';
-import { TIcon } from '../../components/TComponent';
-import ContactsList from '../../components/ContactsList';
+import { TIcon } from '../components/TComponent';
+import ContactsList from '../components/ContactsList';
 
 class ContactsScreen extends React.Component<DispatchProp> {
   static navigationOptions = {
