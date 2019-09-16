@@ -100,17 +100,9 @@ exports[`bbcode-parser plain text 1`] = `
 `;
 
 exports[`bbcode-parser plain text with space 1`] = `
-Array [
-  <Text>
-    Test
-  </Text>,
-  <Text>
-     
-  </Text>,
-  <Text>
-    String
-  </Text>,
-]
+<Text>
+  Test String
+</Text>
 `;
 
 exports[`bbcode-parser pure image 1`] = `
