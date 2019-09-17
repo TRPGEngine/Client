@@ -1,6 +1,6 @@
-import moment from 'moment';
+import moment, { MomentInput } from 'moment';
 
-export const getShortDiff = (str) => {
+export const getShortDiff = (str: string): string => {
   let date = str ? moment(str) : moment();
   if (helper.isToday(date)) {
     return date.format('HH:mm');
@@ -8,7 +8,7 @@ export const getShortDiff = (str) => {
     return date.fromNow();
   }
 };
-export const getShortDate = (str) => {
+export const getShortDate = (str: string): string => {
   let date = str ? moment(str) : moment();
   if (helper.isToday(date)) {
     return date.format('A hh:mm');
@@ -16,7 +16,7 @@ export const getShortDate = (str) => {
     return date.format('MM-DD HH:mm');
   }
 };
-export const getMsgDate = (str) => {
+export const getMsgDate = (str: string): string => {
   let date = str ? moment(str) : moment();
   if (helper.isToday(date)) {
     return date.format('HH:mm:ss');
@@ -24,19 +24,22 @@ export const getMsgDate = (str) => {
     return date.format('YYYY-MM-DD HH:mm:ss');
   }
 };
-export const getFullDate = (str) => {
+export const getFullDate = (str: string): string => {
   let date = str ? moment(str) : moment();
   return date.format('YYYY-MM-DD HH:mm:ss');
 };
-export const getSamlpeDate = (str) => {
+export const getSamlpeDate = (str: string): string => {
   let date = str ? moment(str) : moment();
   return date.format('YYYY-MM-DD');
 };
-export const isToday = (date) => {
+export const isToday = (date: MomentInput): boolean => {
   return moment().isSame(date, 'day');
 };
-export const getDateDiff = (prevDate, nextDate) => {
-  return new Date(nextDate) - new Date(prevDate);
+export const getDateDiff = (
+  prevDate: MomentInput,
+  nextDate: MomentInput
+): number => {
+  return moment(nextDate).valueOf() - moment(prevDate).valueOf();
 };
 
 const helper = {

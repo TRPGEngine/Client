@@ -317,21 +317,21 @@ class ChatScreen extends React.Component<Props> {
                 index < msgList.length - 1
                   ? _get(msgList, [index + 1, 'date'])
                   : 0;
-              let isMe = item.sender_uuid === this.props.selfInfo.get('uuid');
-              let senderInfo = isMe
+              const isMe = item.sender_uuid === this.props.selfInfo.get('uuid');
+              const senderInfo = isMe
                 ? this.props.selfInfo
                 : getUserInfoCache(item.sender_uuid);
-              let name =
+              const name =
                 senderInfo.get('nickname') || senderInfo.get('username');
-              let avatar = senderInfo.get('avatar');
-              let defaultAvatar =
+              const avatar = senderInfo.get('avatar');
+              const defaultAvatar =
                 item.sender_uuid === 'trpgsystem'
                   ? config.defaultImg.trpgsystem
                   : config.defaultImg.getUser(name);
-              let date = item.date;
+              const date = item.date;
 
-              let diffTime = dateHelper.getDateDiff(prevDate, date);
-              let emphasizeTime = diffTime / 1000 / 60 >= 10; // 超过10分钟
+              const diffTime = dateHelper.getDateDiff(prevDate, date);
+              const emphasizeTime = diffTime / 1000 / 60 >= 10; // 超过10分钟
 
               return (
                 <MessageHandler
