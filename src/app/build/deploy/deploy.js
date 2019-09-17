@@ -15,8 +15,8 @@ if (require.main === module) {
         type: 'list',
         name: 'deploymentName',
         message: '发布阶段',
-        choices: ['Production', 'Staging'],
-        default: 'Production',
+        choices: ['Staging', 'Production'],
+        default: 'Staging',
       },
       {
         type: 'list',

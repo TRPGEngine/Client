@@ -11,7 +11,7 @@
     "dev:android": "react-native run-android",
     "build:env": "NODE_CONFIG_DIR=../../config/ node ./build/metro/build-env.js",
     "build:android": "npm run build:env && cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web REACT_NATIVE_APP_ROOT=../../ ./gradlew assembleRelease",
-    "deploy:android": "npm run build:env && node build/deploy/deploy-android.js",
+    "deploy": "npm run build:env && node build/deploy/deploy.js",
     "dump:android-home": "echo \"sdk.dir=$ANDROID_HOME\" >> ./android/local.properties",
     "test": "node ../../node_modules/jest/bin/jest.js"
   },
