@@ -42,6 +42,17 @@ export const getDateDiff = (
   return moment(nextDate).valueOf() - moment(prevDate).valueOf();
 };
 
+/**
+ * 判断是否需要强调时间(两个日期间隔超过设定值)
+ */
+export const shouleEmphasizeTime = (
+  prevDate: MomentInput,
+  nextDate: MomentInput
+): boolean => {
+  const diffTime = getDateDiff(prevDate, nextDate);
+  return diffTime / 1000 / 60 >= 10; // 超过10分钟
+};
+
 const helper = {
   getShortDiff,
   getShortDate,

@@ -1,17 +1,15 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import { View, Text, FlatList, RefreshControl } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
-import dateHelper from '../../../shared/utils/date-helper';
+import dateHelper from '@shared/utils/date-helper';
 import appConfig from '../config.app';
 import ConvItem from '../components/ConvItem';
-import {
-  reloadConverseList,
-  switchConverse,
-} from '../../../shared/redux/actions/chat';
+import { reloadConverseList, switchConverse } from '@shared/redux/actions/chat';
 import styled from 'styled-components/native';
 import { Spring } from 'react-spring/renderprops';
+import TRefreshControl from '../components/TComponent/TRefreshControl';
 
 const NetworkContainer = styled.View<{
   isOnline: boolean;
@@ -111,12 +109,9 @@ class HomeScreen extends React.Component<Props> {
       return (
         <FlatList
           refreshControl={
-            <RefreshControl
+            <TRefreshControl
               refreshing={this.state.isRefreshing}
               onRefresh={() => this.handleRefresh()}
-              colors={['#5dd3d2', '#ffaa4d', '#2f9bd7', '#f88756']}
-              progressBackgroundColor="#ffffff"
-              title="加载中..."
             />
           }
           keyExtractor={(item, index) => item.uuid}

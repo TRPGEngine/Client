@@ -13,14 +13,14 @@ import sb from 'react-native-style-block';
 import ImagePicker from 'react-native-image-picker';
 import { NavigationScreenProps } from 'react-navigation';
 import { TInput, TIcon } from '../components/TComponent';
-import config from '../../../shared/project.config';
-import { sendMsg } from '../../../shared/redux/actions/chat';
-import { getUserInfoCache } from '../../../shared/utils/cache-helper';
-import dateHelper from '../../../shared/utils/date-helper';
+import config from '@shared/project.config';
+import { sendMsg } from '@shared/redux/actions/chat';
+import { getUserInfoCache } from '@shared/utils/cache-helper';
+import dateHelper, { shouleEmphasizeTime } from '@shared/utils/date-helper';
 import ExtraPanelItem from '../components/chat/ExtraPanelItem';
 import EmotionPanel from '../components/chat/EmotionPanel';
-import { toNetwork } from '../../../shared/utils/image-uploader';
-import { toTemporary } from '../../../shared/utils/upload-helper';
+import { toNetwork } from '@shared/utils/image-uploader';
+import { toTemporary } from '@shared/utils/upload-helper';
 import { unemojify } from '../utils/emoji';
 import _get from 'lodash/get';
 
@@ -297,54 +297,56 @@ class ChatScreen extends React.Component<Props> {
     );
   }
 
+  getMsgList(msgList: any[]) {
+    return (
+      <FlatList
+        style={styles.list}
+        ref={(ref) => (this.listRef = ref)}
+        data={msgList}
+        inverted={true}
+        keyExtractor={(item, index) => item.uuid}
+        onTouchStart={() => this.dismissAll()}
+        renderItem={({ item, index }) => {
+          // 因为列表是倒转的。所以第一条数据是最下面那条
+          // UI中的上一条数据应为msgList的下一条
+          const prevDate =
+            index < msgList.length - 1 ? _get(msgList, [index + 1, 'date']) : 0;
+          const isMe = item.sender_uuid === this.props.selfInfo.get('uuid');
+          const senderInfo = isMe
+            ? this.props.selfInfo
+            : getUserInfoCache(item.sender_uuid);
+          const name = senderInfo.get('nickname') || senderInfo.get('username');
+          const avatar = senderInfo.get('avatar');
+          const defaultAvatar =
+            item.sender_uuid === 'trpgsystem'
+              ? config.defaultImg.trpgsystem
+              : config.defaultImg.getUser(name);
+          const date = item.date;
+
+          const emphasizeTime = shouleEmphasizeTime(prevDate, date);
+
+          return (
+            <MessageHandler
+              type={item.type}
+              me={isMe}
+              name={name}
+              avatar={avatar || defaultAvatar}
+              emphasizeTime={emphasizeTime}
+              info={item}
+            />
+          );
+        }}
+      />
+    );
+  }
+
   render() {
     if (this.props.msgList) {
       let msgList: any[] = this.props.msgList.reverse().toJS();
 
       return (
         <View style={styles.container}>
-          <FlatList
-            style={styles.list}
-            ref={(ref) => (this.listRef = ref)}
-            data={msgList}
-            inverted={true}
-            keyExtractor={(item, index) => item.uuid}
-            onTouchStart={() => this.dismissAll()}
-            renderItem={({ item, index }) => {
-              // 因为列表是倒转的。所以第一条数据是最下面那条
-              // UI中的上一条数据应为msgList的下一条
-              const prevDate =
-                index < msgList.length - 1
-                  ? _get(msgList, [index + 1, 'date'])
-                  : 0;
-              const isMe = item.sender_uuid === this.props.selfInfo.get('uuid');
-              const senderInfo = isMe
-                ? this.props.selfInfo
-                : getUserInfoCache(item.sender_uuid);
-              const name =
-                senderInfo.get('nickname') || senderInfo.get('username');
-              const avatar = senderInfo.get('avatar');
-              const defaultAvatar =
-                item.sender_uuid === 'trpgsystem'
-                  ? config.defaultImg.trpgsystem
-                  : config.defaultImg.getUser(name);
-              const date = item.date;
-
-              const diffTime = dateHelper.getDateDiff(prevDate, date);
-              const emphasizeTime = diffTime / 1000 / 60 >= 10; // 超过10分钟
-
-              return (
-                <MessageHandler
-                  type={item.type}
-                  me={isMe}
-                  name={name}
-                  avatar={avatar || defaultAvatar}
-                  emphasizeTime={emphasizeTime}
-                  info={item}
-                />
-              );
-            }}
-          />
+          {this.getMsgList(msgList)}
           <View style={styles.msgBox}>
             <ChatInput
               ref={(ref) => (this.inputRef = ref)}

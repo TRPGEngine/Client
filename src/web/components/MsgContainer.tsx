@@ -2,7 +2,7 @@ import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { List, Map } from 'immutable';
 import config from '../../shared/project.config';
-import dateHelper from '../../shared/utils/date-helper';
+import { shouleEmphasizeTime } from '../../shared/utils/date-helper';
 import scrollTo from '../../shared/utils/animated-scroll-to';
 import { getUserInfoCache } from '../../shared/utils/cache-helper';
 import { getMoreChatLog } from '../../shared/redux/actions/chat';
@@ -71,9 +71,12 @@ class MsgContainer extends React.Component<Props> {
     }, 0);
   }
 
+  /**
+   * 处理加载更多时间
+   */
   handleGetMoreLog() {
-    let date = this.props.msgList.first().get('date');
-    let { converseUUID } = this.props;
+    const date = this.props.msgList.first().get('date');
+    const { converseUUID } = this.props;
     this.props.dispatch(
       getMoreChatLog(converseUUID, date, !this.props.isGroup)
     );
@@ -134,21 +137,21 @@ class MsgContainer extends React.Component<Props> {
         <div className="msg-items">
           {this.props.msgList.map((item, index, arr) => {
             const prevDate = index > 0 ? arr.getIn([index - 1, 'date']) : 0;
-            let senderUUID = item.get('sender_uuid');
-            let isMe = userUUID === senderUUID;
-            let senderInfo = isMe
+            const senderUUID = item.get('sender_uuid');
+            const isMe = userUUID === senderUUID;
+            const senderInfo = isMe
               ? this.props.selfInfo
               : getUserInfoCache(senderUUID);
-            let name = senderInfo.get('nickname') || senderInfo.get('username');
-            let avatar = senderInfo.get('avatar');
-            let defaultAvatar =
+            const name =
+              senderInfo.get('nickname') || senderInfo.get('username');
+            const avatar = senderInfo.get('avatar');
+            const defaultAvatar =
               item.get('sender_uuid') === 'trpgsystem'
                 ? config.defaultImg.trpgsystem
                 : config.defaultImg.getUser(name);
-            let date = item.get('date');
+            const date = item.get('date');
 
-            let diffTime = dateHelper.getDateDiff(prevDate, date);
-            let emphasizeTime = diffTime / 1000 / 60 >= 10; // 超过10分钟
+            const emphasizeTime = shouleEmphasizeTime(prevDate, date);
 
             return (
               <MessageHandler
