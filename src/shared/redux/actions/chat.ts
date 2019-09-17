@@ -207,6 +207,7 @@ export let addUserConverse = function addUserConverse(senders: string[]) {
     if (typeof senders === 'string') {
       senders = [senders];
     }
+
     dispatch({
       type: GET_USER_CONVERSES_SUCCESS,
       payload: senders
@@ -218,7 +219,7 @@ export let addUserConverse = function addUserConverse(senders: string[]) {
     });
 
     // 用户会话缓存
-    let userUUID = getState().getIn(['user', 'info', 'uuid']);
+    const userUUID = getState().getIn(['user', 'info', 'uuid']);
     rnStorage
       .get(getUserConversesHash(userUUID), [])
       .then(function(cachedConverse: string[]) {
@@ -234,7 +235,7 @@ export let addUserConverse = function addUserConverse(senders: string[]) {
       // 更新会话信息
       api.emit('player::getInfo', { type: 'user', uuid: uuid }, function(data) {
         if (data.result) {
-          let info = data.info;
+          const info = data.info;
           dispatch({
             type: UPDATE_CONVERSES_INFO_SUCCESS,
             uuid: info.uuid,

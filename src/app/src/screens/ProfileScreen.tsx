@@ -11,6 +11,7 @@ import { getUserInfo } from '../../../shared/redux/actions/cache';
 import { sendFriendInvite } from '../../../shared/redux/actions/user';
 import { switchToConverseApp } from '../redux/actions/nav';
 import { getUserInfoCache } from '../../../shared/utils/cache-helper';
+import { addUserConverse } from '@src/shared/redux/actions/chat';
 
 interface ItemProps {
   name: string;
@@ -49,10 +50,13 @@ class ProfileScreen extends React.Component<ScreenProps> {
     }
   }
 
-  handlePressSendMsg() {
+  handlePressSendMsg = () => {
     let type = this.props.navigation.state.params.type;
     let userUUID = this.props.navigation.state.params.uuid;
     let userInfo = getUserInfoCache(userUUID);
+
+    // 创建用户会话并切换到该会话
+    this.props.dispatch(addUserConverse([userUUID]));
     this.props.dispatch(
       switchToConverseApp(
         userUUID,
@@ -60,7 +64,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
         userInfo.get('nickname') || userInfo.get('username')
       )
     );
-  }
+  };
 
   render() {
     let userUUID = this.props.navigation.state.params.uuid;
@@ -116,9 +120,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
         </View>
         <View style={styles.actions}>
           {isFriend ? (
-            <TButton onPress={() => this.handlePressSendMsg()}>
-              发送消息
-            </TButton>
+            <TButton onPress={this.handlePressSendMsg}>发送消息</TButton>
           ) : (
             <TButton
               onPress={() => this.props.dispatch(sendFriendInvite(userUUID))}
