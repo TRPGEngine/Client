@@ -108,4 +108,5 @@ const out = {
   },
 };
 
-export default out;
+const appConfig = out;
+export default appConfig;

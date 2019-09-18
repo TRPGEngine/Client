@@ -27,6 +27,7 @@ import _get from 'lodash/get';
 import MessageHandler from '../components/messageTypes/__all__';
 
 import styled from 'styled-components/native';
+import appConfig from '../config.app';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
@@ -319,8 +320,8 @@ class ChatScreen extends React.Component<Props> {
           const avatar = senderInfo.get('avatar');
           const defaultAvatar =
             item.sender_uuid === 'trpgsystem'
-              ? config.defaultImg.trpgsystem
-              : config.defaultImg.getUser(name);
+              ? appConfig.defaultImg.trpgsystem
+              : appConfig.defaultImg.user;
           const date = item.date;
 
           const emphasizeTime = shouleEmphasizeTime(prevDate, date);
