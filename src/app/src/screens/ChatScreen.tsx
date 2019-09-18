@@ -6,7 +6,10 @@ import {
   FlatList,
   TextInput,
   Keyboard,
+  TouchableOpacity,
   EmitterSubscription,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from 'react-native';
 import { Icon } from '@ant-design/react-native';
 import sb from 'react-native-style-block';
@@ -14,7 +17,7 @@ import ImagePicker from 'react-native-image-picker';
 import { NavigationScreenProps } from 'react-navigation';
 import { TInput, TIcon } from '../components/TComponent';
 import config from '@shared/project.config';
-import { sendMsg } from '@shared/redux/actions/chat';
+import { sendMsg, getMoreChatLog } from '@shared/redux/actions/chat';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
 import dateHelper, { shouleEmphasizeTime } from '@shared/utils/date-helper';
 import ExtraPanelItem from '../components/chat/ExtraPanelItem';
@@ -51,10 +54,18 @@ const ChatInput = styled(TInput)`
   margin-right: 4px;
 `;
 
+const LoadmoreText = styled.Text`
+  text-align: center;
+  padding: 10px 0;
+  font-size: 10px;
+`;
+
 interface Props extends DispatchProp<any>, NavigationScreenProps {
   msgList: any;
   selfInfo: any;
   selfUUID: string;
+  nomore: boolean;
+  selectedConversesUUID: string;
 }
 class ChatScreen extends React.Component<Props> {
   static navigationOptions = (props) => {
@@ -86,6 +97,7 @@ class ChatScreen extends React.Component<Props> {
   keyboardDidHideListener: EmitterSubscription;
   inputRef: TextInput;
   listRef: FlatList<any>;
+  isSeekingLog: boolean; // 正在翻阅消息记录
 
   componentDidMount() {
     const converseType = this.props.navigation.getParam('type', 'user');
@@ -120,6 +132,10 @@ class ChatScreen extends React.Component<Props> {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (this.isSeekingLog === true) {
+      return;
+    }
+
     if (_get(prevProps, 'msgList.size') !== _get(this.props, 'msgList.size')) {
       this._scrollToBottom();
     }
@@ -269,6 +285,32 @@ class ChatScreen extends React.Component<Props> {
     );
   }
 
+  /**
+   * 处理加载更多消息
+   */
+  handleGetMoreLog = () => {
+    if (this.props.nomore === true) {
+      // 如果没有更多数据了。则跳过
+      return;
+    }
+
+    const date = this.props.msgList.first().get('date');
+    const { selectedConversesUUID } = this.props;
+    const converseType = this.props.navigation.getParam('type', 'user');
+    this.props.dispatch(
+      getMoreChatLog(selectedConversesUUID, date, converseType === 'user')
+    );
+    this.isSeekingLog = true;
+  };
+
+  onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const offset = e.nativeEvent.contentOffset;
+    if (offset.y === 0) {
+      // 当触底时(因为列表倒置所以列表的地步就是0)
+      this.isSeekingLog = false;
+    }
+  };
+
   // 表情面板的渲染函数
   getEmotionPanel() {
     return (
@@ -307,6 +349,9 @@ class ChatScreen extends React.Component<Props> {
         inverted={true}
         keyExtractor={(item, index) => item.uuid}
         onTouchStart={() => this.dismissAll()}
+        onScroll={this.onScroll}
+        onEndReached={this.handleGetMoreLog}
+        onEndReachedThreshold={0}
         renderItem={({ item, index }) => {
           // 因为列表是倒转的。所以第一条数据是最下面那条
           // UI中的上一条数据应为msgList的下一条
@@ -337,6 +382,15 @@ class ChatScreen extends React.Component<Props> {
             />
           );
         }}
+        ListFooterComponent={
+          this.props.nomore ? (
+            <LoadmoreText>没有更多记录了</LoadmoreText>
+          ) : (
+            <TouchableOpacity>
+              <LoadmoreText>上滑加载更多</LoadmoreText>
+            </TouchableOpacity>
+          )
+        }
       />
     );
   }
@@ -412,5 +466,9 @@ export default connect((state: any) => {
     selfUUID: state.getIn(['user', 'info', 'uuid']),
     msgList: msgList && msgList.sortBy((item) => item.get('date')),
     usercache: state.getIn(['cache', 'user']),
+    nomore: state.getIn(
+      ['chat', 'converses', selectedConversesUUID, 'nomore'],
+      false
+    ),
   };
 })(ChatScreen);
