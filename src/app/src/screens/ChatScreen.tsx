@@ -351,7 +351,7 @@ class ChatScreen extends React.Component<Props> {
         onTouchStart={() => this.dismissAll()}
         onScroll={this.onScroll}
         onEndReached={this.handleGetMoreLog}
-        onEndReachedThreshold={0}
+        onEndReachedThreshold={0.1}
         renderItem={({ item, index }) => {
           // 因为列表是倒转的。所以第一条数据是最下面那条
           // UI中的上一条数据应为msgList的下一条
