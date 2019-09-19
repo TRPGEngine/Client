@@ -22,7 +22,7 @@
     "app:build:env": "node ./src/app/build/metro/build-env.js",
     "app:build:android": "npm run app:build:env && cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web ./gradlew assembleRelease --info",
     "app:bundle:android": "cross-env START_DIR='../../' PLATFORM=app REACT_NATIVE_APP_ROOT=. react-native bundle --platform android --entry-file index.js --bundle-output ./dist/index.android.bundle --dev false",
-    "app:deploy:android": "node build/deploy/deploy-android.js",
+    "app:deploy:android": "cd ./src/app && npm run deploy",
     "app:test": "cd ./src/app && npm run test",
     "test": "jest",
     "test:watch": "jest --watch",

@@ -32,6 +32,7 @@ import MessageHandler from '../components/messageTypes/__all__';
 import styled from 'styled-components/native';
 import appConfig from '../config.app';
 
+const MSG_INIT_NUM = 10;
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
 const ActionBtn = styled.TouchableOpacity`
@@ -340,6 +341,20 @@ class ChatScreen extends React.Component<Props> {
     );
   }
 
+  getMsgListFooter(msgList: any[]) {
+    if (msgList.length < MSG_INIT_NUM) {
+      return null;
+    }
+
+    return this.props.nomore ? (
+      <LoadmoreText>没有更多记录了</LoadmoreText>
+    ) : (
+      <TouchableOpacity>
+        <LoadmoreText>上滑加载更多</LoadmoreText>
+      </TouchableOpacity>
+    );
+  }
+
   getMsgList(msgList: any[]) {
     return (
       <FlatList
@@ -382,15 +397,7 @@ class ChatScreen extends React.Component<Props> {
             />
           );
         }}
-        ListFooterComponent={
-          this.props.nomore ? (
-            <LoadmoreText>没有更多记录了</LoadmoreText>
-          ) : (
-            <TouchableOpacity>
-              <LoadmoreText>上滑加载更多</LoadmoreText>
-            </TouchableOpacity>
-          )
-        }
+        ListFooterComponent={this.getMsgListFooter(msgList)}
       />
     );
   }
