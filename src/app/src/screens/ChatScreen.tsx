@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import {
   View,
@@ -18,10 +18,12 @@ import { NavigationScreenProps } from 'react-navigation';
 import { TInput, TIcon } from '../components/TComponent';
 import config from '@shared/project.config';
 import { sendMsg, getMoreChatLog } from '@shared/redux/actions/chat';
+import { showModal } from '@shared/redux/actions/ui';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
 import dateHelper, { shouleEmphasizeTime } from '@shared/utils/date-helper';
 import ExtraPanelItem from '../components/chat/ExtraPanelItem';
 import EmotionPanel from '../components/chat/EmotionPanel';
+import QuickDiceModal from '../components/chat/QuickDiceModal';
 import { toNetwork } from '@shared/utils/image-uploader';
 import { toTemporary } from '@shared/utils/upload-helper';
 import { unemojify } from '../utils/emoji';
@@ -46,6 +48,7 @@ const ExtraPanel = styled.View`
   background-color: white;
   border-top-width: 1px;
   border-top-color: #ccc;
+  flex-direction: row;
 `;
 
 const ChatInput = styled(TInput)`
@@ -92,6 +95,7 @@ class ChatScreen extends React.Component<Props> {
     showExtraPanel: false,
     showEmoticonPanel: false,
     isKeyboardShow: false,
+    showQuickDiceModal: false,
   };
 
   keyboardDidShowListener: EmitterSubscription;
@@ -337,6 +341,11 @@ class ChatScreen extends React.Component<Props> {
           icon="&#xe621;"
           onPress={() => this.handleSendImage()}
         />
+        <ExtraPanelItem
+          text="投骰"
+          icon="&#xe6fd;"
+          onPress={() => this.setState({ showQuickDiceModal: true })}
+        />
       </ExtraPanel>
     );
   }
@@ -402,6 +411,17 @@ class ChatScreen extends React.Component<Props> {
     );
   }
 
+  getModal() {
+    return (
+      <Fragment>
+        <QuickDiceModal
+          visible={this.state.showQuickDiceModal}
+          onClose={() => this.setState({ showQuickDiceModal: false })}
+        />
+      </Fragment>
+    );
+  }
+
   render() {
     if (this.props.msgList) {
       let msgList: any[] = this.props.msgList.reverse().toJS();
@@ -440,6 +460,7 @@ class ChatScreen extends React.Component<Props> {
             !this.state.showEmoticonPanel &&
             !this.state.isKeyboardShow &&
             this.getExtraPanel()}
+          {this.getModal()}
         </View>
       );
     } else {
@@ -459,8 +480,8 @@ const styles = {
 };
 
 export default connect((state: any) => {
-  let selectedConversesUUID = state.getIn(['chat', 'selectedConversesUUID']);
-  let msgList = state.getIn([
+  const selectedConversesUUID = state.getIn(['chat', 'selectedConversesUUID']);
+  const msgList = state.getIn([
     'chat',
     'converses',
     selectedConversesUUID,
