@@ -24,7 +24,7 @@ export const getMsgDate = (str: string): string => {
     return date.format('YYYY-MM-DD HH:mm:ss');
   }
 };
-export const getFullDate = (str: string): string => {
+export const getFullDate = (str?: string): string => {
   let date = str ? moment(str) : moment();
   return date.format('YYYY-MM-DD HH:mm:ss');
 };

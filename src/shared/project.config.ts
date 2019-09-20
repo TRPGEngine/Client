@@ -135,18 +135,18 @@ const config: ProjectConfig = {
         return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; // 一像素透明图片
       }
     },
-    group: '/src/assets/img/gugugu1.png',
-    trpgsystem: '/src/assets/img/system_notice.png',
+    group: '/src/web/assets/img/gugugu1.png',
+    trpgsystem: '/src/web/assets/img/system_notice.png',
     actor: '',
-    chatimg_fail: '/src/assets/img/img_fail.png',
+    chatimg_fail: '/src/web/assets/img/img_fail.png',
     file: {
-      default: '/src/assets/img/file/default.png',
-      pdf: '/src/assets/img/file/pdf.png',
-      excel: '/src/assets/img/file/excel.png',
-      ppt: '/src/assets/img/file/ppt.png',
-      word: '/src/assets/img/file/word.png',
-      txt: '/src/assets/img/file/txt.png',
-      pic: '/src/assets/img/file/pic.png',
+      default: '/src/web/assets/img/file/default.png',
+      pdf: '/src/web/assets/img/file/pdf.png',
+      excel: '/src/web/assets/img/file/excel.png',
+      ppt: '/src/web/assets/img/file/ppt.png',
+      word: '/src/web/assets/img/file/word.png',
+      txt: '/src/web/assets/img/file/txt.png',
+      pic: '/src/web/assets/img/file/pic.png',
     },
     color: [
       '#333333',
@@ -185,9 +185,7 @@ const config: ProjectConfig = {
     },
   },
 };
-config.file.url = `${config.file.protocol}://${config.file.host}:${
-  config.file.port
-}`;
+config.file.url = `${config.file.protocol}://${config.file.host}:${config.file.port}`;
 
 // 获取基于API的绝对路径
 config.file.getAbsolutePath = function getAbsolutePath(path) {
