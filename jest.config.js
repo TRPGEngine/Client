@@ -12,7 +12,7 @@ module.exports = {
     prefix: '<rootDir>/',
   }),
   rootDir: '.',
-  roots: ['<rootDir>/test/'],
+  roots: ['<rootDir>/test/', '<rootDir>/src/web/test/'],
   transformIgnorePatterns: ['/node_modules/'],
   setupFilesAfterEnv: [
     require.resolve('./test/global.ts'), // 注册全局
