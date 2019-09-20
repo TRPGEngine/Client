@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import sb from 'react-native-style-block';
 import { TIcon } from '../TComponent';
+import styled from 'styled-components/native';
 
 interface Props {
   icon: string;
@@ -9,31 +8,45 @@ interface Props {
   onPress: () => void;
 }
 
+const Container = styled.TouchableOpacity`
+  margin: 10px;
+  width: 80px;
+`;
+
+const IconContainer = styled.View`
+  width: 60px;
+  height: 60px;
+  border: 0.5px solid #ccc;
+  border-radius: 3px;
+  margin: 10px;
+`;
+
+const IconText = styled(TIcon)`
+  color: #ccc;
+  font-size: 32px;
+  text-align: center;
+  line-height: 60px;
+`;
+
+const ItemText = styled.Text`
+  color: #666;
+  text-align: center;
+  font-size: 12px;
+`;
+
 class ExtraPanelItem extends React.Component<Props> {
   render() {
     const { icon, text, onPress } = this.props;
 
     return (
-      <TouchableOpacity onPress={onPress} style={styles.container}>
-        <View style={styles.iconContainer}>
-          <TIcon style={styles.icon} icon={icon} />
-        </View>
-        <Text style={styles.text}>{text}</Text>
-      </TouchableOpacity>
+      <Container onPress={onPress}>
+        <IconContainer>
+          <IconText icon={icon} />
+        </IconContainer>
+        <ItemText>{text}</ItemText>
+      </Container>
     );
   }
 }
-
-const styles = {
-  container: [sb.margin(10), sb.size(80, null)],
-  iconContainer: [
-    sb.size(60, 60),
-    sb.border('all', 0.5, '#ccc'),
-    sb.radius(3),
-    sb.margin(10),
-  ],
-  icon: [sb.color('#ccc'), sb.font(32), sb.textAlign(), { lineHeight: 60 }],
-  text: [sb.color('#666'), sb.textAlign(), sb.font(12)],
-};
 
 export default ExtraPanelItem;
