@@ -1,11 +1,13 @@
 import React, { Fragment } from 'react';
 import { View, Text } from 'react-native';
-import { Modal, WingBlank } from '@ant-design/react-native';
+import { Modal, WingBlank, PickerView } from '@ant-design/react-native';
 import QuickDiceBtn from './QuickDiceBtn';
 import styled from 'styled-components/native';
 import { TButton } from '../TComponent';
+import _range from 'lodash/range';
+import { PickerData } from '@ant-design/react-native/es/picker/PropsType';
 
-const Container = styled.View`
+const MainContainer = styled.View`
   height: 220px;
   width: 100%;
   margin: auto;
@@ -14,6 +16,7 @@ const Container = styled.View`
 
 const DiceTypeContainer = styled.ScrollView.attrs((props) => ({
   horizontal: true,
+  showsHorizontalScrollIndicator: false,
 }))`
   width: 100%;
   flex: 0;
@@ -26,6 +29,25 @@ const DiceText = styled.Text`
   font-size: 26px;
   text-align: center;
 `;
+
+const CustomDiceContainer = styled.View`
+  padding: 10px 0;
+`;
+
+const customDices: PickerData[][] = [
+  _range(10)
+    .map((v) => v + 1)
+    .map<PickerData>((v) => ({
+      label: String(v),
+      value: v,
+    })),
+  _range(100)
+    .map((v) => v + 1)
+    .map<PickerData>((v) => ({
+      label: `d${v}`,
+      value: v,
+    })),
+];
 
 interface Props {
   visible: boolean;
@@ -40,7 +62,22 @@ export default class QuickDiceModal extends React.Component<Props> {
     this.setState({ diceExp });
   }
 
-  getDefaultDiceBtn() {
+  renderCustomDiceView() {
+    const value = this.state.diceExp.split('d').map(Number);
+
+    return (
+      <CustomDiceContainer>
+        <PickerView
+          value={value}
+          onChange={(val) => this.setState({ diceExp: val.join('d') })}
+          data={customDices}
+          cascade={false}
+        />
+      </CustomDiceContainer>
+    );
+  }
+
+  renderDefaultDiceBtn() {
     const { diceExp } = this.state;
 
     return (
@@ -85,13 +122,14 @@ export default class QuickDiceModal extends React.Component<Props> {
         onClose={this.props.onClose}
         maskClosable={true}
       >
-        <Container>
+        {this.renderCustomDiceView()}
+        <MainContainer>
           <WingBlank style={{ flex: 1 }}>
-            <DiceTypeContainer>{this.getDefaultDiceBtn()}</DiceTypeContainer>
+            <DiceTypeContainer>{this.renderDefaultDiceBtn()}</DiceTypeContainer>
             <DiceText>{diceExp}</DiceText>
             <TButton>发送</TButton>
           </WingBlank>
-        </Container>
+        </MainContainer>
       </Modal>
     );
   }
