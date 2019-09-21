@@ -9,7 +9,7 @@
     "dev:proserver": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:80 npm run dev:main",
     "dev:main": "npm run build:env && cross-env PLATFORM=app REACT_NATIVE_APP_ROOT=../../ react-native start",
     "dev:android": "react-native run-android",
-    "build:env": "NODE_CONFIG_DIR=../../config/ node ./build/metro/build-env.js",
+    "build:env": "cross-env NODE_CONFIG_DIR=../../config/ node ./build/metro/build-env.js",
     "build:android": "npm run build:env && cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web REACT_NATIVE_APP_ROOT=../../ ./gradlew assembleRelease",
     "deploy": "npm run build:env && node build/deploy/deploy.js",
     "dump:android-home": "echo \"sdk.dir=$ANDROID_HOME\" >> ./android/local.properties",
