@@ -33,6 +33,7 @@ import MessageHandler from '../components/messageTypes/__all__';
 
 import styled from 'styled-components/native';
 import appConfig from '../config.app';
+import { sendQuickDice } from '@src/shared/redux/actions/dice';
 
 const MSG_INIT_NUM = 10;
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
@@ -316,6 +317,14 @@ class ChatScreen extends React.Component<Props> {
     }
   };
 
+  handleSendQuickDice = (diceExp: string) => {
+    const uuid = this.props.navigation.getParam('uuid', '');
+    const converseType = this.props.navigation.getParam('type', 'user');
+    const isGroup = converseType === 'group';
+    this.props.dispatch(sendQuickDice(uuid, isGroup, diceExp));
+    this.setState({ showQuickDiceModal: false });
+  };
+
   // 表情面板的渲染函数
   getEmotionPanel() {
     return (
@@ -417,6 +426,7 @@ class ChatScreen extends React.Component<Props> {
         <QuickDiceModal
           visible={this.state.showQuickDiceModal}
           onClose={() => this.setState({ showQuickDiceModal: false })}
+          onSend={this.handleSendQuickDice}
         />
       </Fragment>
     );

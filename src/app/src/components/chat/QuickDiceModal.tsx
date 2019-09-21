@@ -63,6 +63,7 @@ const customDices: PickerData[][] = [
 interface Props {
   visible: boolean;
   onClose?: () => void;
+  onSend?: (diceExp: string) => void;
 }
 export default class QuickDiceModal extends React.Component<Props> {
   state = {
@@ -87,6 +88,12 @@ export default class QuickDiceModal extends React.Component<Props> {
       </CustomDiceContainer>
     );
   }
+
+  handleSend = () => {
+    if (this.props.onSend) {
+      this.props.onSend(this.state.diceExp);
+    }
+  };
 
   renderDefaultDiceBtn() {
     const { diceExp } = this.state;
@@ -134,7 +141,7 @@ export default class QuickDiceModal extends React.Component<Props> {
           <WingBlank style={{ flex: 1 }}>
             <DiceTypeContainer>{this.renderDefaultDiceBtn()}</DiceTypeContainer>
             <DiceText>{diceExp}</DiceText>
-            <TButton>发送</TButton>
+            <TButton onPress={this.handleSend}>发送</TButton>
           </WingBlank>
         </MainContainer>
       </QuickDiceModalContainer>
