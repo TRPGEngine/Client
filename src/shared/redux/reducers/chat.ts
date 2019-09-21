@@ -291,7 +291,10 @@ export default function chat(state = initialState, action) {
           // 处理用户的正在写信息
           return state.updateIn(['writingList', 'user'], (list) => {
             if (isWriting) {
-              return list.push(uuid);
+              if (!list.includes(uuid)) {
+                list = list.push(uuid);
+              }
+              return list;
             } else {
               return list.delete(list.findIndex((item) => item === uuid));
             }

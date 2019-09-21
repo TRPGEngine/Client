@@ -555,7 +555,7 @@ export let startWriting = function(type = 'user', uuid: string) {
     renewableDelayTimer(
       getWriteHash(type, uuid),
       function() {
-        dispatch(stopWriting(type, uuid)); // 如果10秒后没有再次收到正在输入的信号，则视为已经停止输入了
+        dispatch(stopWriting(type, uuid)); // 如果在规定时间后没有再次收到正在输入的信号，则视为已经停止输入了
       },
       config.chat.isWriting.timeout
     );
