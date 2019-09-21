@@ -7,11 +7,22 @@ import { TButton } from '../TComponent';
 import _range from 'lodash/range';
 import { PickerData } from '@ant-design/react-native/es/picker/PropsType';
 
+const QuickDiceModalContainer = styled(Modal).attrs((props) => ({
+  transparent: false,
+  animationType: 'slide-up',
+  popup: true,
+  maskClosable: true,
+  ...props,
+}))`
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+`;
+
 const MainContainer = styled.View`
   height: 220px;
   width: 100%;
   margin: auto;
-  background-color: white;
+  /* background-color: white; */
 `;
 
 const DiceTypeContainer = styled.ScrollView.attrs((props) => ({
@@ -55,7 +66,7 @@ interface Props {
 }
 export default class QuickDiceModal extends React.Component<Props> {
   state = {
-    diceExp: '',
+    diceExp: '1d20',
   };
 
   setDice(diceExp: string) {
@@ -69,7 +80,7 @@ export default class QuickDiceModal extends React.Component<Props> {
       <CustomDiceContainer>
         <PickerView
           value={value}
-          onChange={(val) => this.setState({ diceExp: val.join('d') })}
+          onChange={(val) => this.setDice(val.join('d'))}
           data={customDices}
           cascade={false}
         />
@@ -114,13 +125,9 @@ export default class QuickDiceModal extends React.Component<Props> {
     const { diceExp } = this.state;
 
     return (
-      <Modal
-        transparent={false}
+      <QuickDiceModalContainer
         visible={this.props.visible}
-        animationType="slide-up"
-        popup={true}
         onClose={this.props.onClose}
-        maskClosable={true}
       >
         {this.renderCustomDiceView()}
         <MainContainer>
@@ -130,7 +137,7 @@ export default class QuickDiceModal extends React.Component<Props> {
             <TButton>发送</TButton>
           </WingBlank>
         </MainContainer>
-      </Modal>
+      </QuickDiceModalContainer>
     );
   }
 }
