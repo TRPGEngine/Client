@@ -1,4 +1,4 @@
-import config from '../../../config/project.config';
+import config from '../project.config';
 
 export const getOriginalImage = (thumbnailImageUrl: string) => {
   return thumbnailImageUrl.replace('/thumbnail', '');

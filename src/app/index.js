@@ -1,16 +1,15 @@
 // 手动进行配置设置
 // require('../../config/project.config').platform = 'app';
-require('moment/locale/zh-cn');
-require('moment').locale('zh_CN');
-require('../shared/utils/common');
-
+import '../shared/utils/common';
 import { AppRegistry, YellowBox } from 'react-native';
-import App from './App';
+import projectConfig from '../shared/project.config';
+import Config from 'react-native-config';
+// 将projectConfig的版本重设为app版本
+projectConfig.version = Config.JSVERSION;
+import App from './src/App';
 import _get from 'lodash/get';
-import projectConfig from '../../config/project.config';
 
 // Sentry
-import Config from 'react-native-config';
 const dsn = Config.SENTRY_DSN;
 if (dsn && projectConfig.environment === 'production') {
   import('react-native-sentry')

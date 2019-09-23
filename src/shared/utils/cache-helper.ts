@@ -3,7 +3,7 @@ import {
   getGroupInfo,
   getTemplateInfo,
   getActorInfo,
-} from '../../redux/actions/cache';
+} from '../redux/actions/cache';
 import immutable, { Map } from 'immutable';
 import _isNil from 'lodash/isNil';
 import { isUserUUID } from './uuid';

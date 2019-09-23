@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { hideSlidePanel } from '../../redux/actions/ui';
+import { hideSlidePanel } from '../../shared/redux/actions/ui';
 import { isImmutable } from 'immutable';
 
 import './SlidePanel.scss';

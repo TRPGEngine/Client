@@ -7,7 +7,7 @@ import {
   agreeGroupActor,
   refuseGroupActor,
   updateGroupActorInfo,
-} from '../../../../../redux/actions/group';
+} from '../../../../../shared/redux/actions/group';
 
 import './GroupActorCheck.scss';
 

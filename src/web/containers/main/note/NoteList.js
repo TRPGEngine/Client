@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addNote, switchNote } from '../../../../redux/actions/note';
+import { addNote, switchNote } from '../../../../shared/redux/actions/note';
 import moment from 'moment';
 import ReactTooltip from 'react-tooltip';
 import Spinner from '../../../components/Spinner';

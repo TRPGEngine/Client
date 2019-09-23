@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MsgType, MsgPayload } from '@redux/types/chat';
+import { MsgType, MsgPayload } from '@src/shared/redux/types/chat';
 
 export interface MessageProps {
   type: MsgType;

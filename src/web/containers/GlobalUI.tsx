@@ -4,7 +4,7 @@ import Lightbox from 'react-image-lightbox';
 import Modal from '../components/Modal';
 import Loading from '../components/Loading';
 import Alert from '../components/Alert';
-import { hideLightbox } from '../../redux/actions/ui';
+import { hideLightbox } from '../../shared/redux/actions/ui';
 
 interface Props extends DispatchProp<any> {
   showLigthbox: boolean;

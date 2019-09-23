@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../../../config/project.config';
+import config from '../project.config';
 
 export function sendErrorReport(data) {
   axios

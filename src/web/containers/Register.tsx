@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { showLoading, showAlert } from '../../redux/actions/ui';
-import { register } from '../../redux/actions/user';
+import { showLoading, showAlert } from '../../shared/redux/actions/ui';
+import { register } from '../../shared/redux/actions/user';
 import './Register.scss';
 
 interface Props extends DispatchProp<any> {

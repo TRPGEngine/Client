@@ -1,5 +1,3 @@
-import 'moment/locale/zh-cn';
-import moment from 'moment';
 import '../shared/utils/common';
 import App from './containers/App';
 import React from 'react';
@@ -8,20 +6,18 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { getTheme } from './theme';
 import { attachStore } from '../shared/utils/cache-helper';
-import config from '../../config/project.config';
-import configureStore from '../redux/configureStore';
-import * as trpgApi from '../api/trpg.api';
+import config from '../shared/project.config';
+import configureStore from '../shared/redux/configureStore';
+import * as trpgApi from '../shared/api/trpg.api';
 import notify from './utils/notify';
-import rnStorage from '../api/rn-storage.api';
-import { showAlert } from '../redux/actions/ui';
-import { loginWithToken } from '../redux/actions/user';
+import rnStorage from '../shared/api/rn-storage.api';
+import { showAlert } from '../shared/redux/actions/ui';
+import { loginWithToken } from '../shared/redux/actions/user';
 import {
   setNotificationPermission,
   setUserSettings,
   setSystemSettings,
-} from '../redux/actions/settings';
-
-moment.locale('zh_CN');
+} from '../shared/redux/actions/settings';
 
 const store = configureStore();
 attachStore(store);

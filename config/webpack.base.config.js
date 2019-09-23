@@ -121,7 +121,7 @@ module.exports = {
             loader: 'babel-loader',
             query: babelQuery,
           },
-          { loader: 'ts-loader' },
+          { loader: 'ts-loader', options: { allowTsInNodeModules: true } },
         ],
       },
       {
@@ -150,7 +150,7 @@ module.exports = {
   externals: {
     electron: "require('electron')",
     'react-native': "require('react-native')",
-    '../../app/router': "require('../../app/router')", // for redux.configureStore
+    '../../../app/src/router': "require('../../../app/src/router')", // for redux.configureStore
     'react-navigation-redux-helpers':
       "require('react-navigation-redux-helpers')",
     config: JSON.stringify({
@@ -200,7 +200,7 @@ module.exports = {
       title: 'TRPG-Game',
       template: path.resolve(BUILD_PATH, './template/index.html'),
       inject: true,
-      favicon: path.resolve(APP_PATH, './assets/img/favicon.ico'),
+      favicon: path.resolve(APP_PATH, './web/assets/img/favicon.ico'),
       hash: true,
     }),
     new HtmlWebpackIncludeAssetsPlugin({

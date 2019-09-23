@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {
   agreeGroupInvite,
   refuseGroupInvite,
-} from '../../../../redux/actions/group';
+} from '../../../../shared/redux/actions/group';
 
 // 入团邀请
 class GroupInvite extends BaseCard {

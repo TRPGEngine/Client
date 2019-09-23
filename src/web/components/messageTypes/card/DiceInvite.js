@@ -1,6 +1,6 @@
 import BaseCard from './BaseCard';
 import { connect } from 'react-redux';
-import { acceptDiceInvite } from '../../../../redux/actions/dice';
+import { acceptDiceInvite } from '../../../../shared/redux/actions/dice';
 
 // 投骰邀请
 class DiceInvite extends BaseCard {

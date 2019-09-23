@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../../../config/project.config';
+import config from '../../../../shared/project.config';
 import ReactTooltip from 'react-tooltip';
-import { sendGroupInvite } from '../../../../redux/actions/group';
+import { sendGroupInvite } from '../../../../shared/redux/actions/group';
 import { getUserInfoCache } from '../../../../shared/utils/cache-helper';
 
 import './GroupInvite.scss';

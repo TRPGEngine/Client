@@ -10,9 +10,9 @@ import {
 } from 'react-router-dom';
 import ErrorBoundary from './ErrorBoundary';
 import NetworkIndicator from '../components/NetworkIndicator';
-import config from '../../../config/project.config';
+import config from '../../shared/project.config';
 import './App.scss';
-import '../../assets/css/iconfont.css';
+import '../assets/css/iconfont.css';
 import 'react-select/dist/react-select.css';
 import 'react-image-lightbox/style.css';
 

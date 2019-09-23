@@ -2,7 +2,7 @@ import Loadable from 'react-loadable';
 import React from 'react';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import { connect } from 'react-redux';
-import { saveNote } from '../../../../redux/actions/note';
+import { saveNote } from '../../../../shared/redux/actions/note';
 const NoteEditor = Loadable({
   loader: () => import('../../../components/NoteEditor'),
   loading: LoadingSpinner,

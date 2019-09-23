@@ -4,7 +4,7 @@ const options = {
   convertUnicode: true,
   convertAscii: true,
   styles: {
-    backgroundImage: 'url(/src/assets/img/emojione.sprites.png)',
+    backgroundImage: 'url(/src/web/assets/img/emojione.sprites.png)',
     width: '64px',
     height: '64px',
     margin: '4px',

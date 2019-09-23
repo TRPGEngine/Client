@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
-import { ActorType, ActorDataType } from '@redux/types/actor';
+import { ActorType, ActorDataType } from '@src/shared/redux/types/actor';
 import { getOriginalImage } from '@shared/utils/file-helper';
 import XMLBuilder from '@shared/layout/XMLBuilder';
 

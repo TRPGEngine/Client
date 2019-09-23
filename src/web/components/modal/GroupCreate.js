@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ModalPanel from '../ModalPanel';
-import { createGroup } from '../../../redux/actions/group';
+import { createGroup } from '../../../shared/redux/actions/group';
 
 import './GroupCreate.scss';
 

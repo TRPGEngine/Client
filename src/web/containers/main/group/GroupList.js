@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../../../config/project.config';
+import config from '../../../../shared/project.config';
 import ConvItem from '../../../components/ConvItem';
 import dateHelper from '../../../../shared/utils/date-helper';
-import { switchSelectGroup } from '../../../../redux/actions/group';
+import { switchSelectGroup } from '../../../../shared/redux/actions/group';
 import GroupDetail from './GroupDetail';
 
 import './GroupList.scss';

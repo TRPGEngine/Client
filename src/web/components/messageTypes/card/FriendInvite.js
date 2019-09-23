@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {
   agreeFriendInvite,
   refuseFriendInvite,
-} from '../../../../redux/actions/user';
+} from '../../../../shared/redux/actions/user';
 
 // 好友邀请
 class FriendInvite extends BaseCard {

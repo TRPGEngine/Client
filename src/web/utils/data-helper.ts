@@ -1,4 +1,4 @@
-import { GroupActorType } from '@src/redux/types/group';
+import { GroupActorType } from '@src/shared/redux/types/group';
 import _get from 'lodash/get';
 
 /**

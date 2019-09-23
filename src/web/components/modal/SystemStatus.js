@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ModalPanel from '../ModalPanel';
-import config from '../../../../config/project.config';
+import config from '../../../shared/project.config';
 import dateHelper from '../../../shared/utils/date-helper';
 
 const SystemStatusPanel = styled(ModalPanel)`

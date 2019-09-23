@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import config from '../../../../../config/project.config';
+import config from '../../../../shared/project.config';
 import Select from 'react-select';
 import ReactTooltip from 'react-tooltip';
 import {
@@ -8,13 +8,13 @@ import {
   hideModal,
   showAlert,
   showSlidePanel,
-} from '../../../../redux/actions/ui';
-import { sendMsg, sendFile } from '../../../../redux/actions/chat';
-import { changeSelectGroupActor } from '../../../../redux/actions/group';
+} from '../../../../shared/redux/actions/ui';
+import { sendMsg, sendFile } from '../../../../shared/redux/actions/chat';
+import { changeSelectGroupActor } from '../../../../shared/redux/actions/group';
 import {
   sendDiceRequest,
   sendDiceInvite,
-} from '../../../../redux/actions/dice';
+} from '../../../../shared/redux/actions/dice';
 // import GroupMap from './GroupMap';
 import GroupInvite from './GroupInvite';
 import GroupActor from './GroupActor';
@@ -28,7 +28,7 @@ import MsgContainer from '../../../components/MsgContainer';
 import MsgSendBox from '../../../components/MsgSendBox';
 import { List } from 'immutable';
 import _isNil from 'lodash/isNil';
-import { GroupActorMsgData } from '@redux/types/group';
+import { GroupActorMsgData } from '@src/shared/redux/types/group';
 
 interface Props extends DispatchProp<any> {
   selectedUUID: string;

@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { showModal, showAlert } from '../../../../redux/actions/ui';
+import { showModal, showAlert } from '../../../../shared/redux/actions/ui';
 import {
   setEditedTemplate,
   findTemplate,
   selectTemplate,
   removeTemplate,
-} from '../../../../redux/actions/actor';
+} from '../../../../shared/redux/actions/actor';
 import TemplateEdit from './TemplateEdit';
 import ActorEdit from './ActorEdit';
 import TemplateItem from '../../../components/TemplateItem';

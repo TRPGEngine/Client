@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Base from './Base';
 import filesize from 'filesize';
-import config from '../../../../config/project.config';
-import { downloadFile, previewFile } from '../../../redux/actions/file';
+import config from '../../../shared/project.config';
+import { downloadFile, previewFile } from '../../../shared/redux/actions/file';
 
 class File extends Base {
   handlePreview() {

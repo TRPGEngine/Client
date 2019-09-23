@@ -1,5 +1,5 @@
 import React from 'react';
-import config from '../../../config/project.config';
+import config from '../../shared/project.config';
 
 class Image extends React.Component {
   constructor(props) {

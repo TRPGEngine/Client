@@ -4,7 +4,7 @@ import ModalPanel from '../../ModalPanel';
 import { Button, Steps, Row, message } from 'antd';
 import { connect, DispatchProp } from 'react-redux';
 import { DataType } from '@shared/layout/XMLBuilder';
-import { getSuggestTemplate, createActor } from '@redux/actions/actor';
+import { getSuggestTemplate, createActor } from '@src/shared/redux/actions/actor';
 import TemplateSelect, { TemplateType } from './TemplateSelect';
 import CreateActorBase, { BaseActorInfoType } from './CreateActorBase';
 import CreateActorDetail from './CreateActorDetail';

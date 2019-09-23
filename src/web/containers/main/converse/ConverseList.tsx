@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import dateHelper from '../../../../shared/utils/date-helper';
-import config from '../../../../../config/project.config';
+import config from '../../../../shared/project.config';
 import ConverseDetail from './ConverseDetail';
 // import Tab from '../../../components/Tab';
 import { TabsController, Tab } from '../../../components/Tabs';
 import ConvItem from '../../../components/ConvItem';
-import { switchConverse } from '../../../../redux/actions/chat';
-import { showProfileCard } from '../../../../redux/actions/ui';
+import { switchConverse } from '../../../../shared/redux/actions/chat';
+import { showProfileCard } from '../../../../shared/redux/actions/ui';
 
 import './ConverseList.scss';
 
@@ -167,7 +167,7 @@ class ConverseList extends React.Component<Props> {
           ) : (
             <div className="nocontent">
               <p className="nocontent-img">
-                <img src="/src/assets/img/dice.png" />
+                <img src="/src/web/assets/img/dice.png" />
               </p>
               <p className="welcome">{this.getWelcomeMessage()}</p>
             </div>
