@@ -4,12 +4,19 @@ import config from '@src/shared/project.config';
 import { WingBlank } from '@ant-design/react-native';
 import { TButton } from '../components/TComponent';
 import styled from 'styled-components/native';
+import semver from 'semver';
 import appConfig from '../config.app';
 import { connect, DispatchProp } from 'react-redux';
-import checkVersion, { getLastVersion } from '@src/shared/utils/check-version';
+import checkVersion, {
+  getLastVersion,
+  getLastDeployVersion,
+} from '@src/shared/utils/check-version';
 import { showToast } from '@src/shared/redux/actions/ui';
 import CodePush, { LocalPackage } from 'react-native-code-push';
 import rnStorage from '@src/shared/api/rn-storage.api';
+import Config from 'react-native-config';
+
+const apkVersion = Config.VERSION;
 
 // 版本信息页面
 const VersionContainer = styled(WingBlank).attrs((props) => ({ size: 'md' }))`
@@ -57,8 +64,24 @@ class VersionScreen extends React.Component<Props> {
     this.setState({ stateText: text });
   }
 
-  handleCheckVersion = () => {
+  handleCheckVersion = async () => {
     const dispatch = this.props.dispatch;
+
+    // 二进制包检测
+    const lastAppVersion = await getLastDeployVersion();
+    if (semver.gt(lastAppVersion.version, apkVersion)) {
+      // 如果有apk新版本更新
+      const downloadUrl = lastAppVersion.download_url;
+      if (await Linking.canOpenURL(downloadUrl)) {
+        dispatch(showToast('检测到有新的版本, 1秒后开始下载'));
+        setTimeout(function() {
+          Linking.openURL(downloadUrl);
+        }, 1000);
+        return;
+      }
+    }
+
+    // 热更新检测
     if (appConfig.codePush.enabled) {
       // TODO: 也许需要根据版本判断用户是否应为热更新还是下载apk更新
       appConfig.codePush.sync({
@@ -106,6 +129,7 @@ class VersionScreen extends React.Component<Props> {
         },
       });
     } else {
+      // 保底操作
       checkVersion(function(isLatest) {
         if (isLatest) {
           dispatch(showToast('当前版本为最新版'));
@@ -124,9 +148,10 @@ class VersionScreen extends React.Component<Props> {
       <VersionContainer>
         <VersionInfo>
           <LogoImg />
-          {this.state.isAlphaUser && <Text>内测用户</Text>}
+          {this.state.isAlphaUser && <Text>当前为内测用户</Text>}
           <Text>当前版本: {config.version}</Text>
           <Text>最新版本: {this.state.lastVersion}</Text>
+          <Text>二进制版本: {apkVersion}</Text>
           <Text>当前版本标签: {this.state.codepushMeta.label}</Text>
           <Text>当前版本Hash: {this.state.codepushMeta.packageHash}</Text>
           <Text>当前版本描述:</Text>
