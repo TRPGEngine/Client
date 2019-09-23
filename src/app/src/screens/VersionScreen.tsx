@@ -42,7 +42,7 @@ const LogoImg = styled.Image.attrs((props) => ({
 interface Props extends DispatchProp<any> {}
 class VersionScreen extends React.Component<Props> {
   state = {
-    lastVersion: '正在获取...',
+    lastJSVersion: '正在获取...',
     stateText: '',
     progressText: '',
     codepushMeta: {} as LocalPackage,
@@ -50,7 +50,9 @@ class VersionScreen extends React.Component<Props> {
   };
 
   componentDidMount() {
-    getLastVersion().then((version) => this.setState({ lastVersion: version }));
+    getLastVersion(true).then((version) =>
+      this.setState({ lastJSVersion: version })
+    );
 
     CodePush.getUpdateMetadata().then((pkg) => {
       if (!_isNil(pkg)) {
@@ -153,7 +155,7 @@ class VersionScreen extends React.Component<Props> {
           <LogoImg />
           {this.state.isAlphaUser && <Text>当前为内测用户</Text>}
           <Text>当前版本: {config.version}</Text>
-          <Text>最新版本: {this.state.lastVersion}</Text>
+          <Text>最新版本: {this.state.lastJSVersion}</Text>
           <Text>二进制版本: {apkVersion}</Text>
           <Text>当前版本标签: {this.state.codepushMeta.label}</Text>
           <Text>当前版本Hash: {this.state.codepushMeta.packageHash}</Text>

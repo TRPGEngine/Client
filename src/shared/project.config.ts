@@ -76,6 +76,7 @@ interface ProjectConfig {
   github: {
     projectUrl: string;
     projectPackageUrl: string;
+    projectAppPackageUrl: string;
   };
   url: {
     goddessfantasy: string;
@@ -171,6 +172,8 @@ const config: ProjectConfig = {
     projectUrl: 'https://github.com/TRPGEngine/Client',
     projectPackageUrl:
       'https://raw.githubusercontent.com/TRPGEngine/Client/master/package.json',
+    projectAppPackageUrl:
+      'https://raw.githubusercontent.com/TRPGEngine/Client/master/src/app/package.json',
   },
   url: {
     goddessfantasy: 'http://www.goddessfantasy.net/',
@@ -185,7 +188,9 @@ const config: ProjectConfig = {
     },
   },
 };
-config.file.url = `${config.file.protocol}://${config.file.host}:${config.file.port}`;
+config.file.url = `${config.file.protocol}://${config.file.host}:${
+  config.file.port
+}`;
 
 // 获取基于API的绝对路径
 config.file.getAbsolutePath = function getAbsolutePath(path) {
