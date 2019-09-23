@@ -5,6 +5,7 @@ import { WingBlank } from '@ant-design/react-native';
 import { TButton } from '../components/TComponent';
 import styled from 'styled-components/native';
 import semver from 'semver';
+import _isNil from 'lodash/isNil';
 import appConfig from '../config.app';
 import { connect, DispatchProp } from 'react-redux';
 import checkVersion, {
@@ -51,9 +52,11 @@ class VersionScreen extends React.Component<Props> {
   componentDidMount() {
     getLastVersion().then((version) => this.setState({ lastVersion: version }));
 
-    CodePush.getUpdateMetadata().then((pkg) =>
-      this.setState({ codepushMeta: pkg })
-    );
+    CodePush.getUpdateMetadata().then((pkg) => {
+      if (!_isNil(pkg)) {
+        this.setState({ codepushMeta: pkg });
+      }
+    });
 
     rnStorage
       .get('isAlphaUser', false)
