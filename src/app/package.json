@@ -1,7 +1,7 @@
 {
   "name": "trpg-game-app",
   "version": "0.2.4",
-  "appVersion": "0.2.3",
+  "appVersion": "0.2.4",
   "description": "",
   "main": "index.js",
   "scripts": {
