@@ -56,7 +56,8 @@ public class MainApplication extends Application implements ReactApplication {
         new RNSentryPackage(),
         new CodePush(BuildConfig.CODEPUSH_DEPLOYMENTKEY, getApplicationContext(), BuildConfig.DEBUG, BuildConfig.CODEPUSH_URL),
         new RNGestureHandlerPackage(),
-        new ImagePickerPackage()
+        new ImagePickerPackage(),
+        new TRPGPackage()
       );
     }
 

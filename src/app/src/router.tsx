@@ -105,7 +105,7 @@ export const AppNavigator = createStackNavigator(
     SettingsDevelopLab: {
       screen: DevelopLabScreen,
       navigationOptions: {
-        headerTitle: '设备信息',
+        headerTitle: '开发实验室',
       },
     },
     Chat: {
