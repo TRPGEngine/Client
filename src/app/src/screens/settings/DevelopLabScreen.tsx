@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, NativeModules } from 'react-native';
 
-import { NativeModules } from 'react-native';
 import { TButton } from '../../components/TComponent';
 import styled from 'styled-components/native';
 
@@ -12,6 +11,10 @@ const DevButton = styled(TButton)`
 `;
 
 class DevelopLabScreen extends React.Component {
+  sendBasicNotify = () => {
+    TRPGModule.sendBasicNotify({ title: 'test', message: 'message' });
+  };
+
   render() {
     return (
       <View>
@@ -19,6 +22,7 @@ class DevelopLabScreen extends React.Component {
         <DevButton onPress={() => TRPGModule.show('Awesome', TRPGModule.SHORT)}>
           原生Toast
         </DevButton>
+        <DevButton onPress={this.sendBasicNotify}>发送本地通知</DevButton>
       </View>
     );
   }
