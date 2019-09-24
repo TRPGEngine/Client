@@ -4,6 +4,7 @@ import { View, Switch } from 'react-native';
 import { List } from '@ant-design/react-native';
 import { switchNav } from '../redux/actions/nav';
 import rnStorage from '@src/shared/api/rn-storage.api';
+import config from '@src/shared/project.config';
 const Item = List.Item;
 
 interface Props extends DispatchProp {}
@@ -41,6 +42,14 @@ class SettingsScreen extends React.Component<Props, State> {
           >
             设备信息
           </Item>
+          {config.environment === 'development' ? (
+            <Item
+              arrow="horizontal"
+              onPress={() => this.nav('SettingsDevelopLab')}
+            >
+              开发实验室
+            </Item>
+          ) : null}
           <Item
             extra={
               <Switch

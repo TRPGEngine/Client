@@ -39,6 +39,7 @@ import GroupProfileScreen from './screens/GroupProfileScreen';
 import ProfileModifyScreen from './screens/ProfileModifyScreen';
 import WebviewScreen from './screens/WebviewScreen';
 import DeviceInfoScreen from './screens/settings/DeviceInfoScreen';
+import DevelopLabScreen from './screens/settings/DevelopLabScreen';
 import VersionScreen from './screens/VersionScreen';
 
 export const MainNavigator = createBottomTabNavigator({
@@ -97,6 +98,12 @@ export const AppNavigator = createStackNavigator(
     },
     SettingsDeviceInfo: {
       screen: DeviceInfoScreen,
+      navigationOptions: {
+        headerTitle: '设备信息',
+      },
+    },
+    SettingsDevelopLab: {
+      screen: DevelopLabScreen,
       navigationOptions: {
         headerTitle: '设备信息',
       },
