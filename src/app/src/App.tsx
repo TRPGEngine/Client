@@ -21,7 +21,13 @@ import * as trpgApi from '../../shared/api/trpg.api';
 const api = trpgApi.getInstance();
 trpgApi.bindEventFunc.call(api, store, {
   onReceiveMessage(messageData) {
-    tryLocalNotify(messageData);
+    const sender_uuid = messageData.sender_uuid;
+    const message = messageData.message;
+    const name =
+      store.getState().getIn(['cache', 'user', sender_uuid, 'nickname']) ||
+      store.getState().getIn(['cache', 'user', sender_uuid, 'username']) ||
+      sender_uuid;
+    tryLocalNotify(name, message);
   },
 });
 
