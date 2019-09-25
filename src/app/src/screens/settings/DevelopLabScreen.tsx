@@ -3,6 +3,7 @@ import { View, Text, NativeModules } from 'react-native';
 
 import { TButton } from '../../components/TComponent';
 import styled from 'styled-components/native';
+import { sendBasicNotify, clearAllNotifications } from '../../native/trpg';
 
 const TRPGModule = NativeModules.TRPGModule;
 
@@ -12,7 +13,7 @@ const DevButton = styled(TButton)`
 
 class DevelopLabScreen extends React.Component {
   sendBasicNotify = () => {
-    TRPGModule.sendBasicNotify({ title: 'test', message: 'message' });
+    sendBasicNotify({ title: 'test', message: 'message' });
   };
 
   render() {
@@ -23,6 +24,9 @@ class DevelopLabScreen extends React.Component {
           原生Toast
         </DevButton>
         <DevButton onPress={this.sendBasicNotify}>发送本地通知</DevButton>
+        <DevButton onPress={() => clearAllNotifications()}>
+          清理应用通知
+        </DevButton>
       </View>
     );
   }

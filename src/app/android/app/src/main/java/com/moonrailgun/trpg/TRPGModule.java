@@ -77,4 +77,9 @@ public class TRPGModule extends ReactContextBaseJavaModule {
     }
     mTRPGNotificationHelper.sendToNotificationCentre(bundle);
   }
+
+  @ReactMethod
+  public void clearAllNotifications() {
+    mTRPGNotificationHelper.clearNotifications();
+  }
 }
