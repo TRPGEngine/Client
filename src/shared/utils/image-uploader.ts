@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { fileUrl } from '@shared/api/trpg.api';
+import memoizeOne from 'memoize-one';
+import _get from 'lodash/get';
+import request from './request';
 const uploadPicHost = 'https://sm.ms/api/upload';
 
 // https://sm.ms/api/upload
@@ -30,4 +33,40 @@ export const toNetwork = function(userUUID, file) {
       console.error(err, err.request, err.config);
       return false;
     });
+};
+
+/**
+ * 获取聊天图片上传信息
+ */
+interface UploadInfo {
+  url: string;
+  imageField: string;
+  imagePath: string;
+  otherData?: {};
+}
+export const getUploadInfo = memoizeOne(
+  (): Promise<UploadInfo> => {
+    return request('/file/chatimg/upload/info').then((res) => res.data);
+  }
+);
+
+/**
+ * 上传聊天图片
+ */
+export const uploadChatimg = async (file: File): Promise<string> => {
+  const { url, imageField, otherData, imagePath } = await getUploadInfo();
+
+  let form = new FormData();
+  form.append(imageField, file);
+  for (const key in otherData) {
+    if (otherData.hasOwnProperty(key)) {
+      const val = otherData[key];
+      form.append(key, val);
+    }
+  }
+
+  const { data } = await axios.post(url, form);
+  const imageUrl = _get(data, imagePath, '');
+
+  return imageUrl;
 };
