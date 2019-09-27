@@ -1,5 +1,5 @@
 import { API } from './socket-api';
-import config from '../project.config';
+import config from '@shared/project.config';
 
 let api: API; // 单例模式
 export function getInstance(): API {
