@@ -155,11 +155,10 @@ class MsgSendBox extends React.Component<Props> {
         // 上传图片
         e.preventDefault();
         const file = image.getAsFile();
-        const data = await pasteUtils.upload(this.props.userUUID, file);
-        if (data && data.chatimg) {
-          console.log(data);
+        const chatimgUrl = await pasteUtils.upload(file);
+        if (chatimgUrl) {
           this.setState({
-            inputMsg: this.state.inputMsg + `[img]${data.chatimg.url}[/img]`,
+            inputMsg: this.state.inputMsg + `[img]${chatimgUrl}[/img]`,
           });
         }
       }

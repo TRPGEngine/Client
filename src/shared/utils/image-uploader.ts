@@ -9,7 +9,7 @@ const uploadPicHost = 'https://sm.ms/api/upload';
 export const toNetwork = function(userUUID, file) {
   let form = new FormData();
   form.append('smfile', file);
-  form.append('ssl', true);
+  form.append('ssl', 'true');
   form.append('format', 'json');
   return axios({
     url: uploadPicHost,

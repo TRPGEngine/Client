@@ -1,5 +1,9 @@
-import { toNetwork } from './image-uploader';
+import { toNetwork, uploadChatimg } from './image-uploader';
 
+/**
+ * 判定剪切板内是否为图片
+ * @param items 剪切板数据列表
+ */
 export const isPasteImage = function(
   items: DataTransferItemList
 ): DataTransferItem | false {
@@ -15,6 +19,11 @@ export const isPasteImage = function(
   return false;
 };
 
-export const upload = function(userUUID: string, file: File) {
-  return toNetwork(userUUID, file);
+/**
+ * 上传剪切板内的文件
+ * @param userUUID 用户uuid
+ * @param file 文件
+ */
+export const upload = function(file: File): Promise<string> {
+  return uploadChatimg(file);
 };
