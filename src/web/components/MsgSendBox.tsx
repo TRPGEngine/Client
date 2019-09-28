@@ -148,14 +148,14 @@ class MsgSendBox extends React.Component<Props> {
     }
   }
 
-  async handlePaste(e) {
+  async handlePaste(e: React.ClipboardEvent) {
     if (e.clipboardData && e.clipboardData.items) {
-      let image = pasteUtils.isPasteImage(e.clipboardData.items);
+      const image = pasteUtils.isPasteImage(e.clipboardData.items);
       if (image) {
         // 上传图片
         e.preventDefault();
-        let file = image.getAsFile();
-        let data = await pasteUtils.upload(this.props.userUUID, file);
+        const file = image.getAsFile();
+        const data = await pasteUtils.upload(this.props.userUUID, file);
         if (data && data.chatimg) {
           console.log(data);
           this.setState({
