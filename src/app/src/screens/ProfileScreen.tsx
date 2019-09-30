@@ -5,7 +5,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import sb from 'react-native-style-block';
 import { List } from 'immutable';
 import appConfig from '../config.app';
-import { getSamlpeDate } from '../../../shared/utils/date-helper';
+import { getSimpleDate } from '../../../shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getUserInfo } from '../../../shared/redux/actions/cache';
 import { sendFriendInvite } from '../../../shared/redux/actions/user';
@@ -111,11 +111,11 @@ class ProfileScreen extends React.Component<ScreenProps> {
           />
           <ProfileInfoItem
             name="上次登录"
-            value={getSamlpeDate(userInfo.get('last_login')) || '无记录'}
+            value={getSimpleDate(userInfo.get('last_login')) || '无记录'}
           />
           <ProfileInfoItem
             name="注册时间"
-            value={getSamlpeDate(userInfo.get('createAt'))}
+            value={getSimpleDate(userInfo.get('createAt'))}
           />
         </View>
         <View style={styles.actions}>
