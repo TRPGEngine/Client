@@ -208,6 +208,7 @@ export const requestJoinGroup = function(group_uuid: string) {
     return api.emit('group::requestJoinGroup', { group_uuid }, function(data) {
       if (data.result) {
         dispatch({ type: REQUEST_JOIN_GROUP_SUCCESS, payload: data.request });
+        dispatch(showAlert('已发送入团申请'));
       } else {
         dispatch(showAlert(data.msg));
         console.error(data.msg);
