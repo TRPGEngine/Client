@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import FastImage from 'react-native-fast-image';
-import { AstNodeObj } from './types';
+import { TagProps } from './types';
 import config from '../../../../shared/project.config';
 import { TImageViewer } from '@src/app/src/components/TComponent';
-
-interface Props {
-  node: AstNodeObj;
-  attrs: {};
-}
 
 const maxWidth = 180;
 const maxHeight = 120;
 
-const ImageTag = (props: Props) => {
-  const { node, attrs } = props;
+const ImageTag = React.memo((props: TagProps) => {
+  const { node } = props;
+  const { attrs } = node;
   const [width, setWidth] = useState(180);
   const [height, setHeight] = useState(120);
 
@@ -51,6 +47,6 @@ const ImageTag = (props: Props) => {
       />
     </TImageViewer>
   );
-};
+});
 
 export default ImageTag;

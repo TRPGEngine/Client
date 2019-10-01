@@ -5,9 +5,11 @@ import ImageTag from './bbcode/ImageTag';
 import { AstNode } from './bbcode/types';
 import _has from 'lodash/has';
 import _last from 'lodash/last';
+import UrlTag from './bbcode/UrlTag';
 
 const tagMap = {
   img: ImageTag,
+  url: UrlTag,
 };
 
 /**
@@ -15,11 +17,31 @@ const tagMap = {
  */
 class BBCodeParser {
   options = {
-    onlyAllowTags: ['img'],
+    onlyAllowTags: Object.keys(tagMap),
     onError: (err) => {
       console.warn(err.message, err.lineNumber, err.columnNumber);
     },
   };
+
+  /**
+   * 将文本中没有被bbcode标签包裹住的部分进行预处理后重新拼装成bbcode字符串
+   */
+  preProcessText(input: string, processFn: (text: string) => string): string {
+    const ast = parse(input, this.options) as AstNode[];
+
+    return ast
+      .map((node, index) => {
+        if (typeof node === 'string') {
+          // 此处进行预处理
+          const text = node;
+          return processFn(text);
+        }
+
+        const { tag, content } = node;
+        return `[${tag}]${content}[/${tag}]`;
+      })
+      .join('');
+  }
 
   parse(input: string): ReactElement[] {
     const ast = parse(input, this.options) as AstNode[];

@@ -7,7 +7,9 @@ import urlRegex from 'url-regex';
  * @param {string} plainText 服务端标准文本
  */
 export function parse(plainText: string) {
-  return bbcodeParser.parse(preProcessText(plainText));
+  return bbcodeParser.parse(
+    bbcodeParser.preProcessText(plainText, preProcessText)
+  );
 }
 
 /**
@@ -19,6 +21,7 @@ export function preProcessText(plainText: string): string {
   text = text.replace(
     new RegExp(urlRegex({ exact: false, strict: true }), 'g'),
     '[url]$&[/url]'
-  ); // 将聊天记录中的url提取成bbcode
+  ); // 将聊天记录中的url提取成bbcode 需要过滤掉被bbcode包住的部分
+
   return text;
 }
