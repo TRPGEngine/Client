@@ -102,6 +102,38 @@ describe('chat reducer', () => {
 
   it.todo('UPDATE_MSG');
 
+  it('REMOVE_MSG', () => {
+    const state = chatReducer(
+      fromJS({
+        converses: {
+          test: {
+            uuid: 'test',
+            lastMsg: '',
+            lastTime: '',
+            msgList: [
+              {
+                uuid: 'local1',
+              },
+              {
+                uuid: 'local2',
+              },
+            ],
+          },
+        },
+      }),
+      {
+        type: 'REMOVE_MSG',
+        converseUUID: 'test',
+        localUUID: 'local1',
+      }
+    );
+
+    expect(state.getIn(['converses', 'test', 'msgList'])).toBeImmutableList();
+    expect(state.getIn(['converses', 'test', 'msgList']).toJS()).toMatchObject([
+      { uuid: 'local2' },
+    ]);
+  });
+
   it('GET_CONVERSES_REQUEST', () => {
     const state = chatReducer(undefined, {
       type: 'GET_CONVERSES_REQUEST',
