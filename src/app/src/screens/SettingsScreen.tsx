@@ -26,7 +26,7 @@ class SettingsScreen extends React.Component<Props, State> {
   };
 
   onChangeIsAlphaUser = async (val: boolean) => {
-    await rnStorage.set('isAlphaUser', val);
+    await rnStorage.save('isAlphaUser', val);
     this.setState({ isAlphaUser: val });
   };
 
