@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`bbcode-parser mix image and text 1`] = `
+exports[`bbcode-parser bbcode parse component mix image and text 1`] = `
 Array [
   <Text>
     测试文字1
@@ -93,19 +93,19 @@ Array [
 ]
 `;
 
-exports[`bbcode-parser plain text 1`] = `
+exports[`bbcode-parser bbcode parse component plain text 1`] = `
 <Text>
   TestString
 </Text>
 `;
 
-exports[`bbcode-parser plain text with space 1`] = `
+exports[`bbcode-parser bbcode parse component plain text with space 1`] = `
 <Text>
   Test String
 </Text>
 `;
 
-exports[`bbcode-parser pure image 1`] = `
+exports[`bbcode-parser bbcode parse component pure image 1`] = `
 <View>
   <Modal
     hardwareAccelerated={false}
