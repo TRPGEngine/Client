@@ -60,6 +60,6 @@ export const switchToConverseApp = function switchToConverseApp(
   };
 };
 
-export const openWebview = function openWebview(url) {
+export const openWebview = function openWebview(url: string) {
   return NavigationActions.navigate({ routeName: 'Webview', params: { url } });
 };
