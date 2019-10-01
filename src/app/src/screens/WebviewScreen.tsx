@@ -1,6 +1,12 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import { View, Text, ActivityIndicator, BackHandler } from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  BackHandler,
+  Linking,
+} from 'react-native';
 import { WebView } from 'react-native-webview';
 import sb from 'react-native-style-block';
 import rnStorage from '../../../shared/api/rn-storage.api';
@@ -40,8 +46,23 @@ type WebviewScreenProps = NavigationScreenProps<{
   DispatchProp<any>;
 class WebviewScreen extends React.Component<WebviewScreenProps> {
   static navigationOptions = ({ navigation }) => {
+    const url = navigation.getParam('url');
+
     return {
       headerTitle: navigation.getParam('title', '加载中...'),
+      headerRight: (
+        <View style={{ marginRight: 10 }}>
+          <TIcon
+            icon="&#xe63c;"
+            style={{ fontSize: 26 } as any}
+            onPress={async () => {
+              if (await Linking.canOpenURL(url)) {
+                Linking.openURL(url);
+              }
+            }}
+          />
+        </View>
+      ),
     };
   };
 
