@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
-import bbcodeParser from '../../src/utils/bbcode-parser';
 import renderer from 'react-test-renderer';
-import { preProcessText } from '@src/app/src/utils/text-parser';
+import { preProcessText, parse } from '@src/app/src/utils/text-parser';
 
 describe('bbcode-parser', () => {
   describe('preprocess', () => {
@@ -25,29 +24,54 @@ describe('bbcode-parser', () => {
     });
   });
 
-  describe('bbcode parse component', () => {
+  // 文本解析成组件测试
+  describe('text parse component', () => {
     const cases = [
       {
         title: 'plain text',
-        bbcode: 'TestString',
+        text: 'TestString',
       },
       {
         title: 'plain text with space',
-        bbcode: 'Test String',
+        text: 'Test String',
       },
       {
         title: 'pure image',
-        bbcode: '[img]http://exampleimg.com[/img]',
+        text: '[img]http://exampleimg.com[/img]',
       },
       {
         title: 'mix image and text',
-        bbcode: '测试文字1[img]http://exampleimg.com[/img]测试文字2',
+        text: '测试文字1[img]http://exampleimg.com[/img]测试文字2',
+      },
+      {
+        title: 'simple url',
+        text: 'http://baidu.com',
+      },
+      {
+        title: 'mix url and text',
+        text: '百度:http://baidu.com',
+      },
+      {
+        title: 'mix more url and text',
+        text: '百度:http://baidu.com 谷歌:http://google.com',
+      },
+      {
+        title: 'mix url and text with no separation',
+        text: '百度http://baidu.com',
+      },
+      {
+        title: 'mix more url and text with no separation',
+        text: '百度http://baidu.com谷歌http://google.com',
+      },
+      {
+        title: 'mix url and image and text',
+        text: '百度:[img]http://exampleimg.com[/img] http://baidu.com',
       },
     ];
 
     for (const item of cases) {
       it(item.title, () => {
-        const Component = bbcodeParser.parse(item.bbcode);
+        const Component = parse(item.text);
         const result = renderer
           .create(<Fragment>{Component}</Fragment>)
           .toJSON();
