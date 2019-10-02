@@ -5,6 +5,8 @@ import { TButton } from '../../components/TComponent';
 import styled from 'styled-components/native';
 import { sendBasicNotify, clearAllNotifications } from '../../native/trpg';
 
+import MessageHandler from '@app/components/messageTypes/__all__';
+
 const TRPGModule = NativeModules.TRPGModule;
 
 const DevButton = styled(TButton)`
@@ -27,6 +29,15 @@ class DevelopLabScreen extends React.Component {
         <DevButton onPress={() => clearAllNotifications()}>
           清理应用通知
         </DevButton>
+
+        <MessageHandler
+          type="loading"
+          me={true}
+          name="test"
+          avatar={null}
+          info={{ message: 'test', type: 'loading', data: { progress: 0.5 } }}
+          emphasizeTime={false}
+        />
       </View>
     );
   }
