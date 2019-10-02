@@ -23,7 +23,7 @@ import { shouleEmphasizeTime } from '@shared/utils/date-helper';
 import ExtraPanelItem from '@app/components/chat/ExtraPanelItem';
 import EmotionPanel from '@app/components/chat/EmotionPanel';
 import QuickDiceModal from '@app/components/chat/QuickDiceModal';
-import { toNetwork } from '@shared/utils/image-uploader';
+import { toNetwork, uploadChatimg } from '@shared/utils/image-uploader';
 import { toTemporary } from '@shared/utils/upload-helper';
 import { unemojify } from '@app/utils/emoji';
 import _get from 'lodash/get';
@@ -264,26 +264,10 @@ class ChatScreen extends React.Component<Props> {
             name: response.fileName,
           } as any;
 
-          // TODO: 上传到sm.ms
-          // toNetwork(this.props.selfUUID, file).then((res) => {
-          //   console.log('res', res);
-          // });
-
-          // TODO: 暂时先放在服务器上，看看为什么smms不能正常上传(会返回403)
-          toTemporary(selfUUID, file, {
-            onProgress: (percent) => {
-              console.log('percent', percent);
-            },
-            onCompleted: (res) => {
-              // TODO: 待完善: 在聊天界面显示loading
-              // 上传完毕。发送图片
-              const upload_url = res.upload_url;
-              const imageUrl = config.file.getAbsolutePath(upload_url);
-              const message = `[img]${imageUrl}[/img]`;
-
-              console.log('message', message);
-              this.sendMsg(message);
-            },
+          uploadChatimg(file).then((imageUrl) => {
+            const message = `[img]${imageUrl}[/img]`;
+            console.log('message', message);
+            this.sendMsg(message);
           });
         }
       }
