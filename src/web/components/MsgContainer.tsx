@@ -12,10 +12,12 @@ import Default from './messageTypes/Default';
 import Tip from './messageTypes/Tip';
 import Card from './messageTypes/Card';
 import File from './messageTypes/File';
+import Loading from './messageTypes/Loading';
 MessageHandler.registerDefaultMessageHandler(Default);
 MessageHandler.registerMessageHandler('tip', Tip);
 MessageHandler.registerMessageHandler('card', Card);
 MessageHandler.registerMessageHandler('file', File);
+MessageHandler.registerMessageHandler('loading', Loading);
 import './messageTypes/MsgItem.scss';
 
 import './MsgContainer.scss';
