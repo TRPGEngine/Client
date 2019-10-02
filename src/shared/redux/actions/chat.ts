@@ -31,6 +31,7 @@ import * as uploadHelper from '../../utils/upload-helper';
 import { renewableDelayTimer } from '../../utils/timer';
 import config from '../../project.config';
 import _without from 'lodash/without';
+import _isFunction from 'lodash/isFunction';
 import { MsgPayload, ConverseInfo } from '@src/shared/redux/types/chat';
 
 const getUserConversesHash = (userUUID) => {
@@ -486,7 +487,7 @@ export let sendFile = function sendFile(toUUID, payload, file) {
  */
 export const addFakeMsg = function addFakeMsg(
   pkg: MsgPayload,
-  callback: (localUUID: string) => void
+  callback?: (localUUID: string) => void
 ) {
   return function(dispatch, getState) {
     const info = getState().getIn(['user', 'info']);
@@ -500,7 +501,7 @@ export const addFakeMsg = function addFakeMsg(
     }
     const converseUUID = pkg.converse_uuid || pkg.to_uuid;
     dispatch(addMsg(converseUUID, pkg));
-    callback(localUUID);
+    _isFunction(callback) && callback(localUUID);
   };
 };
 
