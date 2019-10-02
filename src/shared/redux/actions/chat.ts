@@ -3,6 +3,7 @@ const {
   ADD_CONVERSES,
   ADD_MSG,
   UPDATE_MSG,
+  REMOVE_MSG,
   GET_CONVERSES_REQUEST,
   GET_CONVERSES_SUCCESS,
   GET_CONVERSES_FAILED,
@@ -36,6 +37,9 @@ const getUserConversesHash = (userUUID) => {
   return `userConverses#${userUUID}`;
 };
 
+/**
+ * 获取本地UUID
+ */
 let localIndex = 0;
 let getLocalUUID = function getLocalUUID() {
   return 'local#' + localIndex++;
@@ -374,6 +378,11 @@ export let updateMsg = function updateMsg(converseUUID, payload) {
   };
 };
 
+/**
+ * 发送消息
+ * @param toUUID 发送目标
+ * @param payload 信息数据
+ */
 export let sendMsg = function sendMsg(toUUID: string, payload: MsgPayload) {
   return function(dispatch, getState) {
     const info = getState().getIn(['user', 'info']);
@@ -467,6 +476,91 @@ export let sendFile = function sendFile(toUUID, payload, file) {
         });
       },
     });
+  };
+};
+
+/**
+ * 添加一条假的本地消息。当外部满足一定条件后需要把这条消息删除
+ * @param pkg 消息内容
+ * @param callback 添加后的回调
+ */
+export const addFakeMsg = function addFakeMsg(
+  pkg: MsgPayload,
+  callback: (localUUID: string) => void
+) {
+  return function(dispatch, getState) {
+    const info = getState().getIn(['user', 'info']);
+    const localUUID = getLocalUUID();
+    pkg.uuid = localUUID;
+    if (!pkg.sender_uuid) {
+      pkg.sender_uuid = info.get('uuid');
+    }
+    if (!pkg.date) {
+      pkg.date = new Date().toISOString();
+    }
+    const converseUUID = pkg.converse_uuid || pkg.to_uuid;
+    dispatch(addMsg(converseUUID, pkg));
+    callback(localUUID);
+  };
+};
+
+/**
+ * 移除假的本地消息
+ * @param converseUUID 会话UUID
+ * @param localUUID 假消息的UUID
+ */
+export const removeFakeMsg = function removeFakeMsg(
+  converseUUID: string,
+  localUUID: string
+) {
+  return {
+    type: REMOVE_MSG,
+    converseUUID,
+    localUUID,
+  };
+};
+
+/**
+ * 增加一个处理中的msg
+ * @param converseUUID 会话UUID
+ */
+interface LoadingCallbackEvent {
+  updateProgress: (val: number) => void;
+  removeLoading: () => void;
+}
+export const addLoadingMsg = function addLoadingMsg(
+  converseUUID: string,
+  cb: (event: LoadingCallbackEvent) => void
+) {
+  return function(dispatch, getState) {
+    const fakeMsgPayload: MsgPayload = {
+      message: '[处理中...]',
+      type: 'loading',
+      converse_uuid: converseUUID,
+      data: {
+        progress: 0,
+      },
+    };
+
+    dispatch(
+      addFakeMsg(fakeMsgPayload, (localUUID) => {
+        cb({
+          updateProgress: (progress) => {
+            dispatch(
+              updateMsg(converseUUID, {
+                uuid: localUUID,
+                data: {
+                  progress,
+                },
+              })
+            );
+          },
+          removeLoading: () => {
+            dispatch(removeFakeMsg(converseUUID, localUUID));
+          },
+        });
+      })
+    );
   };
 };
 
