@@ -17,7 +17,11 @@ import ImagePicker from 'react-native-image-picker';
 import { NavigationScreenProps } from 'react-navigation';
 import { TInput, TIcon } from '@app/components/TComponent';
 import config from '@shared/project.config';
-import { sendMsg, getMoreChatLog } from '@shared/redux/actions/chat';
+import {
+  sendMsg,
+  getMoreChatLog,
+  addLoadingMsg,
+} from '@shared/redux/actions/chat';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
 import { shouleEmphasizeTime } from '@shared/utils/date-helper';
 import ExtraPanelItem from '@app/components/chat/ExtraPanelItem';
@@ -264,11 +268,21 @@ class ChatScreen extends React.Component<Props> {
             name: response.fileName,
           } as any;
 
-          uploadChatimg(file).then((imageUrl) => {
-            const message = `[img]${imageUrl}[/img]`;
-            console.log('message', message);
-            this.sendMsg(message);
-          });
+          const uuid = this.props.navigation.getParam('uuid', '');
+          this.props.dispatch(
+            addLoadingMsg(uuid, ({ updateProgress, removeLoading }) => {
+              uploadChatimg(file, {
+                onUploadProgress(percent) {
+                  updateProgress(percent); // 更新loading百分比
+                },
+              }).then((imageUrl) => {
+                removeLoading(); // 移除loading消息
+                const message = `[img]${imageUrl}[/img]`;
+                console.log('message', message);
+                this.sendMsg(message);
+              });
+            })
+          );
         }
       }
     );

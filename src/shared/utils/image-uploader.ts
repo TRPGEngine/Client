@@ -2,6 +2,7 @@ import axios from 'axios';
 import { fileUrl } from '@shared/api/trpg.api';
 import memoizeOne from 'memoize-one';
 import _get from 'lodash/get';
+import _invoke from 'lodash/invoke';
 import request from './request';
 const uploadPicHost = 'https://sm.ms/api/upload';
 
@@ -53,7 +54,13 @@ export const getUploadInfo = memoizeOne(
 /**
  * 上传聊天图片
  */
-export const uploadChatimg = async (file: File): Promise<string> => {
+interface uploadChatCallback {
+  onUploadProgress: (percent: number) => void;
+}
+export const uploadChatimg = async (
+  file: File,
+  callback?: uploadChatCallback
+): Promise<string> => {
   const { url, imageField, otherData, imagePath } = await getUploadInfo();
 
   let form = new FormData();
@@ -65,7 +72,12 @@ export const uploadChatimg = async (file: File): Promise<string> => {
     }
   }
 
-  const { data } = await axios.post(url, form);
+  const { data } = await axios.post(url, form, {
+    onUploadProgress(progressEvent) {
+      const { loaded = 0, total = 1 } = progressEvent;
+      _invoke(callback, 'onUploadProgress', loaded / total);
+    },
+  });
   const imageUrl = _get(data, imagePath, '');
 
   return imageUrl;
