@@ -37,15 +37,10 @@ import MessageHandler from '@app/components/messageTypes/__all__';
 import styled from 'styled-components/native';
 import appConfig from '@app/config.app';
 import { sendQuickDice } from '@src/shared/redux/actions/dice';
+import InputView from './InputView';
 
 const MSG_INIT_NUM = 10;
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
-
-const ActionBtn = styled.TouchableOpacity`
-  align-self: stretch;
-  justify-content: center;
-  margin: 0px 3px;
-`;
 
 const ExtraPanel = styled.View`
   height: ${EXTRA_PANEL_HEIGHT};
@@ -53,13 +48,6 @@ const ExtraPanel = styled.View`
   border-top-width: 1px;
   border-top-color: #ccc;
   flex-direction: row;
-`;
-
-const ChatInput = styled(TInput)`
-  height: 35;
-  padding: 4px 6px;
-  flex: 1;
-  margin-right: 4px;
 `;
 
 const LoadmoreText = styled.Text`
@@ -104,7 +92,7 @@ class ChatScreen extends React.Component<Props> {
 
   keyboardDidShowListener: EmitterSubscription;
   keyboardDidHideListener: EmitterSubscription;
-  inputRef: TextInput;
+  inputRef = React.createRef<TextInput>();
   listRef: FlatList<any>;
   isSeekingLog: boolean; // 正在翻阅消息记录
 
@@ -202,48 +190,48 @@ class ChatScreen extends React.Component<Props> {
     }, 130);
   }
 
-  handleFocus() {
+  handleFocus = () => {
     // 输入框focus时收起所有面板
     this.setState({
       showExtraPanel: false,
       showEmoticonPanel: false,
     });
-  }
+  };
 
-  handleSendMsg() {
+  handleSendMsg = () => {
     let message = this.state.inputMsg.trim();
     if (!!message) {
       this.sendMsg(message);
       this.setState({ inputMsg: '' });
     }
-  }
+  };
 
   // 显示表情面板
-  handleShowEmoticonPanel() {
+  handleShowEmoticonPanel = () => {
     if (this.state.showEmoticonPanel === true) {
       this.setState({ showEmoticonPanel: false, showExtraPanel: false });
-      this.inputRef.focus();
+      this.inputRef.current.focus();
     } else {
       this.setState({ showEmoticonPanel: true, showExtraPanel: false });
-      this.inputRef.blur();
+      this.inputRef.current.blur();
     }
-  }
+  };
 
   // 显示额外面板
-  handleShowExtraPanel() {
+  handleShowExtraPanel = () => {
     if (this.state.showExtraPanel === true) {
       this.setState({ showExtraPanel: false, showEmoticonPanel: false });
-      this.inputRef.focus();
+      this.inputRef.current.focus();
     } else {
       this.setState({ showExtraPanel: true, showEmoticonPanel: false });
-      this.inputRef.blur();
+      this.inputRef.current.blur();
     }
-  }
+  };
 
   /**
    * 额外面板的发送图片功能
    */
-  handleSendImage() {
+  handleSendImage = () => {
     ImagePicker.launchImageLibrary(
       {
         mediaType: 'photo',
@@ -286,7 +274,7 @@ class ChatScreen extends React.Component<Props> {
         }
       }
     );
-  }
+  };
 
   /**
    * 处理加载更多消息
@@ -345,7 +333,7 @@ class ChatScreen extends React.Component<Props> {
         <ExtraPanelItem
           text="发送图片"
           icon="&#xe621;"
-          onPress={() => this.handleSendImage()}
+          onPress={this.handleSendImage}
         />
         <ExtraPanelItem
           text="投骰"
@@ -436,29 +424,15 @@ class ChatScreen extends React.Component<Props> {
       return (
         <View style={styles.container}>
           {this.getMsgList(msgList)}
-          <View style={styles.msgBox}>
-            <ChatInput
-              ref={(ref) => (this.inputRef = ref)}
-              onChangeText={(inputMsg) => this.setState({ inputMsg })}
-              onFocus={() => this.handleFocus()}
-              multiline={true}
-              maxLength={100}
-              textAlignVertical="center"
-              value={this.state.inputMsg}
-            />
-            <ActionBtn onPress={() => this.handleShowEmoticonPanel()}>
-              <Icon name="smile" size={26} />
-            </ActionBtn>
-            {this.state.inputMsg ? (
-              <ActionBtn onPress={() => this.handleSendMsg()}>
-                <Text style={{ textAlign: 'center' }}>{'发送'}</Text>
-              </ActionBtn>
-            ) : (
-              <ActionBtn onPress={() => this.handleShowExtraPanel()}>
-                <Icon name="plus-circle" size={26} />
-              </ActionBtn>
-            )}
-          </View>
+          <InputView
+            inputRef={this.inputRef}
+            value={this.state.inputMsg}
+            onChange={(inputMsg) => this.setState({ inputMsg })}
+            onSendMsg={this.handleSendMsg}
+            onFocus={this.handleFocus}
+            onShowEmoticonPanel={this.handleShowEmoticonPanel}
+            onShowExtraPanel={this.handleShowExtraPanel}
+          />
           {this.state.showEmoticonPanel &&
             !this.state.showExtraPanel &&
             !this.state.isKeyboardShow &&
@@ -483,7 +457,6 @@ class ChatScreen extends React.Component<Props> {
 const styles = {
   container: [sb.flex()],
   list: [sb.flex()],
-  msgBox: [sb.padding(6, 12), sb.bgColor(), sb.direction()],
 };
 
 export default connect((state: any) => {
