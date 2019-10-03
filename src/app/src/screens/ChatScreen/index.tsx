@@ -38,8 +38,8 @@ import styled from 'styled-components/native';
 import appConfig from '@app/config.app';
 import { sendQuickDice } from '@src/shared/redux/actions/dice';
 import InputView from './InputView';
+import MsgList from './MsgList';
 
-const MSG_INIT_NUM = 10;
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
 const ExtraPanel = styled.View`
@@ -48,12 +48,6 @@ const ExtraPanel = styled.View`
   border-top-width: 1px;
   border-top-color: #ccc;
   flex-direction: row;
-`;
-
-const LoadmoreText = styled.Text`
-  text-align: center;
-  padding: 10px 0;
-  font-size: 10px;
 `;
 
 interface Props extends DispatchProp<any>, NavigationScreenProps {
@@ -93,8 +87,6 @@ class ChatScreen extends React.Component<Props> {
   keyboardDidShowListener: EmitterSubscription;
   keyboardDidHideListener: EmitterSubscription;
   inputRef = React.createRef<TextInput>();
-  listRef: FlatList<any>;
-  isSeekingLog: boolean; // 正在翻阅消息记录
 
   componentDidMount() {
     const converseType = this.props.navigation.getParam('type', 'user');
@@ -117,7 +109,6 @@ class ChatScreen extends React.Component<Props> {
       'keyboardDidShow',
       () => {
         this.setState({ isKeyboardShow: true });
-        this._scrollToBottom.bind(this);
       }
     );
     this.keyboardDidHideListener = Keyboard.addListener(
@@ -128,28 +119,18 @@ class ChatScreen extends React.Component<Props> {
     );
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.isSeekingLog === true) {
-      return;
-    }
-
-    if (_get(prevProps, 'msgList.size') !== _get(this.props, 'msgList.size')) {
-      this._scrollToBottom();
-    }
-  }
-
   componentWillUnmount() {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
   }
 
-  dismissAll() {
+  dismissAll = () => {
     Keyboard.dismiss();
     this.setState({
       showExtraPanel: false,
       showEmoticonPanel: false,
     });
-  }
+  };
 
   /**
    * 向服务器发送信息
@@ -184,11 +165,17 @@ class ChatScreen extends React.Component<Props> {
     }
   }
 
-  _scrollToBottom() {
-    setTimeout(() => {
-      this.listRef && this.listRef.scrollToIndex({ index: 0 }); // 因为使用了inverted属性因此滚到底部对于list的逻辑是滚到顶部
-    }, 130);
-  }
+  /**
+   * 处理请求更多聊天记录事件
+   */
+  handleRequestMoreChatLog = () => {
+    const date = this.props.msgList.first().get('date');
+    const { selectedConversesUUID } = this.props;
+    const converseType = this.props.navigation.getParam('type', 'user');
+    this.props.dispatch(
+      getMoreChatLog(selectedConversesUUID, date, converseType === 'user')
+    );
+  };
 
   handleFocus = () => {
     // 输入框focus时收起所有面板
@@ -276,32 +263,6 @@ class ChatScreen extends React.Component<Props> {
     );
   };
 
-  /**
-   * 处理加载更多消息
-   */
-  handleGetMoreLog = () => {
-    if (this.props.nomore === true) {
-      // 如果没有更多数据了。则跳过
-      return;
-    }
-
-    const date = this.props.msgList.first().get('date');
-    const { selectedConversesUUID } = this.props;
-    const converseType = this.props.navigation.getParam('type', 'user');
-    this.props.dispatch(
-      getMoreChatLog(selectedConversesUUID, date, converseType === 'user')
-    );
-    this.isSeekingLog = true;
-  };
-
-  onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const offset = e.nativeEvent.contentOffset;
-    if (offset.y === 0) {
-      // 当触底时(因为列表倒置所以列表的地步就是0)
-      this.isSeekingLog = false;
-    }
-  };
-
   handleSendQuickDice = (diceExp: string) => {
     const uuid = this.props.navigation.getParam('uuid', '');
     const converseType = this.props.navigation.getParam('type', 'user');
@@ -344,67 +305,6 @@ class ChatScreen extends React.Component<Props> {
     );
   }
 
-  getMsgListFooter(msgList: any[]) {
-    if (msgList.length < MSG_INIT_NUM) {
-      return null;
-    }
-
-    return this.props.nomore ? (
-      <LoadmoreText>没有更多记录了</LoadmoreText>
-    ) : (
-      <TouchableOpacity>
-        <LoadmoreText>上滑加载更多</LoadmoreText>
-      </TouchableOpacity>
-    );
-  }
-
-  getMsgList(msgList: any[]) {
-    return (
-      <FlatList
-        style={styles.list}
-        ref={(ref) => (this.listRef = ref)}
-        data={msgList}
-        inverted={true}
-        keyExtractor={(item, index) => item.uuid}
-        onTouchStart={() => this.dismissAll()}
-        onScroll={this.onScroll}
-        onEndReached={this.handleGetMoreLog}
-        onEndReachedThreshold={0.1}
-        renderItem={({ item, index }) => {
-          // 因为列表是倒转的。所以第一条数据是最下面那条
-          // UI中的上一条数据应为msgList的下一条
-          const prevDate =
-            index < msgList.length - 1 ? _get(msgList, [index + 1, 'date']) : 0;
-          const isMe = item.sender_uuid === this.props.selfInfo.get('uuid');
-          const senderInfo = isMe
-            ? this.props.selfInfo
-            : getUserInfoCache(item.sender_uuid);
-          const name = senderInfo.get('nickname') || senderInfo.get('username');
-          const avatar = senderInfo.get('avatar');
-          const defaultAvatar =
-            item.sender_uuid === 'trpgsystem'
-              ? appConfig.defaultImg.trpgsystem
-              : appConfig.defaultImg.user;
-          const date = item.date;
-
-          const emphasizeTime = shouleEmphasizeTime(prevDate, date);
-
-          return (
-            <MessageHandler
-              type={item.type}
-              me={isMe}
-              name={name}
-              avatar={avatar || defaultAvatar}
-              emphasizeTime={emphasizeTime}
-              info={item}
-            />
-          );
-        }}
-        ListFooterComponent={this.getMsgListFooter(msgList)}
-      />
-    );
-  }
-
   getModal() {
     return (
       <Fragment>
@@ -422,8 +322,14 @@ class ChatScreen extends React.Component<Props> {
       let msgList: any[] = this.props.msgList.reverse().toJS();
 
       return (
-        <View style={styles.container}>
-          {this.getMsgList(msgList)}
+        <View style={{ flex: 1 }}>
+          <MsgList
+            msgList={msgList}
+            selfInfo={this.props.selfInfo}
+            nomore={this.props.nomore}
+            onTouchStart={this.dismissAll}
+            onRequestMoreChatLog={this.handleRequestMoreChatLog}
+          />
           <InputView
             inputRef={this.inputRef}
             value={this.state.inputMsg}
@@ -453,11 +359,6 @@ class ChatScreen extends React.Component<Props> {
     }
   }
 }
-
-const styles = {
-  container: [sb.flex()],
-  list: [sb.flex()],
-};
 
 export default connect((state: any) => {
   const selectedConversesUUID = state.getIn(['chat', 'selectedConversesUUID']);

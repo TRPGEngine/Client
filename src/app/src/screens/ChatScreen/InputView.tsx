@@ -11,7 +11,7 @@ const InputViewContainer = styled.View`
 `;
 
 const ChatInput = styled(TInput)`
-  height: 35;
+  height: 35px;
   padding: 4px 6px;
   flex: 1;
   margin-right: 4px;
