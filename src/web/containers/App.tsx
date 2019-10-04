@@ -28,7 +28,6 @@ const appVersion = config.version;
 import Login from './Login';
 import Register from './Register';
 import GlobalUI from './GlobalUI';
-import { emojify, getCodeList } from '../../shared/utils/emoji';
 
 class App extends React.Component {
   render() {
@@ -41,7 +40,11 @@ class App extends React.Component {
               <Route name="login" path="/login" component={Login} />
               <Route name="register" path="/register" component={Register} />
               <Route name="main" path="/main" component={Main} />
-              <Route name="main" path="/actor-editor" component={ActorEditor} />
+              <Route
+                name="actor-editor"
+                path="/actor-editor"
+                component={ActorEditor}
+              />
               <Route name="emoji" path="/emoji" component={Emoji} />
               <Route name="index" path="/">
                 <Link to="login" className="start-btn">
