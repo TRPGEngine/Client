@@ -15,9 +15,13 @@ export interface VersionInfo {
 /**
  * 从github上获取最新一条的版本记录
  */
-export function getLastVersion(): Promise<string> {
+export function getLastVersion(isApp: boolean = false): Promise<string> {
+  const packageUrl = !isApp
+    ? config.github.projectPackageUrl
+    : config.github.projectAppPackageUrl;
+
   return axios
-    .get(config.github.projectPackageUrl)
+    .get(packageUrl)
     .then((resp) => _get(resp.data, 'version', ''))
     .catch(function(err) {
       console.log('网络错误\n' + err);

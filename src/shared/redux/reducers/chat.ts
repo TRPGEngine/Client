@@ -7,6 +7,7 @@ const {
   ADD_CONVERSES,
   ADD_MSG,
   UPDATE_MSG,
+  REMOVE_MSG,
   GET_CONVERSES_REQUEST,
   GET_CONVERSES_SUCCESS,
   GET_USER_CONVERSES_SUCCESS,
@@ -141,6 +142,22 @@ export default function chat(state = initialState, action) {
                 'update msglist failed, not find msgList in',
                 action.converseUUID
               );
+            }
+
+            return msgList;
+          }
+        );
+      case REMOVE_MSG:
+        return state.updateIn(
+          ['converses', action.converseUUID, 'msgList'],
+          (msgList) => {
+            if (msgList) {
+              const msgIndex = msgList.findIndex(
+                (msg) => msg.get('uuid') === action.localUUID
+              );
+              if (msgIndex >= 0) {
+                return msgList.delete(msgIndex);
+              }
             }
 
             return msgList;

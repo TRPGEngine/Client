@@ -28,7 +28,7 @@ export const getFullDate = (str?: string): string => {
   let date = str ? moment(str) : moment();
   return date.format('YYYY-MM-DD HH:mm:ss');
 };
-export const getSamlpeDate = (str: string): string => {
+export const getSimpleDate = (str: string): string => {
   let date = str ? moment(str) : moment();
   return date.format('YYYY-MM-DD');
 };
@@ -58,7 +58,7 @@ const helper = {
   getShortDate,
   getMsgDate,
   getFullDate,
-  getSamlpeDate,
+  getSimpleDate,
   isToday,
   getDateDiff,
 };

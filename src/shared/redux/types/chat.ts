@@ -1,3 +1,5 @@
+export type LocalMsgType = 'loading';
+
 export type MsgType =
   | 'normal'
   | 'system'
@@ -7,7 +9,8 @@ export type MsgType =
   | 'cmd'
   | 'card'
   | 'tip'
-  | 'file';
+  | 'file'
+  | LocalMsgType;
 
 export interface MsgPayload {
   type: MsgType;

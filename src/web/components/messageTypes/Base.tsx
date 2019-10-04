@@ -35,9 +35,9 @@ class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
         ? config.defaultImg.trpgsystem
         : config.defaultImg.getUser(name);
 
-    return getAbsolutePath(
-      _get(info, 'data.avatar') || avatar || defaultAvatar
-    );
+    const dataAvatar = getAbsolutePath(_get(info, 'data.avatar', ''));
+
+    return dataAvatar || avatar || defaultAvatar;
   }
 
   getContent() {

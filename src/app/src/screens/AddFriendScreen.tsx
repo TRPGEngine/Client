@@ -13,13 +13,18 @@ import { TIcon, TInput, TAvatar } from '../components/TComponent';
 import { findUser } from '../../../shared/redux/actions/user';
 import { findGroup } from '../../../shared/redux/actions/group';
 import { switchNav } from '../redux/actions/nav';
+import styled from 'styled-components/native';
+
+const TextTip = styled.Text`
+  text-align: center;
+  margin-top: 20px;
+`;
 
 interface Props extends DispatchProp<any> {
   isFinding: boolean;
   userFindingResult: any;
   groupFindingResult: any;
 }
-
 class AddFriendScreen extends React.Component<Props> {
   state = {
     searchValue: '',
@@ -76,7 +81,7 @@ class AddFriendScreen extends React.Component<Props> {
         }}
       />
     ) : (
-      <Text>没有找到符合条件的搜索结果</Text>
+      <TextTip>没有找到符合条件的搜索结果</TextTip>
     );
   }
 
@@ -137,7 +142,11 @@ class AddFriendScreen extends React.Component<Props> {
             })),
             (item) =>
               this.props.dispatch(
-                switchNav('Profile', { uuid: item.uuid, type: 'user' })
+                switchNav('Profile', {
+                  uuid: item.uuid,
+                  type: 'user',
+                  name: item.name,
+                })
               )
           );
         } else if (this.state.searchType === 'group') {
@@ -146,10 +155,12 @@ class AddFriendScreen extends React.Component<Props> {
             : [];
 
           return this.getSearchList(resultList, (item) =>
-            this.props.dispatch(switchNav('GroupProfile', { uuid: item.uuid }))
+            this.props.dispatch(
+              switchNav('GroupProfile', { uuid: item.uuid, name: item.name })
+            )
           );
         } else {
-          return <Text>搜索结果异常</Text>;
+          return <TextTip>搜索结果异常</TextTip>;
         }
       }
     }

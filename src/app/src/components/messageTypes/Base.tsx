@@ -41,7 +41,9 @@ class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
   getAvatarUrl(): string {
     const { avatar, info } = this.props;
 
-    return getAbsolutePath(_get(info, 'data.avatar') || avatar);
+    const dataAvatar = getAbsolutePath(_get(info, 'data.avatar', ''));
+
+    return dataAvatar || avatar;
   }
 
   getContent() {

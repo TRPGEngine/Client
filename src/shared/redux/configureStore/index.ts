@@ -1,5 +1,5 @@
 import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, Store } from 'redux';
 import { createLogger } from 'redux-logger';
 import config from '../../project.config';
 import { getCombineReducers } from '../reducers';
@@ -16,7 +16,7 @@ console.log('当前环境:', config.environment);
 console.log('当前平台:', config.platform);
 
 let middlewares = [thunk];
-if (config.environment !== 'production') {
+if (config.environment === 'development') {
   middlewares.push(logger);
 }
 if (config.platform === 'app') {
@@ -29,7 +29,7 @@ const defaultStoreOptions = {
   additionReducer: {},
 };
 
-function configureStore(options = defaultStoreOptions) {
+function configureStore(options = defaultStoreOptions): Store<any, any> {
   const initialState = options.initialState;
   const devTool =
     config.environment === 'development'

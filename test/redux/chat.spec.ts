@@ -1,5 +1,8 @@
 import chatReducer from '@src/shared/redux/reducers/chat';
 import { fromJS } from 'immutable';
+import configureStore from '@src/shared/redux/configureStore';
+import * as chatActions from '@src/shared/redux/actions/chat';
+import { MsgPayload } from '@src/shared/redux/types/chat';
 
 /**
  * 获取初始状态
@@ -101,6 +104,38 @@ describe('chat reducer', () => {
   });
 
   it.todo('UPDATE_MSG');
+
+  it('REMOVE_MSG', () => {
+    const state = chatReducer(
+      fromJS({
+        converses: {
+          test: {
+            uuid: 'test',
+            lastMsg: '',
+            lastTime: '',
+            msgList: [
+              {
+                uuid: 'local1',
+              },
+              {
+                uuid: 'local2',
+              },
+            ],
+          },
+        },
+      }),
+      {
+        type: 'REMOVE_MSG',
+        converseUUID: 'test',
+        localUUID: 'local1',
+      }
+    );
+
+    expect(state.getIn(['converses', 'test', 'msgList'])).toBeImmutableList();
+    expect(state.getIn(['converses', 'test', 'msgList']).toJS()).toMatchObject([
+      { uuid: 'local2' },
+    ]);
+  });
 
   it('GET_CONVERSES_REQUEST', () => {
     const state = chatReducer(undefined, {
@@ -208,5 +243,62 @@ describe('chat reducer', () => {
     );
 
     expect(state.getIn(['converses', 'test', 'nomore'])).toBe(true);
+  });
+});
+
+describe('chat action', () => {
+  it('chat.addFakeMsg', () => {
+    const fakeMsgPayload: MsgPayload = {
+      sender_uuid: 'test_sender',
+      converse_uuid: 'test_converse',
+      message: 'test_message',
+      type: 'normal',
+    };
+    const store = configureStore();
+    store.dispatch(chatActions.addFakeMsg(fakeMsgPayload));
+
+    const state = store.getState();
+
+    expect(
+      state.getIn(['chat', 'converses', 'test_converse', 'msgList'])
+    ).toBeImmutableList();
+    expect(
+      state.getIn(['chat', 'converses', 'test_converse', 'msgList', 0])
+    ).toBeImmutableMap();
+    expect(
+      state.getIn(['chat', 'converses', 'test_converse', 'msgList', 0, 'uuid'])
+    ).toContain('local');
+  });
+
+  it('chat.addLoadingMsg', () => {
+    const store = configureStore();
+    const mockCb = jest.fn();
+    store.dispatch(
+      chatActions.addLoadingMsg(
+        'test_converse',
+        mockCb
+        // ({ updateProgress, removeLoading }) => {}
+      )
+    );
+
+    const state = store.getState();
+    const loadingMsg = state.getIn([
+      'chat',
+      'converses',
+      'test_converse',
+      'msgList',
+      0,
+    ]);
+    expect(loadingMsg).toBeImmutableMap();
+    expect(loadingMsg.get('uuid')).toContain('local');
+    expect(loadingMsg.toJS()).toMatchObject({
+      message: '[处理中...]',
+      type: 'loading',
+      converse_uuid: 'test_converse',
+      data: {
+        progress: 0,
+      },
+    });
+    expect(mockCb).toBeCalledTimes(1);
   });
 });

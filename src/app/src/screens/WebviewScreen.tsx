@@ -1,53 +1,68 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import { View, Text, ActivityIndicator, BackHandler } from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  BackHandler,
+  Linking,
+} from 'react-native';
 import { WebView } from 'react-native-webview';
 import sb from 'react-native-style-block';
 import rnStorage from '../../../shared/api/rn-storage.api';
 import { loginWithToken } from '../../../shared/redux/actions/user';
 import { backNav } from '../redux/actions/nav';
 import { NavigationScreenProps } from 'react-navigation';
+import { TIcon } from '../components/TComponent';
+import styled from 'styled-components/native';
 
-class Loading extends React.Component {
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: 100,
-        }}
-      >
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
-}
+const TipContainer = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+`;
 
-class LoadError extends React.Component<{ url: string }> {
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: 100,
-        }}
-      >
-        <Text>加载出错啦!</Text>
-        <Text>请检查地址: {this.props.url}</Text>
-      </View>
-    );
-  }
-}
+const Loading = React.memo(() => (
+  <TipContainer>
+    <ActivityIndicator size="large" />
+  </TipContainer>
+));
 
-type WebviewScreenProps = NavigationScreenProps & DispatchProp<any>;
+const LoadError = React.memo((props: { url: string }) => (
+  <TipContainer>
+    <Text>加载出错啦!</Text>
+    <Text>请检查地址: {props.url}</Text>
+  </TipContainer>
+));
+
+type WebviewScreenProps = NavigationScreenProps<{
+  url: string;
+  title: string;
+}> &
+  DispatchProp<any>;
 class WebviewScreen extends React.Component<WebviewScreenProps> {
   static navigationOptions = ({ navigation }) => {
+    const url = navigation.getParam('url');
+
     return {
       headerTitle: navigation.getParam('title', '加载中...'),
+      headerRight: (
+        <View style={{ marginRight: 10 }}>
+          <TIcon
+            icon="&#xe63c;"
+            style={{ fontSize: 26 } as any}
+            onPress={async () => {
+              if (await Linking.canOpenURL(url)) {
+                Linking.openURL(url);
+              }
+            }}
+          />
+        </View>
+      ),
     };
   };
 
@@ -56,6 +71,10 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
 
   constructor(props) {
     super(props);
+  }
+
+  get url() {
+    return this.props.navigation.getParam('url', '');
   }
 
   componentDidMount() {
@@ -108,7 +127,7 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
   }
 
   render() {
-    let { url } = this.props.navigation.state.params;
+    const url = this.url;
 
     return (
       <WebView

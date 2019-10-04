@@ -3,10 +3,9 @@ import { connect, DispatchProp } from 'react-redux';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
 import appConfig from '../config.app';
-import { getSamlpeDate } from '../../../shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getGroupInfo } from '../../../shared/redux/actions/cache';
-import { switchToConverseApp } from '../redux/actions/nav';
+import { switchToConverseApp, backNav } from '../redux/actions/nav';
 import { getGroupInfoCache } from '../../../shared/utils/cache-helper';
 import { List } from 'immutable';
 import { NavigationScreenProps } from 'react-navigation';
@@ -55,6 +54,7 @@ class ProfileScreen extends React.Component<Props> {
   handleJoinGroup = () => {
     const groupUUID = this.props.navigation.state.params.uuid;
     this.props.dispatch(requestJoinGroup(groupUUID));
+    this.props.dispatch(backNav());
   };
 
   render() {

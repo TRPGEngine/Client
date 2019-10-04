@@ -3,6 +3,7 @@ import { AppState, AppStateStatus } from 'react-native';
 import { bindNotifyInfo } from '../../shared/redux/actions/notify';
 import rnStorage from '../../shared/api/rn-storage.api';
 import { umPush, Code } from './native/push-utils';
+import { clearAllNotifications, sendBasicNotify } from './native/trpg';
 
 // alias为用户的uuid
 export async function setAlias(alias: string) {
@@ -43,20 +44,15 @@ export function bindInfo(userUUID: string) {
 let appState: AppStateStatus; // active 前台 background 后台 inactive 切换过程中或来电或多任务
 AppState.addEventListener('change', (nextAppState) => {
   appState = nextAppState;
+
+  if (nextAppState === 'active') {
+    // 清理所有推送
+    clearAllNotifications();
+  }
 });
-export function tryLocalNotify(messageData) {
+export function tryLocalNotify(name: string, message: string) {
   if (appState === 'background') {
     // 仅当应用在后台时。发起本地推送
-
-    // TODO: 待处理
-    const sender_uuid = messageData.sender_uuid;
-    const message = messageData.message;
-
-    console.log('messageData', messageData);
-    // TODO: wait To fix type
-    // JPushModule.sendLocalNotification({
-    //   title: '信息',
-    //   content: messageData,
-    // } as any);
+    sendBasicNotify({ title: name, message });
   }
 }

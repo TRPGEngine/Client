@@ -70,8 +70,10 @@ const rnStorage = {
   remove: async (key) => {
     await storage.remove({ key });
   },
+  /**
+   * 持久化存储, 永不过期
+   */
   save: async (key: string | {}, data?: {}) => {
-    // 持久化存储数据。设置为永不过期
     try {
       if (!!key && typeof key === 'string' && !!data) {
         await storage.save({

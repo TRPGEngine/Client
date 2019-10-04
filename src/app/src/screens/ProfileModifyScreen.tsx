@@ -109,6 +109,7 @@ class ProfileModifyScreen extends React.Component<Props> {
         <TModalPanel onOk={() => this.updateUserInfo({ nickname })}>
           <TInput
             defaultValue={nickname}
+            textAlignVertical="center"
             onChangeText={(text) => (nickname = text)}
           />
         </TModalPanel>

@@ -14,6 +14,11 @@ export const attachStore = function(store) {
 };
 
 export const checkUser = function(uuid, type = 'user') {
+  if (!uuid) {
+    // 如果UUID不存在。则跳过
+    return;
+  }
+
   if (uuid.toString().substr(0, 4) === 'trpg') {
     // 不检测trpg开头的内置系统用户
     return;

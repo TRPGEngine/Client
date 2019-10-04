@@ -7,3 +7,7 @@ export type AstNodeObj = {
 };
 
 export type AstNodeStr = string;
+
+export interface TagProps {
+  node: AstNodeObj;
+}
