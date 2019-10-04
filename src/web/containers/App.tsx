@@ -17,6 +17,7 @@ import 'react-select/dist/react-select.css';
 import 'react-image-lightbox/style.css';
 
 const ActorEditor = TLoadable(() => import('./actor/editor/ActorEditor'));
+const Main = TLoadable(() => import('./Main'));
 
 const Router: any =
   config.platform === 'web' || config.environment === 'development'
@@ -25,7 +26,6 @@ const Router: any =
 const appVersion = config.version;
 import Login from './Login';
 import Register from './Register';
-import Main from './Main';
 import GlobalUI from './GlobalUI';
 import { emojify, getCodeList } from '../../shared/utils/emoji';
 
