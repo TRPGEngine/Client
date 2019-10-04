@@ -18,6 +18,7 @@ import 'react-image-lightbox/style.css';
 
 const ActorEditor = TLoadable(() => import('./actor/editor/ActorEditor'));
 const Main = TLoadable(() => import('./Main'));
+const Emoji = TLoadable(() => import('./Emoji'));
 
 const Router: any =
   config.platform === 'web' || config.environment === 'development'
@@ -41,25 +42,7 @@ class App extends React.Component {
               <Route name="register" path="/register" component={Register} />
               <Route name="main" path="/main" component={Main} />
               <Route name="main" path="/actor-editor" component={ActorEditor} />
-              <Route name="emoji" path="/emoji">
-                <div>
-                  {getCodeList().people.map((item) => (
-                    <span key={item}>{emojify(item)}</span>
-                  ))}
-                  {getCodeList().nature.map((item) => (
-                    <span key={item}>{emojify(item)}</span>
-                  ))}
-                  {getCodeList().objects.map((item) => (
-                    <span key={item}>{emojify(item)}</span>
-                  ))}
-                  {getCodeList().places.map((item) => (
-                    <span key={item}>{emojify(item)}</span>
-                  ))}
-                  {getCodeList().symbols.map((item) => (
-                    <span key={item}>{emojify(item)}</span>
-                  ))}
-                </div>
-              </Route>
+              <Route name="emoji" path="/emoji" component={Emoji} />
               <Route name="index" path="/">
                 <Link to="login" className="start-btn">
                   <div className="main">点击屏幕登录</div>
