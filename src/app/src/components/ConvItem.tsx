@@ -2,6 +2,17 @@ import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 import sb from 'react-native-style-block';
 import { TAvatar } from './TComponent';
+import styled from 'styled-components/native';
+
+const UnreadPoint = styled.View`
+  width: 10px;
+  height: 10px;
+  background-color: #ec2121;
+  border-radius: 5px;
+  position: absolute;
+  left: 38px;
+  bottom: 12px;
+`;
 
 interface Props {
   style: any;
@@ -11,6 +22,7 @@ interface Props {
   title: string;
   time?: string;
   content?: string;
+  unread?: boolean;
 }
 class ConvItem extends React.Component<Props> {
   render() {
@@ -18,6 +30,8 @@ class ConvItem extends React.Component<Props> {
     if (!(style instanceof Array)) {
       style = [style];
     }
+
+    const { unread } = this.props;
 
     return (
       <TouchableOpacity
@@ -31,6 +45,7 @@ class ConvItem extends React.Component<Props> {
           height={40}
           width={40}
         />
+        {unread ? <UnreadPoint /> : null}
         <View style={styles.body}>
           <View style={styles.title}>
             <Text style={styles.name}>{this.props.title}</Text>

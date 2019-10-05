@@ -18,6 +18,7 @@ const {
   REMOVE_CONVERSES_SUCCESS,
   REMOVE_USER_CONVERSE,
   SWITCH_CONVERSES,
+  CLEAR_SELECTED_CONVERSE,
   SEND_MSG_COMPLETED,
   SWITCH_GROUP,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
@@ -243,6 +244,8 @@ export default function chat(state = initialState, action) {
         return state
           .set('selectedConversesUUID', action.converseUUID)
           .setIn(['converses', action.converseUUID, 'unread'], false); //已读未读;
+      case CLEAR_SELECTED_CONVERSE:
+        return state.set('selectedConversesUUID', '');
       case SEND_MSG_COMPLETED: {
         let converseUUID = action.converseUUID;
         let localUUID = action.localUUID;

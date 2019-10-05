@@ -15,6 +15,7 @@ const {
   UPDATE_CONVERSES_INFO_SUCCESS,
   UPDATE_CONVERSES_MSGLIST_SUCCESS,
   SWITCH_CONVERSES,
+  CLEAR_SELECTED_CONVERSE,
   SEND_MSG_COMPLETED,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
   UPDATE_WRITING_STATUS,
@@ -58,6 +59,13 @@ export let switchToConverse = function switchToConverse(converseUUID: string) {
     dispatch(switchMenuPannel(0));
     dispatch(switchConverse(converseUUID));
   };
+};
+
+/**
+ * 清理当前选择的会话
+ */
+export const clearSelectedConverse = function clearSelectedConverse() {
+  return { type: CLEAR_SELECTED_CONVERSE };
 };
 
 export let addConverse = function addConverse(payload) {
