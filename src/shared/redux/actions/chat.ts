@@ -336,7 +336,7 @@ export let addMsg = function addMsg(converseUUID, payload) {
 
     if (!getState().getIn(['chat', 'converses', converseUUID])) {
       // 会话不存在，则创建会话
-      console.log('创建会话', payload);
+      console.log('创建会话', converseUUID, payload);
       // if(!!payload.is_group) {
       //   // 群聊
       //   dispatch(createConverse(payload.room, 'group', false));
@@ -347,7 +347,8 @@ export let addMsg = function addMsg(converseUUID, payload) {
 
       if (!payload.is_group) {
         // 单聊
-        dispatch(addConverse({ uuid: converseUUID, type: 'user' }));
+        // dispatch(addConverse({ uuid: converseUUID, type: 'user' }));
+        dispatch(addUserConverse([converseUUID]));
       }
     }
 
