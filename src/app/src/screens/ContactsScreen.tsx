@@ -34,7 +34,7 @@ class ContactsScreen extends React.Component<DispatchProp> {
                 style={[...styles.icon, sb.bgColor('#16a085')]}
                 icon="&#xe61d;"
               />
-              <Text>寻找基友/姬友</Text>
+              <Text>寻找基友/姬友/团</Text>
             </View>
           </TouchableOpacity>
         </View>
