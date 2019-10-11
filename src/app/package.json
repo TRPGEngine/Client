@@ -1,6 +1,6 @@
 {
   "name": "trpg-game-app",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "appVersion": "0.2.5",
   "description": "",
   "main": "index.js",
@@ -34,7 +34,9 @@
     "react-native-gesture-handler": "^1.2.0",
     "react-native-image-crop-picker": "^0.24.1",
     "react-native-image-picker": "^0.28.1",
+    "react-native-image-progress": "^1.1.1",
     "react-native-image-zoom-viewer": "^2.2.25",
+    "react-native-progress": "^3.6.0",
     "react-native-root-siblings": "^3.2.1",
     "react-native-root-toast": "^3.0.1",
     "react-native-sentry": "^0.42.0",
