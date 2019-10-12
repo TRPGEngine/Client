@@ -195,6 +195,10 @@ module.exports = {
         from: path.resolve(BUILD_PATH, './template/pre-loading.css'),
         to: 'pre-loading.css',
       },
+      {
+        from: path.resolve(APP_PATH, './web/assets'),
+        to: './src/web/assets',
+      },
     ]),
     new HtmlwebpackPlugin({
       title: 'TRPG-Game',

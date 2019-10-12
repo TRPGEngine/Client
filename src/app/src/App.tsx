@@ -9,11 +9,13 @@ const store = configureStore({
 import { AppWithNavigationState } from './router';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as AntdProvider } from '@ant-design/react-native';
+import { ThemeProvider } from 'styled-components/native';
 import { injectLoginSuccessCallback } from '../../shared/utils/inject';
 import { bindInfo, tryLocalNotify } from './notify';
 import codePush from 'react-native-code-push';
 import appConfig from './config.app';
 import { attachStore } from '../../shared/utils/cache-helper';
+import styledTheme from '@src/shared/utils/theme';
 
 attachStore(store);
 
@@ -56,7 +58,9 @@ class App extends React.Component {
     return (
       <ReduxProvider store={store}>
         <AntdProvider>
-          <AppWithNavigationState />
+          <ThemeProvider theme={styledTheme}>
+            <AppWithNavigationState />
+          </ThemeProvider>
         </AntdProvider>
       </ReduxProvider>
     );

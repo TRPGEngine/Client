@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import FastImage from 'react-native-fast-image';
 import { TagProps } from './types';
-import config from '../../../../shared/project.config';
+import config from '@shared/project.config';
 import { TImageViewer } from '@src/app/src/components/TComponent';
+import TImage from '../../components/TComponent/TImage';
 
 const maxWidth = 180;
 const maxHeight = 120;
@@ -10,8 +10,8 @@ const maxHeight = 120;
 const ImageTag = React.memo((props: TagProps) => {
   const { node } = props;
   const { attrs } = node;
-  const [width, setWidth] = useState(180);
-  const [height, setHeight] = useState(120);
+  const [width, setWidth] = useState(maxWidth);
+  const [height, setHeight] = useState(maxHeight);
 
   // 等比例缩放图片
   const setImageSize = (targetWidth: number, targetHeight: number) => {
@@ -28,18 +28,13 @@ const ImageTag = React.memo((props: TagProps) => {
 
   return (
     <TImageViewer images={url}>
-      <FastImage
+      <TImage
         style={{
           width,
           height,
         }}
         {...attrs}
-        source={{
-          uri: url,
-          priority: FastImage.priority.normal,
-          cache: FastImage.cacheControl.immutable,
-        }}
-        resizeMode={FastImage.resizeMode.contain}
+        url={url}
         onLoad={(e) => {
           const { width, height } = e.nativeEvent;
           setImageSize(width, height);

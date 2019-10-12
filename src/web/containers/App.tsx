@@ -17,6 +17,8 @@ import 'react-select/dist/react-select.css';
 import 'react-image-lightbox/style.css';
 
 const ActorEditor = TLoadable(() => import('./actor/editor/ActorEditor'));
+const Main = TLoadable(() => import('./Main'));
+const Emoji = TLoadable(() => import('./Emoji'));
 
 const Router: any =
   config.platform === 'web' || config.environment === 'development'
@@ -25,9 +27,7 @@ const Router: any =
 const appVersion = config.version;
 import Login from './Login';
 import Register from './Register';
-import Main from './Main';
 import GlobalUI from './GlobalUI';
-import { emojify, getCodeList } from '../../shared/utils/emoji';
 
 class App extends React.Component {
   render() {
@@ -40,26 +40,12 @@ class App extends React.Component {
               <Route name="login" path="/login" component={Login} />
               <Route name="register" path="/register" component={Register} />
               <Route name="main" path="/main" component={Main} />
-              <Route name="main" path="/actor-editor" component={ActorEditor} />
-              <Route name="emoji" path="/emoji">
-                <div>
-                  {getCodeList().people.map((item) => (
-                    <span key={item}>{emojify(item)}</span>
-                  ))}
-                  {getCodeList().nature.map((item) => (
-                    <span key={item}>{emojify(item)}</span>
-                  ))}
-                  {getCodeList().objects.map((item) => (
-                    <span key={item}>{emojify(item)}</span>
-                  ))}
-                  {getCodeList().places.map((item) => (
-                    <span key={item}>{emojify(item)}</span>
-                  ))}
-                  {getCodeList().symbols.map((item) => (
-                    <span key={item}>{emojify(item)}</span>
-                  ))}
-                </div>
-              </Route>
+              <Route
+                name="actor-editor"
+                path="/actor-editor"
+                component={ActorEditor}
+              />
+              <Route name="emoji" path="/emoji" component={Emoji} />
               <Route name="index" path="/">
                 <Link to="login" className="start-btn">
                   <div className="main">点击屏幕登录</div>

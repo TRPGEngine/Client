@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import XMLBuilder from '../../../../shared/layout/XMLBuilder';
-import exampleXml from '../../../../shared/layout/example/coc7-layout.xml';
+import XMLBuilder from '@shared/layout/XMLBuilder';
+const exampleXml = require('@shared/layout/example/coc7-layout.xml').default;
 import { Button } from 'antd';
 
 const EditorContainer = styled.div`

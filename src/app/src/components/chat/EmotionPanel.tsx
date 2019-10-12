@@ -15,7 +15,9 @@ import { emojiMap, emojiCatalog } from '../../utils/emoji';
 import config from '../../../../shared/project.config';
 import _get from 'lodash/get';
 import _chunk from 'lodash/chunk';
+import _isString from 'lodash/isString';
 import { addUserEmotionCatalogWithSecretSignal } from '../../../../shared/redux/actions/chat';
+import rnStorage from '@src/shared/api/rn-storage.api';
 
 const EMOJI_PANEL_HEIGHT = 190; // 表情面板高度
 
@@ -93,14 +95,31 @@ const EmotionItemImage = styled(FastImage)`
 interface Props {
   dispatch: any;
   emotionCatalog: immutable.List<any>;
-  onSelectEmoji: (code: string) => void;
-  onSelectEmotion: (emotionUrl: string) => void;
+  onSelectEmoji: (code: string) => void; // 选择了emoji表情
+  onSelectEmotion: (emotionUrl: string) => void; // 选择了自定义表情
 }
 
 class EmotionPanel extends React.Component<Props> {
   state = {
     selectedEmotionCatalog: emojiCatalog[0],
   };
+
+  constructor(props) {
+    super(props);
+    // 获取上次发送的表情包的位置
+    rnStorage.get('lastEmotionCatalog').then((catalog) => {
+      if (_isString(catalog)) {
+        this.setState({ selectedEmotionCatalog: catalog });
+      }
+    });
+  }
+
+  /**
+   * 保存最后选择的表情包
+   */
+  saveLastEmotionCatalog() {
+    rnStorage.set('lastEmotionCatalog', this.state.selectedEmotionCatalog);
+  }
 
   /**
    * 点击增加表情包功能
@@ -130,7 +149,10 @@ class EmotionPanel extends React.Component<Props> {
           return (
             <EmojiItem
               key={name + index}
-              onPress={() => this.props.onSelectEmoji(code)}
+              onPress={() => {
+                this.saveLastEmotionCatalog();
+                this.props.onSelectEmoji(code);
+              }}
             >
               <EmojiText>
                 <Emoji name={name} />
@@ -182,7 +204,10 @@ class EmotionPanel extends React.Component<Props> {
                   return (
                     <EmotionItem
                       key={_i}
-                      onPress={() => this.props.onSelectEmotion(imageUrl)}
+                      onPress={() => {
+                        this.saveLastEmotionCatalog();
+                        this.props.onSelectEmotion(imageUrl);
+                      }}
                     >
                       <EmotionItemImage
                         source={{ uri: imageUrl }}
@@ -251,4 +276,6 @@ class EmotionPanel extends React.Component<Props> {
 
 export default connect((state: immutable.Map<string, any>) => ({
   emotionCatalog: state.getIn(['chat', 'emotions', 'catalogs'], []),
-}))(EmotionPanel);
+}))(EmotionPanel) as React.ComponentClass<
+  Omit<Props, 'dispatch' | 'emotionCatalog'>
+>;

@@ -50,7 +50,7 @@ export const shouleEmphasizeTime = (
   nextDate: MomentInput
 ): boolean => {
   const diffTime = getDateDiff(prevDate, nextDate);
-  return diffTime / 1000 / 60 >= 10; // 超过10分钟
+  return diffTime / 1000 / 60 >= 5; // 超过5分钟
 };
 
 const helper = {

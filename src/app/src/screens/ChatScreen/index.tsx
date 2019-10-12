@@ -3,39 +3,27 @@ import { connect, DispatchProp } from 'react-redux';
 import {
   View,
   Text,
-  FlatList,
   TextInput,
   Keyboard,
-  TouchableOpacity,
   EmitterSubscription,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
 } from 'react-native';
-import { Icon } from '@ant-design/react-native';
-import sb from 'react-native-style-block';
 import ImagePicker from 'react-native-image-picker';
 import { NavigationScreenProps } from 'react-navigation';
-import { TInput, TIcon } from '@app/components/TComponent';
-import config from '@shared/project.config';
+import { TIcon } from '@app/components/TComponent';
 import {
   sendMsg,
   getMoreChatLog,
   addLoadingMsg,
+  clearSelectedConverse,
 } from '@shared/redux/actions/chat';
-import { getUserInfoCache } from '@shared/utils/cache-helper';
-import { shouleEmphasizeTime } from '@shared/utils/date-helper';
 import ExtraPanelItem from '@app/components/chat/ExtraPanelItem';
 import EmotionPanel from '@app/components/chat/EmotionPanel';
 import QuickDiceModal from '@app/components/chat/QuickDiceModal';
-import { toNetwork, uploadChatimg } from '@shared/utils/image-uploader';
-import { toTemporary } from '@shared/utils/upload-helper';
+import { uploadChatimg } from '@shared/utils/image-uploader';
 import { unemojify } from '@app/utils/emoji';
 import _get from 'lodash/get';
 
-import MessageHandler from '@app/components/messageTypes/__all__';
-
 import styled from 'styled-components/native';
-import appConfig from '@app/config.app';
 import { sendQuickDice } from '@src/shared/redux/actions/dice';
 import InputView from './InputView';
 import MsgList from './MsgList';
@@ -122,6 +110,7 @@ class ChatScreen extends React.Component<Props> {
   componentWillUnmount() {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
+    this.props.dispatch(clearSelectedConverse()); //切换当前会话为空
   }
 
   dismissAll = () => {

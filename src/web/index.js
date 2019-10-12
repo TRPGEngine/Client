@@ -4,7 +4,6 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-import { getTheme } from './theme';
 import { attachStore } from '../shared/utils/cache-helper';
 import config from '../shared/project.config';
 import configureStore from '../shared/redux/configureStore';
@@ -18,6 +17,7 @@ import {
   setUserSettings,
   setSystemSettings,
 } from '../shared/redux/actions/settings';
+import styledTheme from '@src/shared/utils/theme';
 
 const store = configureStore();
 attachStore(store);
@@ -84,7 +84,7 @@ if (config.platform !== 'web') {
 
 ReactDom.render(
   <Provider store={store}>
-    <ThemeProvider theme={getTheme(store)}>
+    <ThemeProvider theme={styledTheme}>
       <App />
     </ThemeProvider>
   </Provider>,

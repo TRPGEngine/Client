@@ -1,6 +1,7 @@
 import React from 'react';
 import Base from './Base';
 
+import BaseCard from './card/BaseCard';
 import Default from './card/DefaultCard';
 import FriendInvite from './card/FriendInvite';
 import GroupRequest from './card/GroupRequest';
@@ -17,6 +18,9 @@ const CardType = {
   diceRequest: DiceRequest,
   diceInvite: DiceInvite,
   actor: Actor,
+
+  // alias
+  groupRequestFail: BaseCard,
 };
 
 class Card extends Base {

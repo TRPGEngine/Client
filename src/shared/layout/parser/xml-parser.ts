@@ -2,13 +2,18 @@
 import convert from 'xml-js';
 
 const parser = (xml: string) => {
-  console.time('xml解析用时');
-  const js = convert.xml2js(xml, {
-    compact: false,
-    trim: true,
-  });
-  console.timeEnd('xml解析用时');
-  return js;
+  try {
+    console.time('xml解析用时');
+    const js = convert.xml2js(xml, {
+      compact: false,
+      trim: true,
+    });
+    console.timeEnd('xml解析用时');
+    return js;
+  } catch (error) {
+    console.error('解释XML失败:', xml);
+    throw error;
+  }
 };
 
 export default parser;
