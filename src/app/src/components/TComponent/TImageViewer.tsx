@@ -3,6 +3,7 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import { View, Modal, TouchableOpacity } from 'react-native';
 import { saveImageToLocal } from '@src/app/src/utils/file-helper';
 import { Toast } from '@ant-design/react-native';
+import TImage from './TImage';
 
 interface Props {
   /**
@@ -59,6 +60,10 @@ class TImageViewer extends React.Component<Props> {
     this.setState({ modalVisible: false });
   }
 
+  renderImage = (props: any): React.ReactElement<any> => {
+    return <TImage {...props} url={props.source.uri} />;
+  };
+
   render() {
     return (
       <View>
@@ -77,6 +82,7 @@ class TImageViewer extends React.Component<Props> {
             onSave={this.handleSaveImage}
             enableSwipeDown={true}
             menuContext={this.menuContext}
+            renderImage={this.renderImage}
           />
         </Modal>
         <TouchableOpacity onPress={() => this.handlePressChildren()}>
