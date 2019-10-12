@@ -59,7 +59,11 @@ export const getTemplateInfo = function(uuid, onCompleted?) {
   return function(dispatch, getState) {
     return api.emit('actor::getTemplate', { uuid }, function(data) {
       if (data.result) {
-        dispatch({ type: GET_TEMPLATE_INFO, payload: data.template });
+        if (data.template) {
+          dispatch({ type: GET_TEMPLATE_INFO, payload: data.template });
+        } else {
+          console.warn('获取模板失败, 该模板不存在:', uuid);
+        }
       } else {
         console.error(data.msg);
       }
