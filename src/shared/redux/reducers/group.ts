@@ -32,6 +32,7 @@ const {
   SET_MEMBER_TO_MANAGER_SUCCESS,
   UPDATE_GROUP_STATUS,
 } = constants;
+import _get from 'lodash/get';
 
 export type GroupState = Record<{
   info: Map<string, any>;
@@ -62,9 +63,16 @@ export default function group(state = initialState, action) {
     case RESET:
       return initialState;
     case CREATE_GROUP_SUCCESS:
-      return state.update('groups', (list) =>
-        list.push(immutable.fromJS(action.payload))
-      );
+      return state.update('groups', (list) => {
+        const groupIndex = list.findIndex(
+          (g) => g.get('uuid') === _get(action.payload, 'uuid', '')
+        );
+        if (groupIndex === -1) {
+          list = list.push(immutable.fromJS(action.payload));
+        }
+
+        return list;
+      });
     case GET_GROUP_INFO_SUCCESS: {
       const group_uuid = action.payload.uuid;
       return state.setIn(['info', group_uuid], action.payload);
