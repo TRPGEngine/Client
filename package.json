@@ -112,6 +112,7 @@
     "@babel/preset-typescript": "^7.6.0",
     "@babel/runtime": "^7.6.3",
     "@sentry/webpack-plugin": "^1.9.1",
+    "@types/is-uuid": "^1.0.0",
     "@types/jest": "^24.0.18",
     "@types/lodash": "^4.14.144",
     "@types/lodash-es": "^4.17.3",
