@@ -1,12 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { isUserUUID } from '../../shared/utils/uuid';
+import { connect, DispatchProp } from 'react-redux';
+import { isUserUUID } from '@shared/utils/uuid';
 import { removeUserConverse } from '../../shared/redux/actions/chat';
 import { showProfileCard } from '../../shared/redux/actions/ui';
 import './ConvItem.scss';
 
-class ConvItem extends React.Component {
+interface Props extends DispatchProp<any> {
+  icon: string;
+  title: string;
+  time: string;
+  content: string;
+  uuid: string;
+  isWriting: boolean;
+
+  unread?: boolean;
+  isSelected?: boolean;
+  hideCloseBtn?: boolean;
+  onClick?: any;
+}
+class ConvItem extends React.Component<Props> {
   get allowClose() {
     return isUserUUID(this.props.uuid);
   }
@@ -63,14 +75,5 @@ class ConvItem extends React.Component {
     );
   }
 }
-
-ConvItem.propTypes = {
-  icon: PropTypes.string,
-  title: PropTypes.string,
-  time: PropTypes.string,
-  content: PropTypes.string,
-  uuid: PropTypes.string,
-  isWriting: PropTypes.bool,
-};
 
 export default connect()(ConvItem);
