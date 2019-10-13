@@ -1,19 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { hideSlidePanel } from '../../shared/redux/actions/ui';
-import { isImmutable } from 'immutable';
+import { isImmutable, Collection, Record } from 'immutable';
 
 import './SlidePanel.scss';
 
-class SlidePanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.slideEvent = () => {
-      console.log('close slide panel with click window');
-      window.removeEventListener('click', this.slideEvent);
-      this.props.dispatch(hideSlidePanel());
-    };
-  }
+interface Props extends DispatchProp {
+  isSlidePanelShow: boolean;
+  showSlidePanelInfo: Record<{
+    title: string;
+    content: Collection<any, any>;
+  }>;
+}
+class SlidePanel extends React.Component<Props> {
+  slideEvent = () => {
+    console.log('close slide panel with click window');
+    window.removeEventListener('click', this.slideEvent);
+    this.props.dispatch(hideSlidePanel());
+  };
 
   componentWillUpdate(nextProps, nextState) {
     if (
@@ -38,15 +42,15 @@ class SlidePanel extends React.Component {
   }
 
   render() {
-    const showSlidePanelInfo = this.props.showSlidePanelInfo;
+    const { showSlidePanelInfo, isSlidePanelShow } = this.props;
     let content = showSlidePanelInfo.get('content');
     if (isImmutable(content)) {
-      content = content.toJS();
+      content = content.toJS() as any;
     }
 
     return (
       <div
-        className={'slide-panel' + (this.props.isSlidePanelShow ? '' : ' hide')}
+        className={'slide-panel' + (isSlidePanelShow ? '' : ' hide')}
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -63,12 +67,9 @@ class SlidePanel extends React.Component {
   }
 }
 
-export default connect((state) => {
-  let slidePanelContent = state.getIn(['ui', 'showSlidePanelInfo', 'content']);
-
+export default connect((state: any) => {
   return {
     isSlidePanelShow: state.getIn(['ui', 'showSlidePanel']),
-    slidePanelTitle: state.getIn(['ui', 'showSlidePanelInfo', 'title']),
     showSlidePanelInfo: state.getIn(['ui', 'showSlidePanelInfo']),
   };
 })(SlidePanel);
