@@ -4,6 +4,7 @@ import { hideSlidePanel } from '../../shared/redux/actions/ui';
 import { isImmutable, Collection, Record } from 'immutable';
 
 import './SlidePanel.scss';
+import { memoImmutableNode } from '../utils/memo-helper';
 
 interface Props extends DispatchProp {
   isSlidePanelShow: boolean;
@@ -43,10 +44,7 @@ class SlidePanel extends React.Component<Props> {
 
   render() {
     const { showSlidePanelInfo, isSlidePanelShow } = this.props;
-    let content = showSlidePanelInfo.get('content');
-    if (isImmutable(content)) {
-      content = content.toJS() as any;
-    }
+    const content = memoImmutableNode(showSlidePanelInfo.get('content'));
 
     return (
       <div
