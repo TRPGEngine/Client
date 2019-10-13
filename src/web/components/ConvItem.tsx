@@ -1,49 +1,42 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
-import { isUserUUID } from '@shared/utils/uuid';
-import { removeUserConverse } from '../../shared/redux/actions/chat';
-import { showProfileCard } from '../../shared/redux/actions/ui';
+import { isUUID } from '@shared/utils/uuid';
 import './ConvItem.scss';
 
-interface Props extends DispatchProp<any> {
+interface Props {
   icon: string;
   title: string;
   time: string;
   content: string;
   uuid: string;
-  isWriting: boolean;
 
+  isWriting?: boolean;
   unread?: boolean;
   isSelected?: boolean;
   hideCloseBtn?: boolean;
-  onClick?: any;
+  onClick?: () => void;
+  onClickIcon?: () => void;
+  onClickCloseBtn?: () => void;
 }
-class ConvItem extends React.Component<Props> {
-  get allowClose() {
-    return isUserUUID(this.props.uuid);
-  }
-
-  handleCloseConv(e) {
-    if (this.allowClose) {
+class ConvItem extends React.PureComponent<Props> {
+  handleCloseConv = (e) => {
+    if (this.props.onClickCloseBtn) {
+      e.stopPropagation();
       console.log('close conv:', this.props.uuid);
-      this.props.dispatch(removeUserConverse(this.props.uuid));
-      e.stopPropagation();
-    } else {
-      console.log('暂不支持关闭该类型的会话');
+      this.props.onClickCloseBtn();
     }
-  }
+  };
 
-  handleShowInfo(e) {
-    if (this.allowClose) {
+  handleShowInfo = (e) => {
+    if (this.props.onClickIcon && isUUID(this.props.uuid)) {
       e.stopPropagation();
-      this.props.dispatch(showProfileCard(this.props.uuid));
+      this.props.onClickIcon();
     }
-  }
+  };
 
   render() {
-    let closeBtn = !this.props.hideCloseBtn ? (
-      <div className="close" onClick={(e) => this.handleCloseConv(e)}>
-        {this.allowClose ? <i className="iconfont">&#xe70c;</i> : null}
+    const closeBtn = !this.props.hideCloseBtn ? (
+      <div className="close" onClick={this.handleCloseConv}>
+        {isUUID(this.props.uuid) && <i className="iconfont">&#xe70c;</i>}
       </div>
     ) : null;
 
@@ -55,7 +48,7 @@ class ConvItem extends React.Component<Props> {
         onClick={this.props.onClick}
       >
         {closeBtn}
-        <div className="icon" onClick={(e) => this.handleShowInfo(e)}>
+        <div className="icon" onClick={this.handleShowInfo}>
           <img src={this.props.icon} />
         </div>
         <div className="body">
@@ -76,4 +69,4 @@ class ConvItem extends React.Component<Props> {
   }
 }
 
-export default connect()(ConvItem);
+export default ConvItem;

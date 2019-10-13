@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import dateHelper from '../../../../shared/utils/date-helper';
-import config from '../../../../shared/project.config';
+import dateHelper from '@shared/utils/date-helper';
+import config from '@shared/project.config';
 import ConverseDetail from './ConverseDetail';
 // import Tab from '../../../components/Tab';
 import { TabsController, Tab } from '../../../components/Tabs';
 import ConvItem from '../../../components/ConvItem';
-import { switchConverse } from '../../../../shared/redux/actions/chat';
-import { showProfileCard } from '../../../../shared/redux/actions/ui';
+import { switchConverse, removeUserConverse } from '@shared/redux/actions/chat';
+import { showProfileCard } from '@shared/redux/actions/ui';
 
 import './ConverseList.scss';
 
@@ -84,8 +84,12 @@ class ConverseList extends React.Component<Props> {
               unread={item.get('unread')}
               isWriting={userWritingList.includes(userUUID)}
               isSelected={this.props.selectedUUID === uuid}
-              onClick={() => this.handleSelectConverse(uuid)}
               hideCloseBtn={false}
+              onClick={() => this.handleSelectConverse(uuid)}
+              onClickIcon={() => this.props.dispatch(showProfileCard(uuid))}
+              onClickCloseBtn={() =>
+                this.props.dispatch(removeUserConverse(uuid))
+              }
             />
           );
         });
