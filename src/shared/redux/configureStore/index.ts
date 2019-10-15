@@ -1,5 +1,11 @@
 import thunk from 'redux-thunk';
-import { createStore, applyMiddleware, Store } from 'redux';
+import {
+  createStore,
+  applyMiddleware,
+  Store,
+  Middleware,
+  StoreEnhancer,
+} from 'redux';
 import { createLogger } from 'redux-logger';
 import config from '../../project.config';
 import { getCombineReducers } from '../reducers';
@@ -15,14 +21,13 @@ const logger = createLogger({
 console.log('当前环境:', config.environment);
 console.log('当前平台:', config.platform);
 
-let middlewares = [thunk];
+const middlewares: Middleware<any, any, any>[] = [thunk];
 if (config.environment === 'development') {
   middlewares.push(logger);
 }
 if (config.platform === 'app') {
   middlewares.push(require('../../../app/src/router').middleware);
 }
-const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
 
 const defaultStoreOptions = {
   initialState: undefined,
@@ -31,16 +36,18 @@ const defaultStoreOptions = {
 
 function configureStore(options = defaultStoreOptions): Store<any, any> {
   const initialState = options.initialState;
-  const devTool =
-    config.environment === 'development'
-      ? (composeWithDevTools as any)({
-          actionCreators,
-        })(applyMiddleware(thunk))
-      : undefined;
-  const store = (createStoreWithMiddleware as any)(
+
+  let enhancer: StoreEnhancer<any> = applyMiddleware(...middlewares);
+  if (config.environment === 'development') {
+    // 增加redux-devtools-extension
+    enhancer = composeWithDevTools({
+      actionCreators,
+    })(applyMiddleware(...middlewares));
+  }
+  const store = createStore(
     getCombineReducers(options.additionReducer),
     initialState,
-    devTool
+    enhancer
   );
 
   return store;
