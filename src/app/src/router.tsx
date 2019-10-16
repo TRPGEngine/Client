@@ -1,17 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  StatusBar,
-  View,
-  Button,
-  BackHandler,
-  ToastAndroid,
-} from 'react-native';
+import { Text, View, BackHandler, ToastAndroid } from 'react-native';
 import {
   NavigationActions,
   createStackNavigator,
@@ -41,6 +29,7 @@ import WebviewScreen from './screens/WebviewScreen';
 import DeviceInfoScreen from './screens/settings/DeviceInfoScreen';
 import DevelopLabScreen from './screens/settings/DevelopLabScreen';
 import VersionScreen from './screens/VersionScreen';
+import CreateGroupScreen from './screens/CreateGroupScreen';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -53,12 +42,6 @@ export const MainNavigator = createBottomTabNavigator({
     screen: AccountScreen,
   },
 });
-
-const DetailsScreen = () => (
-  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>Details Screen</Text>
-  </View>
-);
 
 export const AppNavigator = createStackNavigator(
   {
@@ -82,12 +65,6 @@ export const AppNavigator = createStackNavigator(
       navigationOptions: {
         headerLeft: null,
         title: 'TRPG Game',
-      },
-    },
-    Details: {
-      screen: DetailsScreen,
-      navigationOptions: {
-        headerTitle: 'Details',
       },
     },
     Settings: {
@@ -137,6 +114,12 @@ export const AppNavigator = createStackNavigator(
       screen: ProfileModifyScreen,
       navigationOptions: {
         headerTitle: '编辑资料',
+      },
+    },
+    CreateGroup: {
+      screen: CreateGroupScreen,
+      navigationOptions: {
+        headerTitle: '创建新团',
       },
     },
     Version: {

@@ -14,18 +14,39 @@ import { findUser } from '../../../shared/redux/actions/user';
 import { findGroup } from '../../../shared/redux/actions/group';
 import { switchNav } from '../redux/actions/nav';
 import styled from 'styled-components/native';
+import {
+  NavigationStackScreenOptions,
+  NavigationScreenConfig,
+  NavigationScreenProps,
+} from 'react-navigation';
 
 const TextTip = styled.Text`
   text-align: center;
   margin-top: 20px;
 `;
 
-interface Props extends DispatchProp<any> {
+interface Props extends DispatchProp<any>, NavigationScreenProps {
   isFinding: boolean;
   userFindingResult: any;
   groupFindingResult: any;
 }
 class AddFriendScreen extends React.Component<Props> {
+  static navigationOptions: NavigationScreenConfig<
+    NavigationStackScreenOptions
+  > = (props) => {
+    return {
+      headerRight: (
+        <View style={{ marginRight: 10 }}>
+          <TouchableOpacity
+            onPress={() => props.navigation.push('CreateGroup')}
+          >
+            <Text>建团</Text>
+          </TouchableOpacity>
+        </View>
+      ),
+    };
+  };
+
   state = {
     searchValue: '',
     showSearchResult: false,
