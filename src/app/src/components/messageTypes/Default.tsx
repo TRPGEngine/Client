@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Clipboard } from 'react-native';
 import _get from 'lodash/get';
 import Base from './Base';
-import { parse } from '@src/app/src/utils/text-parser';
 import { Modal } from '@ant-design/react-native';
 import styled from 'styled-components/native';
+import BBCode from '@src/shared/components/bbcode';
 
 const MsgContainer = styled.TouchableHighlight.attrs({
   underlayColor: '#eee',
@@ -50,7 +50,9 @@ class Default extends Base {
   getContent() {
     return (
       <MsgContainer isImage={this.isImage} onLongPress={this.handleLongPress}>
-        <View>{parse(this.message)}</View>
+        <View>
+          <BBCode plainText={this.message} />
+        </View>
       </MsgContainer>
     );
   }

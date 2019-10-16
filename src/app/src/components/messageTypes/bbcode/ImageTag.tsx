@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { TagProps } from './types';
 import config from '@shared/project.config';
 import { TImageViewer } from '@src/app/src/components/TComponent';
-import TImage from '../../components/TComponent/TImage';
+import { TagProps } from '@src/shared/components/bbcode/type';
+import TImage from '../../TComponent/TImage';
 
 const maxWidth = 180;
 const maxHeight = 120;

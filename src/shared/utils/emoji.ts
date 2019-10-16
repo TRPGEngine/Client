@@ -1,10 +1,10 @@
 import emoji from 'node-emoji';
-import { getCodeList } from '../../../shared/utils/emoji';
+import { getCodeList } from '@src/shared/utils/emojione';
 import _forEach from 'lodash/forEach';
 
 const codeList = getCodeList();
 
-export const emojiMap = _forEach(getCodeList(), (list, catalog, map) => {
+export const emojiMap = _forEach(codeList, (list, catalog, map) => {
   map[catalog] = list
     .filter((name) => emoji.hasEmoji(name))
     .map((name) => ({
@@ -25,7 +25,7 @@ export const emojiCatalog = [
  * 将带有emoji代码的文本转化为标准文本
  * @param {string} code 带有emoji代码的文本
  */
-export function unemojify(code) {
+export function unemojify(code: string): string {
   return emoji.unemojify(code);
 }
 
@@ -33,6 +33,6 @@ export function unemojify(code) {
  * 将标准字符串转化为表情
  * @param {string} plainText 无格式字符串
  */
-export function emojify(plainText) {
+export function emojify(plainText: string): string {
   return emoji.emojify(plainText);
 }

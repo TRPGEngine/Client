@@ -20,7 +20,7 @@ import ExtraPanelItem from '@app/components/chat/ExtraPanelItem';
 import EmotionPanel from '@app/components/chat/EmotionPanel';
 import QuickDiceModal from '@app/components/chat/QuickDiceModal';
 import { uploadChatimg } from '@shared/utils/image-uploader';
-import { unemojify } from '@app/utils/emoji';
+import { unemojify } from '@shared/utils/emoji';
 import _get from 'lodash/get';
 
 import styled from 'styled-components/native';

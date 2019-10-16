@@ -1,6 +1,6 @@
 import React from 'react';
-import Link from '../../components/Link';
-import { TagProps } from './types';
+import Link from '../../Link';
+import { TagProps } from '@src/shared/components/bbcode/type';
 
 const UrlTag = React.memo((props: TagProps) => {
   const { node } = props;

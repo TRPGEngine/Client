@@ -1,5 +1,5 @@
 import React from 'react';
-import { emojify, getCodeList } from '../../shared/utils/emoji';
+import { emojify, getCodeList } from '../../shared/utils/emojione';
 
 const Emoji = React.memo(() => {
   return (
