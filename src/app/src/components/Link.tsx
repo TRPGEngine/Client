@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, Linking } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { connect, DispatchProp } from 'react-redux';
 import { openWebview } from '../redux/actions/nav';
 import styled from 'styled-components/native';

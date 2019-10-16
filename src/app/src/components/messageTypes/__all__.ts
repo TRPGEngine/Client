@@ -4,14 +4,7 @@ import Tip from './Tip';
 import Card from './Card';
 import File from './File';
 import Loading from './Loading';
-import { registerBBCodeTag } from '@src/shared/components/bbcode/parser';
-import ImageTag from './bbcode/ImageTag';
-import UrlTag from './bbcode/UrlTag';
-import PlainText from './bbcode/PlainText';
-
-registerBBCodeTag('_text', PlainText);
-registerBBCodeTag('img', ImageTag);
-registerBBCodeTag('url', UrlTag);
+import './bbcode/__all__';
 
 MessageHandler.registerDefaultMessageHandler(Default);
 MessageHandler.registerMessageHandler('tip', Tip);
