@@ -21,21 +21,30 @@ const logger = createLogger({
 console.log('当前环境:', config.environment);
 console.log('当前平台:', config.platform);
 
-const middlewares: Middleware<any, any, any>[] = [thunk];
+type TMiddleware = Middleware<any, any, any>;
+
+const middlewares: TMiddleware[] = [thunk];
 if (config.environment === 'development') {
   middlewares.push(logger);
 }
-if (config.platform === 'app') {
-  middlewares.push(require('../../../app/src/router').middleware);
-}
 
-const defaultStoreOptions = {
+interface StoreOptions {
+  initialState?: {};
+  additionReducer?: { [name: string]: (state: any, action: any) => any };
+  additionMiddleware?: TMiddleware[];
+}
+const defaultStoreOptions: StoreOptions = {
   initialState: undefined,
   additionReducer: {},
+  additionMiddleware: [],
 };
 
-function configureStore(options = defaultStoreOptions): Store<any, any> {
+function configureStore(
+  options: StoreOptions = defaultStoreOptions
+): Store<any, any> {
   const initialState = options.initialState;
+
+  middlewares.push(...options.additionMiddleware); // 增加额外中间件
 
   let enhancer: StoreEnhancer<any> = applyMiddleware(...middlewares);
   if (config.environment === 'development') {
