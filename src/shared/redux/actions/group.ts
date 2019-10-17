@@ -131,7 +131,11 @@ let initGroupInfo = function(dispatch, group) {
   });
 };
 
-export const createGroup = function(name, subname, desc) {
+export const createGroup = function(
+  name: string,
+  subname: string,
+  desc: string
+) {
   return function(dispatch, getState) {
     dispatch(showLoading());
     api.emit('group::create', { name, subname, desc }, function(data) {

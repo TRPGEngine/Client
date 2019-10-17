@@ -1,7 +1,13 @@
 import { NavigationActions, StackActions } from 'react-navigation';
 import { AppNavigator } from '../../router';
 import constants from '../../../../shared/redux/constants';
-const { RESET, LOGIN_SUCCESS, LOGIN_TOKEN_SUCCESS, LOGOUT } = constants;
+const {
+  RESET,
+  LOGIN_SUCCESS,
+  LOGIN_TOKEN_SUCCESS,
+  LOGOUT,
+  CREATE_GROUP_SUCCESS,
+} = constants;
 import {
   SWITCH_NAV,
   REPLACE_NAV,
@@ -72,7 +78,14 @@ export default function nav(state = initialNavState, action) {
       break;
     case BACK_TOP_NAV:
       nextState = AppNavigator.router.getStateForAction(
-        StackActions.popToTop({})
+        StackActions.popToTop({}),
+        state
+      );
+      break;
+    case CREATE_GROUP_SUCCESS:
+      nextState = AppNavigator.router.getStateForAction(
+        StackActions.popToTop({}),
+        state
       );
       break;
     default:
