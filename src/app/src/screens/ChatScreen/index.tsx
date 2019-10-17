@@ -81,6 +81,7 @@ class ChatScreen extends React.Component<Props> {
 
   componentDidMount() {
     const converseType = this.props.navigation.getParam('type', 'user');
+
     this.props.navigation.setParams({
       headerRightFunc: () => {
         if (converseType === 'user') {
@@ -88,9 +89,9 @@ class ChatScreen extends React.Component<Props> {
             'Profile',
             this.props.navigation.state.params
           );
-        } else {
+        } else if (converseType === 'group') {
           this.props.navigation.navigate(
-            'GroupProfile',
+            'GroupData',
             this.props.navigation.state.params
           );
         }
@@ -113,7 +114,6 @@ class ChatScreen extends React.Component<Props> {
   componentWillUnmount() {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
-    this.props.dispatch(clearSelectedConverse()); //切换当前会话为空
   }
 
   dismissAll = () => {

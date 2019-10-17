@@ -12,6 +12,7 @@ import {
 import { connect, DispatchProp } from 'react-redux';
 import { StackViewStyleInterpolator } from 'react-navigation-stack';
 import { uiHandlerCollection } from './utils/ui-state-handler';
+import _get from 'lodash/get';
 
 import LaunchScreen from './screens/LaunchScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -30,6 +31,7 @@ import DeviceInfoScreen from './screens/settings/DeviceInfoScreen';
 import DevelopLabScreen from './screens/settings/DevelopLabScreen';
 import VersionScreen from './screens/VersionScreen';
 import CreateGroupScreen from './screens/CreateGroupScreen';
+import GroupDataScreen from './screens/GroupDataScreen';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -121,6 +123,12 @@ export const AppNavigator = createStackNavigator(
       navigationOptions: {
         headerTitle: '创建新团',
       },
+    },
+    GroupData: {
+      screen: GroupDataScreen,
+      navigationOptions: ({ navigation }) => ({
+        headerTitle: _get(navigation, 'state.params.name', '详细信息'),
+      }),
     },
     Version: {
       screen: VersionScreen,
