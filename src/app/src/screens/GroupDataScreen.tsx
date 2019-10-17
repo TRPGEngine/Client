@@ -8,15 +8,26 @@ import {
   showAlert,
   hideAlert,
   hideSlidePanel,
+  showModal,
+  hideModal,
 } from '@src/shared/redux/actions/ui';
-import { switchSelectGroup, quitGroup } from '@src/shared/redux/actions/group';
+import {
+  switchSelectGroup,
+  quitGroup,
+  changeSelectGroupActor,
+} from '@src/shared/redux/actions/group';
 import { getCachedUserName } from '@src/shared/utils/cache-helper';
 import _get from 'lodash/get';
+import TModalPanel from '../components/TComponent/TModalPanel';
+import TPicker from '../components/TComponent/TPicker';
 
 const ListItem = List.Item;
 
 interface Props extends TRPGDispatchProp {
   groupInfo: any;
+  selfGroupActors: any;
+  selectedGroupActorUUID: string;
+  selectedGroupUUID: string;
 }
 class GroupDataScreen extends React.Component<Props> {
   state = {
@@ -35,8 +46,46 @@ class GroupDataScreen extends React.Component<Props> {
    * 切换选中角色
    */
   handleSelectGroupActor = () => {
-    // TODO: 待实现
-    alert('未实现');
+    const {
+      dispatch,
+      selectedGroupUUID,
+      selfGroupActors,
+      selectedGroupActorUUID,
+    } = this.props;
+    let actorUUID = selectedGroupActorUUID;
+
+    let options = [];
+    if (selfGroupActors && selfGroupActors.size > 0) {
+      options = selfGroupActors
+        .map((item, index) => ({
+          value: item.get('uuid'),
+          label: item.getIn(['actor', 'name']),
+        }))
+        .toJS();
+    }
+    if (selectedGroupActorUUID) {
+      options.unshift({
+        value: null,
+        label: '取消选择',
+      });
+    }
+
+    dispatch(
+      showModal(
+        <TModalPanel
+          onOk={() => {
+            dispatch(changeSelectGroupActor(selectedGroupUUID, actorUUID));
+            dispatch(hideModal());
+          }}
+        >
+          <TPicker
+            items={options}
+            defaultValue={actorUUID}
+            onValueChange={(val) => (actorUUID = val)}
+          />
+        </TModalPanel>
+      )
+    );
   };
 
   /**
@@ -80,15 +129,32 @@ class GroupDataScreen extends React.Component<Props> {
       <View>
         <List renderHeader={'基本'}>
           <ListItem extra={groupOwnerName}>团主持人</ListItem>
+          <ListItem extra={groupInfo.get('managers_uuid').size + '人'}>
+            团管理
+          </ListItem>
           <ListItem extra={groupInfo.get('group_members').size + '人'}>
             团成员
           </ListItem>
-          <ListItem onPress={this.handleViewHistory}>历史消息</ListItem>
+          <ListItem extra={groupInfo.get('group_actors').size + '张'}>
+            团人物卡
+          </ListItem>
+          <ListItem extra={groupInfo.get('maps_uuid').size + '张'}>
+            团地图
+          </ListItem>
+          <ListItem multipleLine extra={groupInfo.get('desc')}>
+            简介
+          </ListItem>
+
+          {/* <ListItem onPress={this.handleViewHistory} arrow="horizontal">
+            历史消息
+          </ListItem> */}
         </List>
         <List renderHeader={'角色'}>
-          <ListItem onPress={this.handleSelectGroupActor}>选择角色</ListItem>
+          <ListItem onPress={this.handleSelectGroupActor} arrow="horizontal">
+            选择角色
+          </ListItem>
         </List>
-        <List renderHeader={'设置'}>
+        {/* <List renderHeader={'设置'}>
           <ListItem
             extra={
               <Switch
@@ -99,7 +165,7 @@ class GroupDataScreen extends React.Component<Props> {
           >
             消息置顶
           </ListItem>
-          {/* <ListItem
+          <ListItem
             extra={
               <Switch
                 value={isMsgTop}
@@ -108,8 +174,8 @@ class GroupDataScreen extends React.Component<Props> {
             }
           >
             免打扰
-          </ListItem> */}
-        </List>
+          </ListItem>
+        </List> */}
         <WhiteSpace size="lg" />
         <WingBlank>
           <TButton type="error" onPress={this.handleQuitGroup}>
@@ -124,12 +190,31 @@ class GroupDataScreen extends React.Component<Props> {
 export default connect((state: TRPGState, ownProps) => {
   const selectedGroupUUID = _get(ownProps, 'navigation.state.params.uuid', '');
 
+  const groupInfo = state
+    .getIn(['group', 'groups'])
+    .find((group) => group.get('uuid') === selectedGroupUUID);
+
+  const selfActors = state
+    .getIn(['actor', 'selfActors'])
+    .map((i) => i.get('uuid'));
+
+  const selfGroupActors = groupInfo
+    .get('group_actors', [])
+    .filter(
+      (i) => i.get('enabled') && selfActors.indexOf(i.get('actor_uuid')) >= 0
+    );
+
+  const selectedGroupActorUUID = groupInfo.getIn([
+    'extra',
+    'selected_group_actor_uuid',
+  ]);
+
   return {
     userUUID: state.getIn(['user', 'info', 'uuid']),
     usercache: state.getIn(['cache', 'user']),
     selectedGroupUUID,
-    groupInfo: state
-      .getIn(['group', 'groups'])
-      .find((group) => group.get('uuid') === selectedGroupUUID),
+    selfGroupActors,
+    selectedGroupActorUUID,
+    groupInfo,
   };
 })(GroupDataScreen);
