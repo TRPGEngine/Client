@@ -5,6 +5,7 @@ const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plug
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const _get = require('lodash/get');
 
 const ROOT_PATH = path.resolve(__dirname, '../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
@@ -137,6 +138,10 @@ module.exports = {
         query: babelQuery,
       },
       {
+        test: /\.hbs$/,
+        loader: 'handlebars-loader',
+      },
+      {
         test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf)$/,
         loader: 'url-loader?limit=8192&name=assets/[hash].[ext]',
       },
@@ -180,7 +185,7 @@ module.exports = {
 
   plugins: [
     new WebpackBar({
-      name: '🎲  TRPG Game',
+      name: `🎲  TRPG ${_get(process, 'env.TRPG_APP_NAME', 'Game')}`,
       color: '#8C6244',
     }),
     new webpack.DefinePlugin({
@@ -202,7 +207,10 @@ module.exports = {
     ]),
     new HtmlwebpackPlugin({
       title: 'TRPG-Game',
-      template: path.resolve(BUILD_PATH, './template/index.html'),
+      template: path.resolve(BUILD_PATH, './template/index.hbs'),
+      templateParameters: {
+        isDev: _get(process, 'env.NODE_ENV') === 'development',
+      },
       inject: true,
       favicon: path.resolve(APP_PATH, './web/assets/img/favicon.ico'),
       hash: true,
