@@ -11,6 +11,7 @@ import config from '../../project.config';
 import { getCombineReducers } from '../reducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import actionCreators from '../actions';
+import { memoryLogger } from './memory-logger';
 
 const logger = createLogger({
   level: 'info',
@@ -24,6 +25,8 @@ console.log('当前平台:', config.platform);
 type TMiddleware = Middleware<any, any, any>;
 
 const middlewares: TMiddleware[] = [thunk];
+middlewares.push(memoryLogger);
+
 if (config.environment === 'development') {
   middlewares.push(logger);
 }
