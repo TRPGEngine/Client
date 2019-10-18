@@ -203,7 +203,7 @@ class GroupDataScreen extends React.Component<Props> {
         <WhiteSpace size="lg" />
         <WingBlank>
           <TButton type="error" onPress={this.handleQuitGroup}>
-            退出本团
+            {this.isGroupOwner ? '解散本团' : '退出本团'}
           </TButton>
         </WingBlank>
       </View>

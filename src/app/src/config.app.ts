@@ -21,6 +21,7 @@ const getCodepushDeploymentKey = async (): Promise<string> => {
 };
 
 const out = {
+  version: require('../package.json').version,
   defaultImg: {
     logo: require('./assets/img/trpg_logo.png'),
     user: '', // 让系统系统生成
