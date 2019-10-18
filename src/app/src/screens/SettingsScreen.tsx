@@ -60,6 +60,11 @@ class SettingsScreen extends React.Component<Props, State> {
           >
             我要成为内测用户
           </Item>
+          {isAlphaUser ? (
+            <Item arrow="horizontal" onPress={() => this.nav('Debug')}>
+              调试面板
+            </Item>
+          ) : null}
         </List>
       </View>
     );

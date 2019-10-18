@@ -1,12 +1,16 @@
 import React from 'react';
 import configureStore from '../../shared/redux/configureStore';
 import navReducer from './redux/reducers/nav';
+import {
+  AppWithNavigationState,
+  middleware as routerMiddleware,
+} from './router';
 const store = configureStore({
   additionReducer: {
     nav: navReducer,
   },
-} as any);
-import { AppWithNavigationState } from './router';
+  additionMiddleware: [routerMiddleware],
+});
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as AntdProvider } from '@ant-design/react-native';
 import { ThemeProvider } from 'styled-components/native';

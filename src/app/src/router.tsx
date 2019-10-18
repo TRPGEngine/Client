@@ -1,17 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  StatusBar,
-  View,
-  Button,
-  BackHandler,
-  ToastAndroid,
-} from 'react-native';
+import { Text, View, BackHandler, ToastAndroid } from 'react-native';
 import {
   NavigationActions,
   createStackNavigator,
@@ -24,6 +12,7 @@ import {
 import { connect, DispatchProp } from 'react-redux';
 import { StackViewStyleInterpolator } from 'react-navigation-stack';
 import { uiHandlerCollection } from './utils/ui-state-handler';
+import _get from 'lodash/get';
 
 import LaunchScreen from './screens/LaunchScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -41,6 +30,9 @@ import WebviewScreen from './screens/WebviewScreen';
 import DeviceInfoScreen from './screens/settings/DeviceInfoScreen';
 import DevelopLabScreen from './screens/settings/DevelopLabScreen';
 import VersionScreen from './screens/VersionScreen';
+import CreateGroupScreen from './screens/CreateGroupScreen';
+import GroupDataScreen from './screens/GroupDataScreen';
+import DebugScreen from './screens/DebugScreen';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -53,12 +45,6 @@ export const MainNavigator = createBottomTabNavigator({
     screen: AccountScreen,
   },
 });
-
-const DetailsScreen = () => (
-  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>Details Screen</Text>
-  </View>
-);
 
 export const AppNavigator = createStackNavigator(
   {
@@ -82,12 +68,6 @@ export const AppNavigator = createStackNavigator(
       navigationOptions: {
         headerLeft: null,
         title: 'TRPG Game',
-      },
-    },
-    Details: {
-      screen: DetailsScreen,
-      navigationOptions: {
-        headerTitle: 'Details',
       },
     },
     Settings: {
@@ -139,10 +119,28 @@ export const AppNavigator = createStackNavigator(
         headerTitle: '编辑资料',
       },
     },
+    CreateGroup: {
+      screen: CreateGroupScreen,
+      navigationOptions: {
+        headerTitle: '创建新团',
+      },
+    },
+    GroupData: {
+      screen: GroupDataScreen,
+      navigationOptions: ({ navigation }) => ({
+        headerTitle: _get(navigation, 'state.params.name', '详细信息'),
+      }),
+    },
     Version: {
       screen: VersionScreen,
       navigationOptions: {
         headerTitle: '版本信息',
+      },
+    },
+    Debug: {
+      screen: DebugScreen,
+      navigationOptions: {
+        headerTitle: '调试面板',
       },
     },
     Webview: {

@@ -1,29 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import renderer from 'react-test-renderer';
-import { preProcessText, parse } from '@src/app/src/utils/text-parser';
+import BBCode from '@src/shared/components/bbcode';
+import '@app/components/messageTypes/bbcode/__all__';
 
-describe('bbcode-parser', () => {
-  describe('preprocess', () => {
-    it('simple url parse', () => {
-      const text = preProcessText('http://baidu.com');
-      expect(text).toBe('[url]http://baidu.com[/url]');
-    });
-
-    it('mix text and url parse', () => {
-      const text = preProcessText('open:http://baidu.com');
-      expect(text).toBe('open:[url]http://baidu.com[/url]');
-    });
-
-    it('mix text and more url parse', () => {
-      const text = preProcessText(
-        'open:http://baidu.com and http://google.com'
-      );
-      expect(text).toBe(
-        'open:[url]http://baidu.com[/url] and [url]http://google.com[/url]'
-      );
-    });
-  });
-
+describe('bbcode-parser for app', () => {
   // 文本解析成组件测试
   describe('text parse component', () => {
     const cases = [
@@ -71,9 +51,8 @@ describe('bbcode-parser', () => {
 
     for (const item of cases) {
       it(item.title, () => {
-        const Component = parse(item.text);
         const result = renderer
-          .create(<Fragment>{Component}</Fragment>)
+          .create(<BBCode plainText={item.text} />)
           .toJSON();
         expect(result).toMatchSnapshot();
       });

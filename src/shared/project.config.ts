@@ -59,6 +59,7 @@ interface ProjectConfig {
     user: string;
     getUser: (name: string) => string;
     group: string;
+    getGroup: (name: string) => string;
     trpgsystem: string;
     actor: string;
     chatimg_fail: string;
@@ -137,6 +138,14 @@ const config: ProjectConfig = {
       }
     },
     group: '/src/web/assets/img/gugugu1.png',
+    getGroup(name) {
+      // 同getUser
+      if (name) {
+        return `${config.file.url}/file/avatar/svg?name=${name}`;
+      } else {
+        return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; // 一像素透明图片
+      }
+    },
     trpgsystem: '/src/web/assets/img/system_notice.png',
     actor: '',
     chatimg_fail: '/src/web/assets/img/img_fail.png',
@@ -188,9 +197,7 @@ const config: ProjectConfig = {
     },
   },
 };
-config.file.url = `${config.file.protocol}://${config.file.host}:${
-  config.file.port
-}`;
+config.file.url = `${config.file.protocol}://${config.file.host}:${config.file.port}`;
 
 // 获取基于API的绝对路径
 config.file.getAbsolutePath = function getAbsolutePath(path) {

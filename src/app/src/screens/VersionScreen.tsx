@@ -6,7 +6,7 @@ import { TButton } from '../components/TComponent';
 import styled from 'styled-components/native';
 import semver from 'semver';
 import _isNil from 'lodash/isNil';
-import appConfig from '../config.app';
+import appConfig from '@app/config.app';
 import { connect, DispatchProp } from 'react-redux';
 import checkVersion, {
   getLastVersion,
@@ -154,7 +154,7 @@ class VersionScreen extends React.Component<Props> {
         <VersionInfo>
           <LogoImg />
           {this.state.isAlphaUser && <Text>当前为内测用户</Text>}
-          <Text>当前版本: {config.version}</Text>
+          <Text>当前版本: {appConfig.version}</Text>
           <Text>最新版本: {this.state.lastJSVersion}</Text>
           <Text>二进制版本: {apkVersion}</Text>
           <Text>当前版本标签: {this.state.codepushMeta.label}</Text>

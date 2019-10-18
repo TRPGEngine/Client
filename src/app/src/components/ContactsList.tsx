@@ -1,55 +1,69 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import { View, Text, SectionList, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  SectionList,
+  TouchableOpacity,
+  SectionListData,
+} from 'react-native';
 import sb from 'react-native-style-block';
 import appConfig from '../config.app';
 import { TIcon } from './TComponent';
 import ConvItem from './ConvItem';
 import { switchNav } from '../redux/actions/nav';
+import { isImmutable } from 'immutable';
+
+interface SectionListItemData {
+  uuid: string;
+  avatar: string;
+  name: string;
+  type: string;
+}
+
+interface SectionListItem extends SectionListData<SectionListItemData> {
+  name: '好友' | '团';
+  isShow: boolean;
+}
 
 interface Props extends DispatchProp<any> {
   friends: any;
   groups: any;
 }
 interface State {
-  list: any;
+  showFriends: boolean;
+  showGroups: boolean;
 }
 class ContactList extends React.Component<Props, State> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: [
-        {
-          name: '好友',
-          data: props.friends.toJS(),
-          isShow: true,
-          list: props.friends,
-        },
-        {
-          name: '团',
-          data: props.groups.toJS(),
-          isShow: true,
-          list: props.groups,
-        },
-      ],
-    };
+  state = {
+    showFriends: true,
+    showGroups: true,
+  };
+
+  get friends() {
+    const friends = this.props.friends;
+    if (isImmutable(friends)) {
+      return friends.toJS();
+    } else {
+      return friends;
+    }
   }
 
-  handleClickHeader(section) {
-    if (section.isShow === false) {
-      let _section = this.state.list.find((s) => s.name === section.name);
-      _section.data = _section.list.toJS();
-      _section.isShow = true;
-      this.setState({
-        list: this.state.list,
-      });
+  get groups() {
+    const groups = this.props.groups;
+    if (isImmutable(groups)) {
+      return groups.toJS();
     } else {
-      let _section = this.state.list.find((s) => s.name === section.name);
-      _section.data = [];
-      _section.isShow = false;
-      this.setState({
-        list: this.state.list,
-      });
+      return groups;
+    }
+  }
+
+  handleClickHeader(section: SectionListItem) {
+    const { name, isShow } = section;
+    if (name === '好友') {
+      this.setState({ showFriends: !isShow });
+    } else if (name === '团') {
+      this.setState({ showGroups: !isShow });
     }
   }
 
@@ -106,8 +120,25 @@ class ContactList extends React.Component<Props, State> {
     );
   }
 
+  getList(): ReadonlyArray<SectionListItem> {
+    const { showFriends, showGroups } = this.state;
+
+    return [
+      {
+        name: '好友',
+        data: showFriends ? this.friends : [],
+        isShow: showFriends,
+      },
+      {
+        name: '团',
+        data: showGroups ? this.groups : [],
+        isShow: showGroups,
+      },
+    ];
+  }
+
   render() {
-    if (this.props.friends.length === 0 && this.props.groups.length === 0) {
+    if (this.props.friends.size === 0 && this.props.groups.size === 0) {
       return (
         <View>
           <Text>暂无联系人, 快去交♂朋♂友吧</Text>
@@ -119,7 +150,7 @@ class ContactList extends React.Component<Props, State> {
         renderSectionHeader={({ section }) => this.getHeader(section)}
         renderItem={({ item }) => this.getCell(item)}
         scrollEnabled={true}
-        sections={this.state.list}
+        sections={this.getList()}
         keyExtractor={(item, index) => item + index}
         style={styles.listContainer}
       />

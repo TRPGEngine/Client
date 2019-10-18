@@ -1,0 +1,24 @@
+import { preProcessText } from '@src/shared/components/bbcode';
+
+describe('bbcode-parser common', () => {
+  describe('preprocess text', () => {
+    it('simple url parse', () => {
+      const text = preProcessText('http://baidu.com');
+      expect(text).toBe('[url]http://baidu.com[/url]');
+    });
+
+    it('mix text and url parse', () => {
+      const text = preProcessText('open:http://baidu.com');
+      expect(text).toBe('open:[url]http://baidu.com[/url]');
+    });
+
+    it('mix text and more url parse', () => {
+      const text = preProcessText(
+        'open:http://baidu.com and http://google.com'
+      );
+      expect(text).toBe(
+        'open:[url]http://baidu.com[/url] and [url]http://google.com[/url]'
+      );
+    });
+  });
+});

@@ -5,15 +5,15 @@
 
 import { Map } from 'immutable';
 import TAlert from '../components/TApi/TAlert';
-import { Dispatch } from 'redux';
 import { hideAlert, hideModal } from '@src/shared/redux/actions/ui';
 import { Toast, Portal } from '@ant-design/react-native';
 import TModal from '../components/TApi/TModal';
+import { TRPGDispatch } from '@src/shared/redux/types/redux';
 
 type UIMap = Map<string, any>;
 interface FactoryOptions {
-  onEnabled?: (currentUIState: UIMap, dispatch: Dispatch) => void;
-  onDisabled?: (currentUIState: UIMap, dispatch: Dispatch) => void;
+  onEnabled?: (currentUIState: UIMap, dispatch: TRPGDispatch) => void;
+  onDisabled?: (currentUIState: UIMap, dispatch: TRPGDispatch) => void;
 }
 
 /**
@@ -25,7 +25,7 @@ export const uiStateSwitchFactory = (
   variable: string,
   option: FactoryOptions
 ) => {
-  return (prevUI: UIMap, currentUI: UIMap, dispatch: Dispatch) => {
+  return (prevUI: UIMap, currentUI: UIMap, dispatch: TRPGDispatch) => {
     if (prevUI.get(variable) === false && currentUI.get(variable) === true) {
       // UI打开
       option.onEnabled && option.onEnabled(currentUI, dispatch);

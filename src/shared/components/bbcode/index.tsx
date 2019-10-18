@@ -1,16 +1,7 @@
-import { emojify } from './emoji';
-import bbcodeParser from './bbcode-parser';
+import React, { Fragment } from 'react';
+import bbcodeParser from './parser';
 import urlRegex from 'url-regex';
-
-/**
- * 解析文本
- * @param {string} plainText 服务端标准文本
- */
-export function parse(plainText: string) {
-  return bbcodeParser.parse(
-    bbcodeParser.preProcessText(plainText, preProcessText)
-  );
-}
+import { emojify } from '@src/shared/utils/emoji';
 
 /**
  * 客户端预处理文本
@@ -25,3 +16,16 @@ export function preProcessText(plainText: string): string {
 
   return text;
 }
+
+interface Props {
+  plainText: string;
+}
+const BBCode = React.memo(({ plainText }: Props) => {
+  const bbcodeComponent = bbcodeParser.parse(
+    bbcodeParser.preProcessText(plainText, preProcessText)
+  );
+
+  return <Fragment>{bbcodeComponent}</Fragment>;
+});
+
+export default BBCode;

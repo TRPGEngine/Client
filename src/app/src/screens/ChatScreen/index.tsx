@@ -20,8 +20,9 @@ import ExtraPanelItem from '@app/components/chat/ExtraPanelItem';
 import EmotionPanel from '@app/components/chat/EmotionPanel';
 import QuickDiceModal from '@app/components/chat/QuickDiceModal';
 import { uploadChatimg } from '@shared/utils/image-uploader';
-import { unemojify } from '@app/utils/emoji';
+import { unemojify } from '@shared/utils/emoji';
 import _get from 'lodash/get';
+import { ChatParams } from '../../types/params';
 
 import styled from 'styled-components/native';
 import { sendQuickDice } from '@src/shared/redux/actions/dice';
@@ -38,12 +39,14 @@ const ExtraPanel = styled.View`
   flex-direction: row;
 `;
 
-interface Props extends DispatchProp<any>, NavigationScreenProps {
+type Params = ChatParams & { headerRightFunc?: () => void };
+
+interface Props extends DispatchProp<any>, NavigationScreenProps<Params> {
   msgList: any;
   selfInfo: any;
   selfUUID: string;
   nomore: boolean;
-  selectedConversesUUID: string;
+  selectedConverseUUID: string;
 }
 class ChatScreen extends React.Component<Props> {
   static navigationOptions = (props) => {
@@ -78,6 +81,7 @@ class ChatScreen extends React.Component<Props> {
 
   componentDidMount() {
     const converseType = this.props.navigation.getParam('type', 'user');
+
     this.props.navigation.setParams({
       headerRightFunc: () => {
         if (converseType === 'user') {
@@ -85,9 +89,9 @@ class ChatScreen extends React.Component<Props> {
             'Profile',
             this.props.navigation.state.params
           );
-        } else {
+        } else if (converseType === 'group') {
           this.props.navigation.navigate(
-            'GroupProfile',
+            'GroupData',
             this.props.navigation.state.params
           );
         }
@@ -110,7 +114,6 @@ class ChatScreen extends React.Component<Props> {
   componentWillUnmount() {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
-    this.props.dispatch(clearSelectedConverse()); //切换当前会话为空
   }
 
   dismissAll = () => {
@@ -159,10 +162,10 @@ class ChatScreen extends React.Component<Props> {
    */
   handleRequestMoreChatLog = () => {
     const date = this.props.msgList.first().get('date');
-    const { selectedConversesUUID } = this.props;
+    const { selectedConverseUUID } = this.props;
     const converseType = this.props.navigation.getParam('type', 'user');
     this.props.dispatch(
-      getMoreChatLog(selectedConversesUUID, date, converseType === 'user')
+      getMoreChatLog(selectedConverseUUID, date, converseType === 'user')
     );
   };
 
@@ -349,23 +352,28 @@ class ChatScreen extends React.Component<Props> {
   }
 }
 
-export default connect((state: any) => {
-  const selectedConversesUUID = state.getIn(['chat', 'selectedConversesUUID']);
+export default connect((state: any, ownProps: any) => {
+  const selectedConverseUUID = _get(
+    ownProps,
+    'navigation.state.params.uuid',
+    ''
+  );
+
   const msgList = state.getIn([
     'chat',
     'converses',
-    selectedConversesUUID,
+    selectedConverseUUID,
     'msgList',
   ]);
 
   return {
-    selectedConversesUUID,
+    selectedConverseUUID,
     selfInfo: state.getIn(['user', 'info']),
     selfUUID: state.getIn(['user', 'info', 'uuid']),
     msgList: msgList && msgList.sortBy((item) => item.get('date')),
     usercache: state.getIn(['cache', 'user']),
     nomore: state.getIn(
-      ['chat', 'converses', selectedConversesUUID, 'nomore'],
+      ['chat', 'converses', selectedConverseUUID, 'nomore'],
       false
     ),
   };

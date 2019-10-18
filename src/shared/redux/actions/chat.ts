@@ -34,8 +34,9 @@ import config from '../../project.config';
 import _without from 'lodash/without';
 import _isFunction from 'lodash/isFunction';
 import { MsgPayload, ConverseInfo } from '@src/shared/redux/types/chat';
+import { TRPGAction } from '../types/redux';
 
-const getUserConversesHash = (userUUID) => {
+const getUserConversesHash = (userUUID: string): string => {
   return `userConverses#${userUUID}`;
 };
 
@@ -48,12 +49,16 @@ let getLocalUUID = function getLocalUUID() {
 };
 
 // 切换当前会话页面
-export let switchConverse = function switchConverse(converseUUID: string) {
+export let switchConverse = function switchConverse(
+  converseUUID: string
+): TRPGAction {
   return { type: SWITCH_CONVERSES, converseUUID };
 };
 
 // 跳转到会话页面并切换到会话
-export let switchToConverse = function switchToConverse(converseUUID: string) {
+export let switchToConverse = function switchToConverse(
+  converseUUID: string
+): TRPGAction {
   return function(dispatch, getState) {
     dispatch(hideProfileCard());
     dispatch(switchMenuPannel(0));
@@ -64,11 +69,11 @@ export let switchToConverse = function switchToConverse(converseUUID: string) {
 /**
  * 清理当前选择的会话
  */
-export const clearSelectedConverse = function clearSelectedConverse() {
+export const clearSelectedConverse = function clearSelectedConverse(): TRPGAction {
   return { type: CLEAR_SELECTED_CONVERSE };
 };
 
-export let addConverse = function addConverse(payload) {
+export let addConverse = function addConverse(payload): TRPGAction {
   // if(!payload.uuid) {
   //   console.error('[addConverse]payload need uuid', payload);
   //   return;
@@ -79,7 +84,7 @@ export let addConverse = function addConverse(payload) {
 export let updateConversesMsglist = function updateConversesMsglist(
   convUUID,
   list
-) {
+): TRPGAction {
   return function(dispatch, getState) {
     for (let item of list) {
       if (item.sender_uuid) {
@@ -95,7 +100,7 @@ export let updateConversesMsglist = function updateConversesMsglist(
 };
 
 // 获取多人会话
-export let getConverses = function getConverses(cb?) {
+export let getConverses = function getConverses(cb?: () => void): TRPGAction {
   return function(dispatch, getState) {
     dispatch({ type: GET_CONVERSES_REQUEST });
     // 获取会话列表
@@ -140,7 +145,7 @@ export let createConverse = function createConverse(
   uuid,
   type,
   isSwitchToConv = true
-) {
+): TRPGAction {
   return function(dispatch, getState) {
     if (!!getState().getIn(['chat', 'converses', uuid])) {
       console.log('已存在该会话');
@@ -181,7 +186,9 @@ export let createConverse = function createConverse(
 };
 
 // 移除多人会话
-export let removeConverse = function removeConverse(converseUUID) {
+export let removeConverse = function removeConverse(
+  converseUUID: string
+): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('chat::removeConverse', { converseUUID }, function(data) {
       if (data.result) {
@@ -193,7 +200,7 @@ export let removeConverse = function removeConverse(converseUUID) {
   };
 };
 
-export const removeUserConverse = (userConverseUUID) => {
+export const removeUserConverse = (userConverseUUID: string): TRPGAction => {
   return (dispatch, getState) => {
     // 在当前删除
     dispatch({ type: REMOVE_USER_CONVERSE, converseUUID: userConverseUUID });
@@ -215,7 +222,9 @@ export const removeUserConverse = (userConverseUUID) => {
  * 增加用户UUID会话列表
  * @param senders 会话UUID列表
  */
-export let addUserConverse = function addUserConverse(senders: string[]) {
+export let addUserConverse = function addUserConverse(
+  senders: string[]
+): TRPGAction {
   return function(dispatch, getState) {
     if (typeof senders === 'string') {
       senders = [senders];
@@ -289,7 +298,7 @@ export let addUserConverse = function addUserConverse(senders: string[]) {
 
 export let getOfflineUserConverse = function getOfflineUserConverse(
   lastLoginDate: string
-) {
+): TRPGAction {
   return function(dispatch, getState) {
     api.emit('chat::getOfflineUserConverse', { lastLoginDate }, function(data) {
       if (data.result === true) {
@@ -301,7 +310,7 @@ export let getOfflineUserConverse = function getOfflineUserConverse(
   };
 };
 
-export let getAllUserConverse = function getAllUserConverse() {
+export let getAllUserConverse = function getAllUserConverse(): TRPGAction {
   return function(dispatch, getState) {
     api.emit('chat::getAllUserConverse', {}, function(data) {
       if (data.result === true) {
@@ -315,7 +324,9 @@ export let getAllUserConverse = function getAllUserConverse() {
 
 // 重新加载会话列表
 // TODO: 暂时先把cb放在getConverses，以后再想办法优化
-export let reloadConverseList = function reloadConverseList(cb?) {
+export let reloadConverseList = function reloadConverseList(
+  cb?: () => void
+): TRPGAction {
   return function(dispatch, getState) {
     let userInfo = getState().getIn(['user', 'info']);
     let userUUID = userInfo.get('uuid');
@@ -335,7 +346,7 @@ export let reloadConverseList = function reloadConverseList(cb?) {
   };
 };
 
-export let addMsg = function addMsg(converseUUID, payload) {
+export let addMsg = function addMsg(converseUUID, payload): TRPGAction {
   return (dispatch, getState) => {
     if (!(converseUUID && typeof converseUUID === 'string')) {
       console.error('[addMsg]add message need converseUUID:', converseUUID);
@@ -378,7 +389,7 @@ export let addMsg = function addMsg(converseUUID, payload) {
   };
 };
 
-export let updateMsg = function updateMsg(converseUUID, payload) {
+export let updateMsg = function updateMsg(converseUUID, payload): TRPGAction {
   console.log('try to update message', converseUUID, payload);
   return {
     type: UPDATE_MSG,
@@ -393,7 +404,10 @@ export let updateMsg = function updateMsg(converseUUID, payload) {
  * @param toUUID 发送目标
  * @param payload 信息数据
  */
-export let sendMsg = function sendMsg(toUUID: string, payload: MsgPayload) {
+export let sendMsg = function sendMsg(
+  toUUID: string,
+  payload: MsgPayload
+): TRPGAction {
   return function(dispatch, getState) {
     const info = getState().getIn(['user', 'info']);
     const localUUID = getLocalUUID();
@@ -431,7 +445,7 @@ export let sendMsg = function sendMsg(toUUID: string, payload: MsgPayload) {
   };
 };
 
-export let sendFile = function sendFile(toUUID, payload, file) {
+export let sendFile = function sendFile(toUUID, payload, file): TRPGAction {
   if (!file) {
     console.error('发送文件错误。没有找到要发送的文件');
     return;
@@ -497,7 +511,7 @@ export let sendFile = function sendFile(toUUID, payload, file) {
 export const addFakeMsg = function addFakeMsg(
   pkg: MsgPayload,
   callback?: (localUUID: string) => void
-) {
+): TRPGAction {
   return function(dispatch, getState) {
     const info = getState().getIn(['user', 'info']);
     const localUUID = getLocalUUID();
@@ -522,7 +536,7 @@ export const addFakeMsg = function addFakeMsg(
 export const removeFakeMsg = function removeFakeMsg(
   converseUUID: string,
   localUUID: string
-) {
+): TRPGAction {
   return {
     type: REMOVE_MSG,
     converseUUID,
@@ -541,7 +555,7 @@ interface LoadingCallbackEvent {
 export const addLoadingMsg = function addLoadingMsg(
   converseUUID: string,
   cb: (event: LoadingCallbackEvent) => void
-) {
+): TRPGAction {
   return function(dispatch, getState) {
     const fakeMsgPayload: MsgPayload = {
       message: '[处理中...]',
@@ -584,7 +598,7 @@ export let getMoreChatLog = function getMoreChatLog(
   converseUUID: string,
   offsetDate: string,
   isUserChat = true
-) {
+): TRPGAction {
   return function(dispatch, getState) {
     if (isUserChat) {
       api.emit(
@@ -624,7 +638,7 @@ export let getMoreChatLog = function getMoreChatLog(
   };
 };
 
-export let updateCardChatData = function(chatUUID, newData) {
+export let updateCardChatData = function(chatUUID, newData): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('chat::updateCardChatData', { chatUUID, newData }, function(
       data
@@ -645,7 +659,7 @@ export let updateCardChatData = function(chatUUID, newData) {
 const getWriteHash = (type = 'user', uuid) => {
   return `${type}#${uuid}`;
 };
-export let startWriting = function(type = 'user', uuid: string) {
+export let startWriting = function(type = 'user', uuid: string): TRPGAction {
   return function(dispatch, getState) {
     dispatch({
       type: UPDATE_WRITING_STATUS,
@@ -665,7 +679,7 @@ export let startWriting = function(type = 'user', uuid: string) {
     );
   };
 };
-export let stopWriting = function(type = 'user', uuid: string) {
+export let stopWriting = function(type = 'user', uuid: string): TRPGAction {
   return {
     type: UPDATE_WRITING_STATUS,
     payload: {
@@ -676,7 +690,7 @@ export let stopWriting = function(type = 'user', uuid: string) {
   };
 };
 
-export const getUserEmotion = function() {
+export const getUserEmotion = function(): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('chatemotion::getUserEmotionCatalog', null, function(data) {
       if (data.result) {
@@ -695,7 +709,9 @@ export const getUserEmotion = function() {
  * 根据表情包暗号添加用户表情包
  * @param {string} code 表情包暗号
  */
-export const addUserEmotionCatalogWithSecretSignal = function(code) {
+export const addUserEmotionCatalogWithSecretSignal = function(
+  code: string
+): TRPGAction {
   return function(dispatch, getState) {
     code = String(code).toUpperCase();
     return api.emit(

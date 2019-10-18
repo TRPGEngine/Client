@@ -35,6 +35,7 @@ import { getTemplate, getActor } from './actor';
 import { getGroupList, getGroupInvite } from './group';
 import { getNote } from './note';
 import { loadLocalCache } from './cache';
+import { TRPGAction } from '../types/redux';
 
 const api = trpgApi.getInstance();
 
@@ -60,7 +61,7 @@ function loginSuccess(dispatch, getState) {
   runLoginSuccessCallback();
 }
 
-export const login = function(username, password) {
+export const login = function(username: string, password: string): TRPGAction {
   return function(dispatch, getState) {
     password = md5(password);
     let isApp = config.platform === 'app';
@@ -100,7 +101,11 @@ export const login = function(username, password) {
   };
 };
 
-export const loginWithToken = function(uuid, token, channel = null) {
+export const loginWithToken = function(
+  uuid: string,
+  token: string,
+  channel = null
+): TRPGAction {
   return function(dispatch, getState) {
     let isApp = config.platform === 'app';
     dispatch({ type: LOGIN_REQUEST });
@@ -133,7 +138,7 @@ export const loginWithToken = function(uuid, token, channel = null) {
 };
 
 // 重新获取一次用户登录后的数据
-export const updateAllInfo = function() {
+export const updateAllInfo = function(): TRPGAction {
   return function(dispatch, getState) {
     if (getState().getIn(['user', 'isLogin']) === true) {
       loginSuccess(dispatch, getState);
@@ -141,7 +146,7 @@ export const updateAllInfo = function() {
   };
 };
 
-export const logout = function() {
+export const logout = function(): TRPGAction {
   let isApp = config.platform === 'app';
   return function(dispatch, getState) {
     let info = getState().getIn(['user', 'info']);
@@ -162,7 +167,11 @@ export const logout = function() {
   };
 };
 
-export const register = function(username, password, onSuccess) {
+export const register = function(
+  username: string,
+  password: string,
+  onSuccess: () => void
+): TRPGAction {
   password = md5(password);
   return function(dispatch, getState) {
     dispatch({ type: REGISTER_REQUEST });
@@ -186,7 +195,7 @@ export const register = function(username, password, onSuccess) {
   };
 };
 
-export const findUser = function(text, type) {
+export const findUser = function(text: string, type: string): TRPGAction {
   return function(dispatch, getState) {
     dispatch({ type: FIND_USER_REQUEST });
 
@@ -212,7 +221,10 @@ export const findUser = function(text, type) {
   };
 };
 
-export const updateInfo = function(updatedData: {}, onSuccess?: () => void) {
+export const updateInfo = function(
+  updatedData: {},
+  onSuccess?: () => void
+): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('player::updateInfo', updatedData, function(data) {
       if (data.result) {
@@ -227,11 +239,11 @@ export const updateInfo = function(updatedData: {}, onSuccess?: () => void) {
 };
 
 export const changePassword = function(
-  oldPassword,
-  newPassword,
-  success,
-  error
-) {
+  oldPassword: string,
+  newPassword: string,
+  onSuccess?: () => void,
+  onError?: (msg: string) => void
+): TRPGAction {
   oldPassword = md5(oldPassword);
   newPassword = md5(newPassword);
   return function(dispatch, getState) {
@@ -241,17 +253,17 @@ export const changePassword = function(
       function(data) {
         if (data.result) {
           console.log('密码修改成功');
-          success && success();
+          onSuccess && onSuccess();
         } else {
           console.error(data.msg);
-          error && error(data.msg);
+          onError && onError(data.msg);
         }
       }
     );
   };
 };
 
-export const getFriends = function() {
+export const getFriends = function(): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('player::getFriends', {}, function(data) {
       if (data.result) {
@@ -274,7 +286,7 @@ export const getFriends = function() {
  * 发送好友邀请
  * @param uuid 目标用户UUID
  */
-export const sendFriendInvite = function(uuid: string) {
+export const sendFriendInvite = function(uuid: string): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('player::sendFriendInvite', { to: uuid }, function(data) {
       if (data.result) {
@@ -292,7 +304,7 @@ export const sendFriendInvite = function(uuid: string) {
   };
 };
 
-export const agreeFriendInvite = function(inviteUUID) {
+export const agreeFriendInvite = function(inviteUUID: string): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('player::agreeFriendInvite', { uuid: inviteUUID }, function(
       data
@@ -308,7 +320,7 @@ export const agreeFriendInvite = function(inviteUUID) {
   };
 };
 
-export const getFriendsInvite = function() {
+export const getFriendsInvite = function(): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('player::getFriendsInvite', {}, function(data) {
       if (data.result) {
@@ -323,7 +335,7 @@ export const getFriendsInvite = function() {
   };
 };
 
-export const refuseFriendInvite = function(inviteUUID) {
+export const refuseFriendInvite = function(inviteUUID: string): TRPGAction {
   return function(dispatch, getState) {
     return api.emit(
       'player::refuseFriendInvite',
@@ -339,11 +351,11 @@ export const refuseFriendInvite = function(inviteUUID) {
   };
 };
 
-export const addFriendInvite = function(invite) {
+export const addFriendInvite = function(invite: string): TRPGAction {
   return { type: ADD_FRIEND_INVITE, payload: invite };
 };
 
-export const getSettings = function() {
+export const getSettings = function(): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('player::getSettings', {}, function(data) {
       if (data.result) {
@@ -357,7 +369,7 @@ export const getSettings = function() {
   };
 };
 
-export const saveSettings = function() {
+export const saveSettings = function(): TRPGAction {
   return function(dispatch, getState) {
     const settings = getState().get('settings');
     return api.emit(

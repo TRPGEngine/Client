@@ -5,7 +5,7 @@ import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
 import styled from 'styled-components/native';
 import config from '../../../shared/project.config';
-import appConfig from '../config.app';
+import appConfig from '@app/config.app';
 import { logout } from '../../../shared/redux/actions/user';
 import { openWebview } from '../redux/actions/nav';
 import { TButton, TAvatar } from '../components/TComponent';
@@ -104,7 +104,7 @@ class AccountScreen extends React.Component<Props> {
         <AccountList>
           <Item
             arrow="horizontal"
-            extra={config.version}
+            extra={appConfig.version}
             onPress={() => {
               this.props.dispatch(
                 NavigationActions.navigate({ routeName: 'Version' })

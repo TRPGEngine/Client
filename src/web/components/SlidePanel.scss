@@ -13,6 +13,7 @@
   transition-duration: 0.5s;
   display: flex;
   flex-direction: column !important;
+  transition: right 0.4s ease-in-out;
 
   &.hide {
     right: -380px;

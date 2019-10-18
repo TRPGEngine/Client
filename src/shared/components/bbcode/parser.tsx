@@ -1,15 +1,30 @@
-import React, { ReactElement } from 'react';
-import { Text } from 'react-native';
+import React, { ComponentType, ReactNode } from 'react';
+import { TagProps, AstNode } from './type';
 import { parse } from '@bbob/parser';
-import ImageTag from './bbcode/ImageTag';
-import { AstNode } from './bbcode/types';
-import _has from 'lodash/has';
 import _last from 'lodash/last';
-import UrlTag from './bbcode/UrlTag';
+import _has from 'lodash/has';
 
-const tagMap = {
-  img: ImageTag,
-  url: UrlTag,
+/**
+ * 通用的bbcode解释器
+ * 一个纯语言实现
+ */
+
+type StringTagComponent = ComponentType<{ children?: string }> | string;
+type ObjectTagComponent = ComponentType<TagProps>;
+type TagMapComponent = StringTagComponent | ObjectTagComponent;
+
+const tagMap: { [tag: string]: TagMapComponent } = {};
+
+/**
+ * 注册一个组件到内部的tagMap中
+ * @param tagName 标签名
+ * @param component 组件
+ */
+export const registerBBCodeTag = (
+  tagName: string,
+  component: TagMapComponent
+) => {
+  tagMap[tagName] = component;
 };
 
 /**
@@ -43,7 +58,7 @@ class BBCodeParser {
       .join('');
   }
 
-  parse(input: string): ReactElement[] {
+  parse(input: string): ReactNode[] {
     const ast = parse(input, this.options) as AstNode[];
 
     return ast
@@ -57,9 +72,14 @@ class BBCodeParser {
 
         return prev;
       }, [])
-      .map<ReactElement>((node, index) => {
+      .map<ReactNode>((node, index) => {
         if (typeof node === 'string') {
-          return <Text key={index}>{node}</Text>;
+          if (_has(tagMap, '_text')) {
+            const Component = tagMap['_text'] as StringTagComponent;
+            return <Component key={index}>{node}</Component>;
+          } else {
+            return node;
+          }
         }
 
         if (typeof node === 'object' && _has(tagMap, node.tag)) {

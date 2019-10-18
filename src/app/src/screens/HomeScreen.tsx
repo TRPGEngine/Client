@@ -6,10 +6,11 @@ import sb from 'react-native-style-block';
 import dateHelper from '@shared/utils/date-helper';
 import appConfig from '../config.app';
 import ConvItem from '../components/ConvItem';
-import { reloadConverseList, switchConverse } from '@shared/redux/actions/chat';
+import { reloadConverseList } from '@shared/redux/actions/chat';
 import styled from 'styled-components/native';
 import { Spring } from 'react-spring/renderprops';
 import TRefreshControl from '../components/TComponent/TRefreshControl';
+import { ChatType } from '../types/params';
 
 const NetworkContainer = styled.View<{
   isOnline: boolean;
@@ -137,8 +138,7 @@ class HomeScreen extends React.Component<Props> {
     );
   }
 
-  handleSelectConverse(uuid, type, info) {
-    this.props.dispatch(switchConverse(uuid));
+  handleSelectConverse(uuid: string, type: ChatType, info) {
     this.props.dispatch(
       NavigationActions.navigate({
         routeName: 'Chat',

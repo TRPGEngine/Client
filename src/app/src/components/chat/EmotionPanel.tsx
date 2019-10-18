@@ -11,7 +11,7 @@ import styled from 'styled-components/native';
 import { Icon, Carousel, Modal } from '@ant-design/react-native';
 import Emoji from 'react-native-emoji';
 import FastImage from 'react-native-fast-image';
-import { emojiMap, emojiCatalog } from '../../utils/emoji';
+import { emojiMap, emojiCatalog } from '@shared/utils/emoji';
 import config from '../../../../shared/project.config';
 import _get from 'lodash/get';
 import _chunk from 'lodash/chunk';

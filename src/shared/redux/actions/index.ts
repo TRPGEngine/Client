@@ -6,4 +6,12 @@ import * as note from './note';
 import * as actor from './actor';
 import * as group from './group';
 
-export default { ui, chat, user, cache, note, actor, group };
+export default {
+  ...ui,
+  ...chat,
+  ...user,
+  ...cache,
+  ...note,
+  ...actor,
+  ...group,
+};

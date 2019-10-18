@@ -31,6 +31,7 @@ Array [
         onClick={[Function]}
         onSave={[Function]}
         onSwipeDown={[Function]}
+        renderImage={[Function]}
         saveToLocalByLongPress={true}
       />
     </Modal>
@@ -51,39 +52,61 @@ Array [
         }
       }
     >
-      <View
-        style={
-          Array [
-            Object {
-              "overflow": "hidden",
-            },
+      <View>
+        <View
+          style={
             Object {
               "height": 120,
               "width": 180,
-            },
-          ]
-        }
-      >
-        <FastImageView
-          onFastImageLoad={[Function]}
-          resizeMode="contain"
-          source={
-            Object {
-              "cache": "immutable",
-              "priority": "normal",
-              "uri": "http://exampleimg.com",
             }
           }
-          style={
-            Object {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                Array [
+                  Object {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  undefined,
+                ],
+              ]
             }
-          }
-        />
+          >
+            <FastImageView
+              onFastImageError={[Function]}
+              onFastImageLoad={[Function]}
+              onFastImageLoadEnd={[Function]}
+              onFastImageLoadStart={[Function]}
+              onFastImageProgress={[Function]}
+              resizeMode="contain"
+              source={
+                Object {
+                  "cache": "immutable",
+                  "priority": "normal",
+                  "uri": "http://exampleimg.com",
+                }
+              }
+              style={
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              url="http://exampleimg.com"
+            />
+          </View>
+        </View>
       </View>
     </View>
   </View>,
@@ -98,13 +121,17 @@ Array [
   <Text>
     百度:
   </Text>,
-  <Link>
+  <Link
+    url="http://baidu.com"
+  >
     http://baidu.com
   </Link>,
   <Text>
      谷歌:
   </Text>,
-  <Link>
+  <Link
+    url="http://google.com"
+  >
     http://google.com
   </Link>,
 ]
@@ -115,13 +142,17 @@ Array [
   <Text>
     百度
   </Text>,
-  <Link>
+  <Link
+    url="http://baidu.com谷歌http"
+  >
     http://baidu.com谷歌http
   </Link>,
   <Text>
     :
   </Text>,
-  <Link>
+  <Link
+    url="//google.com"
+  >
     //google.com
   </Link>,
 ]
@@ -158,6 +189,7 @@ Array [
         onClick={[Function]}
         onSave={[Function]}
         onSwipeDown={[Function]}
+        renderImage={[Function]}
         saveToLocalByLongPress={true}
       />
     </Modal>
@@ -178,46 +210,70 @@ Array [
         }
       }
     >
-      <View
-        style={
-          Array [
-            Object {
-              "overflow": "hidden",
-            },
+      <View>
+        <View
+          style={
             Object {
               "height": 120,
               "width": 180,
-            },
-          ]
-        }
-      >
-        <FastImageView
-          onFastImageLoad={[Function]}
-          resizeMode="contain"
-          source={
-            Object {
-              "cache": "immutable",
-              "priority": "normal",
-              "uri": "http://exampleimg.com",
             }
           }
-          style={
-            Object {
-              "bottom": 0,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                Array [
+                  Object {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  undefined,
+                ],
+              ]
             }
-          }
-        />
+          >
+            <FastImageView
+              onFastImageError={[Function]}
+              onFastImageLoad={[Function]}
+              onFastImageLoadEnd={[Function]}
+              onFastImageLoadStart={[Function]}
+              onFastImageProgress={[Function]}
+              resizeMode="contain"
+              source={
+                Object {
+                  "cache": "immutable",
+                  "priority": "normal",
+                  "uri": "http://exampleimg.com",
+                }
+              }
+              style={
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              url="http://exampleimg.com"
+            />
+          </View>
+        </View>
       </View>
     </View>
   </View>,
   <Text>
      
   </Text>,
-  <Link>
+  <Link
+    url="http://baidu.com"
+  >
     http://baidu.com
   </Link>,
 ]
@@ -228,7 +284,9 @@ Array [
   <Text>
     百度:
   </Text>,
-  <Link>
+  <Link
+    url="http://baidu.com"
+  >
     http://baidu.com
   </Link>,
 ]
@@ -239,7 +297,9 @@ Array [
   <Text>
     百度
   </Text>,
-  <Link>
+  <Link
+    url="http://baidu.com"
+  >
     http://baidu.com
   </Link>,
 ]
@@ -284,6 +344,7 @@ exports[`bbcode-parser text parse component pure image 1`] = `
       onClick={[Function]}
       onSave={[Function]}
       onSwipeDown={[Function]}
+      renderImage={[Function]}
       saveToLocalByLongPress={true}
     />
   </Modal>
@@ -304,46 +365,70 @@ exports[`bbcode-parser text parse component pure image 1`] = `
       }
     }
   >
-    <View
-      style={
-        Array [
-          Object {
-            "overflow": "hidden",
-          },
+    <View>
+      <View
+        style={
           Object {
             "height": 120,
             "width": 180,
-          },
-        ]
-      }
-    >
-      <FastImageView
-        onFastImageLoad={[Function]}
-        resizeMode="contain"
-        source={
-          Object {
-            "cache": "immutable",
-            "priority": "normal",
-            "uri": "http://exampleimg.com",
           }
         }
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Array [
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                undefined,
+              ],
+            ]
           }
-        }
-      />
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            onFastImageLoad={[Function]}
+            onFastImageLoadEnd={[Function]}
+            onFastImageLoadStart={[Function]}
+            onFastImageProgress={[Function]}
+            resizeMode="contain"
+            source={
+              Object {
+                "cache": "immutable",
+                "priority": "normal",
+                "uri": "http://exampleimg.com",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+            url="http://exampleimg.com"
+          />
+        </View>
+      </View>
     </View>
   </View>
 </View>
 `;
 
 exports[`bbcode-parser text parse component simple url 1`] = `
-<Link>
+<Link
+  url="http://baidu.com"
+>
   http://baidu.com
 </Link>
 `;

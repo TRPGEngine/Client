@@ -17,6 +17,14 @@
 
       gtag('config', 'UA-121610011-1');
     </script>
+    {{#if isDev}}
+    <style>
+      body {
+        /* 开发环境移除背景图 */
+        background-image: none !important;
+      }
+    </style>
+    {{/if}}
   </head>
   <body>
     <div id="app">

@@ -151,3 +151,12 @@ export const getTemplateInfoCache = reduxCacheFactory(
   (uuid: string, onCompleted: GetCacheCompletedCallback) =>
     getTemplateInfo(uuid, onCompleted)
 );
+
+/**
+ * 获取缓存的用户名
+ * @param uuid 用户UUID
+ */
+export const getCachedUserName = (uuid: string): string => {
+  const info = getUserInfoCache(uuid);
+  return info.get('nickname') || info.get('username') || '';
+};

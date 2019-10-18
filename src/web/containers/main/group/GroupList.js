@@ -38,15 +38,17 @@ class GroupList extends React.Component {
       .sortBy((item) => new Date(item.get('lastTime')))
       .reverse()
       .map((item, index) => {
-        let uuid = item.get('uuid');
+        const uuid = item.get('uuid');
         let name = item.get('name');
         if (item.get('status')) {
           name += '(开团中...)';
         }
+        const icon = item.get('avatar') || config.defaultImg.getGroup(name);
+
         return (
           <ConvItem
             key={uuid + '#' + index}
-            icon={item.get('avatar') || config.defaultImg.group}
+            icon={icon}
             title={name}
             content={item.get('lastMsg')}
             time={

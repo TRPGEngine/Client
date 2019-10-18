@@ -49,6 +49,7 @@ import _set from 'lodash/set';
 import _get from 'lodash/get';
 
 import * as trpgApi from '../../api/trpg.api';
+import { TRPGAction } from '../types/redux';
 const api = trpgApi.getInstance();
 
 // 当state->group->groups状态添加新的group时使用来初始化
@@ -131,7 +132,11 @@ let initGroupInfo = function(dispatch, group) {
   });
 };
 
-export const createGroup = function(name, subname, desc) {
+export const createGroup = function(
+  name: string,
+  subname: string,
+  desc: string
+) {
   return function(dispatch, getState) {
     dispatch(showLoading());
     api.emit('group::create', { name, subname, desc }, function(data) {
@@ -342,7 +347,7 @@ export const getGroupList = function() {
   };
 };
 
-export const switchSelectGroup = function(uuid) {
+export const switchSelectGroup = function(uuid: string): TRPGAction {
   return { type: SWITCH_GROUP, payload: uuid };
 };
 
