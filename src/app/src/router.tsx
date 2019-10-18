@@ -32,6 +32,7 @@ import DevelopLabScreen from './screens/settings/DevelopLabScreen';
 import VersionScreen from './screens/VersionScreen';
 import CreateGroupScreen from './screens/CreateGroupScreen';
 import GroupDataScreen from './screens/GroupDataScreen';
+import DebugScreen from './screens/DebugScreen';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -134,6 +135,12 @@ export const AppNavigator = createStackNavigator(
       screen: VersionScreen,
       navigationOptions: {
         headerTitle: '版本信息',
+      },
+    },
+    Debug: {
+      screen: DebugScreen,
+      navigationOptions: {
+        headerTitle: '调试面板',
       },
     },
     Webview: {
