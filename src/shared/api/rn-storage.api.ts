@@ -75,7 +75,7 @@ const rnStorage = {
    */
   save: async (key: string | {}, data?: {}) => {
     try {
-      if (!!key && typeof key === 'string' && !!data) {
+      if (!!key && typeof key === 'string' && !_isNil(data)) {
         await storage.save({
           key,
           data,
