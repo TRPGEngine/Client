@@ -13,6 +13,7 @@ const BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
 const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
 const config = require('../package.json');
+const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const babelQuery = {
   babelrc: false,
@@ -72,6 +73,7 @@ module.exports = {
   output: {
     path: DIST_PATH,
     filename: '[name].[hash].js',
+    publicPath: ASSET_PATH,
   },
   resolve: {
     extensions: [

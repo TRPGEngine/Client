@@ -24,6 +24,7 @@
     "app:bundle:android": "cross-env START_DIR='../../' PLATFORM=app REACT_NATIVE_APP_ROOT=. react-native bundle --platform android --entry-file index.js --bundle-output ./dist/index.android.bundle --dev false",
     "app:deploy:codepush": "cd ./src/app && npm run deploy",
     "app:test": "cd ./src/app && npm run test",
+    "portal:dev": "cross-env NODE_ENV=development webpack-dev-server --progress --color --config ./config/webpack.portal.config.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint --ext .js,.jsx src",
