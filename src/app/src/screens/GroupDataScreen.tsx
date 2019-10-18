@@ -15,6 +15,7 @@ import {
   switchSelectGroup,
   quitGroup,
   changeSelectGroupActor,
+  dismissGroup,
 } from '@src/shared/redux/actions/group';
 import { getCachedUserName } from '@src/shared/utils/cache-helper';
 import _get from 'lodash/get';
@@ -24,6 +25,7 @@ import TPicker from '../components/TComponent/TPicker';
 const ListItem = List.Item;
 
 interface Props extends TRPGDispatchProp {
+  userUUID: string;
   groupInfo: any;
   selfGroupActors: any;
   selectedGroupActorUUID: string;
@@ -33,6 +35,11 @@ class GroupDataScreen extends React.Component<Props> {
   state = {
     isMsgTop: false,
   };
+
+  get isGroupOwner(): boolean {
+    const { userUUID, groupInfo } = this.props;
+    return userUUID === groupInfo.get('owner_uuid');
+  }
 
   /**
    * 查看历史消息
@@ -104,19 +111,36 @@ class GroupDataScreen extends React.Component<Props> {
   handleQuitGroup = () => {
     const { dispatch, groupInfo } = this.props;
 
-    dispatch(
-      showAlert({
-        title: '是否要退出群',
-        content: '一旦确定无法撤销',
-        onConfirm: () => {
-          dispatch(hideAlert());
-          let groupUUID = groupInfo.get('uuid');
-          dispatch(switchSelectGroup(''));
-          dispatch(quitGroup(groupUUID));
-          dispatch(hideSlidePanel());
-        },
-      })
-    );
+    if (this.isGroupOwner) {
+      // 解散团
+      dispatch(
+        showAlert({
+          title: '是否要解散群',
+          content: '一旦确定无法撤销',
+          onConfirm: () => {
+            dispatch(hideAlert());
+            let groupUUID = groupInfo.get('uuid');
+            dispatch(switchSelectGroup(''));
+            dispatch(dismissGroup(groupUUID));
+            dispatch(hideSlidePanel());
+          },
+        })
+      );
+    } else {
+      dispatch(
+        showAlert({
+          title: '是否要退出群',
+          content: '一旦确定无法撤销',
+          onConfirm: () => {
+            dispatch(hideAlert());
+            let groupUUID = groupInfo.get('uuid');
+            dispatch(switchSelectGroup(''));
+            dispatch(quitGroup(groupUUID));
+            dispatch(hideSlidePanel());
+          },
+        })
+      );
+    }
   };
 
   render() {

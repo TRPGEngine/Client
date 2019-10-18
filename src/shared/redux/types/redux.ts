@@ -13,9 +13,11 @@ type ThunkAction<R, S, E, A extends Action> = (
   extraArgument: E
 ) => R;
 
+export type TRPGDispatch = ThunkDispatch<any, any, AnyAction>;
+
 // 用于组件声明
 export interface TRPGDispatchProp {
-  dispatch: ThunkDispatch<any, any, AnyAction>;
+  dispatch: TRPGDispatch;
 }
 
 // 用于action声明

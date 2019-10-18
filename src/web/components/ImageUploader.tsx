@@ -7,10 +7,11 @@ import './ImageUploader.scss';
 import AvatarPicker from './AvatarPicker';
 import { blobUrlToFile } from '@web/utils/file-helper';
 import { toAvatar } from '@shared/utils/upload-helper';
+import { TRPGDispatchProp } from '@src/shared/redux/types/redux';
 
 type CSSUnit = number | string;
 
-interface Props extends DispatchProp {
+interface Props extends TRPGDispatchProp {
   type: 'actor' | 'user' | 'group';
   attachUUID: string;
   width?: CSSUnit;

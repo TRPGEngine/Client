@@ -13,6 +13,7 @@ const TitleToolbar =
     : null;
 
 import './Main.scss';
+import { TRPGDispatch } from '@src/shared/redux/types/redux';
 if (config.platform === 'electron') {
   require('./Main.electron.scss');
 }
@@ -107,7 +108,7 @@ export default connect(
     isLogin: state.getIn(['user', 'isLogin']),
     menuIndex: state.getIn(['ui', 'menuIndex']),
   }),
-  (dispatch) => ({
+  (dispatch: TRPGDispatch) => ({
     switchMenuPannel: (index, pannel) => {
       dispatch(switchMenuPannel(index, pannel));
     },
