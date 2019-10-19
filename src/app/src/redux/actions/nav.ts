@@ -5,7 +5,9 @@ import {
   BACK_TOP_NAV,
 } from '../constants/nav';
 import { NavigationActions } from 'react-navigation';
-import { switchConverse } from '@src/shared/redux/actions/chat';
+import { setConverseIsRead } from '@src/shared/redux/actions/chat';
+import { ChatType } from '../../types/params';
+import { TRPGAction } from '@src/shared/redux/types/redux';
 
 /**
  * 跳转到新的页面
@@ -39,27 +41,30 @@ export const backToTop = function backToTop() {
   return { type: BACK_TOP_NAV };
 };
 
-/** 切换到聊天页面 */
-export const switchToConverseApp = function switchToConverseApp(
-  converseUUID: string,
-  type: 'user' | 'group' = 'user',
+export const openWebview = function openWebview(url: string) {
+  return NavigationActions.navigate({ routeName: 'Webview', params: { url } });
+};
+
+/**
+ * 切换到聊天页面
+ * @param uuid 会话UUID
+ * @param type 会话类型
+ * @param name 会话名
+ */
+export const switchToChatScreen = function switchToChatScreen(
+  uuid: string,
+  type: ChatType,
   name: string
-) {
+): TRPGAction {
   return function(dispatch, getState) {
-    // 多级返回到首页
-    dispatch(backNav());
-    dispatch(backNav());
-    dispatch(switchConverse(converseUUID));
+    dispatch(backToTop());
+    dispatch(setConverseIsRead(uuid));
     dispatch(
       switchNav('Chat', {
-        uuid: converseUUID,
+        uuid,
         type,
         name,
       })
     );
   };
-};
-
-export const openWebview = function openWebview(url: string) {
-  return NavigationActions.navigate({ routeName: 'Webview', params: { url } });
 };

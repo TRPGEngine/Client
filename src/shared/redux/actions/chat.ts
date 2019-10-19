@@ -22,6 +22,7 @@ const {
   UPDATE_USER_CHAT_EMOTION_CATALOG,
   ADD_USER_CHAT_EMOTION_CATALOG,
   SET_CONVERSES_MSGLOG_NOMORE,
+  SET_CONVERSE_ISREAD,
 } = constants;
 import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
@@ -734,4 +735,12 @@ export const addUserEmotionCatalogWithSecretSignal = function(
       }
     );
   };
+};
+
+/**
+ * 设定某一会话为已读
+ * @param converseUUID 会话UUID
+ */
+export const setConverseIsRead = function(converseUUID: string): TRPGAction {
+  return { type: SET_CONVERSE_ISREAD, converseUUID };
 };

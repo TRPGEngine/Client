@@ -9,7 +9,7 @@ import { getSimpleDate } from '../../../shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getUserInfo } from '../../../shared/redux/actions/cache';
 import { sendFriendInvite } from '../../../shared/redux/actions/user';
-import { switchToConverseApp } from '../redux/actions/nav';
+import { switchToChatScreen } from '../redux/actions/nav';
 import { getUserInfoCache } from '../../../shared/utils/cache-helper';
 import { addUserConverse } from '@src/shared/redux/actions/chat';
 
@@ -58,7 +58,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
     // 创建用户会话并切换到该会话
     this.props.dispatch(addUserConverse([userUUID]));
     this.props.dispatch(
-      switchToConverseApp(
+      switchToChatScreen(
         userUUID,
         type,
         userInfo.get('nickname') || userInfo.get('username')

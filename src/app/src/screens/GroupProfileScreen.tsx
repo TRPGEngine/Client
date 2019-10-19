@@ -5,7 +5,7 @@ import sb from 'react-native-style-block';
 import appConfig from '../config.app';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getGroupInfo } from '../../../shared/redux/actions/cache';
-import { switchToConverseApp, backNav } from '../redux/actions/nav';
+import { backNav, switchToChatScreen } from '../redux/actions/nav';
 import { getGroupInfoCache } from '../../../shared/utils/cache-helper';
 import { List } from 'immutable';
 import { NavigationScreenProps } from 'react-navigation';
@@ -46,7 +46,7 @@ class ProfileScreen extends React.Component<Props> {
     const groupUUID = this.props.navigation.state.params.uuid;
     const groupInfo = getGroupInfoCache(groupUUID);
     this.props.dispatch(
-      switchToConverseApp(groupUUID, 'group', groupInfo.get('name'))
+      switchToChatScreen(groupUUID, 'group', groupInfo.get('name'))
     );
   };
 

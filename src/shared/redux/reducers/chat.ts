@@ -26,6 +26,7 @@ const {
   UPDATE_USER_CHAT_EMOTION_CATALOG,
   ADD_USER_CHAT_EMOTION_CATALOG,
   SET_CONVERSES_MSGLOG_NOMORE,
+  SET_CONVERSE_ISREAD,
 } = constants;
 
 type WritingListType =
@@ -348,6 +349,10 @@ export default function chat(state = initialState, action) {
         const converseUUID = action.converseUUID;
         const nomore = action.nomore;
         return state.setIn(['converses', converseUUID, 'nomore'], nomore);
+      }
+      case SET_CONVERSE_ISREAD: {
+        const converseUUID = action.converseUUID;
+        return state.setIn(['converses', converseUUID, 'unread'], false);
       }
       default:
         return state;
