@@ -5,7 +5,7 @@ import {
   BACK_TOP_NAV,
 } from '../constants/nav';
 import { NavigationActions } from 'react-navigation';
-import { setConverseIsRead } from '@src/shared/redux/actions/chat';
+import { switchConverse } from '@src/shared/redux/actions/chat';
 import { ChatType } from '../../types/params';
 import { TRPGAction } from '@src/shared/redux/types/redux';
 
@@ -58,7 +58,7 @@ export const switchToChatScreen = function switchToChatScreen(
 ): TRPGAction {
   return function(dispatch, getState) {
     dispatch(backToTop());
-    dispatch(setConverseIsRead(uuid));
+    dispatch(switchConverse(uuid)); // 切换会话uuid. 所有的会话。不管是group还是user。共用一个会话UUID
     dispatch(
       switchNav('Chat', {
         uuid,
