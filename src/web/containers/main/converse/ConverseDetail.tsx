@@ -225,7 +225,7 @@ class ConverseDetail extends React.Component<Props> {
 }
 
 export default connect((state: any) => {
-  const converseUUID = state.getIn(['chat', 'selectedConversesUUID']); // 会话UUID在用户会话中就是用户UUID
+  const converseUUID = state.getIn(['chat', 'selectedConverseUUID']); // 会话UUID在用户会话中就是用户UUID
   const userWritingList = state.getIn(['chat', 'writingList', 'user'], []);
 
   return {

@@ -376,7 +376,7 @@ export let addMsg = function addMsg(converseUUID, payload): TRPGAction {
 
     let unread = true;
     if (
-      converseUUID === getState().getIn(['chat', 'selectedConversesUUID']) ||
+      converseUUID === getState().getIn(['chat', 'selectedConverseUUID']) ||
       converseUUID === getState().getIn(['group', 'selectedGroupUUID'])
     ) {
       unread = false;

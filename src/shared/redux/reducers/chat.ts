@@ -34,7 +34,7 @@ type WritingListType =
   | Map<'group', Map<string, List<string>>>;
 
 export type ChatState = Record<{
-  selectedConversesUUID: string;
+  selectedConverseUUID: string;
   conversesDesc: string;
   converses: Map<string, any>;
   writingList: WritingListType;
@@ -42,7 +42,7 @@ export type ChatState = Record<{
 }>;
 
 const initialState: ChatState = immutable.fromJS({
-  selectedConversesUUID: '',
+  selectedConverseUUID: '',
   conversesDesc: '', // 获取会话列表的提示信息
   converses: {
     // "systemUUID": {
@@ -243,10 +243,10 @@ export default function chat(state = initialState, action) {
         return state.deleteIn(['converses', action.converseUUID]);
       case SWITCH_CONVERSES:
         return state
-          .set('selectedConversesUUID', action.converseUUID)
+          .set('selectedConverseUUID', action.converseUUID)
           .setIn(['converses', action.converseUUID, 'unread'], false); //已读未读;
       case CLEAR_SELECTED_CONVERSE:
-        return state.set('selectedConversesUUID', '');
+        return state.set('selectedConverseUUID', '');
       case SEND_MSG_COMPLETED: {
         let converseUUID = action.converseUUID;
         let localUUID = action.localUUID;

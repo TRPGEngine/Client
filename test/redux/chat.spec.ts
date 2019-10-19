@@ -15,7 +15,7 @@ describe('chat reducer', () => {
 
     // 检查默认参数
     expect(state).toBeImmutable();
-    expect(state.get('selectedConversesUUID')).toBe('');
+    expect(state.get('selectedConverseUUID')).toBe('');
     expect(state.get('conversesDesc')).toBe('');
     expect(state.get('converses')).toBeImmutableMap();
     expect(state.get('writingList')).toBeImmutableMap();

@@ -183,7 +183,7 @@ class ConverseList extends React.Component<Props> {
 }
 
 export default connect((state: any) => ({
-  selectedUUID: state.getIn(['chat', 'selectedConversesUUID']),
+  selectedUUID: state.getIn(['chat', 'selectedConverseUUID']),
   conversesDesc: state.getIn(['chat', 'conversesDesc']),
   converses: state.getIn(['chat', 'converses']),
   friends: state.getIn(['user', 'friendList']),
