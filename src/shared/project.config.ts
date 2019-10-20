@@ -86,6 +86,7 @@ interface ProjectConfig {
     projectAppPackageUrl: string;
   };
   url: {
+    api?: string;
     goddessfantasy: string;
     blog: string;
     portal: string;
@@ -206,6 +207,7 @@ const config: ProjectConfig = {
   },
 };
 config.file.url = `${config.file.protocol}://${config.file.host}:${config.file.port}`;
+config.url.api = config.file.url;
 
 // 获取基于API的绝对路径
 config.file.getAbsolutePath = function getAbsolutePath(path) {

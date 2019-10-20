@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Formik } from 'formik';
-import { Input, Button, Form, Typography } from 'antd';
+import { Input, Button, Form, Typography, Modal } from 'antd';
+import { request } from '@portal/utils/request';
 
 const Container = styled.div`
   width: 100vw;
@@ -33,7 +34,18 @@ class Login extends React.Component {
   }
 
   handleSubmit = (values: Values) => {
-    console.log(values);
+    const { username, password } = values;
+    if (!values.username || !values.password) {
+      Modal.error({ content: '用户名密码不能为空' });
+      return;
+    }
+
+    request
+      .post('/player/sso/login', {
+        username,
+        password,
+      })
+      .then(({ data }) => alert(JSON.stringify(data)));
   };
 
   render() {
