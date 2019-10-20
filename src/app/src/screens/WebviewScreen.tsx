@@ -41,7 +41,7 @@ const LoadError = React.memo((props: { url: string }) => (
 
 type WebviewScreenProps = NavigationScreenProps<{
   url: string;
-  title: string;
+  title?: string;
 }> &
   DispatchProp<any>;
 class WebviewScreen extends React.Component<WebviewScreenProps> {
