@@ -8,6 +8,12 @@ import { NavigationActions } from 'react-navigation';
 import { switchConverse } from '@src/shared/redux/actions/chat';
 import { ChatType } from '../../types/params';
 import { TRPGAction } from '@src/shared/redux/types/redux';
+import config from '@src/shared/project.config';
+import { WebviewAfterLoadCallback } from '@app/screens/WebviewScreen';
+import rnStorage from '@src/shared/api/rn-storage.api';
+
+import * as trpgApi from '@shared/api/trpg.api';
+const api = trpgApi.getInstance();
 
 /**
  * 跳转到新的页面
@@ -67,4 +73,29 @@ export const switchToChatScreen = function switchToChatScreen(
       })
     );
   };
+};
+
+export const navPortal = function navPortal(url: string) {
+  const portalUrl = config.url.portal;
+
+  url = url.startsWith(portalUrl) ? url : portalUrl + url;
+  const afterLoad: WebviewAfterLoadCallback = async (webview) => {
+    const cachedKey = 'sso:jwt';
+    let jwt = await rnStorage.get(cachedKey);
+    if (!jwt) {
+      const res = await api.emitP('player::getWebToken');
+      jwt = res.jwt;
+      await rnStorage.set(cachedKey, jwt);
+    }
+
+    // 加载完毕后注入js
+    webview.injectJavaScript(
+      `location.href.indexOf('${portalUrl}') === 0 && window.localStorage.setItem('jwt', '${jwt}')`
+    );
+  };
+
+  return switchNav('Webview', {
+    url,
+    afterLoad,
+  });
 };

@@ -15,6 +15,10 @@ import { backNav } from '../redux/actions/nav';
 import { NavigationScreenProps } from 'react-navigation';
 import { TIcon } from '../components/TComponent';
 import styled from 'styled-components/native';
+import {
+  WebViewNavigationEvent,
+  WebViewNavigation,
+} from 'react-native-webview/lib/WebViewTypes';
 
 const TipContainer = styled.View`
   position: absolute;
@@ -39,9 +43,15 @@ const LoadError = React.memo((props: { url: string }) => (
   </TipContainer>
 ));
 
+export type WebviewAfterLoadCallback = (
+  webview: WebView,
+  e: WebViewNavigationEvent
+) => void;
+
 type WebviewScreenProps = NavigationScreenProps<{
   url: string;
   title?: string;
+  afterLoad?: WebviewAfterLoadCallback;
 }> &
   DispatchProp<any>;
 class WebviewScreen extends React.Component<WebviewScreenProps> {
@@ -96,8 +106,8 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
     }
   };
 
-  handleStateChange(state) {
-    let { loading, title, url, canGoForward, canGoBack, target } = state;
+  handleStateChange(state: WebViewNavigation) {
+    let { loading, title, url, canGoForward, canGoBack } = state;
 
     this.props.navigation.setParams({ title });
     this.canGoBack = canGoBack;
@@ -126,6 +136,13 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
     }
   }
 
+  handleLoad = (e: WebViewNavigationEvent) => {
+    const afterLoadFn = this.props.navigation.getParam('afterLoad');
+    if (afterLoadFn && this.webview) {
+      afterLoadFn(this.webview, e);
+    }
+  };
+
   render() {
     const url = this.url;
 
@@ -139,6 +156,7 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
         mixedContentMode={'compatibility'}
         onNavigationStateChange={(state) => this.handleStateChange(state)}
         onMessage={(e) => this.handleMessage(e)}
+        onLoad={this.handleLoad}
       />
     );
   }

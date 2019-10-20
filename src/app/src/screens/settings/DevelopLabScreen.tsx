@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, NativeModules } from 'react-native';
 import Config from 'react-native-config';
 
-import { TButton } from '../../components/TComponent';
+import { TButton } from '@app/components/TComponent';
 import styled from 'styled-components/native';
-import { sendBasicNotify, clearAllNotifications } from '../../native/trpg';
+import { sendBasicNotify, clearAllNotifications } from '@app/native/trpg';
 
 import MessageHandler from '@app/components/messageTypes/__all__';
-import { switchNav } from '../../redux/actions/nav';
+import { switchNav, navPortal } from '@app/redux/actions/nav';
 import config from '@src/shared/project.config';
 import { connect, DispatchProp } from 'react-redux';
 
@@ -41,15 +41,7 @@ class DevelopLabScreen extends React.Component<Props> {
           清理应用通知
         </DevButton>
         <DevButton onPress={this.handleEnvConfig}>Print Env Config</DevButton>
-        <DevButton
-          onPress={() =>
-            dispatch(
-              switchNav('Webview', {
-                url: config.url.portal + '/sso/login',
-              })
-            )
-          }
-        >
+        <DevButton onPress={() => dispatch(navPortal('/sso/login'))}>
           打开Portal登录
         </DevButton>
 
