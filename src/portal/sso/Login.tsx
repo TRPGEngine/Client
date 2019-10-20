@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Formik } from 'formik';
-import { Input, Button } from 'antd';
+import { Input, Button, Form, Typography } from 'antd';
 
 const Container = styled.div`
   width: 100vw;
@@ -13,10 +13,10 @@ const Container = styled.div`
 
 const Window = styled.div`
   width: 80%;
-  height: 60%;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 3px;
   box-shadow: ${(props) => props.theme.boxShadow.normal};
+  padding: 10px;
 `;
 
 interface Values {
@@ -25,29 +25,59 @@ interface Values {
 }
 
 class Login extends React.Component {
+  componentDidMount() {
+    if (window.localStorage.getItem('jwt')) {
+      // 处理登录事件
+      // TODO
+    }
+  }
+
+  handleSubmit = (values: Values) => {
+    console.log(values);
+  };
+
   render() {
     return (
       <Container>
         <Window>
+          <Typography>
+            <Typography.Title level={3}>登录TRPG</Typography.Title>
+          </Typography>
+
           <Formik<Values>
             initialValues={{ username: '', password: '' }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={this.handleSubmit}
           >
             {({ values, handleChange, handleSubmit }) => (
-              <form onSubmit={handleSubmit}>
-                <Input
-                  name="username"
-                  value={values.username}
-                  onChange={handleChange}
-                />
-                <Input
-                  name="password"
-                  type="password"
-                  value={values.password}
-                  onChange={handleChange}
-                />
-                <Button onClick={() => handleSubmit()}>提交</Button>
-              </form>
+              <Form onSubmit={handleSubmit}>
+                <Form.Item label="用户名">
+                  <Input
+                    name="username"
+                    size="large"
+                    value={values.username}
+                    onChange={handleChange}
+                  />
+                </Form.Item>
+                <Form.Item label="密码">
+                  <Input
+                    name="password"
+                    type="password"
+                    size="large"
+                    value={values.password}
+                    onChange={handleChange}
+                  />
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    size="large"
+                    htmlType="submit"
+                    style={{ width: '100%' }}
+                  >
+                    提交
+                  </Button>
+                </Form.Item>
+              </Form>
             )}
           </Formik>
         </Window>
