@@ -51,6 +51,7 @@ export type WebviewAfterLoadCallback = (
 type WebviewScreenProps = NavigationScreenProps<{
   url: string;
   title?: string;
+  injectedJavaScript?: string;
   afterLoad?: WebviewAfterLoadCallback;
 }> &
   DispatchProp<any>;
@@ -83,8 +84,12 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
     super(props);
   }
 
-  get url() {
+  get url(): string {
     return this.props.navigation.getParam('url', '');
+  }
+
+  get injectedJavaScript(): string | undefined {
+    return this.props.navigation.getParam('injectedJavaScript');
   }
 
   componentDidMount() {
@@ -150,6 +155,7 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
       <WebView
         ref={(ref) => (this.webview = ref)}
         source={{ uri: url }}
+        injectedJavaScript={this.injectedJavaScript}
         startInLoadingState={true}
         renderLoading={() => <Loading />}
         renderError={() => <LoadError url={url} />}
