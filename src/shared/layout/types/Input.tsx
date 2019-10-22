@@ -1,5 +1,5 @@
 import React from 'react';
-import Base, { BaseTypeRow } from './Base';
+import Base, { BaseTypeRow, ILayoutType, ILayoutTypeAttributes } from './Base';
 import { Input, Col } from 'antd';
 import { XMLBuilderContext } from '../XMLBuilder';
 import { XMLElementAttributes } from '../parser/xml-parser';
@@ -13,6 +13,14 @@ export const Label = styled.pre`
   text-overflow: ellipsis;
 `;
 
+interface Attributes extends ILayoutTypeAttributes {
+  label?: string;
+  name?: string;
+  isNumber?: boolean;
+  changeValue?: string;
+  defaultValue?: string | number;
+}
+
 /**
  * Input 组件
  * 接受参数:
@@ -21,12 +29,12 @@ export const Label = styled.pre`
  * - changeValue: 要被修改的变量。如果为空则取name
  * - isNumber: 如果为true则无论输入什么都尝试转化为数字
  */
-export default class TInput extends Base {
+export default class TInput extends Base implements ILayoutType<Attributes> {
   name = 'Input';
 
   getEditView(
     tagName,
-    attributes: XMLElementAttributes,
+    attributes: Attributes,
     elements,
     context: XMLBuilderContext
   ) {
@@ -70,7 +78,7 @@ export default class TInput extends Base {
 
   getDetailView(
     tagName,
-    attributes: XMLElementAttributes,
+    attributes: Attributes,
     elements,
     context: XMLBuilderContext
   ) {

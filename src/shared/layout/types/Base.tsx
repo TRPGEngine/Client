@@ -14,17 +14,23 @@ type OperationDataType = {
   field: string;
 };
 
-export interface ILayoutType {
+export interface ILayoutTypeAttributes {
+  key: string;
+}
+export interface ILayoutType<
+  Attributes extends ILayoutTypeAttributes = XMLElementAttributes &
+    ILayoutTypeAttributes
+> {
   name: string;
   getEditView(
     tagName: string,
-    attributes: XMLElementAttributes,
+    attributes: Attributes,
     elements: Array<XMLElement>,
     context: XMLBuilderContext
   ): React.ReactElement;
   getDetailView(
     tagName: string,
-    attributes: XMLElementAttributes,
+    attributes: Attributes,
     elements: Array<XMLElement>,
     context: XMLBuilderContext
   ): React.ReactElement;
@@ -51,7 +57,10 @@ const voidElementTags = [
   'wbr',
 ];
 
-export default class Base implements ILayoutType {
+export interface BaseAttributes extends ILayoutTypeAttributes {}
+export default class Base<
+  Attributes extends ILayoutTypeAttributes = BaseAttributes
+> implements ILayoutType<Attributes> {
   name: string;
 
   // 预处理tag name
@@ -153,7 +162,7 @@ export default class Base implements ILayoutType {
   // 获取编辑视图
   getEditView(
     tagName: string,
-    attributes: XMLElementAttributes,
+    attributes: Attributes,
     elements: Array<XMLElement>,
     context: XMLBuilderContext
   ) {
@@ -174,7 +183,7 @@ export default class Base implements ILayoutType {
   // 获取详情视图
   getDetailView(
     tagName: string,
-    attributes: XMLElementAttributes,
+    attributes: Attributes,
     elements: Array<XMLElement>,
     context: XMLBuilderContext
   ) {
