@@ -55,8 +55,18 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
   }
 
   if (layoutType === 'edit') {
-    return _type.getEditView(name, attributes, elements || [], context);
+    return _type.getEditView({
+      tagName: name,
+      attributes,
+      elements: elements || [],
+      context,
+    });
   } else {
-    return _type.getDetailView(name, attributes, elements || [], context);
+    return _type.getDetailView({
+      tagName: name,
+      attributes,
+      elements: elements || [],
+      context,
+    });
   }
 }

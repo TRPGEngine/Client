@@ -1,24 +1,23 @@
 import React from 'react';
-import Base, { BaseTypeRow, ILayoutTypeAttributes } from './Base';
+import Base, {
+  BaseTypeRow,
+  ILayoutTypeAttributes,
+  LayoutTypeContext,
+} from './Base';
 import { Select, Col } from 'antd';
 import { XMLElementAttributes } from '../parser/xml-parser';
 import { XMLBuilderContext } from '../XMLBuilder';
 const Option = Select.Option;
 
-interface Attributes extends ILayoutTypeAttributes {
+interface Attr extends ILayoutTypeAttributes {
   label?: string;
   name?: string;
   options?: string;
 }
-export default class TSelect extends Base<Attributes> {
+export default class TSelect extends Base<Attr> {
   name = 'Select';
 
-  getEditView(
-    tagName,
-    attributes: Attributes,
-    elements,
-    context: XMLBuilderContext
-  ) {
+  getEditView({ attributes, context }: LayoutTypeContext<Attr>) {
     const { label, name, options } = attributes;
     const { state, dispatch } = context;
     const bindingName = name || label;

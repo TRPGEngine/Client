@@ -14,26 +14,25 @@ type OperationDataType = {
   field: string;
 };
 
+type DefaultLayoutTypeAttr = XMLElementAttributes & ILayoutTypeAttributes;
+export interface LayoutTypeContext<
+  Attr extends ILayoutTypeAttributes = DefaultLayoutTypeAttr
+> {
+  tagName: string;
+  attributes: Attr;
+  elements: Array<XMLElement>;
+  context: XMLBuilderContext;
+}
+
 export interface ILayoutTypeAttributes {
   key: string;
 }
 export interface ILayoutType<
-  Attributes extends ILayoutTypeAttributes = XMLElementAttributes &
-    ILayoutTypeAttributes
+  Attr extends ILayoutTypeAttributes = DefaultLayoutTypeAttr
 > {
   name: string;
-  getEditView(
-    tagName: string,
-    attributes: Attributes,
-    elements: Array<XMLElement>,
-    context: XMLBuilderContext
-  ): React.ReactElement;
-  getDetailView(
-    tagName: string,
-    attributes: Attributes,
-    elements: Array<XMLElement>,
-    context: XMLBuilderContext
-  ): React.ReactElement;
+  getEditView(ctx: LayoutTypeContext<Attr>): React.ReactElement;
+  getDetailView(ctx: LayoutTypeContext<Attr>): React.ReactElement;
 }
 
 // defined from facebook/react/packages/react-dom/src/shared/voidElementTags.js
@@ -160,12 +159,12 @@ export default class Base<
   }
 
   // 获取编辑视图
-  getEditView(
-    tagName: string,
-    attributes: Attributes,
-    elements: Array<XMLElement>,
-    context: XMLBuilderContext
-  ) {
+  getEditView({
+    tagName,
+    attributes,
+    elements,
+    context,
+  }: LayoutTypeContext<Attributes>) {
     let childrens = [];
     if (voidElementTags.includes(tagName)) {
       childrens = undefined;
@@ -181,12 +180,12 @@ export default class Base<
   }
 
   // 获取详情视图
-  getDetailView(
-    tagName: string,
-    attributes: Attributes,
-    elements: Array<XMLElement>,
-    context: XMLBuilderContext
-  ) {
+  getDetailView({
+    tagName,
+    attributes,
+    elements,
+    context,
+  }: LayoutTypeContext<Attributes>) {
     let childrens = [];
     if (voidElementTags.includes(tagName)) {
       childrens = undefined;

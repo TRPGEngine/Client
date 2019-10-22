@@ -4,6 +4,7 @@ import {
   BaseAttributes,
   ILayoutType,
   ILayoutTypeAttributes,
+  LayoutTypeContext,
 } from './Base';
 import { XMLElementAttributes } from '../parser/xml-parser';
 import { XMLBuilderContext } from '../XMLBuilder';
@@ -24,7 +25,7 @@ interface Attr extends ILayoutTypeAttributes {
 export default class TTextArea extends TInput implements ILayoutType<Attr> {
   name = 'TextArea';
 
-  getEditView(tagName, attributes: Attr, elements, context: XMLBuilderContext) {
+  getEditView({ attributes, context }: LayoutTypeContext<Attr>) {
     const label = attributes.label;
     const name = attributes.name;
     const autosize = attributes.autosize;

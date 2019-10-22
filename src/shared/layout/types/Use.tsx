@@ -1,22 +1,23 @@
 import React from 'react';
-import Base, { BaseTypeRow, ILayoutTypeAttributes, ILayoutType } from './Base';
-import { Row } from 'antd';
-import { XMLBuilderContext } from '../XMLBuilder';
-import { XMLElementAttributes } from '../parser/xml-parser';
+import Base, {
+  ILayoutTypeAttributes,
+  ILayoutType,
+  LayoutTypeContext,
+} from './Base';
 
-interface Attributes extends ILayoutTypeAttributes {
+interface Attr extends ILayoutTypeAttributes {
   define: string;
   [other: string]: any;
 }
-export default class TUse extends Base implements ILayoutType<Attributes> {
+export default class TUse extends Base implements ILayoutType<Attr> {
   name = 'Use';
 
-  getEditView(
+  getEditView({
     tagName,
-    attributes: Attributes,
+    attributes,
     elements,
-    context: XMLBuilderContext
-  ) {
+    context,
+  }: LayoutTypeContext<Attr>) {
     const { state } = context;
     const defines = state.defines;
     const { define, ...otherProps } = attributes;
