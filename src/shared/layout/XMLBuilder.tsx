@@ -57,6 +57,10 @@ export enum ActionType {
 
 const XMLBuilderContainer = styled.div`
   text-align: left;
+
+  pre {
+    margin: 0;
+  }
 `;
 
 const buildReducer = (onChange?: stateChangeHandler) => {

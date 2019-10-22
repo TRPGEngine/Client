@@ -203,4 +203,8 @@ export default class Base<
 
 export const BaseTypeRow = styled(Row)`
   margin-bottom: 0.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;

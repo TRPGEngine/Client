@@ -26,24 +26,24 @@
     </Col>
   </Define> -->
   <Define name="skill">
-    <Row>
+    <Row type="flex" align="middle">
       <Col :span="4">
-        <pre>{{props.label}}</pre>
+        <pre title="技能">{{props.label}}</pre>
       </Col>
       <Col :span="4">
         <!-- 初始值 -->
-        <span>{{props.initValue || 1}}</span>
+        <span title="初始等级">{{props.initValue || 1}}</span>
       </Col>
       <Col :span="12">
         <Input :isNumber="true" label="" name="props.value" changeValue="props.value" />
       </Col>
       <Col :span="4">
         <!-- 成功率 -->
-        <Col>
+        <Row type="flex" justify="space-around">
           <span>{{props.initValue + props.value || 0}}%</span>
           <span>{{(props.initValue + props.value || 0) / 2}}%</span>
           <span>{{(props.initValue + props.value || 0) / 5}}%</span>
-        </Col>
+        </Row>
       </Col>
     </Row>
   </Define>
