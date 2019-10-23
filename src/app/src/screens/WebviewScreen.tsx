@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   BackHandler,
   Linking,
+  NativeSyntheticEvent,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import sb from 'react-native-style-block';
@@ -18,6 +19,7 @@ import styled from 'styled-components/native';
 import {
   WebViewNavigationEvent,
   WebViewNavigation,
+  WebViewNativeProgressEvent,
 } from 'react-native-webview/lib/WebViewTypes';
 
 const TipContainer = styled.View`
@@ -28,6 +30,16 @@ const TipContainer = styled.View`
   bottom: 0;
   align-items: center;
   justify-content: center;
+`;
+
+const LoadingBar = styled.View<{ color: string; percent: number }>`
+  background-color: ${(props) => props.color};
+  width: ${(props) => props.percent * 100}%;
+  height: 3px;
+  position: absolute;
+  z-index: 10px;
+  top: 0;
+  left: 0;
 `;
 
 const Loading = React.memo(() => (
@@ -77,12 +89,16 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
     };
   };
 
+  state = {
+    visible: false,
+    percent: 0, //range:  0 - 1
+    color: '#3B78E7',
+  };
+  errorColor = '#f30';
+  disappearDuration = 300;
   canGoBack = false;
   webview: WebView;
-
-  constructor(props) {
-    super(props);
-  }
+  timer: number;
 
   get url(): string {
     return this.props.navigation.getParam('url', '');
@@ -98,6 +114,7 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    clearTimeout(this.timer);
   }
 
   onBackPress = () => {
@@ -109,6 +126,23 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
       // 不能回退
       return false;
     }
+  };
+
+  handleLoadStart = () => {
+    this.setState({ visible: true });
+  };
+  handleLoadEnd = () => {
+    this.timer = setTimeout(() => {
+      this.setState({ visible: false });
+    }, this.disappearDuration);
+  };
+  handleLoadProgress = (
+    e: NativeSyntheticEvent<WebViewNativeProgressEvent>
+  ) => {
+    this.setState({ percent: e.nativeEvent.progress });
+  };
+  handleError = () => {
+    this.setState({ color: this.errorColor, percent: 1 });
   };
 
   handleStateChange(state: WebViewNavigation) {
@@ -152,18 +186,27 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
     const url = this.url;
 
     return (
-      <WebView
-        ref={(ref) => (this.webview = ref)}
-        source={{ uri: url }}
-        injectedJavaScript={this.injectedJavaScript}
-        startInLoadingState={true}
-        renderLoading={() => <Loading />}
-        renderError={() => <LoadError url={url} />}
-        mixedContentMode={'compatibility'}
-        onNavigationStateChange={(state) => this.handleStateChange(state)}
-        onMessage={(e) => this.handleMessage(e)}
-        onLoad={this.handleLoad}
-      />
+      <View style={{ flex: 1 }}>
+        {this.state.visible && (
+          <LoadingBar color={this.state.color} percent={this.state.percent} />
+        )}
+        <WebView
+          ref={(ref) => (this.webview = ref)}
+          source={{ uri: url }}
+          injectedJavaScript={this.injectedJavaScript}
+          startInLoadingState={true}
+          renderLoading={() => <Loading />}
+          renderError={() => <LoadError url={url} />}
+          mixedContentMode={'compatibility'}
+          onNavigationStateChange={(state) => this.handleStateChange(state)}
+          onMessage={(e) => this.handleMessage(e)}
+          onLoad={this.handleLoad}
+          onLoadStart={this.handleLoadStart}
+          onLoadEnd={this.handleLoadEnd}
+          onLoadProgress={this.handleLoadProgress}
+          onError={this.handleError}
+        />
+      </View>
     );
   }
 }
