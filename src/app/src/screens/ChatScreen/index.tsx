@@ -28,6 +28,8 @@ import styled from 'styled-components/native';
 import { sendQuickDice } from '@src/shared/redux/actions/dice';
 import InputView from './InputView';
 import MsgList from './MsgList';
+import { TRPGDispatchProp } from '@src/shared/redux/types/redux';
+import { clearSelectGroup } from '@src/shared/redux/actions/group';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
@@ -41,7 +43,7 @@ const ExtraPanel = styled.View`
 
 type Params = ChatParams & { headerRightFunc?: () => void };
 
-interface Props extends DispatchProp<any>, NavigationScreenProps<Params> {
+interface Props extends TRPGDispatchProp, NavigationScreenProps<Params> {
   msgList: any;
   selfInfo: any;
   selfUUID: string;
@@ -79,8 +81,12 @@ class ChatScreen extends React.Component<Props> {
   keyboardDidHideListener: EmitterSubscription;
   inputRef = React.createRef<TextInput>();
 
+  get converseType() {
+    return this.props.navigation.getParam('type', 'user');
+  }
+
   componentDidMount() {
-    const converseType = this.props.navigation.getParam('type', 'user');
+    const converseType = this.converseType;
 
     this.props.navigation.setParams({
       headerRightFunc: () => {
@@ -114,6 +120,11 @@ class ChatScreen extends React.Component<Props> {
   componentWillUnmount() {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
+    if (this.converseType === 'group') {
+      this.props.dispatch(clearSelectGroup());
+    } else {
+      this.props.dispatch(clearSelectedConverse());
+    }
   }
 
   dismissAll = () => {
@@ -130,7 +141,7 @@ class ChatScreen extends React.Component<Props> {
    */
   sendMsg(message: string) {
     const uuid = this.props.navigation.getParam('uuid', '');
-    const converseType = this.props.navigation.getParam('type', 'user');
+    const converseType = this.converseType;
     if (!!message) {
       // this.props.onSendMsg(message, type);
       if (!!uuid) {
@@ -163,7 +174,7 @@ class ChatScreen extends React.Component<Props> {
   handleRequestMoreChatLog = () => {
     const date = this.props.msgList.first().get('date');
     const { selectedConverseUUID } = this.props;
-    const converseType = this.props.navigation.getParam('type', 'user');
+    const converseType = this.converseType;
     this.props.dispatch(
       getMoreChatLog(selectedConverseUUID, date, converseType === 'user')
     );
@@ -257,7 +268,7 @@ class ChatScreen extends React.Component<Props> {
 
   handleSendQuickDice = (diceExp: string) => {
     const uuid = this.props.navigation.getParam('uuid', '');
-    const converseType = this.props.navigation.getParam('type', 'user');
+    const converseType = this.converseType;
     const isGroup = converseType === 'group';
     this.props.dispatch(sendQuickDice(uuid, isGroup, diceExp));
     this.setState({ showQuickDiceModal: false });
