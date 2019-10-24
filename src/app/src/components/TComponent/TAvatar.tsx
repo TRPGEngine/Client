@@ -4,6 +4,7 @@ import sb from 'react-native-style-block';
 import config from '../../../../shared/project.config';
 import str2int from 'str2int';
 import _isString from 'lodash/isString';
+import TImage from './TImage';
 
 interface Props {
   uri: string | ImageSourcePropType;
@@ -67,15 +68,23 @@ class TAvatar extends React.Component<Props> {
       !TAvatar.errorImageUri.includes(String(uri))
     ) {
       if (typeof uri === 'string') {
-        uri = { uri };
+        // 如果是网络地址。则使用TImage作为缓存
+        return (
+          <TImage
+            style={[...style, { height, width }]}
+            url={uri}
+            onError={this.onImageLoadError}
+          />
+        );
+      } else {
+        return (
+          <Image
+            style={[...style, { height, width }]}
+            source={uri}
+            onError={this.onImageLoadError}
+          />
+        );
       }
-      return (
-        <Image
-          style={[...style, { height, width }]}
-          source={uri}
-          onError={this.onImageLoadError}
-        />
-      );
     } else {
       return (
         <View
