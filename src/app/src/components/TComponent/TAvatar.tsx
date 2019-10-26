@@ -5,6 +5,26 @@ import config from '../../../../shared/project.config';
 import str2int from 'str2int';
 import _isString from 'lodash/isString';
 import TImage from './TImage';
+import styled from 'styled-components/native';
+
+const TImageAvatar = styled(TImage)<{
+  height: number;
+  width: number;
+}>`
+  height: ${(props) => props.height}px;
+  width: ${(props) => props.width}px;
+  border-radius: ${(props) => props.width / 2}px;
+  overflow: hidden;
+`;
+
+const NormalAvatar = styled.Image<{
+  height: number;
+  width: number;
+}>`
+  height: ${(props) => props.height}px;
+  width: ${(props) => props.width}px;
+  border-radius: ${(props) => props.width / 2}px;
+`;
 
 interface Props {
   uri: string | ImageSourcePropType;
@@ -70,16 +90,20 @@ class TAvatar extends React.Component<Props> {
       if (typeof uri === 'string') {
         // 如果是网络地址。则使用TImage作为缓存
         return (
-          <TImage
-            style={[...style, { height, width }]}
+          <TImageAvatar
+            style={style}
+            width={width}
+            height={height}
             url={uri}
             onError={this.onImageLoadError}
           />
         );
       } else {
         return (
-          <Image
-            style={[...style, { height, width }]}
+          <NormalAvatar
+            style={style}
+            width={width}
+            height={height}
             source={uri}
             onError={this.onImageLoadError}
           />

@@ -18,6 +18,7 @@ export default class TImage extends React.Component<Props> {
         <Image
           resizeMode={FastImage.resizeMode.contain}
           indicator={ProgressBar}
+          fallback={true}
           {...this.props}
           source={{
             uri: url,
