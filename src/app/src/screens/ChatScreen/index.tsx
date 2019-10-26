@@ -339,7 +339,6 @@ class ChatScreen extends React.Component<Props> {
 
       return (
         <View style={{ flex: 1 }}>
-          <Text>{JSON.stringify(this.props.isWriting)}</Text>
           <MsgList
             msgList={msgList}
             selfInfo={this.props.selfInfo}
