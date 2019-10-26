@@ -47,7 +47,7 @@ interface Props {
   height: number;
   width: number;
 }
-class TAvatar extends React.Component<Props> {
+class TAvatar extends React.PureComponent<Props> {
   static defaultProps = {
     uri: '',
     name: '',
