@@ -39,7 +39,6 @@ class ConvItem extends React.Component<Props> {
         onPress={() => this.props.onPress && this.props.onPress()}
       >
         <TAvatar
-          style={styles.avatar}
           uri={this.props.icon}
           name={this.props.title}
           height={40}
@@ -69,7 +68,6 @@ const styles = {
     sb.padding(10, 6),
     sb.bgColor(),
   ],
-  avatar: [sb.radius(20)],
   body: [sb.flex(), sb.padding(0, 4), sb.contentCenter()],
   title: [
     sb.direction('row'),

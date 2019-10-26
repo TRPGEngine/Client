@@ -80,7 +80,6 @@ class ProfileScreen extends React.Component<Props> {
         <View style={styles.header}>
           <TImageViewer images={[avatar.replace('/thumbnail', '')]}>
             <TAvatar
-              style={styles.avatar}
               uri={avatar}
               name={groupInfo.get('name')}
               capitalSize={40}
@@ -119,7 +118,6 @@ const styles = {
     sb.bgColor('white'),
     sb.padding(20, 0),
   ],
-  avatar: [sb.radius(50)],
   item: [
     { flexDirection: 'row' },
     sb.padding(10, 4),

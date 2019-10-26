@@ -26,6 +26,19 @@ const NormalAvatar = styled.Image<{
   border-radius: ${(props) => props.width / 2}px;
 `;
 
+const TextAvatar = styled.View<{
+  height: number;
+  width: number;
+  color: string;
+}>`
+  height: ${(props) => props.height}px;
+  width: ${(props) => props.width}px;
+  border-radius: ${(props) => props.width / 2}px;
+  background-color: ${(props) => props.color};
+  align-items: center;
+  justify-content: center;
+`;
+
 interface Props {
   uri: string | ImageSourcePropType;
   name: string;
@@ -111,17 +124,11 @@ class TAvatar extends React.Component<Props> {
       }
     } else {
       return (
-        <View
-          style={[
-            ...style,
-            { backgroundColor: color, height, width },
-            sb.center(),
-          ]}
-        >
+        <TextAvatar style={style} color={color} height={height} width={width}>
           <Text style={[...styles.capital, { fontSize: capitalSize }]}>
             {capital}
           </Text>
-        </View>
+        </TextAvatar>
       );
     }
   }

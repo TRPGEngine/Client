@@ -64,7 +64,7 @@ class AccountScreen extends React.Component<Props> {
         >
           <TAvatar
             uri={avatar}
-            style={styles.avatar}
+            style={{ marginRight: 10 }}
             name={name}
             height={60}
             width={60}
@@ -140,7 +140,6 @@ const styles = {
     sb.alignCenter(),
     { height: 80 },
   ],
-  avatar: [sb.radius(30), { marginRight: 10 }],
   username: [sb.font(18)],
   userdesc: [sb.color('#999')],
   arrow: [
