@@ -22,7 +22,7 @@ import QuickDiceModal from '@app/components/chat/QuickDiceModal';
 import { uploadChatimg } from '@shared/utils/image-uploader';
 import { unemojify } from '@shared/utils/emoji';
 import _get from 'lodash/get';
-import { ChatParams } from '../../types/params';
+import { ChatParams, ChatType } from '../../types/params';
 
 import styled from 'styled-components/native';
 import { sendQuickDice } from '@src/shared/redux/actions/dice';
@@ -30,6 +30,7 @@ import InputView from './InputView';
 import MsgList from './MsgList';
 import { TRPGDispatchProp } from '@src/shared/redux/types/redux';
 import { clearSelectGroup } from '@src/shared/redux/actions/group';
+import { TRPGState } from '@src/shared/redux/types/__all__';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
@@ -49,14 +50,17 @@ interface Props extends TRPGDispatchProp, NavigationScreenProps<Params> {
   selfUUID: string;
   nomore: boolean;
   selectedConverseUUID: string;
+  isWriting: boolean;
 }
 class ChatScreen extends React.Component<Props> {
-  static navigationOptions = (props) => {
+  static navigationOptions = (props: Props) => {
     const navigation = props.navigation;
-    const { state, setParams } = navigation;
+    const { state, getParam, setParams } = navigation;
     const { params } = state;
-    const type = params.type;
+    const type = getParam('type');
+    const isWriting = getParam('isWriting', false);
     return {
+      headerTitle: isWriting ? '正在输入...' : `与 ${params.name} 的聊天`,
       headerRight: ['user', 'group'].includes(type) ? (
         <View style={{ marginRight: 10 }}>
           <TIcon
@@ -124,6 +128,15 @@ class ChatScreen extends React.Component<Props> {
       this.props.dispatch(clearSelectGroup());
     } else {
       this.props.dispatch(clearSelectedConverse());
+    }
+  }
+
+  componentDidUpdate(prevProps: Readonly<Props>) {
+    const { isWriting } = this.props;
+
+    if (prevProps.isWriting !== isWriting) {
+      // 如果isWriting 更新, 则设置参数
+      this.props.navigation.setParams({ isWriting });
     }
   }
 
@@ -326,6 +339,7 @@ class ChatScreen extends React.Component<Props> {
 
       return (
         <View style={{ flex: 1 }}>
+          <Text>{JSON.stringify(this.props.isWriting)}</Text>
           <MsgList
             msgList={msgList}
             selfInfo={this.props.selfInfo}
@@ -363,12 +377,20 @@ class ChatScreen extends React.Component<Props> {
   }
 }
 
-export default connect((state: any, ownProps: any) => {
+export default connect((state: TRPGState, ownProps: Props) => {
   const selectedConverseUUID = _get(
     ownProps,
     'navigation.state.params.uuid',
     ''
   );
+  const converseType = ownProps.navigation.getParam('type', 'user');
+  let isWriting = false;
+  if (converseType === 'user') {
+    // TODO: 暂时先只实现用户的输入中提示
+    isWriting = (state.getIn(['chat', 'writingList', 'user']) || []).includes(
+      selectedConverseUUID
+    );
+  }
 
   const msgList = state.getIn([
     'chat',
@@ -383,9 +405,9 @@ export default connect((state: any, ownProps: any) => {
     selfUUID: state.getIn(['user', 'info', 'uuid']),
     msgList: msgList && msgList.sortBy((item) => item.get('date')),
     usercache: state.getIn(['cache', 'user']),
-    nomore: state.getIn(
-      ['chat', 'converses', selectedConverseUUID, 'nomore'],
-      false
-    ),
+    nomore:
+      state.getIn(['chat', 'converses', selectedConverseUUID, 'nomore']) ||
+      false,
+    isWriting,
   };
 })(ChatScreen);

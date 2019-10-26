@@ -90,10 +90,9 @@ export const AppNavigator = createStackNavigator(
     },
     Chat: {
       screen: ChatScreen,
-      navigationOptions: ({ navigation }) => ({
-        headerTitle: '与 ' + navigation.state.params.name + ' 的聊天',
+      navigationOptions: {
         gesturesEnabled: true,
-      }),
+      },
     },
     AddFriend: {
       screen: AddFriendScreen,
@@ -105,6 +104,7 @@ export const AppNavigator = createStackNavigator(
       screen: ProfileScreen,
       navigationOptions: ({ navigation }) => ({
         headerTitle: navigation.state.params.name + ' 的个人信息',
+        gesturesEnabled: true,
       }),
     },
     GroupProfile: {

@@ -3,4 +3,5 @@ export interface ChatParams {
   uuid: string;
   type: ChatType;
   name: string;
+  isWriting?: boolean;
 }
