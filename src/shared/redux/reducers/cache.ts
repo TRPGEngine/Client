@@ -1,5 +1,6 @@
-import immutable, { Record, Map } from 'immutable';
-import constants from '../constants';
+import immutable from 'immutable';
+import constants from '@redux/constants';
+import { CacheState } from '@redux/types/cache';
 const {
   RESET,
   GET_USER_INFO,
@@ -8,13 +9,6 @@ const {
   GET_TEMPLATE_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
 } = constants;
-
-export type CacheState = Record<{
-  user: Map<string, any>;
-  template: Map<string, any>;
-  actor: Map<string, any>;
-  group: Map<string, any>;
-}>;
 
 const initialState: CacheState = immutable.fromJS({
   user: {},

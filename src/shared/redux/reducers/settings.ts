@@ -1,6 +1,7 @@
-import immutable, { Record } from 'immutable';
-import constants from '../constants';
-import config from '../../project.config';
+import immutable from 'immutable';
+import constants from '@redux/constants';
+import config from '@shared/project.config';
+import { SettingsState } from '@redux/types/settings';
 
 const {
   RESET,
@@ -11,14 +12,6 @@ const {
   REMOVE_FAVORITE_DICE,
   UPDATE_FAVORITE_DICE,
 } = constants;
-
-type NotificationType = 'granted' | 'denied' | 'default';
-
-export type SettingsState = Record<{
-  user: any;
-  system: any;
-  notificationPermission: NotificationType;
-}>;
 
 const initialState: SettingsState = immutable.fromJS({
   ...config.defaultSettings,

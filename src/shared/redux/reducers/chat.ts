@@ -1,7 +1,8 @@
-import immutable, { List, Map, Record } from 'immutable';
+import immutable from 'immutable';
 import _isNil from 'lodash/isNil';
 import _invoke from 'lodash/invoke';
-import constants from '../constants';
+import constants from '@redux/constants';
+import { ChatState } from '@redux/types/chat';
 const {
   RESET,
   ADD_CONVERSES,
@@ -28,18 +29,6 @@ const {
   SET_CONVERSES_MSGLOG_NOMORE,
   SET_CONVERSE_ISREAD,
 } = constants;
-
-type WritingListType =
-  | Map<'user', List<string>>
-  | Map<'group', Map<string, List<string>>>;
-
-export type ChatState = Record<{
-  selectedConverseUUID: string;
-  conversesDesc: string;
-  converses: Map<string, any>;
-  writingList: WritingListType;
-  emotions: Map<'catalogs' | 'favorites', List<any>>;
-}>;
 
 const initialState: ChatState = immutable.fromJS({
   selectedConverseUUID: '',

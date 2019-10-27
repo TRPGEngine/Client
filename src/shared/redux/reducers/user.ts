@@ -1,5 +1,6 @@
-import immutable, { Record, List } from 'immutable';
-import constants from '../constants';
+import immutable from 'immutable';
+import constants from '@redux/constants';
+import { UserState } from '@redux/types/user';
 const {
   RESET,
   LOGIN_REQUEST,
@@ -22,17 +23,6 @@ const {
   REFUSE_FRIEND_INVITE_SUCCESS,
   ADD_FRIEND_INVITE,
 } = constants;
-
-export type UserState = Record<{
-  isTryLogin: boolean;
-  isLogin: boolean;
-  info: any;
-  friendList: List<any>;
-  friendInvite: List<any>;
-  friendRequests: List<any>;
-  isFindingUser: boolean;
-  findingResult: List<any>;
-}>;
 
 const initialState: UserState = immutable.fromJS({
   isTryLogin: false,

@@ -1,6 +1,7 @@
-import constants from '../constants';
-import immutable, { Record, Map } from 'immutable';
+import constants from '@redux/constants';
+import immutable from 'immutable';
 import uuid from 'uuid/v1';
+import { NoteState } from '@redux/types/note';
 
 const {
   RESET,
@@ -13,13 +14,6 @@ const {
   SYNC_NOTE_SUCCESS,
   SYNC_NOTE_FAILED,
 } = constants;
-
-export type NoteState = Record<{
-  noteList: Map<string, any>;
-  selectedNoteUUID: string;
-  isSync: boolean;
-  isSyncUUID: string;
-}>;
 
 const initialState: NoteState = immutable.fromJS({
   noteList: {},
