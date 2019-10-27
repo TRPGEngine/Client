@@ -109,6 +109,7 @@ class TAvatar extends React.PureComponent<Props> {
             height={height}
             url={uri}
             onError={this.onImageLoadError}
+            hideLoading={true}
           />
         );
       } else {
