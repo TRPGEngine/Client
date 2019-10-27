@@ -275,8 +275,13 @@ export default function chat(state = initialState, action) {
           }
         );
       }
-      case SWITCH_GROUP:
-        return state.setIn(['converses', action.payload, 'unread'], false);
+      case SWITCH_GROUP: {
+        if (!_isNil(state.getIn(['converses', action.payload]))) {
+          return state.setIn(['converses', action.payload, 'unread'], false);
+        } else {
+          return state;
+        }
+      }
       case CREATE_CONVERSES_SUCCESS: {
         let createConvUUID = action.payload.uuid;
         let createConv = Object.assign(
