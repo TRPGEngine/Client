@@ -1,13 +1,19 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { List } from '@ant-design/react-native';
-import { fetchDocumentList, DocumentListType } from '@src/shared/model/file';
+import {
+  fetchDocumentList,
+  DocumentListType,
+  fetchDocumentLink,
+} from '@src/shared/model/file';
+import { openWebview } from '../redux/actions/nav';
+import { NavigationScreenProps } from 'react-navigation';
 const Item = List.Item;
 
 interface State {
   docs: DocumentListType[];
 }
-interface Props {}
+interface Props extends NavigationScreenProps {}
 
 class DocumentScreen extends React.Component<Props, State> {
   state: Readonly<State> = {
@@ -21,8 +27,10 @@ class DocumentScreen extends React.Component<Props, State> {
     });
   }
 
-  handlePress = (uuid: string) => {
-    alert(uuid);
+  handlePress = async (uuid: string) => {
+    // TODO 需要处理
+    const link = await fetchDocumentLink(uuid);
+    this.props.navigation.dispatch(openWebview(link));
   };
 
   render() {
