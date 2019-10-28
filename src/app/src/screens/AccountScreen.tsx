@@ -12,6 +12,7 @@ import { TButton, TAvatar } from '../components/TComponent';
 import checkVersion from '../../../shared/utils/check-version';
 import * as appUtils from '../utils/apputils';
 import { TIcon } from '../components/TComponent';
+import DevContainer from '../components/DevContainer';
 
 import { List } from '@ant-design/react-native';
 import { showToast } from '@src/shared/redux/actions/ui';
@@ -88,6 +89,19 @@ class AccountScreen extends React.Component<Props> {
           >
             发现
           </Item>
+          <DevContainer>
+            <Item
+              thumb={
+                <AccountListThumb color="cornflowerblue" icon="&#xe623;" />
+              }
+              arrow="horizontal"
+              onPress={() => {
+                alert('待实现');
+              }}
+            >
+              资料库
+            </Item>
+          </DevContainer>
           <Item
             thumb={<AccountListThumb color="gold" icon="&#xe609;" />}
             arrow="horizontal"
