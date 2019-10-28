@@ -7,7 +7,7 @@ import styled from 'styled-components/native';
 import config from '../../../shared/project.config';
 import appConfig from '@app/config.app';
 import { logout } from '../../../shared/redux/actions/user';
-import { openWebview } from '../redux/actions/nav';
+import { openWebview, switchNav } from '../redux/actions/nav';
 import { TButton, TAvatar } from '../components/TComponent';
 import checkVersion from '../../../shared/utils/check-version';
 import * as appUtils from '../utils/apputils';
@@ -96,7 +96,7 @@ class AccountScreen extends React.Component<Props> {
               }
               arrow="horizontal"
               onPress={() => {
-                alert('待实现');
+                this.props.dispatch(switchNav('Document'));
               }}
             >
               资料库
