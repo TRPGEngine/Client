@@ -171,6 +171,7 @@ android {
         versionName project.env.get("VERSION")
         vectorDrawables.useSupportLibrary = true // for react-native-image-crop-picker
         resValue "string", "build_config_package", "com.moonrailgun.trpg" // react-native-config
+        missingDimensionStrategy 'react-native-camera', 'general' // react-native-camera
     }
     splits {
         abi {
