@@ -245,10 +245,19 @@ android {
         pickFirst '**/x86_64/libc++_shared.so'
         pickFirst '**/x86/libjsc.so'
         pickFirst '**/armeabi-v7a/libjsc.so'
+
+        pickFirst 'lib/x86/libc++_shared.so'
+        pickFirst 'lib/x86_64/libjsc.so'
+        pickFirst 'lib/arm64-v8a/libjsc.so'
+        pickFirst 'lib/arm64-v8a/libc++_shared.so'
+        pickFirst 'lib/x86_64/libc++_shared.so'
+        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
     }
 }
 
 dependencies {
+    implementation project(':react-native-pdf')
+    implementation project(':rn-fetch-blob')
     implementation project(':react-native-fs')
     implementation project(':@react-native-community_cameraroll')
     implementation project(':react-native-config')

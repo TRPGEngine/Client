@@ -37,6 +37,7 @@
     "react-native-image-picker": "^0.28.1",
     "react-native-image-progress": "^1.1.1",
     "react-native-image-zoom-viewer": "^2.2.25",
+    "react-native-pdf": "^5.1.7",
     "react-native-progress": "^3.6.0",
     "react-native-root-siblings": "^3.2.1",
     "react-native-root-toast": "^3.0.1",
@@ -47,6 +48,7 @@
     "react-navigation-redux-helpers": "^3.0.2",
     "react-navigation-stack": "^1.4.0",
     "react-redux": "^7.1.1",
+    "rn-fetch-blob": "^0.11.2",
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
