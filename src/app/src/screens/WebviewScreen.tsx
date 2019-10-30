@@ -20,7 +20,11 @@ import {
   WebViewNavigationEvent,
   WebViewNavigation,
   WebViewNativeProgressEvent,
+  WebViewMessage,
 } from 'react-native-webview/lib/WebViewTypes';
+import _isNil from 'lodash/isNil';
+import _isEmpty from 'lodash/isEmpty';
+import _isString from 'lodash/isString';
 
 const TipContainer = styled.View`
   position: absolute;
@@ -59,6 +63,12 @@ export type WebviewAfterLoadCallback = (
   webview: WebView,
   e: WebViewNavigationEvent
 ) => void;
+
+export interface WebviewMessageCallbackData {
+  type: string;
+  [other: string]: any;
+}
+export type WebviewMessageCallback = (data: WebviewMessageCallbackData) => void;
 
 type WebviewScreenProps = NavigationScreenProps<{
   url: string;
@@ -99,6 +109,7 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
   canGoBack = false;
   webview: WebView;
   timer: number;
+  _messageCb: { [messageType: string]: WebviewMessageCallback[] };
 
   get url(): string {
     return this.props.navigation.getParam('url', '');
@@ -128,6 +139,34 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
     }
   };
 
+  /**
+   * 增加监听方法
+   * @param type 监听的message type
+   * @param fn 方法回调
+   */
+  on(type: string, fn: WebviewMessageCallback) {
+    if (_isNil(this._messageCb[type])) {
+      this._messageCb[type] = [];
+    }
+
+    this._messageCb[type].push(fn);
+  }
+
+  /**
+   * 发送回调到各个事件监听器
+   * @param type 发送的message type
+   * @param data message信息
+   */
+  emit(type: string, data: WebviewMessageCallbackData) {
+    if (_isNil(this._messageCb[type]) || _isEmpty(this._messageCb[type])) {
+      return;
+    }
+
+    for (const cb of this._messageCb[type]) {
+      cb(data);
+    }
+  }
+
   handleLoadStart = () => {
     this.setState({ visible: true });
   };
@@ -152,12 +191,14 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
     this.canGoBack = canGoBack;
   }
 
-  handleMessage(e) {
+  handleMessage = (e: NativeSyntheticEvent<WebViewMessage>) => {
     console.log('On Message Data:', e.nativeEvent.data);
-    let data = e.nativeEvent.data;
+    const json = e.nativeEvent.data;
     try {
-      data = JSON.parse(data);
-      if (data.type === 'onOAuthFinished') {
+      const data: WebviewMessageCallbackData = JSON.parse(json);
+      const type = data.type;
+      if (type === 'onOAuthFinished') {
+        // 处理OAuth登录
         let { uuid, token } = data;
         if (!uuid || !token) {
           console.error('oauth登录失败, 缺少必要参数', uuid, token);
@@ -169,11 +210,14 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
         rnStorage.set('token', token);
 
         this.props.dispatch(loginWithToken(uuid, token, 'qq'));
+      } else if (_isString(type)) {
+        // 处理其他事件
+        this.emit(type, data);
       }
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   handleLoad = (e: WebViewNavigationEvent) => {
     const afterLoadFn = this.props.navigation.getParam('afterLoad');
@@ -199,7 +243,7 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
           renderError={() => <LoadError url={url} />}
           mixedContentMode={'compatibility'}
           onNavigationStateChange={(state) => this.handleStateChange(state)}
-          onMessage={(e) => this.handleMessage(e)}
+          onMessage={this.handleMessage}
           onLoad={this.handleLoad}
           onLoadStart={this.handleLoadStart}
           onLoadEnd={this.handleLoadEnd}
