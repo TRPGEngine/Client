@@ -128,6 +128,21 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
     clearTimeout(this.timer);
   }
 
+  /**
+   * 发送消息到webview
+   * TODO: 未测试
+   */
+  postMessage(type: string, other: {}) {
+    if (this.webview) {
+      (this.webview as any).postMessage(
+        JSON.stringify({
+          type,
+          ...other,
+        })
+      );
+    }
+  }
+
   onBackPress = () => {
     if (this.canGoBack && this.webview) {
       // 可以回退
