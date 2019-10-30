@@ -7,8 +7,19 @@ import { switchSelectGroup } from '../../../../shared/redux/actions/group';
 import GroupDetail from './GroupDetail';
 
 import './GroupList.scss';
+import {
+  TRPGState,
+  TRPGDispatch,
+  TRPGDispatchProp,
+} from '@src/shared/redux/types/redux';
 
-class GroupList extends React.Component {
+interface Props extends TRPGDispatchProp {
+  groups: any;
+  converses: any;
+  selectedUUID: string;
+  switchSelectGroup: any;
+}
+class GroupList extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,11 +30,6 @@ class GroupList extends React.Component {
       slidePanelContent: null,
       selectedActorUUID: 'uuiduuid',
     };
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('click', this.sildeEvent);
-    this.sildeEvent = null;
   }
 
   getGroupList() {
@@ -84,12 +90,12 @@ class GroupList extends React.Component {
 }
 
 export default connect(
-  (state) => ({
+  (state: TRPGState) => ({
     groups: state.getIn(['group', 'groups']),
     selectedUUID: state.getIn(['group', 'selectedGroupUUID']),
     converses: state.getIn(['chat', 'converses']),
   }),
-  (dispatch) => ({
-    switchSelectGroup: (uuid) => dispatch(switchSelectGroup(uuid)),
+  (dispatch: TRPGDispatch) => ({
+    switchSelectGroup: (uuid: string) => dispatch(switchSelectGroup(uuid)),
   })
 )(GroupList);

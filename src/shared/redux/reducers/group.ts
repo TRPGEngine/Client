@@ -1,5 +1,7 @@
-import immutable, { Record, Map, List, fromJS } from 'immutable';
-import constants from '../constants';
+import immutable, { fromJS } from 'immutable';
+import _get from 'lodash/get';
+import { GroupState } from '@redux/types/group';
+import constants from '@redux/constants';
 const {
   RESET,
   CREATE_GROUP_SUCCESS,
@@ -32,18 +34,6 @@ const {
   SET_MEMBER_TO_MANAGER_SUCCESS,
   UPDATE_GROUP_STATUS,
 } = constants;
-import _get from 'lodash/get';
-
-export type GroupState = Record<{
-  info: Map<string, any>;
-  invites: List<any>;
-  groups: List<any>;
-  selectedGroupUUID: string;
-  isFindingGroup: boolean;
-  findingResult: List<any>;
-  requestingGroupUUID: List<string>;
-  groupActorMap: Map<string, Map<string, string>>;
-}>;
 
 const initialState: GroupState = immutable.fromJS({
   info: {}, // 所有的group信息。包括加入的和未加入的 // TODO: 修改到cache里管理

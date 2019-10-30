@@ -9,7 +9,7 @@ import { getSimpleDate } from '../../../shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getUserInfo } from '../../../shared/redux/actions/cache';
 import { sendFriendInvite } from '../../../shared/redux/actions/user';
-import { switchToConverseApp } from '../redux/actions/nav';
+import { switchToChatScreen } from '../redux/actions/nav';
 import { getUserInfoCache } from '../../../shared/utils/cache-helper';
 import { addUserConverse } from '@src/shared/redux/actions/chat';
 
@@ -58,7 +58,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
     // 创建用户会话并切换到该会话
     this.props.dispatch(addUserConverse([userUUID]));
     this.props.dispatch(
-      switchToConverseApp(
+      switchToChatScreen(
         userUUID,
         type,
         userInfo.get('nickname') || userInfo.get('username')
@@ -89,7 +89,6 @@ class ProfileScreen extends React.Component<ScreenProps> {
         <View style={styles.header}>
           <TImageViewer images={[avatar.replace('/thumbnail', '')]}>
             <TAvatar
-              style={styles.avatar}
               uri={avatar}
               name={name}
               capitalSize={40}
@@ -142,7 +141,6 @@ const styles = {
     sb.bgColor('white'),
     sb.padding(20, 0),
   ],
-  avatar: [sb.radius(50)],
   item: [
     { flexDirection: 'row' },
     sb.padding(10, 4),

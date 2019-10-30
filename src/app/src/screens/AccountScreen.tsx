@@ -7,11 +7,12 @@ import styled from 'styled-components/native';
 import config from '../../../shared/project.config';
 import appConfig from '@app/config.app';
 import { logout } from '../../../shared/redux/actions/user';
-import { openWebview } from '../redux/actions/nav';
+import { openWebview, switchNav } from '../redux/actions/nav';
 import { TButton, TAvatar } from '../components/TComponent';
 import checkVersion from '../../../shared/utils/check-version';
 import * as appUtils from '../utils/apputils';
 import { TIcon } from '../components/TComponent';
+import DevContainer from '../components/DevContainer';
 
 import { List } from '@ant-design/react-native';
 import { showToast } from '@src/shared/redux/actions/ui';
@@ -64,7 +65,7 @@ class AccountScreen extends React.Component<Props> {
         >
           <TAvatar
             uri={avatar}
-            style={styles.avatar}
+            style={{ marginRight: 10 }}
             name={name}
             height={60}
             width={60}
@@ -88,6 +89,19 @@ class AccountScreen extends React.Component<Props> {
           >
             发现
           </Item>
+          <DevContainer>
+            <Item
+              thumb={
+                <AccountListThumb color="cornflowerblue" icon="&#xe623;" />
+              }
+              arrow="horizontal"
+              onPress={() => {
+                this.props.dispatch(switchNav('Document'));
+              }}
+            >
+              资料库
+            </Item>
+          </DevContainer>
           <Item
             thumb={<AccountListThumb color="gold" icon="&#xe609;" />}
             arrow="horizontal"
@@ -140,7 +154,6 @@ const styles = {
     sb.alignCenter(),
     { height: 80 },
   ],
-  avatar: [sb.radius(30), { marginRight: 10 }],
   username: [sb.font(18)],
   userdesc: [sb.color('#999')],
   arrow: [

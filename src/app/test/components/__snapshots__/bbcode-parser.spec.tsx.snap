@@ -1,5 +1,438 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`bbcode-parser for app text parse component mix image and text 1`] = `
+Array [
+  <Text>
+    测试文字1
+  </Text>,
+  <View>
+    <Modal
+      hardwareAccelerated={false}
+      onRequestClose={[Function]}
+      transparent={true}
+      visible={false}
+    >
+      <ImageViewer
+        enableSwipeDown={true}
+        imageUrls={
+          Array [
+            Object {
+              "url": "http://exampleimg.com",
+            },
+          ]
+        }
+        index={0}
+        menuContext={
+          Object {
+            "cancel": "取消",
+            "saveToLocal": "保存到相册",
+          }
+        }
+        onClick={[Function]}
+        onSave={[Function]}
+        onSwipeDown={[Function]}
+        renderImage={[Function]}
+        saveToLocalByLongPress={true}
+      />
+    </Modal>
+    <View
+      accessible={true}
+      clickable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "height": 120,
+              "width": 180,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                Array [
+                  Object {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  undefined,
+                ],
+              ]
+            }
+          >
+            <Image
+              onError={[Function]}
+              onLoad={[Function]}
+              onLoadEnd={[Function]}
+              onLoadStart={[Function]}
+              onProgress={[Function]}
+              resizeMode="contain"
+              source={
+                Object {
+                  "cache": "immutable",
+                  "priority": "normal",
+                  "uri": "http://exampleimg.com",
+                }
+              }
+              style={
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              url="http://exampleimg.com"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>,
+  <Text>
+    测试文字2
+  </Text>,
+]
+`;
+
+exports[`bbcode-parser for app text parse component mix more url and text 1`] = `
+Array [
+  <Text>
+    百度:
+  </Text>,
+  <Link
+    url="http://baidu.com"
+  >
+    http://baidu.com
+  </Link>,
+  <Text>
+     谷歌:
+  </Text>,
+  <Link
+    url="http://google.com"
+  >
+    http://google.com
+  </Link>,
+]
+`;
+
+exports[`bbcode-parser for app text parse component mix more url and text with no separation 1`] = `
+Array [
+  <Text>
+    百度
+  </Text>,
+  <Link
+    url="http://baidu.com谷歌http"
+  >
+    http://baidu.com谷歌http
+  </Link>,
+  <Text>
+    :
+  </Text>,
+  <Link
+    url="//google.com"
+  >
+    //google.com
+  </Link>,
+]
+`;
+
+exports[`bbcode-parser for app text parse component mix url and image and text 1`] = `
+Array [
+  <Text>
+    百度:
+  </Text>,
+  <View>
+    <Modal
+      hardwareAccelerated={false}
+      onRequestClose={[Function]}
+      transparent={true}
+      visible={false}
+    >
+      <ImageViewer
+        enableSwipeDown={true}
+        imageUrls={
+          Array [
+            Object {
+              "url": "http://exampleimg.com",
+            },
+          ]
+        }
+        index={0}
+        menuContext={
+          Object {
+            "cancel": "取消",
+            "saveToLocal": "保存到相册",
+          }
+        }
+        onClick={[Function]}
+        onSave={[Function]}
+        onSwipeDown={[Function]}
+        renderImage={[Function]}
+        saveToLocalByLongPress={true}
+      />
+    </Modal>
+    <View
+      accessible={true}
+      clickable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "height": 120,
+              "width": 180,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                Array [
+                  Object {
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  undefined,
+                ],
+              ]
+            }
+          >
+            <Image
+              onError={[Function]}
+              onLoad={[Function]}
+              onLoadEnd={[Function]}
+              onLoadStart={[Function]}
+              onProgress={[Function]}
+              resizeMode="contain"
+              source={
+                Object {
+                  "cache": "immutable",
+                  "priority": "normal",
+                  "uri": "http://exampleimg.com",
+                }
+              }
+              style={
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+              url="http://exampleimg.com"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>,
+  <Text>
+     
+  </Text>,
+  <Link
+    url="http://baidu.com"
+  >
+    http://baidu.com
+  </Link>,
+]
+`;
+
+exports[`bbcode-parser for app text parse component mix url and text 1`] = `
+Array [
+  <Text>
+    百度:
+  </Text>,
+  <Link
+    url="http://baidu.com"
+  >
+    http://baidu.com
+  </Link>,
+]
+`;
+
+exports[`bbcode-parser for app text parse component mix url and text with no separation 1`] = `
+Array [
+  <Text>
+    百度
+  </Text>,
+  <Link
+    url="http://baidu.com"
+  >
+    http://baidu.com
+  </Link>,
+]
+`;
+
+exports[`bbcode-parser for app text parse component plain text 1`] = `
+<Text>
+  TestString
+</Text>
+`;
+
+exports[`bbcode-parser for app text parse component plain text with space 1`] = `
+<Text>
+  Test String
+</Text>
+`;
+
+exports[`bbcode-parser for app text parse component pure image 1`] = `
+<View>
+  <Modal
+    hardwareAccelerated={false}
+    onRequestClose={[Function]}
+    transparent={true}
+    visible={false}
+  >
+    <ImageViewer
+      enableSwipeDown={true}
+      imageUrls={
+        Array [
+          Object {
+            "url": "http://exampleimg.com",
+          },
+        ]
+      }
+      index={0}
+      menuContext={
+        Object {
+          "cancel": "取消",
+          "saveToLocal": "保存到相册",
+        }
+      }
+      onClick={[Function]}
+      onSave={[Function]}
+      onSwipeDown={[Function]}
+      renderImage={[Function]}
+      saveToLocalByLongPress={true}
+    />
+  </Modal>
+  <View
+    accessible={true}
+    clickable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "height": 120,
+            "width": 180,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Array [
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                undefined,
+              ],
+            ]
+          }
+        >
+          <Image
+            onError={[Function]}
+            onLoad={[Function]}
+            onLoadEnd={[Function]}
+            onLoadStart={[Function]}
+            onProgress={[Function]}
+            resizeMode="contain"
+            source={
+              Object {
+                "cache": "immutable",
+                "priority": "normal",
+                "uri": "http://exampleimg.com",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+            url="http://exampleimg.com"
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`bbcode-parser for app text parse component simple url 1`] = `
+<Link
+  url="http://baidu.com"
+>
+  http://baidu.com
+</Link>
+`;
+
 exports[`bbcode-parser text parse component mix image and text 1`] = `
 Array [
   <Text>

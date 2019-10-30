@@ -67,7 +67,6 @@ class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
           ]}
         >
           <TAvatar
-            style={styles.itemAvatar}
             uri={this.getAvatarUrl()}
             name={name}
             height={40}
@@ -103,7 +102,6 @@ const styles = {
     sb.font(10, 14),
   ],
   itemView: [sb.direction(), sb.padding(10, 10)],
-  itemAvatar: [sb.radius(20)],
   itemBody: [sb.padding(0, 4), sb.margin(0, 6), sb.flex()],
   itemName: [{ marginBottom: 4, marginTop: 4 }, sb.font(12)],
   itemMsg: [

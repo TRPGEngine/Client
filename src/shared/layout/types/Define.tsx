@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Base from './Base';
+import Base, { LayoutTypeContext } from './Base';
 import {
   XMLBuilderContext,
   ActionType,
@@ -109,7 +109,7 @@ export default class TDefine extends Base {
     });
   }
 
-  getEditView(tagName, attributes, elements, context: XMLBuilderContext) {
+  getEditView({ tagName, attributes, elements, context }: LayoutTypeContext) {
     const name = attributes.name;
 
     if (!context.state.defines[name]) {

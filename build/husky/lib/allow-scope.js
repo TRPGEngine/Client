@@ -1,1 +1,10 @@
-module.exports = ['app', 'web', 'all', 'layout', 'redux', 'test', 'misc'];
+module.exports = [
+  'app',
+  'web',
+  'portal',
+  'all',
+  'layout',
+  'redux',
+  'test',
+  'misc',
+];

@@ -18,11 +18,7 @@ const Link = (props: Props) => {
     props.dispatch(openWebview(props.url));
   };
 
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <LinkText>{props.children}</LinkText>
-    </TouchableOpacity>
-  );
+  return <LinkText onPress={onPress}>{props.children}</LinkText>;
 };
 
 export default React.memo(connect()(Link));

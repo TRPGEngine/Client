@@ -11,6 +11,7 @@ import styled from 'styled-components/native';
 import { Spring } from 'react-spring/renderprops';
 import TRefreshControl from '../components/TComponent/TRefreshControl';
 import { ChatType } from '../types/params';
+import { switchToChatScreen } from '../redux/actions/nav';
 
 const NetworkContainer = styled.View<{
   isOnline: boolean;
@@ -139,16 +140,7 @@ class HomeScreen extends React.Component<Props> {
   }
 
   handleSelectConverse(uuid: string, type: ChatType, info) {
-    this.props.dispatch(
-      NavigationActions.navigate({
-        routeName: 'Chat',
-        params: {
-          uuid,
-          type,
-          name: info.get('name'),
-        },
-      })
-    );
+    this.props.dispatch(switchToChatScreen(uuid, type, info.get('name')));
   }
 
   render() {

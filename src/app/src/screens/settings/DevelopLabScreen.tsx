@@ -1,11 +1,16 @@
 import React from 'react';
 import { View, Text, NativeModules } from 'react-native';
+import Config from 'react-native-config';
 
-import { TButton } from '../../components/TComponent';
+import { TButton } from '@app/components/TComponent';
 import styled from 'styled-components/native';
-import { sendBasicNotify, clearAllNotifications } from '../../native/trpg';
+import { sendBasicNotify, clearAllNotifications } from '@app/native/trpg';
 
 import MessageHandler from '@app/components/messageTypes/__all__';
+import { switchNav, navPortal } from '@app/redux/actions/nav';
+import config from '@src/shared/project.config';
+import { connect } from 'react-redux';
+import { TRPGDispatchProp } from '@src/shared/redux/types/redux';
 
 const TRPGModule = NativeModules.TRPGModule;
 
@@ -13,9 +18,18 @@ const DevButton = styled(TButton)`
   margin: 10px;
 `;
 
-class DevelopLabScreen extends React.Component {
+interface Props extends TRPGDispatchProp {}
+class DevelopLabScreen extends React.Component<Props> {
   sendBasicNotify = () => {
     sendBasicNotify({ title: 'test', message: 'message' });
+  };
+
+  handleEnvConfig = () => {
+    alert(JSON.stringify(Config, null, 4));
+  };
+
+  handlePortalLogin = () => {
+    this.props.dispatch(navPortal('/sso/login'));
   };
 
   render() {
@@ -29,6 +43,8 @@ class DevelopLabScreen extends React.Component {
         <DevButton onPress={() => clearAllNotifications()}>
           清理应用通知
         </DevButton>
+        <DevButton onPress={this.handleEnvConfig}>Print Env Config</DevButton>
+        <DevButton onPress={this.handlePortalLogin}>打开Portal登录</DevButton>
 
         <MessageHandler
           type="loading"
@@ -43,4 +59,4 @@ class DevelopLabScreen extends React.Component {
   }
 }
 
-export default DevelopLabScreen;
+export default connect()(DevelopLabScreen);

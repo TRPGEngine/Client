@@ -4,6 +4,40 @@ import sb from 'react-native-style-block';
 import config from '../../../../shared/project.config';
 import str2int from 'str2int';
 import _isString from 'lodash/isString';
+import TImage from './TImage';
+import styled from 'styled-components/native';
+
+const TImageAvatar = styled(TImage)<{
+  height: number;
+  width: number;
+}>`
+  height: ${(props) => props.height}px;
+  width: ${(props) => props.width}px;
+  border-radius: ${(props) => props.width / 2}px;
+  overflow: hidden;
+`;
+
+const NormalAvatar = styled.Image<{
+  height: number;
+  width: number;
+}>`
+  height: ${(props) => props.height}px;
+  width: ${(props) => props.width}px;
+  border-radius: ${(props) => props.width / 2}px;
+`;
+
+const TextAvatar = styled.View<{
+  height: number;
+  width: number;
+  color: string;
+}>`
+  height: ${(props) => props.height}px;
+  width: ${(props) => props.width}px;
+  border-radius: ${(props) => props.width / 2}px;
+  background-color: ${(props) => props.color};
+  align-items: center;
+  justify-content: center;
+`;
 
 interface Props {
   uri: string | ImageSourcePropType;
@@ -13,7 +47,7 @@ interface Props {
   height: number;
   width: number;
 }
-class TAvatar extends React.Component<Props> {
+class TAvatar extends React.PureComponent<Props> {
   static defaultProps = {
     uri: '',
     name: '',
@@ -67,28 +101,35 @@ class TAvatar extends React.Component<Props> {
       !TAvatar.errorImageUri.includes(String(uri))
     ) {
       if (typeof uri === 'string') {
-        uri = { uri };
+        // 如果是网络地址。则使用TImage作为缓存
+        return (
+          <TImageAvatar
+            style={style}
+            width={width}
+            height={height}
+            url={uri}
+            onError={this.onImageLoadError}
+            hideLoading={true}
+          />
+        );
+      } else {
+        return (
+          <NormalAvatar
+            style={style}
+            width={width}
+            height={height}
+            source={uri}
+            onError={this.onImageLoadError}
+          />
+        );
       }
-      return (
-        <Image
-          style={[...style, { height, width }]}
-          source={uri}
-          onError={this.onImageLoadError}
-        />
-      );
     } else {
       return (
-        <View
-          style={[
-            ...style,
-            { backgroundColor: color, height, width },
-            sb.center(),
-          ]}
-        >
+        <TextAvatar style={style} color={color} height={height} width={width}>
           <Text style={[...styles.capital, { fontSize: capitalSize }]}>
             {capital}
           </Text>
-        </View>
+        </TextAvatar>
       );
     }
   }

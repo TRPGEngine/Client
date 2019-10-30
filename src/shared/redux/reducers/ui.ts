@@ -1,5 +1,6 @@
-import constants from '../constants';
-import immutable, { Record } from 'immutable';
+import constants from '@redux/constants';
+import immutable from 'immutable';
+import { UIState } from '@redux/types/ui';
 
 const {
   RESET,
@@ -22,35 +23,6 @@ const {
   CHANGE_NETWORK_STATE,
   UPDATE_SOCKET_ID,
 } = constants;
-
-export type UIState = Record<{
-  showAlert: boolean;
-  showAlertInfo: any;
-  showLoading: boolean;
-  showLoadingText: string;
-  showModal: boolean;
-  showModalBody: any;
-  showToast: boolean;
-  showToastText: string;
-  showProfileCard: boolean;
-  showProfileCardUUID: string;
-  showSlidePanel: boolean;
-  showSlidePanelInfo: Record<{
-    title: string;
-    content: string;
-  }>;
-  showLigthbox: boolean;
-  showLigthboxInfo: any;
-  menuIndex: number;
-  menuPannel: any;
-  network: Record<{
-    isOnline: boolean;
-    tryReconnect: boolean;
-    msg: string;
-  }>;
-  socketId: string;
-  lastDiceType: string;
-}>;
 
 const initialState: UIState = immutable.fromJS({
   showAlert: false,

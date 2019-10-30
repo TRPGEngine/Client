@@ -1,5 +1,6 @@
 import immutable, { Record, Map, List } from 'immutable';
 import constants from '../constants';
+import { ActorState } from '@redux/types/actor';
 const {
   RESET,
   GET_TEMPLATE_SUCCESS,
@@ -16,23 +17,6 @@ const {
   REMOVE_ACTOR_SUCCESS,
   UPDATE_ACTOR_SUCCESS,
 } = constants;
-
-export type ActorState = Record<{
-  isFindingTemplate: boolean;
-  suggestTemplate: List<any>;
-  findingResult: List<any>;
-  currentEditedTemplate: Record<{
-    uuid: string;
-    name: string;
-    desc: string;
-    avatar: string;
-    info: string;
-  }>;
-  selfTemplate: List<any>;
-  selectedTemplate: any;
-  selfActors: List<any>;
-  selectedActorUUID: string;
-}>;
 
 const initialState: ActorState = immutable.fromJS({
   isFindingTemplate: false, // 模板查询页面

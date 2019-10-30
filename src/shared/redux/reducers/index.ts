@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux-immutable';
-import config from '../../project.config';
 import ui from './ui';
 import chat from './chat';
 import user from './user';

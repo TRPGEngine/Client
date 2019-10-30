@@ -24,6 +24,12 @@ if (trpgHost) {
   trpgPort = _tmp[1];
 }
 
+/**
+ * portal 服务的地址
+ */
+const portalUrl =
+  process.env.TRPG_PORTAL || 'https://trpg.moonrailgun.com/portal';
+
 const standardPort = isSSL ? '443' : '80';
 let apiPort = environment === 'production' ? standardPort : '23256';
 if (trpgPort) {
@@ -80,8 +86,10 @@ interface ProjectConfig {
     projectAppPackageUrl: string;
   };
   url: {
+    api?: string;
     goddessfantasy: string;
     blog: string;
+    portal: string;
   };
   defaultSettings: {};
 }
@@ -187,6 +195,7 @@ const config: ProjectConfig = {
   url: {
     goddessfantasy: 'http://www.goddessfantasy.net/',
     blog: 'http://moonrailgun.com',
+    portal: portalUrl,
   },
   defaultSettings: {
     user: {
@@ -198,6 +207,7 @@ const config: ProjectConfig = {
   },
 };
 config.file.url = `${config.file.protocol}://${config.file.host}:${config.file.port}`;
+config.url.api = config.file.url;
 
 // 获取基于API的绝对路径
 config.file.getAbsolutePath = function getAbsolutePath(path) {

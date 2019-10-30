@@ -1,5 +1,11 @@
 import React from 'react';
-import { BaseTypeRow } from './Base';
+import {
+  BaseTypeRow,
+  BaseAttributes,
+  ILayoutType,
+  ILayoutTypeAttributes,
+  LayoutTypeContext,
+} from './Base';
 import { XMLElementAttributes } from '../parser/xml-parser';
 import { XMLBuilderContext } from '../XMLBuilder';
 import { parseDataText } from '../processor';
@@ -9,19 +15,21 @@ import { Col, Input } from 'antd';
 import TInput, { Label } from './Input';
 const TextArea = Input.TextArea;
 
-export default class TTextArea extends TInput {
+interface Attr extends ILayoutTypeAttributes {
+  label?: string;
+  name?: string;
+  autosize?: boolean;
+  changeValue?: string;
+  isNumber?: boolean;
+}
+export default class TTextArea extends TInput implements ILayoutType<Attr> {
   name = 'TextArea';
 
-  getEditView(
-    tagName,
-    attributes: XMLElementAttributes,
-    elements,
-    context: XMLBuilderContext
-  ) {
-    const label = attributes.label as string;
-    const name = attributes.name as string;
-    const autosize = attributes.autosize as any;
-    const isNumber: boolean = attributes.isNumber as any;
+  getEditView({ attributes, context }: LayoutTypeContext<Attr>) {
+    const label = attributes.label;
+    const name = attributes.name;
+    const autosize = attributes.autosize;
+    const isNumber: boolean = attributes.isNumber;
 
     const changeValue = attributes.changeValue as string; // 指定要被修改的变量
     const bindingName = parseDataText(name || label, context); // 可以为a.b的格式

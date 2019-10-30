@@ -1,3 +1,5 @@
+import { Record } from 'immutable';
+
 export type AlertPayload =
   | string
   | {
@@ -8,3 +10,32 @@ export type AlertPayload =
       onConfirm?: Function;
       onCancel?: Function;
     };
+
+export type UIState = Record<{
+  showAlert: boolean;
+  showAlertInfo: any;
+  showLoading: boolean;
+  showLoadingText: string;
+  showModal: boolean;
+  showModalBody: any;
+  showToast: boolean;
+  showToastText: string;
+  showProfileCard: boolean;
+  showProfileCardUUID: string;
+  showSlidePanel: boolean;
+  showSlidePanelInfo: Record<{
+    title: string;
+    content: string;
+  }>;
+  showLigthbox: boolean;
+  showLigthboxInfo: any;
+  menuIndex: number;
+  menuPannel: any;
+  network: Record<{
+    isOnline: boolean;
+    tryReconnect: boolean;
+    msg: string;
+  }>;
+  socketId: string;
+  lastDiceType: string;
+}>;

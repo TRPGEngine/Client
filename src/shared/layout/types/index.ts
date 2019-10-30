@@ -1,9 +1,9 @@
 // 这个文件是用于获取与注册所有可用类型
-import BaseType from './Base';
-const _list: Array<BaseType> = [];
+import Base, { ILayoutType } from './Base';
+const _list: Array<ILayoutType> = [];
 
 interface RegisterType {
-  new (): BaseType;
+  new (): ILayoutType;
 }
 
 export const register = (Type: RegisterType) => {
@@ -20,12 +20,12 @@ export const register = (Type: RegisterType) => {
   _list.push(type);
 };
 
-export const get = (name: string): BaseType => {
+export const get = (name: string): ILayoutType => {
   const type = _list.find((val) => val.name === name);
   if (type) {
     return type;
   } else {
-    const baseType = new BaseType();
+    const baseType = new Base();
     return baseType;
   }
 };

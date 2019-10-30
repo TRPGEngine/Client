@@ -1,3 +1,5 @@
+import { List, Map, Record } from 'immutable';
+
 export type LocalMsgType = 'loading';
 
 export type MsgType =
@@ -32,3 +34,15 @@ export interface ConverseInfo {
   type: 'user' | 'group' | 'system';
   name?: string;
 }
+
+type WritingListType =
+  | Map<'user', List<string>>
+  | Map<'group', Map<string, List<string>>>;
+
+export type ChatState = Record<{
+  selectedConverseUUID: string;
+  conversesDesc: string;
+  converses: Map<string, any>;
+  writingList: WritingListType;
+  emotions: Map<'catalogs' | 'favorites', List<any>>;
+}>;

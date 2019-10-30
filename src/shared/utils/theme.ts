@@ -31,6 +31,9 @@ const styledTheme = {
     gold: '#FFD700',
     'alizarin-crimson': '#EC2121',
   },
+  boxShadow: {
+    normal: 'rgba(0, 0, 0, 0.15) 0 0 8px',
+  },
 };
 
 export default styledTheme;

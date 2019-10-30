@@ -33,6 +33,7 @@ import VersionScreen from './screens/VersionScreen';
 import CreateGroupScreen from './screens/CreateGroupScreen';
 import GroupDataScreen from './screens/GroupDataScreen';
 import DebugScreen from './screens/DebugScreen';
+import DocumentScreen from './screens/DocumentScreen';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -90,10 +91,9 @@ export const AppNavigator = createStackNavigator(
     },
     Chat: {
       screen: ChatScreen,
-      navigationOptions: ({ navigation }) => ({
-        headerTitle: '与 ' + navigation.state.params.name + ' 的聊天',
+      navigationOptions: {
         gesturesEnabled: true,
-      }),
+      },
     },
     AddFriend: {
       screen: AddFriendScreen,
@@ -105,6 +105,7 @@ export const AppNavigator = createStackNavigator(
       screen: ProfileScreen,
       navigationOptions: ({ navigation }) => ({
         headerTitle: navigation.state.params.name + ' 的个人信息',
+        gesturesEnabled: true,
       }),
     },
     GroupProfile: {
@@ -141,6 +142,12 @@ export const AppNavigator = createStackNavigator(
       screen: DebugScreen,
       navigationOptions: {
         headerTitle: '调试面板',
+      },
+    },
+    Document: {
+      screen: DocumentScreen,
+      navigationOptions: {
+        headerTitle: '资料库',
       },
     },
     Webview: {

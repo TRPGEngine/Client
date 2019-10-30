@@ -20,7 +20,8 @@
       "@components/*": ["./src/web/components/*"],
       "@shared/*": ["./src/shared/*"],
       "@web/*": ["./src/web/*"],
-      "@app/*": ["./src/app/src/*"]
+      "@app/*": ["./src/app/src/*"],
+      "@portal/*": ["./src/portal/*"]
     }
   },
   "include": [

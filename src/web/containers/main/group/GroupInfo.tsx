@@ -18,8 +18,27 @@ import GroupEdit from '../../../components/modal/GroupEdit';
 // import GroupEdit from './modal/GroupEdit';
 
 import './GroupInfo.scss';
+import {
+  TRPGState,
+  TRPGDispatch,
+  TRPGDispatchProp,
+} from '@src/shared/redux/types/redux';
+import { AlertPayload } from '@src/shared/redux/types/ui';
 
-class GroupInfo extends React.Component {
+interface Props extends TRPGDispatchProp {
+  showModal: any;
+  showAlert: any;
+  hideAlert: any;
+  groupInfo: any;
+  switchSelectGroup: any;
+  dismissGroup: any;
+  hideSlidePanel: any;
+  userUUID: string;
+  quitGroup: any;
+  setGroupStatus: any;
+  usercache: any;
+}
+class GroupInfo extends React.Component<Props> {
   handleEditGroup() {
     console.log('编辑团信息');
     this.props.showModal(<GroupEdit />);
@@ -161,7 +180,7 @@ class GroupInfo extends React.Component {
 }
 
 export default connect(
-  (state) => ({
+  (state: TRPGState) => ({
     userUUID: state.getIn(['user', 'info', 'uuid']),
     usercache: state.getIn(['cache', 'user']),
     selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
@@ -172,10 +191,10 @@ export default connect(
           group.get('uuid') === state.getIn(['group', 'selectedGroupUUID'])
       ),
   }),
-  (dispatch) => ({
-    showAlert: (...args) => dispatch(showAlert(...args)),
+  (dispatch: TRPGDispatch) => ({
+    showAlert: (payload: AlertPayload) => dispatch(showAlert(payload)),
     hideAlert: () => dispatch(hideAlert()),
-    showModal: (...args) => dispatch(showModal(...args)),
+    showModal: (body) => dispatch(showModal(body)),
     switchSelectGroup: (groupUUID) => dispatch(switchSelectGroup(groupUUID)),
     quitGroup: (groupUUID) => dispatch(quitGroup(groupUUID)),
     dismissGroup: (groupUUID) => dispatch(dismissGroup(groupUUID)),

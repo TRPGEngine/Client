@@ -1,7 +1,8 @@
-import immutable, { List, Map, Record } from 'immutable';
+import immutable from 'immutable';
 import _isNil from 'lodash/isNil';
 import _invoke from 'lodash/invoke';
-import constants from '../constants';
+import constants from '@redux/constants';
+import { ChatState } from '@redux/types/chat';
 const {
   RESET,
   ADD_CONVERSES,
@@ -26,22 +27,11 @@ const {
   UPDATE_USER_CHAT_EMOTION_CATALOG,
   ADD_USER_CHAT_EMOTION_CATALOG,
   SET_CONVERSES_MSGLOG_NOMORE,
+  SET_CONVERSE_ISREAD,
 } = constants;
 
-type WritingListType =
-  | Map<'user', List<string>>
-  | Map<'group', Map<string, List<string>>>;
-
-export type ChatState = Record<{
-  selectedConversesUUID: string;
-  conversesDesc: string;
-  converses: Map<string, any>;
-  writingList: WritingListType;
-  emotions: Map<'catalogs' | 'favorites', List<any>>;
-}>;
-
 const initialState: ChatState = immutable.fromJS({
-  selectedConversesUUID: '',
+  selectedConverseUUID: '',
   conversesDesc: '', // 获取会话列表的提示信息
   converses: {
     // "systemUUID": {
@@ -242,10 +232,10 @@ export default function chat(state = initialState, action) {
         return state.deleteIn(['converses', action.converseUUID]);
       case SWITCH_CONVERSES:
         return state
-          .set('selectedConversesUUID', action.converseUUID)
+          .set('selectedConverseUUID', action.converseUUID)
           .setIn(['converses', action.converseUUID, 'unread'], false); //已读未读;
       case CLEAR_SELECTED_CONVERSE:
-        return state.set('selectedConversesUUID', '');
+        return state.set('selectedConverseUUID', '');
       case SEND_MSG_COMPLETED: {
         let converseUUID = action.converseUUID;
         let localUUID = action.localUUID;
@@ -274,8 +264,13 @@ export default function chat(state = initialState, action) {
           }
         );
       }
-      case SWITCH_GROUP:
-        return state.setIn(['converses', action.payload, 'unread'], false);
+      case SWITCH_GROUP: {
+        if (!_isNil(state.getIn(['converses', action.payload]))) {
+          return state.setIn(['converses', action.payload, 'unread'], false);
+        } else {
+          return state;
+        }
+      }
       case CREATE_CONVERSES_SUCCESS: {
         let createConvUUID = action.payload.uuid;
         let createConv = Object.assign(
@@ -348,6 +343,10 @@ export default function chat(state = initialState, action) {
         const converseUUID = action.converseUUID;
         const nomore = action.nomore;
         return state.setIn(['converses', converseUUID, 'nomore'], nomore);
+      }
+      case SET_CONVERSE_ISREAD: {
+        const converseUUID = action.converseUUID;
+        return state.setIn(['converses', converseUUID, 'unread'], false);
       }
       default:
         return state;

@@ -10,7 +10,7 @@ export class API {
   socket = io(this.serverUrl, platformSocketParam);
   handleEventError: any;
 
-  emit(event: string, data: {}, cb?: (res: any) => void) {
+  emit(event: string, data?: {}, cb?: (res: any) => void) {
     if (this.socket.disconnected) {
       this.socket.connect();
     }
@@ -23,6 +23,18 @@ export class API {
         )}`;
         this.handleEventError && this.handleEventError(info);
       }
+    });
+  }
+
+  emitP(this: API, event: string, data?: {}): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.emit(event, data, (res) => {
+        if (res.result === false) {
+          reject(res.message);
+        } else {
+          resolve(res);
+        }
+      });
     });
   }
 

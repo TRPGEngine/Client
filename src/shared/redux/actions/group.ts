@@ -351,6 +351,10 @@ export const switchSelectGroup = function(uuid: string): TRPGAction {
   return { type: SWITCH_GROUP, payload: uuid };
 };
 
+export const clearSelectGroup = function(): TRPGAction {
+  return { type: SWITCH_GROUP, payload: '' };
+};
+
 /**
  * 修改当前选中的团角色的UUID
  * @param groupUUID 团UUID

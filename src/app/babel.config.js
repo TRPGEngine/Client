@@ -9,7 +9,7 @@ module.exports = {
     [
       'transform-inline-environment-variables',
       {
-        include: ['NODE_ENV', 'PLATFORM', 'TRPG_HOST'],
+        include: ['NODE_ENV', 'PLATFORM', 'TRPG_HOST', 'TRPG_PORTAL'],
       },
     ],
     ['import', { libraryName: '@ant-design/react-native' }],

@@ -6,6 +6,13 @@ import {
 } from '../constants/nav';
 import { NavigationActions } from 'react-navigation';
 import { switchConverse } from '@src/shared/redux/actions/chat';
+import { ChatType } from '../../types/params';
+import { TRPGAction } from '@src/shared/redux/types/redux';
+import config from '@src/shared/project.config';
+import rnStorage from '@src/shared/api/rn-storage.api';
+
+import * as trpgApi from '@shared/api/trpg.api';
+const api = trpgApi.getInstance();
 
 /**
  * 跳转到新的页面
@@ -39,20 +46,27 @@ export const backToTop = function backToTop() {
   return { type: BACK_TOP_NAV };
 };
 
-/** 切换到聊天页面 */
-export const switchToConverseApp = function switchToConverseApp(
-  converseUUID: string,
-  type: 'user' | 'group' = 'user',
+export const openWebview = function openWebview(url: string) {
+  return NavigationActions.navigate({ routeName: 'Webview', params: { url } });
+};
+
+/**
+ * 切换到聊天页面
+ * @param uuid 会话UUID
+ * @param type 会话类型
+ * @param name 会话名
+ */
+export const switchToChatScreen = function switchToChatScreen(
+  uuid: string,
+  type: ChatType,
   name: string
-) {
+): TRPGAction {
   return function(dispatch, getState) {
-    // 多级返回到首页
-    dispatch(backNav());
-    dispatch(backNav());
-    dispatch(switchConverse(converseUUID));
+    dispatch(backToTop());
+    dispatch(switchConverse(uuid)); // 切换会话uuid. 所有的会话。不管是group还是user。共用一个会话UUID
     dispatch(
       switchNav('Chat', {
-        uuid: converseUUID,
+        uuid,
         type,
         name,
       })
@@ -60,6 +74,27 @@ export const switchToConverseApp = function switchToConverseApp(
   };
 };
 
-export const openWebview = function openWebview(url: string) {
-  return NavigationActions.navigate({ routeName: 'Webview', params: { url } });
+export const navPortal = function navPortal(url: string): TRPGAction {
+  return async function(dispatch, getState) {
+    const portalUrl = config.url.portal;
+
+    const cachedKey = 'sso:jwt';
+    let jwt: string = await rnStorage.get(cachedKey);
+    if (!jwt) {
+      const res = await api.emitP('player::getWebToken');
+      jwt = res.jwt;
+      await rnStorage.set(cachedKey, jwt);
+    }
+
+    url = url.startsWith(portalUrl) ? url : portalUrl + url;
+
+    const injectedJavaScript = `location.href.indexOf('${portalUrl}') === 0 && window.localStorage.setItem('jwt', '${jwt}')`;
+
+    dispatch(
+      switchNav('Webview', {
+        url,
+        injectedJavaScript,
+      })
+    );
+  };
 };

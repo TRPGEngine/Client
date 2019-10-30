@@ -172,7 +172,6 @@ class ProfileModifyScreen extends React.Component<Props> {
         <View style={styles.header}>
           <TouchableOpacity onPress={() => this.handleSelectAvatar()}>
             <TAvatar
-              style={styles.avatar}
               uri={userInfo.get('avatar', '')}
               name={name}
               capitalSize={40}
@@ -220,7 +219,6 @@ const styles = {
     sb.bgColor('white'),
     sb.padding(20, 0),
   ],
-  avatar: [sb.radius(50)],
   username: [sb.font(18), sb.margin(10, 0, 0, 0)],
   uuid: [sb.font(12)],
 };

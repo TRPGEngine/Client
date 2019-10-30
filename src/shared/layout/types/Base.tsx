@@ -14,20 +14,25 @@ type OperationDataType = {
   field: string;
 };
 
-export interface ILayoutType {
+type DefaultLayoutTypeAttr = XMLElementAttributes & ILayoutTypeAttributes;
+export interface LayoutTypeContext<
+  Attr extends ILayoutTypeAttributes = DefaultLayoutTypeAttr
+> {
+  tagName: string;
+  attributes: Attr;
+  elements: Array<XMLElement>;
+  context: XMLBuilderContext;
+}
+
+export interface ILayoutTypeAttributes {
+  key: string;
+}
+export interface ILayoutType<
+  Attr extends ILayoutTypeAttributes = DefaultLayoutTypeAttr
+> {
   name: string;
-  getEditView(
-    tagName: string,
-    attributes: XMLElementAttributes,
-    elements: Array<XMLElement>,
-    context: XMLBuilderContext
-  ): React.ReactElement;
-  getDetailView(
-    tagName: string,
-    attributes: XMLElementAttributes,
-    elements: Array<XMLElement>,
-    context: XMLBuilderContext
-  ): React.ReactElement;
+  getEditView(ctx: LayoutTypeContext<Attr>): React.ReactElement;
+  getDetailView(ctx: LayoutTypeContext<Attr>): React.ReactElement;
 }
 
 // defined from facebook/react/packages/react-dom/src/shared/voidElementTags.js
@@ -51,7 +56,10 @@ const voidElementTags = [
   'wbr',
 ];
 
-export default class Base implements ILayoutType {
+export interface BaseAttributes extends ILayoutTypeAttributes {}
+export default class Base<
+  Attributes extends ILayoutTypeAttributes = BaseAttributes
+> implements ILayoutType<Attributes> {
   name: string;
 
   // 预处理tag name
@@ -151,12 +159,12 @@ export default class Base implements ILayoutType {
   }
 
   // 获取编辑视图
-  getEditView(
-    tagName: string,
-    attributes: XMLElementAttributes,
-    elements: Array<XMLElement>,
-    context: XMLBuilderContext
-  ) {
+  getEditView({
+    tagName,
+    attributes,
+    elements,
+    context,
+  }: LayoutTypeContext<Attributes>) {
     let childrens = [];
     if (voidElementTags.includes(tagName)) {
       childrens = undefined;
@@ -172,12 +180,12 @@ export default class Base implements ILayoutType {
   }
 
   // 获取详情视图
-  getDetailView(
-    tagName: string,
-    attributes: XMLElementAttributes,
-    elements: Array<XMLElement>,
-    context: XMLBuilderContext
-  ) {
+  getDetailView({
+    tagName,
+    attributes,
+    elements,
+    context,
+  }: LayoutTypeContext<Attributes>) {
     let childrens = [];
     if (voidElementTags.includes(tagName)) {
       childrens = undefined;
@@ -195,4 +203,8 @@ export default class Base implements ILayoutType {
 
 export const BaseTypeRow = styled(Row)`
   margin-bottom: 0.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
