@@ -15,6 +15,11 @@ const ImageTag = React.memo((props: TagProps) => {
 
   // 等比例缩放图片
   const setImageSize = (targetWidth: number, targetHeight: number) => {
+    if (!(targetWidth > 0 && targetHeight > 0)) {
+      // 如果没有满足宽高大于0
+      return;
+    }
+
     const radioWidth = maxWidth / targetWidth;
     const radioHeight = maxHeight / targetHeight;
     const radioTarget = Math.min(radioWidth, radioHeight);

@@ -17,7 +17,7 @@ export default class TImage extends React.PureComponent<Props> {
 
     const props = {
       resizeMode: FastImage.resizeMode.contain,
-      fallback: true,
+      fallback: false,
       ...this.props,
       source: {
         uri: url,
