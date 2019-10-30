@@ -13,6 +13,7 @@ import styled from 'styled-components/native';
 import _get from 'lodash/get';
 import { getUserInfoCache } from '@src/shared/utils/cache-helper';
 import appConfig from '@app/config.app';
+import { MsgListType, MsgPayload } from '@src/shared/redux/types/chat';
 
 const MSG_INIT_NUM = 10;
 
@@ -22,12 +23,10 @@ const LoadmoreText = styled.Text`
   font-size: 10px;
 `;
 
-type MsgItemType = any;
-
-type MsgFlatListType = FlatList<MsgItemType>;
+type MsgFlatListType = FlatList<MsgPayload>;
 
 interface Props {
-  msgList: MsgItemType[];
+  msgList: MsgListType;
   selfInfo: any;
   nomore: boolean;
   onTouchStart?: () => void;
@@ -64,7 +63,12 @@ class MsgList extends React.PureComponent<Props> {
    */
   scrollToBottom() {
     setTimeout(() => {
-      this.listRef && this.listRef.current.scrollToIndex({ index: 0 }); // 因为使用了inverted属性因此滚到底部对于list的逻辑是滚到顶部
+      const msgList = this.props.msgList;
+
+      this.listRef &&
+        this.listRef.current &&
+        msgList.length > 0 &&
+        this.listRef.current.scrollToIndex({ index: 0 }); // 因为使用了inverted属性因此滚到底部对于list的逻辑是滚到顶部
     }, 130);
   }
 
@@ -112,7 +116,7 @@ class MsgList extends React.PureComponent<Props> {
     const { msgList, onTouchStart } = this.props;
 
     return (
-      <FlatList
+      <FlatList<MsgPayload>
         style={{ flex: 1 }}
         ref={this.listRef}
         data={msgList}
