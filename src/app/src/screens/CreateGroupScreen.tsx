@@ -5,7 +5,7 @@ import { TButton } from '../components/TComponent';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { createGroup } from '@src/shared/redux/actions/group';
-import { TRPGDispatchProp } from '@src/shared/redux/types/redux';
+import { TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 
 const Input = styled(InputItem).attrs((props) => ({
   styles: { text: { color: '#999' } },

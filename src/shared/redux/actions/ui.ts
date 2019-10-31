@@ -21,7 +21,7 @@ const {
 } = constants;
 import * as cache from './cache';
 import { AlertPayload } from '../types/ui';
-import { TRPGAction } from '../types/redux';
+import { TRPGAction } from '../types/__all__';
 
 export const showLoading = function(text = '加载中...'): TRPGAction {
   return { type: SHOW_LOADING, text: text };

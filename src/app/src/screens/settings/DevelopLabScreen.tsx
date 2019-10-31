@@ -10,7 +10,7 @@ import MessageHandler from '@app/components/messageTypes/__all__';
 import { switchNav, navPortal } from '@app/redux/actions/nav';
 import config from '@src/shared/project.config';
 import { connect } from 'react-redux';
-import { TRPGDispatchProp } from '@src/shared/redux/types/redux';
+import { TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 
 const TRPGModule = NativeModules.TRPGModule;
 

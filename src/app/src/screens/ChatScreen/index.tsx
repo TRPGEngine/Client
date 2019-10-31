@@ -28,9 +28,8 @@ import styled from 'styled-components/native';
 import { sendQuickDice } from '@src/shared/redux/actions/dice';
 import InputView from './InputView';
 import MsgList from './MsgList';
-import { TRPGDispatchProp } from '@src/shared/redux/types/redux';
+import { TRPGState, TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 import { clearSelectGroup } from '@src/shared/redux/actions/group';
-import { TRPGState } from '@src/shared/redux/types/__all__';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 

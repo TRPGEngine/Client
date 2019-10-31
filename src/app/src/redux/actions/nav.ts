@@ -7,7 +7,7 @@ import {
 import { NavigationActions } from 'react-navigation';
 import { switchConverse } from '@src/shared/redux/actions/chat';
 import { ChatType } from '../../types/params';
-import { TRPGAction } from '@src/shared/redux/types/redux';
+import { TRPGAction } from '@src/shared/redux/types/__all__';
 import config from '@src/shared/project.config';
 import rnStorage from '@src/shared/api/rn-storage.api';
 

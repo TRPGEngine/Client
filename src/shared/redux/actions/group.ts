@@ -49,7 +49,7 @@ import _set from 'lodash/set';
 import _get from 'lodash/get';
 
 import * as trpgApi from '../../api/trpg.api';
-import { TRPGAction } from '../types/redux';
+import { TRPGAction } from '../types/__all__';
 const api = trpgApi.getInstance();
 
 // 当state->group->groups状态添加新的group时使用来初始化

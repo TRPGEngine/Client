@@ -1,3 +1,4 @@
+import { AnyAction, Action } from 'redux';
 import { Record } from 'immutable';
 import { ActorState } from './actor';
 import { CacheState } from './cache';
@@ -20,4 +21,27 @@ interface AllState {
   [other: string]: any;
 }
 
+// 用于state声明
 export type TRPGState = Record<AllState>;
+
+// fork from redux-thunk declaration
+interface ThunkDispatch<S, E, A extends Action> {
+  <T extends A>(action: T): T;
+  <R>(asyncAction: TRPGAction): R;
+}
+
+type ThunkAction<R, S, E, A extends Action> = (
+  dispatch: ThunkDispatch<S, E, A>,
+  getState: () => S,
+  extraArgument: E
+) => R;
+
+export type TRPGDispatch = ThunkDispatch<any, any, AnyAction>;
+
+// 用于组件声明
+export interface TRPGDispatchProp {
+  dispatch: TRPGDispatch;
+}
+
+// 用于action声明
+export type TRPGAction = ThunkAction<any, any, any, AnyAction> | AnyAction;

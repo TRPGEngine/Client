@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { List, WingBlank, WhiteSpace } from '@ant-design/react-native';
 import { View, Switch } from 'react-native';
 import { TButton } from '../components/TComponent';
-import { TRPGState, TRPGDispatchProp } from '@src/shared/redux/types/redux';
+import { TRPGState, TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 import {
   showAlert,
   hideAlert,
