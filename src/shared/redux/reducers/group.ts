@@ -247,7 +247,7 @@ export default function group(state = initialState, action) {
             let groupActorUUID = action.payload.uuid;
             list = list.updateIn([i, 'group_actors'], (_list) => {
               let _index = list.findIndex(
-                (_item) => _item.uuid === groupActorUUID
+                (_item) => _item.get('uuid') === groupActorUUID
               );
               return _list.setIn([_index, 'passed'], true);
             });
@@ -263,7 +263,7 @@ export default function group(state = initialState, action) {
             let groupActorUUID = action.groupActorUUID;
             list = list.updateIn([i, 'group_actors'], (_list) => {
               let _index = list.findIndex(
-                (_item) => _item.uuid === groupActorUUID
+                (_item) => _item.get('uuid') === groupActorUUID
               );
               return _list.delete(_index);
             });
@@ -273,12 +273,17 @@ export default function group(state = initialState, action) {
         return list;
       });
     case UPDATE_GROUP_ACTOR_INFO_SUCCESS: {
-      let groupIndex = state
+      const groupIndex = state
         .get('groups')
-        .findIndex((i) => i.uuid === action.groupUUID);
-      let groupActorIndex = state
+        .findIndex((i) => i.get('uuid') === action.groupUUID);
+      const groupActorIndex = state
         .getIn(['groups', groupIndex, 'group_actors'])
-        .findIndex((i) => i.uuid === action.groupActorUUID);
+        .findIndex((i) => i.get('uuid') === action.groupActorUUID);
+
+      if (groupIndex === -1 || groupActorIndex === -1) {
+        return state;
+      }
+
       return state.setIn(
         ['groups', groupIndex, 'group_actors', groupActorIndex, 'actor_info'],
         immutable.fromJS(action.groupActorInfo)
