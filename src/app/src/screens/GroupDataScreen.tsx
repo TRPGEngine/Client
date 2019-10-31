@@ -19,17 +19,22 @@ import {
 } from '@src/shared/redux/actions/group';
 import { getCachedUserName } from '@src/shared/utils/cache-helper';
 import _get from 'lodash/get';
+import _without from 'lodash/without';
 import TModalPanel from '../components/TComponent/TModalPanel';
 import TPicker from '../components/TComponent/TPicker';
+import { selectUser } from '../redux/actions/nav';
+import { GroupStateGroupsItem } from '@src/shared/redux/types/group';
+import { Map } from 'immutable';
 
 const ListItem = List.Item;
 
 interface Props extends TRPGDispatchProp {
   userUUID: string;
-  groupInfo: any;
+  groupInfo: GroupStateGroupsItem;
   selfGroupActors: any;
   selectedGroupActorUUID: string;
   selectedGroupUUID: string;
+  friendList: string[];
 }
 class GroupDataScreen extends React.Component<Props> {
   state = {
@@ -105,6 +110,25 @@ class GroupDataScreen extends React.Component<Props> {
     });
   };
 
+  handleGroupInvite = () => {
+    // 选择好友
+    const { friendList, groupInfo } = this.props;
+    const groupMembersList: string[] = groupInfo.get('group_members').toJS();
+    const groupManagerList: string[] = groupInfo.get('managers_uuid').toJS();
+
+    const target = _without(
+      friendList,
+      ...groupMembersList,
+      ...groupManagerList
+    );
+
+    this.props.dispatch(
+      selectUser(target, (uuids) => {
+        alert(uuids.join(','));
+      })
+    );
+  };
+
   /**
    * 退出团
    */
@@ -173,6 +197,11 @@ class GroupDataScreen extends React.Component<Props> {
             历史消息
           </ListItem> */}
         </List>
+        <List renderHeader={'成员'}>
+          <ListItem onPress={this.handleGroupInvite} arrow="horizontal">
+            邀请好友
+          </ListItem>
+        </List>
         <List renderHeader={'角色'}>
           <ListItem onPress={this.handleSelectGroupActor} arrow="horizontal">
             选择角色
@@ -214,9 +243,10 @@ class GroupDataScreen extends React.Component<Props> {
 export default connect((state: TRPGState, ownProps) => {
   const selectedGroupUUID = _get(ownProps, 'navigation.state.params.uuid', '');
 
-  const groupInfo = state
-    .getIn(['group', 'groups'])
-    .find((group) => group.get('uuid') === selectedGroupUUID);
+  const groupInfo =
+    state
+      .getIn(['group', 'groups'])
+      .find((group) => group.get('uuid') === selectedGroupUUID) || Map();
 
   const selfActors = state
     .getIn(['actor', 'selfActors'])
@@ -240,5 +270,6 @@ export default connect((state: TRPGState, ownProps) => {
     selfGroupActors,
     selectedGroupActorUUID,
     groupInfo,
+    friendList: state.getIn(['user', 'friendList']).toJS(),
   };
 })(GroupDataScreen);

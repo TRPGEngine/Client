@@ -32,6 +32,7 @@ import DevelopLabScreen from './screens/settings/DevelopLabScreen';
 import VersionScreen from './screens/VersionScreen';
 import CreateGroupScreen from './screens/CreateGroupScreen';
 import GroupDataScreen from './screens/GroupDataScreen';
+import UserSelectScreen from './screens/UserSelectScreen';
 import DebugScreen from './screens/DebugScreen';
 import DocumentScreen from './screens/DocumentScreen';
 
@@ -131,6 +132,12 @@ export const AppNavigator = createStackNavigator(
       navigationOptions: ({ navigation }) => ({
         headerTitle: _get(navigation, 'state.params.name', '详细信息'),
       }),
+    },
+    UserSelect: {
+      screen: UserSelectScreen,
+      navigationOptions: {
+        headerTitle: '选择用户'
+      }
     },
     Version: {
       screen: VersionScreen,

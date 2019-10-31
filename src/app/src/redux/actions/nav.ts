@@ -98,3 +98,27 @@ export const navPortal = function navPortal(url: string): TRPGAction {
     );
   };
 };
+
+/**
+ * 打开一个新的页面来选择用户
+ * @param allUUIDList 所有的UUID列表
+ * @param callback 回调
+ * @param extraParams 其他参数
+ */
+export const selectUser = function(
+  allUUIDList: string[],
+  callback: (selectedUUID: string[]) => void,
+  extraParams?: {
+    title?: string;
+  }
+): TRPGAction {
+  return async function(dispatch, getState) {
+    dispatch(
+      switchNav('UserSelect', {
+        uuids: allUUIDList,
+        onSelected: callback,
+        ...extraParams,
+      })
+    );
+  };
+};
