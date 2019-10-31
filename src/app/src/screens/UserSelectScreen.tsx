@@ -1,14 +1,22 @@
 import React from 'react';
-import { View, Text, FlatList, ListRenderItemInfo } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  ListRenderItemInfo,
+  TouchableOpacity,
+} from 'react-native';
 import {
   NavigationScreenProps,
   NavigationScreenConfig,
   NavigationScreenOptions,
+  NavigationActions,
 } from 'react-navigation';
 import { connect } from 'react-redux';
 import { TRPGState } from '@src/shared/redux/types/__all__';
 import _uniq from 'lodash/uniq';
 import _without from 'lodash/without';
+import _noop from 'lodash/noop';
 import { getUserInfoCache } from '@src/shared/utils/cache-helper';
 import { TAvatar } from '../components/TComponent';
 import styled from 'styled-components/native';
@@ -34,6 +42,7 @@ interface Props
     uuids: string[];
     onSelected: (selectedUUID: string[]) => void;
     title?: string;
+    selectedUUIDs?: string[];
   }> {}
 interface State {
   selectedUUIDs: string[];
@@ -43,8 +52,27 @@ class UserSelectScreen extends React.Component<Props, State> {
   static navigationOptions: NavigationScreenConfig<NavigationScreenOptions> = (
     props: Partial<Props>
   ) => {
+    const uuids = props.navigation.getParam('uuids', []);
+    const selectedUUIDs = props.navigation.getParam('selectedUUIDs', []);
+    const onSelected = props.navigation.getParam('onSelected', _noop);
+
     return {
-      title: props.navigation.getParam('title', undefined),
+      headerTitle:
+        selectedUUIDs.length > 0
+          ? `已选择 ${selectedUUIDs.length} / ${uuids.length}`
+          : props.navigation.getParam('title', '选择用户'),
+      headerRight: (
+        <View style={{ marginRight: 10 }}>
+          <TouchableOpacity
+            onPress={() => {
+              onSelected(selectedUUIDs);
+              props.navigation.dispatch(NavigationActions.back());
+            }}
+          >
+            <Text>完成</Text>
+          </TouchableOpacity>
+        </View>
+      ),
     };
   };
 
@@ -58,6 +86,7 @@ class UserSelectScreen extends React.Component<Props, State> {
   }
 
   setSelectedUUIDs(newSelectedUUIDs: string[]) {
+    this.props.navigation.setParams({ selectedUUIDs: newSelectedUUIDs });
     this.setState({
       selectedUUIDs: newSelectedUUIDs,
     });

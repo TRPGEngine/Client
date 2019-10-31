@@ -135,9 +135,6 @@ export const AppNavigator = createStackNavigator(
     },
     UserSelect: {
       screen: UserSelectScreen,
-      navigationOptions: {
-        headerTitle: '选择用户'
-      }
     },
     Version: {
       screen: VersionScreen,
