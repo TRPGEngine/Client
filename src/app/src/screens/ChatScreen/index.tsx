@@ -22,6 +22,7 @@ import QuickDiceModal from '@app/components/chat/QuickDiceModal';
 import { uploadChatimg } from '@shared/utils/image-uploader';
 import { unemojify } from '@shared/utils/emoji';
 import _get from 'lodash/get';
+import _throttle from 'lodash/throttle';
 import { ChatParams, ChatType } from '../../types/params';
 
 import styled from 'styled-components/native';
@@ -30,6 +31,8 @@ import InputView from './InputView';
 import MsgList from './MsgList';
 import { TRPGState, TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 import { clearSelectGroup } from '@src/shared/redux/actions/group';
+import { sendStartWriting } from '@src/shared/api/event';
+import config from '@src/shared/project.config';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
@@ -83,6 +86,17 @@ class ChatScreen extends React.Component<Props> {
   keyboardDidShowListener: EmitterSubscription;
   keyboardDidHideListener: EmitterSubscription;
   inputRef = React.createRef<TextInput>();
+
+  // 发送正在输入信号
+  // 增加一个2秒的节流防止频繁发送
+  sendWritingThrottled = _throttle(
+    () => {
+      const converseUUID = this.props.navigation.getParam('uuid');
+      sendStartWriting('user', converseUUID);
+    },
+    config.chat.isWriting.throttle,
+    { leading: true, trailing: false }
+  );
 
   get converseType() {
     return this.props.navigation.getParam('type', 'user');
@@ -198,6 +212,15 @@ class ChatScreen extends React.Component<Props> {
       showExtraPanel: false,
       showEmoticonPanel: false,
     });
+  };
+
+  handleChange = (text: string) => {
+    this.setState({ inputMsg: text });
+
+    if (this.converseType === 'user') {
+      // 通知服务器告知converseUUID当前用户正在输入
+      this.sendWritingThrottled();
+    }
   };
 
   handleSendMsg = () => {
@@ -348,7 +371,7 @@ class ChatScreen extends React.Component<Props> {
           <InputView
             inputRef={this.inputRef}
             value={this.state.inputMsg}
-            onChange={(inputMsg) => this.setState({ inputMsg })}
+            onChange={this.handleChange}
             onSendMsg={this.handleSendMsg}
             onFocus={this.handleFocus}
             onShowEmoticonPanel={this.handleShowEmoticonPanel}
