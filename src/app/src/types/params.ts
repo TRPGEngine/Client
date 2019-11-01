@@ -5,3 +5,5 @@ export interface ChatParams {
   name: string;
   isWriting?: boolean;
 }
+
+export type GroupDataParams = Pick<ChatParams, 'uuid' | 'type' | 'name'>;

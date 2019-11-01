@@ -16,6 +16,7 @@ import {
   quitGroup,
   changeSelectGroupActor,
   dismissGroup,
+  sendGroupInviteBatch,
 } from '@src/shared/redux/actions/group';
 import { getCachedUserName } from '@src/shared/utils/cache-helper';
 import _get from 'lodash/get';
@@ -25,10 +26,14 @@ import TPicker from '../components/TComponent/TPicker';
 import { selectUser } from '../redux/actions/nav';
 import { GroupStateGroupsItem } from '@src/shared/redux/types/group';
 import { Map } from 'immutable';
+import { NavigationScreenProps } from 'react-navigation';
+import { GroupDataParams } from '../types/params';
 
 const ListItem = List.Item;
 
-interface Props extends TRPGDispatchProp {
+interface Props
+  extends TRPGDispatchProp,
+    NavigationScreenProps<GroupDataParams> {
   userUUID: string;
   groupInfo: GroupStateGroupsItem;
   selfGroupActors: any;
@@ -110,9 +115,12 @@ class GroupDataScreen extends React.Component<Props> {
     });
   };
 
+  /**
+   * 发送团邀请
+   */
   handleGroupInvite = () => {
     // 选择好友
-    const { friendList, groupInfo } = this.props;
+    const { friendList, groupInfo, dispatch } = this.props;
     const groupMembersList: string[] = groupInfo.get('group_members').toJS();
     const groupManagerList: string[] = groupInfo.get('managers_uuid').toJS();
 
@@ -122,9 +130,9 @@ class GroupDataScreen extends React.Component<Props> {
       ...groupManagerList
     );
 
-    this.props.dispatch(
+    dispatch(
       selectUser(target, (uuids) => {
-        alert(uuids.join(','));
+        dispatch(sendGroupInviteBatch(groupInfo.get('uuid'), uuids));
       })
     );
   };
@@ -240,8 +248,8 @@ class GroupDataScreen extends React.Component<Props> {
   }
 }
 
-export default connect((state: TRPGState, ownProps) => {
-  const selectedGroupUUID = _get(ownProps, 'navigation.state.params.uuid', '');
+export default connect((state: TRPGState, ownProps: Props) => {
+  const selectedGroupUUID = ownProps.navigation.getParam('uuid', '');
 
   const groupInfo =
     state
