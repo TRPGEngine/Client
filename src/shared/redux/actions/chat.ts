@@ -35,7 +35,7 @@ import config from '../../project.config';
 import _without from 'lodash/without';
 import _isFunction from 'lodash/isFunction';
 import { MsgPayload, ConverseInfo } from '@src/shared/redux/types/chat';
-import { TRPGAction } from '../types/redux';
+import { TRPGAction } from '../types/__all__';
 
 const getUserConversesHash = (userUUID: string): string => {
   return `userConverses#${userUUID}`;

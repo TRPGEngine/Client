@@ -11,7 +11,7 @@ import {
   TRPGState,
   TRPGDispatch,
   TRPGDispatchProp,
-} from '@src/shared/redux/types/redux';
+} from '@src/shared/redux/types/__all__';
 
 interface Props extends TRPGDispatchProp {
   groups: any;

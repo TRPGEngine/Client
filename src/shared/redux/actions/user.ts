@@ -35,7 +35,7 @@ import { getTemplate, getActor } from './actor';
 import { getGroupList, getGroupInvite } from './group';
 import { getNote } from './note';
 import { loadLocalCache } from './cache';
-import { TRPGAction } from '../types/redux';
+import { TRPGAction } from '../types/__all__';
 
 const api = trpgApi.getInstance();
 

@@ -49,7 +49,7 @@ import _set from 'lodash/set';
 import _get from 'lodash/get';
 
 import * as trpgApi from '../../api/trpg.api';
-import { TRPGAction } from '../types/redux';
+import { TRPGAction } from '../types/__all__';
 const api = trpgApi.getInstance();
 
 // 当state->group->groups状态添加新的group时使用来初始化
@@ -271,7 +271,10 @@ export const refuseGroupRequest = function(chatlogUUID, requestUUID) {
   };
 };
 
-export const sendGroupInvite = function(group_uuid, to_uuid) {
+export const sendGroupInvite = function(
+  group_uuid: string,
+  to_uuid: string
+): TRPGAction {
   return function(dispatch, getState) {
     api.emit('group::sendGroupInvite', { group_uuid, to_uuid }, function(data) {
       if (data.result) {
@@ -285,6 +288,32 @@ export const sendGroupInvite = function(group_uuid, to_uuid) {
     });
   };
 };
+/**
+ * 批量邀请用户加入团
+ * @param group_uuid 团UUID
+ * @param target_uuids 目标用户UUID列表
+ */
+export const sendGroupInviteBatch = (
+  group_uuid: string,
+  target_uuids: string[]
+): TRPGAction => {
+  return function(dispatch, getState) {
+    api.emit(
+      'group::sendGroupInviteBatch',
+      { group_uuid, target_uuids },
+      function(data) {
+        if (data.result) {
+          dispatch(showAlert('发送邀请成功!'));
+          dispatch(hideSlidePanel());
+        } else {
+          dispatch(showAlert(data.msg));
+          console.error(data);
+        }
+      }
+    );
+  };
+};
+
 export const agreeGroupInvite = function(inviteUUID) {
   return function(dispatch, getState) {
     api.emit('group::agreeGroupInvite', { uuid: inviteUUID }, function(data) {

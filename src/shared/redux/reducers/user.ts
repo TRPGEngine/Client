@@ -53,10 +53,10 @@ export default function ui(state = initialState, action) {
       return state
         .set('isLogin', false)
         .set('isTryLogin', false)
-        .set('info', immutable.Map());
+        .set('info', immutable.fromJS({}));
     case LOGOUT:
       // sessionStorage.remove('uuid').remove('token');
-      return state.set('isLogin', false).set('info', immutable.Map());
+      return state.set('isLogin', false).set('info', immutable.fromJS({}));
     case REGISTER_REQUEST:
     case REGISTER_FAILED:
     case REGISTER_SUCCESS:

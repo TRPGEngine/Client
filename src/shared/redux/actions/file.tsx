@@ -6,6 +6,7 @@ import Webview from '../../../web/components/Webview';
 
 const api = trpgApi.getInstance();
 
+// TODO: 需要将webview的调用抽象出去
 export const previewFile = function(fileuuid) {
   return function(dispatch, getState) {
     return api.emit('file::getFileInfo', { uuid: fileuuid }, function(data) {

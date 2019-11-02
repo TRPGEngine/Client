@@ -29,6 +29,8 @@ export interface MsgPayload {
   };
 }
 
+export type MsgListType = MsgPayload[];
+
 export interface ConverseInfo {
   uuid: string;
   type: 'user' | 'group' | 'system';
@@ -38,6 +40,30 @@ export interface ConverseInfo {
 type WritingListType =
   | Map<'user', List<string>>
   | Map<'group', Map<string, List<string>>>;
+
+export type ChatStateConverseMsgListItem = Record<{
+  room: string;
+  uuid: string;
+  sender: string;
+  sender_uuid: string;
+  to_uuid: string;
+  type: string;
+  is_public: boolean;
+  message: string;
+  date: number;
+}>;
+
+export type ChatStateConverseMsgList = List<ChatStateConverseMsgListItem>;
+
+export type ChatStateConverse = Record<{
+  uuid: string;
+  type: string;
+  name: string;
+  icon: string;
+  lastMsg: string;
+  lastTime: number;
+  msgList: ChatStateConverseMsgList;
+}>;
 
 export type ChatState = Record<{
   selectedConverseUUID: string;

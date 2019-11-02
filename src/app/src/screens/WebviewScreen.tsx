@@ -7,6 +7,7 @@ import {
   BackHandler,
   Linking,
   NativeSyntheticEvent,
+  Dimensions,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import sb from 'react-native-style-block';
@@ -25,6 +26,7 @@ import {
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import _isString from 'lodash/isString';
+import PDF from 'react-native-pdf';
 
 const TipContainer = styled.View`
   position: absolute;
@@ -44,6 +46,10 @@ const LoadingBar = styled.View<{ color: string; percent: number }>`
   z-index: 10px;
   top: 0;
   left: 0;
+`;
+
+const PDFView = styled(PDF)`
+  flex: 1;
 `;
 
 const Loading = React.memo(() => (
@@ -113,6 +119,10 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
 
   get url(): string {
     return this.props.navigation.getParam('url', '');
+  }
+
+  get isPDF(): boolean {
+    return this.url.endsWith('.pdf');
   }
 
   get injectedJavaScript(): string | undefined {
@@ -195,6 +205,9 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
   ) => {
     this.setState({ percent: e.nativeEvent.progress });
   };
+  handleLoadProgressPdf = (percent: number) => {
+    this.setState({ visible: true, percent });
+  };
   handleError = () => {
     this.setState({ color: this.errorColor, percent: 1 });
   };
@@ -249,22 +262,35 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
         {this.state.visible && (
           <LoadingBar color={this.state.color} percent={this.state.percent} />
         )}
-        <WebView
-          ref={(ref) => (this.webview = ref)}
-          source={{ uri: url }}
-          injectedJavaScript={this.injectedJavaScript}
-          startInLoadingState={true}
-          renderLoading={() => <Loading />}
-          renderError={() => <LoadError url={url} />}
-          mixedContentMode={'compatibility'}
-          onNavigationStateChange={(state) => this.handleStateChange(state)}
-          onMessage={this.handleMessage}
-          onLoad={this.handleLoad}
-          onLoadStart={this.handleLoadStart}
-          onLoadEnd={this.handleLoadEnd}
-          onLoadProgress={this.handleLoadProgress}
-          onError={this.handleError}
-        />
+        {this.isPDF ? (
+          // 如果是PDF网络地址时。使用pdf阅览器
+          <PDFView
+            source={{
+              uri: url,
+              cache: true,
+            }}
+            onLoadProgress={this.handleLoadProgressPdf}
+            onLoadComplete={this.handleLoadEnd}
+            onError={this.handleError}
+          />
+        ) : (
+          <WebView
+            ref={(ref) => (this.webview = ref)}
+            source={{ uri: url }}
+            injectedJavaScript={this.injectedJavaScript}
+            startInLoadingState={true}
+            renderLoading={() => <Loading />}
+            renderError={() => <LoadError url={url} />}
+            mixedContentMode={'compatibility'}
+            onNavigationStateChange={(state) => this.handleStateChange(state)}
+            onMessage={this.handleMessage}
+            onLoad={this.handleLoad}
+            onLoadStart={this.handleLoadStart}
+            onLoadEnd={this.handleLoadEnd}
+            onLoadProgress={this.handleLoadProgress}
+            onError={this.handleError}
+          />
+        )}
       </View>
     );
   }

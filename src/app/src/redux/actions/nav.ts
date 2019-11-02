@@ -7,7 +7,7 @@ import {
 import { NavigationActions } from 'react-navigation';
 import { switchConverse } from '@src/shared/redux/actions/chat';
 import { ChatType } from '../../types/params';
-import { TRPGAction } from '@src/shared/redux/types/redux';
+import { TRPGAction } from '@src/shared/redux/types/__all__';
 import config from '@src/shared/project.config';
 import rnStorage from '@src/shared/api/rn-storage.api';
 
@@ -94,6 +94,30 @@ export const navPortal = function navPortal(url: string): TRPGAction {
       switchNav('Webview', {
         url,
         injectedJavaScript,
+      })
+    );
+  };
+};
+
+/**
+ * 打开一个新的页面来选择用户
+ * @param allUUIDList 所有的UUID列表
+ * @param callback 回调
+ * @param extraParams 其他参数
+ */
+export const selectUser = function(
+  allUUIDList: string[],
+  callback: (selectedUUID: string[]) => void,
+  extraParams?: {
+    title?: string;
+  }
+): TRPGAction {
+  return async function(dispatch, getState) {
+    dispatch(
+      switchNav('UserSelect', {
+        uuids: allUUIDList,
+        onSelected: callback,
+        ...extraParams,
       })
     );
   };

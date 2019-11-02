@@ -7,7 +7,7 @@ import './ImageUploader.scss';
 import AvatarPicker from './AvatarPicker';
 import { blobUrlToFile } from '@web/utils/file-helper';
 import { toAvatar } from '@shared/utils/upload-helper';
-import { TRPGDispatchProp } from '@src/shared/redux/types/redux';
+import { TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 
 type CSSUnit = number | string;
 

@@ -13,7 +13,7 @@ const TitleToolbar =
     : null;
 
 import './Main.scss';
-import { TRPGDispatch } from '@src/shared/redux/types/redux';
+import { TRPGDispatch } from '@src/shared/redux/types/__all__';
 if (config.platform === 'electron') {
   require('./Main.electron.scss');
 }

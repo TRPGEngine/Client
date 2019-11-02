@@ -2,7 +2,7 @@ import immutable from 'immutable';
 import _isNil from 'lodash/isNil';
 import _invoke from 'lodash/invoke';
 import constants from '@redux/constants';
-import { ChatState } from '@redux/types/chat';
+import { ChatState, ChatStateConverseMsgList } from '@redux/types/chat';
 const {
   RESET,
   ADD_CONVERSES,
@@ -106,8 +106,20 @@ export default function chat(state = initialState, action) {
         payload = immutable.fromJS(action.payload);
 
         return state
-          .updateIn(['converses', converseUUID, 'msgList'], (msgList) =>
-            msgList.push(payload)
+          .updateIn(
+            ['converses', converseUUID, 'msgList'],
+            (msgList: ChatStateConverseMsgList) => {
+              if (
+                msgList.findIndex(
+                  (msg) => msg.get('uuid') === payload.get('uuid')
+                ) === -1
+              ) {
+                // 当在列表中找不到相同UUID的消息时, 才添加到列表中
+                msgList = msgList.push(payload);
+              }
+
+              return msgList;
+            }
           )
           .setIn(['converses', converseUUID, 'lastMsg'], payload.get('message'))
           .setIn(['converses', converseUUID, 'lastTime'], payload.get('date'))

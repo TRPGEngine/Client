@@ -5,7 +5,7 @@ import { isImmutable, Collection, Record } from 'immutable';
 
 import './SlidePanel.scss';
 import { memoImmutableNode } from '../utils/memo-helper';
-import { TRPGDispatchProp } from '@src/shared/redux/types/redux';
+import { TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 
 interface Props extends TRPGDispatchProp {
   isSlidePanelShow: boolean;

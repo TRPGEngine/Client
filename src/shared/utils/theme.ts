@@ -1,7 +1,16 @@
 // name from http://chir.ag/projects/name-that-color/
 
+declare module 'styled-components' {
+  interface DefaultTheme {
+    color: ThemeType['color'];
+    boxShadow: ThemeType['boxShadow'];
+  }
+}
+
+type ThemeType = typeof styledTheme;
 const styledTheme = {
   color: {
+    borderBase: '#dddddd',
     'seashell-peach': '#FFF4EB',
     whisper: '#FAFAFC',
     soapstone: '#FFFBF8',
