@@ -1,4 +1,4 @@
-import * as types from '../types';
+import * as tags from '../tags';
 import { XMLElement } from '../parser/xml-parser';
 import parseText from '../parser/text-parser';
 import { XMLBuilderContext } from '../XMLBuilder';
@@ -40,7 +40,7 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
 
   // type 为 element 或 root
   const { name, attributes, elements } = data;
-  const _type = types.get(name);
+  const _type = tags.get(name);
 
   // 预处理attributes。 将: 开头的参数作为变量处理
   if (attributes && typeof attributes === 'object') {
