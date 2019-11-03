@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Login from '@portal/sso/Login';
 import ActorEditor from './actor/editor';
+import './utils/event';
 
 class App extends React.Component {
   render() {
