@@ -86,8 +86,11 @@ function reduxCacheFactory(
       throw new Error('get cache func should bind store');
     }
 
-    if (uuid.toString().substr(0, 4) === 'trpg') {
-      return Map(); // 不检测trpg开头的内置系统信息
+    if (_isNil(uuid) || uuid.toString().substr(0, 4) === 'trpg') {
+      // 如果uuid为undefined或null
+      // 或以trpg开头
+      // 直接返回空Map
+      return Map();
     }
 
     const state = store.getState();

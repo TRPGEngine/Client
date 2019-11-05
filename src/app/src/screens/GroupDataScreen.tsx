@@ -21,9 +21,10 @@ import {
 import { getCachedUserName } from '@src/shared/utils/cache-helper';
 import _get from 'lodash/get';
 import _without from 'lodash/without';
+import _isEmpty from 'lodash/isEmpty';
 import TModalPanel from '../components/TComponent/TModalPanel';
 import TPicker from '../components/TComponent/TPicker';
-import { selectUser } from '../redux/actions/nav';
+import { selectUser, backToTop } from '../redux/actions/nav';
 import { GroupStateGroupsItem } from '@src/shared/redux/types/group';
 import { Map } from 'immutable';
 import { NavigationScreenProps } from 'react-navigation';
@@ -154,7 +155,7 @@ class GroupDataScreen extends React.Component<Props> {
             let groupUUID = groupInfo.get('uuid');
             dispatch(switchSelectGroup(''));
             dispatch(dismissGroup(groupUUID));
-            dispatch(hideSlidePanel());
+            dispatch(backToTop());
           },
         })
       );
@@ -168,7 +169,7 @@ class GroupDataScreen extends React.Component<Props> {
             let groupUUID = groupInfo.get('uuid');
             dispatch(switchSelectGroup(''));
             dispatch(quitGroup(groupUUID));
-            dispatch(hideSlidePanel());
+            dispatch(backToTop());
           },
         })
       );
@@ -178,6 +179,10 @@ class GroupDataScreen extends React.Component<Props> {
   render() {
     const { isMsgTop } = this.state;
     const { groupInfo } = this.props;
+
+    if (_isEmpty(groupInfo.toObject())) {
+      return null;
+    }
 
     const groupOwnerName = getCachedUserName(groupInfo.get('owner_uuid'));
 
