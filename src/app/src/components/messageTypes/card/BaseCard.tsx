@@ -9,7 +9,7 @@ export interface BaseCardProps {
 
 export interface CardBtn {
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
   attrs?: {};
 }
 

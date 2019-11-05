@@ -7,18 +7,16 @@ import ui from './ui';
 import user from './user';
 import settings from './settings';
 
-const constants = Object.assign(
-  {
-    RESET: 'RESET',
-  },
-  actor,
-  cache,
-  chat,
-  group,
-  note,
-  ui,
-  user,
-  settings
-);
+const constants = {
+  RESET: 'RESET',
+  ...actor,
+  ...cache,
+  ...chat,
+  ...group,
+  ...note,
+  ...ui,
+  ...user,
+  ...settings,
+};
 
 export default constants;
