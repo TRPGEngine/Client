@@ -233,6 +233,9 @@ export const addGroup = function(group) {
   };
 };
 
+/**
+ * 同意入团邀请
+ */
 export const agreeGroupRequest = function(chatlogUUID, requestUUID, fromUUID) {
   checkUser(fromUUID);
 
