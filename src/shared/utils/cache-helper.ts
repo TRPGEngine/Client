@@ -3,10 +3,13 @@ import {
   getGroupInfo,
   getTemplateInfo,
   getActorInfo,
-} from '../redux/actions/cache';
+  getGroupInviteInfo,
+} from '@redux/actions/cache';
 import immutable, { Map } from 'immutable';
 import _isNil from 'lodash/isNil';
 import { isUserUUID } from './uuid';
+import { CacheScope } from '@redux/types/cache';
+import { TRPGAction } from '@redux/types/__all__';
 
 let _store;
 export const attachStore = function(store) {
@@ -60,12 +63,11 @@ export const loadcache = function() {
   // TODO
 };
 
-type CacheScope = 'user' | 'group' | 'actor' | 'template';
 type GetCacheCompletedCallback = () => void;
 type GetCacheDispatchActionFn = (
   uuid: string,
   onCompleted: GetCacheCompletedCallback
-) => (dispatch: any, getState: any) => any;
+) => TRPGAction;
 /**
  * 一个工厂类，用于生成获取缓存的方法
  * 获取数据缓存，如果缓存已存在则从缓存中获取数据
@@ -113,6 +115,7 @@ function reduxCacheFactory(
 }
 
 /**
+ * 用户信息缓存
  * 获取用户信息并缓存，如果缓存中已经有记录了则从缓存中获取
  * @param {string} uuid 用户UUID
  */
@@ -123,6 +126,7 @@ export const getUserInfoCache = reduxCacheFactory(
 );
 
 /**
+ * 团信息缓存
  * 获取团信息并缓存，如果缓存中已经有记录了则从缓存中获取
  * @param {string} uuid 团UUID
  */
@@ -133,6 +137,7 @@ export const getGroupInfoCache = reduxCacheFactory(
 );
 
 /**
+ * 角色信息缓存
  * 获取角色信息并缓存，如果缓存中已经有记录了则从缓存中获取
  * @param {string} uuid 角色UUID
  */
@@ -143,6 +148,7 @@ export const getActorInfoCache = reduxCacheFactory(
 );
 
 /**
+ * 模板信息缓存
  * 获取模板信息并缓存，如果缓存中已经有记录了则从缓存中获取
  * @param {string} uuid 角色UUID
  */
@@ -150,6 +156,17 @@ export const getTemplateInfoCache = reduxCacheFactory(
   'template',
   (uuid: string, onCompleted: GetCacheCompletedCallback) =>
     getTemplateInfo(uuid, onCompleted)
+);
+
+/**
+ * 团邀请信息缓存
+ * 获取团邀请信息并缓存，如果缓存中已经有记录了则从缓存中获取
+ * @param {string} uuid 角色UUID
+ */
+export const getGroupInviteInfoCache = reduxCacheFactory(
+  'groupInvite',
+  (uuid: string, onCompleted: GetCacheCompletedCallback) =>
+    getGroupInviteInfo(uuid, onCompleted)
 );
 
 /**

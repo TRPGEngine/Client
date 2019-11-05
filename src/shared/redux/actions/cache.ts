@@ -4,11 +4,13 @@ const {
   GET_TEMPLATE_INFO,
   GET_ACTOR_INFO,
   GET_GROUP_INFO_SUCCESS,
+  GET_GROUP_INVITE_INFO,
 } = constants;
 import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 import config from '../../project.config';
 import rnStorage from '../../api/rn-storage.api';
+import { TRPGAction } from '../types/__all__';
 
 // 加载本地缓存信息
 export const loadLocalCache = function() {
@@ -108,6 +110,32 @@ export const getGroupInfo = function(uuid, onCompleted) {
       if (data.result) {
         data.group.avatar = config.file.getAbsolutePath(data.group.avatar);
         dispatch({ type: GET_GROUP_INFO_SUCCESS, payload: data.group });
+      } else {
+        console.error(data.msg);
+      }
+
+      onCompleted && onCompleted(data);
+    });
+  };
+};
+
+/**
+ * 获取团邀请的详情内容
+ * @param uuid 团邀请UUID
+ * @param onCompleted 完成回调
+ */
+export const getGroupInviteInfo = (
+  uuid: string,
+  onCompleted: (data) => void
+): TRPGAction => {
+  if (!uuid) {
+    throw new Error('getGroupInviteInfo need uuid');
+  }
+
+  return function(dispatch, getState) {
+    return api.emit('group::getGroupInviteDetail', { uuid }, function(data) {
+      if (data.result) {
+        dispatch({ type: GET_GROUP_INVITE_INFO, payload: data.invite });
       } else {
         console.error(data.msg);
       }

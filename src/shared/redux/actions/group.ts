@@ -317,7 +317,7 @@ export const sendGroupInviteBatch = (
   };
 };
 
-export const agreeGroupInvite = function(inviteUUID) {
+export const agreeGroupInvite = function(inviteUUID: string): TRPGAction {
   return function(dispatch, getState) {
     api.emit('group::agreeGroupInvite', { uuid: inviteUUID }, function(data) {
       if (data.result) {
