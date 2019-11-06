@@ -21,6 +21,7 @@ import { getUserInfoCache } from '@src/shared/utils/cache-helper';
 import { TAvatar } from '../components/TComponent';
 import styled from 'styled-components/native';
 import { Checkbox } from '@ant-design/react-native';
+import UserList, { UserAvatar } from '@app/components/UserList';
 
 const ListItem = styled.TouchableOpacity`
   padding: 10px 0;
@@ -28,13 +29,6 @@ const ListItem = styled.TouchableOpacity`
   align-items: center;
   border-bottom-width: 0.5px;
   border-bottom-color: ${(props) => props.theme.color.borderBase};
-`;
-
-const UserAvatar = styled(TAvatar).attrs((props) => ({
-  width: 40,
-  height: 40,
-}))`
-  margin: 0 4px;
 `;
 
 interface Props
@@ -126,11 +120,7 @@ class UserSelectScreen extends React.Component<Props, State> {
     return (
       <View>
         <Text>选择用户</Text>
-        <FlatList
-          data={this.uuids}
-          keyExtractor={(item) => item}
-          renderItem={this.renderItem}
-        />
+        <UserList uuids={this.uuids} renderItem={this.renderItem} />
       </View>
     );
   }
