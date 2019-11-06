@@ -6,11 +6,11 @@ const {
   GET_GROUP_INFO_SUCCESS,
   GET_GROUP_INVITE_INFO,
 } = constants;
-import * as trpgApi from '../../api/trpg.api';
+import * as trpgApi from '@shared/api/trpg.api';
 const api = trpgApi.getInstance();
-import config from '../../project.config';
-import rnStorage from '../../api/rn-storage.api';
-import { TRPGAction } from '../types/__all__';
+import config from '@shared/project.config';
+import rnStorage from '@shared/api/rn-storage.api';
+import { TRPGAction } from '@shared/redux/types/__all__';
 
 // 加载本地缓存信息
 export const loadLocalCache = function() {
@@ -100,7 +100,7 @@ export const getActorInfo = function(uuid, onCompleted?) {
  * @param {string} uuid 团唯一标识
  * @param {function} onCompleted 完成后回调
  */
-export const getGroupInfo = function(uuid, onCompleted) {
+export const getGroupInfo = function(uuid, onCompleted?) {
   if (!uuid) {
     throw new Error('getGroupInfo need uuid');
   }
@@ -126,7 +126,7 @@ export const getGroupInfo = function(uuid, onCompleted) {
  */
 export const getGroupInviteInfo = (
   uuid: string,
-  onCompleted: (data) => void
+  onCompleted?: (data) => void
 ): TRPGAction => {
   if (!uuid) {
     throw new Error('getGroupInviteInfo need uuid');

@@ -18,12 +18,12 @@ import { injectLoginSuccessCallback } from '../../shared/utils/inject';
 import { bindInfo, tryLocalNotify } from './notify';
 import codePush from 'react-native-code-push';
 import appConfig from './config.app';
-import { attachStore } from '../../shared/utils/cache-helper';
+import { attachStore } from '@shared/utils/cache-helper';
 import styledTheme from '@src/shared/utils/theme';
 
 attachStore(store);
 
-import * as trpgApi from '../../shared/api/trpg.api';
+import * as trpgApi from '@shared/api/trpg.api';
 const api = trpgApi.getInstance();
 trpgApi.bindEventFunc.call(api, store, {
   onReceiveMessage(messageData) {
