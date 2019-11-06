@@ -1,12 +1,19 @@
 import BaseCard from './BaseCard';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import {
   agreeGroupInvite,
   refuseGroupInvite,
-} from '../../../../shared/redux/actions/group';
+} from '@shared/redux/actions/group';
+import { MessageProps } from '@shared/components/MessageHandler';
+import { TRPGState } from '@src/shared/redux/types/__all__';
+
+interface Props extends MessageProps, DispatchProp<any> {
+  groupInvites: any;
+  groupUUIDList: any;
+}
 
 // 入团邀请
-class GroupInvite extends BaseCard {
+class GroupInvite extends BaseCard<Props> {
   getCardBtn() {
     let info = this.props.info;
     let data = info.data;
@@ -39,7 +46,7 @@ class GroupInvite extends BaseCard {
   }
 }
 
-export default connect((state) => ({
+export default connect((state: TRPGState) => ({
   groupInvites: state.getIn(['group', 'invites']),
   groupUUIDList: state
     .getIn(['group', 'groups'])

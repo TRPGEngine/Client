@@ -1,12 +1,13 @@
-import BaseCard, { BaseCardProps } from './BaseCard';
+import BaseCard from './BaseCard';
 import { connect, DispatchProp } from 'react-redux';
 import {
   agreeFriendInvite,
   refuseFriendInvite,
 } from '@src/shared/redux/actions/user';
+import { MessageProps } from '@src/shared/components/MessageHandler';
 
 // 好友邀请
-interface Props extends BaseCardProps, DispatchProp<any> {
+interface Props extends MessageProps, DispatchProp<any> {
   friendRequests: any;
   friendList: any;
 }

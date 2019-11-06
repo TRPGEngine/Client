@@ -1,12 +1,13 @@
-import BaseCard, { BaseCardProps } from './BaseCard';
+import BaseCard from './BaseCard';
 import { connect, DispatchProp } from 'react-redux';
 import {
   agreeGroupRequest,
   refuseGroupRequest,
-} from '../../../../../shared/redux/actions/group';
+} from '@shared/redux/actions/group';
+import { MessageProps } from '@src/shared/components/MessageHandler';
 
 // 入团申请
-interface Props extends DispatchProp<any>, BaseCardProps {
+interface Props extends MessageProps, DispatchProp<any> {
   groups: any;
 }
 class GroupRequest extends BaseCard<Props> {

@@ -6,7 +6,6 @@ const {
   REMOVE_MSG,
   GET_CONVERSES_REQUEST,
   GET_CONVERSES_SUCCESS,
-  GET_CONVERSES_FAILED,
   GET_USER_CONVERSES_SUCCESS,
   CREATE_CONVERSES_SUCCESS,
   CREATE_CONVERSES_FAILED,
@@ -135,7 +134,6 @@ export let getConverses = function getConverses(cb?: () => void): TRPGAction {
         }
       } else {
         console.error(data);
-        dispatch({ type: GET_CONVERSES_FAILED, payload: data.msg });
       }
     });
   };

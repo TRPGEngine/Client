@@ -1,11 +1,7 @@
 import React, { ReactNode } from 'react';
 import { View, Text } from 'react-native';
 import { TButton } from '../../TComponent';
-import { MsgPayload } from '@shared/redux/types/chat';
-
-export interface BaseCardProps {
-  info: MsgPayload;
-}
+import { MessageProps } from '@src/shared/components/MessageHandler';
 
 export interface CardBtn {
   label: string;
@@ -13,7 +9,7 @@ export interface CardBtn {
   attrs?: {};
 }
 
-class BaseCard<P extends BaseCardProps = BaseCardProps> extends React.Component<
+class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
   P
 > {
   // 获取卡片视图

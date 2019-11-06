@@ -1,12 +1,19 @@
 import BaseCard from './BaseCard';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import {
   agreeFriendInvite,
   refuseFriendInvite,
-} from '../../../../shared/redux/actions/user';
+} from '@shared/redux/actions/user';
+import { MessageProps } from '@src/shared/components/MessageHandler';
+import { TRPGState } from '@src/shared/redux/types/__all__';
+
+interface Props extends MessageProps, DispatchProp<any> {
+  friendList: any;
+  friendRequests: any;
+}
 
 // 好友邀请
-class FriendInvite extends BaseCard {
+class FriendInvite extends BaseCard<Props> {
   getCardBtn() {
     let info = this.props.info;
     let data = info.data;
@@ -39,7 +46,7 @@ class FriendInvite extends BaseCard {
   }
 }
 
-export default connect((state) => ({
+export default connect((state: TRPGState) => ({
   friendList: state.getIn(['user', 'friendList']),
   friendRequests: state.getIn(['user', 'friendRequests']),
 }))(FriendInvite);

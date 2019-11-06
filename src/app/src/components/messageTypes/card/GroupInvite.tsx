@@ -1,4 +1,4 @@
-import BaseCard, { BaseCardProps } from './BaseCard';
+import BaseCard from './BaseCard';
 import { connect, DispatchProp } from 'react-redux';
 import {
   agreeGroupInvite,
@@ -6,9 +6,10 @@ import {
 } from '@shared/redux/actions/group';
 import { getGroupInviteInfoCache } from '@src/shared/utils/cache-helper';
 import _get from 'lodash/get';
+import { MessageProps } from '@src/shared/components/MessageHandler';
 
 // 入团邀请
-interface Props extends BaseCardProps, DispatchProp<any> {
+interface Props extends MessageProps, DispatchProp<any> {
   groupInvites: any;
   groupUUIDList: any;
 }
