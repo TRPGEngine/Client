@@ -68,6 +68,13 @@ type GetCacheDispatchActionFn = (
   uuid: string,
   onCompleted: GetCacheCompletedCallback
 ) => TRPGAction;
+
+interface ReduxCacheFactoryInstance {
+  (uuid: string): Map<any, any>;
+
+  refresh: (uuid: string) => void;
+}
+
 /**
  * 一个工厂类，用于生成获取缓存的方法
  * 获取数据缓存，如果缓存已存在则从缓存中获取数据
@@ -77,32 +84,17 @@ type GetCacheDispatchActionFn = (
 function reduxCacheFactory(
   cacheScope: CacheScope,
   getCacheDispatch: GetCacheDispatchActionFn
-): (uuid: string) => Map<any, any> {
+): ReduxCacheFactoryInstance {
   const isGettingDataUUIDList = [];
 
-  return function getCache(uuid: string) {
-    const store = _store;
-    if (_isNil(store) || _isNil(store.dispatch)) {
-      throw new Error('get cache func should bind store');
-    }
-
-    if (_isNil(uuid) || uuid.toString().substr(0, 4) === 'trpg') {
-      // 如果uuid为undefined或null
-      // 或以trpg开头
-      // 直接返回空Map
-      return Map();
-    }
-
-    const state = store.getState();
-    const data = state.getIn(['cache', cacheScope, uuid]);
-    if (data) {
-      return data;
-    }
-
+  /**
+   * 从服务端获取缓存信息
+   */
+  function _fetchCacheFromServer(uuid: string) {
     if (isGettingDataUUIDList.indexOf(uuid) === -1) {
       // 没有正在获取用户信息
       console.log(`缓存[${cacheScope}: ${uuid}]不存在， 自动获取`);
-      store.dispatch(
+      _store.dispatch(
         getCacheDispatch(uuid, () => {
           // 从列表中移除
           let index = isGettingDataUUIDList.indexOf(uuid);
@@ -113,8 +105,37 @@ function reduxCacheFactory(
       );
       isGettingDataUUIDList.push(uuid);
     }
+  }
+
+  function getCache(uuid: string) {
+    if (_isNil(_store) || _isNil(_store.dispatch)) {
+      throw new Error('get cache func should bind store');
+    }
+
+    if (_isNil(uuid) || uuid.toString().substr(0, 4) === 'trpg') {
+      // 如果uuid为undefined或null
+      // 或以trpg开头
+      // 直接返回空Map
+      return Map();
+    }
+
+    const state = _store.getState();
+    const data = state.getIn(['cache', cacheScope, uuid]);
+    if (data) {
+      return data;
+    }
+
+    _fetchCacheFromServer(uuid);
+
     return Map();
+  }
+
+  getCache.refresh = (uuid: string) => {
+    // 重新获取缓存
+    _fetchCacheFromServer(uuid);
   };
+
+  return getCache;
 }
 
 /**
