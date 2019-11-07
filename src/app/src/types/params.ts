@@ -7,3 +7,5 @@ export interface ChatParams {
 }
 
 export type GroupDataParams = Pick<ChatParams, 'uuid' | 'type' | 'name'>;
+
+export type GroupMemberParams = Pick<ChatParams, 'uuid'>;

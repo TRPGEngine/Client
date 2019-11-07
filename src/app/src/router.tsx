@@ -35,6 +35,7 @@ import GroupDataScreen from './screens/GroupDataScreen';
 import UserSelectScreen from './screens/UserSelectScreen';
 import DebugScreen from './screens/DebugScreen';
 import DocumentScreen from './screens/DocumentScreen';
+import GroupMemberScreen from './screens/GroupMemberScreen';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -132,6 +133,12 @@ export const AppNavigator = createStackNavigator(
       navigationOptions: ({ navigation }) => ({
         headerTitle: _get(navigation, 'state.params.name', '详细信息'),
       }),
+    },
+    GroupMember: {
+      screen: GroupMemberScreen,
+      navigationOptions: {
+        headerTitle: '团成员',
+      },
     },
     UserSelect: {
       screen: UserSelectScreen,

@@ -7,14 +7,15 @@ import {
   ListRenderItem,
 } from 'react-native';
 import styled from 'styled-components/native';
-import { TRPGState } from '@redux/types/__all__';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import {
   getUserInfoCache,
   getCachedUserName,
 } from '@shared/utils/cache-helper';
 import TAvatar from './TComponent/TAvatar';
+import { navProfile } from '@app/redux/actions/nav';
 
-export const UserItem = styled.View`
+export const UserItem = styled.TouchableOpacity`
   padding: 10px 0;
   flex-direction: row;
   align-items: center;
@@ -29,19 +30,23 @@ export const UserAvatar = styled(TAvatar).attrs((props) => ({
   margin: 0 4px;
 `;
 
-interface Props {
+interface Props extends TRPGDispatchProp {
   uuids: string[]; // 用户的uuid列表
   renderItem?: ListRenderItem<string>;
 }
 
 class UserList extends React.Component<Props> {
+  handlePress = (uuid: string, name: string) => {
+    this.props.dispatch(navProfile(uuid, name));
+  };
+
   renderItem = ({ item }: ListRenderItemInfo<string>) => {
     const uuid = item;
     const user = getUserInfoCache(uuid);
     const name = getCachedUserName(uuid);
 
     return (
-      <UserItem>
+      <UserItem onPress={() => this.handlePress(uuid, name)}>
         <UserAvatar name={name} uri={user.get('avatar')} />
         <Text>{name}</Text>
       </UserItem>
