@@ -10,7 +10,6 @@ import { MessageProps } from '@src/shared/components/MessageHandler';
 
 // 入团邀请
 interface Props extends MessageProps, DispatchProp<any> {
-  groupInvites: any;
   groupUUIDList: any;
 }
 class GroupInvite extends BaseCard<Props> {
@@ -53,7 +52,6 @@ class GroupInvite extends BaseCard<Props> {
 
 export default connect((state: any) => ({
   groupInviteCache: state.getIn(['cache', 'groupInvite']),
-  groupInvites: state.getIn(['group', 'invites']),
   groupUUIDList: state
     .getIn(['group', 'groups'])
     .map((item) => item.get('uuid')),

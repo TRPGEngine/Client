@@ -6,48 +6,54 @@ import {
 } from '@shared/redux/actions/group';
 import { MessageProps } from '@shared/components/MessageHandler';
 import { TRPGState } from '@src/shared/redux/types/__all__';
+import { getGroupInviteInfoCache } from '@shared/utils/cache-helper';
+import _get from 'lodash/get';
 
 interface Props extends MessageProps, DispatchProp<any> {
-  groupInvites: any;
   groupUUIDList: any;
 }
 
 // 入团邀请
 class GroupInvite extends BaseCard<Props> {
   getCardBtn() {
-    let info = this.props.info;
-    let data = info.data;
-    let invite = data.invite;
-    let inviteIndex = this.props.groupInvites.findIndex(
-      (item) => item.get('uuid') === invite.uuid
-    );
-    if (inviteIndex >= 0) {
+    const info = this.props.info;
+    const data = info.data;
+    const inviteUUID = _get(data, 'invite.uuid');
+    const inviteInfo = getGroupInviteInfoCache(inviteUUID);
+    const is_agree = inviteInfo.get('is_agree', false);
+    const is_refuse = inviteInfo.get('is_refuse', false);
+
+    const processed = is_agree || is_refuse;
+
+    if (!processed) {
       // 尚未处理
       return [
         {
           label: '拒绝',
-          onClick: () => this.props.dispatch(refuseGroupInvite(invite.uuid)),
+          onClick: () => this.props.dispatch(refuseGroupInvite(inviteUUID)),
         },
         {
           label: '同意',
-          onClick: () => this.props.dispatch(agreeGroupInvite(invite.uuid)),
+          onClick: () => this.props.dispatch(agreeGroupInvite(inviteUUID)),
         },
       ];
     } else {
-      let groupIndex = this.props.groupUUIDList.indexOf(invite.group_uuid);
-      if (groupIndex >= 0) {
+      // 已处理
+      if (is_agree) {
         // 已同意
         return [{ label: '已同意' }];
-      } else {
+      } else if (is_refuse) {
         // 已拒绝
         return [{ label: '已拒绝' }];
+      } else {
+        return [];
       }
     }
   }
 }
 
 export default connect((state: TRPGState) => ({
-  groupInvites: state.getIn(['group', 'invites']),
+  groupInviteCache: state.getIn(['cache', 'groupInvite']),
   groupUUIDList: state
     .getIn(['group', 'groups'])
     .map((item) => item.get('uuid')),
