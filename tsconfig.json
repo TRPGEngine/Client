@@ -21,7 +21,7 @@
       "@web/*": ["./src/web/*"],
       "@app/*": ["./src/app/src/*"],
       "@portal/*": ["./src/portal/*"],
-      "@src/*": ["./src/*"],
+      "@src/*": ["./src/*"]
     }
   },
   "include": [
