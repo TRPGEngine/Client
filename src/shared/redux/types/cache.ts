@@ -1,16 +1,13 @@
-import { Record, Map } from 'immutable';
+import { Map } from 'immutable';
 
 type CacheMap = Map<string, any>;
 
-export interface CacheRecordProps {
-  user: CacheMap;
-  template: CacheMap;
-  actor: CacheMap;
-  group: CacheMap;
-  friendInvite: CacheMap;
-  groupInvite: CacheMap;
-}
+export type CacheKey =
+  | 'user'
+  | 'template'
+  | 'actor'
+  | 'group'
+  | 'friendInvite'
+  | 'groupInvite';
 
-export type CacheState = Record<CacheRecordProps>;
-
-export type CacheScope = keyof CacheRecordProps;
+export type CacheState = Map<CacheKey, CacheMap>;

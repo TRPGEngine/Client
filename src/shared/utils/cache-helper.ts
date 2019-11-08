@@ -9,7 +9,7 @@ import {
 import immutable, { Map } from 'immutable';
 import _isNil from 'lodash/isNil';
 import { isUserUUID } from './uuid';
-import { CacheScope } from '@redux/types/cache';
+import { CacheKey } from '@redux/types/cache';
 import { TRPGAction } from '@redux/types/__all__';
 
 let _store;
@@ -83,7 +83,7 @@ interface ReduxCacheFactoryInstance {
  * @param cacheScope 缓存对象, 必须是redux cache 下的变量
  */
 function reduxCacheFactory(
-  cacheScope: CacheScope,
+  cacheScope: CacheKey,
   getCacheDispatch: GetCacheDispatchActionFn
 ): ReduxCacheFactoryInstance {
   const isGettingDataUUIDList = [];
