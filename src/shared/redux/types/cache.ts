@@ -1,11 +1,14 @@
 import { Record, Map } from 'immutable';
 
+type CacheMap = Map<string, any>;
+
 export interface CacheRecordProps {
-  user: Map<string, any>;
-  template: Map<string, any>;
-  actor: Map<string, any>;
-  group: Map<string, any>;
-  groupInvite: Map<string, any>;
+  user: CacheMap;
+  template: CacheMap;
+  actor: CacheMap;
+  group: CacheMap;
+  friendInvite: CacheMap;
+  groupInvite: CacheMap;
 }
 
 export type CacheState = Record<CacheRecordProps>;

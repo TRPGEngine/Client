@@ -4,6 +4,7 @@ const {
   GET_TEMPLATE_INFO,
   GET_ACTOR_INFO,
   GET_GROUP_INFO_SUCCESS,
+  GET_FRIEND_INVITE_INFO,
   GET_GROUP_INVITE_INFO,
 } = constants;
 import * as trpgApi from '@shared/api/trpg.api';
@@ -110,6 +111,27 @@ export const getGroupInfo = function(uuid, onCompleted?) {
       if (data.result) {
         data.group.avatar = config.file.getAbsolutePath(data.group.avatar);
         dispatch({ type: GET_GROUP_INFO_SUCCESS, payload: data.group });
+      } else {
+        console.error(data.msg);
+      }
+
+      onCompleted && onCompleted(data);
+    });
+  };
+};
+
+export const getFriendInviteInfo = (
+  uuid: string,
+  onCompleted?: (data) => void
+): TRPGAction => {
+  if (!uuid) {
+    throw new Error('getGroupInviteInfo need uuid');
+  }
+
+  return function(dispatch, getState) {
+    return api.emit('player::getFriendInviteDetail', { uuid }, function(data) {
+      if (data.result) {
+        dispatch({ type: GET_FRIEND_INVITE_INFO, payload: data.invite });
       } else {
         console.error(data.msg);
       }

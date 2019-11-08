@@ -8,6 +8,7 @@ const {
   GET_ACTOR_INFO,
   GET_TEMPLATE_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
+  GET_FRIEND_INVITE_INFO,
   GET_GROUP_INVITE_INFO,
 } = constants;
 
@@ -16,6 +17,7 @@ const initialState: CacheState = immutable.fromJS({
   template: {},
   actor: {},
   group: {},
+  friendInvite: {},
   groupInvite: {},
 });
 
@@ -56,6 +58,11 @@ export default function cache(state = initialState, action) {
     case GET_GROUP_INFO_SUCCESS:
       return state.setIn(
         ['group', action.payload.uuid],
+        immutable.fromJS(action.payload)
+      );
+    case GET_FRIEND_INVITE_INFO:
+      return state.setIn(
+        ['friendInvite', action.payload.uuid],
         immutable.fromJS(action.payload)
       );
     case GET_GROUP_INVITE_INFO:

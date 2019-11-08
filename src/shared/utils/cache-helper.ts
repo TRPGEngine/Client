@@ -4,6 +4,7 @@ import {
   getTemplateInfo,
   getActorInfo,
   getGroupInviteInfo,
+  getFriendInviteInfo,
 } from '@redux/actions/cache';
 import immutable, { Map } from 'immutable';
 import _isNil from 'lodash/isNil';
@@ -183,8 +184,19 @@ export const getTemplateInfoCache = reduxCacheFactory(
 );
 
 /**
+ * 好友邀请信息缓存
+ * 获取信息并缓存，如果缓存中已经有记录了则从缓存中获取
+ * @param {string} uuid 角色UUID
+ */
+export const getFriendInviteInfoCache = reduxCacheFactory(
+  'friendInvite',
+  (uuid: string, onCompleted: GetCacheCompletedCallback) =>
+    getFriendInviteInfo(uuid, onCompleted)
+);
+
+/**
  * 团邀请信息缓存
- * 获取团邀请信息并缓存，如果缓存中已经有记录了则从缓存中获取
+ * 获取信息并缓存，如果缓存中已经有记录了则从缓存中获取
  * @param {string} uuid 角色UUID
  */
 export const getGroupInviteInfoCache = reduxCacheFactory(
