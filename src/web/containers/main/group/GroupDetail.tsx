@@ -241,7 +241,7 @@ class GroupDetail extends React.Component<Props> {
         <ReactTooltip effect="solid" />
         <div className="group-header">
           <div className="avatar">
-            <img src={groupInfo.get('avatar') || config.defaultImg.group} />
+            <img src={groupInfo.get('avatar') || config.defaultImg.getGroup(groupInfo.get('name'))} />
           </div>
           <div className="title">
             <div className="main-title">

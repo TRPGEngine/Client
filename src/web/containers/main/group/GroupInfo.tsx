@@ -88,7 +88,11 @@ class GroupInfo extends React.Component<Props> {
         <div className="group-info-cells">
           <div className="group-info-cell group-avatar">
             <ImageViewer originImageUrl={originAvatar}>
-              <img src={avatar || config.defaultImg.group} />
+              <img
+                src={
+                  avatar || config.defaultImg.getGroup(groupInfo.get('name'))
+                }
+              />
             </ImageViewer>
             <div>
               <p>{groupInfo.get('name')}</p>

@@ -58,7 +58,11 @@ class GroupEdit extends React.Component {
           attachUUID={this.props.selectedGroupUUID}
           onUploadSuccess={(json) => this.handleUpdateAvatar(json.url)}
         >
-          <img src={this.state.avatar || config.defaultImg.group} />
+          <img
+            src={
+              this.state.avatar || config.defaultImg.getGroup(this.state.name)
+            }
+          />
         </ImageUploader>
         <div>
           <span>团名称</span>
