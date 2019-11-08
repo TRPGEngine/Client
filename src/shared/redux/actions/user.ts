@@ -26,7 +26,7 @@ import rnStorage from '../../api/rn-storage.api';
 import config from '../../project.config';
 import * as trpgApi from '../../api/trpg.api';
 import { showLoading, hideLoading, showAlert, showToast } from './ui';
-import { checkUser } from '../../utils/cache-helper';
+import { checkUser, getFriendInviteInfoCache } from '../../utils/cache-helper';
 import { runLoginSuccessCallback } from '../../utils/inject';
 import { setUserSettings, setSystemSettings } from './settings';
 
@@ -282,6 +282,21 @@ export const getFriends = function(): TRPGAction {
   };
 };
 
+export const getFriendsInvite = function(): TRPGAction {
+  return function(dispatch, getState) {
+    return api.emit('player::getFriendsInvite', {}, function(data) {
+      if (data.result) {
+        for (let item of data.res) {
+          checkUser(item.from_uuid);
+        }
+        dispatch({ type: GET_FRIEND_INVITE_SUCCESS, payload: data.res });
+      } else {
+        console.error(data.msg);
+      }
+    });
+  };
+};
+
 /**
  * 发送好友邀请
  * @param uuid 目标用户UUID
@@ -312,24 +327,10 @@ export const agreeFriendInvite = function(inviteUUID: string): TRPGAction {
       if (data.result) {
         checkUser(data.invite.from_uuid);
         dispatch({ type: AGREE_FRIEND_INVITE_SUCCESS, payload: data.invite });
+        getFriendInviteInfoCache.refresh(inviteUUID); // 操作成功后重新获取邀请信息缓存
       } else {
         console.error(data.msg);
         dispatch(showAlert(data.msg));
-      }
-    });
-  };
-};
-
-export const getFriendsInvite = function(): TRPGAction {
-  return function(dispatch, getState) {
-    return api.emit('player::getFriendsInvite', {}, function(data) {
-      if (data.result) {
-        for (let item of data.res) {
-          checkUser(item.from_uuid);
-        }
-        dispatch({ type: GET_FRIEND_INVITE_SUCCESS, payload: data.res });
-      } else {
-        console.error(data.msg);
       }
     });
   };
@@ -343,6 +344,7 @@ export const refuseFriendInvite = function(inviteUUID: string): TRPGAction {
       function(data) {
         if (data.result) {
           dispatch({ type: REFUSE_FRIEND_INVITE_SUCCESS, payload: data.res });
+          getFriendInviteInfoCache.refresh(inviteUUID); // 操作成功后重新获取邀请信息缓存
         } else {
           dispatch(showAlert(data.msg));
         }
