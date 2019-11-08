@@ -10,12 +10,10 @@ import {
   Dimensions,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
-import sb from 'react-native-style-block';
-import rnStorage from '../../../shared/api/rn-storage.api';
-import { loginWithToken } from '../../../shared/redux/actions/user';
-import { backNav } from '../redux/actions/nav';
+import rnStorage from '@shared/api/rn-storage.api';
+import { loginWithToken } from '@shared/redux/actions/user';
 import { NavigationScreenProps } from 'react-navigation';
-import { TIcon } from '../components/TComponent';
+import { TIcon } from '@app/components/TComponent';
 import styled from 'styled-components/native';
 import {
   WebViewNavigationEvent,
