@@ -17,25 +17,9 @@ import { TRPGState } from '@src/shared/redux/types/__all__';
 import _uniq from 'lodash/uniq';
 import _without from 'lodash/without';
 import _noop from 'lodash/noop';
-import { getUserInfoCache } from '@src/shared/utils/cache-helper';
-import { TAvatar } from '../components/TComponent';
-import styled from 'styled-components/native';
+import { getUserInfoCache } from '@shared/utils/cache-helper';
 import { Checkbox } from '@ant-design/react-native';
-
-const ListItem = styled.TouchableOpacity`
-  padding: 10px 0;
-  flex-direction: row;
-  align-items: center;
-  border-bottom-width: 0.5px;
-  border-bottom-color: ${(props) => props.theme.color.borderBase};
-`;
-
-const UserAvatar = styled(TAvatar).attrs((props) => ({
-  width: 40,
-  height: 40,
-}))`
-  margin: 0 4px;
-`;
+import UserList, { UserAvatar, UserItem } from '@app/components/UserList';
 
 interface Props
   extends NavigationScreenProps<{
@@ -108,7 +92,7 @@ class UserSelectScreen extends React.Component<Props, State> {
     };
 
     return (
-      <ListItem onPress={() => handleClick(!isChecked)}>
+      <UserItem onPress={() => handleClick(!isChecked)}>
         <Checkbox
           checked={isChecked}
           onChange={(e) => {
@@ -118,7 +102,7 @@ class UserSelectScreen extends React.Component<Props, State> {
         />
         <UserAvatar name={name} uri={user.get('avatar')} />
         <Text>{name}</Text>
-      </ListItem>
+      </UserItem>
     );
   };
 
@@ -126,11 +110,7 @@ class UserSelectScreen extends React.Component<Props, State> {
     return (
       <View>
         <Text>选择用户</Text>
-        <FlatList
-          data={this.uuids}
-          keyExtractor={(item) => item}
-          renderItem={this.renderItem}
-        />
+        <UserList uuids={this.uuids} renderItem={this.renderItem} />
       </View>
     );
   }

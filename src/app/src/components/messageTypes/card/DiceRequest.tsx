@@ -1,9 +1,10 @@
-import BaseCard, { BaseCardProps } from './BaseCard';
+import BaseCard from './BaseCard';
 import { connect, DispatchProp } from 'react-redux';
-import { acceptDiceRequest } from '../../../../../shared/redux/actions/dice';
+import { acceptDiceRequest } from '@shared/redux/actions/dice';
+import { MessageProps } from '@shared/components/MessageHandler';
 
 // 投骰请求
-interface Props extends BaseCardProps, DispatchProp<any> {
+interface Props extends MessageProps, DispatchProp<any> {
   selfUUID: any;
   me: any;
 }

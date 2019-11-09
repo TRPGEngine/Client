@@ -14,14 +14,14 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": true,
     "paths": {
-      "@src/*": ["./src/*"],
       "@config/*": ["./config/*"],
       "@redux/*": ["src/shared/redux/*"],
       "@components/*": ["./src/web/components/*"],
       "@shared/*": ["./src/shared/*"],
       "@web/*": ["./src/web/*"],
       "@app/*": ["./src/app/src/*"],
-      "@portal/*": ["./src/portal/*"]
+      "@portal/*": ["./src/portal/*"],
+      "@src/*": ["./src/*"]
     }
   },
   "include": [

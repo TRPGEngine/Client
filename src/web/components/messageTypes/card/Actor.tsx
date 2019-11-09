@@ -1,14 +1,17 @@
 import React from 'react';
 import BaseCard from './BaseCard';
-import { connect } from 'react-redux';
-import { showModal } from '../../../../shared/redux/actions/ui';
-import { getActorInfo } from '../../../../shared/redux/actions/cache';
-import config from '../../../../shared/project.config';
+import { connect, DispatchProp } from 'react-redux';
+import { showModal } from '@shared/redux/actions/ui';
+import { getActorInfo } from '@shared/redux/actions/cache';
+import config from '@shared/project.config';
 import ActorCacheProfile from '../../modal/ActorCacheProfile';
+import { MessageProps } from '@src/shared/components/MessageHandler';
+
+interface Props extends MessageProps, DispatchProp<any> {}
 
 // 投骰请求
-class Actor extends BaseCard {
-  showActorProfile(uuid) {
+class Actor extends BaseCard<Props> {
+  showActorProfile(uuid: string) {
     if (!uuid) {
       console.error('uuid is required!');
       return;

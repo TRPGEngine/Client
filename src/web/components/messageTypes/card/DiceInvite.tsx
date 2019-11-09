@@ -1,9 +1,15 @@
 import BaseCard from './BaseCard';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { acceptDiceInvite } from '../../../../shared/redux/actions/dice';
+import { MessageProps } from '@shared/components/MessageHandler';
+import { TRPGState } from '@src/shared/redux/types/__all__';
+
+interface Props extends MessageProps, DispatchProp<any> {
+  selfUUID: string;
+}
 
 // 投骰邀请
-class DiceInvite extends BaseCard {
+class DiceInvite extends BaseCard<Props> {
   getCardBtn() {
     let info = this.props.info;
     let me = this.props.me;
@@ -39,6 +45,6 @@ class DiceInvite extends BaseCard {
   }
 }
 
-export default connect((state) => ({
+export default connect((state: TRPGState) => ({
   selfUUID: state.getIn(['user', 'info', 'uuid']),
 }))(DiceInvite);

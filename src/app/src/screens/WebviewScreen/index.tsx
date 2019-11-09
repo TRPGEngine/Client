@@ -7,15 +7,12 @@ import {
   BackHandler,
   Linking,
   NativeSyntheticEvent,
-  Dimensions,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
-import sb from 'react-native-style-block';
-import rnStorage from '../../../shared/api/rn-storage.api';
-import { loginWithToken } from '../../../shared/redux/actions/user';
-import { backNav } from '../redux/actions/nav';
+import rnStorage from '@shared/api/rn-storage.api';
+import { loginWithToken } from '@shared/redux/actions/user';
 import { NavigationScreenProps } from 'react-navigation';
-import { TIcon } from '../components/TComponent';
+import { TIcon } from '@app/components/TComponent';
 import styled from 'styled-components/native';
 import {
   WebViewNavigationEvent,
@@ -26,7 +23,7 @@ import {
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import _isString from 'lodash/isString';
-import PDF from 'react-native-pdf';
+import PDFRender from './pdf';
 
 const TipContainer = styled.View`
   position: absolute;
@@ -46,10 +43,6 @@ const LoadingBar = styled.View<{ color: string; percent: number }>`
   z-index: 10px;
   top: 0;
   left: 0;
-`;
-
-const PDFView = styled(PDF)`
-  flex: 1;
 `;
 
 const Loading = React.memo(() => (
@@ -138,6 +131,12 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
     clearTimeout(this.timer);
   }
 
+  setTitle = (title: string) => {
+    this.props.navigation.setParams({
+      title,
+    });
+  };
+
   /**
    * 发送消息到webview
    * TODO: 未测试
@@ -215,7 +214,7 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
   handleStateChange(state: WebViewNavigation) {
     let { loading, title, url, canGoForward, canGoBack } = state;
 
-    this.props.navigation.setParams({ title });
+    this.setTitle(title);
     this.canGoBack = canGoBack;
   }
 
@@ -264,14 +263,12 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
         )}
         {this.isPDF ? (
           // 如果是PDF网络地址时。使用pdf阅览器
-          <PDFView
-            source={{
-              uri: url,
-              cache: true,
-            }}
+          <PDFRender
+            url={url}
             onLoadProgress={this.handleLoadProgressPdf}
             onLoadComplete={this.handleLoadEnd}
             onError={this.handleError}
+            onChangeTitle={this.setTitle}
           />
         ) : (
           <WebView

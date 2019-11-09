@@ -1,23 +1,25 @@
 import BaseCard from './BaseCard';
 import { connect, DispatchProp } from 'react-redux';
 import {
-  agreeGroupInvite,
-  refuseGroupInvite,
-} from '@shared/redux/actions/group';
-import { getGroupInviteInfoCache } from '@src/shared/utils/cache-helper';
-import _get from 'lodash/get';
+  agreeFriendInvite,
+  refuseFriendInvite,
+} from '@shared/redux/actions/user';
 import { MessageProps } from '@src/shared/components/MessageHandler';
+import { TRPGState } from '@src/shared/redux/types/__all__';
+import _get from 'lodash/get';
+import { getFriendInviteInfoCache } from '@shared/utils/cache-helper';
 
-// 入团邀请
 interface Props extends MessageProps, DispatchProp<any> {
-  groupUUIDList: any;
+  friendList: any;
 }
-class GroupInvite extends BaseCard<Props> {
+
+// 好友邀请
+class FriendInvite extends BaseCard<Props> {
   getCardBtn() {
     const info = this.props.info;
     const data = info.data;
     const inviteUUID = _get(data, 'invite.uuid');
-    const inviteInfo = getGroupInviteInfoCache(inviteUUID);
+    const inviteInfo = getFriendInviteInfoCache(inviteUUID);
     const is_agree = inviteInfo.get('is_agree', false);
     const is_refuse = inviteInfo.get('is_refuse', false);
 
@@ -28,20 +30,20 @@ class GroupInvite extends BaseCard<Props> {
       return [
         {
           label: '拒绝',
-          onClick: () => this.props.dispatch(refuseGroupInvite(inviteUUID)),
+          onClick: () => this.props.dispatch(refuseFriendInvite(inviteUUID)),
         },
         {
           label: '同意',
-          onClick: () => this.props.dispatch(agreeGroupInvite(inviteUUID)),
+          onClick: () => this.props.dispatch(agreeFriendInvite(inviteUUID)),
         },
       ];
     } else {
       // 已处理
       if (is_agree) {
-        // 已同意
+        // 已同意是好友
         return [{ label: '已同意' }];
       } else if (is_refuse) {
-        // 已拒绝
+        // 已拒绝好友邀请
         return [{ label: '已拒绝' }];
       } else {
         return [];
@@ -50,9 +52,7 @@ class GroupInvite extends BaseCard<Props> {
   }
 }
 
-export default connect((state: any) => ({
-  groupInviteCache: state.getIn(['cache', 'groupInvite']),
-  groupUUIDList: state
-    .getIn(['group', 'groups'])
-    .map((item) => item.get('uuid')),
-}))(GroupInvite);
+export default connect((state: TRPGState) => ({
+  friendList: state.getIn(['user', 'friendList']),
+  friendInviteCache: state.getIn(['cache', 'friendInvite']),
+}))(FriendInvite);

@@ -1,17 +1,11 @@
 import React from 'react';
 import Button from 'apsl-react-native-button';
-import {
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  StyleProp,
-  Text,
-  Button as OriButton,
-} from 'react-native';
+import { StyleProp, TextStyle, Button as OriButton } from 'react-native';
 
 type Props = {
   type?: 'default' | 'error' | 'inline';
   style?: any;
-  textStyle?: StyleProp<Text>;
+  textStyle?: StyleProp<TextStyle>;
   disabled?: boolean;
   [other: string]: any;
 };

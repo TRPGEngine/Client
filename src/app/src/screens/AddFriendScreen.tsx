@@ -12,7 +12,7 @@ import sb from 'react-native-style-block';
 import { TIcon, TInput, TAvatar } from '../components/TComponent';
 import { findUser } from '../../../shared/redux/actions/user';
 import { findGroup } from '../../../shared/redux/actions/group';
-import { switchNav } from '../redux/actions/nav';
+import { switchNav, navProfile } from '../redux/actions/nav';
 import styled from 'styled-components/native';
 import {
   NavigationStackScreenOptions,
@@ -161,14 +161,7 @@ class AddFriendScreen extends React.Component<Props> {
               ...item,
               name: item.nickname || item.username,
             })),
-            (item) =>
-              this.props.dispatch(
-                switchNav('Profile', {
-                  uuid: item.uuid,
-                  type: 'user',
-                  name: item.name,
-                })
-              )
+            (item) => this.props.dispatch(navProfile(item.uuid, item.name))
           );
         } else if (this.state.searchType === 'group') {
           let resultList = this.props.groupFindingResult

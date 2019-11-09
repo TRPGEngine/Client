@@ -11,7 +11,7 @@ import sb from 'react-native-style-block';
 import appConfig from '../config.app';
 import { TIcon } from './TComponent';
 import ConvItem from './ConvItem';
-import { switchNav } from '../redux/actions/nav';
+import { switchNav, navProfile } from '../redux/actions/nav';
 import { isImmutable } from 'immutable';
 
 interface SectionListItemData {
@@ -69,13 +69,7 @@ class ContactList extends React.Component<Props, State> {
 
   handleShowProfile(uuid, type, name) {
     if (type === 'user') {
-      this.props.dispatch(
-        switchNav('Profile', {
-          uuid,
-          type,
-          name,
-        })
-      );
+      this.props.dispatch(navProfile(uuid, name));
     } else if (type === 'group') {
       this.props.dispatch(
         switchNav('GroupProfile', {

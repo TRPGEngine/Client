@@ -3,10 +3,14 @@ import {
   getGroupInfo,
   getTemplateInfo,
   getActorInfo,
-} from '../redux/actions/cache';
+  getGroupInviteInfo,
+  getFriendInviteInfo,
+} from '@redux/actions/cache';
 import immutable, { Map } from 'immutable';
 import _isNil from 'lodash/isNil';
 import { isUserUUID } from './uuid';
+import { CacheKey } from '@redux/types/cache';
+import { TRPGAction } from '@redux/types/__all__';
 
 let _store;
 export const attachStore = function(store) {
@@ -60,12 +64,18 @@ export const loadcache = function() {
   // TODO
 };
 
-type CacheScope = 'user' | 'group' | 'actor' | 'template';
 type GetCacheCompletedCallback = () => void;
 type GetCacheDispatchActionFn = (
   uuid: string,
   onCompleted: GetCacheCompletedCallback
-) => (dispatch: any, getState: any) => any;
+) => TRPGAction;
+
+interface ReduxCacheFactoryInstance {
+  (uuid: string): Map<any, any>;
+
+  refresh: (uuid: string) => void;
+}
+
 /**
  * 一个工厂类，用于生成获取缓存的方法
  * 获取数据缓存，如果缓存已存在则从缓存中获取数据
@@ -73,31 +83,19 @@ type GetCacheDispatchActionFn = (
  * @param cacheScope 缓存对象, 必须是redux cache 下的变量
  */
 function reduxCacheFactory(
-  cacheScope: CacheScope,
+  cacheScope: CacheKey,
   getCacheDispatch: GetCacheDispatchActionFn
-): (uuid: string) => Map<any, any> {
+): ReduxCacheFactoryInstance {
   const isGettingDataUUIDList = [];
 
-  return function getCache(uuid: string) {
-    const store = _store;
-    if (_isNil(store) || _isNil(store.dispatch)) {
-      throw new Error('get cache func should bind store');
-    }
-
-    if (uuid.toString().substr(0, 4) === 'trpg') {
-      return Map(); // 不检测trpg开头的内置系统信息
-    }
-
-    const state = store.getState();
-    const data = state.getIn(['cache', cacheScope, uuid]);
-    if (data) {
-      return data;
-    }
-
+  /**
+   * 从服务端获取缓存信息
+   */
+  function _fetchCacheFromServer(uuid: string) {
     if (isGettingDataUUIDList.indexOf(uuid) === -1) {
       // 没有正在获取用户信息
       console.log(`缓存[${cacheScope}: ${uuid}]不存在， 自动获取`);
-      store.dispatch(
+      _store.dispatch(
         getCacheDispatch(uuid, () => {
           // 从列表中移除
           let index = isGettingDataUUIDList.indexOf(uuid);
@@ -108,11 +106,41 @@ function reduxCacheFactory(
       );
       isGettingDataUUIDList.push(uuid);
     }
+  }
+
+  function getCache(uuid: string) {
+    if (_isNil(_store) || _isNil(_store.dispatch)) {
+      throw new Error('get cache func should bind store');
+    }
+
+    if (_isNil(uuid) || uuid.toString().substr(0, 4) === 'trpg') {
+      // 如果uuid为undefined或null
+      // 或以trpg开头
+      // 直接返回空Map
+      return Map();
+    }
+
+    const state = _store.getState();
+    const data = state.getIn(['cache', cacheScope, uuid]);
+    if (data) {
+      return data;
+    }
+
+    _fetchCacheFromServer(uuid);
+
     return Map();
+  }
+
+  getCache.refresh = (uuid: string) => {
+    // 重新获取缓存
+    _fetchCacheFromServer(uuid);
   };
+
+  return getCache;
 }
 
 /**
+ * 用户信息缓存
  * 获取用户信息并缓存，如果缓存中已经有记录了则从缓存中获取
  * @param {string} uuid 用户UUID
  */
@@ -123,6 +151,7 @@ export const getUserInfoCache = reduxCacheFactory(
 );
 
 /**
+ * 团信息缓存
  * 获取团信息并缓存，如果缓存中已经有记录了则从缓存中获取
  * @param {string} uuid 团UUID
  */
@@ -133,6 +162,7 @@ export const getGroupInfoCache = reduxCacheFactory(
 );
 
 /**
+ * 角色信息缓存
  * 获取角色信息并缓存，如果缓存中已经有记录了则从缓存中获取
  * @param {string} uuid 角色UUID
  */
@@ -143,6 +173,7 @@ export const getActorInfoCache = reduxCacheFactory(
 );
 
 /**
+ * 模板信息缓存
  * 获取模板信息并缓存，如果缓存中已经有记录了则从缓存中获取
  * @param {string} uuid 角色UUID
  */
@@ -150,6 +181,28 @@ export const getTemplateInfoCache = reduxCacheFactory(
   'template',
   (uuid: string, onCompleted: GetCacheCompletedCallback) =>
     getTemplateInfo(uuid, onCompleted)
+);
+
+/**
+ * 好友邀请信息缓存
+ * 获取信息并缓存，如果缓存中已经有记录了则从缓存中获取
+ * @param {string} uuid 角色UUID
+ */
+export const getFriendInviteInfoCache = reduxCacheFactory(
+  'friendInvite',
+  (uuid: string, onCompleted: GetCacheCompletedCallback) =>
+    getFriendInviteInfo(uuid, onCompleted)
+);
+
+/**
+ * 团邀请信息缓存
+ * 获取信息并缓存，如果缓存中已经有记录了则从缓存中获取
+ * @param {string} uuid 角色UUID
+ */
+export const getGroupInviteInfoCache = reduxCacheFactory(
+  'groupInvite',
+  (uuid: string, onCompleted: GetCacheCompletedCallback) =>
+    getGroupInviteInfo(uuid, onCompleted)
 );
 
 /**

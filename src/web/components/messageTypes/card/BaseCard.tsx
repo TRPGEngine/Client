@@ -1,6 +1,9 @@
 import React from 'react';
+import { MessageProps } from '@src/shared/components/MessageHandler';
 
-class BaseCard extends React.Component {
+class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
+  P
+> {
   // 获取卡片视图
   getCardView() {
     let info = this.props.info;

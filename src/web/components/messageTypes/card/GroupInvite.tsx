@@ -4,14 +4,16 @@ import {
   agreeGroupInvite,
   refuseGroupInvite,
 } from '@shared/redux/actions/group';
-import { getGroupInviteInfoCache } from '@src/shared/utils/cache-helper';
+import { MessageProps } from '@shared/components/MessageHandler';
+import { TRPGState } from '@src/shared/redux/types/__all__';
+import { getGroupInviteInfoCache } from '@shared/utils/cache-helper';
 import _get from 'lodash/get';
-import { MessageProps } from '@src/shared/components/MessageHandler';
 
-// 入团邀请
 interface Props extends MessageProps, DispatchProp<any> {
   groupUUIDList: any;
 }
+
+// 入团邀请
 class GroupInvite extends BaseCard<Props> {
   getCardBtn() {
     const info = this.props.info;
@@ -50,7 +52,7 @@ class GroupInvite extends BaseCard<Props> {
   }
 }
 
-export default connect((state: any) => ({
+export default connect((state: TRPGState) => ({
   groupInviteCache: state.getIn(['cache', 'groupInvite']),
   groupUUIDList: state
     .getIn(['group', 'groups'])

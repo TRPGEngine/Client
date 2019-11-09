@@ -50,6 +50,7 @@ import _get from 'lodash/get';
 
 import * as trpgApi from '../../api/trpg.api';
 import { TRPGAction } from '../types/__all__';
+import { getGroupInviteInfo } from './cache';
 const api = trpgApi.getInstance();
 
 // 当state->group->groups状态添加新的group时使用来初始化
@@ -233,6 +234,9 @@ export const addGroup = function(group) {
   };
 };
 
+/**
+ * 同意入团邀请
+ */
 export const agreeGroupRequest = function(chatlogUUID, requestUUID, fromUUID) {
   checkUser(fromUUID);
 
@@ -314,7 +318,7 @@ export const sendGroupInviteBatch = (
   };
 };
 
-export const agreeGroupInvite = function(inviteUUID) {
+export const agreeGroupInvite = function(inviteUUID: string): TRPGAction {
   return function(dispatch, getState) {
     api.emit('group::agreeGroupInvite', { uuid: inviteUUID }, function(data) {
       if (data.result) {
@@ -324,6 +328,7 @@ export const agreeGroupInvite = function(inviteUUID) {
           type: AGREE_GROUP_INVITE_SUCCESS,
           payload: { uuid, group },
         });
+        dispatch(getGroupInviteInfo(inviteUUID)); // 操作成功后重新获取邀请信息缓存
         if (group) {
           initGroupInfo(dispatch, group);
         }
@@ -333,11 +338,12 @@ export const agreeGroupInvite = function(inviteUUID) {
     });
   };
 };
-export const refuseGroupInvite = function(inviteUUID) {
+export const refuseGroupInvite = function(inviteUUID: string): TRPGAction {
   return function(dispatch, getState) {
     api.emit('group::refuseGroupInvite', { uuid: inviteUUID }, function(data) {
       if (data.result) {
         dispatch({ type: REFUSE_GROUP_INVITE_SUCCESS, payload: data.res });
+        dispatch(getGroupInviteInfo(inviteUUID)); // 操作成功后重新获取邀请信息缓存
       } else {
         console.error(data);
       }

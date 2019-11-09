@@ -37,11 +37,20 @@ interface ScreenProps
   extends DispatchProp<any>,
     NavigationScreenProps<NavigationParams> {
   friendList: List<string>;
+  selfUUID: string;
 }
 /**
  * 用户信息页面
  */
 class ProfileScreen extends React.Component<ScreenProps> {
+  get userUUID(): string {
+    return this.props.navigation.getParam('uuid', '');
+  }
+
+  get isSelf() {
+    return this.props.selfUUID === this.userUUID;
+  }
+
   componentDidMount() {
     let uuid = this.props.navigation.state.params.uuid;
     if (uuid) {
@@ -67,9 +76,9 @@ class ProfileScreen extends React.Component<ScreenProps> {
   };
 
   render() {
-    let userUUID = this.props.navigation.state.params.uuid;
-    let userInfo = getUserInfoCache(userUUID);
-    let isFriend = this.props.friendList.includes(userUUID);
+    const userUUID = this.userUUID;
+    const userInfo = getUserInfoCache(userUUID);
+    const isFriend = this.props.friendList.includes(userUUID);
 
     if (!userInfo) {
       return (
@@ -117,17 +126,19 @@ class ProfileScreen extends React.Component<ScreenProps> {
             value={getSimpleDate(userInfo.get('createAt'))}
           />
         </View>
-        <View style={styles.actions}>
-          {isFriend ? (
-            <TButton onPress={this.handlePressSendMsg}>发送消息</TButton>
-          ) : (
-            <TButton
-              onPress={() => this.props.dispatch(sendFriendInvite(userUUID))}
-            >
-              加为好友
-            </TButton>
-          )}
-        </View>
+        {!this.isSelf ? (
+          <View style={styles.actions}>
+            {isFriend ? (
+              <TButton onPress={this.handlePressSendMsg}>发送消息</TButton>
+            ) : (
+              <TButton
+                onPress={() => this.props.dispatch(sendFriendInvite(userUUID))}
+              >
+                加为好友
+              </TButton>
+            )}
+          </View>
+        ) : null}
       </View>
     );
   }
@@ -152,4 +163,5 @@ const styles = {
 export default connect((state: any) => ({
   usercache: state.getIn(['cache', 'user']),
   friendList: state.getIn(['user', 'friendList']),
+  selfUUID: state.getIn(['user', 'info', 'uuid']),
 }))(ProfileScreen);

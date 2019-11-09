@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import config from '../../shared/project.config';
-import { sendFriendInvite, agreeFriendInvite } from '../../shared/redux/actions/user';
+import {
+  sendFriendInvite,
+  agreeFriendInvite,
+} from '../../shared/redux/actions/user';
 import { requestJoinGroup } from '../../shared/redux/actions/group';
 
 import './FindResultItem.scss';
@@ -93,7 +96,7 @@ class FindResultItem extends React.Component {
       return (
         <div className="find-result-item">
           <div className="avatar">
-            <img src={info.avatar || config.defaultImg.group} />
+            <img src={info.avatar || config.defaultImg.getGroup(info.name)} />
           </div>
           <div className="profile">
             <span className="username">{info.name}</span>

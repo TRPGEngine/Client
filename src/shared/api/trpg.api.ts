@@ -11,19 +11,6 @@ export function getInstance(): API {
   return api;
 }
 
-import {
-  addMsg,
-  updateMsg,
-  startWriting,
-  stopWriting,
-} from '../redux/actions/chat';
-import { addFriendInvite, loginWithToken } from '../redux/actions/user';
-import {
-  updateGroupStatus,
-  addGroup,
-  updatePlayerSelectedGroupActor,
-} from '../redux/actions/group';
-import { getUserInfoCache } from '../utils/cache-helper';
 import rnStorage from './rn-storage.api';
 import constants from '../redux/constants';
 const { RESET, ADD_FRIEND_SUCCESS } = constants;
@@ -38,6 +25,19 @@ export function bindEventFunc(
     showAlert,
     updateSocketId,
   } = require('../redux/actions/ui');
+  const {
+    addMsg,
+    updateMsg,
+    startWriting,
+    stopWriting,
+  } = require('../redux/actions/chat');
+  const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
+  const {
+    updateGroupStatus,
+    addGroup,
+    updatePlayerSelectedGroupActor,
+  } = require('../redux/actions/group');
+  const { getUserInfoCache } = require('../utils/cache-helper');
 
   if (!(this instanceof API)) {
     throw new Error('bindEventFunc shound a API object class');

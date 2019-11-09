@@ -1,13 +1,14 @@
 import React from 'react';
 const Fragment = React.Fragment;
 import { XMLElement, XMLElementAttributes } from '../parser/xml-parser';
-import * as processor from '../processor/';
+import * as processor from '../processor';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
 import { Row } from 'antd';
 import styled from 'styled-components';
 import { XMLBuilderContext, XMLBuilderState } from '../XMLBuilder';
+import { parseAttrStyle } from '../processor/style';
 
 type OperationDataType = {
   scope: string;
@@ -174,7 +175,7 @@ export default class Base<
 
     return React.createElement(
       this.parseTagName(tagName),
-      attributes,
+      parseAttrStyle(attributes),
       childrens
     );
   }
@@ -195,7 +196,7 @@ export default class Base<
 
     return React.createElement(
       this.parseTagName(tagName),
-      attributes,
+      parseAttrStyle(attributes),
       childrens
     );
   }

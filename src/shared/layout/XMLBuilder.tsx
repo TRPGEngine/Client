@@ -4,10 +4,10 @@ import * as processor from './processor';
 import _clone from 'lodash/clone';
 import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
-import './types/__all__';
+import './tags/__all__';
 import Debug from 'debug';
 import styled from 'styled-components';
-import { ILayoutTypeAttributes } from './types/Base';
+import { ILayoutTypeAttributes } from './tags/Base';
 const debug = Debug('trpg:XMLBuilder');
 
 export type DefinePropsType = {

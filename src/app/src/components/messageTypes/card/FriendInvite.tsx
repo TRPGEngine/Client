@@ -1,43 +1,51 @@
-import BaseCard, { BaseCardProps } from './BaseCard';
+import BaseCard from './BaseCard';
 import { connect, DispatchProp } from 'react-redux';
 import {
   agreeFriendInvite,
   refuseFriendInvite,
 } from '@src/shared/redux/actions/user';
+import { MessageProps } from '@src/shared/components/MessageHandler';
+import { getFriendInviteInfoCache } from '@shared/utils/cache-helper';
+import _get from 'lodash/get';
 
 // 好友邀请
-interface Props extends BaseCardProps, DispatchProp<any> {
+interface Props extends MessageProps, DispatchProp<any> {
   friendRequests: any;
   friendList: any;
 }
 class FriendInvite extends BaseCard<Props> {
   getCardBtn() {
-    let info = this.props.info;
-    let data = info.data;
-    let invite = data.invite || {};
-    let inviteIndex = this.props.friendRequests.findIndex(
-      (item) => item.get('uuid') === invite.uuid
-    );
-    if (inviteIndex >= 0) {
+    const info = this.props.info;
+    const data = info.data;
+    const inviteUUID = _get(data, 'invite.uuid');
+    const inviteInfo = getFriendInviteInfoCache(inviteUUID);
+    const is_agree = inviteInfo.get('is_agree', false);
+    const is_refuse = inviteInfo.get('is_refuse', false);
+
+    const processed = is_agree || is_refuse;
+
+    if (!processed) {
       // 尚未处理
       return [
         {
           label: '拒绝',
-          onClick: () => this.props.dispatch(refuseFriendInvite(invite.uuid)),
+          onClick: () => this.props.dispatch(refuseFriendInvite(inviteUUID)),
         },
         {
           label: '同意',
-          onClick: () => this.props.dispatch(agreeFriendInvite(invite.uuid)),
+          onClick: () => this.props.dispatch(agreeFriendInvite(inviteUUID)),
         },
       ];
     } else {
-      let friendIndex = this.props.friendList.indexOf(invite.from_uuid);
-      if (friendIndex >= 0) {
+      // 已处理
+      if (is_agree) {
         // 已同意是好友
         return [{ label: '已同意' }];
-      } else {
+      } else if (is_refuse) {
         // 已拒绝好友邀请
         return [{ label: '已拒绝' }];
+      } else {
+        return [];
       }
     }
   }
@@ -45,5 +53,5 @@ class FriendInvite extends BaseCard<Props> {
 
 export default connect((state: any) => ({
   friendList: state.getIn(['user', 'friendList']),
-  friendRequests: state.getIn(['user', 'friendRequests']),
+  friendInviteCache: state.getIn(['cache', 'friendInvite']),
 }))(FriendInvite);

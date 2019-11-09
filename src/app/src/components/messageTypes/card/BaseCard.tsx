@@ -1,27 +1,31 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { View, Text } from 'react-native';
 import { TButton } from '../../TComponent';
+import { MessageProps } from '@src/shared/components/MessageHandler';
 
-export interface BaseCardProps {
-  info: any;
+export interface CardBtn {
+  label: string;
+  onClick?: () => void;
+  attrs?: {};
 }
-class BaseCard<P extends BaseCardProps = BaseCardProps> extends React.Component<
+
+class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
   P
 > {
   // 获取卡片视图
-  getCardView() {
+  getCardView(): ReactNode {
     let info = this.props.info;
 
     return <Text>{info.message}</Text>;
   }
 
   // 返回一个形如:[{label: '按钮1', onClick:()=>{}}]的数组
-  getCardBtn() {
+  getCardBtn(): CardBtn[] {
     return [];
   }
 
   // 获取卡片动作
-  getCardAction() {
+  getCardAction(): ReactNode {
     let btns = this.getCardBtn();
     if (!btns || btns.length === 0) {
       return null;
