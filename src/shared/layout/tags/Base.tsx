@@ -57,7 +57,7 @@ const voidElementTags = [
   'wbr',
 ];
 
-const blacklistTags = ['script', 'style'];
+const blacklistTags = ['script', 'style', 'meta', 'head', 'body', 'html'];
 
 export interface BaseAttributes extends ILayoutTypeAttributes {}
 export default class Base<
