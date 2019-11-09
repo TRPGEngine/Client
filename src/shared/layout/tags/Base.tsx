@@ -57,6 +57,8 @@ const voidElementTags = [
   'wbr',
 ];
 
+const blacklistTags = ['script', 'style'];
+
 export interface BaseAttributes extends ILayoutTypeAttributes {}
 export default class Base<
   Attributes extends ILayoutTypeAttributes = BaseAttributes
@@ -167,6 +169,10 @@ export default class Base<
     context,
   }: LayoutTypeContext<Attributes>) {
     let childrens = [];
+    if (blacklistTags.includes(tagName)) {
+      return null;
+    }
+
     if (voidElementTags.includes(tagName)) {
       childrens = undefined;
     } else {
@@ -188,6 +194,10 @@ export default class Base<
     context,
   }: LayoutTypeContext<Attributes>) {
     let childrens = [];
+    if (blacklistTags.includes(tagName)) {
+      return null;
+    }
+
     if (voidElementTags.includes(tagName)) {
       childrens = undefined;
     } else {
