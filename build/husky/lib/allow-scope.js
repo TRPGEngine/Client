@@ -7,4 +7,5 @@ module.exports = [
   'redux',
   'test',
   'misc',
+  'ci',
 ];
