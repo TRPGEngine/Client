@@ -11,9 +11,9 @@ type TextParseResult = {
  */
 const parseText = (text: string): TextParseResult => {
   if (!tagRE.test(text)) {
-    // 如果没有检测到{{}}格式的数据。则返回纯文本
+    // 如果没有检测到{{}}格式的数据。则返回纯文本(转义一下)
     return {
-      expression: `"${text}"`,
+      expression: JSON.stringify(text),
       tokens: [text],
     };
   }
