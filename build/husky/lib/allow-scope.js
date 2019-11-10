@@ -3,6 +3,7 @@ module.exports = [
   'web',
   'portal',
   'all',
+  'shared',
   'layout',
   'redux',
   'test',

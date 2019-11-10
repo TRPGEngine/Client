@@ -1,7 +1,12 @@
 import config from '../project.config';
+import _isString from 'lodash/isString';
 
-export const getOriginalImage = (thumbnailImageUrl: string) => {
-  return thumbnailImageUrl.replace('/thumbnail', '');
+export const getOriginalImage = (thumbnailImageUrl: string): string => {
+  if (_isString(thumbnailImageUrl)) {
+    return thumbnailImageUrl.replace('/thumbnail', '');
+  } else {
+    return thumbnailImageUrl;
+  }
 };
 
 /**
