@@ -6,7 +6,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { connect } from 'react-redux';
-import immutable from 'immutable';
+import immutable, { List } from 'immutable';
 import styled from 'styled-components/native';
 import { Icon, Carousel, Modal } from '@ant-design/react-native';
 import Emoji from 'react-native-emoji';
@@ -16,6 +16,7 @@ import config from '../../../../shared/project.config';
 import _get from 'lodash/get';
 import _chunk from 'lodash/chunk';
 import _isString from 'lodash/isString';
+import _isNil from 'lodash/isNil';
 import { addUserEmotionCatalogWithSecretSignal } from '../../../../shared/redux/actions/chat';
 import rnStorage from '@src/shared/api/rn-storage.api';
 
@@ -182,10 +183,14 @@ class EmotionPanel extends React.Component<Props> {
     // 返回当前页的表情包
     const getEmotionPage = () => {
       // 该表情包下所有表情
-      const items: any[] = this.props.emotionCatalog
-        .find((catalog) => catalog.get('uuid') === selectedEmotionCatalog)
-        .get('items')
-        .toJS();
+      const currentCatalog = this.props.emotionCatalog.find(
+        (catalog) => catalog.get('uuid') === selectedEmotionCatalog
+      );
+
+      let items = [];
+      if (!_isNil(currentCatalog)) {
+        items = currentCatalog.get('items').toJS();
+      }
 
       const rowNum = 2;
       const colNum = 4;
@@ -275,7 +280,7 @@ class EmotionPanel extends React.Component<Props> {
 }
 
 export default connect((state: immutable.Map<string, any>) => ({
-  emotionCatalog: state.getIn(['chat', 'emotions', 'catalogs'], []),
+  emotionCatalog: state.getIn(['chat', 'emotions', 'catalogs'], List()),
 }))(EmotionPanel) as React.ComponentClass<
   Omit<Props, 'dispatch' | 'emotionCatalog'>
 >;
