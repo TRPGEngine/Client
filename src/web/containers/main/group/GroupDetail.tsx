@@ -14,6 +14,7 @@ import { changeSelectGroupActor } from '../../../../shared/redux/actions/group';
 import {
   sendDiceRequest,
   sendDiceInvite,
+  sendQuickDice,
 } from '../../../../shared/redux/actions/dice';
 // import GroupMap from './GroupMap';
 import GroupInvite from './GroupInvite';
@@ -29,6 +30,7 @@ import MsgSendBox from '../../../components/MsgSendBox';
 import { List } from 'immutable';
 import _isNil from 'lodash/isNil';
 import { GroupActorMsgData } from '@src/shared/redux/types/group';
+import QuickDice from '../dice/QuickDice';
 
 interface Props extends DispatchProp<any> {
   selectedUUID: string;
@@ -163,6 +165,21 @@ class GroupDetail extends React.Component<Props> {
     );
   }
 
+  handleQuickDice = () => {
+    console.log('快速投骰');
+    const uuid = this.props.selectedUUID;
+    this.props.dispatch(
+      showModal(
+        <QuickDice
+          onSendQuickDice={(diceExp) => {
+            this.props.dispatch(sendQuickDice(uuid, true, diceExp));
+            this.props.dispatch(hideModal());
+          }}
+        />
+      )
+    );
+  };
+
   getHeaderActions() {
     const actions = [
       {
@@ -241,7 +258,12 @@ class GroupDetail extends React.Component<Props> {
         <ReactTooltip effect="solid" />
         <div className="group-header">
           <div className="avatar">
-            <img src={groupInfo.get('avatar') || config.defaultImg.getGroup(groupInfo.get('name'))} />
+            <img
+              src={
+                groupInfo.get('avatar') ||
+                config.defaultImg.getGroup(groupInfo.get('name'))
+              }
+            />
           </div>
           <div className="title">
             <div className="main-title">
@@ -275,6 +297,7 @@ class GroupDetail extends React.Component<Props> {
           onSendFile={(file) => this.handleSendFile(file)}
           onSendDiceReq={() => this.handleSendDiceReq()}
           onSendDiceInv={() => this.handleSendDiceInv()}
+          onQuickDice={() => this.handleQuickDice()}
         />
       </div>
     );
