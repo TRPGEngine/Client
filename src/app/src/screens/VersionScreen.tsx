@@ -155,11 +155,12 @@ class VersionScreen extends React.Component<Props> {
           <LogoImg />
           {this.state.isAlphaUser && <Text>当前为内测用户</Text>}
           <Text>当前版本: {appConfig.version}</Text>
+          <Text>当前版本Hash: {appConfig.gitHash}</Text>
           <Text>最新版本: {this.state.lastJSVersion}</Text>
           <Text>二进制版本: {apkVersion}</Text>
-          <Text>当前版本标签: {this.state.codepushMeta.label}</Text>
-          <Text>当前版本Hash: {this.state.codepushMeta.packageHash}</Text>
-          <Text>当前版本描述:</Text>
+          <Text>当前包标签: {this.state.codepushMeta.label}</Text>
+          <Text>当前包Hash: {this.state.codepushMeta.packageHash}</Text>
+          <Text>当前包描述:</Text>
           <Text>{this.state.codepushMeta.description}</Text>
 
           <Text>{this.state.stateText}</Text>
