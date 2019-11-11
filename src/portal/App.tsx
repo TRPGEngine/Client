@@ -1,13 +1,14 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
 import Login from '@portal/sso/Login';
-import ActorEditor from './actor/editor';
-import './utils/event';
+import ActorEditor from '@portal/actor/editor';
+import '@portal/utils/event';
+import history from './history';
 
 class App extends React.Component {
   render() {
     return (
-      <BrowserRouter basename="/portal">
+      <Router history={history}>
         <Switch>
           <Route name="login" path="/sso/login" component={Login} />
           <Route
@@ -16,7 +17,7 @@ class App extends React.Component {
             component={ActorEditor}
           />
         </Switch>
-      </BrowserRouter>
+      </Router>
     );
   }
 }

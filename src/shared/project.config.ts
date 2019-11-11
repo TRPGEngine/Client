@@ -17,7 +17,7 @@ if (environment == 'production') {
 }
 
 let trpgHost = process.env.TRPG_HOST;
-let trpgPort;
+let trpgPort: string;
 if (trpgHost) {
   let _tmp = trpgHost.split(':');
   currentHost = _tmp[0];
