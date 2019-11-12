@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import { Formik } from 'formik';
 import { Input, Button, Form, Typography, Modal } from 'antd';
 import { request } from '@portal/utils/request';
+import md5 from 'md5';
+import { saveToken } from '@portal/utils/auth';
+import qs from 'qs';
+import _isString from 'lodash/isString';
 
 const Container = styled.div`
   width: 100vw;
@@ -43,9 +47,21 @@ class Login extends React.Component {
     request
       .post('/player/sso/login', {
         username,
-        password,
+        password: md5(password),
       })
-      .then(({ data }) => alert(JSON.stringify(data)));
+      .then(({ data }) => {
+        if (data.result === true) {
+          saveToken(data.jwt);
+          const query = qs.parse(window.location.search, {
+            ignoreQueryPrefix: true,
+          });
+          if (_isString(query.next)) {
+            window.location.href = decodeURIComponent(query.next);
+          }
+        } else {
+          alert(data.msg);
+        }
+      });
   };
 
   render() {
