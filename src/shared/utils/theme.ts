@@ -2,6 +2,7 @@
 
 declare module 'styled-components' {
   interface DefaultTheme {
+    border: ThemeType['border'];
     color: ThemeType['color'];
     boxShadow: ThemeType['boxShadow'];
   }
@@ -9,6 +10,9 @@ declare module 'styled-components' {
 
 type ThemeType = typeof styledTheme;
 const styledTheme = {
+  border: {
+    thin: '.5px solid rgba(232, 232, 232, 0.8)',
+  },
   color: {
     borderBase: '#dddddd',
     'seashell-peach': '#FFF4EB',

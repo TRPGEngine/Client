@@ -7,7 +7,7 @@ import styled from 'styled-components/native';
 import config from '../../../shared/project.config';
 import appConfig from '@app/config.app';
 import { logout } from '../../../shared/redux/actions/user';
-import { openWebview, switchNav } from '../redux/actions/nav';
+import { openWebview, switchNav, navPortal } from '../redux/actions/nav';
 import { TButton, TAvatar } from '../components/TComponent';
 import checkVersion from '../../../shared/utils/check-version';
 import * as appUtils from '../utils/apputils';
@@ -100,6 +100,17 @@ class AccountScreen extends React.Component<Props> {
               }}
             >
               资料库
+            </Item>
+          </DevContainer>
+          <DevContainer>
+            <Item
+              thumb={<AccountListThumb color="green" icon="&#xe61b;" />}
+              arrow="horizontal"
+              onPress={() => {
+                this.props.dispatch(navPortal('/actor/list'));
+              }}
+            >
+              人物卡
             </Item>
           </DevContainer>
           <Item

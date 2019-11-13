@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import ModalPanel from '../../ModalPanel';
 import { Button, Steps, Row, message } from 'antd';
 import { connect, DispatchProp } from 'react-redux';
-import { DataType } from '@shared/layout/XMLBuilder';
-import { getSuggestTemplate, createActor } from '@src/shared/redux/actions/actor';
+import { DataMap } from '@shared/layout/XMLBuilder';
+import {
+  getSuggestTemplate,
+  createActor,
+} from '@src/shared/redux/actions/actor';
 import TemplateSelect, { TemplateType } from './TemplateSelect';
 import CreateActorBase, { BaseActorInfoType } from './CreateActorBase';
 import CreateActorDetail from './CreateActorDetail';
@@ -38,7 +41,7 @@ const ActorCreate = (props: Props) => {
   const maxStep = 3;
   const [current, setCurrent] = useState(0);
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateType>(null);
-  const [stateData, setStateData] = useState<DataType>(null);
+  const [stateData, setStateData] = useState<DataMap>(null);
 
   const handleCreateActor = async () => {
     console.log('检查数据');

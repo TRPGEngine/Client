@@ -1,12 +1,12 @@
 import React from 'react';
 import { TemplateType } from './TemplateSelect';
-import XMLBuilder, { DataType } from '@shared/layout/XMLBuilder';
+import XMLBuilder, { DataMap } from '@shared/layout/XMLBuilder';
 import _clone from 'lodash/clone';
 
 interface Props {
   template: TemplateType;
-  data: DataType;
-  onChange: (state: DataType) => void;
+  data: DataMap;
+  onChange: (state: DataMap) => void;
 }
 const CreateActorDetail = (props: Props) => {
   const template = props.template;
