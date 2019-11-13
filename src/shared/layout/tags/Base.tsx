@@ -9,11 +9,7 @@ import { Row } from 'antd';
 import styled from 'styled-components';
 import { XMLBuilderContext, XMLBuilderState } from '../XMLBuilder';
 import { parseAttrStyle } from '../processor/style';
-
-type OperationDataType = {
-  scope: string;
-  field: string;
-};
+import { getOperationData, normalizeTagName } from './utils';
 
 type DefaultLayoutTypeAttr = XMLElementAttributes & ILayoutTypeAttributes;
 export interface LayoutTypeContext<
@@ -60,25 +56,11 @@ const voidElementTags = [
 const blacklistTags = ['script', 'style', 'meta', 'head', 'body', 'html'];
 
 export interface BaseAttributes extends ILayoutTypeAttributes {}
+
 export default class Base<
   Attributes extends ILayoutTypeAttributes = BaseAttributes
 > implements ILayoutType<Attributes> {
   name: string;
-
-  // 预处理tag name
-  parseTagName(tagName: string) {
-    // 如果是首字母开头。视为没有做定义的内置操作。改为t-xxx的格式防止抛出命名警告
-    if (typeof tagName === 'string' && /[A-Z]/.test(tagName[0])) {
-      tagName = 't-' + tagName.toLowerCase();
-    }
-
-    // 如果是空字符串或者undefined。使用react的Fragment
-    if (!tagName) {
-      return Fragment;
-    }
-
-    return tagName;
-  }
 
   parseMultilineText(text: string) {
     // 支持\n的渲染 拿到的换行符为\\n
@@ -95,42 +77,11 @@ export default class Base<
   }
 
   /**
-   * 尝试将文本转化为数字
-   * @param str 要转换的文本
-   */
-  tryToNumber(str: string): number | string {
-    const num = Number(str);
-    return !isNaN(num) ? num : str;
-  }
-
-  /**
-   * 获取需要操作的变量的作用域与操作的变量名
-   * 作用域默认为data
-   * @param str 操作参数字符串
-   */
-  getOperationData(str: string): OperationDataType {
-    const [scope, ...fields] = str.split('.');
-    if (fields.length > 0) {
-      // 如果为abc.def
-      return {
-        scope,
-        field: fields.join('.'),
-      };
-    } else {
-      // 如果为abc
-      return {
-        scope: 'data',
-        field: scope,
-      };
-    }
-  }
-
-  /**
    * 根据上下文获取指定状态的数据
    */
   getStateValue(context: XMLBuilderContext, bindingName: string) {
     const state = context.state;
-    const { scope, field } = this.getOperationData(bindingName);
+    const { scope, field } = getOperationData(bindingName);
 
     return _get(state, [scope, field].join('.'));
   }
@@ -180,7 +131,7 @@ export default class Base<
     }
 
     return React.createElement(
-      this.parseTagName(tagName),
+      normalizeTagName(tagName),
       parseAttrStyle(attributes),
       childrens
     );
@@ -205,7 +156,7 @@ export default class Base<
     }
 
     return React.createElement(
-      this.parseTagName(tagName),
+      normalizeTagName(tagName),
       parseAttrStyle(attributes),
       childrens
     );

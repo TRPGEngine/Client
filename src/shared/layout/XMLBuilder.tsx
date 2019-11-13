@@ -6,34 +6,35 @@ import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
 import './tags/__all__';
 import Debug from 'debug';
+const debug = Debug('trpg:XMLBuilder');
 import styled from 'styled-components';
 import { ILayoutTypeAttributes } from './tags/Base';
-const debug = Debug('trpg:XMLBuilder');
+import { StateDataType } from './types';
 
 export type DefinePropsType = {
   [name: string]: any;
 };
-interface DefineType {
+interface DefineMap {
   [name: string]: (
     context: XMLBuilderContext,
     otherProps: DefinePropsType
   ) => React.FunctionComponentElement<ILayoutTypeAttributes>;
 }
 
-interface GlobalType {
-  [name: string]: number | string | null;
+interface GlobalMap {
+  [name: string]: StateDataType;
 }
 
-export interface DataType {
-  [name: string]: number | string | null;
+export interface DataMap {
+  [name: string]: StateDataType;
 }
 
 export type LayoutType = 'edit' | 'detail';
 
 export interface XMLBuilderState {
-  defines: DefineType;
-  global: GlobalType;
-  data: DataType;
+  defines: DefineMap;
+  global: GlobalMap;
+  data: DataMap;
 }
 
 export interface XMLBuilderAction {

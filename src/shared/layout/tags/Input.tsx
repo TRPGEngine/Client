@@ -12,6 +12,7 @@ import _get from 'lodash/get';
 import _set from 'lodash/set';
 import { parseDataText } from '../processor';
 import styled from 'styled-components';
+import { getOperationData, tryToNumber } from './utils';
 
 export const Label = styled.pre`
   overflow: hidden;
@@ -58,12 +59,12 @@ export default class TInput extends Base implements ILayoutType<Attr> {
             placeholder={label}
             value={this.getStateValue(context, bindingName)}
             onChange={(e) => {
-              const { scope, field } = this.getOperationData(
+              const { scope, field } = getOperationData(
                 changeValue || bindingName
               );
 
               if (isNumber) {
-                _set(state[scope], field, this.tryToNumber(e.target.value));
+                _set(state[scope], field, tryToNumber(e.target.value));
               } else {
                 _set(state[scope], field, e.target.value);
               }
