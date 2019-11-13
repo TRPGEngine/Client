@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Button, Spin, Row } from 'antd';
 import { fetchActorList, ActorItem } from '@portal/model/actor';
 import _isNull from 'lodash/isNull';
+import history from '@portal/history';
 
 const Container = styled.div`
   padding: 10px;
@@ -42,7 +43,7 @@ class ActorList extends React.Component<{}, State> {
   }
 
   handleCreateActor = () => {
-    alert('TODO');
+    history.push('/actor/create/select-template');
   };
 
   handleSelectActor = (uuid: string) => {
