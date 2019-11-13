@@ -14,7 +14,7 @@ import _set from 'lodash/set';
 import { Col, Input } from 'antd';
 import TInput, { Label } from './Input';
 import { AutoSizeType } from 'antd/lib/input/TextArea';
-import { getOperationData, tryToNumber } from './utils';
+import { tryToNumber, getStateValue, setStateValue } from './utils';
 const TextArea = Input.TextArea;
 
 interface Attr extends ILayoutTypeAttributes {
@@ -51,19 +51,15 @@ export default class TTextArea extends TInput implements ILayoutType<Attr> {
           <TextArea
             autosize={autosize}
             placeholder={label}
-            value={this.getStateValue(context, bindingName)}
+            value={getStateValue(context, bindingName)}
             onChange={(e) => {
-              const { scope, field } = getOperationData(
-                changeValue || bindingName
+              const { value } = e.target;
+
+              setStateValue(
+                context,
+                changeValue || bindingName,
+                isNumber ? tryToNumber(value) : value
               );
-
-              if (isNumber) {
-                _set(state[scope], field, tryToNumber(e.target.value));
-              } else {
-                _set(state[scope], field, e.target.value);
-              }
-
-              dispatch({ type: 'update_data', payload: state[scope], scope });
             }}
           />
         </Col>

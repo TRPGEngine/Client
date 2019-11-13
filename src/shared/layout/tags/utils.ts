@@ -1,6 +1,8 @@
 import { Fragment } from 'react';
 import _get from 'lodash/get';
-import { XMLBuilderState } from '@shared/layout/XMLBuilder';
+import _set from 'lodash/set';
+import { XMLBuilderState, XMLBuilderContext } from '@shared/layout/XMLBuilder';
+import { StateDataType, StateActionType } from '@shared/layout/types';
 
 export type OperationDataType = {
   scope: string;
@@ -10,6 +12,12 @@ export type OperationDataType = {
 /**
  * 获取需要操作的变量的作用域与操作的变量名
  * 作用域默认为data
+ * 用于独立一个path的第一段
+ * example:
+ * - 'a' => {scope: 'data', field: 'a'}
+ * - 'a.b' => {scope: 'a', field: 'b'}
+ * - 'a.b.c' => {scope: 'a', field: 'b.c'}
+ *
  * @param str 操作参数字符串
  */
 export const getOperationData = (str: string): OperationDataType => {
@@ -58,10 +66,30 @@ export const normalizeTagName = (tagName: string): string | typeof Fragment => {
 };
 
 /**
- * 根据状态获取指定路径数据
+ * 根据上下文获取指定状态的数据
  */
-export const getStateValue = (state: XMLBuilderState, bindingName: string) => {
+export const getStateValue = (
+  context: XMLBuilderContext,
+  bindingName: string
+): StateDataType => {
   const { scope, field } = getOperationData(bindingName);
 
-  return _get(state, [scope, field].join('.'));
+  return _get(context.state, [scope, field].join('.'));
+};
+
+/**
+ * 设置状态的值
+ */
+export const setStateValue = (
+  context: XMLBuilderContext,
+  bindingName: string,
+  value: StateDataType
+): void => {
+  const { state, dispatch } = context;
+  const { scope, field } = getOperationData(bindingName);
+
+  // 该操作是为了能让下面获取到payload。也许需要修改?
+  _set(state, [scope, field].join('.'), value);
+
+  dispatch({ type: StateActionType.UpdateData, payload: state[scope], scope });
 };

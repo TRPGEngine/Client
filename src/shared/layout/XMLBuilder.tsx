@@ -9,7 +9,7 @@ import Debug from 'debug';
 const debug = Debug('trpg:XMLBuilder');
 import styled from 'styled-components';
 import { ILayoutTypeAttributes } from './tags/Base';
-import { StateDataType } from './types';
+import { StateDataType, StateActionType } from './types';
 
 export type DefinePropsType = {
   [name: string]: any;
@@ -51,11 +51,6 @@ export interface XMLBuilderContext {
 
 type stateChangeHandler = (newState: XMLBuilderState) => void;
 
-export enum ActionType {
-  UpdateData = 'update_data',
-  AddDefine = 'add_define',
-}
-
 const XMLBuilderContainer = styled.div`
   text-align: left;
 
@@ -75,12 +70,12 @@ const buildReducer = (onChange?: stateChangeHandler) => {
     debug(`[Action] ${type}: %o`, payload);
 
     switch (type) {
-      case ActionType.UpdateData: {
+      case StateActionType.UpdateData: {
         const scope = action.scope || 'data';
         newState[scope] = payload;
         break;
       }
-      case ActionType.AddDefine:
+      case StateActionType.AddDefine:
         newState.defines[payload.name] = payload.componentFn;
         break;
     }
@@ -96,7 +91,7 @@ const buildReducer = (onChange?: stateChangeHandler) => {
 interface Props {
   xml: string;
   layoutType?: LayoutType;
-  initialData?: DataType;
+  initialData?: DataMap;
   onChange?: stateChangeHandler;
 }
 const XMLBuilder = (props: Props) => {

@@ -7,9 +7,9 @@ import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
 import { Row } from 'antd';
 import styled from 'styled-components';
-import { XMLBuilderContext, XMLBuilderState } from '../XMLBuilder';
+import { XMLBuilderContext } from '../XMLBuilder';
 import { parseAttrStyle } from '../processor/style';
-import { getOperationData, normalizeTagName } from './utils';
+import { normalizeTagName } from './utils';
 
 type DefaultLayoutTypeAttr = XMLElementAttributes & ILayoutTypeAttributes;
 export interface LayoutTypeContext<
@@ -74,16 +74,6 @@ export default class Base<
   // 生成子元素唯一key
   childrenKey(parentName: string, childrenName: string, index: number) {
     return `${parentName}-${childrenName}-${index}`;
-  }
-
-  /**
-   * 根据上下文获取指定状态的数据
-   */
-  getStateValue(context: XMLBuilderContext, bindingName: string) {
-    const state = context.state;
-    const { scope, field } = getOperationData(bindingName);
-
-    return _get(state, [scope, field].join('.'));
   }
 
   // 当挂载时回调
