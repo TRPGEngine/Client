@@ -1,9 +1,14 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { TemplateItem, fetchTemplateInfo } from '@portal/model/actor';
-import XMLBuilder from '@shared/layout/XMLBuilder';
+import {
+  TemplateItem,
+  fetchTemplateInfo,
+  createActor,
+} from '@portal/model/actor';
+import XMLBuilder, { DataMap } from '@shared/layout/XMLBuilder';
 import _isNil from 'lodash/isNil';
-import { Affix, Button } from 'antd';
+import { Affix, Button, notification } from 'antd';
+import { checkToken } from '@portal/utils/auth';
 
 interface Props
   extends RouteComponentProps<{
@@ -18,22 +23,34 @@ class ActorCreate extends React.Component<Props, State> {
   state = {
     template: null,
   };
-  actorData = {};
+  actorData: DataMap = {};
 
   get templateUUID() {
     return this.props.match.params.templateUUID || '';
   }
 
   componentDidMount() {
-    fetchTemplateInfo(this.templateUUID).then((template) => {
-      this.setState({
-        template,
+    checkToken()
+      .then(() => fetchTemplateInfo(this.templateUUID))
+      .then((template) => {
+        this.setState({
+          template,
+        });
       });
-    });
   }
 
   handleCreateActor = () => {
-    alert('TODO');
+    createActor(this.templateUUID, this.actorData)
+      .then(() =>
+        notification.open({
+          message: '创建成功',
+        })
+      )
+      .catch((err) => {
+        notification.error({
+          message: '创建失败: ' + err,
+        });
+      });
   };
 
   render() {

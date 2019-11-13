@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from '@src/shared/project.config';
+import _get from 'lodash/get';
 import history from '../history';
 import { getToken } from './auth';
 
@@ -17,9 +18,7 @@ request.interceptors.request.use((val) => {
 });
 
 request.interceptors.response.use(
-  (val) => {
-    return val;
-  },
+  (val) => val,
   (err) => {
     if (err.response && err.response.status === 401) {
       console.log('未登录: 正在跳转到登录页面...');
@@ -29,6 +28,7 @@ request.interceptors.response.use(
       return;
     }
 
-    console.error(err);
+    // 尝试获取msg
+    throw _get(err, 'response.data.msg', err);
   }
 );

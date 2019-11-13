@@ -60,3 +60,18 @@ export const fetchTemplateInfo = async (
     return null;
   }
 };
+
+export const createActor = async (
+  templateUUID: string,
+  actorInfo: { [key: string]: any }
+): Promise<ActorItem> => {
+  const { data } = await request.post('/actor/create', {
+    templateUUID,
+    actorInfo,
+    name: actorInfo._name,
+    desc: actorInfo._desc,
+    avatar: actorInfo._avatar,
+  });
+
+  return data.actor;
+};
