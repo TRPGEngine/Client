@@ -7,8 +7,14 @@ import {
 } from '@portal/model/actor';
 import XMLBuilder, { DataMap } from '@shared/layout/XMLBuilder';
 import _isNil from 'lodash/isNil';
+import _isString from 'lodash/isString';
+import _get from 'lodash/get';
+import _set from 'lodash/set';
 import { Affix, Button, notification } from 'antd';
-import { checkToken } from '@portal/utils/auth';
+import { checkToken, getJWTInfo } from '@portal/utils/auth';
+import history from '../history';
+import { toAvatarWithBlobUrl } from '@web/utils/upload-helper';
+import { isBlobUrl } from '@shared/utils/string-helper';
 
 interface Props
   extends RouteComponentProps<{
@@ -39,18 +45,27 @@ class ActorCreate extends React.Component<Props, State> {
       });
   }
 
-  handleCreateActor = () => {
-    createActor(this.templateUUID, this.actorData)
-      .then(() =>
-        notification.open({
-          message: '创建成功',
-        })
-      )
-      .catch((err) => {
-        notification.error({
-          message: '创建失败: ' + err,
-        });
+  handleCreateActor = async () => {
+    try {
+    } catch (e) {
+      notification.error({
+        message: '创建失败: ' + e,
       });
+    }
+    // 上传头像
+    const avatarUrl = _get(this.actorData, '_avatar');
+    if (_isString(avatarUrl) && isBlobUrl(avatarUrl)) {
+      const userInfo = getJWTInfo();
+      const avatar = await toAvatarWithBlobUrl(userInfo.uuid, avatarUrl);
+      _set(this.actorData, '_avatar', avatar.url);
+    }
+
+    await createActor(this.templateUUID, this.actorData);
+
+    notification.open({
+      message: '创建成功',
+    });
+    setTimeout(() => history.push('/actor/list'), 1000);
   };
 
   render() {
