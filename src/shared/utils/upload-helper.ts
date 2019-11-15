@@ -1,13 +1,20 @@
 import axios from 'axios';
 import { fileUrl } from '../api/trpg.api';
 
-interface UploadOption {
+export interface UploadOption {
   headers?: {};
   uploadField?: string;
   onProgress?: (percent: number, progressEvent: any) => void;
   onCompleted?: (data: any) => void;
 }
-type UploadReturn<T = any> = Promise<T>;
+export type UploadReturn<T = any> = Promise<T>;
+
+export interface AvatarUpdateData {
+  filename: string;
+  url: string;
+  size: number;
+  avatar: any;
+}
 
 export const generateFileMsgData = function(file) {
   let tmp = file.name.split('.');
@@ -98,12 +105,7 @@ export const toAvatar = function(
   userUUID: string,
   file: File,
   options: UploadOption = {}
-): UploadReturn<{
-  filename: string;
-  url: string;
-  size: number;
-  avatar: any;
-}> {
+): UploadReturn<AvatarUpdateData> {
   options.uploadField = 'avatar';
   return _upload('/avatar', userUUID, file, options);
 };

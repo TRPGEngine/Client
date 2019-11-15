@@ -12,9 +12,8 @@ import TemplateSelect, { TemplateType } from './TemplateSelect';
 import CreateActorBase, { BaseActorInfoType } from './CreateActorBase';
 import CreateActorDetail from './CreateActorDetail';
 import CreateActorConfirm from './CreateActorConfirm';
-import { toAvatar } from '@shared/utils/upload-helper';
-import { blobFromUrl, blobToFile } from '@web/utils/file-helper';
 import _get from 'lodash/get';
+import { toAvatarWithBlobUrl } from '@web/utils/upload-helper';
 const Step = Steps.Step;
 
 const Container = styled.div`
@@ -54,9 +53,11 @@ const ActorCreate = (props: Props) => {
     if (baseInfo.avatar) {
       console.log('上传头像...');
       const blobUrl = baseInfo.avatar;
-      const blob = await blobFromUrl(blobUrl);
-      const file = blobToFile(blob, 'avatar.jpg');
-      const avatarRet = await toAvatar(props.selfUUID, file).catch((err) => {
+
+      const avatarRet = await toAvatarWithBlobUrl(
+        props.selfUUID,
+        blobUrl
+      ).catch((err) => {
         message.error(_get(err, 'response.data.msg', 'Error: 上传失败'));
         throw err;
       });
