@@ -7,8 +7,10 @@ import AvatarPicker from '@components/AvatarPicker';
 import styled from 'styled-components';
 const FormItem = Form.Item;
 
-const BaseInfoContainer = styled(Row)`
-  padding: 10px;
+const BaseInfoContainer = styled(Row).attrs((props) => ({
+  type: 'flex',
+}))`
+  flex-wrap: wrap-reverse;
 `;
 
 interface Attr extends ILayoutTypeAttributes {}
@@ -19,14 +21,14 @@ interface Attr extends ILayoutTypeAttributes {}
  * 处理_name, _desc, _avatar这三个内置变量
  */
 export default class BaseInfo implements ILayoutType<Attr> {
-  name: string;
+  name: string = 'BaseInfo';
 
   getEditView(ctx: LayoutTypeContext<Attr>) {
     const { context } = ctx;
 
     return (
       <BaseInfoContainer>
-        <Col sm={18}>
+        <Col sm={18} xs={24}>
           <Form
             layout="horizontal"
             labelCol={{ xs: 6 }}
@@ -51,7 +53,7 @@ export default class BaseInfo implements ILayoutType<Attr> {
             </FormItem>
           </Form>
         </Col>
-        <Col sm={6} style={{ textAlign: 'center' }}>
+        <Col sm={6} xs={24} style={{ textAlign: 'center' }}>
           <AvatarPicker
             imageUrl={String(getStateValue(context, '_avatar'))}
             onChange={(imageUrl) => setStateValue(context, '_avatar', imageUrl)}
