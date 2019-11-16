@@ -66,7 +66,10 @@ const out = {
   codePush: {
     enabled: true,
     options: {
-      checkFrequency: CodePush.CheckFrequency.MANUAL, // 手动更新
+      // 静默自动更新
+      checkFrequency: CodePush.CheckFrequency.ON_APP_START,
+      installMode: CodePush.InstallMode.ON_NEXT_RESTART,
+      updateDialog: null,
     } as CodePushOptions,
     async sync(cb?: {
       onStatueChanged?: SyncStatusChangedCallback;
