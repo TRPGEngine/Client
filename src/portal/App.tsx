@@ -7,6 +7,7 @@ import ActorCreate from '@portal/actor/create';
 import ActorEditor from '@portal/actor/editor';
 import '@portal/utils/event';
 import history from './history';
+import ActorDetail from './actor/detail';
 
 class App extends React.Component {
   render() {
@@ -19,6 +20,11 @@ class App extends React.Component {
             name="actor-select-template"
             path="/actor/create/select-template"
             component={ActorSelectTemplate}
+          />
+          <Route
+            name="actor-detail"
+            path="/actor/detail/:actorUUID"
+            component={ActorDetail}
           />
           <Route
             name="actor-create"

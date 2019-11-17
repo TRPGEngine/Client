@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Spin, Row, Avatar } from 'antd';
+import { Avatar } from 'antd';
 import { fetchActorList, ActorItem } from '@portal/model/actor';
 import _isNull from 'lodash/isNull';
 import _head from 'lodash/head';
 import history from '@portal/history';
 import { ActionButton } from '@portal/components/ActionButton';
+import Loading from '@portal/components/Loading';
 
 const Container = styled.div`
   padding: 10px;
@@ -42,18 +43,15 @@ class ActorList extends React.Component<{}, State> {
   };
 
   handleSelectActor = (uuid: string) => {
-    alert('TODO:' + uuid);
+    // 跳转到角色详情页面
+    history.push(`/actor/detail/${uuid}`);
   };
 
   renderList() {
     const { list } = this.state;
 
     if (_isNull(list)) {
-      return (
-        <Row type="flex" justify="center">
-          <Spin />
-        </Row>
-      );
+      return <Loading />;
     }
 
     return list.map((item) => (

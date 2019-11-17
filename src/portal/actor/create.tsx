@@ -36,14 +36,13 @@ class ActorCreate extends React.Component<Props, State> {
     return this.props.match.params.templateUUID || '';
   }
 
-  componentDidMount() {
-    checkToken()
-      .then(() => fetchTemplateInfo(this.templateUUID))
-      .then((template) => {
-        this.setState({
-          template,
-        });
-      });
+  async componentDidMount() {
+    await checkToken();
+    const template = await fetchTemplateInfo(this.templateUUID);
+
+    this.setState({
+      template,
+    });
   }
 
   handleCreateActor = async () => {

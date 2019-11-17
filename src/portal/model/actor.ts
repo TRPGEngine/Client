@@ -68,6 +68,11 @@ export const fetchTemplateInfo = async (
   }
 };
 
+/**
+ * 创建人物卡
+ * @param templateUUID 模板UUID
+ * @param actorInfo 角色数据信息
+ */
 export const createActor = async (
   templateUUID: string,
   actorInfo: { [key: string]: any }
@@ -79,6 +84,18 @@ export const createActor = async (
     desc: actorInfo._desc,
     avatar: actorInfo._avatar,
   });
+
+  return data.actor;
+};
+
+/**
+ * 获取人物卡详情
+ * @param actorUUID 人物卡UUID
+ */
+export const fetchActorDetail = async (
+  actorUUID: string
+): Promise<ActorItem> => {
+  const { data } = await request.get(`/actor/detail/${actorUUID}`);
 
   return data.actor;
 };
