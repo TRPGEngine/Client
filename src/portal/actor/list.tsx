@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Spin, Row } from 'antd';
+import { Button, Spin, Row, Avatar } from 'antd';
 import { fetchActorList, ActorItem } from '@portal/model/actor';
 import _isNull from 'lodash/isNull';
+import _head from 'lodash/head';
 import history from '@portal/history';
 import { ActionButton } from '@portal/components/ActionButton';
 
@@ -17,13 +18,6 @@ const ActorListItem = styled.div`
 
   div {
     flex: 1;
-  }
-
-  img {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    overflow: hidden;
   }
 `;
 
@@ -73,7 +67,7 @@ class ActorList extends React.Component<{}, State> {
           </div>
           <div>{item.desc}</div>
         </div>
-        <img src={item.avatar} />
+        <Avatar src={item.avatar}>{_head(item.name)}</Avatar>
       </ActorListItem>
     ));
   }

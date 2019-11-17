@@ -1,4 +1,5 @@
 import { request } from '@portal/utils/request';
+import { getAbsolutePath } from '@shared/utils/file-helper';
 
 export interface ActorItem {
   id: number;
@@ -25,7 +26,10 @@ export const fetchActorList = async (): Promise<ActorItem[]> => {
   const { data } = await request.get('/actor/list');
 
   if (data.result) {
-    return data.list;
+    return data.list.map((item: ActorItem) => ({
+      ...item,
+      avatar: getAbsolutePath(item.avatar),
+    }));
   } else {
     return [];
   }
@@ -39,7 +43,10 @@ export const fetchTemplateList = async (page = 1): Promise<TemplateItem[]> => {
   const { data } = await request.get('/actor/template/list');
 
   if (data.result) {
-    return data.list;
+    return data.list.map((item: ActorItem) => ({
+      ...item,
+      avatar: getAbsolutePath(item.avatar),
+    }));
   } else {
     return [];
   }
