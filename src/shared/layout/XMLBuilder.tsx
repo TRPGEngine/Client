@@ -122,5 +122,6 @@ const XMLBuilder = (props: Props) => {
     </XMLBuilderContainer>
   );
 };
+XMLBuilder.displayName = 'XMLBuilder';
 
 export default XMLBuilder;

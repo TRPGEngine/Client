@@ -16,6 +16,16 @@ const BaseInfoContainer = styled(Row).attrs({
   padding-top: 24px;
 `;
 
+const BaseInfoForm = styled(Form).attrs({
+  layout: 'vertical',
+  labelCol: {
+    span: 6,
+  },
+  wrapperCol: {
+    span: 18,
+  },
+})``;
+
 interface Attr extends ILayoutTypeAttributes {}
 
 /**
@@ -32,11 +42,7 @@ export default class BaseInfo implements ILayoutType<Attr> {
     return (
       <BaseInfoContainer>
         <Col sm={18} xs={24}>
-          <Form
-            layout="horizontal"
-            labelCol={{ xs: 6 }}
-            wrapperCol={{ xs: 18 }}
-          >
+          <BaseInfoForm>
             <FormItem label="名称" required>
               <Input
                 value={getStateValue(context, '_name')}
@@ -54,7 +60,7 @@ export default class BaseInfo implements ILayoutType<Attr> {
                 }
               />
             </FormItem>
-          </Form>
+          </BaseInfoForm>
         </Col>
         <Col sm={6} xs={24} style={{ textAlign: 'center', marginBottom: 10 }}>
           <AvatarPicker
@@ -71,21 +77,17 @@ export default class BaseInfo implements ILayoutType<Attr> {
 
     return (
       <BaseInfoContainer>
-        <Col sm={18}>
-          <Form
-            layout="horizontal"
-            labelCol={{ xs: 6 }}
-            wrapperCol={{ xs: 18 }}
-          >
+        <Col sm={18} xs={24}>
+          <BaseInfoForm>
             <FormItem label="名称" required>
               <div>{getStateValue(context, '_name')}</div>
             </FormItem>
             <FormItem label="描述">
               <div>{getStateValue(context, '_desc')}</div>
             </FormItem>
-          </Form>
+          </BaseInfoForm>
         </Col>
-        <Col sm={6} style={{ textAlign: 'center', marginBottom: 10 }}>
+        <Col sm={6} xs={24} style={{ textAlign: 'center', marginBottom: 10 }}>
           <Avatar
             size={64}
             icon="user"

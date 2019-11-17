@@ -19,6 +19,11 @@ export const Label = styled.pre`
   text-overflow: ellipsis;
 `;
 
+export const DetailText = styled.pre`
+  white-space: pre-wrap;
+  word-wrap: break-word;
+`;
+
 interface Attr extends ILayoutTypeAttributes {
   label?: string;
   name?: string;
@@ -88,7 +93,7 @@ export default class TInput extends Base implements ILayoutType<Attr> {
           <Label title={parsedLabel}>{parsedLabel}</Label>
         </Col>
         <Col span={18}>
-          <pre>{getStateValue(context, bindingName)}</pre>
+          <DetailText>{getStateValue(context, bindingName)}</DetailText>
         </Col>
       </BaseTypeRow>
     );
