@@ -3,6 +3,7 @@
 declare module 'styled-components' {
   interface DefaultTheme {
     border: ThemeType['border'];
+    radius: ThemeType['radius'];
     color: ThemeType['color'];
     boxShadow: ThemeType['boxShadow'];
   }
@@ -12,9 +13,16 @@ type ThemeType = typeof styledTheme;
 const styledTheme = {
   border: {
     thin: '.5px solid rgba(232, 232, 232, 0.8)',
+    standard: '1px solid rgba(232, 232, 232, 0.8)',
+  },
+  radius: {
+    standard: '3px',
+    card: '10px',
   },
   color: {
     borderBase: '#dddddd',
+    gallery: '#EFEFEF',
+    alabaster: '#FCFCFC',
     'seashell-peach': '#FFF4EB',
     whisper: '#FAFAFC',
     soapstone: '#FFFBF8',

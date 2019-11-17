@@ -7,10 +7,13 @@ import AvatarPicker from '@components/AvatarPicker';
 import styled from 'styled-components';
 const FormItem = Form.Item;
 
-const BaseInfoContainer = styled(Row).attrs((props) => ({
+const BaseInfoContainer = styled(Row).attrs({
   type: 'flex',
-}))`
+})`
   flex-wrap: wrap-reverse;
+  margin-bottom: 10px;
+  border-bottom: ${(props) => props.theme.border.standard};
+  padding-top: 24px;
 `;
 
 interface Attr extends ILayoutTypeAttributes {}
@@ -53,7 +56,7 @@ export default class BaseInfo implements ILayoutType<Attr> {
             </FormItem>
           </Form>
         </Col>
-        <Col sm={6} xs={24} style={{ textAlign: 'center' }}>
+        <Col sm={6} xs={24} style={{ textAlign: 'center', marginBottom: 10 }}>
           <AvatarPicker
             imageUrl={String(getStateValue(context, '_avatar'))}
             onChange={(imageUrl) => setStateValue(context, '_avatar', imageUrl)}
@@ -82,7 +85,7 @@ export default class BaseInfo implements ILayoutType<Attr> {
             </FormItem>
           </Form>
         </Col>
-        <Col sm={6} style={{ textAlign: 'center' }}>
+        <Col sm={6} style={{ textAlign: 'center', marginBottom: 10 }}>
           <Avatar
             size={64}
             icon="user"
