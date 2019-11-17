@@ -4,6 +4,7 @@ import { Button, Spin, Row } from 'antd';
 import { fetchActorList, ActorItem } from '@portal/model/actor';
 import _isNull from 'lodash/isNull';
 import history from '@portal/history';
+import { ActionButton } from '@portal/components/ActionButton';
 
 const Container = styled.div`
   padding: 10px;
@@ -62,7 +63,10 @@ class ActorList extends React.Component<{}, State> {
     }
 
     return list.map((item) => (
-      <ActorListItem onClick={() => this.handleSelectActor(item.uuid)}>
+      <ActorListItem
+        key={item.uuid}
+        onClick={() => this.handleSelectActor(item.uuid)}
+      >
         <div>
           <div>
             <strong>{item.name}</strong>
@@ -77,7 +81,7 @@ class ActorList extends React.Component<{}, State> {
   render() {
     return (
       <Container>
-        <Button onClick={this.handleCreateActor}>创建人物卡</Button>
+        <ActionButton onClick={this.handleCreateActor}>创建人物卡</ActionButton>
         <div>{this.renderList()}</div>
       </Container>
     );

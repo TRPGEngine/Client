@@ -35,7 +35,10 @@ class ActorSelectTemplate extends React.Component<{}, State> {
     return (
       <div>
         {list.map((item) => (
-          <TemplateListItem onClick={() => this.handleClick(item.uuid)}>
+          <TemplateListItem
+            key={item.uuid}
+            onClick={() => this.handleClick(item.uuid)}
+          >
             {item.name}
           </TemplateListItem>
         ))}
