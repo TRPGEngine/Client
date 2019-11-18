@@ -20,10 +20,6 @@ class ActorDetail extends React.Component<Props> {
   }
 
   async componentDidMount() {
-    // this.setState({
-    //   template,
-    // });
-
     const actor = await fetchActorDetail(this.actorUUID);
     const template = await fetchTemplateInfo(actor.template_uuid);
 

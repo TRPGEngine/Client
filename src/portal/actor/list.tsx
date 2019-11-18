@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Avatar } from 'antd';
 import { fetchActorList, ActorItem } from '@portal/model/actor';
 import _isNull from 'lodash/isNull';
 import _head from 'lodash/head';
 import history from '@portal/history';
 import { ActionButton } from '@portal/components/ActionButton';
 import Loading from '@portal/components/Loading';
+import Avatar from '@components/Avatar';
 
 const Container = styled.div`
   padding: 10px;
@@ -65,7 +65,7 @@ class ActorList extends React.Component<{}, State> {
           </div>
           <div>{item.desc}</div>
         </div>
-        <Avatar src={item.avatar}>{_head(item.name)}</Avatar>
+        <Avatar name={item.name} src={item.avatar} />
       </ActorListItem>
     ));
   }
