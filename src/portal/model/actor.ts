@@ -1,5 +1,6 @@
 import { request } from '@portal/utils/request';
 import { getAbsolutePath } from '@shared/utils/file-helper';
+import { ModelAccess } from './types';
 
 export interface ActorItem {
   id: number;
@@ -89,7 +90,15 @@ export const createActor = async (
 export const fetchActorDetail = async (
   actorUUID: string
 ): Promise<ActorItem> => {
-  const { data } = await request.get(`/actor/detail/${actorUUID}`);
+  const { data } = await request.get(`/actor/${actorUUID}/detail`);
 
   return data.actor;
+};
+
+export const fetchActorAccess = async (
+  actorUUID: string
+): Promise<ModelAccess> => {
+  const { data } = await request.get(`/actor/${actorUUID}/access`);
+
+  return data.access;
 };

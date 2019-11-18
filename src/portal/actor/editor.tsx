@@ -3,6 +3,11 @@ import XMLBuilder, { DataMap } from '@src/shared/layout/XMLBuilder';
 import { on, off, postMessage } from '../utils/event';
 const exampleXml = require('@shared/layout/example/wuxian-layout.xml').default;
 
+/**
+ * TODO
+ * 测试文件，待删除
+ */
+
 class ActorEditor extends React.Component {
   actorData: DataMap = {};
   getActorData = () => {
