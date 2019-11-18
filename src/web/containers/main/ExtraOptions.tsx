@@ -6,7 +6,7 @@ import { showModal, switchMenuPannel } from '../../../shared/redux/actions/ui';
 import { setEditedTemplate } from '../../../shared/redux/actions/actor';
 import { addNote } from '../../../shared/redux/actions/note';
 import TemplateSelect from './actors/TemplateSelect';
-import ActorCreate from '@components/modal/ActorCreate';
+import ActorCreate from '@web/components/modal/ActorCreate';
 import TemplateEdit from './actors/TemplateEdit';
 // import IsDeveloping from '../../components/IsDeveloping';
 import GroupCreate from '../../components/modal/GroupCreate';

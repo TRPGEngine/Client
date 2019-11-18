@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import at from 'trpg-actor-template';
 import TemplateSelect from './TemplateSelect';
-import ActorCreate from '@components/modal/ActorCreate';
-import ActorEdit from '@components/modal/ActorEdit';
+import ActorCreate from '@web/components/modal/ActorCreate';
+import ActorEdit from '@web/components/modal/ActorEdit';
 import { updateActor } from '@src/shared/redux/actions/actor';
 import * as apiHelper from '../../../../shared/utils/api-helper';
 import { showModal, showAlert } from '../../../../shared/redux/actions/ui';
@@ -12,7 +12,7 @@ import {
   removeActor,
   selectTemplate,
 } from '../../../../shared/redux/actions/actor';
-import ActorInfo from '@components/modal/ActorInfo';
+import ActorInfo from '@web/components/modal/ActorInfo';
 import _isNil from 'lodash/isNil';
 
 import './ActorList.scss';

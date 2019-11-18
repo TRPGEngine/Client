@@ -3,8 +3,8 @@ import { ILayoutTypeAttributes, ILayoutType, LayoutTypeContext } from './Base';
 import { Row, Col, Form, Input } from 'antd';
 import { getStateValue, setStateValue } from './utils';
 import TextArea from 'antd/lib/input/TextArea';
-import Avatar from '@components/Avatar';
-import AvatarPicker from '@components/AvatarPicker';
+import Avatar from '@web/components/Avatar';
+import AvatarPicker from '@web/components/AvatarPicker';
 import styled from 'styled-components';
 const FormItem = Form.Item;
 

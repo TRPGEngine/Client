@@ -5,7 +5,7 @@ import filesize from 'filesize';
 import config from '../../../shared/project.config';
 import { downloadFile, previewFile } from '../../../shared/redux/actions/file';
 import { MessageProps } from '@src/shared/components/MessageHandler';
-import Webview from '@components/Webview';
+import Webview from '@web/components/Webview';
 
 interface Props extends MessageProps, DispatchProp<any> {}
 class File extends Base<Props> {

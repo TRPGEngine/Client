@@ -6,7 +6,7 @@ import _head from 'lodash/head';
 import history from '@portal/history';
 import { ActionButton } from '@portal/components/ActionButton';
 import Loading from '@portal/components/Loading';
-import Avatar from '@components/Avatar';
+import Avatar from '@web/components/Avatar';
 
 const Container = styled.div`
   padding: 10px;
