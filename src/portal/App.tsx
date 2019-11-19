@@ -8,6 +8,7 @@ import ActorEditor from '@portal/actor/editor';
 import '@portal/utils/event';
 import history from './history';
 import ActorDetail from './actor/detail';
+import ActorEdit from './actor/edit';
 
 class App extends React.Component {
   render() {
@@ -25,6 +26,11 @@ class App extends React.Component {
             name="actor-detail"
             path="/actor/detail/:actorUUID"
             component={ActorDetail}
+          />
+          <Route
+            name="actor-edit"
+            path="/actor/edit/:actorUUID"
+            component={ActorEdit}
           />
           <Route
             name="actor-create"

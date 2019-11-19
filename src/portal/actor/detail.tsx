@@ -9,6 +9,8 @@ import XMLBuilder from '@shared/layout/XMLBuilder';
 import Loading from '@portal/components/Loading';
 import { ActionButton } from '@portal/components/ActionButton';
 import _get from 'lodash/get';
+import history from '@portal/history';
+import ActorEditor from '@portal/components/ActorEditor';
 
 interface Props
   extends RouteComponentProps<{
@@ -18,8 +20,6 @@ interface Props
 class ActorDetail extends React.Component<Props> {
   state = {
     actorAccess: {},
-    actorInfo: {},
-    templateLayout: '',
   };
 
   get actorUUID(): string {
@@ -28,33 +28,27 @@ class ActorDetail extends React.Component<Props> {
 
   async componentDidMount() {
     const access = await fetchActorAccess(this.actorUUID);
-    const actor = await fetchActorDetail(this.actorUUID);
-    const template = await fetchTemplateInfo(actor.template_uuid);
 
     this.setState({
       actorAccess: access,
-      actorInfo: actor.info,
-      templateLayout: template.layout,
     });
   }
 
+  handleEditActor = () => {
+    history.push(`/actor/edit/${this.actorUUID}`);
+  };
+
   render() {
-    const { actorAccess, actorInfo, templateLayout } = this.state;
-    if (templateLayout === '') {
-      return <Loading />;
-    }
+    const { actorAccess } = this.state;
 
     return (
-      <div>
-        <XMLBuilder
-          xml={templateLayout}
-          layoutType="detail"
-          initialData={actorInfo}
-        />
+      <ActorEditor actorUUID={this.actorUUID} type="detail">
         {_get(actorAccess, 'editable') === true ? (
-          <ActionButton type="primary">编辑</ActionButton>
+          <ActionButton type="primary" onClick={this.handleEditActor}>
+            编辑
+          </ActionButton>
         ) : null}
-      </div>
+      </ActorEditor>
     );
   }
 }
