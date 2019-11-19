@@ -84,6 +84,25 @@ export const createActor = async (
 };
 
 /**
+ * 编辑角色信息
+ * @param actorUUID 编辑角色信息
+ * @param actorInfo 角色信息
+ */
+export const editActor = async (
+  actorUUID: string,
+  actorInfo: { [key: string]: any }
+): Promise<ActorItem> => {
+  const { data } = await request.post(`/actor/${actorUUID}/edit/`, {
+    info: actorInfo,
+    name: actorInfo._name,
+    desc: actorInfo._desc,
+    avatar: actorInfo._avatar,
+  });
+
+  return data.actor
+};
+
+/**
  * 获取人物卡详情
  * @param actorUUID 人物卡UUID
  */

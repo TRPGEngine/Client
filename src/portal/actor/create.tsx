@@ -58,7 +58,7 @@ class ActorCreate extends React.Component<Props, State> {
       await createActor(this.templateUUID, this.actorData);
 
       notification.open({
-        message: '创建成功',
+        message: '创建成功, 1秒后自动跳转',
       });
       setTimeout(() => history.push('/actor/list'), 1000);
     } catch (e) {

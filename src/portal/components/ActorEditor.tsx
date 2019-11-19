@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useMemo, PropsWithChildren } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  PropsWithChildren,
+  useCallback,
+} from 'react';
 import { fetchActorDetail, fetchTemplateInfo } from '@portal/model/actor';
 import Loading from './Loading';
 import XMLBuilder, {
@@ -12,16 +18,22 @@ interface Props {
   type: 'detail' | 'edit';
   onChange?: (data: DataMap) => void;
 }
-const ActorEditor = (props: PropsWithChildren<Props>) => {
+const ActorEditor: React.FC<PropsWithChildren<Props>> = (props) => {
   const [actorInfo, setActorInfo] = useState({});
   const [templateLayout, setTemplateLayout] = useState('');
+
+  // 修改角色数据
+  const changeActorData = useCallback((data: DataMap) => {
+    setActorInfo(data);
+    _isFunction(props.onChange) && props.onChange(data);
+  }, []);
 
   useEffect(() => {
     (async () => {
       const actor = await fetchActorDetail(props.actorUUID);
       const template = await fetchTemplateInfo(actor.template_uuid);
 
-      setActorInfo(actor.info);
+      changeActorData(actor.info);
       setTemplateLayout(template.layout);
     })();
   }, []);
@@ -32,8 +44,7 @@ const ActorEditor = (props: PropsWithChildren<Props>) => {
     }
 
     const handleChange = (info: XMLBuilderState) => {
-      setActorInfo(info.data);
-      _isFunction(props.onChange) && props.onChange(info.data);
+      changeActorData(info.data);
     };
 
     return (
@@ -49,5 +60,6 @@ const ActorEditor = (props: PropsWithChildren<Props>) => {
     );
   }, [templateLayout, actorInfo]);
 };
+ActorEditor.displayName = 'ActorEditor';
 
 export default ActorEditor;
