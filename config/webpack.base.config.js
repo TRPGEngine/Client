@@ -41,30 +41,6 @@ const babelQuery = {
   ],
 };
 
-// let vendors = Object.keys(config.dependencies);
-// if (process.env.PLATFORM !== 'app') {
-//   let arrRemove = function(arr, item) {
-//     let index = arr.indexOf(item);
-//     if (index >= 0) {
-//       arr.splice(index, 1);
-//     }
-//   };
-
-//   arrRemove(vendors, 'apsl-react-native-button');
-//   arrRemove(vendors, 'react-native');
-//   arrRemove(vendors, 'react-native-photo-browser');
-//   arrRemove(vendors, 'react-native-image-picker');
-//   arrRemove(vendors, 'react-native-root-toast');
-//   arrRemove(vendors, 'react-native-storage');
-//   arrRemove(vendors, 'react-native-style-block');
-//   arrRemove(vendors, 'react-navigation');
-//   arrRemove(vendors, 'react-navigation-redux-helpers');
-//   arrRemove(vendors, 'jcore-react-native');
-//   arrRemove(vendors, 'jpush-react-native');
-// }
-
-// console.log('vendor list:', vendors);
-
 module.exports = {
   entry: {
     // vendor: vendors,
