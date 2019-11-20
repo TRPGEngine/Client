@@ -9,6 +9,7 @@ declare module 'styled-components' {
     radius: ThemeType['radius'];
     color: ThemeType['color'];
     boxShadow: ThemeType['boxShadow'];
+    filter: ThemeType['filter'];
   }
 }
 
@@ -58,6 +59,9 @@ const styledTheme = {
   },
   boxShadow: {
     normal: 'rgba(0, 0, 0, 0.15) 0 0 8px',
+  },
+  filter: {
+    grey100: 'grayscale(100%)',
   },
 };
 

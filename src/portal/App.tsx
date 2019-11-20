@@ -9,6 +9,7 @@ import '@portal/utils/event';
 import history from './history';
 import ActorDetail from './actor/detail';
 import ActorEdit from './actor/edit';
+import GroupActorList from './group/actor/list';
 
 interface TitleRouteProps extends RouteProps {
   title: string;
@@ -63,6 +64,11 @@ class App extends React.Component {
             title="人物编辑器"
             path="/actor/editor"
             component={ActorEditor}
+          />
+          <TitleRoute
+            title="团人物列表"
+            path="/group/:groupUUID/actor/list"
+            component={GroupActorList}
           />
         </Switch>
       </Router>
