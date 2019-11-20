@@ -54,6 +54,7 @@
   },
   "homepage": "https://github.com/TRPGEngine/Client#readme",
   "dependencies": {
+    "@ant-design/colors": "^3.2.2",
     "@bbob/parser": "^2.5.4",
     "@sentry/browser": "^4.6.6",
     "antd": "^3.23.6",

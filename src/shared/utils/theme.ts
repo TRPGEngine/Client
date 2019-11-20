@@ -1,4 +1,7 @@
 // name from http://chir.ag/projects/name-that-color/
+// antd color from https://github.com/ant-design/ant-design-colors
+
+import * as antdColor from '@ant-design/colors';
 
 declare module 'styled-components' {
   interface DefaultTheme {
@@ -20,6 +23,7 @@ const styledTheme = {
     card: '10px',
   },
   color: {
+    antd: antdColor,
     borderBase: '#dddddd',
     gallery: '#EFEFEF',
     alabaster: '#FCFCFC',
