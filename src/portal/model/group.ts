@@ -18,3 +18,19 @@ export const fetchGroupActorList = async (
 
   return data.list;
 };
+
+/**
+ * 申请创建团角色
+ * @param groupUUID 团UUID
+ * @param actorUUID 人物UUID
+ */
+export const applyGroupActor = async (
+  groupUUID: string,
+  actorUUID: string
+): Promise<GroupActorItem> => {
+  const { data } = await request.post(`/group/${groupUUID}/actor/apply`, {
+    actorUUID,
+  });
+
+  return data.actor;
+};
