@@ -478,7 +478,7 @@ export const agreeGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
     return api.emit(
       'group::agreeGroupActor',
-      { groupUUID, groupActorUUID },
+      { groupActorUUID },
       function(data) {
         if (data.result) {
           dispatch({
