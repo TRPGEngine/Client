@@ -11,8 +11,11 @@ import _head from 'lodash/head';
 import Loading from '@portal/components/Loading';
 import Avatar from '@web/components/Avatar';
 import { ActionButton } from '@portal/components/ActionButton';
-import { Modal, notification } from 'antd';
+import { Modal, notification, Tabs } from 'antd';
 import ActorSelect from '@portal/components/ActorSelect';
+import GroupActorApprovalCard from '@portal/components/GroupActorApprovalCard';
+
+const { TabPane } = Tabs;
 
 const GroupActorListItem = styled.div<{
   passed: boolean;
@@ -95,6 +98,14 @@ class GroupActorList extends React.Component<Props, State> {
     }
   };
 
+  handleAgreeGroupActor = (uuid: string) => {
+    console.log('TODO: 同意团角色');
+  };
+
+  handleRefuseGroupActor = (uuid: string) => {
+    console.log('TODO: 拒绝');
+  };
+
   renderApplyActorModal() {
     return (
       <Modal
@@ -140,18 +151,47 @@ class GroupActorList extends React.Component<Props, State> {
     ));
   }
 
+  renderApprovalList() {
+    const { actors } = this.state;
+
+    if (_isEmpty(actors)) {
+      return <Loading />;
+    }
+
+    return actors
+      .filter((actor) => actor.passed === false && actor.enabled === true)
+      .map((actor) => (
+        <GroupActorApprovalCard
+          uuid={actor.uuid}
+          name={actor.name}
+          desc={actor.desc}
+          avatar={actor.avatar}
+          onAgree={this.handleAgreeGroupActor}
+          onRefuse={this.handleRefuseGroupActor}
+        />
+      ));
+  }
+
   render() {
     return (
-      <div>
-        {this.renderList()}
-        <ActionButton
-          type="primary"
-          onClick={() => this.setState({ applyActorModalVisible: true })}
-        >
-          申请添加角色
-        </ActionButton>
-        {this.renderApplyActorModal()}
-      </div>
+      <Tabs defaultActiveKey="actor">
+        <TabPane tab="人物卡" key="actor">
+          <div>
+            {this.renderList()}
+            <ActionButton
+              type="primary"
+              onClick={() => this.setState({ applyActorModalVisible: true })}
+            >
+              申请添加角色
+            </ActionButton>
+            {this.renderApplyActorModal()}
+          </div>
+        </TabPane>
+        <TabPane tab="待审批" key="approval">
+          {/* TODO: 应当仅团管理员可见 */}
+          {this.renderApprovalList()}
+        </TabPane>
+      </Tabs>
     );
   }
 }
