@@ -4,6 +4,8 @@ import {
   fetchGroupActorList,
   GroupActorItem,
   applyGroupActor,
+  agreeGroupActor,
+  refuseGroupActor,
 } from '@portal/model/group';
 import styled from 'styled-components';
 import _isEmpty from 'lodash/isEmpty';
@@ -98,12 +100,40 @@ class GroupActorList extends React.Component<Props, State> {
     }
   };
 
-  handleAgreeGroupActor = (uuid: string) => {
-    console.log('TODO: 同意团角色');
+  /**
+   * 同意团角色
+   */
+  handleAgreeGroupActor = async (uuid: string) => {
+    await agreeGroupActor(this.groupUUID, uuid)
+      .then(() => {
+        notification.success({
+          message: '操作成功',
+        });
+        this.fetchList();
+      })
+      .catch((err) =>
+        notification.error({
+          message: '操作失败: ' + err,
+        })
+      );
   };
 
-  handleRefuseGroupActor = (uuid: string) => {
-    console.log('TODO: 拒绝');
+  /**
+   * 拒绝团角色
+   */
+  handleRefuseGroupActor = async (uuid: string) => {
+    await refuseGroupActor(this.groupUUID, uuid)
+      .then(() => {
+        notification.success({
+          message: '操作成功',
+        });
+        this.fetchList();
+      })
+      .catch((err) =>
+        notification.error({
+          message: '操作失败: ' + err,
+        })
+      );
   };
 
   renderApplyActorModal() {
@@ -166,6 +196,7 @@ class GroupActorList extends React.Component<Props, State> {
           name={actor.name}
           desc={actor.desc}
           avatar={actor.avatar}
+          // 操作按钮应当仅团管理员可见
           onAgree={this.handleAgreeGroupActor}
           onRefuse={this.handleRefuseGroupActor}
         />
@@ -188,7 +219,6 @@ class GroupActorList extends React.Component<Props, State> {
           </div>
         </TabPane>
         <TabPane tab="待审批" key="approval">
-          {/* TODO: 应当仅团管理员可见 */}
           {this.renderApprovalList()}
         </TabPane>
       </Tabs>

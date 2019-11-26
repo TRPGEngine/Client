@@ -501,7 +501,7 @@ export const refuseGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
     return api.emit(
       'group::refuseGroupActor',
-      { groupUUID, groupActorUUID },
+      { groupActorUUID },
       function(data) {
         if (data.result) {
           dispatch({

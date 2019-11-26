@@ -34,3 +34,33 @@ export const applyGroupActor = async (
 
   return data.actor;
 };
+
+/**
+ * 同意团角色的申请
+ * @param groupUUID 团UUID
+ * @param groupActorUUID 团角色UUID
+ */
+export const agreeGroupActor = async (
+  groupUUID: string,
+  groupActorUUID: string
+): Promise<GroupActorItem> => {
+  const { data } = await request.post(`/group/${groupUUID}/actor/agree`, {
+    groupActorUUID,
+  });
+
+  return data.groupActor;
+};
+
+/**
+ * 拒绝团角色的申请
+ * @param groupUUID 团UUID
+ * @param groupActorUUID 团角色UUID
+ */
+export const refuseGroupActor = async (
+  groupUUID: string,
+  groupActorUUID: string
+): Promise<void> => {
+  await request.post(`/group/${groupUUID}/actor/refuse`, {
+    groupActorUUID,
+  });
+};
