@@ -49,7 +49,7 @@ export interface XMLBuilderContext {
   layoutType: LayoutType;
 }
 
-type stateChangeHandler = (newState: XMLBuilderState) => void;
+export type StateChangeHandler = (newState: XMLBuilderState) => void;
 
 const XMLBuilderContainer = styled.div`
   text-align: left;
@@ -59,7 +59,7 @@ const XMLBuilderContainer = styled.div`
   }
 `;
 
-const buildReducer = (onChange?: stateChangeHandler) => {
+const buildReducer = (onChange?: StateChangeHandler) => {
   const XMLBuilderReducer = (
     prevState: XMLBuilderState,
     action: XMLBuilderAction
@@ -92,7 +92,7 @@ interface Props {
   xml: string;
   layoutType?: LayoutType;
   initialData?: DataMap;
-  onChange?: stateChangeHandler;
+  onChange?: StateChangeHandler;
 }
 const XMLBuilder = (props: Props) => {
   const { xml = '', onChange, layoutType = 'edit' } = props;

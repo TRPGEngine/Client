@@ -42,7 +42,7 @@ class ActorDetail extends React.Component<Props> {
     const { actorAccess } = this.state;
 
     return (
-      <ActorEditor actorUUID={this.actorUUID} type="detail">
+      <ActorEditor uuid={this.actorUUID} type="detail">
         {_get(actorAccess, 'editable') === true ? (
           <ActionButton type="primary" onClick={this.handleEditActor}>
             编辑

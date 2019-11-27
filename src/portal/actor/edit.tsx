@@ -43,7 +43,7 @@ class ActorEdit extends React.Component<Props> {
   render() {
     return (
       <ActorEditor
-        actorUUID={this.actorUUID}
+        uuid={this.actorUUID}
         type="edit"
         onChange={(data) => this.setState({ data })}
       >

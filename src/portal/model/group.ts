@@ -4,6 +4,7 @@ export interface GroupActorItem {
   uuid: string;
   actor_uuid: string;
   actor_info: {};
+  actor_template_uuid: string;
   name: string;
   desc: string;
   avatar: string;
@@ -17,6 +18,14 @@ export const fetchGroupActorList = async (
   const { data } = await request.get(`/group/${groupUUID}/actor/list`);
 
   return data.list;
+};
+
+export const fetchGroupActorDetail = async (
+  groupActorUUID: string
+): Promise<GroupActorItem> => {
+  const { data } = await request.get(`/group/actor/detail/${groupActorUUID}`);
+
+  return data.groupActor;
 };
 
 /**

@@ -16,6 +16,7 @@ import { ActionButton } from '@portal/components/ActionButton';
 import { Modal, notification, Tabs } from 'antd';
 import ActorSelect from '@portal/components/ActorSelect';
 import GroupActorApprovalCard from '@portal/components/GroupActorApprovalCard';
+import { nav } from '@portal/history';
 
 const { TabPane } = Tabs;
 
@@ -70,11 +71,10 @@ class GroupActorList extends React.Component<Props, State> {
   }
 
   /**
-   * 点击详情
+   * 点击详情 跳转到团角色详情页面
    */
   handleClick = (groupActorUUID: string) => {
-    // TODO
-    console.log('groupActorUUID', groupActorUUID);
+    nav(`/group/${this.groupUUID}/actor/detail/${groupActorUUID}`);
   };
 
   /**
