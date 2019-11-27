@@ -7,14 +7,9 @@ import {
 } from '@portal/model/actor';
 import XMLBuilder, { DataMap } from '@shared/layout/XMLBuilder';
 import _isNil from 'lodash/isNil';
-import _isString from 'lodash/isString';
-import _get from 'lodash/get';
-import _set from 'lodash/set';
 import { Affix, notification } from 'antd';
-import { checkToken, getJWTInfo } from '@portal/utils/auth';
+import { checkToken } from '@portal/utils/auth';
 import history from '../history';
-import { toAvatarWithBlobUrl } from '@web/utils/upload-helper';
-import { isBlobUrl } from '@shared/utils/string-helper';
 import { ActionButton } from '@portal/components/ActionButton';
 
 interface Props
@@ -47,14 +42,6 @@ class ActorCreate extends React.Component<Props, State> {
 
   handleCreateActor = async () => {
     try {
-      // 上传头像
-      const avatarUrl = _get(this.actorData, '_avatar');
-      if (_isString(avatarUrl) && isBlobUrl(avatarUrl)) {
-        const userInfo = getJWTInfo();
-        const avatar = await toAvatarWithBlobUrl(userInfo.uuid, avatarUrl);
-        _set(this.actorData, '_avatar', avatar.url);
-      }
-
       await createActor(this.templateUUID, this.actorData);
 
       notification.open({

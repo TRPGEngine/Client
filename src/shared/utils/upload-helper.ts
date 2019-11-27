@@ -10,6 +10,7 @@ export interface UploadOption {
 export type UploadReturn<T = any> = Promise<T>;
 
 export interface AvatarUpdateData {
+  uuid: string;
   filename: string;
   url: string;
   size: number;
