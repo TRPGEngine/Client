@@ -3,6 +3,7 @@ import {
   toAvatar,
   UploadOption,
   AvatarUpdateData,
+  toGroupAvatar,
 } from '@shared/utils/upload-helper';
 
 /**
@@ -19,6 +20,22 @@ export const toAvatarWithBlobUrl = async function(
   const blob = await blobFromUrl(blobUrl);
   const file = blobToFile(blob, 'avatar.jpg');
   const avatarRet = await toAvatar(userUUID, file, options);
+
+  return avatarRet;
+};
+
+/**
+ * 基于BlobUrl上传头像
+ * 类似于toAvatarWithBlobUrl但是是文件类型为groupActor
+ */
+export const toGroupActorWithBlobUrl = async function(
+  userUUID: string,
+  blobUrl: string,
+  options: UploadOption = {}
+): Promise<AvatarUpdateData> {
+  const blob = await blobFromUrl(blobUrl);
+  const file = blobToFile(blob, 'avatar.jpg');
+  const avatarRet = await toGroupAvatar(userUUID, file, options);
 
   return avatarRet;
 };

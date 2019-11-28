@@ -1,4 +1,4 @@
 export interface ModelAccess {
-  editable: boolean;
-  removeable: boolean;
+  editable?: boolean;
+  removeable?: boolean;
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { fileUrl } from '../api/trpg.api';
+import _set from 'lodash/set';
 
 export interface UploadOption {
   headers?: {};
@@ -109,4 +110,16 @@ export const toAvatar = function(
 ): UploadReturn<AvatarUpdateData> {
   options.uploadField = 'avatar';
   return _upload('/avatar', userUUID, file, options);
+};
+
+/**
+ * 类似于toAvatar， 但是avatar-type会被设置为团角色
+ */
+export const toGroupAvatar = function(
+  userUUID: string,
+  file: File,
+  options: UploadOption = {}
+): UploadReturn<AvatarUpdateData> {
+  _set(options, 'headers.avatar-type', 'groupActor');
+  return toAvatar(userUUID, file, options);
 };

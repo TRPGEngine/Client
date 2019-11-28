@@ -74,7 +74,7 @@ class GroupActorList extends React.Component<Props, State> {
    * 点击详情 跳转到团角色详情页面
    */
   handleClick = (groupActorUUID: string) => {
-    nav(`/group/${this.groupUUID}/actor/detail/${groupActorUUID}`);
+    nav(`/group/${this.groupUUID}/actor/${groupActorUUID}/detail`);
   };
 
   /**

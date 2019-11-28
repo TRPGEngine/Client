@@ -11,6 +11,7 @@ import ActorDetail from './actor/detail';
 import ActorEdit from './actor/edit';
 import GroupActorList from './group/actor/list';
 import GroupActorDetail from './group/actor/detail';
+import GroupActorEdit from './group/actor/edit';
 
 interface TitleRouteProps extends RouteProps {
   title: string;
@@ -73,8 +74,13 @@ class App extends React.Component {
           />
           <TitleRoute
             title="团人物详情"
-            path="/group/:groupUUID/actor/detail/:groupActorUUID"
+            path="/group/:groupUUID/actor/:groupActorUUID/detail"
             component={GroupActorDetail}
+          />
+          <TitleRoute
+            title="团人物编辑"
+            path="/group/:groupUUID/actor/:groupActorUUID/edit"
+            component={GroupActorEdit}
           />
         </Switch>
       </Router>
