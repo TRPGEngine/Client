@@ -137,6 +137,7 @@ module.exports = {
     'react-navigation-redux-helpers':
       "require('react-navigation-redux-helpers')",
     config: JSON.stringify({
+      // 手动指定部分配置以防止私密配置泄漏
       sentry: require('config').get('sentry'),
     }), // 用于全局使用config，config由编译时的环境变量指定
   },

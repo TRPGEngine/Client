@@ -12,6 +12,7 @@ const WebpackBar = require('webpackbar');
 const ROOT_PATH = path.resolve(__dirname, '../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist/portal');
+const ASSET_PATH = '/portal/';
 
 module.exports = webpackMerge({}, base, {
   entry: {
@@ -20,6 +21,7 @@ module.exports = webpackMerge({}, base, {
 
   output: {
     path: DIST_PATH,
+    publicPath: ASSET_PATH,
   },
 
   devtool: 'cheap-module-eval-source-map',
