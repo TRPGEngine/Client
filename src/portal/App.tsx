@@ -1,17 +1,22 @@
 import React from 'react';
 import { Router, Switch, Route, RouteProps } from 'react-router';
-import Login from '@portal/sso/Login';
-import ActorList from '@portal/actor/list';
-import ActorSelectTemplate from './actor/select-template';
-import ActorCreate from '@portal/actor/create';
-import ActorEditor from '@portal/actor/editor';
+
 import '@portal/utils/event';
 import history from './history';
-import ActorDetail from './actor/detail';
-import ActorEdit from './actor/edit';
-import GroupActorList from './group/actor/list';
-import GroupActorDetail from './group/actor/detail';
-import GroupActorEdit from './group/actor/edit';
+import TLoadable from '@web/components/TLoadable';
+
+const Login = TLoadable(() => import('@portal/sso/Login'));
+const ActorList = TLoadable(() => import('@portal/actor/list'));
+const ActorSelectTemplate = TLoadable(() =>
+  import('@portal/actor/select-template')
+);
+const ActorCreate = TLoadable(() => import('@portal/actor/create'));
+const ActorEditor = TLoadable(() => import('@portal/actor/editor'));
+const ActorDetail = TLoadable(() => import('@portal/actor/detail'));
+const ActorEdit = TLoadable(() => import('@portal/actor/edit'));
+const GroupActorList = TLoadable(() => import('@portal/group/actor/list'));
+const GroupActorDetail = TLoadable(() => import('@portal/group/actor/detail'));
+const GroupActorEdit = TLoadable(() => import('@portal/group/actor/edit'));
 
 interface TitleRouteProps extends RouteProps {
   title: string;

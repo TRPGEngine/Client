@@ -30,7 +30,9 @@ module.exports = webpackMerge({}, base, {
     host: '0.0.0.0',
     port: 8190,
     compress: true,
-    historyApiFallback: true,
+    historyApiFallback: {
+      rewrites: [{ from: /.*/, to: `${ASSET_PATH}index.html` }],
+    },
     hot: true,
     inline: true,
   },
