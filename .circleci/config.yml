@@ -64,22 +64,22 @@ jobs:
       - checkout
       # 更新node依赖
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
+          key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "src/app/package.json" }}-{{ arch }}
       - run:
           name: install-npm-wee
           command: npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
+          key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "src/app/package.json" }}-{{ arch }}
           paths:
             - node_modules
       # cache gradle
       - restore_cache:
-          key: gradle-cache-{{ checksum "android/build.gradle" }}-{{ arch }}
+          key: gradle-cache-{{ checksum "src/app/android/build.gradle" }}-{{ arch }}
       - run:
           name: packageDebug
-          command: cd ./android && ./gradlew app:packageDebug
+          command: cd src/app && cd ./android && ./gradlew app:packageDebug
       - save_cache:
-          key: gradle-cache-{{ checksum "android/build.gradle" }}-{{ arch }}
+          key: gradle-cache-{{ checksum "src/app/android/build.gradle" }}-{{ arch }}
           paths:
             - ~/.gradle/
       - store_artifacts:

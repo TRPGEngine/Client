@@ -1,9 +1,14 @@
 import React from 'react';
 import Base, { LayoutTypeContext } from './Base';
 import { Tabs } from 'antd';
-import { XMLElement } from '../parser/xml-parser';
 import { TabsPosition } from 'antd/lib/tabs';
+import styled from 'styled-components';
 const TabPane = Tabs.TabPane;
+
+const TabPaneContainer = styled.div`
+  padding: 0 10px;
+  padding-bottom: 10px;
+`;
 
 export default class TTabs extends Base {
   name = 'Tabs';
@@ -16,7 +21,9 @@ export default class TTabs extends Base {
         const label = el.attributes.label || '';
         return (
           <TabPane tab={label} key={`${label}#${index}`}>
-            {this.renderChildren(el.elements, context)}
+            <TabPaneContainer>
+              {this.renderChildren(el.elements, context)}
+            </TabPaneContainer>
           </TabPane>
         );
       });

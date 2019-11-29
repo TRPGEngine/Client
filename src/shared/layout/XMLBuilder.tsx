@@ -6,34 +6,35 @@ import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
 import './tags/__all__';
 import Debug from 'debug';
+const debug = Debug('trpg:XMLBuilder');
 import styled from 'styled-components';
 import { ILayoutTypeAttributes } from './tags/Base';
-const debug = Debug('trpg:XMLBuilder');
+import { StateDataType, StateActionType } from './types';
 
 export type DefinePropsType = {
   [name: string]: any;
 };
-interface DefineType {
+interface DefineMap {
   [name: string]: (
     context: XMLBuilderContext,
     otherProps: DefinePropsType
   ) => React.FunctionComponentElement<ILayoutTypeAttributes>;
 }
 
-interface GlobalType {
-  [name: string]: number | string | null;
+interface GlobalMap {
+  [name: string]: StateDataType;
 }
 
-export interface DataType {
-  [name: string]: number | string | null;
+export interface DataMap {
+  [name: string]: StateDataType;
 }
 
 export type LayoutType = 'edit' | 'detail';
 
 export interface XMLBuilderState {
-  defines: DefineType;
-  global: GlobalType;
-  data: DataType;
+  defines: DefineMap;
+  global: GlobalMap;
+  data: DataMap;
 }
 
 export interface XMLBuilderAction {
@@ -48,12 +49,7 @@ export interface XMLBuilderContext {
   layoutType: LayoutType;
 }
 
-type stateChangeHandler = (newState: XMLBuilderState) => void;
-
-export enum ActionType {
-  UpdateData = 'update_data',
-  AddDefine = 'add_define',
-}
+export type StateChangeHandler = (newState: XMLBuilderState) => void;
 
 const XMLBuilderContainer = styled.div`
   text-align: left;
@@ -63,7 +59,7 @@ const XMLBuilderContainer = styled.div`
   }
 `;
 
-const buildReducer = (onChange?: stateChangeHandler) => {
+const buildReducer = (onChange?: StateChangeHandler) => {
   const XMLBuilderReducer = (
     prevState: XMLBuilderState,
     action: XMLBuilderAction
@@ -74,12 +70,12 @@ const buildReducer = (onChange?: stateChangeHandler) => {
     debug(`[Action] ${type}: %o`, payload);
 
     switch (type) {
-      case ActionType.UpdateData: {
+      case StateActionType.UpdateData: {
         const scope = action.scope || 'data';
         newState[scope] = payload;
         break;
       }
-      case ActionType.AddDefine:
+      case StateActionType.AddDefine:
         newState.defines[payload.name] = payload.componentFn;
         break;
     }
@@ -95,8 +91,8 @@ const buildReducer = (onChange?: stateChangeHandler) => {
 interface Props {
   xml: string;
   layoutType?: LayoutType;
-  initialData?: DataType;
-  onChange?: stateChangeHandler;
+  initialData?: DataMap;
+  onChange?: StateChangeHandler;
 }
 const XMLBuilder = (props: Props) => {
   const { xml = '', onChange, layoutType = 'edit' } = props;
@@ -126,5 +122,6 @@ const XMLBuilder = (props: Props) => {
     </XMLBuilderContainer>
   );
 };
+XMLBuilder.displayName = 'XMLBuilder';
 
 export default XMLBuilder;

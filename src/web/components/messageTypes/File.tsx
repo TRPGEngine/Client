@@ -5,12 +5,17 @@ import filesize from 'filesize';
 import config from '../../../shared/project.config';
 import { downloadFile, previewFile } from '../../../shared/redux/actions/file';
 import { MessageProps } from '@src/shared/components/MessageHandler';
+import Webview from '@web/components/Webview';
 
 interface Props extends MessageProps, DispatchProp<any> {}
 class File extends Base<Props> {
   handlePreview() {
     let data = this.props.info.data;
-    this.props.dispatch(previewFile(data.fileuuid));
+    this.props.dispatch(
+      previewFile(data.fileuuid, {
+        WebviewComponent: Webview,
+      })
+    );
   }
 
   handleDownload() {

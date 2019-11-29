@@ -3,6 +3,7 @@ import { getUserInfoCache } from '../../shared/utils/cache-helper';
 import config from '@src/shared/project.config';
 import { switchMenuPannel } from '../../shared/redux/actions/ui';
 import { switchConverse } from '../../shared/redux/actions/chat';
+import _get from 'lodash/get';
 let num = 0;
 
 const hiddenProperty =
@@ -29,14 +30,20 @@ const onVisibilityChange = function() {
 document.addEventListener(visibilityChangeEvent, onVisibilityChange); // TODO: 需要在electron环境下测试是否可以运行
 
 export default function(store) {
+  // 通过blur事件处理浏览器不是当前激活窗口的情况
+  let isBlur = false;
+  window.addEventListener('focus', () => (isBlur = false));
+  window.addEventListener('blur', () => (isBlur = true));
+
   return {
     onReceiveMessage: function(data) {
       // web||electron通知
-      if (window.document && document.hidden) {
-        let isNotify = store
+      const hidden = _get(window, 'document.hidden', false);
+      if (hidden || isBlur) {
+        const allowNotify = store
           .getState()
           .getIn(['settings', 'system', 'notification']);
-        if (isNotify) {
+        if (allowNotify) {
           let uuid = data.sender_uuid;
           let userinfo = getUserInfoCache(data.sender_uuid);
           let username = userinfo.get('nickname') || userinfo.get('username');

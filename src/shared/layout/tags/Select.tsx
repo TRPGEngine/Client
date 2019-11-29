@@ -5,8 +5,7 @@ import Base, {
   LayoutTypeContext,
 } from './Base';
 import { Select, Col } from 'antd';
-import { XMLElementAttributes } from '../parser/xml-parser';
-import { XMLBuilderContext } from '../XMLBuilder';
+import { setStateValue, getStateValue } from './utils';
 const Option = Select.Option;
 
 interface Attr extends ILayoutTypeAttributes {
@@ -37,10 +36,9 @@ export default class TSelect extends Base<Attr> {
           <Select
             style={{ width: '100%' }}
             placeholder="请选择..."
-            value={data[bindingName]}
+            value={getStateValue(context, bindingName)}
             onChange={(value) => {
-              data[bindingName] = value;
-              dispatch({ type: 'update_data', payload: data });
+              setStateValue(context, bindingName, value);
             }}
           >
             {opt.map((item) => (

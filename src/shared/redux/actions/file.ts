@@ -1,13 +1,20 @@
-import React from 'react';
-import * as trpgApi from '../../api/trpg.api';
-import config from '../../project.config';
+import React, { ComponentType } from 'react';
+import * as trpgApi from '@shared/api/trpg.api';
+import config from '@shared/project.config';
 import { showSlidePanel, showLightbox } from './ui';
-import Webview from '../../../web/components/Webview';
+import { TRPGAction } from '@redux/types/__all__';
+import _get from 'lodash/get';
+import _isNil from 'lodash/isNil';
 
 const api = trpgApi.getInstance();
 
-// TODO: 需要将webview的调用抽象出去
-export const previewFile = function(fileuuid) {
+interface PreviewFileOptions {
+  WebviewComponent?: ComponentType<{ src: string }>;
+}
+export const previewFile = function(
+  fileuuid: string,
+  options?: PreviewFileOptions
+): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('file::getFileInfo', { uuid: fileuuid }, function(data) {
       const previewUrl = data.previewUrl;
@@ -19,7 +26,19 @@ export const previewFile = function(fileuuid) {
         } else {
           console.log('在侧边栏打开');
           if (config.platform === 'web' || config.platform === 'electron') {
-            dispatch(showSlidePanel('文件', <Webview src={previewUrl} />));
+            const WebviewComponent = _get(options, 'WebviewComponent');
+            if (_isNil(WebviewComponent)) {
+              console.error('预览失败: 需要放入WebviewComponent');
+              return;
+            }
+            dispatch(
+              showSlidePanel(
+                '文件',
+                React.createElement(WebviewComponent, {
+                  src: previewUrl,
+                })
+              )
+            );
           }
         }
       } else {
@@ -29,7 +48,7 @@ export const previewFile = function(fileuuid) {
   };
 };
 
-export const downloadFile = function(fileuuid) {
+export const downloadFile = function(fileuuid: string): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('file::getFileInfo', { uuid: fileuuid }, function(data) {
       const url = data.downloadUrl; // 下载地址

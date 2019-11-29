@@ -16,7 +16,6 @@
     "paths": {
       "@config/*": ["./config/*"],
       "@redux/*": ["src/shared/redux/*"],
-      "@components/*": ["./src/web/components/*"],
       "@shared/*": ["./src/shared/*"],
       "@web/*": ["./src/web/*"],
       "@app/*": ["./src/app/src/*"],

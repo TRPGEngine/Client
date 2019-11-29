@@ -2,13 +2,12 @@ import React, { Fragment } from 'react';
 import Base, { LayoutTypeContext } from './Base';
 import {
   XMLBuilderContext,
-  ActionType,
   XMLBuilderAction,
-  XMLBuilderState,
-  DataType,
+  DataMap,
   DefinePropsType,
 } from '../XMLBuilder';
 import _set from 'lodash/set';
+import { StateActionType } from '../types';
 
 const useDefineComponentReducer = (
   prevState: WrappedStateType,
@@ -21,8 +20,8 @@ const useDefineComponentReducer = (
 };
 
 type WrappedStateType = {
-  data: DataType;
-  props: DataType;
+  data: DataMap;
+  props: DataMap;
 };
 
 type WrappedContextType = {
@@ -65,7 +64,7 @@ class DefineConstructor extends React.Component<DefineConstructorProps> {
       dispatch: (action: XMLBuilderAction) => {
         const { type } = action;
         switch (type) {
-          case ActionType.UpdateData:
+          case StateActionType.UpdateData:
             // 如果是更新变量。需要在该实例的下子对象进行修改以保证不会影响到全局
             if (action.scope === 'props') {
               action.scope = this.getPrivateScopeName();
@@ -114,7 +113,7 @@ export default class TDefine extends Base {
 
     if (!context.state.defines[name]) {
       context.dispatch({
-        type: ActionType.AddDefine,
+        type: StateActionType.AddDefine,
         payload: {
           name,
           componentFn: (

@@ -12,10 +12,16 @@ import _get from 'lodash/get';
 import _set from 'lodash/set';
 import { parseDataText } from '../processor';
 import styled from 'styled-components';
+import { tryToNumber, setStateValue, getStateValue } from './utils';
 
 export const Label = styled.pre`
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+export const DetailText = styled.pre`
+  white-space: pre-wrap;
+  word-wrap: break-word;
 `;
 
 interface Attr extends ILayoutTypeAttributes {
@@ -56,19 +62,15 @@ export default class TInput extends Base implements ILayoutType<Attr> {
         <Col span={18}>
           <Input
             placeholder={label}
-            value={this.getStateValue(context, bindingName)}
+            value={getStateValue(context, bindingName)}
             onChange={(e) => {
-              const { scope, field } = this.getOperationData(
-                changeValue || bindingName
+              const { value } = e.target;
+
+              setStateValue(
+                context,
+                changeValue || bindingName,
+                isNumber ? tryToNumber(value) : value
               );
-
-              if (isNumber) {
-                _set(state[scope], field, this.tryToNumber(e.target.value));
-              } else {
-                _set(state[scope], field, e.target.value);
-              }
-
-              dispatch({ type: 'update_data', payload: state[scope], scope });
             }}
           />
         </Col>
@@ -91,7 +93,7 @@ export default class TInput extends Base implements ILayoutType<Attr> {
           <Label title={parsedLabel}>{parsedLabel}</Label>
         </Col>
         <Col span={18}>
-          <pre>{this.getStateValue(context, bindingName)}</pre>
+          <DetailText>{getStateValue(context, bindingName)}</DetailText>
         </Col>
       </BaseTypeRow>
     );

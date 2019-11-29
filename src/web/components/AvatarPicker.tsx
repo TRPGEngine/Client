@@ -1,7 +1,8 @@
 import React, { useState, useRef, ReactNode } from 'react';
 import ReactCrop, { Crop } from 'react-image-crop';
-import { Modal, Avatar } from 'antd';
+import { Modal } from 'antd';
 import 'react-image-crop/dist/ReactCrop.css';
+import Avatar from './Avatar';
 
 let fileUrlTemp: string = null; // 缓存裁剪后的图片url
 

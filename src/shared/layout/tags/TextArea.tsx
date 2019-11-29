@@ -13,12 +13,14 @@ import _get from 'lodash/get';
 import _set from 'lodash/set';
 import { Col, Input } from 'antd';
 import TInput, { Label } from './Input';
+import { AutoSizeType } from 'antd/lib/input/TextArea';
+import { tryToNumber, getStateValue, setStateValue } from './utils';
 const TextArea = Input.TextArea;
 
 interface Attr extends ILayoutTypeAttributes {
   label?: string;
   name?: string;
-  autosize?: boolean;
+  autosize?: boolean | AutoSizeType;
   changeValue?: string;
   isNumber?: boolean;
 }
@@ -28,7 +30,10 @@ export default class TTextArea extends TInput implements ILayoutType<Attr> {
   getEditView({ attributes, context }: LayoutTypeContext<Attr>) {
     const label = attributes.label;
     const name = attributes.name;
-    const autosize = attributes.autosize;
+    const autosize = _get(attributes, 'autosize', {
+      minRows: 2,
+      maxRows: 4,
+    });
     const isNumber: boolean = attributes.isNumber;
 
     const changeValue = attributes.changeValue as string; // 指定要被修改的变量
@@ -46,19 +51,15 @@ export default class TTextArea extends TInput implements ILayoutType<Attr> {
           <TextArea
             autosize={autosize}
             placeholder={label}
-            value={this.getStateValue(context, bindingName)}
+            value={getStateValue(context, bindingName)}
             onChange={(e) => {
-              const { scope, field } = this.getOperationData(
-                changeValue || bindingName
+              const { value } = e.target;
+
+              setStateValue(
+                context,
+                changeValue || bindingName,
+                isNumber ? tryToNumber(value) : value
               );
-
-              if (isNumber) {
-                _set(state[scope], field, this.tryToNumber(e.target.value));
-              } else {
-                _set(state[scope], field, e.target.value);
-              }
-
-              dispatch({ type: 'update_data', payload: state[scope], scope });
             }}
           />
         </Col>

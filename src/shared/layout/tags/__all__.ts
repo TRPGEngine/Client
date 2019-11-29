@@ -7,6 +7,8 @@ import Select from './Select';
 import Tabs from './Tabs';
 import TextArea from './TextArea';
 import Use from './Use';
+import BaseInfo from './BaseInfo';
+import Template from './Template';
 
 register(Col);
 register(Define);
@@ -16,3 +18,5 @@ register(Select);
 register(Tabs);
 register(TextArea);
 register(Use);
+register(BaseInfo);
+register(Template);

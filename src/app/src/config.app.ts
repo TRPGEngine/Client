@@ -22,6 +22,7 @@ const getCodepushDeploymentKey = async (): Promise<string> => {
 
 const out = {
   version: require('../version.json').version,
+  gitHash: require('../version.json').gitHash,
   defaultImg: {
     logo: require('./assets/img/trpg_logo.png'),
     user: '', // 让系统系统生成
@@ -65,7 +66,10 @@ const out = {
   codePush: {
     enabled: true,
     options: {
-      checkFrequency: CodePush.CheckFrequency.MANUAL, // 手动更新
+      // 静默自动更新
+      checkFrequency: CodePush.CheckFrequency.ON_APP_START,
+      installMode: CodePush.InstallMode.ON_NEXT_RESTART,
+      updateDialog: null,
     } as CodePushOptions,
     async sync(cb?: {
       onStatueChanged?: SyncStatusChangedCallback;

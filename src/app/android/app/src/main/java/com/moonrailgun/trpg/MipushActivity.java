@@ -31,5 +31,13 @@ public class MipushActivity extends UmengNotifyClickActivity {
         super.onMessage(intent);  // 此方法必须调用，否则无法统计打开数
         String body = intent.getStringExtra(AgooConstants.MESSAGE_BODY);
         Log.i(TAG, body);
+
+        // 在通知栏接受到消息小米推送的消息后跳转到RN页面
+		Bundle bundle = new Bundle();
+		bundle.putString("PUSH_MSG", body);
+		Intent intent1 = new Intent();
+		intent1.setClass(this, MainActivity.class);
+		intent1.putExtras(bundle);
+		startActivity(intent1);
     }
 }

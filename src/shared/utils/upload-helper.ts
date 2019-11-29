@@ -1,13 +1,22 @@
 import axios from 'axios';
 import { fileUrl } from '../api/trpg.api';
+import _set from 'lodash/set';
 
-interface UploadOption {
+export interface UploadOption {
   headers?: {};
   uploadField?: string;
   onProgress?: (percent: number, progressEvent: any) => void;
   onCompleted?: (data: any) => void;
 }
-type UploadReturn<T = any> = Promise<T>;
+export type UploadReturn<T = any> = Promise<T>;
+
+export interface AvatarUpdateData {
+  uuid: string;
+  filename: string;
+  url: string;
+  size: number;
+  avatar: any;
+}
 
 export const generateFileMsgData = function(file) {
   let tmp = file.name.split('.');
@@ -98,12 +107,19 @@ export const toAvatar = function(
   userUUID: string,
   file: File,
   options: UploadOption = {}
-): UploadReturn<{
-  filename: string;
-  url: string;
-  size: number;
-  avatar: any;
-}> {
+): UploadReturn<AvatarUpdateData> {
   options.uploadField = 'avatar';
   return _upload('/avatar', userUUID, file, options);
+};
+
+/**
+ * 类似于toAvatar， 但是avatar-type会被设置为团角色
+ */
+export const toGroupAvatar = function(
+  userUUID: string,
+  file: File,
+  options: UploadOption = {}
+): UploadReturn<AvatarUpdateData> {
+  _set(options, 'headers.avatar-type', 'groupActor');
+  return toAvatar(userUUID, file, options);
 };

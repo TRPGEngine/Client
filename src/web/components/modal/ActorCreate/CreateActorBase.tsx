@@ -3,7 +3,7 @@ import { Row, Col, Input, Form } from 'antd';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
 import _clone from 'lodash/clone';
-import AvatarPicker from '@components/AvatarPicker';
+import AvatarPicker from '@web/components/AvatarPicker';
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 

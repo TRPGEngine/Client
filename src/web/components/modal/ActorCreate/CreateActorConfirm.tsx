@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Row, Avatar, Col } from 'antd';
 import { TemplateType } from './TemplateSelect';
-import XMLBuilder, { DataType } from '@shared/layout/XMLBuilder';
+import XMLBuilder, { DataMap } from '@shared/layout/XMLBuilder';
 import { BaseActorInfoType } from './CreateActorBase';
 import styled from 'styled-components';
 
@@ -16,7 +16,7 @@ const BasicBlock = styled(Row)`
 interface Props {
   template: TemplateType;
   baseInfo: BaseActorInfoType;
-  data: DataType;
+  data: DataMap;
 }
 const CreateActorConfirm = (props: Props) => {
   const template = props.template;

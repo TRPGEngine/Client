@@ -4,22 +4,31 @@ import Select from 'react-select';
 import { setLastDiceType } from '../../../../shared/redux/actions/ui';
 
 import './DiceInvite.scss';
+import { TRPGDispatchProp, TRPGState } from '@redux/types/__all__';
 
-class DiceInvite extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      diceType: this.props.lastDiceType || 'basicDice',
-      diceReason: '',
-    };
-  }
+interface Props extends TRPGDispatchProp {
+  lastDiceType: string;
+  inviteList: any;
+
+  onSendDiceInvite: (reason: string, exp: string) => void;
+}
+
+class DiceInvite extends React.Component<Props> {
+  state = {
+    diceType: this.props.lastDiceType || 'basicDice',
+    diceReason: '',
+
+    diceNum: '1',
+    diceFace: '100',
+    diceExp: '1d100',
+  };
 
   handleSendReq() {
     let diceExp = '';
     if (this.state.diceType === 'basicDice') {
-      diceExp = this.refs.diceNum.value + 'd' + this.refs.diceFace.value;
+      diceExp = this.state.diceNum + 'd' + this.state.diceFace;
     } else {
-      diceExp = this.refs.diceExp.value;
+      diceExp = this.state.diceExp;
     }
 
     // console.log(`因为 ${this.state.diceReason} 请求投出: ${diceExp}`);
@@ -34,7 +43,9 @@ class DiceInvite extends React.Component {
   }
 
   render() {
-    let diceTypeOptions = [
+    const { diceNum, diceFace, diceExp } = this.state;
+
+    const diceTypeOptions = [
       { value: 'basicDice', label: '基本骰' },
       { value: 'complexDice', label: '复合骰' },
     ];
@@ -69,8 +80,12 @@ class DiceInvite extends React.Component {
               key="dicereq-diceExp"
               type="text"
               placeholder="请输入骰子表达式"
-              ref="diceExp"
-              defaultValue="1d100"
+              value={diceExp}
+              onChange={(e) =>
+                this.setState({
+                  diceExp: e.target.value,
+                })
+              }
             />
           </div>
         ) : (
@@ -79,16 +94,24 @@ class DiceInvite extends React.Component {
               key="dicereq-diceNum"
               type="number"
               placeholder="骰数"
-              defaultValue="1"
-              ref="diceNum"
+              value={diceNum}
+              onChange={(e) =>
+                this.setState({
+                  diceNum: e.target.value,
+                })
+              }
             />
             <span>d</span>
             <input
               key="dicereq-diceFace"
               type="number"
               placeholder="骰面"
-              defaultValue="100"
-              ref="diceFace"
+              value={diceFace}
+              onChange={(e) =>
+                this.setState({
+                  diceFace: e.target.value,
+                })
+              }
             />
           </div>
         )}
@@ -98,6 +121,6 @@ class DiceInvite extends React.Component {
   }
 }
 
-export default connect((state) => ({
+export default connect((state: TRPGState) => ({
   lastDiceType: state.getIn(['ui', 'lastDiceType']),
 }))(DiceInvite);
