@@ -44,7 +44,7 @@ const babelQuery = {
 module.exports = {
   entry: {
     // vendor: vendors,
-    app: path.resolve(APP_PATH, './web/index.js'),
+    app: path.resolve(APP_PATH, './web/index.tsx'),
   },
   output: {
     path: DIST_PATH,
