@@ -5,6 +5,7 @@ import {
   refuseGroupRequest,
 } from '@shared/redux/actions/group';
 import { MessageProps } from '@src/shared/components/MessageHandler';
+import _isNil from 'lodash';
 
 // 入团申请
 interface Props extends MessageProps, DispatchProp<any> {
@@ -19,8 +20,8 @@ class GroupRequest extends BaseCard<Props> {
     let groupUUID = data.groupUUID;
     let fromUUID = data.fromUUID;
     let group = this.props.groups.find((g) => g.get('uuid') === groupUUID);
-    if (group) {
-      if (group.get('group_members').includes(fromUUID)) {
+    if (!_isNil(group)) {
+      if (group.get('group_members', []).includes(fromUUID)) {
         return [{ label: '已同意' }];
       } else if (data.is_processed) {
         return [{ label: '已处理' }]; // TODO: 需要服务端主动更新
