@@ -91,9 +91,7 @@ class AccountScreen extends React.Component<Props> {
           </Item>
           <DevContainer>
             <Item
-              thumb={
-                <AccountListThumb color="cornflowerblue" icon="&#xe623;" />
-              }
+              thumb={<AccountListThumb color="orangered" icon="&#xe623;" />}
               arrow="horizontal"
               onPress={() => {
                 this.props.dispatch(switchNav('Document'));
