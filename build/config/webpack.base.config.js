@@ -7,12 +7,12 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const _get = require('lodash/get');
 
-const ROOT_PATH = path.resolve(__dirname, '../');
+const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
 const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
-const config = require('../package.json');
+const config = require('../../package.json');
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const babelQuery = {

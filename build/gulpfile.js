@@ -1,7 +1,7 @@
 const path = require('path');
 const gulp = require('gulp');
 const replace = require('gulp-replace');
-const jeditor = require("gulp-json-editor");
+const jeditor = require('gulp-json-editor');
 const log = require('fancy-log');
 const PluginError = require('plugin-error');
 const {
@@ -16,12 +16,12 @@ process.env['NODE_CONFIG_DIR'] = CONFIG_PATH; // 手动设置配置文件目录�
 gulp.task('assets', async function() {
   gulp.src('../src/assets/**/*').pipe(gulp.dest('../dist/assets/'));
 
-  gulp.src('../build/entry.js').pipe(gulp.dest('../dist/'));
+  gulp.src('./entry.js').pipe(gulp.dest('../dist/'));
 });
 
 gulp.task('webpack', function(callback) {
   const webpack = require('webpack');
-  const webpackConfig = require('../config/webpack.config.js');
+  const webpackConfig = require('./config/webpack.config.js');
   webpack(webpackConfig, function(err, stats) {
     if (err) {
       throw new PluginError('webpack', err);
@@ -48,7 +48,7 @@ gulp.task(
   'package',
   series('default', function(callback) {
     const packager = require('electron-packager');
-    const packagerConfig = require('../config/packager.config.js');
+    const packagerConfig = require('./config/packager.config.js');
     log('[electron-packager]', 'start packing...');
 
     packager(packagerConfig, function(err, appPaths) {
@@ -66,7 +66,7 @@ gulp.task(
   'package:all',
   series('default', function(callback) {
     const packager = require('electron-packager');
-    const packagerConfig = require('../config/packager.config.js');
+    const packagerConfig = require('./config/packager.config.js');
     packagerConfig.all = true;
     log('[electron-packager]', 'start packing...');
 
@@ -82,18 +82,23 @@ gulp.task(
 );
 
 gulp.task('build:createBuilderPackage', function() {
-  return gulp.src('../package.json').pipe(jeditor((json) => {
-    json.main = './entry.js';
-    return json;
-  })).pipe(gulp.dest('../.buildcache/'))
-})
+  return gulp
+    .src('../package.json')
+    .pipe(
+      jeditor((json) => {
+        json.main = './entry.js';
+        return json;
+      })
+    )
+    .pipe(gulp.dest('../.buildcache/'));
+});
 
 gulp.task(
   'package:builder',
   series('default', function(callback) {
     const builder = require('electron-builder');
     const Platform = builder.Platform;
-    const builderConfig = require('../config/builder.config.js');
+    const builderConfig = require('./config/builder.config.js');
     log('[electron-builder]', 'start building...');
 
     builder

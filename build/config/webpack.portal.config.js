@@ -8,7 +8,7 @@ const webpackMerge = require('webpack-merge');
 const path = require('path');
 const base = require('./webpack.config.js');
 
-const ROOT_PATH = path.resolve(__dirname, '../');
+const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist/portal');
 const ASSET_PATH = '/portal/';
