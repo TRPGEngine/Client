@@ -34,11 +34,13 @@
     "postinstall": "npm run app:build:env && npm run install:all",
     "install:app": "cd ./src/app && npm install",
     "install:web": "cd ./src/web && npm install",
-    "install:all": "npm run install:app && npm run install:web"
+    "install:all": "npm run install:app && npm run install:web",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "release": "standard-version"
   },
   "husky": {
     "hooks": {
-      "commit-msg": "node ./build/husky/commit-msg.js"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "repository": {
@@ -119,6 +121,8 @@
     "@babel/preset-react": "^7.6.3",
     "@babel/preset-typescript": "^7.6.0",
     "@babel/runtime": "^7.6.3",
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
     "@sentry/webpack-plugin": "^1.9.1",
     "@types/is-uuid": "^1.0.0",
     "@types/jest": "^24.0.18",
@@ -146,6 +150,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "config": "^3.2.3",
+    "conventional-changelog-cli": "^2.0.28",
     "copy-webpack-plugin": "^4.6.0",
     "cross-env": "^5.2.1",
     "css-loader": "^2.1.1",
@@ -174,6 +179,7 @@
     "raw-loader": "^2.0.0",
     "react-test-renderer": "16.8.3",
     "sass-loader": "^6.0.7",
+    "standard-version": "^7.0.1",
     "style-loader": "^0.18.2",
     "ts-jest": "^24.1.0",
     "ts-loader": "^6.2.0",

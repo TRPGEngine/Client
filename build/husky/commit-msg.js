@@ -1,3 +1,7 @@
+/**
+ * 弃用
+ */
+
 const fs = require('fs');
 const _ = require('lodash');
 const commitFile = process.env['HUSKY_GIT_PARAMS'];
