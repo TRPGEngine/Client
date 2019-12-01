@@ -35,6 +35,7 @@ import _without from 'lodash/without';
 import _isFunction from 'lodash/isFunction';
 import { MsgPayload, ConverseInfo } from '@src/shared/redux/types/chat';
 import { TRPGAction } from '../types/__all__';
+import { isUserUUID } from '@shared/utils/uuid';
 
 const getUserConversesHash = (userUUID: string): string => {
   return `userConverses#${userUUID}`;
@@ -253,6 +254,10 @@ export let addUserConverse = function addUserConverse(
       });
 
     for (let uuid of senders) {
+      if (!isUserUUID(uuid)) {
+        continue;
+      }
+
       // 更新会话信息
       api.emit('player::getInfo', { type: 'user', uuid: uuid }, function(data) {
         if (data.result) {
