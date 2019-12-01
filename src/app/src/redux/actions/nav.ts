@@ -86,7 +86,9 @@ export const navPortal = function navPortal(url: string): TRPGAction {
   return async function(dispatch, getState) {
     const portalUrl = config.url.portal;
 
-    const cachedKey = 'sso:jwt';
+    const userUUID = getState().getIn(['user', 'info', 'uuid']);
+    const cachedKey = `sso:jwt:${userUUID}`;
+
     let jwt: string = await rnStorage.get(cachedKey);
     if (!jwt) {
       const res = await api.emitP('player::getWebToken');
