@@ -106,7 +106,7 @@ export default function group(state = initialState, action) {
           if (list.getIn([i, 'uuid']) === action.groupUUID) {
             list = list.setIn(
               [i, 'group_members'],
-              immutable.fromJS(action.payload)
+              immutable.fromJS(action.payload || [])
             );
           }
         }
@@ -175,7 +175,7 @@ export default function group(state = initialState, action) {
           if (list.getIn([i, 'uuid']) === action.groupUUID) {
             list = list.setIn(
               [i, 'group_members'],
-              immutable.fromJS(action.payload)
+              immutable.fromJS(action.payload || [])
             );
           }
         }
