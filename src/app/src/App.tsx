@@ -16,8 +16,6 @@ import { Provider as AntdProvider } from '@ant-design/react-native';
 import { ThemeProvider } from 'styled-components/native';
 import { injectLoginSuccessCallback } from '../../shared/utils/inject';
 import { bindInfo, tryLocalNotify } from './notify';
-import codePush from 'react-native-code-push';
-import appConfig from './config.app';
 import { attachStore } from '@shared/utils/cache-helper';
 import styledTheme from '@src/shared/utils/theme';
 
@@ -48,6 +46,7 @@ import rnStorage from '../../shared/api/rn-storage.api';
 import { loginWithToken } from '@src/shared/redux/actions/user';
 import ErrorBoundary from '@shared/components/ErrorBoundary';
 import ErrorView from './ErrorView';
+import TRPGCodePush from './components/TRPGCodePush';
 
 (async () => {
   console.log('读取本地存储的token...');
@@ -67,7 +66,9 @@ class App extends React.Component {
         <ReduxProvider store={store}>
           <AntdProvider>
             <ThemeProvider theme={styledTheme}>
-              <AppWithNavigationState />
+              <TRPGCodePush>
+                <AppWithNavigationState />
+              </TRPGCodePush>
             </ThemeProvider>
           </AntdProvider>
         </ReduxProvider>
@@ -76,9 +77,4 @@ class App extends React.Component {
   }
 }
 
-let out = App;
-if (appConfig.codePush.enabled) {
-  out = codePush(appConfig.codePush.options)(App);
-}
-
-export default out;
+export default App;
