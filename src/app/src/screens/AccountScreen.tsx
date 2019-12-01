@@ -55,8 +55,9 @@ class AccountScreen extends React.Component<Props> {
 
   render() {
     const userInfo = this.props.userInfo;
-    let avatar = userInfo.get('avatar') || appConfig.defaultImg.user;
-    let name = userInfo.get('nickname') || userInfo.get('username');
+    const avatar = userInfo.get('avatar') || appConfig.defaultImg.user;
+    const name = userInfo.get('nickname') || userInfo.get('username');
+
     return (
       <View>
         <TouchableOpacity

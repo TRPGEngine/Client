@@ -46,6 +46,9 @@ injectLoginSuccessCallback(() => {
 // token登录
 import rnStorage from '../../shared/api/rn-storage.api';
 import { loginWithToken } from '@src/shared/redux/actions/user';
+import ErrorBoundary from '@shared/components/ErrorBoundary';
+import ErrorView from './ErrorView';
+
 (async () => {
   console.log('读取本地存储的token...');
   let uuid = await rnStorage.get('uuid');
@@ -60,13 +63,15 @@ import { loginWithToken } from '@src/shared/redux/actions/user';
 class App extends React.Component {
   render() {
     return (
-      <ReduxProvider store={store}>
-        <AntdProvider>
-          <ThemeProvider theme={styledTheme}>
-            <AppWithNavigationState />
-          </ThemeProvider>
-        </AntdProvider>
-      </ReduxProvider>
+      <ErrorBoundary renderError={ErrorView}>
+        <ReduxProvider store={store}>
+          <AntdProvider>
+            <ThemeProvider theme={styledTheme}>
+              <AppWithNavigationState />
+            </ThemeProvider>
+          </AntdProvider>
+        </ReduxProvider>
+      </ErrorBoundary>
     );
   }
 }
