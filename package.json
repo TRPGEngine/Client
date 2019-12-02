@@ -36,7 +36,7 @@
     "install:web": "cd ./src/web && npm install",
     "install:all": "npm run install:app && npm run install:web",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "release": "standard-version"
+    "release": "standard-version -a"
   },
   "husky": {
     "hooks": {
