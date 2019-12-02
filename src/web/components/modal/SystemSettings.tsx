@@ -8,8 +8,13 @@ import {
 } from '../../../shared/redux/actions/settings';
 
 import './SystemSettings.scss';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 
-class SystemSettings extends React.Component {
+interface Props extends TRPGDispatchProp {
+  notificationPermission: string;
+  systemSettings: any;
+}
+class SystemSettings extends React.Component<Props> {
   componentWillUnmount() {
     this.props.dispatch(saveSettings());
   }
@@ -35,7 +40,7 @@ class SystemSettings extends React.Component {
   }
 }
 
-export default connect((state) => ({
+export default connect((state: TRPGState) => ({
   notificationPermission: state.getIn(['settings', 'notificationPermission']),
   systemSettings: state.getIn(['settings', 'system']),
 }))(SystemSettings);
