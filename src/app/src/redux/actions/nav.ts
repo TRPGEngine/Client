@@ -12,6 +12,7 @@ import config from '@src/shared/project.config';
 import rnStorage from '@src/shared/api/rn-storage.api';
 
 import * as trpgApi from '@shared/api/trpg.api';
+import { getWebToken } from '@shared/utils/portal-helper';
 const api = trpgApi.getInstance();
 
 /**
@@ -87,14 +88,7 @@ export const navPortal = function navPortal(url: string): TRPGAction {
     const portalUrl = config.url.portal;
 
     const userUUID = getState().getIn(['user', 'info', 'uuid']);
-    const cachedKey = `sso:jwt:${userUUID}`;
-
-    let jwt: string = await rnStorage.get(cachedKey);
-    if (!jwt) {
-      const res = await api.emitP('player::getWebToken');
-      jwt = res.jwt;
-      await rnStorage.set(cachedKey, jwt);
-    }
+    const jwt = await getWebToken(userUUID);
 
     url = url.startsWith(portalUrl) ? url : portalUrl + url;
 
