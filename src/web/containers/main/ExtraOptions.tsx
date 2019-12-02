@@ -21,6 +21,8 @@ import Webview from '../../components/Webview';
 import rnStorage from '@src/shared/api/rn-storage.api';
 
 import './ExtraOptions.scss';
+import { showPortal } from '@web/redux/action/ui';
+import DevContainer from '@web/components/DevContainer';
 
 interface Props extends DispatchProp<any> {}
 class ExtraOptions extends React.Component<Props> {
@@ -94,6 +96,11 @@ class ExtraOptions extends React.Component<Props> {
       this.props.dispatch(logout());
     }
 
+    // test function below
+    if (menu === 'portalCreateActor') {
+      this.props.dispatch(showPortal('/actor/list'));
+    }
+
     this.setState({ show: '' });
   }
 
@@ -104,6 +111,11 @@ class ExtraOptions extends React.Component<Props> {
       return (
         <ul>
           <li onClick={() => this.handleClickMenu('actorCreate')}>创建人物</li>
+          <DevContainer>
+            <li onClick={() => this.handleClickMenu('portalCreateActor')}>
+              创建人物(测试)
+            </li>
+          </DevContainer>
           {/* <li onClick={() => this.handleClickMenu('templateCreate')}>
             创建模板
           </li> */}

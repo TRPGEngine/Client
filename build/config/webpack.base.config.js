@@ -173,6 +173,7 @@ module.exports = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         PLATFORM: JSON.stringify(process.env.PLATFORM),
         TRPG_HOST: JSON.stringify(process.env.TRPG_HOST),
+        TRPG_PORTAL: JSON.stringify(process.env.TRPG_PORTAL),
       },
     }),
     new CopyWebpackPlugin([

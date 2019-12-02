@@ -43,6 +43,10 @@ export default class SystemStatus extends React.Component {
         value: config.file.url,
       },
       {
+        label: 'Portal服务地址',
+        value: config.url.portal,
+      },
+      {
         label: '编译环境',
         value: config.environment,
       },

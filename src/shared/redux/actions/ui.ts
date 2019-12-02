@@ -79,7 +79,10 @@ export const showProfileCard = function(uuid?: string): TRPGAction {
 export const hideProfileCard = function(): TRPGAction {
   return { type: HIDE_PROFILE_CARD };
 };
-export const showSlidePanel = function(title, content): TRPGAction {
+export const showSlidePanel = function(
+  title: string,
+  content: React.ReactNode
+): TRPGAction {
   return { type: SHOW_SLIDE_PANEL, payload: { title, content } };
 };
 export const hideSlidePanel = function(): TRPGAction {
