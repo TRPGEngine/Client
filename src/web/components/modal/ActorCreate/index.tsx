@@ -9,11 +9,13 @@ import {
   createActor,
 } from '@src/shared/redux/actions/actor';
 import TemplateSelect, { TemplateType } from './TemplateSelect';
-import CreateActorBase, { BaseActorInfoType } from './CreateActorBase';
 import CreateActorDetail from './CreateActorDetail';
 import CreateActorConfirm from './CreateActorConfirm';
 import _get from 'lodash/get';
+import _isString from 'lodash/isString';
 import { toAvatarWithBlobUrl } from '@web/utils/upload-helper';
+import { isBlobUrl } from '@shared/utils/string-helper';
+import { AvatarUpdateData } from '@shared/utils/upload-helper';
 const Step = Steps.Step;
 
 const Container = styled.div`
@@ -37,46 +39,60 @@ interface Props extends DispatchProp<any> {
   selfUUID: string;
 }
 const ActorCreate = (props: Props) => {
-  const maxStep = 3;
   const [current, setCurrent] = useState(0);
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateType>(null);
   const [stateData, setStateData] = useState<DataMap>(null);
 
   const handleCreateActor = async () => {
     console.log('检查数据');
-    if (!baseInfo.name || !stateData || !selectedTemplate) {
+    if (!stateData._name || !stateData || !selectedTemplate) {
       message.error('无法创建, 请检查输入');
       return;
     }
 
-    let avatarUrl = null;
-    if (baseInfo.avatar) {
+    const avatarUrl = stateData._avatar;
+    let avatar: AvatarUpdateData;
+    if (_isString(avatarUrl) && isBlobUrl(avatarUrl)) {
       console.log('上传头像...');
-      const blobUrl = baseInfo.avatar;
-
-      const avatarRet = await toAvatarWithBlobUrl(
-        props.selfUUID,
-        blobUrl
-      ).catch((err) => {
-        message.error(_get(err, 'response.data.msg', 'Error: 上传失败'));
-        throw err;
-      });
-      avatarUrl = avatarRet.url; // 为服务端路径
+      avatar = await toAvatarWithBlobUrl(props.selfUUID, avatarUrl).catch(
+        (err) => {
+          message.error(_get(err, 'response.data.msg', 'Error: 上传失败'));
+          throw err;
+        }
+      );
+      stateData._avatar = avatar.url; // 为服务端路径
     }
 
     console.log('创建人物...');
     props.dispatch(
       createActor(
-        baseInfo.name,
-        avatarUrl,
-        baseInfo.desc,
+        stateData._name,
+        stateData._avatar,
+        stateData._desc,
         stateData,
-        selectedTemplate.uuid
+        selectedTemplate.uuid,
+        _get(avatar, 'uuid')
       )
     );
   };
 
+  const steps = [
+    <TemplateSelect
+      onSelectTemplate={(template) => {
+        setSelectedTemplate(template);
+        setCurrent(current + 1);
+      }}
+    />,
+    <CreateActorDetail
+      template={selectedTemplate}
+      data={stateData}
+      onChange={(data) => setStateData(data)}
+    />,
+    <CreateActorConfirm template={selectedTemplate} data={stateData} />,
+  ];
+
   // 操作
+  const maxStep = steps.length - 1;
   const actions = (
     <Actions>
       <Button
@@ -101,29 +117,6 @@ const ActorCreate = (props: Props) => {
     </Actions>
   );
 
-  const [baseInfo, setBaseInfo] = useState<BaseActorInfoType>(
-    {} as BaseActorInfoType
-  );
-  const steps = [
-    <TemplateSelect
-      onSelectTemplate={(template) => {
-        setSelectedTemplate(template);
-        setCurrent(current + 1);
-      }}
-    />,
-    <CreateActorBase value={baseInfo} onChange={(data) => setBaseInfo(data)} />,
-    <CreateActorDetail
-      template={selectedTemplate}
-      data={stateData}
-      onChange={(data) => setStateData(data)}
-    />,
-    <CreateActorConfirm
-      template={selectedTemplate}
-      baseInfo={baseInfo}
-      data={stateData}
-    />,
-  ];
-
   // 获取推荐模板
   useEffect(() => {
     props.dispatch(getSuggestTemplate());
@@ -133,8 +126,7 @@ const ActorCreate = (props: Props) => {
       <Container>
         <Steps current={current}>
           <Step title="选择模板" />
-          <Step title="创建人物" />
-          <Step title="补充属性" />
+          <Step title="设置属性" />
           <Step title="完成" />
         </Steps>
 

@@ -26,6 +26,9 @@ interface GlobalMap {
 }
 
 export interface DataMap {
+  _name?: string;
+  _avatar?: string;
+  _desc?: string;
   [name: string]: StateDataType;
 }
 
