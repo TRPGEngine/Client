@@ -25,6 +25,7 @@ import { getTemplateInfoCache } from '@src/shared/utils/cache-helper';
 import _get from 'lodash/get';
 
 import './GroupActor.scss';
+import { getAbsolutePath } from '@shared/utils/file-helper';
 
 const GroupActorAction = styled.div`
   padding: 4px 10px;
@@ -141,9 +142,8 @@ class GroupActor extends React.Component<Props> {
               <div
                 className="avatar"
                 style={{
-                  backgroundImage: `url(${getGroupActorField(
-                    groupActor,
-                    'avatar'
+                  backgroundImage: `url(${getAbsolutePath(
+                    getGroupActorField(groupActor, 'avatar')
                   )})`,
                 }}
               />
@@ -213,7 +213,11 @@ class GroupActor extends React.Component<Props> {
             >
               <div
                 className="avatar"
-                style={{ backgroundImage: `url(${originActor.get('avatar')})` }}
+                style={{
+                  backgroundImage: `url(${getAbsolutePath(
+                    originActor.get('avatar')
+                  )})`,
+                }}
               />
               <div className="info">
                 <div className="name">{originActor.get('name')}</div>
