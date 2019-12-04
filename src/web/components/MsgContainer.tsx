@@ -7,18 +7,7 @@ import scrollTo from '../../shared/utils/animated-scroll-to';
 import { getUserInfoCache } from '../../shared/utils/cache-helper';
 import { getMoreChatLog } from '../../shared/redux/actions/chat';
 
-import MessageHandler from '../../shared/components/MessageHandler';
-import Default from './messageTypes/Default';
-import Tip from './messageTypes/Tip';
-import Card from './messageTypes/Card';
-import File from './messageTypes/File';
-import Loading from './messageTypes/Loading';
-MessageHandler.registerDefaultMessageHandler(Default);
-MessageHandler.registerMessageHandler('tip', Tip);
-MessageHandler.registerMessageHandler('card', Card);
-MessageHandler.registerMessageHandler('file', File);
-MessageHandler.registerMessageHandler('loading', Loading);
-import './messageTypes/MsgItem.scss';
+import MessageHandler from './messageTypes/__all__';
 
 import './MsgContainer.scss';
 
