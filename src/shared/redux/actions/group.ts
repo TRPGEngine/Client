@@ -476,47 +476,43 @@ export const removeGroupActor = function(groupUUID, groupActorUUID) {
 
 export const agreeGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
-    return api.emit(
-      'group::agreeGroupActor',
-      { groupActorUUID },
-      function(data) {
-        if (data.result) {
-          dispatch({
-            type: AGREE_GROUP_ACTOR_SUCCESS,
-            groupUUID,
-            payload: data.groupActor,
-          });
-          dispatch(hideModal());
-          dispatch(showAlert('已同意该人物加入本团!'));
-        } else {
-          dispatch(showAlert(data.msg));
-          console.error(data);
-        }
+    return api.emit('group::agreeGroupActor', { groupActorUUID }, function(
+      data
+    ) {
+      if (data.result) {
+        dispatch({
+          type: AGREE_GROUP_ACTOR_SUCCESS,
+          groupUUID,
+          payload: data.groupActor,
+        });
+        dispatch(hideModal());
+        dispatch(showAlert('已同意该人物加入本团!'));
+      } else {
+        dispatch(showAlert(data.msg));
+        console.error(data);
       }
-    );
+    });
   };
 };
 
 export const refuseGroupActor = function(groupUUID, groupActorUUID) {
   return function(dispatch, getState) {
-    return api.emit(
-      'group::refuseGroupActor',
-      { groupActorUUID },
-      function(data) {
-        if (data.result) {
-          dispatch({
-            type: REFUSE_GROUP_ACTOR_SUCCESS,
-            groupUUID,
-            groupActorUUID,
-          });
-          dispatch(hideModal());
-          dispatch(showAlert('已拒绝该人物加入本团!'));
-        } else {
-          dispatch(showAlert(data.msg));
-          console.error(data);
-        }
+    return api.emit('group::refuseGroupActor', { groupActorUUID }, function(
+      data
+    ) {
+      if (data.result) {
+        dispatch({
+          type: REFUSE_GROUP_ACTOR_SUCCESS,
+          groupUUID,
+          groupActorUUID,
+        });
+        dispatch(hideModal());
+        dispatch(showAlert('已拒绝该人物加入本团!'));
+      } else {
+        dispatch(showAlert(data.msg));
+        console.error(data);
       }
-    );
+    });
   };
 };
 
@@ -531,7 +527,7 @@ export const updateGroupActorInfo = function(
   return function(dispatch, getState) {
     return api.emit(
       'group::updateGroupActorInfo',
-      { groupUUID, groupActorUUID, groupActorInfo },
+      { groupActorUUID, groupActorInfo },
       function(data) {
         if (data.result) {
           dispatch({
