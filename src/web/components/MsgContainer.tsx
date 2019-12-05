@@ -100,20 +100,20 @@ class MsgContainer extends React.Component<Props> {
   }
 
   render() {
-    let { userUUID } = this.props;
+    const { className, userUUID, msgList, nomore } = this.props;
 
     return (
       <div
-        className={'msg-container ' + this.props.className}
+        className={'msg-container ' + className}
         ref={(ref) => (this.containerRef = ref)}
         onLoad={(e) => this.handleContainerLoad(e.target)}
         onScroll={(e) => this.handleContainerScroll(e.target)}
       >
-        {this.props.nomore || this.props.msgList.size < 10 ? (
+        {nomore || msgList.size < 10 ? (
           <button
             className="get-more-log-btn"
             disabled={true}
-            style={{ display: this.props.msgList.size < 10 ? 'none' : 'block' }}
+            style={{ display: msgList.size < 10 ? 'none' : 'block' }}
           >
             没有更多记录了
           </button>
@@ -126,7 +126,8 @@ class MsgContainer extends React.Component<Props> {
           </button>
         )}
         <div className="msg-items">
-          {this.props.msgList.map((item, index, arr) => {
+          {msgList.map((item, index) => {
+            const arr = msgList;
             const prevDate = index > 0 ? arr.getIn([index - 1, 'date']) : 0;
             const senderUUID = item.get('sender_uuid');
             const isMe = userUUID === senderUUID;
