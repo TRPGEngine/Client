@@ -5,6 +5,7 @@ import { Input, Button, Form, Typography, Modal, notification } from 'antd';
 import qs from 'qs';
 import _isString from 'lodash/isString';
 import { loginWithPassword } from '@portal/model/sso';
+import { checkToken } from '@portal/utils/auth';
 
 const Container = styled.div`
   width: 100vw;
@@ -31,7 +32,25 @@ class Login extends React.Component {
   componentDidMount() {
     if (window.localStorage.getItem('jwt')) {
       // 处理登录事件
-      // TODO
+      console.log('正在尝试登录...');
+      checkToken()
+        .then(() => {
+          // 当前Token有效
+          this.gotoNextUrl();
+        })
+        .catch((err) => {
+          console.log('当前Token无效', err);
+        });
+    }
+  }
+
+  // 跳转到querystring next参数写的Url
+  gotoNextUrl() {
+    const query = qs.parse(window.location.search, {
+      ignoreQueryPrefix: true,
+    });
+    if (_isString(query.next)) {
+      window.location.href = decodeURIComponent(query.next);
     }
   }
 
@@ -44,12 +63,7 @@ class Login extends React.Component {
 
     loginWithPassword(username, password)
       .then(() => {
-        const query = qs.parse(window.location.search, {
-          ignoreQueryPrefix: true,
-        });
-        if (_isString(query.next)) {
-          window.location.href = decodeURIComponent(query.next);
-        }
+        this.gotoNextUrl();
       })
       .catch((err) => notification.error(err));
   };
