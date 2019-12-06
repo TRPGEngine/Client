@@ -64,8 +64,9 @@ export default function group(state = initialState, action) {
         return list;
       });
     case GET_GROUP_INFO_SUCCESS: {
-      const group_uuid = action.payload.uuid;
-      return state.setIn(['info', group_uuid], action.payload);
+      const groupUUID = action.payload.uuid;
+
+      return state.mergeIn(['info', groupUUID], fromJS(action.payload)); // 合并
     }
     case UPDATE_GROUP_INFO_SUCCESS: {
       const groupIndex = state

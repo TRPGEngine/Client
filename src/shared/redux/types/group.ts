@@ -21,7 +21,8 @@ export interface GroupActorType {
   actor: ActorType;
 }
 
-export type GroupStateGroupsItem = Record<{
+export interface GroupInfo {
+  id: number;
   uuid: string;
   type: GroupType;
   name: string;
@@ -32,13 +33,20 @@ export type GroupStateGroupsItem = Record<{
   allow_search: boolean;
   creator_uuid: string;
   owner_uuid: string;
-  managers_uuid: List<string>;
-  maps_uuid: List<string>;
+  managers_uuid: string[];
+  maps_uuid: string[];
+}
 
-  // group初始化后获取的参数
-  group_members: List<string>;
-  group_actors: any;
-}>;
+export type GroupStateGroupsItem = Record<
+  GroupInfo & {
+    managers_uuid: List<string>;
+    maps_uuid: List<string>;
+
+    // group初始化后获取的参数
+    group_actors: any;
+    group_members: List<string>;
+  }
+>;
 
 export type GroupStateGroups = List<GroupStateGroupsItem>;
 

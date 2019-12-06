@@ -51,86 +51,89 @@ import _get from 'lodash/get';
 import * as trpgApi from '../../api/trpg.api';
 import { TRPGAction } from '../types/__all__';
 import { getGroupInviteInfo } from './cache';
+import { GroupInfo } from '@redux/types/group';
 const api = trpgApi.getInstance();
 
 // 当state->group->groups状态添加新的group时使用来初始化
-let initGroupInfo = function(dispatch, group) {
-  let groupUUID = group.uuid;
-  dispatch(
-    addConverse({
-      uuid: groupUUID,
-      id: group.id,
-      name: group.name,
-      type: 'group',
-      msgList: [],
-      lastMsg: '',
-      lastTime: 0, // 设定初始化的团时间为0方便排序
-    })
-  );
+const initGroupInfo = function(group: GroupInfo): TRPGAction {
+  return function(dispatch, getState) {
+    const groupUUID = group.uuid;
+    dispatch(
+      addConverse({
+        uuid: groupUUID,
+        id: group.id,
+        name: group.name,
+        type: 'group',
+        msgList: [],
+        lastMsg: '',
+        lastTime: 0, // 设定初始化的团时间为0方便排序
+      })
+    );
 
-  // 获取团成员
-  api.emit('group::getGroupMembers', { groupUUID }, function(data) {
-    if (data.result) {
-      let members = data.members;
-      let uuidList = [];
-      for (let member of members) {
-        let uuid = member.uuid;
-        uuidList.push(uuid);
-        checkUser(uuid);
+    // 获取团成员
+    api.emit('group::getGroupMembers', { groupUUID }, function(data) {
+      if (data.result) {
+        let members = data.members;
+        let uuidList = [];
+        for (let member of members) {
+          let uuid = member.uuid;
+          uuidList.push(uuid);
+          checkUser(uuid);
+        }
+        dispatch({
+          type: GET_GROUP_MEMBERS_SUCCESS,
+          groupUUID,
+          payload: uuidList,
+        });
+      } else {
+        console.error('获取团成员失败:', data.msg);
       }
-      dispatch({
-        type: GET_GROUP_MEMBERS_SUCCESS,
-        groupUUID,
-        payload: uuidList,
-      });
-    } else {
-      console.error('获取团成员失败:', data.msg);
-    }
-  });
+    });
 
-  // 获取团人物
-  api.emit('group::getGroupActors', { groupUUID }, function(data) {
-    if (data.result) {
-      let actors = data.actors;
-      for (let ga of actors) {
-        _set(ga, 'avatar', config.file.getAbsolutePath(_get(ga, 'avatar')));
-        _set(
-          ga,
-          'actor.avatar',
-          config.file.getAbsolutePath(_get(ga, 'actor.avatar'))
-        );
-        checkTemplate(ga.actor.template_uuid);
+    // 获取团人物
+    api.emit('group::getGroupActors', { groupUUID }, function(data) {
+      if (data.result) {
+        let actors = data.actors;
+        for (let ga of actors) {
+          _set(ga, 'avatar', config.file.getAbsolutePath(_get(ga, 'avatar')));
+          _set(
+            ga,
+            'actor.avatar',
+            config.file.getAbsolutePath(_get(ga, 'actor.avatar'))
+          );
+          checkTemplate(ga.actor.template_uuid);
+        }
+        dispatch({ type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors });
+      } else {
+        console.error('获取团人物失败:', data.msg);
       }
-      dispatch({ type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors });
-    } else {
-      console.error('获取团人物失败:', data.msg);
-    }
-  });
+    });
 
-  // 获取团选择人物的Mapping
-  api.emit('group::getGroupActorMapping', { groupUUID }, function(data) {
-    if (data.result) {
-      const { mapping } = data;
-      dispatch({
-        type: UPDATE_GROUP_ACTOR_MAPPING,
-        groupUUID,
-        payload: mapping,
-      });
-    } else {
-      console.error('获取团人物选择失败:', data.msg);
-    }
-  });
+    // 获取团选择人物的Mapping
+    api.emit('group::getGroupActorMapping', { groupUUID }, function(data) {
+      if (data.result) {
+        const { mapping } = data;
+        dispatch({
+          type: UPDATE_GROUP_ACTOR_MAPPING,
+          groupUUID,
+          payload: mapping,
+        });
+      } else {
+        console.error('获取团人物选择失败:', data.msg);
+      }
+    });
 
-  // 获取团聊天日志
-  api.emit('chat::getConverseChatLog', { converse_uuid: groupUUID }, function(
-    data
-  ) {
-    if (data.result) {
-      dispatch(updateConversesMsglist(groupUUID, data.list));
-    } else {
-      console.error('获取团聊天记录失败:', data.msg);
-    }
-  });
+    // 获取团聊天日志
+    api.emit('chat::getConverseChatLog', { converse_uuid: groupUUID }, function(
+      data
+    ) {
+      if (data.result) {
+        dispatch(updateConversesMsglist(groupUUID, data.list));
+      } else {
+        console.error('获取团聊天记录失败:', data.msg);
+      }
+    });
+  };
 };
 
 export const createGroup = function(
@@ -146,7 +149,7 @@ export const createGroup = function(
         dispatch(hideModal());
         dispatch(showAlert('创建成功'));
         dispatch({ type: CREATE_GROUP_SUCCESS, payload: data.group });
-        initGroupInfo(dispatch, data.group); // 创建成功后直接初始化
+        dispatch(data.group); // 创建成功后直接初始化
       } else {
         console.error(data);
         dispatch(showAlert(data.msg));
@@ -155,11 +158,16 @@ export const createGroup = function(
   };
 };
 
-export const getGroupInfo = function(uuid) {
+/**
+ * 获取团信息
+ * 注意: 不会进行group初始化操作
+ * @param uuid 团UUID
+ */
+export const getGroupInfo = function(uuid: string): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('group::getInfo', { uuid }, function(data) {
       if (data.result) {
-        let group = data.group;
+        const group = data.group;
         group.avatar = config.file.getAbsolutePath(group.avatar);
         dispatch({ type: GET_GROUP_INFO_SUCCESS, payload: group });
         dispatch(getGroupStatus(uuid)); // 获取团信息后再获取团状态作为补充
@@ -229,7 +237,7 @@ export const addGroup = function(group) {
     if (group) {
       group.avatar = config.file.getAbsolutePath(group.avatar);
       dispatch({ type: ADD_GROUP_SUCCESS, payload: group });
-      initGroupInfo(dispatch, group);
+      dispatch(initGroupInfo(group));
     }
   };
 };
@@ -330,7 +338,7 @@ export const agreeGroupInvite = function(inviteUUID: string): TRPGAction {
         });
         dispatch(getGroupInviteInfo(inviteUUID)); // 操作成功后重新获取邀请信息缓存
         if (group) {
-          initGroupInfo(dispatch, group);
+          dispatch(initGroupInfo(group));
         }
       } else {
         console.error(data);
@@ -350,7 +358,7 @@ export const refuseGroupInvite = function(inviteUUID: string): TRPGAction {
     });
   };
 };
-export const getGroupInvite = function() {
+export const getGroupInvite = function(): TRPGAction {
   return function(dispatch, getState) {
     api.emit('group::getGroupInvite', function(data) {
       if (data.result) {
@@ -362,17 +370,18 @@ export const getGroupInvite = function() {
   };
 };
 
-export const getGroupList = function() {
+export const getGroupList = function(): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('group::getGroupList', {}, function(data) {
       if (data.result) {
-        let groups = data.groups;
+        const groups: GroupInfo[] = data.groups;
         for (let group of groups) {
           group.avatar = config.file.getAbsolutePath(group.avatar);
         }
+
         dispatch({ type: GET_GROUP_LIST_SUCCESS, payload: groups });
         for (let group of groups) {
-          initGroupInfo(dispatch, group);
+          dispatch(initGroupInfo(group));
           dispatch(getGroupStatus(group.uuid)); // 获取团状态
         }
       } else {
@@ -395,7 +404,10 @@ export const clearSelectGroup = function(): TRPGAction {
  * @param groupUUID 团UUID
  * @param groupActorUUID 团角色UUID
  */
-export const changeSelectGroupActor = function(groupUUID, groupActorUUID) {
+export const changeSelectGroupActor = function(
+  groupUUID: string,
+  groupActorUUID: string
+): TRPGAction {
   return function(dispatch, getState) {
     return api.emit(
       'group::setPlayerSelectedGroupActor',
