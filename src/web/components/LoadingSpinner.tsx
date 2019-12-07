@@ -1,7 +1,7 @@
 import React from 'react';
 import './LoadingSpinner.scss';
 
-const LoadingSpinner = () => {
+const LoadingSpinner: React.FC = React.memo(() => {
   return (
     <div className="loading-spinner">
       <div className="rect1" />
@@ -11,6 +11,6 @@ const LoadingSpinner = () => {
       <div className="rect5" />
     </div>
   );
-};
+});
 
 export default LoadingSpinner;

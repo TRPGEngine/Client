@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import ModalPanel from '../ModalPanel';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
+import _isFunction from 'lodash/isFunction';
 import XMLBuilder from '@shared/layout/XMLBuilder';
-import { Col, Row, Avatar, Button } from 'antd';
+import { Row, Button } from 'antd';
 import styled from 'styled-components';
 
 /**
@@ -11,7 +12,7 @@ import styled from 'styled-components';
  */
 
 const Container = styled(Row)`
-  width: 600px;
+  min-width: 600px;
 `;
 
 interface Props {
@@ -31,7 +32,9 @@ const ActorEdit = (props: Props) => {
   }
 
   const actions = (
-    <Button onClick={() => props.onSave && props.onSave(actorData)}>
+    <Button
+      onClick={() => _isFunction(props.onSave) && props.onSave(actorData)}
+    >
       保存
     </Button>
   );
@@ -39,21 +42,12 @@ const ActorEdit = (props: Props) => {
   return (
     <ModalPanel title={title} actions={actions} allowMaximize={true}>
       <Container>
-        <Col xs={8}>
-          <Avatar shape="square" size={128} src={props.avatar} />
-          <div>{props.name}</div>
-          <div>
-            <pre>{props.desc}</pre>
-          </div>
-        </Col>
-        <Col xs={16}>
-          <XMLBuilder
-            xml={props.layout}
-            initialData={props.data}
-            layoutType="edit"
-            onChange={(newState) => setActorData(newState.data)}
-          />
-        </Col>
+        <XMLBuilder
+          xml={props.layout}
+          initialData={props.data}
+          layoutType="edit"
+          onChange={(newState) => setActorData(newState.data)}
+        />
       </Container>
     </ModalPanel>
   );

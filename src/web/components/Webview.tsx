@@ -17,7 +17,11 @@ class Webview extends React.Component<Props> {
   id: string;
   webframe: HTMLElement & { src: string };
 
-  constructor(props) {
+  static defaultProps: Partial<Props> = {
+    allowExopen: false,
+  };
+
+  constructor(props: Props) {
     super(props);
     this.id = 'webframe' + webframeIndex;
     webframeIndex++;

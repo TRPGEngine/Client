@@ -89,7 +89,7 @@ class VersionScreen extends React.Component<Props> {
     // 热更新检测
     if (appConfig.codePush.enabled) {
       // TODO: 也许需要根据版本判断用户是否应为热更新还是下载apk更新
-      appConfig.codePush.sync({
+      appConfig.codePush.sync(null, {
         onStatueChanged: (status: CodePush.SyncStatus) => {
           if (status === CodePush.SyncStatus.UP_TO_DATE) {
             this.setText('当前版本已为最新版');

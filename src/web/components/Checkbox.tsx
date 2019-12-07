@@ -1,16 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import './Checkbox.scss';
 
-class Checkbox extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  handleClick() {
+interface Props {
+  value: boolean;
+  onChange: (value: boolean) => void;
+}
+class Checkbox extends React.Component<Props> {
+  handleClick = () => {
     this.props.onChange && this.props.onChange(!this.props.value);
-  }
+  };
 
   render() {
     return (
@@ -20,10 +18,5 @@ class Checkbox extends React.Component {
     );
   }
 }
-
-Checkbox.propTypes = {
-  value: PropTypes.bool,
-  onChange: PropTypes.func,
-};
 
 export default Checkbox;

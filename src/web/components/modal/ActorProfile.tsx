@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ReactTooltip from 'react-tooltip';
 import { ActorType, ActorDataType } from '@src/shared/redux/types/actor';
-import { getOriginalImage } from '@shared/utils/file-helper';
 import XMLBuilder from '@shared/layout/XMLBuilder';
+import styled from 'styled-components';
 
-import './ActorProfile.scss';
+const Container = styled.div`
+  width: 700px;
+  height: 500px;
+  padding: 10px;
+`;
 
 interface Props {
   actor: ActorType;
@@ -48,28 +51,10 @@ class ActorProfile extends React.Component<Props> {
   }
 
   render() {
-    let actor = this.props.actor;
-    let template = this.props.templateCache.get(actor.template_uuid);
+    const actor = this.props.actor;
+    const template = this.props.templateCache.get(actor.template_uuid);
 
-    return (
-      <div className="actor-profile">
-        <ReactTooltip effect="solid" id="property-desc" place="left" />
-        <div className="profile">
-          <div className="name">{actor.name}</div>
-          <div className="uuid" title={actor.uuid}>
-            {actor.uuid}
-          </div>
-          <div
-            className="avatar"
-            style={{
-              backgroundImage: `url(${getOriginalImage(actor.avatar)})`,
-            }}
-          />
-          <div className="desc">{actor.desc}</div>
-        </div>
-        <div className="property">{this.getActorProperty(actor, template)}</div>
-      </div>
-    );
+    return <Container>{this.getActorProperty(actor, template)}</Container>;
   }
 }
 

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, PropsWithChildren, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import rnStorage from '@src/shared/api/rn-storage.api';
 
 // 仅对内测用户显示
-const DevContainer = (props: PropsWithChildren<{}>): React.ReactElement => {
+const DevContainer: React.FC = (props) => {
   const [isAlphaUser, setIsAlphaUser] = useState<boolean>(false);
 
   useEffect(() => {

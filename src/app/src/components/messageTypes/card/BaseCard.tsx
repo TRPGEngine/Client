@@ -19,7 +19,7 @@ class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
     return <Text>{info.message}</Text>;
   }
 
-  // 返回一个形如:[{label: '按钮1', onClick:()=>{}}]的数组
+  // 返回一个形如:[{label: '按钮1', onClick: () => {}}]的数组
   getCardBtn(): CardBtn[] {
     return [];
   }

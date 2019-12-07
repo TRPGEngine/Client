@@ -64,8 +64,9 @@ export default function group(state = initialState, action) {
         return list;
       });
     case GET_GROUP_INFO_SUCCESS: {
-      const group_uuid = action.payload.uuid;
-      return state.setIn(['info', group_uuid], action.payload);
+      const groupUUID = action.payload.uuid;
+
+      return state.mergeIn(['info', groupUUID], fromJS(action.payload)); // 合并
     }
     case UPDATE_GROUP_INFO_SUCCESS: {
       const groupIndex = state
@@ -106,7 +107,7 @@ export default function group(state = initialState, action) {
           if (list.getIn([i, 'uuid']) === action.groupUUID) {
             list = list.setIn(
               [i, 'group_members'],
-              immutable.fromJS(action.payload)
+              immutable.fromJS(action.payload || [])
             );
           }
         }
@@ -175,7 +176,7 @@ export default function group(state = initialState, action) {
           if (list.getIn([i, 'uuid']) === action.groupUUID) {
             list = list.setIn(
               [i, 'group_members'],
-              immutable.fromJS(action.payload)
+              immutable.fromJS(action.payload || [])
             );
           }
         }

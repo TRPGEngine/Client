@@ -91,7 +91,10 @@ interface ProjectConfig {
     blog: string;
     portal: string;
   };
-  defaultSettings: {};
+  defaultSettings: {
+    user: {};
+    system: {};
+  };
 }
 
 const config: ProjectConfig = {

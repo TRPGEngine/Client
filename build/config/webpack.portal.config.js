@@ -7,11 +7,11 @@ process.env.TRPG_APP_NAME = 'Portal';
 const webpackMerge = require('webpack-merge');
 const path = require('path');
 const base = require('./webpack.config.js');
-const WebpackBar = require('webpackbar');
 
-const ROOT_PATH = path.resolve(__dirname, '../');
+const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist/portal');
+const ASSET_PATH = '/portal/';
 
 module.exports = webpackMerge({}, base, {
   entry: {
@@ -20,6 +20,7 @@ module.exports = webpackMerge({}, base, {
 
   output: {
     path: DIST_PATH,
+    publicPath: ASSET_PATH,
   },
 
   devtool: 'cheap-module-eval-source-map',
@@ -28,7 +29,9 @@ module.exports = webpackMerge({}, base, {
     host: '0.0.0.0',
     port: 8190,
     compress: true,
-    historyApiFallback: true,
+    historyApiFallback: {
+      rewrites: [{ from: /.*/, to: `${ASSET_PATH}index.html` }],
+    },
     hot: true,
     inline: true,
   },

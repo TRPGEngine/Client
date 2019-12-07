@@ -14,6 +14,7 @@ import _get from 'lodash/get';
 import { getUserInfoCache } from '@src/shared/utils/cache-helper';
 import appConfig from '@app/config.app';
 import { MsgListType, MsgPayload } from '@src/shared/redux/types/chat';
+import _isFunction from 'lodash/isFunction';
 
 const MSG_INIT_NUM = 10;
 
@@ -68,7 +69,10 @@ class MsgList extends React.PureComponent<Props> {
       this.listRef &&
         this.listRef.current &&
         msgList.length > 0 &&
-        this.listRef.current.scrollToIndex({ index: 0 }); // 因为使用了inverted属性因此滚到底部对于list的逻辑是滚到顶部
+        _isFunction(this.listRef.current.scrollToIndex) &&
+        this.listRef.current.scrollToIndex({ index: 0 });
+
+      // 因为使用了inverted属性因此滚到底部对于list的逻辑是滚到顶部
     }, 130);
   }
 

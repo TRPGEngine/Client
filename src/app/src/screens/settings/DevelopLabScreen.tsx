@@ -10,7 +10,8 @@ import MessageHandler from '@app/components/messageTypes/__all__';
 import { switchNav, navPortal } from '@app/redux/actions/nav';
 import config from '@src/shared/project.config';
 import { connect } from 'react-redux';
-import { TRPGDispatchProp } from '@src/shared/redux/types/__all__';
+import { TRPGDispatchProp, TRPGState } from '@src/shared/redux/types/__all__';
+import rnStorage from '@shared/api/rn-storage.api';
 
 const TRPGModule = NativeModules.TRPGModule;
 
@@ -18,7 +19,9 @@ const DevButton = styled(TButton)`
   margin: 10px;
 `;
 
-interface Props extends TRPGDispatchProp {}
+interface Props extends TRPGDispatchProp {
+  userUUID: string;
+}
 class DevelopLabScreen extends React.Component<Props> {
   sendBasicNotify = () => {
     sendBasicNotify({ title: 'test', message: 'message' });
@@ -33,9 +36,11 @@ class DevelopLabScreen extends React.Component<Props> {
   };
 
   render() {
+    const { userUUID } = this.props;
     return (
       <View>
         <Text style={{ textAlign: 'center' }}>开发实验室</Text>
+        <Text>当前用户: {userUUID}</Text>
         <DevButton onPress={() => TRPGModule.show('Awesome', TRPGModule.SHORT)}>
           原生Toast
         </DevButton>
@@ -45,6 +50,15 @@ class DevelopLabScreen extends React.Component<Props> {
         </DevButton>
         <DevButton onPress={this.handleEnvConfig}>Print Env Config</DevButton>
         <DevButton onPress={this.handlePortalLogin}>打开Portal登录</DevButton>
+        <DevButton
+          onPress={() =>
+            rnStorage
+              .remove(`sso:jwt:${userUUID}`)
+              .then(() => alert('清理完毕'))
+          }
+        >
+          清理当前用户单点登录token
+        </DevButton>
 
         <MessageHandler
           type="loading"
@@ -59,4 +73,6 @@ class DevelopLabScreen extends React.Component<Props> {
   }
 }
 
-export default connect()(DevelopLabScreen);
+export default connect((state: TRPGState) => ({
+  userUUID: state.getIn(['user', 'info', 'uuid']) || '',
+}))(DevelopLabScreen);

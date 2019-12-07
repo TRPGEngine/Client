@@ -3,33 +3,28 @@ import { Text, View, Image } from 'react-native';
 import sb from 'react-native-style-block';
 import BaseCard from './BaseCard';
 import { connect } from 'react-redux';
-import { showModal } from '../../../../../shared/redux/actions/ui';
-import { getActorInfo } from '../../../../../shared/redux/actions/cache';
-import config from '../../../../../shared/project.config';
+import config from '@shared/project.config';
+import { TRPGDispatchProp } from '@redux/types/__all__';
+import { navPortal } from '@app/redux/actions/nav';
+import { MessageProps } from '@shared/components/MessageHandler';
 
-// TODO: 设置为APP可用的消息类型渲染
 // 投骰请求
-class Actor extends BaseCard {
-  showActorProfile(uuid) {
+interface Props extends TRPGDispatchProp, MessageProps {}
+class Actor extends BaseCard<Props> {
+  showActorProfile(uuid: string) {
     if (!uuid) {
       console.error('uuid is required!');
       return;
     }
 
-    alert('TODO: 查看人物卡');
     // 获取最新信息
-    // TODO: 打开网页显示人物卡信息
-    // import ActorCacheProfile from '../../modal/ActorCacheProfile';
-    // this.props.dispatch(getActorInfo(uuid));// TODO: 需要实现actor的缓存工具
-    // this.props.dispatch(showModal(
-    //   <ActorCacheProfile uuid={uuid} />
-    // ))
+    this.props.dispatch(navPortal(`/actor/detail/${uuid}`));
   }
 
   getCardView() {
-    let info = this.props.info;
-    let data = info.data;
-    let imgUrl =
+    const info = this.props.info;
+    const data = info.data;
+    const imgUrl =
       config.file.getAbsolutePath(data.avatar) || config.defaultImg.actor;
 
     return (
@@ -44,8 +39,8 @@ class Actor extends BaseCard {
   }
 
   getCardBtn() {
-    let info = this.props.info;
-    let data = info.data;
+    const info = this.props.info;
+    const data = info.data;
     return [
       {
         label: '查看',

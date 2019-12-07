@@ -21,11 +21,14 @@ request.interceptors.response.use(
   (val) => val,
   (err) => {
     if (err.response && err.response.status === 401) {
-      console.log('未登录: 正在跳转到登录页面...');
-      const pathname = window.location.pathname;
-      const next = encodeURIComponent(pathname);
-      history.push(`/sso/login?next=${next}`);
-      return;
+      const pathname = window.location.pathname; // 获取url路径，不包含querystring
+      if (!pathname.includes('/sso/login')) {
+        // 若当前页不是登录页。则跳过
+        const next = encodeURIComponent(pathname);
+        console.log('未登录: 正在跳转到登录页面...');
+        history.push(`/sso/login?next=${next}`);
+        return;
+      }
     }
 
     // 尝试获取msg

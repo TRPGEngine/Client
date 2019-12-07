@@ -59,7 +59,7 @@ jobs:
   "Build Android App":
     working_directory: ~/trpg
     docker:
-      - image: circleci/android:api-28-node8-alpha
+      - image: circleci/android:api-28-node
     steps:
       - checkout
       # 更新node依赖

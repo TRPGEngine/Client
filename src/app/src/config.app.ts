@@ -3,8 +3,10 @@ import CodePush, {
   DownloadProgressCallback,
   HandleBinaryVersionMismatchCallback,
   CodePushOptions,
+  SyncOptions,
 } from 'react-native-code-push';
 import _invoke from 'lodash/invoke';
+import _merge from 'lodash/merge';
 import Config from 'react-native-config';
 import rnStorage from '@src/shared/api/rn-storage.api';
 
@@ -66,31 +68,34 @@ const out = {
   codePush: {
     enabled: true,
     options: {
-      // 静默自动更新
-      checkFrequency: CodePush.CheckFrequency.ON_APP_START,
-      installMode: CodePush.InstallMode.ON_NEXT_RESTART,
-      updateDialog: null,
+      checkFrequency: CodePush.CheckFrequency.ON_APP_START, // 启动时检查
     } as CodePushOptions,
-    async sync(cb?: {
-      onStatueChanged?: SyncStatusChangedCallback;
-      onDownloadProgressChanged?: DownloadProgressCallback;
-      onHandleBinaryVersionMismatchCallback?: HandleBinaryVersionMismatchCallback;
-    }) {
+    async sync(
+      options: SyncOptions,
+      cb?: {
+        onStatueChanged?: SyncStatusChangedCallback;
+        onDownloadProgressChanged?: DownloadProgressCallback;
+        onHandleBinaryVersionMismatchCallback?: HandleBinaryVersionMismatchCallback;
+      }
+    ) {
       return CodePush.sync(
-        {
-          updateDialog: {
-            appendReleaseDescription: true,
-            descriptionPrefix: '\n\n更新内容：\n',
-            title: '更新',
-            optionalInstallButtonLabel: '更新',
-            optionalIgnoreButtonLabel: '忽略',
-            optionalUpdateMessage: '有新的版本可以使用，是否更新?',
-            mandatoryUpdateMessage: '有新的版本必须更新',
-            mandatoryContinueButtonLabel: '更新',
+        _merge(
+          {
+            updateDialog: {
+              appendReleaseDescription: true,
+              descriptionPrefix: '\n\n更新内容：\n',
+              title: '更新',
+              optionalInstallButtonLabel: '更新',
+              optionalIgnoreButtonLabel: '忽略',
+              optionalUpdateMessage: '有新的版本可以使用，是否更新?',
+              mandatoryUpdateMessage: '有新的版本必须更新',
+              mandatoryContinueButtonLabel: '更新',
+            },
+            installMode: CodePush.InstallMode.IMMEDIATE,
+            deploymentKey: await getCodepushDeploymentKey(),
           },
-          installMode: CodePush.InstallMode.IMMEDIATE,
-          deploymentKey: await getCodepushDeploymentKey(),
-        },
+          options
+        ),
         (status) => {
           console.log('[code push status]', status);
           _invoke(cb, 'onStatueChanged', status);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useReducer, useMemo } from 'react';
 import parser, { XMLElement } from './parser/xml-parser';
 import * as processor from './processor';
 import _clone from 'lodash/clone';
@@ -26,6 +26,9 @@ interface GlobalMap {
 }
 
 export interface DataMap {
+  _name?: string;
+  _avatar?: string;
+  _desc?: string;
   [name: string]: StateDataType;
 }
 
@@ -96,7 +99,6 @@ interface Props {
 }
 const XMLBuilder = (props: Props) => {
   const { xml = '', onChange, layoutType = 'edit' } = props;
-  const [layout, setLayout] = useState({});
 
   const initialState: XMLBuilderState = {
     defines: {},
@@ -105,11 +107,11 @@ const XMLBuilder = (props: Props) => {
   };
   const [state, dispatch] = useReducer(buildReducer(onChange), initialState);
 
-  useEffect(() => {
+  const layout = useMemo(() => {
     const layout = parser(xml);
     layout.type = 'root';
     console.log('layout', layout);
-    setLayout(layout);
+    return layout;
   }, [xml]);
 
   if (_isEmpty(layout)) {

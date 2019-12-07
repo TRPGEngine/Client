@@ -7,12 +7,12 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const _get = require('lodash/get');
 
-const ROOT_PATH = path.resolve(__dirname, '../');
+const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
 const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
-const config = require('../package.json');
+const config = require('../../package.json');
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const babelQuery = {
@@ -44,7 +44,7 @@ const babelQuery = {
 module.exports = {
   entry: {
     // vendor: vendors,
-    app: path.resolve(APP_PATH, './web/index.js'),
+    app: path.resolve(APP_PATH, './web/index.tsx'),
   },
   output: {
     path: DIST_PATH,
@@ -137,6 +137,7 @@ module.exports = {
     'react-navigation-redux-helpers':
       "require('react-navigation-redux-helpers')",
     config: JSON.stringify({
+      // 手动指定部分配置以防止私密配置泄漏
       sentry: require('config').get('sentry'),
     }), // 用于全局使用config，config由编译时的环境变量指定
   },
@@ -154,8 +155,9 @@ module.exports = {
       cacheGroups: {
         default: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -20,
-          reuseExistingChunk: true,
+          priority: -10, // 优先级，一个chunk很可能满足多个缓存组，会被抽取到优先级高的缓存组中
+          reuseExistingChunk: true, //  如果该chunk中引用了已经被抽取的chunk，直接引用该chunk，不会重复打包代码
+          enforce: true, // 如果cacheGroup中没有设置minSize，则据此判断是否使用上层的minSize，true：则使用0，false：使用上层minSize
         },
       },
     },
@@ -171,6 +173,7 @@ module.exports = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         PLATFORM: JSON.stringify(process.env.PLATFORM),
         TRPG_HOST: JSON.stringify(process.env.TRPG_HOST),
+        TRPG_PORTAL: JSON.stringify(process.env.TRPG_PORTAL),
       },
     }),
     new CopyWebpackPlugin([

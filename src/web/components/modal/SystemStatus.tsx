@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ModalPanel from '../ModalPanel';
-import config from '../../../shared/project.config';
-import dateHelper from '../../../shared/utils/date-helper';
+import config from '@shared/project.config';
+import dateHelper from '@shared/utils/date-helper';
 
 const SystemStatusPanel = styled(ModalPanel)`
   width: 420px;
@@ -41,6 +41,10 @@ export default class SystemStatus extends React.Component {
       {
         label: '网页服务地址',
         value: config.file.url,
+      },
+      {
+        label: 'Portal服务地址',
+        value: config.url.portal,
       },
       {
         label: '编译环境',

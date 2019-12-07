@@ -55,8 +55,9 @@ class AccountScreen extends React.Component<Props> {
 
   render() {
     const userInfo = this.props.userInfo;
-    let avatar = userInfo.get('avatar') || appConfig.defaultImg.user;
-    let name = userInfo.get('nickname') || userInfo.get('username');
+    const avatar = userInfo.get('avatar') || appConfig.defaultImg.user;
+    const name = userInfo.get('nickname') || userInfo.get('username');
+
     return (
       <View>
         <TouchableOpacity
@@ -91,9 +92,7 @@ class AccountScreen extends React.Component<Props> {
           </Item>
           <DevContainer>
             <Item
-              thumb={
-                <AccountListThumb color="cornflowerblue" icon="&#xe623;" />
-              }
+              thumb={<AccountListThumb color="orangered" icon="&#xe623;" />}
               arrow="horizontal"
               onPress={() => {
                 this.props.dispatch(switchNav('Document'));

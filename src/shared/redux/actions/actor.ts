@@ -23,6 +23,7 @@ import {
   hideAlert,
   hideModal,
 } from './ui';
+import _isUndefined from 'lodash/isUndefined';
 
 import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
@@ -208,7 +209,7 @@ let selectTemplate = function selectTemplate(template) {
 
 /**
  * 创建人物
- * 创建人物前需先上传人物卡头像
+ * NOTICE: 创建人物前需先上传人物卡头像
  * @param name 人物卡名
  * @param avatar 人物卡头像地址
  * @param desc 人物卡描述
@@ -220,7 +221,8 @@ const createActor = function createActor(
   avatar: string,
   desc: string,
   info: {},
-  template_uuid: string
+  template_uuid: string,
+  avatar_uuid?: string
 ) {
   return function(dispatch, getState) {
     dispatch(showLoading('创建人物中，请稍后...'));
@@ -234,6 +236,15 @@ const createActor = function createActor(
         if (data.result) {
           const actor = data.actor;
           actor.avatar = config.file.getAbsolutePath(actor.avatar);
+
+          if (actor.avatar !== '' && !_isUndefined(avatar_uuid)) {
+            // 创建完毕后绑定头像关系
+            api.emit('file::bindAttachUUID', {
+              avatar_uuid,
+              attach_uuid: actor.uuid,
+            });
+          }
+
           dispatch({ type: CREATE_ACTOR_SUCCESS, payload: actor });
         } else {
           dispatch(showAlert(data.msg));
