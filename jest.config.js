@@ -28,5 +28,6 @@ module.exports = {
   globals: {
     window: {},
   },
-  verbose: false,
+  snapshotSerializers: ['enzyme-to-json/serializer'],
+  verbose: true,
 };

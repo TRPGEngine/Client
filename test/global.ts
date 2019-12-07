@@ -3,6 +3,21 @@
 import 'regenerator-runtime/runtime';
 
 // enzyme react 支持
-import { configure } from 'enzyme';
+import { configure, ShallowWrapper, ReactWrapper } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
+
+// enzyme-to-json
+import { Json, shallowToJson, mountToJson, Options } from 'enzyme-to-json';
+declare module 'enzyme' {
+  class CommonWrapper {
+    toJson(): Json;
+  }
+}
+
+ShallowWrapper.prototype.toJson = function(options?: Options) {
+  return shallowToJson(this, options);
+};
+ReactWrapper.prototype.toJson = function(options?: Options) {
+  return mountToJson(this, options);
+};
