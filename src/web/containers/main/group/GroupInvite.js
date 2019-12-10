@@ -109,7 +109,7 @@ export default connect(
       friendList: state.getIn(['user', 'friendList']),
       selectedGroupUUID,
       groupInfo,
-      groupMembers: groupInfo.get('group_members'),
+      groupMembers: groupInfo.get('group_members', []),
     };
   },
   (dispatch) => ({
