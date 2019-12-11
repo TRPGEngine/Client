@@ -8,7 +8,7 @@ import {
   getSuggestTemplate,
   createActor,
 } from '@src/shared/redux/actions/actor';
-import TemplateSelect, { TemplateType } from './TemplateSelect';
+import TemplateSelect from './TemplateSelect';
 import CreateActorDetail from './CreateActorDetail';
 import CreateActorConfirm from './CreateActorConfirm';
 import _get from 'lodash/get';
@@ -16,6 +16,7 @@ import _isString from 'lodash/isString';
 import { toAvatarWithBlobUrl } from '@web/utils/upload-helper';
 import { isBlobUrl } from '@shared/utils/string-helper';
 import { AvatarUpdateData } from '@shared/utils/upload-helper';
+import { ActorTemplateType } from '@redux/types/actor';
 const Step = Steps.Step;
 
 const Container = styled.div`
@@ -40,7 +41,9 @@ interface Props extends DispatchProp<any> {
 }
 const ActorCreate = (props: Props) => {
   const [current, setCurrent] = useState(0);
-  const [selectedTemplate, setSelectedTemplate] = useState<TemplateType>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<ActorTemplateType>(
+    null
+  );
   const [stateData, setStateData] = useState<DataMap>(null);
 
   const handleCreateActor = async () => {
@@ -121,6 +124,7 @@ const ActorCreate = (props: Props) => {
   useEffect(() => {
     props.dispatch(getSuggestTemplate());
   });
+
   return (
     <ModalPanel title="创建人物" actions={actions}>
       <Container>

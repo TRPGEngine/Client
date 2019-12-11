@@ -5,35 +5,22 @@ import { findTemplate } from '@src/shared/redux/actions/actor';
 import { List } from 'immutable';
 import TemplateItem from '../../TemplateItem';
 import styled from 'styled-components';
+import { ActorTemplateStateType, ActorTemplateType } from '@redux/types/actor';
+
 const Search = Input.Search;
 
 const Body = styled.div`
   margin-top: 20px;
 `;
 
-export interface TemplateType {
-  id: number;
-  uuid: string;
-  name: string;
-  desc: string;
-  info: string;
-  avatar: string;
-  layout: string;
-  built_in: boolean;
-  creatorId: number;
-  createAt: string;
-  updatedAt: string;
-  deletedAt: string;
-}
-
-type SelectTemplateCallback = (template: TemplateType) => void;
+type SelectTemplateCallback = (template: ActorTemplateType) => void;
 
 /**
  * 渲染模板列表
  * 一行三列
  */
 const TemplateList = (props: {
-  list: List<any>;
+  list: List<ActorTemplateStateType>;
   onSelectTemplate: SelectTemplateCallback;
 }) => {
   return (
@@ -45,8 +32,10 @@ const TemplateList = (props: {
               canEdit={false}
               name={item.get('name')}
               desc={item.get('desc')}
-              creator={item.get('creator_name') || '未知'}
-              time={item.get('updateAt')}
+              // TODO
+              // creator={item.get('creator_name') || '未知'}
+              creator={'未知'}
+              time={item.get('updatedAt')}
               onCreate={() => props.onSelectTemplate(item.toJS())}
             />
           </Col>
@@ -57,8 +46,8 @@ const TemplateList = (props: {
 };
 
 interface Props extends DispatchProp<any> {
-  findingResult: List<any>;
-  getSuggestTemplate: List<any>;
+  findingResult: List<ActorTemplateStateType>;
+  suggestTemplate: List<ActorTemplateStateType>;
   onSelectTemplate: SelectTemplateCallback;
 }
 /**
@@ -71,7 +60,7 @@ const TemplateSelect = (props: Props) => {
         <div>
           <p>推荐模板</p>
           <TemplateList
-            list={props.getSuggestTemplate}
+            list={props.suggestTemplate}
             onSelectTemplate={props.onSelectTemplate}
           />
         </div>
@@ -109,6 +98,6 @@ const TemplateSelect = (props: Props) => {
 };
 
 export default connect((state: any) => ({
-  getSuggestTemplate: state.getIn(['actor', 'suggestTemplate']),
+  suggestTemplate: state.getIn(['actor', 'suggestTemplate']),
   findingResult: state.getIn(['actor', 'findingResult']),
 }))(TemplateSelect);

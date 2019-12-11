@@ -26,6 +26,7 @@ import {
 import _isUndefined from 'lodash/isUndefined';
 
 import * as trpgApi from '../../api/trpg.api';
+import { TRPGAction } from '@redux/types/__all__';
 const api = trpgApi.getInstance();
 
 let setTemplate = function setTemplate(uuid, name, desc, avatar, info) {
@@ -55,7 +56,7 @@ let getTemplate = function getTemplate(uuid?: string) {
  * 获取推荐模板
  * 只获取一次，如果之前获取过则不再重复获取
  */
-const getSuggestTemplate = () => {
+const getSuggestTemplate = (): TRPGAction => {
   return function(dispatch, getState) {
     if (getState().getIn(['actor', 'suggestTemplate']).size > 0) {
       return;

@@ -18,9 +18,24 @@ export interface ActorDataType {
   [key: string]: string;
 }
 
+export interface ActorTemplateType {
+  uuid: string;
+  name: string;
+  desc: string;
+  avatar: string | null;
+  info: any;
+  layout: string;
+  built_in: boolean;
+  is_public: boolean;
+
+  updatedAt: string;
+}
+
+export type ActorTemplateStateType = Record<ActorTemplateType>;
+
 export type ActorState = Record<{
   isFindingTemplate: boolean;
-  suggestTemplate: List<any>;
+  suggestTemplate: List<ActorTemplateStateType>;
   findingResult: List<any>;
   currentEditedTemplate: Record<{
     uuid: string;
