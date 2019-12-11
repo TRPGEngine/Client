@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Row, Avatar, Col } from 'antd';
-import { TemplateType } from './TemplateSelect';
 import XMLBuilder, { DataMap } from '@shared/layout/XMLBuilder';
 import styled from 'styled-components';
+import { ActorTemplateType } from '@redux/types/actor';
 
 const BasicBlock = styled(Row)`
   background-color: rgba(0, 0, 0, 0.05);
@@ -13,7 +13,7 @@ const BasicBlock = styled(Row)`
 `;
 
 interface Props {
-  template: TemplateType;
+  template: ActorTemplateType;
   data: DataMap;
 }
 const CreateActorConfirm = (props: Props) => {

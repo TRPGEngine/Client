@@ -1,10 +1,10 @@
 import React from 'react';
-import { TemplateType } from './TemplateSelect';
 import XMLBuilder, { DataMap } from '@shared/layout/XMLBuilder';
 import _clone from 'lodash/clone';
+import { ActorTemplateType } from '@redux/types/actor';
 
 interface Props {
-  template: TemplateType;
+  template: ActorTemplateType;
   data: DataMap;
   onChange: (state: DataMap) => void;
 }
