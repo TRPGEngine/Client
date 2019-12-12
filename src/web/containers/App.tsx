@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import TLoadable from '../components/TLoadable';
 import {
   Route,
@@ -62,4 +61,4 @@ class App extends React.Component {
   }
 }
 
-export default connect()(App);
+export default App;
