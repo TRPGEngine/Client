@@ -1,8 +1,11 @@
-import { shallow, mount } from 'enzyme';
-import App from '@web/containers/App';
-import React from 'react';
+import ReactDOM from 'react-dom';
 
-test('renders without crashing', async () => {
-  // TODO: should test it with mount
-  mount(<App />);
+test('renders full app without crashing', async () => {
+  const div = document.createElement('div');
+  div.id = 'app';
+  document.body.append(div);
+
+  await import('@web/index');
+
+  ReactDOM.unmountComponentAtNode(div);
 });
