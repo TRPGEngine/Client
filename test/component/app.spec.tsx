@@ -4,5 +4,5 @@ import React from 'react';
 
 test('renders without crashing', async () => {
   // TODO: should test it with mount
-  shallow(<App />);
+  mount(<App />);
 });

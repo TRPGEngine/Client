@@ -82,7 +82,7 @@
     "qs": "^6.9.1",
     "react": "16.8.3",
     "react-contenteditable": "^3.3.2",
-    "react-dom": "^16.10.2",
+    "react-dom": "16.8.3",
     "react-emojione2": "^2.2.18",
     "react-fileupload": "^2.4.0",
     "react-image-crop": "^8.3.1",
