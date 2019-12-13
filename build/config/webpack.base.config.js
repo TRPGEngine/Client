@@ -184,6 +184,7 @@ module.exports = {
       {
         from: path.resolve(APP_PATH, './web/assets'),
         to: './src/web/assets',
+        ignore: ['fonts/*.html'],
       },
     ]),
     new HtmlwebpackPlugin({
@@ -191,6 +192,7 @@ module.exports = {
       template: path.resolve(BUILD_PATH, './template/index.hbs'),
       templateParameters: {
         isDev: _get(process, 'env.NODE_ENV') === 'development',
+        isPro: _get(process, 'env.NODE_ENV') === 'production',
       },
       inject: true,
       favicon: path.resolve(APP_PATH, './web/assets/img/favicon.ico'),

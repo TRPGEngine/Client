@@ -18,6 +18,9 @@ import {
   setSystemSettings,
 } from '../shared/redux/actions/settings';
 import styledTheme from '@src/shared/utils/theme';
+import { installServiceWorker } from './utils/sw-helper';
+
+installServiceWorker(); // 注册 service worker 服务
 
 const store = configureStore();
 attachStore(store);
