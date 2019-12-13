@@ -65,9 +65,19 @@ class GroupActorList extends React.Component<Props, State> {
     this.fetchList();
   }
 
+  /**
+   * 获取团人物卡列表
+   */
   async fetchList() {
-    const actors = await fetchGroupActorList(this.groupUUID);
-    this.setState({ actors });
+    try {
+      const actors = await fetchGroupActorList(this.groupUUID);
+
+      this.setState({ actors });
+    } catch (err) {
+      notification.error({
+        message: '获取列表失败: ' + err,
+      });
+    }
   }
 
   /**
@@ -89,10 +99,11 @@ class GroupActorList extends React.Component<Props, State> {
         applyActorModalVisible: false,
       });
 
-      this.fetchList();
       notification.open({
         message: `申请成功, 请等待团管理员审批: ${groupActor.uuid}`,
       });
+
+      this.fetchList();
     } catch (err) {
       notification.error({
         message: err,

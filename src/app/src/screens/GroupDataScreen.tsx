@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { List, WingBlank, WhiteSpace } from '@ant-design/react-native';
-import { View, Switch } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { TButton } from '../components/TComponent';
 import { TRPGState, TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 import {
   showAlert,
   hideAlert,
-  hideSlidePanel,
   showModal,
   hideModal,
 } from '@src/shared/redux/actions/ui';
@@ -24,7 +23,12 @@ import _without from 'lodash/without';
 import _isEmpty from 'lodash/isEmpty';
 import TModalPanel from '../components/TComponent/TModalPanel';
 import TPicker from '../components/TComponent/TPicker';
-import { selectUser, backToTop, switchNav } from '../redux/actions/nav';
+import {
+  selectUser,
+  backToTop,
+  switchNav,
+  navPortal,
+} from '../redux/actions/nav';
 import { GroupStateGroupsItem } from '@src/shared/redux/types/group';
 import { Map } from 'immutable';
 import { NavigationScreenProps } from 'react-navigation';
@@ -58,6 +62,15 @@ class GroupDataScreen extends React.Component<Props> {
   handleViewHistory = () => {
     // TODO: 待实现
     alert('未实现');
+  };
+
+  /**
+   * 显示团角色列表
+   */
+  handleShowGroupActor = () => {
+    const { dispatch, selectedGroupUUID } = this.props;
+
+    dispatch(navPortal(`/group/${selectedGroupUUID}/actor/list`));
   };
 
   /**
@@ -116,10 +129,15 @@ class GroupDataScreen extends React.Component<Props> {
     });
   };
 
+  /**
+   * 显示团成员
+   */
   handleShowMember = () => {
-    this.props.dispatch(switchNav('GroupMember', {
-      uuid: this.props.navigation.getParam('uuid')
-    }));
+    this.props.dispatch(
+      switchNav('GroupMember', {
+        uuid: this.props.navigation.getParam('uuid'),
+      })
+    );
   };
 
   /**
@@ -193,7 +211,7 @@ class GroupDataScreen extends React.Component<Props> {
     const groupOwnerName = getCachedUserName(groupInfo.get('owner_uuid'));
 
     return (
-      <View>
+      <ScrollView>
         <List renderHeader={'基本'}>
           <ListItem extra={groupOwnerName}>团主持人</ListItem>
           <ListItem extra={groupInfo.get('managers_uuid').size + '人'}>
@@ -226,6 +244,9 @@ class GroupDataScreen extends React.Component<Props> {
           </ListItem>
         </List>
         <List renderHeader={'角色'}>
+          <ListItem onPress={this.handleShowGroupActor} arrow="horizontal">
+            角色列表
+          </ListItem>
           <ListItem onPress={this.handleSelectGroupActor} arrow="horizontal">
             选择角色
           </ListItem>
@@ -258,7 +279,7 @@ class GroupDataScreen extends React.Component<Props> {
             {this.isGroupOwner ? '解散本团' : '退出本团'}
           </TButton>
         </WingBlank>
-      </View>
+      </ScrollView>
     );
   }
 }
