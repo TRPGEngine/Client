@@ -138,7 +138,7 @@ export const editActor = async (
     _set(actorInfo, '_avatar', avatar.url);
   }
 
-  const { data } = await request.post(`/actor/${actorUUID}/edit/`, {
+  const { data } = await request.post(`/actor/${actorUUID}/edit`, {
     info: actorInfo,
     name: actorInfo._name,
     desc: actorInfo._desc,
@@ -153,6 +153,14 @@ export const editActor = async (
   }
 
   return actor;
+};
+
+/**
+ * 删除人物卡
+ * @param actorUUID 人物卡UUID
+ */
+export const removeActor = (actorUUID: string) => {
+  return request.post(`/actor/${actorUUID}/remove`);
 };
 
 /**

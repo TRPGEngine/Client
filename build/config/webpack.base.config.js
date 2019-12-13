@@ -85,7 +85,9 @@ module.exports = {
             loader: 'less-loader',
             options: {
               modifyVars: {
+                // https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
                 'primary-color': '#8C6244',
+                'error-color': '#e44a4c',
                 'text-selection-bg': '#1890ff',
               },
               javascriptEnabled: true,
