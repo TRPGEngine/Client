@@ -38,10 +38,10 @@ export default class BaseInfo implements ILayoutType<Attr> {
   name: string = 'BaseInfo';
 
   getEditView(ctx: LayoutTypeContext<Attr>) {
-    const { context } = ctx;
+    const { context, attributes } = ctx;
 
     return (
-      <BaseInfoContainer>
+      <BaseInfoContainer key={attributes.key}>
         <Col sm={18} xs={24}>
           <BaseInfoForm>
             <FormItem label="名称" required>
@@ -74,10 +74,10 @@ export default class BaseInfo implements ILayoutType<Attr> {
   }
 
   getDetailView(ctx: LayoutTypeContext<Attr>) {
-    const { context } = ctx;
+    const { context, attributes } = ctx;
 
     return (
-      <BaseInfoContainer>
+      <BaseInfoContainer key={attributes.key}>
         <Col sm={18} xs={24}>
           <BaseInfoForm>
             <FormItem label="名称" required>
