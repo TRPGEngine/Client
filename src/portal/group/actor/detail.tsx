@@ -44,6 +44,7 @@ class GroupActorDetail extends React.Component<Props, State> {
   handleRemoveGroupActor = () => {
     Modal.warning({
       content: '你确定要删除该人物卡么？删除后人物卡将永远无法找回',
+      maskClosable: true,
       onOk: () => {
         removeGroupActor(this.groupUUID, this.groupActorUUID)
           .then(() => {

@@ -36,6 +36,7 @@ class ActorDetail extends React.Component<Props> {
   handleRemoveActor = () => {
     Modal.warning({
       content: '你确定要删除该人物卡么？删除后人物卡将永远无法找回',
+      maskClosable: true,
       onOk: () => {
         removeActor(this.actorUUID)
           .then(() => {
