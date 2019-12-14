@@ -174,22 +174,24 @@ class GroupActorList extends React.Component<Props, State> {
       return <Loading />;
     }
 
-    return actors.map((actor) => (
-      <GroupActorListItem
-        key={actor.uuid}
-        passed={actor.passed}
-        enabled={actor.enabled}
-        onClick={() => this.handleClick(actor.uuid)}
-      >
-        <div>
+    return actors
+      .filter((actor) => actor.passed)
+      .map((actor) => (
+        <GroupActorListItem
+          key={actor.uuid}
+          passed={actor.passed}
+          enabled={actor.enabled}
+          onClick={() => this.handleClick(actor.uuid)}
+        >
           <div>
-            <strong>{actor.name}</strong>
+            <div>
+              <strong>{actor.name}</strong>
+            </div>
+            <div>{actor.desc}</div>
           </div>
-          <div>{actor.desc}</div>
-        </div>
-        <Avatar name={actor.name} src={actor.avatar} />
-      </GroupActorListItem>
-    ));
+          <Avatar name={actor.name} src={actor.avatar} />
+        </GroupActorListItem>
+      ));
   }
 
   renderApprovalList() {
@@ -207,7 +209,8 @@ class GroupActorList extends React.Component<Props, State> {
           name={actor.name}
           desc={actor.desc}
           avatar={actor.avatar}
-          // 操作按钮应当仅团管理员可见
+          // TODO: 需要有一个查看待审批的团角色信息的入口
+          // TODO: 操作按钮应当仅团管理员可见
           onAgree={this.handleAgreeGroupActor}
           onRefuse={this.handleRefuseGroupActor}
         />

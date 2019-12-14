@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Avatar from '@web/components/Avatar';
 import { Card } from 'antd';
 import styled from 'styled-components';
 import _isString from 'lodash/isString';
 import _invoke from 'lodash/invoke';
+import { nav } from '@portal/history';
+import { fetchGroupActorDetail } from '@portal/model/group';
 
 const Meta = Card.Meta;
 
@@ -20,25 +22,36 @@ export interface ApprovalCardProps {
   onAgree?: (uuid: string) => void;
   onRefuse?: (uuid: string) => void;
 }
-const GroupActorApprovalCard = React.memo((props: ApprovalCardProps) => {
-  return (
-    <ApprovalCardContainer
-      actions={[
-        <div onClick={() => _invoke(props, 'onAgree', props.uuid)}>
-          <i className="iconfont">&#xe66b;</i>通过
-        </div>,
-        <div onClick={() => _invoke(props, 'onRefuse', props.uuid)}>
-          <i className="iconfont">&#xe680;</i>拒绝
-        </div>,
-      ]}
-    >
-      <Meta
-        avatar={<Avatar name={props.name} src={props.avatar} />}
-        title={props.name}
-        description={props.desc}
-      />
-    </ApprovalCardContainer>
-  );
-});
+const GroupActorApprovalCard: React.FC<ApprovalCardProps> = React.memo(
+  (props) => {
+    const handleViewActor = useCallback(() => {
+      fetchGroupActorDetail(props.uuid).then((actor) => {
+        nav(`/actor/detail/${actor.actor_uuid}`);
+      });
+    }, [props.uuid]);
+
+    return (
+      <ApprovalCardContainer
+        actions={[
+          <div onClick={handleViewActor}>
+            <i className="iconfont">&#xe613;</i> 查看
+          </div>,
+          <div onClick={() => _invoke(props, 'onAgree', props.uuid)}>
+            <i className="iconfont">&#xe66b;</i> 通过
+          </div>,
+          <div onClick={() => _invoke(props, 'onRefuse', props.uuid)}>
+            <i className="iconfont">&#xe680;</i> 拒绝
+          </div>,
+        ]}
+      >
+        <Meta
+          avatar={<Avatar name={props.name} src={props.avatar} />}
+          title={props.name}
+          description={props.desc}
+        />
+      </ApprovalCardContainer>
+    );
+  }
+);
 
 export default GroupActorApprovalCard;
