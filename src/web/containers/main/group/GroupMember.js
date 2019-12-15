@@ -2,7 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import config from '../../../../shared/project.config';
 import moment from 'moment';
-import { showModal, showProfileCard } from '../../../../shared/redux/actions/ui';
+import {
+  showModal,
+  showProfileCard,
+} from '../../../../shared/redux/actions/ui';
 import GroupMemberManage from './modal/GroupMemberManage';
 import { getUserInfoCache } from '../../../../shared/utils/cache-helper';
 
@@ -18,7 +21,7 @@ class GroupMember extends React.Component {
     let hasManagerAuth =
       groupInfo.get('managers_uuid').indexOf(this.props.userUUID) >= 0;
     if (groupInfo.get('group_members')) {
-      return groupInfo.get('group_members').map((uuid) => {
+      return groupInfo.get('group_members', []).map((uuid) => {
         let user = getUserInfoCache(uuid);
         let last_login = user.get('last_login')
           ? moment(user.get('last_login')).format('YYYY-M-D HH:mm:ss')

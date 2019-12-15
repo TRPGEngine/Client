@@ -1,0 +1,20 @@
+{
+  "name": "TRPG Engine",
+  "short_name": "TRPG",
+  "icons": [
+    {
+      "src": "/src/web/assets/img/logo@192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/src/web/assets/img/logo@512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#8C6244",
+  "background_color": "#8C6244",
+  "start_url": "/",
+  "display": "standalone"
+}

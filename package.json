@@ -1,6 +1,6 @@
 {
   "name": "trpg-game-client",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "专注于TRPG跑团的IM即时应用聊天软件",
   "main": "./dist/entry.js",
   "scripts": {
@@ -27,6 +27,7 @@
     "portal:dev": "cross-env NODE_ENV=development webpack-dev-server --progress --color --config ./build/config/webpack.portal.config.js",
     "portal:build": "cross-env NODE_ENV=production webpack --progress --color --config ./build/config/webpack.portal.config.js",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "lint": "eslint --ext .js,.jsx src",
     "lint:fix": "eslint --fix --ext .js,.jsx src",
@@ -81,7 +82,7 @@
     "qs": "^6.9.1",
     "react": "16.8.3",
     "react-contenteditable": "^3.3.2",
-    "react-dom": "^16.10.2",
+    "react-dom": "16.8.3",
     "react-emojione2": "^2.2.18",
     "react-fileupload": "^2.4.0",
     "react-image-crop": "^8.3.1",
@@ -180,6 +181,7 @@
     "metro-react-native-babel-preset": "^0.53.1",
     "monaco-editor-webpack-plugin": "^1.7.0",
     "node-sass": "^4.12.0",
+    "offline-plugin": "^5.0.7",
     "plugin-error": "^1.0.1",
     "prettier": "^1.18.2",
     "raw-loader": "^2.0.0",

@@ -65,9 +65,19 @@ class GroupActorList extends React.Component<Props, State> {
     this.fetchList();
   }
 
+  /**
+   * 获取团人物卡列表
+   */
   async fetchList() {
-    const actors = await fetchGroupActorList(this.groupUUID);
-    this.setState({ actors });
+    try {
+      const actors = await fetchGroupActorList(this.groupUUID);
+
+      this.setState({ actors });
+    } catch (err) {
+      notification.error({
+        message: '获取列表失败: ' + err,
+      });
+    }
   }
 
   /**
@@ -89,10 +99,11 @@ class GroupActorList extends React.Component<Props, State> {
         applyActorModalVisible: false,
       });
 
-      this.fetchList();
       notification.open({
         message: `申请成功, 请等待团管理员审批: ${groupActor.uuid}`,
       });
+
+      this.fetchList();
     } catch (err) {
       notification.error({
         message: err,
@@ -163,22 +174,24 @@ class GroupActorList extends React.Component<Props, State> {
       return <Loading />;
     }
 
-    return actors.map((actor) => (
-      <GroupActorListItem
-        key={actor.uuid}
-        passed={actor.passed}
-        enabled={actor.enabled}
-        onClick={() => this.handleClick(actor.uuid)}
-      >
-        <div>
+    return actors
+      .filter((actor) => actor.passed)
+      .map((actor) => (
+        <GroupActorListItem
+          key={actor.uuid}
+          passed={actor.passed}
+          enabled={actor.enabled}
+          onClick={() => this.handleClick(actor.uuid)}
+        >
           <div>
-            <strong>{actor.name}</strong>
+            <div>
+              <strong>{actor.name}</strong>
+            </div>
+            <div>{actor.desc}</div>
           </div>
-          <div>{actor.desc}</div>
-        </div>
-        <Avatar name={actor.name} src={actor.avatar} />
-      </GroupActorListItem>
-    ));
+          <Avatar name={actor.name} src={actor.avatar} />
+        </GroupActorListItem>
+      ));
   }
 
   renderApprovalList() {
@@ -196,7 +209,7 @@ class GroupActorList extends React.Component<Props, State> {
           name={actor.name}
           desc={actor.desc}
           avatar={actor.avatar}
-          // 操作按钮应当仅团管理员可见
+          // TODO: 操作按钮应当仅团管理员可见
           onAgree={this.handleAgreeGroupActor}
           onRefuse={this.handleRefuseGroupActor}
         />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchTemplateList, TemplateItem } from '@portal/model/actor';
+import { TemplateItem, fetchRecommendTemplateList } from '@portal/model/actor';
 import styled from 'styled-components';
 import history from '@portal/history';
 
@@ -18,7 +18,7 @@ class ActorSelectTemplate extends React.Component<{}, State> {
   };
 
   componentDidMount() {
-    fetchTemplateList().then((list) =>
+    fetchRecommendTemplateList().then((list) =>
       this.setState({
         list,
       })

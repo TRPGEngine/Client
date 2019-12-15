@@ -9,7 +9,10 @@ export const request = axios.create({
 });
 
 request.interceptors.request.use((val) => {
-  if (!val.headers['X-Token']) {
+  if (
+    ['post', 'get'].includes(val.method.toLowerCase()) &&
+    !val.headers['X-Token']
+  ) {
     // 任何请求都尝试增加token
     val.headers['X-Token'] = getToken();
   }

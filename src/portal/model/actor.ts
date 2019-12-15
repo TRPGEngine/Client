@@ -56,6 +56,19 @@ export const fetchTemplateList = async (page = 1): Promise<TemplateItem[]> => {
 };
 
 /**
+ * 获取角色模板推荐列表
+ */
+export const fetchRecommendTemplateList = async (): Promise<TemplateItem[]> => {
+  const { data } = await request.get('/actor/template/list/recommend');
+
+  if (data.result) {
+    return data.list;
+  } else {
+    return [];
+  }
+};
+
+/**
  * 获取角色模板详情
  * @param uuid 模板UUID
  */
@@ -125,7 +138,7 @@ export const editActor = async (
     _set(actorInfo, '_avatar', avatar.url);
   }
 
-  const { data } = await request.post(`/actor/${actorUUID}/edit/`, {
+  const { data } = await request.post(`/actor/${actorUUID}/edit`, {
     info: actorInfo,
     name: actorInfo._name,
     desc: actorInfo._desc,
@@ -140,6 +153,14 @@ export const editActor = async (
   }
 
   return actor;
+};
+
+/**
+ * 删除人物卡
+ * @param actorUUID 人物卡UUID
+ */
+export const removeActor = (actorUUID: string) => {
+  return request.post(`/actor/${actorUUID}/remove`);
 };
 
 /**

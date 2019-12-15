@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, Image, ImageSourcePropType } from 'react-native';
-import sb from 'react-native-style-block';
+import { ImageSourcePropType } from 'react-native';
 import config from '../../../../shared/project.config';
 import str2int from 'str2int';
 import _isString from 'lodash/isString';
@@ -39,6 +38,12 @@ const TextAvatar = styled.View<{
   justify-content: center;
 `;
 
+const CapitalText = styled.Text`
+  text-align: center;
+  text-align-vertical: center;
+  color: white;
+`;
+
 interface Props {
   uri: string | ImageSourcePropType;
   name: string;
@@ -63,7 +68,7 @@ class TAvatar extends React.PureComponent<Props> {
     loadError: false,
   };
 
-  getColor(name) {
+  getColor(name: string) {
     if (!name) {
       return '#ffffff'; // 如果获取不到名字，则返回白色
     }
@@ -93,7 +98,7 @@ class TAvatar extends React.PureComponent<Props> {
     if (capital) {
       capital = capital.toUpperCase();
     }
-    let color = this.getColor(name);
+    const color = this.getColor(name);
 
     if (
       uri &&
@@ -126,23 +131,11 @@ class TAvatar extends React.PureComponent<Props> {
     } else {
       return (
         <TextAvatar style={style} color={color} height={height} width={width}>
-          <Text style={[...styles.capital, { fontSize: capitalSize }]}>
-            {capital}
-          </Text>
+          <CapitalText style={{ fontSize: capitalSize }}>{capital}</CapitalText>
         </TextAvatar>
       );
     }
   }
 }
-
-const styles = {
-  capital: [
-    {
-      textAlign: 'center',
-      textAlignVertical: 'center',
-    },
-    sb.color(),
-  ],
-};
 
 export default TAvatar;

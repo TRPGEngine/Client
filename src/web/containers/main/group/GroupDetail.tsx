@@ -112,7 +112,7 @@ class GroupDetail extends React.Component<Props> {
   // 发送投骰邀请
   handleSendDiceInv() {
     let usercache = this.props.usercache;
-    let groupMembers = this.props.groupInfo.get('group_members');
+    let groupMembers = this.props.groupInfo.get('group_members', []);
     let list = groupMembers
       .filter((uuid) => uuid !== this.props.userUUID)
       .map((uuid) => ({

@@ -5,7 +5,7 @@ import {
   refuseGroupRequest,
 } from '@shared/redux/actions/group';
 import { MessageProps } from '@src/shared/components/MessageHandler';
-import _isNil from 'lodash';
+import _isNil from 'lodash/isNil';
 
 // 入团申请
 interface Props extends MessageProps, DispatchProp<any> {

@@ -5,6 +5,7 @@ const webpackMerge = require('webpack-merge');
 const base = require('./webpack.base.config.js');
 const package = require('../../package.json');
 const config = require('config');
+const OfflinePlugin = require('offline-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
@@ -40,5 +41,5 @@ if (_.get(process, 'env.npm_config_report', false)) {
 
 module.exports = webpackMerge({}, base, {
   mode: 'production',
-  plugins,
+  plugins: [...plugins, new OfflinePlugin()],
 });

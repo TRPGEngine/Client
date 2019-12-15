@@ -121,6 +121,14 @@ export const editGroupActor = async (
   return groupActor;
 };
 
+/**
+ * 删除团人物卡
+ * @param actorUUID 团人物卡UUID
+ */
+export const removeGroupActor = (groupUUID: string, groupActorUUID: string) => {
+  return request.post(`/group/${groupUUID}/actor/${groupActorUUID}/remove`);
+};
+
 export const fetchGroupActorAccess = async (
   groupUUID: string,
   groupActorUUID: string

@@ -9,10 +9,10 @@ module.exports = {
   preset: 'ts-jest/presets/js-with-ts',
   testEnvironment: 'jsdom',
   moduleNameMapper: {
+    '\\.(css|less|scss)$': 'identity-obj-proxy',
     ...pathsToModuleNameMapper(compilerOptions.paths, {
       prefix: '<rootDir>/',
     }),
-    '\\.(css|less)$': 'identity-obj-proxy',
   },
   rootDir: '.',
   roots: ['<rootDir>/test/', '<rootDir>/src/web/test/'],

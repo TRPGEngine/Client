@@ -5,7 +5,9 @@ let api: API; // 单例模式
 export function getInstance(): API {
   if (!api) {
     api = new API();
-    console.log('new socket client connect created!', api);
+    if (config.environment !== 'test') {
+      console.log('new socket client connect created!', api);
+    }
   }
 
   return api;
