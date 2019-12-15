@@ -209,7 +209,6 @@ class GroupActorList extends React.Component<Props, State> {
           name={actor.name}
           desc={actor.desc}
           avatar={actor.avatar}
-          // TODO: 需要有一个查看待审批的团角色信息的入口
           // TODO: 操作按钮应当仅团管理员可见
           onAgree={this.handleAgreeGroupActor}
           onRefuse={this.handleRefuseGroupActor}
