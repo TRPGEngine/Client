@@ -3,19 +3,25 @@ import { connect } from 'react-redux';
 import config from '../../../shared/project.config';
 import { showAlert, showModal } from '../../../shared/redux/actions/ui';
 import TemplateSelect from '../../containers/main/actors/TemplateSelect';
+import { List } from 'immutable';
 
 import './ActorSelect.scss';
+import { AlertPayload } from '@redux/types/ui';
+import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 
-class ActorSelect extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectActorUUID: '',
-    };
-  }
+interface Props {
+  selfActors: List<any>;
+  showAlert: any;
+  showModal: any;
+  onSelect: any;
+}
+class ActorSelect extends React.Component<Props> {
+  state = {
+    selectActorUUID: '',
+  };
 
   handleSelect() {
-    let selectActorUUID = this.state.selectActorUUID;
+    const selectActorUUID = this.state.selectActorUUID;
     if (selectActorUUID) {
       console.log('[人物卡列表]选择了' + selectActorUUID);
       let selectActorInfo = this.props.selfActors.find(
@@ -85,11 +91,11 @@ class ActorSelect extends React.Component {
 }
 
 export default connect(
-  (state) => ({
+  (state: TRPGState) => ({
     selfActors: state.getIn(['actor', 'selfActors']),
   }),
-  (dispatch) => ({
-    showAlert: (...args) => dispatch(showAlert(...args)),
-    showModal: (...args) => dispatch(showModal(...args)),
+  (dispatch: TRPGDispatch) => ({
+    showAlert: (payload: AlertPayload) => dispatch(showAlert(payload)),
+    showModal: (body) => dispatch(showModal(body)),
   })
 )(ActorSelect);
