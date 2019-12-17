@@ -4,17 +4,19 @@ import Select from 'react-select';
 import { findUser } from '../../../shared/redux/actions/user';
 import ModalPanel from '../ModalPanel';
 import FindResultItem from '../FindResultItem';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 
 import './FriendsAdd.scss';
 
-class FriendsAdd extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectValue: 'username',
-      searchText: '',
-    };
-  }
+interface Props extends TRPGDispatchProp {
+  isFinding: boolean;
+  findingResult: any;
+}
+class FriendsAdd extends React.Component<Props> {
+  state = {
+    selectValue: 'username',
+    searchText: '',
+  };
 
   handleSearch() {
     let text = this.state.searchText.trim();
@@ -49,7 +51,7 @@ class FriendsAdd extends React.Component {
             <input
               type="text"
               placeholder="请输入你要添加的好友信息"
-              spellCheck="false"
+              spellCheck={false}
               value={this.state.searchText}
               onChange={(e) => this.setState({ searchText: e.target.value })}
             />
@@ -77,7 +79,7 @@ class FriendsAdd extends React.Component {
   }
 }
 
-export default connect((state) => ({
+export default connect((state: TRPGState) => ({
   isFinding: state.getIn(['user', 'isFindingUser']),
   findingResult: state.getIn(['user', 'findingResult']),
 }))(FriendsAdd);

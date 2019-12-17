@@ -4,17 +4,19 @@ import Select from 'react-select';
 import { findGroup } from '../../../shared/redux/actions/group';
 import ModalPanel from '../ModalPanel';
 import FindResultItem from '../FindResultItem';
+import { TRPGDispatchProp, TRPGState } from '@redux/types/__all__';
 
 import './GroupAdd.scss';
 
-class GroupAdd extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectValue: 'groupname',
-      searchText: '',
-    };
-  }
+interface Props extends TRPGDispatchProp {
+  isFinding: boolean;
+  findingResult: any;
+}
+class GroupAdd extends React.Component<Props> {
+  state = {
+    selectValue: 'groupname',
+    searchText: '',
+  };
 
   handleSearch() {
     let text = this.state.searchText.trim();
@@ -55,7 +57,7 @@ class GroupAdd extends React.Component {
             <input
               type="text"
               placeholder="请输入你要添加的团信息"
-              spellCheck="false"
+              spellCheck={false}
               value={this.state.searchText}
               onChange={(e) => this.setState({ searchText: e.target.value })}
             />
@@ -83,7 +85,7 @@ class GroupAdd extends React.Component {
   }
 }
 
-export default connect((state) => ({
+export default connect((state: TRPGState) => ({
   isFinding: state.getIn(['group', 'isFindingGroup']),
   findingResult: state.getIn(['group', 'findingResult']),
 }))(GroupAdd);

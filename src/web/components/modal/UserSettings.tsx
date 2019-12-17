@@ -6,15 +6,15 @@ import {
   removeFavoriteDice,
   updateFavoriteDice,
   saveSettings,
-} from '../../../shared/redux/actions/settings';
+} from '@shared/redux/actions/settings';
+import { TRPGDispatchProp, TRPGState } from '@redux/types/__all__';
 
 import './UserSettings.scss';
 
-class UserSettings extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+interface Props extends TRPGDispatchProp {
+  userSettings: any;
+}
+class UserSettings extends React.Component<Props> {
   componentWillUnmount() {
     this.props.dispatch(saveSettings());
   }
@@ -75,6 +75,6 @@ class UserSettings extends React.Component {
   }
 }
 
-export default connect((state) => ({
+export default connect((state: TRPGState) => ({
   userSettings: state.getIn(['settings', 'user']),
 }))(UserSettings);
