@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../shared/project.config';
-import { showAlert, showModal } from '../../../shared/redux/actions/ui';
-import TemplateSelect from '../../containers/main/actors/TemplateSelect';
+import config from '@shared/project.config';
+import { showAlert, showModal } from '@shared/redux/actions/ui';
+import ActorCreate from '@web/components/modal/ActorCreate';
 import { List } from 'immutable';
 
 import './ActorSelect.scss';
@@ -20,7 +20,7 @@ class ActorSelect extends React.Component<Props> {
     selectActorUUID: '',
   };
 
-  handleSelect() {
+  handleSelect = () => {
     const selectActorUUID = this.state.selectActorUUID;
     if (selectActorUUID) {
       console.log('[人物卡列表]选择了' + selectActorUUID);
@@ -35,11 +35,11 @@ class ActorSelect extends React.Component<Props> {
     } else {
       this.props.showAlert('请选择人物卡');
     }
-  }
+  };
 
-  handleActorCreate() {
-    this.props.showModal(<TemplateSelect />);
-  }
+  handleActorCreate = () => {
+    this.props.showModal(<ActorCreate />);
+  };
 
   render() {
     return (
@@ -48,7 +48,7 @@ class ActorSelect extends React.Component<Props> {
         <div className="actor-list">
           {this.props.selfActors.size > 0 ? (
             this.props.selfActors.map((item, index) => {
-              let uuid = item.get('uuid');
+              const uuid = item.get('uuid');
               return (
                 <div
                   key={`actor-item#${uuid}#${index}`}
@@ -78,12 +78,12 @@ class ActorSelect extends React.Component<Props> {
           ) : (
             <div className="no-actor">
               尚无人物卡, 现在去
-              <span onClick={() => this.handleActorCreate()}>创建</span>
+              <span onClick={this.handleActorCreate}>创建</span>
             </div>
           )}
         </div>
         <div className="action">
-          <button onClick={() => this.handleSelect()}>确定</button>
+          <button onClick={this.handleSelect}>确定</button>
         </div>
       </div>
     );
