@@ -5,6 +5,11 @@ const platformSocketParam = {
   jsonp: false,
 };
 
+type SocketOnFunc = (
+  event: string,
+  fn: (data: { [key: string]: any }) => void
+) => void;
+
 export class API {
   serverUrl = `${config.io.protocol}://${config.io.host}:${config.io.port}`;
   socket = io(this.serverUrl, platformSocketParam);
@@ -38,5 +43,5 @@ export class API {
     });
   }
 
-  on = this.socket.on.bind(this.socket);
+  on: SocketOnFunc = this.socket.on.bind(this.socket);
 }
