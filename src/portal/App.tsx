@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Switch, Route, RouteProps } from 'react-router';
 
-import '@portal/utils/event';
+import { postMessage } from '@portal/utils/event';
 import history from './history';
 import TLoadable from '@web/components/TLoadable';
 
@@ -21,20 +21,27 @@ const GroupActorEdit = TLoadable(() => import('@portal/group/actor/edit'));
 interface TitleRouteProps extends RouteProps {
   title: string;
 }
-const TitleRoute = (route: TitleRouteProps) => {
+const TitleRoute: React.FC<TitleRouteProps> = React.memo((route) => {
+  const { path, title } = route;
+
   return (
     <Route
-      path={route.path}
+      path={path}
       render={(props) => {
-        document.title = route.title || 'TRPG Portal';
+        document.title = title || 'TRPG Portal';
+
+        postMessage('common::updatePath', {
+          title: document.title,
+          path,
+        });
 
         const Component = route.component;
-
         return <Component {...props}>{route.children}</Component>;
       }}
     />
   );
-};
+});
+TitleRoute.displayName = 'TitleRoute';
 
 class App extends React.Component {
   render() {
