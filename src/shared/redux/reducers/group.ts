@@ -1,4 +1,4 @@
-import immutable, { fromJS } from 'immutable';
+import immutable, { fromJS, List } from 'immutable';
 import _get from 'lodash/get';
 import { GroupState } from '@redux/types/group';
 import constants from '@redux/constants';
@@ -31,6 +31,8 @@ const {
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
   TICK_MEMBER_SUCCESS,
+  ADD_GROUP_MEMBER,
+  REMOVE_GROUP_MEMBER,
   SET_MEMBER_TO_MANAGER_SUCCESS,
   UPDATE_GROUP_STATUS,
 } = constants;
@@ -307,6 +309,28 @@ export default function group(state = initialState, action) {
         let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
         return list.updateIn([index, 'group_members'], (gml) => {
           return gml.delete(gml.findIndex((i) => i === action.memberUUID));
+        });
+      });
+    case ADD_GROUP_MEMBER:
+      return state.update('groups', (list) => {
+        let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
+        return list.updateIn([index, 'group_members'], (gml: List<string>) => {
+          const i = gml.findIndex((v) => v === action.memberUUID);
+          if (i >= 0) {
+            return gml;
+          }
+          return gml.push(action.memberUUID);
+        });
+      });
+    case REMOVE_GROUP_MEMBER:
+      return state.update('groups', (list) => {
+        let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
+        return list.updateIn([index, 'group_members'], (gml: List<string>) => {
+          const i = gml.findIndex((v) => v === action.memberUUID);
+          if (i >= 0) {
+            return gml.delete(i);
+          }
+          return gml;
         });
       });
     case SET_MEMBER_TO_MANAGER_SUCCESS:

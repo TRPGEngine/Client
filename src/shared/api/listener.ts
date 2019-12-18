@@ -24,6 +24,8 @@ export function bindEventFunc(
     updateGroupStatus,
     addGroup,
     updatePlayerSelectedGroupActor,
+    addGroupMember,
+    removeGroupMember,
   } = require('../redux/actions/group');
   const { getUserInfoCache } = require('../utils/cache-helper');
 
@@ -84,7 +86,14 @@ export function bindEventFunc(
       )
     );
   });
+  api.on('group::addGroupMember', ({ groupUUID, memberUUID }) => {
+    store.dispatch(addGroupMember(groupUUID, memberUUID));
+  });
+  api.on('group::removeGroupMember', ({ groupUUID, memberUUID }) => {
+    store.dispatch(removeGroupMember(groupUUID, memberUUID));
+  });
 
+  // 网络状态管理
   api.on('connect', function(data) {
     store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
     store.dispatch(updateSocketId(api.socket.id));
