@@ -101,7 +101,10 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
             'actor.avatar',
             config.file.getAbsolutePath(_get(ga, 'actor.avatar'))
           );
+          if (ga.actor.template_uuid) {
+            // 如果有则检查
           checkTemplate(ga.actor.template_uuid);
+        }
         }
         dispatch({ type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors });
       } else {
@@ -377,6 +380,12 @@ export const getGroupList = function(): TRPGAction {
         const groups: GroupInfo[] = data.groups;
         for (let group of groups) {
           group.avatar = config.file.getAbsolutePath(group.avatar);
+
+          // 初始化部分数据
+          group.managers_uuid = [];
+          group.maps_uuid = [];
+          group.group_actors = [];
+          group.group_members = [];
         }
 
         dispatch({ type: GET_GROUP_LIST_SUCCESS, payload: groups });
