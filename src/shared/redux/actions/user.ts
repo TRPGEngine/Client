@@ -22,12 +22,18 @@ const {
   ADD_FRIEND_INVITE,
 } = constants;
 import md5 from 'md5';
-import rnStorage from '../../api/rn-storage.api';
-import config from '../../project.config';
-import * as trpgApi from '../../api/trpg.api';
+import rnStorage from '@shared/api/rn-storage.api';
+import config from '@shared/project.config';
+import * as trpgApi from '@shared/api/trpg.api';
 import { showLoading, hideLoading, showAlert, showToast } from './ui';
-import { checkUser, getFriendInviteInfoCache } from '../../utils/cache-helper';
-import { runLoginSuccessCallback } from '../../utils/inject';
+import {
+  checkUser,
+  getFriendInviteInfoCache,
+} from '@shared/utils/cache-helper';
+import {
+  runLoginSuccessCallback,
+  runLogoutSuccessCallback,
+} from '@shared/utils/inject';
 import { setUserSettings, setSystemSettings } from './settings';
 
 import { reloadConverseList, getUserEmotion } from './chat';
@@ -159,6 +165,7 @@ export const logout = function(): TRPGAction {
       if (data.result) {
         rnStorage.remove('uuid');
         rnStorage.remove('token');
+        runLogoutSuccessCallback();
         dispatch({ type: RESET });
       } else {
         dispatch(showAlert(data.msg));

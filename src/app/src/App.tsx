@@ -14,7 +14,7 @@ const store = configureStore({
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as AntdProvider } from '@ant-design/react-native';
 import { ThemeProvider } from 'styled-components/native';
-import { injectLoginSuccessCallback } from '../../shared/utils/inject';
+import { injectLoginSuccessCallback } from '@shared/utils/inject';
 import { bindInfo, tryLocalNotify } from './notify';
 import { attachStore } from '@shared/utils/cache-helper';
 import styledTheme from '@src/shared/utils/theme';
