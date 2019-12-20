@@ -12,6 +12,7 @@ import { getCombineReducers } from '../reducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import actionCreators from '../actions';
 import { memoryLogger } from './memory-logger';
+import { initStoreHelper } from './helper';
 
 const logger = createLogger({
   level: 'info',
@@ -61,6 +62,8 @@ function configureStore(
     initialState,
     enhancer
   );
+
+  initStoreHelper(store); // 注册Helper
 
   return store;
 }
