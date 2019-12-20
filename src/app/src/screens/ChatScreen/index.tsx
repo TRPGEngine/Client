@@ -35,6 +35,8 @@ import { clearSelectGroup } from '@src/shared/redux/actions/group';
 import { sendStartWriting } from '@src/shared/api/event';
 import config from '@src/shared/project.config';
 import { List } from 'immutable';
+import { getCurrentGroupActor } from '@redux/helpers/group';
+import { MsgPayload } from '@redux/types/chat';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
@@ -55,7 +57,6 @@ interface Props extends TRPGDispatchProp, NavigationScreenProps<Params> {
   nomore: boolean;
   selectedConverseUUID: string;
   isWriting: boolean;
-  msgExtraData: {};
 }
 class ChatScreen extends React.Component<Props> {
   static navigationOptions = (props: Props) => {
@@ -176,7 +177,7 @@ class ChatScreen extends React.Component<Props> {
       if (!!uuid) {
         message = unemojify(message); // 转成标准文本
 
-        let payload: any = {
+        const payload: MsgPayload = {
           message,
           type: 'normal',
           is_public: false,
@@ -189,9 +190,17 @@ class ChatScreen extends React.Component<Props> {
           payload.converse_uuid = uuid;
           payload.is_public = true;
           payload.is_group = true;
-          payload.data = {
-            ...this.props.msgExtraData,
-          };
+
+          const currentGroupActor = getCurrentGroupActor(
+            this.props.selectedConverseUUID
+          );
+          if (!_isNil(currentGroupActor)) {
+            payload.data = {
+              groupActorUUID: currentGroupActor.get('uuid'),
+              name: currentGroupActor.get('name'),
+              avatar: currentGroupActor.get('avatar'),
+            };
+          }
           this.props.dispatch(sendMsg(null, payload));
         }
       }
@@ -413,43 +422,10 @@ export default connect((state: TRPGState, ownProps: Props) => {
   const converseType = ownProps.navigation.getParam('type', 'user');
   let isWriting = false;
   if (converseType === 'user') {
-    // TODO: 暂时先只实现用户的输入中提示
-    isWriting = (state.getIn(['chat', 'writingList', 'user']) || []).includes(
-      selectedConverseUUID
-    );
-  }
-
-  let msgExtraData = {}; // 发送消息时会额外带出的数据
-  if (converseType === 'group') {
-    // 如果是团信息会尝试带入团信息
-    const groupInfo = state
-      .getIn(['group', 'groups'])
-      .find((group) => group.get('uuid') === selectedConverseUUID);
-    if (!_isNil(groupInfo)) {
-      const selfActors = state
-        .getIn(['actor', 'selfActors'])
-        .map((i) => i.get('uuid'));
-      const selfGroupActors = groupInfo
-        .get('group_actors', List())
-        .filter(
-          (i) =>
-            i.get('enabled') && selfActors.indexOf(i.get('actor_uuid')) >= 0
-        );
-      const selectedGroupActorUUID = groupInfo.getIn([
-        'extra',
-        'selected_group_actor_uuid',
-      ]);
-      const selectedGroupActorInfo = selfGroupActors.find(
-        (actor) => actor.get('uuid') === selectedGroupActorUUID
-      );
-      if (!_isNil(selectedGroupActorInfo)) {
-        msgExtraData = {
-          groupActorUUID: selectedGroupActorInfo.get('uuid'),
-          name: selectedGroupActorInfo.get('name'),
-          avatar: selectedGroupActorInfo.get('avatar'),
-        };
-      }
-    }
+    // TODO: 暂时先只实现用户会话的输入中提示
+    isWriting = (
+      state.getIn(['chat', 'writingList', 'user']) || List()
+    ).includes(selectedConverseUUID);
   }
 
   const msgList = state.getIn([
@@ -469,6 +445,5 @@ export default connect((state: TRPGState, ownProps: Props) => {
       state.getIn(['chat', 'converses', selectedConverseUUID, 'nomore']) ||
       false,
     isWriting,
-    msgExtraData,
   };
 })(ChatScreen);

@@ -21,6 +21,7 @@ import { getCachedUserName } from '@src/shared/utils/cache-helper';
 import _get from 'lodash/get';
 import _without from 'lodash/without';
 import _isEmpty from 'lodash/isEmpty';
+import _isNil from 'lodash/isNil';
 import TModalPanel from '../components/TComponent/TModalPanel';
 import TPicker from '../components/TComponent/TPicker';
 import {
@@ -33,6 +34,7 @@ import { GroupStateGroupsItem } from '@src/shared/redux/types/group';
 import { Map } from 'immutable';
 import { NavigationScreenProps } from 'react-navigation';
 import { GroupDataParams } from '../types/params';
+import { getCurrentGroupActor } from '@redux/helpers/group';
 
 const ListItem = List.Item;
 
@@ -42,7 +44,6 @@ interface Props
   userUUID: string;
   groupInfo: GroupStateGroupsItem;
   selfGroupActors: any;
-  selectedGroupActorUUID: string;
   selectedGroupUUID: string;
   friendList: string[];
 }
@@ -77,13 +78,12 @@ class GroupDataScreen extends React.Component<Props> {
    * 切换选中角色
    */
   handleSelectGroupActor = () => {
-    const {
-      dispatch,
-      selectedGroupUUID,
-      selfGroupActors,
-      selectedGroupActorUUID,
-    } = this.props;
-    let actorUUID = selectedGroupActorUUID;
+    const { dispatch, selectedGroupUUID, selfGroupActors } = this.props;
+
+    const currentGroupActor = getCurrentGroupActor(selectedGroupUUID);
+    let actorUUID = _isNil(currentGroupActor)
+      ? null
+      : currentGroupActor.get('uuid');
 
     const options = [
       {
@@ -305,17 +305,11 @@ export default connect((state: TRPGState, ownProps: Props) => {
       (i) => i.get('enabled') && selfActors.indexOf(i.get('actor_uuid')) >= 0
     );
 
-  const selectedGroupActorUUID = groupInfo.getIn([
-    'extra',
-    'selected_group_actor_uuid',
-  ]);
-
   return {
     userUUID: state.getIn(['user', 'info', 'uuid']),
     usercache: state.getIn(['cache', 'user']),
     selectedGroupUUID,
     selfGroupActors,
-    selectedGroupActorUUID,
     groupInfo,
     friendList: state.getIn(['user', 'friendList']).toJS(),
   };
