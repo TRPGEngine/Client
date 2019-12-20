@@ -22,6 +22,7 @@ import QuickDiceModal from '@app/components/chat/QuickDiceModal';
 import { uploadChatimg } from '@shared/utils/image-uploader';
 import { unemojify } from '@shared/utils/emoji';
 import _get from 'lodash/get';
+import _isNil from 'lodash/isNil';
 import _throttle from 'lodash/throttle';
 import { ChatParams, ChatType } from '../../types/params';
 
@@ -33,6 +34,7 @@ import { TRPGState, TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 import { clearSelectGroup } from '@src/shared/redux/actions/group';
 import { sendStartWriting } from '@src/shared/api/event';
 import config from '@src/shared/project.config';
+import { List } from 'immutable';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
@@ -53,6 +55,7 @@ interface Props extends TRPGDispatchProp, NavigationScreenProps<Params> {
   nomore: boolean;
   selectedConverseUUID: string;
   isWriting: boolean;
+  msgExtraData: {};
 }
 class ChatScreen extends React.Component<Props> {
   static navigationOptions = (props: Props) => {
@@ -186,6 +189,9 @@ class ChatScreen extends React.Component<Props> {
           payload.converse_uuid = uuid;
           payload.is_public = true;
           payload.is_group = true;
+          payload.data = {
+            ...this.props.msgExtraData,
+          };
           this.props.dispatch(sendMsg(null, payload));
         }
       }
@@ -413,6 +419,39 @@ export default connect((state: TRPGState, ownProps: Props) => {
     );
   }
 
+  let msgExtraData = {}; // 发送消息时会额外带出的数据
+  if (converseType === 'group') {
+    // 如果是团信息会尝试带入团信息
+    const groupInfo = state
+      .getIn(['group', 'groups'])
+      .find((group) => group.get('uuid') === selectedConverseUUID);
+    if (!_isNil(groupInfo)) {
+      const selfActors = state
+        .getIn(['actor', 'selfActors'])
+        .map((i) => i.get('uuid'));
+      const selfGroupActors = groupInfo
+        .get('group_actors', List())
+        .filter(
+          (i) =>
+            i.get('enabled') && selfActors.indexOf(i.get('actor_uuid')) >= 0
+        );
+      const selectedGroupActorUUID = groupInfo.getIn([
+        'extra',
+        'selected_group_actor_uuid',
+      ]);
+      const selectedGroupActorInfo = selfGroupActors.find(
+        (actor) => actor.get('uuid') === selectedGroupActorUUID
+      );
+      if (!_isNil(selectedGroupActorInfo)) {
+        msgExtraData = {
+          groupActorUUID: selectedGroupActorInfo.get('uuid'),
+          name: selectedGroupActorInfo.get('name'),
+          avatar: selectedGroupActorInfo.get('avatar'),
+        };
+      }
+    }
+  }
+
   const msgList = state.getIn([
     'chat',
     'converses',
@@ -430,5 +469,6 @@ export default connect((state: TRPGState, ownProps: Props) => {
       state.getIn(['chat', 'converses', selectedConverseUUID, 'nomore']) ||
       false,
     isWriting,
+    msgExtraData,
   };
 })(ChatScreen);
