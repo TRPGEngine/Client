@@ -85,20 +85,21 @@ class GroupDataScreen extends React.Component<Props> {
     } = this.props;
     let actorUUID = selectedGroupActorUUID;
 
-    let options = [];
-    if (selfGroupActors && selfGroupActors.size > 0) {
-      options = selfGroupActors
-        .map((item, index) => ({
-          value: item.get('uuid'),
-          label: item.getIn(['actor', 'name']),
-        }))
-        .toJS();
-    }
-    if (selectedGroupActorUUID) {
-      options.unshift({
+    const options = [
+      {
         value: null,
-        label: '取消选择',
-      });
+        label: '不选择',
+      },
+    ];
+    if (selfGroupActors && selfGroupActors.size > 0) {
+      options.push(
+        ...selfGroupActors
+          .map((item, index) => ({
+            value: item.get('uuid'),
+            label: item.getIn(['actor', 'name']),
+          }))
+          .toJS()
+      );
     }
 
     dispatch(
@@ -112,7 +113,9 @@ class GroupDataScreen extends React.Component<Props> {
           <TPicker
             items={options}
             defaultValue={actorUUID}
-            onValueChange={(val) => (actorUUID = val)}
+            onValueChange={(val) => {
+              actorUUID = val;
+            }}
           />
         </TModalPanel>
       )
