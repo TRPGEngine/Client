@@ -23,19 +23,25 @@ const ActorListItem = styled.div`
 `;
 
 interface State {
+  isLoading: boolean;
   list: ActorItem[];
 }
 class ActorList extends React.Component<{}, State> {
   state: Readonly<State> = {
-    list: null,
+    isLoading: true,
+    list: [],
   };
 
   componentDidMount() {
-    fetchActorList().then((list) =>
+    this.setState({
+      isLoading: true,
+    });
+    fetchActorList().then((list) => {
       this.setState({
         list,
-      })
-    );
+        isLoading: false,
+      });
+    });
   }
 
   handleCreateActor = () => {
@@ -48,9 +54,9 @@ class ActorList extends React.Component<{}, State> {
   };
 
   renderList() {
-    const { list } = this.state;
+    const { isLoading, list } = this.state;
 
-    if (_isNull(list)) {
+    if (isLoading) {
       return <Loading />;
     }
 

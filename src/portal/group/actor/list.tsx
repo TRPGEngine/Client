@@ -46,12 +46,14 @@ interface Props
     groupUUID: string;
   }> {}
 interface State {
+  isLoading: boolean;
   actors: GroupActorItem[];
   applyActorModalVisible: boolean; // 是否显示申请团角色模态框
   selectedActorUUID: string[]; // 选择的角色的UUID
 }
 class GroupActorList extends React.Component<Props, State> {
   state: Readonly<State> = {
+    isLoading: true,
     actors: [],
     applyActorModalVisible: false,
     selectedActorUUID: [],
@@ -70,6 +72,7 @@ class GroupActorList extends React.Component<Props, State> {
    */
   async fetchList() {
     try {
+      this.setState({ isLoading: true });
       const actors = await fetchGroupActorList(this.groupUUID);
 
       this.setState({ actors });
@@ -77,6 +80,8 @@ class GroupActorList extends React.Component<Props, State> {
       notification.error({
         message: '获取列表失败: ' + err,
       });
+    } finally {
+      this.setState({ isLoading: false });
     }
   }
 
@@ -168,9 +173,9 @@ class GroupActorList extends React.Component<Props, State> {
   }
 
   renderList() {
-    const { actors } = this.state;
+    const { isLoading, actors } = this.state;
 
-    if (_isEmpty(actors)) {
+    if (isLoading) {
       return <Loading />;
     }
 
