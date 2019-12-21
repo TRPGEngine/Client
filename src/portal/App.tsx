@@ -17,6 +17,7 @@ const ActorEdit = TLoadable(() => import('@portal/actor/edit'));
 const GroupActorList = TLoadable(() => import('@portal/group/actor/list'));
 const GroupActorDetail = TLoadable(() => import('@portal/group/actor/detail'));
 const GroupActorEdit = TLoadable(() => import('@portal/group/actor/edit'));
+const NoteCreate = TLoadable(() => import('@portal/note/create'));
 
 interface TitleRouteProps extends RouteProps {
   title: string;
@@ -93,6 +94,11 @@ class App extends React.Component {
             title="团人物编辑"
             path="/group/:groupUUID/actor/:groupActorUUID/edit"
             component={GroupActorEdit}
+          />
+          <TitleRoute
+            title="创建笔记"
+            path="/note/create"
+            component={NoteCreate}
           />
         </Switch>
       </Router>
