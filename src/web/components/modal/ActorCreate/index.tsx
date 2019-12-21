@@ -13,6 +13,8 @@ import CreateActorDetail from './CreateActorDetail';
 import CreateActorConfirm from './CreateActorConfirm';
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
+import _isNil from 'lodash/isNil';
+import _isEmpty from 'lodash/isEmpty';
 import { toAvatarWithBlobUrl } from '@web/utils/upload-helper';
 import { isBlobUrl } from '@shared/utils/string-helper';
 import { AvatarUpdateData } from '@shared/utils/upload-helper';
@@ -44,11 +46,15 @@ const ActorCreate = (props: Props) => {
   const [selectedTemplate, setSelectedTemplate] = useState<ActorTemplateType>(
     null
   );
-  const [stateData, setStateData] = useState<DataMap>(null);
+  const [stateData, setStateData] = useState<DataMap>({});
 
   const handleCreateActor = async () => {
-    console.log('检查数据');
-    if (!stateData._name || !stateData || !selectedTemplate) {
+    console.log('正在检查数据');
+    if (
+      _isNil(stateData) ||
+      _isEmpty(stateData._name) ||
+      _isEmpty(selectedTemplate)
+    ) {
       message.error('无法创建, 请检查输入');
       return;
     }
