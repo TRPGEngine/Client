@@ -17,7 +17,7 @@ const notifyEventNameMap = {
 
 /**
  * 绑定当前设备与用户信息
- * 如果当前设备不存在绑定信息或绑定信息非当前登录用户，则向远程发起绑定请求
+ * 如果当前设备不存在绑定信息或绑定信息非当前登录用户(即用户在同一设备切换了账号)，则向远程发起绑定请求
  * @param info 绑定信息
  */
 export const bindNotifyInfo = async (info: NotifyInfo) => {

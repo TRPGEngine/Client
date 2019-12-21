@@ -1,5 +1,5 @@
 /**
- * 专门用于人物卡编辑器的webpack配置
+ * 专门用于人物卡portal的webpack配置
  */
 
 process.env.TRPG_APP_NAME = 'Portal';
@@ -7,13 +7,14 @@ process.env.TRPG_APP_NAME = 'Portal';
 const webpackMerge = require('webpack-merge');
 const path = require('path');
 const base = require('./webpack.config.js');
+const OfflinePlugin = require('offline-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist/portal');
 const ASSET_PATH = '/portal/';
 
-module.exports = webpackMerge({}, base, {
+const config = webpackMerge({}, base, {
   entry: {
     app: path.resolve(APP_PATH, './portal/index.tsx'),
   },
@@ -36,3 +37,10 @@ module.exports = webpackMerge({}, base, {
     inline: true,
   },
 });
+
+/**
+ * portal不需要offline插件
+ */
+config.plugins = config.plugins.filter((x) => !(x instanceof OfflinePlugin));
+
+module.exports = config;

@@ -26,6 +26,8 @@ const {
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
   TICK_MEMBER_SUCCESS,
+  ADD_GROUP_MEMBER,
+  REMOVE_GROUP_MEMBER,
   SET_MEMBER_TO_MANAGER_SUCCESS,
   UPDATE_GROUP_STATUS,
   UPDATE_PLAYER_SELECTED_GROUP_ACTOR,
@@ -101,7 +103,10 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
             'actor.avatar',
             config.file.getAbsolutePath(_get(ga, 'actor.avatar'))
           );
-          checkTemplate(ga.actor.template_uuid);
+          if (ga.actor.template_uuid) {
+            // 如果有则检查
+            checkTemplate(ga.actor.template_uuid);
+          }
         }
         dispatch({ type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors });
       } else {
@@ -377,6 +382,12 @@ export const getGroupList = function(): TRPGAction {
         const groups: GroupInfo[] = data.groups;
         for (let group of groups) {
           group.avatar = config.file.getAbsolutePath(group.avatar);
+
+          // 初始化部分数据
+          group.managers_uuid = [];
+          group.maps_uuid = [];
+          group.group_actors = [];
+          group.group_members = [];
         }
 
         dispatch({ type: GET_GROUP_LIST_SUCCESS, payload: groups });
@@ -602,6 +613,35 @@ export const tickMember = function(groupUUID, memberUUID) {
         console.error(data);
       }
     });
+  };
+};
+
+/**
+ * 增加团成员列表UUID
+ * @param groupUUID 团UUID
+ * @param memberUUID 成员UUID
+ */
+export const addGroupMember = function(groupUUID: string, memberUUID: string) {
+  return {
+    type: ADD_GROUP_MEMBER,
+    groupUUID,
+    memberUUID,
+  };
+};
+
+/**
+ * 移除团成员列表UUID
+ * @param groupUUID 团UUID
+ * @param memberUUID 成员UUID
+ */
+export const removeGroupMember = function(
+  groupUUID: string,
+  memberUUID: string
+) {
+  return {
+    type: REMOVE_GROUP_MEMBER,
+    groupUUID,
+    memberUUID,
   };
 };
 

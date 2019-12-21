@@ -22,6 +22,7 @@ import QuickDiceModal from '@app/components/chat/QuickDiceModal';
 import { uploadChatimg } from '@shared/utils/image-uploader';
 import { unemojify } from '@shared/utils/emoji';
 import _get from 'lodash/get';
+import _isNil from 'lodash/isNil';
 import _throttle from 'lodash/throttle';
 import { ChatParams, ChatType } from '../../types/params';
 
@@ -33,6 +34,9 @@ import { TRPGState, TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 import { clearSelectGroup } from '@src/shared/redux/actions/group';
 import { sendStartWriting } from '@src/shared/api/event';
 import config from '@src/shared/project.config';
+import { List } from 'immutable';
+import { getCurrentGroupActor } from '@redux/helpers/group';
+import { MsgPayload } from '@redux/types/chat';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
@@ -173,7 +177,7 @@ class ChatScreen extends React.Component<Props> {
       if (!!uuid) {
         message = unemojify(message); // 转成标准文本
 
-        let payload: any = {
+        const payload: MsgPayload = {
           message,
           type: 'normal',
           is_public: false,
@@ -186,6 +190,17 @@ class ChatScreen extends React.Component<Props> {
           payload.converse_uuid = uuid;
           payload.is_public = true;
           payload.is_group = true;
+
+          const currentGroupActor = getCurrentGroupActor(
+            this.props.selectedConverseUUID
+          );
+          if (!_isNil(currentGroupActor)) {
+            payload.data = {
+              groupActorUUID: currentGroupActor.get('uuid'),
+              name: currentGroupActor.get('name'),
+              avatar: currentGroupActor.get('avatar'),
+            };
+          }
           this.props.dispatch(sendMsg(null, payload));
         }
       }
@@ -407,10 +422,10 @@ export default connect((state: TRPGState, ownProps: Props) => {
   const converseType = ownProps.navigation.getParam('type', 'user');
   let isWriting = false;
   if (converseType === 'user') {
-    // TODO: 暂时先只实现用户的输入中提示
-    isWriting = (state.getIn(['chat', 'writingList', 'user']) || []).includes(
-      selectedConverseUUID
-    );
+    // TODO: 暂时先只实现用户会话的输入中提示
+    isWriting = (
+      state.getIn(['chat', 'writingList', 'user']) || List()
+    ).includes(selectedConverseUUID);
   }
 
   const msgList = state.getIn([

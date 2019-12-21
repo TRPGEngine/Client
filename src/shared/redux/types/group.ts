@@ -33,8 +33,11 @@ export interface GroupInfo {
   allow_search: boolean;
   creator_uuid: string;
   owner_uuid: string;
-  managers_uuid: string[];
-  maps_uuid: string[];
+
+  managers_uuid?: string[];
+  maps_uuid?: string[];
+  group_actors?: any[];
+  group_members?: string[];
 }
 
 export type GroupStateGroupsItem = Record<

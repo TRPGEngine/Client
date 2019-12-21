@@ -4,16 +4,15 @@ import ModalPanel from '../ModalPanel';
 import { createGroup } from '../../../shared/redux/actions/group';
 
 import './GroupCreate.scss';
+import { TRPGDispatchProp } from '@redux/types/__all__';
 
-class GroupCreate extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      groupName: '',
-      groupSubName: '',
-      groupDesc: '',
-    };
-  }
+interface Props extends TRPGDispatchProp {}
+class GroupCreate extends React.Component<Props> {
+  state = {
+    groupName: '',
+    groupSubName: '',
+    groupDesc: '',
+  };
 
   handleCreate() {
     this.props.dispatch(
@@ -38,7 +37,7 @@ class GroupCreate extends React.Component {
             <label>团名</label>
             <input
               type="text"
-              maxLength="16"
+              maxLength={16}
               value={this.state.groupName}
               onChange={(e) => this.setState({ groupName: e.target.value })}
             />
@@ -48,7 +47,7 @@ class GroupCreate extends React.Component {
             <input
               type="text"
               placeholder="选填"
-              maxLength="32"
+              maxLength={32}
               value={this.state.groupSubName}
               onChange={(e) => this.setState({ groupSubName: e.target.value })}
             />
@@ -56,10 +55,9 @@ class GroupCreate extends React.Component {
           <div>
             <label>团简介</label>
             <textarea
-              type="text"
               placeholder="简单介绍下你的团吧"
-              maxLength="100"
-              rows="4"
+              maxLength={100}
+              rows={4}
               value={this.state.groupDesc}
               onChange={(e) => this.setState({ groupDesc: e.target.value })}
             />

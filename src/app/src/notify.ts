@@ -1,9 +1,12 @@
 import { AppState, AppStateStatus } from 'react-native';
 // import JPushModule from 'jpush-react-native';
-import { bindNotifyInfo } from '../../shared/redux/actions/notify';
-import rnStorage from '../../shared/api/rn-storage.api';
+import { bindNotifyInfo } from '@shared/redux/actions/notify';
+import rnStorage from '@shared/api/rn-storage.api';
 import { umPush, Code } from './native/push-utils';
 import { clearAllNotifications, sendBasicNotify } from './native/trpg';
+
+import * as trpgApi from '@shared/api/trpg.api';
+const api = trpgApi.getInstance();
 
 // alias为用户的uuid
 export async function setAlias(alias: string) {
@@ -56,3 +59,31 @@ export function tryLocalNotify(name: string, message: string) {
     sendBasicNotify({ title: name, message });
   }
 }
+
+/**
+ * TODO: 未实装 设置
+ * 激活使用Notify
+ */
+export const activeNofify = async () => {
+  umPush.getRegistrationId((registrationID) => {
+    api.emit('notify::activeNofify', { registrationID }, (data) => {
+      if (data.result) {
+        console.log('激活推送');
+      }
+    });
+  });
+};
+
+/**
+ * TODO: 未实装 设置
+ * 取消使用Notify
+ */
+export const deactiveNofify = async () => {
+  umPush.getRegistrationId((registrationID) => {
+    api.emit('notify::deactiveNofify', { registrationID }, (data) => {
+      if (data.result) {
+        console.log('取消推送');
+      }
+    });
+  });
+};

@@ -3,19 +3,18 @@ import { connect } from 'react-redux';
 import ModalPanel from './ModalPanel';
 import { changePassword } from '../../shared/redux/actions/user';
 import { showAlert, hideModal } from '../../shared/redux/actions/ui';
+import { TRPGDispatchProp } from '@redux/types/__all__';
 
 import './ChangePassword.scss';
 
-class ChangePassword extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: '',
-      oldPassword: '',
-      newPassword: '',
-      newPasswordRepeat: '',
-    };
-  }
+interface Props extends TRPGDispatchProp {}
+class ChangePassword extends React.Component<Props> {
+  state = {
+    error: '',
+    oldPassword: '',
+    newPassword: '',
+    newPasswordRepeat: '',
+  };
 
   handleChangePassword() {
     this.setState({ error: '' });

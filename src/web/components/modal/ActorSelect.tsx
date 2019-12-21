@@ -1,21 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../shared/project.config';
-import { showAlert, showModal } from '../../../shared/redux/actions/ui';
-import TemplateSelect from '../../containers/main/actors/TemplateSelect';
+import config from '@shared/project.config';
+import { showAlert, showModal } from '@shared/redux/actions/ui';
+import ActorCreate from '@web/components/modal/ActorCreate';
+import { List } from 'immutable';
 
 import './ActorSelect.scss';
+import { AlertPayload } from '@redux/types/ui';
+import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 
-class ActorSelect extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectActorUUID: '',
-    };
-  }
+interface Props {
+  selfActors: List<any>;
+  showAlert: any;
+  showModal: any;
+  onSelect: any;
+}
+class ActorSelect extends React.Component<Props> {
+  state = {
+    selectActorUUID: '',
+  };
 
-  handleSelect() {
-    let selectActorUUID = this.state.selectActorUUID;
+  handleSelect = () => {
+    const selectActorUUID = this.state.selectActorUUID;
     if (selectActorUUID) {
       console.log('[人物卡列表]选择了' + selectActorUUID);
       let selectActorInfo = this.props.selfActors.find(
@@ -29,11 +35,11 @@ class ActorSelect extends React.Component {
     } else {
       this.props.showAlert('请选择人物卡');
     }
-  }
+  };
 
-  handleActorCreate() {
-    this.props.showModal(<TemplateSelect />);
-  }
+  handleActorCreate = () => {
+    this.props.showModal(<ActorCreate />);
+  };
 
   render() {
     return (
@@ -42,7 +48,7 @@ class ActorSelect extends React.Component {
         <div className="actor-list">
           {this.props.selfActors.size > 0 ? (
             this.props.selfActors.map((item, index) => {
-              let uuid = item.get('uuid');
+              const uuid = item.get('uuid');
               return (
                 <div
                   key={`actor-item#${uuid}#${index}`}
@@ -72,12 +78,12 @@ class ActorSelect extends React.Component {
           ) : (
             <div className="no-actor">
               尚无人物卡, 现在去
-              <span onClick={() => this.handleActorCreate()}>创建</span>
+              <span onClick={this.handleActorCreate}>创建</span>
             </div>
           )}
         </div>
         <div className="action">
-          <button onClick={() => this.handleSelect()}>确定</button>
+          <button onClick={this.handleSelect}>确定</button>
         </div>
       </div>
     );
@@ -85,11 +91,11 @@ class ActorSelect extends React.Component {
 }
 
 export default connect(
-  (state) => ({
+  (state: TRPGState) => ({
     selfActors: state.getIn(['actor', 'selfActors']),
   }),
-  (dispatch) => ({
-    showAlert: (...args) => dispatch(showAlert(...args)),
-    showModal: (...args) => dispatch(showModal(...args)),
+  (dispatch: TRPGDispatch) => ({
+    showAlert: (payload: AlertPayload) => dispatch(showAlert(payload)),
+    showModal: (body) => dispatch(showModal(body)),
   })
 )(ActorSelect);

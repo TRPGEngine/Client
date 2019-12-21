@@ -1,6 +1,6 @@
 import _isUndefined from 'lodash/isUndefined';
 import _pull from 'lodash/pull';
-import { EventTypes } from '../types/events';
+import { PortalEventTypes } from '@shared/types/portal';
 
 type EventFn = (...args: any[]) => void;
 
@@ -44,13 +44,16 @@ export const emit = (eventName: string, ...args: any[]) => {
  * @param type 事件类型
  * @param others 其他参数
  */
-export const buildPostPayload = (type: EventTypes, others?: {}): string => {
+export const buildPostPayload = (
+  type: PortalEventTypes,
+  others?: {}
+): string => {
   return JSON.stringify({
     ...others,
     type,
   });
 };
-export const postMessage = (type: EventTypes, others?: {}) => {
+export const postMessage = (type: PortalEventTypes, others?: {}) => {
   window.postMessage(buildPostPayload(type, others), '*');
 };
 
