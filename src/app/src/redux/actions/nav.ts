@@ -92,7 +92,17 @@ export const navPortal = function navPortal(url: string): TRPGAction {
 
     url = url.startsWith(portalUrl) ? url : portalUrl + url;
 
-    const injectedJavaScript = `location.href.indexOf('${portalUrl}') === 0 && window.localStorage.setItem('jwt', '${jwt}')`;
+    // const injectedJavaScript = `location.href.indexOf('${portalUrl}') === 0 && window.localStorage.setItem('jwt', '${jwt}')`;
+    const injectedJavaScript = `(function(){
+      if(location.href.indexOf('${portalUrl}') !== 0) {
+        return;
+      }
+      let token = window.localStorage.getItem('jwt');
+      if(!token || (token && token != '${jwt}')){
+        window.localStorage.setItem('jwt', '${jwt}');
+        window.location.reload();
+      }
+    })();`;
 
     dispatch(
       switchNav('Webview', {
