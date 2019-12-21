@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { connect, DispatchProp } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import Emoticon from './Emoticon';
-import * as pasteUtils from '../../shared/utils/paste-utils';
-import { sendMsg } from '../../shared/redux/actions/chat';
-import { showModal, hideModal } from '../../shared/redux/actions/ui';
+import * as pasteUtils from '@shared/utils/paste-utils';
+import { sendMsg } from '@shared/redux/actions/chat';
+import { showModal, hideModal } from '@shared/redux/actions/ui';
 import ActorSelect from './modal/ActorSelect';
-import config from '../../shared/project.config';
+import config from '@shared/project.config';
 import ContentEditable from 'react-contenteditable';
+import { TRPGState } from '@redux/types/__all__';
+import { Mentions } from 'antd';
 
 import './MsgSendBox.scss';
 
@@ -26,7 +28,7 @@ interface Props extends DispatchProp<any> {
   onSendDiceInv: () => void;
 }
 class MsgSendBox extends React.Component<Props> {
-  inputMsgRef = React.createRef<HTMLElement>();
+  inputMsgRef = React.createRef<Mentions>();
   fileUploader = React.createRef<HTMLInputElement>();
   state = {
     inputMsg: '',
@@ -114,12 +116,12 @@ class MsgSendBox extends React.Component<Props> {
     window.removeEventListener('click', this.hidePopup);
   }
 
-  handleMsgInputChange(e) {
-    this.setState({ inputMsg: e.target.value });
-    this.props.onChange && this.props.onChange(e.target.value); // 事件向上传递
-  }
+  handleMsgInputChange = (text: string) => {
+    this.setState({ inputMsg: text });
+    this.props.onChange && this.props.onChange(text); // 事件向上传递
+  };
 
-  handleMsgInputKeyDown(e) {
+  handleMsgInputKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.keyCode === 9) {
       e.preventDefault();
       let index = this.inputType.findIndex(
@@ -140,15 +142,15 @@ class MsgSendBox extends React.Component<Props> {
       // 发送信息
       e.preventDefault();
     }
-  }
+  };
 
-  handleMsgInputKeyUp(e) {
+  handleMsgInputKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.keyCode === 13 && !e.shiftKey) {
       this.handleSendMsg();
     }
-  }
+  };
 
-  async handlePaste(e: React.ClipboardEvent) {
+  handlePaste = async (e: React.ClipboardEvent) => {
     if (e.clipboardData && e.clipboardData.items) {
       const image = pasteUtils.isPasteImage(e.clipboardData.items);
       if (image) {
@@ -163,7 +165,7 @@ class MsgSendBox extends React.Component<Props> {
         }
       }
     }
-  }
+  };
 
   handleSendMsg() {
     let message = this.state.inputMsg.trim();
@@ -358,16 +360,15 @@ class MsgSendBox extends React.Component<Props> {
               })}
             </div>
           </div>
-          <MsgEditor
-            innerRef={this.inputMsgRef}
+          <Mentions
+            ref={this.inputMsgRef}
             className="input-msg"
-            tagName="pre"
-            html={this.state.inputMsg}
+            value={this.state.inputMsg}
             disabled={false}
-            onChange={(e) => this.handleMsgInputChange(e)}
-            onKeyDown={(e) => this.handleMsgInputKeyDown(e)}
-            onKeyUp={(e) => this.handleMsgInputKeyUp(e)}
-            onPaste={(e) => this.handlePaste(e)}
+            onChange={this.handleMsgInputChange}
+            onKeyDownCapture={this.handleMsgInputKeyDown}
+            onKeyUpCapture={this.handleMsgInputKeyUp}
+            onPaste={this.handlePaste}
           />
         </div>
         <div className="action-area">
@@ -383,6 +384,6 @@ class MsgSendBox extends React.Component<Props> {
   }
 }
 
-export default connect((state: any) => ({
+export default connect((state: TRPGState) => ({
   userUUID: state.getIn(['user', 'info', 'uuid']),
 }))(MsgSendBox);
