@@ -1,6 +1,7 @@
 import { Map } from 'immutable';
 
-type CacheMap = Map<string, any>;
+// type CacheMap = Map<string, any>;
+type CacheMap = { [name: string]: any };
 
 export type CacheKey =
   | 'user'
@@ -10,4 +11,7 @@ export type CacheKey =
   | 'friendInvite'
   | 'groupInvite';
 
-export type CacheState = Map<CacheKey, CacheMap>;
+// export type CacheState = Map<CacheKey, CacheMap>;
+export type CacheState = {
+  [name in CacheKey]: CacheMap;
+};

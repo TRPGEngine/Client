@@ -37,9 +37,12 @@ export interface ConverseInfo {
   name?: string;
 }
 
-type WritingListType =
-  | Map<'user', List<string>>
-  | Map<'group', Map<string, List<string>>>;
+type WritingListType = {
+  user: string[];
+  group: {
+    [name: string]: string[];
+  };
+};
 
 export type ChatStateConverseMsgListItem = Record<{
   room: string;
@@ -65,10 +68,10 @@ export type ChatStateConverse = Record<{
   msgList: ChatStateConverseMsgList;
 }>;
 
-export type ChatState = Record<{
+export type ChatState = {
   selectedConverseUUID: string;
   conversesDesc: string;
-  converses: Map<string, any>;
+  converses: { [name: string]: any };
   writingList: WritingListType;
-  emotions: Map<'catalogs' | 'favorites', List<any>>;
-}>;
+  emotions: { [name in 'catalogs' | 'favorites']: any[] };
+};

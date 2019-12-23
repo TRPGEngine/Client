@@ -70,6 +70,7 @@
     "formik": "^1.5.8",
     "handlebars": "^4.4.3",
     "handlebars-loader": "^1.7.1",
+    "immer": "^5.1.0",
     "immutable": "^4.0.0-rc.12",
     "is-uuid": "^1.0.2",
     "lodash": "^4.17.15",

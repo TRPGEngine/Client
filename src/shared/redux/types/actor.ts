@@ -1,5 +1,3 @@
-import { Record, List } from 'immutable';
-
 export interface ActorType {
   id: number;
   uuid: string;
@@ -31,21 +29,19 @@ export interface ActorTemplateType {
   updatedAt: string;
 }
 
-export type ActorTemplateStateType = Record<ActorTemplateType>;
-
-export type ActorState = Record<{
+export type ActorState = {
   isFindingTemplate: boolean;
-  suggestTemplate: List<ActorTemplateStateType>;
-  findingResult: List<any>;
-  currentEditedTemplate: Record<{
+  suggestTemplate: ActorTemplateType[];
+  findingResult: any[];
+  currentEditedTemplate: {
     uuid: string;
     name: string;
     desc: string;
     avatar: string;
     info: string;
-  }>;
-  selfTemplate: List<any>;
+  };
+  selfTemplate: any[];
   selectedTemplate: any;
-  selfActors: List<any>;
+  selfActors: any[];
   selectedActorUUID: string;
-}>;
+};
