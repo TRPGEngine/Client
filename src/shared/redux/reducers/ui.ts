@@ -1,6 +1,7 @@
 import constants from '@redux/constants';
 import immutable from 'immutable';
 import { UIState } from '@redux/types/ui';
+import { produce } from 'immer';
 
 const {
   RESET,
@@ -24,7 +25,7 @@ const {
   UPDATE_SOCKET_ID,
 } = constants;
 
-const initialState: UIState = immutable.fromJS({
+const initialState: UIState = {
   showAlert: false,
   showAlertInfo: {},
   showLoading: false,
@@ -51,72 +52,126 @@ const initialState: UIState = immutable.fromJS({
   },
   socketId: '',
   lastDiceType: 'basicDice',
-});
+};
 
-export default function ui(state = initialState, action) {
+export default produce((draft: UIState, action) => {
   switch (action.type) {
     case RESET:
-      return state
-        .set('showModal', false)
-        .set('showSlidePanel', false)
-        .set('showSlidePanelInfo', initialState.get('showSlidePanelInfo'));
+      draft.showModal = false;
+      draft.showSlidePanel = false;
+      draft.showSlidePanelInfo = initialState.showSlidePanelInfo;
+      return;
+    // return state
+    //   .set('showModal', false)
+    //   .set('showSlidePanel', false)
+    //   .set('showSlidePanelInfo', initialState.get('showSlidePanelInfo'));
     case SHOW_ALERT: {
-      let showAlertInfo = action.payload || {};
-      return state
-        .set('showAlert', true)
-        .set('showAlertInfo', immutable.fromJS(showAlertInfo));
+      const showAlertInfo = action.payload || {};
+      draft.showAlert = true;
+      draft.showAlertInfo = showAlertInfo;
+      return;
+      // return state
+      //   .set('showAlert', true)
+      //   .set('showAlertInfo', immutable.fromJS(showAlertInfo));
     }
     case HIDE_ALERT:
-      return state
-        .set('showAlert', false)
-        .set('showAlertInfo', immutable.Map());
+      draft.showAlert = false;
+      draft.showAlertInfo = {};
+      return;
+
+    // return state
+    //   .set('showAlert', false)
+    //   .set('showAlertInfo', immutable.Map());
     case SHOW_LOADING:
-      return state
-        .set('showLoading', true)
-        .set('showLoadingText', action.text || '加载中...');
+      draft.showLoading = true;
+      draft.showLoadingText = action.text || '加载中...';
+      return;
+
+    // return state
+    //   .set('showLoading', true)
+    //   .set('showLoadingText', action.text || '加载中...');
     case HIDE_LOADING:
-      return state.set('showLoading', false);
+      draft.showLoading = false;
+      return;
+    // return state.set('showLoading', false);
     case SHOW_MODAL:
-      return state
-        .set('showModal', true)
-        .set('showModalBody', immutable.fromJS(action.payload));
+      draft.showModal = true;
+      draft.showModalBody = action.payload;
+      return;
+
+    // return state
+    //   .set('showModal', true)
+    //   .set('showModalBody', immutable.fromJS(action.payload));
     case HIDE_MODAL:
-      return state.set('showModal', false).set('showModalBody', undefined);
+      draft.showModal = false;
+      draft.showModalBody = undefined;
+      return;
+    // return state.set('showModal', false).set('showModalBody', undefined);
     case SHOW_TOAST:
-      return state
-        .set('showToast', true)
-        .set('showToastText', action.text || '');
+      draft.showToast = true;
+      draft.showToastText = action.text || '';
+      return;
+    // return state
+    //   .set('showToast', true)
+    //   .set('showToastText', action.text || '');
     case HIDE_TOAST:
-      return state.set('showToast', false);
+      draft.showToast = false;
+      return;
+    // return state.set('showToast', false);
     case SHOW_PROFILE_CARD:
-      return state
-        .set('showProfileCard', true)
-        .set('showProfileCardUUID', action.uuid);
+      draft.showProfileCard = true;
+      draft.showProfileCardUUID = action.uuid;
+      return;
+
+    // return state
+    //   .set('showProfileCard', true)
+    //   .set('showProfileCardUUID', action.uuid);
     case HIDE_PROFILE_CARD:
-      return state.set('showProfileCard', false);
+      draft.showProfileCard = false;
+      return;
+
+    // return state.set('showProfileCard', false);
     case SHOW_SLIDE_PANEL:
-      return state
-        .set('showSlidePanel', true)
-        .set('showSlidePanelInfo', immutable.fromJS(action.payload));
+      draft.showSlidePanel = true;
+      draft.showSlidePanelInfo = action.payload;
+      return;
+
+    // return state
+    //   .set('showSlidePanel', true)
+    //   .set('showSlidePanelInfo', immutable.fromJS(action.payload));
     case HIDE_SLIDE_PANEL:
-      return state.set('showSlidePanel', false);
+      draft.showSlidePanel = false;
+      return;
+    // return state.set('showSlidePanel', false);
     case SHOW_LIGHTBOX:
-      return state
-        .set('showLigthbox', true)
-        .set('showLigthboxInfo', immutable.fromJS(action.payload));
+      draft.showLigthbox = true;
+      draft.showLigthboxInfo = action.payload;
+      return;
+    // return state
+    //   .set('showLigthbox', true)
+    //   .set('showLigthboxInfo', immutable.fromJS(action.payload));
     case HIDE_LIGHTBOX:
-      return state.set('showLigthbox', false);
+      draft.showLigthbox = false;
+      return;
+    // return state.set('showLigthbox', false);
     case SWITCH_MENU_PANNEL:
-      return state
-        .set('menuIndex', action.menuIndex)
-        .set('menuPannel', action.payload);
+      draft.menuIndex = action.menuIndex;
+      draft.menuPannel = action.payload;
+      return;
+    // return state
+    //   .set('menuIndex', action.menuIndex)
+    //   .set('menuPannel', action.payload);
     case SET_LAST_DICE_TYPE:
-      return state.set('lastDiceType', action.payload);
+      draft.lastDiceType = action.payload;
+      return;
+    // return state.set('lastDiceType', action.payload);
     case CHANGE_NETWORK_STATE:
-      return state.set('network', immutable.fromJS(action.payload));
+      draft.network = action.payload;
+      return;
+    // return state.set('network', immutable.fromJS(action.payload));
     case UPDATE_SOCKET_ID:
-      return state.set('socketId', action.socketId);
-    default:
-      return state;
+      draft.socketId = action.socketId;
+      return;
+    // return state.set('socketId', action.socketId);
   }
-}
+}, initialState);
