@@ -1,4 +1,3 @@
-import immutable, { Record, Map, List } from 'immutable';
 import constants from '../constants';
 import { ActorState } from '@redux/types/actor';
 import { produce } from 'immer';

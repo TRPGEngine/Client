@@ -36,30 +36,25 @@ export interface GroupInfo {
 
   managers_uuid?: string[];
   maps_uuid?: string[];
+
+  // group初始化后获取的参数
   group_actors?: any[];
   group_members?: string[];
+  extra?: any;
+  status?: boolean;
 }
 
-export type GroupStateGroupsItem = Record<
-  GroupInfo & {
-    managers_uuid: List<string>;
-    maps_uuid: List<string>;
-
-    // group初始化后获取的参数
-    group_actors: any;
-    group_members: List<string>;
-  }
->;
-
-export type GroupStateGroups = List<GroupStateGroupsItem>;
-
-export type GroupState = Record<{
-  info: Map<string, any>;
-  invites: List<any>;
-  groups: GroupStateGroups;
+export type GroupState = {
+  info: { [name: string]: any };
+  invites: any[];
+  groups: GroupInfo[];
   selectedGroupUUID: string;
   isFindingGroup: boolean;
-  findingResult: List<any>;
-  requestingGroupUUID: List<string>;
-  groupActorMap: Map<string, Map<string, string>>;
-}>;
+  findingResult: any[];
+  requestingGroupUUID: string[];
+  groupActorMap: {
+    [name: string]: {
+      [name: string]: string;
+    };
+  };
+};

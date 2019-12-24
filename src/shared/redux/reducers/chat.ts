@@ -1,7 +1,5 @@
-import immutable from 'immutable';
 import _isNil from 'lodash/isNil';
 import _invoke from 'lodash/invoke';
-import _merge from 'lodash/merge';
 import _remove from 'lodash/remove';
 import _orderBy from 'lodash/orderBy';
 import _last from 'lodash/last';
@@ -164,7 +162,10 @@ export default produce((draft: ChatState, action) => {
         (item) => item.uuid === action.msgUUID
       );
       if (msgIndex >= 0) {
-        _merge(msgList[msgIndex], action.payload);
+        msgList[msgIndex] = {
+          ...msgList[msgIndex],
+          ...action.payload,
+        };
       }
 
       return;
@@ -358,7 +359,10 @@ export default produce((draft: ChatState, action) => {
 
         const index = msgList.findIndex((item) => item.uuid === localUUID);
         if (index >= 0) {
-          _merge(msgList[index], pkg);
+          msgList[index] = {
+            ...msgList[index],
+            ...pkg,
+          };
         }
       }
 
