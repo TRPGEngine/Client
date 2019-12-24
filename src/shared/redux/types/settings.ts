@@ -1,9 +1,7 @@
-import { Record } from 'immutable';
-
 type NotificationType = 'granted' | 'denied' | 'default';
 
-export type SettingsState = Record<{
+export interface SettingsState {
   user: any;
   system: any;
   notificationPermission: NotificationType;
-}>;
+}
