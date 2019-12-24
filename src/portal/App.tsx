@@ -24,6 +24,7 @@ const GroupActorEdit = TLoadable(() =>
   import('@portal/routes/group/actor/edit')
 );
 const NoteCreate = TLoadable(() => import('@portal/routes/note/create'));
+const DeployLatest = TLoadable(() => import('@portal/routes/deploy'));
 
 interface TitleRouteProps extends RouteProps {
   title: string;
@@ -106,6 +107,7 @@ class App extends React.Component {
             path="/note/create"
             component={NoteCreate}
           />
+          <TitleRoute title="下载App" path="/deploy" component={DeployLatest} />
         </Switch>
       </Router>
     );

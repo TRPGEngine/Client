@@ -5,6 +5,7 @@ import { showSlidePanel, showLightbox } from './ui';
 import { TRPGAction } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
+import { downloadFileWeb } from '@shared/utils/file-helper';
 
 const api = trpgApi.getInstance();
 
@@ -54,14 +55,7 @@ export const downloadFile = function(fileuuid: string): TRPGAction {
       const url = data.downloadUrl; // 下载地址
       if (url) {
         console.log('开始下载:', url);
-        let a = document.createElement('a');
-        // a.target = '_blank';
-        a.style.display = 'none';
-        a.href = url;
-        a.download = url;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        downloadFileWeb(url);
       } else {
         console.error('无法下载');
       }
