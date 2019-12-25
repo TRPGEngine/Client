@@ -184,12 +184,12 @@ class EmotionPanel extends React.Component<Props> {
     const getEmotionPage = () => {
       // 该表情包下所有表情
       const currentCatalog = this.props.emotionCatalog.find(
-        (catalog) => catalog.get('uuid') === selectedEmotionCatalog
+        (catalog) => catalog.uuid === selectedEmotionCatalog
       );
 
       let items = [];
       if (!_isNil(currentCatalog)) {
-        items = currentCatalog.get('items').toJS();
+        items = currentCatalog.items;
       }
 
       const rowNum = 2;

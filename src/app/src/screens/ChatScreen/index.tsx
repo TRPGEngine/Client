@@ -371,7 +371,7 @@ class ChatScreen extends React.Component<Props> {
 
   render() {
     if (this.props.msgList) {
-      let msgList: any[] = this.props.msgList.reverse().toJS();
+      let msgList: any[] = this.props.msgList.reverse();
 
       return (
         <View style={{ flex: 1 }}>

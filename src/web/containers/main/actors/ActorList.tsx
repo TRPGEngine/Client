@@ -152,27 +152,24 @@ class ActorList extends React.Component<Props> {
       }
     }
 
-    if (actor && actor.get('info')) {
-      let template = this.props.templateCache.get(
-        actor.get('template_uuid'),
-        {}
-      );
-      let info = at.parse(template.get('info', '{}'));
-      info.setData(actor.get('info').toJS());
+    if (actor && actor.info) {
+      let template = this.props.templateCache[actor.template_uuid] ?? {};
+      let info = at.parse(template.info ?? {});
+      info.setData(actor.info);
       let cells = info.getCells();
       return (
         <div>
           <p>
             <span>人物卡:</span>
-            <span>{actor.get('name')}</span>
+            <span>{actor.name}</span>
           </p>
           <p>
             <span>说明:</span>
-            <span>{actor.get('desc')}</span>
+            <span>{actor.desc}</span>
           </p>
           {cells.map((item, index) => {
             return (
-              <p key={actor.get('uuid') + index}>
+              <p key={actor.uuid + index}>
                 <span>{item['name']}:</span>
                 <span>{item['value']}</span>
               </p>

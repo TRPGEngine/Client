@@ -27,10 +27,7 @@ class ActorSelect extends React.Component<Props> {
         (a) => a.get('uuid') === selectActorUUID
       );
       this.props.onSelect &&
-        this.props.onSelect(
-          selectActorUUID,
-          selectActorInfo && selectActorInfo.toJS()
-        );
+        this.props.onSelect(selectActorUUID, selectActorInfo);
     } else {
       this.props.showAlert('请选择人物卡');
     }

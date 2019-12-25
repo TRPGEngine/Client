@@ -53,12 +53,10 @@ class QuickDice extends React.Component<Props> {
       { value: 'complexDice', label: '复合骰' },
       { value: 'favoriteDice', label: '常用骰' },
     ];
-    const favoriteDice = this.props.favoriteDice
-      .map((i) => ({
-        value: i.get('value'),
-        label: `${i.get('title')}(${i.get('value')})`,
-      }))
-      .toJS();
+    const favoriteDice = this.props.favoriteDice.map((i) => ({
+      value: i.value,
+      label: `${i.title}(${i.value})`,
+    }));
 
     return (
       <div className="quick-dice">

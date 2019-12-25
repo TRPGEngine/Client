@@ -64,7 +64,7 @@ class ActorEdit extends React.Component<Props, State> {
     let info = this.props.selectedTemplate.info;
     let template = (this.template = at.parse(info));
     if (this.editedActor) {
-      let data = this.editedActor.get('info').toJS();
+      let data = this.editedActor.get('info');
       template.setData(data);
     }
     template.eval();

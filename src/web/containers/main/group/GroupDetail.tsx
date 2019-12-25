@@ -127,9 +127,7 @@ class GroupDetail extends React.Component<Props> {
         <ListSelect
           list={list.map((i) => i.name)}
           onListSelect={(selecteds) => {
-            let inviteList = list
-              .filter((_, i) => selecteds.indexOf(i) >= 0)
-              .toJS();
+            let inviteList = list.filter((_, i) => selecteds.indexOf(i) >= 0);
             let inviteNameList = inviteList.map((i) => i.name);
             let inviteUUIDList = inviteList.map((i) => i.uuid);
             if (inviteNameList.length === 0) {
@@ -241,12 +239,10 @@ class GroupDetail extends React.Component<Props> {
     let { selfGroupActors, selectedGroupActorUUID, groupInfo } = this.props;
     let options = [];
     if (selfGroupActors && selfGroupActors.size > 0) {
-      options = selfGroupActors
-        .map((item, index) => ({
-          value: item.get('uuid'),
-          label: item.getIn(['actor', 'name']),
-        }))
-        .toJS();
+      options = selfGroupActors.map((item, index) => ({
+        value: item.get('uuid'),
+        label: item.getIn(['actor', 'name']),
+      }));
     }
     if (selectedGroupActorUUID) {
       options.unshift({

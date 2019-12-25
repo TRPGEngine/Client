@@ -154,7 +154,7 @@ class AddFriendScreen extends React.Component<Props> {
         // 显示搜索结果列表
         if (this.state.searchType === 'user') {
           let userFindingResult = this.props.userFindingResult
-            ? this.props.userFindingResult.toJS()
+            ? this.props.userFindingResult
             : [];
 
           return this.getSearchList(
@@ -166,7 +166,7 @@ class AddFriendScreen extends React.Component<Props> {
           );
         } else if (this.state.searchType === 'group') {
           let resultList = this.props.groupFindingResult
-            ? this.props.groupFindingResult.toJS()
+            ? this.props.groupFindingResult
             : [];
 
           return this.getSearchList(resultList, (item) =>

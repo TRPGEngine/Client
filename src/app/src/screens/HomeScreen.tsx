@@ -106,8 +106,7 @@ class HomeScreen extends React.Component<Props> {
               this.handleSelectConverse(uuid, item.get('type'), item);
             },
           };
-        })
-        .toJS();
+        });
 
       return (
         <FlatList

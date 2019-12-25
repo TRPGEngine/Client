@@ -79,7 +79,7 @@ class NoteList extends React.Component<Props> {
           <NoteDetail
             key={selectedNoteUUID}
             uuid={selectedNoteUUID}
-            note={note.toJS()}
+            note={note}
           />
         );
       } else {

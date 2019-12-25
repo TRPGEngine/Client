@@ -154,7 +154,7 @@ class MsgContainer extends React.Component<Props> {
                 name={name}
                 avatar={avatar || defaultAvatar}
                 emphasizeTime={emphasizeTime}
-                info={item.toJS()}
+                info={item}
               />
             );
           })}

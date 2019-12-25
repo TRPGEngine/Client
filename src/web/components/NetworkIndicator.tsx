@@ -11,7 +11,7 @@ interface Props {
  * 网络状态指示器
  */
 const NetworkIndicator: React.FC<Props> = React.memo((props) => {
-  const network = props.network.toJS();
+  const network = props.network;
   let icon = '';
   let state = '';
   if (network.isOnline === true) {

@@ -106,26 +106,24 @@ class ConverseList extends React.Component<Props> {
   }
 
   getFriendList() {
-    let friends = this.props.friends.toJS();
-    let usercache = this.props.usercache;
+    const friends = this.props.friends;
+    const usercache = this.props.usercache;
 
     return (
       <div className="friend-list">
         {friends.length > 0 ? (
           friends.map((item, index) => {
-            let uuid = item;
-            let name =
-              usercache.getIn([uuid, 'nickname']) ||
-              usercache.getIn([uuid, 'username']);
+            const uuid = item;
+            const name = _get(usercache, [uuid, 'nickname']) ?? _get(usercache, [uuid, 'username'])
             return (
               <ConvItem
                 key={`friends#${uuid}#${index}`}
                 icon={
-                  usercache.getIn([uuid, 'avatar']) ||
+                  _get(usercache, [uuid, 'avatar']) ??
                   config.defaultImg.getUser(name)
                 }
                 title={name}
-                content={usercache.getIn([uuid, 'sign'])}
+                content={_get(usercache, [uuid, 'sign'])}
                 time=""
                 uuid=""
                 isSelected={false}

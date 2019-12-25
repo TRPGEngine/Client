@@ -97,7 +97,6 @@ class GroupDataScreen extends React.Component<Props> {
             value: item.get('uuid'),
             label: item.getIn(['actor', 'name']),
           }))
-          .toJS()
       );
     }
 

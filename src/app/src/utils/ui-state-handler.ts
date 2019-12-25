@@ -76,7 +76,7 @@ export const modelHandler = uiStateSwitchFactory('showModal', {
   onEnabled: (currentUI, dispatch) => {
     const body = currentUI.get('showModalBody');
     if (body) {
-      TModal.show(body.toJS(), { onRequestClose: () => dispatch(hideModal()) });
+      TModal.show(body, { onRequestClose: () => dispatch(hideModal()) });
     }
   },
   onDisabled: () => {

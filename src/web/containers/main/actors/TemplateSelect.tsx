@@ -50,7 +50,7 @@ class TemplateSelect extends React.Component<Props> {
   }
 
   handleEdit(item) {
-    this.props.setEditedTemplate(item.toJS());
+    this.props.setEditedTemplate(item);
     this.props.showModal(<TemplateEdit isEdit={true} />);
   }
 

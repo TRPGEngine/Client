@@ -77,7 +77,7 @@ class GroupAdd extends React.Component<Props> {
           <div className="group-search-result">
             {this.props.isFinding
               ? '正在查询...'
-              : this.getFriendResult(this.props.findingResult.toJS())}
+              : this.getFriendResult(this.props.findingResult)}
           </div>
         </div>
       </ModalPanel>

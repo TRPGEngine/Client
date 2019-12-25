@@ -55,10 +55,9 @@ class DiceRequest extends React.Component<Props> {
     ];
     let favoriteDice = this.props.favoriteDice
       .map((i) => ({
-        value: i.get('value'),
-        label: `${i.get('title')}(${i.get('value')})`,
+        value: i.value,
+        label: `${i.title}(${i.value})`,
       }))
-      .toJS();
     return (
       <div className="dice-request">
         <span>因为</span>

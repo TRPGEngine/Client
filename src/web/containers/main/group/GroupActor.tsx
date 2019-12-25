@@ -131,7 +131,7 @@ class GroupActor extends React.Component<Props> {
       return groupActors
         .filter((item) => item.get('passed') === true)
         .map((item) => {
-          const groupActor: GroupActorType = item.toJS(); // 团人物卡信息
+          const groupActor: GroupActorType = item; // 团人物卡信息
           const originActor: ActorType = groupActor.actor;
           const groupActorUUID = groupActor.uuid;
 
@@ -227,17 +227,14 @@ class GroupActor extends React.Component<Props> {
                   <Tooltip title="查询">
                     <button
                       onClick={() =>
-                        this.handleShowActorProfile(
-                          originActor.toJS(),
-                          actorData.toJS()
-                        )
+                        this.handleShowActorProfile(originActor, actorData)
                       }
                     >
                       <i className="iconfont">&#xe61b;</i>
                     </button>
                   </Tooltip>
                   <Tooltip title="审批">
-                    <button onClick={() => this.handleApprove(item.toJS())}>
+                    <button onClick={() => this.handleApprove(item)}>
                       <i className="iconfont">&#xe83f;</i>
                     </button>
                   </Tooltip>

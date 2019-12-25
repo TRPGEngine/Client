@@ -19,7 +19,7 @@ class Modal extends React.Component<Props> {
             <div className="modal-close" onClick={() => this.props.hideModal()}>
               <i className="iconfont">&#xe70c;</i>
             </div>
-            <div className="modal-content">{this.props.body.toJS()}</div>
+            <div className="modal-content">{this.props.body}</div>
           </div>
         </div>
       );
