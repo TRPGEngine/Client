@@ -6,12 +6,16 @@ import ReactTooltip from 'react-tooltip';
 import Spinner from '../../../components/Spinner';
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import NoteDetail from './NoteDetail';
+import _values from 'lodash/values';
+import _orderBy from 'lodash/orderBy';
 
 import './NoteList.scss';
 
 interface Props extends TRPGDispatchProp {
   selectedNoteUUID: string;
-  noteList: any[];
+  noteList: any;
+  isNoteSync: boolean;
+  isNoteSyncUUID: string;
 }
 class NoteList extends React.Component<Props> {
   constructor(props) {
@@ -30,44 +34,36 @@ class NoteList extends React.Component<Props> {
     let selectedNoteUUID = this.props.selectedNoteUUID;
 
     let content = notes
-      ? notes
-          .sortBy((item) => item.get('updatedAt'))
-          .reverse()
-          .map((item, index) => {
-            item = item.toJS();
-
-            let summary = item.content
-              .replace(/<\/?.+?>/g, '')
-              .replace(/ /g, '');
-            if (summary.length > 70) {
-              summary = summary.slice(0, 70) + '...';
-            }
-            let uuid = item.uuid;
-            return (
-              <div
-                key={uuid}
-                className={
-                  'note-item' + (selectedNoteUUID === uuid ? ' active' : '')
-                }
-                onClick={() => this.handleClick(uuid)}
-              >
-                <div className="note-title">
-                  <span>{item.title}</span>
-                  <Spinner
-                    visible={
-                      this.props.isNoteSync &&
-                      uuid === this.props.isNoteSyncUUID
-                    }
-                  />
-                </div>
-
-                <div className="note-update-time">
-                  {moment(item.updatedAt).fromNow()}
-                </div>
-                <div className="note-summary">{summary}</div>
+      ? _orderBy(_values(notes), 'updatedAt', 'desc').map((item, index) => {
+          let summary = item.content.replace(/<\/?.+?>/g, '').replace(/ /g, '');
+          if (summary.length > 70) {
+            summary = summary.slice(0, 70) + '...';
+          }
+          let uuid = item.uuid;
+          return (
+            <div
+              key={uuid}
+              className={
+                'note-item' + (selectedNoteUUID === uuid ? ' active' : '')
+              }
+              onClick={() => this.handleClick(uuid)}
+            >
+              <div className="note-title">
+                <span>{item.title}</span>
+                <Spinner
+                  visible={
+                    this.props.isNoteSync && uuid === this.props.isNoteSyncUUID
+                  }
+                />
               </div>
-            );
-          })
+
+              <div className="note-update-time">
+                {moment(item.updatedAt).fromNow()}
+              </div>
+              <div className="note-summary">{summary}</div>
+            </div>
+          );
+        })
       : '';
 
     return content;
@@ -76,7 +72,7 @@ class NoteList extends React.Component<Props> {
   getNoteDetail() {
     const selectedNoteUUID = this.props.selectedNoteUUID;
     if (selectedNoteUUID) {
-      let note = this.props.noteList.get(selectedNoteUUID);
+      let note = this.props.noteList[selectedNoteUUID];
 
       if (note) {
         return (

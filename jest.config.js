@@ -23,7 +23,6 @@ module.exports = {
   transformIgnorePatterns: ['/node_modules/'],
   setupFilesAfterEnv: [
     require.resolve('./test/global.ts'), // 注册全局
-    require.resolve('./test/immutable-expect.ts'), // 注册预期
   ],
   globals: {
     window: {},

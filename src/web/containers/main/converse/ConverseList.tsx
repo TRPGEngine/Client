@@ -3,12 +3,12 @@ import { connect, DispatchProp } from 'react-redux';
 import dateHelper from '@shared/utils/date-helper';
 import config from '@shared/project.config';
 import ConverseDetail from './ConverseDetail';
-// import Tab from '../../../components/Tab';
 import { TabsController, Tab } from '@web/components/Tabs';
 import ConvItem from '@web/components/ConvItem';
 import { switchConverse, removeUserConverse } from '@shared/redux/actions/chat';
 import { showProfileCard } from '@shared/redux/actions/ui';
 import _get from 'lodash/get';
+import { TRPGState } from '@redux/types/__all__';
 
 import './ConverseList.scss';
 

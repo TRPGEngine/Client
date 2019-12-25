@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
+import _get from 'lodash/get';
 
 import './Tabs.scss';
 
 export class TabsController extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedIndex: 0,
-    };
-  }
+  state = {
+    selectedIndex: 0,
+  };
 
   render() {
     return (
@@ -23,7 +21,7 @@ export class TabsController extends React.Component {
                 }
                 onClick={() => this.setState({ selectedIndex: index })}
               >
-                {element.props.name}
+                {_get(element, 'props.name')}
               </div>
             );
           })}
@@ -44,7 +42,10 @@ export class TabsController extends React.Component {
   }
 }
 
-export class Tab extends React.Component {
+interface TabProps {
+  name: ReactNode;
+}
+export class Tab extends React.Component<TabProps> {
   render() {
     return <div className="tab-items">{this.props.children}</div>;
   }

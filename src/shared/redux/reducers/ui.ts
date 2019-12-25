@@ -1,5 +1,4 @@
 import constants from '@redux/constants';
-import immutable from 'immutable';
 import { UIState } from '@redux/types/ui';
 import { produce } from 'immer';
 

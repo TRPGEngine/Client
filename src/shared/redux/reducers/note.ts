@@ -1,5 +1,4 @@
 import constants from '@redux/constants';
-import immutable from 'immutable';
 import uuid from 'uuid/v1';
 import { NoteState } from '@redux/types/note';
 import produce from 'immer';
