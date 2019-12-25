@@ -6,7 +6,6 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { connect } from 'react-redux';
-import immutable, { List } from 'immutable';
 import styled from 'styled-components/native';
 import { Icon, Carousel, Modal } from '@ant-design/react-native';
 import Emoji from 'react-native-emoji';

@@ -3,14 +3,13 @@
  * 用于生成将redux的状态转化为UI
  */
 
-import { Map } from 'immutable';
 import TAlert from '../components/TApi/TAlert';
 import { hideAlert, hideModal } from '@src/shared/redux/actions/ui';
 import { Toast, Portal } from '@ant-design/react-native';
 import TModal from '../components/TApi/TModal';
 import { TRPGDispatch } from '@src/shared/redux/types/__all__';
 
-type UIMap = Map<string, any>;
+type UIMap = { [name: string]: any };
 interface FactoryOptions {
   onEnabled?: (currentUIState: UIMap, dispatch: TRPGDispatch) => void;
   onDisabled?: (currentUIState: UIMap, dispatch: TRPGDispatch) => void;

@@ -1,5 +1,4 @@
 import { getStoreState } from '@redux/configureStore/helper';
-import { List } from 'immutable';
 
 /**
  * 获取当前选择的团角色的角色信息
@@ -10,11 +9,11 @@ export function getCurrentGroupActor(groupUUID: string) {
   const groupInfo = state
     .getIn(['group', 'groups'])
     .find((group) => group.get('uuid') === groupUUID);
-  const selfActors: List<string> = state
+  const selfActors: string[] = state
     .getIn(['actor', 'selfActors'])
     .map((i) => i.get('uuid'));
   const selfGroupActors = groupInfo
-    .get('group_actors', List())
+    .get('group_actors', [])
     .filter(
       (i) => i.get('enabled') && selfActors.includes(i.get('actor_uuid'))
     );

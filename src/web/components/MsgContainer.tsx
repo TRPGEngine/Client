@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import { List, Map } from 'immutable';
 import config from '@shared/project.config';
 import { shouleEmphasizeTime } from '@shared/utils/date-helper';
 import scrollTo from '@shared/utils/animated-scroll-to';

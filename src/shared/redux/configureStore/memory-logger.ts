@@ -1,6 +1,5 @@
 import { Middleware } from 'redux';
 import _cloneDeep from 'lodash/cloneDeep';
-import { isImmutable } from 'immutable';
 
 export type ActionsListItem = Readonly<[string, object]>;
 export type ActionsListType = ActionsListItem[];
@@ -15,10 +14,7 @@ const MAX_SIZE = 500; // 最大记录500条
 export const memoryLogger: Middleware = ({ dispatch, getState }) => (next) => (
   action
 ) => {
-  let a = _cloneDeep(action);
-  if (isImmutable(a)) {
-    a = a.toJS();
-  }
+  const a = _cloneDeep(action);
   _actions.push([a.type, a]);
 
   if (_actions.length > MAX_SIZE) {

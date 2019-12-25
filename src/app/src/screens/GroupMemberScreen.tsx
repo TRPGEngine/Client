@@ -3,19 +3,18 @@ import { NavigationScreenProps } from 'react-navigation';
 import { GroupMemberParams } from '@app/types/params';
 import { connect } from 'react-redux';
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
-import { List, Map } from 'immutable';
 import UserList from '@app/components/UserList';
 import _isNil from 'lodash/isNil';
 
 interface Props
   extends NavigationScreenProps<GroupMemberParams>,
     TRPGDispatchProp {
-  groupMembers: List<string>;
+  groupMembers: string[];
 }
 
 class GroupMemberScreen extends React.Component<Props> {
   getUUIDs(): string[] {
-    return this.props.groupMembers.toJSON();
+    return this.props.groupMembers;
   }
 
   render() {
@@ -33,6 +32,6 @@ export default connect((state: TRPGState, ownProps: Props) => {
 
   return {
     groupMembers:
-      (!_isNil(group) ? group.get('group_members') : null) || List(),
+      (!_isNil(group) ? group.get('group_members') : null) ?? [],
   };
 })(GroupMemberScreen);

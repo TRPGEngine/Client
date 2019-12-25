@@ -1,4 +1,3 @@
-import { Record, Map, List } from 'immutable';
 import { ActorType } from './actor';
 
 export type GroupType = 'group' | 'channel' | 'test';

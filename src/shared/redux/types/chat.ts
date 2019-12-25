@@ -1,5 +1,3 @@
-import { List, Map, Record } from 'immutable';
-
 export type LocalMsgType = 'loading';
 
 export type MsgType =
@@ -44,7 +42,7 @@ type WritingListType = {
   };
 };
 
-export type ChatStateConverseMsgListItem = Record<{
+export type ChatStateConverseMsgListItem = {
   room: string;
   uuid: string;
   sender: string;
@@ -54,11 +52,11 @@ export type ChatStateConverseMsgListItem = Record<{
   is_public: boolean;
   message: string;
   date: number;
-}>;
+};
 
-export type ChatStateConverseMsgList = List<ChatStateConverseMsgListItem>;
+export type ChatStateConverseMsgList = ChatStateConverseMsgListItem[];
 
-export type ChatStateConverse = Record<{
+export type ChatStateConverse = {
   uuid: string;
   type: string;
   name: string;
@@ -66,7 +64,7 @@ export type ChatStateConverse = Record<{
   lastMsg: string;
   lastTime: number;
   msgList: ChatStateConverseMsgList;
-}>;
+};
 
 export type ChatState = {
   selectedConverseUUID: string;

@@ -3,7 +3,6 @@ import { View, Modal, TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import TPopup from './TPopup';
 import { TButton } from '../TComponent';
-import { Record } from 'immutable';
 
 const Container = styled.View`
   background-color: rgba(0, 0, 0, 0.2);
@@ -68,17 +67,17 @@ export interface AlertInfoType {
 }
 
 interface Props {
-  showAlertInfo: Record<AlertInfoType>;
+  showAlertInfo: AlertInfoType;
   onRequestClose: () => void;
 }
 class TAlertContainer extends React.Component<Props> {
   render() {
     const { showAlertInfo, onRequestClose } = this.props;
-    const title = showAlertInfo.get('title') || '';
-    const content = showAlertInfo.get('content') || '确认进行该操作?';
-    const confirmTitle = showAlertInfo.get('confirmTitle') || '确认';
-    const onConfirm = showAlertInfo.get('onConfirm');
-    const onCancel = showAlertInfo.get('onCancel');
+    const title = showAlertInfo.title ?? '';
+    const content = showAlertInfo.content ?? '确认进行该操作?';
+    const confirmTitle = showAlertInfo.confirmTitle ?? '确认';
+    const onConfirm = showAlertInfo.onConfirm;
+    const onCancel = showAlertInfo.onCancel;
 
     let header, cancelBtn;
     if (title) {
@@ -132,7 +131,7 @@ export interface TAlertOptions {
 }
 
 const TAlert = {
-  show: function(alertInfo: Record<AlertInfoType>, opts: TAlertOptions = {}) {
+  show: function(alertInfo: AlertInfoType, opts: TAlertOptions = {}) {
     return TPopup.show(
       <TAlertContainer
         showAlertInfo={alertInfo}

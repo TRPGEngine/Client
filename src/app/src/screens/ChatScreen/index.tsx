@@ -34,7 +34,6 @@ import { TRPGState, TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 import { clearSelectGroup } from '@src/shared/redux/actions/group';
 import { sendStartWriting } from '@src/shared/api/event';
 import config from '@src/shared/project.config';
-import { List } from 'immutable';
 import { getCurrentGroupActor } from '@redux/helpers/group';
 import { MsgPayload } from '@redux/types/chat';
 

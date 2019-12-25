@@ -12,7 +12,6 @@ import appConfig from '../config.app';
 import { TIcon } from './TComponent';
 import ConvItem from './ConvItem';
 import { switchNav, navProfile } from '../redux/actions/nav';
-import { isImmutable } from 'immutable';
 import { TRPGState } from '@redux/types/__all__';
 import _get from 'lodash/get';
 
@@ -43,21 +42,11 @@ class ContactList extends React.Component<Props, State> {
   };
 
   get friends() {
-    const friends = this.props.friends;
-    if (isImmutable(friends)) {
-      return friends.toJS();
-    } else {
-      return friends;
-    }
+      return this.props.friends;
   }
 
   get groups() {
-    const groups = this.props.groups;
-    if (isImmutable(groups)) {
-      return groups.toJS();
-    } else {
-      return groups;
-    }
+    return this.props.groups;
   }
 
   handleClickHeader(section: SectionListItem) {

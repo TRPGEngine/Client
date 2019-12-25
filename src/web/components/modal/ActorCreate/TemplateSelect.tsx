@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Empty, Row, Col } from 'antd';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import { findTemplate } from '@src/shared/redux/actions/actor';
-import { List } from 'immutable';
 import TemplateItem from '../../TemplateItem';
 import styled from 'styled-components';
 import { ActorTemplateType } from '@redux/types/actor';

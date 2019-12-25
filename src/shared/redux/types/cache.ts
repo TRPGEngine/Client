@@ -1,5 +1,3 @@
-import { Map } from 'immutable';
-
 // type CacheMap = Map<string, any>;
 type CacheMap = { [name: string]: any };
 

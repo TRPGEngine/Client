@@ -1,5 +1,4 @@
 import { AnyAction, Action } from 'redux';
-import { Record } from 'immutable';
 import { ActorState } from './actor';
 import { CacheState } from './cache';
 import { ChatState } from './chat';

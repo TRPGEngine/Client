@@ -32,10 +32,6 @@ class Alert extends React.Component<Props> {
         </button>
       );
     }
-    if (content && content._root) {
-      // is immutable
-      content = content.toJS();
-    }
 
     return (
       <div>
