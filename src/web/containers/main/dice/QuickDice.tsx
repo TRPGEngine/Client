@@ -149,6 +149,6 @@ class QuickDice extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  lastDiceType: state.getIn(['ui', 'lastDiceType']),
-  favoriteDice: state.getIn(['settings', 'user', 'favoriteDice']),
+  lastDiceType: state.ui.lastDiceType,
+  favoriteDice: state.settings.user.favoriteDice,
 }))(QuickDice);

@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
-import { setLastDiceType } from '../../../../shared/redux/actions/ui';
+import { setLastDiceType } from '@shared/redux/actions/ui';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import _get from 'lodash/get';
 
 import './DiceRequest.scss';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 
 interface Props extends TRPGDispatchProp {
   lastDiceType: string;
@@ -155,6 +156,6 @@ class DiceRequest extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  lastDiceType: state.getIn(['ui', 'lastDiceType']),
-  favoriteDice: state.getIn(['settings', 'user', 'favoriteDice']),
+  lastDiceType: state.ui.lastDiceType,
+  favoriteDice: _get(state, ['settings', 'user', 'favoriteDice']),
 }))(DiceRequest);

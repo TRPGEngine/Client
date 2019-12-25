@@ -185,15 +185,12 @@ class GroupInfo extends React.Component<Props> {
 
 export default connect(
   (state: TRPGState) => ({
-    userUUID: state.getIn(['user', 'info', 'uuid']),
-    usercache: state.getIn(['cache', 'user']),
-    selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
-    groupInfo: state
-      .getIn(['group', 'groups'])
-      .find(
-        (group) =>
-          group.get('uuid') === state.getIn(['group', 'selectedGroupUUID'])
-      ),
+    userUUID: state.user.info.uuid,
+    usercache: state.cache.user,
+    selectedGroupUUID: state.group.selectedGroupUUID,
+    groupInfo: state.group.groups.find(
+      (group) => group.uuid === state.group.selectedGroupUUID
+    ),
   }),
   (dispatch: TRPGDispatch) => ({
     showAlert: (payload: AlertPayload) => dispatch(showAlert(payload)),

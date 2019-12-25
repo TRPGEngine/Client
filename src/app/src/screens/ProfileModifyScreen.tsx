@@ -13,6 +13,7 @@ import _last from 'lodash/last';
 import { List } from '@ant-design/react-native';
 import TModalPanel from '../components/TComponent/TModalPanel';
 import TPicker from '../components/TComponent/TPicker';
+import { TRPGState } from '@redux/types/__all__';
 const Item = List.Item;
 
 interface Props extends DispatchProp<any> {
@@ -223,6 +224,6 @@ const styles = {
   uuid: [sb.font(12)],
 };
 
-export default connect((state: any) => ({
-  userInfo: state.getIn(['user', 'info']),
+export default connect((state: TRPGState) => ({
+  userInfo: state.user.info,
 }))(ProfileModifyScreen);

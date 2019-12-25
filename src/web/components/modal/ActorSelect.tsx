@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 import config from '@shared/project.config';
 import { showAlert, showModal } from '@shared/redux/actions/ui';
 import ActorCreate from '@web/components/modal/ActorCreate';
-import { List } from 'immutable';
-
-import './ActorSelect.scss';
 import { AlertPayload } from '@redux/types/ui';
 import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 
+import './ActorSelect.scss';
+
 interface Props {
-  selfActors: List<any>;
+  selfActors: any;
   showAlert: any;
   showModal: any;
   onSelect: any;
@@ -92,7 +91,7 @@ class ActorSelect extends React.Component<Props> {
 
 export default connect(
   (state: TRPGState) => ({
-    selfActors: state.getIn(['actor', 'selfActors']),
+    selfActors: state.actor.selfActors,
   }),
   (dispatch: TRPGDispatch) => ({
     showAlert: (payload: AlertPayload) => dispatch(showAlert(payload)),

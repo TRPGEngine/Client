@@ -12,6 +12,7 @@ import { Spring } from 'react-spring/renderprops';
 import TRefreshControl from '../components/TComponent/TRefreshControl';
 import { ChatType } from '../types/params';
 import { switchToChatScreen } from '../redux/actions/nav';
+import { TRPGState } from '@redux/types/__all__';
 
 const NetworkContainer = styled.View<{
   isOnline: boolean;
@@ -158,10 +159,10 @@ const styles = {
   tipText: [sb.textAlign('center'), sb.margin(80, 0, 0, 0), sb.color('#999')],
 };
 
-export default connect((state: any) => ({
-  converses: state.getIn(['chat', 'converses']),
-  conversesDesc: state.getIn(['chat', 'conversesDesc']),
-  groups: state.getIn(['group', 'groups']),
-  usercache: state.getIn(['cache', 'user']),
-  network: state.getIn(['ui', 'network']),
+export default connect((state: TRPGState) => ({
+  converses: state.chat.converses,
+  conversesDesc: state.chat.conversesDesc,
+  groups: state.group.groups,
+  usercache: state.cache.user,
+  network: state.ui.network,
 }))(HomeScreen);

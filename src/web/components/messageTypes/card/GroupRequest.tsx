@@ -50,5 +50,5 @@ class GroupRequest extends BaseCard<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  groups: state.getIn(['group', 'groups']),
+  groups: state.group.groups,
 }))(GroupRequest);

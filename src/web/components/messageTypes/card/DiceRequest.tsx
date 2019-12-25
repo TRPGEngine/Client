@@ -43,5 +43,5 @@ class DiceRequest extends BaseCard<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  selfUUID: state.getIn(['user', 'info', 'uuid']),
+  selfUUID: state.user.info.uuid,
 }))(DiceRequest);

@@ -53,8 +53,6 @@ class GroupInvite extends BaseCard<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  groupInviteCache: state.getIn(['cache', 'groupInvite']),
-  groupUUIDList: state
-    .getIn(['group', 'groups'])
-    .map((item) => item.get('uuid')),
+  groupInviteCache: state.cache.groupInvite,
+  groupUUIDList: state.group.groups.map((item) => item.uuid),
 }))(GroupInvite);

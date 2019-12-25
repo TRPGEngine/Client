@@ -7,10 +7,15 @@ import {
 import ModalPanel from '../../../../components/ModalPanel';
 import config from '../../../../../shared/project.config';
 import { getUserInfoCache } from '../../../../../shared/utils/cache-helper';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 
 import './GroupMemberManage.scss';
 
-class GroupMemberManage extends React.Component {
+interface Props extends TRPGDispatchProp {
+  uuid: string;
+  selectedGroupUUID: string;
+}
+class GroupMemberManage extends React.Component<Props> {
   handleRaiseManager() {
     this.props.dispatch(
       setMemberToManager(this.props.selectedGroupUUID, this.props.uuid)
@@ -49,7 +54,7 @@ class GroupMemberManage extends React.Component {
   }
 }
 
-export default connect((state) => ({
-  usercache: state.getIn(['cache', 'user']),
-  selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
+export default connect((state: TRPGState) => ({
+  usercache: state.cache.user,
+  selectedGroupUUID: state.group.selectedGroupUUID,
 }))(GroupMemberManage);

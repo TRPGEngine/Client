@@ -17,12 +17,21 @@ import _isNil from 'lodash/isNil';
 
 import './ActorList.scss';
 import { message } from 'antd';
+import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
+import { AlertPayload } from '@redux/types/ui';
 
-class ActorList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+interface Props {
+  selectActor: any;
+  showModal: any;
+  showAlert: (payload: AlertPayload) => void;
+  removeActor: any;
+  selectTemplate: any;
+  actors: any;
+  templateCache: any;
+  updateActor: any;
+  selectedActorUUID: string;
+}
+class ActorList extends React.Component<Props> {
   handleAddNewActor() {
     this.props.selectActor('');
     this.props.showModal(<ActorCreate />);
@@ -120,9 +129,7 @@ class ActorList extends React.Component {
               <span title={desc}>{desc}</span>
             </p>
             <p className="action">
-              <button onClick={() => this.handleRemoveActor(uuid)}>
-                删除
-              </button>
+              <button onClick={() => this.handleRemoveActor(uuid)}>删除</button>
               <button onClick={() => this.handleOpenActorEditModal(uuid)}>
                 编辑
               </button>
@@ -205,14 +212,14 @@ class ActorList extends React.Component {
 }
 
 export default connect(
-  (state) => ({
-    actors: state.getIn(['actor', 'selfActors']),
-    selectedActorUUID: state.getIn(['actor', 'selectedActorUUID']),
-    templateCache: state.getIn(['cache', 'template']),
+  (state: TRPGState) => ({
+    actors: state.actor.selfActors,
+    selectedActorUUID: state.actor.selectedActorUUID,
+    templateCache: state.cache.template,
   }),
-  (dispatch) => ({
+  (dispatch: TRPGDispatch) => ({
     showModal: (body) => dispatch(showModal(body)),
-    showAlert: (...args) => dispatch(showAlert(...args)),
+    showAlert: (payload: AlertPayload) => dispatch(showAlert(payload)),
     selectActor: (uuid) => dispatch(selectActor(uuid)),
     removeActor: (uuid) => dispatch(removeActor(uuid)),
     updateActor: (uuid, name, avatar, desc, info) =>

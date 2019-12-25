@@ -38,5 +38,5 @@ const NetworkIndicator: React.FC<Props> = React.memo((props) => {
 });
 
 export default connect((state: TRPGState) => ({
-  network: state.getIn(['ui', 'network']),
+  network: state.ui.network,
 }))(NetworkIndicator);

@@ -1,15 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addNote, switchNote } from '../../../../shared/redux/actions/note';
+import { addNote, switchNote } from '@shared/redux/actions/note';
 import moment from 'moment';
 import ReactTooltip from 'react-tooltip';
 import Spinner from '../../../components/Spinner';
-
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import NoteDetail from './NoteDetail';
 
 import './NoteList.scss';
 
-class NoteList extends React.Component {
+interface Props extends TRPGDispatchProp {
+  selectedNoteUUID: string;
+  noteList: any[];
+}
+class NoteList extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +31,6 @@ class NoteList extends React.Component {
 
     let content = notes
       ? notes
-          .toList()
           .sortBy((item) => item.get('updatedAt'))
           .reverse()
           .map((item, index) => {
@@ -119,9 +122,9 @@ class NoteList extends React.Component {
     );
   }
 }
-export default connect((state) => ({
-  selectedNoteUUID: state.getIn(['note', 'selectedNoteUUID']),
-  noteList: state.getIn(['note', 'noteList']),
-  isNoteSync: state.getIn(['note', 'isSync']),
-  isNoteSyncUUID: state.getIn(['note', 'isSyncUUID']),
+export default connect((state: TRPGState) => ({
+  selectedNoteUUID: state.note.selectedNoteUUID,
+  noteList: state.note.noteList,
+  isNoteSync: state.note.isSync,
+  isNoteSyncUUID: state.note.isSyncUUID,
 }))(NoteList);

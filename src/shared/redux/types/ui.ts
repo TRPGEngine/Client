@@ -1,9 +1,11 @@
+import { ReactNode } from 'react';
+
 export type AlertPayload =
   | string
   | {
       type?: 'alert';
       title?: string;
-      content: string;
+      content: ReactNode;
       confirmTitle?: string;
       onConfirm?: Function;
       onCancel?: Function;

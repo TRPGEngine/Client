@@ -10,6 +10,7 @@ const {
 import sb from 'react-native-style-block';
 import TButton from './TButton';
 import { hideAlert } from '../../../../shared/redux/actions/ui';
+import { TRPGState } from '@redux/types/__all__';
 
 interface Props extends DispatchProp<any> {
   showAlertInfo: any;
@@ -104,7 +105,7 @@ const styles = {
   cancelBtn: [sb.bgColor('white')],
 };
 
-export default connect((state: any) => ({
-  showAlert: state.getIn(['ui', 'showAlert']),
-  showAlertInfo: state.getIn(['ui', 'showAlertInfo']),
+export default connect((state: TRPGState) => ({
+  showAlert: state.ui.showAlert,
+  showAlertInfo: state.ui.showAlertInfo,
 }))(TAlert);

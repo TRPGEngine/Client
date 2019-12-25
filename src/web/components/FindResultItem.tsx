@@ -1,21 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../shared/project.config';
+import config from '@shared/project.config';
 import {
   sendFriendInvite,
   agreeFriendInvite,
-} from '../../shared/redux/actions/user';
-import { requestJoinGroup } from '../../shared/redux/actions/group';
+} from '@shared/redux/actions/user';
+import { requestJoinGroup } from '@shared/redux/actions/group';
+import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
+import _get from 'lodash/get';
 
 import './FindResultItem.scss';
 
-class FindResultItem extends React.Component {
+interface Props {
+  friendList: string[];
+  friendInvite: any;
+  friendRequests: any;
+  selfUUID: string;
+  joinedGroupUUIDs: string[];
+  requestingGroupUUID: string[];
+  agreeFriendInvite: (uuid: string) => void;
+  sendFriendInvite: (uuid: string) => void;
+  requestJoinGroup: (uuid: string) => void;
+
+  info: any;
+  type: string;
+}
+class FindResultItem extends React.Component<Props> {
   getUserAction(uuid) {
-    let friendList = this.props.friendList.toJS();
-    let friendInvite = this.props.friendInvite.toJS();
-    let friendRequests = this.props.friendRequests.toArray().map((item) => {
-      return item.get('from_uuid');
-    });
+    let friendList = this.props.friendList;
+    let friendInvite = this.props.friendInvite;
+    let friendRequests = this.props.friendRequests.map(
+      (item) => item.from_uuid
+    );
     let selfUUID = this.props.selfUUID;
     if (selfUUID === uuid) {
       return (
@@ -75,11 +91,11 @@ class FindResultItem extends React.Component {
   }
 
   render() {
-    let info = this.props.info;
-    let type = this.props.type || 'user';
+    const info = this.props.info;
+    const type = this.props.type || 'user';
 
     if (type === 'user') {
-      let name = info.nickname || info.username;
+      const name = info.nickname || info.username;
       return (
         <div className="find-result-item">
           <div className="avatar">
@@ -110,25 +126,21 @@ class FindResultItem extends React.Component {
 }
 
 export default connect(
-  (state) => ({
-    selfUUID: state.getIn(['user', 'info', 'uuid']),
-    friendList: state.getIn(['user', 'friendList']),
-    friendInvite: state.getIn(['user', 'friendInvite']),
-    friendRequests: state.getIn(['user', 'friendRequests']),
-    joinedGroupUUIDs: state
-      .getIn(['group', 'groups'])
-      .map((g) => g.get('uuid')),
-    requestingGroupUUID: state.getIn(['group', 'requestingGroupUUID']),
+  (state: TRPGState) => ({
+    selfUUID: _get(state, ['user', 'info', 'uuid']),
+    friendList: _get(state, ['user', 'friendList']),
+    friendInvite: _get(state, ['user', 'friendInvite']),
+    friendRequests: _get(state, ['user', 'friendRequests']),
+    joinedGroupUUIDs: state.group.groups.map((g) => g.uuid),
+    requestingGroupUUID: state.group.requestingGroupUUID,
   }),
-  (dispatch) => ({
-    sendFriendInvite: (uuid) => {
+  (dispatch: TRPGDispatch) => ({
+    sendFriendInvite: (uuid: string) => {
       dispatch(sendFriendInvite(uuid));
     },
-    agreeFriendInvite: (fromUUID) => {
+    agreeFriendInvite: (fromUUID: string) => {
       dispatch((dispatch, getState) => {
-        let friendRequests = getState()
-          .getIn(['user', 'friendRequests'])
-          .toJS();
+        const friendRequests = getState().user.friendRequests;
 
         let inviteUUID = '';
         for (let req of friendRequests) {
@@ -143,6 +155,6 @@ export default connect(
         }
       });
     },
-    requestJoinGroup: (uuid) => dispatch(requestJoinGroup(uuid)),
+    requestJoinGroup: (uuid: string) => dispatch(requestJoinGroup(uuid)),
   })
 )(FindResultItem);

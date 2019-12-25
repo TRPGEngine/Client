@@ -9,14 +9,14 @@ import { showModal, hideModal } from '@shared/redux/actions/ui';
 import ActorSelect from './modal/ActorSelect';
 import config from '@shared/project.config';
 import ContentEditable from 'react-contenteditable';
-import { TRPGState } from '@redux/types/__all__';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { Mentions } from 'antd';
 
 import './MsgSendBox.scss';
 
 const MsgEditor = ContentEditable as any;
 
-interface Props extends DispatchProp<any> {
+interface Props extends TRPGDispatchProp {
   userUUID: string;
   converseUUID: string;
   isGroup: boolean;
@@ -385,5 +385,5 @@ class MsgSendBox extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  userUUID: state.getIn(['user', 'info', 'uuid']),
+  userUUID: state.user.info.uuid,
 }))(MsgSendBox);

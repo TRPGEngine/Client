@@ -13,6 +13,7 @@ import config from '../../../shared/project.config';
 import { replaceNav } from '../redux/actions/nav';
 import { Modal } from '@ant-design/react-native';
 import SystemStatus from '../components/SystemStatus';
+import { TRPGState } from '@redux/types/__all__';
 
 interface Props extends DispatchProp<any> {
   isTryLogin: boolean;
@@ -227,8 +228,8 @@ const styles = {
   },
 };
 
-export default connect((state: any) => ({
-  isTryLogin: state.getIn(['user', 'isTryLogin']),
-  isLogin: state.getIn(['user', 'isLogin']),
-  network: state.getIn(['ui', 'network']),
+export default connect((state: TRPGState) => ({
+  isTryLogin: state.user.isTryLogin,
+  isLogin: state.user.isLogin,
+  network: state.ui.network,
 }))(LaunchScreen);

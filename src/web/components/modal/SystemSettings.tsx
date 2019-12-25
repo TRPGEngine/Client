@@ -41,6 +41,6 @@ class SystemSettings extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  notificationPermission: state.getIn(['settings', 'notificationPermission']),
-  systemSettings: state.getIn(['settings', 'system']),
+  notificationPermission: state.settings.notificationPermission,
+  systemSettings: state.settings.system,
 }))(SystemSettings);

@@ -53,6 +53,6 @@ class FriendInvite extends BaseCard<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  friendList: state.getIn(['user', 'friendList']),
-  friendInviteCache: state.getIn(['cache', 'friendInvite']),
+  friendList: state.user.friendList,
+  friendInviteCache: state.cache.friendInvite,
 }))(FriendInvite);

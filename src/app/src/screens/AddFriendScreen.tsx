@@ -19,6 +19,7 @@ import {
   NavigationScreenConfig,
   NavigationScreenProps,
 } from 'react-navigation';
+import { TRPGState } from '@redux/types/__all__';
 
 const TextTip = styled.Text`
   text-align: center;
@@ -246,10 +247,9 @@ const styles = {
   searchResultListItemAvatar: [sb.margin(0, 10, 0, 0)],
 };
 
-export default connect((state: any) => ({
+export default connect((state: TRPGState) => ({
   isFinding:
-    state.getIn(['user', 'isFindingUser']) ||
-    state.getIn(['group', 'isFindingGroup']),
-  userFindingResult: state.getIn(['user', 'findingResult']),
-  groupFindingResult: state.getIn(['group', 'findingResult']),
+    state.user.isFindingUser ?? state.group.isFindingGroup,
+  userFindingResult: state.user.findingResult,
+  groupFindingResult: state.group.findingResult,
 }))(AddFriendScreen);

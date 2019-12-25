@@ -118,6 +118,6 @@ class UserSelectScreen extends React.Component<Props, State> {
 
 export default connect((state: TRPGState) => {
   return {
-    usercache: state.getIn(['cache', 'user']),
+    usercache: state.cache.user,
   };
 })(UserSelectScreen);

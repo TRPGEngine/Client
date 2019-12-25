@@ -186,7 +186,7 @@
     "node-sass": "^4.12.0",
     "offline-plugin": "^5.0.7",
     "plugin-error": "^1.0.1",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "raw-loader": "^2.0.0",
     "react-test-renderer": "16.8.3",
     "sass-loader": "^6.0.7",

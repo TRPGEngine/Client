@@ -26,6 +26,7 @@ import _get from 'lodash/get';
 
 import './GroupActor.scss';
 import { getAbsolutePath } from '@shared/utils/file-helper';
+import { TRPGState } from '@redux/types/__all__';
 
 const GroupActorAction = styled.div`
   padding: 4px 10px;
@@ -280,14 +281,14 @@ class GroupActor extends React.Component<Props> {
 }
 
 export default connect(
-  (state: any) => {
-    const selectedGroupUUID = state.getIn(['group', 'selectedGroupUUID']);
+  (state: TRPGState) => {
+    const selectedGroupUUID = state.group.selectedGroupUUID;
     return {
       selectedGroupUUID,
       groupInfo: state
         .getIn(['group', 'groups'])
         .find((group) => group.get('uuid') === selectedGroupUUID),
-      templateCache: state.getIn(['cache', 'template']),
+      templateCache: state.cache.template,
     };
   },
   (dispatch: any, ownProps) => ({

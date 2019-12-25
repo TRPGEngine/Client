@@ -19,6 +19,7 @@ import _isString from 'lodash/isString';
 import _isNil from 'lodash/isNil';
 import { addUserEmotionCatalogWithSecretSignal } from '../../../../shared/redux/actions/chat';
 import rnStorage from '@src/shared/api/rn-storage.api';
+import { TRPGState } from '@redux/types/__all__';
 
 const EMOJI_PANEL_HEIGHT = 190; // 表情面板高度
 
@@ -95,7 +96,7 @@ const EmotionItemImage = styled(FastImage)`
 
 interface Props {
   dispatch: any;
-  emotionCatalog: immutable.List<any>;
+  emotionCatalog: any[];
   onSelectEmoji: (code: string) => void; // 选择了emoji表情
   onSelectEmotion: (emotionUrl: string) => void; // 选择了自定义表情
 }
@@ -279,8 +280,8 @@ class EmotionPanel extends React.Component<Props> {
   }
 }
 
-export default connect((state: immutable.Map<string, any>) => ({
-  emotionCatalog: state.getIn(['chat', 'emotions', 'catalogs'], List()),
+export default connect((state: TRPGState) => ({
+  emotionCatalog: _get(state, ['chat', 'emotions', 'catalogs'], []),
 }))(EmotionPanel) as React.ComponentClass<
   Omit<Props, 'dispatch' | 'emotionCatalog'>
 >;

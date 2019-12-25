@@ -1,17 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../../shared/project.config';
+import config from '@shared/project.config';
 import moment from 'moment';
-import {
-  showModal,
-  showProfileCard,
-} from '../../../../shared/redux/actions/ui';
+import { showModal, showProfileCard } from '@shared/redux/actions/ui';
 import GroupMemberManage from './modal/GroupMemberManage';
-import { getUserInfoCache } from '../../../../shared/utils/cache-helper';
+import { getUserInfoCache } from '@shared/utils/cache-helper';
+import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
 
 import './GroupMember.scss';
 
-class GroupMember extends React.Component {
+interface Props {
+  userUUID: string;
+  selectedGroupUUID: string;
+  groupInfo: any;
+  showModal: any;
+  showProfileCard: any;
+}
+class GroupMember extends React.Component<Props> {
   handleManageMember(uuid) {
     this.props.showModal(<GroupMemberManage uuid={uuid} />);
   }
@@ -80,18 +85,15 @@ class GroupMember extends React.Component {
 }
 
 export default connect(
-  (state) => ({
-    userUUID: state.getIn(['user', 'info', 'uuid']),
-    selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
-    groupInfo: state
-      .getIn(['group', 'groups'])
-      .find(
-        (group) =>
-          group.get('uuid') === state.getIn(['group', 'selectedGroupUUID'])
-      ),
-    usercache: state.getIn(['cache', 'user']),
+  (state: TRPGState) => ({
+    userUUID: state.user.info.uuid,
+    selectedGroupUUID: state.group.selectedGroupUUID,
+    groupInfo: state.group.groups.find(
+      (group) => group.uuid === state.group.selectedGroupUUID
+    ),
+    usercache: state.cache.user,
   }),
-  (dispatch) => ({
+  (dispatch: TRPGDispatch) => ({
     showModal: (body) => dispatch(showModal(body)),
     showProfileCard: (uuid) => dispatch(showProfileCard(uuid)),
   })

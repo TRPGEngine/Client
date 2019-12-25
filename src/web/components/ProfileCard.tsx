@@ -6,17 +6,35 @@ import ImageViewer from './ImageViewer';
 import ImageUploader from './ImageUploader';
 import { showAlert, hideProfileCard } from '../../shared/redux/actions/ui';
 import { sendFriendInvite, updateInfo } from '../../shared/redux/actions/user';
-import { addUserConverse, switchToConverse } from '../../shared/redux/actions/chat';
+import {
+  addUserConverse,
+  switchToConverse,
+} from '../../shared/redux/actions/chat';
 import './ProfileCard.scss';
+import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
+import { AlertPayload } from '@redux/types/ui';
 
-class ProfileCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isEdited: false,
-      editedInfo: {},
-    };
-  }
+interface Props {
+  userInfo: any;
+  friendList: any[];
+  isSelf: boolean;
+  selectedUUID: string;
+  isShow: boolean;
+  showAlert: (payload: AlertPayload) => void;
+  hideProfileCard: () => void;
+  updateInfo: (data: {}) => void;
+  addUserConverse: (uuid: string) => void;
+  sendFriendInvite: (uuid: string) => void;
+}
+interface State {
+  isEdited: boolean;
+  editedInfo: {[name: string]: any}
+}
+class ProfileCard extends React.Component<Props, State> {
+  state: State = {
+    isEdited: false,
+    editedInfo: {},
+  };
 
   handleEditProfile() {
     if (this.props.isSelf) {
@@ -58,11 +76,11 @@ class ProfileCard extends React.Component {
 
   setEditedInfo() {
     let info = this.props.userInfo;
-    this.setState({ editedInfo: info ? info.toJS() : {} });
+    this.setState({ editedInfo: info ?? {} });
   }
 
   getActions() {
-    let friendList = this.props.friendList.toJS();
+    let friendList = this.props.friendList;
     let disabledAddFriend =
       friendList.indexOf(this.props.selectedUUID) >= 0 || this.props.isSelf;
     let uuid = this.props.selectedUUID;
@@ -203,7 +221,7 @@ class ProfileCard extends React.Component {
           <div className="item">
             <span>个人签名:</span>
             <textarea
-              rows="3"
+              rows={3}
               value={this.state.editedInfo.sign || ''}
               onChange={(e) =>
                 this.setState({
@@ -297,31 +315,29 @@ class ProfileCard extends React.Component {
 }
 
 export default connect(
-  (state) => {
-    let selfUUID = state.getIn(['user', 'info', 'uuid']);
-    let selectedUUID = state.getIn(['ui', 'showProfileCardUUID']);
-    let isSelf = selfUUID === selectedUUID;
-    let userInfo = isSelf
-      ? state.getIn(['user', 'info'])
-      : state.getIn(['cache', 'user', selectedUUID]);
+  (state: TRPGState) => {
+    const selfUUID = state.user.info.uuid;
+    const selectedUUID = state.ui.showProfileCardUUID;
+    const isSelf = selfUUID === selectedUUID;
+    const userInfo = isSelf ? state.user.info : state.cache.user[selectedUUID];
 
     return {
       userInfo,
-      friendList: state.getIn(['user', 'friendList']),
+      friendList: state.user.friendList,
       isSelf,
       selectedUUID,
-      isShow: state.getIn(['ui', 'showProfileCard']),
+      isShow: state.ui.showProfileCard,
     };
   },
-  (dispatch) => ({
-    showAlert: (...args) => dispatch(showAlert(...args)),
+  (dispatch: TRPGDispatch) => ({
+    showAlert: (payload: AlertPayload) => dispatch(showAlert(payload)),
     hideProfileCard: () => dispatch(hideProfileCard()),
-    addUserConverse: (uuid) => {
-      dispatch(addUserConverse(uuid));
+    addUserConverse: (uuid: string) => {
+      dispatch(addUserConverse([uuid]));
       dispatch(switchToConverse(uuid));
     },
     // createConverse: (uuid, type, isSwitchToConv = true) => dispatch(createConverse(uuid, type, isSwitchToConv)),
-    sendFriendInvite: (uuid) => dispatch(sendFriendInvite(uuid)),
-    updateInfo: (updatedData) => dispatch(updateInfo(updatedData)),
+    sendFriendInvite: (uuid: string) => dispatch(sendFriendInvite(uuid)),
+    updateInfo: (updatedData: {}) => dispatch(updateInfo(updatedData)),
   })
 )(ProfileCard);

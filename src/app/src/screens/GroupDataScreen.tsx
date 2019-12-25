@@ -306,11 +306,11 @@ export default connect((state: TRPGState, ownProps: Props) => {
     );
 
   return {
-    userUUID: state.getIn(['user', 'info', 'uuid']),
-    usercache: state.getIn(['cache', 'user']),
+    userUUID: state.user.info.uuid,
+    usercache: state.cache.user,
     selectedGroupUUID,
     selfGroupActors,
     groupInfo,
-    friendList: state.getIn(['user', 'friendList']).toJS(),
+    friendList: state.user.friendList,
   };
 })(GroupDataScreen);

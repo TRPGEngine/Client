@@ -91,9 +91,9 @@ class GroupList extends React.Component<Props> {
 
 export default connect(
   (state: TRPGState) => ({
-    groups: state.getIn(['group', 'groups']),
-    selectedUUID: state.getIn(['group', 'selectedGroupUUID']),
-    converses: state.getIn(['chat', 'converses']),
+    groups: state.group.groups,
+    selectedUUID: state.group.selectedGroupUUID,
+    converses: state.chat.converses,
   }),
   (dispatch: TRPGDispatch) => ({
     switchSelectGroup: (uuid: string) => dispatch(switchSelectGroup(uuid)),

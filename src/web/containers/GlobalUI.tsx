@@ -5,6 +5,7 @@ import Modal from '../components/Modal';
 import Loading from '../components/Loading';
 import Alert from '../components/Alert';
 import { hideLightbox } from '../../shared/redux/actions/ui';
+import { TRPGState } from '@redux/types/__all__';
 
 interface Props extends DispatchProp<any> {
   showLigthbox: boolean;
@@ -33,9 +34,9 @@ class GlobalUI extends React.Component<Props> {
   }
 }
 
-export default connect((state: any) => ({
-  showLoading: state.getIn(['ui', 'showLoading']),
-  showLoadingText: state.getIn(['ui', 'showLoadingText']),
-  showLigthbox: state.getIn(['ui', 'showLigthbox']),
-  showLigthboxInfo: state.getIn(['ui', 'showLigthboxInfo']),
+export default connect((state: TRPGState) => ({
+  showLoading: state.ui.showLoading,
+  showLoadingText: state.ui.showLoadingText,
+  showLigthbox: state.ui.showLigthbox,
+  showLigthboxInfo: state.ui.showLigthboxInfo,
 }))(GlobalUI);

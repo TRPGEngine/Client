@@ -86,6 +86,6 @@ class GroupAdd extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  isFinding: state.getIn(['group', 'isFindingGroup']),
-  findingResult: state.getIn(['group', 'findingResult']),
+  isFinding: state.group.isFindingGroup,
+  findingResult: state.group.findingResult,
 }))(GroupAdd);

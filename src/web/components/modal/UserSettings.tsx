@@ -76,5 +76,5 @@ class UserSettings extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  userSettings: state.getIn(['settings', 'user']),
+  userSettings: state.settings.user,
 }))(UserSettings);

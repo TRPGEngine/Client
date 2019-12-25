@@ -7,7 +7,7 @@ import './ImageUploader.scss';
 import AvatarPicker from './AvatarPicker';
 import { blobUrlToFile } from '@web/utils/file-helper';
 import { toAvatar } from '@shared/utils/upload-helper';
-import { TRPGDispatchProp } from '@src/shared/redux/types/__all__';
+import { TRPGDispatchProp, TRPGState } from '@src/shared/redux/types/__all__';
 
 type CSSUnit = number | string;
 
@@ -101,6 +101,6 @@ class ImageUploader extends React.Component<Props> {
   }
 }
 
-export default connect((state: any) => ({
-  user_uuid: state.getIn(['user', 'info', 'uuid']),
+export default connect((state: TRPGState) => ({
+  user_uuid: state.user.info.uuid,
 }))(ImageUploader);

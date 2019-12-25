@@ -4,10 +4,11 @@ import dateHelper from '@shared/utils/date-helper';
 import config from '@shared/project.config';
 import ConverseDetail from './ConverseDetail';
 // import Tab from '../../../components/Tab';
-import { TabsController, Tab } from '../../../components/Tabs';
-import ConvItem from '../../../components/ConvItem';
+import { TabsController, Tab } from '@web/components/Tabs';
+import ConvItem from '@web/components/ConvItem';
 import { switchConverse, removeUserConverse } from '@shared/redux/actions/chat';
 import { showProfileCard } from '@shared/redux/actions/ui';
+import _get from 'lodash/get';
 
 import './ConverseList.scss';
 
@@ -182,12 +183,12 @@ class ConverseList extends React.Component<Props> {
   }
 }
 
-export default connect((state: any) => ({
-  selectedUUID: state.getIn(['chat', 'selectedConverseUUID']),
-  conversesDesc: state.getIn(['chat', 'conversesDesc']),
-  converses: state.getIn(['chat', 'converses']),
-  friends: state.getIn(['user', 'friendList']),
-  usercache: state.getIn(['cache', 'user']),
-  userInfo: state.getIn(['user', 'info']),
-  userWritingList: state.getIn(['chat', 'writingList', 'user'], []),
+export default connect((state: TRPGState) => ({
+  selectedUUID: state.chat.selectedConverseUUID,
+  conversesDesc: state.chat.conversesDesc,
+  converses: state.chat.converses,
+  friends: state.user.friendList,
+  usercache: state.cache.user,
+  userInfo: state.user.info,
+  userWritingList: _get(state, ['chat', 'writingList', 'user']) ?? [],
 }))(ConverseList);

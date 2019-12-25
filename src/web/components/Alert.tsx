@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { hideAlert } from '../../shared/redux/actions/ui';
 import './Alert.scss';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 
-class Alert extends React.Component {
+interface Props extends TRPGDispatchProp {
+  showAlert: boolean;
+  showAlertInfo: any;
+}
+class Alert extends React.Component<Props> {
   getAlertContent() {
-    const title = this.props.showAlertInfo.get('title') || '';
-    let content = this.props.showAlertInfo.get('content');
-    const confirmTitle = this.props.showAlertInfo.get('confirmTitle');
-    const onConfirm = this.props.showAlertInfo.get('onConfirm');
-    const onCancel = this.props.showAlertInfo.get('onCancel');
+    const {
+      showAlertInfo,
+    } = this.props
+
+    const title = showAlertInfo.title ?? '';
+    let content = showAlertInfo.content;
+    const confirmTitle = showAlertInfo.confirmTitle;
+    const onConfirm = showAlertInfo.onConfirm;
+    const onCancel = showAlertInfo.onCancel;
 
     let cancelBtn;
     if (onConfirm) {
@@ -52,11 +61,11 @@ class Alert extends React.Component {
     const show = this.props.showAlert || false;
     const type = this.props.showAlertInfo.get('type') || 'alert';
 
-    let alertContent = '';
+    let alertContent: ReactNode = '';
     if (!type || type === 'alert') {
       alertContent = this.getAlertContent();
     }
-    let body = '';
+    let body: ReactNode = '';
     if (show) {
       body = (
         <div className="mask" onClick={(e) => e.stopPropagation()}>
@@ -69,7 +78,7 @@ class Alert extends React.Component {
   }
 }
 
-export default connect((state) => ({
-  showAlert: state.getIn(['ui', 'showAlert']),
-  showAlertInfo: state.getIn(['ui', 'showAlertInfo']),
+export default connect((state: TRPGState) => ({
+  showAlert: state.ui.showAlert,
+  showAlertInfo: state.ui.showAlertInfo,
 }))(Alert);

@@ -1,27 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { showModal, showAlert } from '../../../../shared/redux/actions/ui';
+import { showModal, showAlert } from '@shared/redux/actions/ui';
 import {
   setEditedTemplate,
   findTemplate,
   selectTemplate,
   removeTemplate,
-} from '../../../../shared/redux/actions/actor';
+} from '@shared/redux/actions/actor';
 import TemplateEdit from './TemplateEdit';
 import ActorEdit from './ActorEdit';
-import TemplateItem from '../../../components/TemplateItem';
-import ModalPanel from '../../../components/ModalPanel';
+import TemplateItem from '@web/components/TemplateItem';
+import ModalPanel from '@web/components/ModalPanel';
 import ReactTooltip from 'react-tooltip';
 
 import './TemplateSelect.scss';
+import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
 
-class TemplateSelect extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchName: '',
-    };
-  }
+interface Props {
+  findTemplate: any;
+  setEditedTemplate: any;
+  findingResult: any;
+  selfTemplate: any;
+  username: any;
+
+  showModal: any;
+  selectTemplate: any;
+  showAlert: any;
+  removeTemplate: any;
+}
+class TemplateSelect extends React.Component<Props> {
+  state = {
+    searchName: '',
+  };
 
   handleSearch() {
     // console.log(this.state.searchName);
@@ -35,7 +45,6 @@ class TemplateSelect extends React.Component {
   }
 
   handleCreateActor(template) {
-    template = template.toJS();
     this.props.selectTemplate(template);
     this.props.showModal(<ActorEdit />);
   }
@@ -54,7 +63,7 @@ class TemplateSelect extends React.Component {
   }
 
   getFindResult() {
-    let findingResult = this.props.findingResult;
+    const findingResult = this.props.findingResult;
     if (findingResult) {
       if (findingResult.size === 0) {
         return <div className="no-result">暂无搜索结果...</div>;
@@ -130,12 +139,12 @@ class TemplateSelect extends React.Component {
 }
 
 export default connect(
-  (state) => ({
-    username: state.getIn(['user', 'info', 'username']),
-    findingResult: state.getIn(['actor', 'findingResult']),
-    selfTemplate: state.getIn(['actor', 'selfTemplate']),
+  (state: TRPGState) => ({
+    username: state.user.info.username,
+    findingResult: state.actor.findingResult,
+    selfTemplate: state.actor.selfTemplate,
   }),
-  (dispatch) => ({
+  (dispatch: TRPGDispatch) => ({
     showModal: (body) => dispatch(showModal(body)),
     showAlert: (body) => dispatch(showAlert(body)),
     setEditedTemplate: (obj) => dispatch(setEditedTemplate(obj)),

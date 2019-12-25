@@ -13,6 +13,8 @@ import { TIcon } from './TComponent';
 import ConvItem from './ConvItem';
 import { switchNav, navProfile } from '../redux/actions/nav';
 import { isImmutable } from 'immutable';
+import { TRPGState } from '@redux/types/__all__';
+import _get from 'lodash/get';
 
 interface SectionListItemData {
   uuid: string;
@@ -165,23 +167,22 @@ const styles = {
   cell: [{ marginLeft: 20, paddingLeft: 10 }],
 };
 
-export default connect((state: any) => {
-  let usercache = state.getIn(['cache', 'user']);
-  let friends = state.getIn(['user', 'friendList']);
-  let groups = state.getIn(['group', 'groups']);
+export default connect((state: TRPGState) => {
+  const usercache = state.cache.user;
+  const friends = state.user.friendList;
+  const groups = state.group.groups;
 
   return {
     friends: friends.map((f) => ({
-      uuid: usercache.getIn([f, 'uuid']),
-      avatar: usercache.getIn([f, 'avatar']),
-      name:
-        usercache.getIn([f, 'nickname']) || usercache.getIn([f, 'username']),
+      uuid: _get(usercache, [f, 'uuid']),
+      avatar: _get(usercache, [f, 'avatar']),
+      name: _get(usercache, [f, 'nickname']) ?? _get(usercache, [f, 'username']),
       type: 'user',
     })),
     groups: groups.map((g) => ({
-      uuid: g.get('uuid'),
-      avatar: g.get('avatar'),
-      name: g.get('name'),
+      uuid: g.uuid,
+      avatar: g.avatar,
+      name: g.name,
       type: 'group',
     })),
   };

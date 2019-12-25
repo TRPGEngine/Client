@@ -3,7 +3,6 @@ import { connect, DispatchProp } from 'react-redux';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import sb from 'react-native-style-block';
-import { List } from 'immutable';
 import appConfig from '../config.app';
 import { getSimpleDate } from '../../../shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
@@ -12,6 +11,7 @@ import { sendFriendInvite } from '../../../shared/redux/actions/user';
 import { switchToChatScreen } from '../redux/actions/nav';
 import { getUserInfoCache } from '../../../shared/utils/cache-helper';
 import { addUserConverse } from '@src/shared/redux/actions/chat';
+import { TRPGState } from '@redux/types/__all__';
 
 interface ItemProps {
   name: string;
@@ -36,7 +36,7 @@ interface NavigationParams {
 interface ScreenProps
   extends DispatchProp<any>,
     NavigationScreenProps<NavigationParams> {
-  friendList: List<string>;
+  friendList: string[];
   selfUUID: string;
 }
 /**
@@ -160,8 +160,8 @@ const styles = {
   actions: [sb.padding(10)],
 };
 
-export default connect((state: any) => ({
-  usercache: state.getIn(['cache', 'user']),
-  friendList: state.getIn(['user', 'friendList']),
-  selfUUID: state.getIn(['user', 'info', 'uuid']),
+export default connect((state: TRPGState) => ({
+  usercache: state.cache.user,
+  friendList: state.user.friendList,
+  selfUUID: state.user.info.uuid,
 }))(ProfileScreen);

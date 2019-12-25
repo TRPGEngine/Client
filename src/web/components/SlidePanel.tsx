@@ -1,18 +1,16 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import { hideSlidePanel } from '../../shared/redux/actions/ui';
-import { isImmutable, Collection, Record } from 'immutable';
+import { TRPGDispatchProp, TRPGState } from '@src/shared/redux/types/__all__';
 
 import './SlidePanel.scss';
-import { memoImmutableNode } from '../utils/memo-helper';
-import { TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 
 interface Props extends TRPGDispatchProp {
   isSlidePanelShow: boolean;
-  showSlidePanelInfo: Record<{
+  showSlidePanelInfo: {
     title: string;
-    content: Collection<any, any>;
-  }>;
+    content: any;
+  };
 }
 class SlidePanel extends React.Component<Props> {
   slideEvent = () => {
@@ -45,7 +43,7 @@ class SlidePanel extends React.Component<Props> {
 
   render() {
     const { showSlidePanelInfo, isSlidePanelShow } = this.props;
-    const content = memoImmutableNode(showSlidePanelInfo.get('content'));
+    const content = showSlidePanelInfo.content;
 
     return (
       <div
@@ -55,7 +53,7 @@ class SlidePanel extends React.Component<Props> {
         }}
       >
         <div className="header">
-          <div className="title">{showSlidePanelInfo.get('title')}</div>
+          <div className="title">{showSlidePanelInfo.title}</div>
           <div className="close" onClick={() => this.handleHideSlidePanel()}>
             <i className="iconfont">&#xe70c;</i>
           </div>
@@ -66,9 +64,9 @@ class SlidePanel extends React.Component<Props> {
   }
 }
 
-export default connect((state: any) => {
+export default connect((state: TRPGState) => {
   return {
-    isSlidePanelShow: state.getIn(['ui', 'showSlidePanel']),
-    showSlidePanelInfo: state.getIn(['ui', 'showSlidePanelInfo']),
+    isSlidePanelShow: state.ui.showSlidePanel,
+    showSlidePanelInfo: state.ui.showSlidePanelInfo,
   };
 })(SlidePanel);

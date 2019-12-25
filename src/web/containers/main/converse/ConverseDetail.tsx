@@ -20,6 +20,7 @@ import MsgSendBox from '../../../components/MsgSendBox';
 import { isUserUUID } from '@shared/utils/uuid';
 import { sendStartWriting, sendStopWriting } from '@shared/api/event';
 import _throttle from 'lodash/throttle';
+import { TRPGState } from '@redux/types/__all__';
 
 import './ConverseDetail.scss';
 
@@ -224,12 +225,12 @@ class ConverseDetail extends React.Component<Props> {
   }
 }
 
-export default connect((state: any) => {
-  const converseUUID = state.getIn(['chat', 'selectedConverseUUID']); // 会话UUID在用户会话中就是用户UUID
-  const userWritingList = state.getIn(['chat', 'writingList', 'user'], []);
+export default connect((state: TRPGState) => {
+  const converseUUID = state.chat.selectedConverseUUID; // 会话UUID在用户会话中就是用户UUID
+  const userWritingList = state.chat.writingList.user?? [];
 
   return {
-    usercache: state.getIn(['cache', 'user']),
+    usercache: state.cache.user,
     converseUUID,
     isWriting: userWritingList.includes(converseUUID),
   };

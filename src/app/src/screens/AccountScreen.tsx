@@ -16,6 +16,7 @@ import DevContainer from '../components/DevContainer';
 
 import { List } from '@ant-design/react-native';
 import { showToast } from '@src/shared/redux/actions/ui';
+import { TRPGState } from '@redux/types/__all__';
 const Item = List.Item;
 
 const AccountList = styled(List)`
@@ -173,6 +174,6 @@ const styles = {
   ],
 };
 
-export default connect((state: any) => ({
-  userInfo: state.getIn(['user', 'info']),
+export default connect((state: TRPGState) => ({
+  userInfo: state.user.info,
 }))(AccountScreen);

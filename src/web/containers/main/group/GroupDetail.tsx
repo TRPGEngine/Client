@@ -27,10 +27,11 @@ import ListSelect from '../../../components/ListSelect';
 import IsDeveloping from '../../../components/IsDeveloping';
 import MsgContainer from '../../../components/MsgContainer';
 import MsgSendBox from '../../../components/MsgSendBox';
-import { List } from 'immutable';
 import _isNil from 'lodash/isNil';
+import _get from 'lodash/get';
 import { GroupActorMsgData } from '@src/shared/redux/types/group';
 import QuickDice from '../dice/QuickDice';
+import { TRPGState } from '@redux/types/__all__';
 
 interface Props extends DispatchProp<any> {
   selectedUUID: string;
@@ -304,20 +305,16 @@ class GroupDetail extends React.Component<Props> {
   }
 }
 
-export default connect((state: any) => {
-  const selectedUUID = state.getIn(['group', 'selectedGroupUUID']);
-  const groupInfo = state
-    .getIn(['group', 'groups'])
-    .find((group) => group.get('uuid') === selectedUUID);
-  const selfActors = state
-    .getIn(['actor', 'selfActors'])
-    .map((i) => i.get('uuid'));
-  const selfGroupActors = groupInfo
-    .get('group_actors', List())
-    .filter(
-      (i) => i.get('enabled') && selfActors.indexOf(i.get('actor_uuid')) >= 0
-    );
-  const selectedGroupActorUUID = groupInfo.getIn([
+export default connect((state: TRPGState) => {
+  const selectedUUID = state.group.selectedGroupUUID;
+  const groupInfo = state.group.groups.find(
+    (group) => group.uuid === selectedUUID
+  );
+  const selfActors = state.actor.selfActors.map((i) => i.uuid);
+  const selfGroupActors = (groupInfo.group_actors || []).filter(
+    (i) => i.enabled && selfActors.indexOf(i.actor_uuid) >= 0
+  );
+  const selectedGroupActorUUID = _get(groupInfo, [
     'extra',
     'selected_group_actor_uuid',
   ]);
@@ -327,12 +324,12 @@ export default connect((state: any) => {
     msgList: state
       .getIn(['chat', 'converses', selectedUUID, 'msgList'])
       .sortBy((item) => item.get('date')),
-    userUUID: state.getIn(['user', 'info', 'uuid']),
-    usercache: state.getIn(['cache', 'user']),
+    userUUID: state.user.info.uuid,
+    usercache: state.cache.user,
     selfGroupActors,
     selectedGroupActorUUID,
     selectedGroupActorInfo: selfGroupActors.find(
-      (actor) => actor.get('uuid') === selectedGroupActorUUID
+      (actor) => actor.uuid === selectedGroupActorUUID
     ),
   };
 })(GroupDetail);

@@ -1,12 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { hideModal } from '../../shared/redux/actions/ui';
 import './Modal.scss';
+import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 
-class Modal extends React.Component {
+interface Props {
+  show: boolean;
+  body: any;
+  hideModal: () => void;
+}
+class Modal extends React.Component<Props> {
   render() {
-    let body = '';
+    let body: ReactNode = '';
     if (this.props.show && this.props.body) {
       body = (
         <div className="modal-mask" onClick={(e) => e.stopPropagation()}>
@@ -24,17 +29,12 @@ class Modal extends React.Component {
   }
 }
 
-Modal.propTypes = {
-  show: PropTypes.bool,
-  body: PropTypes.object,
-};
-
 export default connect(
-  (state) => ({
-    show: state.getIn(['ui', 'showModal']),
-    body: state.getIn(['ui', 'showModalBody']),
+  (state: TRPGState) => ({
+    show: state.ui.showModal,
+    body: state.ui.showModalBody,
   }),
-  (dispatch) => ({
+  (dispatch: TRPGDispatch) => ({
     hideModal: () => {
       dispatch(hideModal());
     },

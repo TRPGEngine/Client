@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { ActorType, ActorDataType } from '@src/shared/redux/types/actor';
 import XMLBuilder from '@shared/layout/XMLBuilder';
 import styled from 'styled-components';
+import { TRPGState } from '@redux/types/__all__';
 
 const Container = styled.div`
   width: 700px;
@@ -58,6 +59,6 @@ class ActorProfile extends React.Component<Props> {
   }
 }
 
-export default connect((state: any) => ({
-  templateCache: state.getIn(['cache', 'template']),
+export default connect((state: TRPGState) => ({
+  templateCache: state.cache.template,
 }))(ActorProfile);

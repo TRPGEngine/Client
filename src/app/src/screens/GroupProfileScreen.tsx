@@ -7,9 +7,9 @@ import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getGroupInfo } from '../../../shared/redux/actions/cache';
 import { backNav, switchToChatScreen } from '../redux/actions/nav';
 import { getGroupInfoCache } from '../../../shared/utils/cache-helper';
-import { List } from 'immutable';
 import { NavigationScreenProps } from 'react-navigation';
 import { requestJoinGroup } from '@src/shared/redux/actions/group';
+import { TRPGState } from '@redux/types/__all__';
 
 interface ItemProps {
   name: string;
@@ -29,7 +29,7 @@ class ProfileInfoItem extends React.Component<ItemProps> {
 interface Props
   extends DispatchProp<any>,
     NavigationScreenProps<{ uuid: string }> {
-  addedGroupUUIDList: List<string>;
+  addedGroupUUIDList: string[];
   groupcache: any;
 }
 class ProfileScreen extends React.Component<Props> {
@@ -126,9 +126,7 @@ const styles = {
   actions: [sb.padding(10)],
 };
 
-export default connect((state: any) => ({
-  addedGroupUUIDList: state
-    .getIn(['group', 'groups'])
-    .map((g) => g.get('uuid')),
-  groupcache: state.getIn(['cache', 'group']),
+export default connect((state: TRPGState) => ({
+  addedGroupUUIDList: state.group.groups.map((g) => g.uuid),
+  groupcache: state.cache.group,
 }))(ProfileScreen);

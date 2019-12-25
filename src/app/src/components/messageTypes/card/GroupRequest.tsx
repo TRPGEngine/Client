@@ -6,6 +6,7 @@ import {
 } from '@shared/redux/actions/group';
 import { MessageProps } from '@src/shared/components/MessageHandler';
 import _isNil from 'lodash/isNil';
+import { TRPGState } from '@redux/types/__all__';
 
 // 入团申请
 interface Props extends MessageProps, DispatchProp<any> {
@@ -47,6 +48,6 @@ class GroupRequest extends BaseCard<Props> {
   }
 }
 
-export default connect((state: any) => ({
-  groups: state.getIn(['group', 'groups']),
+export default connect((state: TRPGState) => ({
+  groups: state.group.groups,
 }))(GroupRequest);

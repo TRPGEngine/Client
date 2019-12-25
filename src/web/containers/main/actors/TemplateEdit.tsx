@@ -1,6 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { showModal, showAlert, hideAlert } from '../../../../shared/redux/actions/ui';
+import {
+  showModal,
+  showAlert,
+  hideAlert,
+} from '../../../../shared/redux/actions/ui';
 import Select from 'react-select';
 import TemplatePropertyCell from '../../../components/TemplatePropertyCell';
 import at from 'trpg-actor-template';
@@ -12,23 +16,33 @@ import TemplateSelect from './TemplateSelect';
 import TemplateAdvancedCreate from './TemplateAdvancedCreate';
 
 import './TemplateEdit.scss';
+import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 
-class TemplateEdit extends React.Component {
+interface Props {
+  isEdit: boolean;
+  currentEditedTemplate: any;
+  showModal: any;
+  hideAlert: any;
+  createTemplate: any;
+  updateTemplate: any;
+  showAlert: any;
+}
+class TemplateEdit extends React.Component<Props> {
+  state = {
+    selectFunc: 'value',
+    name: '',
+    desc: '',
+    inspectCell: undefined,
+    template: undefined,
+  };
+
   constructor(props) {
     super(props);
-    this.state = {
-      selectFunc: 'value',
-      name: '',
-      desc: '',
-      inspectCell: undefined,
-    };
-    if (this.props.isEdit && this.props.currentEditedTemplate.get('uuid')) {
+    if (this.props.isEdit && this.props.currentEditedTemplate.uuid) {
       // 编辑模板
-      this.state.template = at.parse(
-        this.props.currentEditedTemplate.get('info')
-      );
-      this.state.name = this.props.currentEditedTemplate.get('name');
-      this.state.desc = this.props.currentEditedTemplate.get('desc');
+      this.state.template = at.parse(this.props.currentEditedTemplate.info);
+      this.state.name = this.props.currentEditedTemplate.name;
+      this.state.desc = this.props.currentEditedTemplate.desc;
     } else {
       // 新建模板
       this.state.template = at.getInitTemplate();
@@ -127,7 +141,7 @@ class TemplateEdit extends React.Component {
             <span>描述:</span>
             <textarea
               placeholder="属性描述"
-              rows="3"
+              rows={3}
               value={inspectCell.desc || ''}
               onChange={(e) => {
                 inspectCell.desc = e.target.value;
@@ -203,8 +217,8 @@ class TemplateEdit extends React.Component {
           <div className="desc">
             <textarea
               placeholder="模板描述"
-              rows="4"
-              cols="60"
+              rows={4}
+              cols={60}
               value={this.state.desc}
               onChange={(e) => this.setState({ desc: e.target.value })}
             />
@@ -260,10 +274,10 @@ class TemplateEdit extends React.Component {
 }
 
 export default connect(
-  (state) => ({
-    currentEditedTemplate: state.getIn(['actor', 'currentEditedTemplate']),
+  (state: TRPGState) => ({
+    currentEditedTemplate: state.actor.currentEditedTemplate,
   }),
-  (dispatch) => ({
+  (dispatch: TRPGDispatch) => ({
     showModal: (body) => dispatch(showModal(body)),
     showAlert: (payload) => dispatch(showAlert(payload)),
     hideAlert: () => dispatch(hideAlert()),

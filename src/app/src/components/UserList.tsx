@@ -65,5 +65,5 @@ class UserList extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  usercache: state.getIn(['cache', 'user']),
+  usercache: state.cache.user,
 }))(UserList);

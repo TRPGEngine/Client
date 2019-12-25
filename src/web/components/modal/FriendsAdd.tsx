@@ -80,6 +80,6 @@ class FriendsAdd extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  isFinding: state.getIn(['user', 'isFindingUser']),
-  findingResult: state.getIn(['user', 'findingResult']),
+  isFinding: state.user.isFindingUser,
+  findingResult: state.user.findingResult,
 }))(FriendsAdd);

@@ -424,26 +424,20 @@ export default connect((state: TRPGState, ownProps: Props) => {
   if (converseType === 'user') {
     // TODO: 暂时先只实现用户会话的输入中提示
     isWriting = (
-      state.getIn(['chat', 'writingList', 'user']) || List()
+      state.chat.writingList.user ?? []
     ).includes(selectedConverseUUID);
   }
 
-  const msgList = state.getIn([
-    'chat',
-    'converses',
-    selectedConverseUUID,
-    'msgList',
-  ]);
+  const msgList = _get(state, ['chat', 'converses', selectedConverseUUID, 'msgList']);
 
   return {
     selectedConverseUUID,
-    selfInfo: state.getIn(['user', 'info']),
-    selfUUID: state.getIn(['user', 'info', 'uuid']),
+    selfInfo: state.user.info,
+    selfUUID: state.user.info.uuid,
     msgList: msgList && msgList.sortBy((item) => item.get('date')),
-    usercache: state.getIn(['cache', 'user']),
+    usercache: state.cache.user,
     nomore:
-      state.getIn(['chat', 'converses', selectedConverseUUID, 'nomore']) ||
-      false,
+      _get(state, ['chat', 'converses', selectedConverseUUID, 'nomore']) ?? false,
     isWriting,
   };
 })(ChatScreen);
