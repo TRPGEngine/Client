@@ -32,26 +32,26 @@ class UserSettings extends React.Component<Props> {
       <ModalPanel title="个人设置" className="user-settings">
         <p>常用骰子:</p>
         <div className="user-favorite-list">
-          {this.props.userSettings.get('favoriteDice').map((item, index) => (
+          {this.props.userSettings.favoriteDice.map((item, index) => (
             <div className="user-favorite-item" key={'favorite-dice#' + index}>
               <input
-                value={item.get('title')}
+                value={item.title}
                 onChange={(e) =>
                   this.props.dispatch(
                     updateFavoriteDice(index, {
                       title: e.target.value,
-                      value: item.get('value'),
+                      value: item.value,
                     })
                   )
                 }
                 placeholder="标题"
               />
               <input
-                value={item.get('value')}
+                value={item.value}
                 onChange={(e) =>
                   this.props.dispatch(
                     updateFavoriteDice(index, {
-                      title: item.get('title'),
+                      title: item.title,
                       value: e.target.value,
                     })
                   )

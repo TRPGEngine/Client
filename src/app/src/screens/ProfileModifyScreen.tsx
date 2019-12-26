@@ -28,8 +28,8 @@ class ProfileModifyScreen extends React.Component<Props> {
 
     const headers = {
       'avatar-type': 'user',
-      'user-uuid': this.props.userInfo.get('uuid'),
-      'attach-uuid': this.props.userInfo.get('uuid'),
+      'user-uuid': this.props.userInfo.uuid,
+      'attach-uuid': this.props.userInfo.uuid,
       width,
       height,
     };
@@ -103,7 +103,7 @@ class ProfileModifyScreen extends React.Component<Props> {
    */
   handleEditNickname = () => {
     const { dispatch, userInfo } = this.props;
-    let nickname = userInfo.get('nickname');
+    let nickname = userInfo.nickname;
 
     dispatch(
       showModal(
@@ -123,7 +123,7 @@ class ProfileModifyScreen extends React.Component<Props> {
    */
   handleEditSex = () => {
     const { dispatch, userInfo } = this.props;
-    let sex = userInfo.get('sex');
+    let sex = userInfo.sex;
 
     dispatch(
       showModal(
@@ -148,7 +148,7 @@ class ProfileModifyScreen extends React.Component<Props> {
    */
   handleEditSign = () => {
     const { dispatch, userInfo } = this.props;
-    let sign = userInfo.get('sign');
+    let sign = userInfo.sign;
 
     dispatch(
       showModal(
@@ -167,41 +167,41 @@ class ProfileModifyScreen extends React.Component<Props> {
 
   render() {
     const userInfo = this.props.userInfo;
-    const name = userInfo.get('nickname') || userInfo.get('username');
+    const name = userInfo.nickname || userInfo.username;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => this.handleSelectAvatar()}>
             <TAvatar
-              uri={userInfo.get('avatar', '')}
+              uri={userInfo.avatar '')}
               name={name}
               capitalSize={40}
               height={100}
               width={100}
             />
           </TouchableOpacity>
-          <Text style={styles.username}>{userInfo.get('username')}</Text>
-          <Text style={styles.uuid}>{userInfo.get('uuid')}</Text>
+          <Text style={styles.username}>{userInfo.username}</Text>
+          <Text style={styles.uuid}>{userInfo.uuid}</Text>
         </View>
 
         <List>
           <Item
             arrow="horizontal"
-            extra={userInfo.get('nickname')}
+            extra={userInfo.nickname}
             onPress={this.handleEditNickname}
           >
             昵称
           </Item>
           <Item
             arrow="horizontal"
-            extra={userInfo.get('sex')}
+            extra={userInfo.sex}
             onPress={this.handleEditSex}
           >
             性别
           </Item>
           <Item
             arrow="horizontal"
-            extra={userInfo.get('sign')}
+            extra={userInfo.sign}
             onPress={this.handleEditSign}
           >
             个性签名

@@ -8,6 +8,7 @@ import { getMoreChatLog } from '@shared/redux/actions/chat';
 import { TRPGState } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _head from 'lodash/head';
+import _sortBy from 'lodash/sortBy';
 
 import MessageHandler from './messageTypes/__all__';
 
@@ -131,25 +132,25 @@ class MsgContainer extends React.Component<Props> {
           {msgList.map((item, index) => {
             const arr = msgList;
             const prevDate = index > 0 ? _get(arr, [index - 1, 'date']) : 0;
-            const senderUUID = item.get('sender_uuid');
+            const senderUUID = item.sender_uuid;
             const isMe = userUUID === senderUUID;
             const senderInfo = isMe
               ? this.props.selfInfo
               : getUserInfoCache(senderUUID);
             const name = senderInfo.nickname || senderInfo.username;
-            const avatar = senderInfo.get('avatar');
+            const avatar = senderInfo.avatar;
             const defaultAvatar =
-              item.get('sender_uuid') === 'trpgsystem'
+              item.sender_uuid === 'trpgsystem'
                 ? config.defaultImg.trpgsystem
                 : config.defaultImg.getUser(name);
-            const date = item.get('date');
+            const date = item.date;
 
             const emphasizeTime = shouleEmphasizeTime(prevDate, date);
 
             return (
               <MessageHandler
-                key={item.get('uuid')}
-                type={item.get('type')}
+                key={item.uuid}
+                type={item.type}
                 me={isMe}
                 name={name}
                 avatar={avatar || defaultAvatar}
@@ -169,7 +170,7 @@ export default connect((state: TRPGState, ownProps: any) => {
   const msgList = _get(state, ['chat', 'converses', converseUUID, 'msgList']);
 
   return {
-    msgList: msgList && msgList.sortBy((item) => item.get('date')),
+    msgList: msgList && _sortBy(msgList, 'date'),
     nomore: _get(state, ['chat', 'converses', converseUUID, 'nomore'], false),
     userUUID: _get(state, ['user', 'info', 'uuid']),
     selfInfo: state.user.info,

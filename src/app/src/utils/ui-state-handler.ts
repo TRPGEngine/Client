@@ -25,12 +25,12 @@ export const uiStateSwitchFactory = (
   option: FactoryOptions
 ) => {
   return (prevUI: UIMap, currentUI: UIMap, dispatch: TRPGDispatch) => {
-    if (prevUI.get(variable) === false && currentUI.get(variable) === true) {
+    if (prevUI.variable === false && currentUI.variable === true) {
       // UI打开
       option.onEnabled && option.onEnabled(currentUI, dispatch);
     }
 
-    if (prevUI.get(variable) === true && currentUI.get(variable) === false) {
+    if (prevUI.variable === true && currentUI.variable === false) {
       // UI关闭
       option.onDisabled && option.onDisabled(currentUI, dispatch);
     }
@@ -42,7 +42,7 @@ export const uiStateSwitchFactory = (
  */
 export const alertHandler = uiStateSwitchFactory('showAlert', {
   onEnabled: (currentUI, dispatch) => {
-    TAlert.show(currentUI.get('showAlertInfo'), {
+    TAlert.show(currentUI.'howAlertInfo'), {
       onRequestClose: () => dispatch(hideAlert()),
     });
   },
@@ -61,7 +61,7 @@ export const toastHandler = uiStateSwitchFactory('showToast', {
       // 如果已存在Toast, 先把之前的移除
       Portal.remove(currentToastKey);
     }
-    currentToastKey = Toast.show(currentUI.get('showToastText'), 0);
+    currentToastKey = Toast.show(currentUI.'howToastText'), 0);
   },
   onDisabled: () => {
     Portal.remove(currentToastKey);
@@ -74,7 +74,7 @@ export const toastHandler = uiStateSwitchFactory('showToast', {
  */
 export const modelHandler = uiStateSwitchFactory('showModal', {
   onEnabled: (currentUI, dispatch) => {
-    const body = currentUI.get('showModalBody');
+    const body = currentUI.'howModalBody');
     if (body) {
       TModal.show(body, { onRequestClose: () => dispatch(hideModal()) });
     }

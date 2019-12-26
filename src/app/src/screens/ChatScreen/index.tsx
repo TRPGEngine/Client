@@ -24,6 +24,7 @@ import { unemojify } from '@shared/utils/emoji';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import _throttle from 'lodash/throttle';
+import _sortBy from 'lodash/sortBy';
 import { ChatParams, ChatType } from '../../types/params';
 
 import styled from 'styled-components/native';
@@ -195,9 +196,9 @@ class ChatScreen extends React.Component<Props> {
           );
           if (!_isNil(currentGroupActor)) {
             payload.data = {
-              groupActorUUID: currentGroupActor.get('uuid'),
-              name: currentGroupActor.get('name'),
-              avatar: currentGroupActor.get('avatar'),
+              groupActorUUID: currentGroupActor.uuid,
+              name: currentGroupActor.name,
+              avatar: currentGroupActor.avatar,
             };
           }
           this.props.dispatch(sendMsg(null, payload));
@@ -212,7 +213,7 @@ class ChatScreen extends React.Component<Props> {
    * 处理请求更多聊天记录事件
    */
   handleRequestMoreChatLog = () => {
-    const date = this.props.msgList.first().get('date');
+    const date = _get(this.props.msgList, [0, 'date']);
     const { selectedConverseUUID } = this.props;
     const converseType = this.converseType;
     this.props.dispatch(
@@ -422,21 +423,27 @@ export default connect((state: TRPGState, ownProps: Props) => {
   let isWriting = false;
   if (converseType === 'user') {
     // TODO: 暂时先只实现用户会话的输入中提示
-    isWriting = (
-      state.chat.writingList.user ?? []
-    ).includes(selectedConverseUUID);
+    isWriting = (state.chat.writingList.user ?? []).includes(
+      selectedConverseUUID
+    );
   }
 
-  const msgList = _get(state, ['chat', 'converses', selectedConverseUUID, 'msgList']);
+  const msgList = _get(state, [
+    'chat',
+    'converses',
+    selectedConverseUUID,
+    'msgList',
+  ]);
 
   return {
     selectedConverseUUID,
     selfInfo: state.user.info,
     selfUUID: state.user.info.uuid,
-    msgList: msgList && msgList.sortBy((item) => item.get('date')),
+    msgList: msgList && _sortBy(msgList, 'date'),
     usercache: state.cache.user,
     nomore:
-      _get(state, ['chat', 'converses', selectedConverseUUID, 'nomore']) ?? false,
+      _get(state, ['chat', 'converses', selectedConverseUUID, 'nomore']) ??
+      false,
     isWriting,
   };
 })(ChatScreen);

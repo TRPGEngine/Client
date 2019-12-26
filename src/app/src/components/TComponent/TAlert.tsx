@@ -23,11 +23,11 @@ class TAlert extends React.Component<Props> {
   };
 
   render() {
-    const title = this.props.showAlertInfo.get('title') || '';
-    const content = this.props.showAlertInfo.get('content');
-    const confirmTitle = this.props.showAlertInfo.get('confirmTitle');
-    const onConfirm = this.props.showAlertInfo.get('onConfirm');
-    const onCancel = this.props.showAlertInfo.get('onCancel');
+    const title = this.props.showAlertInfo.title || '';
+    const content = this.props.showAlertInfo.content;
+    const confirmTitle = this.props.showAlertInfo.confirmTitle;
+    const onConfirm = this.props.showAlertInfo.onConfirm;
+    const onCancel = this.props.showAlertInfo.onCancel;
 
     let header, cancelBtn;
     if (title) {

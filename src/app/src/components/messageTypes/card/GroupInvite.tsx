@@ -19,8 +19,8 @@ class GroupInvite extends BaseCard<Props> {
     const data = info.data;
     const inviteUUID = _get(data, 'invite.uuid');
     const inviteInfo = getGroupInviteInfoCache(inviteUUID);
-    const is_agree = inviteInfo.get('is_agree', false);
-    const is_refuse = inviteInfo.get('is_refuse', false);
+    const is_agree = inviteInfo.is_agree ?? false;
+    const is_refuse = inviteInfo.is_refuse ?? false;
 
     const processed = is_agree || is_refuse;
 

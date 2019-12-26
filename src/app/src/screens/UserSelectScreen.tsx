@@ -80,7 +80,7 @@ class UserSelectScreen extends React.Component<Props, State> {
     const { selectedUUIDs } = this.state;
     const uuid = item;
     const user = getUserInfoCache(uuid);
-    const name = user.get('nickname') || user.get('username');
+    const name = user.nickname || user.username;
     const isChecked = selectedUUIDs.includes(uuid);
 
     const handleClick = (checked: boolean) => {
@@ -100,7 +100,7 @@ class UserSelectScreen extends React.Component<Props, State> {
             handleClick(checked);
           }}
         />
-        <UserAvatar name={name} uri={user.get('avatar')} />
+        <UserAvatar name={name} uri={user.avatar} />
         <Text>{name}</Text>
       </UserItem>
     );

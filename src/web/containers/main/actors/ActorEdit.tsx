@@ -41,7 +41,7 @@ class ActorEdit extends React.Component<Props, State> {
     super(props);
     if (this.props.selectedActorUUID) {
       let actorIndex = this.props.selfActors.findIndex((item, index) => {
-        if (item.get('uuid') === this.props.selectedActorUUID) {
+        if (item.uuid === this.props.selectedActorUUID) {
           return true;
         } else {
           return false;
@@ -50,9 +50,9 @@ class ActorEdit extends React.Component<Props, State> {
 
       if (actorIndex >= 0) {
         let actor = (this.editedActor = this.props.selfActors[actorIndex]);
-        this.state.profileName = actor.get('name');
-        this.state.profileDesc = actor.get('desc');
-        this.state.profileAvatar = actor.get('avatar');
+        this.state.profileName = actor.name;
+        this.state.profileDesc = actor.desc;
+        this.state.profileAvatar = actor.avatar;
       } else {
         console.error('角色不存在');
       }
@@ -64,7 +64,7 @@ class ActorEdit extends React.Component<Props, State> {
     let info = this.props.selectedTemplate.info;
     let template = (this.template = at.parse(info));
     if (this.editedActor) {
-      let data = this.editedActor.get('info');
+      let data = this.editedActor.info;
       template.setData(data);
     }
     template.eval();

@@ -55,7 +55,7 @@ class TemplateSelect extends React.Component<Props> {
   }
 
   handleDelete(item) {
-    let template_uuid = item.get('uuid');
+    let template_uuid = item.uuid;
     this.props.showAlert({
       content: '你确定要删除该模板么？删除后仍会保留相关联的人物卡与团人物',
       onConfirm: () => this.props.removeTemplate(template_uuid),
@@ -71,12 +71,12 @@ class TemplateSelect extends React.Component<Props> {
         return findingResult.map((item, index) => {
           return (
             <TemplateItem
-              key={'template-find-result' + item.get('uuid')}
+              key={'template-find-result' + item.uuid}
               canEdit={false}
-              name={item.get('name')}
-              desc={item.get('desc')}
-              creator={item.get('creator_name') || '未知'}
-              time={item.get('updateAt')}
+              name={item.name}
+              desc={item.desc}
+              creator={item.creator_name || '未知'}
+              time={item.updateAt}
               onCreate={() => this.handleCreateActor(item)}
             />
           );
@@ -118,12 +118,12 @@ class TemplateSelect extends React.Component<Props> {
               {this.props.selfTemplate.map((item, index) => {
                 return (
                   <TemplateItem
-                    key={item.get('uuid')}
+                    key={item.uuid}
                     canEdit={true}
-                    name={item.get('name')}
-                    desc={item.get('desc')}
+                    name={item.name}
+                    desc={item.desc}
                     creator={this.props.username}
-                    time={item.get('updateAt')}
+                    time={item.updateAt}
                     onEdit={() => this.handleEdit(item)}
                     onCreate={() => this.handleCreateActor(item)}
                     onDelete={() => this.handleDelete(item)}

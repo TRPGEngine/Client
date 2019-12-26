@@ -25,13 +25,9 @@ class GroupMemberScreen extends React.Component<Props> {
 export default connect((state: TRPGState, ownProps: Props) => {
   const groupUUID = ownProps.navigation.getParam('uuid');
 
-  const group = state
-    .get('group')
-    .get('groups')
-    .find((x) => x.get('uuid') === groupUUID);
+  const group = state.group.groups.find((x) => x.uuid === groupUUID);
 
   return {
-    groupMembers:
-      (!_isNil(group) ? group.get('group_members') : null) ?? [],
+    groupMembers: (!_isNil(group) ? group.group_members : null) ?? [],
   };
 })(GroupMemberScreen);

@@ -10,16 +10,16 @@ export function getCurrentGroupActor(groupUUID: string) {
   const groupInfo = state.group.groups.find(
     (group) => group.uuid === groupUUID
   );
-  const selfActors: string[] = state.actor.selfActors.map((i) => i.get('uuid'));
+  const selfActors: string[] = state.actor.selfActors.map((i) => i.uuid);
   const selfGroupActors = (groupInfo.group_actors ?? []).filter(
-    (i) => i.get('enabled') && selfActors.includes(i.get('actor_uuid'))
+    (i) => i.enabled && selfActors.includes(i.actor_uuid)
   );
   const selectedGroupActorUUID = _get(groupInfo, [
     'extra',
     'selected_group_actor_uuid',
   ]);
   const currentGroupActorInfo = selfGroupActors.find(
-    (actor) => actor.get('uuid') === selectedGroupActorUUID
+    (actor) => actor.uuid === selectedGroupActorUUID
   );
   return currentGroupActorInfo;
 }

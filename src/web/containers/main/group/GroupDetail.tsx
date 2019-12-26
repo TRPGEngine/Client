@@ -56,9 +56,9 @@ class GroupDetail extends React.Component<Props> {
     let msgData: GroupActorMsgData;
     if (!_isNil(this.props.selectedGroupActorInfo)) {
       msgData = {
-        groupActorUUID: this.props.selectedGroupActorInfo.get('uuid'),
-        name: this.props.selectedGroupActorInfo.get('name'),
-        avatar: this.props.selectedGroupActorInfo.get('avatar'),
+        groupActorUUID: this.props.selectedGroupActorInfo.uuid,
+        name: this.props.selectedGroupActorInfo.name,
+        avatar: this.props.selectedGroupActorInfo.avatar,
       };
     }
     this.props.dispatch(
@@ -257,17 +257,16 @@ class GroupDetail extends React.Component<Props> {
           <div className="avatar">
             <img
               src={
-                groupInfo.get('avatar') ||
-                config.defaultImg.getGroup(groupInfo.get('name'))
+                groupInfo.avatar || config.defaultImg.getGroup(groupInfo.name)
               }
             />
           </div>
           <div className="title">
             <div className="main-title">
-              {groupInfo.get('name')}
-              {groupInfo.get('status') && '(开团中...)'}
+              {groupInfo.name}
+              {groupInfo.status && '(开团中...)'}
             </div>
-            <div className="sub-title">{groupInfo.get('sub_name')}</div>
+            <div className="sub-title">{groupInfo.sub_name}</div>
           </div>
           <Select
             name="actor-select"
@@ -317,12 +316,9 @@ export default connect((state: TRPGState) => {
   return {
     selectedUUID,
     groupInfo,
-    msgList: _get(state, [
-      'chat',
-      'converses',
-      selectedUUID,
-      'msgList',
-    ]).sortBy((item) => item.get('date')),
+    msgList: _get(state, ['chat', 'converses', selectedUUID, 'msgList']).sortBy(
+      (item) => item.date
+    ),
     userUUID: state.user.info.uuid,
     usercache: state.cache.user,
     selfGroupActors,

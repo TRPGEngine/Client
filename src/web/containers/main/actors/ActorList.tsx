@@ -58,26 +58,26 @@ class ActorList extends React.Component<Props> {
 
   handleOpenActorEditModal(uuid) {
     // TODO
-    const actor = this.props.actors.find((a) => a.get('uuid') === uuid);
+    const actor = this.props.actors.find((a) => a.uuid === uuid);
     if (_isNil(actor)) {
       message.error('角色不存在');
       return;
     }
     const templateLayout = _get(this.props.templateCache, [
-      actor.get('template_uuid'),
+      actor.template_uuid,
       'layout',
     ]);
 
-    const name = actor.get('name');
-    const desc = actor.get('desc');
-    const avatar = actor.get('avatar');
+    const name = actor.name;
+    const desc = actor.desc;
+    const avatar = actor.avatar;
 
     this.props.showModal(
       <ActorEdit
         name={name}
         desc={desc}
         avatar={avatar}
-        data={actor.get('info')}
+        data={actor.info}
         layout={templateLayout}
         onSave={(data) =>
           this.props.updateActor(uuid, name, avatar, desc, data)
@@ -87,22 +87,22 @@ class ActorList extends React.Component<Props> {
   }
 
   handleOpenActorInfoModal(uuid) {
-    const actor = this.props.actors.find((a) => a.get('uuid') === uuid);
+    const actor = this.props.actors.find((a) => a.uuid === uuid);
     if (_isNil(actor)) {
       message.error('角色不存在');
       return;
     }
     const templateLayout = _get(this.props.templateCache, [
-      actor.get('template_uuid'),
+      actor.template_uuid,
       'layout',
     ]);
 
     this.props.showModal(
       <ActorInfo
-        name={actor.get('name')}
-        desc={actor.get('desc')}
-        avatar={actor.get('avatar')}
-        data={actor.get('info')}
+        name={actor.name}
+        desc={actor.desc}
+        avatar={actor.avatar}
+        data={actor.info}
         layout={templateLayout}
       />
     );
@@ -110,13 +110,13 @@ class ActorList extends React.Component<Props> {
 
   getActorList() {
     return this.props.actors.map((item, index) => {
-      let uuid = item.get('uuid');
+      let uuid = item.uuid;
       let backgroundStyle = {
-        backgroundImage: `url(${item.get('avatar')})`,
+        backgroundImage: `url(${item.avatar})`,
       };
-      let actorname = item.get('name');
-      let desc = item.get('desc');
-      let template_uuid = item.get('template_uuid');
+      let actorname = item.name;
+      let desc = item.desc;
+      let template_uuid = item.template_uuid;
       return (
         <div className="actor-card" key={uuid + '-' + index}>
           <div className="avatar" style={backgroundStyle} />
@@ -147,7 +147,7 @@ class ActorList extends React.Component<Props> {
   getActorInfo() {
     let actor;
     for (let _actor of this.props.actors) {
-      if (_actor.get('uuid') === this.props.selectedActorUUID) {
+      if (_actor.uuid === this.props.selectedActorUUID) {
         actor = _actor;
         break;
       }

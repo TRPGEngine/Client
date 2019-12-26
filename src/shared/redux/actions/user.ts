@@ -380,7 +380,7 @@ export const getSettings = function(): TRPGAction {
 
 export const saveSettings = function(): TRPGAction {
   return function(dispatch, getState) {
-    const settings = getState().get('settings');
+    const settings = getState().settings;
     return api.emit(
       'player::saveSettings',
       {

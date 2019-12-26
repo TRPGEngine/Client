@@ -211,5 +211,5 @@ export const getGroupInviteInfoCache = reduxCacheFactory(
  */
 export const getCachedUserName = (uuid: string): string => {
   const info = getUserInfoCache(uuid);
-  return info.get('nickname') || info.get('username') || '';
+  return info.nickname ?? info.username ?? '';
 };

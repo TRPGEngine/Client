@@ -80,9 +80,7 @@ class GroupDataScreen extends React.Component<Props> {
     const { dispatch, selectedGroupUUID, selfGroupActors } = this.props;
 
     const currentGroupActor = getCurrentGroupActor(selectedGroupUUID);
-    let actorUUID = _isNil(currentGroupActor)
-      ? null
-      : currentGroupActor.get('uuid');
+    let actorUUID = _isNil(currentGroupActor) ? null : currentGroupActor.uuid;
 
     const options = [
       {

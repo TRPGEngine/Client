@@ -60,14 +60,14 @@ class HomeScreen extends React.Component<Props> {
   getNetworkTip() {
     const { network } = this.props;
     return (
-      <Spring to={{ top: network.get('isOnline') ? -26 : 0 }}>
+      <Spring to={{ top: network.isOnline ? -26 : 0 }}>
         {(props) => (
           <NetworkContainer
             style={props}
-            isOnline={network.get('isOnline')}
-            tryReconnect={network.get('tryReconnect')}
+            isOnline={network.isOnline}
+            tryReconnect={network.tryReconnect}
           >
-            <NetworkText>{network.get('msg')}</NetworkText>
+            <NetworkText>{network.msg}</NetworkText>
           </NetworkContainer>
         )}
       </Spring>
@@ -78,33 +78,31 @@ class HomeScreen extends React.Component<Props> {
     if (this.props.converses.size > 0) {
       const arr: any[] = this.props.converses
         .valueSeq()
-        .sortBy((item) => new Date(item.get('lastTime') || 0))
+        .sortBy((item) => new Date(item.lastTime || 0))
         .reverse()
         .map((item, index) => {
-          let uuid = item.get('uuid');
+          let uuid = item.uuid;
           let defaultIcon =
             uuid === 'trpgsystem'
               ? appConfig.defaultImg.trpgsystem
               : appConfig.defaultImg.user;
           let avatar: string;
-          if (item.get('type') === 'user') {
+          if (item.type === 'user') {
             avatar = _get(this.props.usercache, [uuid, 'avatar']);
-          } else if (item.get('type') === 'group') {
-            let group = this.props.groups.find((g) => g.get('uuid') === uuid);
-            avatar = group ? group.get('avatar') : '';
+          } else if (item.type === 'group') {
+            let group = this.props.groups.find((g) => g.uuid === uuid);
+            avatar = group ? group.avatar : '';
           }
 
           return {
-            icon: item.get('icon') || avatar || defaultIcon,
-            title: item.get('name'),
-            content: item.get('lastMsg'),
-            time: item.get('lastTime')
-              ? dateHelper.getShortDiff(item.get('lastTime'))
-              : '',
+            icon: item.icon || avatar || defaultIcon,
+            title: item.name,
+            content: item.lastMsg,
+            time: item.lastTime ? dateHelper.getShortDiff(item.lastTime) : '',
             uuid,
-            unread: item.get('unread'),
+            unread: item.unread,
             onPress: () => {
-              this.handleSelectConverse(uuid, item.get('type'), item);
+              this.handleSelectConverse(uuid, item.type, item);
             },
           };
         });
@@ -141,7 +139,7 @@ class HomeScreen extends React.Component<Props> {
   }
 
   handleSelectConverse(uuid: string, type: ChatType, info) {
-    this.props.dispatch(switchToChatScreen(uuid, type, info.get('name')));
+    this.props.dispatch(switchToChatScreen(uuid, type, info.name));
   }
 
   render() {

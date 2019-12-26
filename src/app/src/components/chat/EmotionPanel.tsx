@@ -259,7 +259,7 @@ class EmotionPanel extends React.Component<Props> {
           })}
           {/* 自定义表情包 */}
           {this.props.emotionCatalog.map((catalog) => {
-            const catalogUUID = catalog.get('uuid');
+            const catalogUUID = catalog.uuid;
 
             return (
               <EmoticonCatalogItem

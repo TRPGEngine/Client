@@ -86,7 +86,7 @@ class GroupActor extends React.Component<Props> {
     const template = getTemplateInfoCache(
       _get(groupActor, 'actor.template_uuid')
     );
-    const templateLayout = template.get('layout');
+    const templateLayout = template.layout;
 
     showModal(
       <ActorEdit
@@ -96,7 +96,7 @@ class GroupActor extends React.Component<Props> {
         data={getGroupActorInfo(groupActor)}
         layout={templateLayout}
         onSave={(data) =>
-          updateGroupActorInfo(groupInfo.get('uuid'), groupActor.uuid, data)
+          updateGroupActorInfo(groupInfo.uuid, groupActor.uuid, data)
         }
       />
     );
@@ -126,10 +126,10 @@ class GroupActor extends React.Component<Props> {
   // 正式人物卡
   getGroupActorsList() {
     const { groupInfo } = this.props;
-    const groupActors = this.props.groupInfo.get('group_actors');
+    const groupActors = this.props.groupInfo.group_actors;
     if (groupActors && groupActors.size > 0) {
       return groupActors
-        .filter((item) => item.get('passed') === true)
+        .filter((item) => item.passed === true)
         .map((item) => {
           const groupActor: GroupActorType = item; // 团人物卡信息
           const originActor: ActorType = groupActor.actor;
@@ -200,29 +200,29 @@ class GroupActor extends React.Component<Props> {
 
   // 待审人物卡
   getGroupActorChecksList() {
-    let groupActors = this.props.groupInfo.get('group_actors');
+    let groupActors = this.props.groupInfo.group_actors;
     if (groupActors && groupActors.size > 0) {
       return groupActors
-        .filter((item) => item.get('passed') === false)
+        .filter((item) => item.passed === false)
         .map((item) => {
-          let originActor = item.get('actor');
-          let actorData = item.get('actor_info');
+          let originActor = item.actor;
+          let actorData = item.actor_info;
           return (
             <div
-              key={'group-actor-check#' + item.get('uuid')}
+              key={'group-actor-check#' + item.uuid}
               className="group-actor-check-item"
             >
               <div
                 className="avatar"
                 style={{
                   backgroundImage: `url(${getAbsolutePath(
-                    originActor.get('avatar')
+                    originActor.avatar
                   )})`,
                 }}
               />
               <div className="info">
-                <div className="name">{originActor.get('name')}</div>
-                <div className="desc">{originActor.get('desc')}</div>
+                <div className="name">{originActor.name}</div>
+                <div className="desc">{originActor.desc}</div>
                 <div className="action">
                   <Tooltip title="查询">
                     <button

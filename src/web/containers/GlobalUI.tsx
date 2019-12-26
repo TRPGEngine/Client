@@ -19,7 +19,7 @@ class GlobalUI extends React.Component<Props> {
       <React.Fragment>
         {this.props.showLigthbox ? (
           <Lightbox
-            mainSrc={this.props.showLigthboxInfo.get('src')}
+            mainSrc={this.props.showLigthboxInfo.src}
             onCloseRequest={() => this.props.dispatch(hideLightbox())}
           />
         ) : null}

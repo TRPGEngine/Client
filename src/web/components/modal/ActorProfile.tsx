@@ -45,7 +45,7 @@ class ActorProfile extends React.Component<Props> {
     return (
       <XMLBuilder
         layoutType="detail"
-        xml={template.get('layout', '')}
+        xml={template.layout ?? ''}
         initialData={initialData}
       />
     );
@@ -53,7 +53,7 @@ class ActorProfile extends React.Component<Props> {
 
   render() {
     const actor = this.props.actor;
-    const template = this.props.templateCache.get(actor.template_uuid);
+    const template = this.props.templateCache[actor.template_uuid];
 
     return <Container>{this.getActorProperty(actor, template)}</Container>;
   }

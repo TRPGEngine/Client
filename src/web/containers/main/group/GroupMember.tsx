@@ -24,17 +24,17 @@ class GroupMember extends React.Component<Props> {
   getMemberList() {
     let groupInfo = this.props.groupInfo;
     let hasManagerAuth =
-      groupInfo.get('managers_uuid').indexOf(this.props.userUUID) >= 0;
-    if (groupInfo.get('group_members')) {
-      return groupInfo.get('group_members', []).map((uuid) => {
+      groupInfo.managers_uuid.indexOf(this.props.userUUID) >= 0;
+    if (groupInfo.group_members) {
+      return (groupInfo.group_members || []).map((uuid) => {
         let user = getUserInfoCache(uuid);
-        let last_login = user.get('last_login')
-          ? moment(user.get('last_login')).format('YYYY-M-D HH:mm:ss')
+        let last_login = user.last_login
+          ? moment(user.last_login).format('YYYY-M-D HH:mm:ss')
           : '从未登录';
-        let isManager = groupInfo.get('managers_uuid').indexOf(uuid) >= 0;
-        let isOwner = groupInfo.get('owner_uuid') === uuid;
+        let isManager = groupInfo.managers_uuid.indexOf(uuid) >= 0;
+        let isOwner = groupInfo.owner_uuid === uuid;
         let auth = isOwner ? 'owner' : isManager ? 'manager' : 'none';
-        let name = user.get('nickname') || user.get('username');
+        let name = user.nickname || user.username;
         return (
           <tr
             key={`group-member#${this.props.selectedGroupUUID}#${uuid}`}
@@ -44,9 +44,7 @@ class GroupMember extends React.Component<Props> {
               <i className="iconfont">&#xe648;</i>
             </td>
             <td className="avatar">
-              <img
-                src={user.get('avatar') || config.defaultImg.getUser(name)}
-              />
+              <img src={user.avatar || config.defaultImg.getUser(name)} />
             </td>
             <td className="name">{name}</td>
             <td className="last-login">{last_login}</td>

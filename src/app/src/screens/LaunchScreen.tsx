@@ -62,7 +62,7 @@ class LaunchScreen extends React.Component<Props> {
   }
 
   componentDidUpdate(prevProps: Readonly<Props>) {
-    if (this.props.network.get('isOnline') === false) {
+    if (this.props.network.isOnline === false) {
       return;
     }
 
@@ -80,7 +80,7 @@ class LaunchScreen extends React.Component<Props> {
   }
 
   handleFinishAnimation() {
-    if (this.props.network.get('isOnline') === false) {
+    if (this.props.network.isOnline === false) {
       return;
     }
 
@@ -118,9 +118,9 @@ class LaunchScreen extends React.Component<Props> {
   render() {
     let network = this.props.network;
     let networkType = 'red';
-    if (network.get('isOnline')) {
+    if (network.isOnline) {
       networkType = 'green';
-    } else if (network.get('tryReconnect')) {
+    } else if (network.tryReconnect) {
       networkType = 'yellow';
     }
 
@@ -136,7 +136,7 @@ class LaunchScreen extends React.Component<Props> {
               styles.networkIndicator[networkType],
             ]}
           />
-          <Text>当前网络状态: {network.get('msg')}</Text>
+          <Text>当前网络状态: {network.msg}</Text>
         </TouchableOpacity>
 
         <Animated.View

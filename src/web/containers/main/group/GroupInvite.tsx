@@ -51,7 +51,7 @@ class GroupInvite extends React.Component<Props> {
             }
 
             let user = getUserInfoCache(uuid);
-            let name = user.get('nickname') || user.get('username');
+            let name = user.nickname || user.username;
 
             return (
               <div
@@ -64,9 +64,7 @@ class GroupInvite extends React.Component<Props> {
                 data-tip={name}
               >
                 <div className="avatar">
-                  <img
-                    src={user.get('avatar') || config.defaultImg.getUser(name)}
-                  />
+                  <img src={user.avatar || config.defaultImg.getUser(name)} />
                 </div>
                 <div className="mask" />
               </div>
@@ -77,7 +75,7 @@ class GroupInvite extends React.Component<Props> {
         <div className="invite-list">
           {this.props.groupMembers.map((uuid) => {
             let user = getUserInfoCache(uuid);
-            let name = user.get('nickname') || user.get('username');
+            let name = user.nickname || user.username;
 
             return (
               <div
@@ -87,9 +85,7 @@ class GroupInvite extends React.Component<Props> {
                 data-tip={name}
               >
                 <div className="avatar">
-                  <img
-                    src={user.get('avatar') || config.defaultImg.getUser(name)}
-                  />
+                  <img src={user.avatar || config.defaultImg.getUser(name)} />
                 </div>
                 <div className="mask" />
               </div>

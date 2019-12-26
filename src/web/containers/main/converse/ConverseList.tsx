@@ -48,7 +48,7 @@ class ConverseList extends React.Component<Props> {
       const converses = this.props.converses
         .valueSeq()
         .filter((item) => item.type === 'user' || item.type === 'system')
-        .sortBy((item) => new Date(item.get('lastTime') || 0))
+        .sortBy((item) => new Date(item.lastTime || 0))
         .reverse()
         .map((item, index) => {
           const uuid = item.uuid;
@@ -58,7 +58,7 @@ class ConverseList extends React.Component<Props> {
               : config.defaultImg.getUser(item.name);
           const attachIcon =
             item.type === 'user'
-              ? _get(this.props.usercache, [item.get('members', 0), 'avatar'])
+              ? _get(this.props.usercache, [item.members ?? 0, 'avatar'])
               : null;
           const userUUID = _isArray(item.members)
             ? item.members.find((i) => i !== this.props.userInfo.uuid)
@@ -71,15 +71,11 @@ class ConverseList extends React.Component<Props> {
             <ConvItem
               key={'converses#' + index}
               icon={icon}
-              title={item.get('name')}
-              content={item.get('lastMsg')}
-              time={
-                item.get('lastTime')
-                  ? dateHelper.getShortDiff(item.get('lastTime'))
-                  : ''
-              }
+              title={item.name}
+              content={item.lastMsg}
+              time={item.lastTime ? dateHelper.getShortDiff(item.lastTime) : ''}
               uuid={uuid}
-              unread={item.get('unread')}
+              unread={item.unread}
               isWriting={userWritingList.includes(userUUID)}
               isSelected={this.props.selectedUUID === uuid}
               hideCloseBtn={false}

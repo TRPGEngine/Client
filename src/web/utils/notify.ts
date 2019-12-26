@@ -54,7 +54,7 @@ export default function(store) {
           }
           const notification = new Notification(`来自 ${username}:`, {
             body: data.message,
-            icon: userinfo.get('avatar') || config.defaultImg.trpgsystem,
+            icon: userinfo.avatar || config.defaultImg.trpgsystem,
             tag: 'trpg-msg',
             renotify: true,
             data: { uuid },

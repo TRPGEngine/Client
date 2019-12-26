@@ -141,7 +141,7 @@ class ConverseDetail extends React.Component<Props> {
 
   getHeaderActions() {
     const actions = [];
-    if (this.props.usercache.get(this.props.converseUUID)) {
+    if (this.props.usercache.this.props.converseUUID) {
       actions.push({
         name: '个人信息',
         icon: '&#xe611;',

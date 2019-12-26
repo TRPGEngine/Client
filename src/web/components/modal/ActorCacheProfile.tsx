@@ -16,9 +16,7 @@ class ActorCacheProfile extends React.Component<Props> {
     let actorcache = this.props.actorcache;
     return (
       <ModalPanel title="人物信息">
-        <ActorProfile
-          actor={actorcache.get(uuid) ? _get(actorcache, uuid) : {}}
-        />
+        <ActorProfile actor={actorcache[uuid] ? _get(actorcache, uuid) : {}} />
       </ModalPanel>
     );
   }

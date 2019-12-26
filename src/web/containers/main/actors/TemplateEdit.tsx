@@ -59,7 +59,7 @@ class TemplateEdit extends React.Component<Props> {
     template.desc = this.state.desc;
     template.avatar = '';
     let info = at.stringify(template);
-    let uuid = this.props.currentEditedTemplate.get('uuid');
+    let uuid = this.props.currentEditedTemplate.uuid;
     if (!uuid) {
       this.props.createTemplate(
         template.name,

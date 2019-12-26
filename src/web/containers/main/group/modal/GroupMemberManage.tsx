@@ -30,7 +30,7 @@ class GroupMemberManage extends React.Component<Props> {
 
   render() {
     let userInfo = getUserInfoCache(this.props.uuid);
-    let name = userInfo.get('nickname') || userInfo.get('username');
+    let name = userInfo.nickname || userInfo.username;
     let actions = (
       <div>
         <button onClick={() => this.handleRaiseManager()}>提升为管理</button>
@@ -41,13 +41,11 @@ class GroupMemberManage extends React.Component<Props> {
       <ModalPanel title="管理成员" actions={actions}>
         <div className="group-member-manage">
           <div className="avatar">
-            <img
-              src={userInfo.get('avatar') || config.defaultImg.getUser(name)}
-            />
+            <img src={userInfo.avatar || config.defaultImg.getUser(name)} />
           </div>
-          <div className="uuid">{userInfo.get('uuid')}</div>
+          <div className="uuid">{userInfo.uuid}</div>
           <p className="name">{name}</p>
-          <p className="sign">{userInfo.get('sign')}</p>
+          <p className="sign">{userInfo.sign}</p>
         </div>
       </ModalPanel>
     );

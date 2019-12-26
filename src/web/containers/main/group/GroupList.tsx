@@ -6,6 +6,7 @@ import dateHelper from '../../../../shared/utils/date-helper';
 import { switchSelectGroup } from '../../../../shared/redux/actions/group';
 import GroupDetail from './GroupDetail';
 import _get from 'lodash/get';
+import _sortBy from 'lodash/sortBy';
 
 import './GroupList.scss';
 import {
@@ -35,15 +36,16 @@ class GroupList extends React.Component<Props> {
 
   getGroupList() {
     const converses = this.props.converses;
-    return this.props.groups
-      .map((item) => {
+    return _sortBy(
+      this.props.groups.map((item) => {
         let uuid = item.uuid;
         return item
           .set('lastTime', _get(converses, [uuid, 'lastTime']) || 0)
           .set('lastMsg', _get(converses, [uuid, 'lastMsg']))
           .set('unread', _get(converses, [uuid, 'unread']));
-      })
-      .sortBy((item) => new Date(item.get('lastTime')))
+      }),
+      (x) => new Date(x.lastTime)
+    )
       .reverse()
       .map((item, index) => {
         const uuid = item.uuid;
@@ -58,14 +60,10 @@ class GroupList extends React.Component<Props> {
             key={uuid + '#' + index}
             icon={icon}
             title={name}
-            content={item.get('lastMsg')}
-            time={
-              item.get('lastTime')
-                ? dateHelper.getShortDiff(item.get('lastTime'))
-                : ''
-            }
+            content={item.lastMsg}
+            time={item.lastTime ? dateHelper.getShortDiff(item.lastTime) : ''}
             uuid={uuid}
-            unread={item.get('unread')}
+            unread={item.unread}
             isSelected={this.props.selectedUUID === uuid}
             onClick={() => this.props.switchSelectGroup(uuid)}
             hideCloseBtn={true}

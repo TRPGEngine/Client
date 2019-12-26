@@ -28,7 +28,7 @@ interface Props {
 }
 interface State {
   isEdited: boolean;
-  editedInfo: {[name: string]: any}
+  editedInfo: { [name: string]: any };
 }
 class ProfileCard extends React.Component<Props, State> {
   state: State = {
@@ -175,11 +175,11 @@ class ProfileCard extends React.Component<Props, State> {
         <div className="body">
           <div className="item">
             <span>唯一标识符:</span>
-            <span>{this.props.userInfo.get('uuid')}</span>
+            <span>{this.props.userInfo.uuid}</span>
           </div>
           <div className="item">
             <span>用户名:</span>
-            <span>{this.props.userInfo.get('username')}</span>
+            <span>{this.props.userInfo.username}</span>
           </div>
           <div className="item">
             <span>昵称:</span>
@@ -237,33 +237,31 @@ class ProfileCard extends React.Component<Props, State> {
         <div className="body">
           <div className="item">
             <span>唯一标识符:</span>
-            <span>{this.props.userInfo.get('uuid')}</span>
+            <span>{this.props.userInfo.uuid}</span>
           </div>
           {isSelf ? (
             <div className="item">
               <span>用户名:</span>
-              {this.props.userInfo.get('username')}
+              {this.props.userInfo.username}
             </div>
           ) : null}
           <div className="item">
             <span>昵称:</span>
-            {this.props.userInfo.get('nickname')}
+            {this.props.userInfo.nickname}
           </div>
           <div className="item">
             <span>性别:</span>
-            {this.getSexP(this.props.userInfo.get('sex'))}
+            {this.getSexP(this.props.userInfo.sex)}
           </div>
           <div className="item">
             <span>个人签名:</span>
-            <span>{this.props.userInfo.get('sign')}</span>
+            <span>{this.props.userInfo.sign}</span>
           </div>
         </div>
       );
 
-      let avatar = this.props.userInfo.get('avatar') || '';
-      let name =
-        this.props.userInfo.get('nickname') ||
-        this.props.userInfo.get('username');
+      let avatar = this.props.userInfo.avatar || '';
+      let name = this.props.userInfo.nickname || this.props.userInfo.username;
 
       return (
         <div className="mask" onClick={(e) => e.stopPropagation()}>
@@ -292,8 +290,7 @@ class ProfileCard extends React.Component<Props, State> {
                   )}
                 </div>
                 <span className="username">
-                  {this.props.userInfo.get('nickname') ||
-                    this.props.userInfo.get('username')}
+                  {this.props.userInfo.nickname || this.props.userInfo.username}
                 </span>
                 {isSelf ? editBtn : null}
               </div>

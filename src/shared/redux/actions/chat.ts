@@ -208,9 +208,7 @@ export const removeUserConverse = (userConverseUUID: string): TRPGAction => {
     // 在localStorage删除
     const userUUID = getState().user.info.uuid;
     const converses = getState().chat.converses;
-    const uuids = Object.keys(
-      converses.filter((c) => c.get('type') === 'user')
-    );
+    const uuids = Object.keys(converses.filter((c) => c.type === 'user'));
     rnStorage.set(
       getUserConversesHash(userUUID),
       _without(uuids, userConverseUUID)
