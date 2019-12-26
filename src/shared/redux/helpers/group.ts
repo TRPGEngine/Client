@@ -1,4 +1,5 @@
 import { getStoreState } from '@redux/configureStore/helper';
+import _get from 'lodash/get';
 
 /**
  * 获取当前选择的团角色的角色信息
@@ -6,18 +7,14 @@ import { getStoreState } from '@redux/configureStore/helper';
 export function getCurrentGroupActor(groupUUID: string) {
   const state = getStoreState();
 
-  const groupInfo = state
-    .getIn(['group', 'groups'])
-    .find((group) => group.get('uuid') === groupUUID);
-  const selfActors: string[] = state
-    .getIn(['actor', 'selfActors'])
-    .map((i) => i.get('uuid'));
-  const selfGroupActors = groupInfo
-    .get('group_actors', [])
-    .filter(
-      (i) => i.get('enabled') && selfActors.includes(i.get('actor_uuid'))
-    );
-  const selectedGroupActorUUID = groupInfo.getIn([
+  const groupInfo = state.group.groups.find(
+    (group) => group.uuid === groupUUID
+  );
+  const selfActors: string[] = state.actor.selfActors.map((i) => i.get('uuid'));
+  const selfGroupActors = (groupInfo.group_actors ?? []).filter(
+    (i) => i.get('enabled') && selfActors.includes(i.get('actor_uuid'))
+  );
+  const selectedGroupActorUUID = _get(groupInfo, [
     'extra',
     'selected_group_actor_uuid',
   ]);

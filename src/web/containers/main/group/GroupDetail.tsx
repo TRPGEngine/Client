@@ -113,14 +113,14 @@ class GroupDetail extends React.Component<Props> {
   // 发送投骰邀请
   handleSendDiceInv() {
     let usercache = this.props.usercache;
-    let groupMembers = this.props.groupInfo.get('group_members', []);
+    let groupMembers = this.props.groupInfo.group_members ?? [];
     let list = groupMembers
       .filter((uuid) => uuid !== this.props.userUUID)
       .map((uuid) => ({
         name:
-          usercache.getIn([uuid, 'nickname']) ||
-          usercache.getIn([uuid, 'username']),
-        uuid: usercache.getIn([uuid, 'uuid']),
+          _get(usercache, [uuid, 'nickname']) ||
+          _get(usercache, [uuid, 'username']),
+        uuid: _get(usercache, [uuid, 'uuid']),
       }));
     this.props.dispatch(
       showModal(
@@ -240,8 +240,8 @@ class GroupDetail extends React.Component<Props> {
     let options = [];
     if (selfGroupActors && selfGroupActors.size > 0) {
       options = selfGroupActors.map((item, index) => ({
-        value: item.get('uuid'),
-        label: item.getIn(['actor', 'name']),
+        value: item.uuid,
+        label: _get(item, 'actor.name'),
       }));
     }
     if (selectedGroupActorUUID) {
@@ -317,9 +317,12 @@ export default connect((state: TRPGState) => {
   return {
     selectedUUID,
     groupInfo,
-    msgList: state
-      .getIn(['chat', 'converses', selectedUUID, 'msgList'])
-      .sortBy((item) => item.get('date')),
+    msgList: _get(state, [
+      'chat',
+      'converses',
+      selectedUUID,
+      'msgList',
+    ]).sortBy((item) => item.get('date')),
     userUUID: state.user.info.uuid,
     usercache: state.cache.user,
     selfGroupActors,

@@ -11,7 +11,7 @@ import config from '@shared/project.config';
  */
 export const showPortal = (url: string): TRPGAction => {
   return async function(dispatch, getState) {
-    const userUUID = getState().getIn(['user', 'info', 'uuid']);
+    const userUUID = getState().user.info.uuid;
 
     const jwt = await getWebToken(userUUID); // 检查WebToken
 

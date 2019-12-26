@@ -5,6 +5,7 @@ import ConvItem from '../../../components/ConvItem';
 import dateHelper from '../../../../shared/utils/date-helper';
 import { switchSelectGroup } from '../../../../shared/redux/actions/group';
 import GroupDetail from './GroupDetail';
+import _get from 'lodash/get';
 
 import './GroupList.scss';
 import {
@@ -33,23 +34,24 @@ class GroupList extends React.Component<Props> {
   }
 
   getGroupList() {
+    const converses = this.props.converses;
     return this.props.groups
       .map((item) => {
-        let uuid = item.get('uuid');
+        let uuid = item.uuid;
         return item
-          .set('lastTime', this.props.converses.getIn([uuid, 'lastTime']) || 0)
-          .set('lastMsg', this.props.converses.getIn([uuid, 'lastMsg']))
-          .set('unread', this.props.converses.getIn([uuid, 'unread']));
+          .set('lastTime', _get(converses, [uuid, 'lastTime']) || 0)
+          .set('lastMsg', _get(converses, [uuid, 'lastMsg']))
+          .set('unread', _get(converses, [uuid, 'unread']));
       })
       .sortBy((item) => new Date(item.get('lastTime')))
       .reverse()
       .map((item, index) => {
-        const uuid = item.get('uuid');
-        let name = item.get('name');
-        if (item.get('status')) {
+        const uuid = item.uuid;
+        let name = item.name;
+        if (item.status) {
           name += '(开团中...)';
         }
-        const icon = item.get('avatar') || config.defaultImg.getGroup(name);
+        const icon = item.avatar || config.defaultImg.getGroup(name);
 
         return (
           <ConvItem

@@ -16,6 +16,7 @@ import {
 import ImageViewer from '../../../components/ImageViewer';
 import GroupEdit from '../../../components/modal/GroupEdit';
 // import GroupEdit from './modal/GroupEdit';
+import _get from 'lodash/get';
 
 import './GroupInfo.scss';
 import {
@@ -116,7 +117,7 @@ class GroupInfo extends React.Component<Props> {
           <div className="group-info-cell">
             <span>团主持人:</span>
             <span>
-              {usercache.getIn([groupInfo.get('owner_uuid'), 'nickname'])}
+              {_get(usercache, [groupInfo.get('owner_uuid'), 'nickname'])}
             </span>
           </div>
           <div className="group-info-cell">

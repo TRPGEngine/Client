@@ -92,11 +92,10 @@ class GroupDataScreen extends React.Component<Props> {
     ];
     if (selfGroupActors && selfGroupActors.size > 0) {
       options.push(
-        ...selfGroupActors
-          .map((item, index) => ({
-            value: item.get('uuid'),
-            label: item.getIn(['actor', 'name']),
-          }))
+        ...selfGroupActors.map((item, index) => ({
+          value: item.uuid,
+          label: _get(item, ['actor', 'name']),
+        }))
       );
     }
 
@@ -228,9 +227,7 @@ class GroupDataScreen extends React.Component<Props> {
           <ListItem extra={groupInfo.group_actors.length + '张'}>
             团人物卡
           </ListItem>
-          <ListItem extra={groupInfo.maps_uuid.length + '张'}>
-            团地图
-          </ListItem>
+          <ListItem extra={groupInfo.maps_uuid.length + '张'}>团地图</ListItem>
           <ListItem multipleLine extra={groupInfo.desc}>
             简介
           </ListItem>
@@ -289,19 +286,13 @@ export default connect((state: TRPGState, ownProps: Props) => {
   const selectedGroupUUID = ownProps.navigation.getParam('uuid', '');
 
   const groupInfo =
-    state
-      .getIn(['group', 'groups'])
-      .find((group) => group.get('uuid') === selectedGroupUUID) ?? {};
+    state.group.groups.find((group) => group.uuid === selectedGroupUUID) ?? {};
 
-  const selfActors = state
-    .getIn(['actor', 'selfActors'])
-    .map((i) => i.get('uuid'));
+  const selfActors = state.actor.selfActors.map((i) => i.uuid);
 
-  const selfGroupActors = groupInfo
-    .get('group_actors', [])
-    .filter(
-      (i) => i.get('enabled') && selfActors.indexOf(i.get('actor_uuid')) >= 0
-    );
+  const selfGroupActors = _get(groupInfo, 'group_actors', []).filter(
+    (i) => i.enabled && selfActors.indexOf(i.actor_uuid) >= 0
+  );
 
   return {
     userUUID: state.user.info.uuid,

@@ -5,15 +5,16 @@ import TemplateSelect from './TemplateSelect';
 import ActorCreate from '@web/components/modal/ActorCreate';
 import ActorEdit from '@web/components/modal/ActorEdit';
 import { updateActor } from '@src/shared/redux/actions/actor';
-import * as apiHelper from '../../../../shared/utils/api-helper';
-import { showModal, showAlert } from '../../../../shared/redux/actions/ui';
+import * as apiHelper from '@shared/utils/api-helper';
+import { showModal, showAlert } from '@shared/redux/actions/ui';
 import {
   selectActor,
   removeActor,
   selectTemplate,
-} from '../../../../shared/redux/actions/actor';
+} from '@shared/redux/actions/actor';
 import ActorInfo from '@web/components/modal/ActorInfo';
 import _isNil from 'lodash/isNil';
+import _get from 'lodash/get';
 
 import './ActorList.scss';
 import { message } from 'antd';
@@ -62,7 +63,7 @@ class ActorList extends React.Component<Props> {
       message.error('角色不存在');
       return;
     }
-    const templateLayout = this.props.templateCache.getIn([
+    const templateLayout = _get(this.props.templateCache, [
       actor.get('template_uuid'),
       'layout',
     ]);
@@ -91,7 +92,7 @@ class ActorList extends React.Component<Props> {
       message.error('角色不存在');
       return;
     }
-    const templateLayout = this.props.templateCache.getIn([
+    const templateLayout = _get(this.props.templateCache, [
       actor.get('template_uuid'),
       'layout',
     ]);

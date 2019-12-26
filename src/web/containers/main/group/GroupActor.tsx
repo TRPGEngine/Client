@@ -150,7 +150,7 @@ class GroupActor extends React.Component<Props> {
               />
               <div className="info">
                 {groupActorUUID ===
-                groupInfo.getIn(['extra', 'selected_group_actor_uuid']) ? (
+                _get(groupInfo, ['extra', 'selected_group_actor_uuid']) ? (
                   <div className="label">使用中</div>
                 ) : null}
                 <div className="name">
@@ -282,9 +282,9 @@ export default connect(
     const selectedGroupUUID = state.group.selectedGroupUUID;
     return {
       selectedGroupUUID,
-      groupInfo: state
-        .getIn(['group', 'groups'])
-        .find((group) => group.get('uuid') === selectedGroupUUID),
+      groupInfo: state.group.groups.find(
+        (group) => group.uuid === selectedGroupUUID
+      ),
       templateCache: state.cache.template,
     };
   },

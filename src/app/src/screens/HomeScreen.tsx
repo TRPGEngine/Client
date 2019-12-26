@@ -13,6 +13,7 @@ import TRefreshControl from '../components/TComponent/TRefreshControl';
 import { ChatType } from '../types/params';
 import { switchToChatScreen } from '../redux/actions/nav';
 import { TRPGState } from '@redux/types/__all__';
+import _get from 'lodash/get';
 
 const NetworkContainer = styled.View<{
   isOnline: boolean;
@@ -87,7 +88,7 @@ class HomeScreen extends React.Component<Props> {
               : appConfig.defaultImg.user;
           let avatar: string;
           if (item.get('type') === 'user') {
-            avatar = this.props.usercache.getIn([uuid, 'avatar']);
+            avatar = _get(this.props.usercache, [uuid, 'avatar']);
           } else if (item.get('type') === 'group') {
             let group = this.props.groups.find((g) => g.get('uuid') === uuid);
             avatar = group ? group.get('avatar') : '';

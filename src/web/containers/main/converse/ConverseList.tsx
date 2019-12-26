@@ -8,6 +8,7 @@ import ConvItem from '@web/components/ConvItem';
 import { switchConverse, removeUserConverse } from '@shared/redux/actions/chat';
 import { showProfileCard } from '@shared/redux/actions/ui';
 import _get from 'lodash/get';
+import _isArray from 'lodash/isArray';
 import { TRPGState } from '@redux/types/__all__';
 
 import './ConverseList.scss';
@@ -43,31 +44,27 @@ class ConverseList extends React.Component<Props> {
   getConverseList() {
     if (this.props.converses.size > 0) {
       const userWritingList = this.props.userWritingList;
-      let usercache = this.props.usercache;
-      let converses = this.props.converses
+      const usercache = this.props.usercache;
+      const converses = this.props.converses
         .valueSeq()
-        .filter(
-          (item) => item.get('type') === 'user' || item.get('type') === 'system'
-        )
+        .filter((item) => item.type === 'user' || item.type === 'system')
         .sortBy((item) => new Date(item.get('lastTime') || 0))
         .reverse()
         .map((item, index) => {
-          let uuid = item.get('uuid');
-          let defaultIcon =
+          const uuid = item.uuid;
+          const defaultIcon =
             uuid === 'trpgsystem'
               ? config.defaultImg.trpgsystem
-              : config.defaultImg.getUser(item.get('name'));
-          let attachIcon =
-            item.get('type') === 'user'
-              ? this.props.usercache.getIn([item.get('members', 0), 'avatar'])
+              : config.defaultImg.getUser(item.name);
+          const attachIcon =
+            item.type === 'user'
+              ? _get(this.props.usercache, [item.get('members', 0), 'avatar'])
               : null;
-          let userUUID = item.get('members')
-            ? item
-                .get('members')
-                .find((i) => i !== this.props.userInfo.get('uuid'))
+          const userUUID = _isArray(item.members)
+            ? item.members.find((i) => i !== this.props.userInfo.uuid)
             : uuid;
           let icon =
-            item.get('icon') || usercache.getIn([uuid, 'avatar']) || attachIcon;
+            item.icon || _get(usercache, [uuid, 'avatar']) || attachIcon;
           icon = config.file.getAbsolutePath(icon) || defaultIcon;
 
           return (
@@ -114,7 +111,9 @@ class ConverseList extends React.Component<Props> {
         {friends.length > 0 ? (
           friends.map((item, index) => {
             const uuid = item;
-            const name = _get(usercache, [uuid, 'nickname']) ?? _get(usercache, [uuid, 'username'])
+            const name =
+              _get(usercache, [uuid, 'nickname']) ??
+              _get(usercache, [uuid, 'username']);
             return (
               <ConvItem
                 key={`friends#${uuid}#${index}`}

@@ -20,6 +20,7 @@ import MsgSendBox from '../../../components/MsgSendBox';
 import { isUserUUID } from '@shared/utils/uuid';
 import { sendStartWriting, sendStopWriting } from '@shared/api/event';
 import _throttle from 'lodash/throttle';
+import _get from 'lodash/get';
 import { TRPGState } from '@redux/types/__all__';
 
 import './ConverseDetail.scss';
@@ -102,12 +103,10 @@ class ConverseDetail extends React.Component<Props> {
 
   // 发送投骰邀请
   handleSendDiceInv() {
-    let uuid = this.props.converseUUID;
+    const uuid = this.props.converseUUID;
     console.log('发送投骰邀请', uuid);
-    let usercache = this.props.usercache;
-    let name =
-      usercache.getIn([uuid, 'nickname']) ||
-      usercache.getIn([uuid, 'username']);
+    const usercache = this.props.usercache;
+    const name = usercache.uuid.nickname || usercache.uuid.username;
     this.props.dispatch(
       showModal(
         <DiceInvite
@@ -183,11 +182,11 @@ class ConverseDetail extends React.Component<Props> {
       avatar = config.defaultImg.trpgsystem;
     } else {
       name =
-        usercache.getIn([userUUID, 'nickname']) ||
-        usercache.getIn([userUUID, 'username']);
-      desc = usercache.getIn([userUUID, 'desc']);
+        _get(usercache, [userUUID, 'nickname']) ||
+        _get(usercache, [userUUID, 'username']);
+      desc = _get(usercache, [userUUID, 'desc']);
       avatar =
-        usercache.getIn([userUUID, 'avatar']) ||
+        _get(usercache, [userUUID, 'avatar']) ||
         config.defaultImg.getUser(name);
     }
     return (
@@ -227,7 +226,7 @@ class ConverseDetail extends React.Component<Props> {
 
 export default connect((state: TRPGState) => {
   const converseUUID = state.chat.selectedConverseUUID; // 会话UUID在用户会话中就是用户UUID
-  const userWritingList = state.chat.writingList.user?? [];
+  const userWritingList = state.chat.writingList.user ?? [];
 
   return {
     usercache: state.cache.user,
