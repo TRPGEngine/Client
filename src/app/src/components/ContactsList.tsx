@@ -12,7 +12,8 @@ import appConfig from '../config.app';
 import { TIcon } from './TComponent';
 import ConvItem from './ConvItem';
 import { switchNav, navProfile } from '../redux/actions/nav';
-import { isImmutable } from 'immutable';
+import { TRPGState } from '@redux/types/__all__';
+import _get from 'lodash/get';
 
 interface SectionListItemData {
   uuid: string;
@@ -41,21 +42,11 @@ class ContactList extends React.Component<Props, State> {
   };
 
   get friends() {
-    const friends = this.props.friends;
-    if (isImmutable(friends)) {
-      return friends.toJS();
-    } else {
-      return friends;
-    }
+    return this.props.friends;
   }
 
   get groups() {
-    const groups = this.props.groups;
-    if (isImmutable(groups)) {
-      return groups.toJS();
-    } else {
-      return groups;
-    }
+    return this.props.groups;
   }
 
   handleClickHeader(section: SectionListItem) {
@@ -132,7 +123,7 @@ class ContactList extends React.Component<Props, State> {
   }
 
   render() {
-    if (this.props.friends.size === 0 && this.props.groups.size === 0) {
+    if (this.props.friends.length === 0 && this.props.groups.length === 0) {
       return (
         <View>
           <Text>暂无联系人, 快去交♂朋♂友吧</Text>
@@ -165,23 +156,23 @@ const styles = {
   cell: [{ marginLeft: 20, paddingLeft: 10 }],
 };
 
-export default connect((state: any) => {
-  let usercache = state.getIn(['cache', 'user']);
-  let friends = state.getIn(['user', 'friendList']);
-  let groups = state.getIn(['group', 'groups']);
+export default connect((state: TRPGState) => {
+  const usercache = state.cache.user;
+  const friends = state.user.friendList;
+  const groups = state.group.groups;
 
   return {
     friends: friends.map((f) => ({
-      uuid: usercache.getIn([f, 'uuid']),
-      avatar: usercache.getIn([f, 'avatar']),
+      uuid: _get(usercache, [f, 'uuid']),
+      avatar: _get(usercache, [f, 'avatar']),
       name:
-        usercache.getIn([f, 'nickname']) || usercache.getIn([f, 'username']),
+        _get(usercache, [f, 'nickname']) ?? _get(usercache, [f, 'username']),
       type: 'user',
     })),
     groups: groups.map((g) => ({
-      uuid: g.get('uuid'),
-      avatar: g.get('avatar'),
-      name: g.get('name'),
+      uuid: g.uuid,
+      avatar: g.avatar,
+      name: g.name,
       type: 'group',
     })),
   };

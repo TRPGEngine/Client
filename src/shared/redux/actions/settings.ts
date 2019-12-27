@@ -17,11 +17,11 @@ export const saveSettings = function saveSettings() {
   return async function(dispatch, getState) {
     let userSettings = await rnStorage.save(
       'userSettings',
-      getState().getIn(['settings', 'user'])
+      getState().settings.user
     );
     let systemSettings = await rnStorage.save(
       'systemSettings',
-      getState().getIn(['settings', 'system'])
+      getState().settings.system
     );
 
     console.log('设置保存成功');
@@ -40,12 +40,10 @@ export const saveSettings = function saveSettings() {
 
 export const setUserSettings = function setUserSettings(payload) {
   return function(dispatch, getState) {
-    rnStorage.save(
-      'userSettings',
-      getState()
-        .getIn(['settings', 'user'])
-        .merge(payload)
-    ); // 异步
+    rnStorage.save('userSettings', {
+      ...getState().settings.user,
+      ...payload,
+    }); // 异步
     dispatch({ type: SET_USER_SETTINGS, payload });
   };
 };
@@ -65,12 +63,10 @@ export const setSystemSettings = function setSystemSettings(payload) {
       }
     }
 
-    rnStorage.save(
-      'systemSettings',
-      getState()
-        .getIn(['settings', 'system'])
-        .merge(payload)
-    ); // 异步
+    rnStorage.save('systemSettings', {
+      ...getState().settings.system,
+      ...payload,
+    }); // 异步
     dispatch({ type: SET_SYSTEM_SETTINGS, payload });
   };
 };

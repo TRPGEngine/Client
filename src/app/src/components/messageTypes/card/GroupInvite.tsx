@@ -7,6 +7,7 @@ import {
 import { getGroupInviteInfoCache } from '@src/shared/utils/cache-helper';
 import _get from 'lodash/get';
 import { MessageProps } from '@src/shared/components/MessageHandler';
+import { TRPGState } from '@redux/types/__all__';
 
 // 入团邀请
 interface Props extends MessageProps, DispatchProp<any> {
@@ -18,8 +19,8 @@ class GroupInvite extends BaseCard<Props> {
     const data = info.data;
     const inviteUUID = _get(data, 'invite.uuid');
     const inviteInfo = getGroupInviteInfoCache(inviteUUID);
-    const is_agree = inviteInfo.get('is_agree', false);
-    const is_refuse = inviteInfo.get('is_refuse', false);
+    const is_agree = inviteInfo.is_agree ?? false;
+    const is_refuse = inviteInfo.is_refuse ?? false;
 
     const processed = is_agree || is_refuse;
 
@@ -50,9 +51,7 @@ class GroupInvite extends BaseCard<Props> {
   }
 }
 
-export default connect((state: any) => ({
-  groupInviteCache: state.getIn(['cache', 'groupInvite']),
-  groupUUIDList: state
-    .getIn(['group', 'groups'])
-    .map((item) => item.get('uuid')),
+export default connect((state: TRPGState) => ({
+  groupInviteCache: state.cache.groupInvite,
+  groupUUIDList: state.group.groups.map((g) => g.uuid),
 }))(GroupInvite);

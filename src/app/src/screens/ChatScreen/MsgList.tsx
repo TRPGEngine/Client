@@ -54,7 +54,9 @@ class MsgList extends React.PureComponent<Props> {
       return;
     }
 
-    if (_get(prevProps, 'msgList.size') !== _get(this.props, 'msgList.size')) {
+    if (
+      _get(prevProps, 'msgList.length') !== _get(this.props, 'msgList.length')
+    ) {
       this.scrollToBottom();
     }
   }
@@ -135,12 +137,12 @@ class MsgList extends React.PureComponent<Props> {
           // UI中的上一条数据应为msgList的下一条
           const prevDate =
             index < msgList.length - 1 ? _get(msgList, [index + 1, 'date']) : 0;
-          const isMe = item.sender_uuid === this.props.selfInfo.get('uuid');
+          const isMe = item.sender_uuid === this.props.selfInfo.uuid;
           const senderInfo = isMe
             ? this.props.selfInfo
             : getUserInfoCache(item.sender_uuid);
-          const name = senderInfo.get('nickname') || senderInfo.get('username');
-          const avatar = senderInfo.get('avatar');
+          const name = senderInfo.nickname || senderInfo.username;
+          const avatar = senderInfo.avatar;
           const defaultAvatar =
             item.sender_uuid === 'trpgsystem'
               ? appConfig.defaultImg.trpgsystem

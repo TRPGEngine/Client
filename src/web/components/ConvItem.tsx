@@ -1,6 +1,7 @@
 import React from 'react';
 import { isUUID } from '@shared/utils/uuid';
 import './ConvItem.scss';
+import Avatar from './Avatar';
 
 interface Props {
   icon: string;

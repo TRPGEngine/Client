@@ -1,17 +1,17 @@
-import { Record } from 'immutable';
+import { ReactNode } from 'react';
 
 export type AlertPayload =
   | string
   | {
       type?: 'alert';
       title?: string;
-      content: string;
+      content: ReactNode;
       confirmTitle?: string;
       onConfirm?: Function;
       onCancel?: Function;
     };
 
-export type UIState = Record<{
+export type UIState = {
   showAlert: boolean;
   showAlertInfo: any;
   showLoading: boolean;
@@ -23,19 +23,19 @@ export type UIState = Record<{
   showProfileCard: boolean;
   showProfileCardUUID: string;
   showSlidePanel: boolean;
-  showSlidePanelInfo: Record<{
+  showSlidePanelInfo: {
     title: string;
     content: string;
-  }>;
+  };
   showLigthbox: boolean;
   showLigthboxInfo: any;
   menuIndex: number;
   menuPannel: any;
-  network: Record<{
+  network: {
     isOnline: boolean;
     tryReconnect: boolean;
     msg: string;
-  }>;
+  };
   socketId: string;
   lastDiceType: string;
-}>;
+};

@@ -1,8 +1,6 @@
-import { Record, Map } from 'immutable';
-
-export type NoteState = Record<{
-  noteList: Map<string, any>;
+export type NoteState = {
+  noteList: { [uuid: string]: any };
   selectedNoteUUID: string;
   isSync: boolean;
   isSyncUUID: string;
-}>;
+};

@@ -1,7 +1,8 @@
 import constants from '@redux/constants';
-import immutable from 'immutable';
 import uuid from 'uuid/v1';
 import { NoteState } from '@redux/types/note';
+import produce from 'immer';
+import _set from 'lodash/set';
 
 const {
   RESET,
@@ -15,12 +16,12 @@ const {
   SYNC_NOTE_FAILED,
 } = constants;
 
-const initialState: NoteState = immutable.fromJS({
+const initialState: NoteState = {
   noteList: {},
   selectedNoteUUID: '',
   isSync: false,
   isSyncUUID: '',
-});
+};
 
 function getBlankNote() {
   return {
@@ -32,40 +33,59 @@ function getBlankNote() {
   };
 }
 
-export default function ui(state = initialState, action) {
+export default produce((draft: NoteState, action) => {
   switch (action.type) {
     case RESET:
       return initialState;
     case ADD_NOTE: {
       // let showAlertInfo = action.payload || {};
-      let blankNote = immutable.fromJS(getBlankNote());
-      let blankUUID = blankNote.get('uuid');
-      return state
-        .setIn(['noteList', blankUUID], blankNote)
-        .set('selectedNoteUUID', blankUUID);
+      const blankNote = getBlankNote();
+      const blankUUID = blankNote.uuid;
+      draft.noteList[blankUUID] = blankNote;
+      draft.selectedNoteUUID = blankUUID;
+      return;
+
+      // let blankNote = immutable.fromJS(getBlankNote());
+      // let blankUUID = blankNote.get('uuid');
+      // return state
+      //   .setIn(['noteList', blankUUID], blankNote)
+      //   .set('selectedNoteUUID', blankUUID);
     }
     case SAVE_NOTE: {
-      let saveUUID = action.payload.uuid;
-      let saveTitle = action.payload.title;
-      let saveContent = action.payload.content;
+      const saveUUID = action.payload.uuid;
+      const saveTitle = action.payload.title;
+      const saveContent = action.payload.content;
 
-      state = state
-        .setIn(['noteList', saveUUID, 'title'], saveTitle)
-        .setIn(['noteList', saveUUID, 'content'], saveContent)
-        .setIn(['noteList', saveUUID, 'updatedAt'], new Date().getTime());
+      _set(draft.noteList, [saveUUID, 'title'], saveTitle);
+      _set(draft.noteList, [saveUUID, 'content'], saveContent);
+      _set(draft.noteList, [saveUUID, 'updatedAt'], new Date().getTime());
+      return;
 
-      return state;
+      // state = state
+      //   .setIn(['noteList', saveUUID, 'title'], saveTitle)
+      //   .setIn(['noteList', saveUUID, 'content'], saveContent)
+      //   .setIn(['noteList', saveUUID, 'updatedAt'], new Date().getTime());
+
+      // return state;
     }
     case GET_NOTE:
-      return state.set('noteList', immutable.fromJS(action.noteList));
+      draft.noteList = action.noteList;
+      return;
+    // return state.set('noteList', immutable.fromJS(action.noteList));
     case SWITCH_NOTE:
-      return state.set('selectedNoteUUID', action.noteUUID);
+      draft.selectedNoteUUID = action.noteUUID;
+      return;
+    // return state.set('selectedNoteUUID', action.noteUUID);
     case SYNC_NOTE_REQUEST:
-      return state.set('isSync', true).set('isSyncUUID', action.uuid);
+      draft.isSync = true;
+      draft.isSyncUUID = action.uuid;
+      return;
+    // return state.set('isSync', true).set('isSyncUUID', action.uuid);
     case SYNC_NOTE_SUCCESS:
     case SYNC_NOTE_FAILED:
-      return state.set('isSync', false).set('isSyncUUID', '');
-    default:
-      return state;
+      draft.isSync = false;
+      draft.isSyncUUID = '';
+      return;
+    // return state.set('isSync', false).set('isSyncUUID', '');
   }
-}
+}, initialState);

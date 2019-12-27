@@ -5,24 +5,34 @@ import TemplateSelect from './TemplateSelect';
 import ActorCreate from '@web/components/modal/ActorCreate';
 import ActorEdit from '@web/components/modal/ActorEdit';
 import { updateActor } from '@src/shared/redux/actions/actor';
-import * as apiHelper from '../../../../shared/utils/api-helper';
-import { showModal, showAlert } from '../../../../shared/redux/actions/ui';
+import * as apiHelper from '@shared/utils/api-helper';
+import { showModal, showAlert } from '@shared/redux/actions/ui';
 import {
   selectActor,
   removeActor,
   selectTemplate,
-} from '../../../../shared/redux/actions/actor';
+} from '@shared/redux/actions/actor';
 import ActorInfo from '@web/components/modal/ActorInfo';
 import _isNil from 'lodash/isNil';
+import _get from 'lodash/get';
 
 import './ActorList.scss';
 import { message } from 'antd';
+import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
+import { AlertPayload } from '@redux/types/ui';
 
-class ActorList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+interface Props {
+  selectActor: any;
+  showModal: any;
+  showAlert: (payload: AlertPayload) => void;
+  removeActor: any;
+  selectTemplate: any;
+  actors: any;
+  templateCache: any;
+  updateActor: any;
+  selectedActorUUID: string;
+}
+class ActorList extends React.Component<Props> {
   handleAddNewActor() {
     this.props.selectActor('');
     this.props.showModal(<ActorCreate />);
@@ -48,26 +58,26 @@ class ActorList extends React.Component {
 
   handleOpenActorEditModal(uuid) {
     // TODO
-    const actor = this.props.actors.find((a) => a.get('uuid') === uuid);
+    const actor = this.props.actors.find((a) => a.uuid === uuid);
     if (_isNil(actor)) {
       message.error('角色不存在');
       return;
     }
-    const templateLayout = this.props.templateCache.getIn([
-      actor.get('template_uuid'),
+    const templateLayout = _get(this.props.templateCache, [
+      actor.template_uuid,
       'layout',
     ]);
 
-    const name = actor.get('name');
-    const desc = actor.get('desc');
-    const avatar = actor.get('avatar');
+    const name = actor.name;
+    const desc = actor.desc;
+    const avatar = actor.avatar;
 
     this.props.showModal(
       <ActorEdit
         name={name}
         desc={desc}
         avatar={avatar}
-        data={actor.get('info')}
+        data={actor.info}
         layout={templateLayout}
         onSave={(data) =>
           this.props.updateActor(uuid, name, avatar, desc, data)
@@ -77,22 +87,22 @@ class ActorList extends React.Component {
   }
 
   handleOpenActorInfoModal(uuid) {
-    const actor = this.props.actors.find((a) => a.get('uuid') === uuid);
+    const actor = this.props.actors.find((a) => a.uuid === uuid);
     if (_isNil(actor)) {
       message.error('角色不存在');
       return;
     }
-    const templateLayout = this.props.templateCache.getIn([
-      actor.get('template_uuid'),
+    const templateLayout = _get(this.props.templateCache, [
+      actor.template_uuid,
       'layout',
     ]);
 
     this.props.showModal(
       <ActorInfo
-        name={actor.get('name')}
-        desc={actor.get('desc')}
-        avatar={actor.get('avatar')}
-        data={actor.get('info')}
+        name={actor.name}
+        desc={actor.desc}
+        avatar={actor.avatar}
+        data={actor.info}
         layout={templateLayout}
       />
     );
@@ -100,13 +110,13 @@ class ActorList extends React.Component {
 
   getActorList() {
     return this.props.actors.map((item, index) => {
-      let uuid = item.get('uuid');
+      let uuid = item.uuid;
       let backgroundStyle = {
-        backgroundImage: `url(${item.get('avatar')})`,
+        backgroundImage: `url(${item.avatar})`,
       };
-      let actorname = item.get('name');
-      let desc = item.get('desc');
-      let template_uuid = item.get('template_uuid');
+      let actorname = item.name;
+      let desc = item.desc;
+      let template_uuid = item.template_uuid;
       return (
         <div className="actor-card" key={uuid + '-' + index}>
           <div className="avatar" style={backgroundStyle} />
@@ -120,9 +130,7 @@ class ActorList extends React.Component {
               <span title={desc}>{desc}</span>
             </p>
             <p className="action">
-              <button onClick={() => this.handleRemoveActor(uuid)}>
-                删除
-              </button>
+              <button onClick={() => this.handleRemoveActor(uuid)}>删除</button>
               <button onClick={() => this.handleOpenActorEditModal(uuid)}>
                 编辑
               </button>
@@ -139,33 +147,30 @@ class ActorList extends React.Component {
   getActorInfo() {
     let actor;
     for (let _actor of this.props.actors) {
-      if (_actor.get('uuid') === this.props.selectedActorUUID) {
+      if (_actor.uuid === this.props.selectedActorUUID) {
         actor = _actor;
         break;
       }
     }
 
-    if (actor && actor.get('info')) {
-      let template = this.props.templateCache.get(
-        actor.get('template_uuid'),
-        {}
-      );
-      let info = at.parse(template.get('info', '{}'));
-      info.setData(actor.get('info').toJS());
+    if (actor && actor.info) {
+      let template = this.props.templateCache[actor.template_uuid] ?? {};
+      let info = at.parse(template.info ?? {});
+      info.setData(actor.info);
       let cells = info.getCells();
       return (
         <div>
           <p>
             <span>人物卡:</span>
-            <span>{actor.get('name')}</span>
+            <span>{actor.name}</span>
           </p>
           <p>
             <span>说明:</span>
-            <span>{actor.get('desc')}</span>
+            <span>{actor.desc}</span>
           </p>
           {cells.map((item, index) => {
             return (
-              <p key={actor.get('uuid') + index}>
+              <p key={actor.uuid + index}>
                 <span>{item['name']}:</span>
                 <span>{item['value']}</span>
               </p>
@@ -205,14 +210,14 @@ class ActorList extends React.Component {
 }
 
 export default connect(
-  (state) => ({
-    actors: state.getIn(['actor', 'selfActors']),
-    selectedActorUUID: state.getIn(['actor', 'selectedActorUUID']),
-    templateCache: state.getIn(['cache', 'template']),
+  (state: TRPGState) => ({
+    actors: state.actor.selfActors,
+    selectedActorUUID: state.actor.selectedActorUUID,
+    templateCache: state.cache.template,
   }),
-  (dispatch) => ({
+  (dispatch: TRPGDispatch) => ({
     showModal: (body) => dispatch(showModal(body)),
-    showAlert: (...args) => dispatch(showAlert(...args)),
+    showAlert: (payload: AlertPayload) => dispatch(showAlert(payload)),
     selectActor: (uuid) => dispatch(selectActor(uuid)),
     removeActor: (uuid) => dispatch(removeActor(uuid)),
     updateActor: (uuid, name, avatar, desc, info) =>

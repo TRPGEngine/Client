@@ -11,7 +11,7 @@ interface Props {
  * 网络状态指示器
  */
 const NetworkIndicator: React.FC<Props> = React.memo((props) => {
-  const network = props.network.toJS();
+  const network = props.network;
   let icon = '';
   let state = '';
   if (network.isOnline === true) {
@@ -38,5 +38,5 @@ const NetworkIndicator: React.FC<Props> = React.memo((props) => {
 });
 
 export default connect((state: TRPGState) => ({
-  network: state.getIn(['ui', 'network']),
+  network: state.ui.network,
 }))(NetworkIndicator);

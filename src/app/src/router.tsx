@@ -177,7 +177,7 @@ export const AppNavigator = createStackNavigator(
 );
 
 export const middleware = createReactNavigationReduxMiddleware(
-  (state: any) => state.get('nav'),
+  (state: any) => state.nav,
   'root'
 );
 
@@ -237,8 +237,8 @@ class ReduxNavigation extends React.Component<ReduxNavigationProps> {
 
 const mapStateToProps = (state) => {
   return {
-    state: state.get('nav'),
-    ui: state.get('ui'),
+    state: state.nav,
+    ui: state.ui,
   };
 };
 

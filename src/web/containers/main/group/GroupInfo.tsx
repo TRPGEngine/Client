@@ -16,6 +16,7 @@ import {
 import ImageViewer from '../../../components/ImageViewer';
 import GroupEdit from '../../../components/modal/GroupEdit';
 // import GroupEdit from './modal/GroupEdit';
+import _get from 'lodash/get';
 
 import './GroupInfo.scss';
 import {
@@ -50,7 +51,7 @@ class GroupInfo extends React.Component<Props> {
       content: '一旦确定无法撤销',
       onConfirm: () => {
         this.props.hideAlert();
-        let groupUUID = this.props.groupInfo.get('uuid');
+        let groupUUID = this.props.groupInfo.uuid;
         this.props.switchSelectGroup('');
         this.props.dismissGroup(groupUUID);
         this.props.hideSlidePanel();
@@ -64,7 +65,7 @@ class GroupInfo extends React.Component<Props> {
       content: '一旦确定无法撤销',
       onConfirm: () => {
         this.props.hideAlert();
-        let groupUUID = this.props.groupInfo.get('uuid');
+        let groupUUID = this.props.groupInfo.uuid;
         this.props.switchSelectGroup('');
         this.props.quitGroup(groupUUID);
         this.props.hideSlidePanel();
@@ -73,7 +74,7 @@ class GroupInfo extends React.Component<Props> {
   }
 
   handleSwitchGroupStatus(status = false) {
-    this.props.setGroupStatus(this.props.groupInfo.get('uuid'), status);
+    this.props.setGroupStatus(this.props.groupInfo.uuid, status);
   }
 
   render() {
@@ -81,23 +82,19 @@ class GroupInfo extends React.Component<Props> {
     if (!groupInfo) {
       return null;
     }
-    let avatar = groupInfo.get('avatar') || '';
+    let avatar = groupInfo.avatar || '';
     let originAvatar = avatar.replace('/thumbnail', '');
     return (
       <div className="group-info">
         <div className="group-info-cells">
           <div className="group-info-cell group-avatar">
             <ImageViewer originImageUrl={originAvatar}>
-              <img
-                src={
-                  avatar || config.defaultImg.getGroup(groupInfo.get('name'))
-                }
-              />
+              <img src={avatar || config.defaultImg.getGroup(groupInfo.name)} />
             </ImageViewer>
             <div>
-              <p>{groupInfo.get('name')}</p>
-              <p className="group-subname" title={groupInfo.get('sub_name')}>
-                {groupInfo.get('sub_name')}
+              <p>{groupInfo.name}</p>
+              <p className="group-subname" title={groupInfo.sub_name}>
+                {groupInfo.sub_name}
               </p>
             </div>
           </div>
@@ -105,49 +102,47 @@ class GroupInfo extends React.Component<Props> {
         <div className="group-info-cells">
           <div className="group-info-cell">
             <span>团唯一标识:</span>
-            <span className="uuid">{groupInfo.get('uuid')}</span>
+            <span className="uuid">{groupInfo.uuid}</span>
           </div>
           <div className="group-info-cell">
             <span>团状态:</span>
-            <span>{groupInfo.get('status') ? '开团中' : '闭团中'}</span>
+            <span>{groupInfo.status ? '开团中' : '闭团中'}</span>
           </div>
         </div>
         <div className="group-info-cells">
           <div className="group-info-cell">
             <span>团主持人:</span>
-            <span>
-              {usercache.getIn([groupInfo.get('owner_uuid'), 'nickname'])}
-            </span>
+            <span>{_get(usercache, [groupInfo.owner_uuid, 'nickname'])}</span>
           </div>
           <div className="group-info-cell">
             <span>团管理数:</span>
-            <span>{groupInfo.get('managers_uuid').size} 人</span>
+            <span>{groupInfo.managers_uuid.length} 人</span>
           </div>
           <div className="group-info-cell">
             <span>团成员数:</span>
-            <span>{groupInfo.get('group_members').size} 人</span>
+            <span>{groupInfo.group_members.length} 人</span>
           </div>
           <div className="group-info-cell">
             <span>团人物卡数:</span>
-            <span>{groupInfo.get('group_actors').size} 张</span>
+            <span>{groupInfo.group_actors.length} 张</span>
           </div>
           <div className="group-info-cell">
             <span>团地图数:</span>
-            <span>{groupInfo.get('maps_uuid').size} 张</span>
+            <span>{groupInfo.maps_uuid.length} 张</span>
           </div>
           <div className="group-info-cell">
             <span>团简介:</span>
             <span className="desc">
-              <pre>{groupInfo.get('desc')}</pre>
+              <pre>{groupInfo.desc}</pre>
             </span>
           </div>
         </div>
 
-        {this.props.userUUID === groupInfo.get('owner_uuid') ? (
+        {this.props.userUUID === groupInfo.owner_uuid ? (
           <div>
             <div className="group-info-cells">
               <div className="group-info-cell">
-                {groupInfo.get('status') ? (
+                {groupInfo.status ? (
                   <button onClick={() => this.handleSwitchGroupStatus(false)}>
                     闭团
                   </button>
@@ -185,15 +180,12 @@ class GroupInfo extends React.Component<Props> {
 
 export default connect(
   (state: TRPGState) => ({
-    userUUID: state.getIn(['user', 'info', 'uuid']),
-    usercache: state.getIn(['cache', 'user']),
-    selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
-    groupInfo: state
-      .getIn(['group', 'groups'])
-      .find(
-        (group) =>
-          group.get('uuid') === state.getIn(['group', 'selectedGroupUUID'])
-      ),
+    userUUID: state.user.info.uuid,
+    usercache: state.cache.user,
+    selectedGroupUUID: state.group.selectedGroupUUID,
+    groupInfo: state.group.groups.find(
+      (group) => group.uuid === state.group.selectedGroupUUID
+    ),
   }),
   (dispatch: TRPGDispatch) => ({
     showAlert: (payload: AlertPayload) => dispatch(showAlert(payload)),

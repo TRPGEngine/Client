@@ -16,6 +16,7 @@ import DevContainer from '../components/DevContainer';
 
 import { List } from '@ant-design/react-native';
 import { showToast } from '@src/shared/redux/actions/ui';
+import { TRPGState } from '@redux/types/__all__';
 const Item = List.Item;
 
 const AccountList = styled(List)`
@@ -55,8 +56,8 @@ class AccountScreen extends React.Component<Props> {
 
   render() {
     const userInfo = this.props.userInfo;
-    const avatar = userInfo.get('avatar') || appConfig.defaultImg.user;
-    const name = userInfo.get('nickname') || userInfo.get('username');
+    const avatar = userInfo.avatar || appConfig.defaultImg.user;
+    const name = userInfo.nickname || userInfo.username;
 
     return (
       <View>
@@ -74,7 +75,7 @@ class AccountScreen extends React.Component<Props> {
           <View style={{ flex: 1 }}>
             <Text style={styles.username}>{name}</Text>
             <Text style={styles.userdesc} numberOfLines={1}>
-              {userInfo.get('sign')}
+              {userInfo.sign}
             </Text>
           </View>
           <Text style={styles.arrow}>&#xe60e;</Text>
@@ -173,6 +174,6 @@ const styles = {
   ],
 };
 
-export default connect((state: any) => ({
-  userInfo: state.getIn(['user', 'info']),
+export default connect((state: TRPGState) => ({
+  userInfo: state.user.info,
 }))(AccountScreen);

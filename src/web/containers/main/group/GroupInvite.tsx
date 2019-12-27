@@ -1,19 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../../shared/project.config';
+import config from '@shared/project.config';
 import ReactTooltip from 'react-tooltip';
-import { sendGroupInvite } from '../../../../shared/redux/actions/group';
-import { getUserInfoCache } from '../../../../shared/utils/cache-helper';
+import { sendGroupInvite } from '@shared/redux/actions/group';
+import { getUserInfoCache } from '@shared/utils/cache-helper';
+import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 
 import './GroupInvite.scss';
 
-class GroupInvite extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedUUIDs: [],
-    };
-  }
+interface Props {
+  selectedGroupUUID: string;
+  friendList: any[];
+  groupMembers: any[];
+  sendGroupInvite: any;
+}
+class GroupInvite extends React.Component<Props> {
+  state = {
+    selectedUUIDs: [],
+  };
 
   handleSelect(uuid) {
     let selectedUUIDs = this.state.selectedUUIDs;
@@ -47,7 +51,7 @@ class GroupInvite extends React.Component {
             }
 
             let user = getUserInfoCache(uuid);
-            let name = user.get('nickname') || user.get('username');
+            let name = user.nickname || user.username;
 
             return (
               <div
@@ -60,9 +64,7 @@ class GroupInvite extends React.Component {
                 data-tip={name}
               >
                 <div className="avatar">
-                  <img
-                    src={user.get('avatar') || config.defaultImg.getUser(name)}
-                  />
+                  <img src={user.avatar || config.defaultImg.getUser(name)} />
                 </div>
                 <div className="mask" />
               </div>
@@ -73,7 +75,7 @@ class GroupInvite extends React.Component {
         <div className="invite-list">
           {this.props.groupMembers.map((uuid) => {
             let user = getUserInfoCache(uuid);
-            let name = user.get('nickname') || user.get('username');
+            let name = user.nickname || user.username;
 
             return (
               <div
@@ -83,9 +85,7 @@ class GroupInvite extends React.Component {
                 data-tip={name}
               >
                 <div className="avatar">
-                  <img
-                    src={user.get('avatar') || config.defaultImg.getUser(name)}
-                  />
+                  <img src={user.avatar || config.defaultImg.getUser(name)} />
                 </div>
                 <div className="mask" />
               </div>
@@ -99,20 +99,20 @@ class GroupInvite extends React.Component {
 }
 
 export default connect(
-  (state) => {
-    let selectedGroupUUID = state.getIn(['group', 'selectedGroupUUID']);
-    let groupInfo = state
-      .getIn(['group', 'groups'])
-      .find((group) => group.get('uuid') === selectedGroupUUID);
+  (state: TRPGState) => {
+    const selectedGroupUUID = state.group.selectedGroupUUID;
+    const groupInfo = state.group.groups.find(
+      (group) => group.uuid === selectedGroupUUID
+    );
     return {
-      usercache: state.getIn(['cache', 'user']),
-      friendList: state.getIn(['user', 'friendList']),
+      usercache: state.cache.user,
+      friendList: state.user.friendList,
       selectedGroupUUID,
       groupInfo,
-      groupMembers: groupInfo.get('group_members', []),
+      groupMembers: groupInfo.group_members ?? [],
     };
   },
-  (dispatch) => ({
+  (dispatch: TRPGDispatch) => ({
     sendGroupInvite: (group_uuid, to_uuid) =>
       dispatch(sendGroupInvite(group_uuid, to_uuid)),
   })

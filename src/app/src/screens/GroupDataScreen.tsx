@@ -30,8 +30,7 @@ import {
   switchNav,
   navPortal,
 } from '../redux/actions/nav';
-import { GroupStateGroupsItem } from '@src/shared/redux/types/group';
-import { Map } from 'immutable';
+import { GroupInfo } from '@src/shared/redux/types/group';
 import { NavigationScreenProps } from 'react-navigation';
 import { GroupDataParams } from '../types/params';
 import { getCurrentGroupActor } from '@redux/helpers/group';
@@ -42,7 +41,7 @@ interface Props
   extends TRPGDispatchProp,
     NavigationScreenProps<GroupDataParams> {
   userUUID: string;
-  groupInfo: GroupStateGroupsItem;
+  groupInfo: GroupInfo;
   selfGroupActors: any;
   selectedGroupUUID: string;
   friendList: string[];
@@ -54,7 +53,7 @@ class GroupDataScreen extends React.Component<Props> {
 
   get isGroupOwner(): boolean {
     const { userUUID, groupInfo } = this.props;
-    return userUUID === groupInfo.get('owner_uuid');
+    return userUUID === groupInfo.owner_uuid;
   }
 
   /**
@@ -81,9 +80,7 @@ class GroupDataScreen extends React.Component<Props> {
     const { dispatch, selectedGroupUUID, selfGroupActors } = this.props;
 
     const currentGroupActor = getCurrentGroupActor(selectedGroupUUID);
-    let actorUUID = _isNil(currentGroupActor)
-      ? null
-      : currentGroupActor.get('uuid');
+    let actorUUID = _isNil(currentGroupActor) ? null : currentGroupActor.uuid;
 
     const options = [
       {
@@ -91,14 +88,12 @@ class GroupDataScreen extends React.Component<Props> {
         label: '不选择',
       },
     ];
-    if (selfGroupActors && selfGroupActors.size > 0) {
+    if (selfGroupActors && selfGroupActors.length > 0) {
       options.push(
-        ...selfGroupActors
-          .map((item, index) => ({
-            value: item.get('uuid'),
-            label: item.getIn(['actor', 'name']),
-          }))
-          .toJS()
+        ...selfGroupActors.map((item, index) => ({
+          value: item.uuid,
+          label: _get(item, ['actor', 'name']),
+        }))
       );
     }
 
@@ -149,8 +144,8 @@ class GroupDataScreen extends React.Component<Props> {
   handleGroupInvite = () => {
     // 选择好友
     const { friendList, groupInfo, dispatch } = this.props;
-    const groupMembersList: string[] = groupInfo.get('group_members').toJS();
-    const groupManagerList: string[] = groupInfo.get('managers_uuid').toJS();
+    const groupMembersList: string[] = groupInfo.group_members;
+    const groupManagerList: string[] = groupInfo.managers_uuid;
 
     const target = _without(
       friendList,
@@ -160,7 +155,7 @@ class GroupDataScreen extends React.Component<Props> {
 
     dispatch(
       selectUser(target, (uuids) => {
-        dispatch(sendGroupInviteBatch(groupInfo.get('uuid'), uuids));
+        dispatch(sendGroupInviteBatch(groupInfo.uuid, uuids));
       })
     );
   };
@@ -179,7 +174,7 @@ class GroupDataScreen extends React.Component<Props> {
           content: '一旦确定无法撤销',
           onConfirm: () => {
             dispatch(hideAlert());
-            let groupUUID = groupInfo.get('uuid');
+            let groupUUID = groupInfo.uuid;
             dispatch(switchSelectGroup(''));
             dispatch(dismissGroup(groupUUID));
             dispatch(backToTop());
@@ -193,7 +188,7 @@ class GroupDataScreen extends React.Component<Props> {
           content: '一旦确定无法撤销',
           onConfirm: () => {
             dispatch(hideAlert());
-            let groupUUID = groupInfo.get('uuid');
+            let groupUUID = groupInfo.uuid;
             dispatch(switchSelectGroup(''));
             dispatch(quitGroup(groupUUID));
             dispatch(backToTop());
@@ -207,33 +202,31 @@ class GroupDataScreen extends React.Component<Props> {
     const { isMsgTop } = this.state;
     const { groupInfo } = this.props;
 
-    if (_isEmpty(groupInfo.toObject())) {
+    if (_isEmpty(groupInfo)) {
       return null;
     }
 
-    const groupOwnerName = getCachedUserName(groupInfo.get('owner_uuid'));
+    const groupOwnerName = getCachedUserName(groupInfo.owner_uuid);
 
     return (
       <ScrollView>
         <List renderHeader={'基本'}>
           <ListItem extra={groupOwnerName}>团主持人</ListItem>
-          <ListItem extra={groupInfo.get('managers_uuid').size + '人'}>
+          <ListItem extra={groupInfo.managers_uuid.length + '人'}>
             团管理
           </ListItem>
           <ListItem
             arrow="horizontal"
-            extra={groupInfo.get('group_members').size + '人'}
+            extra={groupInfo.group_members.length + '人'}
             onPress={this.handleShowMember}
           >
             团成员
           </ListItem>
-          <ListItem extra={groupInfo.get('group_actors').size + '张'}>
+          <ListItem extra={groupInfo.group_actors.length + '张'}>
             团人物卡
           </ListItem>
-          <ListItem extra={groupInfo.get('maps_uuid').size + '张'}>
-            团地图
-          </ListItem>
-          <ListItem multipleLine extra={groupInfo.get('desc')}>
+          <ListItem extra={groupInfo.maps_uuid.length + '张'}>团地图</ListItem>
+          <ListItem multipleLine extra={groupInfo.desc}>
             简介
           </ListItem>
 
@@ -291,26 +284,20 @@ export default connect((state: TRPGState, ownProps: Props) => {
   const selectedGroupUUID = ownProps.navigation.getParam('uuid', '');
 
   const groupInfo =
-    state
-      .getIn(['group', 'groups'])
-      .find((group) => group.get('uuid') === selectedGroupUUID) || Map();
+    state.group.groups.find((group) => group.uuid === selectedGroupUUID) ?? {};
 
-  const selfActors = state
-    .getIn(['actor', 'selfActors'])
-    .map((i) => i.get('uuid'));
+  const selfActors = state.actor.selfActors.map((i) => i.uuid);
 
-  const selfGroupActors = groupInfo
-    .get('group_actors', [])
-    .filter(
-      (i) => i.get('enabled') && selfActors.indexOf(i.get('actor_uuid')) >= 0
-    );
+  const selfGroupActors = _get(groupInfo, 'group_actors', []).filter(
+    (i) => i.enabled && selfActors.indexOf(i.actor_uuid) >= 0
+  );
 
   return {
-    userUUID: state.getIn(['user', 'info', 'uuid']),
-    usercache: state.getIn(['cache', 'user']),
+    userUUID: state.user.info.uuid,
+    usercache: state.cache.user,
     selectedGroupUUID,
     selfGroupActors,
     groupInfo,
-    friendList: state.getIn(['user', 'friendList']).toJS(),
+    friendList: state.user.friendList,
   };
 })(GroupDataScreen);

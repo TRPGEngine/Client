@@ -3,7 +3,6 @@ import { connect, DispatchProp } from 'react-redux';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import sb from 'react-native-style-block';
-import { List } from 'immutable';
 import appConfig from '../config.app';
 import { getSimpleDate } from '../../../shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
@@ -12,6 +11,7 @@ import { sendFriendInvite } from '../../../shared/redux/actions/user';
 import { switchToChatScreen } from '../redux/actions/nav';
 import { getUserInfoCache } from '../../../shared/utils/cache-helper';
 import { addUserConverse } from '@src/shared/redux/actions/chat';
+import { TRPGState } from '@redux/types/__all__';
 
 interface ItemProps {
   name: string;
@@ -36,7 +36,7 @@ interface NavigationParams {
 interface ScreenProps
   extends DispatchProp<any>,
     NavigationScreenProps<NavigationParams> {
-  friendList: List<string>;
+  friendList: string[];
   selfUUID: string;
 }
 /**
@@ -67,11 +67,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
     // 创建用户会话并切换到该会话
     this.props.dispatch(addUserConverse([userUUID]));
     this.props.dispatch(
-      switchToChatScreen(
-        userUUID,
-        type,
-        userInfo.get('nickname') || userInfo.get('username')
-      )
+      switchToChatScreen(userUUID, type, userInfo.nickname || userInfo.username)
     );
   };
 
@@ -88,10 +84,8 @@ class ProfileScreen extends React.Component<ScreenProps> {
       );
     }
 
-    let avatar = userInfo.get('avatar')
-      ? userInfo.get('avatar')
-      : appConfig.defaultImg.user;
-    let name = userInfo.get('nickname') || userInfo.get('username');
+    let avatar = userInfo.avatar ? userInfo.avatar : appConfig.defaultImg.user;
+    let name = userInfo.nickname || userInfo.username;
 
     return (
       <View style={styles.container}>
@@ -106,24 +100,22 @@ class ProfileScreen extends React.Component<ScreenProps> {
             />
           </TImageViewer>
           <Text style={{ fontSize: 18, marginTop: 4 }}>{name}</Text>
-          <Text style={{ fontSize: 12, color: '#999' }}>
-            {userInfo.get('uuid')}
-          </Text>
+          <Text style={{ fontSize: 12, color: '#999' }}>{userInfo.uuid}</Text>
         </View>
         <View style={{ paddingLeft: 10, backgroundColor: 'white' }}>
-          <ProfileInfoItem name="用户名" value={userInfo.get('username')} />
-          <ProfileInfoItem name="性别" value={userInfo.get('sex')} />
+          <ProfileInfoItem name="用户名" value={userInfo.username} />
+          <ProfileInfoItem name="性别" value={userInfo.sex} />
           <ProfileInfoItem
             name="简介"
-            value={userInfo.get('desc') || '这个人很懒什么都没有留下'}
+            value={userInfo.desc || '这个人很懒什么都没有留下'}
           />
           <ProfileInfoItem
             name="上次登录"
-            value={getSimpleDate(userInfo.get('last_login')) || '无记录'}
+            value={getSimpleDate(userInfo.last_login) || '无记录'}
           />
           <ProfileInfoItem
             name="注册时间"
-            value={getSimpleDate(userInfo.get('createAt'))}
+            value={getSimpleDate(userInfo.createAt)}
           />
         </View>
         {!this.isSelf ? (
@@ -160,8 +152,8 @@ const styles = {
   actions: [sb.padding(10)],
 };
 
-export default connect((state: any) => ({
-  usercache: state.getIn(['cache', 'user']),
-  friendList: state.getIn(['user', 'friendList']),
-  selfUUID: state.getIn(['user', 'info', 'uuid']),
+export default connect((state: TRPGState) => ({
+  usercache: state.cache.user,
+  friendList: state.user.friendList,
+  selfUUID: state.user.info.uuid,
 }))(ProfileScreen);

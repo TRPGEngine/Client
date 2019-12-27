@@ -47,7 +47,7 @@ class UserList extends React.Component<Props> {
 
     return (
       <UserItem onPress={() => this.handlePress(uuid, name)}>
-        <UserAvatar name={name} uri={user.get('avatar')} />
+        <UserAvatar name={name} uri={user.avatar} />
         <Text>{name}</Text>
       </UserItem>
     );
@@ -65,5 +65,5 @@ class UserList extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  usercache: state.getIn(['cache', 'user']),
+  usercache: state.cache.user,
 }))(UserList);

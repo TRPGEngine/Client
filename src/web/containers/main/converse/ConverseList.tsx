@@ -3,11 +3,17 @@ import { connect, DispatchProp } from 'react-redux';
 import dateHelper from '@shared/utils/date-helper';
 import config from '@shared/project.config';
 import ConverseDetail from './ConverseDetail';
-// import Tab from '../../../components/Tab';
-import { TabsController, Tab } from '../../../components/Tabs';
-import ConvItem from '../../../components/ConvItem';
+import { TabsController, Tab } from '@web/components/Tabs';
+import ConvItem from '@web/components/ConvItem';
 import { switchConverse, removeUserConverse } from '@shared/redux/actions/chat';
 import { showProfileCard } from '@shared/redux/actions/ui';
+import _get from 'lodash/get';
+import _isArray from 'lodash/isArray';
+import _values from 'lodash/values';
+import _filter from 'lodash/filter';
+import _sortBy from 'lodash/sortBy';
+import _size from 'lodash/size';
+import { TRPGState } from '@redux/types/__all__';
 
 import './ConverseList.scss';
 
@@ -40,48 +46,42 @@ class ConverseList extends React.Component<Props> {
   }
 
   getConverseList() {
-    if (this.props.converses.size > 0) {
+    if (_size(this.props.converses) > 0) {
       const userWritingList = this.props.userWritingList;
-      let usercache = this.props.usercache;
-      let converses = this.props.converses
-        .valueSeq()
-        .filter(
-          (item) => item.get('type') === 'user' || item.get('type') === 'system'
-        )
-        .sortBy((item) => new Date(item.get('lastTime') || 0))
+      const usercache = this.props.usercache;
+      const converses = _sortBy(
+        _values(this.props.converses).filter(
+          (item) => item.type === 'user' || item.type === 'system'
+        ),
+        (item) => new Date(item.lastTime || 0)
+      )
         .reverse()
         .map((item, index) => {
-          let uuid = item.get('uuid');
-          let defaultIcon =
+          const uuid = item.uuid;
+          const defaultIcon =
             uuid === 'trpgsystem'
               ? config.defaultImg.trpgsystem
-              : config.defaultImg.getUser(item.get('name'));
-          let attachIcon =
-            item.get('type') === 'user'
-              ? this.props.usercache.getIn([item.get('members', 0), 'avatar'])
+              : config.defaultImg.getUser(item.name);
+          const attachIcon =
+            item.type === 'user'
+              ? _get(this.props.usercache, [item.members ?? 0, 'avatar'])
               : null;
-          let userUUID = item.get('members')
-            ? item
-                .get('members')
-                .find((i) => i !== this.props.userInfo.get('uuid'))
+          const userUUID = _isArray(item.members)
+            ? item.members.find((i) => i !== this.props.userInfo.uuid)
             : uuid;
           let icon =
-            item.get('icon') || usercache.getIn([uuid, 'avatar']) || attachIcon;
+            item.icon || _get(usercache, [uuid, 'avatar']) || attachIcon;
           icon = config.file.getAbsolutePath(icon) || defaultIcon;
 
           return (
             <ConvItem
               key={'converses#' + index}
               icon={icon}
-              title={item.get('name')}
-              content={item.get('lastMsg')}
-              time={
-                item.get('lastTime')
-                  ? dateHelper.getShortDiff(item.get('lastTime'))
-                  : ''
-              }
+              title={item.name}
+              content={item.lastMsg}
+              time={item.lastTime ? dateHelper.getShortDiff(item.lastTime) : ''}
               uuid={uuid}
-              unread={item.get('unread')}
+              unread={item.unread}
               isWriting={userWritingList.includes(userUUID)}
               isSelected={this.props.selectedUUID === uuid}
               hideCloseBtn={false}
@@ -105,26 +105,26 @@ class ConverseList extends React.Component<Props> {
   }
 
   getFriendList() {
-    let friends = this.props.friends.toJS();
-    let usercache = this.props.usercache;
+    const friends = this.props.friends;
+    const usercache = this.props.usercache;
 
     return (
       <div className="friend-list">
         {friends.length > 0 ? (
           friends.map((item, index) => {
-            let uuid = item;
-            let name =
-              usercache.getIn([uuid, 'nickname']) ||
-              usercache.getIn([uuid, 'username']);
+            const uuid = item;
+            const name =
+              _get(usercache, [uuid, 'nickname']) ??
+              _get(usercache, [uuid, 'username']);
             return (
               <ConvItem
                 key={`friends#${uuid}#${index}`}
                 icon={
-                  usercache.getIn([uuid, 'avatar']) ||
+                  _get(usercache, [uuid, 'avatar']) ??
                   config.defaultImg.getUser(name)
                 }
                 title={name}
-                content={usercache.getIn([uuid, 'sign'])}
+                content={_get(usercache, [uuid, 'sign'])}
                 time=""
                 uuid=""
                 isSelected={false}
@@ -182,12 +182,12 @@ class ConverseList extends React.Component<Props> {
   }
 }
 
-export default connect((state: any) => ({
-  selectedUUID: state.getIn(['chat', 'selectedConverseUUID']),
-  conversesDesc: state.getIn(['chat', 'conversesDesc']),
-  converses: state.getIn(['chat', 'converses']),
-  friends: state.getIn(['user', 'friendList']),
-  usercache: state.getIn(['cache', 'user']),
-  userInfo: state.getIn(['user', 'info']),
-  userWritingList: state.getIn(['chat', 'writingList', 'user'], []),
+export default connect((state: TRPGState) => ({
+  selectedUUID: state.chat.selectedConverseUUID,
+  conversesDesc: state.chat.conversesDesc,
+  converses: state.chat.converses,
+  friends: state.user.friendList,
+  usercache: state.cache.user,
+  userInfo: state.user.info,
+  userWritingList: _get(state, ['chat', 'writingList', 'user']) ?? [],
 }))(ConverseList);

@@ -6,6 +6,7 @@ import {
 } from '@shared/redux/actions/group';
 import { MessageProps } from '@src/shared/components/MessageHandler';
 import _isNil from 'lodash/isNil';
+import { TRPGState } from '@redux/types/__all__';
 
 // 入团申请
 interface Props extends MessageProps, DispatchProp<any> {
@@ -19,9 +20,9 @@ class GroupRequest extends BaseCard<Props> {
     let requestUUID = data.requestUUID;
     let groupUUID = data.groupUUID;
     let fromUUID = data.fromUUID;
-    let group = this.props.groups.find((g) => g.get('uuid') === groupUUID);
+    let group = this.props.groups.find((g) => g.uuid === groupUUID);
     if (!_isNil(group)) {
-      if (group.get('group_members', []).includes(fromUUID)) {
+      if ((group.group_members ?? []).includes(fromUUID)) {
         return [{ label: '已同意' }];
       } else if (data.is_processed) {
         return [{ label: '已处理' }]; // TODO: 需要服务端主动更新
@@ -47,6 +48,6 @@ class GroupRequest extends BaseCard<Props> {
   }
 }
 
-export default connect((state: any) => ({
-  groups: state.getIn(['group', 'groups']),
+export default connect((state: TRPGState) => ({
+  groups: state.group.groups,
 }))(GroupRequest);

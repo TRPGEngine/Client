@@ -40,19 +40,21 @@ export default function(store) {
       // web||electron通知
       const hidden = _get(window, 'document.hidden', false);
       if (hidden || isBlur) {
-        const allowNotify = store
-          .getState()
-          .getIn(['settings', 'system', 'notification']);
+        const allowNotify = _get(store.getState(), [
+          'settings',
+          'system',
+          'notification',
+        ]);
         if (allowNotify) {
-          let uuid = data.sender_uuid;
-          let userinfo = getUserInfoCache(data.sender_uuid);
-          let username = userinfo.get('nickname') || userinfo.get('username');
+          const uuid = data.sender_uuid;
+          const userinfo = getUserInfoCache(data.sender_uuid);
+          let username = userinfo.nickname || userinfo.username;
           if (uuid && uuid.substr(0, 4) === 'trpg') {
             username = '系统消息';
           }
-          let notification = new Notification(`来自 ${username}:`, {
+          const notification = new Notification(`来自 ${username}:`, {
             body: data.message,
-            icon: userinfo.get('avatar') || config.defaultImg.trpgsystem,
+            icon: userinfo.avatar || config.defaultImg.trpgsystem,
             tag: 'trpg-msg',
             renotify: true,
             data: { uuid },
@@ -67,7 +69,6 @@ export default function(store) {
 
         // 增加小红点
         num++;
-
         tinycon.setBubble(num >= 100 ? 99 : num);
       }
     },

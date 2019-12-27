@@ -108,7 +108,7 @@ export function bindEventFunc(
     store.dispatch(updateSocketId(api.socket.id));
     console.log('重连成功');
 
-    let isLogin = store.getState().getIn(['user', 'isLogin']);
+    const isLogin = store.getState().user.isLogin;
     if (isLogin) {
       (async () => {
         let uuid = await rnStorage.get('uuid');

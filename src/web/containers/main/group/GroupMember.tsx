@@ -1,17 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import config from '../../../../shared/project.config';
+import config from '@shared/project.config';
 import moment from 'moment';
-import {
-  showModal,
-  showProfileCard,
-} from '../../../../shared/redux/actions/ui';
+import { showModal, showProfileCard } from '@shared/redux/actions/ui';
 import GroupMemberManage from './modal/GroupMemberManage';
-import { getUserInfoCache } from '../../../../shared/utils/cache-helper';
+import { getUserInfoCache } from '@shared/utils/cache-helper';
+import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
 
 import './GroupMember.scss';
 
-class GroupMember extends React.Component {
+interface Props {
+  userUUID: string;
+  selectedGroupUUID: string;
+  groupInfo: any;
+  showModal: any;
+  showProfileCard: any;
+}
+class GroupMember extends React.Component<Props> {
   handleManageMember(uuid) {
     this.props.showModal(<GroupMemberManage uuid={uuid} />);
   }
@@ -19,17 +24,17 @@ class GroupMember extends React.Component {
   getMemberList() {
     let groupInfo = this.props.groupInfo;
     let hasManagerAuth =
-      groupInfo.get('managers_uuid').indexOf(this.props.userUUID) >= 0;
-    if (groupInfo.get('group_members')) {
-      return groupInfo.get('group_members', []).map((uuid) => {
+      groupInfo.managers_uuid.indexOf(this.props.userUUID) >= 0;
+    if (groupInfo.group_members) {
+      return (groupInfo.group_members || []).map((uuid) => {
         let user = getUserInfoCache(uuid);
-        let last_login = user.get('last_login')
-          ? moment(user.get('last_login')).format('YYYY-M-D HH:mm:ss')
+        let last_login = user.last_login
+          ? moment(user.last_login).format('YYYY-M-D HH:mm:ss')
           : '从未登录';
-        let isManager = groupInfo.get('managers_uuid').indexOf(uuid) >= 0;
-        let isOwner = groupInfo.get('owner_uuid') === uuid;
+        let isManager = groupInfo.managers_uuid.indexOf(uuid) >= 0;
+        let isOwner = groupInfo.owner_uuid === uuid;
         let auth = isOwner ? 'owner' : isManager ? 'manager' : 'none';
-        let name = user.get('nickname') || user.get('username');
+        let name = user.nickname || user.username;
         return (
           <tr
             key={`group-member#${this.props.selectedGroupUUID}#${uuid}`}
@@ -39,9 +44,7 @@ class GroupMember extends React.Component {
               <i className="iconfont">&#xe648;</i>
             </td>
             <td className="avatar">
-              <img
-                src={user.get('avatar') || config.defaultImg.getUser(name)}
-              />
+              <img src={user.avatar || config.defaultImg.getUser(name)} />
             </td>
             <td className="name">{name}</td>
             <td className="last-login">{last_login}</td>
@@ -80,18 +83,15 @@ class GroupMember extends React.Component {
 }
 
 export default connect(
-  (state) => ({
-    userUUID: state.getIn(['user', 'info', 'uuid']),
-    selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
-    groupInfo: state
-      .getIn(['group', 'groups'])
-      .find(
-        (group) =>
-          group.get('uuid') === state.getIn(['group', 'selectedGroupUUID'])
-      ),
-    usercache: state.getIn(['cache', 'user']),
+  (state: TRPGState) => ({
+    userUUID: state.user.info.uuid,
+    selectedGroupUUID: state.group.selectedGroupUUID,
+    groupInfo: state.group.groups.find(
+      (group) => group.uuid === state.group.selectedGroupUUID
+    ),
+    usercache: state.cache.user,
   }),
-  (dispatch) => ({
+  (dispatch: TRPGDispatch) => ({
     showModal: (body) => dispatch(showModal(body)),
     showProfileCard: (uuid) => dispatch(showProfileCard(uuid)),
   })

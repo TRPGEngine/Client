@@ -27,10 +27,12 @@ import ListSelect from '../../../components/ListSelect';
 import IsDeveloping from '../../../components/IsDeveloping';
 import MsgContainer from '../../../components/MsgContainer';
 import MsgSendBox from '../../../components/MsgSendBox';
-import { List } from 'immutable';
 import _isNil from 'lodash/isNil';
+import _get from 'lodash/get';
+import _orderBy from 'lodash/orderBy';
 import { GroupActorMsgData } from '@src/shared/redux/types/group';
 import QuickDice from '../dice/QuickDice';
+import { TRPGState } from '@redux/types/__all__';
 
 interface Props extends DispatchProp<any> {
   selectedUUID: string;
@@ -55,9 +57,9 @@ class GroupDetail extends React.Component<Props> {
     let msgData: GroupActorMsgData;
     if (!_isNil(this.props.selectedGroupActorInfo)) {
       msgData = {
-        groupActorUUID: this.props.selectedGroupActorInfo.get('uuid'),
-        name: this.props.selectedGroupActorInfo.get('name'),
-        avatar: this.props.selectedGroupActorInfo.get('avatar'),
+        groupActorUUID: this.props.selectedGroupActorInfo.uuid,
+        name: this.props.selectedGroupActorInfo.name,
+        avatar: this.props.selectedGroupActorInfo.avatar,
       };
     }
     this.props.dispatch(
@@ -112,23 +114,21 @@ class GroupDetail extends React.Component<Props> {
   // 发送投骰邀请
   handleSendDiceInv() {
     let usercache = this.props.usercache;
-    let groupMembers = this.props.groupInfo.get('group_members', []);
+    let groupMembers = this.props.groupInfo.group_members ?? [];
     let list = groupMembers
       .filter((uuid) => uuid !== this.props.userUUID)
       .map((uuid) => ({
         name:
-          usercache.getIn([uuid, 'nickname']) ||
-          usercache.getIn([uuid, 'username']),
-        uuid: usercache.getIn([uuid, 'uuid']),
+          _get(usercache, [uuid, 'nickname']) ||
+          _get(usercache, [uuid, 'username']),
+        uuid: _get(usercache, [uuid, 'uuid']),
       }));
     this.props.dispatch(
       showModal(
         <ListSelect
           list={list.map((i) => i.name)}
           onListSelect={(selecteds) => {
-            let inviteList = list
-              .filter((_, i) => selecteds.indexOf(i) >= 0)
-              .toJS();
+            let inviteList = list.filter((_, i) => selecteds.indexOf(i) >= 0);
             let inviteNameList = inviteList.map((i) => i.name);
             let inviteUUIDList = inviteList.map((i) => i.uuid);
             if (inviteNameList.length === 0) {
@@ -239,13 +239,11 @@ class GroupDetail extends React.Component<Props> {
   render() {
     let { selfGroupActors, selectedGroupActorUUID, groupInfo } = this.props;
     let options = [];
-    if (selfGroupActors && selfGroupActors.size > 0) {
-      options = selfGroupActors
-        .map((item, index) => ({
-          value: item.get('uuid'),
-          label: item.getIn(['actor', 'name']),
-        }))
-        .toJS();
+    if (selfGroupActors && selfGroupActors.length > 0) {
+      options = selfGroupActors.map((item, index) => ({
+        value: item.uuid,
+        label: _get(item, 'actor.name'),
+      }));
     }
     if (selectedGroupActorUUID) {
       options.unshift({
@@ -260,17 +258,16 @@ class GroupDetail extends React.Component<Props> {
           <div className="avatar">
             <img
               src={
-                groupInfo.get('avatar') ||
-                config.defaultImg.getGroup(groupInfo.get('name'))
+                groupInfo.avatar || config.defaultImg.getGroup(groupInfo.name)
               }
             />
           </div>
           <div className="title">
             <div className="main-title">
-              {groupInfo.get('name')}
-              {groupInfo.get('status') && '(开团中...)'}
+              {groupInfo.name}
+              {groupInfo.status && '(开团中...)'}
             </div>
-            <div className="sub-title">{groupInfo.get('sub_name')}</div>
+            <div className="sub-title">{groupInfo.sub_name}</div>
           </div>
           <Select
             name="actor-select"
@@ -304,35 +301,32 @@ class GroupDetail extends React.Component<Props> {
   }
 }
 
-export default connect((state: any) => {
-  const selectedUUID = state.getIn(['group', 'selectedGroupUUID']);
-  const groupInfo = state
-    .getIn(['group', 'groups'])
-    .find((group) => group.get('uuid') === selectedUUID);
-  const selfActors = state
-    .getIn(['actor', 'selfActors'])
-    .map((i) => i.get('uuid'));
-  const selfGroupActors = groupInfo
-    .get('group_actors', List())
-    .filter(
-      (i) => i.get('enabled') && selfActors.indexOf(i.get('actor_uuid')) >= 0
-    );
-  const selectedGroupActorUUID = groupInfo.getIn([
+export default connect((state: TRPGState) => {
+  const selectedUUID = state.group.selectedGroupUUID;
+  const groupInfo = state.group.groups.find(
+    (group) => group.uuid === selectedUUID
+  );
+  const selfActors = state.actor.selfActors.map((i) => i.uuid);
+  const selfGroupActors = (groupInfo.group_actors || []).filter(
+    (i) => i.enabled && selfActors.indexOf(i.actor_uuid) >= 0
+  );
+  const selectedGroupActorUUID = _get(groupInfo, [
     'extra',
     'selected_group_actor_uuid',
   ]);
   return {
     selectedUUID,
     groupInfo,
-    msgList: state
-      .getIn(['chat', 'converses', selectedUUID, 'msgList'])
-      .sortBy((item) => item.get('date')),
-    userUUID: state.getIn(['user', 'info', 'uuid']),
-    usercache: state.getIn(['cache', 'user']),
+    msgList: _orderBy(
+      _get(state, ['chat', 'converses', selectedUUID, 'msgList']),
+      'date'
+    ),
+    userUUID: state.user.info.uuid,
+    usercache: state.cache.user,
     selfGroupActors,
     selectedGroupActorUUID,
     selectedGroupActorInfo: selfGroupActors.find(
-      (actor) => actor.get('uuid') === selectedGroupActorUUID
+      (actor) => actor.uuid === selectedGroupActorUUID
     ),
   };
 })(GroupDetail);

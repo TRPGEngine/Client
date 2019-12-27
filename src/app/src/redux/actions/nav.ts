@@ -10,6 +10,7 @@ import { ChatType } from '../../types/params';
 import { TRPGAction } from '@src/shared/redux/types/__all__';
 import config from '@src/shared/project.config';
 import rnStorage from '@src/shared/api/rn-storage.api';
+import _get from 'lodash/get';
 
 import * as trpgApi from '@shared/api/trpg.api';
 import { getWebToken } from '@shared/utils/portal-helper';
@@ -87,7 +88,7 @@ export const navPortal = function navPortal(url: string): TRPGAction {
   return async function(dispatch, getState) {
     const portalUrl = config.url.portal;
 
-    const userUUID = getState().getIn(['user', 'info', 'uuid']);
+    const userUUID = _get(getState(), ['user', 'info', 'uuid']);
     const jwt = await getWebToken(userUUID);
 
     url = url.startsWith(portalUrl) ? url : portalUrl + url;

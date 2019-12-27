@@ -1,7 +1,7 @@
 import * as trpgApi from '../api/trpg.api';
 const api = trpgApi.getInstance();
 
-export const getTemplate = function(template_uuid, cb) {
+export const getTemplate = function(template_uuid: string, cb: Function) {
   if (!template_uuid) {
     console.error('have not template_uuid:', template_uuid);
     return;

@@ -1,5 +1,4 @@
 import { AnyAction, Action } from 'redux';
-import { Record } from 'immutable';
 import { ActorState } from './actor';
 import { CacheState } from './cache';
 import { ChatState } from './chat';
@@ -22,7 +21,7 @@ interface AllState {
 }
 
 // 用于state声明
-export type TRPGState = Record<AllState>;
+export type TRPGState = AllState;
 
 // fork from redux-thunk declaration
 interface ThunkDispatch<S, E, A extends Action> {
@@ -44,4 +43,6 @@ export interface TRPGDispatchProp {
 }
 
 // 用于action声明
-export type TRPGAction = ThunkAction<any, any, any, AnyAction> | AnyAction;
+export type TRPGAction =
+  | ThunkAction<any, TRPGState, any, AnyAction>
+  | AnyAction;

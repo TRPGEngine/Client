@@ -74,5 +74,5 @@ class DevelopLabScreen extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  userUUID: state.getIn(['user', 'info', 'uuid']) || '',
+  userUUID: state.user.info.uuid ?? '',
 }))(DevelopLabScreen);

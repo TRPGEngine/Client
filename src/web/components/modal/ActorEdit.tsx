@@ -19,11 +19,11 @@ interface Props {
   name?: string;
   desc?: string;
   avatar?: string;
-  data: {};
-  layout: string;
+  data?: {};
+  layout?: string;
   onSave?: (data: any) => void;
 }
-const ActorEdit = (props: Props) => {
+const ActorEdit: React.FC<Props> = (props) => {
   const [actorData, setActorData] = useState(props.data);
 
   let title = '人物卡';
@@ -51,6 +51,10 @@ const ActorEdit = (props: Props) => {
       </Container>
     </ModalPanel>
   );
+};
+ActorEdit.defaultProps = {
+  data: {},
+  layout: '',
 };
 
 export default ActorEdit;

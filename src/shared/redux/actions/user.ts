@@ -126,7 +126,7 @@ export const loginWithToken = function(
         } else {
           console.log(data);
           dispatch({ type: LOGIN_FAILED, payload: data.msg });
-          if (getState().getIn(['user', 'isLogin'])) {
+          if (getState().user.isLogin) {
             // 登录超时
             dispatch({ type: RESET }); // 登录超时以后重置数据内容。需要重新获取
             dispatch(
@@ -146,7 +146,7 @@ export const loginWithToken = function(
 // 重新获取一次用户登录后的数据
 export const updateAllInfo = function(): TRPGAction {
   return function(dispatch, getState) {
-    if (getState().getIn(['user', 'isLogin']) === true) {
+    if (getState().user.isLogin === true) {
       loginSuccess(dispatch, getState);
     }
   };
@@ -155,9 +155,9 @@ export const updateAllInfo = function(): TRPGAction {
 export const logout = function(): TRPGAction {
   let isApp = config.platform === 'app';
   return function(dispatch, getState) {
-    let info = getState().getIn(['user', 'info']);
-    let uuid = info.get('uuid');
-    let token = isApp ? info.get('app_token') : info.get('token');
+    let info = getState().user.info;
+    let uuid = info.uuid;
+    let token = isApp ? info.app_token : info.token;
     dispatch(showLoading());
     dispatch({ type: LOGOUT });
     api.emit('player::logout', { uuid, token, isApp }, function(data) {
@@ -380,7 +380,7 @@ export const getSettings = function(): TRPGAction {
 
 export const saveSettings = function(): TRPGAction {
   return function(dispatch, getState) {
-    const settings = getState().get('settings');
+    const settings = getState().settings;
     return api.emit(
       'player::saveSettings',
       {

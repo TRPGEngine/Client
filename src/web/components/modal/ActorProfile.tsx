@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { ActorType, ActorDataType } from '@src/shared/redux/types/actor';
 import XMLBuilder from '@shared/layout/XMLBuilder';
 import styled from 'styled-components';
+import { TRPGState } from '@redux/types/__all__';
 
 const Container = styled.div`
   width: 700px;
@@ -44,7 +45,7 @@ class ActorProfile extends React.Component<Props> {
     return (
       <XMLBuilder
         layoutType="detail"
-        xml={template.get('layout', '')}
+        xml={template.layout ?? ''}
         initialData={initialData}
       />
     );
@@ -52,12 +53,12 @@ class ActorProfile extends React.Component<Props> {
 
   render() {
     const actor = this.props.actor;
-    const template = this.props.templateCache.get(actor.template_uuid);
+    const template = this.props.templateCache[actor.template_uuid];
 
     return <Container>{this.getActorProperty(actor, template)}</Container>;
   }
 }
 
-export default connect((state: any) => ({
-  templateCache: state.getIn(['cache', 'template']),
+export default connect((state: TRPGState) => ({
+  templateCache: state.cache.template,
 }))(ActorProfile);

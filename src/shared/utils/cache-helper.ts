@@ -6,8 +6,8 @@ import {
   getGroupInviteInfo,
   getFriendInviteInfo,
 } from '@redux/actions/cache';
-import immutable, { Map } from 'immutable';
 import _isNil from 'lodash/isNil';
+import _get from 'lodash/get';
 import { isUserUUID } from './uuid';
 import { CacheKey } from '@redux/types/cache';
 import { TRPGAction } from '@redux/types/__all__';
@@ -47,7 +47,7 @@ export const checkTemplate = function(uuid) {
   let store = _store;
   if (!!store && !!store.dispatch) {
     const state = store.getState();
-    let info = state.getIn(['cache', 'template', uuid]);
+    let info = _get(state, ['cache', 'template', uuid]);
     if (!info) {
       store.dispatch(getTemplateInfo(uuid));
     }
@@ -71,7 +71,7 @@ type GetCacheDispatchActionFn = (
 ) => TRPGAction;
 
 interface ReduxCacheFactoryInstance {
-  (uuid: string): Map<any, any>;
+  (uuid: string): any;
 
   refresh: (uuid: string) => void;
 }
@@ -117,18 +117,18 @@ function reduxCacheFactory(
       // 如果uuid为undefined或null
       // 或以trpg开头
       // 直接返回空Map
-      return Map();
+      return {};
     }
 
     const state = _store.getState();
-    const data = state.getIn(['cache', cacheScope, uuid]);
-    if (data) {
+    const data = _get(state, ['cache', cacheScope, uuid]);
+    if (!_isNil(data)) {
       return data;
     }
 
     _fetchCacheFromServer(uuid);
 
-    return Map();
+    return {};
   }
 
   getCache.refresh = (uuid: string) => {
@@ -211,5 +211,5 @@ export const getGroupInviteInfoCache = reduxCacheFactory(
  */
 export const getCachedUserName = (uuid: string): string => {
   const info = getUserInfoCache(uuid);
-  return info.get('nickname') || info.get('username') || '';
+  return info.nickname ?? info.username ?? '';
 };

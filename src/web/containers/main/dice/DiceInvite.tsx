@@ -122,5 +122,5 @@ class DiceInvite extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  lastDiceType: state.getIn(['ui', 'lastDiceType']),
+  lastDiceType: state.ui.lastDiceType,
 }))(DiceInvite);

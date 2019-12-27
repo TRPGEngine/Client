@@ -6,6 +6,7 @@ import { login, loginWithToken } from '../../shared/redux/actions/user';
 import config from '../../shared/project.config';
 import rnStorage from '../../shared/api/rn-storage.api';
 import './Login.scss';
+import { TRPGState } from '@redux/types/__all__';
 
 interface Props extends DispatchProp<any> {
   isLogin: boolean;
@@ -110,9 +111,9 @@ class Login extends React.Component<Props> {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: TRPGState) {
   return {
-    isLogin: state.getIn(['user', 'isLogin']),
+    isLogin: state.user.isLogin,
   };
 }
 
