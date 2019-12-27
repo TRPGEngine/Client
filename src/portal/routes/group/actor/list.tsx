@@ -190,7 +190,9 @@ class GroupActorList extends React.Component<Props, State> {
         >
           <div>
             <div>
-              <strong>{actor.name}</strong>
+              <strong>
+                {actor.name} <small>({actor.owner?.name})</small>
+              </strong>
             </div>
             <div>{actor.desc}</div>
           </div>
@@ -210,10 +212,12 @@ class GroupActorList extends React.Component<Props, State> {
       .filter((actor) => actor.passed === false && actor.enabled === true)
       .map((actor) => (
         <GroupActorApprovalCard
+          key={actor.uuid}
           uuid={actor.uuid}
           name={actor.name}
           desc={actor.desc}
           avatar={actor.avatar}
+          ownerName={actor.owner?.name}
           // TODO: 操作按钮应当仅团管理员可见
           onAgree={this.handleAgreeGroupActor}
           onRefuse={this.handleRefuseGroupActor}

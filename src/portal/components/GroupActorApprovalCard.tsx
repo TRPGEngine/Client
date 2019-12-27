@@ -4,6 +4,7 @@ import { Card } from 'antd';
 import styled from 'styled-components';
 import _isString from 'lodash/isString';
 import _invoke from 'lodash/invoke';
+import _isEmpty from 'lodash/isEmpty';
 import { nav } from '@portal/history';
 import { fetchGroupActorDetail } from '@portal/model/group';
 
@@ -13,11 +14,23 @@ const ApprovalCardContainer = styled(Card)`
   margin-bottom: 10px !important;
 `;
 
+const ApprovalCardTitle = styled.div`
+  display: flex;
+  align-items: flex-end;
+
+  > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
+
 export interface ApprovalCardProps {
   uuid: string;
   name: string;
   desc: string;
   avatar: string;
+  ownerName?: string;
 
   onAgree?: (uuid: string) => void;
   onRefuse?: (uuid: string) => void;
@@ -46,12 +59,20 @@ const GroupActorApprovalCard: React.FC<ApprovalCardProps> = React.memo(
       >
         <Meta
           avatar={<Avatar name={props.name} src={props.avatar} />}
-          title={props.name}
+          title={
+            <ApprovalCardTitle>
+              <span>{props.name}</span>{' '}
+              {!_isEmpty(props.ownerName) ? (
+                <small>({props.ownerName})</small>
+              ) : null}
+            </ApprovalCardTitle>
+          }
           description={props.desc}
         />
       </ApprovalCardContainer>
     );
   }
 );
+GroupActorApprovalCard.displayName = 'GroupActorApprovalCard';
 
 export default GroupActorApprovalCard;
