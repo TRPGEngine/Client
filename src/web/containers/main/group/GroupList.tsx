@@ -39,10 +39,12 @@ class GroupList extends React.Component<Props> {
     return _sortBy(
       this.props.groups.map((item) => {
         let uuid = item.uuid;
-        return item
-          .set('lastTime', _get(converses, [uuid, 'lastTime']) || 0)
-          .set('lastMsg', _get(converses, [uuid, 'lastMsg']))
-          .set('unread', _get(converses, [uuid, 'unread']));
+        return {
+          ...item,
+          lastTime: _get(converses, [uuid, 'lastTime']) || 0,
+          lastMsg: _get(converses, [uuid, 'lastMsg']),
+          unread: _get(converses, [uuid, 'unread']),
+        };
       }),
       (x) => new Date(x.lastTime)
     )

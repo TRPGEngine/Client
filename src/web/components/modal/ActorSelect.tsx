@@ -42,7 +42,7 @@ class ActorSelect extends React.Component<Props> {
       <div className="actor-select">
         <h3>请选择人物卡</h3>
         <div className="actor-list">
-          {this.props.selfActors.size > 0 ? (
+          {this.props.selfActors.length > 0 ? (
             this.props.selfActors.map((item, index) => {
               const uuid = item.uuid;
               return (

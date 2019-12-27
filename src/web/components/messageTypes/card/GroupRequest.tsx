@@ -23,7 +23,7 @@ class GroupRequest extends BaseCard<Props> {
     let fromUUID = data.fromUUID;
     let group = this.props.groups.find((g) => g.uuid === groupUUID);
     if (!_isNil(group)) {
-      if (group.group_members ?? []).includes(fromUUID)) {
+      if ((group.group_members ?? []).includes(fromUUID)) {
         return [{ label: '已同意' }];
       } else if (data.is_processed) {
         return [{ label: '已处理' }]; // TODO: 需要服务端主动更新

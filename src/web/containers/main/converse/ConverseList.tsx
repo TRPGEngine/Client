@@ -9,6 +9,10 @@ import { switchConverse, removeUserConverse } from '@shared/redux/actions/chat';
 import { showProfileCard } from '@shared/redux/actions/ui';
 import _get from 'lodash/get';
 import _isArray from 'lodash/isArray';
+import _values from 'lodash/values';
+import _filter from 'lodash/filter';
+import _sortBy from 'lodash/sortBy';
+import _size from 'lodash/size';
 import { TRPGState } from '@redux/types/__all__';
 
 import './ConverseList.scss';
@@ -42,13 +46,15 @@ class ConverseList extends React.Component<Props> {
   }
 
   getConverseList() {
-    if (this.props.converses.size > 0) {
+    if (_size(this.props.converses) > 0) {
       const userWritingList = this.props.userWritingList;
       const usercache = this.props.usercache;
-      const converses = this.props.converses
-        .valueSeq()
-        .filter((item) => item.type === 'user' || item.type === 'system')
-        .sortBy((item) => new Date(item.lastTime || 0))
+      const converses = _sortBy(
+        _values(this.props.converses).filter(
+          (item) => item.type === 'user' || item.type === 'system'
+        ),
+        (item) => new Date(item.lastTime || 0)
+      )
         .reverse()
         .map((item, index) => {
           const uuid = item.uuid;

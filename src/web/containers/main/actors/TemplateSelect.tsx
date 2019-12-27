@@ -65,7 +65,7 @@ class TemplateSelect extends React.Component<Props> {
   getFindResult() {
     const findingResult = this.props.findingResult;
     if (findingResult) {
-      if (findingResult.size === 0) {
+      if (findingResult.length === 0) {
         return <div className="no-result">暂无搜索结果...</div>;
       } else {
         return findingResult.map((item, index) => {

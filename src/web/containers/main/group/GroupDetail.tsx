@@ -29,6 +29,7 @@ import MsgContainer from '../../../components/MsgContainer';
 import MsgSendBox from '../../../components/MsgSendBox';
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
+import _orderBy from 'lodash/orderBy';
 import { GroupActorMsgData } from '@src/shared/redux/types/group';
 import QuickDice from '../dice/QuickDice';
 import { TRPGState } from '@redux/types/__all__';
@@ -238,7 +239,7 @@ class GroupDetail extends React.Component<Props> {
   render() {
     let { selfGroupActors, selectedGroupActorUUID, groupInfo } = this.props;
     let options = [];
-    if (selfGroupActors && selfGroupActors.size > 0) {
+    if (selfGroupActors && selfGroupActors.length > 0) {
       options = selfGroupActors.map((item, index) => ({
         value: item.uuid,
         label: _get(item, 'actor.name'),
@@ -316,8 +317,9 @@ export default connect((state: TRPGState) => {
   return {
     selectedUUID,
     groupInfo,
-    msgList: _get(state, ['chat', 'converses', selectedUUID, 'msgList']).sortBy(
-      (item) => item.date
+    msgList: _orderBy(
+      _get(state, ['chat', 'converses', selectedUUID, 'msgList']),
+      'date'
     ),
     userUUID: state.user.info.uuid,
     usercache: state.cache.user,

@@ -173,7 +173,7 @@ class ProfileModifyScreen extends React.Component<Props> {
         <View style={styles.header}>
           <TouchableOpacity onPress={() => this.handleSelectAvatar()}>
             <TAvatar
-              uri={userInfo.avatar '')}
+              uri={userInfo.avatar ?? ''}
               name={name}
               capitalSize={40}
               height={100}

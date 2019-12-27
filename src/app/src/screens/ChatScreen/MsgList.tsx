@@ -54,7 +54,9 @@ class MsgList extends React.PureComponent<Props> {
       return;
     }
 
-    if (_get(prevProps, 'msgList.size') !== _get(this.props, 'msgList.size')) {
+    if (
+      _get(prevProps, 'msgList.length') !== _get(this.props, 'msgList.length')
+    ) {
       this.scrollToBottom();
     }
   }

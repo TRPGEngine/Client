@@ -14,6 +14,8 @@ import { ChatType } from '../types/params';
 import { switchToChatScreen } from '../redux/actions/nav';
 import { TRPGState } from '@redux/types/__all__';
 import _get from 'lodash/get';
+import _values from 'lodash/values';
+import _sortBy from 'lodash/sortBy';
 
 const NetworkContainer = styled.View<{
   isOnline: boolean;
@@ -75,10 +77,11 @@ class HomeScreen extends React.Component<Props> {
   }
 
   getList() {
-    if (this.props.converses.size > 0) {
-      const arr: any[] = this.props.converses
-        .valueSeq()
-        .sortBy((item) => new Date(item.lastTime || 0))
+    if (this.props.converses.length > 0) {
+      const arr: any[] = _sortBy(
+        _values(this.props.converses),
+        (item) => new Date(item.lastTime || 0)
+      )
         .reverse()
         .map((item, index) => {
           let uuid = item.uuid;

@@ -42,7 +42,7 @@ class ContactList extends React.Component<Props, State> {
   };
 
   get friends() {
-      return this.props.friends;
+    return this.props.friends;
   }
 
   get groups() {
@@ -123,7 +123,7 @@ class ContactList extends React.Component<Props, State> {
   }
 
   render() {
-    if (this.props.friends.size === 0 && this.props.groups.size === 0) {
+    if (this.props.friends.length === 0 && this.props.groups.length === 0) {
       return (
         <View>
           <Text>暂无联系人, 快去交♂朋♂友吧</Text>
@@ -165,7 +165,8 @@ export default connect((state: TRPGState) => {
     friends: friends.map((f) => ({
       uuid: _get(usercache, [f, 'uuid']),
       avatar: _get(usercache, [f, 'avatar']),
-      name: _get(usercache, [f, 'nickname']) ?? _get(usercache, [f, 'username']),
+      name:
+        _get(usercache, [f, 'nickname']) ?? _get(usercache, [f, 'username']),
       type: 'user',
     })),
     groups: groups.map((g) => ({

@@ -88,7 +88,7 @@ class GroupDataScreen extends React.Component<Props> {
         label: '不选择',
       },
     ];
-    if (selfGroupActors && selfGroupActors.size > 0) {
+    if (selfGroupActors && selfGroupActors.length > 0) {
       options.push(
         ...selfGroupActors.map((item, index) => ({
           value: item.uuid,

@@ -116,19 +116,19 @@ class GroupInfo extends React.Component<Props> {
           </div>
           <div className="group-info-cell">
             <span>团管理数:</span>
-            <span>{groupInfo.managers_uuid.size} 人</span>
+            <span>{groupInfo.managers_uuid.length} 人</span>
           </div>
           <div className="group-info-cell">
             <span>团成员数:</span>
-            <span>{groupInfo.group_members.size} 人</span>
+            <span>{groupInfo.group_members.length} 人</span>
           </div>
           <div className="group-info-cell">
             <span>团人物卡数:</span>
-            <span>{groupInfo.group_actors.size} 张</span>
+            <span>{groupInfo.group_actors.length} 张</span>
           </div>
           <div className="group-info-cell">
             <span>团地图数:</span>
-            <span>{groupInfo.maps_uuid.size} 张</span>
+            <span>{groupInfo.maps_uuid.length} 张</span>
           </div>
           <div className="group-info-cell">
             <span>团简介:</span>

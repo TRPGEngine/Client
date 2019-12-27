@@ -42,7 +42,7 @@ export const uiStateSwitchFactory = (
  */
 export const alertHandler = uiStateSwitchFactory('showAlert', {
   onEnabled: (currentUI, dispatch) => {
-    TAlert.show(currentUI.'howAlertInfo'), {
+    TAlert.show(currentUI.showAlertInfo, {
       onRequestClose: () => dispatch(hideAlert()),
     });
   },
@@ -61,7 +61,7 @@ export const toastHandler = uiStateSwitchFactory('showToast', {
       // 如果已存在Toast, 先把之前的移除
       Portal.remove(currentToastKey);
     }
-    currentToastKey = Toast.show(currentUI.'howToastText'), 0);
+    currentToastKey = Toast.show(currentUI.showToastText, 0);
   },
   onDisabled: () => {
     Portal.remove(currentToastKey);
@@ -74,7 +74,7 @@ export const toastHandler = uiStateSwitchFactory('showToast', {
  */
 export const modelHandler = uiStateSwitchFactory('showModal', {
   onEnabled: (currentUI, dispatch) => {
-    const body = currentUI.'howModalBody');
+    const body = currentUI.showModalBody;
     if (body) {
       TModal.show(body, { onRequestClose: () => dispatch(hideModal()) });
     }

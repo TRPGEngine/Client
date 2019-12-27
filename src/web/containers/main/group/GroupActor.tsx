@@ -127,7 +127,7 @@ class GroupActor extends React.Component<Props> {
   getGroupActorsList() {
     const { groupInfo } = this.props;
     const groupActors = this.props.groupInfo.group_actors;
-    if (groupActors && groupActors.size > 0) {
+    if (groupActors && groupActors.length > 0) {
       return groupActors
         .filter((item) => item.passed === true)
         .map((item) => {
@@ -201,7 +201,7 @@ class GroupActor extends React.Component<Props> {
   // 待审人物卡
   getGroupActorChecksList() {
     let groupActors = this.props.groupInfo.group_actors;
-    if (groupActors && groupActors.size > 0) {
+    if (groupActors && groupActors.length > 0) {
       return groupActors
         .filter((item) => item.passed === false)
         .map((item) => {
