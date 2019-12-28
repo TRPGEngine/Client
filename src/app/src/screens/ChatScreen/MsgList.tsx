@@ -112,7 +112,7 @@ class MsgList extends React.PureComponent<Props> {
     return nomore ? (
       <LoadmoreText>没有更多记录了</LoadmoreText>
     ) : (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={this.handleGetMoreLog}>
         <LoadmoreText>上滑加载更多</LoadmoreText>
       </TouchableOpacity>
     );
