@@ -25,12 +25,12 @@ export const uiStateSwitchFactory = (
   option: FactoryOptions
 ) => {
   return (prevUI: UIMap, currentUI: UIMap, dispatch: TRPGDispatch) => {
-    if (prevUI.variable === false && currentUI.variable === true) {
+    if (prevUI[variable] === false && currentUI[variable] === true) {
       // UI打开
       option.onEnabled && option.onEnabled(currentUI, dispatch);
     }
 
-    if (prevUI.variable === true && currentUI.variable === false) {
+    if (prevUI[variable] === true && currentUI[variable] === false) {
       // UI关闭
       option.onDisabled && option.onDisabled(currentUI, dispatch);
     }
