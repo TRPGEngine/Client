@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import at from 'trpg-actor-template';
+import * as at from 'trpg-actor-template';
 import config from '@shared/project.config';
 import { showAlert } from '@shared/redux/actions/ui';
 import { createActor, updateActor } from '@shared/redux/actions/actor';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import at from 'trpg-actor-template';
+import * as at from 'trpg-actor-template';
 import TemplateSelect from './TemplateSelect';
 import ActorCreate from '@web/components/modal/ActorCreate';
 import ActorEdit from '@web/components/modal/ActorEdit';

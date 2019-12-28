@@ -7,7 +7,7 @@ import {
 } from '../../../../shared/redux/actions/ui';
 import Select from 'react-select';
 import TemplatePropertyCell from '../../../components/TemplatePropertyCell';
-import at from 'trpg-actor-template';
+import * as at from 'trpg-actor-template';
 import {
   createTemplate,
   updateTemplate,
