@@ -21,6 +21,7 @@ export interface MsgPayload {
   converse_uuid?: string;
   is_public?: boolean;
   is_group?: boolean;
+  revoke?: boolean;
   date?: string;
   data?: {
     [key: string]: any;

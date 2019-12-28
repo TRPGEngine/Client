@@ -5,6 +5,10 @@ import Base from './Base';
 import { Modal } from '@ant-design/react-native';
 import styled from 'styled-components/native';
 import BBCode from '@src/shared/components/bbcode';
+import { connect } from 'react-redux';
+import { TRPGDispatchProp } from '@redux/types/__all__';
+import { MessageProps } from '@shared/components/MessageHandler';
+import { revokeMsg } from '@redux/actions/chat';
 
 const MsgContainer = styled.TouchableHighlight.attrs({
   underlayColor: '#eee',
@@ -14,7 +18,8 @@ const MsgContainer = styled.TouchableHighlight.attrs({
   padding: ${(props) => (props.isImage ? 0 : '6px 8px')};
 `;
 
-class Default extends Base {
+interface Props extends TRPGDispatchProp, MessageProps {}
+class Default extends Base<Props> {
   get isMsgPadding() {
     return false;
   }
@@ -36,7 +41,7 @@ class Default extends Base {
   }
 
   handleLongPress = () => {
-    Modal.operation([
+    const operations = [
       {
         text: '复制到剪切板',
         onPress: () => {
@@ -44,7 +49,19 @@ class Default extends Base {
           Clipboard.setString(this.message);
         },
       },
-    ]);
+    ];
+
+    if (this.props.me) {
+      operations.push({
+        text: '撤回消息',
+        onPress: () => {
+          // 撤回消息
+          this.props.dispatch(revokeMsg(this.props.info.uuid));
+        },
+      });
+    }
+
+    Modal.operation(operations);
   };
 
   getContent() {
@@ -58,4 +75,4 @@ class Default extends Base {
   }
 }
 
-export default Default;
+export default connect()(Default as any);

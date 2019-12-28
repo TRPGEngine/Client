@@ -28,8 +28,8 @@ class MessageHandler extends Component<MessageProps> {
   }
 
   render() {
-    let messageType = this.props.type;
-    let Handler =
+    const messageType = this.props.type;
+    const Handler =
       MessageHandler.messageHandlers[messageType] ||
       MessageHandler.messageHandlers['default'];
 

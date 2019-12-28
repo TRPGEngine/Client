@@ -27,7 +27,7 @@ import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 import rnStorage from '../../api/rn-storage.api';
 import { checkUser } from '../../utils/cache-helper';
-import { hideProfileCard, switchMenuPannel, showAlert } from './ui';
+import { hideProfileCard, switchMenuPannel, showToast } from './ui';
 import * as uploadHelper from '../../utils/upload-helper';
 import { renewableDelayTimer } from '../../utils/timer';
 import config from '../../project.config';
@@ -502,6 +502,28 @@ export let sendFile = function sendFile(toUUID, payload, file): TRPGAction {
         });
       },
     });
+  };
+};
+
+/**
+ * 撤回消息
+ * @param msgUUID 消息UUID
+ */
+export const revokeMsg = function revokeMsg(messageUUID: string): TRPGAction {
+  return (dispatch, getState) => {
+    api.emit(
+      'chat::revokeMsg',
+      {
+        messageUUID,
+      },
+      (data) => {
+        if (data.result === false) {
+          // 撤回提示
+          console.error('消息撤回失败', data.msg);
+          dispatch(showToast('消息撤回失败:' + data.msg));
+        }
+      }
+    );
   };
 };
 

@@ -16,6 +16,7 @@ import { TRPGState } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _values from 'lodash/values';
 import _sortBy from 'lodash/sortBy';
+import _size from 'lodash/size';
 
 const NetworkContainer = styled.View<{
   isOnline: boolean;
@@ -77,7 +78,7 @@ class HomeScreen extends React.Component<Props> {
   }
 
   getList() {
-    if (this.props.converses.length > 0) {
+    if (_size(this.props.converses) > 0) {
       const arr: any[] = _sortBy(
         _values(this.props.converses),
         (item) => new Date(item.lastTime || 0)
