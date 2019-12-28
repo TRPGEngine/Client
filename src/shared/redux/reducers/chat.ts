@@ -1,4 +1,5 @@
 import _isNil from 'lodash/isNil';
+import _isString from 'lodash/isString';
 import _invoke from 'lodash/invoke';
 import _remove from 'lodash/remove';
 import _orderBy from 'lodash/orderBy';
@@ -166,6 +167,15 @@ export default produce((draft: ChatState, action) => {
           ...msgList[msgIndex],
           ...action.payload,
         };
+
+        if (
+          _isString(action.payload.message) &&
+          msgIndex === msgList.length - 1
+        ) {
+          // 如果修改了message且message是最后一条
+          // 则更新lastMsg
+          draft.converses[action.converseUUID].lastMsg = action.payload.message;
+        }
       }
 
       return;
