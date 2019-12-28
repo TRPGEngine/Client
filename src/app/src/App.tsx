@@ -48,6 +48,7 @@ import { loginWithToken } from '@src/shared/redux/actions/user';
 import ErrorBoundary from '@shared/components/ErrorBoundary';
 import ErrorView from './ErrorView';
 import TRPGCodePush from './components/TRPGCodePush';
+import { initConfig } from '@redux/actions/settings';
 
 (async () => {
   console.log('读取本地存储的token...');
@@ -58,6 +59,9 @@ import TRPGCodePush from './components/TRPGCodePush';
     console.log('尝试登陆uuid:', uuid);
     store.dispatch(loginWithToken(uuid, token));
   }
+
+  // 初始化配置
+  store.dispatch(initConfig());
 })();
 
 class App extends React.Component {

@@ -10,6 +10,7 @@ import { TRPGState } from '@redux/types/__all__';
 
 interface Props extends DispatchProp<any> {
   isLogin: boolean;
+  oauthList: string[];
   history: any;
 }
 class Login extends React.Component<Props> {
@@ -69,10 +70,11 @@ class Login extends React.Component<Props> {
   }
 
   render() {
-    let canLogin =
+    const canLogin =
       this.state.username &&
       this.state.password &&
       this.state.password.length >= 5;
+
     return (
       <div className="login-screen">
         <h2>欢迎来到TRPG的世界</h2>
@@ -101,9 +103,11 @@ class Login extends React.Component<Props> {
           >
             登录
           </button>
-          <button onClick={() => this.handleQQLogin()}>
-            <i className="iconfont">&#xe786;</i>
-          </button>
+          {this.props.oauthList.includes('qq') ? (
+            <button onClick={() => this.handleQQLogin()}>
+              <i className="iconfont">&#xe786;</i>
+            </button>
+          ) : null}
         </div>
         <Link to="register">没有账号？现在注册</Link>
       </div>
@@ -114,6 +118,7 @@ class Login extends React.Component<Props> {
 function mapStateToProps(state: TRPGState) {
   return {
     isLogin: state.user.isLogin,
+    oauthList: state.settings.config.oauth ?? [],
   };
 }
 
