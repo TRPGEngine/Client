@@ -1,4 +1,4 @@
-import { AnyAction, Action } from 'redux';
+import { AnyAction, Action, Store } from 'redux';
 import { ActorState } from './actor';
 import { CacheState } from './cache';
 import { ChatState } from './chat';
@@ -22,6 +22,8 @@ interface AllState {
 
 // 用于state声明
 export type TRPGState = AllState;
+
+export type TRPGStore = Store<TRPGState, any>;
 
 // fork from redux-thunk declaration
 interface ThunkDispatch<S, E, A extends Action> {

@@ -4,6 +4,7 @@ import config from '@src/shared/project.config';
 import { switchMenuPannel } from '../../shared/redux/actions/ui';
 import { switchConverse } from '../../shared/redux/actions/chat';
 import _get from 'lodash/get';
+import { TRPGStore } from '@redux/types/__all__';
 let num = 0;
 
 const hiddenProperty =
@@ -29,7 +30,7 @@ const onVisibilityChange = function() {
 };
 document.addEventListener(visibilityChangeEvent, onVisibilityChange); // TODO: 需要在electron环境下测试是否可以运行
 
-export default function(store) {
+export default function(store: TRPGStore) {
   // 通过blur事件处理浏览器不是当前激活窗口的情况
   let isBlur = false;
   window.addEventListener('focus', () => (isBlur = false));
