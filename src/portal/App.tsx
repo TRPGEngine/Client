@@ -5,19 +5,26 @@ import { postMessage } from '@portal/utils/event';
 import history from './history';
 import TLoadable from '@web/components/TLoadable';
 
-const Login = TLoadable(() => import('@portal/sso/Login'));
-const ActorList = TLoadable(() => import('@portal/actor/list'));
+const Login = TLoadable(() => import('@portal/routes/sso/Login'));
+const ActorList = TLoadable(() => import('@portal/routes/actor/list'));
 const ActorSelectTemplate = TLoadable(() =>
-  import('@portal/actor/select-template')
+  import('@portal/routes/actor/select-template')
 );
-const ActorCreate = TLoadable(() => import('@portal/actor/create'));
-const ActorEditor = TLoadable(() => import('@portal/actor/editor'));
-const ActorDetail = TLoadable(() => import('@portal/actor/detail'));
-const ActorEdit = TLoadable(() => import('@portal/actor/edit'));
-const GroupActorList = TLoadable(() => import('@portal/group/actor/list'));
-const GroupActorDetail = TLoadable(() => import('@portal/group/actor/detail'));
-const GroupActorEdit = TLoadable(() => import('@portal/group/actor/edit'));
-const NoteCreate = TLoadable(() => import('@portal/note/create'));
+const ActorCreate = TLoadable(() => import('@portal/routes/actor/create'));
+const ActorEditor = TLoadable(() => import('@portal/routes/actor/editor'));
+const ActorDetail = TLoadable(() => import('@portal/routes/actor/detail'));
+const ActorEdit = TLoadable(() => import('@portal/routes/actor/edit'));
+const GroupActorList = TLoadable(() =>
+  import('@portal/routes/group/actor/list')
+);
+const GroupActorDetail = TLoadable(() =>
+  import('@portal/routes/group/actor/detail')
+);
+const GroupActorEdit = TLoadable(() =>
+  import('@portal/routes/group/actor/edit')
+);
+const NoteCreate = TLoadable(() => import('@portal/routes/note/create'));
+const DeployLatest = TLoadable(() => import('@portal/routes/deploy'));
 
 interface TitleRouteProps extends RouteProps {
   title: string;
@@ -100,6 +107,7 @@ class App extends React.Component {
             path="/note/create"
             component={NoteCreate}
           />
+          <TitleRoute title="下载App" path="/deploy" component={DeployLatest} />
         </Switch>
       </Router>
     );

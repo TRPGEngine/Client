@@ -1,5 +1,3 @@
-import { Record, List } from 'immutable';
-
 export type UserAlignment =
   | 'LG'
   | 'NG'
@@ -29,15 +27,13 @@ export interface UserInfo {
   alignment: UserAlignment;
 }
 
-export type UserStateInfo = Record<UserInfo>;
-
-export type UserState = Record<{
+export type UserState = {
   isTryLogin: boolean;
   isLogin: boolean;
-  info: UserStateInfo;
-  friendList: List<string>;
-  friendInvite: List<any>;
-  friendRequests: List<any>;
+  info: Partial<UserInfo>;
+  friendList: string[];
+  friendInvite: any[];
+  friendRequests: any[];
   isFindingUser: boolean;
-  findingResult: List<any>;
-}>;
+  findingResult: any[];
+};

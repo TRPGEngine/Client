@@ -7,6 +7,7 @@ import {
 import { MessageProps } from '@src/shared/components/MessageHandler';
 import { getFriendInviteInfoCache } from '@shared/utils/cache-helper';
 import _get from 'lodash/get';
+import { TRPGState } from '@redux/types/__all__';
 
 // 好友邀请
 interface Props extends MessageProps, DispatchProp<any> {
@@ -19,8 +20,8 @@ class FriendInvite extends BaseCard<Props> {
     const data = info.data;
     const inviteUUID = _get(data, 'invite.uuid');
     const inviteInfo = getFriendInviteInfoCache(inviteUUID);
-    const is_agree = inviteInfo.get('is_agree', false);
-    const is_refuse = inviteInfo.get('is_refuse', false);
+    const is_agree = inviteInfo.is_agree ?? false;
+    const is_refuse = inviteInfo.is_refuse ?? false;
 
     const processed = is_agree || is_refuse;
 
@@ -51,7 +52,7 @@ class FriendInvite extends BaseCard<Props> {
   }
 }
 
-export default connect((state: any) => ({
-  friendList: state.getIn(['user', 'friendList']),
-  friendInviteCache: state.getIn(['cache', 'friendInvite']),
+export default connect((state: TRPGState) => ({
+  friendList: state.user.friendList,
+  friendInviteCache: state.cache.friendInvite,
 }))(FriendInvite);

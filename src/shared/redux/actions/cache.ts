@@ -23,13 +23,13 @@ export const loadLocalCache = function() {
   };
 };
 
-export const saveLocalCache = function() {
+export const saveLocalCache = function(): TRPGAction {
   return function(dispatch, getState) {
     console.log('save local cache');
-    let usercache = getState().getIn(['cache', 'user']);
-    let templatecache = getState().getIn(['cache', 'template']);
+    const usercache = getState().cache.user;
+    const templatecache = getState().cache.template;
 
-    let saveData = { usercache, templatecache };
+    const saveData = { usercache, templatecache };
     rnStorage.save('localCache', saveData); // TODO: 可能需要一个优化。用一个存储列表来处理短时间多次请求保存本地缓存的问题
   };
 };

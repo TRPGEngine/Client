@@ -4,12 +4,9 @@ const ipcRenderer = require('electron').ipcRenderer;
 import './TitleToolbar.scss';
 
 class TitleToolbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isBig: false,
-    };
-  }
+  state = {
+    isBig: false,
+  };
 
   handleClose() {
     ipcRenderer.send('close-window');

@@ -24,6 +24,7 @@ import { unemojify } from '@shared/utils/emoji';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import _throttle from 'lodash/throttle';
+import _sortBy from 'lodash/sortBy';
 import { ChatParams, ChatType } from '../../types/params';
 
 import styled from 'styled-components/native';
@@ -34,7 +35,6 @@ import { TRPGState, TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 import { clearSelectGroup } from '@src/shared/redux/actions/group';
 import { sendStartWriting } from '@src/shared/api/event';
 import config from '@src/shared/project.config';
-import { List } from 'immutable';
 import { getCurrentGroupActor } from '@redux/helpers/group';
 import { MsgPayload } from '@redux/types/chat';
 
@@ -196,9 +196,9 @@ class ChatScreen extends React.Component<Props> {
           );
           if (!_isNil(currentGroupActor)) {
             payload.data = {
-              groupActorUUID: currentGroupActor.get('uuid'),
-              name: currentGroupActor.get('name'),
-              avatar: currentGroupActor.get('avatar'),
+              groupActorUUID: currentGroupActor.uuid,
+              name: currentGroupActor.name,
+              avatar: currentGroupActor.avatar,
             };
           }
           this.props.dispatch(sendMsg(null, payload));
@@ -213,7 +213,7 @@ class ChatScreen extends React.Component<Props> {
    * 处理请求更多聊天记录事件
    */
   handleRequestMoreChatLog = () => {
-    const date = this.props.msgList.first().get('date');
+    const date = _get(this.props.msgList, [0, 'date']);
     const { selectedConverseUUID } = this.props;
     const converseType = this.converseType;
     this.props.dispatch(
@@ -372,7 +372,7 @@ class ChatScreen extends React.Component<Props> {
 
   render() {
     if (this.props.msgList) {
-      let msgList: any[] = this.props.msgList.reverse().toJS();
+      let msgList: any[] = this.props.msgList.reverse();
 
       return (
         <View style={{ flex: 1 }}>
@@ -423,12 +423,12 @@ export default connect((state: TRPGState, ownProps: Props) => {
   let isWriting = false;
   if (converseType === 'user') {
     // TODO: 暂时先只实现用户会话的输入中提示
-    isWriting = (
-      state.getIn(['chat', 'writingList', 'user']) || List()
-    ).includes(selectedConverseUUID);
+    isWriting = (state.chat.writingList.user ?? []).includes(
+      selectedConverseUUID
+    );
   }
 
-  const msgList = state.getIn([
+  const msgList = _get(state, [
     'chat',
     'converses',
     selectedConverseUUID,
@@ -437,12 +437,12 @@ export default connect((state: TRPGState, ownProps: Props) => {
 
   return {
     selectedConverseUUID,
-    selfInfo: state.getIn(['user', 'info']),
-    selfUUID: state.getIn(['user', 'info', 'uuid']),
-    msgList: msgList && msgList.sortBy((item) => item.get('date')),
-    usercache: state.getIn(['cache', 'user']),
+    selfInfo: state.user.info,
+    selfUUID: state.user.info.uuid,
+    msgList: msgList && _sortBy(msgList, 'date'),
+    usercache: state.cache.user,
     nomore:
-      state.getIn(['chat', 'converses', selectedConverseUUID, 'nomore']) ||
+      _get(state, ['chat', 'converses', selectedConverseUUID, 'nomore']) ??
       false,
     isWriting,
   };

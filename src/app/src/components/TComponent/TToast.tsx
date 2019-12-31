@@ -1,6 +1,7 @@
 import Toast from 'react-native-root-toast';
 import React from 'react';
 import { connect } from 'react-redux';
+import { TRPGState } from '@redux/types/__all__';
 
 interface Props {
   showToast: boolean;
@@ -23,7 +24,7 @@ class TToast extends React.Component<Props> {
   }
 }
 
-export default connect((state: any) => ({
-  showToast: state.getIn(['ui', 'showToast']),
-  showToastText: state.getIn(['ui', 'showToastText']),
+export default connect((state: TRPGState) => ({
+  showToast: state.ui.showToast,
+  showToastText: state.ui.showToastText,
 }))(TToast);

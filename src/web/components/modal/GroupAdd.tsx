@@ -77,7 +77,7 @@ class GroupAdd extends React.Component<Props> {
           <div className="group-search-result">
             {this.props.isFinding
               ? '正在查询...'
-              : this.getFriendResult(this.props.findingResult.toJS())}
+              : this.getFriendResult(this.props.findingResult)}
           </div>
         </div>
       </ModalPanel>
@@ -86,6 +86,6 @@ class GroupAdd extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  isFinding: state.getIn(['group', 'isFindingGroup']),
-  findingResult: state.getIn(['group', 'findingResult']),
+  isFinding: state.group.isFindingGroup,
+  findingResult: state.group.findingResult,
 }))(GroupAdd);

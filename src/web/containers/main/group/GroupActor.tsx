@@ -26,6 +26,7 @@ import _get from 'lodash/get';
 
 import './GroupActor.scss';
 import { getAbsolutePath } from '@shared/utils/file-helper';
+import { TRPGState } from '@redux/types/__all__';
 
 const GroupActorAction = styled.div`
   padding: 4px 10px;
@@ -85,7 +86,7 @@ class GroupActor extends React.Component<Props> {
     const template = getTemplateInfoCache(
       _get(groupActor, 'actor.template_uuid')
     );
-    const templateLayout = template.get('layout');
+    const templateLayout = template.layout;
 
     showModal(
       <ActorEdit
@@ -95,7 +96,7 @@ class GroupActor extends React.Component<Props> {
         data={getGroupActorInfo(groupActor)}
         layout={templateLayout}
         onSave={(data) =>
-          updateGroupActorInfo(groupInfo.get('uuid'), groupActor.uuid, data)
+          updateGroupActorInfo(groupInfo.uuid, groupActor.uuid, data)
         }
       />
     );
@@ -125,12 +126,12 @@ class GroupActor extends React.Component<Props> {
   // 正式人物卡
   getGroupActorsList() {
     const { groupInfo } = this.props;
-    const groupActors = this.props.groupInfo.get('group_actors');
-    if (groupActors && groupActors.size > 0) {
+    const groupActors = this.props.groupInfo.group_actors;
+    if (groupActors && groupActors.length > 0) {
       return groupActors
-        .filter((item) => item.get('passed') === true)
+        .filter((item) => item.passed === true)
         .map((item) => {
-          const groupActor: GroupActorType = item.toJS(); // 团人物卡信息
+          const groupActor: GroupActorType = item; // 团人物卡信息
           const originActor: ActorType = groupActor.actor;
           const groupActorUUID = groupActor.uuid;
 
@@ -149,7 +150,7 @@ class GroupActor extends React.Component<Props> {
               />
               <div className="info">
                 {groupActorUUID ===
-                groupInfo.getIn(['extra', 'selected_group_actor_uuid']) ? (
+                _get(groupInfo, ['extra', 'selected_group_actor_uuid']) ? (
                   <div className="label">使用中</div>
                 ) : null}
                 <div className="name">
@@ -199,44 +200,41 @@ class GroupActor extends React.Component<Props> {
 
   // 待审人物卡
   getGroupActorChecksList() {
-    let groupActors = this.props.groupInfo.get('group_actors');
-    if (groupActors && groupActors.size > 0) {
+    let groupActors = this.props.groupInfo.group_actors;
+    if (groupActors && groupActors.length > 0) {
       return groupActors
-        .filter((item) => item.get('passed') === false)
+        .filter((item) => item.passed === false)
         .map((item) => {
-          let originActor = item.get('actor');
-          let actorData = item.get('actor_info');
+          let originActor = item.actor;
+          let actorData = item.actor_info;
           return (
             <div
-              key={'group-actor-check#' + item.get('uuid')}
+              key={'group-actor-check#' + item.uuid}
               className="group-actor-check-item"
             >
               <div
                 className="avatar"
                 style={{
                   backgroundImage: `url(${getAbsolutePath(
-                    originActor.get('avatar')
+                    originActor.avatar
                   )})`,
                 }}
               />
               <div className="info">
-                <div className="name">{originActor.get('name')}</div>
-                <div className="desc">{originActor.get('desc')}</div>
+                <div className="name">{originActor.name}</div>
+                <div className="desc">{originActor.desc}</div>
                 <div className="action">
                   <Tooltip title="查询">
                     <button
                       onClick={() =>
-                        this.handleShowActorProfile(
-                          originActor.toJS(),
-                          actorData.toJS()
-                        )
+                        this.handleShowActorProfile(originActor, actorData)
                       }
                     >
                       <i className="iconfont">&#xe61b;</i>
                     </button>
                   </Tooltip>
                   <Tooltip title="审批">
-                    <button onClick={() => this.handleApprove(item.toJS())}>
+                    <button onClick={() => this.handleApprove(item)}>
                       <i className="iconfont">&#xe83f;</i>
                     </button>
                   </Tooltip>
@@ -280,14 +278,14 @@ class GroupActor extends React.Component<Props> {
 }
 
 export default connect(
-  (state: any) => {
-    const selectedGroupUUID = state.getIn(['group', 'selectedGroupUUID']);
+  (state: TRPGState) => {
+    const selectedGroupUUID = state.group.selectedGroupUUID;
     return {
       selectedGroupUUID,
-      groupInfo: state
-        .getIn(['group', 'groups'])
-        .find((group) => group.get('uuid') === selectedGroupUUID),
-      templateCache: state.getIn(['cache', 'template']),
+      groupInfo: state.group.groups.find(
+        (group) => group.uuid === selectedGroupUUID
+      ),
+      templateCache: state.cache.template,
     };
   },
   (dispatch: any, ownProps) => ({

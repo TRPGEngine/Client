@@ -3,6 +3,7 @@ import { connect, DispatchProp } from 'react-redux';
 import { Modal, ActivityIndicator, View, Text } from 'react-native';
 import sb from 'react-native-style-block';
 import { hideLoading } from '../../../../shared/redux/actions/ui';
+import { TRPGState } from '@redux/types/__all__';
 
 interface Props extends DispatchProp<any> {
   showLoading: boolean;
@@ -60,7 +61,7 @@ const styles = {
   text: [sb.color(), { paddingBottom: 10 }],
 };
 
-export default connect((state: any) => ({
-  showLoading: state.getIn(['ui', 'showLoading']),
-  showLoadingText: state.getIn(['ui', 'showLoadingText']),
+export default connect((state: TRPGState) => ({
+  showLoading: state.ui.showLoading,
+  showLoadingText: state.ui.showLoadingText,
 }))(TLoading);

@@ -20,8 +20,8 @@ class FriendInvite extends BaseCard<Props> {
     const data = info.data;
     const inviteUUID = _get(data, 'invite.uuid');
     const inviteInfo = getFriendInviteInfoCache(inviteUUID);
-    const is_agree = inviteInfo.get('is_agree', false);
-    const is_refuse = inviteInfo.get('is_refuse', false);
+    const is_agree = inviteInfo.is_agree ?? false;
+    const is_refuse = inviteInfo.is_refuse ?? false;
 
     const processed = is_agree || is_refuse;
 
@@ -53,6 +53,6 @@ class FriendInvite extends BaseCard<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  friendList: state.getIn(['user', 'friendList']),
-  friendInviteCache: state.getIn(['cache', 'friendInvite']),
+  friendList: state.user.friendList,
+  friendInviteCache: state.cache.friendInvite,
 }))(FriendInvite);

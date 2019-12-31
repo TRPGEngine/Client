@@ -33,3 +33,17 @@ export const getRelativePath = (path: string) => {
 export const getUploadsImagePath = (filename: string, isTemporary = false) => {
   return config.file.getUploadsImagePath(filename, isTemporary);
 };
+
+/**
+ * 网页端下载文件
+ * @param url 下载地址
+ */
+export const downloadFileWeb = (url: string) => {
+  let a = document.createElement('a');
+  a.style.display = 'none';
+  a.href = url;
+  a.download = url;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};

@@ -27,7 +27,7 @@ import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 import rnStorage from '../../api/rn-storage.api';
 import { checkUser } from '../../utils/cache-helper';
-import { hideProfileCard, switchMenuPannel, showAlert } from './ui';
+import { hideProfileCard, switchMenuPannel, showToast, showAlert } from './ui';
 import * as uploadHelper from '../../utils/upload-helper';
 import { renewableDelayTimer } from '../../utils/timer';
 import config from '../../project.config';
@@ -110,7 +110,7 @@ export let getConverses = function getConverses(cb?: () => void): TRPGAction {
       if (data.result) {
         let list = data.list;
         dispatch({ type: GET_CONVERSES_SUCCESS, payload: list });
-        let uuid = getState().getIn(['user', 'info', 'uuid']);
+        let uuid = getState().user.info.uuid;
         checkUser(uuid);
         // 用户聊天记录
         for (let item of list) {
@@ -147,7 +147,7 @@ export let createConverse = function createConverse(
   isSwitchToConv = true
 ): TRPGAction {
   return function(dispatch, getState) {
-    if (!!getState().getIn(['chat', 'converses', uuid])) {
+    if (!!getState().chat.converses[uuid]) {
       console.log('已存在该会话');
       if (isSwitchToConv) {
         dispatch(switchToConverse(uuid));
@@ -206,11 +206,9 @@ export const removeUserConverse = (userConverseUUID: string): TRPGAction => {
     dispatch({ type: REMOVE_USER_CONVERSE, converseUUID: userConverseUUID });
 
     // 在localStorage删除
-    const userUUID = getState().getIn(['user', 'info', 'uuid']);
-    const converses = getState().getIn(['chat', 'converses']);
-    const uuids = Object.keys(
-      converses.filter((c) => c.get('type') === 'user').toJS()
-    );
+    const userUUID = getState().user.info.uuid;
+    const converses = getState().chat.converses;
+    const uuids = Object.keys(converses.filter((c) => c.type === 'user'));
     rnStorage.set(
       getUserConversesHash(userUUID),
       _without(uuids, userConverseUUID)
@@ -241,7 +239,7 @@ export let addUserConverse = function addUserConverse(
     });
 
     // 用户会话缓存
-    const userUUID = getState().getIn(['user', 'info', 'uuid']);
+    const userUUID = getState().user.info.uuid;
     rnStorage
       .get(getUserConversesHash(userUUID), [])
       .then(function(cachedConverse: string[]) {
@@ -328,12 +326,12 @@ export let getAllUserConverse = function getAllUserConverse(): TRPGAction {
 
 // 重新加载会话列表
 // TODO: 暂时先把cb放在getConverses，以后再想办法优化
-export let reloadConverseList = function reloadConverseList(
+export const reloadConverseList = function reloadConverseList(
   cb?: () => void
 ): TRPGAction {
   return function(dispatch, getState) {
-    let userInfo = getState().getIn(['user', 'info']);
-    let userUUID = userInfo.get('uuid');
+    const userInfo = getState().user.info;
+    const userUUID = userInfo.uuid;
 
     dispatch(getConverses(cb)); // 从服务端获取多人会话列表
     rnStorage.get(getUserConversesHash(userUUID)).then(function(converse) {
@@ -341,7 +339,7 @@ export let reloadConverseList = function reloadConverseList(
       if (converse && converse.length > 0) {
         // 如果本地缓存有存在用户会话，则根据上次登录时间获取这段时间内新建的用户会话
         dispatch(addUserConverse(converse));
-        dispatch(getOfflineUserConverse(userInfo.get('last_login')));
+        dispatch(getOfflineUserConverse(userInfo.last_login));
       } else {
         // 如果本地没有存在用户会话，则获取所有的用户会话
         dispatch(getAllUserConverse());
@@ -357,7 +355,7 @@ export let addMsg = function addMsg(converseUUID, payload): TRPGAction {
       return;
     }
 
-    if (!getState().getIn(['chat', 'converses', converseUUID])) {
+    if (!getState().chat.converses[converseUUID]) {
       // 会话不存在，则创建会话
       console.log('创建会话', converseUUID, payload);
       // if(!!payload.is_group) {
@@ -379,8 +377,8 @@ export let addMsg = function addMsg(converseUUID, payload): TRPGAction {
 
     let unread = true;
     if (
-      converseUUID === getState().getIn(['chat', 'selectedConverseUUID']) ||
-      converseUUID === getState().getIn(['group', 'selectedGroupUUID'])
+      converseUUID === getState().chat.selectedConverseUUID ||
+      converseUUID === getState().group.selectedGroupUUID
     ) {
       unread = false;
     }
@@ -413,10 +411,10 @@ export let sendMsg = function sendMsg(
   payload: MsgPayload
 ): TRPGAction {
   return function(dispatch, getState) {
-    const info = getState().getIn(['user', 'info']);
+    const info = getState().user.info;
     const localUUID = getLocalUUID();
-    let pkg = {
-      sender_uuid: info.get('uuid'),
+    const pkg = {
+      sender_uuid: info.uuid,
       to_uuid: toUUID,
       converse_uuid: payload.converse_uuid,
       type: payload.type,
@@ -432,17 +430,17 @@ export let sendMsg = function sendMsg(
     let converseUUID = payload.converse_uuid || toUUID;
     dispatch(addMsg(converseUUID, pkg));
     return api.emit('chat::message', pkg, function(data) {
-      // console.log(data);
-      // TODO: 待实现SEND_MSG_COMPLETED的数据处理方法(用于送达提示)
-      dispatch({
-        type: SEND_MSG_COMPLETED,
-        payload: data,
-        localUUID,
-        converseUUID,
-      });
       if (data.result) {
+        // TODO: 待实现SEND_MSG_COMPLETED的数据处理方法(用于送达提示)
+        dispatch({
+          type: SEND_MSG_COMPLETED,
+          payload: data,
+          localUUID,
+          converseUUID,
+        });
         console.log('发送成功');
       } else {
+        dispatch(showToast('消息发送失败'));
         console.log('发送失败', pkg);
       }
     });
@@ -456,8 +454,8 @@ export let sendFile = function sendFile(toUUID, payload, file): TRPGAction {
   }
 
   return function(dispatch, getState) {
-    const info = getState().getIn(['user', 'info']);
-    const selfUserUUID = info.get('uuid');
+    const info = getState().user.info;
+    const selfUserUUID = info.uuid;
     const localUUID = getLocalUUID();
     let pkg = {
       room: payload.room || '',
@@ -508,6 +506,28 @@ export let sendFile = function sendFile(toUUID, payload, file): TRPGAction {
 };
 
 /**
+ * 撤回消息
+ * @param msgUUID 消息UUID
+ */
+export const revokeMsg = function revokeMsg(messageUUID: string): TRPGAction {
+  return (dispatch, getState) => {
+    api.emit(
+      'chat::revokeMsg',
+      {
+        messageUUID,
+      },
+      (data) => {
+        if (data.result === false) {
+          // 撤回提示
+          console.error('消息撤回失败', data.msg);
+          dispatch(showToast('消息撤回失败:' + data.msg));
+        }
+      }
+    );
+  };
+};
+
+/**
  * 添加一条假的本地消息。当外部满足一定条件后需要把这条消息删除
  * @param pkg 消息内容
  * @param callback 添加后的回调
@@ -517,11 +537,11 @@ export const addFakeMsg = function addFakeMsg(
   callback?: (localUUID: string) => void
 ): TRPGAction {
   return function(dispatch, getState) {
-    const info = getState().getIn(['user', 'info']);
+    const info = getState().user.info;
     const localUUID = getLocalUUID();
     pkg.uuid = localUUID;
     if (!pkg.sender_uuid) {
-      pkg.sender_uuid = info.get('uuid');
+      pkg.sender_uuid = info.uuid;
     }
     if (!pkg.date) {
       pkg.date = new Date().toISOString();

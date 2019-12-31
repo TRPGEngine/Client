@@ -5,6 +5,8 @@ import ConvItem from '../../../components/ConvItem';
 import dateHelper from '../../../../shared/utils/date-helper';
 import { switchSelectGroup } from '../../../../shared/redux/actions/group';
 import GroupDetail from './GroupDetail';
+import _get from 'lodash/get';
+import _sortBy from 'lodash/sortBy';
 
 import './GroupList.scss';
 import {
@@ -33,37 +35,37 @@ class GroupList extends React.Component<Props> {
   }
 
   getGroupList() {
-    return this.props.groups
-      .map((item) => {
-        let uuid = item.get('uuid');
-        return item
-          .set('lastTime', this.props.converses.getIn([uuid, 'lastTime']) || 0)
-          .set('lastMsg', this.props.converses.getIn([uuid, 'lastMsg']))
-          .set('unread', this.props.converses.getIn([uuid, 'unread']));
-      })
-      .sortBy((item) => new Date(item.get('lastTime')))
+    const converses = this.props.converses;
+    return _sortBy(
+      this.props.groups.map((item) => {
+        let uuid = item.uuid;
+        return {
+          ...item,
+          lastTime: _get(converses, [uuid, 'lastTime']) || 0,
+          lastMsg: _get(converses, [uuid, 'lastMsg']),
+          unread: _get(converses, [uuid, 'unread']),
+        };
+      }),
+      (x) => new Date(x.lastTime)
+    )
       .reverse()
       .map((item, index) => {
-        const uuid = item.get('uuid');
-        let name = item.get('name');
-        if (item.get('status')) {
+        const uuid = item.uuid;
+        let name = item.name;
+        if (item.status) {
           name += '(开团中...)';
         }
-        const icon = item.get('avatar') || config.defaultImg.getGroup(name);
+        const icon = item.avatar || config.defaultImg.getGroup(name);
 
         return (
           <ConvItem
             key={uuid + '#' + index}
             icon={icon}
             title={name}
-            content={item.get('lastMsg')}
-            time={
-              item.get('lastTime')
-                ? dateHelper.getShortDiff(item.get('lastTime'))
-                : ''
-            }
+            content={item.lastMsg}
+            time={item.lastTime ? dateHelper.getShortDiff(item.lastTime) : ''}
             uuid={uuid}
-            unread={item.get('unread')}
+            unread={item.unread}
             isSelected={this.props.selectedUUID === uuid}
             onClick={() => this.props.switchSelectGroup(uuid)}
             hideCloseBtn={true}
@@ -91,9 +93,9 @@ class GroupList extends React.Component<Props> {
 
 export default connect(
   (state: TRPGState) => ({
-    groups: state.getIn(['group', 'groups']),
-    selectedUUID: state.getIn(['group', 'selectedGroupUUID']),
-    converses: state.getIn(['chat', 'converses']),
+    groups: state.group.groups,
+    selectedUUID: state.group.selectedGroupUUID,
+    converses: state.chat.converses,
   }),
   (dispatch: TRPGDispatch) => ({
     switchSelectGroup: (uuid: string) => dispatch(switchSelectGroup(uuid)),

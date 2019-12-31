@@ -16,6 +16,7 @@ import {
   setNotificationPermission,
   setUserSettings,
   setSystemSettings,
+  initConfig,
 } from '../shared/redux/actions/settings';
 import styledTheme from '@src/shared/utils/theme';
 import { installServiceWorker } from './utils/sw-helper';
@@ -47,20 +48,10 @@ window.onerror = (event, source, fileno, columnNumber, error) => {
     store.dispatch(loginWithToken(uuid, token));
   }
 
-  // 系统设置
-  store.dispatch(setNotificationPermission(Notification.permission));
-  let systemSettings =
-    (await rnStorage.get('systemSettings')) || config.defaultSettings.system;
-  if (systemSettings) {
-    store.dispatch(setSystemSettings(systemSettings));
-  }
+  // 初始化配置
+  store.dispatch(initConfig());
 
-  // 个人设置
-  let userSettings =
-    (await rnStorage.get('userSettings')) || config.defaultSettings.user;
-  if (userSettings) {
-    store.dispatch(setUserSettings(userSettings));
-  }
+  store.dispatch(setNotificationPermission(Notification.permission));
 })();
 
 // 检查版本, 网页版跳过检查

@@ -7,6 +7,7 @@ import config from '../../../../shared/project.config';
 import { MessageProps } from '@shared/components/MessageHandler';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
+import { TipMessage } from '../TipMessage';
 
 class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
   static defaultProps = {
@@ -52,6 +53,9 @@ class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
 
   render() {
     const { me, name, info, emphasizeTime } = this.props;
+    if (this.props.info.revoke === true) {
+      return <TipMessage text={`${name} 撤回了一条消息`} />;
+    }
 
     return (
       <View>

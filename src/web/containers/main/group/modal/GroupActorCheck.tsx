@@ -1,23 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import ModalPanel from '../../../../components/ModalPanel';
-import ActorProfile from '../../../../components/modal/ActorProfile';
+import ModalPanel from '@web/components/ModalPanel';
+import ActorProfile from '@web/components/modal/ActorProfile';
 import {
   agreeGroupActor,
   refuseGroupActor,
   updateGroupActorInfo,
-} from '../../../../../shared/redux/actions/group';
+} from '@shared/redux/actions/group';
+import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
 
 import './GroupActorCheck.scss';
 
-class GroupActorCheck extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editingData: props.groupActor.actor_info || {},
-    };
-  }
+interface Props {
+  selectedGroupUUID: string;
+  groupActor: any;
+
+  agreeGroupActor: any;
+  refuseGroupActor: any;
+}
+class GroupActorCheck extends React.Component<Props> {
+  state = {
+    editingData: this.props.groupActor.actor_info || {},
+  };
 
   handleAgree() {
     this.props.agreeGroupActor(
@@ -68,17 +72,20 @@ class GroupActorCheck extends React.Component {
   }
 }
 
-GroupActorCheck.propTypes = {
-  groupActor: PropTypes.object.isRequired,
-};
-
 export default connect(
-  (state) => ({
-    selectedGroupUUID: state.getIn(['group', 'selectedGroupUUID']),
+  (state: TRPGState) => ({
+    selectedGroupUUID: state.group.selectedGroupUUID,
   }),
-  (dispatch) => ({
-    agreeGroupActor: (...args) => dispatch(agreeGroupActor(...args)),
-    refuseGroupActor: (...args) => dispatch(refuseGroupActor(...args)),
-    updateGroupActorInfo: (...args) => dispatch(updateGroupActorInfo(...args)),
+  (dispatch: TRPGDispatch) => ({
+    agreeGroupActor: (groupUUID, groupActorUUID) =>
+      dispatch(agreeGroupActor(groupUUID, groupActorUUID)),
+    refuseGroupActor: (groupUUID, groupActorUUID) =>
+      dispatch(refuseGroupActor(groupUUID, groupActorUUID)),
+    updateGroupActorInfo: (
+      groupUUID: string,
+      groupActorUUID: string,
+      groupActorInfo: {}
+    ) =>
+      dispatch(updateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)),
   })
 )(GroupActorCheck);

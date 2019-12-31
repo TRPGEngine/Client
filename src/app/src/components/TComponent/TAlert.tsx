@@ -10,6 +10,7 @@ const {
 import sb from 'react-native-style-block';
 import TButton from './TButton';
 import { hideAlert } from '../../../../shared/redux/actions/ui';
+import { TRPGState } from '@redux/types/__all__';
 
 interface Props extends DispatchProp<any> {
   showAlertInfo: any;
@@ -22,11 +23,11 @@ class TAlert extends React.Component<Props> {
   };
 
   render() {
-    const title = this.props.showAlertInfo.get('title') || '';
-    const content = this.props.showAlertInfo.get('content');
-    const confirmTitle = this.props.showAlertInfo.get('confirmTitle');
-    const onConfirm = this.props.showAlertInfo.get('onConfirm');
-    const onCancel = this.props.showAlertInfo.get('onCancel');
+    const title = this.props.showAlertInfo.title || '';
+    const content = this.props.showAlertInfo.content;
+    const confirmTitle = this.props.showAlertInfo.confirmTitle;
+    const onConfirm = this.props.showAlertInfo.onConfirm;
+    const onCancel = this.props.showAlertInfo.onCancel;
 
     let header, cancelBtn;
     if (title) {
@@ -104,7 +105,7 @@ const styles = {
   cancelBtn: [sb.bgColor('white')],
 };
 
-export default connect((state: any) => ({
-  showAlert: state.getIn(['ui', 'showAlert']),
-  showAlertInfo: state.getIn(['ui', 'showAlertInfo']),
+export default connect((state: TRPGState) => ({
+  showAlert: state.ui.showAlert,
+  showAlertInfo: state.ui.showAlertInfo,
 }))(TAlert);

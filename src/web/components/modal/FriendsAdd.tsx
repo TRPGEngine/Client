@@ -71,7 +71,7 @@ class FriendsAdd extends React.Component<Props> {
           <div className="friends-search-result">
             {this.props.isFinding
               ? '正在查询...'
-              : this.getFriendResult(this.props.findingResult.toJS())}
+              : this.getFriendResult(this.props.findingResult)}
           </div>
         </div>
       </ModalPanel>
@@ -80,6 +80,6 @@ class FriendsAdd extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  isFinding: state.getIn(['user', 'isFindingUser']),
-  findingResult: state.getIn(['user', 'findingResult']),
+  isFinding: state.user.isFindingUser,
+  findingResult: state.user.findingResult,
 }))(FriendsAdd);

@@ -9,7 +9,7 @@ import XMLBuilder, { DataMap } from '@shared/layout/XMLBuilder';
 import _isNil from 'lodash/isNil';
 import { Affix, notification } from 'antd';
 import { checkToken } from '@portal/utils/auth';
-import history from '../history';
+import history from '@portal/history';
 import { ActionButton } from '@portal/components/ActionButton';
 
 interface Props

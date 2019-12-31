@@ -18,7 +18,6 @@ const logger = createLogger({
   level: 'info',
   logger: console,
   collapsed: true,
-  stateTransformer: (state) => state.toJS(),
 });
 console.log('当前环境:', config.environment);
 console.log('当前平台:', config.platform);

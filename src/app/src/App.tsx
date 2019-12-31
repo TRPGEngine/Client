@@ -18,6 +18,7 @@ import { injectLoginSuccessCallback } from '@shared/utils/inject';
 import { bindInfo, tryLocalNotify } from './notify';
 import { attachStore } from '@shared/utils/cache-helper';
 import styledTheme from '@src/shared/utils/theme';
+import _get from 'lodash/get';
 
 attachStore(store);
 
@@ -28,8 +29,8 @@ trpgApi.bindEventFunc.call(api, store, {
     const sender_uuid = messageData.sender_uuid;
     const message = messageData.message;
     const name =
-      store.getState().getIn(['cache', 'user', sender_uuid, 'nickname']) ||
-      store.getState().getIn(['cache', 'user', sender_uuid, 'username']) ||
+      _get(store.getState(), ['cache', 'user', sender_uuid, 'nickname']) ??
+      _get(store.getState(), ['cache', 'user', sender_uuid, 'username']) ??
       sender_uuid;
     tryLocalNotify(name, message);
   },
@@ -37,16 +38,17 @@ trpgApi.bindEventFunc.call(api, store, {
 
 injectLoginSuccessCallback(() => {
   // 登录成功
-  const userUUID = store.getState().getIn(['user', 'info', 'uuid']);
+  const userUUID = _get(store.getState(), ['user', 'info', 'uuid']);
   bindInfo(userUUID);
 });
 
 // token登录
-import rnStorage from '../../shared/api/rn-storage.api';
+import rnStorage from '@shared/api/rn-storage.api';
 import { loginWithToken } from '@src/shared/redux/actions/user';
 import ErrorBoundary from '@shared/components/ErrorBoundary';
 import ErrorView from './ErrorView';
 import TRPGCodePush from './components/TRPGCodePush';
+import { initConfig } from '@redux/actions/settings';
 
 (async () => {
   console.log('读取本地存储的token...');
@@ -57,6 +59,9 @@ import TRPGCodePush from './components/TRPGCodePush';
     console.log('尝试登陆uuid:', uuid);
     store.dispatch(loginWithToken(uuid, token));
   }
+
+  // 初始化配置
+  store.dispatch(initConfig());
 })();
 
 class App extends React.Component {

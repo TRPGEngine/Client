@@ -9,6 +9,7 @@ import { isBlobUrl } from '@shared/utils/string-helper';
 import { bindFileAvatarAttachUUID } from './file';
 import { ActorItem } from './actor';
 import { ModelAccess } from './types';
+import { PlayerUser } from './player';
 
 export interface GroupActorItem {
   uuid: string;
@@ -20,6 +21,8 @@ export interface GroupActorItem {
   avatar: string;
   passed: boolean;
   enabled: boolean;
+
+  owner?: PlayerUser;
 }
 
 export const fetchGroupActorList = async (

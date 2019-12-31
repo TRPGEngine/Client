@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 import config from '@shared/project.config';
 import { showAlert, showModal } from '@shared/redux/actions/ui';
 import ActorCreate from '@web/components/modal/ActorCreate';
-import { List } from 'immutable';
-
-import './ActorSelect.scss';
 import { AlertPayload } from '@redux/types/ui';
 import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 
+import './ActorSelect.scss';
+
 interface Props {
-  selfActors: List<any>;
+  selfActors: any;
   showAlert: any;
   showModal: any;
   onSelect: any;
@@ -25,13 +24,10 @@ class ActorSelect extends React.Component<Props> {
     if (selectActorUUID) {
       console.log('[人物卡列表]选择了' + selectActorUUID);
       let selectActorInfo = this.props.selfActors.find(
-        (a) => a.get('uuid') === selectActorUUID
+        (a) => a.uuid === selectActorUUID
       );
       this.props.onSelect &&
-        this.props.onSelect(
-          selectActorUUID,
-          selectActorInfo && selectActorInfo.toJS()
-        );
+        this.props.onSelect(selectActorUUID, selectActorInfo);
     } else {
       this.props.showAlert('请选择人物卡');
     }
@@ -46,9 +42,9 @@ class ActorSelect extends React.Component<Props> {
       <div className="actor-select">
         <h3>请选择人物卡</h3>
         <div className="actor-list">
-          {this.props.selfActors.size > 0 ? (
+          {this.props.selfActors.length > 0 ? (
             this.props.selfActors.map((item, index) => {
-              const uuid = item.get('uuid');
+              const uuid = item.uuid;
               return (
                 <div
                   key={`actor-item#${uuid}#${index}`}
@@ -61,13 +57,13 @@ class ActorSelect extends React.Component<Props> {
                   <div
                     className="actor-avatar"
                     style={{
-                      backgroundImage: `url(${item.get('avatar') ||
+                      backgroundImage: `url(${item.avatar ||
                         config.defaultImg.actor})`,
                     }}
                   />
                   <div className="actor-info">
-                    <div className="actor-name">{item.get('name')}</div>
-                    <div className="actor-desc">{item.get('desc')}</div>
+                    <div className="actor-name">{item.name}</div>
+                    <div className="actor-desc">{item.desc}</div>
                   </div>
                   <div className="actor-extra">
                     <i className="iconfont">&#xe620;</i>
@@ -92,7 +88,7 @@ class ActorSelect extends React.Component<Props> {
 
 export default connect(
   (state: TRPGState) => ({
-    selfActors: state.getIn(['actor', 'selfActors']),
+    selfActors: state.actor.selfActors,
   }),
   (dispatch: TRPGDispatch) => ({
     showAlert: (payload: AlertPayload) => dispatch(showAlert(payload)),

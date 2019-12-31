@@ -12,7 +12,7 @@ export function scrollTo(element, to, duration, isAnimatied = true) {
 
   var animateScroll = function() {
     currentTime += increment;
-    var val = Math.easeInOutQuad(currentTime, start, change, duration);
+    var val = easeInOutQuad(currentTime, start, change, duration);
     element.scrollTop = val;
     if (currentTime < duration) {
       setTimeout(animateScroll, increment);
@@ -34,12 +34,12 @@ export function scrollToBottom(element, duration, isAnimatied = true) {
 //b = start value
 //c = change in value
 //d = duration
-Math.easeInOutQuad = function(t, b, c, d) {
+function easeInOutQuad(t, b, c, d) {
   t /= d / 2;
   if (t < 1) return (c / 2) * t * t + b;
   t--;
   return (-c / 2) * (t * (t - 2) - 1) + b;
-};
+}
 
 export default {
   to: scrollTo,

@@ -7,9 +7,17 @@ import { login } from '../../../shared/redux/actions/user';
 import { openWebview } from '../redux/actions/nav';
 import config from '../../../shared/project.config';
 import appConfig from '../config.app';
-import { TButton, TFormGroup, TLoading } from '@src/app/src/components/TComponent';
+import {
+  TButton,
+  TFormGroup,
+  TLoading,
+} from '@src/app/src/components/TComponent';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import _isEmpty from 'lodash/isEmpty';
 
-interface Props extends DispatchProp<any> {}
+interface Props extends TRPGDispatchProp {
+  oauthList: string[];
+}
 class LoginScreen extends React.Component<Props> {
   static navigationOptions = {
     header: null,
@@ -35,6 +43,29 @@ class LoginScreen extends React.Component<Props> {
   handleQQLogin() {
     this.props.dispatch(
       openWebview(config.file.url + '/oauth/qq/login?platform=app')
+    );
+  }
+
+  renderOAuth() {
+    const { oauthList } = this.props;
+    if (_isEmpty(oauthList)) {
+      return;
+    }
+
+    return (
+      <View style={styles.oauth}>
+        <Text style={styles.oauthTip}>第三方登录</Text>
+        <View style={styles.oauthBtnContainer}>
+          {oauthList.includes('qq') ? (
+            <TouchableOpacity onPress={() => this.handleQQLogin()}>
+              <Image
+                style={styles.oauthBtnImage}
+                source={appConfig.oauth.qq.icon}
+              />
+            </TouchableOpacity>
+          ) : null}
+        </View>
+      </View>
     );
   }
 
@@ -72,17 +103,7 @@ class LoginScreen extends React.Component<Props> {
           <Text style={styles.registerText}>没有账户？点击此处注册</Text>
         </TouchableOpacity>
 
-        <View style={styles.oauth}>
-          <Text style={styles.oauthTip}>第三方登录</Text>
-          <View style={styles.oauthBtnContainer}>
-            <TouchableOpacity onPress={() => this.handleQQLogin()}>
-              <Image
-                style={styles.oauthBtnImage}
-                source={appConfig.oauth.qq.icon}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
+        {this.renderOAuth()}
       </View>
     );
   }
@@ -107,4 +128,6 @@ const styles = {
   oauthBtnImage: [sb.size(40, 40), sb.radius(20)],
 };
 
-export default connect()(LoginScreen);
+export default connect((state: TRPGState) => ({
+  oauthList: state.settings.config.oauth ?? [],
+}))(LoginScreen);

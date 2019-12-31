@@ -29,7 +29,7 @@ class SystemSettings extends React.Component<Props> {
         <div className="setting-cell">
           <label>桌面通知权限({this.props.notificationPermission})</label>
           <Checkbox
-            value={this.props.systemSettings.get('notification')}
+            value={this.props.systemSettings.notification}
             onChange={(isChecked) =>
               this.handleRequestNotificationPermission(isChecked)
             }
@@ -41,6 +41,6 @@ class SystemSettings extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  notificationPermission: state.getIn(['settings', 'notificationPermission']),
-  systemSettings: state.getIn(['settings', 'system']),
+  notificationPermission: state.settings.notificationPermission,
+  systemSettings: state.settings.system,
 }))(SystemSettings);

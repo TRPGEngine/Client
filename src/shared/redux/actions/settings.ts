@@ -3,6 +3,7 @@ const {
   SET_USER_SETTINGS,
   SET_SYSTEM_SETTINGS,
   UPDATE_NOTIFICATION_PERMISSION,
+  UPDATE_CONFIG,
   ADD_FAVORITE_DICE,
   REMOVE_FAVORITE_DICE,
   UPDATE_FAVORITE_DICE,
@@ -11,17 +12,51 @@ import { showAlert } from './ui';
 import config from '@src/shared/project.config';
 import rnStorage from '../../api/rn-storage.api';
 import * as trpgApi from '../../api/trpg.api';
+import { TRPGAction } from '@redux/types/__all__';
+import { ServerConfig } from '@redux/types/settings';
+import request from '@shared/utils/request';
 const api = trpgApi.getInstance();
+
+/**
+ * 初始化配置
+ */
+export const initConfig = function initConfig(): TRPGAction {
+  return async (dispatch, getState) => {
+    // 系统设置
+    const systemSettings =
+      (await rnStorage.get('systemSettings')) || config.defaultSettings.system;
+    if (systemSettings) {
+      dispatch(setSystemSettings(systemSettings));
+    }
+
+    // 个人设置
+    const userSettings =
+      (await rnStorage.get('userSettings')) || config.defaultSettings.user;
+    if (userSettings) {
+      dispatch(setUserSettings(userSettings));
+    }
+
+    // OAuth 配置
+    request('/oauth/enabled', 'get').then(({ data }) => {
+      const list = data.list;
+      dispatch(
+        updateConfig({
+          oauth: list,
+        })
+      );
+    });
+  };
+};
 
 export const saveSettings = function saveSettings() {
   return async function(dispatch, getState) {
     let userSettings = await rnStorage.save(
       'userSettings',
-      getState().getIn(['settings', 'user'])
+      getState().settings.user
     );
     let systemSettings = await rnStorage.save(
       'systemSettings',
-      getState().getIn(['settings', 'system'])
+      getState().settings.system
     );
 
     console.log('设置保存成功');
@@ -40,12 +75,10 @@ export const saveSettings = function saveSettings() {
 
 export const setUserSettings = function setUserSettings(payload) {
   return function(dispatch, getState) {
-    rnStorage.save(
-      'userSettings',
-      getState()
-        .getIn(['settings', 'user'])
-        .merge(payload)
-    ); // 异步
+    rnStorage.save('userSettings', {
+      ...getState().settings.user,
+      ...payload,
+    }); // 异步
     dispatch({ type: SET_USER_SETTINGS, payload });
   };
 };
@@ -65,12 +98,10 @@ export const setSystemSettings = function setSystemSettings(payload) {
       }
     }
 
-    rnStorage.save(
-      'systemSettings',
-      getState()
-        .getIn(['settings', 'system'])
-        .merge(payload)
-    ); // 异步
+    rnStorage.save('systemSettings', {
+      ...getState().settings.system,
+      ...payload,
+    }); // 异步
     dispatch({ type: SET_SYSTEM_SETTINGS, payload });
   };
 };
@@ -92,6 +123,19 @@ export const requestNotificationPermission = function requestNotificationPermiss
         dispatch(setSystemSettings({ notification: false }));
       }
     });
+  };
+};
+
+/**
+ * 更新服务端全局设置
+ * @param config 设置
+ */
+export const updateConfig = function updateConfig(
+  config: ServerConfig
+): TRPGAction {
+  return {
+    type: UPDATE_CONFIG,
+    payload: config,
   };
 };
 

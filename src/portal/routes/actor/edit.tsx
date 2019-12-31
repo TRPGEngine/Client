@@ -4,7 +4,7 @@ import { ActionButton } from '@portal/components/ActionButton';
 import ActorEditor from '@portal/components/ActorEditor';
 import { checkToken } from '@portal/utils/auth';
 import { editActor } from '@portal/model/actor';
-import history from '../history';
+import history from '@portal/history';
 import { notification } from 'antd';
 
 interface Props

@@ -12,6 +12,11 @@ import { Spring } from 'react-spring/renderprops';
 import TRefreshControl from '../components/TComponent/TRefreshControl';
 import { ChatType } from '../types/params';
 import { switchToChatScreen } from '../redux/actions/nav';
+import { TRPGState } from '@redux/types/__all__';
+import _get from 'lodash/get';
+import _values from 'lodash/values';
+import _sortBy from 'lodash/sortBy';
+import _size from 'lodash/size';
 
 const NetworkContainer = styled.View<{
   isOnline: boolean;
@@ -58,14 +63,14 @@ class HomeScreen extends React.Component<Props> {
   getNetworkTip() {
     const { network } = this.props;
     return (
-      <Spring to={{ top: network.get('isOnline') ? -26 : 0 }}>
+      <Spring to={{ top: network.isOnline ? -26 : 0 }}>
         {(props) => (
           <NetworkContainer
             style={props}
-            isOnline={network.get('isOnline')}
-            tryReconnect={network.get('tryReconnect')}
+            isOnline={network.isOnline}
+            tryReconnect={network.tryReconnect}
           >
-            <NetworkText>{network.get('msg')}</NetworkText>
+            <NetworkText>{network.msg}</NetworkText>
           </NetworkContainer>
         )}
       </Spring>
@@ -73,40 +78,38 @@ class HomeScreen extends React.Component<Props> {
   }
 
   getList() {
-    if (this.props.converses.size > 0) {
-      const arr: any[] = this.props.converses
-        .valueSeq()
-        .sortBy((item) => new Date(item.get('lastTime') || 0))
+    if (_size(this.props.converses) > 0) {
+      const arr: any[] = _sortBy(
+        _values(this.props.converses),
+        (item) => new Date(item.lastTime || 0)
+      )
         .reverse()
         .map((item, index) => {
-          let uuid = item.get('uuid');
+          let uuid = item.uuid;
           let defaultIcon =
             uuid === 'trpgsystem'
               ? appConfig.defaultImg.trpgsystem
               : appConfig.defaultImg.user;
           let avatar: string;
-          if (item.get('type') === 'user') {
-            avatar = this.props.usercache.getIn([uuid, 'avatar']);
-          } else if (item.get('type') === 'group') {
-            let group = this.props.groups.find((g) => g.get('uuid') === uuid);
-            avatar = group ? group.get('avatar') : '';
+          if (item.type === 'user') {
+            avatar = _get(this.props.usercache, [uuid, 'avatar']);
+          } else if (item.type === 'group') {
+            let group = this.props.groups.find((g) => g.uuid === uuid);
+            avatar = group ? group.avatar : '';
           }
 
           return {
-            icon: item.get('icon') || avatar || defaultIcon,
-            title: item.get('name'),
-            content: item.get('lastMsg'),
-            time: item.get('lastTime')
-              ? dateHelper.getShortDiff(item.get('lastTime'))
-              : '',
+            icon: item.icon || avatar || defaultIcon,
+            title: item.name,
+            content: item.lastMsg,
+            time: item.lastTime ? dateHelper.getShortDiff(item.lastTime) : '',
             uuid,
-            unread: item.get('unread'),
+            unread: item.unread,
             onPress: () => {
-              this.handleSelectConverse(uuid, item.get('type'), item);
+              this.handleSelectConverse(uuid, item.type, item);
             },
           };
-        })
-        .toJS();
+        });
 
       return (
         <FlatList
@@ -140,7 +143,7 @@ class HomeScreen extends React.Component<Props> {
   }
 
   handleSelectConverse(uuid: string, type: ChatType, info) {
-    this.props.dispatch(switchToChatScreen(uuid, type, info.get('name')));
+    this.props.dispatch(switchToChatScreen(uuid, type, info.name));
   }
 
   render() {
@@ -158,10 +161,10 @@ const styles = {
   tipText: [sb.textAlign('center'), sb.margin(80, 0, 0, 0), sb.color('#999')],
 };
 
-export default connect((state: any) => ({
-  converses: state.getIn(['chat', 'converses']),
-  conversesDesc: state.getIn(['chat', 'conversesDesc']),
-  groups: state.getIn(['group', 'groups']),
-  usercache: state.getIn(['cache', 'user']),
-  network: state.getIn(['ui', 'network']),
+export default connect((state: TRPGState) => ({
+  converses: state.chat.converses,
+  conversesDesc: state.chat.conversesDesc,
+  groups: state.group.groups,
+  usercache: state.cache.user,
+  network: state.ui.network,
 }))(HomeScreen);

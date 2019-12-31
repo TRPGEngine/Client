@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import config from '../../../shared/project.config';
-import { showProfileCard, switchMenuPannel } from '../../../shared/redux/actions/ui';
+import config from '@shared/project.config';
+import { showProfileCard, switchMenuPannel } from '@shared/redux/actions/ui';
 import SlidePanel from '../../components/SlidePanel';
 import ConverseList from './converse/ConverseList';
 import ActorList from './actors/ActorList';
 import GroupList from './group/GroupList';
 import NoteList from './note/NoteList';
 import ExtraOptions from './ExtraOptions';
+import { TRPGState } from '@redux/types/__all__';
 
 import './MenuPannel.scss';
 
@@ -98,11 +99,9 @@ class MenuPannel extends React.Component<Props> {
   }
 }
 
-export default connect((state: any) => ({
-  avatar: state.getIn(['user', 'info', 'avatar']),
-  name:
-    state.getIn(['user', 'info', 'nickname']) ||
-    state.getIn(['user', 'info', 'username']),
-  selectedPannel: state.getIn(['ui', 'menuPannel']),
-  selectedMenuIndex: state.getIn(['ui', 'menuIndex']),
+export default connect((state: TRPGState) => ({
+  avatar: state.user.info.avatar,
+  name: state.user.info.nickname || state.user.info.username,
+  selectedPannel: state.ui.menuPannel,
+  selectedMenuIndex: state.ui.menuIndex,
 }))(MenuPannel);

@@ -7,9 +7,9 @@ import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
 import { getGroupInfo } from '../../../shared/redux/actions/cache';
 import { backNav, switchToChatScreen } from '../redux/actions/nav';
 import { getGroupInfoCache } from '../../../shared/utils/cache-helper';
-import { List } from 'immutable';
 import { NavigationScreenProps } from 'react-navigation';
 import { requestJoinGroup } from '@src/shared/redux/actions/group';
+import { TRPGState } from '@redux/types/__all__';
 
 interface ItemProps {
   name: string;
@@ -29,7 +29,7 @@ class ProfileInfoItem extends React.Component<ItemProps> {
 interface Props
   extends DispatchProp<any>,
     NavigationScreenProps<{ uuid: string }> {
-  addedGroupUUIDList: List<string>;
+  addedGroupUUIDList: string[];
   groupcache: any;
 }
 class ProfileScreen extends React.Component<Props> {
@@ -45,9 +45,7 @@ class ProfileScreen extends React.Component<Props> {
   handlePressSendMsg = () => {
     const groupUUID = this.props.navigation.state.params.uuid;
     const groupInfo = getGroupInfoCache(groupUUID);
-    this.props.dispatch(
-      switchToChatScreen(groupUUID, 'group', groupInfo.get('name'))
-    );
+    this.props.dispatch(switchToChatScreen(groupUUID, 'group', groupInfo.name));
   };
 
   // 处理发送入团申请事件
@@ -60,7 +58,7 @@ class ProfileScreen extends React.Component<Props> {
   render() {
     const groupUUID = this.props.navigation.state.params.uuid;
     const hasJoined = this.props.addedGroupUUIDList.includes(groupUUID);
-    const groupInfo = this.props.groupcache.get(groupUUID);
+    const groupInfo = this.props.groupcache.groupUUID;
 
     if (!groupInfo) {
       return (
@@ -70,10 +68,8 @@ class ProfileScreen extends React.Component<Props> {
       );
     }
 
-    let avatar = groupInfo.get('avatar')
-      ? groupInfo.get('avatar')
-      : appConfig.defaultImg.user;
-    let name = groupInfo.get('name');
+    const avatar = groupInfo.avatar ?? appConfig.defaultImg.user;
+    const name = groupInfo.name;
 
     return (
       <View style={styles.container}>
@@ -81,22 +77,20 @@ class ProfileScreen extends React.Component<Props> {
           <TImageViewer images={[avatar.replace('/thumbnail', '')]}>
             <TAvatar
               uri={avatar}
-              name={groupInfo.get('name')}
+              name={name}
               capitalSize={40}
               height={100}
               width={100}
             />
           </TImageViewer>
-          <Text style={{ fontSize: 18, marginTop: 4 }}>
-            {groupInfo.get('name')}
-          </Text>
+          <Text style={{ fontSize: 18, marginTop: 4 }}>{name}</Text>
           <Text style={{ fontSize: 12, color: '#999' }}>
-            {groupInfo.get('sub_name')}
+            {groupInfo.sub_name}
           </Text>
         </View>
         <View style={{ paddingLeft: 10, backgroundColor: 'white' }}>
-          <ProfileInfoItem name="唯一标识" value={groupInfo.get('uuid')} />
-          <ProfileInfoItem name="团副名" value={groupInfo.get('username')} />
+          <ProfileInfoItem name="唯一标识" value={groupInfo.uuid} />
+          <ProfileInfoItem name="团副名" value={groupInfo.username} />
         </View>
         <View style={styles.actions}>
           {hasJoined ? (
@@ -126,9 +120,7 @@ const styles = {
   actions: [sb.padding(10)],
 };
 
-export default connect((state: any) => ({
-  addedGroupUUIDList: state
-    .getIn(['group', 'groups'])
-    .map((g) => g.get('uuid')),
-  groupcache: state.getIn(['cache', 'group']),
+export default connect((state: TRPGState) => ({
+  addedGroupUUIDList: state.group.groups.map((g) => g.uuid),
+  groupcache: state.cache.group,
 }))(ProfileScreen);

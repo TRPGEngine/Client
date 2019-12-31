@@ -1,15 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addNote, switchNote } from '../../../../shared/redux/actions/note';
+import { addNote, switchNote } from '@shared/redux/actions/note';
 import moment from 'moment';
 import ReactTooltip from 'react-tooltip';
 import Spinner from '../../../components/Spinner';
-
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import NoteDetail from './NoteDetail';
+import _values from 'lodash/values';
+import _orderBy from 'lodash/orderBy';
 
 import './NoteList.scss';
 
-class NoteList extends React.Component {
+interface Props extends TRPGDispatchProp {
+  selectedNoteUUID: string;
+  noteList: any;
+  isNoteSync: boolean;
+  isNoteSyncUUID: string;
+}
+class NoteList extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,45 +34,36 @@ class NoteList extends React.Component {
     let selectedNoteUUID = this.props.selectedNoteUUID;
 
     let content = notes
-      ? notes
-          .toList()
-          .sortBy((item) => item.get('updatedAt'))
-          .reverse()
-          .map((item, index) => {
-            item = item.toJS();
-
-            let summary = item.content
-              .replace(/<\/?.+?>/g, '')
-              .replace(/ /g, '');
-            if (summary.length > 70) {
-              summary = summary.slice(0, 70) + '...';
-            }
-            let uuid = item.uuid;
-            return (
-              <div
-                key={uuid}
-                className={
-                  'note-item' + (selectedNoteUUID === uuid ? ' active' : '')
-                }
-                onClick={() => this.handleClick(uuid)}
-              >
-                <div className="note-title">
-                  <span>{item.title}</span>
-                  <Spinner
-                    visible={
-                      this.props.isNoteSync &&
-                      uuid === this.props.isNoteSyncUUID
-                    }
-                  />
-                </div>
-
-                <div className="note-update-time">
-                  {moment(item.updatedAt).fromNow()}
-                </div>
-                <div className="note-summary">{summary}</div>
+      ? _orderBy(_values(notes), 'updatedAt', 'desc').map((item, index) => {
+          let summary = item.content.replace(/<\/?.+?>/g, '').replace(/ /g, '');
+          if (summary.length > 70) {
+            summary = summary.slice(0, 70) + '...';
+          }
+          let uuid = item.uuid;
+          return (
+            <div
+              key={uuid}
+              className={
+                'note-item' + (selectedNoteUUID === uuid ? ' active' : '')
+              }
+              onClick={() => this.handleClick(uuid)}
+            >
+              <div className="note-title">
+                <span>{item.title}</span>
+                <Spinner
+                  visible={
+                    this.props.isNoteSync && uuid === this.props.isNoteSyncUUID
+                  }
+                />
               </div>
-            );
-          })
+
+              <div className="note-update-time">
+                {moment(item.updatedAt).fromNow()}
+              </div>
+              <div className="note-summary">{summary}</div>
+            </div>
+          );
+        })
       : '';
 
     return content;
@@ -73,14 +72,14 @@ class NoteList extends React.Component {
   getNoteDetail() {
     const selectedNoteUUID = this.props.selectedNoteUUID;
     if (selectedNoteUUID) {
-      let note = this.props.noteList.get(selectedNoteUUID);
+      let note = this.props.noteList[selectedNoteUUID];
 
       if (note) {
         return (
           <NoteDetail
             key={selectedNoteUUID}
             uuid={selectedNoteUUID}
-            note={note.toJS()}
+            note={note}
           />
         );
       } else {
@@ -119,9 +118,9 @@ class NoteList extends React.Component {
     );
   }
 }
-export default connect((state) => ({
-  selectedNoteUUID: state.getIn(['note', 'selectedNoteUUID']),
-  noteList: state.getIn(['note', 'noteList']),
-  isNoteSync: state.getIn(['note', 'isSync']),
-  isNoteSyncUUID: state.getIn(['note', 'isSyncUUID']),
+export default connect((state: TRPGState) => ({
+  selectedNoteUUID: state.note.selectedNoteUUID,
+  noteList: state.note.noteList,
+  isNoteSync: state.note.isSync,
+  isNoteSyncUUID: state.note.isSyncUUID,
 }))(NoteList);

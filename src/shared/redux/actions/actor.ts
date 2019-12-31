@@ -58,7 +58,7 @@ let getTemplate = function getTemplate(uuid?: string) {
  */
 const getSuggestTemplate = (): TRPGAction => {
   return function(dispatch, getState) {
-    if (getState().getIn(['actor', 'suggestTemplate']).size > 0) {
+    if (getState().actor.suggestTemplate.length > 0) {
       return;
     }
 

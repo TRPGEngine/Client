@@ -1,25 +1,47 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import at from 'trpg-actor-template';
-import config from '../../../../shared/project.config';
-import { showAlert } from '../../../../shared/redux/actions/ui';
-import { createActor, updateActor } from '../../../../shared/redux/actions/actor';
-import ImageUploader from '../../../components/ImageUploader';
+import * as at from 'trpg-actor-template';
+import config from '@shared/project.config';
+import { showAlert } from '@shared/redux/actions/ui';
+import { createActor, updateActor } from '@shared/redux/actions/actor';
+import ImageUploader from '@web/components/ImageUploader';
 
 import './ActorEdit.scss';
+import { AlertPayload } from '@redux/types/ui';
+import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
 
-class ActorEdit extends React.Component {
+interface Props {
+  selectedActorUUID: string;
+  selfActors: any[];
+  selectedTemplate: any;
+
+  showAlert: (payload: AlertPayload) => void;
+  createActor: any;
+  updateActor: any;
+}
+interface State {
+  cells: any[];
+  profileName: string;
+  profileDesc: string;
+  profileAvatar: string;
+}
+class ActorEdit extends React.Component<Props, State> {
+  editedActor: any;
+  template_uuid: string;
+  template: any;
+
+  state = {
+    cells: [],
+    profileName: '',
+    profileDesc: '',
+    profileAvatar: '',
+  };
+
   constructor(props) {
     super(props);
-    this.state = {
-      cells: [],
-      profileName: '',
-      profileDesc: '',
-      profileAvatar: '',
-    };
     if (this.props.selectedActorUUID) {
       let actorIndex = this.props.selfActors.findIndex((item, index) => {
-        if (item.get('uuid') === this.props.selectedActorUUID) {
+        if (item.uuid === this.props.selectedActorUUID) {
           return true;
         } else {
           return false;
@@ -27,10 +49,10 @@ class ActorEdit extends React.Component {
       });
 
       if (actorIndex >= 0) {
-        let actor = (this.editedActor = this.props.selfActors.get(actorIndex));
-        this.state.profileName = actor.get('name');
-        this.state.profileDesc = actor.get('desc');
-        this.state.profileAvatar = actor.get('avatar');
+        let actor = (this.editedActor = this.props.selfActors[actorIndex]);
+        this.state.profileName = actor.name;
+        this.state.profileDesc = actor.desc;
+        this.state.profileAvatar = actor.avatar;
       } else {
         console.error('角色不存在');
       }
@@ -38,11 +60,11 @@ class ActorEdit extends React.Component {
   }
 
   componentDidMount() {
-    this.template_uuid = this.props.selectedTemplate.get('uuid');
-    let info = this.props.selectedTemplate.get('info');
+    this.template_uuid = this.props.selectedTemplate.uuid;
+    let info = this.props.selectedTemplate.info;
     let template = (this.template = at.parse(info));
     if (this.editedActor) {
-      let data = this.editedActor.get('info').toJS();
+      let data = this.editedActor.info;
       template.setData(data);
     }
     template.eval();
@@ -172,13 +194,13 @@ class ActorEdit extends React.Component {
 }
 
 export default connect(
-  (state) => ({
-    selectedTemplate: state.getIn(['actor', 'selectedTemplate']),
-    selectedActorUUID: state.getIn(['actor', 'selectedActorUUID']),
-    selfActors: state.getIn(['actor', 'selfActors']),
+  (state: TRPGState) => ({
+    selectedTemplate: state.actor.selectedTemplate,
+    selectedActorUUID: state.actor.selectedActorUUID,
+    selfActors: state.actor.selfActors,
   }),
-  (dispatch) => ({
-    showAlert: (msg) => {
+  (dispatch: TRPGDispatch) => ({
+    showAlert: (msg: AlertPayload) => {
       dispatch(showAlert(msg));
     },
     createActor: (name, avatar, desc, info, template_uuid) => {

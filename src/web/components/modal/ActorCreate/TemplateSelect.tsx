@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Input, Empty, Row, Col } from 'antd';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import { findTemplate } from '@src/shared/redux/actions/actor';
-import { List } from 'immutable';
 import TemplateItem from '../../TemplateItem';
 import styled from 'styled-components';
-import { ActorTemplateStateType, ActorTemplateType } from '@redux/types/actor';
+import { ActorTemplateType } from '@redux/types/actor';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 
 const Search = Input.Search;
 
@@ -20,23 +20,23 @@ type SelectTemplateCallback = (template: ActorTemplateType) => void;
  * 一行三列
  */
 const TemplateList = (props: {
-  list: List<ActorTemplateStateType>;
+  list: ActorTemplateType[];
   onSelectTemplate: SelectTemplateCallback;
 }) => {
   return (
     <Row gutter={8}>
       {props.list.map((item, index) => {
         return (
-          <Col key={'template-suggest-result' + item.get('uuid')} xs={8}>
+          <Col key={'template-suggest-result' + item.uuid} xs={8}>
             <TemplateItem
               canEdit={false}
-              name={item.get('name')}
-              desc={item.get('desc')}
+              name={item.name}
+              desc={item.desc}
               // TODO
               // creator={item.get('creator_name') || '未知'}
               creator={'未知'}
-              time={item.get('updatedAt')}
-              onCreate={() => props.onSelectTemplate(item.toJS())}
+              time={item.updatedAt}
+              onCreate={() => props.onSelectTemplate(item)}
             />
           </Col>
         );
@@ -45,9 +45,9 @@ const TemplateList = (props: {
   );
 };
 
-interface Props extends DispatchProp<any> {
-  findingResult: List<ActorTemplateStateType>;
-  suggestTemplate: List<ActorTemplateStateType>;
+interface Props extends TRPGDispatchProp {
+  findingResult: ActorTemplateType[];
+  suggestTemplate: ActorTemplateType[];
   onSelectTemplate: SelectTemplateCallback;
 }
 /**
@@ -67,7 +67,7 @@ const TemplateSelect = (props: Props) => {
       );
     }
 
-    return props.findingResult.size === 0 ? (
+    return props.findingResult.length === 0 ? (
       <Empty description="暂未搜索结果" />
     ) : (
       <div>
@@ -97,7 +97,7 @@ const TemplateSelect = (props: Props) => {
   );
 };
 
-export default connect((state: any) => ({
-  suggestTemplate: state.getIn(['actor', 'suggestTemplate']),
-  findingResult: state.getIn(['actor', 'findingResult']),
+export default connect((state: TRPGState) => ({
+  suggestTemplate: state.actor.suggestTemplate,
+  findingResult: state.actor.findingResult,
 }))(TemplateSelect);

@@ -19,6 +19,7 @@ import { toAvatarWithBlobUrl } from '@web/utils/upload-helper';
 import { isBlobUrl } from '@shared/utils/string-helper';
 import { AvatarUpdateData } from '@shared/utils/upload-helper';
 import { ActorTemplateType } from '@redux/types/actor';
+import { TRPGState } from '@redux/types/__all__';
 const Step = Steps.Step;
 
 const Container = styled.div`
@@ -146,6 +147,6 @@ const ActorCreate = (props: Props) => {
   );
 };
 
-export default connect((state: any) => ({
-  selfUUID: state.getIn(['user', 'info', 'uuid']),
+export default connect((state: TRPGState) => ({
+  selfUUID: state.user.info.uuid,
 }))(ActorCreate);

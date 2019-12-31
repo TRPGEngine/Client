@@ -3,14 +3,13 @@
  * 用于生成将redux的状态转化为UI
  */
 
-import { Map } from 'immutable';
 import TAlert from '../components/TApi/TAlert';
 import { hideAlert, hideModal } from '@src/shared/redux/actions/ui';
 import { Toast, Portal } from '@ant-design/react-native';
 import TModal from '../components/TApi/TModal';
 import { TRPGDispatch } from '@src/shared/redux/types/__all__';
 
-type UIMap = Map<string, any>;
+type UIMap = { [name: string]: any };
 interface FactoryOptions {
   onEnabled?: (currentUIState: UIMap, dispatch: TRPGDispatch) => void;
   onDisabled?: (currentUIState: UIMap, dispatch: TRPGDispatch) => void;
@@ -26,12 +25,12 @@ export const uiStateSwitchFactory = (
   option: FactoryOptions
 ) => {
   return (prevUI: UIMap, currentUI: UIMap, dispatch: TRPGDispatch) => {
-    if (prevUI.get(variable) === false && currentUI.get(variable) === true) {
+    if (prevUI[variable] === false && currentUI[variable] === true) {
       // UI打开
       option.onEnabled && option.onEnabled(currentUI, dispatch);
     }
 
-    if (prevUI.get(variable) === true && currentUI.get(variable) === false) {
+    if (prevUI[variable] === true && currentUI[variable] === false) {
       // UI关闭
       option.onDisabled && option.onDisabled(currentUI, dispatch);
     }
@@ -43,7 +42,7 @@ export const uiStateSwitchFactory = (
  */
 export const alertHandler = uiStateSwitchFactory('showAlert', {
   onEnabled: (currentUI, dispatch) => {
-    TAlert.show(currentUI.get('showAlertInfo'), {
+    TAlert.show(currentUI.showAlertInfo, {
       onRequestClose: () => dispatch(hideAlert()),
     });
   },
@@ -62,7 +61,7 @@ export const toastHandler = uiStateSwitchFactory('showToast', {
       // 如果已存在Toast, 先把之前的移除
       Portal.remove(currentToastKey);
     }
-    currentToastKey = Toast.show(currentUI.get('showToastText'), 0);
+    currentToastKey = Toast.show(currentUI.showToastText, 0);
   },
   onDisabled: () => {
     Portal.remove(currentToastKey);
@@ -75,9 +74,9 @@ export const toastHandler = uiStateSwitchFactory('showToast', {
  */
 export const modelHandler = uiStateSwitchFactory('showModal', {
   onEnabled: (currentUI, dispatch) => {
-    const body = currentUI.get('showModalBody');
+    const body = currentUI.showModalBody;
     if (body) {
-      TModal.show(body.toJS(), { onRequestClose: () => dispatch(hideModal()) });
+      TModal.show(body, { onRequestClose: () => dispatch(hideModal()) });
     }
   },
   onDisabled: () => {

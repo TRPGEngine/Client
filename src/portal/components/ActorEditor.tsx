@@ -36,6 +36,7 @@ const ActorEditor: React.FC<Props> = (props) => {
         changeActorData(groupActor.actor_info);
         setTemplateLayout(template.layout);
       } else {
+        // 是普通角色
         const actor = await fetchActorDetail(props.uuid);
         const template = await fetchTemplateInfo(actor.template_uuid);
 

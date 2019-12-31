@@ -7,27 +7,38 @@ import { hideModal } from '../../../shared/redux/actions/ui';
 import { updateGroupInfo } from '../../../shared/redux/actions/group';
 
 import './GroupEdit.scss';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 
-class GroupEdit extends React.Component {
-  constructor(props) {
+interface Props extends TRPGDispatchProp {
+  selectedGroupUUID: string;
+  selectedGroupInfo: any;
+}
+interface State {
+  avatar: string,
+  name: string,
+  sub_name: string,
+  desc: string,
+}
+class GroupEdit extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
-      avatar: props.selectedGroupInfo.get('avatar') || '',
-      name: props.selectedGroupInfo.get('name') || '',
-      sub_name: props.selectedGroupInfo.get('sub_name') || '',
-      desc: props.selectedGroupInfo.get('desc') || '',
+      avatar: props.selectedGroupInfo.avatar ?? '',
+      name: props.selectedGroupInfo.name ?? '',
+      sub_name: props.selectedGroupInfo.sub_name ?? '',
+      desc: props.selectedGroupInfo.desc ?? '',
     };
   }
 
   handleSaveGroupInfo() {
-    let groupInfoData = Object.assign({}, this.state);
+    const groupInfoData: State = Object.assign({}, this.state);
     delete groupInfoData.avatar;
     this.props.dispatch(
       updateGroupInfo(this.props.selectedGroupUUID, groupInfoData)
     );
   }
 
-  handleUpdateAvatar(url) {
+  handleUpdateAvatar(url: string) {
     this.props.dispatch(
       updateGroupInfo(this.props.selectedGroupUUID, { avatar: url })
     );
@@ -90,13 +101,13 @@ class GroupEdit extends React.Component {
   }
 }
 
-export default connect((state) => {
-  let selectedGroupUUID = state.getIn(['group', 'selectedGroupUUID']);
-  let selectedGroupIndex = state
-    .getIn(['group', 'groups'])
-    .findIndex((g) => g.get('uuid') === selectedGroupUUID);
+export default connect((state: TRPGState) => {
+  const selectedGroupUUID = state.group.selectedGroupUUID;
+  const selectedGroupIndex = state.group.groups.findIndex(
+    (g) => g.uuid === selectedGroupUUID
+  );
   return {
     selectedGroupUUID,
-    selectedGroupInfo: state.getIn(['group', 'groups', selectedGroupIndex]),
+    selectedGroupInfo: state.group.groups[selectedGroupIndex],
   };
 })(GroupEdit);
