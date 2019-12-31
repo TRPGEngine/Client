@@ -8,7 +8,7 @@ import { getMoreChatLog } from '@shared/redux/actions/chat';
 import { TRPGState } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _head from 'lodash/head';
-import _sortBy from 'lodash/sortBy';
+import _orderBy from 'lodash/orderBy';
 
 import MessageHandler from './messageTypes/__all__';
 
@@ -170,7 +170,7 @@ export default connect((state: TRPGState, ownProps: any) => {
   const msgList = _get(state, ['chat', 'converses', converseUUID, 'msgList']);
 
   return {
-    msgList: msgList && _sortBy(msgList, 'date'),
+    msgList: msgList && _orderBy(msgList, (item) => new Date(item.date)),
     nomore: _get(state, ['chat', 'converses', converseUUID, 'nomore'], false),
     userUUID: _get(state, ['user', 'info', 'uuid']),
     selfInfo: state.user.info,

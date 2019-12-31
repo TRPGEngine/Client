@@ -24,7 +24,7 @@ import { unemojify } from '@shared/utils/emoji';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import _throttle from 'lodash/throttle';
-import _sortBy from 'lodash/sortBy';
+import _orderBy from 'lodash/orderBy';
 import { ChatParams, ChatType } from '../../types/params';
 
 import styled from 'styled-components/native';
@@ -439,7 +439,7 @@ export default connect((state: TRPGState, ownProps: Props) => {
     selectedConverseUUID,
     selfInfo: state.user.info,
     selfUUID: state.user.info.uuid,
-    msgList: msgList && _sortBy(msgList, 'date'),
+    msgList: msgList && _orderBy(msgList, (item) => new Date(item.date)),
     usercache: state.cache.user,
     nomore:
       _get(state, ['chat', 'converses', selectedConverseUUID, 'nomore']) ??
