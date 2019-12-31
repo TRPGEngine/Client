@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.13](https://github.com/TRPGEngine/Client/compare/v0.2.12...v0.2.13) (2019-12-31)
+
+
+### Bug Fixes
+
+* 修复聊天记录页面时间排序问题 ([b9a5edb](https://github.com/TRPGEngine/Client/commit/b9a5edb78a1afe202de1a8e5e76a969df8e13d0c))
+
 ### [0.2.12](https://github.com/TRPGEngine/Client/compare/v0.2.11...v0.2.12) (2019-12-31)
 
 
