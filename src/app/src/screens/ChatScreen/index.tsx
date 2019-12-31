@@ -23,9 +23,10 @@ import { uploadChatimg } from '@shared/utils/image-uploader';
 import { unemojify } from '@shared/utils/emoji';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
+import _isArray from 'lodash/isArray';
 import _throttle from 'lodash/throttle';
 import _orderBy from 'lodash/orderBy';
-import { ChatParams, ChatType } from '../../types/params';
+import { ChatParams } from '../../types/params';
 
 import styled from 'styled-components/native';
 import { sendQuickDice } from '@src/shared/redux/actions/dice';
@@ -36,7 +37,7 @@ import { clearSelectGroup } from '@src/shared/redux/actions/group';
 import { sendStartWriting } from '@src/shared/api/event';
 import config from '@src/shared/project.config';
 import { getCurrentGroupActor } from '@redux/helpers/group';
-import { MsgPayload } from '@redux/types/chat';
+import { MsgPayload, MsgListType } from '@redux/types/chat';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
@@ -51,7 +52,7 @@ const ExtraPanel = styled.View`
 type Params = ChatParams & { headerRightFunc?: () => void };
 
 interface Props extends TRPGDispatchProp, NavigationScreenProps<Params> {
-  msgList: any;
+  msgList: MsgListType;
   selfInfo: any;
   selfUUID: string;
   nomore: boolean;
@@ -371,13 +372,13 @@ class ChatScreen extends React.Component<Props> {
   }
 
   render() {
-    if (this.props.msgList) {
-      let msgList: any[] = this.props.msgList.reverse();
+    const { msgList } = this.props;
 
+    if (_isArray(msgList)) {
       return (
         <View style={{ flex: 1 }}>
           <MsgList
-            msgList={msgList}
+            msgList={msgList.reverse()}
             selfInfo={this.props.selfInfo}
             nomore={this.props.nomore}
             onTouchStart={this.dismissAll}
