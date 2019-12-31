@@ -27,7 +27,7 @@ import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 import rnStorage from '../../api/rn-storage.api';
 import { checkUser } from '../../utils/cache-helper';
-import { hideProfileCard, switchMenuPannel, showToast } from './ui';
+import { hideProfileCard, switchMenuPannel, showToast, showAlert } from './ui';
 import * as uploadHelper from '../../utils/upload-helper';
 import { renewableDelayTimer } from '../../utils/timer';
 import config from '../../project.config';
@@ -413,7 +413,7 @@ export let sendMsg = function sendMsg(
   return function(dispatch, getState) {
     const info = getState().user.info;
     const localUUID = getLocalUUID();
-    let pkg = {
+    const pkg = {
       sender_uuid: info.uuid,
       to_uuid: toUUID,
       converse_uuid: payload.converse_uuid,
@@ -430,17 +430,17 @@ export let sendMsg = function sendMsg(
     let converseUUID = payload.converse_uuid || toUUID;
     dispatch(addMsg(converseUUID, pkg));
     return api.emit('chat::message', pkg, function(data) {
-      // console.log(data);
-      // TODO: 待实现SEND_MSG_COMPLETED的数据处理方法(用于送达提示)
-      dispatch({
-        type: SEND_MSG_COMPLETED,
-        payload: data,
-        localUUID,
-        converseUUID,
-      });
       if (data.result) {
+        // TODO: 待实现SEND_MSG_COMPLETED的数据处理方法(用于送达提示)
+        dispatch({
+          type: SEND_MSG_COMPLETED,
+          payload: data,
+          localUUID,
+          converseUUID,
+        });
         console.log('发送成功');
       } else {
+        dispatch(showToast('消息发送失败'));
         console.log('发送失败', pkg);
       }
     });
