@@ -133,29 +133,33 @@
       }
 
       > .card-content-actor {
-        width: 420px;
-        height: 160px;
+        padding: 10px;
+        max-height: 160;
         display: flex;
 
         > .card-content-avatar {
           display: flex;
-          height: 100%;
-          width: 110px;
+          width: 60px;
+          height: 60px;
+          flex-shrink: 0;
           overflow: hidden;
           align-items: center;
           justify-content: center;
           background-position: center;
           background-size: cover;
+          font-size: 24px;
         }
 
         > .card-content-profile {
           flex: 1;
-          padding: 10px;
+          padding: 0 10px;
           display: flex;
           flex-direction: column;
+          overflow: hidden;
           > h3 {
             margin: 0;
             margin-bottom: 4px;
+            @include one-line;
           }
 
           > p {

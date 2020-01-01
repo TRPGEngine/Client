@@ -6,6 +6,7 @@ import { getActorInfo } from '@shared/redux/actions/cache';
 import config from '@shared/project.config';
 import ActorCacheProfile from '../../modal/ActorCacheProfile';
 import { MessageProps } from '@src/shared/components/MessageHandler';
+import Avatar from '@web/components/Avatar';
 
 interface Props extends MessageProps, DispatchProp<any> {}
 
@@ -28,10 +29,7 @@ class Actor extends BaseCard<Props> {
       config.file.getAbsolutePath(data.avatar) || config.defaultImg.actor;
     return (
       <div className="card-content-actor">
-        <div
-          className="card-content-avatar"
-          style={{ backgroundImage: `url(${url})` }}
-        />
+        <Avatar className="card-content-avatar" name={data.name} src={url} />
         <div className="card-content-profile">
           <h3>{data.name}</h3>
           <p>{data.desc}</p>
