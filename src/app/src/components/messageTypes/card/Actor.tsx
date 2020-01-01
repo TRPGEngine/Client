@@ -7,6 +7,7 @@ import config from '@shared/project.config';
 import { TRPGDispatchProp } from '@redux/types/__all__';
 import { navPortal } from '@app/redux/actions/nav';
 import { MessageProps } from '@shared/components/MessageHandler';
+import { TAvatar } from '@app/components/TComponent';
 
 // 投骰请求
 interface Props extends TRPGDispatchProp, MessageProps {}
@@ -29,7 +30,7 @@ class Actor extends BaseCard<Props> {
 
     return (
       <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: imgUrl }} />
+        <TAvatar name={data.name} uri={imgUrl} style={styles.image} />
         <View style={styles.props}>
           <Text>{data.name}</Text>
           <Text>{data.desc}</Text>
@@ -52,7 +53,13 @@ class Actor extends BaseCard<Props> {
 
 const styles = {
   container: [sb.direction(), sb.size(240)],
-  image: [sb.size(60, 80), sb.margin(2)],
+  image: [
+    sb.size(60, 60),
+    sb.margin(2),
+    {
+      borderRadius: 3,
+    },
+  ],
   props: [sb.flex(), sb.padding(4)],
 };
 
