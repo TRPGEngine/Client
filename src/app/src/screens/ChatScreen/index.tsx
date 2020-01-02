@@ -26,6 +26,7 @@ import _isNil from 'lodash/isNil';
 import _isArray from 'lodash/isArray';
 import _throttle from 'lodash/throttle';
 import _orderBy from 'lodash/orderBy';
+import _last from 'lodash/last';
 import { ChatParams } from '../../types/params';
 
 import styled from 'styled-components/native';
@@ -214,11 +215,13 @@ class ChatScreen extends React.Component<Props> {
    * 处理请求更多聊天记录事件
    */
   handleRequestMoreChatLog = () => {
-    const date = _get(this.props.msgList, [0, 'date']);
+    const msgList = this.props.msgList;
+    // 获取时间最前的那条记录
+    const oldestDate = _last(msgList).date ?? new Date().toISOString();
     const { selectedConverseUUID } = this.props;
     const converseType = this.converseType;
     this.props.dispatch(
-      getMoreChatLog(selectedConverseUUID, date, converseType === 'user')
+      getMoreChatLog(selectedConverseUUID, oldestDate, converseType === 'user')
     );
   };
 
@@ -378,7 +381,7 @@ class ChatScreen extends React.Component<Props> {
       return (
         <View style={{ flex: 1 }}>
           <MsgList
-            msgList={msgList.reverse()}
+            msgList={msgList}
             selfInfo={this.props.selfInfo}
             nomore={this.props.nomore}
             onTouchStart={this.dismissAll}
@@ -440,7 +443,8 @@ export default connect((state: TRPGState, ownProps: Props) => {
     selectedConverseUUID,
     selfInfo: state.user.info,
     selfUUID: state.user.info.uuid,
-    msgList: msgList && _orderBy(msgList, (item) => new Date(item.date)),
+    msgList:
+      msgList && _orderBy(msgList, (item) => new Date(item.date), 'desc'),
     usercache: state.cache.user,
     nomore:
       _get(state, ['chat', 'converses', selectedConverseUUID, 'nomore']) ??
