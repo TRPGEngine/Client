@@ -76,6 +76,13 @@ if (config.platform !== 'web') {
   });
 }
 
+// 离开页面确认
+if(config.platform === 'web') {
+  window.onbeforeunload = function() { 
+    return "确认离开当前页面吗？";
+  }
+}
+
 ReactDom.render(
   <Provider store={store}>
     <ThemeProvider theme={styledTheme}>

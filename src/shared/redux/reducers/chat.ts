@@ -453,9 +453,9 @@ export default produce((draft: ChatState, action) => {
         if (isWriting) {
           if (!list.includes(uuid)) {
             list.push(uuid);
-          } else {
-            _pull(list, uuid);
           }
+        } else {
+          _pull(list, uuid);
         }
         // return state.updateIn(['writingList', 'user'], (list) => {
         //   if (isWriting) {

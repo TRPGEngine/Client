@@ -12,20 +12,20 @@ interface State {
   logger: ActionsListItem[];
 }
 class DebugScreen extends React.Component<{}, State> {
-  state = {
+  state: State = {
     sections: [],
     logger: [],
   };
 
   componentDidMount() {
-    this.setState({ logger: getLogger() });
+    this.setState({ logger: getLogger().reverse() });
   }
 
   renderItem = (item: ActionsListItem, index: number) => {
     return (
-      <AccordionPanel header={item[0]} key={index + item[0]}>
+      <AccordionPanel key={index + item[0]} header={item[0]}>
         <WingBlank>
-          <Text>{JSON.stringify(item[1])}</Text>
+          <Text>{JSON.stringify(item[1], null, 4)}</Text>
         </WingBlank>
       </AccordionPanel>
     );
