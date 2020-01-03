@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.14](https://github.com/TRPGEngine/Client/compare/v0.2.13...v0.2.14) (2020-01-03)
+
+
+### Features
+
+* **app:** 对于没有头像的人物卡卡片消息增加一个默认的头像防止过度空白 ([8641664](https://github.com/TRPGEngine/Client/commit/86416646932fb28fbd531d6c1543926c36be8e1d))
+* **web:** 人物卡卡片消息如果没有头像则给一个默认头像 ([0bc7e00](https://github.com/TRPGEngine/Client/commit/0bc7e000e7d21b7177566962a0e24699db41e6eb))
+* **web:** 增加一个网页端退出的确认提示 ([aa7e565](https://github.com/TRPGEngine/Client/commit/aa7e565bad9da8e5cb0aadb6b02c800f0e2e02f1))
+
+
+### Bug Fixes
+
+* 修复错误的清除正在输入聊天状态的代码 ([bd59a0c](https://github.com/TRPGEngine/Client/commit/bd59a0c6bc63fded955ede50a2e5cd8755ac4160))
+
 ### [0.2.13](https://github.com/TRPGEngine/Client/compare/v0.2.12...v0.2.13) (2019-12-31)
 
 
