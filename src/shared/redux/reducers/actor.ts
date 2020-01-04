@@ -174,7 +174,9 @@ export default produce((draft: ActorState, action) => {
     //   return list;
     // });
     case UPDATE_ACTOR_SUCCESS:
-      const i = draft.selfActors.findIndex((item) => item.uuid === action.uuid);
+      const i = draft.selfActors.findIndex(
+        (item) => item.uuid === action.payload.uuid
+      );
       if (i >= 0) {
         draft.selfActors[i] = action.payload;
       }
