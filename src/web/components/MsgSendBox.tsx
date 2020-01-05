@@ -369,6 +369,7 @@ class MsgSendBox extends React.Component<Props> {
             onKeyDownCapture={this.handleMsgInputKeyDown}
             onKeyUpCapture={this.handleMsgInputKeyUp}
             onPaste={this.handlePaste}
+            autoFocus={true}
           />
         </div>
         <div className="action-area">
