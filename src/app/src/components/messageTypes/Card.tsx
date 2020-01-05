@@ -20,6 +20,7 @@ const CardType = {
   actor: Actor,
 
   // alias
+  groupRequestSuccess: BaseCard,
   groupRequestFail: BaseCard,
 };
 
