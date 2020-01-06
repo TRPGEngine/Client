@@ -4,11 +4,11 @@ import _get from 'lodash/get';
 import Base from './Base';
 import { Modal } from '@ant-design/react-native';
 import styled from 'styled-components/native';
-import BBCode from '@src/shared/components/bbcode';
 import { connect } from 'react-redux';
 import { TRPGDispatchProp } from '@redux/types/__all__';
 import { MessageProps } from '@shared/components/MessageHandler';
 import { revokeMsg } from '@redux/actions/chat';
+import BBCode from './bbcode/__all__';
 
 const MsgContainer = styled.TouchableHighlight.attrs({
   underlayColor: '#eee',

@@ -1,7 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import BBCode from '@src/shared/components/bbcode';
-import '@app/components/messageTypes/bbcode/__all__';
+import BBCode from '@app/components/messageTypes/bbcode/__all__';
 
 describe('bbcode-parser for app', () => {
   // 文本解析成组件测试
@@ -46,6 +45,14 @@ describe('bbcode-parser for app', () => {
       {
         title: 'mix url and image and text',
         text: '百度:[img]http://exampleimg.com[/img] http://baidu.com',
+      },
+      {
+        title: 'should parse emoji native code',
+        text: '🐱',
+      },
+      {
+        title: 'should parse emoji key',
+        text: ':cat:',
       },
     ];
 
