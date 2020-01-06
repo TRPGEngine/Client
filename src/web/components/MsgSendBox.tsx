@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect, DispatchProp } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import Emoticon from './Emoticon';
+import EmojiPanel from './EmojiPanel';
 import * as pasteUtils from '@shared/utils/paste-utils';
 import { sendMsg } from '@shared/redux/actions/chat';
 import { showModal, hideModal } from '@shared/redux/actions/ui';
@@ -183,11 +183,15 @@ class MsgSendBox extends React.Component<Props> {
     setTimeout(() => window.addEventListener('click', this.hidePopup), 0);
   }
 
-  handleSelectEmoticon(code) {
+  handleEmoticonClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+  };
+
+  handleSelectEmoticon = (code: string) => {
     this.setState({ inputMsg: this.state.inputMsg + code });
     this.hidePopup();
     this.inputMsgRef.current.focus();
-  }
+  };
 
   // 显示投骰方式弹出框
   handleShowDiceMethods() {
@@ -273,8 +277,14 @@ class MsgSendBox extends React.Component<Props> {
                 'popup emoticon' + (this.state.showEmoticon ? ' active' : '')
               }
             >
-              <Emoticon onSelect={(code) => this.handleSelectEmoticon(code)} />
+              <EmojiPanel
+                style={{ position: 'relative', display: 'block' }}
+                onClick={this.handleEmoticonClick}
+                onSelect={this.handleSelectEmoticon}
+              />
+              {/* <Emoticon onSelect={(code) => this.handleSelectEmoticon(code)} /> */}
             </div>
+
             <div
               className={
                 'popup dice' + (this.state.showDiceMethods ? ' active' : '')

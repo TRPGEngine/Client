@@ -14,7 +14,7 @@ const options = {
   // handleClick: event => console.log(event.target.title)
 };
 
-export const emojify = function(str, opt) {
+export const emojify = function(str, opt?) {
   return _emojify(str, Object.assign({}, options, opt));
 };
 

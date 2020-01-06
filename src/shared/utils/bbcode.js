@@ -1,7 +1,8 @@
 import React from 'react';
 import parser from 'bbcode-to-react';
-import { emojify } from './emojione';
+// import { emojify } from './emojione';
 import Image from '../../web/components/Image';
+import { emojify } from './emoji';
 
 class EmojiTag extends parser.Tag {
   toReact() {

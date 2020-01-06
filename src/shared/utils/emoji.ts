@@ -30,7 +30,7 @@ export function unemojify(code: string): string {
 }
 
 /**
- * 将标准字符串转化为表情
+ * 将待emoji代码的字符串转化为表情
  * @param {string} plainText 无格式字符串
  */
 export function emojify(plainText: string): string {
