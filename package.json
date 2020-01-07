@@ -99,6 +99,7 @@
     "react-split-pane": "^0.1.87",
     "react-spring": "^8.0.27",
     "react-tooltip": "^3.11.1",
+    "react-use": "^13.14.0",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
