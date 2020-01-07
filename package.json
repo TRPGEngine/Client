@@ -93,6 +93,7 @@
     "react-native-storage": "git+https://github.com/moonrailgun/react-native-storage.git",
     "react-quill": "^1.3.3",
     "react-redux": "^7.1.1",
+    "react-rnd": "^10.1.3",
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^4.0.8",
     "react-select": "1.0.0-rc.5",
