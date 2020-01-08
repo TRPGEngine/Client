@@ -1,12 +1,12 @@
 import React from 'react';
-import { Formik, FormikActions } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import { Modal, Input, Form } from 'antd';
 
 interface FeedbackModalProps {
   visible: boolean;
   onSubmit?: (
     values: FeedbackValues,
-    formikActions: FormikActions<FeedbackValues>
+    formikHelpers: FormikHelpers<FeedbackValues>
   ) => void;
   onCancel?: () => void;
 }

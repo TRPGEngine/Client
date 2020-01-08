@@ -4,7 +4,7 @@ import { getHelpFAQ, HelpFAQItem, sendFeedback } from '@portal/model/help';
 import styled from 'styled-components';
 import { ActionButton } from '@portal/components/ActionButton';
 import { Divider, message } from 'antd';
-import { FormikActions } from 'formik';
+import { FormikHelpers } from 'formik';
 import { FeedbackModal, FeedbackValues } from './modal/FeedbackModal';
 
 const FAQList = styled.ul`
@@ -40,18 +40,18 @@ const Help: React.FC<Props> = React.memo((props) => {
   const handleSubmit = useCallback(
     async (
       values: FeedbackValues,
-      formikActions: FormikActions<FeedbackValues>
+      formikHelpers: FormikHelpers<FeedbackValues>
     ) => {
-      formikActions.setSubmitting(true);
+      formikHelpers.setSubmitting(true);
       try {
         await sendFeedback(values);
 
-        formikActions.resetForm();
+        formikHelpers.resetForm();
         hideFeedback();
       } catch (err) {
         message.error(String(err));
       } finally {
-        formikActions.setSubmitting(false);
+        formikHelpers.setSubmitting(false);
       }
     },
     []
