@@ -36,7 +36,7 @@ class App extends React.Component {
       <Router history={history}>
         <Switch>
           {routes.map((config) => (
-            <TitleRoute {...config} />
+            <TitleRoute key={config.path} {...config} />
           ))}
         </Switch>
       </Router>
