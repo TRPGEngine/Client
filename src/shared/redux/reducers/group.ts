@@ -214,16 +214,18 @@ export default produce((draft: GroupState, action) => {
     // });
     case GET_GROUP_LIST_SUCCESS:
       draft.groups = action.payload ?? [];
-      return
-      // return state.set('groups', immutable.fromJS(action.payload));
+      return;
+    // return state.set('groups', immutable.fromJS(action.payload));
     case SWITCH_GROUP:
       draft.selectedGroupUUID = action.payload;
       return;
-      // return state.set('selectedGroupUUID', action.payload);
-    case GET_GROUP_ACTOR_SUCCESS:{
-      const index = draft.groups.findIndex((group) => group.uuid === action.groupUUID);
-      if(index >= 0) {
-        draft.groups[index].group_actors = action.payload
+    // return state.set('selectedGroupUUID', action.payload);
+    case GET_GROUP_ACTOR_SUCCESS: {
+      const index = draft.groups.findIndex(
+        (group) => group.uuid === action.groupUUID
+      );
+      if (index >= 0) {
+        draft.groups[index].group_actors = action.payload;
       }
 
       return;
@@ -242,9 +244,11 @@ export default produce((draft: GroupState, action) => {
       // });
     }
     case GET_GROUP_MEMBERS_SUCCESS: {
-      const index = draft.groups.findIndex((group) => group.uuid === action.groupUUID);
-      if(index >= 0) {
-        draft.groups[index].group_members = action.payload
+      const index = draft.groups.findIndex(
+        (group) => group.uuid === action.groupUUID
+      );
+      if (index >= 0) {
+        draft.groups[index].group_members = action.payload;
       }
 
       return;
@@ -265,10 +269,14 @@ export default produce((draft: GroupState, action) => {
     case SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS: {
       const { groupUUID, groupActorUUID } = action.payload;
       const index = draft.groups.findIndex((group) => group.uuid === groupUUID);
-      if(index >= 0) {
-        _set(draft.groups[index], 'extra.selected_group_actor_uuid', groupActorUUID);
+      if (index >= 0) {
+        _set(
+          draft.groups[index],
+          'extra.selected_group_actor_uuid',
+          groupActorUUID
+        );
       }
-      _set(draft.groupActorMap, [groupUUID, 'self'], groupActorUUID)
+      _set(draft.groupActorMap, [groupUUID, 'self'], groupActorUUID);
       return;
 
       // return state
@@ -289,7 +297,7 @@ export default produce((draft: GroupState, action) => {
     }
     case UPDATE_PLAYER_SELECTED_GROUP_ACTOR: {
       const { groupUUID, userUUID, groupActorUUID } = action.payload;
-      _set(draft.groupActorMap, [groupUUID, userUUID], groupActorUUID)
+      _set(draft.groupActorMap, [groupUUID, userUUID], groupActorUUID);
       return;
       // return state.setIn(
       //   ['groupActorMap', groupUUID, userUUID],
@@ -297,11 +305,13 @@ export default produce((draft: GroupState, action) => {
       // );
     }
     case ADD_GROUP_ACTOR_SUCCESS: {
-      const index = draft.groups.findIndex((group) => group.uuid === action.groupUUID)
-      if(index >= 0) {
-        draft.groups[index].group_actors.push(action.payload)
+      const index = draft.groups.findIndex(
+        (group) => group.uuid === action.groupUUID
+      );
+      if (index >= 0) {
+        draft.groups[index].group_actors.push(action.payload);
       }
-      return
+      return;
 
       // return state.update('groups', (list) => {
       //   for (var i = 0; i < list.size; i++) {
@@ -316,10 +326,12 @@ export default produce((draft: GroupState, action) => {
       // });
     }
     case REMOVE_GROUP_ACTOR_SUCCESS: {
-      const groupIndex = draft.groups.findIndex(group => group.uuid === action.groupUUID)
-      if(groupIndex >= 0) {
-        const group_actors =draft.groups[groupIndex].group_actors;
-        _remove(group_actors, (ga) => ga.uuid === action.groupActorUUID)
+      const groupIndex = draft.groups.findIndex(
+        (group) => group.uuid === action.groupUUID
+      );
+      if (groupIndex >= 0) {
+        const group_actors = draft.groups[groupIndex].group_actors;
+        _remove(group_actors, (ga) => ga.uuid === action.groupActorUUID);
       }
       return;
 
@@ -344,11 +356,15 @@ export default produce((draft: GroupState, action) => {
       // return state;
     }
     case AGREE_GROUP_ACTOR_SUCCESS: {
-      const index = draft.groups.findIndex(group => group.uuid === action.groupUUID);
-      if(index >= 0) {
+      const index = draft.groups.findIndex(
+        (group) => group.uuid === action.groupUUID
+      );
+      if (index >= 0) {
         const groupActorUUID = action.payload.uuid;
-        const groupActorIndex = draft.groups[index].group_actors.findIndex(item => item.uuid === groupActorUUID);
-        if(groupActorIndex >= 0) {
+        const groupActorIndex = draft.groups[index].group_actors.findIndex(
+          (item) => item.uuid === groupActorUUID
+        );
+        if (groupActorIndex >= 0) {
           draft.groups[index].group_actors[groupActorIndex].passed = true;
         }
       }
@@ -371,10 +387,15 @@ export default produce((draft: GroupState, action) => {
       // });
     }
     case REFUSE_GROUP_ACTOR_SUCCESS: {
-      const index = draft.groups.findIndex(group => group.uuid === action.groupUUID);
-      if(index>=0) {
+      const index = draft.groups.findIndex(
+        (group) => group.uuid === action.groupUUID
+      );
+      if (index >= 0) {
         const groupActorUUID = action.groupActorUUID;
-        _remove(draft.groups[index].group_actors, (item) => item.uuid === groupActorUUID)
+        _remove(
+          draft.groups[index].group_actors,
+          (item) => item.uuid === groupActorUUID
+        );
       }
 
       return;
@@ -396,17 +417,25 @@ export default produce((draft: GroupState, action) => {
       // });
     }
     case UPDATE_GROUP_ACTOR_INFO_SUCCESS: {
-      const groupIndex = draft.groups.findIndex(g => g.uuid === action.groupUUID);
-      if(groupIndex === -1) {
+      const groupIndex = draft.groups.findIndex(
+        (g) => g.uuid === action.groupUUID
+      );
+      if (groupIndex === -1) {
         return;
       }
-      const groupActorIndex = draft.groups[groupIndex].group_actors.findIndex(g => g.uuid === action.groupActorUUID)
+      const groupActorIndex = draft.groups[groupIndex].group_actors.findIndex(
+        (g) => g.uuid === action.groupActorUUID
+      );
 
-      if(groupActorIndex === -1) {
+      if (groupActorIndex === -1) {
         return;
       }
 
-      _set(draft.groups[groupIndex], ['group_actors', groupActorIndex, 'actor_info'], action.groupActorInfo)
+      _set(
+        draft.groups[groupIndex],
+        ['group_actors', groupActorIndex, 'actor_info'],
+        action.groupActorInfo
+      );
       return;
 
       // const groupIndex = state
@@ -426,7 +455,7 @@ export default produce((draft: GroupState, action) => {
       // );
     }
     case UPDATE_GROUP_ACTOR_MAPPING: {
-      draft.groupActorMap[action.groupUUID] = action.payload
+      draft.groupActorMap[action.groupUUID] = action.payload;
       return;
       // const groupUUID = action.groupUUID;
       // const payload = action.payload;
@@ -438,14 +467,16 @@ export default produce((draft: GroupState, action) => {
       _remove(draft.groups, (group) => group.uuid === action.groupUUID);
       return;
 
-      // return state.update('groups', (list) => {
-      //   let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
-      //   return list.delete(index);
-      // });
+    // return state.update('groups', (list) => {
+    //   let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
+    //   return list.delete(index);
+    // });
     case TICK_MEMBER_SUCCESS: {
-      const group = draft.groups.find(group => group.uuid === action.groupUUID);
-      if(!_isNil(group)) {
-        _remove(group.group_members, (member => member === action.memberUUID));
+      const group = draft.groups.find(
+        (group) => group.uuid === action.groupUUID
+      );
+      if (!_isNil(group)) {
+        _remove(group.group_members, (member) => member === action.memberUUID);
       }
       return;
 
@@ -456,10 +487,14 @@ export default produce((draft: GroupState, action) => {
       //   });
       // });
     }
-    case ADD_GROUP_MEMBER:{
-      const groupIndex = draft.groups.findIndex((group) => group.uuid === action.groupUUID);
-      const groupMemberIndex = draft.groups[groupIndex].group_members.findIndex((uuid) => uuid === action.memberUUID);
-      if(groupMemberIndex === -1) {
+    case ADD_GROUP_MEMBER: {
+      const groupIndex = draft.groups.findIndex(
+        (group) => group.uuid === action.groupUUID
+      );
+      const groupMemberIndex = draft.groups[groupIndex].group_members.findIndex(
+        (uuid) => uuid === action.memberUUID
+      );
+      if (groupMemberIndex === -1) {
         draft.groups[groupIndex].group_members.push(action.memberUUID);
       }
       return;
@@ -475,9 +510,14 @@ export default produce((draft: GroupState, action) => {
       //   });
       // });
     }
-    case REMOVE_GROUP_MEMBER:{
-      const groupIndex = draft.groups.findIndex(group => group.uuid === action.groupUUID);
-      _remove(draft.groups[groupIndex].group_members, (member) => member === action.memberUUID)
+    case REMOVE_GROUP_MEMBER: {
+      const groupIndex = draft.groups.findIndex(
+        (group) => group.uuid === action.groupUUID
+      );
+      _remove(
+        draft.groups[groupIndex].group_members,
+        (member) => member === action.memberUUID
+      );
       return;
 
       // return state.update('groups', (list) => {
@@ -491,22 +531,25 @@ export default produce((draft: GroupState, action) => {
       //   });
       // });
     }
-    case SET_MEMBER_TO_MANAGER_SUCCESS:
-      {
-        const group = draft.groups.find(group => group.uuid === action.groupUUID);
-        group.managers_uuid.push(action.memberUUID)
-        return;
+    case SET_MEMBER_TO_MANAGER_SUCCESS: {
+      const group = draft.groups.find(
+        (group) => group.uuid === action.groupUUID
+      );
+      group.managers_uuid.push(action.memberUUID);
+      return;
 
-        // return state.update('groups', (list) => {
-        //   let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
-        //   return list.updateIn([index, 'managers_uuid'], (list) =>
-        //     list.push(action.memberUUID)
-        //   );
-        // });
-      }
+      // return state.update('groups', (list) => {
+      //   let index = list.findIndex((i) => i.get('uuid') === action.groupUUID);
+      //   return list.updateIn([index, 'managers_uuid'], (list) =>
+      //     list.push(action.memberUUID)
+      //   );
+      // });
+    }
 
-    case UPDATE_GROUP_STATUS:{
-      const group = draft.groups.find(group => group.uuid === action.groupUUID);
+    case UPDATE_GROUP_STATUS: {
+      const group = draft.groups.find(
+        (group) => group.uuid === action.groupUUID
+      );
       group.status = action.groupStatus;
       return;
 

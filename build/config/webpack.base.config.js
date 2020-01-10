@@ -34,6 +34,16 @@ const babelQuery = {
         libraryDirectory: 'es',
         style: true, // `style: true` 会加载 less 文件
       },
+      'antd',
+    ],
+    [
+      'import',
+      {
+        libraryName: 'react-use',
+        libraryDirectory: 'esm',
+        camel2DashComponentName: false,
+      },
+      'react-use',
     ],
     'transform-class-properties',
     '@babel/plugin-transform-modules-commonjs',

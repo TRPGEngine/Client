@@ -20,12 +20,13 @@ export function preProcessText(plainText: string): string {
 interface Props {
   plainText: string;
 }
-const BBCode = React.memo(({ plainText }: Props) => {
+const BBCode: React.FC<Props> = React.memo(({ plainText }) => {
   const bbcodeComponent = bbcodeParser.parse(
     bbcodeParser.preProcessText(plainText, preProcessText)
   );
 
   return <Fragment>{bbcodeComponent}</Fragment>;
 });
+BBCode.displayName = 'BBCode';
 
 export default BBCode;

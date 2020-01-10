@@ -17,6 +17,7 @@ export const toAvatarWithBlobUrl = async function(
   blobUrl: string,
   options: UploadOption = {}
 ): Promise<AvatarUpdateData> {
+  // TODO: 上传前需要先检查是否存在
   const blob = await blobFromUrl(blobUrl);
   const file = blobToFile(blob, 'avatar.jpg');
   const avatarRet = await toAvatar(userUUID, file, options);

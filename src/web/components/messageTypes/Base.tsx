@@ -5,7 +5,9 @@ import { MessageProps } from '@shared/components/MessageHandler';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 
-class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
+class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
+  P
+> {
   static defaultProps = {
     type: 'normal',
     me: false,

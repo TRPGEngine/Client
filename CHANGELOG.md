@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.15](https://github.com/TRPGEngine/Client/compare/v0.2.14...v0.2.15) (2020-01-10)
+
+
+### Features
+
+* **portal:** 增加帮助反馈 ([1c15c81](https://github.com/TRPGEngine/Client/commit/1c15c810bafac29030da64cba4e82b01ba6cc901))
+* **web:** 增加独立窗口的方法 ([ca5c66c](https://github.com/TRPGEngine/Client/commit/ca5c66c13cfb09fd71775dd542789eacc8672d32))
+
+
+### Bug Fixes
+
+* **web:** 修复某些情况下ActorEdit无法更新用户数据的bug ([0a34ee0](https://github.com/TRPGEngine/Client/commit/0a34ee066a783eb16ff34edda76cd291d5f8a3c3))
+* 修复更新角色信息时无法无法上传头像的bug ([8bafac2](https://github.com/TRPGEngine/Client/commit/8bafac2a4a49eef2575aeff266a991c90a73ff34))
+* **web:** 修复输入法状态下输入英文按回车会直接发送消息的bug ([7a27786](https://github.com/TRPGEngine/Client/commit/7a27786f4870dbc8fd28e712d2331a0eabfdf1bf))
+* **web:** 修复选择团角色后下次不会自动选择已选中的团角色的bug ([3656179](https://github.com/TRPGEngine/Client/commit/3656179cf9c2016918d21ea5be44610623b3ac1f))
+
 ### [0.2.14](https://github.com/TRPGEngine/Client/compare/v0.2.13...v0.2.14) (2020-01-03)
 
 

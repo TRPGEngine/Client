@@ -3,6 +3,11 @@ import { emojify, getCodeList } from '../../shared/utils/emojione';
 
 import './Emoticon.scss';
 
+/**
+ * TODO:暂时不使用，弃置
+ * 之后可以作为所有表情的包装器（emoji，自定义）
+ */
+
 class Emoticon extends React.Component {
   constructor(props) {
     super(props);

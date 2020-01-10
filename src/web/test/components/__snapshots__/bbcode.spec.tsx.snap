@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bbcode render render ":cat:" 1`] = `
+<Memo()
+  plainText=":cat:"
+>
+  <Memo()
+    key="0"
+  >
+    <pre>
+      🐱
+    </pre>
+  </Memo()>
+</Memo()>
+`;
+
+exports[`bbcode render render "[img]http://example.com[/img]" 1`] = `
+<Memo()
+  plainText="[img]http://example.com[/img]"
+>
+  <ImageTag
+    key="0"
+    node={
+      TagNode {
+        "attrs": Object {},
+        "content": Array [
+          "http://example.com",
+        ],
+        "tag": "img",
+      }
+    }
+  >
+    <mock-image
+      role="chatimage"
+      src="http://example.com"
+    />
+  </ImageTag>
+</Memo()>
+`;
+
+exports[`bbcode render render "mix text image[img]http://example.com[/img]" 1`] = `
+<Memo()
+  plainText="mix text image[img]http://example.com[/img]"
+>
+  <Memo()
+    key="0"
+  >
+    <pre>
+      mix text image
+    </pre>
+  </Memo()>
+  <ImageTag
+    key="1"
+    node={
+      TagNode {
+        "attrs": Object {},
+        "content": Array [
+          "http://example.com",
+        ],
+        "tag": "img",
+      }
+    }
+  >
+    <mock-image
+      role="chatimage"
+      src="http://example.com"
+    />
+  </ImageTag>
+</Memo()>
+`;

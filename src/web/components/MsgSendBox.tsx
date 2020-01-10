@@ -1,20 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect, DispatchProp } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import Emoticon from './Emoticon';
+import EmojiPanel from './EmojiPanel';
 import * as pasteUtils from '@shared/utils/paste-utils';
 import { sendMsg } from '@shared/redux/actions/chat';
 import { showModal, hideModal } from '@shared/redux/actions/ui';
 import ActorSelect from './modal/ActorSelect';
 import config from '@shared/project.config';
-import ContentEditable from 'react-contenteditable';
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { Mentions } from 'antd';
 
 import './MsgSendBox.scss';
-
-const MsgEditor = ContentEditable as any;
 
 interface Props extends TRPGDispatchProp {
   userUUID: string;
@@ -30,6 +27,7 @@ interface Props extends TRPGDispatchProp {
 class MsgSendBox extends React.Component<Props> {
   inputMsgRef = React.createRef<Mentions>();
   fileUploader = React.createRef<HTMLInputElement>();
+  inputIME = false;
   state = {
     inputMsg: '',
     inputType: 'normal',
@@ -89,6 +87,7 @@ class MsgSendBox extends React.Component<Props> {
       onClick: () => this.handleShowDiceMethods(),
     },
   ];
+
   hidePopup = () => {
     window.removeEventListener('click', this.hidePopup);
     this.setState({
@@ -145,9 +144,21 @@ class MsgSendBox extends React.Component<Props> {
   };
 
   handleMsgInputKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.keyCode === 13 && !e.shiftKey) {
+    if (e.keyCode === 13 && !e.shiftKey && !this.inputIME) {
+      // 当按下回车且没有按下shift且不是输入法模式
       this.handleSendMsg();
     }
+  };
+
+  handleCompositionStart = () => {
+    this.inputIME = true;
+  };
+
+  handleCompositionEnd = () => {
+    setTimeout(() => {
+      // 给一个时间，因为该事件的触发时间在handleMsgInputKeyUp前
+      this.inputIME = false;
+    }, 100);
   };
 
   handlePaste = async (e: React.ClipboardEvent) => {
@@ -183,11 +194,15 @@ class MsgSendBox extends React.Component<Props> {
     setTimeout(() => window.addEventListener('click', this.hidePopup), 0);
   }
 
-  handleSelectEmoticon(code) {
+  handleEmoticonClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+  };
+
+  handleSelectEmoticon = (code: string) => {
     this.setState({ inputMsg: this.state.inputMsg + code });
     this.hidePopup();
     this.inputMsgRef.current.focus();
-  }
+  };
 
   // 显示投骰方式弹出框
   handleShowDiceMethods() {
@@ -273,8 +288,14 @@ class MsgSendBox extends React.Component<Props> {
                 'popup emoticon' + (this.state.showEmoticon ? ' active' : '')
               }
             >
-              <Emoticon onSelect={(code) => this.handleSelectEmoticon(code)} />
+              <EmojiPanel
+                style={{ position: 'relative', display: 'block' }}
+                onClick={this.handleEmoticonClick}
+                onSelect={this.handleSelectEmoticon}
+              />
+              {/* <Emoticon onSelect={(code) => this.handleSelectEmoticon(code)} /> */}
             </div>
+
             <div
               className={
                 'popup dice' + (this.state.showDiceMethods ? ' active' : '')
@@ -368,7 +389,10 @@ class MsgSendBox extends React.Component<Props> {
             onChange={this.handleMsgInputChange}
             onKeyDownCapture={this.handleMsgInputKeyDown}
             onKeyUpCapture={this.handleMsgInputKeyUp}
+            onCompositionStart={this.handleCompositionStart}
+            onCompositionEnd={this.handleCompositionEnd}
             onPaste={this.handlePaste}
+            autoFocus={true}
           />
         </div>
         <div className="action-area">

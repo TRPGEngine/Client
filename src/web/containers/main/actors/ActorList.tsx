@@ -79,9 +79,15 @@ class ActorList extends React.Component<Props> {
         avatar={avatar}
         data={actor.info}
         layout={templateLayout}
-        onSave={(data) =>
-          this.props.updateActor(uuid, name, avatar, desc, data)
-        }
+        onSave={(data) => {
+          this.props.updateActor(
+            uuid,
+            data._name,
+            data._avatar,
+            data._desc,
+            data
+          );
+        }}
       />
     );
   }

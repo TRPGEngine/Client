@@ -44,7 +44,7 @@ interface Props extends DispatchProp<any> {
   selectedGroupActorInfo: any;
 }
 class GroupDetail extends React.Component<Props> {
-  handleSelectGroupActor(item) {
+  handleSelectGroupActor = (item) => {
     if (item.value !== this.props.selectedGroupActorUUID) {
       this.props.dispatch(
         changeSelectGroupActor(this.props.selectedUUID, item.value)
@@ -278,7 +278,7 @@ class GroupDetail extends React.Component<Props> {
             searchable={false}
             placeholder="请选择身份卡"
             noResultsText="暂无身份卡..."
-            onChange={(item) => this.handleSelectGroupActor(item)}
+            onChange={this.handleSelectGroupActor}
           />
           <div className="actions">{this.getHeaderActions()}</div>
         </div>

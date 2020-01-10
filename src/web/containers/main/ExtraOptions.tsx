@@ -96,6 +96,12 @@ class ExtraOptions extends React.Component<Props> {
     // test function below
     if (menu === 'portalCreateActor') {
       this.props.dispatch(showPortal('/actor/list'));
+    } else if (menu === 'createTestWindow') {
+      import('@web/components/StandaloneWindow').then((module) =>
+        module.default.open({
+          body: 'test',
+        })
+      );
     }
 
     this.setState({ show: '' });
@@ -111,6 +117,9 @@ class ExtraOptions extends React.Component<Props> {
           <DevContainer>
             <li onClick={() => this.handleClickMenu('portalCreateActor')}>
               创建人物(测试)
+            </li>
+            <li onClick={() => this.handleClickMenu('createTestWindow')}>
+              新建窗口(测试)
             </li>
           </DevContainer>
           {/* <li onClick={() => this.handleClickMenu('templateCreate')}>

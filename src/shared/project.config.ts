@@ -109,7 +109,7 @@ const config: ProjectConfig = {
   chat: {
     isWriting: {
       throttle: 800, // 节流时间，即至少多少毫秒才会发出一个正在写的信息
-      timeout: 1500, // 超时时间，即多少毫秒后仍未接收到正在写操作则自动视为已经停止写
+      timeout: 2000, // 超时时间，即多少毫秒后仍未接收到正在写操作则自动视为已经停止写
     },
   },
   file: {

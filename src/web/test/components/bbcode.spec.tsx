@@ -1,23 +1,14 @@
-import { preParse } from '@src/shared/utils/msg-parser';
+import React from 'react';
+import { shallow, mount } from 'enzyme';
+import BBCode from '@web/components/messageTypes/bbcode/__all__';
 
-describe('pre-parse', () => {
-  it('pure text', () => {
-    const ret = preParse('text');
-    expect(ret).toBe('text');
-  });
-
-  it('url string', () => {
-    const ret = preParse('https://baidu.com');
-    expect(ret).toBe('https://baidu.com');
-  });
-
-  it('url with port string', () => {
-    const ret = preParse('https://baidu.com:443/');
-    expect(ret).toBe('https://baidu.com:443/');
-  });
-
-  it('emoji string', () => {
-    const ret = preParse(':smile:');
-    expect(ret).toBe('[emoji]smile[/emoji]');
+describe('bbcode render', () => {
+  test.each([
+    [':cat:'],
+    ['[img]http://example.com[/img]'],
+    ['mix text image[img]http://example.com[/img]'],
+  ])('render "%s"', (originText) => {
+    const wrapper = mount(<BBCode plainText={originText} />);
+    expect(wrapper.toJson()).toMatchSnapshot();
   });
 });

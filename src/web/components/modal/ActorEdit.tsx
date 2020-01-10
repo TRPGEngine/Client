@@ -3,6 +3,7 @@ import ModalPanel from '../ModalPanel';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import _isFunction from 'lodash/isFunction';
+import _cloneDeep from 'lodash/cloneDeep';
 import XMLBuilder from '@shared/layout/XMLBuilder';
 import { Row, Button } from 'antd';
 import styled from 'styled-components';
@@ -24,7 +25,7 @@ interface Props {
   onSave?: (data: any) => void;
 }
 const ActorEdit: React.FC<Props> = (props) => {
-  const [actorData, setActorData] = useState(props.data);
+  const [actorData, setActorData] = useState(_cloneDeep(props.data));
 
   let title = '人物卡';
   if (!_isNil(props.name)) {
@@ -44,7 +45,7 @@ const ActorEdit: React.FC<Props> = (props) => {
       <Container>
         <XMLBuilder
           xml={props.layout}
-          initialData={props.data}
+          initialData={actorData}
           layoutType="edit"
           onChange={(newState) => setActorData(newState.data)}
         />

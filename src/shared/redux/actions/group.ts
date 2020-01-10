@@ -72,6 +72,8 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
       })
     );
 
+    // TODO: 这里请求太多了。要合并成一个最好
+
     // 获取团成员
     api.emit('group::getGroupMembers', { groupUUID }, function(data) {
       if (data.result) {
@@ -92,11 +94,15 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
       }
     });
 
+    // 获取自己选择的团角色
+    dispatch(getSelectedGroupActor(groupUUID));
+
     // 获取团人物
     api.emit('group::getGroupActors', { groupUUID }, function(data) {
       if (data.result) {
-        let actors = data.actors;
+        const actors = data.actors;
         for (let ga of actors) {
+          // 处理头像
           _set(ga, 'avatar', config.file.getAbsolutePath(_get(ga, 'avatar')));
           _set(
             ga,
@@ -408,6 +414,41 @@ export const switchSelectGroup = function(uuid: string): TRPGAction {
 
 export const clearSelectGroup = function(): TRPGAction {
   return { type: SWITCH_GROUP, payload: '' };
+};
+
+/**
+ * 获取当前团选择的团角色
+ * @param groupUUID 团UUID
+ */
+export const getSelectedGroupActor = function(groupUUID: string): TRPGAction {
+  return function(dispatch, getState) {
+    const userUUID = getState().user.info.uuid;
+    return api.emit(
+      'group::getPlayerSelectedGroupActor',
+      {
+        groupUUID,
+        groupMemberUUID: userUUID,
+      },
+      function(data) {
+        if (data.result) {
+          const groupActorUUID = _get(
+            data,
+            'playerSelectedGroupActor.selectedGroupActorUUID'
+          );
+
+          dispatch({
+            type: SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS,
+            payload: {
+              groupUUID,
+              groupActorUUID,
+            },
+          });
+        } else {
+          console.error(data);
+        }
+      }
+    );
+  };
 };
 
 /**

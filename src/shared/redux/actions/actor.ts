@@ -24,9 +24,14 @@ import {
   hideModal,
 } from './ui';
 import _isUndefined from 'lodash/isUndefined';
+import _isString from 'lodash/isString';
+import _set from 'lodash/set';
 
 import * as trpgApi from '../../api/trpg.api';
 import { TRPGAction } from '@redux/types/__all__';
+import { isBlobUrl } from '@shared/utils/string-helper';
+import { getJWTInfo } from '@portal/utils/auth';
+import { toAvatarWithBlobUrl } from '@web/utils/upload-helper';
 const api = trpgApi.getInstance();
 
 let setTemplate = function setTemplate(uuid, name, desc, avatar, info) {
@@ -309,9 +314,23 @@ let updateActor = function updateActor(
   avatar: string,
   desc: string,
   info: {}
-) {
-  return function(dispatch, getState) {
+): TRPGAction {
+  return async function(dispatch, getState) {
     dispatch(showLoading('正在更新人物卡信息，请稍后...'));
+    if (_isString(avatar) && isBlobUrl(avatar)) {
+      // 如果avatar是blob url的话, 则上传一下
+      const userUUID = getState().user.info.uuid;
+      try {
+        const { url } = await toAvatarWithBlobUrl(userUUID, avatar);
+        // 上传成功后更新属性
+        _set(info, '_avatar', url);
+        avatar = url;
+      } catch (err) {
+        dispatch(showAlert('上传头像失败'));
+        throw err;
+      }
+    }
+
     return api.emit(
       'actor::updateActor',
       { uuid, name, avatar, desc, info },
