@@ -31,6 +31,7 @@ export type UserState = {
   isTryLogin: boolean;
   isLogin: boolean;
   info: Partial<UserInfo>;
+  webToken: string; // 用于portal登录的token
   friendList: string[];
   friendInvite: any[];
   friendRequests: any[];

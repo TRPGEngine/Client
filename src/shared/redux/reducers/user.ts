@@ -13,6 +13,7 @@ const {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILED,
+  SET_WEB_TOKEN,
   FIND_USER_REQUEST,
   FIND_USER_SUCCESS,
   FIND_USER_FAILED,
@@ -30,6 +31,7 @@ const initialState: UserState = {
   isTryLogin: false,
   isLogin: false,
   info: {},
+  webToken: null,
   friendList: [],
   friendInvite: [], // 好友邀请(发送的)
   friendRequests: [], // 好友申请(接受到的)
@@ -75,6 +77,9 @@ export default produce((draft: UserState, action) => {
     case REGISTER_REQUEST:
     case REGISTER_FAILED:
     case REGISTER_SUCCESS:
+      return;
+    case SET_WEB_TOKEN:
+      draft.webToken = action.token ?? null;
       return;
     case FIND_USER_REQUEST:
       draft.isFindingUser = false;
