@@ -17,5 +17,6 @@ const Avatar = React.memo((props: Props) => {
     </AntdAvatar>
   );
 });
+Avatar.displayName = 'Avatar';
 
 export default Avatar;

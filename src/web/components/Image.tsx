@@ -9,7 +9,7 @@ interface Props
   > {
   src: string;
 }
-class Image extends React.Component<Props> {
+class Image extends React.PureComponent<Props> {
   state = {
     isLoading: true,
   };
@@ -21,7 +21,7 @@ class Image extends React.Component<Props> {
     mImg.onload = () => {
       this.setState({ isLoading: false });
     };
-    mImg = null;
+    mImg = null; // 释放内存
   }
 
   render() {
@@ -36,7 +36,7 @@ class Image extends React.Component<Props> {
         onError={() => {
           this.setState({ src: config.defaultImg.chatimg_fail });
         }}
-        onLoad={() => console.log('aaaa')}
+        // onLoad={() => console.log('aaaa')}
       />
     );
   }
