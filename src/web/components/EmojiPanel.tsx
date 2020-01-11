@@ -5,9 +5,15 @@ import styled from 'styled-components';
 import _isFunction from 'lodash/isFunction';
 
 const Container = styled.div`
+  .emoji-mart {
     .emoji-mart-emoji {
       outline: 0;
     }
+
+    .emoji-mart-scroll {
+      overflow-x: hidden;
+    }
+  }
 `;
 
 const i18n = {
