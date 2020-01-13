@@ -1,4 +1,5 @@
 /**
+ * https://github.com/angular/angular/blob/master/CONTRIBUTING.md#type
  * feat：新功能（feature）
  * fix：修补bug
  * docs：文档（documentation）
