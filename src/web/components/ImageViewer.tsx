@@ -1,16 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Lightbox from 'react-image-lightbox';
 
 import './ImageViewer.scss';
 
-class ImageViewer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false,
-    };
-  }
+interface Props {
+  originImageUrl: string;
+}
+class ImageViewer extends React.PureComponent<Props> {
+  state = {
+    isOpen: false,
+  };
 
   handleClick() {
     if (this.props.originImageUrl) {
@@ -32,9 +31,5 @@ class ImageViewer extends React.Component {
     );
   }
 }
-
-ImageViewer.propTypes = {
-  originImageUrl: PropTypes.string,
-};
 
 export default ImageViewer;
