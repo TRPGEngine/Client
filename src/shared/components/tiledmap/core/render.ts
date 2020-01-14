@@ -1,7 +1,7 @@
 import { Size, Position, Axios } from './types';
 
 interface TiledMapOptions {
-  size: Size;
+  size: Size; // 应当是gridSize的整数倍
   gridSize: Size;
   ratio?: number; // 绘制精度, 越大越精细但是消耗资源越高
   axis?: {
@@ -174,33 +174,33 @@ export class TiledMapRender {
 
     const windowRelativePos = this.getWindowRelativePosition();
 
-    for (let x = 0; x <= width; x = x + interval.width) {
+    for (let x = 0, xi = 1; x < width; x = x + interval.width, xi++) {
       // x轴
-      const text = String(x);
+      const text = String(xi);
       const { width: textWidth } = ctx.measureText(text);
-      const deltaLeft = textWidth / 2;
+      const offsetX = -textWidth / 2 + interval.width / 2; // 左边相对移动距离
 
       ctx.fillText(
         text,
-        x - deltaLeft,
+        x + offsetX,
         windowRelativePos.y < -padding.y
           ? 0 - padding.y
           : windowRelativePos.y + fontSize
       );
     }
 
-    for (let y = 0; y <= height; y = y + interval.height) {
+    for (let y = 0, yi = 1; y < height; y = y + interval.height, yi++) {
       // y轴
-      const text = String(y);
+      const text = String(yi);
       const { width: textWidth } = ctx.measureText(text);
-      const deltaBottom = fontSize / 2;
+      const offsetY = fontSize / 2 + interval.height / 2; // 上下相对移动距离
 
       ctx.fillText(
         text,
         windowRelativePos.x < -padding.x
           ? -textWidth - padding.x
           : windowRelativePos.x,
-        y + deltaBottom
+        y + offsetY
       );
     }
   }
