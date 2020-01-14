@@ -15,10 +15,13 @@ class Image extends React.PureComponent<Props> {
   };
 
   componentDidMount() {
-    let mImg = new (window as any).Image();
+    let mImg = new window.Image();
 
     mImg.src = this.props.src;
     mImg.onload = () => {
+      this.setState({ isLoading: false });
+    };
+    mImg.onerror = () => {
       this.setState({ isLoading: false });
     };
     mImg = null; // 释放内存
@@ -36,7 +39,6 @@ class Image extends React.PureComponent<Props> {
         onError={() => {
           this.setState({ src: config.defaultImg.chatimg_fail });
         }}
-        // onLoad={() => console.log('aaaa')}
       />
     );
   }
