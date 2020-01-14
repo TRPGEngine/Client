@@ -19,9 +19,7 @@ export const TiledMap: React.FC = React.memo((props) => {
 
   return (
     <div>
-      <canvas ref={canvasRef} width={800} height={600}>
-        请使用现代浏览器打开本页面
-      </canvas>
+      <canvas ref={canvasRef}>请使用现代浏览器打开本页面</canvas>
     </div>
   );
 });

@@ -3,6 +3,7 @@ import { Size, Position, Axios } from './types';
 interface TiledMapOptions {
   size: Size;
   gridSize: Size;
+  ratio?: number; // 绘制精度, 越大越精细但是消耗资源越高
   axis?: {
     padding: Axios;
   };
@@ -10,6 +11,7 @@ interface TiledMapOptions {
 
 export class TiledMapRender {
   static defaultOptions: Partial<TiledMapOptions> = {
+    ratio: window.devicePixelRatio ?? 1,
     axis: {
       padding: {
         x: 10,
@@ -20,6 +22,7 @@ export class TiledMapRender {
 
   private ctx: CanvasRenderingContext2D;
   public position: Position = { x: 0, y: 0 };
+  private _originOptions?: TiledMapOptions;
   public options: TiledMapOptions;
 
   constructor(private el: HTMLCanvasElement, options: TiledMapOptions) {
@@ -29,10 +32,58 @@ export class TiledMapRender {
       ...options,
     };
 
-    // init
-    el.style.cursor = 'all-scroll';
+    this.init();
     this.render();
     this.addEventListener();
+  }
+
+  /**
+   * 初始化元素的一些基本信息与全局配置
+   */
+  init() {
+    const el = this.el;
+    const options = this.options;
+    const ratio = options.ratio;
+
+    el.style.cursor = 'all-scroll';
+    this.ctx.scale(ratio, ratio);
+    el.width = options.size.width * ratio;
+    el.height = options.size.height * ratio;
+
+    // 设置canvas实际尺寸为渲染面积一半大小
+    // el.style.transform = `scale(${1 / ratio})`;
+    // el.style.transformOrigin = '0 0';
+    el.style.width = options.size.width + 'px';
+    el.style.height = options.size.height + 'px';
+
+    this.resetOptionSize();
+  }
+
+  /**
+   * 将options的数据根据ratio进行缩放
+   */
+  resetOptionSize() {
+    const options = this.options;
+    this._originOptions = options;
+    const { ratio, size, gridSize, axis } = options;
+
+    this.options = {
+      ...this.options,
+      size: {
+        width: size.width * ratio,
+        height: size.height * ratio,
+      },
+      gridSize: {
+        width: gridSize.width * ratio,
+        height: gridSize.height * ratio,
+      },
+      axis: {
+        padding: {
+          x: axis.padding.x * ratio,
+          y: axis.padding.y * ratio,
+        },
+      },
+    };
   }
 
   addEventListener() {
