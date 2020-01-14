@@ -7,12 +7,22 @@ export const TiledMap: React.FC = React.memo((props) => {
   useEffect(() => {
     const render = new TiledMapRender(canvasRef.current, {
       size: {
-        x: 800,
-        y: 600,
+        width: 800,
+        height: 600,
+      },
+      gridSize: {
+        width: 40,
+        height: 40,
       },
     });
   }, []);
 
-  return <canvas ref={canvasRef} width={800} height={600} />;
+  return (
+    <div>
+      <canvas ref={canvasRef} width={800} height={600}>
+        请使用现代浏览器打开本页面
+      </canvas>
+    </div>
+  );
 });
 TiledMap.displayName = 'TiledMap';
