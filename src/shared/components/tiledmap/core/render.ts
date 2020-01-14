@@ -1,24 +1,38 @@
-import { Size, Position } from './types';
+import { Size, Position, Axios } from './types';
 
 interface TiledMapOptions {
   size: Size;
   gridSize: Size;
+  axis?: {
+    padding: Axios;
+  };
 }
 
 export class TiledMapRender {
+  static defaultOptions: Partial<TiledMapOptions> = {
+    axis: {
+      padding: {
+        x: 10,
+        y: 10,
+      },
+    },
+  };
+
   private ctx: CanvasRenderingContext2D;
   public position: Position = { x: 0, y: 0 };
-  constructor(private el: HTMLCanvasElement, public options: TiledMapOptions) {
+  public options: TiledMapOptions;
+
+  constructor(private el: HTMLCanvasElement, options: TiledMapOptions) {
     this.ctx = el.getContext('2d');
+    this.options = {
+      ...TiledMapRender.defaultOptions,
+      ...options,
+    };
 
     // init
     el.style.cursor = 'all-scroll';
     this.render();
     this.addEventListener();
-  }
-
-  render() {
-    this.drawGrid();
   }
 
   addEventListener() {
@@ -49,15 +63,23 @@ export class TiledMapRender {
   }
 
   /**
+   * 渲染所有的图形
+   */
+  render() {
+    this.clear();
+    this.resetTranslate();
+
+    this.drawGrid();
+    this.drawAxis();
+  }
+
+  /**
    * 绘制网格
    */
   drawGrid() {
+    const ctx = this.ctx;
     const interval = this.options.gridSize;
     const { width, height } = this.options.size;
-    const ctx = this.ctx;
-
-    this.clear();
-    this.resetTranslate();
 
     ctx.strokeStyle = '#cccccc';
     ctx.lineWidth = 1;
@@ -82,6 +104,65 @@ export class TiledMapRender {
       ctx.lineTo(width, y);
       ctx.stroke();
     }
+  }
+
+  /**
+   * 绘制坐标轴
+   */
+  drawAxis() {
+    const ctx = this.ctx;
+    const interval = this.options.gridSize;
+    const { width, height } = this.options.size;
+    const padding = this.options.axis.padding;
+
+    const fontSize = 18;
+
+    ctx.font = `${fontSize}px '微软雅黑'`;
+    ctx.fillStyle = '#cccccc';
+    ctx.lineWidth = 1;
+
+    const windowRelativePos = this.getWindowRelativePosition();
+
+    for (let x = 0; x <= width; x = x + interval.width) {
+      // x轴
+      const text = String(x);
+      const { width: textWidth } = ctx.measureText(text);
+      const deltaLeft = textWidth / 2;
+
+      ctx.fillText(
+        text,
+        x - deltaLeft,
+        windowRelativePos.y < -padding.y
+          ? 0 - padding.y
+          : windowRelativePos.y + fontSize
+      );
+    }
+
+    for (let y = 0; y <= height; y = y + interval.height) {
+      // y轴
+      const text = String(y);
+      const { width: textWidth } = ctx.measureText(text);
+      const deltaBottom = fontSize / 2;
+
+      ctx.fillText(
+        text,
+        windowRelativePos.x < -padding.x
+          ? -textWidth - padding.x
+          : windowRelativePos.x,
+        y + deltaBottom
+      );
+    }
+  }
+
+  /**
+   * 获取在实际窗口上左上角的坐标
+   */
+  getWindowRelativePosition(): Position {
+    const pos = this.position;
+    return {
+      x: -pos.x,
+      y: -pos.y,
+    };
   }
 
   setPosition(pos: Position) {
