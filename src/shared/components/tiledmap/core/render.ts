@@ -1,7 +1,7 @@
 import { Size, Position, Axios } from './types';
 
 interface TiledMapOptions {
-  size: Size; // 应当是gridSize的整数倍
+  size: Size; // 格子数
   gridSize: Size;
   ratio?: number; // 绘制精度, 越大越精细但是消耗资源越高
   axis?: {
@@ -37,6 +37,14 @@ export class TiledMapRender {
     this.addEventListener();
   }
 
+  getCanvasSize(): Size {
+    const options = this.options;
+    return {
+      width: options.size.width * options.gridSize.width,
+      height: options.size.height * options.gridSize.height,
+    };
+  }
+
   /**
    * 初始化元素的一些基本信息与全局配置
    */
@@ -47,14 +55,16 @@ export class TiledMapRender {
 
     el.style.cursor = 'all-scroll';
     this.ctx.scale(ratio, ratio);
-    el.width = options.size.width * ratio;
-    el.height = options.size.height * ratio;
+
+    const canvasSize = this.getCanvasSize();
+    el.width = canvasSize.width * ratio;
+    el.height = canvasSize.height * ratio;
 
     // 设置canvas实际尺寸为渲染面积一半大小
     // el.style.transform = `scale(${1 / ratio})`;
     // el.style.transformOrigin = '0 0';
-    el.style.width = options.size.width + 'px';
-    el.style.height = options.size.height + 'px';
+    el.style.width = canvasSize.width + 'px';
+    el.style.height = canvasSize.height + 'px';
 
     this.resetOptionSize();
   }
@@ -70,8 +80,8 @@ export class TiledMapRender {
     this.options = {
       ...this.options,
       size: {
-        width: size.width * ratio,
-        height: size.height * ratio,
+        width: size.width,
+        height: size.height,
       },
       gridSize: {
         width: gridSize.width * ratio,
@@ -131,34 +141,37 @@ export class TiledMapRender {
     const ctx = this.ctx;
     const interval = this.options.gridSize;
     const { width, height } = this.options.size;
+    const canvasSize = this.getCanvasSize();
 
     ctx.strokeStyle = '#cccccc';
     ctx.lineWidth = 1;
     ctx.beginPath();
 
-    for (let x = 0; x <= width; x = x + interval.width) {
-      if (x === width) {
+    for (let x = 0, xi = 0; xi <= width; x = x + interval.width, xi++) {
+      if (xi === width) {
+        // 使绘制的最后一条线往前走1px使其能在屏幕内
         x--;
       }
 
       ctx.moveTo(x, 0);
-      ctx.lineTo(x, height);
+      ctx.lineTo(x, canvasSize.height);
       ctx.stroke();
     }
 
-    for (let y = 0; y <= height; y = y + interval.height) {
-      if (y === height) {
+    for (let y = 0, yi = 0; yi <= height; y = y + interval.height, yi++) {
+      if (yi === height) {
+        // 使绘制的最后一条线往前走1px使其能在屏幕内
         y--;
       }
 
       ctx.moveTo(0, y);
-      ctx.lineTo(width, y);
+      ctx.lineTo(canvasSize.width, y);
       ctx.stroke();
     }
   }
 
   /**
-   * 绘制坐标轴
+   * 绘制坐标轴标识
    */
   drawAxis() {
     const ctx = this.ctx;
@@ -174,7 +187,7 @@ export class TiledMapRender {
 
     const windowRelativePos = this.getWindowRelativePosition();
 
-    for (let x = 0, xi = 1; x < width; x = x + interval.width, xi++) {
+    for (let x = 0, xi = 1; xi <= width; x = x + interval.width, xi++) {
       // x轴
       const text = String(xi);
       const { width: textWidth } = ctx.measureText(text);
@@ -189,7 +202,7 @@ export class TiledMapRender {
       );
     }
 
-    for (let y = 0, yi = 1; y < height; y = y + interval.height, yi++) {
+    for (let y = 0, yi = 1; yi <= height; y = y + interval.height, yi++) {
       // y轴
       const text = String(yi);
       const { width: textWidth } = ctx.measureText(text);

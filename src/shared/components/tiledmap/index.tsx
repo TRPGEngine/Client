@@ -7,8 +7,8 @@ export const TiledMap: React.FC = React.memo((props) => {
   useEffect(() => {
     const render = new TiledMapRender(canvasRef.current, {
       size: {
-        width: 800,
-        height: 600,
+        width: 20,
+        height: 15,
       },
       gridSize: {
         width: 40,
