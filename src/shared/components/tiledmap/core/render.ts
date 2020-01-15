@@ -1,31 +1,15 @@
 import { Size, Position, TiledMapOptions } from './types';
 
 export class TiledMapRender {
-  static defaultOptions: Partial<TiledMapOptions> = {
-    ratio: window.devicePixelRatio ?? 1,
-    axis: {
-      padding: {
-        x: 10,
-        y: 10,
-      },
-    },
-  };
-
   private ctx: CanvasRenderingContext2D;
   public position: Position = { x: 0, y: 0 };
   private _originOptions?: TiledMapOptions;
-  public options: TiledMapOptions;
 
-  constructor(private el: HTMLCanvasElement, options: TiledMapOptions) {
+  constructor(private el: HTMLCanvasElement, public options: TiledMapOptions) {
     this.ctx = el.getContext('2d');
-    this.options = {
-      ...TiledMapRender.defaultOptions,
-      ...options,
-    };
 
     this.init();
     this.render();
-    this.addEventListener();
   }
 
   getCanvasSize(): Size {
@@ -85,33 +69,6 @@ export class TiledMapRender {
         },
       },
     };
-  }
-
-  addEventListener() {
-    this.el.addEventListener('mousedown', (e) => {
-      const { clientX, clientY } = e;
-      const { x: prevX, y: prevY } = this.position;
-
-      const handleMouseMove = (e: MouseEvent) => {
-        const deltaX = e.clientX - clientX;
-        const deltaY = e.clientY - clientY;
-        this.setPosition({
-          x: prevX + deltaX,
-          y: prevY + deltaY,
-        });
-        this.render();
-      };
-
-      const handleMouseLeave = (e: MouseEvent) => {
-        this.el.removeEventListener('mousemove', handleMouseMove);
-        this.el.removeEventListener('mouseup', handleMouseLeave);
-        this.el.removeEventListener('mouseleave', handleMouseLeave);
-      };
-
-      this.el.addEventListener('mousemove', handleMouseMove);
-      this.el.addEventListener('mouseup', handleMouseLeave);
-      this.el.addEventListener('mouseleave', handleMouseLeave);
-    });
   }
 
   /**

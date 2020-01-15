@@ -1,12 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import { TiledMapManager } from './core/manager';
+import { regAllTool } from './tools/__all__';
 
 export const TiledMap: React.FC = React.memo((props) => {
   const canvasRef = useRef<HTMLCanvasElement>();
   const manager = useRef<TiledMapManager>(null);
 
   useEffect(() => {
-    manager.current = new TiledMapManager(canvasRef.current, {
+    const tiledMapManager = new TiledMapManager(canvasRef.current, {
       size: {
         width: 20,
         height: 15,
@@ -16,6 +17,9 @@ export const TiledMap: React.FC = React.memo((props) => {
         height: 40,
       },
     });
+    regAllTool(tiledMapManager);
+
+    manager.current = tiledMapManager;
   }, []);
 
   return (
