@@ -1,11 +1,12 @@
 import React, { useRef, useEffect } from 'react';
-import { TiledMapRender } from './core/render';
+import { TiledMapManager } from './core/manager';
 
 export const TiledMap: React.FC = React.memo((props) => {
   const canvasRef = useRef<HTMLCanvasElement>();
+  const manager = useRef<TiledMapManager>(null);
 
   useEffect(() => {
-    const render = new TiledMapRender(canvasRef.current, {
+    manager.current = new TiledMapManager(canvasRef.current, {
       size: {
         width: 20,
         height: 15,

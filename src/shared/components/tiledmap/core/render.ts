@@ -1,13 +1,4 @@
-import { Size, Position, Axios } from './types';
-
-interface TiledMapOptions {
-  size: Size; // 格子数
-  gridSize: Size;
-  ratio?: number; // 绘制精度, 越大越精细但是消耗资源越高
-  axis?: {
-    padding: Axios;
-  };
-}
+import { Size, Position, TiledMapOptions } from './types';
 
 export class TiledMapRender {
   static defaultOptions: Partial<TiledMapOptions> = {
