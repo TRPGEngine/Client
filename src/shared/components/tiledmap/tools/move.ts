@@ -16,7 +16,7 @@ export class TiledMapToolMove extends TiledMapToolBase {
         x: canvasPos.x + deltaX * ratio,
         y: canvasPos.y + deltaY * ratio,
       });
-      ctx.render.render();
+      ctx.render.draw();
     };
 
     const handleMouseLeave = (e: MouseEvent) => {

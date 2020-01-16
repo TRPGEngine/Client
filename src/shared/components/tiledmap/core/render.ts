@@ -9,7 +9,7 @@ export class TiledMapRender {
     this.ctx = el.getContext('2d');
 
     this.init();
-    this.render();
+    this.draw();
   }
 
   getCanvasSize(): Size {
@@ -74,7 +74,7 @@ export class TiledMapRender {
   /**
    * 渲染所有的图形
    */
-  render() {
+  draw() {
     this.clear();
     this.resetTranslate();
 
