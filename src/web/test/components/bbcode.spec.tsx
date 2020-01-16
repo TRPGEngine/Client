@@ -7,6 +7,8 @@ describe('bbcode render', () => {
     [':cat:'],
     ['[img]http://example.com[/img]'],
     ['mix text image[img]http://example.com[/img]'],
+    ['some sample text'],
+    ['[asd]unrecognized tag should be ignore[/asd]'],
   ])('render "%s"', (originText) => {
     const wrapper = mount(<BBCode plainText={originText} />);
     expect(wrapper.toJson()).toMatchSnapshot();
