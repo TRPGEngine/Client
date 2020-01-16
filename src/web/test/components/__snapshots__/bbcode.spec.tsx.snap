@@ -1,21 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`bbcode render render ":cat:" 1`] = `
-<Memo()
+<BBCode
   plainText=":cat:"
 >
-  <Memo()
+  <PlainText
     key="0"
   >
     <pre>
       🐱
     </pre>
-  </Memo()>
-</Memo()>
+  </PlainText>
+</BBCode>
 `;
 
 exports[`bbcode render render "[img]http://example.com[/img]" 1`] = `
-<Memo()
+<BBCode
   plainText="[img]http://example.com[/img]"
 >
   <ImageTag
@@ -30,25 +30,35 @@ exports[`bbcode render render "[img]http://example.com[/img]" 1`] = `
       }
     }
   >
-    <mock-image
-      role="chatimage"
-      src="http://example.com"
-    />
+    <ImageViewer
+      allImageUrls={Array []}
+      originImageUrl="http://example.com"
+    >
+      <div
+        className="image-viewer"
+        onClick={[Function]}
+      >
+        <mock-image
+          role="chatimage"
+          src="http://example.com"
+        />
+      </div>
+    </ImageViewer>
   </ImageTag>
-</Memo()>
+</BBCode>
 `;
 
 exports[`bbcode render render "mix text image[img]http://example.com[/img]" 1`] = `
-<Memo()
+<BBCode
   plainText="mix text image[img]http://example.com[/img]"
 >
-  <Memo()
+  <PlainText
     key="0"
   >
     <pre>
       mix text image
     </pre>
-  </Memo()>
+  </PlainText>
   <ImageTag
     key="1"
     node={
@@ -61,10 +71,20 @@ exports[`bbcode render render "mix text image[img]http://example.com[/img]" 1`] 
       }
     }
   >
-    <mock-image
-      role="chatimage"
-      src="http://example.com"
-    />
+    <ImageViewer
+      allImageUrls={Array []}
+      originImageUrl="http://example.com"
+    >
+      <div
+        className="image-viewer"
+        onClick={[Function]}
+      >
+        <mock-image
+          role="chatimage"
+          src="http://example.com"
+        />
+      </div>
+    </ImageViewer>
   </ImageTag>
-</Memo()>
+</BBCode>
 `;
