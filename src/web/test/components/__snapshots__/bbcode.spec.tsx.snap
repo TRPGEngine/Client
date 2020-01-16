@@ -81,6 +81,60 @@ exports[`bbcode render render "[img]http://example.com[/img]" 1`] = `
 </BBCode>
 `;
 
+exports[`bbcode render render "[url]http://baidu.com[/url]" 1`] = `
+<BBCode
+  plainText="[url]http://baidu.com[/url]"
+>
+  <UrlTag
+    key="0"
+    node={
+      TagNode {
+        "attrs": Object {},
+        "content": Array [
+          "http://baidu.com",
+        ],
+        "tag": "url",
+      }
+    }
+  >
+    <a
+      href="http://baidu.com"
+      target="_blank"
+      title="http://baidu.com"
+    >
+      http://baidu.com
+    </a>
+  </UrlTag>
+</BBCode>
+`;
+
+exports[`bbcode render render "http://baidu.com" 1`] = `
+<BBCode
+  plainText="http://baidu.com"
+>
+  <UrlTag
+    key="0"
+    node={
+      TagNode {
+        "attrs": Object {},
+        "content": Array [
+          "http://baidu.com",
+        ],
+        "tag": "url",
+      }
+    }
+  >
+    <a
+      href="http://baidu.com"
+      target="_blank"
+      title="http://baidu.com"
+    >
+      http://baidu.com
+    </a>
+  </UrlTag>
+</BBCode>
+`;
+
 exports[`bbcode render render "mix text image[img]http://example.com[/img]" 1`] = `
 <BBCode
   plainText="mix text image[img]http://example.com[/img]"
