@@ -58,8 +58,13 @@ class BBCodeParser {
       .join('');
   }
 
-  parse(input: string): ReactNode[] {
-    const ast = parse(input, this.options) as AstNode[];
+  // 将bbcode字符串转化为AstNode
+  parse(input: string): AstNode[] {
+    return parse(input, this.options);
+  }
+
+  render(input: string): ReactNode[] {
+    const ast = this.parse(input);
 
     return ast
       .reduce<AstNode[]>((prev, curr) => {

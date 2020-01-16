@@ -21,7 +21,7 @@ interface Props {
   plainText: string;
 }
 const BBCode: React.FC<Props> = React.memo(({ plainText }) => {
-  const bbcodeComponent = bbcodeParser.parse(
+  const bbcodeComponent = bbcodeParser.render(
     bbcodeParser.preProcessText(plainText, preProcessText)
   );
 
