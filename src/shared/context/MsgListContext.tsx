@@ -4,6 +4,7 @@ import bbcodeParser from '@shared/components/bbcode/parser';
 import _get from 'lodash/get';
 import _invoke from 'lodash/invoke';
 import _flatten from 'lodash/flatten';
+import _uniq from 'lodash/uniq';
 
 interface MsgListContextType {
   msgList: MsgListType;
@@ -38,6 +39,7 @@ export const useMsgList = (): MsgListType => {
 
 /**
  * 获取当前聊天列表的所有图片的url列表
+ * 返回去重后的结果
  */
 export const useMsgListImageUrls = (): string[] => {
   const msgList = useMsgList();
@@ -49,7 +51,7 @@ export const useMsgListImageUrls = (): string[] => {
       .map((nodes) => {
         return nodes.map((node) => _invoke(node, 'content.join', ''));
       });
-    return _flatten(urls);
+    return _uniq(_flatten(urls));
   }, [msgList]);
 
   return imageUrls;
