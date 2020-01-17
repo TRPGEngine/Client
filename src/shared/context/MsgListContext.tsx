@@ -51,6 +51,7 @@ export const useMsgListImageUrls = (): string[] => {
       .map((nodes) => {
         return nodes.map((node) => _invoke(node, 'content.join', ''));
       });
+
     return _uniq(_flatten(urls));
   }, [msgList]);
 

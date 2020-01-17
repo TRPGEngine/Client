@@ -11,6 +11,7 @@ interface Props {
    * 可以为单个字符串，也可以是一个字符串列表
    */
   images: string | string[];
+  initIndex?: number;
 }
 
 class TImageViewer extends React.Component<Props> {
@@ -18,6 +19,17 @@ class TImageViewer extends React.Component<Props> {
     index: 0,
     modalVisible: false,
   };
+
+  static defaultProps = {
+    initIndex: 0,
+  };
+
+  constructor(props) {
+    super(props);
+    if (props.initIndex >= 0) {
+      this.state.index = props.initIndex;
+    }
+  }
 
   get images() {
     const images = this.props.images;

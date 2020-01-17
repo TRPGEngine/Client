@@ -15,6 +15,7 @@ import { getUserInfoCache } from '@src/shared/utils/cache-helper';
 import appConfig from '@app/config.app';
 import { MsgListType, MsgPayload } from '@src/shared/redux/types/chat';
 import _isFunction from 'lodash/isFunction';
+import { MsgListContextProvider } from '@shared/context/MsgListContext';
 
 const MSG_INIT_NUM = 10;
 
@@ -122,48 +123,52 @@ class MsgList extends React.PureComponent<Props> {
     const { msgList, onTouchStart } = this.props;
 
     return (
-      <FlatList<MsgPayload>
-        style={{ flex: 1 }}
-        ref={this.listRef}
-        data={msgList}
-        inverted={true}
-        keyExtractor={(item, index) => item.uuid + index}
-        onTouchStart={onTouchStart}
-        onScroll={this.handleScroll}
-        onEndReached={this.handleGetMoreLog}
-        onEndReachedThreshold={0.1}
-        renderItem={({ item, index }) => {
-          // 因为列表是倒转的。所以第一条数据是最下面那条
-          // UI中的上一条数据应为msgList的下一条
-          const prevDate =
-            index < msgList.length - 1 ? _get(msgList, [index + 1, 'date']) : 0;
-          const isMe = item.sender_uuid === this.props.selfInfo.uuid;
-          const senderInfo = isMe
-            ? this.props.selfInfo
-            : getUserInfoCache(item.sender_uuid);
-          const name = senderInfo.nickname || senderInfo.username;
-          const avatar = senderInfo.avatar;
-          const defaultAvatar =
-            item.sender_uuid === 'trpgsystem'
-              ? appConfig.defaultImg.trpgsystem
-              : appConfig.defaultImg.user;
-          const date = item.date;
+      <MsgListContextProvider msgList={msgList}>
+        <FlatList<MsgPayload>
+          style={{ flex: 1 }}
+          ref={this.listRef}
+          data={msgList}
+          inverted={true}
+          keyExtractor={(item, index) => item.uuid + index}
+          onTouchStart={onTouchStart}
+          onScroll={this.handleScroll}
+          onEndReached={this.handleGetMoreLog}
+          onEndReachedThreshold={0.1}
+          renderItem={({ item, index }) => {
+            // 因为列表是倒转的。所以第一条数据是最下面那条
+            // UI中的上一条数据应为msgList的下一条
+            const prevDate =
+              index < msgList.length - 1
+                ? _get(msgList, [index + 1, 'date'])
+                : 0;
+            const isMe = item.sender_uuid === this.props.selfInfo.uuid;
+            const senderInfo = isMe
+              ? this.props.selfInfo
+              : getUserInfoCache(item.sender_uuid);
+            const name = senderInfo.nickname || senderInfo.username;
+            const avatar = senderInfo.avatar;
+            const defaultAvatar =
+              item.sender_uuid === 'trpgsystem'
+                ? appConfig.defaultImg.trpgsystem
+                : appConfig.defaultImg.user;
+            const date = item.date;
 
-          const emphasizeTime = shouleEmphasizeTime(prevDate, date);
+            const emphasizeTime = shouleEmphasizeTime(prevDate, date);
 
-          return (
-            <MessageHandler
-              type={item.type}
-              me={isMe}
-              name={name}
-              avatar={avatar || defaultAvatar}
-              emphasizeTime={emphasizeTime}
-              info={item}
-            />
-          );
-        }}
-        ListFooterComponent={this.renderMsgListFooter()}
-      />
+            return (
+              <MessageHandler
+                type={item.type}
+                me={isMe}
+                name={name}
+                avatar={avatar || defaultAvatar}
+                emphasizeTime={emphasizeTime}
+                info={item}
+              />
+            );
+          }}
+          ListFooterComponent={this.renderMsgListFooter()}
+        />
+      </MsgListContextProvider>
     );
   }
 }
