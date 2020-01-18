@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.16](https://github.com/TRPGEngine/Client/compare/v0.2.15...v0.2.16) (2020-01-18)
+
+
+### Features
+
+* 增加消息上下文管理器 ([a5502c6](https://github.com/TRPGEngine/Client/commit/a5502c6f3fd879e89ee61b08d39012d315c18c5b))
+* **app:** 增加消息列表上下文用于在图片预览的时候显示多个图片切换 ([a66420d](https://github.com/TRPGEngine/Client/commit/a66420d6705b5ab2cae849b8ce1ebcfcdc0d792a))
+* **web:** 为Emoji面板增加了中文的翻译 ([f1a70db](https://github.com/TRPGEngine/Client/commit/f1a70db01bcc48a07172921950652db37454fff9))
+* **web:** 增加web端bbcode解析网址的操作 ([d53ad91](https://github.com/TRPGEngine/Client/commit/d53ad91010437e138cc454f456dabd5c68976a42))
+* **web:** 增加图片消息可以点击打开图片预览功能 ([880bf15](https://github.com/TRPGEngine/Client/commit/880bf155509dedbabc510419608a7db699c70977))
+* **web:** 增加消息列表上下文用于在图片预览的时候显示多个图片切换 ([7789c70](https://github.com/TRPGEngine/Client/commit/7789c707b00328a347a821fdca48321514023edb))
+
+
+### Bug Fixes
+
+* **web:** 修复了在window下emoji面板使用原生emoji表情会出现x轴滚动条的问题 ([dc4121a](https://github.com/TRPGEngine/Client/commit/dc4121a1ce92212a12442d5193f9ac14cf249f2c))
+* **web:** 修复错误图片无法正常打开的问题 ([d1f2767](https://github.com/TRPGEngine/Client/commit/d1f2767a18c9c54d8bd41412332c60bfbdad61af))
+* 修复BBCode如果没有注册的Tag就不会渲染的bug ([545dac8](https://github.com/TRPGEngine/Client/commit/545dac86a67e9e086233b6787f9d8e23fb409208))
+
 ### [0.2.15](https://github.com/TRPGEngine/Client/compare/v0.2.14...v0.2.15) (2020-01-10)
 
 
