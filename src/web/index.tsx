@@ -20,6 +20,8 @@ import {
 } from '../shared/redux/actions/settings';
 import styledTheme from '@src/shared/utils/theme';
 import { installServiceWorker } from './utils/sw-helper';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/es/locale/zh_CN';
 
 installServiceWorker(); // 注册 service worker 服务
 
@@ -86,7 +88,9 @@ if (config.platform === 'web' && config.environment === 'production') {
 ReactDom.render(
   <Provider store={store}>
     <ThemeProvider theme={styledTheme}>
-      <App />
+      <ConfigProvider locale={zhCN}>
+        <App />
+      </ConfigProvider>
     </ThemeProvider>
   </Provider>,
   document.querySelector('#app')
