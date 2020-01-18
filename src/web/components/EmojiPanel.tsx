@@ -5,10 +5,36 @@ import styled from 'styled-components';
 import _isFunction from 'lodash/isFunction';
 
 const Container = styled.div`
-  .emoji-mart-emoji {
-    outline: 0;
+  .emoji-mart {
+    .emoji-mart-emoji {
+      outline: 0;
+    }
+
+    .emoji-mart-scroll {
+      overflow-x: hidden;
+    }
   }
 `;
+
+const i18n = {
+  search: '搜索',
+  clear: '清除', // Accessible label on "clear" button
+  notfound: '没有找到表情',
+  categories: {
+    search: '搜索结果',
+    recent: '最近使用',
+    people: '人物',
+    nature: '自然',
+    foods: '食物',
+    activity: '活动',
+    places: '地点',
+    objects: '物体',
+    symbols: '标志',
+    flags: '旗帜',
+    custom: '自定义',
+  },
+  categorieslabel: '表情目录', // Accessible title for the list of categories
+};
 
 interface Props {
   style?: React.CSSProperties;
@@ -26,6 +52,7 @@ const EmojiPanel: React.FC<Props> = React.memo((props) => {
     <Container onClick={props.onClick}>
       <Picker
         title="TRPG Engine Emoji"
+        i18n={i18n}
         style={props.style}
         showPreview={false}
         showSkinTones={false}

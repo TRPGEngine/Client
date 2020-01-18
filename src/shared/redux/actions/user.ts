@@ -9,6 +9,7 @@ const {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILED,
+  SET_WEB_TOKEN,
   FIND_USER_REQUEST,
   FIND_USER_SUCCESS,
   FIND_USER_FAILED,
@@ -198,6 +199,22 @@ export const register = function(
           })
         );
       }
+    });
+  };
+};
+
+/**
+ * 获取用于web鉴权的jwt
+ */
+export const fetchWebToken = function(): TRPGAction {
+  return function(dispatch, getState) {
+    return api.emit('player::getWebToken', null, (data) => {
+      const token = data.jwt ?? null;
+      rnStorage.set('jwt', token);
+      dispatch({
+        type: SET_WEB_TOKEN,
+        token,
+      });
     });
   };
 };

@@ -20,6 +20,7 @@ import rnStorage from '@shared/api/rn-storage.api';
 import './ExtraOptions.scss';
 import { showPortal } from '@web/redux/action/ui';
 import DevContainer from '@web/components/DevContainer';
+import { PortalView } from '@web/components/PortalView';
 
 interface Props extends DispatchProp<any> {}
 class ExtraOptions extends React.Component<Props> {
@@ -80,10 +81,7 @@ class ExtraOptions extends React.Component<Props> {
       this.props.dispatch(
         showModal(
           <ModalPanel title="帮助反馈" className="help">
-            <Webview
-              src={config.file.url + '/help/feedback'}
-              allowExopen={false}
-            />
+            <PortalView url="/help/feedback" />
           </ModalPanel>
         )
       );

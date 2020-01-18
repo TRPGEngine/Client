@@ -1,21 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`bbcode render render ":cat:" 1`] = `
-<Memo()
+<BBCode
   plainText=":cat:"
 >
-  <Memo()
+  <PlainText
     key="0"
   >
     <pre>
       🐱
     </pre>
-  </Memo()>
-</Memo()>
+  </PlainText>
+</BBCode>
+`;
+
+exports[`bbcode render render "[asd]unrecognized tag should be ignore[/asd]" 1`] = `
+<BBCode
+  plainText="[asd]unrecognized tag should be ignore[/asd]"
+>
+  <DefaultBBCodeComponent
+    key="0"
+    node={
+      TagNode {
+        "attrs": Object {},
+        "content": Array [
+          "unrecognized,",
+          " ",
+          ",tag,",
+          " ",
+          ",should,",
+          " ",
+          ",be,",
+          " ",
+          ",ignore",
+        ],
+        "tag": "asd",
+      }
+    }
+  >
+    <PlainText>
+      <pre>
+        unrecognized, ,tag, ,should, ,be, ,ignore
+      </pre>
+    </PlainText>
+  </DefaultBBCodeComponent>
+</BBCode>
 `;
 
 exports[`bbcode render render "[img]http://example.com[/img]" 1`] = `
-<Memo()
+<BBCode
   plainText="[img]http://example.com[/img]"
 >
   <ImageTag
@@ -30,25 +63,89 @@ exports[`bbcode render render "[img]http://example.com[/img]" 1`] = `
       }
     }
   >
-    <mock-image
-      role="chatimage"
-      src="http://example.com"
-    />
+    <ImageViewer
+      allImageUrls={Array []}
+      originImageUrl="http://example.com"
+    >
+      <div
+        className="image-viewer"
+        onClick={[Function]}
+      >
+        <mock-image
+          role="chatimage"
+          src="http://example.com"
+        />
+      </div>
+    </ImageViewer>
   </ImageTag>
-</Memo()>
+</BBCode>
+`;
+
+exports[`bbcode render render "[url]http://baidu.com[/url]" 1`] = `
+<BBCode
+  plainText="[url]http://baidu.com[/url]"
+>
+  <UrlTag
+    key="0"
+    node={
+      TagNode {
+        "attrs": Object {},
+        "content": Array [
+          "http://baidu.com",
+        ],
+        "tag": "url",
+      }
+    }
+  >
+    <a
+      href="http://baidu.com"
+      target="_blank"
+      title="http://baidu.com"
+    >
+      http://baidu.com
+    </a>
+  </UrlTag>
+</BBCode>
+`;
+
+exports[`bbcode render render "http://baidu.com" 1`] = `
+<BBCode
+  plainText="http://baidu.com"
+>
+  <UrlTag
+    key="0"
+    node={
+      TagNode {
+        "attrs": Object {},
+        "content": Array [
+          "http://baidu.com",
+        ],
+        "tag": "url",
+      }
+    }
+  >
+    <a
+      href="http://baidu.com"
+      target="_blank"
+      title="http://baidu.com"
+    >
+      http://baidu.com
+    </a>
+  </UrlTag>
+</BBCode>
 `;
 
 exports[`bbcode render render "mix text image[img]http://example.com[/img]" 1`] = `
-<Memo()
+<BBCode
   plainText="mix text image[img]http://example.com[/img]"
 >
-  <Memo()
+  <PlainText
     key="0"
   >
     <pre>
       mix text image
     </pre>
-  </Memo()>
+  </PlainText>
   <ImageTag
     key="1"
     node={
@@ -61,10 +158,34 @@ exports[`bbcode render render "mix text image[img]http://example.com[/img]" 1`] 
       }
     }
   >
-    <mock-image
-      role="chatimage"
-      src="http://example.com"
-    />
+    <ImageViewer
+      allImageUrls={Array []}
+      originImageUrl="http://example.com"
+    >
+      <div
+        className="image-viewer"
+        onClick={[Function]}
+      >
+        <mock-image
+          role="chatimage"
+          src="http://example.com"
+        />
+      </div>
+    </ImageViewer>
   </ImageTag>
-</Memo()>
+</BBCode>
+`;
+
+exports[`bbcode render render "some sample text" 1`] = `
+<BBCode
+  plainText="some sample text"
+>
+  <PlainText
+    key="0"
+  >
+    <pre>
+      some sample text
+    </pre>
+  </PlainText>
+</BBCode>
 `;

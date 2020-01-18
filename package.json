@@ -1,6 +1,6 @@
 {
   "name": "trpg-game-client",
-  "version": "0.2.15",
+  "version": "0.2.16",
   "description": "专注于TRPG跑团的IM即时应用聊天软件",
   "main": "./dist/entry.js",
   "scripts": {
@@ -137,6 +137,7 @@
     "@types/lodash-es": "^4.17.3",
     "@types/md5": "^2.1.33",
     "@types/memoize-one": "^4.1.1",
+    "@types/nprogress": "^0.2.0",
     "@types/qs": "^6.9.0",
     "@types/react": "^16.9.5",
     "@types/react-dom": "^16.9.1",

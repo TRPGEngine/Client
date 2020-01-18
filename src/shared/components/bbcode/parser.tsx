@@ -27,6 +27,23 @@ export const registerBBCodeTag = (
   tagMap[tagName] = component;
 };
 
+const DefaultBBCodeComponent: React.FC<TagProps> = React.memo((props) => {
+  if (_has(tagMap, '_text')) {
+    const Component = tagMap['_text'] as StringTagComponent;
+    return <Component>{props.node.content.join('')}</Component>;
+  } else {
+    return null;
+  }
+});
+DefaultBBCodeComponent.displayName = 'DefaultBBCodeComponent';
+
+/**
+ * 获取BBCode标签组件
+ */
+export const getBBCodeTag = (tagName: string): TagMapComponent => {
+  return tagMap[tagName] ?? DefaultBBCodeComponent;
+};
+
 /**
  * BBCode 解析器
  */
@@ -58,8 +75,13 @@ class BBCodeParser {
       .join('');
   }
 
-  parse(input: string): ReactNode[] {
-    const ast = parse(input, this.options) as AstNode[];
+  // 将bbcode字符串转化为AstNode
+  parse(input: string): AstNode[] {
+    return parse(input, this.options);
+  }
+
+  render(input: string): ReactNode[] {
+    const ast = this.parse(input);
 
     return ast
       .reduce<AstNode[]>((prev, curr) => {
@@ -82,8 +104,8 @@ class BBCodeParser {
           }
         }
 
-        if (typeof node === 'object' && _has(tagMap, node.tag)) {
-          const Component = tagMap[node.tag];
+        if (typeof node === 'object') {
+          const Component = getBBCodeTag(node.tag);
           return <Component key={index} node={node} />;
         }
 

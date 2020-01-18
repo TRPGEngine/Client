@@ -9,11 +9,12 @@ import { TRPGState } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _head from 'lodash/head';
 import _orderBy from 'lodash/orderBy';
+import { UserInfo } from '@redux/types/user';
+import { MsgListContextProvider } from '@shared/context/MsgListContext';
 
 import MessageHandler from './messageTypes/__all__';
 
 import './MsgContainer.scss';
-import { UserInfo } from '@redux/types/user';
 
 interface Props extends DispatchProp<any> {
   msgList: any[];
@@ -129,36 +130,38 @@ class MsgContainer extends React.Component<Props> {
           </button>
         )}
         <div className="msg-items">
-          {msgList.map((item, index) => {
-            const arr = msgList;
-            const prevDate = index > 0 ? _get(arr, [index - 1, 'date']) : 0;
-            const senderUUID = item.sender_uuid;
-            const isMe = userUUID === senderUUID;
-            const senderInfo = isMe
-              ? this.props.selfInfo
-              : getUserInfoCache(senderUUID);
-            const name = senderInfo.nickname || senderInfo.username;
-            const avatar = senderInfo.avatar;
-            const defaultAvatar =
-              item.sender_uuid === 'trpgsystem'
-                ? config.defaultImg.trpgsystem
-                : config.defaultImg.getUser(name);
-            const date = item.date;
+          <MsgListContextProvider msgList={msgList}>
+            {msgList.map((item, index) => {
+              const arr = msgList;
+              const prevDate = index > 0 ? _get(arr, [index - 1, 'date']) : 0;
+              const senderUUID = item.sender_uuid;
+              const isMe = userUUID === senderUUID;
+              const senderInfo = isMe
+                ? this.props.selfInfo
+                : getUserInfoCache(senderUUID);
+              const name = senderInfo.nickname || senderInfo.username;
+              const avatar = senderInfo.avatar;
+              const defaultAvatar =
+                item.sender_uuid === 'trpgsystem'
+                  ? config.defaultImg.trpgsystem
+                  : config.defaultImg.getUser(name);
+              const date = item.date;
 
-            const emphasizeTime = shouleEmphasizeTime(prevDate, date);
+              const emphasizeTime = shouleEmphasizeTime(prevDate, date);
 
-            return (
-              <MessageHandler
-                key={item.uuid}
-                type={item.type}
-                me={isMe}
-                name={name}
-                avatar={avatar || defaultAvatar}
-                emphasizeTime={emphasizeTime}
-                info={item}
-              />
-            );
-          })}
+              return (
+                <MessageHandler
+                  key={item.uuid}
+                  type={item.type}
+                  me={isMe}
+                  name={name}
+                  avatar={avatar || defaultAvatar}
+                  emphasizeTime={emphasizeTime}
+                  info={item}
+                />
+              );
+            })}
+          </MsgListContextProvider>
         </div>
       </div>
     );

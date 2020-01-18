@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import config from '@shared/project.config';
 import NProgress from 'nprogress';
-import config from '../../shared/project.config';
-require('nprogress/nprogress.css');
+import 'nprogress/nprogress.css';
 import './Webview.scss';
 
 let webframeIndex = 0;
