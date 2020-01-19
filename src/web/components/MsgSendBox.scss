@@ -43,8 +43,18 @@
       outline: 0;
       box-shadow: none;
       background-color: transparent;
+      border-radius: 0 !important; // 替换antd的圆角
 
       > textarea {
+        &::-webkit-scrollbar {
+          width: 2px;
+          height: 2px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          border-radius: 0;
+        }
+
         @include auto-scroll-bar;
         width: 100%;
         height: 100%;
