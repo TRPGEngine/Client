@@ -1,11 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
-import bbcodeParser from '@shared/components/bbcode/parser';
 import _isObject from 'lodash/isObject';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
-import { AstNodeObj } from '@shared/components/bbcode/type';
-import { preProcessText } from '@shared/components/bbcode';
 import request from '@shared/utils/request';
+import { getUrls } from '@shared/utils/string-helper';
 
 interface WebsiteInfo {
   title: string;
@@ -22,19 +20,9 @@ export const useWebsiteInfo = (rawMessage: string) => {
     url: '',
   });
   const messageUrl = useMemo(() => {
-    const message = preProcessText(rawMessage);
-
-    if (message.indexOf('[url]') >= 0) {
-      const ast = bbcodeParser.parse(message);
-      const urlTag = ast.find(
-        (node) => _isObject(node) && node.tag === 'url'
-      ) as AstNodeObj; // 只取第一个
-
-      if (_isNil(urlTag)) {
-        return '';
-      }
-
-      return urlTag.content.join('');
+    const urls = getUrls(rawMessage);
+    if (urls.length > 0) {
+      return urls[0]; // 只获取第一个
     }
 
     return '';

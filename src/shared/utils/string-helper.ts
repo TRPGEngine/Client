@@ -1,4 +1,5 @@
 import _isString from 'lodash/isString';
+import urlRegex from 'url-regex';
 
 /**
  * 判断字符串是否是一个blobUrl
@@ -6,4 +7,12 @@ import _isString from 'lodash/isString';
  */
 export const isBlobUrl = (str: string) => {
   return _isString(str) && str.startsWith('blob:');
+};
+
+/**
+ * 获取一段字符串中的所有url
+ * @param str 字符串
+ */
+export const getUrls = (str: string): string[] => {
+  return str.match(urlRegex());
 };

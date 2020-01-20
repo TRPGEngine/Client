@@ -14,11 +14,14 @@ const TestComponent: React.FC<{ message: string }> = (props) => {
   );
 };
 
-describe('useWebsiteInfo', () => {
-  test('useWebsiteInfo should be ok', async () => {
-    const wrapper = mount(
-      <TestComponent message={'[url]https://www.baidu.com[/url]'} />
-    );
+describe('useWebsiteInfo should be ok', () => {
+  test.each([
+    ['[url]https://www.baidu.com[/url]'],
+    ['https://www.baidu.com'],
+    ['some text https://www.baidu.com'],
+    ['https://www.baidu.com some text'],
+  ])('message: %s', async (msg) => {
+    const wrapper = mount(<TestComponent message={msg} />);
 
     expect(wrapper.find('.loading').text()).toBe('true');
     expect(wrapper.find('.hasUrl').text()).toBe('true');
