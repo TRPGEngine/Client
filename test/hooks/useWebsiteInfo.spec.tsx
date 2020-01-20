@@ -22,7 +22,9 @@ describe('useWebsiteInfo', () => {
 
     expect(wrapper.find('.loading').text()).toBe('true');
     expect(wrapper.find('.hasUrl').text()).toBe('true');
-    expect(wrapper.find('.info').text()).toBe('null');
+    expect(wrapper.find('.info').text()).toBe(
+      '{"title":"","content":"","url":""}'
+    );
 
     await sleep(0);
     wrapper.update();
@@ -30,7 +32,7 @@ describe('useWebsiteInfo', () => {
     expect(wrapper.find('.loading').text()).toBe('false');
     expect(wrapper.find('.hasUrl').text()).toBe('true');
     expect(wrapper.find('.info').text()).toBe(
-      '{"title":"mock title","content":"mock content"}'
+      '{"title":"mock title","content":"mock content","url":"https://www.baidu.com"}'
     );
   });
 });

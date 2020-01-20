@@ -4,20 +4,28 @@ import _isObject from 'lodash/isObject';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import { AstNodeObj } from '@shared/components/bbcode/type';
+import { preProcessText } from '@shared/components/bbcode';
 import request from '@shared/utils/request';
 
 interface WebsiteInfo {
   title: string;
   content: string;
   icon?: string;
+  url: string;
 }
 
 export const useWebsiteInfo = (rawMessage: string) => {
   const [loading, setLoading] = useState(false);
-  const [info, setInfo] = useState<WebsiteInfo>(null);
+  const [info, setInfo] = useState<WebsiteInfo>({
+    title: '',
+    content: '',
+    url: '',
+  });
   const messageUrl = useMemo(() => {
-    if (rawMessage.indexOf('[url]') >= 0) {
-      const ast = bbcodeParser.parse(rawMessage);
+    const message = preProcessText(rawMessage);
+
+    if (message.indexOf('[url]') >= 0) {
+      const ast = bbcodeParser.parse(message);
       const urlTag = ast.find(
         (node) => _isObject(node) && node.tag === 'url'
       ) as AstNodeObj; // 只取第一个
@@ -42,7 +50,7 @@ export const useWebsiteInfo = (rawMessage: string) => {
       request(`/info/website/info?url=${messageUrl}`).then((res) => {
         setLoading(false);
         const info = res.data.info;
-        setInfo(info);
+        setInfo({ ...info, url: messageUrl });
       });
     }
   }, [hasUrl, messageUrl]);
