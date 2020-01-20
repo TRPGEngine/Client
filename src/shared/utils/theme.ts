@@ -10,6 +10,7 @@ declare module 'styled-components' {
     color: ThemeType['color'];
     boxShadow: ThemeType['boxShadow'];
     filter: ThemeType['filter'];
+    mixins: ThemeType['mixins'];
   }
 }
 
@@ -62,6 +63,16 @@ const styledTheme = {
   },
   filter: {
     grey100: 'grayscale(100%)',
+  },
+  mixins: {
+    autoScrollBar: `
+      overflow: hidden;
+
+      &:hover {
+        overflow-y: auto;
+        overflow-y: overlay;
+      }
+    `,
   },
 };
 
