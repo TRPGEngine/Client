@@ -15,6 +15,9 @@ const CONFIG_PATH = path.resolve(ROOT_PATH, 'config');
 const config = require('../../package.json');
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
+const dllConfig = require('./dll/vendor-manifest.json');
+const dllHashName = 'dll_' + dllConfig.name; // 用于处理文件的hash使其能在修改后通知html模板也进行变更
+
 const babelQuery = {
   babelrc: false,
   compact: false,
@@ -194,10 +197,17 @@ module.exports = {
         TRPG_PORTAL: JSON.stringify(process.env.TRPG_PORTAL),
       },
     }),
+    new webpack.DllReferencePlugin({
+      manifest: dllConfig,
+    }),
     new CopyWebpackPlugin([
       {
         from: path.resolve(BUILD_PATH, './template/pre-loading.css'),
         to: 'pre-loading.css',
+      },
+      {
+        from: path.resolve(BUILD_PATH, './config/dll/dll_vendor.js'),
+        to: `${dllHashName}.js`,
       },
       {
         from: path.resolve(APP_PATH, './web/assets'),
@@ -211,6 +221,7 @@ module.exports = {
       templateParameters: {
         isDev: _get(process, 'env.NODE_ENV') === 'development',
         isPro: _get(process, 'env.NODE_ENV') === 'production',
+        dllHashName,
       },
       inject: true,
       favicon: path.resolve(APP_PATH, './web/assets/img/favicon.ico'),
