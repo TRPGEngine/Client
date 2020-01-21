@@ -14,5 +14,5 @@ export const isBlobUrl = (str: string) => {
  * @param str 字符串
  */
 export const getUrls = (str: string): string[] => {
-  return str.match(urlRegex());
+  return str.match(urlRegex()) ?? [];
 };
