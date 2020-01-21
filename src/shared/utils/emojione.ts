@@ -1,23 +1,3 @@
-import { emojify as _emojify } from 'react-emojione2';
-const options = {
-  convertShortnames: true,
-  convertUnicode: true,
-  convertAscii: true,
-  styles: {
-    backgroundImage: 'url(/src/web/assets/img/emojione.sprites.png)',
-    width: '64px',
-    height: '64px',
-    margin: '4px',
-    zoom: '0.4',
-  },
-  // this click handler will be set on every emoji
-  // handleClick: event => console.log(event.target.title)
-};
-
-export const emojify = function(str, opt?) {
-  return _emojify(str, Object.assign({}, options, opt));
-};
-
 export const getCodeList = function() {
   // import data from 'react-emojione2/lib/data/emoji-data'.default;
   // return data.map((item) => item[2]);
