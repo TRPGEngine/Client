@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, NativeModules } from 'react-native';
+import { ScrollView, Text, NativeModules } from 'react-native';
 import Config from 'react-native-config';
 
 import { TButton } from '@app/components/TComponent';
@@ -38,7 +38,7 @@ class DevelopLabScreen extends React.Component<Props> {
   render() {
     const { userUUID } = this.props;
     return (
-      <View>
+      <ScrollView>
         <Text style={{ textAlign: 'center' }}>开发实验室</Text>
         <Text>当前用户: {userUUID}</Text>
         <DevButton onPress={() => TRPGModule.show('Awesome', TRPGModule.SHORT)}>
@@ -68,7 +68,15 @@ class DevelopLabScreen extends React.Component<Props> {
           info={{ message: 'test', type: 'loading', data: { progress: 0.5 } }}
           emphasizeTime={false}
         />
-      </View>
+        <MessageHandler
+          type="normal"
+          me={true}
+          name="test"
+          avatar={null}
+          info={{ message: 'http://www.baidu.com/', type: 'normal' }}
+          emphasizeTime={false}
+        />
+      </ScrollView>
     );
   }
 }
