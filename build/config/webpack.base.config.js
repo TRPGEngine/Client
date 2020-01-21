@@ -21,6 +21,7 @@ const babelQuery = {
   presets: ['@babel/preset-env', '@babel/preset-react'],
   ignore: [/[\/\\]core-js/, /@babel[\/\\]runtime/],
   plugins: [
+    '@babel/plugin-syntax-dynamic-import',
     [
       '@babel/plugin-transform-runtime',
       {
@@ -47,7 +48,6 @@ const babelQuery = {
     ],
     'transform-class-properties',
     '@babel/plugin-transform-modules-commonjs',
-    'dynamic-import-webpack',
   ],
 };
 
@@ -160,16 +160,22 @@ module.exports = {
       minSize: 30000,
       maxSize: 0,
       minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
+      maxAsyncRequests: 6,
+      maxInitialRequests: 4,
       automaticNameDelimiter: '~',
-      name: true,
+      automaticNameMaxLength: 30,
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           priority: -10, // 优先级，一个chunk很可能满足多个缓存组，会被抽取到优先级高的缓存组中
           reuseExistingChunk: true, //  如果该chunk中引用了已经被抽取的chunk，直接引用该chunk，不会重复打包代码
           enforce: true, // 如果cacheGroup中没有设置minSize，则据此判断是否使用上层的minSize，true：则使用0，false：使用上层minSize
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+          enforce: true,
         },
       },
     },

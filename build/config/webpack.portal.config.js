@@ -14,6 +14,8 @@ const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist/portal');
 const ASSET_PATH = '/portal/';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const config = webpackMerge({}, base, {
   entry: {
     app: path.resolve(APP_PATH, './portal/index.tsx'),
@@ -24,7 +26,7 @@ const config = webpackMerge({}, base, {
     publicPath: ASSET_PATH,
   },
 
-  devtool: 'cheap-module-eval-source-map',
+  devtool: isProduction ? false : 'cheap-module-eval-source-map',
 
   devServer: {
     host: '0.0.0.0',
