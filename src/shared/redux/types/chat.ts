@@ -43,19 +43,7 @@ type WritingListType = {
   };
 };
 
-export type ChatStateConverseMsgListItem = {
-  room: string;
-  uuid: string;
-  sender: string;
-  sender_uuid: string;
-  to_uuid: string;
-  type: string;
-  is_public: boolean;
-  message: string;
-  date: number;
-};
-
-export type ChatStateConverseMsgList = ChatStateConverseMsgListItem[];
+export type ChatStateConverseMsgList = MsgPayload[];
 
 export type ChatStateConverse = {
   uuid: string;
