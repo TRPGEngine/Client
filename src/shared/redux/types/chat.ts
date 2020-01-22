@@ -61,16 +61,19 @@ export type ChatStateConverse = {
   uuid: string;
   type: string;
   name: string;
-  icon: string;
+  icon?: string;
   lastMsg: string;
   lastTime: number;
   msgList: ChatStateConverseMsgList;
+
+  // 客户端信息
+  unread?: boolean;
 };
 
 export type ChatState = {
   selectedConverseUUID: string;
   conversesDesc: string;
-  converses: { [name: string]: any };
+  converses: { [name: string]: ChatStateConverse };
   writingList: WritingListType;
   emotions: { [name in 'catalogs' | 'favorites']: any[] };
 };

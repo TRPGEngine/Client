@@ -367,6 +367,9 @@ export default produce((draft: ChatState, action) => {
       if (!_isNil(converse)) {
         const msgList = converse.msgList;
 
+        // NOTE: 这里可能会有一个问题。就是在团消息中因为消息也会给自己发一份，
+        // 因此如果SEND_MSG_COMPLETED在该条消息的团广播到达之后收到的话就会出现两条一样的消息
+        // 如果socket.io能保证消息的时序的话就不会出现这个问题。观察一波
         const index = msgList.findIndex((item) => item.uuid === localUUID);
         if (index >= 0) {
           msgList[index] = {
