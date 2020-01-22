@@ -1,7 +1,7 @@
 import { TiledMapOptions } from './types';
 import { TiledMapRender } from './render';
-import { TiledMapToolBase } from '../tools/base';
 import _isNil from 'lodash/isNil';
+import { Toolbox } from './toolbox';
 
 /**
  * TiledMap统一管理类
@@ -19,8 +19,7 @@ export class TiledMapManager {
   };
 
   public render: TiledMapRender;
-  private tools: TiledMapToolBase[] = [];
-  private currentTool = '';
+  public toolbox = new Toolbox();
 
   constructor(public el: HTMLCanvasElement, public options: TiledMapOptions) {
     this.options = {
@@ -29,6 +28,7 @@ export class TiledMapManager {
     };
     this.render = new TiledMapRender(el, this.options);
 
+    this.toolbox.renderDom(el.parentElement);
     this.initEventListener();
   }
 
@@ -37,7 +37,7 @@ export class TiledMapManager {
       const { clientX: x, clientY: y } = e;
       // const { x: prevX, y: prevY } = this.render.position;
 
-      const activityTool = this.getCurrentTool();
+      const activityTool = this.toolbox.getCurrentTool();
       if (!_isNil(activityTool)) {
         activityTool.action({
           canvasPos: this.render.position,
@@ -48,27 +48,5 @@ export class TiledMapManager {
         });
       }
     });
-  }
-
-  /**
-   * 注册工具
-   */
-  regTool(tool: TiledMapToolBase) {
-    this.tools.push(tool);
-  }
-
-  /**
-   * 设置当前使用的工具
-   * @param toolName 工具名
-   */
-  setCurrentTool(toolName: string) {
-    this.currentTool = toolName;
-  }
-
-  /**
-   * 获取当前的工具
-   */
-  getCurrentTool(): TiledMapToolBase | null {
-    return this.tools.find((tool) => tool.name === this.currentTool);
   }
 }

@@ -1,0 +1,28 @@
+.tiledmap {
+  .toolbox {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background-color: white;
+    border: 1px solid grey;
+
+    > .toolbox-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(0,0,0,0.05);
+      }
+
+      &.toolbox-item-selected {
+        background-color: rgba(0,0,0,0.1);
+      }
+
+      > i.iconfont {
+        font-size: 18px;
+      }
+    }
+  }
+}

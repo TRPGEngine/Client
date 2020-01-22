@@ -1,8 +1,8 @@
-import { TiledMapManager } from '../core/manager';
+import { Toolbox } from '../core/toolbox';
 import { TiledMapToolMove } from './move';
 
-export function regAllTool(manager: TiledMapManager) {
-  manager.regTool(new TiledMapToolMove());
+export function regAllTool(toolbox: Toolbox) {
+  toolbox.regTool(new TiledMapToolMove());
 
-  manager.setCurrentTool('move');
+  toolbox.setCurrentTool('move');
 }
