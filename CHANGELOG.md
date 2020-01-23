@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.17](https://github.com/TRPGEngine/Client/compare/v0.2.16...v0.2.17) (2020-01-23)
+
+
+### Features
+
+* **app:** 增加普通消息解析html数据并显示连接基本信息 ([56d829c](https://github.com/TRPGEngine/Client/commit/56d829c99acb73c4cd9cafa05a4de251ed06f883))
+* **web:** 增加antd全局翻译 ([593e6a2](https://github.com/TRPGEngine/Client/commit/593e6a21ee76047b1f16b03323a6514b1d9a478f))
+* **web:** 增加普通消息解析html数据并显示连接基本信息 ([0ab9475](https://github.com/TRPGEngine/Client/commit/0ab9475c25320534c9abeeb8de726a344cf632bf))
+
+
+### Bug Fixes
+
+* 修复removeUserConverse的操作错误 ([55a1a3b](https://github.com/TRPGEngine/Client/commit/55a1a3b361d7f98b69cac5552a633773bc208289))
+* 修复string-helper#getUrls可能会返回null的bug ([b5579bc](https://github.com/TRPGEngine/Client/commit/b5579bcc6b6ca80ea39613db13dd58421b59cd3d))
+
 ### [0.2.16](https://github.com/TRPGEngine/Client/compare/v0.2.15...v0.2.16) (2020-01-18)
 
 

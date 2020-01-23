@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { TiledMapManager } from './core/manager';
-import { regAllTool } from './tools/__all__';
+import './index.less';
 
 export const TiledMap: React.FC = React.memo((props) => {
   const canvasRef = useRef<HTMLCanvasElement>();
@@ -17,13 +17,12 @@ export const TiledMap: React.FC = React.memo((props) => {
         height: 40,
       },
     });
-    regAllTool(tiledMapManager);
 
     manager.current = tiledMapManager;
   }, []);
 
   return (
-    <div>
+    <div className="tiledmap">
       <canvas ref={canvasRef}>请使用现代浏览器打开本页面</canvas>
     </div>
   );

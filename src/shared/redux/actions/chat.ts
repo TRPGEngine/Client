@@ -33,6 +33,7 @@ import { renewableDelayTimer } from '../../utils/timer';
 import config from '../../project.config';
 import _without from 'lodash/without';
 import _isFunction from 'lodash/isFunction';
+import _filter from 'lodash/filter';
 import { MsgPayload, ConverseInfo } from '@src/shared/redux/types/chat';
 import { TRPGAction } from '../types/__all__';
 import { isUserUUID } from '@shared/utils/uuid';
@@ -208,7 +209,7 @@ export const removeUserConverse = (userConverseUUID: string): TRPGAction => {
     // 在localStorage删除
     const userUUID = getState().user.info.uuid;
     const converses = getState().chat.converses;
-    const uuids = Object.keys(converses.filter((c) => c.type === 'user'));
+    const uuids = Object.keys(_filter(converses, (c) => c.type === 'user'));
     rnStorage.set(
       getUserConversesHash(userUUID),
       _without(uuids, userConverseUUID)

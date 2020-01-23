@@ -1,5 +1,5 @@
 import React from 'react';
-import { emojify, getCodeList } from '../../shared/utils/emojione';
+import { getCodeList } from '../../shared/utils/emojione';
 
 import './Emoticon.scss';
 
@@ -26,7 +26,7 @@ class Emoticon extends React.Component {
           className="emoji-cell"
           onClick={() => this.props.onSelect(item)}
         >
-          {emojify(item)}
+          {/* {emojify(item)} */}
         </span>
       ));
     }
@@ -44,7 +44,7 @@ class Emoticon extends React.Component {
       >
         <div className="items">{this.getEmoticonItems()}</div>
         <div className="group">
-          {Object.keys(this.emoji).map((groupName) => (
+          {/* {Object.keys(this.emoji).map((groupName) => (
             <div
               key={'emoji-group#' + groupName}
               className={
@@ -55,7 +55,7 @@ class Emoticon extends React.Component {
             >
               {emojify(this.emoji[groupName][0])}
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     );

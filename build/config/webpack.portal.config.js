@@ -14,6 +14,11 @@ const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist/portal');
 const ASSET_PATH = '/portal/';
 
+const dllConfig = require('./dll/vendor-manifest.json');
+const dllHashName = 'dll_' + dllConfig.name;
+
+const isProduction = process.env.NODE_ENV === 'production';
+
 const config = webpackMerge({}, base, {
   entry: {
     app: path.resolve(APP_PATH, './portal/index.tsx'),
@@ -24,14 +29,18 @@ const config = webpackMerge({}, base, {
     publicPath: ASSET_PATH,
   },
 
-  devtool: 'cheap-module-eval-source-map',
+  devtool: isProduction ? false : 'cheap-module-eval-source-map',
 
   devServer: {
     host: '0.0.0.0',
     port: 8190,
     compress: true,
+    overlay: true,
     historyApiFallback: {
-      rewrites: [{ from: /.*/, to: `${ASSET_PATH}index.html` }],
+      rewrites: [
+        { from: `${dllHashName}.js`, to: `/portal/${dllHashName}.js` },
+        { from: /.*/, to: `${ASSET_PATH}index.html` },
+      ],
     },
     hot: true,
     inline: true,

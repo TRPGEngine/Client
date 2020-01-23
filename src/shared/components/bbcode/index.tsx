@@ -7,7 +7,7 @@ import { emojify } from '@src/shared/utils/emoji';
  * 客户端预处理文本
  * @param plainText 服务端文本
  */
-export function preProcessText(plainText: string): string {
+export function preProcessLinkText(plainText: string): string {
   let text = emojify(plainText); // 将:<emojicode>: 转化为 unicode字符
   text = text.replace(
     new RegExp(urlRegex({ exact: false, strict: true }), 'g'),
@@ -17,13 +17,16 @@ export function preProcessText(plainText: string): string {
   return text;
 }
 
+// 处理所有的预处理文本
+export function preProcessText(plainText: string): string {
+  return bbcodeParser.preProcessText(plainText, preProcessLinkText);
+}
+
 interface Props {
   plainText: string;
 }
 const BBCode: React.FC<Props> = React.memo(({ plainText }) => {
-  const bbcodeComponent = bbcodeParser.render(
-    bbcodeParser.preProcessText(plainText, preProcessText)
-  );
+  const bbcodeComponent = bbcodeParser.render(preProcessText(plainText));
 
   return <Fragment>{bbcodeComponent}</Fragment>;
 });
