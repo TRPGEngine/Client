@@ -415,7 +415,7 @@ export let sendMsg = function sendMsg(
     const info = getState().user.info;
     const localUUID = getLocalUUID();
     const pkg = {
-      sender_uuid: info.uuid,
+      sender_uuid: info.uuid, // 此处虽然构造了sender_uuid。但只用于本地消息临时自己的显示, 服务端不会接受该数据
       to_uuid: toUUID,
       converse_uuid: payload.converse_uuid,
       type: payload.type,
