@@ -35,6 +35,8 @@ const WindowContainer = styled.div`
   color: ${styledTheme.color['cod-gray']};
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 
   > .window-container-title {
     display: flex;
@@ -51,6 +53,10 @@ const WindowContainer = styled.div`
         cursor: pointer;
       }
     }
+  }
+
+  > .window-container-body {
+    flex: 1;
   }
 `;
 
@@ -119,6 +125,8 @@ StandaloneWindow.defaultProps = {
       width: 360,
       height: 420,
     },
+    minWidth: 180,
+    minHeight: 210,
   },
   title: '新窗口',
 };
