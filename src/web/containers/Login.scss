@@ -47,7 +47,7 @@
     }
   }
 
-  a, a:link, a:visited {
+  a, a:link, a:visited, a:hover {
     float: right;
     @include link-btn;
   }
