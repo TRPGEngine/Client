@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import styledTheme from '@shared/utils/theme';
 import { useWindowSize } from 'react-use';
 
-interface StandaloneWindowConfig {
+export interface StandaloneWindowConfig {
   options?: RndProps;
   title?: string;
   body: ReactNode;

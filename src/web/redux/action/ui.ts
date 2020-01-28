@@ -4,7 +4,9 @@ import { showSlidePanel } from '@redux/actions/ui';
 import Webview from '@web/components/Webview';
 import React from 'react';
 import config from '@shared/project.config';
-import StandaloneWindow from '@web/components/StandaloneWindow';
+import StandaloneWindow, {
+  StandaloneWindowConfig,
+} from '@web/components/StandaloneWindow';
 
 type PortalPreviewType = 'slidepanel' | 'standalonewindow';
 
@@ -14,7 +16,8 @@ type PortalPreviewType = 'slidepanel' | 'standalonewindow';
  */
 export const showPortal = (
   url: string,
-  type: PortalPreviewType = 'slidepanel'
+  type: PortalPreviewType = 'slidepanel',
+  options?: Omit<StandaloneWindowConfig, 'body'>
 ): TRPGAction => {
   return async function(dispatch, getState) {
     const userUUID = getState().user.info.uuid;
@@ -32,6 +35,7 @@ export const showPortal = (
       dispatch(showSlidePanel('', node));
     } else if (type === 'standalonewindow') {
       StandaloneWindow.open({
+        ...options,
         body: node,
       });
     }
