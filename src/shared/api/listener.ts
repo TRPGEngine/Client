@@ -1,11 +1,12 @@
 import { API } from './socket-api';
 import rnStorage from './rn-storage.api';
 import constants from '../redux/constants';
+import { TRPGStore } from '@redux/types/__all__';
 const { RESET, ADD_FRIEND_SUCCESS } = constants;
 
 export function bindEventFunc(
   this: API,
-  store: any,
+  store: TRPGStore,
   { onReceiveMessage }: any = {}
 ) {
   const {

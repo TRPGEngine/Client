@@ -2,12 +2,11 @@
  * Store帮助类, 用于直接从Store中获取一些状态信息
  */
 
-import { Store } from 'redux';
 import _isNil from 'lodash/isNil';
-import { TRPGState } from '@redux/types/__all__';
+import { TRPGState, TRPGStore } from '@redux/types/__all__';
 
-let _store: Store;
-export function initStoreHelper(store: Store): void {
+let _store: TRPGStore;
+export function initStoreHelper(store: TRPGStore): void {
   _store = store;
 }
 

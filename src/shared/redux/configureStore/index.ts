@@ -13,6 +13,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import actionCreators from '../actions';
 import { memoryLogger } from './memory-logger';
 import { initStoreHelper } from './helper';
+import { TRPGStore } from '@redux/types/__all__';
 
 const logger = createLogger({
   level: 'info',
@@ -44,7 +45,7 @@ const defaultStoreOptions: StoreOptions = {
 
 function configureStore(
   options: StoreOptions = defaultStoreOptions
-): Store<any, any> {
+): TRPGStore {
   const initialState = options.initialState;
 
   middlewares.push(...options.additionMiddleware); // 增加额外中间件
