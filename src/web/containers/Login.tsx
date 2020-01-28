@@ -114,8 +114,10 @@ class Login extends React.Component<Props> {
             </button>
           ) : null}
         </div>
+        <div className="login-action">
+          <a onClick={this.handleShowDownloadApp}>下载移动版APP</a>
         <Link to="register">没有账号？现在注册</Link>
-        <a onClick={this.handleShowDownloadApp}>下载移动版APP</a>
+        </div>
       </div>
     );
   }
