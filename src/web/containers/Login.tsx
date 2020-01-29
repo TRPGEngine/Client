@@ -104,7 +104,7 @@ class Login extends React.Component<Props> {
           }}
           onKeyUp={(e) => e.keyCode === 13 && this.handleLogin()}
         />
-        <div className="loginArea">
+        <div className="login-area">
           <button
             className={canLogin ? 'active' : ''}
             onClick={() => this.handleLogin()}
