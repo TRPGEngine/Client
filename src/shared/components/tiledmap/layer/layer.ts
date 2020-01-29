@@ -5,6 +5,7 @@ import { DrawContext } from '../core/render';
 export class Layer {
   desc: string;
   tokens: Token[] = [];
+  index: number = 0; // 值越高越晚绘制, 显示越在上面
 
   constructor(public name: string) {}
 

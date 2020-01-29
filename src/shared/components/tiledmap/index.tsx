@@ -20,7 +20,7 @@ export const TiledMap: React.FC = React.memo((props) => {
     });
 
     // ------------ test ------------
-    tiledMapManager.addLayer('人物');
+    const layer = tiledMapManager.addLayer('人物');
     const image = new Image();
     image.src =
       'https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2807058697,2434741312&fm=58';
@@ -31,6 +31,19 @@ export const TiledMap: React.FC = React.memo((props) => {
         y: 110,
       };
       tiledMapManager.addToken('人物', testToken);
+    };
+
+    const layer2 = tiledMapManager.addLayer('背景');
+    layer2.index = -1; // 应在人物下面
+    const image2 = new Image();
+    image2.src = 'https://www.dytt8.net/images/m.jpg';
+    image2.onload = function() {
+      const testToken = new ImageToken('测试背景', image2);
+      testToken.position = {
+        x: 50,
+        y: 50,
+      };
+      tiledMapManager.addToken('背景', testToken);
     };
 
     // ------------ test ------------

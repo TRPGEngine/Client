@@ -1,5 +1,6 @@
 import { Layer } from './Layer';
 import { DrawContext } from '../core/render';
+import _orderBy from 'lodash/orderBy';
 
 export class LayerManager {
   layers: Layer[] = [];
@@ -13,6 +14,8 @@ export class LayerManager {
   }
 
   drawLayer(ctx: DrawContext) {
-    this.layers.forEach((layer) => layer.drawAllToken(ctx));
+    _orderBy(this.layers, 'index', 'asc').forEach((layer) => {
+      layer.drawAllToken(ctx);
+    });
   }
 }
