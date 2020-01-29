@@ -1,8 +1,18 @@
 import { Size, Position, TiledMapOptions } from './types';
+import _isNil from 'lodash/isNil';
+import { LayerManager } from '../layer/manager';
+
+export interface DrawContext {
+  el: HTMLCanvasElement;
+  ratio: number;
+  canvasPos: Position;
+  render: TiledMapRender;
+}
 
 export class TiledMapRender {
   private ctx: CanvasRenderingContext2D;
   public position: Position = { x: 0, y: 0 };
+  public layerManager: LayerManager;
   private _originOptions?: TiledMapOptions;
 
   constructor(private el: HTMLCanvasElement, public options: TiledMapOptions) {
@@ -10,6 +20,10 @@ export class TiledMapRender {
 
     this.init();
     this.draw();
+  }
+
+  get canvas(): CanvasRenderingContext2D {
+    return this.ctx;
   }
 
   getCanvasSize(): Size {
@@ -80,6 +94,8 @@ export class TiledMapRender {
 
     this.drawGrid();
     this.drawAxis();
+
+    this.drawLayer();
   }
 
   /**
@@ -164,6 +180,29 @@ export class TiledMapRender {
         y + offsetY
       );
     }
+  }
+
+  /**
+   * 绘制所有层
+   */
+  drawLayer() {
+    if (_isNil(this.layerManager)) {
+      return;
+    }
+
+    this.layerManager.drawLayer(this.getDrawContext());
+  }
+
+  /**
+   * 获取用于绘制的上下文
+   */
+  getDrawContext() {
+    return {
+      canvasPos: this.position,
+      el: this.el,
+      render: this,
+      ratio: this.options.ratio,
+    };
   }
 
   /**

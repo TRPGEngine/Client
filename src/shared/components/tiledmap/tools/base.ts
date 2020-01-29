@@ -1,12 +1,8 @@
 import { Position } from '../core/types';
-import { TiledMapRender } from '../core/render';
+import { DrawContext } from '../core/render';
 
-export interface ActionContext {
-  el: HTMLCanvasElement;
-  ratio: number;
-  canvasPos: Position;
+export interface ActionContext extends DrawContext {
   mousePos: Position;
-  render: TiledMapRender;
 }
 
 export abstract class TiledMapToolBase {

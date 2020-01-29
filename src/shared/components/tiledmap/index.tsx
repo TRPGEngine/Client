@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { TiledMapManager } from './core/manager';
 import './index.less';
+import { ImageToken } from './layer/token';
 
 export const TiledMap: React.FC = React.memo((props) => {
   const canvasRef = useRef<HTMLCanvasElement>();
@@ -17,6 +18,22 @@ export const TiledMap: React.FC = React.memo((props) => {
         height: 40,
       },
     });
+
+    // ------------ test ------------
+    tiledMapManager.addLayer('人物');
+    const image = new Image();
+    image.src =
+      'https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2807058697,2434741312&fm=58';
+    image.onload = function() {
+      const testToken = new ImageToken('测试人物', image);
+      testToken.position = {
+        x: 110,
+        y: 110,
+      };
+      tiledMapManager.addToken('人物', testToken);
+    };
+
+    // ------------ test ------------
 
     manager.current = tiledMapManager;
   }, []);
