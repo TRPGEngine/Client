@@ -7,6 +7,7 @@ export interface DrawContext {
   el: HTMLCanvasElement;
   ratio: number;
   canvasPos: Position;
+  gridSize: Size;
   render: TiledMapRender;
 }
 
@@ -26,6 +27,10 @@ export class TiledMapRender {
 
   get canvas(): CanvasRenderingContext2D {
     return this.ctx;
+  }
+
+  get gridSize(): Size {
+    return this.options.gridSize;
   }
 
   getCanvasSize(): Size {
@@ -201,11 +206,12 @@ export class TiledMapRender {
   /**
    * 获取用于绘制的上下文
    */
-  getDrawContext() {
+  getDrawContext(): DrawContext {
     return {
       canvasPos: this.position,
       el: this.el,
       render: this,
+      gridSize: this.gridSize,
       ratio: this.options.ratio,
     };
   }

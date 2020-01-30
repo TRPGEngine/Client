@@ -3,7 +3,7 @@ import { DrawContext } from '../core/render';
 import _isNumber from 'lodash/isNumber';
 
 export class Token {
-  position: Position = { x: 0, y: 0 };
+  gridPosition: Position = { x: 0, y: 0 }; // 网格坐标, 0 0 表示网格左上角
 
   constructor(public name: string) {}
 
@@ -19,7 +19,7 @@ export class Token {
 }
 
 export class ImageToken extends Token {
-  size: Size;
+  imageSize: Size;
   private _image: HTMLImageElement;
   private _promise: Promise<HTMLImageElement>;
   loaded: boolean = false;
@@ -31,7 +31,7 @@ export class ImageToken extends Token {
       const image = new Image();
       image.src = imageSrc;
       image.onload = () => {
-        this.size = {
+        this.imageSize = {
           width: _isNumber(image.width) ? image.width : 100,
           height: _isNumber(image.height) ? image.height : 100,
         };
@@ -61,12 +61,14 @@ export class ImageToken extends Token {
       return;
     }
 
+    const { gridSize, ratio } = ctx;
+
     ctx.render.canvas.drawImage(
       this._image,
-      this.position.x,
-      this.position.y,
-      this.size.width,
-      this.size.height
+      this.gridPosition.x * gridSize.width * ratio,
+      this.gridPosition.y * gridSize.height * ratio,
+      this.imageSize.width,
+      this.imageSize.height
     );
   }
 }

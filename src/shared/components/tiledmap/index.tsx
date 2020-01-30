@@ -25,9 +25,9 @@ export const TiledMap: React.FC = React.memo((props) => {
       '测试人物',
       'https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2807058697,2434741312&fm=58'
     );
-    testToken.position = {
-      x: 110,
-      y: 110,
+    testToken.gridPosition = {
+      x: 2,
+      y: 4,
     };
     tiledMapManager.addToken('人物', testToken);
 
@@ -37,9 +37,9 @@ export const TiledMap: React.FC = React.memo((props) => {
       '测试背景',
       'https://www.dytt8.net/images/m.jpg'
     );
-    testToken2.position = {
-      x: 50,
-      y: 50,
+    testToken2.gridPosition = {
+      x: 1,
+      y: 1,
     };
     tiledMapManager.addToken('背景', testToken2);
 
