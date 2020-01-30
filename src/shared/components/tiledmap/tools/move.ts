@@ -5,7 +5,6 @@ export class TiledMapToolMove extends TiledMapToolBase {
   name = 'move';
   desc = '移动棋盘';
   icon = '&#xe766;';
-  catalog = '';
 
   select(ctx: DrawContext): void {
     ctx.el.style.cursor = 'all-scroll';

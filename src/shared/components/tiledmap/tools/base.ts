@@ -16,10 +16,11 @@ export abstract class TiledMapToolBase {
   abstract icon: string;
 
   // 工具分类
-  abstract catalog: string;
+  catalog: string = '';
 
   // 选择事件
   abstract select(ctx: DrawContext): void;
+
   // 点击事件
   abstract action(ctx: ActionContext): void;
 }

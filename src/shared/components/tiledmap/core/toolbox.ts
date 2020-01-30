@@ -35,13 +35,14 @@ export class Toolbox {
 
     // 工具项
     for (const tool of this.tools) {
-      const { icon, name } = tool;
+      const { icon, name, desc } = tool;
 
       const iconContainerEl = document.createElement('div');
       iconContainerEl.className = 'toolbox-item';
       iconContainerEl.setAttribute('data-icon-name', name);
       iconContainerEl.style.width = `${this.iconSize.width}px`;
       iconContainerEl.style.height = `${this.iconSize.height}px`;
+      iconContainerEl.title = desc;
       iconContainerEl.onclick = () => {
         this.setCurrentTool(name);
       };
