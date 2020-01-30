@@ -21,30 +21,31 @@ export const TiledMap: React.FC = React.memo((props) => {
 
     // ------------ test ------------
     const layer = tiledMapManager.addLayer('人物');
-    const image = new Image();
-    image.src =
-      'https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2807058697,2434741312&fm=58';
-    image.onload = function() {
-      const testToken = new ImageToken('测试人物', image);
-      testToken.position = {
-        x: 110,
-        y: 110,
-      };
-      tiledMapManager.addToken('人物', testToken);
+    const testToken = new ImageToken(
+      '测试人物',
+      'https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2807058697,2434741312&fm=58'
+    );
+    testToken.position = {
+      x: 110,
+      y: 110,
     };
+    testToken.promise.then(() => {
+      tiledMapManager.addToken('人物', testToken);
+    });
 
     const layer2 = tiledMapManager.addLayer('背景');
     layer2.index = -1; // 应在人物下面
-    const image2 = new Image();
-    image2.src = 'https://www.dytt8.net/images/m.jpg';
-    image2.onload = function() {
-      const testToken = new ImageToken('测试背景', image2);
-      testToken.position = {
-        x: 50,
-        y: 50,
-      };
-      tiledMapManager.addToken('背景', testToken);
+    const testToken2 = new ImageToken(
+      '测试背景',
+      'https://www.dytt8.net/images/m.jpg'
+    );
+    testToken2.position = {
+      x: 50,
+      y: 50,
     };
+    testToken2.promise.then(() => {
+      tiledMapManager.addToken('背景', testToken2);
+    });
 
     // ------------ test ------------
 

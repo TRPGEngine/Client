@@ -14,19 +14,45 @@ export class Token {
 
 export class ImageToken extends Token {
   size: Size;
+  private _image: HTMLImageElement;
+  private _promise: Promise<HTMLImageElement>;
+  loaded: boolean = false;
 
-  constructor(name: string, public image: CanvasImageSource) {
+  constructor(name: string, public imageSrc: string) {
     super(name);
 
-    this.size = {
-      width: _isNumber(image.width) ? image.width : 100,
-      height: _isNumber(image.height) ? image.height : 100,
-    };
+    this._promise = new Promise((resolve, reject) => {
+      const image = new Image();
+      image.src = imageSrc;
+      image.onload = () => {
+        this.size = {
+          width: _isNumber(image.width) ? image.width : 100,
+          height: _isNumber(image.height) ? image.height : 100,
+        };
+        this.loaded = true;
+
+        resolve(image);
+      };
+      image.onerror = () => {
+        console.error('[ImageToken]', '加载失败:', this.imageSrc);
+
+        reject();
+      };
+      this._image = image;
+    });
+  }
+
+  get promise() {
+    return this._promise;
   }
 
   render(ctx: DrawContext) {
+    if (!this.loaded) {
+      return;
+    }
+
     ctx.render.canvas.drawImage(
-      this.image,
+      this._image,
       this.position.x,
       this.position.y,
       this.size.width,
