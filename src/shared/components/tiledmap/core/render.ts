@@ -1,5 +1,6 @@
 import { Size, Position, TiledMapOptions } from './types';
 import _isNil from 'lodash/isNil';
+import _throttle from 'lodash/throttle';
 import { LayerManager } from '../layer/manager';
 
 export interface DrawContext {
@@ -14,6 +15,7 @@ export class TiledMapRender {
   public position: Position = { x: 0, y: 0 };
   public layerManager: LayerManager;
   private _originOptions?: TiledMapOptions;
+  public readonly fps = 60; // 每秒渲染60帧最高
 
   constructor(private el: HTMLCanvasElement, public options: TiledMapOptions) {
     this.ctx = el.getContext('2d');
@@ -87,17 +89,20 @@ export class TiledMapRender {
 
   /**
    * 渲染所有的图形
-   * TODO: 需要节流
    */
-  draw() {
-    this.clear();
-    this.resetTranslate();
+  draw = _throttle(
+    () => {
+      this.clear();
+      this.resetTranslate();
 
-    this.drawGrid();
-    this.drawAxis();
+      this.drawGrid();
+      this.drawAxis();
 
-    this.drawLayer();
-  }
+      this.drawLayer();
+    },
+    Math.floor(1000 / this.fps), // 每秒最该渲染帧数
+    { leading: true, trailing: true }
+  );
 
   /**
    * 绘制网格
