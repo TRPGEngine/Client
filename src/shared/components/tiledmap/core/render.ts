@@ -44,7 +44,6 @@ export class TiledMapRender {
     const options = this.options;
     const ratio = options.ratio;
 
-    el.style.cursor = 'all-scroll';
     this.ctx.scale(ratio, ratio);
 
     const canvasSize = this.getCanvasSize();

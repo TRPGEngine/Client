@@ -1,20 +1,23 @@
 import _isNil from 'lodash/isNil';
+import _isEmpty from 'lodash/isEmpty';
 import { TiledMapToolBase } from '../tools/base';
 import { regAllTool } from '../tools/__all__';
 import { Size } from './types';
+import { TiledMapManager } from './manager';
 
 export class Toolbox {
   private tools: TiledMapToolBase[] = [];
   private currentTool = '';
-  private el: HTMLDivElement;
+  private containerEl: HTMLDivElement;
 
   iconSize: Size = {
     width: 32,
     height: 32,
   };
 
-  constructor() {
+  constructor(private _manager: TiledMapManager) {
     regAllTool(this);
+    this.renderDom(_manager.el.parentElement);
   }
 
   /**
@@ -52,7 +55,7 @@ export class Toolbox {
     }
 
     container.appendChild(dom);
-    this.el = dom;
+    this.containerEl = dom;
 
     this.updateCurrentToolClass();
   }
@@ -61,8 +64,8 @@ export class Toolbox {
    * 销毁工具箱元素
    */
   destoryEl() {
-    if (!_isNil(this.el)) {
-      this.el.remove();
+    if (!_isNil(this.containerEl)) {
+      this.containerEl.remove();
     }
   }
 
@@ -78,6 +81,9 @@ export class Toolbox {
    * @param toolName 工具名
    */
   setCurrentTool(toolName: string) {
+    const tool = this.tools.find((t) => t.name === toolName);
+    tool.select(this._manager.render.getDrawContext()); // 调用工具的选择事件
+
     this.currentTool = toolName;
 
     this.updateCurrentToolClass();
@@ -89,16 +95,16 @@ export class Toolbox {
    * 其他图标移除类名 toolbox-item-selected
    */
   updateCurrentToolClass() {
-    if (_isNil(this.el)) {
+    if (_isNil(this.containerEl) || _isEmpty(this.currentTool)) {
       return;
     }
 
     // 设置样式
-    this.el
+    this.containerEl
       .querySelectorAll('.toolbox-item-selected')
       .forEach((item) => item.classList.remove('toolbox-item-selected'));
 
-    this.el
+    this.containerEl
       .querySelector(`.toolbox-item[data-icon-name=${this.currentTool}]`)
       .classList.add('toolbox-item-selected');
   }

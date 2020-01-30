@@ -22,7 +22,7 @@ export class TiledMapManager {
   };
 
   public render: TiledMapRender;
-  public toolbox = new Toolbox();
+  public toolbox: Toolbox;
   private layerManager = new LayerManager();
 
   constructor(public el: HTMLCanvasElement, public options: TiledMapOptions) {
@@ -33,7 +33,7 @@ export class TiledMapManager {
     this.render = new TiledMapRender(el, this.options);
     this.render.layerManager = this.layerManager;
 
-    this.toolbox.renderDom(el.parentElement);
+    this.toolbox = new Toolbox(this);
     this.initEventListener();
   }
 
