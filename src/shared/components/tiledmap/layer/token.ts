@@ -7,7 +7,13 @@ export class Token {
 
   constructor(public name: string) {}
 
-  render(ctx: DrawContext) {
+  /**
+   * 准备
+   * 当外层增加token时会检查token是否准备完毕
+   */
+  async prepare(): Promise<void> {}
+
+  draw(ctx: DrawContext) {
     throw new Error('Should be Implement');
   }
 }
@@ -46,7 +52,11 @@ export class ImageToken extends Token {
     return this._promise;
   }
 
-  render(ctx: DrawContext) {
+  async prepare(): Promise<void> {
+    await Promise.resolve(this._promise);
+  }
+
+  draw(ctx: DrawContext) {
     if (!this.loaded) {
       return;
     }

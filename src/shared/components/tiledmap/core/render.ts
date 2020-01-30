@@ -87,6 +87,7 @@ export class TiledMapRender {
 
   /**
    * 渲染所有的图形
+   * TODO: 需要节流
    */
   draw() {
     this.clear();

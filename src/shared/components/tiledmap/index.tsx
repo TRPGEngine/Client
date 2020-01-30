@@ -29,9 +29,7 @@ export const TiledMap: React.FC = React.memo((props) => {
       x: 110,
       y: 110,
     };
-    testToken.promise.then(() => {
-      tiledMapManager.addToken('人物', testToken);
-    });
+    tiledMapManager.addToken('人物', testToken);
 
     const layer2 = tiledMapManager.addLayer('背景');
     layer2.index = -1; // 应在人物下面
@@ -43,9 +41,7 @@ export const TiledMap: React.FC = React.memo((props) => {
       x: 50,
       y: 50,
     };
-    testToken2.promise.then(() => {
-      tiledMapManager.addToken('背景', testToken2);
-    });
+    tiledMapManager.addToken('背景', testToken2);
 
     // ------------ test ------------
 

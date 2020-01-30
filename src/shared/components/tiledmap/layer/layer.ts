@@ -22,7 +22,7 @@ export class Layer {
    */
   drawAllToken(ctx: DrawContext) {
     this.tokens.forEach((token) => {
-      token.render(ctx);
+      token.draw(ctx);
     });
   }
 }

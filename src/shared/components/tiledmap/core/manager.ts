@@ -60,9 +60,12 @@ export class TiledMapManager {
   }
 
   addToken(layerName: string, token: Token): void {
-    const layer = this.layerManager.getLayer(layerName);
-    layer.appendToken(token);
+    token.prepare().then(() => {
+      // 当 token 准备完毕后增加到层中并绘制
+      const layer = this.layerManager.getLayer(layerName);
+      layer.appendToken(token);
 
-    this.render.draw(); // 绘制图像
+      this.render.draw(); // 绘制图像
+    });
   }
 }
