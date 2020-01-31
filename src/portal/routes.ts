@@ -74,6 +74,11 @@ export const routes: RouteConfig[] = [
     component: TLoadable(() => import('@portal/routes/help')),
   },
   {
+    title: '免责声明',
+    path: '/about/disclaimer',
+    component: TLoadable(() => import('@portal/routes/about/disclaimer')),
+  },
+  {
     title: '地图demo',
     path: '/map/demo',
     component: TLoadable(() => import('@portal/routes/map/demo')),
