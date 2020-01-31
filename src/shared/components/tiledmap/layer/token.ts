@@ -79,12 +79,12 @@ export class ImageToken extends Token {
       return;
     }
 
-    const { gridSize, ratio } = ctx;
+    const { gridSize } = ctx;
 
     ctx.render.canvas.drawImage(
       this._image,
-      this.gridPosition.x * gridSize.width * ratio,
-      this.gridPosition.y * gridSize.height * ratio,
+      this.gridPosition.x * gridSize.width,
+      this.gridPosition.y * gridSize.height,
       this.imageSize.width,
       this.imageSize.height
     );

@@ -12,11 +12,8 @@ export class TiledMapToolSelect extends TiledMapToolBase {
   }
 
   action(ctx: ActionContext): void {
-    const relativePos = {
-      x: ctx.mousePos.x - ctx.canvasPos.x,
-      y: ctx.mousePos.y - ctx.canvasPos.y,
-    }; // 鼠标指向位置在画布上的坐标
-    const gridPos = px2gridPos(relativePos, ctx.gridSize);
+    const position = ctx.render.transformMousePosToCanvasPos(ctx.mousePos); // 鼠标指向位置在画布上的坐标
+    const gridPos = px2gridPos(position, ctx.gridSize);
 
     const selectToken = ctx.layerManager.getLayerTokenByGridPosition({
       x: gridPos.x + 0.5,

@@ -33,6 +33,10 @@ export class TiledMapRender {
     return this.options.gridSize;
   }
 
+  get ratio(): number {
+    return this.options.ratio;
+  }
+
   getCanvasSize(): Size {
     const options = this.options;
     return {
@@ -46,8 +50,7 @@ export class TiledMapRender {
    */
   init() {
     const el = this.el;
-    const options = this.options;
-    const ratio = options.ratio;
+    const ratio = this.ratio;
 
     this.ctx.scale(ratio, ratio);
 
@@ -241,5 +244,16 @@ export class TiledMapRender {
   // 清除画布
   clear() {
     this.el.width = this.el.width; // 使用触发dom重绘来清除画布。更加暴力
+  }
+
+  /**
+   * 鼠标坐标转画布空间坐标
+   * @param mousePos 鼠标相对dom节点的坐标
+   */
+  transformMousePosToCanvasPos(mousePos: Position): Position {
+    return {
+      x: mousePos.x * this.ratio - this.position.x,
+      y: mousePos.y * this.ratio - this.position.y,
+    };
   }
 }
