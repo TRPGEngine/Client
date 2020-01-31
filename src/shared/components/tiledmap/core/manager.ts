@@ -44,9 +44,12 @@ export class TiledMapManager {
 
       const activityTool = this.toolbox.getCurrentTool();
       if (!_isNil(activityTool)) {
+        const pxPos = { x, y };
+        const drawContext = this.render.getDrawContext();
         activityTool.action({
-          ...this.render.getDrawContext(),
-          mousePos: { x, y },
+          ...drawContext,
+          layerManager: this.layerManager,
+          mousePos: pxPos,
         });
       }
     });
