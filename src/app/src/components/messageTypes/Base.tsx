@@ -53,7 +53,7 @@ class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
 
   render() {
     const { me, name, info, emphasizeTime } = this.props;
-    if (this.props.info.revoke === true) {
+    if (info.revoke === true) {
       return <TipMessage text={`${name} 撤回了一条消息`} />;
     }
 
