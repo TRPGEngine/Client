@@ -1,8 +1,10 @@
 import { Position } from '../core/types';
 import { DrawContext } from '../core/render';
 import { LayerManager } from '../layer/manager';
+import { TiledMapManager } from '../core/manager';
 
 export interface ActionContext extends DrawContext {
+  manager: TiledMapManager;
   layerManager: LayerManager;
   mousePos: Position; // 鼠标指针在画布dom上的相对位置
 }

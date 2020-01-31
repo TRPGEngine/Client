@@ -37,7 +37,7 @@ export class TiledMapManager {
     this.initEventListener();
   }
 
-  initEventListener() {
+  private initEventListener() {
     this.el.addEventListener('mousedown', (e) => {
       const { clientX: x, clientY: y } = e;
       // const { x: prevX, y: prevY } = this.render.position;
@@ -48,6 +48,7 @@ export class TiledMapManager {
         const drawContext = this.render.getDrawContext();
         activityTool.action({
           ...drawContext,
+          manager: this,
           layerManager: this.layerManager,
           mousePos: pxPos,
         });
@@ -55,14 +56,14 @@ export class TiledMapManager {
     });
   }
 
-  addLayer(name: string): Layer {
+  public addLayer(name: string): Layer {
     const layer = new Layer(name);
     this.layerManager.appendLayer(layer);
 
     return layer;
   }
 
-  addToken(layerName: string, token: Token): void {
+  public addToken(layerName: string, token: Token): void {
     token.prepare().then(() => {
       // 当 token 准备完毕后增加到层中并绘制
       const layer = this.layerManager.getLayer(layerName);
