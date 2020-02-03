@@ -8,6 +8,7 @@ import {
 import { requestJoinGroup } from '@shared/redux/actions/group';
 import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 import _get from 'lodash/get';
+import _isNil from 'lodash/isNil';
 import { showModal } from '@redux/actions/ui';
 import GroupInfo from './popover/GroupInfo';
 import { Popover } from 'antd';
@@ -124,7 +125,14 @@ class FindResultItem extends React.Component<Props> {
             </div>
           </Popover>
           <div className="profile">
-            <span className="username">{info.name}</span>
+            <span className="username">
+              {info.name}
+              {!_isNil(info.members_count) && (
+                <small>
+                  ({info.members_count}/{info.max_member})
+                </small>
+              )}
+            </span>
             <span className="uuid">{info.uuid}</span>
           </div>
           <div className="action">{this.getGroupAction(info.uuid)}</div>
