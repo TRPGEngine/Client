@@ -6,12 +6,13 @@ import { TRPGState } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import { useEffect } from 'react';
+import { GroupInfo } from '@redux/types/group';
 
 /**
  * 用于redux的缓存hook
  * @shared/utils/cache-helper 的 hook版本
  */
-function reduxHookCacheFactory(
+function reduxHookCacheFactory<T>(
   cacheScope: CacheKey,
   getCacheDispatch: GetCacheDispatchActionFn
 ) {
@@ -21,8 +22,8 @@ function reduxHookCacheFactory(
   const isSkipUUID = (uuid: string) =>
     _isNil(uuid) || uuid.toString().substr(0, 4) === 'trpg';
 
-  return function hook(uuid: string) {
-    const data = useSelector<TRPGState, any>((state) =>
+  return function hook(uuid: string): Partial<T> {
+    const data = useSelector<TRPGState, T>((state) =>
       _get(state, ['cache', cacheScope, uuid])
     );
     const dispatch = useDispatch();
@@ -59,7 +60,7 @@ function reduxHookCacheFactory(
   };
 }
 
-export const useCachedGroupInfo = reduxHookCacheFactory(
+export const useCachedGroupInfo = reduxHookCacheFactory<GroupInfo>(
   'group',
   (uuid, onCompleted) => getGroupInfo(uuid, onCompleted)
 );
