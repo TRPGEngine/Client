@@ -144,7 +144,9 @@ export default produce((draft: GroupState, action) => {
       // }
     }
     case AGREE_GROUP_REQUEST_SUCCESS:
-      const group = draft.groups.find(action.groupUUID);
+      const group = draft.groups.find(
+        (group) => group.uuid === action.groupUUID
+      );
       if (!_isNil(group)) {
         group.group_members = action.payload || [];
       }
