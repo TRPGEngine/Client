@@ -1,5 +1,6 @@
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
+import _pull from 'lodash/pull';
 import { TiledMapToolBase } from '../tools/base';
 import { regAllTool } from '../tools/__all__';
 import { Size } from './types';
@@ -7,7 +8,7 @@ import { TiledMapManager } from './manager';
 
 export class Toolbox {
   private tools: TiledMapToolBase[] = [];
-  private currentTool = '';
+  private currentToolName = '';
   private containerEl: HTMLDivElement;
 
   iconSize: Size = {
@@ -82,12 +83,24 @@ export class Toolbox {
    * @param toolName 工具名
    */
   setCurrentTool(toolName: string) {
+    const prevTool = this.getCurrentTool();
     const tool = this.tools.find((t) => t.name === toolName);
+    if (_isNil(tool)) {
+      return;
+    }
     tool.select(this._manager.render.getDrawContext()); // 调用工具的选择事件
 
-    this.currentTool = toolName;
+    this.currentToolName = toolName;
 
     this.updateCurrentToolClass();
+
+    if (!_isNil(prevTool)) {
+      // 如果上一个工具不为空
+      // 将上一个工具的渲染事件清理
+      _pull(this._manager.render.extraDrawFns, prevTool.draw);
+    }
+
+    this._manager.render.extraDrawFns.push(tool.draw);
   }
 
   /**
@@ -96,7 +109,7 @@ export class Toolbox {
    * 其他图标移除类名 toolbox-item-selected
    */
   updateCurrentToolClass() {
-    if (_isNil(this.containerEl) || _isEmpty(this.currentTool)) {
+    if (_isNil(this.containerEl) || _isEmpty(this.currentToolName)) {
       return;
     }
 
@@ -106,7 +119,7 @@ export class Toolbox {
       .forEach((item) => item.classList.remove('toolbox-item-selected'));
 
     this.containerEl
-      .querySelector(`.toolbox-item[data-icon-name=${this.currentTool}]`)
+      .querySelector(`.toolbox-item[data-icon-name=${this.currentToolName}]`)
       .classList.add('toolbox-item-selected');
   }
 
@@ -114,6 +127,6 @@ export class Toolbox {
    * 获取当前的工具
    */
   getCurrentTool(): TiledMapToolBase | null {
-    return this.tools.find((tool) => tool.name === this.currentTool);
+    return this.tools.find((tool) => tool.name === this.currentToolName);
   }
 }

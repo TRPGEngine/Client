@@ -11,10 +11,13 @@ export interface DrawContext {
   render: TiledMapRender;
 }
 
+export type DrawFunction = (ctx: DrawContext) => void;
+
 export class TiledMapRender {
   private ctx: CanvasRenderingContext2D;
   public position: Position = { x: 0, y: 0 };
   public layerManager: LayerManager;
+  public extraDrawFns: DrawFunction[] = []; //额外的渲染事件, 当所有的基础渲染完毕后调用列表中的渲染事件
   private _originOptions?: TiledMapOptions;
   public readonly fps = 60; // 每秒渲染60帧最高
 
@@ -106,6 +109,10 @@ export class TiledMapRender {
       this.drawAxis();
 
       this.drawLayer();
+
+      for (const fn of this.extraDrawFns) {
+        fn(this.getDrawContext());
+      }
     },
     Math.floor(1000 / this.fps), // 每秒最该渲染帧数
     { leading: true, trailing: true }
