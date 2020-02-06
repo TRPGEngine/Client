@@ -3,9 +3,13 @@ import { DrawContext } from '../core/render';
 import _isNumber from 'lodash/isNumber';
 import _inRange from 'lodash/inRange';
 
+/**
+ * 棋子
+ * 原则上来说棋子在画布上的大小必须为网格整数倍
+ */
 export class Token {
   gridPosition: Position = { x: 0, y: 0 }; // 网格坐标, 0 0 表示网格左上角
-  gridAreaSize: Size = { width: 0, height: 0 }; // 当前Token所占据的网格数
+  gridAreaSize: Size = { width: 1, height: 1 }; // 当前Token所占据的网格数 所有的Token默认都是1x1 不得为0或负数
 
   constructor(public name: string) {}
 
@@ -14,14 +18,6 @@ export class Token {
    * 当外层增加token时会检查token是否准备完毕
    */
   async prepare(): Promise<void> {}
-
-  /**
-   * 计算占据面积的公式
-   * 计算规则为 realPx/gridPx 取底， 如果不满1则为1
-   */
-  protected calGridAreaNum(realPx: number, gridPx: number) {
-    return Math.max(Math.floor(realPx / gridPx), 1);
-  }
 
   draw(ctx: DrawContext) {
     throw new Error('Should be Implement');
@@ -36,10 +32,9 @@ export class Token {
 }
 
 export class ImageToken extends Token {
-  imageSize: Size;
+  imageSize: Size; // 图片的实际大小
   private _image: HTMLImageElement;
   private _promise: Promise<HTMLImageElement>;
-  private _drawed: boolean = false; // 是否已经被绘制过
   loaded: boolean = false;
 
   constructor(name: string, public imageSrc: string) {
@@ -85,18 +80,9 @@ export class ImageToken extends Token {
       this._image,
       this.gridPosition.x * gridSize.width,
       this.gridPosition.y * gridSize.height,
-      this.imageSize.width,
-      this.imageSize.height
+      this.gridAreaSize.width * gridSize.width,
+      this.gridAreaSize.height * gridSize.height
     );
-
-    if (!this._drawed) {
-      // 绘制以后记录所占据的网格大小
-      this._drawed = true;
-      this.gridAreaSize = {
-        width: this.calGridAreaNum(this.imageSize.width, gridSize.width),
-        height: this.calGridAreaNum(this.imageSize.height, gridSize.height),
-      };
-    }
   }
 
   checkPosInside(gridPos: Position): boolean {
