@@ -76,6 +76,10 @@ export class Toolbox {
    */
   regTool(tool: TiledMapToolBase) {
     this.tools.push(tool);
+
+    if (!_isNil(tool.drawAlway)) {
+      this._manager.render.extraDrawFns.push(tool.drawAlway); // 注册工具绘制函数
+    }
   }
 
   /**
