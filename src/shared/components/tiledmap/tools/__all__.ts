@@ -6,5 +6,5 @@ export function regAllTool(toolbox: Toolbox) {
   toolbox.regTool(new TiledMapToolSelect());
   toolbox.regTool(new TiledMapToolMove());
 
-  toolbox.setCurrentTool('move');
+  toolbox.setCurrentTool('select');
 }

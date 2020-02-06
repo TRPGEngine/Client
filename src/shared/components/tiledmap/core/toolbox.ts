@@ -129,4 +129,12 @@ export class Toolbox {
   getCurrentTool(): TiledMapToolBase | null {
     return this.tools.find((tool) => tool.name === this.currentToolName);
   }
+
+  /**
+   * 获取当前工具名
+   * 用于外部获取
+   */
+  public getCurrentToolName() {
+    return this.currentToolName;
+  }
 }

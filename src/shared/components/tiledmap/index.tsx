@@ -1,7 +1,33 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { TiledMapManager } from './core/manager';
 import './index.less';
 import { ImageToken } from './layer/token';
+import { useKey, useKeyPressEvent } from 'react-use';
+import _isNil from 'lodash/isNil';
+
+/**
+ * 按下空格键临时切换当前道具
+ */
+function useTmpToolSwitch(manager: React.MutableRefObject<TiledMapManager>) {
+  const tmpSwitchRef = useRef<boolean>(false); // 标识当前是否为临时切换(通过按空格)
+  const handleSpaceKeydown = useCallback(() => {
+    if (!_isNil(manager.current)) {
+      if (manager.current.toolbox.getCurrentToolName() === 'select') {
+        manager.current.toolbox.setCurrentTool('move');
+        tmpSwitchRef.current = true;
+      }
+    }
+  }, []);
+  const handleSpaceKeyup = useCallback(() => {
+    if (!_isNil(manager.current) && tmpSwitchRef.current === true) {
+      if (manager.current.toolbox.getCurrentToolName() === 'move') {
+        manager.current.toolbox.setCurrentTool('select');
+        tmpSwitchRef.current = false;
+      }
+    }
+  }, []);
+  useKeyPressEvent(' ', handleSpaceKeydown, handleSpaceKeyup);
+}
 
 export const TiledMap: React.FC = React.memo((props) => {
   const canvasRef = useRef<HTMLCanvasElement>();
@@ -47,6 +73,8 @@ export const TiledMap: React.FC = React.memo((props) => {
 
     manager.current = tiledMapManager;
   }, []);
+
+  useTmpToolSwitch(manager);
 
   return (
     <div className="tiledmap">
