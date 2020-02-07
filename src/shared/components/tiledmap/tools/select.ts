@@ -3,6 +3,7 @@ import { DrawContext } from '../core/render';
 import { px2gridPos } from '../core/utils';
 import { Token } from '../layer/token';
 import _isNil from 'lodash/isNil';
+import { Position, Size } from '../core/types';
 
 export class TiledMapToolSelect extends TiledMapToolBase {
   name = 'select';
@@ -20,6 +21,18 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     const { gridSize } = ctx;
     const { canvas } = ctx.render;
 
+    this.drawSelectRect(canvas, gridPosition, gridAreaSize, gridSize);
+  };
+
+  /**
+   * 绘制选中的线框
+   */
+  drawSelectRect(
+    canvas: CanvasRenderingContext2D,
+    gridPosition: Position,
+    gridAreaSize: Size,
+    gridSize: Size
+  ) {
     // 绘制线框
     canvas.lineWidth = 3;
     canvas.strokeStyle = 'rgba(255, 161, 96, 0.8)';
@@ -29,7 +42,35 @@ export class TiledMapToolSelect extends TiledMapToolBase {
       gridAreaSize.width * gridSize.width,
       gridAreaSize.height * gridSize.height
     );
-  };
+
+    // 绘制修改大小控制器
+    const rectSize = 8;
+    canvas.fillStyle = 'rgba(255, 161, 96, 0.8)';
+    canvas.fillRect(
+      gridPosition.x * gridSize.width - rectSize / 2,
+      gridPosition.y * gridSize.height - rectSize / 2,
+      rectSize,
+      rectSize
+    );
+    canvas.fillRect(
+      (gridPosition.x + 1) * gridSize.width - rectSize / 2,
+      (gridPosition.y + 1) * gridSize.height - rectSize / 2,
+      rectSize,
+      rectSize
+    );
+    canvas.fillRect(
+      (gridPosition.x + 1) * gridSize.width - rectSize / 2,
+      gridPosition.y * gridSize.height - rectSize / 2,
+      rectSize,
+      rectSize
+    );
+    canvas.fillRect(
+      gridPosition.x * gridSize.width - rectSize / 2,
+      (gridPosition.y + 1) * gridSize.height - rectSize / 2,
+      rectSize,
+      rectSize
+    );
+  }
 
   select(ctx: DrawContext): void {
     ctx.el.style.cursor = 'default';
@@ -52,5 +93,7 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     ctx.render.draw();
 
     // TODO: 绘制选择范围
+
+    // TODO: resize handler事件处理
   }
 }
