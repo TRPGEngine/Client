@@ -85,6 +85,12 @@ class ExtraOptions extends React.Component<Props> {
           </ModalPanel>
         )
       );
+    } else if (menu === 'disclaimer') {
+      this.props.dispatch(
+        showPortal('/about/disclaimer', 'standalonewindow', {
+          title: '免责声明',
+        })
+      );
     } else if (menu === 'blog') {
       window.open(config.url.blog);
     } else if (menu === 'logout') {
@@ -144,6 +150,7 @@ class ExtraOptions extends React.Component<Props> {
             <li onClick={() => this.handleClickMenu('relogin')}>重新登录</li>
           ) : null}
           <li onClick={() => this.handleClickMenu('help')}>帮助反馈</li>
+          <li onClick={() => this.handleClickMenu('disclaimer')}>免责声明</li>
           <li onClick={() => this.handleClickMenu('blog')}>开发者博客</li>
           <li onClick={() => this.handleClickMenu('logout')}>退出登录</li>
         </ul>

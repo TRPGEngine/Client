@@ -49,6 +49,15 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   render() {
     const { type, me, name, info, emphasizeTime } = this.props;
 
+    if (info.revoke === true) {
+      // 撤回消息显示
+      return (
+        <div className="msg-item-tip">
+          <div className="content">{name} 撤回了一条消息</div>
+        </div>
+      );
+    }
+
     return (
       <div className={'msg-item ' + (me ? 'me ' : '') + type}>
         {emphasizeTime ? (

@@ -14,10 +14,10 @@ interface Props extends TRPGDispatchProp {
   selectedGroupInfo: any;
 }
 interface State {
-  avatar: string,
-  name: string,
-  sub_name: string,
-  desc: string,
+  avatar: string;
+  name: string;
+  sub_name: string;
+  desc: string;
 }
 class GroupEdit extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -45,7 +45,7 @@ class GroupEdit extends React.Component<Props, State> {
   }
 
   render() {
-    let actions = (
+    const actions = (
       <div className="actions">
         <button onClick={() => this.props.dispatch(hideModal())}>
           <i className="iconfont">&#xe70c;</i>取消

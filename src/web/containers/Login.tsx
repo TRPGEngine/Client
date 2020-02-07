@@ -7,6 +7,7 @@ import config from '../../shared/project.config';
 import rnStorage from '../../shared/api/rn-storage.api';
 import './Login.scss';
 import { TRPGState } from '@redux/types/__all__';
+import { showPortal } from '@web/redux/action/ui';
 
 interface Props extends DispatchProp<any> {
   isLogin: boolean;
@@ -69,6 +70,14 @@ class Login extends React.Component<Props> {
     );
   }
 
+  handleShowDownloadApp = () => {
+    this.props.dispatch(
+      showPortal('/deploy', 'standalonewindow', {
+        title: '下载APP',
+      })
+    );
+  };
+
   render() {
     const canLogin =
       this.state.username &&
@@ -95,7 +104,7 @@ class Login extends React.Component<Props> {
           }}
           onKeyUp={(e) => e.keyCode === 13 && this.handleLogin()}
         />
-        <div className="loginArea">
+        <div className="login-area">
           <button
             className={canLogin ? 'active' : ''}
             onClick={() => this.handleLogin()}
@@ -109,7 +118,10 @@ class Login extends React.Component<Props> {
             </button>
           ) : null}
         </div>
-        <Link to="register">没有账号？现在注册</Link>
+        <div className="login-action">
+          <a onClick={this.handleShowDownloadApp}>下载移动版APP</a>
+          <Link to="register">没有账号？现在注册</Link>
+        </div>
       </div>
     );
   }

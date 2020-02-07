@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Clipboard, TouchableHighlight, Text } from 'react-native';
+import { View, Clipboard, TouchableOpacity } from 'react-native';
 import _get from 'lodash/get';
 import Base from './Base';
 import { Modal } from '@ant-design/react-native';
@@ -67,7 +67,7 @@ const DefaultAddonContent: React.FC<{ message: string }> = React.memo(
     }
 
     return (
-      <TouchableHighlight onPress={handleClick}>
+      <TouchableOpacity onPress={handleClick}>
         <DefaultAddonContentContainer>
           <DefaultAddonInfo>
             <DefaultAddonInfoTitle>{info.title}</DefaultAddonInfoTitle>
@@ -77,7 +77,7 @@ const DefaultAddonContent: React.FC<{ message: string }> = React.memo(
             {_isString(info.icon) && <DefaultAddonImage url={info.icon} />}
           </View>
         </DefaultAddonContentContainer>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 );

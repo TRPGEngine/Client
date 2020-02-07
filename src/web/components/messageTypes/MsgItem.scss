@@ -32,23 +32,35 @@
     }
   }
 
+  &.ooc,&.speak,&.action {
+    .content > .body > .bubble{
+      padding-left: 22px;
+      padding-right: 22px;
+    }
+  }
+
   &.ooc {
     .content>.body>.bubble {
       color: #ccc;
       border-style: dashed;
+
       &:before{
-        content: '（';
+        content: '(';
+        position: absolute;
+        top: 4px;
+        left: 14px;
       }
       &:after{
-        content: '）';
+        content: ')';
+        position: absolute;
+        bottom: 6px;
+        right: 14px;
       }
     }
   }
 
   &.speak {
     .content>.body>.bubble {
-      padding-left: 22px;
-      padding-right: 22px;
       border-color: #bec9ff;
       box-shadow: 0px 0px 2px 0px #bec9ff;
       &:before{
@@ -58,7 +70,7 @@
       }
       &:after{
         content: '\e601';
-        bottom: 16px;
+        bottom: 13px;
         right: 6px;
       }
       &:before, &:after{
@@ -75,23 +87,20 @@
       border-color: #ffa787;
       box-shadow: 0px 0px 2px 0px #ffa787;
 
-      &:after {
-        content: '\e619';
-        font-family: "iconfont";
-        color: #ccc;
-        margin-left: 4px;
-      }
-    }
-
-    &.me .content>.body>.bubble {
-      &:after {
-        content: '';
-      }
       &:before {
         content: '\e619';
         font-family: "iconfont";
         color: #ccc;
-        margin-right: 4px;
+        position: absolute;
+        right: 6px;
+      }
+    }
+
+    &.me .content>.body>.bubble {
+      &:before {
+        position: absolute;
+        left: 6px;
+        right: auto;
       }
     }
   }

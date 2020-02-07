@@ -1,15 +1,43 @@
 import { Size, Position, TiledMapOptions } from './types';
+import _isNil from 'lodash/isNil';
+import _throttle from 'lodash/throttle';
+import { LayerManager } from '../layer/manager';
+
+export interface DrawContext {
+  el: HTMLCanvasElement;
+  ratio: number;
+  canvasPos: Position;
+  gridSize: Size;
+  render: TiledMapRender;
+}
+
+export type DrawFunction = (ctx: DrawContext) => void;
 
 export class TiledMapRender {
   private ctx: CanvasRenderingContext2D;
   public position: Position = { x: 0, y: 0 };
+  public layerManager: LayerManager;
+  public extraDrawFns: DrawFunction[] = []; //额外的渲染事件, 当所有的基础渲染完毕后调用列表中的渲染事件
   private _originOptions?: TiledMapOptions;
+  public readonly fps = 60; // 每秒渲染60帧最高
 
   constructor(private el: HTMLCanvasElement, public options: TiledMapOptions) {
     this.ctx = el.getContext('2d');
 
     this.init();
     this.draw();
+  }
+
+  get canvas(): CanvasRenderingContext2D {
+    return this.ctx;
+  }
+
+  get gridSize(): Size {
+    return this.options.gridSize;
+  }
+
+  get ratio(): number {
+    return this.options.ratio;
   }
 
   getCanvasSize(): Size {
@@ -25,10 +53,8 @@ export class TiledMapRender {
    */
   init() {
     const el = this.el;
-    const options = this.options;
-    const ratio = options.ratio;
+    const ratio = this.ratio;
 
-    el.style.cursor = 'all-scroll';
     this.ctx.scale(ratio, ratio);
 
     const canvasSize = this.getCanvasSize();
@@ -74,13 +100,23 @@ export class TiledMapRender {
   /**
    * 渲染所有的图形
    */
-  draw() {
-    this.clear();
-    this.resetTranslate();
+  draw = _throttle(
+    () => {
+      this.clear();
+      this.resetTranslate();
 
-    this.drawGrid();
-    this.drawAxis();
-  }
+      this.drawGrid();
+      this.drawAxis();
+
+      this.drawLayer();
+
+      for (const fn of this.extraDrawFns) {
+        fn(this.getDrawContext());
+      }
+    },
+    Math.floor(1000 / this.fps), // 每秒最该渲染帧数
+    { leading: true, trailing: true }
+  );
 
   /**
    * 绘制网格
@@ -167,6 +203,30 @@ export class TiledMapRender {
   }
 
   /**
+   * 绘制所有层
+   */
+  drawLayer() {
+    if (_isNil(this.layerManager)) {
+      return;
+    }
+
+    this.layerManager.drawLayer(this.getDrawContext());
+  }
+
+  /**
+   * 获取用于绘制的上下文
+   */
+  getDrawContext(): DrawContext {
+    return {
+      canvasPos: this.position,
+      el: this.el,
+      render: this,
+      gridSize: this.gridSize,
+      ratio: this.options.ratio,
+    };
+  }
+
+  /**
    * 获取在实际窗口上左上角的坐标
    */
   getWindowRelativePosition(): Position {
@@ -191,5 +251,16 @@ export class TiledMapRender {
   // 清除画布
   clear() {
     this.el.width = this.el.width; // 使用触发dom重绘来清除画布。更加暴力
+  }
+
+  /**
+   * 鼠标坐标转画布空间坐标
+   * @param mousePos 鼠标相对dom节点的坐标
+   */
+  transformMousePosToCanvasPos(mousePos: Position): Position {
+    return {
+      x: mousePos.x * this.ratio - this.position.x,
+      y: mousePos.y * this.ratio - this.position.y,
+    };
   }
 }

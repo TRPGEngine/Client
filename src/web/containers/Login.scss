@@ -30,7 +30,7 @@
     margin: 0 0 5px;
   }
 
-  .loginArea {
+  .login-area {
     display: flex;
 
     button {
@@ -47,8 +47,14 @@
     }
   }
 
-  a, a:link, a:visited {
-    float: right;
-    @include link-btn;
+  .login-action {
+    display: flex;
+    justify-content: space-between;
+
+    a, a:link, a:visited, a:hover {
+      @include link-btn;
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 }

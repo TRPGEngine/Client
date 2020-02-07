@@ -24,6 +24,10 @@ if (trpgHost) {
   trpgPort = _tmp[1];
 }
 
+if (trpgPort === '443') {
+  isSSL = true;
+}
+
 /**
  * portal 服务的地址
  */

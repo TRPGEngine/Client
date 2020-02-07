@@ -4,12 +4,21 @@ import { showSlidePanel } from '@redux/actions/ui';
 import Webview from '@web/components/Webview';
 import React from 'react';
 import config from '@shared/project.config';
+import StandaloneWindow, {
+  StandaloneWindowConfig,
+} from '@web/components/StandaloneWindow';
+
+type PortalPreviewType = 'slidepanel' | 'standalonewindow';
 
 /**
  * 显示portal页面
  * @param url portal地址
  */
-export const showPortal = (url: string): TRPGAction => {
+export const showPortal = (
+  url: string,
+  type: PortalPreviewType = 'slidepanel',
+  options?: Omit<StandaloneWindowConfig, 'body'>
+): TRPGAction => {
   return async function(dispatch, getState) {
     const userUUID = getState().user.info.uuid;
 
@@ -20,7 +29,15 @@ export const showPortal = (url: string): TRPGAction => {
 
     const portalUrl = config.url.portal;
     url = url.startsWith(portalUrl) ? url : portalUrl + url;
+    const node = React.createElement(Webview, { src: url });
 
-    dispatch(showSlidePanel('', React.createElement(Webview, { src: url })));
+    if (type === 'slidepanel') {
+      dispatch(showSlidePanel('', node));
+    } else if (type === 'standalonewindow') {
+      StandaloneWindow.open({
+        ...options,
+        body: node,
+      });
+    }
   };
 };

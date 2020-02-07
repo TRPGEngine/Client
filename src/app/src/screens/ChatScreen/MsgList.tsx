@@ -129,7 +129,7 @@ class MsgList extends React.PureComponent<Props> {
           ref={this.listRef}
           data={msgList}
           inverted={true}
-          keyExtractor={(item, index) => item.uuid + index}
+          keyExtractor={(item) => item.uuid}
           onTouchStart={onTouchStart}
           onScroll={this.handleScroll}
           onEndReached={this.handleGetMoreLog}

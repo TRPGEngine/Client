@@ -2,14 +2,15 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import sb from 'react-native-style-block';
 import { TAvatar } from '../TComponent';
-import dateHelper from '../../../../shared/utils/date-helper';
-import config from '../../../../shared/project.config';
+import dateHelper from '@shared/utils/date-helper';
 import { MessageProps } from '@shared/components/MessageHandler';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import { TipMessage } from '../TipMessage';
 
-class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
+class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
+  P
+> {
   static defaultProps = {
     type: 'normal',
     me: false,
@@ -53,7 +54,7 @@ class Base<P extends MessageProps = MessageProps> extends React.Component<P> {
 
   render() {
     const { me, name, info, emphasizeTime } = this.props;
-    if (this.props.info.revoke === true) {
+    if (info.revoke === true) {
       return <TipMessage text={`${name} 撤回了一条消息`} />;
     }
 

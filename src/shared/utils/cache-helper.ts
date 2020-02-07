@@ -65,7 +65,7 @@ export const loadcache = function() {
 };
 
 type GetCacheCompletedCallback = () => void;
-type GetCacheDispatchActionFn = (
+export type GetCacheDispatchActionFn = (
   uuid: string,
   onCompleted: GetCacheCompletedCallback
 ) => TRPGAction;
