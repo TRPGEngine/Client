@@ -44,6 +44,7 @@ interface ProjectConfig {
   version: string;
   environment: string;
   platform: string;
+  isSSL: boolean;
   io: {
     protocol: 'wss' | 'ws';
     host: string;
@@ -105,6 +106,7 @@ const config: ProjectConfig = {
   version: require('../../package.json').version,
   environment,
   platform,
+  isSSL,
   io: {
     protocol: isSSL ? 'wss' : 'ws',
     host: currentHost,

@@ -39,6 +39,13 @@ export const getUploadsImagePath = (filename: string, isTemporary = false) => {
  * @param url 下载地址
  */
 export const downloadFileWeb = (url: string) => {
+  if (config.isSSL && url.startsWith('http://')) {
+    // 如果当前是ssl协议且下载地址是http协议
+    // 直接打开窗口(因为mix-content限制)
+    window.open(url);
+    return;
+  }
+
   let a = document.createElement('a');
   a.style.display = 'none';
   a.href = url;
