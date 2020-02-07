@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.18](https://github.com/TRPGEngine/Client/compare/v0.2.17...v0.2.18) (2020-02-07)
+
+
+### Features
+
+* **portal:** 增加免责声明页面 ([67a895a](https://github.com/TRPGEngine/Client/commit/67a895ad39c8e1d80aa22eae3e67ac2bda63c970))
+* **web:** web端增加免责声明入口 ([2bbc8ec](https://github.com/TRPGEngine/Client/commit/2bbc8ec23df86c6c214ddd1ea251d2702bf9f513))
+* **web:** 增加了打开下载移动版app的入口 ([d475dd8](https://github.com/TRPGEngine/Client/commit/d475dd80230abe4fb6359aa2817d8029fb8700bb))
+* **web:** 搜索结果增加团人数显示 ([1c11e2c](https://github.com/TRPGEngine/Client/commit/1c11e2c69ca522ff7e373685fc8d83739a3993fb))
+* **web:** 添加团时可以获取到团的基本信息 ([cbe8e0a](https://github.com/TRPGEngine/Client/commit/cbe8e0a1ea6261c8ca241b49a86f4affd4050a96))
+* **web:** 网页端消息撤回显示 ([b3710d2](https://github.com/TRPGEngine/Client/commit/b3710d26bf72f7b58ff265209bbcd7548254b492))
+
+
+### Bug Fixes
+
+* 修复了getWebToken如果没有获取到userUUID仍旧会继续运行的bug ([98ff65f](https://github.com/TRPGEngine/Client/commit/98ff65f885b8efa26ebd20bb2c715b317f4fcf42))
+* **web:** 修复编辑团信息时头像显示大小不正确的bug ([fc6b95e](https://github.com/TRPGEngine/Client/commit/fc6b95e0364d8dcdae582973251caa5f3ba8040e))
+* 修复同意团申请报错的bug ([2fadc85](https://github.com/TRPGEngine/Client/commit/2fadc850172a69dce1052c71ac925b71e00d45ad))
+
 ### [0.2.17](https://github.com/TRPGEngine/Client/compare/v0.2.16...v0.2.17) (2020-01-23)
 
 
