@@ -106,7 +106,10 @@ class ConverseDetail extends React.Component<Props> {
     const uuid = this.props.converseUUID;
     console.log('发送投骰邀请', uuid);
     const usercache = this.props.usercache;
-    const name = usercache.uuid.nickname || usercache.uuid.username;
+    const name =
+      _get(usercache, [uuid, 'nickname']) ||
+      _get(usercache, [uuid, 'username']);
+
     this.props.dispatch(
       showModal(
         <DiceInvite
