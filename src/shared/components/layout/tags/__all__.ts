@@ -1,4 +1,4 @@
-import { register } from '.';
+import { register } from '../tags';
 import Col from './Col';
 import Define from './Define';
 import Input from './Input';

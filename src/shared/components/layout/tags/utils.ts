@@ -1,8 +1,14 @@
 import { Fragment } from 'react';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
-import { XMLBuilderState, XMLBuilderContext } from '@shared/layout/XMLBuilder';
-import { StateDataType, StateActionType } from '@shared/layout/types';
+import {
+  XMLBuilderState,
+  XMLBuilderContext,
+} from '@shared/components/layout/XMLBuilder';
+import {
+  StateDataType,
+  StateActionType,
+} from '@shared/components/layout/types';
 
 export type OperationDataType = {
   scope: string;

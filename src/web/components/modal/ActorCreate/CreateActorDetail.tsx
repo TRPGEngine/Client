@@ -1,5 +1,5 @@
 import React from 'react';
-import XMLBuilder, { DataMap } from '@shared/layout/XMLBuilder';
+import XMLBuilder, { DataMap } from '@shared/components/layout/XMLBuilder';
 import _clone from 'lodash/clone';
 import { ActorTemplateType } from '@redux/types/actor';
 

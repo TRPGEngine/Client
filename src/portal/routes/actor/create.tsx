@@ -5,7 +5,7 @@ import {
   fetchTemplateInfo,
   createActor,
 } from '@portal/model/actor';
-import XMLBuilder, { DataMap } from '@shared/layout/XMLBuilder';
+import XMLBuilder, { DataMap } from '@shared/components/layout/XMLBuilder';
 import _isNil from 'lodash/isNil';
 import { Affix, notification } from 'antd';
 import { checkToken } from '@portal/utils/auth';

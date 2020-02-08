@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Row, Avatar, Col } from 'antd';
-import XMLBuilder, { DataMap } from '@shared/layout/XMLBuilder';
+import XMLBuilder, { DataMap } from '@shared/components/layout/XMLBuilder';
 import styled from 'styled-components';
 import { ActorTemplateType } from '@redux/types/actor';
 

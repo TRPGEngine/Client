@@ -4,7 +4,7 @@ import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import _isFunction from 'lodash/isFunction';
 import _cloneDeep from 'lodash/cloneDeep';
-import XMLBuilder from '@shared/layout/XMLBuilder';
+import XMLBuilder from '@shared/components/layout/XMLBuilder';
 import { Row, Button } from 'antd';
 import styled from 'styled-components';
 

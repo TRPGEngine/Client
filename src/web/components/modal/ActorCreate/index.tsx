@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ModalPanel from '../../ModalPanel';
 import { Button, Steps, Row, message } from 'antd';
 import { connect, DispatchProp } from 'react-redux';
-import { DataMap } from '@shared/layout/XMLBuilder';
+import { DataMap } from '@shared/components/layout/XMLBuilder';
 import {
   getSuggestTemplate,
   createActor,

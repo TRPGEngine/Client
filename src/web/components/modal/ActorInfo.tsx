@@ -2,7 +2,7 @@ import React from 'react';
 import ModalPanel from '../ModalPanel';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
-import XMLBuilder from '@shared/layout/XMLBuilder';
+import XMLBuilder from '@shared/components/layout/XMLBuilder';
 import { Col, Row, Avatar } from 'antd';
 import styled from 'styled-components';
 
