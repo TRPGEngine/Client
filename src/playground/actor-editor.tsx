@@ -4,6 +4,7 @@ import SplitPane from 'react-split-pane';
 import MonacoEditor, { EditorDidMount } from 'react-monaco-editor';
 import './split-pane.css';
 import { editor, IPosition, KeyMod, KeyCode } from 'monaco-editor';
+import XMLBuilder from '@shared/components/layout/XMLBuilder';
 
 const Container = styled.div`
   height: 100vh;
@@ -43,7 +44,7 @@ const initCodePos: IPosition = {
   column: 21,
 };
 
-const ActorEditor = () => {
+const ActorEditor = React.memo(() => {
   const [code, setCode] = useState<string>(initCode);
   const editorRef = useRef<editor.IStandaloneCodeEditor>();
 
@@ -60,25 +61,28 @@ const ActorEditor = () => {
   return (
     <Container>
       <SplitPane split="vertical" defaultSize="50%">
+        <Block label="布局">
+          <MonacoEditor
+            width="100%"
+            height="100%"
+            language="xml"
+            theme="vs-dark"
+            value={code}
+            options={editorOptions}
+            onChange={(newValue) => setCode(newValue)}
+            editorDidMount={onEditorDidMount}
+          />
+        </Block>
         <SplitPane split="horizontal" defaultSize="60%">
-          <Block label="布局">
-            <MonacoEditor
-              width="100%"
-              height="100%"
-              language="xml"
-              theme="vs-dark"
-              value={code}
-              options={editorOptions}
-              onChange={(newValue) => setCode(newValue)}
-              editorDidMount={onEditorDidMount}
-            />
-          </Block>
-          <div></div>
+          <div>
+            <XMLBuilder xml={code} />
+          </div>
+
+          <div>这里是属性, 需要一个JSON显示器</div>
         </SplitPane>
-        <div>asad</div>
       </SplitPane>
     </Container>
   );
-};
+});
 
 export default ActorEditor;
