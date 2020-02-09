@@ -14,8 +14,9 @@ import XMLBuilder, {
   XMLBuilderState,
 } from '@shared/components/layout/XMLBuilder';
 import ReactJson from 'react-json-view';
+import copy from 'copy-to-clipboard';
 import { Block } from './components/Block';
-import { Select } from 'antd';
+import { Select, message } from 'antd';
 const { Option } = Select;
 
 declare module 'antd/lib/select' {
@@ -61,9 +62,9 @@ const ActorEditor = React.memo(() => {
     editorRef.current = editor;
     editor.focus();
     editor.setPosition(initCodePos);
-    console.log(KeyMod.CtrlCmd, KeyCode.KEY_S, KeyMod.CtrlCmd | KeyCode.KEY_S);
-    editor.addCommand(KeyMod.CtrlCmd | KeyCode.KEY_S, () => {
-      console.log('TODO: save');
+
+    editor.addCommand(KeyMod.CtrlCmd | KeyCode.KEY_S, (e) => {
+      copy(code) && message.success('布局代码已复制到剪切板');
     });
   };
 
