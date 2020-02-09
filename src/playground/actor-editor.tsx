@@ -31,7 +31,7 @@ declare module 'antd/lib/select' {
  * 示例代码
  */
 const exampleLayout = [
-  { label: 'simple', value: require('./example/simple.xml').default },
+  { label: 'Simple', value: require('./example/simple.xml').default },
 ];
 
 const Container = styled.div`
@@ -61,7 +61,7 @@ const ActorEditor = React.memo(() => {
   const [layoutType, setLayoutType] = useState<LayoutType>('edit');
   const editorRef = useRef<editor.IStandaloneCodeEditor>();
 
-  const onEditorDidMount: EditorDidMount = (editor) => {
+  const onEditorDidMount: EditorDidMount = useCallback((editor) => {
     editorRef.current = editor;
     editor.focus();
     editor.setPosition(initCodePos);
@@ -69,7 +69,7 @@ const ActorEditor = React.memo(() => {
     editor.addCommand(KeyMod.CtrlCmd | KeyCode.KEY_S, (e) => {
       copy(code) && message.success('布局代码已复制到剪切板');
     });
-  };
+  }, []);
 
   const handleSelectLayout = useCallback(
     (value: string, option: ReactElement) => {
@@ -107,7 +107,6 @@ const ActorEditor = React.memo(() => {
       >
         <div>
           <Checkbox
-            style={{ width: 200 }}
             checked={layoutType === 'edit'}
             onChange={handleChangeLayoutType}
           >
@@ -128,16 +127,22 @@ const ActorEditor = React.memo(() => {
     <Container>
       <SplitPane split="vertical" defaultSize="50%">
         <Block label="布局" theme="dark" actions={LayoutActions}>
-          <MonacoEditor
-            width="100%"
-            height="100%"
-            language="xml"
-            theme="vs-dark"
-            value={code}
-            options={editorOptions}
-            onChange={(newValue) => setCode(newValue)}
-            editorDidMount={onEditorDidMount}
-          />
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              backgroundColor: '#1e1e1e',
+            }}
+          >
+            <MonacoEditor
+              language="xml"
+              theme="vs-dark"
+              value={code}
+              options={editorOptions}
+              onChange={(newValue) => setCode(newValue)}
+              editorDidMount={onEditorDidMount}
+            />
+          </div>
         </Block>
         <SplitPane split="horizontal" defaultSize="80%">
           <Block label="" theme="light" actions={RenderActions}>
