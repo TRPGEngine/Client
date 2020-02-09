@@ -1,9 +1,10 @@
-import React, { useReducer, useMemo } from 'react';
+import React, { useReducer, useMemo, useState, useEffect } from 'react';
 import parser, { XMLElement } from './parser/xml-parser';
 import * as processor from './processor';
 import _clone from 'lodash/clone';
 import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
+import _isNil from 'lodash/isNil';
 import './tags/__all__';
 import Debug from 'debug';
 const debug = Debug('trpg:XMLBuilder');
@@ -91,14 +92,44 @@ const buildReducer = (onChange?: StateChangeHandler) => {
   return XMLBuilderReducer;
 };
 
+class XMLErrorBoundary extends React.Component {
+  state = { hasError: false, error: null };
+
+  static getDerivedStateFromError(error) {
+    // 更新 state 使下一次渲染能够显示降级后的 UI
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // 你同样可以将错误日志上报给服务器
+    console.error(error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // 你可以自定义降级后的 UI 并渲染
+      return (
+        <div>
+          <h2>人物卡布局解析错误</h2>
+          <p>{String(this.state.error)}</p>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 interface Props {
   xml: string;
   layoutType?: LayoutType;
   initialData?: DataMap;
   onChange?: StateChangeHandler;
 }
-const XMLBuilder = (props: Props) => {
+const XMLBuilder = React.memo((props: Props) => {
   const { xml = '', onChange, layoutType = 'edit' } = props;
+  const [error, setError] = useState<Error>(null);
+  const [layout, setLayout] = useState();
 
   const initialState: XMLBuilderState = {
     defines: {},
@@ -107,23 +138,40 @@ const XMLBuilder = (props: Props) => {
   };
   const [state, dispatch] = useReducer(buildReducer(onChange), initialState);
 
-  const layout = useMemo(() => {
-    const layout = parser(xml);
-    layout.type = 'root';
-    console.log('layout', layout);
-    return layout;
+  useEffect(() => {
+    try {
+      const layout = parser(xml);
+      layout.type = 'root';
+      console.log('layout', layout);
+      setLayout(layout);
+      setError(null);
+    } catch (err) {
+      console.error(err);
+      setError(err);
+    }
   }, [xml]);
+
+  if (!_isNil(error)) {
+    return (
+      <div>
+        <p>XML解析出现错误:</p>
+        <p>{String(error)}</p>
+      </div>
+    );
+  }
 
   if (_isEmpty(layout)) {
     return null;
   }
 
   return (
-    <XMLBuilderContainer>
-      {processor.render(layout, { state, dispatch, layoutType })}
-    </XMLBuilderContainer>
+    <XMLErrorBoundary>
+      <XMLBuilderContainer>
+        {processor.render(layout, { state, dispatch, layoutType })}
+      </XMLBuilderContainer>
+    </XMLErrorBoundary>
   );
-};
+});
 XMLBuilder.displayName = 'XMLBuilder';
 
 export default XMLBuilder;
