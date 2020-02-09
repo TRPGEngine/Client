@@ -12,11 +12,13 @@ import './split-pane.css';
 import { editor, IPosition, KeyMod, KeyCode } from 'monaco-editor';
 import XMLBuilder, {
   XMLBuilderState,
+  LayoutType,
 } from '@shared/components/layout/XMLBuilder';
 import ReactJson from 'react-json-view';
 import copy from 'copy-to-clipboard';
 import { Block } from './components/Block';
-import { Select, message } from 'antd';
+import { Select, message, Button, Checkbox } from 'antd';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 const { Option } = Select;
 
 declare module 'antd/lib/select' {
@@ -56,6 +58,7 @@ const initCodePos: IPosition = {
 
 const ActorEditor = React.memo(() => {
   const [code, setCode] = useState<string>(initCode);
+  const [layoutType, setLayoutType] = useState<LayoutType>('edit');
   const editorRef = useRef<editor.IStandaloneCodeEditor>();
 
   const onEditorDidMount: EditorDidMount = (editor) => {
@@ -94,6 +97,28 @@ const ActorEditor = React.memo(() => {
     );
   }, []);
 
+  const handleChangeLayoutType = useCallback((e: CheckboxChangeEvent) => {
+    setLayoutType(e.target.checked ? 'edit' : 'detail');
+  }, []);
+  const RenderActions = useMemo(() => {
+    return (
+      <div
+        style={{ display: 'flex', flex: 1, justifyContent: 'space-between' }}
+      >
+        <div>
+          <Checkbox
+            style={{ width: 200 }}
+            checked={layoutType === 'edit'}
+            onChange={handleChangeLayoutType}
+          >
+            编辑模式
+          </Checkbox>
+        </div>
+        <Button type="primary">分享给用户</Button>
+      </div>
+    );
+  }, [layoutType]);
+
   const [currentState, setCurrentState] = useState({});
   const handleStateChange = useCallback((newState: XMLBuilderState) => {
     setCurrentState({ ...newState.data });
@@ -102,7 +127,7 @@ const ActorEditor = React.memo(() => {
   return (
     <Container>
       <SplitPane split="vertical" defaultSize="50%">
-        <Block label="布局" actions={LayoutActions}>
+        <Block label="布局" theme="dark" actions={LayoutActions}>
           <MonacoEditor
             width="100%"
             height="100%"
@@ -115,10 +140,15 @@ const ActorEditor = React.memo(() => {
           />
         </Block>
         <SplitPane split="horizontal" defaultSize="80%">
-          <div style={{ width: '100%' }}>
-            <XMLBuilder xml={code} onChange={handleStateChange} />
-          </div>
-
+          <Block label="" theme="light" actions={RenderActions}>
+            <div style={{ width: '100%' }}>
+              <XMLBuilder
+                layoutType={layoutType}
+                xml={code}
+                onChange={handleStateChange}
+              />
+            </div>
+          </Block>
           <div>
             <ReactJson
               name={false}
