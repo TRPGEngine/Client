@@ -40,6 +40,19 @@ const Container = styled.div`
   background-color: white;
 `;
 
+const XMLRenderContainer = styled.div<{ isMobile: boolean }>`
+  ${(props) =>
+    props.isMobile
+      ? `
+        width: 375px;
+        height: 667px;
+        margin: 20px auto;
+        border: 1px solid #ccc;
+        overflow: auto;
+      `
+      : `width: 100%`}
+`;
+
 const editorOptions = {
   selectOnLineNumbers: true,
   automaticLayout: true,
@@ -58,7 +71,8 @@ const initCodePos: IPosition = {
 
 const ActorEditor = React.memo(() => {
   const [code, setCode] = useState<string>(initCode);
-  const [layoutType, setLayoutType] = useState<LayoutType>('edit');
+  const [layoutType, setLayoutType] = useState<LayoutType>('edit'); // 渲染类型
+  const [isMobile, setIsMobile] = useState(false); // 是否为移动模式
   const editorRef = useRef<editor.IStandaloneCodeEditor>();
 
   const onEditorDidMount: EditorDidMount = useCallback((editor) => {
@@ -100,6 +114,9 @@ const ActorEditor = React.memo(() => {
   const handleChangeLayoutType = useCallback((e: CheckboxChangeEvent) => {
     setLayoutType(e.target.checked ? 'edit' : 'detail');
   }, []);
+  const handleChangeIsMobile = useCallback((e: CheckboxChangeEvent) => {
+    setIsMobile(e.target.checked ? true : false);
+  }, []);
   const RenderActions = useMemo(() => {
     return (
       <div
@@ -112,11 +129,14 @@ const ActorEditor = React.memo(() => {
           >
             编辑模式
           </Checkbox>
+          <Checkbox checked={isMobile} onChange={handleChangeIsMobile}>
+            移动页面
+          </Checkbox>
         </div>
         <Button type="primary">分享给用户</Button>
       </div>
     );
-  }, [layoutType]);
+  }, [layoutType, isMobile]);
 
   const [currentState, setCurrentState] = useState({});
   const handleStateChange = useCallback((newState: XMLBuilderState) => {
@@ -146,13 +166,13 @@ const ActorEditor = React.memo(() => {
         </Block>
         <SplitPane split="horizontal" defaultSize="80%">
           <Block label="" theme="light" actions={RenderActions}>
-            <div style={{ width: '100%' }}>
+            <XMLRenderContainer isMobile={isMobile}>
               <XMLBuilder
                 layoutType={layoutType}
                 xml={code}
                 onChange={handleStateChange}
               />
-            </div>
+            </XMLRenderContainer>
           </Block>
           <div>
             <ReactJson

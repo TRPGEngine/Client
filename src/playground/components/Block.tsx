@@ -8,6 +8,8 @@ const BlockContent = styled.div<{ type: BlockThemeType }>`
   width: 100%;
   overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
 
   > h2 {
     margin: 0;
@@ -25,6 +27,11 @@ const BlockContent = styled.div<{ type: BlockThemeType }>`
       margin-right: 8px;
     }
   }
+
+  > div {
+    flex: 1;
+    overflow: auto;
+  }
 `;
 
 interface Props {
@@ -40,7 +47,7 @@ export const Block: React.FC<Props> = React.memo((props) => {
         <span>{props.label}</span>
         {props.actions}
       </h2>
-      {props.children}
+      <div>{props.children}</div>
     </BlockContent>
   );
 });
