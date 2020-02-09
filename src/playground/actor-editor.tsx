@@ -19,6 +19,7 @@ import copy from 'copy-to-clipboard';
 import { Block } from './components/Block';
 import { Select, message, Button, Checkbox } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { registerLayoutCodeSuggest } from './editor/suggestions';
 const { Option } = Select;
 
 declare module 'antd/lib/select' {
@@ -26,6 +27,8 @@ declare module 'antd/lib/select' {
     [other: string]: any;
   }
 }
+
+registerLayoutCodeSuggest(); // 注册布局相关的代码提示
 
 /**
  * 示例代码
