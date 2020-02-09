@@ -126,7 +126,7 @@ interface Props {
   initialData?: DataMap;
   onChange?: StateChangeHandler;
 }
-const XMLBuilder = React.memo((props: Props) => {
+const XMLBuilder: React.FC<Props> = React.memo((props) => {
   const { xml = '', onChange, layoutType = 'edit' } = props;
   const [error, setError] = useState<Error>(null);
   const [layout, setLayout] = useState();

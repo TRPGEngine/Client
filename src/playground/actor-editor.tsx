@@ -10,7 +10,10 @@ import SplitPane from 'react-split-pane';
 import MonacoEditor, { EditorDidMount } from 'react-monaco-editor';
 import './split-pane.css';
 import { editor, IPosition, KeyMod, KeyCode } from 'monaco-editor';
-import XMLBuilder from '@shared/components/layout/XMLBuilder';
+import XMLBuilder, {
+  XMLBuilderState,
+} from '@shared/components/layout/XMLBuilder';
+import ReactJson from 'react-json-view';
 import { Block } from './components/Block';
 import { Select } from 'antd';
 const { Option } = Select;
@@ -72,7 +75,6 @@ const ActorEditor = React.memo(() => {
     },
     []
   );
-
   const LayoutActions = useMemo(() => {
     return (
       <div>
@@ -91,6 +93,11 @@ const ActorEditor = React.memo(() => {
     );
   }, []);
 
+  const [currentState, setCurrentState] = useState({});
+  const handleStateChange = useCallback((newState: XMLBuilderState) => {
+    setCurrentState({ ...newState.data });
+  }, []);
+
   return (
     <Container>
       <SplitPane split="vertical" defaultSize="50%">
@@ -106,12 +113,21 @@ const ActorEditor = React.memo(() => {
             editorDidMount={onEditorDidMount}
           />
         </Block>
-        <SplitPane split="horizontal" defaultSize="60%">
+        <SplitPane split="horizontal" defaultSize="80%">
           <div style={{ width: '100%' }}>
-            <XMLBuilder xml={code} />
+            <XMLBuilder xml={code} onChange={handleStateChange} />
           </div>
 
-          <div>这里是属性, 需要一个JSON显示器</div>
+          <div>
+            <ReactJson
+              name={false}
+              style={{ fontFamily: 'inherit' }}
+              src={currentState}
+              enableClipboard={false}
+              displayObjectSize={false}
+              displayDataTypes={false}
+            />
+          </div>
         </SplitPane>
       </SplitPane>
     </Container>

@@ -88,6 +88,7 @@
     "react-fileupload": "^2.4.0",
     "react-image-crop": "^8.3.1",
     "react-image-lightbox": "^5.1.0",
+    "react-json-view": "^1.19.1",
     "react-loadable": "^5.5.0",
     "react-monaco-editor": "^0.28.0",
     "react-native-storage": "git+https://github.com/moonrailgun/react-native-storage.git",
