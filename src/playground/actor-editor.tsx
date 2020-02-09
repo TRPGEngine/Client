@@ -1,31 +1,37 @@
-import React, { useState, useRef } from 'react';
+import React, {
+  useState,
+  useRef,
+  useMemo,
+  useCallback,
+  ReactElement,
+} from 'react';
 import styled from 'styled-components';
 import SplitPane from 'react-split-pane';
 import MonacoEditor, { EditorDidMount } from 'react-monaco-editor';
 import './split-pane.css';
 import { editor, IPosition, KeyMod, KeyCode } from 'monaco-editor';
 import XMLBuilder from '@shared/components/layout/XMLBuilder';
+import { Block } from './components/Block';
+import { Select } from 'antd';
+const { Option } = Select;
+
+declare module 'antd/lib/select' {
+  export interface OptionProps {
+    [other: string]: any;
+  }
+}
+
+/**
+ * 示例代码
+ */
+const exampleLayout = [
+  { label: 'simple', value: require('./example/simple.xml').default },
+];
 
 const Container = styled.div`
   height: 100vh;
   width: 100vw;
   background-color: white;
-`;
-
-const Block = styled.div<{ label: string }>`
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-
-  &:before {
-    content: '${(props) => props.label || ''}';
-    padding: 0.5rem 2rem;
-    background-color: #333;
-    display: block;
-    color: white;
-    font-size: 16px;
-    border-bottom: 1px solid #111;
-  }
 `;
 
 const editorOptions = {
@@ -58,10 +64,37 @@ const ActorEditor = React.memo(() => {
     });
   };
 
+  const handleSelectLayout = useCallback(
+    (value: string, option: ReactElement) => {
+      const xml = option.props.xml;
+
+      setCode(xml);
+    },
+    []
+  );
+
+  const LayoutActions = useMemo(() => {
+    return (
+      <div>
+        <Select
+          style={{ width: 120 }}
+          placeholder="请选择布局"
+          onChange={handleSelectLayout}
+        >
+          {exampleLayout.map((l) => (
+            <Option value={l.label} xml={l.value}>
+              {l.label}
+            </Option>
+          ))}
+        </Select>
+      </div>
+    );
+  }, []);
+
   return (
     <Container>
       <SplitPane split="vertical" defaultSize="50%">
-        <Block label="布局">
+        <Block label="布局" actions={LayoutActions}>
           <MonacoEditor
             width="100%"
             height="100%"
@@ -74,7 +107,7 @@ const ActorEditor = React.memo(() => {
           />
         </Block>
         <SplitPane split="horizontal" defaultSize="60%">
-          <div>
+          <div style={{ width: '100%' }}>
             <XMLBuilder xml={code} />
           </div>
 

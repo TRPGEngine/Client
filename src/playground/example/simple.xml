@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Template>
+  <BaseInfo />
+  <TextArea
+    label="人物卡信息"
+    name="data"
+    :autosize="{ minRows: 4, maxRows: 8 }"
+  />
+</Template>
