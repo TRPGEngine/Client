@@ -18,5 +18,5 @@ const parser = (xml: string) => {
 
 export default parser;
 
-export type XMLElement = convert.Element | convert.ElementCompact;
+export type XMLElement = convert.Element;
 export type XMLElementAttributes = convert.Attributes;

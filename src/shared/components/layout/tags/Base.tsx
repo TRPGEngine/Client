@@ -22,7 +22,7 @@ export interface LayoutTypeContext<
 }
 
 export interface ILayoutTypeAttributes {
-  key: string;
+  key?: string;
 }
 export interface ILayoutType<
   Attr extends ILayoutTypeAttributes = DefaultLayoutTypeAttr

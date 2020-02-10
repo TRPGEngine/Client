@@ -42,7 +42,7 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
 
   // type 为文本
   if (type === 'text') {
-    return parseDataText(data.text, context);
+    return parseDataText(String(data.text), context);
   }
 
   // type 为 element 或 root
@@ -73,6 +73,8 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
         attributes[realKey] = realVal;
       });
   }
+
+  // TODO: 要确保没一个属性attributes都要有一个唯一的key
 
   if (layoutType === 'edit') {
     return _type.getEditView({
