@@ -151,6 +151,16 @@ const XMLBuilder: React.FC<Props> = React.memo((props) => {
     }
   }, [xml]);
 
+  const LayoutDOM = useMemo(() => {
+    try {
+      return processor.render(layout, { state, dispatch, layoutType });
+    } catch (err) {
+      console.error(err);
+      setError(err);
+      return null;
+    }
+  }, [layout]);
+
   if (!_isNil(error)) {
     return (
       <div>
@@ -166,9 +176,7 @@ const XMLBuilder: React.FC<Props> = React.memo((props) => {
 
   return (
     <XMLErrorBoundary>
-      <XMLBuilderContainer>
-        {processor.render(layout, { state, dispatch, layoutType })}
-      </XMLBuilderContainer>
+      <XMLBuilderContainer>{LayoutDOM}</XMLBuilderContainer>
     </XMLErrorBoundary>
   );
 });
