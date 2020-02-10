@@ -11,6 +11,8 @@ const debug = Debug('trpg:XMLBuilder');
 import styled from 'styled-components';
 import { ILayoutTypeAttributes } from './tags/Base';
 import { StateDataType, StateActionType } from './types';
+import { useSize } from 'react-use';
+import { LayoutWidthContextProvider } from './context/LayoutWidthContext';
 
 export type DefinePropsType = {
   [name: string]: any;
@@ -126,7 +128,7 @@ interface Props {
   initialData?: DataMap;
   onChange?: StateChangeHandler;
 }
-const XMLBuilder: React.FC<Props> = React.memo((props) => {
+const XMLBuilder: React.FC<Props> = (props) => {
   const { xml = '', onChange, layoutType = 'edit' } = props;
   const [error, setError] = useState<Error>(null);
   const [layout, setLayout] = useState();
@@ -152,6 +154,19 @@ const XMLBuilder: React.FC<Props> = React.memo((props) => {
   }, [xml]);
 
   const LayoutDOM = useMemo(() => {
+    if (!_isNil(error)) {
+      return (
+        <div>
+          <p>XML解析出现错误:</p>
+          <p>{String(error)}</p>
+        </div>
+      );
+    }
+
+    if (_isEmpty(layout)) {
+      return null;
+    }
+
     try {
       return processor.render(layout, { state, dispatch, layoutType });
     } catch (err) {
@@ -159,27 +174,20 @@ const XMLBuilder: React.FC<Props> = React.memo((props) => {
       setError(err);
       return null;
     }
-  }, [layout]);
+  }, [layout, error]);
 
-  if (!_isNil(error)) {
-    return (
-      <div>
-        <p>XML解析出现错误:</p>
-        <p>{String(error)}</p>
-      </div>
-    );
-  }
-
-  if (_isEmpty(layout)) {
-    return null;
-  }
+  const [XMLRender, { width }] = useSize(
+    <XMLBuilderContainer>{LayoutDOM}</XMLBuilderContainer>
+  );
 
   return (
     <XMLErrorBoundary>
-      <XMLBuilderContainer>{LayoutDOM}</XMLBuilderContainer>
+      <LayoutWidthContextProvider width={width}>
+        {XMLRender}
+      </LayoutWidthContextProvider>
     </XMLErrorBoundary>
   );
-});
+};
 XMLBuilder.displayName = 'XMLBuilder';
 
 export default XMLBuilder;
