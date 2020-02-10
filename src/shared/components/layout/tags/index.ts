@@ -44,7 +44,7 @@ const tagMap = {
 export const registerTag = (
   type: TagType,
   name: string,
-  tag: React.ReactElement
+  tag: React.ComponentType
 ) => {
   _set(tagMap, [type, name], tag);
 };

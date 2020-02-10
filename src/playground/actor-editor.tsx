@@ -35,6 +35,7 @@ registerLayoutCodeSuggest(); // 注册布局相关的代码提示
  */
 const exampleLayout = [
   { label: 'Simple', value: require('./example/simple.xml').default },
+  { label: 'Grid', value: require('./example/grid.xml').default },
 ];
 
 const Container = styled.div`
@@ -52,6 +53,7 @@ const XMLRenderContainer = styled.div<{ isMobile: boolean }>`
         margin: 20px auto;
         border: 1px solid #ccc;
         overflow: auto;
+        box-sizing: content-box;
       `
       : `width: 100%`}
 `;

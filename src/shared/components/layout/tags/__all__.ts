@@ -1,4 +1,4 @@
-import { register } from '../tags';
+import { register, registerTag } from '../tags';
 import Col from './Col';
 import Define from './Define';
 import Input from './Input';
@@ -9,6 +9,7 @@ import TextArea from './TextArea';
 import Use from './Use';
 import BaseInfo from './BaseInfo';
 import Template from './Template';
+import { TagColShared } from './Col/shared';
 
 register(Col);
 register(Define);
@@ -20,3 +21,6 @@ register(TextArea);
 register(Use);
 register(BaseInfo);
 register(Template);
+
+registerTag('detail', 'Col', TagColShared);
+registerTag('edit', 'Col', TagColShared);
