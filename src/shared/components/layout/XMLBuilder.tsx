@@ -13,6 +13,7 @@ import { ILayoutTypeAttributes } from './tags/Base';
 import { StateDataType, StateActionType } from './types';
 import { useSize } from 'react-use';
 import { LayoutWidthContextProvider } from './context/LayoutWidthContext';
+import { LayoutStateContextProvider } from './context/LayoutStateContext';
 
 export type DefinePropsType = {
   [name: string]: any;
@@ -183,7 +184,9 @@ const XMLBuilder: React.FC<Props> = (props) => {
   return (
     <XMLErrorBoundary>
       <LayoutWidthContextProvider width={width}>
-        {XMLRender}
+        <LayoutStateContextProvider state={{ state, dispatch, layoutType }}>
+          {XMLRender}
+        </LayoutStateContextProvider>
       </LayoutWidthContextProvider>
     </XMLErrorBoundary>
   );

@@ -7,6 +7,12 @@ import _isNil from 'lodash/isNil';
 import { compileCode } from './sandbox';
 import React from 'react';
 
+export interface LayoutProps {
+  _name: string;
+  _childrenEl: XMLElement[];
+  [attrs: string]: any;
+}
+
 // 解析带数据的文本信息。根据state返回实际文本内容
 // 格式为{{text}}
 export function parseDataText(
@@ -48,7 +54,8 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
     // 如果存在新机制注册的元素
     return React.createElement(tag, {
       ...attributes,
-      childrenEl: elements,
+      _name: name,
+      _childrenEl: elements,
     });
   }
 
