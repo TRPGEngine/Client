@@ -3,7 +3,9 @@ import { XMLElement } from '../parser/xml-parser';
 import parseText from '../parser/text-parser';
 import { XMLBuilderContext } from '../XMLBuilder';
 import _get from 'lodash/get';
+import _isNil from 'lodash/isNil';
 import { compileCode } from './sandbox';
+import React from 'react';
 
 // 解析带数据的文本信息。根据state返回实际文本内容
 // 格式为{{text}}
@@ -22,7 +24,6 @@ export function parseDataText(
  * 返回一个react vdom
  * @param data XML的ast
  * @param context 上下文，包括状态和dispatch和布局类型
- * @param layoutType 布局类型, 为edit或detail
  */
 export function render(data: XMLElement, context: XMLBuilderContext) {
   const { type } = data;
@@ -40,6 +41,18 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
 
   // type 为 element 或 root
   const { name, attributes, elements } = data;
+
+  // 尝试使用新的注册机制
+  const tag = tags.getTag(layoutType, name);
+  if (!_isNil(tag)) {
+    // 如果存在新机制注册的元素
+    return React.createElement(tag, {
+      ...attributes,
+      childrenEl: elements,
+    });
+  }
+
+  // 使用老机制
   const _type = tags.get(name);
 
   // 预处理attributes。 将: 开头的参数作为变量处理

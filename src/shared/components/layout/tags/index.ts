@@ -1,5 +1,8 @@
 // 这个文件是用于获取与注册所有可用类型
 import Base, { ILayoutType } from './Base';
+import React from 'react';
+import _set from 'lodash/set';
+import _get from 'lodash/get';
 const _list: Array<ILayoutType> = [];
 
 interface RegisterType {
@@ -28,4 +31,24 @@ export const get = (name: string): ILayoutType => {
     const baseType = new Base();
     return baseType;
   }
+};
+
+/**
+ * 新版本的注册机制
+ */
+type TagType = 'detail' | 'edit';
+const tagMap = {
+  detail: {},
+  edit: {},
+};
+export const registerTag = (
+  type: TagType,
+  name: string,
+  tag: React.ReactElement
+) => {
+  _set(tagMap, [type, name], tag);
+};
+
+export const getTag = (type: TagType, name: string) => {
+  return _get(tagMap, [type, name]);
 };
