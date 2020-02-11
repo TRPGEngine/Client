@@ -10,6 +10,7 @@ import Use from './Use';
 import BaseInfo from './BaseInfo';
 import Template from './Template';
 import { TagColShared } from './Col/shared';
+import { TagBaseAttrShared } from './BaseAttr/shared';
 
 register(Col);
 register(Define);
@@ -24,3 +25,6 @@ register(Template);
 
 registerTag('detail', 'Col', TagColShared);
 registerTag('edit', 'Col', TagColShared);
+
+registerTag('detail', 'BaseAttr', TagBaseAttrShared);
+registerTag('edit', 'BaseAttr', TagBaseAttrShared);

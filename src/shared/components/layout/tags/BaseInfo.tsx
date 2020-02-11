@@ -1,6 +1,7 @@
 import React from 'react';
 import { ILayoutTypeAttributes, ILayoutType, LayoutTypeContext } from './Base';
-import { Row, Col, Form, Input } from 'antd';
+import { Row, Form, Input } from 'antd';
+import { LayoutCol } from './Col/shared';
 import { getStateValue, setStateValue } from './utils';
 import TextArea from 'antd/lib/input/TextArea';
 import Avatar from '@web/components/Avatar';
@@ -42,7 +43,7 @@ export default class BaseInfo implements ILayoutType<Attr> {
 
     return (
       <BaseInfoContainer key={attributes.key}>
-        <Col sm={18} xs={24}>
+        <LayoutCol sm={18} xs={24}>
           <BaseInfoForm>
             <FormItem label="名称" required>
               <Input
@@ -62,13 +63,17 @@ export default class BaseInfo implements ILayoutType<Attr> {
               />
             </FormItem>
           </BaseInfoForm>
-        </Col>
-        <Col sm={6} xs={24} style={{ textAlign: 'center', marginBottom: 10 }}>
+        </LayoutCol>
+        <LayoutCol
+          sm={6}
+          xs={24}
+          style={{ textAlign: 'center', marginBottom: 10 }}
+        >
           <AvatarPicker
             imageUrl={String(getStateValue(context, '_avatar'))}
             onChange={(imageUrl) => setStateValue(context, '_avatar', imageUrl)}
           />
-        </Col>
+        </LayoutCol>
       </BaseInfoContainer>
     );
   }
@@ -78,7 +83,7 @@ export default class BaseInfo implements ILayoutType<Attr> {
 
     return (
       <BaseInfoContainer key={attributes.key}>
-        <Col sm={18} xs={24}>
+        <LayoutCol sm={18} xs={24}>
           <BaseInfoForm>
             <FormItem label="名称" required>
               <div>{getStateValue(context, '_name')}</div>
@@ -87,14 +92,18 @@ export default class BaseInfo implements ILayoutType<Attr> {
               <div>{getStateValue(context, '_desc')}</div>
             </FormItem>
           </BaseInfoForm>
-        </Col>
-        <Col sm={6} xs={24} style={{ textAlign: 'center', marginBottom: 10 }}>
+        </LayoutCol>
+        <LayoutCol
+          sm={6}
+          xs={24}
+          style={{ textAlign: 'center', marginBottom: 10 }}
+        >
           <Avatar
             size={64}
             icon="user"
             src={String(getStateValue(context, '_avatar'))}
           />
-        </Col>
+        </LayoutCol>
       </BaseInfoContainer>
     );
   }
