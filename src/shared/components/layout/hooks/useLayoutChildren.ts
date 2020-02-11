@@ -2,6 +2,7 @@ import { useMemo, ReactNode, useContext } from 'react';
 import { LayoutProps, render } from '../processor';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
+import _isEmpty from 'lodash/isEmpty';
 import { LayoutStateContext } from '../context/LayoutStateContext';
 
 // 生成子元素唯一key
@@ -13,6 +14,10 @@ export const useLayoutChildren = (props: LayoutProps): ReactNode => {
   const stateContext = useContext(LayoutStateContext);
 
   const children = useMemo(() => {
+    if (_isEmpty(props._childrenEl)) {
+      return null;
+    }
+
     return props._childrenEl.map((el, index) => {
       if (!_get(el, 'attributes.key')) {
         _set(el, 'attributes.key', childrenKey(props._name, el.name, index)); // 增加一个默认的key

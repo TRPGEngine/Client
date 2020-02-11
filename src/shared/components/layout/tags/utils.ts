@@ -1,6 +1,8 @@
 import { Fragment } from 'react';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
+import _toPairs from 'lodash/toPairs';
+import _fromPairs from 'lodash/fromPairs';
 import {
   XMLBuilderState,
   XMLBuilderContext,
@@ -98,4 +100,13 @@ export const setStateValue = (
   _set(state, [scope, field].join('.'), value);
 
   dispatch({ type: StateActionType.UpdateData, payload: state[scope], scope });
+};
+
+/**
+ * 将属性中额私有参数提取出来(以下划线开头_的成员变量)
+ */
+export const removePrivateProps = (props: {}): {} => {
+  return _fromPairs(
+    _toPairs(props).filter(([key, value]) => !key.startsWith('_'))
+  );
 };

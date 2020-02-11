@@ -1,5 +1,6 @@
 import { useContext, useMemo } from 'react';
 import { LayoutWidthContext } from '@shared/components/layout/context/LayoutWidthContext';
+import { tryToNumber } from '../tags/utils';
 
 /**
  * 预处理props的xs sm md lg xl xxl
@@ -12,7 +13,7 @@ export const useLayoutGrid = (props: {}) => {
   const layoutWidth = useContext(LayoutWidthContext);
 
   const span = useMemo(() => {
-    let newSpan = props['newSpan'];
+    let newSpan = props['span'] ?? 24;
     const keys = Object.keys(props);
 
     if (keys.includes('xxl') && layoutWidth >= 1600) {
@@ -39,11 +40,19 @@ export const useLayoutGrid = (props: {}) => {
       newSpan = props['xs'];
     }
 
-    return newSpan;
+    return tryToNumber(newSpan);
   }, [layoutWidth]);
 
-  return {
+  const ret = {
     ...props,
     span,
   };
+  delete ret['xxl'];
+  delete ret['xl'];
+  delete ret['lg'];
+  delete ret['md'];
+  delete ret['sm'];
+  delete ret['xs'];
+
+  return ret;
 };
