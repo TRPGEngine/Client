@@ -3,9 +3,11 @@ import { XMLElement } from '../parser/xml-parser';
 import parseText from '../parser/text-parser';
 import { XMLBuilderContext } from '../XMLBuilder';
 import _get from 'lodash/get';
+import _has from 'lodash/has';
 import _isNil from 'lodash/isNil';
 import { compileCode } from './sandbox';
 import React from 'react';
+import { parseAttrStyle } from './style';
 
 export interface LayoutProps {
   _name: string;
@@ -47,6 +49,11 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
 
   // type 为 element 或 root
   const { name, attributes, elements } = data;
+
+  // 预处理style属性
+  if (_has(attributes, 'style')) {
+    parseAttrStyle(attributes);
+  }
 
   // 尝试使用新的注册机制
   const tag = tags.getTag(layoutType, name);
