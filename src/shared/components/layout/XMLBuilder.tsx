@@ -175,7 +175,7 @@ const XMLBuilder: React.FC<Props> = (props) => {
       setError(err);
       return null;
     }
-  }, [layout, error]);
+  }, [layout, state, dispatch, layoutType, error]);
 
   const [XMLRender, { width }] = useSize(
     <XMLBuilderContainer>{LayoutDOM}</XMLBuilderContainer>

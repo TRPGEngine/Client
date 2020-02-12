@@ -36,6 +36,7 @@ registerLayoutCodeSuggest(); // 注册布局相关的代码提示
 const exampleLayout = [
   { label: 'Simple', value: require('./example/simple.xml').default },
   { label: 'Grid', value: require('./example/grid.xml').default },
+  { label: 'Input', value: require('./example/input.xml').default },
 ];
 
 const Container = styled.div`

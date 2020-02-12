@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
+import _isNil from 'lodash/isNil';
 import _toPairs from 'lodash/toPairs';
 import _fromPairs from 'lodash/fromPairs';
 import {
@@ -48,9 +49,21 @@ export const getOperationData = (str: string): OperationDataType => {
 
 /**
  * 尝试将文本转化为数字
+ * 用于表单数据转换
  * @param str 要转换的文本
  */
 export const tryToNumber = (str: string): number | string => {
+  if (typeof str === 'string' && str === '') {
+    // 空字符串直接返回空字符串
+    return '';
+  }
+
+  if (typeof str === 'string' && (str.length > 15 || str.startsWith(' '))) {
+    // 大于15位的数字视为字符串
+    // 输入空格视为字符串
+    return str;
+  }
+
   const num = Number(str);
   return !isNaN(num) ? num : str;
 };
@@ -109,4 +122,16 @@ export const removePrivateProps = (props: {}): {} => {
   return _fromPairs(
     _toPairs(props).filter(([key, value]) => !key.startsWith('_'))
   );
+};
+
+/**
+ * 处理xml读取到的多行文本
+ */
+export const parseMultilineText = (text: string) => {
+  // 支持\n的渲染 拿到的换行符为\\n
+  if (_isNil(text) || typeof text !== 'string') {
+    return '';
+  }
+
+  return text.replace(new RegExp('\\\\n', 'g'), '\n');
 };

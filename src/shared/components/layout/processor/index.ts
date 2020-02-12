@@ -12,6 +12,7 @@ import { parseAttrStyle } from './style';
 export interface LayoutProps {
   _name: string;
   _childrenEl: XMLElement[];
+  key: string;
   [attrs: string]: any;
 }
 

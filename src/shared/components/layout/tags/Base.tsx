@@ -9,7 +9,7 @@ import { Row } from 'antd';
 import styled from 'styled-components';
 import { XMLBuilderContext } from '../XMLBuilder';
 import { parseAttrStyle } from '../processor/style';
-import { normalizeTagName } from './utils';
+import { normalizeTagName, parseMultilineText } from './utils';
 
 type DefaultLayoutTypeAttr = XMLElementAttributes & ILayoutTypeAttributes;
 export interface LayoutTypeContext<
@@ -63,12 +63,7 @@ export default class Base<
   name: string;
 
   parseMultilineText(text: string) {
-    // 支持\n的渲染 拿到的换行符为\\n
-    if (_isNil(text) || typeof text !== 'string') {
-      return '';
-    }
-
-    return text.replace(new RegExp('\\\\n', 'g'), '\n');
+    return parseMultilineText(text);
   }
 
   // 生成子元素唯一key
