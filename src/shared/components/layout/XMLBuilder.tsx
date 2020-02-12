@@ -1,5 +1,5 @@
 import React, { useReducer, useMemo, useState, useEffect } from 'react';
-import parser, { XMLElement } from './parser/xml-parser';
+import parser, { iterativeConfigKey } from './parser/xml-parser';
 import * as processor from './processor';
 import _clone from 'lodash/clone';
 import _isEmpty from 'lodash/isEmpty';
@@ -145,6 +145,7 @@ const XMLBuilder: React.FC<Props> = (props) => {
     try {
       const layout = parser(xml);
       layout.type = 'root';
+      iterativeConfigKey(layout);
       console.log('layout', layout);
       setLayout(layout);
       setError(null);

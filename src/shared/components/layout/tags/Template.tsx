@@ -19,10 +19,10 @@ export default class Template extends Base implements ILayoutType<Attr> {
   name: string = 'Template';
 
   getEditView(ctx: LayoutTypeContext<Attr>) {
-    const { elements, context } = ctx;
+    const { elements, context, attributes } = ctx;
 
     return (
-      <TemplateContainer>
+      <TemplateContainer key={attributes.key}>
         {this.renderChildren(elements, context)}
       </TemplateContainer>
     );

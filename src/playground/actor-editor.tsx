@@ -108,7 +108,7 @@ const ActorEditor = React.memo(() => {
           onChange={handleSelectLayout}
         >
           {exampleLayout.map((l) => (
-            <Option value={l.label} xml={l.value}>
+            <Option key={l.label} value={l.label} xml={l.value}>
               {l.label}
             </Option>
           ))}

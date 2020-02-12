@@ -82,8 +82,6 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
       });
   }
 
-  // TODO: 要确保没一个属性attributes都要有一个唯一的key
-
   if (layoutType === 'edit') {
     return _type.getEditView({
       tagName: name,
