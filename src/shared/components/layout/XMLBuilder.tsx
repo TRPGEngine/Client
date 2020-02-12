@@ -1,19 +1,17 @@
-import React, { useReducer, useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import parser, { iterativeConfigKey } from './parser/xml-parser';
 import * as processor from './processor';
-import _clone from 'lodash/clone';
 import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
 import _isNil from 'lodash/isNil';
 import './tags/__all__';
-import Debug from 'debug';
-const debug = Debug('trpg:XMLBuilder');
 import styled from 'styled-components';
 import { ILayoutTypeAttributes } from './tags/Base';
-import { StateDataType, StateActionType } from './types';
+import { StateDataType } from './types';
 import { useSize } from 'react-use';
 import { LayoutWidthContextProvider } from './context/LayoutWidthContext';
 import { LayoutStateContextProvider } from './context/LayoutStateContext';
+import { useBuildLayoutStateContext } from './hooks/useBuildLayoutStateContext';
 
 export type DefinePropsType = {
   [name: string]: any;
@@ -66,35 +64,6 @@ const XMLBuilderContainer = styled.div`
   }
 `;
 
-const buildReducer = (onChange?: StateChangeHandler) => {
-  const XMLBuilderReducer = (
-    prevState: XMLBuilderState,
-    action: XMLBuilderAction
-  ): XMLBuilderState => {
-    const type = action.type;
-    const payload = action.payload;
-    const newState = _clone(prevState);
-    debug(`[Action] ${type}: %o`, payload);
-
-    switch (type) {
-      case StateActionType.UpdateData: {
-        const scope = action.scope || 'data';
-        newState[scope] = payload;
-        break;
-      }
-      case StateActionType.AddDefine:
-        newState.defines[payload.name] = payload.componentFn;
-        break;
-    }
-
-    onChange && onChange(newState);
-
-    return newState;
-  };
-
-  return XMLBuilderReducer;
-};
-
 class XMLErrorBoundary extends React.Component {
   state = { hasError: false, error: null };
 
@@ -129,17 +98,15 @@ interface Props {
   initialData?: DataMap;
   onChange?: StateChangeHandler;
 }
-const XMLBuilder: React.FC<Props> = (props) => {
+const XMLBuilder: React.FC<Props> = React.memo((props) => {
   const { xml = '', onChange, layoutType = 'edit' } = props;
   const [error, setError] = useState<Error>(null);
   const [layout, setLayout] = useState();
 
-  const initialState: XMLBuilderState = {
-    defines: {},
-    global: {},
-    data: props.initialData || {},
-  };
-  const [state, dispatch] = useReducer(buildReducer(onChange), initialState);
+  const { state, dispatch } = useBuildLayoutStateContext({
+    initialData: props.initialData,
+    onChange,
+  });
 
   useEffect(() => {
     try {
@@ -191,7 +158,7 @@ const XMLBuilder: React.FC<Props> = (props) => {
       </LayoutWidthContextProvider>
     </XMLErrorBoundary>
   );
-};
+});
 XMLBuilder.displayName = 'XMLBuilder';
 
 export default XMLBuilder;
