@@ -1,4 +1,4 @@
 import React from 'react';
 import { LayoutProps } from '../processor';
 
-export type TagComponent = React.FC<LayoutProps>;
+export type TagComponent<T = {}> = React.FC<LayoutProps & T>;

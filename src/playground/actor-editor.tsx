@@ -37,6 +37,10 @@ const exampleLayout = [
   { label: 'Simple', value: require('./example/simple.xml').default },
   { label: 'Grid', value: require('./example/grid.xml').default },
   { label: 'Input', value: require('./example/input.xml').default },
+  {
+    label: 'Use and Define',
+    value: require('./example/use-define.xml').default,
+  },
 ];
 
 const Container = styled.div`
@@ -103,7 +107,7 @@ const ActorEditor = React.memo(() => {
     return (
       <div>
         <Select
-          style={{ width: 120 }}
+          style={{ width: 200 }}
           placeholder="请选择布局"
           onChange={handleSelectLayout}
         >

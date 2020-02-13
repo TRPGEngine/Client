@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
+import _clone from 'lodash/clone';
 import _toPairs from 'lodash/toPairs';
 import _fromPairs from 'lodash/fromPairs';
 import {
@@ -94,8 +95,17 @@ export const getStateValue = (
   bindingName: string
 ): StateDataType => {
   const { scope, field } = getOperationData(bindingName);
+  let path = field;
+  if (scope !== 'data') {
+    path = [scope, field].join('.');
+  }
 
-  return _get(context.state, [scope, field].join('.'));
+  const ret = _get(context.state.data, path);
+  if (typeof ret === 'object') {
+    return '';
+  }
+
+  return ret;
 };
 
 /**
@@ -106,22 +116,26 @@ export const setStateValue = (
   bindingName: string,
   value: StateDataType
 ): void => {
-  const { state, dispatch } = context;
+  const { dispatch } = context;
   const { scope, field } = getOperationData(bindingName);
 
-  // 该操作是为了能让下面获取到payload。也许需要修改?
-  _set(state, [scope, field].join('.'), value);
-
-  dispatch({ type: StateActionType.UpdateData, payload: state[scope], scope });
+  dispatch({
+    type: StateActionType.UpdateData,
+    payload: {
+      scope,
+      field,
+      value,
+    },
+  });
 };
-
 /**
  * 将属性中额私有参数提取出来(以下划线开头_的成员变量)
+ * 返回一个新的对象
  */
-export const removePrivateProps = (props: {}): {} => {
+export const removePrivateProps = <T extends object>(props: T): Partial<T> => {
   return _fromPairs(
     _toPairs(props).filter(([key, value]) => !key.startsWith('_'))
-  );
+  ) as T;
 };
 
 /**

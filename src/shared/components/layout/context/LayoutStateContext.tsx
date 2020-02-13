@@ -12,3 +12,4 @@ export const LayoutStateContextProvider: React.FC<{
     </LayoutStateContext.Provider>
   );
 });
+LayoutStateContextProvider.displayName = 'LayoutStateContextProvider';

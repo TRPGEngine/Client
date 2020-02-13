@@ -18,15 +18,18 @@ export default class TUse extends Base implements ILayoutType<Attr> {
     elements,
     context,
   }: LayoutTypeContext<Attr>) {
-    const { state } = context;
-    const defines = state.defines;
-    const { define, ...otherProps } = attributes;
+    // 弃用
+    // const { state } = context;
+    // const defines = state.defines;
+    // const { define, ...otherProps } = attributes;
 
-    const componentFn = defines[define];
-    if (componentFn) {
-      return componentFn(context, otherProps);
-    } else {
-      return null;
-    }
+    // const componentFn = defines[define];
+    // if (componentFn) {
+    //   return componentFn(context, otherProps);
+    // } else {
+    //   return null;
+    // }
+
+    return null;
   }
 }

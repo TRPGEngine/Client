@@ -12,33 +12,33 @@ import { useSize } from 'react-use';
 import { LayoutWidthContextProvider } from './context/LayoutWidthContext';
 import { LayoutStateContextProvider } from './context/LayoutStateContext';
 import { useBuildLayoutStateContext } from './hooks/useBuildLayoutStateContext';
+import { TagComponent } from './tags/type';
+
+/**
+ * XML布局需求:
+ * name必须全局唯一
+ * 需要版本号
+ * 以Template组件作为统一包装(不强求)
+ */
 
 export type DefinePropsType = {
   [name: string]: any;
 };
 interface DefineMap {
-  [name: string]: (
-    context: XMLBuilderContext,
-    otherProps: DefinePropsType
-  ) => React.FunctionComponentElement<ILayoutTypeAttributes>;
-}
-
-interface GlobalMap {
-  [name: string]: StateDataType;
+  [name: string]: TagComponent;
 }
 
 export interface DataMap {
   _name?: string;
   _avatar?: string;
   _desc?: string;
-  [name: string]: StateDataType;
+  [name: string]: StateDataType | DataMap; // 可以嵌套
 }
 
 export type LayoutType = 'edit' | 'detail';
 
 export interface XMLBuilderState {
   defines: DefineMap;
-  global: GlobalMap;
   data: DataMap;
 }
 
@@ -52,6 +52,7 @@ export interface XMLBuilderContext {
   state: XMLBuilderState;
   dispatch: React.Dispatch<XMLBuilderAction>;
   layoutType: LayoutType;
+  parent?: XMLBuilderContext;
 }
 
 export type StateChangeHandler = (newState: XMLBuilderState) => void;

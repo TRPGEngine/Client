@@ -12,6 +12,8 @@ import Template from './Template';
 import { TagColShared } from './Col/shared';
 import { TagBaseAttrShared } from './BaseAttr/shared';
 import { TagInputEdit } from './Input/edit';
+import { TagUseShared } from './Use/shared';
+import { TagDefineShared } from './Define/shared';
 
 register(Col);
 register(Define);
@@ -31,3 +33,9 @@ registerTag('detail', 'BaseAttr', TagBaseAttrShared);
 registerTag('edit', 'BaseAttr', TagBaseAttrShared);
 
 registerTag('edit', 'Input', TagInputEdit);
+
+registerTag('detail', 'Use', TagUseShared);
+registerTag('edit', 'Use', TagUseShared);
+
+registerTag('detail', 'Define', TagDefineShared);
+registerTag('edit', 'Define', TagDefineShared);
