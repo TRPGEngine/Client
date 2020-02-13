@@ -14,6 +14,8 @@ import { TagBaseAttrShared } from './BaseAttr/shared';
 import { TagInputEdit } from './Input/edit';
 import { TagUseShared } from './Use/shared';
 import { TagDefineShared } from './Define/shared';
+import { TagTextAreaEdit } from './TextArea/edit';
+import { TagInputDetail } from './Input/detail';
 
 register(Col);
 register(Define);
@@ -33,6 +35,10 @@ registerTag('detail', 'BaseAttr', TagBaseAttrShared);
 registerTag('edit', 'BaseAttr', TagBaseAttrShared);
 
 registerTag('edit', 'Input', TagInputEdit);
+registerTag('detail', 'Input', TagInputDetail);
+
+registerTag('edit', 'TextArea', TagTextAreaEdit);
+registerTag('detail', 'TextArea', TagInputDetail);
 
 registerTag('detail', 'Use', TagUseShared);
 registerTag('edit', 'Use', TagUseShared);

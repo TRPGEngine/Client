@@ -56,6 +56,18 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
     parseAttrStyle(attributes);
   }
 
+  // 预处理attributes。 将: 开头的参数作为变量处理
+  if (attributes && typeof attributes === 'object') {
+    Object.keys(attributes)
+      .filter((key) => key.startsWith(':'))
+      .forEach((key) => {
+        const value = attributes[key];
+        const realKey = key.substr(1);
+        const realVal = parseDataText(`{{(${value})}}`, context);
+        attributes[realKey] = realVal;
+      });
+  }
+
   // 尝试使用新的注册机制
   const tag = tags.getTag(layoutType, name);
   if (!_isNil(tag)) {
@@ -69,18 +81,6 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
 
   // 使用老机制
   const _type = tags.get(name);
-
-  // 预处理attributes。 将: 开头的参数作为变量处理
-  if (attributes && typeof attributes === 'object') {
-    Object.keys(attributes)
-      .filter((key) => key.startsWith(':'))
-      .forEach((key) => {
-        const value = attributes[key];
-        const realKey = key.substr(1);
-        const realVal = parseDataText(`{{(${value})}}`, context);
-        attributes[realKey] = realVal;
-      });
-  }
 
   if (layoutType === 'edit') {
     return _type.getEditView({

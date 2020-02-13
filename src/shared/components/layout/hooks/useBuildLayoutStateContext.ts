@@ -44,8 +44,6 @@ const buildReducer = (onChange?: StateChangeHandler) => {
 
     onChange && onChange(newState);
 
-    console.log('newState', newState);
-
     return newState;
   };
 

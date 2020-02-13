@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Template>
-  <Input name="input" />
+  <Input name="输入框" />
+  <Input name="输入框2" label="自定义标签" />
+  <TextArea name="文本框" />
+  <TextArea name="自适应大小的文本框" :autosize="true" />
+  <TextArea name="固定范围的自适应大小文本框" :autosize="{minRows: 2, maxRows: 6}" />
 </Template>
