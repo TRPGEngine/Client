@@ -11,7 +11,7 @@ export const TagInputDetail: TagComponent = React.memo((props) => {
   return (
     <BaseTypeRow key={props.key}>
       <LayoutCol span={6}>
-        <Label title={label}>{label}</Label>
+        <Label title={label} />
       </LayoutCol>
       <LayoutCol span={18}>
         <DetailText>{stateValue}</DetailText>

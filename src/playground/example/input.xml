@@ -5,4 +5,5 @@
   <TextArea name="文本框" />
   <TextArea name="自适应大小的文本框" :autosize="true" />
   <TextArea name="固定范围的自适应大小文本框" :autosize="{minRows: 2, maxRows: 6}" />
+  <Select name="下拉选择" options="选项A,选项B,选项C" />
 </Template>
