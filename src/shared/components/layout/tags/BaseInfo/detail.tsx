@@ -5,27 +5,9 @@ import { Row, Form, Input } from 'antd';
 import { LayoutCol } from '../Col/shared';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';
 import Avatar from '@web/components/Avatar';
+import { BaseInfoContainer, BaseInfoForm } from './shared';
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
-
-const BaseInfoContainer = styled(Row).attrs({
-  type: 'flex',
-})`
-  flex-wrap: wrap-reverse;
-  margin-bottom: 10px;
-  border-bottom: ${(props) => props.theme.border.standard};
-  padding-top: 24px;
-`;
-
-const BaseInfoForm = styled(Form).attrs({
-  layout: 'vertical',
-  labelCol: {
-    span: 6,
-  },
-  wrapperCol: {
-    span: 18,
-  },
-})``;
 
 export const TagBaseInfoDetail: TagComponent = React.memo((props) => {
   const [name, setName] = useLayoutFieldState('_name');

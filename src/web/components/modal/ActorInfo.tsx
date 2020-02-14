@@ -3,7 +3,7 @@ import ModalPanel from '../ModalPanel';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import XMLBuilder from '@shared/components/layout/XMLBuilder';
-import { Col, Row, Avatar } from 'antd';
+import { Row } from 'antd';
 import styled from 'styled-components';
 
 /**
@@ -30,20 +30,11 @@ const ActorInfo = (props: Props) => {
   return (
     <ModalPanel title={title}>
       <Container>
-        <Col xs={8}>
-          <Avatar shape="square" size={128} src={props.avatar} />
-          <div>{props.name}</div>
-          <div>
-            <pre>{props.desc}</pre>
-          </div>
-        </Col>
-        <Col xs={16}>
-          <XMLBuilder
-            xml={props.layout}
-            initialData={props.data}
-            layoutType="detail"
-          />
-        </Col>
+        <XMLBuilder
+          xml={props.layout}
+          initialData={props.data}
+          layoutType="detail"
+        />
       </Container>
     </ModalPanel>
   );

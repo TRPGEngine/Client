@@ -55,8 +55,10 @@ class ActorList extends React.Component<Props> {
     });
   }
 
-  handleOpenActorEditModal(uuid) {
-    // TODO
+  /**
+   * 编辑人物卡信息
+   */
+  handleOpenActorEditModal(uuid: string) {
     const actor = this.props.actors.find((a) => a.uuid === uuid);
     if (_isNil(actor)) {
       message.error('角色不存在');
@@ -91,6 +93,9 @@ class ActorList extends React.Component<Props> {
     );
   }
 
+  /**
+   * 查看人物卡信息
+   */
   handleOpenActorInfoModal(uuid: string) {
     const actor = this.props.actors.find((a) => a.uuid === uuid);
     if (_isNil(actor)) {
