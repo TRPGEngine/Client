@@ -59,6 +59,11 @@ export const routes: RouteConfig[] = [
     component: TLoadable(() => import('@portal/routes/group/actor/edit')),
   },
   {
+    title: '创建模板',
+    path: '/template/create',
+    component: TLoadable(() => import('@portal/routes/template/create')),
+  },
+  {
     title: '创建笔记',
     path: '/note/create',
     component: TLoadable(() => import('@portal/routes/note/create')),
