@@ -17,6 +17,7 @@ import { TagDefineShared } from './Define/shared';
 import { TagTextAreaEdit } from './TextArea/edit';
 import { TagInputDetail } from './Input/detail';
 import { TagSelectEdit } from './Select/edit';
+import { TagTemplateShared } from './Template/shared';
 
 register(Col);
 register(Define);
@@ -28,6 +29,9 @@ register(TextArea);
 register(Use);
 register(BaseInfo);
 register(Template);
+
+registerTag('detail', 'Template', TagTemplateShared);
+registerTag('edit', 'Template', TagTemplateShared);
 
 registerTag('detail', 'Col', TagColShared);
 registerTag('edit', 'Col', TagColShared);

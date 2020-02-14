@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { XMLBuilderContext } from '../XMLBuilder';
 import { parseAttrStyle } from '../processor/style';
 import { normalizeTagName, parseMultilineText } from './utils';
+import { blacklistTags, voidElementTags } from './Base/shared';
 
 type DefaultLayoutTypeAttr = XMLElementAttributes & ILayoutTypeAttributes;
 export interface LayoutTypeContext<
@@ -31,29 +32,6 @@ export interface ILayoutType<
   getEditView(ctx: LayoutTypeContext<Attr>): React.ReactElement;
   getDetailView(ctx: LayoutTypeContext<Attr>): React.ReactElement;
 }
-
-// defined from facebook/react/packages/react-dom/src/shared/voidElementTags.js
-// https://github.com/facebook/react/blob/b0657fde6a/packages/react-dom/src/shared/voidElementTags.js
-const voidElementTags = [
-  'menuitem',
-  'area',
-  'base',
-  'br',
-  'col',
-  'embed',
-  'hr',
-  'img',
-  'input',
-  'keygen',
-  'link',
-  'meta',
-  'param',
-  'source',
-  'track',
-  'wbr',
-];
-
-const blacklistTags = ['script', 'style', 'meta', 'head', 'body', 'html'];
 
 export interface BaseAttributes extends ILayoutTypeAttributes {}
 

@@ -3,6 +3,7 @@ import Base, { ILayoutType } from './Base';
 import React from 'react';
 import _set from 'lodash/set';
 import _get from 'lodash/get';
+import { TagBaseShared } from './Base/shared';
 const _list: Array<ILayoutType> = [];
 
 interface RegisterType {
@@ -50,5 +51,5 @@ export const registerTag = (
 };
 
 export const getTag = (type: TagType, name: string) => {
-  return _get(tagMap, [type, name]);
+  return _get(tagMap, [type, name], TagBaseShared);
 };
