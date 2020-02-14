@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Template>
+  <Bar label="生命值" current="当前血量" max="最大血量" />
+
+  <Input name="当前血量" />
+  <Input name="最大血量" />
+</Template>
