@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useCallback,
   ReactElement,
+  useEffect,
 } from 'react';
 import styled from 'styled-components';
 import SplitPane from 'react-split-pane';
@@ -17,6 +18,7 @@ import XMLBuilder, {
 } from '@shared/components/layout/XMLBuilder';
 import ReactJson from 'react-json-view';
 import copy from 'copy-to-clipboard';
+import LZString from 'lz-string';
 import { Block } from './components/Block';
 import { Select, message, Button, Checkbox } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
@@ -86,6 +88,15 @@ const ActorEditor = React.memo(() => {
   const [isMobile, setIsMobile] = useState(false); // 是否为移动模式
   const editorRef = useRef<editor.IStandaloneCodeEditor>();
 
+  useEffect(() => {
+    // 尝试载入url中的code
+    const hash = window.location.hash;
+    if (hash.startsWith('#code')) {
+      const codehash = hash.split('/')[1] ?? '';
+      setCode(LZString.decompressFromEncodedURIComponent(codehash));
+    }
+  }, []);
+
   const onEditorDidMount: EditorDidMount = useCallback((editor) => {
     editorRef.current = editor;
     editor.focus();
@@ -132,6 +143,14 @@ const ActorEditor = React.memo(() => {
   const handleChangeIsMobile = useCallback((e: CheckboxChangeEvent) => {
     setIsMobile(e.target.checked ? true : false);
   }, []);
+  const handleShareCode = useCallback(() => {
+    const codehash = LZString.compressToEncodedURIComponent(code);
+    const hash = `code/${codehash}`;
+    const { origin, pathname } = window.location;
+
+    copy(`${origin}${pathname}#${hash}`) &&
+      message.success('分享链接已复制到剪切板');
+  }, []);
   const RenderActions = useMemo(() => {
     return (
       <div
@@ -148,7 +167,9 @@ const ActorEditor = React.memo(() => {
             移动页面
           </Checkbox>
         </div>
-        <Button type="primary">分享给用户</Button>
+        <Button type="primary" onClick={handleShareCode}>
+          分享给用户
+        </Button>
       </div>
     );
   }, [layoutType, isMobile]);
