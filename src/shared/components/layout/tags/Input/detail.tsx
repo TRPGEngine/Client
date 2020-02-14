@@ -1,9 +1,9 @@
 import React from 'react';
 import { TagComponent } from '../type';
-import { BaseTypeRow } from '../Base';
 import { LayoutCol } from '../Col/shared';
 import { Label, DetailText } from './shared';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
+import { BaseTypeRow } from '../Base/shared';
 
 export const TagInputDetail: TagComponent = React.memo((props) => {
   const { label, stateValue } = useLayoutFormData(props);

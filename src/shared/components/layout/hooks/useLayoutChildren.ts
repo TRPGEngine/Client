@@ -19,11 +19,7 @@ export const useLayoutChildren = (props: LayoutProps): ReactNode => {
     }
 
     return props._childrenEl.map((el, index) => {
-      if (!_get(el, 'attributes.key')) {
-        _set(el, 'attributes.key', childrenKey(props._name, el.name, index)); // 增加一个默认的key
-      }
-
-      // NOTE: 所有的组件返回的实例都应当有key. 因为这个元素是map出来的
+      // NOTICE: 所有的组件返回的实例都应当有key. 因为这个元素是map出来的
       return render(el, stateContext);
     });
   }, [props, stateContext]);

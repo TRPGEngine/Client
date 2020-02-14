@@ -2,6 +2,8 @@ import React from 'react';
 import { TagComponent } from '../type';
 import { useLayoutChildren } from '../../hooks/useLayoutChildren';
 import { normalizeTagName } from '../utils';
+import styled from 'styled-components';
+import { Row } from 'antd';
 
 // defined from facebook/react/packages/react-dom/src/shared/voidElementTags.js
 // https://github.com/facebook/react/blob/b0657fde6a/packages/react-dom/src/shared/voidElementTags.js
@@ -53,3 +55,11 @@ export const TagBaseShared: TagComponent = React.memo((props) => {
   return React.createElement(Tag, props, childrens);
 });
 TagBaseShared.displayName = 'TagBaseShared';
+
+export const BaseTypeRow = styled(Row)`
+  margin-bottom: 0.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;

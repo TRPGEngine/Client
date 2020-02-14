@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { TagComponent } from '../type';
 import TextArea from 'antd/lib/input/TextArea';
 import { LayoutCol } from '../Col/shared';
-import { BaseTypeRow } from '../Base';
 import { Label } from '../Input/shared';
 import { useLayoutFormData } from '../../hooks/useLayoutFormData';
+import { BaseTypeRow } from '../Base/shared';
 
 export const TagTextAreaEdit: TagComponent = React.memo((props) => {
   const { label, placeholder, stateValue, setStateValue } = useLayoutFormData(

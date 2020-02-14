@@ -1,10 +1,10 @@
 import React, { useMemo, useCallback } from 'react';
 import { TagComponent } from '../type';
-import { BaseTypeRow } from '../Base';
 import { LayoutCol } from '../Col/shared';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
 import { Select } from 'antd';
 import { Label } from '../Input/shared';
+import { BaseTypeRow } from '../Base/shared';
 const Option = Select.Option;
 
 interface TagProps {

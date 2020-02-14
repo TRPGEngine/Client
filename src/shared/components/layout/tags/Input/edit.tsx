@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { TagComponent } from '../type';
-import { BaseTypeRow } from '../Base';
 import { LayoutCol } from '../Col/shared';
 import { Label } from './shared';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
 import { Input } from 'antd';
 import { tryToNumber } from '../utils';
+import { BaseTypeRow } from '../Base/shared';
 
 export const TagInputEdit: TagComponent = React.memo((props) => {
   const { label, placeholder, stateValue, setStateValue } = useLayoutFormData(

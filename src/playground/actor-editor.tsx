@@ -40,6 +40,7 @@ const exampleLayout = [
   { label: 'Simple', value: require('./example/simple.xml').default },
   { label: 'Grid', value: require('./example/grid.xml').default },
   { label: 'Input', value: require('./example/input.xml').default },
+  { label: 'Tabs', value: require('./example/tabs.xml').default },
   {
     label: 'Use and Define',
     value: require('./example/use-define.xml').default,

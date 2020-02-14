@@ -78,23 +78,4 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
       _childrenEl: elements,
     });
   }
-
-  // 使用老机制
-  const _type = tags.get(name);
-
-  if (layoutType === 'edit') {
-    return _type.getEditView({
-      tagName: name,
-      attributes,
-      elements: elements || [],
-      context,
-    });
-  } else {
-    return _type.getDetailView({
-      tagName: name,
-      attributes,
-      elements: elements || [],
-      context,
-    });
-  }
 }

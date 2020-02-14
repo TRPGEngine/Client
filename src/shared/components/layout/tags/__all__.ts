@@ -1,14 +1,4 @@
-import { register, registerTag } from '../tags';
-import Col from './Col';
-import Define from './Define';
-import Input from './Input';
-import Row from './Row';
-import Select from './Select';
-import Tabs from './Tabs';
-import TextArea from './TextArea';
-import Use from './Use';
-import BaseInfo from './BaseInfo';
-import Template from './Template';
+import { registerTag } from '../tags';
 import { TagColShared } from './Col/shared';
 import { TagBaseAttrShared } from './BaseAttr/shared';
 import { TagInputEdit } from './Input/edit';
@@ -20,20 +10,14 @@ import { TagSelectEdit } from './Select/edit';
 import { TagTemplateShared } from './Template/shared';
 import { TagBaseInfoEdit } from './BaseInfo/edit';
 import { TagBaseInfoDetail } from './BaseInfo/detail';
-
-// register(Col);
-// register(Define);
-// register(Input);
-register(Row);
-// register(Select);
-register(Tabs);
-// register(TextArea);
-// register(Use);
-// register(BaseInfo);
-// register(Template);
+import { TagRowShared } from './Row/shared';
+import { TagTabsShared } from './Tabs/shared';
 
 registerTag('detail', 'Template', TagTemplateShared);
 registerTag('edit', 'Template', TagTemplateShared);
+
+registerTag('detail', 'Row', TagRowShared);
+registerTag('edit', 'Row', TagRowShared);
 
 registerTag('detail', 'Col', TagColShared);
 registerTag('edit', 'Col', TagColShared);
@@ -52,6 +36,9 @@ registerTag('detail', 'TextArea', TagInputDetail);
 
 registerTag('edit', 'Select', TagSelectEdit);
 registerTag('detail', 'Select', TagInputDetail);
+
+registerTag('edit', 'Tabs', TagTabsShared);
+registerTag('detail', 'Tabs', TagTabsShared);
 
 registerTag('detail', 'Use', TagUseShared);
 registerTag('edit', 'Use', TagUseShared);

@@ -6,7 +6,6 @@ import _isUndefined from 'lodash/isUndefined';
 import _isNil from 'lodash/isNil';
 import './tags/__all__';
 import styled from 'styled-components';
-import { ILayoutTypeAttributes } from './tags/Base';
 import { StateDataType } from './types';
 import { useSize } from 'react-use';
 import { LayoutWidthContextProvider } from './context/LayoutWidthContext';
