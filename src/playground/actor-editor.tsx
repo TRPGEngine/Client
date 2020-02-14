@@ -10,6 +10,7 @@ import SplitPane from 'react-split-pane';
 import MonacoEditor, { EditorDidMount } from 'react-monaco-editor';
 import './split-pane.css';
 import { editor, IPosition, KeyMod, KeyCode } from 'monaco-editor';
+import { useLocalStorage } from 'react-use';
 import XMLBuilder, {
   XMLBuilderState,
   LayoutType,
@@ -80,7 +81,7 @@ const initCodePos: IPosition = {
 };
 
 const ActorEditor = React.memo(() => {
-  const [code, setCode] = useState<string>(initCode);
+  const [code, setCode] = useLocalStorage('playground:code', initCode);
   const [layoutType, setLayoutType] = useState<LayoutType>('edit'); // 渲染类型
   const [isMobile, setIsMobile] = useState(false); // 是否为移动模式
   const editorRef = useRef<editor.IStandaloneCodeEditor>();
@@ -103,11 +104,14 @@ const ActorEditor = React.memo(() => {
     },
     []
   );
+  const handleResetCode = useCallback(() => {
+    setCode(initCode);
+  }, []);
   const LayoutActions = useMemo(() => {
     return (
-      <div>
+      <div style={{ display: 'flex' }}>
         <Select
-          style={{ width: 200 }}
+          style={{ width: 200, marginRight: 6 }}
           placeholder="请选择布局"
           onChange={handleSelectLayout}
         >
@@ -117,6 +121,7 @@ const ActorEditor = React.memo(() => {
             </Option>
           ))}
         </Select>
+        <Button onClick={handleResetCode}>重置</Button>
       </div>
     );
   }, []);
@@ -153,6 +158,10 @@ const ActorEditor = React.memo(() => {
     setCurrentState({ ...newState.data });
   }, []);
 
+  const handleEditorChange = useCallback((newValue: string) => {
+    setCode(newValue);
+  }, []);
+
   return (
     <Container>
       <SplitPane split="vertical" defaultSize="50%">
@@ -169,7 +178,7 @@ const ActorEditor = React.memo(() => {
               theme="vs-dark"
               value={code}
               options={editorOptions}
-              onChange={(newValue) => setCode(newValue)}
+              onChange={handleEditorChange}
               editorDidMount={onEditorDidMount}
             />
           </div>
