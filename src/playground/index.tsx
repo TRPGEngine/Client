@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { ThemeProvider } from 'styled-components';
 import styledTheme from '@shared/utils/theme';
-import ActorEditor from './actor-editor';
+import App from './App';
 
 ReactDom.render(
   <ThemeProvider theme={styledTheme}>
-    <ActorEditor />
+    <App />
   </ThemeProvider>,
   document.querySelector('#app')
 );

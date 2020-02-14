@@ -2,10 +2,14 @@
  * 专门用于人物卡编辑器的webpack配置
  */
 
+process.env.TRPG_APP_NAME = 'Playground';
+
 const webpackMerge = require('webpack-merge');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const path = require('path');
+const _ = require('lodash');
 const base = require('./webpack.base.config.js');
+const OfflinePlugin = require('offline-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
@@ -17,7 +21,7 @@ const dllHashName = 'dll_' + dllConfig.name;
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-module.exports = webpackMerge({}, base, {
+const config = webpackMerge({}, base, {
   entry: {
     app: path.resolve(APP_PATH, './playground/index.tsx'),
   },
@@ -47,3 +51,24 @@ module.exports = webpackMerge({}, base, {
 
   plugins: [new MonacoWebpackPlugin()],
 });
+
+// use npm run build:report or npm run playground:build --report
+// to generate bundle-report
+if (_.get(process, 'env.npm_config_report', false)) {
+  const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
+  config.plugins.push(
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: 'bundle-report.html',
+      openAnalyzer: true,
+    })
+  );
+}
+
+/**
+ * playground不需要offline插件
+ */
+config.plugins = config.plugins.filter((x) => !(x instanceof OfflinePlugin));
+
+module.exports = config;
