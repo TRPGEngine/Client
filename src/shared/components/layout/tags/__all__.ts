@@ -18,23 +18,28 @@ import { TagTextAreaEdit } from './TextArea/edit';
 import { TagInputDetail } from './Input/detail';
 import { TagSelectEdit } from './Select/edit';
 import { TagTemplateShared } from './Template/shared';
+import { TagBaseInfoEdit } from './BaseInfo/edit';
+import { TagBaseInfoDetail } from './BaseInfo/detail';
 
-register(Col);
-register(Define);
-register(Input);
+// register(Col);
+// register(Define);
+// register(Input);
 register(Row);
-register(Select);
+// register(Select);
 register(Tabs);
-register(TextArea);
-register(Use);
-register(BaseInfo);
-register(Template);
+// register(TextArea);
+// register(Use);
+// register(BaseInfo);
+// register(Template);
 
 registerTag('detail', 'Template', TagTemplateShared);
 registerTag('edit', 'Template', TagTemplateShared);
 
 registerTag('detail', 'Col', TagColShared);
 registerTag('edit', 'Col', TagColShared);
+
+registerTag('detail', 'BaseInfo', TagBaseInfoDetail);
+registerTag('edit', 'BaseInfo', TagBaseInfoEdit);
 
 registerTag('detail', 'BaseAttr', TagBaseAttrShared);
 registerTag('edit', 'BaseAttr', TagBaseAttrShared);
