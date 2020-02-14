@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as at from 'trpg-actor-template';
-import TemplateSelect from './TemplateSelect';
 import ActorCreate from '@web/components/modal/ActorCreate';
 import ActorEdit from '@web/components/modal/ActorEdit';
 import * as apiHelper from '@shared/utils/api-helper';
@@ -92,7 +91,7 @@ class ActorList extends React.Component<Props> {
     );
   }
 
-  handleOpenActorInfoModal(uuid) {
+  handleOpenActorInfoModal(uuid: string) {
     const actor = this.props.actors.find((a) => a.uuid === uuid);
     if (_isNil(actor)) {
       message.error('角色不存在');

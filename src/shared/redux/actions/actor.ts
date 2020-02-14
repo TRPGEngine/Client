@@ -3,9 +3,6 @@ const {
   GET_TEMPLATE_SUCCESS,
   GET_SUGGEST_TEMPLATES_SUCCESS,
   FIND_TEMPLATE_SUCCESS,
-  CREATE_TEMPLATE_SUCCESS,
-  UPDATE_TEMPLATE_SUCCESS,
-  REMOVE_TEMPLATE_SUCCESS,
   SET_EDITED_TEMPLATE,
   SELECT_TEMPLATE,
   CREATE_ACTOR_SUCCESS,
@@ -87,116 +84,6 @@ let findTemplate = function findTemplate(searchName) {
         dispatch({ type: FIND_TEMPLATE_SUCCESS, payload: data.templates });
       } else {
         console.error(data.msg);
-      }
-    });
-  };
-};
-
-let createTemplate = function createTemplate(name, desc, avatar, info) {
-  return function(dispatch, getState) {
-    dispatch(showLoading('创建中...'));
-    return api.emit(
-      'actor::createTemplate',
-      { name, desc, avatar, info },
-      function(data) {
-        dispatch(hideLoading());
-        dispatch(showAlert({ title: '成功', content: '模板创建完毕' }));
-        if (data.result) {
-          dispatch({ type: CREATE_TEMPLATE_SUCCESS, payload: data.template });
-        } else {
-          console.error(data.msg);
-          dispatch(showAlert(data.msg));
-          // dispatch({type:LOGIN_FAILED, payload: data.msg});
-        }
-      }
-    );
-  };
-};
-
-let createTemplateAdvanced = function createTemplateAdvanced(
-  name,
-  desc,
-  avatar,
-  info
-) {
-  return function(dispatch, getState) {
-    dispatch(showLoading('创建中...'));
-    if (!name) {
-      // 如果没有给模板名则从info里面取模板名
-      try {
-        let _data = JSON.parse(info);
-        name = _data.name;
-      } catch (err) {
-        dispatch(hideLoading());
-        dispatch(
-          showAlert({ title: '创建失败', content: '请检查输入模板信息' })
-        );
-        return;
-      }
-    }
-    if (!desc) {
-      // 如果没有给模板描述则从info里面取模板描述
-      try {
-        let _data = JSON.parse(info);
-        desc = _data.desc;
-      } catch (err) {
-        dispatch(hideLoading());
-        dispatch(
-          showAlert({ title: '创建失败', content: '请检查输入模板信息' })
-        );
-        return;
-      }
-    }
-
-    return api.emit(
-      'actor::createTemplateAdvanced',
-      { name, desc, avatar, info },
-      function(data) {
-        dispatch(hideLoading());
-        dispatch(hideModal());
-        dispatch(showAlert({ title: '成功', content: '模板创建完毕' }));
-        if (data.result) {
-          dispatch({ type: CREATE_TEMPLATE_SUCCESS, payload: data.template });
-        } else {
-          console.error(data.msg);
-          dispatch(showAlert(data.msg));
-        }
-      }
-    );
-  };
-};
-
-let updateTemplate = function updateTemplate(uuid, name, desc, avatar, info) {
-  return function(dispatch, getState) {
-    dispatch(showLoading('保存中...'));
-    return api.emit(
-      'actor::updateTemplate',
-      { uuid, name, desc, avatar, info },
-      function(data) {
-        dispatch(hideLoading());
-        dispatch(showAlert({ title: '成功', content: '模板更新完毕' }));
-        if (data.result) {
-          dispatch({ type: UPDATE_TEMPLATE_SUCCESS, payload: data.template });
-        } else {
-          console.error(data.msg);
-          dispatch(showAlert(data.msg));
-        }
-      }
-    );
-  };
-};
-
-let removeTemplate = function removeTemplate(uuid) {
-  return function(dispatch, getState) {
-    dispatch(showLoading());
-    return api.emit('actor::removeTemplate', { uuid }, function(data) {
-      dispatch(hideLoading());
-      dispatch(showAlert('模板删除成功'));
-      if (data.result) {
-        dispatch({ type: REMOVE_TEMPLATE_SUCCESS, uuid });
-      } else {
-        console.error(data.msg);
-        dispatch(showAlert(data.msg));
       }
     });
   };
@@ -302,10 +189,6 @@ export {
   getTemplate,
   getSuggestTemplate,
   findTemplate,
-  createTemplate,
-  createTemplateAdvanced,
-  updateTemplate,
-  removeTemplate,
   setEditedTemplate,
   selectTemplate,
   createActor,
