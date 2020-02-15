@@ -27,20 +27,23 @@ const buildReducer = (onChange?: StateChangeHandler) => {
 
     switch (type) {
       case StateActionType.UpdateData: {
+        const data = _clone(newState.data);
         const { scope, field, value } = payload;
 
         if (scope === 'data') {
           // 修改data
-          _set(newState.data, field, value);
+          _set(data, field, value);
         } else {
-          _set(newState.data, [scope, field].join('.'), value);
+          _set(data, [scope, field].join('.'), value);
         }
+
+        newState.data = data;
         break;
       }
       case StateActionType.AddDefine:
         newState.defines[payload.name] = payload.component;
         break;
-      case StateActionType.AddGlobal:
+      case StateActionType.SetGlobal:
         newState.global[payload.name] = payload.value;
     }
 

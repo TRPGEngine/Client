@@ -265,7 +265,7 @@ const ActorEditor = React.memo(() => {
             </div>
             <div>
               <ReactJson
-                name={false}
+                name="全局变量"
                 style={{ fontFamily: 'inherit' }}
                 src={currentGlobal}
                 enableClipboard={false}
