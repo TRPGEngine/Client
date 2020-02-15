@@ -8,4 +8,8 @@
     <Input name="当前血量" />
     <Input name="最大血量" />
   </Hidden>
+
+  <FieldSet label="独立框">
+    <p>将一些内容放到一个独立的分割框内</p>
+  </FieldSet>
 </Template>

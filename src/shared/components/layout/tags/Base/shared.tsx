@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TagComponent } from '../type';
 import { useLayoutChildren } from '../../hooks/useLayoutChildren';
-import { normalizeTagName } from '../utils';
+import { normalizeTagName, removePrivateProps } from '../utils';
 import styled from 'styled-components';
 import { Row } from 'antd';
 
@@ -38,6 +38,7 @@ export const blacklistTags = [
 export const TagBaseShared: TagComponent = React.memo((props) => {
   const tagName = props._name;
   let childrens = useLayoutChildren(props);
+  const tagProps = useMemo(() => removePrivateProps(props), [props]);
 
   if (blacklistTags.includes(tagName)) {
     return null;
@@ -52,7 +53,9 @@ export const TagBaseShared: TagComponent = React.memo((props) => {
   if (Tag === React.Fragment) {
     return React.createElement(Tag, { key: props.key }, childrens);
   }
-  return React.createElement(Tag, props, childrens);
+
+  // 是HTML元素
+  return React.createElement(Tag, tagProps, childrens);
 });
 TagBaseShared.displayName = 'TagBaseShared';
 
