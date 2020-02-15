@@ -20,10 +20,10 @@ import ReactJson from 'react-json-view';
 import copy from 'copy-to-clipboard';
 import LZString from 'lz-string';
 import { Block } from './components/Block';
-import { Select, message, Button, Checkbox, Col, Tooltip } from 'antd';
+import { Select, message, Button, Checkbox, Tooltip } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { registerLayoutCodeSuggest } from './editor/suggestions';
-import config from '@shared/project.config';
+import { exampleLayout } from './editor/example';
 const { Option } = Select;
 
 declare module 'antd/lib/select' {
@@ -33,31 +33,6 @@ declare module 'antd/lib/select' {
 }
 
 registerLayoutCodeSuggest(); // 注册布局相关的代码提示
-
-/**
- * 示例代码
- */
-const exampleLayout = [
-  { label: 'Simple', value: require('./example/simple.xml').default },
-  { label: 'Grid', value: require('./example/grid.xml').default },
-  { label: 'Input', value: require('./example/input.xml').default },
-  { label: 'Tabs', value: require('./example/tabs.xml').default },
-  { label: 'Display', value: require('./example/display.xml').default },
-  {
-    label: 'Use and Define',
-    value: require('./example/use-define.xml').default,
-  },
-  {
-    label: 'Var',
-    value: require('./example/var.xml').default,
-  },
-];
-if (config.environment === 'development') {
-  exampleLayout.push({
-    label: 'CoC7',
-    value: require('./example/coc7.xml').default,
-  });
-}
 
 const Container = styled.div`
   height: 100vh;
@@ -136,7 +111,7 @@ const ActorEditor = React.memo(() => {
       <div style={{ display: 'flex' }}>
         <Select
           style={{ width: 200, marginRight: 6 }}
-          placeholder="请选择布局"
+          placeholder="请选择示例"
           onChange={handleSelectLayout}
         >
           {exampleLayout.map((l) => (
