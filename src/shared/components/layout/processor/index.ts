@@ -25,7 +25,14 @@ export function parseDataText(
   context: XMLBuilderContext
 ): string {
   const { expression, tokens } = parseText(text);
-  const sandbox = { ...context.state, _get, _find, _map };
+  const sandbox = {
+    ...context.state.global,
+    ...context.state.data,
+    ...context.state,
+    _get,
+    _find,
+    _map,
+  };
 
   return compileCode(`return ${expression}`)(sandbox);
 }

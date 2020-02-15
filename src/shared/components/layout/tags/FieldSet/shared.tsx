@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useLayoutChildren } from '@shared/components/layout/hooks/useLayoutChildren';
 import { TagComponent } from '../type';
 import styled from 'styled-components';
+import _isEmpty from 'lodash/isEmpty';
 
 const padding = 10;
 
@@ -80,7 +81,9 @@ export const TagFieldSetShared: TagComponent<TagProps> = React.memo((props) => {
   return (
     <Container key={props.key} left={left}>
       <div className="fieldset-divider">
-        <span className="inner-text">{props.label}</span>
+        {!_isEmpty(props.label) && (
+          <span className="inner-text">{props.label}</span>
+        )}
       </div>
       {children}
     </Container>

@@ -18,7 +18,7 @@ export const TagVarShared: TagComponent<TagProps> = React.memo(
 
     useEffect(() => {
       if (!_isNil(props[':value'])) {
-        console.warn('Var 不支持:value的参数');
+        console.warn('Var组件 不支持:value的参数');
         return;
       }
 
