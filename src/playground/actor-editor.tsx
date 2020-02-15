@@ -20,7 +20,7 @@ import ReactJson from 'react-json-view';
 import copy from 'copy-to-clipboard';
 import LZString from 'lz-string';
 import { Block } from './components/Block';
-import { Select, message, Button, Checkbox } from 'antd';
+import { Select, message, Button, Checkbox, Col, Tooltip } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { registerLayoutCodeSuggest } from './editor/suggestions';
 const { Option } = Select;
@@ -45,6 +45,10 @@ const exampleLayout = [
   {
     label: 'Use and Define',
     value: require('./example/use-define.xml').default,
+  },
+  {
+    label: 'Var',
+    value: require('./example/var.xml').default,
   },
 ];
 
@@ -153,6 +157,10 @@ const ActorEditor = React.memo(() => {
     copy(`${origin}${pathname}#${hash}`) &&
       message.success('分享链接已复制到剪切板');
   }, []);
+  const [renderKey, setRenderKey] = useState(0);
+  const handleForceUpdate = useCallback(() => {
+    setRenderKey(renderKey + 1);
+  }, [renderKey]);
   const RenderActions = useMemo(() => {
     return (
       <div
@@ -169,16 +177,36 @@ const ActorEditor = React.memo(() => {
             移动页面
           </Checkbox>
         </div>
-        <Button type="primary" onClick={handleShareCode}>
-          分享给用户
-        </Button>
+        <div style={{ display: 'flex' }}>
+          <Tooltip title="强制刷新布局">
+            <Button
+              type="primary"
+              onClick={handleForceUpdate}
+              icon="sync"
+              style={{ marginRight: 4 }}
+            />
+          </Tooltip>
+          <Tooltip title="分享给用户">
+            <Button type="primary" onClick={handleShareCode}>
+              分享给用户
+            </Button>
+          </Tooltip>
+        </div>
       </div>
     );
-  }, [layoutType, isMobile]);
+  }, [
+    layoutType,
+    isMobile,
+    handleChangeIsMobile,
+    handleForceUpdate,
+    handleShareCode,
+  ]);
 
-  const [currentState, setCurrentState] = useState({});
+  const [currentData, setCurrentData] = useState({});
+  const [currentGlobal, setCurrentGlobal] = useState({});
   const handleStateChange = useCallback((newState: XMLBuilderState) => {
-    setCurrentState({ ...newState.data });
+    setCurrentData({ ...newState.data });
+    setCurrentGlobal({ ...newState.global });
   }, []);
 
   const handleEditorChange = useCallback((newValue: string) => {
@@ -210,22 +238,35 @@ const ActorEditor = React.memo(() => {
           <Block label="" theme="light" actions={RenderActions}>
             <XMLRenderContainer isMobile={isMobile}>
               <XMLBuilder
+                key={renderKey}
                 layoutType={layoutType}
                 xml={code}
                 onChange={handleStateChange}
               />
             </XMLRenderContainer>
           </Block>
-          <div>
-            <ReactJson
-              name={false}
-              style={{ fontFamily: 'inherit' }}
-              src={currentState}
-              enableClipboard={false}
-              displayObjectSize={false}
-              displayDataTypes={false}
-            />
-          </div>
+          <SplitPane split="vertical" defaultSize="80%">
+            <div>
+              <ReactJson
+                name={false}
+                style={{ fontFamily: 'inherit' }}
+                src={currentData}
+                enableClipboard={false}
+                displayObjectSize={false}
+                displayDataTypes={false}
+              />
+            </div>
+            <div>
+              <ReactJson
+                name={false}
+                style={{ fontFamily: 'inherit' }}
+                src={currentGlobal}
+                enableClipboard={false}
+                displayObjectSize={false}
+                displayDataTypes={false}
+              />
+            </div>
+          </SplitPane>
         </SplitPane>
       </SplitPane>
     </Container>

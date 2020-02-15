@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Template>
   <Define name="input">
-    <Input name="global.修改全局数据" />
+    <Input name="root.修改全局数据" />
     <Input name="parent.修改父级数据" />
     <Input name="data.一样修改局部数据" />
     <Input name="简单修改局部数据" />

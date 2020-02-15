@@ -14,6 +14,7 @@ import { TagRowShared } from './Row/shared';
 import { TagTabsShared } from './Tabs/shared';
 import { TagBarShared } from './Bar/shared';
 import { TagHiddenShared } from './Hidden/shared';
+import { TagVarShared } from './Var/shared';
 
 registerTag('detail', 'Template', TagTemplateShared);
 registerTag('edit', 'Template', TagTemplateShared);
@@ -53,3 +54,6 @@ registerTag('edit', 'Use', TagUseShared);
 
 registerTag('detail', 'Define', TagDefineShared);
 registerTag('edit', 'Define', TagDefineShared);
+
+registerTag('detail', 'Var', TagVarShared);
+registerTag('edit', 'Var', TagVarShared);

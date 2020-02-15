@@ -40,6 +40,8 @@ const buildReducer = (onChange?: StateChangeHandler) => {
       case StateActionType.AddDefine:
         newState.defines[payload.name] = payload.component;
         break;
+      case StateActionType.AddGlobal:
+        newState.global[payload.name] = payload.value;
     }
 
     onChange && onChange(newState);
@@ -95,8 +97,9 @@ function getDefineState(
     data: {
       ...(typeof currentData === 'object' ? currentData : {}),
       parent: parentContext.state.data,
-      global: getRootContext(parentContext).state.data,
+      root: getRootContext(parentContext).state.data,
     },
+    global: parentContext.state.global,
   };
 }
 function buildDefineReducer(name: string, parentContext: XMLBuilderContext) {
@@ -120,7 +123,7 @@ function buildDefineReducer(name: string, parentContext: XMLBuilderContext) {
         } else if (scope === 'parent') {
           // 修改父级数据
           newScope = 'data';
-        } else if (scope === 'global') {
+        } else if (scope === 'root') {
           // 修改全局数据，层层传递
           newScope = 'data';
           targetContext = getRootContext(parentContext);

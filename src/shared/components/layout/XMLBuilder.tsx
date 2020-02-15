@@ -39,6 +39,7 @@ export type LayoutType = 'edit' | 'detail';
 export interface XMLBuilderState {
   defines: DefineMap;
   data: DataMap;
+  global: DataMap; // 全局变量
 }
 
 export interface XMLBuilderAction {
