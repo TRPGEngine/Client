@@ -16,3 +16,10 @@ export const isBlobUrl = (str: string) => {
 export const getUrls = (str: string): string[] => {
   return str.match(urlRegex()) ?? [];
 };
+
+/**
+ * 用于判定环境变量的值
+ */
+export function is(it: string) {
+  return !!it && it !== '0' && it !== 'false';
+}

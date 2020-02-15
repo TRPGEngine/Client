@@ -11,7 +11,7 @@ export const LabelBody = styled.pre`
 
 export const Label: React.FC<{ title: string }> = React.memo((props) => {
   return (
-    <Tooltip title={props.title}>
+    <Tooltip title={props.title} trigger="click">
       <LabelBody>{props.title}</LabelBody>
     </Tooltip>
   );

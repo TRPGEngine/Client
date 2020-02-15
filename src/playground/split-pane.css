@@ -43,8 +43,12 @@
   border-right: 5px solid rgba(0, 0, 0, 0.5);
 }
 .Resizer.disabled {
-cursor: not-allowed;
+  cursor: not-allowed;
 }
 .Resizer.disabled:hover {
-border-color: transparent;
+  border-color: transparent;
+}
+
+.Pane {
+  overflow: auto;
 }

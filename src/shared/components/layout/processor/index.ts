@@ -5,6 +5,8 @@ import { XMLBuilderContext } from '../XMLBuilder';
 import _get from 'lodash/get';
 import _has from 'lodash/has';
 import _isNil from 'lodash/isNil';
+import _find from 'lodash/find';
+import _map from 'lodash/map';
 import { compileCode } from './sandbox';
 import React from 'react';
 import { parseAttrStyle } from './style';
@@ -23,7 +25,7 @@ export function parseDataText(
   context: XMLBuilderContext
 ): string {
   const { expression, tokens } = parseText(text);
-  const sandbox = context.state;
+  const sandbox = { ...context.state, _get, _find, _map };
 
   return compileCode(`return ${expression}`)(sandbox);
 }
@@ -63,8 +65,13 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
       .forEach((key) => {
         const value = attributes[key];
         const realKey = key.substr(1);
-        const realVal = parseDataText(`{{(${value})}}`, context);
-        attributes[realKey] = realVal;
+        try {
+          const realVal = parseDataText(`{{(${value})}}`, context);
+          attributes[realKey] = realVal;
+        } catch (e) {
+          // 不处理解析错误的变量
+          console.warn('Cannot parse attr:', key, value, e);
+        }
       });
   }
 

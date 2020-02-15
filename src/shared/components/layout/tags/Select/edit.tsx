@@ -5,11 +5,13 @@ import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutForm
 import { Select } from 'antd';
 import { Label } from '../Input/shared';
 import { BaseTypeRow } from '../Base/shared';
+import { is } from '@shared/utils/string-helper';
 const Option = Select.Option;
 
 interface TagProps {
   name: string;
   options: string | string[];
+  showSearch?: boolean | string;
 }
 export const TagSelectEdit: TagComponent<TagProps> = React.memo((props) => {
   const { label, stateValue, setStateValue } = useLayoutFormData(props);
@@ -22,6 +24,14 @@ export const TagSelectEdit: TagComponent<TagProps> = React.memo((props) => {
 
     return options;
   }, [props.options]);
+
+  const showSearch = useMemo(() => {
+    if (typeof props.showSearch === 'string') {
+      return is(props.showSearch);
+    } else {
+      return props.showSearch;
+    }
+  }, [props.showSearch]);
 
   const handleChange = useCallback(
     (value) => {
@@ -39,11 +49,12 @@ export const TagSelectEdit: TagComponent<TagProps> = React.memo((props) => {
         <Select
           style={{ width: '100%' }}
           placeholder="请选择..."
+          showSearch={showSearch}
           allowClear={true}
           value={stateValue}
           onChange={handleChange}
         >
-          {opt.map((item) => (
+          {(opt ?? []).map((item) => (
             <Option key={item} value={item}>
               {item}
             </Option>

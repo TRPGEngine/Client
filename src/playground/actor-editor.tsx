@@ -23,6 +23,7 @@ import { Block } from './components/Block';
 import { Select, message, Button, Checkbox, Col, Tooltip } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { registerLayoutCodeSuggest } from './editor/suggestions';
+import config from '@shared/project.config';
 const { Option } = Select;
 
 declare module 'antd/lib/select' {
@@ -51,6 +52,12 @@ const exampleLayout = [
     value: require('./example/var.xml').default,
   },
 ];
+if (config.environment === 'development') {
+  exampleLayout.push({
+    label: 'CoC7',
+    value: require('./example/coc7.xml').default,
+  });
+}
 
 const Container = styled.div`
   height: 100vh;

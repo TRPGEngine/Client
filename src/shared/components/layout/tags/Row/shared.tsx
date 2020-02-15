@@ -8,6 +8,10 @@ export const TagRowShared: TagComponent = React.memo((props) => {
   const children = useLayoutChildren(props);
   const rowProps = useMemo(() => removePrivateProps(props), [props]);
 
-  return <Row {...rowProps}>{children}</Row>;
+  return (
+    <Row gutter={4} {...rowProps}>
+      {children}
+    </Row>
+  );
 });
 TagRowShared.displayName = 'TagRowShared';
