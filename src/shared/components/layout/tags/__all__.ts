@@ -17,6 +17,7 @@ import { TagHiddenShared } from './Hidden/shared';
 import { TagVarShared } from './Var/shared';
 import { TagFieldSetShared } from './FieldSet/shared';
 
+// 展示数据组件
 registerTag('detail', 'Template', TagTemplateShared);
 registerTag('edit', 'Template', TagTemplateShared);
 
@@ -28,18 +29,6 @@ registerTag('edit', 'Col', TagColShared);
 
 registerTag('detail', 'BaseInfo', TagBaseInfoDetail);
 registerTag('edit', 'BaseInfo', TagBaseInfoEdit);
-
-registerTag('detail', 'BaseAttr', TagBaseAttrShared);
-registerTag('edit', 'BaseAttr', TagBaseAttrShared);
-
-registerTag('edit', 'Input', TagInputEdit);
-registerTag('detail', 'Input', TagInputDetail);
-
-registerTag('edit', 'TextArea', TagTextAreaEdit);
-registerTag('detail', 'TextArea', TagInputDetail);
-
-registerTag('edit', 'Select', TagSelectEdit);
-registerTag('detail', 'Select', TagInputDetail);
 
 registerTag('edit', 'Tabs', TagTabsShared);
 registerTag('detail', 'Tabs', TagTabsShared);
@@ -53,6 +42,20 @@ registerTag('detail', 'Hidden', TagHiddenShared);
 registerTag('edit', 'FieldSet', TagFieldSetShared);
 registerTag('detail', 'FieldSet', TagFieldSetShared);
 
+// 数据录入组件
+registerTag('detail', 'BaseAttr', TagBaseAttrShared);
+registerTag('edit', 'BaseAttr', TagBaseAttrShared);
+
+registerTag('edit', 'Input', TagInputEdit);
+registerTag('detail', 'Input', TagInputDetail);
+
+registerTag('edit', 'TextArea', TagTextAreaEdit);
+registerTag('detail', 'TextArea', TagInputDetail);
+
+registerTag('edit', 'Select', TagSelectEdit);
+registerTag('detail', 'Select', TagInputDetail);
+
+// 高级操作组件
 registerTag('detail', 'Use', TagUseShared);
 registerTag('edit', 'Use', TagUseShared);
 

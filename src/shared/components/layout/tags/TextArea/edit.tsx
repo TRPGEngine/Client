@@ -1,12 +1,15 @@
 import React, { useCallback } from 'react';
 import { TagComponent } from '../type';
-import TextArea from 'antd/lib/input/TextArea';
+import TextArea, { AutoSizeType } from 'antd/lib/input/TextArea';
 import { LayoutCol } from '../Col/shared';
-import { Label } from '../Input/shared';
+import { TagInputProps, TagLabel } from '../Input/shared';
 import { useLayoutFormData } from '../../hooks/useLayoutFormData';
 import { BaseTypeRow } from '../Base/shared';
 
-export const TagTextAreaEdit: TagComponent = React.memo((props) => {
+interface TagProps extends TagInputProps {
+  autosize: boolean | AutoSizeType;
+}
+export const TagTextAreaEdit: TagComponent<TagProps> = React.memo((props) => {
   const { label, placeholder, stateValue, setStateValue } = useLayoutFormData(
     props
   );
@@ -23,7 +26,7 @@ export const TagTextAreaEdit: TagComponent = React.memo((props) => {
   return (
     <BaseTypeRow key={props.key}>
       <LayoutCol span={6}>
-        <Label title={label} />
+        <TagLabel label={label} desc={props.desc} />
       </LayoutCol>
       <LayoutCol span={18}>
         <TextArea

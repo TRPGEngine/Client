@@ -3,7 +3,7 @@ import { TagComponent } from '../type';
 import { LayoutCol } from '../Col/shared';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
 import { Select } from 'antd';
-import { Label } from '../Input/shared';
+import { TagLabel } from '../Input/shared';
 import { BaseTypeRow } from '../Base/shared';
 import { is } from '@shared/utils/string-helper';
 const Option = Select.Option;
@@ -11,6 +11,7 @@ const Option = Select.Option;
 interface TagProps {
   name: string;
   options: string | string[];
+  desc?: string;
   showSearch?: boolean | string;
 }
 export const TagSelectEdit: TagComponent<TagProps> = React.memo((props) => {
@@ -43,7 +44,7 @@ export const TagSelectEdit: TagComponent<TagProps> = React.memo((props) => {
   return (
     <BaseTypeRow key={props.key}>
       <LayoutCol span={6}>
-        <Label title={label} />
+        <TagLabel label={label} desc={props.desc} />
       </LayoutCol>
       <LayoutCol span={18}>
         <Select

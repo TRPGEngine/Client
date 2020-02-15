@@ -32,6 +32,7 @@
         name="职业"
         :options="_map(global.job, 'name').join(',')"
         showSearch="true"
+        desc="调查员的职业决定了他们最擅长哪些技能、收入有多少、可能认识些什么样的人。同时，职业也可以在一定程度上完善调查员的角色形象，影响他们的动机和他们对周围世界的态度。"
       />
       <p>{{_get(global.selectJobInfo, 'desc')}}</p>
       <p>信用范围: {{_get(global.selectJobInfo, 'credit.0', 0)}} ~ {{_get(global.selectJobInfo, 'credit.1', 0)}}</p>
