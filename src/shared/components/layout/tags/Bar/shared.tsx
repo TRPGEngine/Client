@@ -10,6 +10,7 @@ interface TagProps {
   current: string;
   max: string;
   label: string;
+  color: string;
   size?: ProgressSize;
 }
 export const TagBarShared: TagComponent<TagProps> = React.memo((props) => {
@@ -19,6 +20,10 @@ export const TagBarShared: TagComponent<TagProps> = React.memo((props) => {
   const current = useMemo(() => Number(_current) || 0, [_current]);
   const max = useMemo(() => Number(_max) || 0, [_max]);
   const label = props.label;
+  const color = useMemo(
+    () => props.color ?? styledTheme.color['atomic-tangerine'],
+    [props.color]
+  );
 
   const percent = useMemo(() => {
     return (current / max) * 100;
@@ -38,7 +43,7 @@ export const TagBarShared: TagComponent<TagProps> = React.memo((props) => {
       <Progress
         key={props.key}
         showInfo={false}
-        strokeColor={styledTheme.color['atomic-tangerine']}
+        strokeColor={color}
         percent={percent}
         size={props.size}
       />

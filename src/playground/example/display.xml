@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Template>
-  <Bar label="生命值" current="当前血量" max="最大血量" />
-
-  <Input name="当前血量" />
-  <Input name="最大血量" />
+  <p>切换模式来查看不同</p>
+  <Hidden in="edit">
+    <Bar label="生命值" color="#d02828" current="当前血量" max="最大血量" />
+  </Hidden>
+  <Hidden in="detail">
+    <Input name="当前血量" />
+    <Input name="最大血量" />
+  </Hidden>
 </Template>
