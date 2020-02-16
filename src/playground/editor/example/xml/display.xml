@@ -12,4 +12,7 @@
   <FieldSet label="独立框">
     <p>将一些内容放到一个独立的分割框内</p>
   </FieldSet>
+
+  <p>雷达图</p>
+  <Radar dataKey="a,b,c" :dataValue="[1,2,3]" />
 </Template>
