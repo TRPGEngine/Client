@@ -7,6 +7,7 @@ import _has from 'lodash/has';
 import _isNil from 'lodash/isNil';
 import _find from 'lodash/find';
 import _map from 'lodash/map';
+import _inRange from 'lodash/inRange';
 import { compileCode } from './sandbox';
 import React from 'react';
 import { parseAttrStyle } from './style';
@@ -29,9 +30,14 @@ export function parseDataText(
     ...context.state.global,
     ...context.state.data,
     ...context.state,
+    Math,
     _get,
     _find,
     _map,
+    _inRange,
+    AND(a: any, b: any) {
+      return a && b;
+    },
   };
 
   return compileCode(`return ${expression}`)(sandbox);

@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useMemo, Fragment } from 'react';
 import styled from 'styled-components';
 import { Tooltip, Icon } from 'antd';
 import _isEmpty from 'lodash/isEmpty';
+import { parseMultilineText } from '../utils';
 
 export interface TagInputProps {
   name: string;
   label?: string;
   placeholder?: string;
   desc?: string;
+  disabled?: boolean;
 }
 
 export const LabelContainer = styled.div`
   display: flex;
   align-items: center;
+  padding-right: 4px;
 `;
 
 export const LabelBody = styled.pre`
@@ -41,8 +44,21 @@ export const LabelTip: React.FC<{ tip: string }> = React.memo((props) => {
     return null;
   }
 
+  const tip = useMemo(() => {
+    // 处理换行符
+    return (
+      <Fragment>
+        {parseMultilineText(props.tip)
+          .split('\n')
+          .map((item) => (
+            <div>{item}</div>
+          ))}
+      </Fragment>
+    );
+  }, [props.tip]);
+
   return (
-    <Tooltip title={props.tip} trigger="hover">
+    <Tooltip title={tip} trigger="hover">
       <Icon type="question-circle-o" />
     </Tooltip>
   );

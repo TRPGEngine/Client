@@ -28,6 +28,7 @@ export const TagInputEdit: TagComponent<TagInputProps> = React.memo((props) => {
           placeholder={placeholder}
           value={stateValue}
           onChange={handleChange}
+          disabled={props.disabled}
         />
       </LayoutCol>
     </BaseTypeRow>
