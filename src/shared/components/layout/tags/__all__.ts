@@ -18,6 +18,7 @@ import { TagVarShared } from './Var/shared';
 import { TagFieldSetShared } from './FieldSet/shared';
 import { TagRollBtnEdit } from './RollBtn/edit';
 import { TagRollBtnDetail } from './RollBtn/detail';
+import { TagComputedShared } from './Computed/shared';
 
 // 展示数据组件
 registerTag('detail', 'Template', TagTemplateShared);
@@ -69,3 +70,6 @@ registerTag('edit', 'Define', TagDefineShared);
 
 registerTag('detail', 'Var', TagVarShared);
 registerTag('edit', 'Var', TagVarShared);
+
+registerTag('detail', 'Computed', TagComputedShared);
+registerTag('edit', 'Computed', TagComputedShared);
