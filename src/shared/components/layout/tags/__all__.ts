@@ -19,6 +19,7 @@ import { TagFieldSetShared } from './FieldSet/shared';
 import { TagRollBtnEdit } from './RollBtn/edit';
 import { TagRollBtnDetail } from './RollBtn/detail';
 import { TagComputedShared } from './Computed/shared';
+import { TagTipShared } from './Tip/shared';
 
 // 展示数据组件
 registerTag('detail', 'Template', TagTemplateShared);
@@ -44,6 +45,9 @@ registerTag('detail', 'Hidden', TagHiddenShared);
 
 registerTag('edit', 'FieldSet', TagFieldSetShared);
 registerTag('detail', 'FieldSet', TagFieldSetShared);
+
+registerTag('edit', 'Tip', TagTipShared);
+registerTag('detail', 'Tip', TagTipShared);
 
 // 数据录入组件
 registerTag('detail', 'BaseAttr', TagBaseAttrShared);

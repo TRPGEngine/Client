@@ -4,6 +4,8 @@ import { ThemeProvider } from 'styled-components';
 import styledTheme from '@shared/utils/theme';
 import App from './App';
 
+import './index.less';
+
 ReactDom.render(
   <ThemeProvider theme={styledTheme}>
     <App />

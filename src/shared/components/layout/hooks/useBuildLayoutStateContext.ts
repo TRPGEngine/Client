@@ -33,6 +33,9 @@ const buildReducer = (onChange?: StateChangeHandler) => {
         if (scope === 'data') {
           // 修改data
           _set(data, field, value);
+        } else if (scope === 'global') {
+          // 修改global数据
+          _set(newState, ['global', field].join('.'), value);
         } else {
           _set(data, [scope, field].join('.'), value);
         }
