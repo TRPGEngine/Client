@@ -1,7 +1,8 @@
 import { LayoutProps } from '../processor';
 import { parseMultilineText } from '../tags/utils';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useLayoutFieldState } from './useLayoutFieldState';
+import _isNil from 'lodash/isNil';
 
 export const useLayoutFormData = (props: LayoutProps) => {
   const label = useMemo(() => parseMultilineText(props.label ?? props.name), [
@@ -14,5 +15,17 @@ export const useLayoutFormData = (props: LayoutProps) => {
   );
   const [stateValue, setStateValue] = useLayoutFieldState(props.name);
 
-  return { label, placeholder, stateValue, setStateValue };
+  // 处理默认值
+  useEffect(() => {
+    if (!_isNil(props.default) && _isNil(stateValue)) {
+      setStateValue(props.default);
+    }
+  }, [props.default]);
+
+  return {
+    label,
+    placeholder,
+    stateValue,
+    setStateValue,
+  };
 };

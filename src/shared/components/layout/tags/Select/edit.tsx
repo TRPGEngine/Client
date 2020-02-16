@@ -13,6 +13,7 @@ interface TagProps {
   options: string | string[];
   desc?: string;
   showSearch?: boolean | string;
+  default?: string;
 }
 export const TagSelectEdit: TagComponent<TagProps> = React.memo((props) => {
   const { label, stateValue, setStateValue } = useLayoutFormData(props);

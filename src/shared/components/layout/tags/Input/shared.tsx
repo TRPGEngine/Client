@@ -10,6 +10,7 @@ export interface TagInputProps {
   placeholder?: string;
   desc?: string;
   disabled?: boolean;
+  default?: string;
 }
 
 export const LabelContainer = styled.div`
