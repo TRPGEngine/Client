@@ -134,6 +134,7 @@ const AvatarPicker = (props: Props) => {
             <ReactCrop
               src={originImageUrl}
               crop={cropInfo}
+              imageStyle={{ maxHeight: '70vh' }}
               onImageLoaded={(ref) => (imageRef.current = ref)}
               onChange={(crop) => setCropInfo(crop)}
             />
