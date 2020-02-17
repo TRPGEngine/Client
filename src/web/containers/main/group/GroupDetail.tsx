@@ -50,7 +50,7 @@ class GroupDetail extends React.Component<Props> {
         changeSelectGroupActor(this.props.selectedUUID, item.value)
       );
     }
-  }
+  };
 
   handleSendMsg(message, type) {
     console.log('send msg:', message, 'to', this.props.selectedUUID);
@@ -180,44 +180,43 @@ class GroupDetail extends React.Component<Props> {
     );
   };
 
+  actions = [
+    {
+      name: '添加团员',
+      icon: '&#xe61c;',
+      component: <GroupInvite />,
+    },
+    {
+      name: '查看团员',
+      icon: '&#xe603;',
+      component: <GroupMember />,
+    },
+    {
+      name: '人物卡',
+      icon: '&#xe61b;',
+      component: <GroupActor />,
+    },
+    {
+      name: '游戏地图',
+      icon: '&#xe6d7;',
+      // component: (
+      //   <GroupMap />
+      // )
+      component: <IsDeveloping />,
+    },
+    {
+      name: '游戏规则',
+      icon: '&#xe621;',
+      component: <IsDeveloping />,
+    },
+    {
+      name: '团信息',
+      icon: '&#xe611;',
+      component: <GroupInfo />,
+    },
+  ];
   getHeaderActions() {
-    const actions = [
-      {
-        name: '添加团员',
-        icon: '&#xe61c;',
-        component: <GroupInvite />,
-      },
-      {
-        name: '查看团员',
-        icon: '&#xe603;',
-        component: <GroupMember />,
-      },
-      {
-        name: '人物卡',
-        icon: '&#xe61b;',
-        component: <GroupActor />,
-      },
-      {
-        name: '游戏地图',
-        icon: '&#xe6d7;',
-        // component: (
-        //   <GroupMap />
-        // )
-        component: <IsDeveloping />,
-      },
-      {
-        name: '游戏规则',
-        icon: '&#xe621;',
-        component: <IsDeveloping />,
-      },
-      {
-        name: '团信息',
-        icon: '&#xe611;',
-        component: <GroupInfo />,
-      },
-    ];
-
-    return actions.map((item, index) => {
+    return this.actions.map((item, index) => {
       return (
         <button
           key={'group-action-' + index}

@@ -49,7 +49,7 @@ interface Props {
   ) => void;
 }
 class GroupActor extends React.Component<Props> {
-  handleSendGroupActorCheck() {
+  handleSendGroupActorCheck = () => {
     if (!this.props.selectedGroupUUID) {
       showAlert('请选择一个团来提交您的人物');
     }
@@ -61,7 +61,7 @@ class GroupActor extends React.Component<Props> {
         }}
       />
     );
-  }
+  };
 
   // 查看人物卡
   handleShowActorProfile(actor: ActorType, overwritedActorData: ActorDataType) {
@@ -239,11 +239,13 @@ class GroupActor extends React.Component<Props> {
                       <i className="iconfont">&#xe61b;</i>
                     </button>
                   </Tooltip>
-                  <Tooltip title="审批">
-                    <button onClick={() => this.handleApprove(item)}>
-                      <i className="iconfont">&#xe83f;</i>
-                    </button>
-                  </Tooltip>
+                  {this.props.isGroupManager && (
+                    <Tooltip title="审批">
+                      <button onClick={() => this.handleApprove(item)}>
+                        <i className="iconfont">&#xe83f;</i>
+                      </button>
+                    </Tooltip>
+                  )}
                 </div>
               </div>
             </div>
@@ -272,7 +274,7 @@ class GroupActor extends React.Component<Props> {
               </div>
             </div>
             <GroupActorAction>
-              <button onClick={() => this.handleSendGroupActorCheck()}>
+              <button onClick={this.handleSendGroupActorCheck}>
                 <i className="iconfont">&#xe604;</i>申请审核
               </button>
             </GroupActorAction>

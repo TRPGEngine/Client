@@ -114,7 +114,7 @@ const AvatarPicker = (props: Props) => {
           type="file"
           style={{ display: 'none' }}
           onChange={handleSelectFile}
-          // TODO: 需要一个accept参数限制文件类型
+          accept="image/*"
         />
         {props.children ? (
           props.children
