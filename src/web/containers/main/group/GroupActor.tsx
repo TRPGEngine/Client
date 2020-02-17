@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { selectActor } from '@src/shared/redux/actions/actor';
 import { showAlert, showModal } from '@src/shared/redux/actions/ui';
@@ -27,6 +27,7 @@ import _get from 'lodash/get';
 import './GroupActor.scss';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import { TRPGState } from '@redux/types/__all__';
+import { isGroupManager } from '@shared/model/group';
 
 const GroupActorAction = styled.div`
   padding: 4px 10px;
@@ -39,6 +40,7 @@ interface Props {
   addGroupActor: any;
   removeGroupActor: any;
   groupInfo: any;
+  isGroupManager: boolean;
   templateCache: any;
   updateGroupActorInfo: (
     groupUUID: string,
@@ -172,22 +174,26 @@ class GroupActor extends React.Component<Props> {
                       <i className="iconfont">&#xe61b;</i>
                     </button>
                   </Tooltip>
-                  <Tooltip title="编辑">
-                    <button
-                      onClick={() => this.handleEditActorInfo(groupActor)}
-                    >
-                      <i className="iconfont">&#xe612;</i>
-                    </button>
-                  </Tooltip>
-                  <Tooltip title="删除">
-                    <button
-                      onClick={() =>
-                        this.handleRemoveGroupActor(groupActorUUID)
-                      }
-                    >
-                      <i className="iconfont">&#xe76b;</i>
-                    </button>
-                  </Tooltip>
+                  {this.props.isGroupManager && (
+                    <Fragment>
+                      <Tooltip title="编辑">
+                        <button
+                          onClick={() => this.handleEditActorInfo(groupActor)}
+                        >
+                          <i className="iconfont">&#xe612;</i>
+                        </button>
+                      </Tooltip>
+                      <Tooltip title="删除">
+                        <button
+                          onClick={() =>
+                            this.handleRemoveGroupActor(groupActorUUID)
+                          }
+                        >
+                          <i className="iconfont">&#xe76b;</i>
+                        </button>
+                      </Tooltip>
+                    </Fragment>
+                  )}
                 </div>
               </div>
             </div>
@@ -280,11 +286,14 @@ class GroupActor extends React.Component<Props> {
 export default connect(
   (state: TRPGState) => {
     const selectedGroupUUID = state.group.selectedGroupUUID;
+    const groupInfo = state.group.groups.find(
+      (group) => group.uuid === selectedGroupUUID
+    );
+    const userUUID = state.user.info.uuid;
     return {
       selectedGroupUUID,
-      groupInfo: state.group.groups.find(
-        (group) => group.uuid === selectedGroupUUID
-      ),
+      groupInfo,
+      isGroupManager: isGroupManager(groupInfo, userUUID),
       templateCache: state.cache.template,
     };
   },
