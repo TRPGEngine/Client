@@ -11,7 +11,7 @@ import SplitPane from 'react-split-pane';
 import MonacoEditor, { EditorDidMount } from 'react-monaco-editor';
 import './split-pane.css';
 import { editor, IPosition, KeyMod, KeyCode } from 'monaco-editor';
-import { useLocalStorage, useRafState } from 'react-use';
+import { useLocalStorage } from 'react-use';
 import XMLBuilder, {
   XMLBuilderState,
   LayoutType,
@@ -20,6 +20,7 @@ import ReactJson from 'react-json-view';
 import copy from 'copy-to-clipboard';
 import LZString from 'lz-string';
 import { Block } from './components/Block';
+import _debounce from 'lodash/debounce';
 import { Select, message, Button, Checkbox, Tooltip } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { registerLayoutCodeSuggest } from './editor/suggestions';
@@ -184,19 +185,11 @@ const ActorEditor = React.memo(() => {
     handleShareCode,
   ]);
 
-  const [currentData, setCurrentData] = useRafState({});
-  const [currentGlobal, setCurrentGlobal] = useRafState({});
-  const handleStateChange = useCallback((newState: XMLBuilderState) => {
-    setCurrentData(newState.data);
-    setCurrentGlobal(newState.global);
-  }, []);
-
   const handleEditorChange = useCallback((newValue: string) => {
     setCode(newValue);
   }, []);
 
   const codeEditor = useMemo(() => {
-    console.log('codeEditor', codeEditor);
     return (
       <MonacoEditor
         language="xml"
@@ -209,6 +202,17 @@ const ActorEditor = React.memo(() => {
     );
   }, [code, editorOptions, handleEditorChange, onEditorDidMount]);
 
+  const [currentData, setCurrentData] = useState({});
+  const [currentGlobal, setCurrentGlobal] = useState({});
+  const handleStateChange = useMemo(
+    () =>
+      _debounce((newState: XMLBuilderState) => {
+        // 此处使用debounce降低资源消耗
+        setCurrentData({ ...newState.data });
+        setCurrentGlobal({ ...newState.global });
+      }, 200),
+    []
+  );
   const stateDataJSON = useMemo(() => {
     return (
       <ReactJson
@@ -220,7 +224,7 @@ const ActorEditor = React.memo(() => {
         displayDataTypes={false}
       />
     );
-  }, [currentData]);
+  }, [currentData, renderKey]);
 
   const stateGlobalData = useMemo(() => {
     return (
@@ -233,7 +237,7 @@ const ActorEditor = React.memo(() => {
         displayDataTypes={false}
       />
     );
-  }, [currentGlobal]);
+  }, [currentGlobal, renderKey]);
 
   return (
     <Container>
