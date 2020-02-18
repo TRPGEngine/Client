@@ -17,7 +17,7 @@ interface TagDefineComponentProps {
 export const TagDefineComponent: TagComponent<TagDefineComponentProps> = React.memo(
   (props) => {
     const parentContext = useContext(LayoutStateContext);
-    const { state, dispatch } = useBuildLayoutDefineStateContext(props.name);
+    const { state, dispatch } = useBuildLayoutDefineStateContext(props);
     const children = useLayoutChildren(props);
 
     return (
@@ -36,7 +36,7 @@ export const TagDefineComponent: TagComponent<TagDefineComponentProps> = React.m
 );
 
 interface TagProps {
-  name: string;
+  name: string; // 用于存储数据
 }
 export const TagDefineShared: TagComponent<TagProps> = React.memo((props) => {
   const context = useContext(LayoutStateContext);
@@ -45,12 +45,14 @@ export const TagDefineShared: TagComponent<TagProps> = React.memo((props) => {
       type: StateActionType.AddDefine,
       payload: {
         name: props.name,
-        component: ({ name, key }) => {
-          const children = useLayoutChildren(props);
+        component: ({ name, key, ...useProps }) => {
           return (
-            <TagDefineComponent {...props} key={key} name={name}>
-              {children}
-            </TagDefineComponent>
+            <TagDefineComponent
+              {...props}
+              {...useProps}
+              key={key}
+              name={name}
+            />
           );
         },
       },

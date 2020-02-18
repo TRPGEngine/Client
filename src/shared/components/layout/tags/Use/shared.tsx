@@ -4,7 +4,7 @@ import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { removePrivateProps } from '../utils';
 
 interface TagProps {
-  name: string;
+  name: string; // 用于存储数据
   define: string;
 }
 export const TagUseShared: TagComponent<TagProps> = React.memo((props) => {

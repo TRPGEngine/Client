@@ -16,4 +16,11 @@
   </Define>
 
   <Use name="use-scope" define="input" />
+
+
+  <Define name="props">
+    <span>{{props.data}}</span>
+  </Define>
+
+  <Use name="use-props" define="props" data="1" />
 </Template>

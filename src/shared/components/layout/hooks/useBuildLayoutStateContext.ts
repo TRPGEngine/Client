@@ -155,7 +155,14 @@ function buildDefineReducer(name: string, parentContext: XMLBuilderContext) {
  * 构建用于Define组件的布局上下文
  * @param name use定义的唯一标识名
  */
-export const useBuildLayoutDefineStateContext = (name: string) => {
+interface DefineStateContextProps {
+  name: string;
+  [other: string]: any;
+}
+export const useBuildLayoutDefineStateContext = (
+  props: DefineStateContextProps
+) => {
+  const { name, ...otherProps } = props;
   const parentContext = useContext(LayoutStateContext);
   const initialState = useMemo(() => getDefineState(name, parentContext), [
     parentContext,
@@ -165,7 +172,10 @@ export const useBuildLayoutDefineStateContext = (name: string) => {
     initialState
   );
 
-  const state = getDefineState(name, parentContext);
+  const state = {
+    ...getDefineState(name, parentContext),
+    props: otherProps,
+  };
 
   return { state, dispatch };
 };
