@@ -11,7 +11,7 @@ import SplitPane from 'react-split-pane';
 import MonacoEditor, { EditorDidMount } from 'react-monaco-editor';
 import './split-pane.css';
 import { editor, IPosition, KeyMod, KeyCode } from 'monaco-editor';
-import { useLocalStorage } from 'react-use';
+import { useLocalStorage, useRafState } from 'react-use';
 import XMLBuilder, {
   XMLBuilderState,
   LayoutType,
@@ -184,16 +184,56 @@ const ActorEditor = React.memo(() => {
     handleShareCode,
   ]);
 
-  const [currentData, setCurrentData] = useState({});
-  const [currentGlobal, setCurrentGlobal] = useState({});
+  const [currentData, setCurrentData] = useRafState({});
+  const [currentGlobal, setCurrentGlobal] = useRafState({});
   const handleStateChange = useCallback((newState: XMLBuilderState) => {
-    setCurrentData({ ...newState.data });
-    setCurrentGlobal({ ...newState.global });
+    setCurrentData(newState.data);
+    setCurrentGlobal(newState.global);
   }, []);
 
   const handleEditorChange = useCallback((newValue: string) => {
     setCode(newValue);
   }, []);
+
+  const codeEditor = useMemo(() => {
+    console.log('codeEditor', codeEditor);
+    return (
+      <MonacoEditor
+        language="xml"
+        theme="vs-dark"
+        value={code}
+        options={editorOptions}
+        onChange={handleEditorChange}
+        editorDidMount={onEditorDidMount}
+      />
+    );
+  }, [code, editorOptions, handleEditorChange, onEditorDidMount]);
+
+  const stateDataJSON = useMemo(() => {
+    return (
+      <ReactJson
+        name={false}
+        style={{ fontFamily: 'inherit' }}
+        src={currentData}
+        enableClipboard={false}
+        displayObjectSize={false}
+        displayDataTypes={false}
+      />
+    );
+  }, [currentData]);
+
+  const stateGlobalData = useMemo(() => {
+    return (
+      <ReactJson
+        name="全局变量"
+        style={{ fontFamily: 'inherit' }}
+        src={currentGlobal}
+        enableClipboard={false}
+        displayObjectSize={false}
+        displayDataTypes={false}
+      />
+    );
+  }, [currentGlobal]);
 
   return (
     <Container>
@@ -206,14 +246,7 @@ const ActorEditor = React.memo(() => {
               backgroundColor: '#1e1e1e',
             }}
           >
-            <MonacoEditor
-              language="xml"
-              theme="vs-dark"
-              value={code}
-              options={editorOptions}
-              onChange={handleEditorChange}
-              editorDidMount={onEditorDidMount}
-            />
+            {codeEditor}
           </div>
         </Block>
         <SplitPane split="horizontal" defaultSize="80%">
@@ -228,26 +261,8 @@ const ActorEditor = React.memo(() => {
             </XMLRenderContainer>
           </Block>
           <SplitPane split="vertical" defaultSize="80%">
-            <div>
-              <ReactJson
-                name={false}
-                style={{ fontFamily: 'inherit' }}
-                src={currentData}
-                enableClipboard={false}
-                displayObjectSize={false}
-                displayDataTypes={false}
-              />
-            </div>
-            <div>
-              <ReactJson
-                name="全局变量"
-                style={{ fontFamily: 'inherit' }}
-                src={currentGlobal}
-                enableClipboard={false}
-                displayObjectSize={false}
-                displayDataTypes={false}
-              />
-            </div>
+            <div>{stateDataJSON}</div>
+            <div>{stateGlobalData}</div>
           </SplitPane>
         </SplitPane>
       </SplitPane>
