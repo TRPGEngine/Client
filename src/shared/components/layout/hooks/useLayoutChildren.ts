@@ -5,11 +5,6 @@ import _set from 'lodash/set';
 import _isEmpty from 'lodash/isEmpty';
 import { LayoutStateContext } from '../context/LayoutStateContext';
 
-// 生成子元素唯一key
-function childrenKey(parentName: string, childrenName: string, index: number) {
-  return `${parentName}-${childrenName}-${index}`;
-}
-
 export const useLayoutChildren = (props: LayoutProps): ReactNode => {
   const stateContext = useContext(LayoutStateContext);
 

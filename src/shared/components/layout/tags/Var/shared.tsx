@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useMemo } from 'react';
 import { TagComponent } from '../type';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { StateActionType } from '../../types';
@@ -6,15 +6,25 @@ import _isEqual from 'lodash/isEqual';
 import _isString from 'lodash/isString';
 import _isNil from 'lodash/isNil';
 import { parseDataText } from '../../processor';
+import { is } from '@shared/utils/string-helper';
 
 interface TagProps {
   name: string;
   value: any;
   ':value': any;
+  static: string;
 }
 export const TagVarShared: TagComponent<TagProps> = React.memo(
   (props) => {
     const context = useContext(LayoutStateContext);
+
+    const watchDeps = useMemo(() => {
+      if (is(props.static)) {
+        return [];
+      } else {
+        return [context.state.data, props.name, props.value];
+      }
+    }, [props.static, context.state.data, props.name, props.value]);
 
     useEffect(() => {
       if (!_isNil(props[':value'])) {
@@ -26,6 +36,7 @@ export const TagVarShared: TagComponent<TagProps> = React.memo(
         // 需要处理数据
         try {
           const realVal = parseDataText(`{{(${props.value})}}`, context);
+
           context.dispatch({
             type: StateActionType.SetGlobal,
             payload: {
@@ -40,7 +51,7 @@ export const TagVarShared: TagComponent<TagProps> = React.memo(
 
         return;
       }
-    }, [context.state.data, props.name, props.value]);
+    }, watchDeps);
 
     return null;
   },
