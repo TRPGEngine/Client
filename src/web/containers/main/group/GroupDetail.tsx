@@ -33,6 +33,7 @@ import _orderBy from 'lodash/orderBy';
 import { GroupActorMsgData } from '@src/shared/redux/types/group';
 import QuickDice from '../dice/QuickDice';
 import { TRPGState } from '@redux/types/__all__';
+import GroupRule from './GroupRule';
 
 interface Props extends DispatchProp<any> {
   selectedUUID: string;
@@ -207,7 +208,7 @@ class GroupDetail extends React.Component<Props> {
     {
       name: '游戏规则',
       icon: '&#xe621;',
-      component: <IsDeveloping />,
+      component: <GroupRule />,
     },
     {
       name: '团信息',

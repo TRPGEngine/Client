@@ -189,6 +189,11 @@ export const getGroupInfo = function(uuid: string): TRPGAction {
   };
 };
 
+/**
+ * 更新团信息
+ * @param groupUUID 团UUID
+ * @param groupInfo 团信息
+ */
 export const updateGroupInfo = function(groupUUID, groupInfo) {
   return function(dispatch, getState) {
     api.emit('group::updateInfo', { groupUUID, groupInfo }, function(data) {

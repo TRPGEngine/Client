@@ -30,6 +30,7 @@ export interface GroupInfo {
   avatar: string;
   max_member: number;
   allow_search: boolean;
+  rule?: string;
   creator_uuid: string;
   owner_uuid: string;
 
