@@ -150,5 +150,38 @@
         </Hidden>
       </Row>
     </FieldSet>
+
+    <FieldSet label="技能">
+      <Row :gutter="16">
+        <Col sm="16">
+          <Tabs>
+            <Tab label="本职"></Tab>
+            <Tab label="交流"></Tab>
+            <Tab label="探索"></Tab>
+            <Tab label="运动"></Tab>
+            <Tab label="技能"></Tab>
+            <Tab label="战斗"></Tab>
+            <Tab label="医疗"></Tab>
+            <Tab label="知识"></Tab>
+            <Tab label="自定义"></Tab>
+          </Tabs>
+        </Col>
+        <Col sm="8">
+          <FieldSet>
+            <p>
+              <span>个人兴趣点</span>
+              <Tip>智力*2</Tip>
+              <span>{{智力*2 || 0}}</span>
+            </p>
+            <p>
+              <Var name="jobSkillPoint" value="evalParse(_get(global, 'selectJobInfo.dutySkill'), 0)" />
+              <span>本职技能点</span>
+              <Tip>{{_get(global, "selectJobInfo.dutySkill")}}</Tip>
+              <span>{{jobSkillPoint}}</span>
+            </p>
+          </FieldSet>
+        </Col>
+      </Row>
+    </FieldSet>
   </div>
 </Template>

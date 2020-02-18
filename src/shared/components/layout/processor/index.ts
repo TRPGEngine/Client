@@ -8,6 +8,8 @@ import _isNil from 'lodash/isNil';
 import _find from 'lodash/find';
 import _map from 'lodash/map';
 import _inRange from 'lodash/inRange';
+import _isEmpty from 'lodash/isEmpty';
+import _isString from 'lodash/isString';
 import { compileCode } from './sandbox';
 import React from 'react';
 import { parseAttrStyle } from './style';
@@ -37,6 +39,13 @@ export function parseDataText(
     _inRange,
     AND(a: any, b: any) {
       return a && b;
+    },
+    evalParse(text: string, fallback: any = undefined) {
+      if (_isEmpty(text) || !_isString(text)) {
+        return fallback;
+      }
+
+      return parseDataText(`{{${text}}}`, context) || fallback;
     },
   };
 
