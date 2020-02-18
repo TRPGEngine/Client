@@ -36,7 +36,7 @@ export const TagTabsShared: TagComponent<TagProps> = React.memo((props) => {
   }, [elements, stateContext]);
 
   return (
-    <Tabs key={props.key} tabPosition={position}>
+    <Tabs tabPosition={position}>
       {childrens}
     </Tabs>
   );

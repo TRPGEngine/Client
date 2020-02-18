@@ -51,8 +51,8 @@ export const LabelTip: React.FC<{ tip: string }> = React.memo((props) => {
       <Fragment>
         {parseMultilineText(props.tip)
           .split('\n')
-          .map((item) => (
-            <div>{item}</div>
+          .map((item, index) => (
+            <div key={index}>{item}</div>
           ))}
       </Fragment>
     );

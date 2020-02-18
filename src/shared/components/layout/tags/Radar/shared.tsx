@@ -24,7 +24,7 @@ export const TagRadarShared: TagComponent<TagProps> = React.memo((props) => {
   const data = useMemo(() => {
     return _zip(dataKey, props.dataValue).map(([name, value]) => ({
       name,
-      value,
+      value: value ?? 0,
     }));
   }, [props.dataValue]);
 

@@ -13,7 +13,7 @@ export const TagHiddenShared: TagComponent<TagProps> = React.memo((props) => {
   if (layoutType === props.in) {
     return null;
   } else {
-    return <Fragment key={props.key}>{children}</Fragment>;
+    return <Fragment>{children}</Fragment>;
   }
 });
 TagHiddenShared.displayName = 'TagHiddenShared';

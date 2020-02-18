@@ -41,7 +41,6 @@ export const TagBarShared: TagComponent<TagProps> = React.memo((props) => {
   return (
     <Tooltip title={title}>
       <Progress
-        key={props.key}
         showInfo={false}
         strokeColor={color}
         percent={percent}

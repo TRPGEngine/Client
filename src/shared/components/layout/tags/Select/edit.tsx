@@ -43,7 +43,7 @@ export const TagSelectEdit: TagComponent<TagProps> = React.memo((props) => {
   );
 
   return (
-    <BaseTypeRow key={props.key}>
+    <BaseTypeRow>
       <LayoutCol span={6}>
         <TagLabel label={label} desc={props.desc} />
       </LayoutCol>

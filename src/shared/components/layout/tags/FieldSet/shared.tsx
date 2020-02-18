@@ -79,7 +79,7 @@ export const TagFieldSetShared: TagComponent<TagProps> = React.memo((props) => {
   }, [orientation]);
 
   return (
-    <Container key={props.key} left={left}>
+    <Container left={left}>
       <div className="fieldset-divider">
         {!_isEmpty(props.label) && (
           <span className="inner-text">{props.label}</span>

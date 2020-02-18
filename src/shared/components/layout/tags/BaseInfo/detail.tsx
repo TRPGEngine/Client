@@ -15,7 +15,7 @@ export const TagBaseInfoDetail: TagComponent = React.memo((props) => {
   const [avatar, setAvatar] = useLayoutFieldState('_avatar');
 
   return (
-    <BaseInfoContainer key={props.key}>
+    <BaseInfoContainer>
       <LayoutCol sm={18} xs={24}>
         <BaseInfoForm>
           <FormItem label="名称" required>

@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import parser, { iterativeConfigKey } from './parser/xml-parser';
+import parser from './parser/xml-parser';
 import * as processor from './processor';
 import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
@@ -12,6 +12,7 @@ import { LayoutWidthContextProvider } from './context/LayoutWidthContext';
 import { LayoutStateContextProvider } from './context/LayoutStateContext';
 import { useBuildLayoutStateContext } from './hooks/useBuildLayoutStateContext';
 import { TagComponent } from './tags/type';
+import { iterativeConfigKey } from './parser/key';
 
 /**
  * XML布局需求:

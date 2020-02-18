@@ -10,7 +10,7 @@ export const TagInputDetail: TagComponent<TagInputProps> = React.memo(
     const { label, stateValue } = useLayoutFormData(props);
 
     return (
-      <BaseTypeRow key={props.key}>
+      <BaseTypeRow>
         <LayoutCol span={6}>
           <TagLabel label={label} desc={props.desc} />
         </LayoutCol>

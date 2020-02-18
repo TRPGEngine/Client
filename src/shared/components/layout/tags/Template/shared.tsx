@@ -10,6 +10,6 @@ const TemplateContainer = styled.div`
 export const TagTemplateShared: TagComponent = React.memo((props) => {
   const children = useLayoutChildren(props);
 
-  return <TemplateContainer key={props.key}>{children}</TemplateContainer>;
+  return <TemplateContainer>{children}</TemplateContainer>;
 });
 TagTemplateShared.displayName = 'TagTemplateShared';

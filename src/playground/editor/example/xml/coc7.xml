@@ -41,7 +41,7 @@
         showSearch="true"
         desc="调查员的职业决定了他们最擅长哪些技能、收入有多少、可能认识些什么样的人。同时，职业也可以在一定程度上完善调查员的角色形象，影响他们的动机和他们对周围世界的态度。"
       />
-      <p><pre style="white-space: pre-wrap;">{{_get(global.selectJobInfo, 'desc')}}</pre></p>
+      <div><pre style="white-space: pre-wrap;">{{_get(global.selectJobInfo, 'desc')}}</pre></div>
       <p>信用范围: {{_get(global.selectJobInfo, 'credit.0', 0)}} ~ {{_get(global.selectJobInfo, 'credit.1', 0)}}</p>
       <p>本职技能点: {{_get(global.selectJobInfo, 'dutySkill', '')}}</p>
     </FieldSet>
@@ -135,7 +135,7 @@
             <p>玩家的调查员应选择年龄在15至90之间。若设想的调查员超过这个年龄范围，那么请找您的守秘人进行调整吧。对照相应年龄，调整调查员的属性（不同年龄段的调整不叠加）。</p>
             <p>进行教育增强检定时，掷百分骰。若结果大于你当前的教育值，则给教育属性增加1d10点（教育值不能高于99）</p>
 
-            <p>
+            <div>
               <RollBtn label="投骰1d100">
                 <Item dice="1d100" target="global.educheck" />
               </RollBtn>
@@ -145,7 +145,7 @@
                 <Item dice="1d10" target="global.eduaddon" />
               </RollBtn>
               <p>1d10结果: {{eduaddon || '尚无结果'}}</p>
-            </p>
+            </div>
           </FieldSet>
         </Hidden>
       </Row>

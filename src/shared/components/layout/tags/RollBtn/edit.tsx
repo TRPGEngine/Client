@@ -39,7 +39,7 @@ export const TagRollBtnEdit: TagComponent<TagProps> = React.memo((props) => {
   }, [context]);
 
   return (
-    <Button key={props.key} type="primary" onClick={handleRoll}>
+    <Button type="primary" onClick={handleRoll}>
       {props.label ?? '投骰'}
     </Button>
   );
