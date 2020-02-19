@@ -49,7 +49,11 @@ export function parseDataText(
     },
   };
 
-  return compileCode(`return ${expression}`)(sandbox);
+  try {
+    return compileCode(`return ${expression}`)(sandbox);
+  } catch (e) {
+    return null;
+  }
 }
 
 /**

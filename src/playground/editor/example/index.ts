@@ -18,6 +18,10 @@ const exampleLayout = [
     label: 'Var',
     value: require('./xml/var.xml').default,
   },
+  {
+    label: 'Function',
+    value: require('./xml/function.xml').default,
+  },
 ];
 if (config.environment === 'development') {
   exampleLayout.push({
