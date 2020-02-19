@@ -22,6 +22,7 @@ import { TagComputedShared } from './Computed/shared';
 import { TagTipShared } from './Tip/shared';
 import { TagRadarShared } from './Radar/shared';
 import { TagFunctionShared } from './Function/shared';
+import { TagInputNumberEdit } from './InputNumber/edit';
 
 // 展示数据组件
 registerTag('detail', 'Template', TagTemplateShared);
@@ -60,6 +61,9 @@ registerTag('edit', 'BaseAttr', TagBaseAttrShared);
 
 registerTag('edit', 'Input', TagInputEdit);
 registerTag('detail', 'Input', TagInputDetail);
+
+registerTag('edit', 'InputNumber', TagInputNumberEdit);
+registerTag('detail', 'InputNumber', TagInputDetail);
 
 registerTag('edit', 'TextArea', TagTextAreaEdit);
 registerTag('detail', 'TextArea', TagInputDetail);

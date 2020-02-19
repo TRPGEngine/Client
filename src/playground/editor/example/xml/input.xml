@@ -6,14 +6,15 @@
   <TextArea name="自适应大小的文本框" :autosize="true" />
   <TextArea name="固定范围的自适应大小文本框" :autosize="{minRows: 2, maxRows: 6}" />
   <Select name="下拉选择" options="选项A,选项B,选项C" />
+  <InputNumber name="数字框" />
+  <InputNumber name="数字框(步长5)" step="5" />
+  <InputNumber name="数字框(范围0 ~ 20)" min="0" max="20" />
 
 
   ---------------------------
   <p>可以隐藏左侧标签</p>
   <Input name="输入框" hideLabel="true" />
-  <Input name="输入框2" label="自定义标签" hideLabel="true" />
   <TextArea name="文本框" hideLabel="true" />
-  <TextArea name="自适应大小的文本框" :autosize="true" hideLabel="true" />
-  <TextArea name="固定范围的自适应大小文本框" :autosize="{minRows: 2, maxRows: 6}" hideLabel="true" />
   <Select name="下拉选择" options="选项A,选项B,选项C" hideLabel="true" />
+  <InputNumber name="数字框" hideLabel="true" />
 </Template>

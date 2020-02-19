@@ -11,7 +11,7 @@ import SplitPane from 'react-split-pane';
 import MonacoEditor, { EditorDidMount } from 'react-monaco-editor';
 import './split-pane.css';
 import { editor, IPosition, KeyMod, KeyCode } from 'monaco-editor';
-import { useLocalStorage } from 'react-use';
+import { useLocalStorage, useCounter } from 'react-use';
 import XMLBuilder, {
   XMLBuilderState,
   LayoutType,
@@ -140,10 +140,10 @@ const ActorEditor = React.memo(() => {
     copy(`${origin}${pathname}#${hash}`) &&
       message.success('分享链接已复制到剪切板');
   }, []);
-  const [renderKey, setRenderKey] = useState(0);
+  const [renderKey, { inc: incRenderKey }] = useCounter(0);
   const handleForceUpdate = useCallback(() => {
-    setRenderKey(renderKey + 1);
-  }, [renderKey]);
+    incRenderKey();
+  }, [incRenderKey]);
   const RenderActions = useMemo(() => {
     return (
       <div
