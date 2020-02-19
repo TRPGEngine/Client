@@ -152,11 +152,42 @@
     </FieldSet>
 
     <FieldSet label="技能">
+      <Function name="getSkillInfo" params="skillName" body="return _find(global.skill, ['name', skillName])" />
+
       <Row :gutter="16">
         <Col sm="16">
+          <Define name="skill">
+            <Computed target="基础" deps="props.skillName" expression="getSkillInfo(props.skillName).base" />
+            <tr>
+              <td><span>{{props.skillName}}</span></td>
+              <td><span>{{基础}}</span></td>
+              <td><Input name="成长" hideLabel="true" /></td>
+              <td><Input name="职业" hideLabel="true" /></td>
+              <td><Input name="兴趣" hideLabel="true" /></td>
+              <td>{{SUM(基础, 成长, 职业, 兴趣)}}</td>
+            </tr>
+          </Define>
+
           <Tabs>
-            <Tab label="本职"></Tab>
-            <Tab label="交流"></Tab>
+            <Tab label="本职">
+            </Tab>
+            <Tab label="交流">
+              <table>
+                <thead>
+                  <tr>
+                    <td>技能</td>
+                    <td>初始</td>
+                    <td>成长</td>
+                    <td>职业</td>
+                    <td>兴趣</td>
+                    <td>成功率</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <Use name="skill-会计" define="skill" skillName="信用评级" />
+                </tbody>
+              </table>
+            </Tab>
             <Tab label="探索"></Tab>
             <Tab label="运动"></Tab>
             <Tab label="技能"></Tab>

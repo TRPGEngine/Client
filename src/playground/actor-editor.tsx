@@ -235,6 +235,7 @@ const ActorEditor = React.memo(() => {
         enableClipboard={false}
         displayObjectSize={false}
         displayDataTypes={false}
+        collapsed={1}
       />
     );
   }, [currentGlobal, renderKey]);

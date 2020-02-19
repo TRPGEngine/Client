@@ -8,6 +8,7 @@ import { TagComponent } from '../type';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { parseDataText } from '../../processor';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';
+import { getStateValue } from '../utils';
 
 interface TagProps {
   deps: string | string[];
@@ -26,7 +27,8 @@ export const TagComputedShared: TagComponent<TagProps> = React.memo((props) => {
     return props.deps;
   }, [props.deps]);
 
-  const watchValues = deps.map((name) => context.state.data[name]);
+  const watchValues = deps.map((name) => getStateValue(context, name));
+
   useEffect(() => {
     if (deps.includes(props.target)) {
       console.warn('circle deps:', deps, props.target);
@@ -35,7 +37,7 @@ export const TagComputedShared: TagComponent<TagProps> = React.memo((props) => {
 
     const value = parseDataText(`{{(${props.expression})}}`, context);
 
-    setStateValue(value || null);
+    setStateValue(value ?? null);
   }, [...watchValues, props.target, props.expression]);
 
   return null;

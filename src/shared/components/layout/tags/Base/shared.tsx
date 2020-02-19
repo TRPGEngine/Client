@@ -51,7 +51,7 @@ export const TagBaseShared: TagComponent = React.memo((props) => {
   const Tag = normalizeTagName(tagName);
 
   if (Tag === React.Fragment) {
-    return React.createElement(Tag, { key: props.key }, childrens);
+    return React.createElement(Tag, {}, childrens);
   }
 
   // 是HTML元素
