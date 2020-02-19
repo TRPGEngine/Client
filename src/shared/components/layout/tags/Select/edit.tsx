@@ -6,6 +6,7 @@ import { Select } from 'antd';
 import { TagLabel } from '../Input/shared';
 import { BaseTypeRow } from '../Base/shared';
 import { is } from '@shared/utils/string-helper';
+import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
 const Option = Select.Option;
 
 interface TagProps {
@@ -35,6 +36,8 @@ export const TagSelectEdit: TagComponent<TagProps> = React.memo((props) => {
     }
   }, [props.showSearch]);
 
+  const FormContainer = useLayoutFormContainer(props);
+
   const handleChange = useCallback(
     (value) => {
       setStateValue(value);
@@ -43,27 +46,22 @@ export const TagSelectEdit: TagComponent<TagProps> = React.memo((props) => {
   );
 
   return (
-    <BaseTypeRow>
-      <LayoutCol span={6}>
-        <TagLabel label={label} desc={props.desc} />
-      </LayoutCol>
-      <LayoutCol span={18}>
-        <Select
-          style={{ width: '100%' }}
-          placeholder="请选择..."
-          showSearch={showSearch}
-          allowClear={true}
-          value={stateValue}
-          onChange={handleChange}
-        >
-          {(opt ?? []).map((item) => (
-            <Option key={item} value={item}>
-              {item}
-            </Option>
-          ))}
-        </Select>
-      </LayoutCol>
-    </BaseTypeRow>
+    <FormContainer label={label}>
+      <Select
+        style={{ width: '100%' }}
+        placeholder="请选择..."
+        showSearch={showSearch}
+        allowClear={true}
+        value={stateValue}
+        onChange={handleChange}
+      >
+        {(opt ?? []).map((item) => (
+          <Option key={item} value={item}>
+            {item}
+          </Option>
+        ))}
+      </Select>
+    </FormContainer>
   );
 });
 TagSelectEdit.displayName = 'TagSelectEdit';

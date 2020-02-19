@@ -1,11 +1,10 @@
 import React, { useCallback } from 'react';
 import { TagComponent } from '../type';
-import { LayoutCol } from '../Col/shared';
-import { TagInputProps, TagLabel } from './shared';
+import { TagInputProps } from './shared';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
 import { Input } from 'antd';
 import { tryToNumber } from '../utils';
-import { BaseTypeRow } from '../Base/shared';
+import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
 
 export const TagInputEdit: TagComponent<TagInputProps> = React.memo((props) => {
   const { label, placeholder, stateValue, setStateValue } = useLayoutFormData(
@@ -18,20 +17,17 @@ export const TagInputEdit: TagComponent<TagInputProps> = React.memo((props) => {
     setStateValue(tryToNumber(value));
   }, []);
 
+  const FormContainer = useLayoutFormContainer(props);
+
   return (
-    <BaseTypeRow>
-      <LayoutCol span={6}>
-        <TagLabel label={label} desc={props.desc} />
-      </LayoutCol>
-      <LayoutCol span={18}>
-        <Input
-          placeholder={placeholder}
-          value={stateValue}
-          onChange={handleChange}
-          disabled={props.disabled}
-        />
-      </LayoutCol>
-    </BaseTypeRow>
+    <FormContainer label={label}>
+      <Input
+        placeholder={placeholder}
+        value={stateValue}
+        onChange={handleChange}
+        disabled={props.disabled}
+      />
+    </FormContainer>
   );
 });
 TagInputEdit.displayName = 'TagInputEdit';

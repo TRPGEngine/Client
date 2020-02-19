@@ -5,6 +5,7 @@ import { LayoutCol } from '../Col/shared';
 import { TagInputProps, TagLabel } from '../Input/shared';
 import { useLayoutFormData } from '../../hooks/useLayoutFormData';
 import { BaseTypeRow } from '../Base/shared';
+import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
 
 interface TagProps extends TagInputProps {
   autosize: boolean | AutoSizeType;
@@ -13,6 +14,8 @@ export const TagTextAreaEdit: TagComponent<TagProps> = React.memo((props) => {
   const { label, placeholder, stateValue, setStateValue } = useLayoutFormData(
     props
   );
+
+  const FormContainer = useLayoutFormContainer(props);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -24,19 +27,14 @@ export const TagTextAreaEdit: TagComponent<TagProps> = React.memo((props) => {
   );
 
   return (
-    <BaseTypeRow>
-      <LayoutCol span={6}>
-        <TagLabel label={label} desc={props.desc} />
-      </LayoutCol>
-      <LayoutCol span={18}>
-        <TextArea
-          autosize={props.autosize}
-          placeholder={placeholder}
-          value={stateValue}
-          onChange={handleChange}
-        />
-      </LayoutCol>
-    </BaseTypeRow>
+    <FormContainer label={label}>
+      <TextArea
+        autosize={props.autosize}
+        placeholder={placeholder}
+        value={stateValue}
+        onChange={handleChange}
+      />
+    </FormContainer>
   );
 });
 TagTextAreaEdit.displayName = 'TagTextAreaEdit';
