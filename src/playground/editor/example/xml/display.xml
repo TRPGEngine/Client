@@ -13,6 +13,7 @@
     <p>将一些内容放到一个独立的分割框内</p>
   </FieldSet>
 
-  <p>雷达图</p>
-  <Radar dataKey="a,b,c" :dataValue="[1,2,3]" />
+  <FieldSet label="雷达图">
+    <Radar dataKey="a,b,c,d,e" :dataValue="[1,2,3,4,5]" />
+  </FieldSet>
 </Template>
