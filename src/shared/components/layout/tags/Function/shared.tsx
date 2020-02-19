@@ -6,7 +6,8 @@ import _isEqual from 'lodash/isEqual';
 import _isString from 'lodash/isString';
 import _isNil from 'lodash/isNil';
 import _once from 'lodash/once';
-import parseText from '../../parser/text-parser';
+import { evalScript } from '../../processor';
+import { generateSandboxContext } from '../../processor/sandbox';
 
 interface TagProps {
   name: string;
@@ -23,15 +24,18 @@ export const TagFunctionShared: TagComponent<TagProps> = React.memo((props) => {
   }, [props.params]);
 
   useEffect(() => {
-    const funcStr = `function(${params.join(',')}) {
+    const funcStr = `function (${params.join(',')}) {
       ${props.body}
     }`;
+
+    const sandbox = generateSandboxContext(context);
+    const func = evalScript(funcStr, sandbox);
 
     context.dispatch({
       type: StateActionType.SetGlobal,
       payload: {
         name: props.name,
-        value: parseText(`{{${funcStr}}}`),
+        value: func,
       },
     });
   }, [props.name, params]);

@@ -45,15 +45,8 @@ export const TagDefineShared: TagComponent<TagProps> = React.memo((props) => {
       type: StateActionType.AddDefine,
       payload: {
         name: props.name,
-        component: ({ name, key, ...useProps }) => {
-          return (
-            <TagDefineComponent
-              {...props}
-              {...useProps}
-              key={key}
-              name={name}
-            />
-          );
+        component: ({ name, ...useProps }) => {
+          return <TagDefineComponent {...props} {...useProps} name={name} />;
         },
       },
     });

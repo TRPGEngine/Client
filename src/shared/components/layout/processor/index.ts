@@ -2,17 +2,13 @@ import * as tags from '../tags';
 import { XMLElement } from '../parser/xml-parser';
 import parseText from '../parser/text-parser';
 import { XMLBuilderContext } from '../XMLBuilder';
-import _get from 'lodash/get';
 import _has from 'lodash/has';
 import _isNil from 'lodash/isNil';
-import _find from 'lodash/find';
-import _map from 'lodash/map';
-import _inRange from 'lodash/inRange';
-import _isEmpty from 'lodash/isEmpty';
-import _isString from 'lodash/isString';
-import { compileCode } from './sandbox';
+import { compileCode, generateSandboxContext } from './sandbox';
 import React from 'react';
 import { parseAttrStyle } from './style';
+import Debug from 'debug';
+const debug = Debug('trpg:layout:processor');
 
 export interface LayoutProps {
   _name: string;
@@ -28,30 +24,20 @@ export function parseDataText(
   context: XMLBuilderContext
 ): string {
   const { expression, tokens } = parseText(text);
-  const sandbox = {
-    ...context.state.global,
-    ...context.state.data,
-    ...context.state,
-    Math,
-    _get,
-    _find,
-    _map,
-    _inRange,
-    AND(a: any, b: any) {
-      return a && b;
-    },
-    evalParse(text: string, fallback: any = undefined) {
-      if (_isEmpty(text) || !_isString(text)) {
-        return fallback;
-      }
+  const sandbox = generateSandboxContext(context);
 
-      return parseDataText(`{{${text}}}`, context) || fallback;
-    },
-  };
+  return evalScript(expression, sandbox);
+}
 
+/**
+ * 执行源码并返回结果
+ * @param sourceCode 源码
+ */
+export function evalScript(sourceCode: string, sandbox: object) {
   try {
-    return compileCode(`return ${expression}`)(sandbox);
+    return compileCode(`return ${sourceCode}`)(sandbox);
   } catch (e) {
+    debug('compileCode error %o', e);
     return null;
   }
 }
