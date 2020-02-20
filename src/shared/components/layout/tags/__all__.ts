@@ -26,70 +26,48 @@ import { TagInputNumberEdit } from './InputNumber/edit';
 import { TagStyledShared } from './Styled/shared';
 
 // 展示数据组件
-registerTag('detail', 'Template', TagTemplateShared);
-registerTag('edit', 'Template', TagTemplateShared);
+registerTag('Template', TagTemplateShared);
 
-registerTag('detail', 'Row', TagRowShared);
-registerTag('edit', 'Row', TagRowShared);
+registerTag('Row', TagRowShared);
 
-registerTag('detail', 'Col', TagColShared);
-registerTag('edit', 'Col', TagColShared);
+registerTag('Col', TagColShared);
 
-registerTag('detail', 'BaseInfo', TagBaseInfoDetail);
-registerTag('edit', 'BaseInfo', TagBaseInfoEdit);
+registerTag('BaseInfo', TagBaseInfoDetail, TagBaseInfoEdit);
 
-registerTag('edit', 'Tabs', TagTabsShared);
-registerTag('detail', 'Tabs', TagTabsShared);
+registerTag('Tabs', TagTabsShared);
 
-registerTag('edit', 'Bar', TagBarShared);
-registerTag('detail', 'Bar', TagBarShared);
+registerTag('Bar', TagBarShared);
 
-registerTag('edit', 'Hidden', TagHiddenShared);
-registerTag('detail', 'Hidden', TagHiddenShared);
+registerTag('Hidden', TagHiddenShared);
 
-registerTag('edit', 'FieldSet', TagFieldSetShared);
-registerTag('detail', 'FieldSet', TagFieldSetShared);
+registerTag('FieldSet', TagFieldSetShared);
 
-registerTag('edit', 'Tip', TagTipShared);
-registerTag('detail', 'Tip', TagTipShared);
+registerTag('Tip', TagTipShared);
 
-registerTag('edit', 'Radar', TagRadarShared);
-registerTag('detail', 'Radar', TagRadarShared);
+registerTag('Radar', TagRadarShared);
 
-registerTag('edit', 'Styled', TagStyledShared);
-registerTag('detail', 'Styled', TagStyledShared);
+registerTag('Styled', TagStyledShared);
 
 // 数据录入组件
-registerTag('detail', 'BaseAttr', TagBaseAttrShared);
-registerTag('edit', 'BaseAttr', TagBaseAttrShared);
+registerTag('BaseAttr', TagBaseAttrShared);
 
-registerTag('edit', 'Input', TagInputEdit);
-registerTag('detail', 'Input', TagInputDetail);
+registerTag('Input', TagInputDetail, TagInputEdit);
 
-registerTag('edit', 'InputNumber', TagInputNumberEdit);
-registerTag('detail', 'InputNumber', TagInputDetail);
+registerTag('InputNumber', TagInputDetail, TagInputNumberEdit);
 
-registerTag('edit', 'TextArea', TagTextAreaEdit);
-registerTag('detail', 'TextArea', TagInputDetail);
+registerTag('TextArea', TagInputDetail, TagTextAreaEdit);
 
-registerTag('edit', 'Select', TagSelectEdit);
-registerTag('detail', 'Select', TagInputDetail);
+registerTag('Select', TagInputDetail, TagSelectEdit);
 
-registerTag('edit', 'RollBtn', TagRollBtnEdit);
-registerTag('detail', 'RollBtn', TagRollBtnDetail);
+registerTag('RollBtn', TagRollBtnDetail, TagRollBtnEdit);
 
 // 高级操作组件
-registerTag('detail', 'Use', TagUseShared);
-registerTag('edit', 'Use', TagUseShared);
+registerTag('Use', TagUseShared);
 
-registerTag('detail', 'Define', TagDefineShared);
-registerTag('edit', 'Define', TagDefineShared);
+registerTag('Define', TagDefineShared);
 
-registerTag('detail', 'Var', TagVarShared);
-registerTag('edit', 'Var', TagVarShared);
+registerTag('Var', TagVarShared);
 
-registerTag('detail', 'Computed', TagComputedShared);
-registerTag('edit', 'Computed', TagComputedShared);
+registerTag('Computed', TagComputedShared);
 
-registerTag('detail', 'Function', TagFunctionShared);
-registerTag('edit', 'Function', TagFunctionShared);
+registerTag('Function', TagFunctionShared);
