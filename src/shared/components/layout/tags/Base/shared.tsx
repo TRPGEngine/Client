@@ -59,10 +59,9 @@ export const TagBaseShared: TagComponent = React.memo((props) => {
 });
 TagBaseShared.displayName = 'TagBaseShared';
 
-export const BaseTypeRow = styled(Row)`
+export const BaseTypeRow = styled(Row).attrs({
+  className: 'tag-row',
+})`
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-
-  /* &:last-child {
-    margin-bottom: 0;
-  } */
 `;

@@ -24,7 +24,7 @@ export const TagComputedShared: TagComponent<TagProps> = React.memo((props) => {
       return props.deps.split(',');
     }
 
-    return props.deps;
+    return props.deps || [];
   }, [props.deps]);
 
   const watchValues = deps.map((name) => getStateValue(context, name));

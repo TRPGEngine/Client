@@ -1,9 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useCallback, Fragment } from 'react';
 import { TagComponent } from '../type';
-import {
-  useBuildLayoutStateContext,
-  useBuildLayoutDefineStateContext,
-} from '../../hooks/useBuildLayoutStateContext';
+import { useBuildLayoutDefineStateContext } from '../../hooks/useBuildLayoutStateContext';
 import {
   LayoutStateContextProvider,
   LayoutStateContext,
@@ -18,7 +15,11 @@ export const TagDefineComponent: TagComponent<TagDefineComponentProps> = React.m
   (props) => {
     const parentContext = useContext(LayoutStateContext);
     const { state, dispatch } = useBuildLayoutDefineStateContext(props);
-    const children = useLayoutChildren(props);
+
+    const ChildrenComponent = useCallback(() => {
+      const children = useLayoutChildren(props);
+      return <Fragment>{children}</Fragment>;
+    }, [props._childrenEl]);
 
     return (
       <LayoutStateContextProvider
@@ -29,7 +30,7 @@ export const TagDefineComponent: TagComponent<TagDefineComponentProps> = React.m
           parent: parentContext,
         }}
       >
-        {children}
+        <ChildrenComponent />
       </LayoutStateContextProvider>
     );
   }

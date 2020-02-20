@@ -7,6 +7,7 @@ import _inRange from 'lodash/inRange';
 import _isEmpty from 'lodash/isEmpty';
 import _isString from 'lodash/isString';
 import _toNumber from 'lodash/toNumber';
+import _isArray from 'lodash/isArray';
 import Debug from 'debug';
 const debug = Debug('trpg:layout:sandbox');
 
@@ -25,6 +26,8 @@ export function generateSandboxContext(context: XMLBuilderContext) {
     _map,
     _inRange,
     _toNumber,
+    _isArray,
+    _isString,
     AND(a: any, b: any) {
       return a && b;
     },

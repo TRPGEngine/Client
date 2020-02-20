@@ -81,7 +81,7 @@
         <Col sm="8">
           <FieldSet>
             <Input name="当前生命值" :default="最大生命值" />
-            <Computed target="最大生命值" deps="体质,体型" expression="Math.floor((体质+体型)/10)" />
+            <Computed target="最大生命值" deps="体质,体型" expression="Math.floor((体质+体型)/10) || 0" />
             <Input name="最大生命值" label="最大生命值" :disabled="true" />
 
             <Select name="身体状态" options="健康,轻伤,重伤,濒死,死亡" default="健康" />
@@ -153,18 +153,32 @@
 
     <FieldSet label="技能">
       <Function name="getSkillInfo" params="skillName" body="return _find(global.skill, ['name', skillName])" />
+      <Function name="getSkillSubNames" params="skillName" body="return _map(global.getSkillInfo(skillName).sub, 'name')" />
+      <Function name="getSkillBase" params="skillName" body="return _get(getSkillInfo(skillName), 'base', 0)" />
 
       <Row :gutter="16">
-        <Col sm="16">
+        <Col md="16">
           <Define name="skill">
-            <Computed target="基础" deps="props.skillName" expression="getSkillInfo(props.skillName).base" />
+            <Computed target="基础" deps="props.skillName" expression="getSkillBase(props.skillName)" />
+            <Computed target="addedPoint" deps="成长,职业,兴趣" expression="SUM(成长, 职业, 兴趣)" />
+            <Hidden :if="props.skillName !== '母语'">
+              <!-- 用于母语技能 -->
+              <Computed target="基础" deps="root.教育" expression="root['教育'] || 0" />
+            </Hidden>
             <tr>
-              <td><span>{{props.skillName}}</span></td>
+              <td>
+                <div className="skill-name">
+                  <span>{{props.skillName}}</span>
+                  <Hidden :if="!_isArray(getSkillInfo(props.skillName).sub)">
+                    <Select name="专攻" :options="getSkillSubNames(props.skillName)" hideLabel="true" />
+                  </Hidden>
+                </div>
+              </td>
               <td><span>{{基础}}</span></td>
               <td><Input name="成长" hideLabel="true" /></td>
               <td><Input name="职业" hideLabel="true" /></td>
               <td><Input name="兴趣" hideLabel="true" /></td>
-              <td>{{SUM(基础, 成长, 职业, 兴趣)}}</td>
+              <td>{{SUM(基础, addedPoint)}}%</td>
             </tr>
           </Define>
 
@@ -172,21 +186,49 @@
             <Tab label="本职">
             </Tab>
             <Tab label="交流">
-              <table>
-                <thead>
-                  <tr>
-                    <td>技能</td>
-                    <td>初始</td>
-                    <td>成长</td>
-                    <td>职业</td>
-                    <td>兴趣</td>
-                    <td>成功率</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <Use name="skill-会计" define="skill" skillName="信用评级" />
-                </tbody>
-              </table>
+              <Styled>
+                <Style>
+                  table {
+                    white-space: nowrap;
+
+                    td {
+                      padding: 0 2px;
+
+                      .skill-name {
+                        display: flex;
+                        align-items: center;
+
+                        > .tag-row {
+                          margin: 0;
+                        }
+                      }
+                    }
+                  }
+                </Style>
+
+                <table>
+                  <thead>
+                    <tr>
+                      <td>技能</td>
+                      <td>初始</td>
+                      <td>成长</td>
+                      <td>职业</td>
+                      <td>兴趣</td>
+                      <td>成功率</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <Use name="skill-信用评级" define="skill" skillName="信用评级" />
+                    <Use name="skill-取悦" define="skill" skillName="取悦" />
+                    <Use name="skill-话术" define="skill" skillName="话术" />
+                    <Use name="skill-恐吓" define="skill" skillName="恐吓" />
+                    <Use name="skill-说服" define="skill" skillName="说服" />
+                    <Use name="skill-心理学" define="skill" skillName="心理学" />
+                    <Use name="skill-母语" define="skill" skillName="母语" />
+                    <Use name="skill-外语" define="skill" skillName="外语" />
+                  </tbody>
+                </table>
+              </Styled>
             </Tab>
             <Tab label="探索"></Tab>
             <Tab label="运动"></Tab>
@@ -197,7 +239,7 @@
             <Tab label="自定义"></Tab>
           </Tabs>
         </Col>
-        <Col sm="8">
+        <Col md="8">
           <FieldSet>
             <p>
               <span>个人兴趣点</span>
