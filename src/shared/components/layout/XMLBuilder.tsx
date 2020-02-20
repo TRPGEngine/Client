@@ -64,6 +64,14 @@ const XMLBuilderContainer = styled.div`
   pre {
     margin: 0;
   }
+
+  code {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(27, 31, 35, 0.05);
+    border-radius: 3px;
+  }
 `;
 
 class XMLErrorBoundary extends React.Component {
