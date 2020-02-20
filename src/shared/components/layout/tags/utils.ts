@@ -13,6 +13,7 @@ import {
   StateDataType,
   StateActionType,
 } from '@shared/components/layout/types';
+import { XMLElement } from '../parser/xml-parser';
 
 export type OperationDataType = {
   scope: string;
@@ -148,4 +149,23 @@ export const parseMultilineText = (text: string) => {
   }
 
   return text.replace(new RegExp('\\\\n', 'g'), '\n');
+};
+
+/**
+ * 获取元素子节点的文本
+ */
+export const getChildrenText = (el: XMLElement): string => {
+  const childrenEl = el.elements;
+
+  return childrenEl
+    .map((el) => {
+      if (el.type === 'text') {
+        return String(el.text);
+      } else if (el.type === 'element') {
+        return getChildrenText(el);
+      }
+    })
+    .reduce((prev, curr) => {
+      return prev + curr;
+    }, '');
 };

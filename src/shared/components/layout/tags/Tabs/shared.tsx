@@ -13,6 +13,14 @@ const TabPaneContainer = styled.div`
   padding-bottom: 10px;
 `;
 
+/**
+ * Usage:
+ * <Tabs>
+ *   <Tab label="选项卡1">内容1</Tab>
+ *   <Tab label="选项卡2">内容2</Tab>
+ *   <Tab label="选项卡3">内容3</Tab>
+ * </Tabs>
+ */
 interface TagProps {
   position: string;
 }
@@ -21,7 +29,7 @@ export const TagTabsShared: TagComponent<TagProps> = React.memo((props) => {
 
   const position = (props.position as TabsPosition) || 'top';
   const elements = props._childrenEl;
-  const childrens = useMemo(() => {
+  const children = useMemo(() => {
     return (elements || [])
       .filter((el) => el.name === 'Tab')
       .map((el, index) => {
@@ -35,10 +43,6 @@ export const TagTabsShared: TagComponent<TagProps> = React.memo((props) => {
       });
   }, [elements, stateContext]);
 
-  return (
-    <Tabs tabPosition={position}>
-      {childrens}
-    </Tabs>
-  );
+  return <Tabs tabPosition={position}>{children}</Tabs>;
 });
 TagTabsShared.displayName = 'TagTabsShared';
