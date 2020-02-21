@@ -24,6 +24,7 @@ import { TagRadarShared } from './Radar/shared';
 import { TagFunctionShared } from './Function/shared';
 import { TagInputNumberEdit } from './InputNumber/edit';
 import { TagStyledShared } from './Styled/shared';
+import { TagScriptShared } from './Script/shared';
 
 // 展示数据组件
 registerTag('Template', TagTemplateShared);
@@ -71,3 +72,5 @@ registerTag('Var', TagVarShared);
 registerTag('Computed', TagComputedShared);
 
 registerTag('Function', TagFunctionShared);
+
+registerTag('Script', TagScriptShared);

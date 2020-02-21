@@ -5,4 +5,14 @@
 
   <Function name="returnParms" params="a" body="return a;" />
   <p>{{returnParms('1')}}</p>
+
+  <Script>
+    function add(a, b) {
+      return a + b;
+    }
+
+    setGlobal('add', add);
+  </Script>
+
+  <p>{{add(1,2)}}</p>
 </Template>

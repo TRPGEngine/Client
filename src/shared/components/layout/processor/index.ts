@@ -45,11 +45,11 @@ export function evalScript(sourceCode: string, sandbox: object) {
 /**
  * XML渲染引擎，每次渲染组件都会循环调用该方法
  * 返回一个react vdom
- * @param data XML的ast
+ * @param el XML的ast 节点
  * @param context 上下文，包括状态和dispatch和布局类型
  */
-export function render(data: XMLElement, context: XMLBuilderContext) {
-  const { type } = data;
+export function render(el: XMLElement, context: XMLBuilderContext) {
+  const { type } = el;
   const layoutType = context.layoutType || 'edit';
 
   // 仅渲染元素类型与文本类型与根节点
@@ -59,11 +59,11 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
 
   // type 为文本
   if (type === 'text') {
-    return parseDataText(String(data.text), context);
+    return parseDataText(String(el.text), context);
   }
 
   // type 为 element 或 root
-  const { name, attributes, elements } = data;
+  const { name, attributes, elements } = el;
 
   // 预处理style属性
   if (_has(attributes, 'style')) {
@@ -94,6 +94,7 @@ export function render(data: XMLElement, context: XMLBuilderContext) {
     return React.createElement(tag, {
       ...attributes,
       _name: name,
+      _el: el,
       _childrenEl: elements,
     });
   }
