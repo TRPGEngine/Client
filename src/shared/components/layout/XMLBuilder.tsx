@@ -25,7 +25,7 @@ export type DefinePropsType = {
   [name: string]: any;
 };
 interface DefineMap {
-  [name: string]: TagComponent;
+  [name: string]: React.ComponentType<DefinePropsType>;
 }
 
 export interface DataMap {

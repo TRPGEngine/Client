@@ -21,6 +21,7 @@ export function generateSandboxContext(context: XMLBuilderContext) {
     ...context.state.data,
     ...context.state,
     Math,
+    JSON,
     _get,
     _find,
     _map,

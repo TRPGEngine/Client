@@ -2,10 +2,6 @@ import React, { useEffect, useContext, useMemo } from 'react';
 import { TagComponent } from '../type';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { StateActionType } from '../../types';
-import _isEqual from 'lodash/isEqual';
-import _isString from 'lodash/isString';
-import _isNil from 'lodash/isNil';
-import _once from 'lodash/once';
 import { evalScript } from '../../processor';
 import { generateSandboxContext } from '../../processor/sandbox';
 
