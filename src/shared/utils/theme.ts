@@ -57,6 +57,7 @@ const styledTheme = {
     downy: '#65CAB0',
     gold: '#FFD700',
     'alizarin-crimson': '#EC2121',
+    transparent90: 'rgba(0,0,0,0.1)',
   },
   boxShadow: {
     normal: 'rgba(0, 0, 0, 0.15) 0 0 8px',

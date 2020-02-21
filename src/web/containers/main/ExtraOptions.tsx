@@ -21,6 +21,7 @@ import './ExtraOptions.scss';
 import { showPortal } from '@web/redux/action/ui';
 import DevContainer from '@web/components/DevContainer';
 import { PortalView } from '@web/components/PortalView';
+import { UserSelector } from '@web/components/modal/UserSeletor';
 
 interface Props extends DispatchProp<any> {}
 class ExtraOptions extends React.Component<Props> {
@@ -106,6 +107,8 @@ class ExtraOptions extends React.Component<Props> {
           body: 'test',
         })
       );
+    } else if (menu === 'userSelector') {
+      this.props.dispatch(showModal(<UserSelector />));
     }
 
     this.setState({ show: '' });
@@ -124,6 +127,9 @@ class ExtraOptions extends React.Component<Props> {
             </li>
             <li onClick={() => this.handleClickMenu('createTestWindow')}>
               新建窗口(测试)
+            </li>
+            <li onClick={() => this.handleClickMenu('userSelector')}>
+              选择人物(测试)
             </li>
           </DevContainer>
           {/* <li onClick={() => this.handleClickMenu('templateCreate')}>
