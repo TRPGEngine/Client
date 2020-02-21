@@ -37,7 +37,7 @@ export function evalScript(sourceCode: string, sandbox: object) {
   try {
     return compileCode(`return ${sourceCode}`)(sandbox);
   } catch (e) {
-    debug('compileCode error %o', e);
+    debug('compileCode [%s](sandbox: %o)  error :%o', sourceCode, sandbox, e);
     return null;
   }
 }

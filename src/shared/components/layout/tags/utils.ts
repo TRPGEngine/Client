@@ -89,17 +89,28 @@ export const normalizeTagName = (tagName: string): string | typeof Fragment => {
 };
 
 /**
+ * 获取要实际操作变量名的路径
+ *
+ * 返回要获取变量在data数据中的位置
+ */
+export const getNamePath = (name: string) => {
+  const { scope, field } = getOperationData(name);
+  let path = field;
+  if (scope !== 'data') {
+    path = [scope, field].join('.');
+  }
+
+  return path;
+};
+
+/**
  * 根据上下文获取指定状态的数据
  */
 export const getStateValue = (
   context: XMLBuilderContext,
   bindingName: string
 ): StateDataType => {
-  const { scope, field } = getOperationData(bindingName);
-  let path = field;
-  if (scope !== 'data') {
-    path = [scope, field].join('.');
-  }
+  const path = getNamePath(bindingName);
 
   const ret = _get(context.state.data, path);
   if (typeof ret === 'object') {
