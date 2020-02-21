@@ -19,8 +19,8 @@
 
 
   <Define name="props">
+    <p>可以传输变量</p>
     <span>{{props.data}}</span>
   </Define>
-
   <Use name="use-props" define="props" data="1" />
 </Template>

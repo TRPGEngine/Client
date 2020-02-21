@@ -185,9 +185,13 @@ const ActorEditor = React.memo(() => {
     handleShareCode,
   ]);
 
-  const handleEditorChange = useCallback((newValue: string) => {
-    setCode(newValue);
-  }, []);
+  const handleEditorChange = useMemo(
+    () =>
+      _debounce((newValue: string) => {
+        setCode(newValue);
+      }, 500),
+    [setCode]
+  );
 
   const codeEditor = useMemo(() => {
     return (
