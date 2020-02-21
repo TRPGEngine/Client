@@ -23,4 +23,13 @@
     <span>{{props.data}}</span>
   </Define>
   <Use name="use-props" define="props" data="1" />
+
+
+  <p>可以循环:</p>
+  <Define name="foreach">
+    <li>{{props.a}}</li>
+  </Define>
+  <ul>
+    <ForEach name="testForeach" :data="[{a:1}, {a:2}]" define="foreach" />
+  </ul>
 </Template>
