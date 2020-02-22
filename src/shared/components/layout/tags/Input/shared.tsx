@@ -27,10 +27,13 @@ export const LabelBody = styled.pre`
 `;
 
 export const Label: React.FC<{ title: string }> = React.memo((props) => {
-  return (
-    <Tooltip title={props.title} trigger="click">
-      <LabelBody>{props.title}</LabelBody>
-    </Tooltip>
+  return useMemo(
+    () => (
+      <Tooltip title={props.title} trigger="click">
+        <LabelBody>{props.title}</LabelBody>
+      </Tooltip>
+    ),
+    [props.title]
   );
 });
 Label.displayName = 'Label';
@@ -58,22 +61,28 @@ export const LabelTip: React.FC<{ tip: string }> = React.memo((props) => {
     );
   }, [props.tip]);
 
-  return (
-    <Tooltip title={tip} trigger="hover">
-      <Icon type="question-circle-o" />
-    </Tooltip>
+  return useMemo(
+    () => (
+      <Tooltip title={tip} trigger="hover">
+        <Icon type="question-circle-o" />
+      </Tooltip>
+    ),
+    [tip]
   );
 });
 LabelTip.displayName = 'LabelTip';
 
 export const TagLabel: React.FC<{ label: string; desc: string }> = React.memo(
   (props) => {
-    return (
-      <LabelContainer>
-        <Label title={props.label} />
-        &nbsp;
-        <LabelTip tip={props.desc} />
-      </LabelContainer>
+    return useMemo(
+      () => (
+        <LabelContainer>
+          <Label title={props.label} />
+          &nbsp;
+          <LabelTip tip={props.desc} />
+        </LabelContainer>
+      ),
+      [props.label, props.desc]
     );
   }
 );

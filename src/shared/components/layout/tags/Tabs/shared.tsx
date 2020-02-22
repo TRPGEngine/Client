@@ -25,7 +25,7 @@ interface TagProps {
   position: string;
 }
 export const TagTabsShared: TagComponent<TagProps> = React.memo((props) => {
-  const stateContext = useContext(LayoutStateContext);
+  const context = useContext(LayoutStateContext);
 
   const position = (props.position as TabsPosition) || 'top';
   const elements = props._childrenEl;
@@ -37,11 +37,11 @@ export const TagTabsShared: TagComponent<TagProps> = React.memo((props) => {
 
         return (
           <TabPane tab={label} key={`${label}#${index}`}>
-            <TabPaneContainer>{render(el, stateContext)}</TabPaneContainer>
+            <TabPaneContainer>{render(el, context)}</TabPaneContainer>
           </TabPane>
         );
       });
-  }, [elements, stateContext]);
+  }, [elements, context]);
 
   return <Tabs tabPosition={position}>{children}</Tabs>;
 });

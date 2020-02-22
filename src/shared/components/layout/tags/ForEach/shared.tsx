@@ -17,6 +17,7 @@ export const TagForEachShared: TagComponent<TagProps> = React.memo((props) => {
       return (
         <UseDefineComponent
           {...item}
+          key={`${props.name}-${i}`}
           name={`${props.name}-${i}`}
           define={props.define}
         />

@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import TLoadable from '@web/components/TLoadable';
 import { TagComponent } from '../type';
 import _zip from 'lodash/zip';
+import { useDeepCompareMemo } from '@shared/hooks/useDeepCompareMemo';
 
 const Radar = TLoadable(() =>
   import('./radar').then((module) => module.TRadar)
@@ -21,13 +22,16 @@ export const TagRadarShared: TagComponent<TagProps> = React.memo((props) => {
     return props.dataKey ?? [];
   }, [props.dataKey]);
 
-  const data = useMemo(() => {
+  const data = useDeepCompareMemo(() => {
     return _zip(dataKey, props.dataValue).map(([name, value]) => ({
       name,
       value: value ?? 0,
     }));
   }, [props.dataValue]);
 
-  return <Radar data={data} height={props.height} />;
+  return useMemo(() => <Radar data={data} height={props.height} />, [
+    data,
+    props.height,
+  ]);
 });
 TagRadarShared.displayName = 'TagRadarShared';
