@@ -185,6 +185,18 @@
               <td>{{SUM(基础, addedPoint)}}%</td>
             </tr>
           </Define>
+          <Define name="skillTableHead">
+            <thead>
+              <tr>
+                <td width="150">技能</td>
+                <td width="40">初始</td>
+                <td width="60">成长</td>
+                <td width="60">职业</td>
+                <td width="60">兴趣</td>
+                <td width="60">成功率</td>
+              </tr>
+            </thead>
+          </Define>
 
           <Styled>
             <Style>
@@ -209,19 +221,11 @@
 
             <Tabs>
               <Tab label="本职">
+                <Use define="skillTableHead" />
               </Tab>
               <Tab label="交流">
                 <table>
-                  <thead>
-                    <tr>
-                      <td width="150">技能</td>
-                      <td width="40">初始</td>
-                      <td width="60">成长</td>
-                      <td width="60">职业</td>
-                      <td width="60">兴趣</td>
-                      <td width="60">成功率</td>
-                    </tr>
-                  </thead>
+                  <Use define="skillTableHead" />
                   <tbody>
                     <Use name="skill-信用评级" define="skill" skillName="信用评级" />
                     <Use name="skill-取悦" define="skill" skillName="取悦" />
@@ -236,16 +240,7 @@
               </Tab>
               <Tab label="探索">
                 <table>
-                  <thead>
-                    <tr>
-                      <td width="150">技能</td>
-                      <td width="40">初始</td>
-                      <td width="60">成长</td>
-                      <td width="60">职业</td>
-                      <td width="60">兴趣</td>
-                      <td width="60">成功率</td>
-                    </tr>
-                  </thead>
+                  <Use define="skillTableHead" />
                   <tbody>
                     <Use name="skill-估价" define="skill" skillName="估价" />
                     <Use name="skill-乔装" define="skill" skillName="乔装" />
@@ -264,16 +259,7 @@
               </Tab>
               <Tab label="运动">
                 <table>
-                  <thead>
-                    <tr>
-                      <td width="150">技能</td>
-                      <td width="40">初始</td>
-                      <td width="60">成长</td>
-                      <td width="60">职业</td>
-                      <td width="60">兴趣</td>
-                      <td width="60">成功率</td>
-                    </tr>
-                  </thead>
+                  <Use define="skillTableHead" />
                   <tbody>
                     <Use name="skill-攀爬" define="skill" skillName="攀爬" />
                     <Use name="skill-跳跃" define="skill" skillName="跳跃" />
@@ -285,16 +271,7 @@
               </Tab>
               <Tab label="技能">
                 <table>
-                  <thead>
-                    <tr>
-                      <td width="150">技能</td>
-                      <td width="40">初始</td>
-                      <td width="60">成长</td>
-                      <td width="60">职业</td>
-                      <td width="60">兴趣</td>
-                      <td width="60">成功率</td>
-                    </tr>
-                  </thead>
+                  <Use define="skillTableHead" />
                   <tbody>
                     <Use name="skill-艺术与手艺1" define="skill" skillName="艺术与手艺" />
                     <Use name="skill-艺术与手艺2" define="skill" skillName="艺术与手艺" />
@@ -315,16 +292,7 @@
               </Tab>
               <Tab label="战斗">
                 <table>
-                  <thead>
-                    <tr>
-                      <td width="150">技能</td>
-                      <td width="40">初始</td>
-                      <td width="60">成长</td>
-                      <td width="60">职业</td>
-                      <td width="60">兴趣</td>
-                      <td width="60">成功率</td>
-                    </tr>
-                  </thead>
+                  <Use define="skillTableHead" />
                   <tbody>
                     <Use name="skill-格斗1" define="skill" skillName="格斗" />
                     <Use name="skill-格斗2" define="skill" skillName="格斗" />
@@ -341,16 +309,7 @@
               </Tab>
               <Tab label="医疗">
                 <table>
-                  <thead>
-                    <tr>
-                      <td width="150">技能</td>
-                      <td width="40">初始</td>
-                      <td width="60">成长</td>
-                      <td width="60">职业</td>
-                      <td width="60">兴趣</td>
-                      <td width="60">成功率</td>
-                    </tr>
-                  </thead>
+                  <Use define="skillTableHead" />
                   <tbody>
                     <Use name="skill-急救" define="skill" skillName="急救" />
                     <Use name="skill-医学" define="skill" skillName="医学" />
@@ -361,16 +320,7 @@
               </Tab>
               <Tab label="知识">
                 <table>
-                  <thead>
-                    <tr>
-                      <td width="150">技能</td>
-                      <td width="40">初始</td>
-                      <td width="60">成长</td>
-                      <td width="60">职业</td>
-                      <td width="60">兴趣</td>
-                      <td width="60">成功率</td>
-                    </tr>
-                  </thead>
+                  <Use define="skillTableHead" />
                   <tbody>
                     <Use name="skill-会计" define="skill" skillName="会计" />
                     <Use name="skill-法律" define="skill" skillName="法律" />
