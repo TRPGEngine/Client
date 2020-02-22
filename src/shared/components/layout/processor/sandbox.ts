@@ -1,6 +1,7 @@
 import { XMLBuilderContext } from '../XMLBuilder';
 import { parseDataText } from './';
 import _get from 'lodash/get';
+import _isNil from 'lodash/isNil';
 import _find from 'lodash/find';
 import _map from 'lodash/map';
 import _inRange from 'lodash/inRange';
@@ -23,6 +24,7 @@ export function generateSandboxContext(context: XMLBuilderContext) {
     Math,
     JSON,
     _get,
+    _isNil,
     _find,
     _map,
     _inRange,
