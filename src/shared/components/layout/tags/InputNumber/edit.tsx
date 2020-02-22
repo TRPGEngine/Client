@@ -37,19 +37,22 @@ export const TagInputNumberEdit: TagComponent<TagProps> = React.memo(
     const min = useToNumber(props.min);
     const max = useToNumber(props.max);
 
-    return (
-      <FormContainer label={label}>
-        <InputNumber
-          style={{ width: '100%' }}
-          placeholder={placeholder}
-          min={min}
-          max={max}
-          step={step}
-          value={value}
-          onChange={handleChange}
-          disabled={props.disabled}
-        />
-      </FormContainer>
+    return useMemo(
+      () => (
+        <FormContainer label={label}>
+          <InputNumber
+            style={{ width: '100%' }}
+            placeholder={placeholder}
+            min={min}
+            max={max}
+            step={step}
+            value={value}
+            onChange={handleChange}
+            disabled={props.disabled}
+          />
+        </FormContainer>
+      ),
+      [label, placeholder, min, max, step, value, handleChange, props.disabled]
     );
   }
 );

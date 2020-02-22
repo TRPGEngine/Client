@@ -45,23 +45,26 @@ export const TagSelectEdit: TagComponent<TagProps> = React.memo((props) => {
     [setStateValue]
   );
 
-  return (
-    <FormContainer label={label}>
-      <Select
-        style={{ width: '100%' }}
-        placeholder="请选择..."
-        showSearch={showSearch}
-        allowClear={true}
-        value={stateValue}
-        onChange={handleChange}
-      >
-        {(opt ?? []).map((item) => (
-          <Option key={item} value={item}>
-            {item}
-          </Option>
-        ))}
-      </Select>
-    </FormContainer>
+  return useMemo(
+    () => (
+      <FormContainer label={label}>
+        <Select
+          style={{ width: '100%' }}
+          placeholder="请选择..."
+          showSearch={showSearch}
+          allowClear={true}
+          value={stateValue}
+          onChange={handleChange}
+        >
+          {(opt ?? []).map((item) => (
+            <Option key={item} value={item}>
+              {item}
+            </Option>
+          ))}
+        </Select>
+      </FormContainer>
+    ),
+    [label, showSearch, stateValue, handleChange, opt]
   );
 });
 TagSelectEdit.displayName = 'TagSelectEdit';

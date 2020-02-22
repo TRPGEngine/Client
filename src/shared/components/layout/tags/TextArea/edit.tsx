@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { TagComponent } from '../type';
 import TextArea, { AutoSizeType } from 'antd/lib/input/TextArea';
 import { LayoutCol } from '../Col/shared';
@@ -15,6 +15,8 @@ export const TagTextAreaEdit: TagComponent<TagProps> = React.memo((props) => {
     props
   );
 
+  const autosize = useMemo(() => props.autosize, []); // autosize 只在最初获取一次。不会接受后续的动态变更
+
   const FormContainer = useLayoutFormContainer(props);
 
   const handleChange = useCallback(
@@ -26,15 +28,18 @@ export const TagTextAreaEdit: TagComponent<TagProps> = React.memo((props) => {
     []
   );
 
-  return (
-    <FormContainer label={label}>
-      <TextArea
-        autosize={props.autosize}
-        placeholder={placeholder}
-        value={stateValue}
-        onChange={handleChange}
-      />
-    </FormContainer>
+  return useMemo(
+    () => (
+      <FormContainer label={label}>
+        <TextArea
+          autosize={autosize}
+          placeholder={placeholder}
+          value={stateValue}
+          onChange={handleChange}
+        />
+      </FormContainer>
+    ),
+    [label, autosize, placeholder, stateValue, handleChange]
   );
 });
 TagTextAreaEdit.displayName = 'TagTextAreaEdit';

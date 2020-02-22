@@ -11,5 +11,5 @@ export function useToArray(arr: any): any[] {
     } else {
       return [];
     }
-  }, arr);
+  }, [arr]);
 }

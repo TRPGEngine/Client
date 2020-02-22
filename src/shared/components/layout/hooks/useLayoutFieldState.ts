@@ -9,12 +9,15 @@ export const useLayoutFieldState = (
 ): [FieldValue, (newValue: any) => void] => {
   const context = useContext(LayoutStateContext);
 
-  const value = useMemo(() => getStateValue(context, name), [name, context]);
+  const value = useMemo(() => getStateValue(context, name), [
+    name,
+    context.state.data,
+  ]);
   const setValue = useCallback(
     (newValue) => {
       setStateValue(context, name, newValue);
     },
-    [name, context]
+    [name, context.dispatch]
   );
 
   return [value, setValue];

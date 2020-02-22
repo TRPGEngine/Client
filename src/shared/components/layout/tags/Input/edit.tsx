@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { TagComponent } from '../type';
 import { TagInputProps } from './shared';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
@@ -11,23 +11,29 @@ export const TagInputEdit: TagComponent<TagInputProps> = React.memo((props) => {
     props
   );
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target;
 
-    setStateValue(tryToNumber(value));
-  }, []);
+      setStateValue(tryToNumber(value));
+    },
+    [setStateValue]
+  );
 
   const FormContainer = useLayoutFormContainer(props);
 
-  return (
-    <FormContainer label={label}>
-      <Input
-        placeholder={placeholder}
-        value={stateValue}
-        onChange={handleChange}
-        disabled={props.disabled}
-      />
-    </FormContainer>
+  return useMemo(
+    () => (
+      <FormContainer label={label}>
+        <Input
+          placeholder={placeholder}
+          value={stateValue}
+          onChange={handleChange}
+          disabled={props.disabled}
+        />
+      </FormContainer>
+    ),
+    [label, placeholder, stateValue, handleChange, props.disabled]
   );
 });
 TagInputEdit.displayName = 'TagInputEdit';
