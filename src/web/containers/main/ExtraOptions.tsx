@@ -21,7 +21,7 @@ import './ExtraOptions.scss';
 import { showPortal } from '@web/redux/action/ui';
 import DevContainer from '@web/components/DevContainer';
 import { PortalView } from '@web/components/PortalView';
-import { UserSelector } from '@web/components/modal/UserSeletor';
+import { UserSelector } from '@web/components/modal/UserSelector';
 
 interface Props extends DispatchProp<any> {}
 class ExtraOptions extends React.Component<Props> {
