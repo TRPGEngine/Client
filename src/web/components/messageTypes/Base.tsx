@@ -7,6 +7,7 @@ import { getAbsolutePath } from '@shared/utils/file-helper';
 import Avatar from '../Avatar';
 import { Popover } from 'antd';
 import PopoverUserInfo from '../popover/UserInfo';
+import PopoverMsgSenderInfo from '../popover/MsgSenderInfo';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -27,12 +28,6 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     const { name, info } = this.props;
 
     return _get(info, 'data.name') || name;
-  }
-
-  getSenderUUID(): string {
-    const { info } = this.props;
-
-    return _get(info, ['sender_uuid'], '');
   }
 
   /**
@@ -90,7 +85,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
               <Popover
                 placement="right"
                 trigger="click"
-                content={<PopoverUserInfo userUUID={this.getSenderUUID()} />}
+                content={<PopoverMsgSenderInfo payload={info} />}
               >
                 <Avatar
                   name={this.getSenderName()}

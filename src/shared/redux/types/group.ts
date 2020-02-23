@@ -38,7 +38,7 @@ export interface GroupInfo {
   maps_uuid?: string[];
 
   // group初始化后获取的参数
-  group_actors?: any[];
+  group_actors?: GroupActorType[];
   group_members?: string[];
   extra?: any;
   status?: boolean;
