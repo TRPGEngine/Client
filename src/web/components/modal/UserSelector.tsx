@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  useState,
-  useCallback,
-  useMemo,
-  useEffect,
-} from 'react';
+import React, { Fragment, useState, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import ModalPanel from '../ModalPanel';
 import { Select, Collapse } from 'antd';
@@ -30,12 +24,31 @@ const Container = styled.div`
     flex: 1;
   }
 
+  .select-user {
+    border: ${(props) => props.theme.border.standard};
+
+    .ant-select-selection {
+      background-color: transparent;
+      border: 0;
+      box-shadow: none !important;
+
+      &:focus,
+      &:active {
+        border: 0 !important;
+        box-shadow: none !important;
+      }
+    }
+  }
+
   .user-list {
     height: 100%;
     overflow: auto;
 
-    .ant-collapse-content-box {
-      padding: 0;
+    .ant-collapse {
+      border-radius: 0;
+      .ant-collapse-content-box {
+        padding: 0;
+      }
     }
   }
 `;
@@ -109,7 +122,7 @@ SelectedUser.displayName = 'SelectedUser';
 
 const UserListItem = styled.div<{ selected: boolean }>`
   text-align: left;
-  padding: 4px 8px;
+  padding: 6px 12px;
 
   user-select: none;
   cursor: pointer;
@@ -190,7 +203,7 @@ export const UserSelector: React.FC = React.memo(() => {
   return (
     <ModalPanel title="选择用户" style={{ width: 600, height: 480 }}>
       <Container>
-        <div>
+        <div className="select-user">
           <SelectedUser
             uuids={selectedUUIDs}
             allUserUUIDs={allUserUUIDs}

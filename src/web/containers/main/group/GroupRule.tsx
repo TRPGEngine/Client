@@ -37,7 +37,7 @@ const GroupRule = React.memo(() => {
           <HTML html={groupInfo.rule} />
         </div>
       ) : (
-        '主持人暂未写入规则'
+        <p>主持人暂未写入规则</p>
       )}
     </div>
   );
