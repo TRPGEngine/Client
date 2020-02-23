@@ -4,6 +4,9 @@ import config from '../../../shared/project.config';
 import { MessageProps } from '@shared/components/MessageHandler';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
+import Avatar from '../Avatar';
+import { Popover } from 'antd';
+import PopoverUserInfo from '../popover/UserInfo';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -24,6 +27,12 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     const { name, info } = this.props;
 
     return _get(info, 'data.name') || name;
+  }
+
+  getSenderUUID(): string {
+    const { info } = this.props;
+
+    return _get(info, ['sender_uuid'], '');
   }
 
   /**
@@ -71,7 +80,25 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
         </div>
         <div className="content">
           <div className="avatar">
-            <img src={this.getAvatarUrl()} />
+            {me ? (
+              <Avatar
+                name={this.getSenderName()}
+                src={this.getAvatarUrl()}
+                size={38}
+              />
+            ) : (
+              <Popover
+                placement="right"
+                trigger="click"
+                content={<PopoverUserInfo userUUID={this.getSenderUUID()} />}
+              >
+                <Avatar
+                  name={this.getSenderName()}
+                  src={this.getAvatarUrl()}
+                  size={38}
+                />
+              </Popover>
+            )}
           </div>
           <div className="body">{this.getContent()}</div>
         </div>
