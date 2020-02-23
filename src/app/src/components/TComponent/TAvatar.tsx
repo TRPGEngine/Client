@@ -1,10 +1,9 @@
 import React from 'react';
 import { ImageSourcePropType } from 'react-native';
-import config from '../../../../shared/project.config';
-import str2int from 'str2int';
 import _isString from 'lodash/isString';
 import TImage from './TImage';
 import styled from 'styled-components/native';
+import { getAvatarColorHex } from '@shared/utils/string-helper';
 
 const TImageAvatar = styled(TImage)<{
   height: number;
@@ -68,16 +67,6 @@ class TAvatar extends React.PureComponent<Props> {
     loadError: false,
   };
 
-  getColor(name: string) {
-    if (!name) {
-      return '#ffffff'; // 如果获取不到名字，则返回白色
-    }
-
-    const color = config.defaultImg.color;
-    const id = str2int(name);
-    return color[id % color.length];
-  }
-
   onImageLoadError = () => {
     const { uri } = this.props;
 
@@ -98,7 +87,7 @@ class TAvatar extends React.PureComponent<Props> {
     if (capital) {
       capital = capital.toUpperCase();
     }
-    const color = this.getColor(name);
+    const color = getAvatarColorHex(name);
 
     if (
       uri &&

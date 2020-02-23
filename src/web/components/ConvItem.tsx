@@ -50,7 +50,7 @@ class ConvItem extends React.PureComponent<Props> {
       >
         {closeBtn}
         <div className="icon" onClick={this.handleShowInfo}>
-          <img src={this.props.icon} />
+          <Avatar name={this.props.title} src={this.props.icon} size={38} />
         </div>
         <div className="body">
           <div className="title">
