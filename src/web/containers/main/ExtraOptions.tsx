@@ -78,6 +78,10 @@ class ExtraOptions extends React.Component<Props> {
         console.log('正在尝试自动重新登录');
         this.props.dispatch(loginWithToken(uuid, token));
       })();
+    } else if (menu === 'refresh') {
+      window.localStorage.clear();
+      window.sessionStorage.clear();
+      window.location.reload();
     } else if (menu === 'help') {
       this.props.dispatch(
         showModal(
@@ -155,6 +159,7 @@ class ExtraOptions extends React.Component<Props> {
           {config.environment === 'development' ? (
             <li onClick={() => this.handleClickMenu('relogin')}>重新登录</li>
           ) : null}
+          <li onClick={() => this.handleClickMenu('refresh')}>清理缓存</li>
           <li onClick={() => this.handleClickMenu('help')}>帮助反馈</li>
           <li onClick={() => this.handleClickMenu('disclaimer')}>免责声明</li>
           <li onClick={() => this.handleClickMenu('blog')}>开发者博客</li>
