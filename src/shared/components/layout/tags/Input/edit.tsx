@@ -1,12 +1,13 @@
 import React, { useCallback, useMemo } from 'react';
 import { TagComponent } from '../type';
 import { TagInputProps } from './shared';
+import { TMemo } from '@shared/components/TMemo';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
 import { Input } from 'antd';
 import { tryToNumber } from '../utils';
 import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
 
-export const TagInputEdit: TagComponent<TagInputProps> = React.memo((props) => {
+export const TagInputEdit: TagComponent<TagInputProps> = TMemo((props) => {
   const { label, placeholder, stateValue, setStateValue } = useLayoutFormData(
     props
   );

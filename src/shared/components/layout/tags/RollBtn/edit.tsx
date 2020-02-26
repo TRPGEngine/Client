@@ -5,11 +5,12 @@ import _isNil from 'lodash/isNil';
 import { roll } from './shared';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { setStateValue } from '../utils';
+import { TMemo } from '@shared/components/TMemo';
 
 interface TagProps {
   label?: string;
 }
-export const TagRollBtnEdit: TagComponent<TagProps> = React.memo((props) => {
+export const TagRollBtnEdit: TagComponent<TagProps> = TMemo((props) => {
   const context = useContext(LayoutStateContext);
 
   const items = useMemo(() => {

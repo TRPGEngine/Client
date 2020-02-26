@@ -1,15 +1,15 @@
 import React from 'react';
 import { TagComponent } from '../type';
-import styled from 'styled-components';
-import { Row, Form, Input } from 'antd';
+import { Form, Input } from 'antd';
 import { LayoutCol } from '../Col/shared';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';
 import Avatar from '@web/components/Avatar';
+import { TMemo } from '@shared/components/TMemo';
 import { BaseInfoContainer, BaseInfoForm } from './shared';
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 
-export const TagBaseInfoDetail: TagComponent = React.memo((props) => {
+export const TagBaseInfoDetail: TagComponent = TMemo((props) => {
   const [name, setName] = useLayoutFieldState('_name');
   const [desc, setDesc] = useLayoutFieldState('_desc');
   const [avatar, setAvatar] = useLayoutFieldState('_avatar');

@@ -2,13 +2,14 @@ import React, { useContext } from 'react';
 import { TagComponent } from '../type';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { removePrivateProps } from '../utils';
+import { TMemo } from '@shared/components/TMemo';
 
 interface UseDefineComponentProps {
   name: string; // 用于存储数据
   define: string; //
   [useProps: string]: any;
 }
-export const UseDefineComponent: React.FC<UseDefineComponentProps> = React.memo(
+export const UseDefineComponent: React.FC<UseDefineComponentProps> = TMemo(
   (props) => {
     const context = useContext(LayoutStateContext);
     const defines = context.state.defines;
@@ -24,7 +25,7 @@ export const UseDefineComponent: React.FC<UseDefineComponentProps> = React.memo(
 );
 UseDefineComponent.displayName = 'UseDefineComponent';
 
-export const TagUseShared: TagComponent<UseDefineComponentProps> = React.memo(
+export const TagUseShared: TagComponent<UseDefineComponentProps> = TMemo(
   (props) => {
     const useProps = removePrivateProps(props);
 

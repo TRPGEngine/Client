@@ -5,6 +5,7 @@ import { Progress, Tooltip } from 'antd';
 import { ProgressSize } from 'antd/lib/progress/progress';
 import styledTheme from '@shared/utils/theme';
 import _isEmpty from 'lodash/isEmpty';
+import { TMemo } from '@shared/components/TMemo';
 
 interface TagProps {
   current: string;
@@ -13,7 +14,7 @@ interface TagProps {
   color: string;
   size?: ProgressSize;
 }
-export const TagBarShared: TagComponent<TagProps> = React.memo((props) => {
+export const TagBarShared: TagComponent<TagProps> = TMemo((props) => {
   const [_current] = useLayoutFieldState(props.current);
   const [_max] = useLayoutFieldState(props.max);
 

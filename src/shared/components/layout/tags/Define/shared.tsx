@@ -7,11 +7,12 @@ import {
 } from '../../context/LayoutStateContext';
 import { useLayoutChildren } from '../../hooks/useLayoutChildren';
 import { StateActionType } from '../../types';
+import { TMemo } from '@shared/components/TMemo';
 
 interface TagDefineComponentProps {
   name: string;
 }
-export const TagDefineComponent: TagComponent<TagDefineComponentProps> = React.memo(
+export const TagDefineComponent: TagComponent<TagDefineComponentProps> = TMemo(
   (props) => {
     const parentContext = useContext(LayoutStateContext);
     const { state, dispatch } = useBuildLayoutDefineStateContext(props);
@@ -39,7 +40,7 @@ export const TagDefineComponent: TagComponent<TagDefineComponentProps> = React.m
 interface TagProps {
   name: string; // 用于存储数据
 }
-export const TagDefineShared: TagComponent<TagProps> = React.memo((props) => {
+export const TagDefineShared: TagComponent<TagProps> = TMemo((props) => {
   const context = useContext(LayoutStateContext);
   useEffect(() => {
     context.dispatch({

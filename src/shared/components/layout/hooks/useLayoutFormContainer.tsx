@@ -5,6 +5,7 @@ import { is } from '@shared/utils/string-helper';
 import { BaseTypeRow } from '../tags/Base/shared';
 import { LayoutCol } from '../tags/Col/shared';
 import { TagLabel } from '../tags/Input/shared';
+import { TMemo } from '@shared/components/TMemo';
 
 export const useLayoutFormContainer = (props: LayoutProps) => {
   const hideLabel = useMemo(() => {
@@ -17,7 +18,7 @@ export const useLayoutFormContainer = (props: LayoutProps) => {
   const desc = props.desc;
 
   return useMemo(() => {
-    const FormContainer: React.FC<{ label: string }> = React.memo((props) => {
+    const FormContainer: React.FC<{ label: string }> = TMemo((props) => {
       return hideLabel ? (
         // 隐藏标签
         <BaseTypeRow>
@@ -33,6 +34,7 @@ export const useLayoutFormContainer = (props: LayoutProps) => {
         </BaseTypeRow>
       );
     });
+    FormContainer.displayName = 'FormContainer';
 
     return FormContainer;
   }, [hideLabel]);

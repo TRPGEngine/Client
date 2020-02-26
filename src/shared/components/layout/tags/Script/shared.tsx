@@ -5,8 +5,9 @@ import { StateActionType } from '../../types';
 import { evalScript } from '../../processor';
 import { generateSandboxContext } from '../../processor/sandbox';
 import { getChildrenText } from '../utils';
+import { TMemo } from '@shared/components/TMemo';
 
-export const TagScriptShared: TagComponent = React.memo((props) => {
+export const TagScriptShared: TagComponent = TMemo((props) => {
   const context = useContext(LayoutStateContext);
 
   useEffect(() => {

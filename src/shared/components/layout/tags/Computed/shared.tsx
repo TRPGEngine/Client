@@ -9,13 +9,14 @@ import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { parseDataText } from '../../processor';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';
 import { getStateValue } from '../utils';
+import { TMemo } from '@shared/components/TMemo';
 
 interface TagProps {
   deps: string | string[];
   expression: string;
   target: string;
 }
-export const TagComputedShared: TagComponent<TagProps> = React.memo((props) => {
+export const TagComputedShared: TagComponent<TagProps> = TMemo((props) => {
   const context = useContext(LayoutStateContext);
   const [_, setStateValue] = useLayoutFieldState(props.target);
 

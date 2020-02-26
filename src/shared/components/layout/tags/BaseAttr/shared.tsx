@@ -2,8 +2,9 @@ import React from 'react';
 import { useLayoutChildren } from '@shared/components/layout/hooks/useLayoutChildren';
 import { LayoutCol } from '@shared/components/layout/tags/Col/shared';
 import { TagComponent } from '../type';
+import { TMemo } from '@shared/components/TMemo';
 
-export const TagBaseAttrShared: TagComponent = React.memo((props) => {
+export const TagBaseAttrShared: TagComponent = TMemo((props) => {
   const children = useLayoutChildren(props);
 
   return (

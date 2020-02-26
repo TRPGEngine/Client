@@ -5,8 +5,9 @@ import _isString from 'lodash/isString';
 import _isNil from 'lodash/isNil';
 import { useLayoutChildren } from '../../hooks/useLayoutChildren';
 import { Tooltip, Icon } from 'antd';
+import { TMemo } from '@shared/components/TMemo';
 
-export const TagTipShared: TagComponent = React.memo((props) => {
+export const TagTipShared: TagComponent = TMemo((props) => {
   const children = useLayoutChildren(props);
 
   const tip = useMemo(() => {

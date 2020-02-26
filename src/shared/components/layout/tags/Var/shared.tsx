@@ -7,6 +7,7 @@ import _isString from 'lodash/isString';
 import _isNil from 'lodash/isNil';
 import { parseDataText } from '../../processor';
 import { is } from '@shared/utils/string-helper';
+import { TMemo } from '@shared/components/TMemo';
 
 interface TagProps {
   name: string;
@@ -14,7 +15,7 @@ interface TagProps {
   ':value': any;
   static: string;
 }
-export const TagVarShared: TagComponent<TagProps> = React.memo(
+export const TagVarShared: TagComponent<TagProps> = TMemo(
   (props) => {
     const context = useContext(LayoutStateContext);
 

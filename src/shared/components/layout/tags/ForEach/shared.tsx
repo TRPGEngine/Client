@@ -3,13 +3,14 @@ import { TagComponent } from '../type';
 import _isArray from 'lodash/isArray';
 import { useToArray } from '@shared/hooks/useToArray';
 import { UseDefineComponent } from '../Use/shared';
+import { TMemo } from '@shared/components/TMemo';
 
 interface TagProps {
   name: string;
   data: object[];
   define: string;
 }
-export const TagForEachShared: TagComponent<TagProps> = React.memo((props) => {
+export const TagForEachShared: TagComponent<TagProps> = TMemo((props) => {
   const data = useToArray(props.data);
 
   const items = useMemo(() => {

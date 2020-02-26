@@ -1,16 +1,15 @@
 import React, { useCallback, useMemo } from 'react';
 import { TagComponent } from '../type';
 import TextArea, { AutoSizeType } from 'antd/lib/input/TextArea';
-import { LayoutCol } from '../Col/shared';
-import { TagInputProps, TagLabel } from '../Input/shared';
+import { TagInputProps } from '../Input/shared';
 import { useLayoutFormData } from '../../hooks/useLayoutFormData';
-import { BaseTypeRow } from '../Base/shared';
 import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
+import { TMemo } from '@shared/components/TMemo';
 
 interface TagProps extends TagInputProps {
   autosize: boolean | AutoSizeType;
 }
-export const TagTextAreaEdit: TagComponent<TagProps> = React.memo((props) => {
+export const TagTextAreaEdit: TagComponent<TagProps> = TMemo((props) => {
   const { label, placeholder, stateValue, setStateValue } = useLayoutFormData(
     props
   );

@@ -5,6 +5,7 @@ import { TabsPosition } from 'antd/lib/tabs';
 import styled from 'styled-components';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { render } from '../../processor';
+import { TMemo } from '@shared/components/TMemo';
 
 const TabPane = Tabs.TabPane;
 
@@ -24,7 +25,7 @@ const TabPaneContainer = styled.div`
 interface TagProps {
   position: string;
 }
-export const TagTabsShared: TagComponent<TagProps> = React.memo((props) => {
+export const TagTabsShared: TagComponent<TagProps> = TMemo((props) => {
   const context = useContext(LayoutStateContext);
 
   const position = (props.position as TabsPosition) || 'top';

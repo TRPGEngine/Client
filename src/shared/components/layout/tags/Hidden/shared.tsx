@@ -2,12 +2,13 @@ import React, { useContext, Fragment, useMemo } from 'react';
 import { TagComponent } from '../type';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { useLayoutChildren } from '../../hooks/useLayoutChildren';
+import { TMemo } from '@shared/components/TMemo';
 
 interface TagProps {
   in: 'detail' | 'edit';
   if: any;
 }
-export const TagHiddenShared: TagComponent<TagProps> = React.memo((props) => {
+export const TagHiddenShared: TagComponent<TagProps> = TMemo((props) => {
   const { layoutType } = useContext(LayoutStateContext);
   const children = useLayoutChildren(props);
 

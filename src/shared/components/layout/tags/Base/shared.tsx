@@ -4,6 +4,7 @@ import { useLayoutChildren } from '../../hooks/useLayoutChildren';
 import { normalizeTagName, removePrivateProps } from '../utils';
 import styled from 'styled-components';
 import { Row } from 'antd';
+import { TMemo } from '@shared/components/TMemo';
 
 // defined from facebook/react/packages/react-dom/src/shared/voidElementTags.js
 // https://github.com/facebook/react/blob/b0657fde6a/packages/react-dom/src/shared/voidElementTags.js
@@ -35,7 +36,7 @@ export const blacklistTags = [
   'html',
 ];
 
-export const TagBaseShared: TagComponent = React.memo((props) => {
+export const TagBaseShared: TagComponent = TMemo((props) => {
   const tagName = props._name;
   let childrens = useLayoutChildren(props);
   const tagProps = useMemo(() => removePrivateProps(props), [props]);

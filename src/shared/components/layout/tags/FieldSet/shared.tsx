@@ -3,6 +3,7 @@ import { useLayoutChildren } from '@shared/components/layout/hooks/useLayoutChil
 import { TagComponent } from '../type';
 import styled from 'styled-components';
 import _isEmpty from 'lodash/isEmpty';
+import { TMemo } from '@shared/components/TMemo';
 
 const padding = 10;
 
@@ -57,7 +58,7 @@ interface TagProps {
   label: string;
   orientation?: 'left' | 'right' | 'center';
 }
-export const TagFieldSetShared: TagComponent<TagProps> = React.memo((props) => {
+export const TagFieldSetShared: TagComponent<TagProps> = TMemo((props) => {
   const children = useLayoutChildren(props);
 
   const orientation = useMemo(

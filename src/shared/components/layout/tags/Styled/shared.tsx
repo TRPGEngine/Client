@@ -4,8 +4,9 @@ import { useLayoutChildren } from '../../hooks/useLayoutChildren';
 import { LayoutProps } from '../../processor';
 import styled from 'styled-components';
 import { getChildrenText } from '../utils';
+import { TMemo } from '@shared/components/TMemo';
 
-export const TagStyledShared: TagComponent = React.memo((props) => {
+export const TagStyledShared: TagComponent = TMemo((props) => {
   const elements = [...props._childrenEl];
   const styleIndex = elements.findIndex((el) => el.name === 'Style');
   let style = '';

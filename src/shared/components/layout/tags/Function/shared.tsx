@@ -4,13 +4,14 @@ import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { StateActionType } from '../../types';
 import { evalScript } from '../../processor';
 import { generateSandboxContext } from '../../processor/sandbox';
+import { TMemo } from '@shared/components/TMemo';
 
 interface TagProps {
   name: string;
   body: string;
   params: string | string[];
 }
-export const TagFunctionShared: TagComponent<TagProps> = React.memo((props) => {
+export const TagFunctionShared: TagComponent<TagProps> = TMemo((props) => {
   const context = useContext(LayoutStateContext);
   const params = useMemo(() => {
     if (typeof props.params === 'string') {

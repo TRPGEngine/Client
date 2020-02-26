@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 import styled from 'styled-components';
 import _get from 'lodash/get';
+import { TMemo } from '@shared/components/TMemo';
 
 interface RadarData {
   name: string;
@@ -28,7 +29,7 @@ const CustomTooltipContainer = styled.div`
   box-shadow: ${(props) => props.theme.boxShadow.normal};
 `;
 
-const CustomTooltip: React.FC<TooltipProps> = React.memo(
+const CustomTooltip: React.FC<TooltipProps> = TMemo(
   ({ active, payload, label }) => {
     if (active) {
       return (
@@ -42,7 +43,7 @@ const CustomTooltip: React.FC<TooltipProps> = React.memo(
   }
 );
 
-export const TRadar: React.FC<Props> = React.memo((props) => {
+export const TRadar: React.FC<Props> = TMemo((props) => {
   const height = props.height ?? 300;
 
   return (

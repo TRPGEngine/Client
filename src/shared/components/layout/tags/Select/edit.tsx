@@ -1,13 +1,11 @@
 import React, { useMemo, useCallback } from 'react';
 import { TagComponent } from '../type';
-import { LayoutCol } from '../Col/shared';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
 import { Select } from 'antd';
-import { TagLabel } from '../Input/shared';
-import { BaseTypeRow } from '../Base/shared';
 import { is } from '@shared/utils/string-helper';
 import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
 const Option = Select.Option;
+import { TMemo } from '@shared/components/TMemo';
 
 interface TagProps {
   name: string;
@@ -16,7 +14,7 @@ interface TagProps {
   showSearch?: boolean | string;
   default?: string;
 }
-export const TagSelectEdit: TagComponent<TagProps> = React.memo((props) => {
+export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
   const { label, stateValue, setStateValue } = useLayoutFormData(props);
 
   const opt: string[] = useMemo(() => {

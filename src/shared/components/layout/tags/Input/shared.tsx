@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Tooltip, Icon } from 'antd';
 import _isEmpty from 'lodash/isEmpty';
 import { parseMultilineText } from '../utils';
+import { TMemo } from '@shared/components/TMemo';
 
 export interface TagInputProps {
   name: string;
@@ -26,7 +27,7 @@ export const LabelBody = styled.pre`
   text-overflow: ellipsis;
 `;
 
-export const Label: React.FC<{ title: string }> = React.memo((props) => {
+export const Label: React.FC<{ title: string }> = TMemo((props) => {
   return useMemo(
     () => (
       <Tooltip title={props.title} trigger="click">
@@ -43,7 +44,7 @@ export const DetailText = styled.pre`
   word-wrap: break-word;
 `;
 
-export const LabelTip: React.FC<{ tip: string }> = React.memo((props) => {
+export const LabelTip: React.FC<{ tip: string }> = TMemo((props) => {
   if (_isEmpty(props.tip)) {
     return null;
   }
@@ -72,7 +73,7 @@ export const LabelTip: React.FC<{ tip: string }> = React.memo((props) => {
 });
 LabelTip.displayName = 'LabelTip';
 
-export const TagLabel: React.FC<{ label: string; desc: string }> = React.memo(
+export const TagLabel: React.FC<{ label: string; desc: string }> = TMemo(
   (props) => {
     return useMemo(
       () => (
@@ -86,3 +87,4 @@ export const TagLabel: React.FC<{ label: string; desc: string }> = React.memo(
     );
   }
 );
+TagLabel.displayName = 'TagLabel';
