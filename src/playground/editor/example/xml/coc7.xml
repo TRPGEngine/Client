@@ -160,7 +160,6 @@
             /* 有指定专精 */
             var tmp = skillName.split('(');
             var mastery = tmp[1].replace(')', '').split(',');
-            debug(mastery);
             return {
               name: tmp[0],
               mastery: mastery
@@ -194,8 +193,12 @@
             return _map(global.getSkillInfo(skillName).sub, 'name');
           }
         }
-        function getSkillBase(skillName) {
-          return _get(global.getSkillInfo(skillName), 'base', 0);
+        function getSkillBase(skillName, mastery) {
+          /* 优先获取专精再获取基础 */
+          var skillInfo = global.getSkillInfo(skillName);
+          var masteryBase = _get(_find(skillInfo.sub, ['name', mastery]), 'base');
+          debug(masteryBase);
+          return masteryBase || _get(skillInfo, 'base', 0);
         }
 
         setGlobal('getSkillInfo', getSkillInfo);
@@ -213,7 +216,7 @@
       <Row :gutter="16">
         <Col md="16">
           <Define name="skill">
-            <Computed target="基础" deps="props.skillName" expression="getSkillBase(props.skillName)" />
+            <Computed target="基础" deps="props.skillName,专攻" expression="getSkillBase(props.skillName, 专攻)" />
             <Computed target="addedPoint" deps="成长,职业,兴趣" expression="SUM(成长, 职业, 兴趣)" />
             <Hidden :if="props.skillName !== '母语'">
               <!-- 用于母语技能 -->
