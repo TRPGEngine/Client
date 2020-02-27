@@ -85,9 +85,11 @@ class MsgList extends React.PureComponent<Props> {
    */
   handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offset = e.nativeEvent.contentOffset;
-    if (offset.y === 0) {
-      // 当触底时(因为列表倒置所以列表的地步就是0)
+    if (offset.y < 10) {
+      // 当触底时(预留10像素, 因为列表倒置所以列表的底部就是0)
       this.isSeekingLog = false;
+    } else {
+      this.isSeekingLog = true; // 如果滚动后不是在底部则视为正在查阅历史记录
     }
   };
 
