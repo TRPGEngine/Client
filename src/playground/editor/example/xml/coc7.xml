@@ -284,6 +284,20 @@
                     <ForEach name="skill-本职技能" define="skill" :data="getJobDuty()" />
                   </tbody>
                 </table>
+
+                <Hidden :if="!(Array.isArray(global.selectJobInfo.dutySkillOptions))">
+                  <p style="margin: 10px 0">可选本职职业:</p>
+                  <Define name="skillOption">
+                    <li>{{props.item}}</li>
+                  </Define>
+                  <ul>
+                    <ForEach name="skillOption" define="skillOption" :data="(global.selectJobInfo.dutySkillOptions || []).map((x) => ({item: x.join('或')}))" />
+                  </ul>
+                </Hidden>
+
+                <Hidden :if="!(global.selectJobInfo.dutySocial > 0)">
+                  <center style="margin: 10px 0">你可以选择 {{global.selectJobInfo.dutySocial}} 项社交技能作为本职技能(取悦,话术,恐吓,说服)</center>
+                </Hidden>
                 <Hidden :if="!_isNil(global.selectJobInfo)">
                   <center style="margin: 10px 0">请先选择职业</center>
                 </Hidden>
