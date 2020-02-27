@@ -155,6 +155,7 @@
     "@types/react-router-dom": "^4.3.5",
     "@types/react-test-renderer": "^16.9.0",
     "@types/recharts": "^1.8.5",
+    "@types/redux-logger": "^3.0.7",
     "@types/semver": "^6.0.2",
     "@types/socket.io-client": "^1.4.32",
     "@types/styled-components": "^4.1.19",

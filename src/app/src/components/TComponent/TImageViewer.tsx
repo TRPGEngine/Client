@@ -89,7 +89,6 @@ class TImageViewer extends React.Component<Props> {
             index={this.state.index}
             onSwipeDown={() => this.hide()}
             onClick={() => this.hide()}
-            // TODO: 待实现保存图片到本地的功能
             saveToLocalByLongPress={true}
             onSave={this.handleSaveImage}
             enableSwipeDown={true}
