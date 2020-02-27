@@ -13,6 +13,8 @@ import { Mentions } from 'antd';
 
 import './MsgSendBox.scss';
 
+const msgMaxLength = config.chat.maxLength;
+
 interface Props extends TRPGDispatchProp {
   userUUID: string;
   converseUUID: string;
@@ -385,6 +387,7 @@ class MsgSendBox extends React.Component<Props> {
             ref={this.inputMsgRef}
             className="input-msg"
             value={this.state.inputMsg}
+            maxLength={msgMaxLength}
             disabled={false}
             onChange={this.handleMsgInputChange}
             onKeyDownCapture={this.handleMsgInputKeyDown}
