@@ -2,7 +2,7 @@ import constants from '../constants';
 const {
   CREATE_GROUP_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
-  UPDATE_GROUP_INFO_SUCCESS,
+  UPDATE_GROUP_INFO,
   FIND_GROUP_REQUEST,
   FIND_GROUP_SUCCESS,
   REQUEST_JOIN_GROUP_SUCCESS,
@@ -194,13 +194,16 @@ export const getGroupInfo = function(uuid: string): TRPGAction {
  * @param groupUUID 团UUID
  * @param groupInfo 团信息
  */
-export const updateGroupInfo = function(groupUUID, groupInfo) {
+export const requestUpdateGroupInfo = function(
+  groupUUID: string,
+  groupInfo: object
+) {
   return function(dispatch, getState) {
     api.emit('group::updateInfo', { groupUUID, groupInfo }, function(data) {
       if (data.result) {
         let group = data.group;
         group.avatar = config.file.getAbsolutePath(group.avatar);
-        dispatch({ type: UPDATE_GROUP_INFO_SUCCESS, payload: group });
+        dispatch(updateGroupInfo(group));
         dispatch(hideModal());
         dispatch(showAlert('操作成功'));
       } else {
@@ -210,6 +213,9 @@ export const updateGroupInfo = function(groupUUID, groupInfo) {
     });
   };
 };
+export function updateGroupInfo(groupInfo: object): TRPGAction {
+  return { type: UPDATE_GROUP_INFO, payload: groupInfo };
+}
 
 export const findGroup = function(text, type) {
   return function(dispatch, getState) {

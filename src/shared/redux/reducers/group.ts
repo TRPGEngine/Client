@@ -9,7 +9,7 @@ const {
   RESET,
   CREATE_GROUP_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
-  UPDATE_GROUP_INFO_SUCCESS,
+  UPDATE_GROUP_INFO,
   FIND_GROUP_REQUEST,
   FIND_GROUP_SUCCESS,
   REQUEST_JOIN_GROUP_SUCCESS,
@@ -86,7 +86,7 @@ export default produce((draft: GroupState, action) => {
 
       // return state.mergeIn(['info', groupUUID], fromJS(action.payload)); // 合并
     }
-    case UPDATE_GROUP_INFO_SUCCESS: {
+    case UPDATE_GROUP_INFO: {
       const groupIndex = draft.groups.findIndex(
         (i) => i.uuid === action.payload.uuid
       );

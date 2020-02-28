@@ -4,7 +4,7 @@ import TRPGEditor from '@shared/editor';
 import { Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { TRPGState } from '@redux/types/__all__';
-import { updateGroupInfo } from '@redux/actions/group';
+import { requestUpdateGroupInfo } from '@redux/actions/group';
 import { GroupInfo } from '@redux/types/group';
 
 interface Props {}
@@ -21,7 +21,7 @@ const GroupRuleEditor: React.FC<Props> = React.memo((props) => {
 
   const handleSave = useCallback(() => {
     dispatch(
-      updateGroupInfo(groupUUID, {
+      requestUpdateGroupInfo(groupUUID, {
         rule: content,
       })
     );
