@@ -5,7 +5,7 @@ import { showAlert, showModal } from '@src/shared/redux/actions/ui';
 import {
   addGroupActor,
   removeGroupActor,
-  updateGroupActorInfo,
+  requestUpdateGroupActorInfo,
 } from '@src/shared/redux/actions/group';
 import { TabsController, Tab } from '../../../components/Tabs';
 import ModalPanel from '../../../components/ModalPanel';
@@ -42,7 +42,7 @@ interface Props {
   groupInfo: any;
   isGroupManager: boolean;
   templateCache: any;
-  updateGroupActorInfo: (
+  requestUpdateGroupActorInfo: (
     groupUUID: string,
     groupActorUUID: string,
     groupActorInfo: {}
@@ -84,7 +84,7 @@ class GroupActor extends React.Component<Props> {
    * @param groupActor 团人物卡
    */
   handleEditActorInfo(groupActor: GroupActorType) {
-    const { showModal, groupInfo, updateGroupActorInfo } = this.props;
+    const { showModal, groupInfo, requestUpdateGroupActorInfo } = this.props;
     const template = getTemplateInfoCache(
       _get(groupActor, 'actor.template_uuid')
     );
@@ -98,7 +98,7 @@ class GroupActor extends React.Component<Props> {
         data={getGroupActorInfo(groupActor)}
         layout={templateLayout}
         onSave={(data) =>
-          updateGroupActorInfo(groupInfo.uuid, groupActor.uuid, data)
+          requestUpdateGroupActorInfo(groupInfo.uuid, groupActor.uuid, data)
         }
       />
     );
@@ -307,11 +307,11 @@ export default connect(
       dispatch(addGroupActor(groupUUID, actorUUID)),
     removeGroupActor: (groupUUID: string, groupActorUUID: string) =>
       dispatch(removeGroupActor(groupUUID, groupActorUUID)),
-    updateGroupActorInfo: (
+    requestUpdateGroupActorInfo: (
       groupUUID: string,
       groupActorUUID: string,
       groupActorInfo: {}
     ) =>
-      dispatch(updateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)),
+      dispatch(requestUpdateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)),
   })
 )(GroupActor);

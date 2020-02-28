@@ -21,7 +21,7 @@ const {
   REMOVE_GROUP_ACTOR_SUCCESS,
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
-  UPDATE_GROUP_ACTOR_INFO_SUCCESS,
+  UPDATE_GROUP_ACTOR_INFO,
   UPDATE_GROUP_ACTOR_MAPPING,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
@@ -588,23 +588,20 @@ export const refuseGroupActor = function(groupUUID, groupActorUUID) {
 /**
  * 更新团人物的人物卡信息
  */
-export const updateGroupActorInfo = function(
+export const requestUpdateGroupActorInfo = function(
   groupUUID: string,
   groupActorUUID: string,
   groupActorInfo: {}
 ) {
   return function(dispatch, getState) {
     return api.emit(
-      'group::updateGroupActorInfo',
+      'group::requestUpdateGroupActorInfo',
       { groupActorUUID, groupActorInfo },
       function(data) {
         if (data.result) {
-          dispatch({
-            type: UPDATE_GROUP_ACTOR_INFO_SUCCESS,
-            groupUUID,
-            groupActorUUID,
-            groupActorInfo,
-          });
+          dispatch(
+            updateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)
+          );
           dispatch(hideModal());
           dispatch(showAlert('保存完毕!'));
         } else {
@@ -613,6 +610,18 @@ export const updateGroupActorInfo = function(
         }
       }
     );
+  };
+};
+export const updateGroupActorInfo = function(
+  groupUUID: string,
+  groupActorUUID: string,
+  groupActorInfo: {}
+): TRPGAction {
+  return {
+    type: UPDATE_GROUP_ACTOR_INFO,
+    groupUUID,
+    groupActorUUID,
+    groupActorInfo,
   };
 };
 

@@ -5,7 +5,7 @@ import ActorProfile from '@web/components/modal/ActorProfile';
 import {
   agreeGroupActor,
   refuseGroupActor,
-  updateGroupActorInfo,
+  requestUpdateGroupActorInfo,
 } from '@shared/redux/actions/group';
 import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
 
@@ -81,11 +81,11 @@ export default connect(
       dispatch(agreeGroupActor(groupUUID, groupActorUUID)),
     refuseGroupActor: (groupUUID, groupActorUUID) =>
       dispatch(refuseGroupActor(groupUUID, groupActorUUID)),
-    updateGroupActorInfo: (
+    requestUpdateGroupActorInfo: (
       groupUUID: string,
       groupActorUUID: string,
       groupActorInfo: {}
     ) =>
-      dispatch(updateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)),
+      dispatch(requestUpdateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)),
   })
 )(GroupActorCheck);
