@@ -201,6 +201,7 @@
           return masteryBase || _get(skillInfo, 'base', 0);
         }
 
+        setGlobal('getSkillNameDetail', getSkillNameDetail);
         setGlobal('getSkillInfo', getSkillInfo);
         setGlobal('getSkillSubNames', getSkillSubNames);
         setGlobal('getSkillBase', getSkillBase);
@@ -208,7 +209,7 @@
         function getJobDuty() {
           const dutys = _get(global, 'selectJobInfo.duty');
           return (dutys || [])
-            .map((duty) => ({skillName: duty}));
+            .map((duty) => ({name: 'skill-' + getSkillNameDetail(duty).name, skillName: duty}));
         }
         setGlobal('getJobDuty', getJobDuty);
       </Script>
@@ -229,7 +230,7 @@
             <tr>
               <td>
                 <div className="skill-name">
-                  <span>{{props.skillName}}</span>
+                  <span>{{global.getSkillNameDetail(props.skillName).name}}</span>
                   <Hidden :if="!_isArray(global.getSkillInfo(props.skillName).sub)">
                     <Select name="专攻" :options="getSkillSubNames(props.skillName)" hideLabel="true" />
                   </Hidden>
@@ -285,18 +286,18 @@
                   </tbody>
                 </table>
 
-                <Hidden :if="!(Array.isArray(global.selectJobInfo.dutySkillOptions))">
+                <Hidden :if="!(_isArray(_get(global, 'selectJobInfo.dutySkillOptions')))">
                   <p style="margin: 10px 0">可选本职职业:</p>
                   <Define name="skillOption">
                     <li>{{props.item}}</li>
                   </Define>
                   <ul>
-                    <ForEach name="skillOption" define="skillOption" :data="(global.selectJobInfo.dutySkillOptions || []).map((x) => ({item: x.join('或')}))" />
+                    <ForEach name="skillOption" define="skillOption" :data="(_get(global, 'selectJobInfo.dutySkillOptions') || []).map((x) => ({item: x.join('或')}))" />
                   </ul>
                 </Hidden>
 
-                <Hidden :if="!(global.selectJobInfo.dutySocial > 0)">
-                  <center style="margin: 10px 0">你可以选择 {{global.selectJobInfo.dutySocial}} 项社交技能作为本职技能(取悦,话术,恐吓,说服)</center>
+                <Hidden :if="!(_get(global, 'selectJobInfo.dutySocial', 0) > 0)">
+                  <center style="margin: 10px 0">你可以选择 {{_get(global, 'selectJobInfo.dutySocial', 0)}} 项社交技能作为本职技能(取悦,话术,恐吓,说服)</center>
                 </Hidden>
                 <Hidden :if="!_isNil(global.selectJobInfo)">
                   <center style="margin: 10px 0">请先选择职业</center>
@@ -432,6 +433,24 @@
               <span>本职技能点</span>
               <Tip>{{_get(global, "selectJobInfo.dutySkill")}}</Tip>
               <span>{{jobSkillPoint}}</span>
+            </p>
+            <Script>
+              function getAllSkill(allData) {
+                return debug(_keys(allData)
+                  .filter(x => x.startsWith('skill-'))
+                  .map((key) => allData[key]))
+              }
+              setGlobal('getAllSkill', getAllSkill);
+            </Script>
+            <p>
+              <span>已加点数</span>
+              <Tip>已加所有点数之和</Tip>
+              <span>{{SUM(getAllSkill(getStateData()).map((x) => _get(x, 'addedPoint', 0)))}}</span>
+            </p>
+            <p>
+              <span>已加职业点数</span>
+              <Tip>已加所有职业点之和</Tip>
+              <span>{{SUM(getAllSkill(getStateData()).map((x) => _get(x, '职业', 0)))}}</span>
             </p>
           </FieldSet>
         </Col>

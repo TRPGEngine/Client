@@ -15,11 +15,12 @@ export const TagForEachShared: TagComponent<TagProps> = TMemo((props) => {
 
   const items = useMemo(() => {
     return data.map((item, i) => {
+      const useName = item.name ?? `${props.name}-${i}`;
       return (
         <UseDefineComponent
           {...item}
           key={`${props.name}-${i}`}
-          name={`${props.name}-${i}`}
+          name={useName}
           define={props.define}
         />
       );
