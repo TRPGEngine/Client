@@ -11,6 +11,7 @@ import _isString from 'lodash/isString';
 import _toNumber from 'lodash/toNumber';
 import _isArray from 'lodash/isArray';
 import _indexOf from 'lodash/indexOf';
+import _flatten from 'lodash/flatten';
 import Debug from 'debug';
 const debug = Debug('trpg:layout:sandbox');
 
@@ -35,6 +36,7 @@ export function generateSandboxContext(context: XMLBuilderContext) {
     _isArray,
     _isString,
     _indexOf,
+    _flatten,
     AND(a: any, b: any) {
       return a && b;
     },
