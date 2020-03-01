@@ -10,6 +10,7 @@ import { parseDataText } from '../../processor';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';
 import { getStateValue } from '../utils';
 import { TMemo } from '@shared/components/TMemo';
+import _isUndefined from 'lodash/isUndefined';
 
 interface TagProps {
   deps: string | string[];
@@ -17,6 +18,13 @@ interface TagProps {
   target: string;
 }
 export const TagComputedShared: TagComponent<TagProps> = TMemo((props) => {
+  if (_isUndefined(props.target)) {
+    console.warn('Tag Computed Required Target');
+  }
+  if (_isUndefined(props.expression)) {
+    console.warn('Tag Computed Required Expression');
+  }
+
   const context = useContext(LayoutStateContext);
   const [_, setStateValue] = useLayoutFieldState(props.target);
 

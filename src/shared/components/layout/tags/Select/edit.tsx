@@ -7,7 +7,10 @@ import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
 const Option = Select.Option;
 const OptGroup = Select.OptGroup;
 import { TMemo } from '@shared/components/TMemo';
+import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
+import _flatten from 'lodash/flatten';
+import { WarningFlag } from './WarningFlag';
 
 interface TagProps {
   name: string;
@@ -15,17 +18,24 @@ interface TagProps {
   desc?: string;
   showSearch?: boolean | string;
   default?: string;
+  strict?: boolean; // 是否开启严格模式, 如果开启严格模式则当值在数据中心不存在时, 显示一个警告
 }
 export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
   const { label, stateValue, setStateValue } = useLayoutFormData(props);
 
-  const opt = useMemo(() => {
-    let options = props.options;
-
-    if (typeof options === 'string') {
-      options = options.split(',');
+  const options = useMemo(() => {
+    if (typeof props.options === 'string') {
+      return props.options.split(',');
     }
 
+    if (!Array.isArray(props.options)) {
+      return [];
+    }
+
+    return props.options;
+  }, [props.options]);
+
+  const opt = useMemo(() => {
     if (Array.isArray(options)) {
       return options.map((item) => {
         if (_isString(item)) {
@@ -51,7 +61,7 @@ export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
     }
 
     return null;
-  }, [props.options]);
+  }, [options]);
 
   const showSearch = useMemo(() => {
     if (typeof props.showSearch === 'string') {
@@ -60,6 +70,35 @@ export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
       return props.showSearch;
     }
   }, [props.showSearch]);
+
+  const strict = useMemo(() => {
+    if (typeof props.strict === 'string') {
+      return is(props.strict);
+    } else {
+      return props.strict;
+    }
+  }, [props.strict]);
+  const strictWarning = useMemo(() => {
+    if (_isNil(stateValue) || stateValue === '') {
+      return false;
+    }
+
+    if (strict === true) {
+      const items = _flatten(
+        options.map((option) => {
+          if (typeof option === 'string') {
+            return [option];
+          } else {
+            return option.items ?? [];
+          }
+        })
+      ); // 所有可用值
+
+      return !items.includes(String(stateValue));
+    }
+
+    return false;
+  }, [strict, stateValue]);
 
   const FormContainer = useLayoutFormContainer(props);
 
@@ -83,9 +122,10 @@ export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
         >
           {opt}
         </Select>
+        {strictWarning && <WarningFlag />}
       </FormContainer>
     ),
-    [label, showSearch, stateValue, handleChange, opt]
+    [label, showSearch, stateValue, handleChange, opt, strictWarning]
   );
 });
 TagSelectEdit.displayName = 'TagSelectEdit';

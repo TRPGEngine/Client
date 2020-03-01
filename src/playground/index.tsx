@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import styledTheme from '@shared/utils/theme';
 import App from './App';
 
+import '@web/assets/css/iconfont.css';
 import './index.less';
 
 ReactDom.render(

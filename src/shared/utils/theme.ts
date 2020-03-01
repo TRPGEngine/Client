@@ -56,6 +56,7 @@ const styledTheme = {
     tan: '#D0A282',
     downy: '#65CAB0',
     gold: '#FFD700',
+    warning: '#faad14',
     'alizarin-crimson': '#EC2121',
     transparent90: 'rgba(0,0,0,0.1)',
   },
