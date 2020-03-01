@@ -5,11 +5,13 @@ import { Select } from 'antd';
 import { is } from '@shared/utils/string-helper';
 import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
 const Option = Select.Option;
+const OptGroup = Select.OptGroup;
 import { TMemo } from '@shared/components/TMemo';
+import _isString from 'lodash/isString';
 
 interface TagProps {
   name: string;
-  options: string | string[];
+  options: string | Array<string | { name: string; items: string[] }>;
   desc?: string;
   showSearch?: boolean | string;
   default?: string;
@@ -17,13 +19,38 @@ interface TagProps {
 export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
   const { label, stateValue, setStateValue } = useLayoutFormData(props);
 
-  const opt: string[] = useMemo(() => {
-    const options = props.options;
+  const opt = useMemo(() => {
+    let options = props.options;
+
     if (typeof options === 'string') {
-      return options.split(',');
+      options = options.split(',');
     }
 
-    return options;
+    if (Array.isArray(options)) {
+      return options.map((item) => {
+        if (_isString(item)) {
+          // 无分组
+          return (
+            <Option key={item} value={item}>
+              {item}
+            </Option>
+          );
+        } else {
+          // 有分组
+          return (
+            <OptGroup label={item.name}>
+              {(item.items || []).map((item) => (
+                <Option key={item} value={item}>
+                  {item}
+                </Option>
+              ))}
+            </OptGroup>
+          );
+        }
+      });
+    }
+
+    return null;
   }, [props.options]);
 
   const showSearch = useMemo(() => {
@@ -54,11 +81,7 @@ export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
           value={stateValue}
           onChange={handleChange}
         >
-          {(opt ?? []).map((item) => (
-            <Option key={item} value={item}>
-              {item}
-            </Option>
-          ))}
+          {opt}
         </Select>
       </FormContainer>
     ),
