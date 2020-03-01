@@ -26,6 +26,7 @@ import { TagInputNumberEdit } from './InputNumber/edit';
 import { TagStyledShared } from './Styled/shared';
 import { TagScriptShared } from './Script/shared';
 import { TagForEachShared } from './ForEach/shared';
+import { TagStaticShared } from './Static/shared';
 
 // 展示数据组件
 registerTag('Template', TagTemplateShared);
@@ -69,6 +70,8 @@ registerTag('Use', TagUseShared);
 registerTag('Define', TagDefineShared);
 
 registerTag('Var', TagVarShared);
+
+registerTag('Static', TagStaticShared);
 
 registerTag('Computed', TagComputedShared);
 
