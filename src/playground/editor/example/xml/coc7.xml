@@ -543,6 +543,10 @@
             </Row>
             <TextArea name="资产说明" />
           </FieldSet>
+
+          <FieldSet label="随身物品">
+            <TextArea name="随身物品" rows="11" hideLabel="true" />
+          </FieldSet>
         </Col>
         <Col sm="12">
           <FieldSet label="背景故事">
@@ -559,5 +563,23 @@
         </Col>
       </Row>
     </FieldSet>
+
+    <Row>
+      <Col sm="8">
+        <FieldSet label="调查员经历">
+          <TextArea name="调查员经历" hideLabel="true" rows="8" />
+        </FieldSet>
+      </Col>
+      <Col sm="8">
+        <FieldSet label="调查员伙伴">
+          <TextArea name="调查员伙伴" hideLabel="true" rows="8" />
+        </FieldSet>
+      </Col>
+      <Col sm="8">
+        <FieldSet label="克苏鲁神话">
+          <TextArea name="克苏鲁神话" hideLabel="true" rows="8" />
+        </FieldSet>
+      </Col>
+    </Row>
   </div>
 </Template>
