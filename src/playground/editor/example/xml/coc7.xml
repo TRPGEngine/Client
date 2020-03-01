@@ -530,7 +530,7 @@
         <Col sm="12">
           <FieldSet label="资产情况">
             <Computed target="CR" deps="skill-信用评级.addedPoint" expression="_get(data, 'skill-信用评级.addedPoint', 0)" />
-            <Computed target="CurrFund" deps="CR,时代" expression="_find(fund[时代], (x) => _inRange(CR, x.range[0], x.range[1]))" />
+            <Computed target="CurrFund" deps="CR,时代" expression="_find(_get(fund, '时代', []), (x) => _inRange(CR, x.range[0], x.range[1]))" />
             <Row>
               <Col sm="12">
                 <p>信用评级: {{_get(CurrFund, 'desc', '')}}</p>
@@ -546,7 +546,15 @@
         </Col>
         <Col sm="12">
           <FieldSet label="背景故事">
-
+            <Input name="个人描述	" />
+            <Input name="思想/信念" />
+            <Input name="重要之人" />
+            <Input name="意义非凡之地" />
+            <Input name="宝贵之物" />
+            <Input name="特点" />
+            <Input name="伤口/疤痕" />
+            <Input name="恐惧症/狂躁症" />
+            <TextArea name="详细描述" rows="4" />
           </FieldSet>
         </Col>
       </Row>

@@ -8,6 +8,7 @@ import { TMemo } from '@shared/components/TMemo';
 
 interface TagProps extends TagInputProps {
   autosize: boolean | AutoSizeType;
+  rows: number;
 }
 export const TagTextAreaEdit: TagComponent<TagProps> = TMemo((props) => {
   const { label, placeholder, stateValue, setStateValue } = useLayoutFormData(
@@ -15,6 +16,7 @@ export const TagTextAreaEdit: TagComponent<TagProps> = TMemo((props) => {
   );
 
   const autosize = useMemo(() => props.autosize, []); // autosize 只在最初获取一次。不会接受后续的动态变更
+  const rows = props.rows;
 
   const FormContainer = useLayoutFormContainer(props);
 
@@ -32,13 +34,14 @@ export const TagTextAreaEdit: TagComponent<TagProps> = TMemo((props) => {
       <FormContainer label={label}>
         <TextArea
           autosize={autosize}
+          rows={rows}
           placeholder={placeholder}
           value={stateValue}
           onChange={handleChange}
         />
       </FormContainer>
     ),
-    [label, autosize, placeholder, stateValue, handleChange]
+    [label, autosize, rows, placeholder, stateValue, handleChange]
   );
 });
 TagTextAreaEdit.displayName = 'TagTextAreaEdit';
