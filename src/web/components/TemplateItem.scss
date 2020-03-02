@@ -20,13 +20,12 @@
     border-bottom: 1px solid #dddcdd;
     padding: 6px;
     font-weight: bold;
-    overflow: hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
     cursor: pointer;
     display: flex;
+
     .name {
       flex: 1;
+      @include one-line;
     }
     .actions {
       display: flex;
@@ -38,8 +37,11 @@
 
   .desc {
     font-size: 14px;
-    padding: 6px 0;
+    margin: 6px 0;
     color: #333;
+    line-height: 1.5em;
+    height: 14px * 2 * 1.5;
+    overflow: hidden;
   }
 
   .footer {

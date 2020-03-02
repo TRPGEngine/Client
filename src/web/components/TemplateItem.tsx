@@ -36,19 +36,24 @@ class TemplateItem extends React.PureComponent<Props> {
   }
 
   render() {
+    const { name, desc, creator, time } = this.props;
     return (
       <div className="template-item">
         <div className="header">
-          <div className="name">{this.props.name}</div>
+          <Tooltip title={name}>
+            <div className="name">{name}</div>
+          </Tooltip>
           {this.getActions()}
         </div>
-        <div className="desc">{this.props.desc}</div>
+        <Tooltip title={desc} trigger="click">
+          <div className="desc">{desc}</div>
+        </Tooltip>
         <div className="footer">
-          <div className="creator" title={this.props.creator}>
-            {this.props.creator}
+          <div className="creator" title={creator}>
+            {creator}
           </div>
           <div className="time">
-            {moment(this.props.time).format('YYYY-MM-DD HH:mm:ss')}
+            {moment(time).format('YYYY-MM-DD HH:mm:ss')}
           </div>
         </div>
       </div>

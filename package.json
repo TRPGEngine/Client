@@ -27,7 +27,7 @@
     "portal:dev": "cross-env NODE_ENV=development webpack-dev-server --progress --color --config ./build/config/webpack.portal.config.js",
     "portal:build": "cross-env NODE_ENV=production webpack --progress --color --config ./build/config/webpack.portal.config.js",
     "playground:dev": "cross-env NODE_ENV=development NODE_OPTIONS='--max_old_space_size=4096' webpack-dev-server --progress --colors --config ./build/config/webpack.playground.config.js",
-    "playground:build": "cross-env NODE_ENV=production webpack --progress --colors --config ./build/config/webpack.playground.config.js",
+    "playground:build": "cross-env NODE_ENV=production NODE_OPTIONS='--max_old_space_size=4096' webpack --progress --colors --config ./build/config/webpack.playground.config.js",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
