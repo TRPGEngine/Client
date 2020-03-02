@@ -2,12 +2,19 @@ import React from 'react';
 import moment from 'moment';
 
 import './TemplateItem.scss';
+import { Tooltip } from 'antd';
 
-class TemplateItem extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+interface Props {
+  canEdit: boolean;
+  name: string;
+  desc: string;
+  creator: string;
+  time: string;
+  onCreate?: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
+}
+class TemplateItem extends React.PureComponent<Props> {
   getActions() {
     return (
       <div className="actions">
