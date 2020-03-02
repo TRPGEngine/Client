@@ -1,5 +1,3 @@
-import config from '@shared/project.config';
-
 /**
  * 示例代码
  */
@@ -22,12 +20,10 @@ const exampleLayout = [
     label: 'Function',
     value: require('./xml/function.xml').default,
   },
-];
-if (config.environment === 'development') {
-  exampleLayout.push({
+  {
     label: 'CoC7',
     value: require('./xml/coc7.xml').default,
-  });
-}
+  },
+];
 
 export { exampleLayout };
