@@ -4,6 +4,10 @@ import config from '../../../shared/project.config';
 import { MessageProps } from '@shared/components/MessageHandler';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
+import Avatar from '../Avatar';
+import { Popover } from 'antd';
+import PopoverUserInfo from '../popover/UserInfo';
+import PopoverMsgSenderInfo from '../popover/MsgSenderInfo';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -71,7 +75,25 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
         </div>
         <div className="content">
           <div className="avatar">
-            <img src={this.getAvatarUrl()} />
+            {me ? (
+              <Avatar
+                name={this.getSenderName()}
+                src={this.getAvatarUrl()}
+                size={38}
+              />
+            ) : (
+              <Popover
+                placement="right"
+                trigger="click"
+                content={<PopoverMsgSenderInfo payload={info} />}
+              >
+                <Avatar
+                  name={this.getSenderName()}
+                  src={this.getAvatarUrl()}
+                  size={38}
+                />
+              </Popover>
+            )}
           </div>
           <div className="body">{this.getContent()}</div>
         </div>

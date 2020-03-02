@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { selectActor } from '@src/shared/redux/actions/actor';
 import { showAlert, showModal } from '@src/shared/redux/actions/ui';
 import {
   addGroupActor,
   removeGroupActor,
-  updateGroupActorInfo,
+  requestUpdateGroupActorInfo,
 } from '@src/shared/redux/actions/group';
 import { TabsController, Tab } from '../../../components/Tabs';
 import ModalPanel from '../../../components/ModalPanel';
@@ -27,6 +27,7 @@ import _get from 'lodash/get';
 import './GroupActor.scss';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import { TRPGState } from '@redux/types/__all__';
+import { isGroupManager } from '@shared/model/group';
 
 const GroupActorAction = styled.div`
   padding: 4px 10px;
@@ -39,15 +40,16 @@ interface Props {
   addGroupActor: any;
   removeGroupActor: any;
   groupInfo: any;
+  isGroupManager: boolean;
   templateCache: any;
-  updateGroupActorInfo: (
+  requestUpdateGroupActorInfo: (
     groupUUID: string,
     groupActorUUID: string,
     groupActorInfo: {}
   ) => void;
 }
 class GroupActor extends React.Component<Props> {
-  handleSendGroupActorCheck() {
+  handleSendGroupActorCheck = () => {
     if (!this.props.selectedGroupUUID) {
       showAlert('请选择一个团来提交您的人物');
     }
@@ -59,7 +61,7 @@ class GroupActor extends React.Component<Props> {
         }}
       />
     );
-  }
+  };
 
   // 查看人物卡
   handleShowActorProfile(actor: ActorType, overwritedActorData: ActorDataType) {
@@ -82,7 +84,7 @@ class GroupActor extends React.Component<Props> {
    * @param groupActor 团人物卡
    */
   handleEditActorInfo(groupActor: GroupActorType) {
-    const { showModal, groupInfo, updateGroupActorInfo } = this.props;
+    const { showModal, groupInfo, requestUpdateGroupActorInfo } = this.props;
     const template = getTemplateInfoCache(
       _get(groupActor, 'actor.template_uuid')
     );
@@ -96,7 +98,7 @@ class GroupActor extends React.Component<Props> {
         data={getGroupActorInfo(groupActor)}
         layout={templateLayout}
         onSave={(data) =>
-          updateGroupActorInfo(groupInfo.uuid, groupActor.uuid, data)
+          requestUpdateGroupActorInfo(groupInfo.uuid, groupActor.uuid, data)
         }
       />
     );
@@ -172,22 +174,26 @@ class GroupActor extends React.Component<Props> {
                       <i className="iconfont">&#xe61b;</i>
                     </button>
                   </Tooltip>
-                  <Tooltip title="编辑">
-                    <button
-                      onClick={() => this.handleEditActorInfo(groupActor)}
-                    >
-                      <i className="iconfont">&#xe612;</i>
-                    </button>
-                  </Tooltip>
-                  <Tooltip title="删除">
-                    <button
-                      onClick={() =>
-                        this.handleRemoveGroupActor(groupActorUUID)
-                      }
-                    >
-                      <i className="iconfont">&#xe76b;</i>
-                    </button>
-                  </Tooltip>
+                  {this.props.isGroupManager && (
+                    <Fragment>
+                      <Tooltip title="编辑">
+                        <button
+                          onClick={() => this.handleEditActorInfo(groupActor)}
+                        >
+                          <i className="iconfont">&#xe612;</i>
+                        </button>
+                      </Tooltip>
+                      <Tooltip title="删除">
+                        <button
+                          onClick={() =>
+                            this.handleRemoveGroupActor(groupActorUUID)
+                          }
+                        >
+                          <i className="iconfont">&#xe76b;</i>
+                        </button>
+                      </Tooltip>
+                    </Fragment>
+                  )}
                 </div>
               </div>
             </div>
@@ -233,11 +239,13 @@ class GroupActor extends React.Component<Props> {
                       <i className="iconfont">&#xe61b;</i>
                     </button>
                   </Tooltip>
-                  <Tooltip title="审批">
-                    <button onClick={() => this.handleApprove(item)}>
-                      <i className="iconfont">&#xe83f;</i>
-                    </button>
-                  </Tooltip>
+                  {this.props.isGroupManager && (
+                    <Tooltip title="审批">
+                      <button onClick={() => this.handleApprove(item)}>
+                        <i className="iconfont">&#xe83f;</i>
+                      </button>
+                    </Tooltip>
+                  )}
                 </div>
               </div>
             </div>
@@ -266,7 +274,7 @@ class GroupActor extends React.Component<Props> {
               </div>
             </div>
             <GroupActorAction>
-              <button onClick={() => this.handleSendGroupActorCheck()}>
+              <button onClick={this.handleSendGroupActorCheck}>
                 <i className="iconfont">&#xe604;</i>申请审核
               </button>
             </GroupActorAction>
@@ -280,11 +288,14 @@ class GroupActor extends React.Component<Props> {
 export default connect(
   (state: TRPGState) => {
     const selectedGroupUUID = state.group.selectedGroupUUID;
+    const groupInfo = state.group.groups.find(
+      (group) => group.uuid === selectedGroupUUID
+    );
+    const userUUID = state.user.info.uuid;
     return {
       selectedGroupUUID,
-      groupInfo: state.group.groups.find(
-        (group) => group.uuid === selectedGroupUUID
-      ),
+      groupInfo,
+      isGroupManager: isGroupManager(groupInfo, userUUID),
       templateCache: state.cache.template,
     };
   },
@@ -296,11 +307,11 @@ export default connect(
       dispatch(addGroupActor(groupUUID, actorUUID)),
     removeGroupActor: (groupUUID: string, groupActorUUID: string) =>
       dispatch(removeGroupActor(groupUUID, groupActorUUID)),
-    updateGroupActorInfo: (
+    requestUpdateGroupActorInfo: (
       groupUUID: string,
       groupActorUUID: string,
       groupActorInfo: {}
     ) =>
-      dispatch(updateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)),
+      dispatch(requestUpdateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)),
   })
 )(GroupActor);

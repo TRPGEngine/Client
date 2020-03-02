@@ -44,12 +44,14 @@ interface ProjectConfig {
   version: string;
   environment: string;
   platform: string;
+  isSSL: boolean;
   io: {
     protocol: 'wss' | 'ws';
     host: string;
     port: string;
   };
   chat: {
+    maxLength: number;
     isWriting: {
       throttle: number;
       timeout: number;
@@ -105,12 +107,14 @@ const config: ProjectConfig = {
   version: require('../../package.json').version,
   environment,
   platform,
+  isSSL,
   io: {
     protocol: isSSL ? 'wss' : 'ws',
     host: currentHost,
     port: apiPort,
   },
   chat: {
+    maxLength: 800, // 聊天输入框最大长度, 数据库存1000, 前端预留一点存800
     isWriting: {
       throttle: 800, // 节流时间，即至少多少毫秒才会发出一个正在写的信息
       timeout: 2000, // 超时时间，即多少毫秒后仍未接收到正在写操作则自动视为已经停止写

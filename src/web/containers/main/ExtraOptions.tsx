@@ -21,6 +21,7 @@ import './ExtraOptions.scss';
 import { showPortal } from '@web/redux/action/ui';
 import DevContainer from '@web/components/DevContainer';
 import { PortalView } from '@web/components/PortalView';
+import { UserSelector } from '@web/components/modal/UserSelector';
 
 interface Props extends DispatchProp<any> {}
 class ExtraOptions extends React.Component<Props> {
@@ -77,6 +78,10 @@ class ExtraOptions extends React.Component<Props> {
         console.log('正在尝试自动重新登录');
         this.props.dispatch(loginWithToken(uuid, token));
       })();
+    } else if (menu === 'refresh') {
+      window.localStorage.clear();
+      window.sessionStorage.clear();
+      window.location.reload();
     } else if (menu === 'help') {
       this.props.dispatch(
         showModal(
@@ -106,6 +111,8 @@ class ExtraOptions extends React.Component<Props> {
           body: 'test',
         })
       );
+    } else if (menu === 'userSelector') {
+      this.props.dispatch(showModal(<UserSelector />));
     }
 
     this.setState({ show: '' });
@@ -124,6 +131,9 @@ class ExtraOptions extends React.Component<Props> {
             </li>
             <li onClick={() => this.handleClickMenu('createTestWindow')}>
               新建窗口(测试)
+            </li>
+            <li onClick={() => this.handleClickMenu('userSelector')}>
+              选择人物(测试)
             </li>
           </DevContainer>
           {/* <li onClick={() => this.handleClickMenu('templateCreate')}>
@@ -149,6 +159,7 @@ class ExtraOptions extends React.Component<Props> {
           {config.environment === 'development' ? (
             <li onClick={() => this.handleClickMenu('relogin')}>重新登录</li>
           ) : null}
+          <li onClick={() => this.handleClickMenu('refresh')}>清理缓存</li>
           <li onClick={() => this.handleClickMenu('help')}>帮助反馈</li>
           <li onClick={() => this.handleClickMenu('disclaimer')}>免责声明</li>
           <li onClick={() => this.handleClickMenu('blog')}>开发者博客</li>

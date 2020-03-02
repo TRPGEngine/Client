@@ -7,9 +7,6 @@ const {
   GET_TEMPLATE_SUCCESS,
   GET_SUGGEST_TEMPLATES_SUCCESS,
   FIND_TEMPLATE_SUCCESS,
-  CREATE_TEMPLATE_SUCCESS,
-  UPDATE_TEMPLATE_SUCCESS,
-  REMOVE_TEMPLATE_SUCCESS,
   SET_EDITED_TEMPLATE,
   SELECT_TEMPLATE,
   CREATE_ACTOR_SUCCESS,
@@ -66,40 +63,6 @@ export default produce((draft: ActorState, action) => {
       draft.findingResult = action.payload;
       return;
     // return state.set('findingResult', immutable.fromJS(action.payload));
-    case CREATE_TEMPLATE_SUCCESS:
-      draft.currentEditedTemplate = action.payload;
-      draft.selfTemplate.push(action.payload);
-      return;
-    // return state
-    //   .set('currentEditedTemplate', immutable.fromJS(action.payload))
-    //   .update('selfTemplate', (list) =>
-    //     list.push(immutable.fromJS(action.payload))
-    //   );
-    case UPDATE_TEMPLATE_SUCCESS: {
-      draft.currentEditedTemplate = action.payload;
-      const uuid = action.payload.uuid;
-      const i = draft.selfTemplate.findIndex((item) => item.uuid === uuid);
-      if (i >= 0) {
-        draft.selfTemplate[i] = action.payload;
-      }
-      return;
-      // return state
-      //   .set('currentEditedTemplate', immutable.fromJS(action.payload))
-      //   .update('selfTemplate', (list) =>
-      //     updateSelfTemplate(list, action.payload.uuid, action.payload)
-      //   );
-    }
-    case REMOVE_TEMPLATE_SUCCESS:
-      _remove(draft.selfTemplate, (item) => item.uuid === action.uuid);
-      return;
-    // return state.update('selfTemplate', (list) => {
-    //   for (var i = 0; i < list.size; i++) {
-    //     if (list.getIn([i, 'uuid']) === action.uuid) {
-    //       return list.delete(i);
-    //     }
-    //   }
-    //   return list;
-    // });
     case GET_TEMPLATE_SUCCESS:
       if (action.uuid) {
         const i = draft.selfTemplate.findIndex(

@@ -59,6 +59,11 @@ export const routes: RouteConfig[] = [
     component: TLoadable(() => import('@portal/routes/group/actor/edit')),
   },
   {
+    title: '创建模板',
+    path: '/template/create',
+    component: TLoadable(() => import('@portal/routes/template/create')),
+  },
+  {
     title: '创建笔记',
     path: '/note/create',
     component: TLoadable(() => import('@portal/routes/note/create')),
@@ -77,6 +82,11 @@ export const routes: RouteConfig[] = [
     title: '免责声明',
     path: '/about/disclaimer',
     component: TLoadable(() => import('@portal/routes/about/disclaimer')),
+  },
+  {
+    title: 'Portal版本信息',
+    path: '/about/health',
+    component: TLoadable(() => import('@portal/routes/about/health')),
   },
   {
     title: '地图demo',

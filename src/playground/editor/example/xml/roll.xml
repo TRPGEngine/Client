@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Template>
+  <RollBtn label="随机投骰1d100">
+    <Item dice="1d100" target="diceRes" />
+  </RollBtn>
+  <p>投骰结果: {{diceRes || '尚无结果'}}</p>
+
+  <RollBtn label="投掷多个数据">
+    <Item dice="1d100" target="diceRes1" />
+    <Item dice="1d100" target="diceRes2" />
+    <Item dice="1d100" target="diceRes3" />
+    <Item dice="1d100" target="diceRes4" />
+    <Item dice="1d100" target="diceRes5" />
+    <Item dice="1d100" target="diceRes6" />
+  </RollBtn>
+  <p>
+    <span>投骰结果:</span>
+    <ul>
+      <li>{{diceRes1}}</li>
+      <li>{{diceRes2}}</li>
+      <li>{{diceRes3}}</li>
+      <li>{{diceRes4}}</li>
+      <li>{{diceRes5}}</li>
+      <li>{{diceRes6}}</li>
+    </ul>
+  </p>
+
+  <p>投骰按钮在详情模式下不会显示</p>
+</Template>

@@ -29,7 +29,7 @@ const Container = styled.div`
 interface Props {
   groupUUID: string;
 }
-const GroupInfo: React.FC<Props> = React.memo((props) => {
+const PopoverGroupInfo: React.FC<Props> = React.memo((props) => {
   const groupInfo = useCachedGroupInfo(props.groupUUID);
 
   const avatar = useMemo(
@@ -62,6 +62,6 @@ const GroupInfo: React.FC<Props> = React.memo((props) => {
     </Container>
   );
 });
-GroupInfo.displayName = 'GroupInfo';
+PopoverGroupInfo.displayName = 'PopoverGroupInfo';
 
-export default GroupInfo;
+export default PopoverGroupInfo;

@@ -1,7 +1,8 @@
 import React from 'react';
-import XMLBuilder, { DataMap } from '@src/shared/layout/XMLBuilder';
+import XMLBuilder, { DataMap } from '@shared/components/layout/XMLBuilder';
 import { on, off, postMessage } from '@portal/utils/event';
-const exampleXml = require('@shared/layout/example/wuxian-layout.xml').default;
+const exampleXml = require('@shared/components/layout/example/wuxian-layout.xml')
+  .default;
 
 /**
  * TODO

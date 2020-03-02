@@ -3,6 +3,9 @@ import { Text, TextInput } from 'react-native';
 import styled from 'styled-components/native';
 import { TInput } from '../../components/TComponent';
 import { Icon } from '@ant-design/react-native';
+import config from '@shared/project.config';
+
+const msgMaxLength = config.chat.maxLength;
 
 const InputViewContainer = styled.View`
   padding: 6px 12px;
@@ -51,7 +54,7 @@ class InputView extends React.PureComponent<Props> {
           onChangeText={onChange}
           onFocus={onFocus}
           multiline={true}
-          maxLength={100}
+          maxLength={msgMaxLength}
           textAlignVertical="center"
           value={value}
         />

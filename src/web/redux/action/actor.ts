@@ -56,10 +56,10 @@ export function updateActor(
       function(data) {
         dispatch(hideLoading());
         dispatch(hideAlert());
-        dispatch(hideModal());
         if (data.result) {
           let actor = data.actor;
           actor.avatar = config.file.getAbsolutePath(actor.avatar);
+          dispatch(hideModal()); // 保存成功后再隐藏模态框
           dispatch({ type: UPDATE_ACTOR_SUCCESS, payload: actor });
         } else {
           dispatch(showAlert(data.msg));

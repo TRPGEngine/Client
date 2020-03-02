@@ -10,7 +10,7 @@ import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import { showModal } from '@redux/actions/ui';
-import GroupInfo from './popover/GroupInfo';
+import PopoverGroupInfo from './popover/GroupInfo';
 import { Popover } from 'antd';
 
 import './FindResultItem.scss';
@@ -118,7 +118,7 @@ class FindResultItem extends React.Component<Props> {
         <div className="find-result-item">
           <Popover
             placement="right"
-            content={<GroupInfo groupUUID={info.uuid} />}
+            content={<PopoverGroupInfo groupUUID={info.uuid} />}
           >
             <div className="avatar">
               <img src={info.avatar || config.defaultImg.getGroup(info.name)} />

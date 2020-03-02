@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Template>
+  <Row>
+    <Col sm="12" style="border: 1px solid #ccc;">col-12</Col>
+    <Col sm="12" style="border: 1px solid #ccc;">col-12</Col>
+  </Row>
+  <Row>
+    <Col sm="8" style="border: 1px solid #ccc;">col-8</Col>
+    <Col sm="8" style="border: 1px solid #ccc;">col-8</Col>
+    <Col sm="8" style="border: 1px solid #ccc;">col-8</Col>
+  </Row>
+  <Row>
+    <Col sm="6" style="border: 1px solid #ccc;">col-6</Col>
+    <Col sm="6" style="border: 1px solid #ccc;">col-6</Col>
+    <Col sm="6" style="border: 1px solid #ccc;">col-6</Col>
+    <Col sm="6" style="border: 1px solid #ccc;">col-6</Col>
+  </Row>
+
+  <Row>
+    <span>这是一行</span>|<span>这是并列</span>
+  </Row>
+  <Row>
+    <span>这是另一行</span>
+  </Row>
+</Template>

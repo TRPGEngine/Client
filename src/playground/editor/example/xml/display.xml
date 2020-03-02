@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Template>
+  <FieldSet label="独立框">
+    <p>将一些内容放到一个独立的分割框内</p>
+  </FieldSet>
+
+  <FieldSet label="隐藏与条">
+    <p>切换模式来查看不同</p>
+    <Hidden in="edit">
+      <Bar label="生命值" color="#d02828" current="当前血量" max="最大血量" />
+    </Hidden>
+    <Hidden in="detail">
+      <Input name="当前血量" default="10" />
+      <Input name="最大血量" default="20" />
+    </Hidden>
+  </FieldSet>
+
+  <FieldSet label="雷达图">
+    <Radar dataKey="a,b,c,d,e" :dataValue="[1,2,3,4,5]" />
+  </FieldSet>
+
+  <FieldSet label="自定义样式">
+    <Styled>
+      <Style>
+        .red {
+          color: red;
+        }
+      </Style>
+
+      <p>普通文本</p>
+      <p className="red">红色文本</p>
+
+      使用<code>&lt;style /&gt;</code>标签是无效的
+      <style>
+        * {
+          color: red;
+        }
+      </style>
+    </Styled>
+  </FieldSet>
+
+  <FieldSet label="实体字符">
+    <p>在布局文件中，不能使用小于号(&lt;)和大于号(&gt;), 这是因为解释器会误认为它们是标签</p>
+    <p>如果希望正确地显示预留字符，我们必须在 布局文件 源代码中使用字符实体</p>
+
+    <table>
+      <tbody>
+        <tr>
+          <th style="width:20%">显示结果</th>
+          <th style="width:20%">描述</th>
+          <th style="width:30%">实体名称</th>
+        </tr>
+
+        <tr>
+          <td>&nbsp;</td>
+          <td>空格</td>
+          <td>&amp;nbsp;</td>
+        </tr>
+
+        <tr>
+          <td>&lt;</td>
+          <td>小于号</td>
+          <td>&amp;lt;</td>
+        </tr>
+
+        <tr>
+          <td>&gt;</td>
+          <td>大于号</td>
+          <td>&amp;gt;</td>
+        </tr>
+
+        <tr>
+          <td>&amp;</td>
+          <td>和号</td>
+          <td>&amp;amp;</td>
+        </tr>
+
+        <tr>
+          <td>"</td>
+          <td>引号</td>
+          <td>&amp;quot;</td>
+        </tr>
+
+        <tr>
+          <td>'</td>
+          <td>撇号&nbsp;</td>
+          <td>&amp;apos;</td>
+        </tr>
+
+        <tr>
+          <td>￠</td>
+          <td>分（cent）</td>
+          <td>&amp;cent;</td>
+        </tr>
+
+        <tr>
+          <td>£</td>
+          <td>镑（pound）</td>
+          <td>&amp;pound;</td>
+        </tr>
+
+        <tr>
+          <td>¥</td>
+          <td>元（yen）</td>
+          <td>&amp;yen;</td>
+        </tr>
+
+        <tr>
+          <td>€</td>
+          <td>欧元（euro）</td>
+          <td>&amp;euro;</td>
+        </tr>
+
+        <tr>
+          <td>§</td>
+          <td>小节</td>
+          <td>&amp;sect;</td>
+        </tr>
+
+        <tr>
+          <td>©</td>
+          <td>版权（copyright）</td>
+          <td>&amp;copy;</td>
+        </tr>
+
+        <tr>
+          <td>®</td>
+          <td>注册商标</td>
+          <td>&amp;reg;</td>
+        </tr>
+
+        <tr>
+          <td>™</td>
+          <td>商标</td>
+          <td>&amp;trade;</td>
+        </tr>
+
+        <tr>
+          <td>×</td>
+          <td>乘号</td>
+          <td>&amp;times;</td>
+        </tr>
+
+        <tr>
+          <td>÷</td>
+          <td>除号</td>
+          <td>&amp;divide;</td>
+        </tr>
+      </tbody>
+    </table>
+  </FieldSet>
+</Template>

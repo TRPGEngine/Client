@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { fileUrl } from '../api/trpg.api';
 import _set from 'lodash/set';
+import _isFunction from 'lodash/isFunction';
 
 export interface UploadOption {
   headers?: {};
@@ -11,11 +12,9 @@ export interface UploadOption {
 export type UploadReturn<T = any> = Promise<T>;
 
 export interface AvatarUpdateData {
-  uuid: string;
-  filename: string;
   url: string;
-  size: number;
-  avatar: any;
+  isLocal: string; // 是否存在单机本地
+  uuid: string; // 对应头像的UUID
 }
 
 export const generateFileMsgData = function(file) {
@@ -51,7 +50,7 @@ const _upload = function(
     onUploadProgress: (progressEvent) => {
       if (progressEvent.lengthComputable) {
         options &&
-          options.onProgress &&
+          _isFunction(options.onProgress) &&
           options.onProgress(
             progressEvent.loaded / progressEvent.total,
             progressEvent
@@ -60,7 +59,9 @@ const _upload = function(
     },
   })
     .then((res) => {
-      options && options.onCompleted && options.onCompleted(res.data);
+      options &&
+        _isFunction(options.onCompleted) &&
+        options.onCompleted(res.data);
       return res.data;
     })
     .catch((err) => {
@@ -109,7 +110,7 @@ export const toAvatar = function(
   options: UploadOption = {}
 ): UploadReturn<AvatarUpdateData> {
   options.uploadField = 'avatar';
-  return _upload('/avatar', userUUID, file, options);
+  return _upload('/v2/avatar/upload', userUUID, file, options);
 };
 
 /**

@@ -13,6 +13,7 @@ interface Props {
   userUUID: string;
   selectedGroupUUID: string;
   groupInfo: any;
+  isGroupManager: boolean;
   showModal: any;
   showProfileCard: any;
 }
@@ -22,19 +23,19 @@ class GroupMember extends React.Component<Props> {
   }
 
   getMemberList() {
-    let groupInfo = this.props.groupInfo;
-    let hasManagerAuth =
+    const groupInfo = this.props.groupInfo;
+    const hasManagerAuth =
       groupInfo.managers_uuid.indexOf(this.props.userUUID) >= 0;
     if (groupInfo.group_members) {
       return (groupInfo.group_members || []).map((uuid) => {
-        let user = getUserInfoCache(uuid);
-        let last_login = user.last_login
+        const user = getUserInfoCache(uuid);
+        const last_login = user.last_login
           ? moment(user.last_login).format('YYYY-M-D HH:mm:ss')
           : '从未登录';
-        let isManager = groupInfo.managers_uuid.indexOf(uuid) >= 0;
-        let isOwner = groupInfo.owner_uuid === uuid;
-        let auth = isOwner ? 'owner' : isManager ? 'manager' : 'none';
-        let name = user.nickname || user.username;
+        const isManager = groupInfo.managers_uuid.indexOf(uuid) >= 0;
+        const isOwner = groupInfo.owner_uuid === uuid;
+        const auth = isOwner ? 'owner' : isManager ? 'manager' : 'none';
+        const name = user.nickname || user.username;
         return (
           <tr
             key={`group-member#${this.props.selectedGroupUUID}#${uuid}`}
@@ -83,14 +84,20 @@ class GroupMember extends React.Component<Props> {
 }
 
 export default connect(
-  (state: TRPGState) => ({
-    userUUID: state.user.info.uuid,
-    selectedGroupUUID: state.group.selectedGroupUUID,
-    groupInfo: state.group.groups.find(
-      (group) => group.uuid === state.group.selectedGroupUUID
-    ),
-    usercache: state.cache.user,
-  }),
+  (state: TRPGState) => {
+    const userUUID = state.user.info.uuid;
+    const selectedGroupUUID = state.group.selectedGroupUUID;
+    const groupInfo = state.group.groups.find(
+      (group) => group.uuid === selectedGroupUUID
+    );
+
+    return {
+      userUUID,
+      selectedGroupUUID: selectedGroupUUID,
+      groupInfo,
+      usercache: state.cache.user,
+    };
+  },
   (dispatch: TRPGDispatch) => ({
     showModal: (body) => dispatch(showModal(body)),
     showProfileCard: (uuid) => dispatch(showProfileCard(uuid)),

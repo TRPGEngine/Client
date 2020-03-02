@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Template>
+  <Define name="input">
+    <Input name="root.修改全局数据" />
+    <Input name="parent.修改父级数据" />
+    <Input name="data.一样修改局部数据" />
+    <Input name="简单修改局部数据" />
+
+    <!-- <div>嵌套调用</div> -->
+    <!-- <Use name="sub" define="input2" /> -->
+  </Define>
+
+  <Define name="input2">
+    <Input name="parent.修改父级数据" />
+    <Input name="简单修改局部数据" />
+  </Define>
+
+  <Use name="use-scope" define="input" />
+
+
+  <Define name="props">
+    <p>可以传输变量</p>
+    <span>{{props.data}}</span>
+  </Define>
+  <Use name="use-props" define="props" data="1" />
+
+
+  <p>可以循环:</p>
+  <Define name="foreach">
+    <li>{{props.a}}</li>
+  </Define>
+  <ul>
+    <ForEach name="testForeach" :data="[{a:1}, {a:2}]" define="foreach" />
+  </ul>
+</Template>

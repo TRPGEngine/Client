@@ -6,6 +6,7 @@ import {
   NativeScrollEvent,
   Keyboard,
   EmitterSubscription,
+  ListRenderItem,
 } from 'react-native';
 import MessageHandler from '@app/components/messageTypes/__all__';
 import { shouleEmphasizeTime } from '@src/shared/utils/date-helper';
@@ -84,9 +85,11 @@ class MsgList extends React.PureComponent<Props> {
    */
   handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offset = e.nativeEvent.contentOffset;
-    if (offset.y === 0) {
-      // 当触底时(因为列表倒置所以列表的地步就是0)
+    if (offset.y < 10) {
+      // 当触底时(预留10像素, 因为列表倒置所以列表的底部就是0)
       this.isSeekingLog = false;
+    } else {
+      this.isSeekingLog = true; // 如果滚动后不是在底部则视为正在查阅历史记录
     }
   };
 
@@ -119,6 +122,39 @@ class MsgList extends React.PureComponent<Props> {
     );
   }
 
+  renderItem: ListRenderItem<MsgPayload> = ({ item, index }) => {
+    const msgList = this.props.msgList;
+
+    // 因为列表是倒转的。所以第一条数据是最下面那条
+    // UI中的上一条数据应为msgList的下一条
+    const prevDate =
+      index < msgList.length - 1 ? _get(msgList, [index + 1, 'date']) : 0;
+    const isMe = item.sender_uuid === this.props.selfInfo.uuid;
+    const senderInfo = isMe
+      ? this.props.selfInfo
+      : getUserInfoCache(item.sender_uuid);
+    const name = senderInfo.nickname || senderInfo.username;
+    const avatar = senderInfo.avatar;
+    const defaultAvatar =
+      item.sender_uuid === 'trpgsystem'
+        ? appConfig.defaultImg.trpgsystem
+        : appConfig.defaultImg.user;
+    const date = item.date;
+
+    const emphasizeTime = shouleEmphasizeTime(prevDate, date);
+
+    return (
+      <MessageHandler
+        type={item.type}
+        me={isMe}
+        name={name}
+        avatar={avatar || defaultAvatar}
+        emphasizeTime={emphasizeTime}
+        info={item}
+      />
+    );
+  };
+
   render() {
     const { msgList, onTouchStart } = this.props;
 
@@ -134,38 +170,7 @@ class MsgList extends React.PureComponent<Props> {
           onScroll={this.handleScroll}
           onEndReached={this.handleGetMoreLog}
           onEndReachedThreshold={0.1}
-          renderItem={({ item, index }) => {
-            // 因为列表是倒转的。所以第一条数据是最下面那条
-            // UI中的上一条数据应为msgList的下一条
-            const prevDate =
-              index < msgList.length - 1
-                ? _get(msgList, [index + 1, 'date'])
-                : 0;
-            const isMe = item.sender_uuid === this.props.selfInfo.uuid;
-            const senderInfo = isMe
-              ? this.props.selfInfo
-              : getUserInfoCache(item.sender_uuid);
-            const name = senderInfo.nickname || senderInfo.username;
-            const avatar = senderInfo.avatar;
-            const defaultAvatar =
-              item.sender_uuid === 'trpgsystem'
-                ? appConfig.defaultImg.trpgsystem
-                : appConfig.defaultImg.user;
-            const date = item.date;
-
-            const emphasizeTime = shouleEmphasizeTime(prevDate, date);
-
-            return (
-              <MessageHandler
-                type={item.type}
-                me={isMe}
-                name={name}
-                avatar={avatar || defaultAvatar}
-                emphasizeTime={emphasizeTime}
-                info={item}
-              />
-            );
-          }}
+          renderItem={this.renderItem}
           ListFooterComponent={this.renderMsgListFooter()}
         />
       </MsgListContextProvider>

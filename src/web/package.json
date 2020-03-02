@@ -13,5 +13,8 @@
     "trpg"
   ],
   "author": "moonrailgun",
-  "license": "GPL-2.0"
+  "license": "GPL-2.0",
+  "dependencies": {
+    "xss": "^1.0.6"
+  }
 }

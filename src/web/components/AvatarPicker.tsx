@@ -114,7 +114,7 @@ const AvatarPicker = (props: Props) => {
           type="file"
           style={{ display: 'none' }}
           onChange={handleSelectFile}
-          // TODO: 需要一个accept参数限制文件类型
+          accept="image/*"
         />
         {props.children ? (
           props.children
@@ -134,6 +134,7 @@ const AvatarPicker = (props: Props) => {
             <ReactCrop
               src={originImageUrl}
               crop={cropInfo}
+              imageStyle={{ maxHeight: '70vh' }}
               onImageLoaded={(ref) => (imageRef.current = ref)}
               onChange={(crop) => setCropInfo(crop)}
             />

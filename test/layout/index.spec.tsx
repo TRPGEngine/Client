@@ -1,5 +1,5 @@
 import React from 'react';
-import XMLBuilder from '@shared/layout/XMLBuilder';
+import XMLBuilder from '@shared/components/layout/XMLBuilder';
 import { shallow, mount } from 'enzyme';
 
 const wrapXML = (xml: string) => `<Template>${xml}</Template>`;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import config from '../../../../shared/project.config';
+import config from '@shared/project.config';
 import Select from 'react-select';
 import ReactTooltip from 'react-tooltip';
 import {
@@ -8,14 +8,14 @@ import {
   hideModal,
   showAlert,
   showSlidePanel,
-} from '../../../../shared/redux/actions/ui';
-import { sendMsg, sendFile } from '../../../../shared/redux/actions/chat';
-import { changeSelectGroupActor } from '../../../../shared/redux/actions/group';
+} from '@shared/redux/actions/ui';
+import { sendMsg, sendFile } from '@shared/redux/actions/chat';
+import { changeSelectGroupActor } from '@shared/redux/actions/group';
 import {
   sendDiceRequest,
   sendDiceInvite,
   sendQuickDice,
-} from '../../../../shared/redux/actions/dice';
+} from '@shared/redux/actions/dice';
 // import GroupMap from './GroupMap';
 import GroupInvite from './GroupInvite';
 import GroupActor from './GroupActor';
@@ -33,6 +33,8 @@ import _orderBy from 'lodash/orderBy';
 import { GroupActorMsgData } from '@src/shared/redux/types/group';
 import QuickDice from '../dice/QuickDice';
 import { TRPGState } from '@redux/types/__all__';
+import GroupRule from './GroupRule';
+import { GroupInfoContext } from '@shared/context/GroupInfoContext';
 
 interface Props extends DispatchProp<any> {
   selectedUUID: string;
@@ -50,7 +52,7 @@ class GroupDetail extends React.Component<Props> {
         changeSelectGroupActor(this.props.selectedUUID, item.value)
       );
     }
-  }
+  };
 
   handleSendMsg(message, type) {
     console.log('send msg:', message, 'to', this.props.selectedUUID);
@@ -180,44 +182,43 @@ class GroupDetail extends React.Component<Props> {
     );
   };
 
+  actions = [
+    {
+      name: '添加团员',
+      icon: '&#xe61c;',
+      component: <GroupInvite />,
+    },
+    {
+      name: '查看团员',
+      icon: '&#xe603;',
+      component: <GroupMember />,
+    },
+    {
+      name: '人物卡',
+      icon: '&#xe61b;',
+      component: <GroupActor />,
+    },
+    {
+      name: '游戏地图',
+      icon: '&#xe6d7;',
+      // component: (
+      //   <GroupMap />
+      // )
+      component: <IsDeveloping />,
+    },
+    {
+      name: '游戏规则',
+      icon: '&#xe621;',
+      component: <GroupRule />,
+    },
+    {
+      name: '团信息',
+      icon: '&#xe611;',
+      component: <GroupInfo />,
+    },
+  ];
   getHeaderActions() {
-    const actions = [
-      {
-        name: '添加团员',
-        icon: '&#xe61c;',
-        component: <GroupInvite />,
-      },
-      {
-        name: '查看团员',
-        icon: '&#xe603;',
-        component: <GroupMember />,
-      },
-      {
-        name: '人物卡',
-        icon: '&#xe61b;',
-        component: <GroupActor />,
-      },
-      {
-        name: '游戏地图',
-        icon: '&#xe6d7;',
-        // component: (
-        //   <GroupMap />
-        // )
-        component: <IsDeveloping />,
-      },
-      {
-        name: '游戏规则',
-        icon: '&#xe621;',
-        component: <IsDeveloping />,
-      },
-      {
-        name: '团信息',
-        icon: '&#xe611;',
-        component: <GroupInfo />,
-      },
-    ];
-
-    return actions.map((item, index) => {
+    return this.actions.map((item, index) => {
       return (
         <button
           key={'group-action-' + index}
@@ -252,51 +253,53 @@ class GroupDetail extends React.Component<Props> {
       });
     }
     return (
-      <div className="detail">
-        <ReactTooltip effect="solid" />
-        <div className="group-header">
-          <div className="avatar">
-            <img
-              src={
-                groupInfo.avatar || config.defaultImg.getGroup(groupInfo.name)
-              }
-            />
-          </div>
-          <div className="title">
-            <div className="main-title">
-              {groupInfo.name}
-              {groupInfo.status && '(开团中...)'}
+      <GroupInfoContext.Provider value={groupInfo}>
+        <div className="detail">
+          <ReactTooltip effect="solid" />
+          <div className="group-header">
+            <div className="avatar">
+              <img
+                src={
+                  groupInfo.avatar || config.defaultImg.getGroup(groupInfo.name)
+                }
+              />
             </div>
-            <div className="sub-title">{groupInfo.sub_name}</div>
+            <div className="title">
+              <div className="main-title">
+                {groupInfo.name}
+                {groupInfo.status && '(开团中...)'}
+              </div>
+              <div className="sub-title">{groupInfo.sub_name}</div>
+            </div>
+            <Select
+              name="actor-select"
+              className="group-actor-select"
+              value={selectedGroupActorUUID}
+              options={options}
+              clearable={false}
+              searchable={false}
+              placeholder="请选择身份卡"
+              noResultsText="暂无身份卡..."
+              onChange={this.handleSelectGroupActor}
+            />
+            <div className="actions">{this.getHeaderActions()}</div>
           </div>
-          <Select
-            name="actor-select"
-            className="group-actor-select"
-            value={selectedGroupActorUUID}
-            options={options}
-            clearable={false}
-            searchable={false}
-            placeholder="请选择身份卡"
-            noResultsText="暂无身份卡..."
-            onChange={this.handleSelectGroupActor}
+          <MsgContainer
+            className="group-content"
+            converseUUID={this.props.selectedUUID}
+            isGroup={true}
           />
-          <div className="actions">{this.getHeaderActions()}</div>
+          <MsgSendBox
+            converseUUID={this.props.selectedUUID}
+            isGroup={true}
+            onSendMsg={(message, type) => this.handleSendMsg(message, type)}
+            onSendFile={(file) => this.handleSendFile(file)}
+            onSendDiceReq={() => this.handleSendDiceReq()}
+            onSendDiceInv={() => this.handleSendDiceInv()}
+            onQuickDice={() => this.handleQuickDice()}
+          />
         </div>
-        <MsgContainer
-          className="group-content"
-          converseUUID={this.props.selectedUUID}
-          isGroup={true}
-        />
-        <MsgSendBox
-          converseUUID={this.props.selectedUUID}
-          isGroup={true}
-          onSendMsg={(message, type) => this.handleSendMsg(message, type)}
-          onSendFile={(file) => this.handleSendFile(file)}
-          onSendDiceReq={() => this.handleSendDiceReq()}
-          onSendDiceInv={() => this.handleSendDiceInv()}
-          onQuickDice={() => this.handleQuickDice()}
-        />
-      </div>
+      </GroupInfoContext.Provider>
     );
   }
 }

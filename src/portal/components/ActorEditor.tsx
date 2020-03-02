@@ -4,7 +4,7 @@ import Loading from './Loading';
 import XMLBuilder, {
   XMLBuilderState,
   DataMap,
-} from '@shared/layout/XMLBuilder';
+} from '@shared/components/layout/XMLBuilder';
 import _isFunction from 'lodash/isFunction';
 import { fetchGroupActorDetail } from '@portal/model/group';
 

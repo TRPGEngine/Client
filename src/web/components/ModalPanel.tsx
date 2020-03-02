@@ -38,9 +38,11 @@ const ModalPanelActionGroup = styled.div`
 interface Props {
   title?: string;
   className?: string;
+  style?: React.CSSProperties;
   actions?: React.ReactNode;
   children: React.ReactNode;
   allowMaximize?: boolean;
+  padding?: number;
 }
 class ModalPanel extends React.Component<Props> {
   state = {
@@ -55,13 +57,22 @@ class ModalPanel extends React.Component<Props> {
   };
 
   render() {
-    const { className, title, children, actions, allowMaximize } = this.props;
+    const {
+      className,
+      title,
+      style,
+      children,
+      actions,
+      allowMaximize,
+      padding,
+    } = this.props;
     const { maximize } = this.state;
 
     return (
       <ModalPanelContainer
         className={'modal-panel ' + (className || '')}
         maximize={maximize}
+        style={style}
       >
         {allowMaximize && (
           <ModalPanelActionGroup>
@@ -82,7 +93,9 @@ class ModalPanel extends React.Component<Props> {
         <div className="head">
           <span>{title}</span>
         </div>
-        <div className="body">{children}</div>
+        <div className="body" style={{ padding }}>
+          {children}
+        </div>
         {actions ? <div className="foot">{actions}</div> : null}
       </ModalPanelContainer>
     );

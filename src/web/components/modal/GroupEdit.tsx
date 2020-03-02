@@ -4,7 +4,7 @@ import config from '../../../shared/project.config';
 import ModalPanel from '../ModalPanel';
 import ImageUploader from '../ImageUploader';
 import { hideModal } from '../../../shared/redux/actions/ui';
-import { updateGroupInfo } from '../../../shared/redux/actions/group';
+import { requestUpdateGroupInfo } from '../../../shared/redux/actions/group';
 
 import './GroupEdit.scss';
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
@@ -34,13 +34,13 @@ class GroupEdit extends React.Component<Props, State> {
     const groupInfoData: State = Object.assign({}, this.state);
     delete groupInfoData.avatar;
     this.props.dispatch(
-      updateGroupInfo(this.props.selectedGroupUUID, groupInfoData)
+      requestUpdateGroupInfo(this.props.selectedGroupUUID, groupInfoData)
     );
   }
 
   handleUpdateAvatar(url: string) {
     this.props.dispatch(
-      updateGroupInfo(this.props.selectedGroupUUID, { avatar: url })
+      requestUpdateGroupInfo(this.props.selectedGroupUUID, { avatar: url })
     );
   }
 

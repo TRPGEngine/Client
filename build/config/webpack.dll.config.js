@@ -1,8 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
 
-// 原则上是需要全量导入 且共用的模块
-const dllModules = ['react', 'react-dom', 'moment'];
+// 原则上是需要全量导入 且共用的模块 或特别大的模块
+// 仅考虑网页端和portal需要使用的模块
+const dllModules = [
+  // 'react',
+  // 'react-dom',
+  'moment',
+  'axios',
+];
 
 module.exports = {
   entry: {

@@ -1,4 +1,5 @@
 import { PermissionsAndroid } from 'react-native';
+import { logger } from '@shared/api/logger';
 
 // for Android
 
@@ -24,12 +25,17 @@ export const requestExternalStoragePermission = async (): Promise<boolean> => {
     );
 
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      logger.info('User agree request permission: WRITE_EXTERNAL_STORAGE');
       return true;
     }
 
+    logger.info('User refush request permission: WRITE_EXTERNAL_STORAGE');
     return false;
   } catch (err) {
-    console.error('Failed to request permission ', err);
+    logger.error(
+      'Failed to request permission: WRITE_EXTERNAL_STORAGE, error: ',
+      err
+    );
     return false;
   }
 };

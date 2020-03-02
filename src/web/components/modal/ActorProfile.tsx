@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ActorType, ActorDataType } from '@src/shared/redux/types/actor';
-import XMLBuilder from '@shared/layout/XMLBuilder';
+import XMLBuilder from '@shared/components/layout/XMLBuilder';
 import styled from 'styled-components';
 import { TRPGState } from '@redux/types/__all__';
 

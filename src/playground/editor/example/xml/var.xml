@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Template>
+  <Var name="string" value="'TRPG'" />
+  <Var name="number" value="1" />
+  <Var name="object" value="{foo: 'bar'}" />
+  <div>
+    <p>变量可以在右下角看到</p>
+    <p>设置的变量:</p>
+    <p>字符串: {{global.string}}</p>
+    <p>数字: {{global.number}}</p>
+    <p>对象: {{JSON.stringify(global.object)}}</p>
+  </div>
+</Template>

@@ -9,7 +9,7 @@ const {
   RESET,
   CREATE_GROUP_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
-  UPDATE_GROUP_INFO_SUCCESS,
+  UPDATE_GROUP_INFO,
   FIND_GROUP_REQUEST,
   FIND_GROUP_SUCCESS,
   REQUEST_JOIN_GROUP_SUCCESS,
@@ -29,7 +29,7 @@ const {
   REMOVE_GROUP_ACTOR_SUCCESS,
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
-  UPDATE_GROUP_ACTOR_INFO_SUCCESS,
+  UPDATE_GROUP_ACTOR_INFO,
   UPDATE_GROUP_ACTOR_MAPPING,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
@@ -86,7 +86,7 @@ export default produce((draft: GroupState, action) => {
 
       // return state.mergeIn(['info', groupUUID], fromJS(action.payload)); // 合并
     }
-    case UPDATE_GROUP_INFO_SUCCESS: {
+    case UPDATE_GROUP_INFO: {
       const groupIndex = draft.groups.findIndex(
         (i) => i.uuid === action.payload.uuid
       );
@@ -418,7 +418,7 @@ export default produce((draft: GroupState, action) => {
       //   return list;
       // });
     }
-    case UPDATE_GROUP_ACTOR_INFO_SUCCESS: {
+    case UPDATE_GROUP_ACTOR_INFO: {
       const groupIndex = draft.groups.findIndex(
         (g) => g.uuid === action.groupUUID
       );

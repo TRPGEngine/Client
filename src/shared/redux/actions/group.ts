@@ -2,7 +2,7 @@ import constants from '../constants';
 const {
   CREATE_GROUP_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
-  UPDATE_GROUP_INFO_SUCCESS,
+  UPDATE_GROUP_INFO,
   FIND_GROUP_REQUEST,
   FIND_GROUP_SUCCESS,
   REQUEST_JOIN_GROUP_SUCCESS,
@@ -21,7 +21,7 @@ const {
   REMOVE_GROUP_ACTOR_SUCCESS,
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
-  UPDATE_GROUP_ACTOR_INFO_SUCCESS,
+  UPDATE_GROUP_ACTOR_INFO,
   UPDATE_GROUP_ACTOR_MAPPING,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
@@ -189,13 +189,21 @@ export const getGroupInfo = function(uuid: string): TRPGAction {
   };
 };
 
-export const updateGroupInfo = function(groupUUID, groupInfo) {
+/**
+ * 更新团信息
+ * @param groupUUID 团UUID
+ * @param groupInfo 团信息
+ */
+export const requestUpdateGroupInfo = function(
+  groupUUID: string,
+  groupInfo: object
+) {
   return function(dispatch, getState) {
     api.emit('group::updateInfo', { groupUUID, groupInfo }, function(data) {
       if (data.result) {
         let group = data.group;
         group.avatar = config.file.getAbsolutePath(group.avatar);
-        dispatch({ type: UPDATE_GROUP_INFO_SUCCESS, payload: group });
+        dispatch(updateGroupInfo(group));
         dispatch(hideModal());
         dispatch(showAlert('操作成功'));
       } else {
@@ -205,6 +213,9 @@ export const updateGroupInfo = function(groupUUID, groupInfo) {
     });
   };
 };
+export function updateGroupInfo(groupInfo: object): TRPGAction {
+  return { type: UPDATE_GROUP_INFO, payload: groupInfo };
+}
 
 export const findGroup = function(text, type) {
   return function(dispatch, getState) {
@@ -583,23 +594,20 @@ export const refuseGroupActor = function(groupUUID, groupActorUUID) {
 /**
  * 更新团人物的人物卡信息
  */
-export const updateGroupActorInfo = function(
+export const requestUpdateGroupActorInfo = function(
   groupUUID: string,
   groupActorUUID: string,
   groupActorInfo: {}
 ) {
   return function(dispatch, getState) {
     return api.emit(
-      'group::updateGroupActorInfo',
+      'group::requestUpdateGroupActorInfo',
       { groupActorUUID, groupActorInfo },
       function(data) {
         if (data.result) {
-          dispatch({
-            type: UPDATE_GROUP_ACTOR_INFO_SUCCESS,
-            groupUUID,
-            groupActorUUID,
-            groupActorInfo,
-          });
+          dispatch(
+            updateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)
+          );
           dispatch(hideModal());
           dispatch(showAlert('保存完毕!'));
         } else {
@@ -608,6 +616,18 @@ export const updateGroupActorInfo = function(
         }
       }
     );
+  };
+};
+export const updateGroupActorInfo = function(
+  groupUUID: string,
+  groupActorUUID: string,
+  groupActorInfo: {}
+): TRPGAction {
+  return {
+    type: UPDATE_GROUP_ACTOR_INFO,
+    groupUUID,
+    groupActorUUID,
+    groupActorInfo,
   };
 };
 

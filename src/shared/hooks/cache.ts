@@ -1,11 +1,12 @@
 import { CacheKey } from '@redux/types/cache';
 import { GetCacheDispatchActionFn } from '@shared/utils/cache-helper';
-import { getGroupInfo } from '@redux/actions/cache';
+import { getGroupInfo, getUserInfo } from '@redux/actions/cache';
 import { useSelector, useDispatch } from 'react-redux';
 import { TRPGState } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import { useEffect } from 'react';
+import { UserInfo } from '@redux/types/user';
 import { GroupInfo } from '@redux/types/group';
 
 /**
@@ -59,6 +60,11 @@ function reduxHookCacheFactory<T>(
     return data ?? {};
   };
 }
+
+export const useCachedUserInfo = reduxHookCacheFactory<UserInfo>(
+  'user',
+  (uuid, onCompleted) => getUserInfo(uuid, onCompleted)
+);
 
 export const useCachedGroupInfo = reduxHookCacheFactory<GroupInfo>(
   'group',
