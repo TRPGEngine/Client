@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.20](https://github.com/TRPGEngine/Client/compare/v0.2.19...v0.2.20) (2020-03-02)
+
+
+### Features
+
+* **app:** 增加聊天界面滚动条不在底部时, 视为正在查询历史记录，不会自动往下滚动 ([674153d](https://github.com/TRPGEngine/Client/commit/674153d442e83fe2fa2a933ed20288932da93697))
+* **group:** 增加团处理更新团角色信息的通知 ([bf910f4](https://github.com/TRPGEngine/Client/commit/bf910f45f561f46b76d96fc2e353de3405713282))
+* **group:** 增加处理更新团信息的通知 ([bf8772f](https://github.com/TRPGEngine/Client/commit/bf8772f15bc3d77db5140bb8db892b7bb2823ed7))
+* **layout:** tag Select 增加分组的操作 ([463e66d](https://github.com/TRPGEngine/Client/commit/463e66dffd4a2c3c9a9c724812dbc4eafd7865f8))
+* **layout:** use可以传递数据到define中 ([6ec2a9a](https://github.com/TRPGEngine/Client/commit/6ec2a9aed4f35f33ac47b65117393ad943a58c7f))
+* **layout:** var组件增加static标识用于优化大对象性能 ([cbf66a2](https://github.com/TRPGEngine/Client/commit/cbf66a2ba90c9878d2019f1a17ebbf6f42eb4bc3))
+* **layout:** 增加 Bar 标签 ([12f9f0f](https://github.com/TRPGEngine/Client/commit/12f9f0fd0f92b6187359985ca25c6a76c1ecbd82))
+* **layout:** 增加Computed组件用于动态计算 ([a4c6719](https://github.com/TRPGEngine/Client/commit/a4c67194bd79da1af5a5c5d44e493c69f6f40126))
+* **layout:** 增加evalParse用于在布局里手动解析string ([c286e0e](https://github.com/TRPGEngine/Client/commit/c286e0ef77bca5ec7d962d8b98fafdea54815807))
+* **layout:** 增加FieldSet组件 ([33c6f83](https://github.com/TRPGEngine/Client/commit/33c6f8377a9fa6cc1b63f6ef991e4173066d2b7d))
+* **layout:** 增加Function字段 ([5c23185](https://github.com/TRPGEngine/Client/commit/5c231853b46e747dc84bd428acca2017cee33710))
+* **layout:** 增加Hidden组件if参数的支持 ([4f8586e](https://github.com/TRPGEngine/Client/commit/4f8586e02dd2854e86d28d64d2e1af8678892095))
+* **layout:** 增加hideLabel字段用于所有的表单组件 ([481e2a8](https://github.com/TRPGEngine/Client/commit/481e2a89482ae49464ded3b2d31b644e7a808982))
+* **layout:** 增加InputNumber标签用于处理数字类型的数据 ([b657a6c](https://github.com/TRPGEngine/Client/commit/b657a6cb4e98d030ce609d49318bc4cacfb6465f))
+* **layout:** 增加RollBtn ([0986c02](https://github.com/TRPGEngine/Client/commit/0986c02b1c6e513d06f37ab7c93551214b9a5cbc))
+* **layout:** 增加script标签 ([a5c91b4](https://github.com/TRPGEngine/Client/commit/a5c91b4b5acd69f7e020847bd83a36798b423eab))
+* **layout:** 增加Styled组件用于设置样式 ([05ce0d7](https://github.com/TRPGEngine/Client/commit/05ce0d737387e8090fb7a6dcc504584c5cddabd3))
+* **layout:** 增加Tip组件并增加global属性的设置 ([d0ff06a](https://github.com/TRPGEngine/Client/commit/d0ff06a0e2b35ed7d3843249893f6ecc7a26708d))
+* **layout:** 增加严格校验以显示出现值不在下拉框任意一项 ([bdfe971](https://github.com/TRPGEngine/Client/commit/bdfe971246f9e6c32c14e5135b65cf2d704a5774))
+* **layout:** 增加了ForEach组件用于动态循环生成同样的布局 ([87ca429](https://github.com/TRPGEngine/Client/commit/87ca4292b62601bd043f3dd970a412c9c2ae8ae3))
+* **layout:** 增加了Static标签专门用于处理静态数据 ([e52a4b2](https://github.com/TRPGEngine/Client/commit/e52a4b29adf1b67f39243da0ea120a34652c517d))
+* **layout:** 增加了Var标签用于存储数据 ([bdc2e03](https://github.com/TRPGEngine/Client/commit/bdc2e03ab7dce4a900b79ec066c158a107de23db))
+* **layout:** 增加更多的细节. 代码解释器现在能直接获取到global的data的数据了 ([69d3f93](https://github.com/TRPGEngine/Client/commit/69d3f9305df39b063aa18c79d9ce80ab54992ab5))
+* **layout:** 增加雷达图组件用于展示数据 ([e849bb6](https://github.com/TRPGEngine/Client/commit/e849bb69221983527c68e27f7cac4790a1807d4a))
+* **layout:** 输入类标签增加描述字段。用于提示用户 ([b7c437a](https://github.com/TRPGEngine/Client/commit/b7c437a2f08e51d92fddbc346177585e408a856b))
+* **portal:** 发布页面增加二维码生成 方便手机用户扫码下载 ([9ad7efb](https://github.com/TRPGEngine/Client/commit/9ad7efb74a6b7e4cf5d3b99e1965609b2fc83e22))
+* **portal:** 增加创建模板的页面 ([125c20f](https://github.com/TRPGEngine/Client/commit/125c20f0f4e80a929d51bd9b15ac1f5eeb95dde1))
+* **portal:** 增加版本信息 ([3219950](https://github.com/TRPGEngine/Client/commit/3219950871f6c0ecb63a3d476e96bb0169f846c0))
+* **web:** 会话消息中可以点开头像查看信息 ([8972dfd](https://github.com/TRPGEngine/Client/commit/8972dfd767e67aba73d536e5e34293b8b5266ef7))
+* **web:** 增加发送者头像可以点开查看详细信息 ([0b2c988](https://github.com/TRPGEngine/Client/commit/0b2c988877c6c3fa2ff3dcefcab41f67b99eb2bf))
+* **web:** 增加团规则的编辑与查看 ([80a7fb9](https://github.com/TRPGEngine/Client/commit/80a7fb9b5f924d179ad9b6d764d708df0b844f1f))
+* **web:** 增加清理缓存的操作 ([3336fb2](https://github.com/TRPGEngine/Client/commit/3336fb282f158e5c22b22c7ef632601323353b65))
+
+
+### Bug Fixes
+
+* 修复因mix-content导致无法在https环境下载http资源的问题 ([c54cab7](https://github.com/TRPGEngine/Client/commit/c54cab711c2f8a19f46ace3f8c6f6f48d5cbbf44))
+* **app:** 修复app端错误的聊天输入框最大长度的问题 ([e940157](https://github.com/TRPGEngine/Client/commit/e940157fc7e624bd125112ddcc1c6af7f7ed3768))
+* **layout:** 修复Computed组件无法监听上下文变量的问题与无法返回0的问题 ([2e8eeec](https://github.com/TRPGEngine/Client/commit/2e8eeec313820b431cccf9dc5c0651dc25337934))
+* **layout:** 修复Function组件无法获取上下文的问题 ([166cb8c](https://github.com/TRPGEngine/Client/commit/166cb8ccfaae88d64489e1f162a0fa24a312f83a))
+
 ### [0.2.19](https://github.com/TRPGEngine/Client/compare/v0.2.18...v0.2.19) (2020-02-07)
 
 
