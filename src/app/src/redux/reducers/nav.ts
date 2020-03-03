@@ -1,14 +1,14 @@
 import { NavigationActions, StackActions } from 'react-navigation';
 import { AppNavigator } from '../../router';
-import constants from '../../../../shared/redux/constants';
+import constants from '@shared/redux/constants';
 const {
-  RESET,
   LOGIN_SUCCESS,
   LOGIN_TOKEN_SUCCESS,
   LOGOUT,
   CREATE_GROUP_SUCCESS,
 } = constants;
 import {
+  RESET_NAV,
   SWITCH_NAV,
   REPLACE_NAV,
   BACK_NAV,
@@ -22,7 +22,7 @@ let initialNavState = AppNavigator.router.getStateForAction(
 export default function nav(state = initialNavState, action) {
   let nextState;
   switch (action.type) {
-    case RESET:
+    case RESET_NAV:
       nextState = AppNavigator.router.getStateForAction(
         StackActions.reset({
           index: 0,
