@@ -11,8 +11,8 @@ import { useSize } from 'react-use';
 import { LayoutWidthContextProvider } from './context/LayoutWidthContext';
 import { LayoutStateContextProvider } from './context/LayoutStateContext';
 import { useBuildLayoutStateContext } from './hooks/useBuildLayoutStateContext';
-import { TagComponent } from './tags/type';
 import { iterativeConfigKey } from './parser/key';
+import { TMemo } from '../TMemo';
 
 /**
  * XML布局需求:
@@ -108,7 +108,7 @@ interface Props {
   initialData?: DataMap;
   onChange?: StateChangeHandler;
 }
-const XMLBuilder: React.FC<Props> = React.memo((props) => {
+const XMLBuilder: React.FC<Props> = TMemo((props) => {
   const { xml = '', onChange, layoutType = 'edit' } = props;
   const [error, setError] = useState<Error>(null);
   const [layout, setLayout] = useState();

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import ModalPanel from '../../ModalPanel';
 import { Button, Steps, Row, message } from 'antd';
-import { connect, DispatchProp } from 'react-redux';
 import { DataMap } from '@shared/components/layout/XMLBuilder';
 import {
   getSuggestTemplate,
@@ -19,7 +18,11 @@ import { toAvatarWithBlobUrl } from '@web/utils/upload-helper';
 import { isBlobUrl } from '@shared/utils/string-helper';
 import { AvatarUpdateData } from '@shared/utils/upload-helper';
 import { ActorTemplateType } from '@redux/types/actor';
-import { TRPGState } from '@redux/types/__all__';
+import { TMemo } from '@shared/components/TMemo';
+import {
+  useTRPGSelector,
+  useTRPGDispatch,
+} from '@shared/hooks/useTRPGSelector';
 const Step = Steps.Step;
 
 const Container = styled.div`
@@ -39,15 +42,14 @@ const Actions = styled(Row).attrs(() => ({
   padding: 0 10px;
 `;
 
-interface Props extends DispatchProp<any> {
-  selfUUID: string;
-}
-const ActorCreate = (props: Props) => {
+const ActorCreate: React.FC = TMemo(() => {
   const [current, setCurrent] = useState(0);
   const [selectedTemplate, setSelectedTemplate] = useState<ActorTemplateType>(
     null
   );
   const [stateData, setStateData] = useState<DataMap>({});
+  const selfUUID = useTRPGSelector((state) => state.user.info.uuid);
+  const dispatch = useTRPGDispatch();
 
   const handleCreateActor = async () => {
     console.log('正在检查数据');
@@ -64,17 +66,15 @@ const ActorCreate = (props: Props) => {
     let avatar: AvatarUpdateData;
     if (_isString(avatarUrl) && isBlobUrl(avatarUrl)) {
       console.log('上传头像...');
-      avatar = await toAvatarWithBlobUrl(props.selfUUID, avatarUrl).catch(
-        (err) => {
-          message.error(_get(err, 'response.data.msg', 'Error: 上传失败'));
-          throw err;
-        }
-      );
+      avatar = await toAvatarWithBlobUrl(selfUUID, avatarUrl).catch((err) => {
+        message.error(_get(err, 'response.data.msg', 'Error: 上传失败'));
+        throw err;
+      });
       stateData._avatar = avatar.url; // 为服务端路径
     }
 
     console.log('创建人物...');
-    props.dispatch(
+    dispatch(
       createActor(
         stateData._name,
         stateData._avatar,
@@ -96,57 +96,62 @@ const ActorCreate = (props: Props) => {
     <CreateActorDetail
       template={selectedTemplate}
       data={stateData}
-      onChange={(data) => setStateData(data)}
+      onChange={setStateData}
     />,
     <CreateActorConfirm template={selectedTemplate} data={stateData} />,
   ];
 
   // 操作
   const maxStep = steps.length - 1;
-  const actions = (
-    <Actions>
-      <Button
-        disabled={!(current !== 0)}
-        style={{ visibility: current !== 0 ? 'visible' : 'hidden' }}
-        onClick={() => setCurrent(Math.max(0, current - 1))}
-      >
-        上一步
-      </Button>
-
-      {current === maxStep ? (
-        <Button onClick={handleCreateActor}>创建人物</Button>
-      ) : (
+  const actions = useMemo(
+    () => (
+      <Actions>
         <Button
-          disabled={!(current !== maxStep && !!selectedTemplate)}
-          style={{ visibility: current !== maxStep ? 'visible' : 'hidden' }}
-          onClick={() => setCurrent(Math.min(maxStep, current + 1))}
+          disabled={!(current !== 0)}
+          style={{ visibility: current !== 0 ? 'visible' : 'hidden' }}
+          onClick={() => setCurrent(Math.max(0, current - 1))}
         >
-          下一步
+          上一步
         </Button>
-      )}
-    </Actions>
+
+        {current === maxStep ? (
+          <Button onClick={handleCreateActor}>创建人物</Button>
+        ) : (
+          <Button
+            disabled={!(current !== maxStep && !!selectedTemplate)}
+            style={{ visibility: current !== maxStep ? 'visible' : 'hidden' }}
+            onClick={() => setCurrent(Math.min(maxStep, current + 1))}
+          >
+            下一步
+          </Button>
+        )}
+      </Actions>
+    ),
+    [current, setCurrent, maxStep, handleCreateActor, selectedTemplate]
   );
 
   // 获取推荐模板
   useEffect(() => {
-    props.dispatch(getSuggestTemplate());
+    dispatch(getSuggestTemplate());
   });
 
-  return (
-    <ModalPanel title="创建人物" actions={actions}>
-      <Container>
-        <Steps current={current}>
-          <Step title="选择模板" />
-          <Step title="设置属性" />
-          <Step title="完成" />
-        </Steps>
+  return useMemo(
+    () => (
+      <ModalPanel title="创建人物" actions={actions}>
+        <Container>
+          <Steps current={current}>
+            <Step title="选择模板" />
+            <Step title="设置属性" />
+            <Step title="完成" />
+          </Steps>
 
-        <ContainerBody>{steps[current]}</ContainerBody>
-      </Container>
-    </ModalPanel>
+          <ContainerBody>{steps[current]}</ContainerBody>
+        </Container>
+      </ModalPanel>
+    ),
+    [actions, current, steps[current]]
   );
-};
+});
+ActorCreate.displayName = 'ActorCreate';
 
-export default connect((state: TRPGState) => ({
-  selfUUID: state.user.info.uuid,
-}))(ActorCreate);
+export default ActorCreate;
