@@ -26,8 +26,8 @@ import {
 const Step = Steps.Step;
 
 const Container = styled.div`
-  height: 420px;
-  width: 600px;
+  min-height: 420px;
+  min-width: 600px;
   text-align: left;
 `;
 
@@ -137,7 +137,7 @@ const ActorCreate: React.FC = TMemo(() => {
 
   return useMemo(
     () => (
-      <ModalPanel title="创建人物" actions={actions}>
+      <ModalPanel title="创建人物" allowMaximize={true} actions={actions}>
         <Container>
           <Steps current={current}>
             <Step title="选择模板" />

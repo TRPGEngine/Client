@@ -4,11 +4,21 @@ import styled, { css } from 'styled-components';
 import './ModalPanel.scss';
 
 const ModalPanelContainer = styled.div<{ maximize?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  max-width: 80vw;
+  max-height: 80vh;
+
   ${(props) =>
     props.maximize &&
     css`
       width: 100vw;
       height: 100vh;
+      max-width: 100vw;
+      max-height: 100vh;
     `}
 `;
 
@@ -44,7 +54,7 @@ interface Props {
   allowMaximize?: boolean;
   padding?: number;
 }
-class ModalPanel extends React.Component<Props> {
+class ModalPanel extends React.PureComponent<Props> {
   state = {
     maximize: false,
   };
