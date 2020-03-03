@@ -48,6 +48,7 @@ export function evalScript(sourceCode: string, sandbox: object) {
 }
 
 /**
+ * @deprecated
  * XML渲染引擎，每次渲染组件都会循环调用该方法
  * 返回一个react vdom
  * @param el XML的ast 节点
