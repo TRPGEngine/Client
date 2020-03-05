@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.22](https://github.com/TRPGEngine/Client/compare/v0.2.21...v0.2.22) (2020-03-05)
+
+
+### Bug Fixes
+
+* **web:** 修复某些情况下团主持人无法管理用户的bug ([f862a1b](https://github.com/TRPGEngine/Client/commit/f862a1b39c06dffc82d8515d9823121c7608572f))
+
 ### [0.2.21](https://github.com/TRPGEngine/Client/compare/v0.2.20...v0.2.21) (2020-03-04)
 
 
