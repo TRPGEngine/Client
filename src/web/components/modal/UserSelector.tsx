@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import ModalPanel from '../ModalPanel';
-import { Select, Collapse } from 'antd';
+import { Select, Collapse, Button } from 'antd';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import _flatten from 'lodash/flatten';
 import _uniq from 'lodash/uniq';
@@ -166,7 +166,12 @@ const AllUserList: React.FC<AllUserListProps> = React.memo((props) => {
 });
 AllUserList.displayName = 'AllUserList';
 
-export const UserSelector: React.FC = React.memo(() => {
+interface Props {
+  // TODO: 需要增加一个移除部分uuid的操作
+
+  onConfirm?: (uuids: string[]) => void;
+}
+export const UserSelector: React.FC<Props> = React.memo((props) => {
   const [selectedUUIDs, setSelectedUUIDs] = useState<string[]>([]);
 
   const friends = useTRPGSelector<string[]>((state) => state.user.friendList);
@@ -200,8 +205,19 @@ export const UserSelector: React.FC = React.memo(() => {
     [selectedUUIDs, setSelectedUUIDs]
   );
 
+  const handleConfirm = useCallback(() => {
+    _isFunction(props.onConfirm) && props.onConfirm(selectedUUIDs);
+  }, [selectedUUIDs, props.onConfirm]);
+  const actions = useMemo(() => {
+    return <Button onClick={handleConfirm}>确认</Button>;
+  }, [handleConfirm]);
+
   return (
-    <ModalPanel title="选择用户" style={{ width: 600, height: 480 }}>
+    <ModalPanel
+      title="选择用户"
+      style={{ width: 600, height: 480 }}
+      actions={actions}
+    >
       <Container>
         <div className="select-user">
           <SelectedUser

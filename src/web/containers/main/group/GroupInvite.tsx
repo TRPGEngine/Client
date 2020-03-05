@@ -8,6 +8,10 @@ import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 
 import './GroupInvite.scss';
 
+/**
+ * @deprecated
+ */
+
 interface Props {
   selectedGroupUUID: string;
   friendList: any[];

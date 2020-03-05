@@ -10,7 +10,10 @@ import {
   showSlidePanel,
 } from '@shared/redux/actions/ui';
 import { sendMsg, sendFile } from '@shared/redux/actions/chat';
-import { changeSelectGroupActor } from '@shared/redux/actions/group';
+import {
+  changeSelectGroupActor,
+  sendGroupInvite,
+} from '@shared/redux/actions/group';
 import {
   sendDiceRequest,
   sendDiceInvite,
@@ -35,6 +38,7 @@ import QuickDice from '../dice/QuickDice';
 import { TRPGState } from '@redux/types/__all__';
 import GroupRule from './GroupRule';
 import { GroupInfoContext } from '@shared/context/GroupInfoContext';
+import { UserSelector } from '@web/components/modal/UserSelector';
 
 interface Props extends DispatchProp<any> {
   selectedUUID: string;
@@ -182,11 +186,27 @@ class GroupDetail extends React.Component<Props> {
     );
   };
 
+  /**
+   * 发送邀请入团的邀请
+   */
+  handleSendGroupInvite = (uuids: string[]) => {
+    const groupUUID = this.props.selectedUUID;
+    for (let uuid of uuids) {
+      // TODO: 需要一个待处理的group邀请列表，防止多次提交邀请
+      this.props.dispatch(sendGroupInvite(groupUUID, uuid));
+    }
+    this.props.dispatch(hideModal());
+  };
+
   actions = [
     {
       name: '添加团员',
       icon: '&#xe61c;',
-      component: <GroupInvite />,
+      onClick: () => {
+        this.props.dispatch(
+          showModal(<UserSelector onConfirm={this.handleSendGroupInvite} />)
+        );
+      },
     },
     {
       name: '查看团员',
@@ -223,10 +243,13 @@ class GroupDetail extends React.Component<Props> {
         <button
           key={'group-action-' + index}
           data-tip={item.name}
-          onClick={(e) => {
-            e.stopPropagation();
-            this.props.dispatch(showSlidePanel(item.name, item.component));
-          }}
+          onClick={
+            item.onClick ??
+            ((e) => {
+              e.stopPropagation();
+              this.props.dispatch(showSlidePanel(item.name, item.component));
+            })
+          }
         >
           <i
             className="iconfont"
