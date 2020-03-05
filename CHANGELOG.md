@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.21](https://github.com/TRPGEngine/Client/compare/v0.2.20...v0.2.21) (2020-03-04)
+
+
+### Bug Fixes
+
+* **layout:** 修复coc7人物卡缺少兴趣点显示与资产情况计算不正确的bug ([56c8fe3](https://github.com/TRPGEngine/Client/commit/56c8fe37c3c76800ad06c96d1a540d02f1b1e16c))
+* **web:** 修复ActorInfo无法显示部分布局的问题 ([f27f03d](https://github.com/TRPGEngine/Client/commit/f27f03dd3e7e5096b9399b39842ff124ed4bc3c5))
+
 ### [0.2.20](https://github.com/TRPGEngine/Client/compare/v0.2.19...v0.2.20) (2020-03-02)
 
 

@@ -11,8 +11,9 @@ import { useSize } from 'react-use';
 import { LayoutWidthContextProvider } from './context/LayoutWidthContext';
 import { LayoutStateContextProvider } from './context/LayoutStateContext';
 import { useBuildLayoutStateContext } from './hooks/useBuildLayoutStateContext';
-import { TagComponent } from './tags/type';
 import { iterativeConfigKey } from './parser/key';
+import { TMemo } from '../TMemo';
+import { LayoutNode } from './processor/LayoutNode';
 
 /**
  * XML布局需求:
@@ -108,7 +109,7 @@ interface Props {
   initialData?: DataMap;
   onChange?: StateChangeHandler;
 }
-const XMLBuilder: React.FC<Props> = React.memo((props) => {
+const XMLBuilder: React.FC<Props> = TMemo((props) => {
   const { xml = '', onChange, layoutType = 'edit' } = props;
   const [error, setError] = useState<Error>(null);
   const [layout, setLayout] = useState();
@@ -132,6 +133,12 @@ const XMLBuilder: React.FC<Props> = React.memo((props) => {
     }
   }, [xml]);
 
+  const context = useMemo(() => ({ state, dispatch, layoutType }), [
+    state,
+    dispatch,
+    layoutType,
+  ]);
+
   const LayoutDOM = useMemo(() => {
     if (!_isNil(error)) {
       return (
@@ -147,13 +154,13 @@ const XMLBuilder: React.FC<Props> = React.memo((props) => {
     }
 
     try {
-      return processor.render(layout, { state, dispatch, layoutType });
+      return <LayoutNode node={layout} />;
     } catch (err) {
       console.error(err);
       setError(err);
       return null;
     }
-  }, [layout, state, dispatch, layoutType, error]);
+  }, [layout, error]);
 
   const [XMLRender, { width }] = useSize(
     <XMLBuilderContainer>{LayoutDOM}</XMLBuilderContainer>
@@ -162,7 +169,7 @@ const XMLBuilder: React.FC<Props> = React.memo((props) => {
   return (
     <XMLErrorBoundary>
       <LayoutWidthContextProvider width={width}>
-        <LayoutStateContextProvider state={{ state, dispatch, layoutType }}>
+        <LayoutStateContextProvider state={context}>
           {XMLRender}
         </LayoutStateContextProvider>
       </LayoutWidthContextProvider>

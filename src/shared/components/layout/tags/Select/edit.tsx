@@ -48,7 +48,7 @@ export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
         } else {
           // 有分组
           return (
-            <OptGroup label={item.name}>
+            <OptGroup key={item.name} label={item.name}>
               {(item.items || []).map((item) => (
                 <Option key={item} value={item}>
                   {item}

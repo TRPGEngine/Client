@@ -13,62 +13,67 @@ import _isArray from 'lodash/isArray';
 import _indexOf from 'lodash/indexOf';
 import _flatten from 'lodash/flatten';
 import Debug from 'debug';
+import memoizeOne from 'memoize-one';
 const debug = Debug('trpg:layout:sandbox');
 
+/**
+ * 生成沙盒上下文
+ */
+export const generateSandboxContext = memoizeOne(
+  (context: XMLBuilderContext) => {
+    const sandbox = {
+      ...context.state.global,
+      ...context.state.data,
+      ...context.state,
+      Math,
+      JSON,
+      _get,
+      _isNil,
+      _find,
+      _map,
+      _keys,
+      _inRange,
+      _toNumber,
+      _isArray,
+      _isString,
+      _indexOf,
+      _flatten,
+      AND(a: any, b: any) {
+        return a && b;
+      },
+      evalParse(text: string, fallback: any = undefined) {
+        if (_isEmpty(text) || !_isString(text)) {
+          return fallback;
+        }
+
+        return parseDataText(`{{${text}}}`, context) || fallback;
+      },
+      debug(first, ...other) {
+        debug(first, ...other);
+        return first;
+      },
+      /**
+       * 将参数中所有可用的数字加起来
+       */
+      SUM(...args: any[]) {
+        if (args.length === 1 && _isArray(args[0])) {
+          args = [...args[0]];
+        }
+        const nums = args.map(_toNumber).filter((n) => !isNaN(n));
+
+        return nums.reduce((prev, cur) => prev + cur, 0);
+      },
+      getStateData() {
+        return { ...context.state.data };
+      },
+    };
+
+    return sandbox;
+  }
+);
+
 type Sandbox = {};
-
 const sandboxProxies = new WeakMap<Sandbox, Sandbox>();
-
-export function generateSandboxContext(context: XMLBuilderContext) {
-  const sandbox = {
-    ...context.state.global,
-    ...context.state.data,
-    ...context.state,
-    Math,
-    JSON,
-    _get,
-    _isNil,
-    _find,
-    _map,
-    _keys,
-    _inRange,
-    _toNumber,
-    _isArray,
-    _isString,
-    _indexOf,
-    _flatten,
-    AND(a: any, b: any) {
-      return a && b;
-    },
-    evalParse(text: string, fallback: any = undefined) {
-      if (_isEmpty(text) || !_isString(text)) {
-        return fallback;
-      }
-
-      return parseDataText(`{{${text}}}`, context) || fallback;
-    },
-    debug(first, ...other) {
-      debug(first, ...other);
-      return first;
-    },
-    /**
-     * 将参数中所有可用的数字加起来
-     */
-    SUM(...args: any[]) {
-      if (args.length === 1 && _isArray(args[0])) {
-        args = [...args[0]];
-      }
-      const nums = args.map(_toNumber).filter((n) => !isNaN(n));
-
-      return nums.reduce((prev, cur) => prev + cur, 0);
-    },
-    getStateData() {
-      return { ...context.state.data };
-    },
-  };
-
-  return sandbox;
-}
 
 /**
  * Usage: compileCode(srcCode)(sandbox)

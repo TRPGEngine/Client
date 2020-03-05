@@ -4,8 +4,8 @@ import { Tabs } from 'antd';
 import { TabsPosition } from 'antd/lib/tabs';
 import styled from 'styled-components';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
-import { render } from '../../processor';
 import { TMemo } from '@shared/components/TMemo';
+import { LayoutNode } from '../../processor/LayoutNode';
 
 const TabPane = Tabs.TabPane;
 
@@ -38,7 +38,9 @@ export const TagTabsShared: TagComponent<TagProps> = TMemo((props) => {
 
         return (
           <TabPane tab={label} key={`${label}#${index}`}>
-            <TabPaneContainer>{render(el, context)}</TabPaneContainer>
+            <TabPaneContainer>
+              <LayoutNode node={el} />
+            </TabPaneContainer>
           </TabPane>
         );
       });
