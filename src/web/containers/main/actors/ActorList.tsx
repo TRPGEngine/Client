@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import * as at from 'trpg-actor-template';
 import ActorCreate from '@web/components/modal/ActorCreate';
 import ActorEdit from '@web/components/modal/ActorEdit';
-import * as apiHelper from '@shared/utils/api-helper';
 import { showModal, showAlert } from '@shared/redux/actions/ui';
 import { updateActor } from '@web/redux/action/actor';
 import {
@@ -45,16 +44,6 @@ class ActorList extends React.Component<Props> {
     });
   }
 
-  handleEditActor(uuid, template_uuid) {
-    this.props.selectActor(uuid);
-
-    // 获取模板信息
-    apiHelper.getTemplate(template_uuid, (template) => {
-      this.props.selectTemplate(template);
-      this.props.showModal(<ActorEdit />);
-    });
-  }
-
   /**
    * 编辑人物卡信息
    */
@@ -64,14 +53,11 @@ class ActorList extends React.Component<Props> {
       message.error('角色不存在');
       return;
     }
-    const templateLayout = _get(this.props.templateCache, [
-      actor.template_uuid,
-      'layout',
-    ]);
 
     const name = actor.name;
     const desc = actor.desc;
     const avatar = actor.avatar;
+    const templateUUID = actor.template_uuid;
 
     this.props.showModal(
       <ActorEdit
@@ -79,7 +65,7 @@ class ActorList extends React.Component<Props> {
         desc={desc}
         avatar={avatar}
         data={actor.info}
-        layout={templateLayout}
+        templateUUID={templateUUID}
         onSave={(data) => {
           this.props.updateActor(
             uuid,
@@ -102,10 +88,6 @@ class ActorList extends React.Component<Props> {
       message.error('角色不存在');
       return;
     }
-    const templateLayout = _get(this.props.templateCache, [
-      actor.template_uuid,
-      'layout',
-    ]);
 
     this.props.showModal(
       <ActorInfo
@@ -113,7 +95,7 @@ class ActorList extends React.Component<Props> {
         desc={actor.desc}
         avatar={actor.avatar}
         data={actor.info}
-        layout={templateLayout}
+        templateUUID={actor.template_uuid}
       />
     );
   }

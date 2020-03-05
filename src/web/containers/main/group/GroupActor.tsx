@@ -21,7 +21,6 @@ import {
   getGroupActorInfo,
   getGroupActorField,
 } from '@src/web/utils/data-helper';
-import { getTemplateInfoCache } from '@src/shared/utils/cache-helper';
 import _get from 'lodash/get';
 
 import './GroupActor.scss';
@@ -85,10 +84,9 @@ class GroupActor extends React.Component<Props> {
    */
   handleEditActorInfo(groupActor: GroupActorType) {
     const { showModal, groupInfo, requestUpdateGroupActorInfo } = this.props;
-    const template = getTemplateInfoCache(
-      _get(groupActor, 'actor.template_uuid')
-    );
-    const templateLayout = template.layout;
+    const templateUUID =
+      _get(groupActor, 'actor_template_uuid') ??
+      _get(groupActor, 'actor.template_uuid');
 
     showModal(
       <ActorEdit
@@ -96,7 +94,7 @@ class GroupActor extends React.Component<Props> {
         avatar={groupActor.avatar}
         desc={groupActor.desc}
         data={getGroupActorInfo(groupActor)}
-        layout={templateLayout}
+        templateUUID={templateUUID}
         onSave={(data) =>
           requestUpdateGroupActorInfo(groupInfo.uuid, groupActor.uuid, data)
         }
@@ -296,7 +294,6 @@ export default connect(
       selectedGroupUUID,
       groupInfo,
       isGroupManager: isGroupManager(groupInfo, userUUID),
-      templateCache: state.cache.template,
     };
   },
   (dispatch: any, ownProps) => ({
@@ -312,6 +309,8 @@ export default connect(
       groupActorUUID: string,
       groupActorInfo: {}
     ) =>
-      dispatch(requestUpdateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)),
+      dispatch(
+        requestUpdateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)
+      ),
   })
 )(GroupActor);
