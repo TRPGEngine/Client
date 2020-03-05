@@ -6,26 +6,28 @@ import { showModal, showProfileCard } from '@shared/redux/actions/ui';
 import GroupMemberManage from './modal/GroupMemberManage';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
 import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
+import { isGroupManager } from '@shared/model/group';
+import { GroupInfo } from '@redux/types/group';
 
 import './GroupMember.scss';
 
 interface Props {
   userUUID: string;
   selectedGroupUUID: string;
-  groupInfo: any;
+  groupInfo: GroupInfo;
   isGroupManager: boolean;
   showModal: any;
   showProfileCard: any;
 }
 class GroupMember extends React.Component<Props> {
-  handleManageMember(uuid) {
+  handleManageMember = (uuid: string) => {
     this.props.showModal(<GroupMemberManage uuid={uuid} />);
-  }
+  };
 
   getMemberList() {
-    const groupInfo = this.props.groupInfo;
-    const hasManagerAuth =
-      groupInfo.managers_uuid.indexOf(this.props.userUUID) >= 0;
+    const { groupInfo, userUUID } = this.props;
+
+    const hasManagerAuth = isGroupManager(groupInfo, userUUID);
     if (groupInfo.group_members) {
       return (groupInfo.group_members || []).map((uuid) => {
         const user = getUserInfoCache(uuid);
