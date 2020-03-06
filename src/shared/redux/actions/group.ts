@@ -22,6 +22,7 @@ const {
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
   UPDATE_GROUP_ACTOR_INFO,
+  UPDATE_GROUP_ACTOR,
   UPDATE_GROUP_ACTOR_MAPPING,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
@@ -53,7 +54,7 @@ import _get from 'lodash/get';
 import * as trpgApi from '../../api/trpg.api';
 import { TRPGAction } from '../types/__all__';
 import { getGroupInviteInfo } from './cache';
-import { GroupInfo } from '@redux/types/group';
+import { GroupInfo, GroupActorType } from '@redux/types/group';
 const api = trpgApi.getInstance();
 
 // 当state->group->groups状态添加新的group时使用来初始化
@@ -618,6 +619,9 @@ export const requestUpdateGroupActorInfo = function(
     );
   };
 };
+/**
+ * 更新团人物卡数据
+ */
 export const updateGroupActorInfo = function(
   groupUUID: string,
   groupActorUUID: string,
@@ -628,6 +632,19 @@ export const updateGroupActorInfo = function(
     groupUUID,
     groupActorUUID,
     groupActorInfo,
+  };
+};
+/**
+ * 更新团人物卡信息
+ */
+export const updateGroupActor = function(
+  groupUUID: string,
+  groupActor: GroupActorType
+): TRPGAction {
+  return {
+    type: UPDATE_GROUP_ACTOR,
+    groupUUID,
+    groupActor,
   };
 };
 
