@@ -601,7 +601,7 @@ export const requestUpdateGroupActorInfo = function(
 ) {
   return function(dispatch, getState) {
     return api.emit(
-      'group::requestUpdateGroupActorInfo',
+      'group::updateGroupActorInfo',
       { groupActorUUID, groupActorInfo },
       function(data) {
         if (data.result) {
