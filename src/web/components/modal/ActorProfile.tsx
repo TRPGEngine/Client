@@ -19,6 +19,9 @@ interface Props {
   overwritedActorData?: ActorDataType; // 一般用于团角色的人物信息, 只读
   templateCache: any;
 }
+/**
+ * @deprecated
+ */
 class ActorProfile extends React.Component<Props> {
   constructor(props) {
     super(props);

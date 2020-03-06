@@ -19,9 +19,20 @@ export const getGroupActorField = (
  * @param groupActor 团人物卡
  */
 export const getGroupActorInfo = (groupActor: GroupActorType): {} => {
-  return Object.assign(
-    {},
-    _get(groupActor, 'actor.info'),
-    groupActor.actor_info
+  return {
+    ..._get(groupActor, 'actor.info', {}),
+    ...groupActor.actor_info,
+  };
+};
+
+/**
+ * 获取团人物卡的模板UUID
+ * @param groupActor 团人物卡
+ */
+export const getGroupActorTemplateUUID = (
+  groupActor: GroupActorType
+): string => {
+  return (
+    groupActor.actor_template_uuid ?? _get(groupActor, 'actor.template_uuid')
   );
 };

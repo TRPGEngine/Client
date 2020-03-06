@@ -11,20 +11,22 @@ import { TabsController, Tab } from '../../../components/Tabs';
 import ActorSelect from '../../../components/modal/ActorSelect';
 import { GroupActorCheck } from './modal/GroupActorCheck';
 import { ActorType, ActorDataType } from '@src/shared/redux/types/actor';
-import { GroupActorType } from '@src/shared/redux/types/group';
+import { GroupActorType, GroupInfo } from '@src/shared/redux/types/group';
 import ActorEdit from '@src/web/components/modal/ActorEdit';
 import { Tooltip } from 'antd';
 import styled from 'styled-components';
 import {
   getGroupActorInfo,
   getGroupActorField,
+  getGroupActorTemplateUUID,
 } from '@src/web/utils/data-helper';
 import _get from 'lodash/get';
-
-import './GroupActor.scss';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import { TRPGState } from '@redux/types/__all__';
 import { isGroupManager } from '@shared/model/group';
+import ActorInfo from '@web/components/modal/ActorInfo';
+
+import './GroupActor.scss';
 
 const GroupActorAction = styled.div`
   padding: 4px 10px;
@@ -36,7 +38,7 @@ interface Props {
   showAlert: any;
   addGroupActor: any;
   removeGroupActor: any;
-  groupInfo: any;
+  groupInfo: GroupInfo;
   isGroupManager: boolean;
   templateCache: any;
   requestUpdateGroupActorInfo: (
@@ -45,7 +47,7 @@ interface Props {
     groupActorInfo: {}
   ) => void;
 }
-class GroupActor extends React.Component<Props> {
+class GroupActor extends React.PureComponent<Props> {
   handleSendGroupActorCheck = () => {
     if (!this.props.selectedGroupUUID) {
       showAlert('请选择一个团来提交您的人物');
@@ -61,20 +63,18 @@ class GroupActor extends React.Component<Props> {
   };
 
   // 查看人物卡
-  handleShowActorProfile(actor: ActorType, overwritedActorData: ActorDataType) {
-    if (actor) {
+  handleShowActorProfile = (groupActor: GroupActorType) => {
+    if (groupActor) {
       this.props.showModal(
-        <ModalPanel title="人物属性">
-          <ActorProfile
-            actor={actor}
-            overwritedActorData={overwritedActorData}
-          />
-        </ModalPanel>
+        <ActorInfo
+          data={getGroupActorInfo(groupActor)}
+          templateUUID={getGroupActorTemplateUUID(groupActor)}
+        />
       );
     } else {
-      console.error('需要actor');
+      console.error('需要groupActor');
     }
-  }
+  };
 
   /**
    * 处理团人物卡信息的编辑
@@ -82,9 +82,7 @@ class GroupActor extends React.Component<Props> {
    */
   handleEditActorInfo(groupActor: GroupActorType) {
     const { showModal, groupInfo, requestUpdateGroupActorInfo } = this.props;
-    const templateUUID =
-      _get(groupActor, 'actor_template_uuid') ??
-      _get(groupActor, 'actor.template_uuid');
+    const templateUUID = getGroupActorTemplateUUID(groupActor);
 
     showModal(
       <ActorEdit
@@ -167,12 +165,7 @@ class GroupActor extends React.Component<Props> {
                 <div className="action">
                   <Tooltip title="查询">
                     <button
-                      onClick={() =>
-                        this.handleShowActorProfile(
-                          originActor,
-                          groupActor.actor_info
-                        )
-                      }
+                      onClick={() => this.handleShowActorProfile(groupActor)}
                     >
                       <i className="iconfont">&#xe61b;</i>
                     </button>
@@ -214,37 +207,32 @@ class GroupActor extends React.Component<Props> {
       return groupActors
         .filter((item) => item.passed === false)
         .map((item) => {
-          let originActor = item.actor;
-          let actorData = item.actor_info;
+          const groupActor: GroupActorType = item; // 团人物卡信息
           return (
             <div
-              key={'group-actor-check#' + item.uuid}
+              key={'group-actor-check#' + groupActor.uuid}
               className="group-actor-check-item"
             >
               <div
                 className="avatar"
                 style={{
-                  backgroundImage: `url(${getAbsolutePath(
-                    originActor.avatar
-                  )})`,
+                  backgroundImage: `url(${getAbsolutePath(groupActor.avatar)})`,
                 }}
               />
               <div className="info">
-                <div className="name">{originActor.name}</div>
-                <div className="desc">{originActor.desc}</div>
+                <div className="name">{groupActor.name}</div>
+                <div className="desc">{groupActor.desc}</div>
                 <div className="action">
                   <Tooltip title="查询">
                     <button
-                      onClick={() =>
-                        this.handleShowActorProfile(originActor, actorData)
-                      }
+                      onClick={() => this.handleShowActorProfile(groupActor)}
                     >
                       <i className="iconfont">&#xe61b;</i>
                     </button>
                   </Tooltip>
                   {this.props.isGroupManager && (
                     <Tooltip title="审批">
-                      <button onClick={() => this.handleApprove(item)}>
+                      <button onClick={() => this.handleApprove(groupActor)}>
                         <i className="iconfont">&#xe83f;</i>
                       </button>
                     </Tooltip>
