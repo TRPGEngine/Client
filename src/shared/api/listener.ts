@@ -28,6 +28,7 @@ export function bindEventFunc(
     addGroupMember,
     removeGroupMember,
     updateGroupActorInfo,
+    updateGroupActor,
     updateGroupInfo,
   } = require('../redux/actions/group');
   const { getUserInfoCache } = require('../utils/cache-helper');
@@ -89,6 +90,10 @@ export function bindEventFunc(
     store.dispatch(
       updateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)
     );
+  });
+  api.on('group::updateGroupActor', function(data) {
+    const { groupUUID, groupActor } = data;
+    store.dispatch(updateGroupActor(groupUUID, groupActor));
   });
   api.on('group::updatePlayerSelectedGroupActor', function(data) {
     store.dispatch(

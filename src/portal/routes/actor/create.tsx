@@ -65,11 +65,11 @@ class ActorCreate extends React.Component<Props, State> {
               xml={template.layout}
               onChange={({ data }) => (this.actorData = data)}
             />
-            <Affix offsetBottom={10}>
+            <div>
               <ActionButton type="primary" onClick={this.handleCreateActor}>
                 创建人物
               </ActionButton>
-            </Affix>
+            </div>
           </div>
         )}
       </div>

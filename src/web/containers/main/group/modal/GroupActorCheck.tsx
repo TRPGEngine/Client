@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { connect } from 'react-redux';
 import ModalPanel from '@web/components/ModalPanel';
 import ActorProfile from '@web/components/modal/ActorProfile';
@@ -8,84 +8,70 @@ import {
   requestUpdateGroupActorInfo,
 } from '@shared/redux/actions/group';
 import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
+import { TMemo } from '@shared/components/TMemo';
+import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useCachedActorTemplateInfo } from '@shared/hooks/cache';
+import _get from 'lodash/get';
+import _isString from 'lodash/isString';
 
 import './GroupActorCheck.scss';
+import XMLBuilder from '@shared/components/layout/XMLBuilder';
 
 interface Props {
-  selectedGroupUUID: string;
-  groupActor: any;
-
-  agreeGroupActor: any;
-  refuseGroupActor: any;
+  actorData: {};
+  templateUUID: string;
+  groupUUID: string;
+  groupActorUUID: string;
 }
-class GroupActorCheck extends React.Component<Props> {
-  state = {
-    editingData: this.props.groupActor.actor_info || {},
-  };
+export const GroupActorCheck: React.FC<Props> = TMemo((props) => {
+  // TODO: 也许需要做成可以由管理员进行修改的方式
 
-  handleAgree() {
-    this.props.agreeGroupActor(
-      this.props.selectedGroupUUID,
-      this.props.groupActor.uuid
-    );
-  }
+  // const [editingData, setEditingData] = useState(props.actorData);
+  const dispatch = useTRPGDispatch();
 
-  handleRefuse() {
-    this.props.refuseGroupActor(
-      this.props.selectedGroupUUID,
-      this.props.groupActor.uuid
-    );
-  }
+  const handleAgree = useCallback(() => {
+    dispatch(agreeGroupActor(props.groupUUID, props.groupActorUUID));
+  }, [dispatch, props.groupUUID, props.groupActorUUID]);
 
-  handleEditData(key, value) {
-    let tmp = Object.assign({}, this.state.editingData);
-    tmp[key] = value;
-    this.setState({ editingData: tmp });
-  }
+  const handleRefuse = useCallback(() => {
+    dispatch(refuseGroupActor(props.groupUUID, props.groupActorUUID));
+  }, [dispatch, props.groupUUID, props.groupActorUUID]);
 
-  render() {
-    let groupActor = this.props.groupActor;
-    let actions = (
+  const template = useCachedActorTemplateInfo(props.templateUUID);
+  const layout = _get(template, 'layout');
+
+  const actions = useMemo(() => {
+    return (
       <div className="actions">
-        <button onClick={() => this.handleRefuse()}>
+        <button onClick={handleRefuse}>
           <i className="iconfont">&#xe680;</i>拒绝
         </button>
-        <button onClick={() => this.handleAgree()}>
+        <button onClick={handleAgree}>
           <i className="iconfont">&#xe66b;</i>通过
         </button>
       </div>
     );
-    return (
-      <ModalPanel
-        title="人物审核"
-        actions={actions}
-        className="group-actor-check"
-      >
-        <ActorProfile
-          actor={groupActor.actor}
-          canEdit={true}
-          editingData={this.state.editingData}
-          onEditData={(k, v) => this.handleEditData(k, v)}
-        />
-      </ModalPanel>
-    );
-  }
-}
+  }, [handleRefuse, handleAgree]);
 
-export default connect(
-  (state: TRPGState) => ({
-    selectedGroupUUID: state.group.selectedGroupUUID,
-  }),
-  (dispatch: TRPGDispatch) => ({
-    agreeGroupActor: (groupUUID, groupActorUUID) =>
-      dispatch(agreeGroupActor(groupUUID, groupActorUUID)),
-    refuseGroupActor: (groupUUID, groupActorUUID) =>
-      dispatch(refuseGroupActor(groupUUID, groupActorUUID)),
-    requestUpdateGroupActorInfo: (
-      groupUUID: string,
-      groupActorUUID: string,
-      groupActorInfo: {}
-    ) =>
-      dispatch(requestUpdateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)),
-  })
-)(GroupActorCheck);
+  return useMemo(
+    () =>
+      _isString(layout) && (
+        <ModalPanel
+          className="group-actor-check"
+          title="审核人物"
+          actions={actions}
+          allowMaximize={true}
+        >
+          <XMLBuilder
+            xml={layout}
+            initialData={props.actorData}
+            layoutType="detail"
+            // layoutType="edit"
+            // onChange={(newState) => setEditingData(newState.data)}
+          />
+        </ModalPanel>
+      ),
+    [layout, actions, props.actorData]
+  );
+});
+GroupActorCheck.displayName = 'GroupActorCheck';

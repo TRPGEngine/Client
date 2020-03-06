@@ -30,6 +30,7 @@ const {
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
   UPDATE_GROUP_ACTOR_INFO,
+  UPDATE_GROUP_ACTOR,
   UPDATE_GROUP_ACTOR_MAPPING,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
@@ -433,28 +434,56 @@ export default produce((draft: GroupState, action) => {
         return;
       }
 
+      const groupActorInfo = action.groupActorInfo;
       _set(
         draft.groups[groupIndex],
         ['group_actors', groupActorIndex, 'actor_info'],
-        action.groupActorInfo
+        groupActorInfo
+      );
+      if (!_isNil(groupActorInfo._name)) {
+        _set(
+          draft.groups[groupIndex],
+          ['group_actors', groupActorIndex, 'name'],
+          groupActorInfo._name
+        );
+      }
+      if (!_isNil(groupActorInfo._desc)) {
+        _set(
+          draft.groups[groupIndex],
+          ['group_actors', groupActorIndex, 'desc'],
+          groupActorInfo._desc
+        );
+      }
+      if (!_isNil(groupActorInfo._avatar)) {
+        _set(
+          draft.groups[groupIndex],
+          ['group_actors', groupActorIndex, 'avatar'],
+          groupActorInfo._avatar
+        );
+      }
+      return;
+    }
+    case UPDATE_GROUP_ACTOR: {
+      const groupIndex = draft.groups.findIndex(
+        (g) => g.uuid === action.groupUUID
+      );
+      if (groupIndex === -1) {
+        return;
+      }
+      const groupActorIndex = draft.groups[groupIndex].group_actors.findIndex(
+        (ga) => ga.uuid === action.groupActor.uuid
+      );
+
+      if (groupActorIndex === -1) {
+        return;
+      }
+
+      _set(
+        draft.groups[groupIndex],
+        ['group_actors', groupActorIndex],
+        action.groupActor
       );
       return;
-
-      // const groupIndex = state
-      //   .get('groups')
-      //   .findIndex((i) => i.get('uuid') === action.groupUUID);
-      // const groupActorIndex = state
-      //   .getIn(['groups', groupIndex, 'group_actors'])
-      //   .findIndex((i) => i.get('uuid') === action.groupActorUUID);
-
-      // if (groupIndex === -1 || groupActorIndex === -1) {
-      //   return state;
-      // }
-
-      // return state.setIn(
-      //   ['groups', groupIndex, 'group_actors', groupActorIndex, 'actor_info'],
-      //   immutable.fromJS(action.groupActorInfo)
-      // );
     }
     case UPDATE_GROUP_ACTOR_MAPPING: {
       draft.groupActorMap[action.groupUUID] = action.payload;

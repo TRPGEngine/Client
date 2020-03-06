@@ -212,7 +212,7 @@ export const UserSelector: React.FC<Props> = React.memo((props) => {
     return <Button onClick={handleConfirm}>确认</Button>;
   }, [handleConfirm]);
 
-  return (
+  return useMemo(() => (
     <ModalPanel
       title="选择用户"
       style={{ width: 600, height: 480 }}
@@ -235,6 +235,6 @@ export const UserSelector: React.FC<Props> = React.memo((props) => {
         </div>
       </Container>
     </ModalPanel>
-  );
+  ), [actions, selectedUUIDs, allUserUUIDs, setSelectedUUIDs, allUsers, handleAppendUUID]) ;
 });
 UserSelector.displayName = 'UserSelector';

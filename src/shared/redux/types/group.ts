@@ -16,7 +16,8 @@ export interface GroupActorType {
   passed: boolean;
   enabled: boolean;
   actor_uuid: string;
-  actor_info: {};
+  actor_info?: {}; // 当通过审批以后会保存一份。未通过的到actor中查看
+  actor_template_uuid?: string; // 当通过审批以后会保存一份。未通过的到actor中查看
   actor: ActorType;
 }
 
