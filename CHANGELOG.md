@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.23](https://github.com/TRPGEngine/Client/compare/v0.2.22...v0.2.23) (2020-03-06)
+
+
+### Bug Fixes
+
+* **web:** 修复无法更新团人物卡的bug ([f552b8b](https://github.com/TRPGEngine/Client/commit/f552b8b78116c31a2b5472d80e4bd0c2ade2b99f))
+
 ### [0.2.22](https://github.com/TRPGEngine/Client/compare/v0.2.21...v0.2.22) (2020-03-05)
 
 
