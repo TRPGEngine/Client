@@ -528,6 +528,8 @@
           <Use name="武器5" define="weapon" />
         </tbody>
       </table>
+
+      <p>*: 星号代表有额外说明，具体请查阅规则书附录部分</p>
     </FieldSet>
 
     <FieldSet>

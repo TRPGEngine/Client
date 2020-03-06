@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --inline --progress --colors --port 8089 --host 0.0.0.0 --config ./build/config/webpack.config.js",
     "dev:proserver": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:80 npm run dev",
-    "build:dev": "cross-env PLATFORM=web webpack --progress --colors --display-modules --config ./build/config/webpack.config.js",
-    "build:pro": "cross-env NODE_ENV=production npm run build",
+    "build:main": "webpack --progress --colors --display-modules --config ./build/config/webpack.config.js",
+    "build:dev": "cross-env PLATFORM=web npm run build:main",
+    "build:pro": "cross-env NODE_ENV=production npm run build:main",
     "build:report": "cross-env npm_config_report=true npm run build:pro",
     "build:dll": "webpack --config build/config/webpack.dll.config.js",
     "pc": "cross-env PLATFORM=electron NODE_ENV=production TRPG_HOST=localhost gulp --gulpfile build/gulpfile.js && electron .",
