@@ -8,10 +8,8 @@ import {
   requestUpdateGroupActorInfo,
 } from '@src/shared/redux/actions/group';
 import { TabsController, Tab } from '../../../components/Tabs';
-import ModalPanel from '../../../components/ModalPanel';
-import ActorProfile from '../../../components/modal/ActorProfile';
 import ActorSelect from '../../../components/modal/ActorSelect';
-import GroupActorCheck from './modal/GroupActorCheck';
+import { GroupActorCheck } from './modal/GroupActorCheck';
 import { ActorType, ActorDataType } from '@src/shared/redux/types/actor';
 import { GroupActorType } from '@src/shared/redux/types/group';
 import ActorEdit from '@src/web/components/modal/ActorEdit';
@@ -103,9 +101,16 @@ class GroupActor extends React.Component<Props> {
   }
 
   // 审批人物
-  handleApprove(groupActorInfo) {
+  handleApprove(groupActorInfo: GroupActorType) {
     if (groupActorInfo) {
-      this.props.showModal(<GroupActorCheck groupActor={groupActorInfo} />);
+      this.props.showModal(
+        <GroupActorCheck
+          actorData={groupActorInfo.actor.info}
+          templateUUID={groupActorInfo.actor.template_uuid}
+          groupUUID={this.props.selectedGroupUUID}
+          groupActorUUID={groupActorInfo.actor_uuid}
+        />
+      );
     } else {
       console.error('需要groupActor');
     }
