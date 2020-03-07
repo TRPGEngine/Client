@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.24](https://github.com/TRPGEngine/Client/compare/v0.2.23...v0.2.24) (2020-03-07)
+
+
+### Bug Fixes
+
+* **web:** 修复人物审核uuid不正确的问题 ([f2bd829](https://github.com/TRPGEngine/Client/commit/f2bd82955d24e14faca1568b76e30a1a62d887fb))
+
 ### [0.2.23](https://github.com/TRPGEngine/Client/compare/v0.2.22...v0.2.23) (2020-03-06)
 
 
