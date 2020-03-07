@@ -4,6 +4,7 @@ import {
   getGroupInfo,
   getUserInfo,
   getTemplateInfo,
+  getActorInfo,
 } from '@redux/actions/cache';
 import { useSelector, useDispatch } from 'react-redux';
 import { TRPGState } from '@redux/types/__all__';
@@ -12,6 +13,7 @@ import _isNil from 'lodash/isNil';
 import { useEffect } from 'react';
 import { UserInfo } from '@redux/types/user';
 import { GroupInfo } from '@redux/types/group';
+import { ActorType } from '@redux/types/actor';
 
 /**
  * 用于redux的缓存hook
@@ -73,6 +75,11 @@ export const useCachedUserInfo = reduxHookCacheFactory<UserInfo>(
 export const useCachedGroupInfo = reduxHookCacheFactory<GroupInfo>(
   'group',
   (uuid, onCompleted) => getGroupInfo(uuid, onCompleted)
+);
+
+export const useCachedActorInfo = reduxHookCacheFactory<ActorType>(
+  'actor',
+  (uuid, onCompleted) => getActorInfo(uuid, onCompleted)
 );
 
 export const useCachedActorTemplateInfo = reduxHookCacheFactory<GroupInfo>(

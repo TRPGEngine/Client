@@ -7,25 +7,26 @@ import config from '@shared/project.config';
 import ActorCacheProfile from '../../modal/ActorCacheProfile';
 import { MessageProps } from '@src/shared/components/MessageHandler';
 import Avatar from '@web/components/Avatar';
+import { ActorInfoWithUUID } from '@web/components/modal/ActorInfo';
+import { message } from 'antd';
 
 interface Props extends MessageProps, DispatchProp<any> {}
 
-// 投骰请求
+// 人物卡消息
 class Actor extends BaseCard<Props> {
   showActorProfile(uuid: string) {
     if (!uuid) {
-      console.error('uuid is required!');
+      message.error('uuid is required!');
       return;
     }
-    // 获取最新信息
-    this.props.dispatch(getActorInfo(uuid)); // TODO: 需要实现actor的缓存工具
-    this.props.dispatch(showModal(<ActorCacheProfile uuid={uuid} />));
+
+    this.props.dispatch(showModal(<ActorInfoWithUUID uuid={uuid} />));
   }
 
   getCardView() {
-    let info = this.props.info;
-    let data = info.data;
-    let url =
+    const info = this.props.info;
+    const data = info.data;
+    const url =
       config.file.getAbsolutePath(data.avatar) || config.defaultImg.actor;
     return (
       <div className="card-content-actor">
@@ -39,8 +40,8 @@ class Actor extends BaseCard<Props> {
   }
 
   getCardBtn() {
-    let info = this.props.info;
-    let data = info.data;
+    const info = this.props.info;
+    const data = info.data;
     return [
       {
         label: '查看',
