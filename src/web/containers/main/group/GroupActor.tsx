@@ -103,10 +103,10 @@ class GroupActor extends React.PureComponent<Props> {
     if (groupActorInfo) {
       this.props.showModal(
         <GroupActorCheck
-          actorData={groupActorInfo.actor.info}
-          templateUUID={groupActorInfo.actor.template_uuid}
+          actorData={getGroupActorInfo(groupActorInfo)}
+          templateUUID={getGroupActorTemplateUUID(groupActorInfo)}
           groupUUID={this.props.selectedGroupUUID}
-          groupActorUUID={groupActorInfo.actor_uuid}
+          groupActorUUID={groupActorInfo.uuid}
         />
       );
     } else {
