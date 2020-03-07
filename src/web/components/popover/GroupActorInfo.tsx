@@ -12,6 +12,7 @@ import { Button } from 'antd';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { showModal } from '@redux/actions/ui';
 import ActorInfo from '../modal/ActorInfo';
+import { TPopoverContext } from './index';
 
 /**
  * NOTICE: 不同于别的Popover 团角色的popover不应该从缓存中获取而是应该直接获取团信息
@@ -42,6 +43,7 @@ interface Props {
   groupActorUUID: string;
 }
 const PopoverGroupActorInfo: React.FC<Props> = TMemo((props) => {
+  const popoverHandler = useContext(TPopoverContext);
   const groupInfo = useContext(GroupInfoContext);
   const dispatch = useTRPGDispatch();
 
@@ -51,6 +53,7 @@ const PopoverGroupActorInfo: React.FC<Props> = TMemo((props) => {
   }, [groupInfo, props.groupActorUUID]);
 
   const handleShowActorInfo = useCallback(() => {
+    popoverHandler.closePopover();
     dispatch(
       showModal(
         <ActorInfo
@@ -59,7 +62,7 @@ const PopoverGroupActorInfo: React.FC<Props> = TMemo((props) => {
         />
       )
     );
-  }, [dispatch, groupActorInfo]);
+  }, [dispatch, groupActorInfo, popoverHandler]);
 
   return useMemo(() => {
     return _isEmpty(groupActorInfo) ? (
