@@ -33,7 +33,10 @@ import MsgSendBox from '../../../components/MsgSendBox';
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
 import _orderBy from 'lodash/orderBy';
-import { GroupActorMsgData } from '@src/shared/redux/types/group';
+import {
+  GroupActorMsgData,
+  GroupActorType,
+} from '@src/shared/redux/types/group';
 import QuickDice from '../dice/QuickDice';
 import { TRPGState } from '@redux/types/__all__';
 import GroupRule from './GroupRule';
@@ -45,7 +48,7 @@ interface Props extends DispatchProp<any> {
   userUUID: string;
   groupInfo: any;
   usercache: any;
-  selfGroupActors: any;
+  selfGroupActors: GroupActorType[];
   selectedGroupActorUUID: string;
   selectedGroupActorInfo: any;
 }
@@ -266,7 +269,7 @@ class GroupDetail extends React.Component<Props> {
     if (selfGroupActors && selfGroupActors.length > 0) {
       options = selfGroupActors.map((item, index) => ({
         value: item.uuid,
-        label: _get(item, 'actor.name'),
+        label: item.name,
       }));
     }
     if (selectedGroupActorUUID) {

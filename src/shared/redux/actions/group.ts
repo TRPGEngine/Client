@@ -402,10 +402,9 @@ export const getGroupList = function(): TRPGAction {
           group.avatar = config.file.getAbsolutePath(group.avatar);
 
           // 初始化部分数据
-          group.managers_uuid = [];
-          group.maps_uuid = [];
-          group.group_actors = [];
-          group.group_members = [];
+          group.maps_uuid = group.maps_uuid ?? [];
+          group.group_actors = group.group_actors ?? [];
+          group.group_members = group.group_members ?? [];
         }
 
         dispatch({ type: GET_GROUP_LIST_SUCCESS, payload: groups });
