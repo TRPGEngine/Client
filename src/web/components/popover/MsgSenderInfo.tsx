@@ -4,6 +4,7 @@ import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
 import PopoverUserInfo from './UserInfo';
 import PopoverGroupActorInfo from './GroupActorInfo';
+import { TMemo } from '@shared/components/TMemo';
 
 /**
  * 专门用于处理消息信息的Popover
@@ -12,7 +13,7 @@ import PopoverGroupActorInfo from './GroupActorInfo';
 interface Props {
   payload: MsgPayload;
 }
-const PopoverMsgSenderInfo: React.FC<Props> = React.memo((props) => {
+const PopoverMsgSenderInfo: React.FC<Props> = TMemo((props) => {
   const groupActorUUID = _get(props.payload, ['data', 'groupActorUUID']);
   const isGroupActorMessage = !_isNil(groupActorUUID);
 
