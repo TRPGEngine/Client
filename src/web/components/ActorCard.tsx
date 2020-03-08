@@ -2,6 +2,7 @@ import React from 'react';
 import { ActorType } from '@redux/types/actor';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
+import { getAbsolutePath } from '@shared/utils/file-helper';
 
 export const ActorCardContainer = styled.div`
   display: flex;
@@ -93,7 +94,7 @@ export const ActorCard: React.FC<Props> = TMemo((props) => {
   const { actor } = props;
 
   const backgroundStyle = {
-    backgroundImage: `url(${actor.avatar})`,
+    backgroundImage: `url(${getAbsolutePath(actor.avatar)})`,
   };
 
   return (

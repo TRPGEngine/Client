@@ -2,6 +2,8 @@ import constants from '../constants';
 import { ActorState } from '@redux/types/actor';
 import { produce } from 'immer';
 import _remove from 'lodash/remove';
+import _find from 'lodash/find';
+import _isNil from 'lodash/isNil';
 const {
   RESET,
   GET_TEMPLATE_SUCCESS,
@@ -14,6 +16,9 @@ const {
   SELECT_ACTOR,
   REMOVE_ACTOR_SUCCESS,
   UPDATE_ACTOR_SUCCESS,
+  SHARE_ACTOR_SUCCESS,
+  UNSHARE_ACTOR_SUCCESS,
+  FORK_ACTOR_SUCCESS,
 } = constants;
 
 const initialState: ActorState = {
@@ -147,5 +152,28 @@ export default produce((draft: ActorState, action) => {
     // return state.update('selfActors', (list) =>
     //   updateSelfActor(list, action.payload.uuid, action.payload)
     // );
+    case SHARE_ACTOR_SUCCESS: {
+      const actorUUID = action.payload.actorUUID;
+      const actor = _find(draft.selfActors, ['uuid', actorUUID]);
+      if (!_isNil(actor)) {
+        actor.shared = true;
+      }
+      return;
+    }
+    case UNSHARE_ACTOR_SUCCESS: {
+      const actorUUID = action.payload.actorUUID;
+      const actor = _find(draft.selfActors, ['uuid', actorUUID]);
+      if (!_isNil(actor)) {
+        actor.shared = false;
+      }
+      return;
+    }
+    case FORK_ACTOR_SUCCESS: {
+      const actor = action.payload.actor;
+      if (!_isNil(actor)) {
+        draft.selfActors.push(actor);
+      }
+      return;
+    }
   }
 }, initialState);

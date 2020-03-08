@@ -1,15 +1,15 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import * as at from 'trpg-actor-template';
-import { ActorCard } from '@web/components/ActorCard';
+import { ActorCard, ActorCardContainer } from '@web/components/ActorCard';
 import ActorCreate from '@web/components/modal/ActorCreate';
 import ActorEdit from '@web/components/modal/ActorEdit';
 import { showModal, showAlert } from '@shared/redux/actions/ui';
-import { updateActor } from '@web/redux/action/actor';
 import {
-  selectActor,
   removeActor,
-  selectTemplate,
+  shareActor,
+  unshareActor,
+  selectActor,
 } from '@shared/redux/actions/actor';
 import ActorInfo from '@web/components/modal/ActorInfo';
 import _isNil from 'lodash/isNil';
@@ -17,32 +17,30 @@ import _get from 'lodash/get';
 
 import './ActorList.scss';
 import { message } from 'antd';
-import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
-import { AlertPayload } from '@redux/types/ui';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import { ActorType } from '@redux/types/actor';
+import { updateActor } from '@web/redux/action/actor';
 
-interface Props {
-  selectActor: any;
-  showModal: any;
-  showAlert: (payload: AlertPayload) => void;
-  removeActor: any;
-  selectTemplate: any;
-  actors: any;
+interface Props extends TRPGDispatchProp {
+  actors: ActorType[];
   templateCache: any;
-  updateActor: any;
   selectedActorUUID: string;
 }
 class ActorList extends React.Component<Props> {
   handleAddNewActor() {
-    this.props.selectActor('');
-    this.props.showModal(<ActorCreate />);
+    this.props.dispatch(selectActor(''));
+    this.props.dispatch(showModal(<ActorCreate />));
   }
 
   handleRemoveActor(uuid) {
-    this.props.selectActor('');
-    this.props.showAlert({
-      content: '你确定要删除该人物卡么？删除后会同时删除相关的团人物并无法找回',
-      onConfirm: () => this.props.removeActor(uuid),
-    });
+    this.props.dispatch(selectActor(''));
+    this.props.dispatch(
+      showAlert({
+        content:
+          '你确定要删除该人物卡么？删除后会同时删除相关的团人物并无法找回',
+        onConfirm: () => this.props.dispatch(removeActor(uuid)),
+      })
+    );
   }
 
   /**
@@ -60,23 +58,21 @@ class ActorList extends React.Component<Props> {
     const avatar = actor.avatar;
     const templateUUID = actor.template_uuid;
 
-    this.props.showModal(
-      <ActorEdit
-        name={name}
-        desc={desc}
-        avatar={avatar}
-        data={actor.info}
-        templateUUID={templateUUID}
-        onSave={(data) => {
-          this.props.updateActor(
-            uuid,
-            data._name,
-            data._avatar,
-            data._desc,
-            data
-          );
-        }}
-      />
+    this.props.dispatch(
+      showModal(
+        <ActorEdit
+          name={name}
+          desc={desc}
+          avatar={avatar}
+          data={actor.info}
+          templateUUID={templateUUID}
+          onSave={(data) => {
+            this.props.dispatch(
+              updateActor(uuid, data._name, data._avatar, data._desc, data)
+            );
+          }}
+        />
+      )
     );
   }
 
@@ -90,16 +86,48 @@ class ActorList extends React.Component<Props> {
       return;
     }
 
-    this.props.showModal(
-      <ActorInfo
-        name={actor.name}
-        desc={actor.desc}
-        avatar={actor.avatar}
-        data={actor.info}
-        templateUUID={actor.template_uuid}
-      />
+    this.props.dispatch(
+      showModal(
+        <ActorInfo
+          name={actor.name}
+          desc={actor.desc}
+          avatar={actor.avatar}
+          data={actor.info}
+          templateUUID={actor.template_uuid}
+        />
+      )
     );
   }
+
+  /**
+   * 分享人物卡
+   */
+  handleShareActor = (uuid: string) => {
+    this.props.dispatch(
+      showAlert({
+        title: '是否要分享人物卡?',
+        content: '分享后人物卡会被其他人看到并允许被fork',
+        onConfirm: () => {
+          this.props.dispatch(shareActor(uuid));
+        },
+      })
+    );
+  };
+
+  /**
+   * 取消分享人物卡
+   */
+  handleUnshareActor = (uuid: string) => {
+    this.props.dispatch(
+      showAlert({
+        title: '取消分享人物卡',
+        content: '取消后无法被其他人搜到',
+        onConfirm: () => {
+          this.props.dispatch(unshareActor(uuid));
+        },
+      })
+    );
+  };
 
   getActorList() {
     return this.props.actors.map((item, index) => {
@@ -118,6 +146,15 @@ class ActorList extends React.Component<Props> {
               <button onClick={() => this.handleOpenActorInfoModal(uuid)}>
                 查看
               </button>
+              {item.shared ? (
+                <button onClick={() => this.handleUnshareActor(uuid)}>
+                  分享中
+                </button>
+              ) : (
+                <button onClick={() => this.handleShareActor(uuid)}>
+                  分享
+                </button>
+              )}
             </Fragment>
           }
         />
@@ -190,19 +227,8 @@ class ActorList extends React.Component<Props> {
   }
 }
 
-export default connect(
-  (state: TRPGState) => ({
-    actors: state.actor.selfActors,
-    selectedActorUUID: state.actor.selectedActorUUID,
-    templateCache: state.cache.template,
-  }),
-  (dispatch: TRPGDispatch) => ({
-    showModal: (body) => dispatch(showModal(body)),
-    showAlert: (payload: AlertPayload) => dispatch(showAlert(payload)),
-    selectActor: (uuid) => dispatch(selectActor(uuid)),
-    removeActor: (uuid) => dispatch(removeActor(uuid)),
-    updateActor: (uuid, name, avatar, desc, info) =>
-      dispatch(updateActor(uuid, name, avatar, desc, info)),
-    selectTemplate: (template) => dispatch(selectTemplate(template)),
-  })
-)(ActorList);
+export default connect((state: TRPGState) => ({
+  actors: state.actor.selfActors,
+  selectedActorUUID: state.actor.selectedActorUUID,
+  templateCache: state.cache.template,
+}))(ActorList);
