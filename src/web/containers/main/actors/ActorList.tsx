@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import * as at from 'trpg-actor-template';
+import { ActorCard } from '@web/components/ActorCard';
 import ActorCreate from '@web/components/modal/ActorCreate';
 import ActorEdit from '@web/components/modal/ActorEdit';
 import { showModal, showAlert } from '@shared/redux/actions/ui';
@@ -102,26 +103,14 @@ class ActorList extends React.Component<Props> {
 
   getActorList() {
     return this.props.actors.map((item, index) => {
-      let uuid = item.uuid;
-      let backgroundStyle = {
-        backgroundImage: `url(${item.avatar})`,
-      };
-      let actorname = item.name;
-      let desc = item.desc;
-      let template_uuid = item.template_uuid;
+      const uuid = item.uuid;
+
       return (
-        <div className="actor-card" key={uuid + '-' + index}>
-          <div className="avatar" style={backgroundStyle} />
-          <div className="profile">
-            <p>
-              <span>角色:</span>
-              <span title={actorname}>{actorname}</span>
-            </p>
-            <p>
-              <span>说明:</span>
-              <span title={desc}>{desc}</span>
-            </p>
-            <p className="action">
+        <ActorCard
+          key={`${uuid}-${index}`}
+          actor={item}
+          actions={
+            <Fragment>
               <button onClick={() => this.handleRemoveActor(uuid)}>删除</button>
               <button onClick={() => this.handleOpenActorEditModal(uuid)}>
                 编辑
@@ -129,9 +118,9 @@ class ActorList extends React.Component<Props> {
               <button onClick={() => this.handleOpenActorInfoModal(uuid)}>
                 查看
               </button>
-            </p>
-          </div>
-        </div>
+            </Fragment>
+          }
+        />
       );
     });
   }
@@ -177,7 +166,7 @@ class ActorList extends React.Component<Props> {
 
   render() {
     let addNewCard = (
-      <div className="actor-card">
+      <ActorCardContainer>
         <div
           className="actor-card-new"
           onClick={() => this.handleAddNewActor()}
@@ -185,7 +174,7 @@ class ActorList extends React.Component<Props> {
           <i className="iconfont">&#xe604;</i>
           <span>添加新人物</span>
         </div>
-      </div>
+      </ActorCardContainer>
     );
     return (
       <div className="actor">

@@ -2,6 +2,7 @@
 // antd color from https://github.com/ant-design/ant-design-colors
 
 import * as antdColor from '@ant-design/colors';
+import { css } from 'styled-components';
 
 declare module 'styled-components' {
   interface DefaultTheme {
@@ -73,6 +74,46 @@ const styledTheme = {
       &:hover {
         overflow-y: auto;
         overflow-y: overlay;
+      }
+    `,
+    linkBtn: css`
+      font-size: 14px;
+      background-color: transparent;
+      border: 0;
+      cursor: pointer;
+      color: #705949;
+      padding: 0 2px;
+      margin: 4px 6px;
+      outline: 0;
+      position: relative;
+      user-select: none;
+
+      &:disabled {
+        cursor: not-allowed;
+        color: #999999;
+      }
+
+      &:enabled {
+        &:after {
+          content: ' ';
+          position: absolute;
+          border-top: 1px solid #705949;
+          bottom: 0;
+          transition: all 0.2s ease-in-out;
+
+          left: 0;
+          width: 0;
+        }
+
+        &:hover,
+        &:active,
+        &.active {
+          &:after {
+            border-top: 1px solid #705949;
+
+            width: 100%;
+          }
+        }
       }
     `,
   },
