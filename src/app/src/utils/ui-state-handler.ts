@@ -8,6 +8,7 @@ import { hideAlert, hideModal } from '@src/shared/redux/actions/ui';
 import { Toast, Portal } from '@ant-design/react-native';
 import TModal from '../components/TApi/TModal';
 import { TRPGDispatch } from '@src/shared/redux/types/__all__';
+import _last from 'lodash/last';
 
 type UIMap = { [name: string]: any };
 interface FactoryOptions {
@@ -74,7 +75,7 @@ export const toastHandler = uiStateSwitchFactory('showToast', {
  */
 export const modelHandler = uiStateSwitchFactory('showModal', {
   onEnabled: (currentUI, dispatch) => {
-    const body = currentUI.showModalBody;
+    const body = _last(currentUI.modalStack);
     if (body) {
       TModal.show(body, { onRequestClose: () => dispatch(hideModal()) });
     }

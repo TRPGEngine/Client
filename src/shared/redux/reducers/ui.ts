@@ -29,8 +29,7 @@ const initialState: UIState = {
   showAlertInfo: {},
   showLoading: false,
   showLoadingText: '加载中...',
-  showModal: false,
-  showModalBody: undefined,
+  modalStack: [],
   showToast: false,
   showToastText: '',
   showProfileCard: false,
@@ -56,14 +55,10 @@ const initialState: UIState = {
 export default produce((draft: UIState, action) => {
   switch (action.type) {
     case RESET:
-      draft.showModal = false;
+      draft.modalStack = [];
       draft.showSlidePanel = false;
       draft.showSlidePanelInfo = initialState.showSlidePanelInfo;
       return;
-    // return state
-    //   .set('showModal', false)
-    //   .set('showSlidePanel', false)
-    //   .set('showSlidePanelInfo', initialState.get('showSlidePanelInfo'));
     case SHOW_ALERT: {
       const showAlertInfo = action.payload || {};
       draft.showAlert = true;
@@ -94,18 +89,11 @@ export default produce((draft: UIState, action) => {
       return;
     // return state.set('showLoading', false);
     case SHOW_MODAL:
-      draft.showModal = true;
-      draft.showModalBody = action.payload;
+      draft.modalStack.push(action.payload);
       return;
-
-    // return state
-    //   .set('showModal', true)
-    //   .set('showModalBody', immutable.fromJS(action.payload));
     case HIDE_MODAL:
-      draft.showModal = false;
-      draft.showModalBody = undefined;
+      draft.modalStack.pop();
       return;
-    // return state.set('showModal', false).set('showModalBody', undefined);
     case SHOW_TOAST:
       draft.showToast = true;
       draft.showToastText = action.text || '';

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { ActorTemplateType } from '@redux/types/actor';
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { TMemo } from '@shared/components/TMemo';
-import { showModal } from '@redux/actions/ui';
+import { showModal, hideModal } from '@redux/actions/ui';
 import { SharedActorList } from './SharedActorList';
 
 const Search = Input.Search;
@@ -91,6 +91,7 @@ const TemplateSelect: React.FC<Props> = TMemo((props: Props) => {
   const [search, setSearch] = useState('');
   const handleSearch = (name: string) => props.dispatch(findTemplate(name));
   const handleShowSharedActorList = useCallback(() => {
+    dispatch(hideModal()); // 关闭掉当前的模态框
     dispatch(showModal(<SharedActorList />));
   }, []);
 
