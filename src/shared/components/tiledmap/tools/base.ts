@@ -7,6 +7,7 @@ export interface ActionContext extends DrawContext {
   manager: TiledMapManager;
   layerManager: LayerManager;
   mousePos: Position; // 鼠标指针在画布dom上的相对位置
+  mouseCanvasPos: Position; // 鼠标指针在canvas上的位置
 }
 
 export abstract class TiledMapToolBase {

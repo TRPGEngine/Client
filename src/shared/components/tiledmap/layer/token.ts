@@ -1,7 +1,8 @@
-import { Position, Size } from '../core/types';
+import { Position, Size, Rect } from '../core/types';
 import { DrawContext } from '../core/render';
 import _isNumber from 'lodash/isNumber';
 import _inRange from 'lodash/inRange';
+import { isRectInsideRect } from '../core/utils';
 
 /**
  * 棋子
@@ -27,7 +28,70 @@ export class Token {
    * 判定一个网格点是否在当前Token内部
    */
   checkPosInside(gridPos: Position): boolean {
+    if (this.gridAreaSize.width === 0 || this.gridAreaSize.height === 0) {
+      // 如果占用面积不存在则直接返回false
+      return false;
+    }
+
+    if (
+      _inRange(
+        gridPos.x,
+        this.gridPosition.x,
+        this.gridPosition.x + this.gridAreaSize.width
+      ) &&
+      _inRange(
+        gridPos.y,
+        this.gridPosition.y,
+        this.gridPosition.y + this.gridAreaSize.height
+      )
+    ) {
+      return true;
+    }
+
     return false;
+  }
+
+  /**
+   * 判定当前Token是否完全在矩形范围内
+   */
+  checkIsInsideRange(range: Rect): boolean {
+    const { x, y } = this.gridPosition;
+    const { width, height } = this.gridAreaSize;
+
+    return isRectInsideRect(
+      {
+        x1: x,
+        y1: y,
+        x2: x + width,
+        y2: y + height,
+      },
+      range
+    );
+  }
+
+  getRect(): Rect {
+    const { gridPosition, gridAreaSize } = this;
+
+    return {
+      x1: gridPosition.x,
+      x2: gridPosition.x + gridAreaSize.width,
+      y1: gridPosition.y,
+      y2: gridPosition.y + gridAreaSize.height,
+    };
+  }
+
+  /**
+   * 返回真实范围
+   */
+  getRealPxRect(gridSize: Size): Rect {
+    const rect = this.getRect();
+
+    return {
+      x1: rect.x1 * gridSize.width,
+      x2: rect.x2 * gridSize.width,
+      y1: rect.y1 * gridSize.height,
+      y2: rect.y2 * gridSize.height,
+    };
   }
 }
 
@@ -83,29 +147,5 @@ export class ImageToken extends Token {
       this.gridAreaSize.width * gridSize.width,
       this.gridAreaSize.height * gridSize.height
     );
-  }
-
-  checkPosInside(gridPos: Position): boolean {
-    if (this.gridAreaSize.width === 0 || this.gridAreaSize.height === 0) {
-      // 如果占用面积不存在则直接返回false
-      return false;
-    }
-
-    if (
-      _inRange(
-        gridPos.x,
-        this.gridPosition.x,
-        this.gridPosition.x + this.gridAreaSize.width
-      ) &&
-      _inRange(
-        gridPos.y,
-        this.gridPosition.y,
-        this.gridPosition.y + this.gridAreaSize.height
-      )
-    ) {
-      return true;
-    }
-
-    return false;
   }
 }
