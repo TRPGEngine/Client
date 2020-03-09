@@ -1,6 +1,8 @@
 import React from 'react';
 import { TagComponent } from '../type';
-import { Form, Input } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input } from 'antd';
 import { LayoutCol } from '../Col/shared';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';
 import AvatarPicker from '@web/components/AvatarPicker';
@@ -23,7 +25,7 @@ export const TagBaseInfoEdit: TagComponent = TMemo((props) => {
           </FormItem>
           <FormItem label="描述">
             <TextArea
-              autosize={{ maxRows: 8, minRows: 4 }}
+              autoSize={{ maxRows: 8, minRows: 4 }}
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
             />

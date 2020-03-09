@@ -1,6 +1,7 @@
 import React, { useMemo, Fragment } from 'react';
 import styled from 'styled-components';
-import { Tooltip, Icon } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Tooltip } from 'antd';
 import _isEmpty from 'lodash/isEmpty';
 import { parseMultilineText } from '../utils';
 import { TMemo } from '@shared/components/TMemo';
@@ -65,7 +66,7 @@ export const LabelTip: React.FC<{ tip: string }> = TMemo((props) => {
   return useMemo(
     () => (
       <Tooltip title={tip} trigger="hover">
-        <Icon type="question-circle-o" />
+        <QuestionCircleOutlined />
       </Tooltip>
     ),
     [tip]

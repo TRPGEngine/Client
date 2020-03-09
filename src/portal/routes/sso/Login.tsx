@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Formik } from 'formik';
-import { Input, Button, Form, Typography, Modal, notification } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Button, Typography, Modal, notification } from 'antd';
 import qs from 'qs';
 import _isString from 'lodash/isString';
 import { loginWithPassword } from '@portal/model/sso';

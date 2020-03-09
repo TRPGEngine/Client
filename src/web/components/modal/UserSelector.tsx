@@ -9,7 +9,7 @@ import _without from 'lodash/without';
 import _isEqual from 'lodash/isEqual';
 import _isFunction from 'lodash/isFunction';
 import { useCachedUserInfo } from '@shared/hooks/cache';
-import { OptionProps } from 'antd/lib/select';
+import { OptionProps, OptionType } from 'antd/lib/select';
 import { GroupInfo } from '@redux/types/group';
 import Avatar from '../Avatar';
 
@@ -78,7 +78,7 @@ const SelectedUser: React.FC<SelectedUserProps> = React.memo((props) => {
   }, [props.uuids]);
 
   const filterOption = useCallback(
-    (inputValue: string, option: React.ReactElement<OptionProps>) => {
+    (inputValue: string, option: any) => {
       const label: string = option.props.label ?? '';
 
       return label.includes(inputValue);

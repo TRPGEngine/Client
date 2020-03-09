@@ -21,6 +21,7 @@ import copy from 'copy-to-clipboard';
 import LZString from 'lz-string';
 import { Block } from './components/Block';
 import _debounce from 'lodash/debounce';
+import { SyncOutlined } from '@ant-design/icons';
 import { Select, message, Button, Checkbox, Tooltip } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { registerLayoutCodeSuggest } from './editor/suggestions';
@@ -97,7 +98,7 @@ const ActorEditor = React.memo(() => {
   }, []);
 
   const handleSelectLayout = useCallback(
-    (value: string, option: ReactElement) => {
+    (value: string, option: any) => {
       const xml = option.props.xml;
 
       setCode(xml);
@@ -165,7 +166,7 @@ const ActorEditor = React.memo(() => {
             <Button
               type="primary"
               onClick={handleForceUpdate}
-              icon="sync"
+              icon={<SyncOutlined />}
               style={{ marginRight: 4 }}
             />
           </Tooltip>
