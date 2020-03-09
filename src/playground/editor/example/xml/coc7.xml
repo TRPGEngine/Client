@@ -10,7 +10,7 @@
   <div>
     <Row>
       <Col span="12">
-        <Select name="时代" options="1920s,现代" />
+        <Select name="时代" options="1920s,现代" :allowCustom="true" />
       </Col>
     </Row>
 
@@ -146,6 +146,7 @@
         name="职业"
         :options="_map(global.job, 'name').join(',')"
         showSearch="true"
+        :allowCustom="true"
         desc="调查员的职业决定了他们最擅长哪些技能、收入有多少、可能认识些什么样的人。同时，职业也可以在一定程度上完善调查员的角色形象，影响他们的动机和他们对周围世界的态度。"
       />
       <div><pre style="white-space: pre-wrap;">{{_get(global.selectJobInfo, 'desc')}}</pre></div>
@@ -318,7 +319,7 @@
                   <center style="margin: 10px 0">你可以选择 {{_get(global, 'selectJobInfo.dutySocial', 0)}} 项社交技能作为本职技能(取悦,话术,恐吓,说服)</center>
                 </Hidden>
                 <Hidden :if="!_isNil(global.selectJobInfo)">
-                  <center style="margin: 10px 0">请先选择职业</center>
+                  <center style="margin: 10px 0">请先选择内置职业</center>
                 </Hidden>
               </Tab>
               <Tab label="交流">
