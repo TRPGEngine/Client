@@ -229,6 +229,7 @@ class MsgSendBox extends React.Component<Props> {
                   converse_uuid: converseUUID,
                   type: 'card',
                   message: '[人物卡]',
+                  is_group: isGroup,
                   is_public: isGroup,
                   data: {
                     type: 'actor',
@@ -244,6 +245,7 @@ class MsgSendBox extends React.Component<Props> {
                 sendMsg(converseUUID, {
                   type: 'card',
                   message: '[人物卡]',
+                  is_group: isGroup,
                   is_public: isGroup,
                   data: {
                     type: 'actor',
