@@ -5,7 +5,10 @@ import ActorProfile from './ActorProfile';
 import { TRPGState } from '@redux/types/__all__';
 import _get from 'lodash/get';
 
-// 从缓存中获取actor信息的中间组件
+/**
+ * @deprecated
+ * 从缓存中获取actor信息的中间组件
+ */
 interface Props {
   uuid: string;
   actorcache: any;

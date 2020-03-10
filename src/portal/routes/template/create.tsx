@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import _isNil from 'lodash/isNil';
-import { Form, Input, Button, message } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Button, message } from 'antd';
 import { checkToken } from '@portal/utils/auth';
 import { useFormik } from 'formik';
 import styled from 'styled-components';
@@ -73,7 +75,7 @@ const TemplateCreate: React.FC = React.memo(() => {
         <Form.Item label="描述">
           <Input.TextArea
             name="desc"
-            autosize={{
+            autoSize={{
               maxRows: 4,
               minRows: 2,
             }}
@@ -84,7 +86,7 @@ const TemplateCreate: React.FC = React.memo(() => {
         <Form.Item label="布局">
           <Input.TextArea
             name="layout"
-            autosize={{
+            autoSize={{
               maxRows: 10,
               minRows: 4,
             }}

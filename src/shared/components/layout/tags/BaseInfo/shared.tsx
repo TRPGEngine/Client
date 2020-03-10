@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { Row, Form } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row } from 'antd';
 
 export const BaseInfoContainer = styled(Row).attrs({
   type: 'flex',

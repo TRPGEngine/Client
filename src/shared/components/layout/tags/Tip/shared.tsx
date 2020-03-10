@@ -4,7 +4,8 @@ import _isEqual from 'lodash/isEqual';
 import _isString from 'lodash/isString';
 import _isNil from 'lodash/isNil';
 import { useLayoutChildren } from '../../hooks/useLayoutChildren';
-import { Tooltip, Icon } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Tooltip } from 'antd';
 import { TMemo } from '@shared/components/TMemo';
 
 export const TagTipShared: TagComponent = TMemo((props) => {
@@ -16,10 +17,7 @@ export const TagTipShared: TagComponent = TMemo((props) => {
 
   return (
     <Tooltip title={tip} trigger="hover">
-      <Icon
-        type="question-circle-o"
-        style={{ paddingLeft: 4, paddingRight: 4 }}
-      />
+      <QuestionCircleOutlined style={{ paddingLeft: 4, paddingRight: 4 }} />
     </Tooltip>
   );
 });

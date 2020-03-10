@@ -4,8 +4,10 @@ export interface ActorType {
   name: string;
   desc: string;
   avatar: string;
-  info: ActorDataType;
   template_uuid: string;
+  info: ActorDataType;
+  shared: boolean;
+  fork_count: number;
   createdAt: string;
   updatedAt: string;
   deletedAt: string;
@@ -42,6 +44,6 @@ export type ActorState = {
   };
   selfTemplate: any[];
   selectedTemplate: any;
-  selfActors: any[];
+  selfActors: ActorType[];
   selectedActorUUID: string;
 };

@@ -10,7 +10,7 @@
   <div>
     <Row>
       <Col span="12">
-        <Select name="时代" options="1920s,现代" />
+        <Select name="时代" options="1920s,现代" :allowCustom="true" />
       </Col>
     </Row>
 
@@ -54,7 +54,7 @@
             <RollBtn label="随机生成">
               <Item dice="3d6 * 5" target="力量" />
               <Item dice="3d6 * 5" target="体质" />
-              <Item dice="2d6 * 5" target="体型" />
+              <Item dice="(2d6 + 6) * 5" target="体型" />
               <Item dice="3d6 * 5" target="敏捷" />
               <Item dice="3d6 * 5" target="外貌" />
               <Item dice="(2d6 + 6) * 5" target="智力" />
@@ -74,7 +74,7 @@
             <Input name="最大生命值" label="最大生命值" :disabled="true" />
 
             <Select name="身体状态" options="健康,轻伤,重伤,濒死,死亡" default="健康" />
-            <Select name="精神状态" options="神志清醒,不定性疯狂,永久性疯狂" default="神志清醒" />
+            <Select name="精神状态" options="神志清醒,临时性疯狂,不定性疯狂,永久性疯狂" default="神志清醒" />
 
             <!-- 伤害加值与体格 -->
             <Var name="sumStrSiz" value="力量+体型" />
@@ -146,6 +146,7 @@
         name="职业"
         :options="_map(global.job, 'name').join(',')"
         showSearch="true"
+        :allowCustom="true"
         desc="调查员的职业决定了他们最擅长哪些技能、收入有多少、可能认识些什么样的人。同时，职业也可以在一定程度上完善调查员的角色形象，影响他们的动机和他们对周围世界的态度。"
       />
       <div><pre style="white-space: pre-wrap;">{{_get(global.selectJobInfo, 'desc')}}</pre></div>
@@ -244,6 +245,23 @@
               <td>{{SUM(基础, addedPoint)}}%</td>
             </tr>
           </Define>
+          <Define name="skillOfCthulhu">
+            <!-- 克苏鲁神话技能专用 -->
+            <Computed target="基础" expression="getSkillBase('克苏鲁神话')" />
+            <Computed target="addedPoint" deps="成长" expression="SUM(成长)" />
+            <tr>
+              <td>
+                <div className="skill-name">
+                  <span>{{global.getSkillNameDetail('克苏鲁神话').name}}</span>
+                </div>
+              </td>
+              <td><span>{{基础}}</span></td>
+              <td><Input name="成长" hideLabel="true" /></td>
+              <td><center>-</center></td>
+              <td><center>-</center></td>
+              <td>{{SUM(基础, addedPoint)}}%</td>
+            </tr>
+          </Define>
           <Define name="skillTableHead">
             <thead>
               <tr>
@@ -301,7 +319,7 @@
                   <center style="margin: 10px 0">你可以选择 {{_get(global, 'selectJobInfo.dutySocial', 0)}} 项社交技能作为本职技能(取悦,话术,恐吓,说服)</center>
                 </Hidden>
                 <Hidden :if="!_isNil(global.selectJobInfo)">
-                  <center style="margin: 10px 0">请先选择职业</center>
+                  <center style="margin: 10px 0">请先选择内置职业</center>
                 </Hidden>
               </Tab>
               <Tab label="交流">
@@ -413,7 +431,7 @@
                     <Use name="skill-科学" define="skill" skillName="科学" />
                     <Use name="skill-科学2" define="skill" skillName="科学" />
                     <Use name="skill-科学3" define="skill" skillName="科学" />
-                    <Use name="skill-克苏鲁神话" define="skill" skillName="克苏鲁神话" />
+                    <Use name="skill-克苏鲁神话" define="skillOfCthulhu" />
                   </tbody>
                 </table>
               </Tab>

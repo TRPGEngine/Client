@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.25](https://github.com/TRPGEngine/Client/compare/v0.2.24...v0.2.25) (2020-03-09)
+
+
+### Features
+
+* **layout:** 增加可增加自定义项的Select Tag参数 ([96ba56f](https://github.com/TRPGEngine/Client/commit/96ba56ffa3cda93e0f4a41e96579d3b5747a8464))
+* **map:** move,resize and selection ([c0c90db](https://github.com/TRPGEngine/Client/commit/c0c90db8734d2793bf91b3328e1458e35a94f379))
+* **web:** 人物卡的分享与取消分享, 以及fork人物卡列表 ([16f5636](https://github.com/TRPGEngine/Client/commit/16f56368721652b433d72ebf15b5450dd8c4ed31))
+* **web:** 增加团角色的popover点开时可以点开完整人物卡 ([17cd2bd](https://github.com/TRPGEngine/Client/commit/17cd2bd6c6c38b8f5cbc74e66a08eb361e0bf6ca))
+* **web:** 增加搜索分享人物卡的分页功能 ([a37c0dc](https://github.com/TRPGEngine/Client/commit/a37c0dcd6fc7b1f46789506c820cde37a74fd908))
+
+
+### Bug Fixes
+
+* 修复一些团状态管理的bug ([7319d7d](https://github.com/TRPGEngine/Client/commit/7319d7d2bd487a200ea8fafd6f6f0cb948f73e38))
+* **layout:** 修复骰子无法正确处理括号的问题 ([446922b](https://github.com/TRPGEngine/Client/commit/446922b747c3b437a5500f2c4a903cc22260e6b7))
+* **web:** 修复发送人物卡会广播的问题 ([10ab7a9](https://github.com/TRPGEngine/Client/commit/10ab7a9fae37540c8d0ea175de0e46dd6824c9be))
+
+### [0.2.24](https://github.com/TRPGEngine/Client/compare/v0.2.23...v0.2.24) (2020-03-07)
+
+
+### Bug Fixes
+
+* **web:** 修复人物审核uuid不正确的问题 ([f2bd829](https://github.com/TRPGEngine/Client/commit/f2bd82955d24e14faca1568b76e30a1a62d887fb))
+
 ### [0.2.23](https://github.com/TRPGEngine/Client/compare/v0.2.22...v0.2.23) (2020-03-06)
 
 

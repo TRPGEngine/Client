@@ -51,6 +51,7 @@ export class TiledMapManager {
           manager: this,
           layerManager: this.layerManager,
           mousePos: pxPos,
+          mouseCanvasPos: this.render.transformMousePosToCanvasPos(pxPos),
         });
       }
     });

@@ -9,6 +9,9 @@ const {
   GET_ACTOR_SUCCESS,
   SELECT_ACTOR,
   REMOVE_ACTOR_SUCCESS,
+  SHARE_ACTOR_SUCCESS,
+  UNSHARE_ACTOR_SUCCESS,
+  FORK_ACTOR_SUCCESS,
 } = constants;
 import config from '../../project.config';
 import { checkTemplate } from '../../utils/cache-helper';
@@ -28,7 +31,7 @@ import { TRPGAction } from '@redux/types/__all__';
 import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 
-let setTemplate = function setTemplate(uuid, name, desc, avatar, info) {
+export function setTemplate(uuid, name, desc, avatar, info) {
   return {
     uuid,
     name,
@@ -36,9 +39,9 @@ let setTemplate = function setTemplate(uuid, name, desc, avatar, info) {
     avatar,
     info,
   };
-};
+}
 
-let getTemplate = function getTemplate(uuid?: string) {
+export function getTemplate(uuid?: string) {
   return function(dispatch, getState) {
     return api.emit('actor::getTemplate', { uuid }, function(data) {
       if (data.result) {
@@ -49,13 +52,13 @@ let getTemplate = function getTemplate(uuid?: string) {
       }
     });
   };
-};
+}
 
 /**
  * 获取推荐模板
  * 只获取一次，如果之前获取过则不再重复获取
  */
-const getSuggestTemplate = (): TRPGAction => {
+export function getSuggestTemplate(): TRPGAction {
   return function(dispatch, getState) {
     if (getState().actor.suggestTemplate.length > 0) {
       return;
@@ -72,9 +75,9 @@ const getSuggestTemplate = (): TRPGAction => {
       }
     });
   };
-};
+}
 
-let findTemplate = function findTemplate(searchName) {
+export function findTemplate(searchName) {
   return function(dispatch, getState) {
     return api.emit('actor::findTemplate', { name: searchName }, function(
       data
@@ -87,15 +90,15 @@ let findTemplate = function findTemplate(searchName) {
       }
     });
   };
-};
+}
 
-let setEditedTemplate = function setEditedTemplate(obj) {
+export function setEditedTemplate(obj) {
   return { type: SET_EDITED_TEMPLATE, payload: obj };
-};
+}
 
-let selectTemplate = function selectTemplate(template) {
+export function selectTemplate(template) {
   return { type: SELECT_TEMPLATE, payload: template };
-};
+}
 
 /**
  * 创建人物
@@ -106,7 +109,7 @@ let selectTemplate = function selectTemplate(template) {
  * @param info 人物卡信息
  * @param template_uuid 人物卡关联模板
  */
-const createActor = function createActor(
+export function createActor(
   name: string,
   avatar: string,
   desc: string,
@@ -143,9 +146,9 @@ const createActor = function createActor(
       }
     );
   };
-};
+}
 
-let getActor = function getActor(uuid = '') {
+export function getActor(uuid = '') {
   return function(dispatch, getState) {
     return api.emit('actor::getActor', { uuid }, function(data) {
       if (data.result) {
@@ -165,34 +168,92 @@ let getActor = function getActor(uuid = '') {
       }
     });
   };
-};
+}
 
-let selectActor = function selectActor(uuid) {
+export function selectActor(uuid) {
   return { type: SELECT_ACTOR, payload: uuid };
-};
+}
 
-let removeActor = function removeActor(uuid) {
+export function removeActor(uuid) {
   return function(dispatch, getState) {
     return api.emit('actor::removeActor', { uuid }, function(data) {
       dispatch(hideAlert());
       if (data.result) {
         dispatch({ type: REMOVE_ACTOR_SUCCESS, uuid });
       } else {
+        dispatch(showAlert(data.msg));
         console.error(data.msg);
       }
     });
   };
-};
+}
 
-export {
-  setTemplate,
-  getTemplate,
-  getSuggestTemplate,
-  findTemplate,
-  setEditedTemplate,
-  selectTemplate,
-  createActor,
-  getActor,
-  selectActor,
-  removeActor,
-};
+/**
+ * 分享人物卡
+ * @param actorUUID 想分享的人物卡的UUID
+ */
+export function shareActor(actorUUID: string): TRPGAction {
+  return function(dispatch, getState) {
+    return api.emit('actor::shareActor', { actorUUID }, function(data) {
+      if (data.result) {
+        dispatch({
+          type: SHARE_ACTOR_SUCCESS,
+          payload: {
+            actorUUID,
+          },
+        });
+        dispatch(hideAlert());
+      } else {
+        dispatch(showAlert(data.msg));
+      }
+    });
+  };
+}
+
+/**
+ * 取消分享人物卡
+ * @param actorUUID 想取消分享的人物卡的UUID
+ */
+export function unshareActor(actorUUID: string): TRPGAction {
+  return function(dispatch, getState) {
+    return api.emit('actor::unshareActor', { actorUUID }, function(data) {
+      if (data.result) {
+        dispatch({
+          type: UNSHARE_ACTOR_SUCCESS,
+          payload: {
+            actorUUID,
+          },
+        });
+        dispatch(hideAlert());
+      } else {
+        dispatch(showAlert(data.msg));
+      }
+    });
+  };
+}
+
+/**
+ * fork人物卡
+ * @param targetActorUUID 想fork的人物卡的UUID
+ */
+export function forkActor(targetActorUUID: string): TRPGAction {
+  return function(dispatch, getState) {
+    return api.emit('actor::forkActor', { targetActorUUID }, function(data) {
+      if (data.result) {
+        const actor = data.actor;
+        dispatch({
+          type: FORK_ACTOR_SUCCESS,
+          payload: {
+            actor,
+          },
+        });
+        dispatch(hideModal());
+        dispatch(
+          showAlert(`Fork 人物卡[${actor.name}]成功, 请在人物卡列表中查看`)
+        );
+      } else {
+        dispatch(showAlert(data.msg));
+      }
+    });
+  };
+}

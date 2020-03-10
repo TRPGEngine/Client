@@ -1,7 +1,7 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useState, Fragment } from 'react';
 import { TagComponent } from '../type';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
-import { Select } from 'antd';
+import { Select, Divider, Input, Button } from 'antd';
 import { is } from '@shared/utils/string-helper';
 import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
 const Option = Select.Option;
@@ -11,6 +11,7 @@ import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
 import _flatten from 'lodash/flatten';
 import { WarningFlag } from './WarningFlag';
+import { useToBoolean } from '@shared/hooks/useToBoolean';
 
 interface TagProps {
   name: string;
@@ -19,9 +20,12 @@ interface TagProps {
   showSearch?: boolean | string;
   default?: string;
   strict?: boolean; // 是否开启严格模式, 如果开启严格模式则当值在数据中心不存在时, 显示一个警告
+  allowCustom?: boolean; // 是否允许增加自定义
 }
 export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
   const { label, stateValue, setStateValue } = useLayoutFormData(props);
+  const [customItems, setCustomItems] = useState<string[]>([]);
+  const allowCustom = useToBoolean(props.allowCustom);
 
   const options = useMemo(() => {
     if (typeof props.options === 'string') {
@@ -37,7 +41,7 @@ export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
 
   const opt = useMemo(() => {
     if (Array.isArray(options)) {
-      return options.map((item) => {
+      return [...options, ...customItems].map((item) => {
         if (_isString(item)) {
           // 无分组
           return (
@@ -61,7 +65,7 @@ export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
     }
 
     return null;
-  }, [options]);
+  }, [options, customItems]);
 
   const showSearch = useMemo(() => {
     if (typeof props.showSearch === 'string') {
@@ -109,6 +113,46 @@ export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
     [setStateValue]
   );
 
+  const [customItemName, setCustomItemName] = useState('');
+  const handleAddCustomItem = useCallback(() => {
+    if (customItemName === '') {
+      return;
+    }
+    setCustomItemName('');
+    setCustomItems([...customItems, customItemName]);
+  }, [customItemName, setCustomItemName, setCustomItems, customItems]);
+  const dropdownRender = useCallback(
+    (menu: React.ReactElement): React.ReactElement => {
+      return (
+        <div>
+          {menu}
+          {allowCustom === true && (
+            <Fragment>
+              <Divider style={{ margin: '4px 0' }} />
+              <div style={{ display: 'flex', flexWrap: 'nowrap', padding: 8 }}>
+                <Input
+                  style={{ flex: 'auto' }}
+                  value={customItemName}
+                  onChange={(e) => setCustomItemName(e.target.value)}
+                  size="small"
+                />
+                <Button
+                  type="link"
+                  block={true}
+                  disabled={customItemName === ''}
+                  onClick={handleAddCustomItem}
+                >
+                  <i className="iconfont">&#xe604;</i> 自定义
+                </Button>
+              </div>
+            </Fragment>
+          )}
+        </div>
+      );
+    },
+    [allowCustom, customItemName, setCustomItemName, handleAddCustomItem]
+  );
+
   return useMemo(
     () => (
       <FormContainer label={label}>
@@ -119,13 +163,22 @@ export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
           allowClear={true}
           value={stateValue}
           onChange={handleChange}
+          dropdownRender={dropdownRender}
         >
           {opt}
         </Select>
         {strictWarning && <WarningFlag />}
       </FormContainer>
     ),
-    [label, showSearch, stateValue, handleChange, opt, strictWarning]
+    [
+      label,
+      showSearch,
+      stateValue,
+      handleChange,
+      opt,
+      strictWarning,
+      dropdownRender,
+    ]
   );
 });
 TagSelectEdit.displayName = 'TagSelectEdit';

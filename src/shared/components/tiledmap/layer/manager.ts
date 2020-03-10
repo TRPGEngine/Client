@@ -1,7 +1,7 @@
 import { Layer } from './Layer';
 import { DrawContext } from '../core/render';
 import _orderBy from 'lodash/orderBy';
-import { Position } from '../core/types';
+import { Position, Rect } from '../core/types';
 import { Token } from './token';
 
 export class LayerManager {
@@ -48,5 +48,26 @@ export class LayerManager {
     }
 
     return null;
+  }
+
+  /**
+   * 根据网格坐标获取最上层的Token
+   * @param gridPos 网格坐标
+   */
+  getLayerTokenByGridRectRange(rangeRect: Rect): Token[] {
+    const layers = this.getAllLayers();
+
+    const ret = [];
+    for (const layer of layers) {
+      const tokens = layer.tokens;
+
+      for (const token of tokens) {
+        if (token.checkIsInsideRange(rangeRect)) {
+          ret.push(token);
+        }
+      }
+    }
+
+    return ret;
   }
 }

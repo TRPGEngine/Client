@@ -1,7 +1,8 @@
 import React from 'react';
-import { Spin as AntSpin, Icon } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin as AntSpin } from 'antd';
 
-const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Spin = React.memo(() => <AntSpin indicator={antIcon} />);
 

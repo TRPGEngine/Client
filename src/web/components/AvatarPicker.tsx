@@ -3,6 +3,7 @@ import ReactCrop, { Crop } from 'react-image-crop';
 import { Modal } from 'antd';
 import 'react-image-crop/dist/ReactCrop.css';
 import Avatar from './Avatar';
+import { UserOutlined } from '@ant-design/icons';
 
 let fileUrlTemp: string = null; // 缓存裁剪后的图片url
 
@@ -119,7 +120,7 @@ const AvatarPicker = (props: Props) => {
         {props.children ? (
           props.children
         ) : (
-          <Avatar size={64} icon="user" src={cropUrl} />
+          <Avatar size={64} icon={<UserOutlined />} src={cropUrl} />
         )}
       </div>
       <Modal

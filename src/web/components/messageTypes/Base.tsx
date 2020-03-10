@@ -1,13 +1,12 @@
 import React from 'react';
-import dateHelper from '../../../shared/utils/date-helper';
-import config from '../../../shared/project.config';
+import dateHelper from '@shared/utils/date-helper';
+import config from '@shared/project.config';
 import { MessageProps } from '@shared/components/MessageHandler';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import Avatar from '../Avatar';
-import { Popover } from 'antd';
-import PopoverUserInfo from '../popover/UserInfo';
 import PopoverMsgSenderInfo from '../popover/MsgSenderInfo';
+import { TPopover } from '../popover';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -82,7 +81,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
                 size={38}
               />
             ) : (
-              <Popover
+              <TPopover
                 placement="right"
                 trigger="click"
                 content={<PopoverMsgSenderInfo payload={info} />}
@@ -92,7 +91,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
                   src={this.getAvatarUrl()}
                   size={38}
                 />
-              </Popover>
+              </TPopover>
             )}
           </div>
           <div className="body">{this.getContent()}</div>

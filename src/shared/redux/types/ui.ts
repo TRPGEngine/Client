@@ -16,8 +16,7 @@ export type UIState = {
   showAlertInfo: any;
   showLoading: boolean;
   showLoadingText: string;
-  showModal: boolean;
-  showModalBody: any;
+  modalStack: ReactNode[];
   showToast: boolean;
   showToastText: string;
   showProfileCard: boolean;

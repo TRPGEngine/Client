@@ -17,3 +17,10 @@ export interface TiledMapOptions {
     padding: Axios;
   };
 }
+
+export interface Rect {
+  x1: number; // 左上角x
+  y1: number; // 左上角y
+  x2: number; // 右上角x
+  y2: number; // 右上角y
+}

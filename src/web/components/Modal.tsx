@@ -1,42 +1,35 @@
-import React, { ReactNode } from 'react';
-import { connect } from 'react-redux';
+import React, { useMemo } from 'react';
 import { hideModal } from '../../shared/redux/actions/ui';
 import './Modal.scss';
-import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
+import {
+  useTRPGSelector,
+  useTRPGDispatch,
+} from '@shared/hooks/useTRPGSelector';
+import { TMemo } from '@shared/components/TMemo';
 
-interface Props {
-  show: boolean;
-  body: any;
-  hideModal: () => void;
-}
-class Modal extends React.Component<Props> {
-  render() {
-    let body: ReactNode = '';
-    if (this.props.show && this.props.body) {
-      body = (
-        <div className="modal-mask" onClick={(e) => e.stopPropagation()}>
-          <div className="modal-card">
-            <div className="modal-close" onClick={() => this.props.hideModal()}>
-              <i className="iconfont">&#xe70c;</i>
-            </div>
-            <div className="modal-content">{this.props.body}</div>
+const Modal: React.FC = TMemo(() => {
+  const modalStack = useTRPGSelector((state) => state.ui.modalStack);
+  const dispatch = useTRPGDispatch();
+
+  const body = useMemo(() => {
+    return modalStack.map((modal, index) => (
+      <div
+        key={index}
+        className="modal-mask"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="modal-card">
+          <div className="modal-close" onClick={() => dispatch(hideModal())}>
+            <i className="iconfont">&#xe70c;</i>
           </div>
+          <div className="modal-content">{modal}</div>
         </div>
-      );
-    }
+      </div>
+    ));
+  }, [modalStack, dispatch]);
 
-    return <div className="modal">{body}</div>;
-  }
-}
+  return <div className="modal">{body}</div>;
+});
+Modal.displayName = 'Modal';
 
-export default connect(
-  (state: TRPGState) => ({
-    show: state.ui.showModal,
-    body: state.ui.showModalBody,
-  }),
-  (dispatch: TRPGDispatch) => ({
-    hideModal: () => {
-      dispatch(hideModal());
-    },
-  })
-)(Modal);
+export default Modal;
