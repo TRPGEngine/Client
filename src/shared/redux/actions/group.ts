@@ -776,3 +776,29 @@ export const setGroupStatus = function(groupUUID, groupStatus) {
     );
   };
 };
+
+/**
+ * 创建团频道
+ * @param groupUUID 所属团UUID
+ * @param name 频道名
+ * @param desc 频道描述
+ */
+export const createGroupChannel = function(
+  groupUUID: string,
+  name: string,
+  desc: string
+): TRPGAction {
+  return function(dispatch, getState) {
+    return api.emit(
+      'group::createGroupChannel',
+      { groupUUID, name, desc },
+      function(data) {
+        if (data.result) {
+          dispatch(hideModal());
+        } else {
+          dispatch(showAlert(data.msg));
+        }
+      }
+    );
+  };
+};
