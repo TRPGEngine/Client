@@ -2,6 +2,7 @@ import { Size, Position, TiledMapOptions } from './types';
 import _isNil from 'lodash/isNil';
 import _throttle from 'lodash/throttle';
 import { LayerManager } from '../layer/manager';
+import { TiledMapManager } from './manager';
 
 export interface DrawContext {
   el: HTMLCanvasElement;
@@ -16,6 +17,7 @@ export type DrawFunction = (ctx: DrawContext) => void;
 export class TiledMapRender {
   private ctx: CanvasRenderingContext2D;
   public position: Position = { x: 0, y: 0 };
+  public manager: TiledMapManager;
   public layerManager: LayerManager;
   public extraDrawFns: DrawFunction[] = []; //额外的渲染事件, 当所有的基础渲染完毕后调用列表中的渲染事件
   private _originOptions?: TiledMapOptions;

@@ -24,6 +24,7 @@ export class TiledMapManager {
   public render: TiledMapRender;
   public toolbox: Toolbox;
   private layerManager = new LayerManager();
+  public selectedToken: Token[] = [];
 
   constructor(public el: HTMLCanvasElement, public options: TiledMapOptions) {
     this.options = {
@@ -31,6 +32,7 @@ export class TiledMapManager {
       ...options,
     };
     this.render = new TiledMapRender(el, this.options);
+    this.render.manager = this;
     this.render.layerManager = this.layerManager;
 
     this.toolbox = new Toolbox(this);
@@ -72,5 +74,9 @@ export class TiledMapManager {
 
       this.render.draw(); // 绘制图像
     });
+  }
+
+  public removeToken(): void {
+    // TODO
   }
 }

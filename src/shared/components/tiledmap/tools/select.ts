@@ -23,17 +23,17 @@ export class TiledMapToolSelect extends TiledMapToolBase {
   desc = '选择指针';
   icon = '&#xe65c;';
 
-  currentTokens: Token[] = [];
   handlerSize = 8;
 
   drawAlway = (ctx: DrawContext) => {
-    if (_isEmpty(this.currentTokens)) {
+    const currentTokens = ctx.render.manager.selectedToken;
+    if (_isEmpty(currentTokens)) {
       return;
     }
     const { gridSize } = ctx;
     const { canvas } = ctx.render;
 
-    for (const token of this.currentTokens) {
+    for (const token of currentTokens) {
       const { gridAreaSize, gridPosition } = token;
       this.drawSelectRect(canvas, gridPosition, gridAreaSize, gridSize);
     }
@@ -75,12 +75,13 @@ export class TiledMapToolSelect extends TiledMapToolBase {
    */
   action(ctx: ActionContext): void {
     const { ratio, mouseCanvasPos, gridSize } = ctx;
+    const currentTokens = ctx.manager.selectedToken;
 
-    const clickedHandler = this.checkClickAnyHandler(mouseCanvasPos, gridSize);
+    const clickedHandler = this.checkClickAnyHandler(ctx);
 
     if (clickedHandler === false) {
       const selectToken = this.getSelectToken(ctx);
-      if (this.currentTokens.includes(selectToken)) {
+      if (currentTokens.includes(selectToken)) {
         // 如果点击到的Token已经被选中. 则视为移动操作
         this.handleMoveAction(ctx);
       } else {
@@ -128,14 +129,14 @@ export class TiledMapToolSelect extends TiledMapToolBase {
             pxRect2GridRect(this.selectionRect, gridSize)
           );
 
-          this.currentTokens = tokens;
+          ctx.manager.selectedToken = tokens;
         } else {
           const selectToken = this.getSelectToken(ctx);
 
           if (_isNil(selectToken)) {
-            this.currentTokens = [];
+            ctx.manager.selectedToken = [];
           } else {
-            this.currentTokens = [selectToken];
+            ctx.manager.selectedToken = [selectToken];
           }
         }
       }
@@ -225,6 +226,7 @@ export class TiledMapToolSelect extends TiledMapToolBase {
 
   handleMoveAction(ctx: ActionContext) {
     const { el, gridSize, mouseCanvasPos } = ctx;
+    const currentTokens = ctx.manager.selectedToken;
 
     let startPos = px2gridPos(mouseCanvasPos, gridSize);
 
@@ -239,7 +241,7 @@ export class TiledMapToolSelect extends TiledMapToolBase {
         y: targetPos.y - startPos.y,
       };
 
-      for (const token of this.currentTokens) {
+      for (const token of currentTokens) {
         token.gridPosition = {
           x: token.gridPosition.x + deltaPos.x,
           y: token.gridPosition.y + deltaPos.y,
@@ -268,16 +270,16 @@ export class TiledMapToolSelect extends TiledMapToolBase {
   /**
    * 返回点击到的resize handler点
    */
-  checkClickAnyHandler(
-    mouseCanvasPos: Position,
-    gridSize: Size
-  ): ClickedHander | false {
+  checkClickAnyHandler(ctx: ActionContext): ClickedHander | false {
+    const { mouseCanvasPos, gridSize } = ctx;
+    const currentTokens = ctx.manager.selectedToken;
+
     // 只允许修改1个
-    if (this.currentTokens.length !== 1) {
+    if (currentTokens.length !== 1) {
       return false;
     }
 
-    const token = this.currentTokens[0];
+    const token = currentTokens[0];
     const rect = token.getRealPxRect(gridSize);
 
     if (
