@@ -187,9 +187,10 @@ class ProfileCard extends React.Component<Props, State> {
               value={this.state.editedInfo.nickname || ''}
               onChange={(e) =>
                 this.setState({
-                  editedInfo: Object.assign(this.state.editedInfo, {
+                  editedInfo: {
+                    ...this.state.editedInfo,
                     nickname: e.target.value,
-                  }),
+                  },
                 })
               }
             />
@@ -211,9 +212,10 @@ class ProfileCard extends React.Component<Props, State> {
               placeholder="请选择性别..."
               onChange={(item) =>
                 this.setState({
-                  editedInfo: Object.assign(this.state.editedInfo, {
+                  editedInfo: {
+                    ...this.state.editedInfo,
                     sex: item.value,
-                  }),
+                  },
                 })
               }
             />
@@ -225,9 +227,10 @@ class ProfileCard extends React.Component<Props, State> {
               value={this.state.editedInfo.sign || ''}
               onChange={(e) =>
                 this.setState({
-                  editedInfo: Object.assign(this.state.editedInfo, {
+                  editedInfo: {
+                    ...this.state.editedInfo,
                     sign: e.target.value,
-                  }),
+                  },
                 })
               }
             />
