@@ -1,4 +1,5 @@
 import { ActorType } from './actor';
+import { MsgPayload } from './chat';
 
 export type GroupType = 'group' | 'channel' | 'test';
 
@@ -21,6 +22,21 @@ export interface GroupActorType {
   actor: ActorType;
 }
 
+export interface GroupDetail {
+  master_name: string;
+  disable_check_actor: boolean;
+  background_image_url: string;
+  welcome_msg_payload: MsgPayload;
+  allow_quick_dice: boolean;
+}
+
+export interface GroupChannel {
+  uuid: string;
+  name: string;
+  desc: string;
+  members: string[];
+}
+
 export interface GroupInfo {
   id: number;
   uuid: string;
@@ -37,6 +53,9 @@ export interface GroupInfo {
 
   managers_uuid?: string[];
   maps_uuid?: string[];
+
+  detail?: GroupDetail; // 一开始不存在需要保存后才生成
+  channels?: GroupChannel[];
 
   // group初始化后获取的参数
   group_actors?: GroupActorType[];

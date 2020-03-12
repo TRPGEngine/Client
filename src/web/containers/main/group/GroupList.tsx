@@ -13,36 +13,22 @@ import {
 } from '@shared/hooks/useTRPGSelector';
 
 import './GroupList.scss';
+import { useConverses } from '@redux/hooks/useConverses';
 
 const GroupList: React.FC = TMemo((props) => {
   const selectedUUID = useTRPGSelector(
     (state) => state.group.selectedGroupUUID
   );
-  const converses = useTRPGSelector((state) => state.chat.converses);
-  const groups = useTRPGSelector((state) => state.group.groups);
   const dispatch = useTRPGDispatch();
+  const converses = useConverses(['group']);
 
   const groupList = useMemo(() => {
-    return _sortBy(
-      groups.map((item) => {
-        let uuid = item.uuid;
-        return {
-          ...item,
-          lastTime: _get(converses, [uuid, 'lastTime']) || 0,
-          lastMsg: _get(converses, [uuid, 'lastMsg']),
-          unread: _get(converses, [uuid, 'unread']),
-        };
-      }),
-      (x) => new Date(x.lastTime)
-    )
+    return _sortBy(converses, (x) => new Date(x.lastTime))
       .reverse()
       .map((item, index) => {
         const uuid = item.uuid;
-        let name = item.name;
-        if (item.status) {
-          name += '(开团中...)';
-        }
-        const icon = item.avatar || config.defaultImg.getGroup(name);
+        const name = item.name;
+        const icon = item.icon || config.defaultImg.getGroup(name);
 
         return (
           <ConvItem
@@ -59,7 +45,7 @@ const GroupList: React.FC = TMemo((props) => {
           />
         );
       });
-  }, [converses, groups, selectedUUID, dispatch]);
+  }, [converses, selectedUUID, dispatch]);
 
   return (
     <div className="group">
