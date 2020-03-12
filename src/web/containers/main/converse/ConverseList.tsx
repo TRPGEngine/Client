@@ -1,5 +1,4 @@
-import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import React, { useMemo, useCallback } from 'react';
 import dateHelper from '@shared/utils/date-helper';
 import config from '@shared/project.config';
 import ConverseDetail from './ConverseDetail';
@@ -13,27 +12,19 @@ import _values from 'lodash/values';
 import _filter from 'lodash/filter';
 import _sortBy from 'lodash/sortBy';
 import _size from 'lodash/size';
-import { TRPGState } from '@redux/types/__all__';
+import { TMemo } from '@shared/components/TMemo';
+import {
+  useTRPGDispatch,
+  useTRPGSelector,
+} from '@shared/hooks/useTRPGSelector';
 
 import './ConverseList.scss';
 
-interface Props extends DispatchProp<any> {
-  selectedUUID: string;
-  conversesDesc: string;
-  converses: any;
-  friends: any;
-  usercache: any;
-  userInfo: any;
-  userWritingList: any;
-}
-class ConverseList extends React.Component<Props> {
-  handleSelectConverse(converseUUID) {
-    console.log('选择会话', converseUUID);
-    this.props.dispatch(switchConverse(converseUUID));
-  }
+const ConverseList: React.FC = TMemo(() => {
+  const dispatch = useTRPGDispatch();
 
-  getWelcomeMessage() {
-    let hours = new Date().getHours();
+  const welcomeMessage = useMemo(() => {
+    const hours = new Date().getHours();
     if (hours < 6) {
       return '我欲修仙，法力无边。';
     } else if (hours < 12) {
@@ -43,14 +34,30 @@ class ConverseList extends React.Component<Props> {
     } else {
       return '跑团时间到！赶紧找个团一起哈啤！';
     }
-  }
+  }, []);
 
-  getConverseList() {
-    if (_size(this.props.converses) > 0) {
-      const userWritingList = this.props.userWritingList;
-      const usercache = this.props.usercache;
-      const converses = _sortBy(
-        _values(this.props.converses).filter(
+  const handleSelectConverse = useCallback(
+    (converseUUID: string) => {
+      console.log('选择会话', converseUUID);
+      dispatch(switchConverse(converseUUID));
+    },
+    [dispatch]
+  );
+
+  const converses = useTRPGSelector((state) => state.chat.converses);
+  const conversesDesc = useTRPGSelector((state) => state.chat.conversesDesc);
+  const usercache = useTRPGSelector((state) => state.cache.user);
+  const selectedUUID = useTRPGSelector(
+    (state) => state.chat.selectedConverseUUID
+  );
+  const userInfo = useTRPGSelector((state) => state.user.info);
+  const userWritingList = useTRPGSelector(
+    (state) => _get(state, ['chat', 'writingList', 'user']) ?? []
+  );
+  const converseList = useMemo(() => {
+    if (_size(converses) > 0) {
+      const conversesNode = _sortBy(
+        _values(converses).filter(
           (item) => item.type === 'user' || item.type === 'system'
         ),
         (item) => new Date(item.lastTime || 0)
@@ -62,15 +69,8 @@ class ConverseList extends React.Component<Props> {
             uuid === 'trpgsystem'
               ? config.defaultImg.trpgsystem
               : config.defaultImg.getUser(item.name);
-          const attachIcon =
-            item.type === 'user'
-              ? _get(this.props.usercache, [item.members ?? 0, 'avatar'])
-              : null;
-          const userUUID = _isArray(item.members)
-            ? item.members.find((i) => i !== this.props.userInfo.uuid)
-            : uuid;
-          let icon =
-            item.icon || _get(usercache, [uuid, 'avatar']) || attachIcon;
+          const userUUID = uuid;
+          let icon = item.icon || _get(usercache, [uuid, 'avatar']);
           icon = config.file.getAbsolutePath(icon) || defaultIcon;
 
           return (
@@ -83,31 +83,35 @@ class ConverseList extends React.Component<Props> {
               uuid={uuid}
               unread={item.unread}
               isWriting={userWritingList.includes(userUUID)}
-              isSelected={this.props.selectedUUID === uuid}
+              isSelected={selectedUUID === uuid}
               hideCloseBtn={false}
-              onClick={() => this.handleSelectConverse(uuid)}
-              onClickIcon={() => this.props.dispatch(showProfileCard(uuid))}
-              onClickCloseBtn={() =>
-                this.props.dispatch(removeUserConverse(uuid))
-              }
+              onClick={() => handleSelectConverse(uuid)}
+              onClickIcon={() => dispatch(showProfileCard(uuid))}
+              onClickCloseBtn={() => dispatch(removeUserConverse(uuid))}
             />
           );
         });
 
-      return <div className="converses-list">{converses}</div>;
+      return <div className="converses-list">{conversesNode}</div>;
     } else {
       return (
         <div className="converses-list">
-          <div className="converses-tip">{this.props.conversesDesc}</div>
+          <div className="converses-tip">{conversesDesc}</div>
         </div>
       );
     }
-  }
+  }, [
+    dispatch,
+    converses,
+    usercache,
+    selectedUUID,
+    conversesDesc,
+    userWritingList,
+    userInfo,
+  ]);
 
-  getFriendList() {
-    const friends = this.props.friends;
-    const usercache = this.props.usercache;
-
+  const friends = useTRPGSelector((state) => state.user.friendList);
+  const friendList = useMemo(() => {
     return (
       <div className="friend-list">
         {friends.length > 0 ? (
@@ -128,7 +132,7 @@ class ConverseList extends React.Component<Props> {
                 time=""
                 uuid=""
                 isSelected={false}
-                onClick={() => this.props.dispatch(showProfileCard(uuid))}
+                onClick={() => dispatch(showProfileCard(uuid))}
                 hideCloseBtn={true}
               />
             );
@@ -138,56 +142,47 @@ class ConverseList extends React.Component<Props> {
         )}
       </div>
     );
-  }
+  }, [friends, usercache, dispatch]);
 
-  render() {
-    return (
-      <div className="converse">
-        <div className="list">
-          <TabsController>
-            <Tab
-              name={
-                <span>
-                  <i className="iconfont">&#xe769;</i>消息
-                </span>
-              }
-            >
-              {this.getConverseList()}
-            </Tab>
-            <Tab
-              name={
-                <span>
-                  <i className="iconfont">&#xe60d;</i>好友
-                </span>
-              }
-            >
-              {this.getFriendList()}
-            </Tab>
-          </TabsController>
-        </div>
-        <div className="detail">
-          {this.props.selectedUUID ? (
-            <ConverseDetail converseUUID={this.props.selectedUUID} />
-          ) : (
-            <div className="nocontent">
-              <p className="nocontent-img">
-                <img src="/src/web/assets/img/dice.png" />
-              </p>
-              <p className="welcome">{this.getWelcomeMessage()}</p>
-            </div>
-          )}
-        </div>
+  return (
+    <div className="converse">
+      <div className="list">
+        <TabsController>
+          <Tab
+            name={
+              <span>
+                <i className="iconfont">&#xe769;</i>消息
+              </span>
+            }
+          >
+            {converseList}
+          </Tab>
+          <Tab
+            name={
+              <span>
+                <i className="iconfont">&#xe60d;</i>好友
+              </span>
+            }
+          >
+            {friendList}
+          </Tab>
+        </TabsController>
       </div>
-    );
-  }
-}
+      <div className="detail">
+        {selectedUUID ? (
+          <ConverseDetail converseUUID={selectedUUID} />
+        ) : (
+          <div className="nocontent">
+            <p className="nocontent-img">
+              <img src="/src/web/assets/img/dice.png" />
+            </p>
+            <p className="welcome">{welcomeMessage}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+});
+ConverseList.displayName = 'ConverseList';
 
-export default connect((state: TRPGState) => ({
-  selectedUUID: state.chat.selectedConverseUUID,
-  conversesDesc: state.chat.conversesDesc,
-  converses: state.chat.converses,
-  friends: state.user.friendList,
-  usercache: state.cache.user,
-  userInfo: state.user.info,
-  userWritingList: _get(state, ['chat', 'writingList', 'user']) ?? [],
-}))(ConverseList);
+export default ConverseList;

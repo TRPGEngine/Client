@@ -1,6 +1,6 @@
 import moment, { MomentInput } from 'moment';
 
-export const getShortDiff = (str: string): string => {
+export const getShortDiff = (str: MomentInput): string => {
   let date = str ? moment(str) : moment();
   if (helper.isToday(date)) {
     return date.format('HH:mm');
