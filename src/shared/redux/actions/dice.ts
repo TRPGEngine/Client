@@ -1,4 +1,4 @@
-import * as trpgApi from '../../api/trpg.api';
+import * as trpgApi from '@shared/api/trpg.api';
 const api = trpgApi.getInstance();
 import { addMsg } from './chat';
 import { showAlert } from './ui';
@@ -18,6 +18,7 @@ export const sendDiceRequest = function(
           console.log('pkg', data.pkg);
           dispatch(addMsg(to_uuid, data.pkg));
         } else {
+          dispatch(showAlert(data.msg));
           console.error(data);
         }
       }
@@ -36,6 +37,7 @@ export const acceptDiceRequest = function(uuid) {
           // let converseUUID = log.is_group ? log.converse_uuid : log.sender_uuid;
           // dispatch(updateMsg(converseUUID, log));
         } else {
+          dispatch(showAlert(data.msg));
           console.error(data);
         }
       }
@@ -67,6 +69,7 @@ export const sendDiceInvite = function(
           console.log('pkg', data.pkg);
           dispatch(addMsg(to_uuid, data.pkg));
         } else {
+          dispatch(showAlert(data.msg));
           console.error(data);
         }
       }
@@ -84,6 +87,7 @@ export const acceptDiceInvite = function(uuid) {
         // let converseUUID = log.is_group ? log.converse_uuid : log.sender_uuid;
         // dispatch(updateMsg(converseUUID, log));
       } else {
+        dispatch(showAlert(data.msg));
         console.error(data);
       }
     });
@@ -100,7 +104,7 @@ export const sendQuickDice = function(to_uuid, is_group, dice_request) {
           // console.log('pkg', data);
         } else {
           console.error(data);
-          dispatch(showAlert('快速投骰失败'));
+          dispatch(showAlert('发送快速投骰失败'));
         }
       }
     );
