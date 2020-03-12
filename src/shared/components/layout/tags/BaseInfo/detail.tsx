@@ -1,6 +1,7 @@
 import React from 'react';
 import { TagComponent } from '../type';
 import { Form } from '@ant-design/compatible';
+import { UserOutlined } from '@ant-design/icons';
 import '@ant-design/compatible/assets/index.css';
 import { Input } from 'antd';
 import { LayoutCol } from '../Col/shared';
@@ -33,7 +34,7 @@ export const TagBaseInfoDetail: TagComponent = TMemo((props) => {
         xs={24}
         style={{ textAlign: 'center', marginBottom: 10 }}
       >
-        <Avatar size={64} icon="user" src={String(avatar)} />
+        <Avatar size={64} icon={<UserOutlined />} src={String(avatar)} />
       </LayoutCol>
     </BaseInfoContainer>
   );
