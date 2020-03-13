@@ -73,16 +73,21 @@ export const toastHandler = uiStateSwitchFactory('showToast', {
 /**
  * Modal 处理
  */
-export const modelHandler = uiStateSwitchFactory('showModal', {
-  onEnabled: (currentUI, dispatch) => {
+export const modelHandler = (
+  prevUI: UIMap,
+  currentUI: UIMap,
+  dispatch: TRPGDispatch
+) => {
+  if (currentUI['modalStack'].length > prevUI['modalStack'].length) {
+    // 增加了modalStack
     const body = _last(currentUI.modalStack);
     if (body) {
       TModal.show(body, { onRequestClose: () => dispatch(hideModal()) });
     }
-  },
-  onDisabled: () => {
+  } else if (currentUI['modalStack'].length < prevUI['modalStack'].length) {
+    // 减少了modalStack
     TModal.hide();
-  },
-});
+  }
+};
 
 export const uiHandlerCollection = [alertHandler, toastHandler, modelHandler];
