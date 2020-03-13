@@ -58,7 +58,7 @@ class ProfileScreen extends React.Component<Props> {
   render() {
     const groupUUID = this.props.navigation.state.params.uuid;
     const hasJoined = this.props.addedGroupUUIDList.includes(groupUUID);
-    const groupInfo = this.props.groupcache.groupUUID;
+    const groupInfo = this.props.groupcache[groupUUID];
 
     if (!groupInfo) {
       return (

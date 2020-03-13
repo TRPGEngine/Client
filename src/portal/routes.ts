@@ -46,7 +46,7 @@ export const routes: RouteConfig[] = [
   {
     title: '团人物列表',
     path: '/group/:groupUUID/actor/list',
-    component: TLoadable(() => import('@portal/routes/actor/list')),
+    component: TLoadable(() => import('@portal/routes/group/actor/list')),
   },
   {
     title: '团人物详情',
