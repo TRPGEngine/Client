@@ -93,4 +93,9 @@ export const routes: RouteConfig[] = [
     path: '/map/demo',
     component: TLoadable(() => import('@portal/routes/map/demo')),
   },
+  {
+    title: '生成战报',
+    path: '/trpg/report/create',
+    component: TLoadable(() => import('@portal/routes/trpg/report/create')),
+  },
 ];
