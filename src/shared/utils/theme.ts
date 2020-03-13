@@ -1,8 +1,9 @@
 // name from http://chir.ag/projects/name-that-color/
 // antd color from https://github.com/ant-design/ant-design-colors
 
+// NOTICE: 该文件是共用的，请不要在该文件中引入styled-component
+
 import * as antdColor from '@ant-design/colors';
-import { css } from 'styled-components';
 
 declare module 'styled-components' {
   interface DefaultTheme {
@@ -76,7 +77,7 @@ const styledTheme = {
         overflow-y: overlay;
       }
     `,
-    linkBtn: css`
+    linkBtn: `
       font-size: 14px;
       background-color: transparent;
       border: 0;

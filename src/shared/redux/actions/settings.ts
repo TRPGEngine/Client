@@ -15,7 +15,7 @@ import * as trpgApi from '../../api/trpg.api';
 import { TRPGAction } from '@redux/types/__all__';
 import { ServerConfig } from '@redux/types/settings';
 import request from '@shared/utils/request';
-import { message } from 'antd';
+// import { message } from 'antd'; // 这里会被app引用 请不要增加antd
 const api = trpgApi.getInstance();
 
 /**
@@ -92,7 +92,8 @@ export const setSystemSettings = function setSystemSettings(payload) {
       payload.notification === true
     ) {
       if (Notification.permission === 'denied') {
-        message.warn('桌面通知权限已被禁止, 请手动修改后刷新应用');
+        // message.warn('桌面通知权限已被禁止, 请手动修改后刷新应用');
+        dispatch(showAlert('桌面通知权限已被禁止'));
         payload.notification = false;
       } else if (Notification.permission === 'default') {
         dispatch(requestNotificationPermission());
