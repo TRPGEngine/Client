@@ -16,7 +16,7 @@ export const useWebToken = () => {
       // 获取portalToken
       dispatch(fetchWebToken());
     }
-  }, []);
+  }, [jwt]);
 
   return jwt;
 };
