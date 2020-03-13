@@ -61,6 +61,7 @@ export type StateChangeHandler = (newState: XMLBuilderState) => void;
 
 const XMLBuilderContainer = styled.div`
   text-align: left;
+  width: 100%;
 
   pre {
     margin: 0;

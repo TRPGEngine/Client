@@ -42,6 +42,8 @@ import { TRPGState } from '@redux/types/__all__';
 import GroupRule from './GroupRule';
 import { GroupInfoContext } from '@shared/context/GroupInfoContext';
 import { UserSelector } from '@web/components/modal/UserSelector';
+import { checkIsTestUser } from '@web/utils/debug-helper';
+import { GroupChannelCreate } from './modal/GroupChannelCreate';
 
 interface Props extends DispatchProp<any> {
   selectedUUID: string;
@@ -202,9 +204,24 @@ class GroupDetail extends React.Component<Props> {
   };
 
   actions = [
+    ...(checkIsTestUser()
+      ? [
+          {
+            name: '创建频道',
+            icon: '&#xe61c;',
+            onClick: () => {
+              this.props.dispatch(
+                showModal(
+                  <GroupChannelCreate groupUUID={this.props.selectedUUID} />
+                )
+              );
+            },
+          },
+        ]
+      : []),
     {
       name: '添加团员',
-      icon: '&#xe61c;',
+      icon: '&#xe61d;',
       onClick: () => {
         this.props.dispatch(
           showModal(<UserSelector onConfirm={this.handleSendGroupInvite} />)

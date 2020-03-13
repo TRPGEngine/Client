@@ -82,8 +82,13 @@ export function bindEventFunc(
     store.dispatch(addGroup(data.group));
   });
   api.on('group::updateGroupInfo', function(data) {
-    const { groupInfo } = data;
-    store.dispatch(updateGroupInfo(groupInfo));
+    const { groupUUID, groupInfo } = data;
+    store.dispatch(
+      updateGroupInfo({
+        ...groupInfo,
+        uuid: groupUUID ?? groupInfo.uuid,
+      })
+    );
   });
   api.on('group::updateGroupActorInfo', function(data) {
     const { groupUUID, groupActorUUID, groupActorInfo } = data;

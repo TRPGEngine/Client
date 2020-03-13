@@ -56,6 +56,27 @@ jobs:
           command: npm run package-all
       - store_artifacts:
           path: ./dist
+
+  "Build RN Code":
+    working_directory: ~/trpg
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - restore_cache:
+        key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "src/app/package.json" }}-{{ arch }}
+      - run:
+          name: install-node_module
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "src/app/package.json" }}-{{ arch }}
+          paths:
+            - node_modules
+            - src/app/node_modules
+      - run:
+          name: bundle
+          command: cd ./src/app && sh ./build/bundle.sh
+
   "Build Android App":
     working_directory: ~/trpg
     docker:
@@ -66,12 +87,13 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "src/app/package.json" }}-{{ arch }}
       - run:
-          name: install-npm-wee
+          name: install-node_module
           command: npm install
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "src/app/package.json" }}-{{ arch }}
           paths:
             - node_modules
+            - src/app/node_modules
       # cache gradle
       - restore_cache:
           key: gradle-cache-{{ checksum "src/app/android/build.gradle" }}-{{ arch }}
@@ -94,6 +116,13 @@ workflows:
               only:
                 - release
       - Build Electron App:
+          requires:
+            - node
+          filters:
+            branches:
+              only:
+                - release
+      - Build RN Code:
           requires:
             - node
           filters:

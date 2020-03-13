@@ -10,6 +10,23 @@ import { bindFileAvatarAttachUUID } from './file';
 import { ActorItem } from './actor';
 import { ModelAccess } from './types';
 import { PlayerUser } from './player';
+import { ChatLogItem } from './chat';
+
+export interface GroupItem {
+  uuid: string;
+  type: string;
+  name: string;
+  sub_name: string;
+  desc: string;
+  avatar: string;
+  max_member: number;
+  allow_search: boolean;
+  creator_uuid: string;
+  owner_uuid: string;
+  managers_uuid: string[];
+  maps_uuid: string[];
+  rule: string;
+}
 
 export interface GroupActorItem {
   uuid: string;
@@ -23,6 +40,33 @@ export interface GroupActorItem {
   enabled: boolean;
 
   owner?: PlayerUser;
+}
+
+/**
+ * 获取自己拥有的所有团
+ */
+export async function fetchOwnGroupList(): Promise<GroupItem[]> {
+  const { data } = await request.get('/group/list/own');
+
+  return data.groups;
+}
+
+/**
+ * 获取一定时间内所有的团会话
+ * @param groupUUID 团UUID
+ * @param from 开始时间
+ * @param to 结束时间
+ */
+export async function fetchGroupChatLog(
+  groupUUID: string,
+  from: string,
+  to: string
+): Promise<ChatLogItem[]> {
+  const { data } = await request.get(`/group/log/${groupUUID}`, {
+    params: { from, to },
+  });
+
+  return data.logs;
 }
 
 export const fetchGroupActorList = async (

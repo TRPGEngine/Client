@@ -8,6 +8,7 @@ export const TPopoverContext = React.createContext({ closePopover: () => {} });
 /**
  * 重新封装一层Popover
  * 管理Popover的显示与隐藏
+ * 可以由Context来让子节点关闭popover
  */
 export const TPopover: React.FC<PopoverProps> = TMemo((props) => {
   const [visible, setVisible] = useState(false);
