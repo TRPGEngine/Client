@@ -283,13 +283,13 @@ class GroupDataScreen extends React.Component<Props> {
 export default connect((state: TRPGState, ownProps: Props) => {
   const selectedGroupUUID = ownProps.navigation.getParam('uuid', '');
 
-  const groupInfo =
-    state.group.groups.find((group) => group.uuid === selectedGroupUUID) ?? {};
+  const groupInfo = state.group.groups.find(
+    (group) => group.uuid === selectedGroupUUID
+  );
 
-  const selfActors = state.actor.selfActors.map((i) => i.uuid);
-
-  const selfGroupActors = _get(groupInfo, 'group_actors', []).filter(
-    (i) => i.enabled && selfActors.indexOf(i.actor_uuid) >= 0
+  const userUUID = state.user.info.uuid;
+  const selfGroupActors = (groupInfo?.group_actors || []).filter(
+    (i) => i.enabled && i.passed && i.owner?.uuid === userUUID
   );
 
   return {
