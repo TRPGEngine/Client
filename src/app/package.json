@@ -14,6 +14,7 @@
     "build:android": "npm run build:env && cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web REACT_NATIVE_APP_ROOT=../../ ./gradlew assembleRelease",
     "deploy": "npm run build:env && node build/deploy/deploy.js",
     "dump:android-home": "echo \"sdk.dir=$ANDROID_HOME\" >> ./android/local.properties",
+    "assets:update": "bash ./build/copy-iconfont.sh",
     "test": "node ../../node_modules/jest/bin/jest.js"
   },
   "keywords": [
