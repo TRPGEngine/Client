@@ -11,7 +11,9 @@ import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import _isFunction from 'lodash/isFunction';
+import _isString from 'lodash/isString';
 import { TRPGDispatch } from '@redux/types/__all__';
+import { LoadingSpinnerSmall } from '../LoadingSpinnerSmall';
 
 interface MsgOperationItemContext {
   dispatch: TRPGDispatch;
@@ -92,9 +94,16 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     return [];
   }
 
+  get isLoading(): boolean {
+    const { info } = this.props;
+
+    return _isString(info.uuid) && info.uuid.startsWith('local');
+  }
+
   render() {
     const { type, me, name, info, emphasizeTime } = this.props;
     const operations = this.getOperation();
+    const isLoading = this.isLoading;
 
     if (info.revoke === true) {
       // 撤回消息显示
@@ -141,7 +150,9 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
           <div className="body">
             {this.getContent()}
 
-            {operations.length > 0 && (
+            {isLoading && <LoadingSpinnerSmall />}
+
+            {!isLoading && operations.length > 0 && (
               <TPopover
                 overlayClassName="operation-popover"
                 placement="topRight"

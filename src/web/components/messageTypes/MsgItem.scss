@@ -317,6 +317,10 @@
         }
       }
 
+      >.loading {
+        align-self: flex-end;
+      }
+
       >.operation {
         border: 1px solid #e1e0e4;
         border-radius: 3px;
