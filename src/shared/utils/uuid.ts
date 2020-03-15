@@ -7,3 +7,7 @@ export const isUUID = (uuid: string) => {
 export const isUserUUID = (uuid: string) => {
   return v1(uuid);
 };
+
+export const isUserOrGroupUUID = (uuid: string) => {
+  return v1(uuid);
+};

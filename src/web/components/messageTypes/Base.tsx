@@ -14,6 +14,7 @@ import _isFunction from 'lodash/isFunction';
 import _isString from 'lodash/isString';
 import { TRPGDispatch } from '@redux/types/__all__';
 import { LoadingSpinnerSmall } from '../LoadingSpinnerSmall';
+import { isUserOrGroupUUID } from '@shared/utils/uuid';
 
 interface MsgOperationItemContext {
   dispatch: TRPGDispatch;
@@ -94,6 +95,10 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     return [];
   }
 
+  checkSenderIsUser(): boolean {
+    return isUserOrGroupUUID(_get(this.props.info, ['sender_uuid']));
+  }
+
   get isLoading(): boolean {
     const { info } = this.props;
 
@@ -127,15 +132,9 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
         </div>
         <div className="content">
           <div className="avatar">
-            {me ? (
-              <Avatar
-                name={this.getSenderName()}
-                src={this.getAvatarUrl()}
-                size={38}
-              />
-            ) : (
+            {this.checkSenderIsUser() ? (
               <TPopover
-                placement="right"
+                placement={me ? 'left' : 'right'}
                 trigger="click"
                 content={<PopoverMsgSenderInfo payload={info} />}
               >
@@ -145,6 +144,12 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
                   size={38}
                 />
               </TPopover>
+            ) : (
+              <Avatar
+                name={this.getSenderName()}
+                src={this.getAvatarUrl()}
+                size={38}
+              />
             )}
           </div>
           <div className="body">
