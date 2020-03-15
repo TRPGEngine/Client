@@ -438,6 +438,52 @@
               <Tab label="自定义"></Tab>
             </Tabs>
 
+            <!-- 下面是用于将技能里面的数据放到外面方便投骰判定 -->
+            <Computed target="信用评级" deps="skill-信用评级.addedPoint" expression="SUM(data['skill-信用评级'].基础, data['skill-信用评级'].addedPoint)" />
+            <Computed target="取悦" deps="skill-取悦.addedPoint" expression="SUM(data['skill-取悦'].基础, data['skill-取悦'].addedPoint)" />
+            <Computed target="话术" deps="skill-话术.addedPoint" expression="SUM(data['skill-话术'].基础, data['skill-话术'].addedPoint)" />
+            <Computed target="恐吓" deps="skill-恐吓.addedPoint" expression="SUM(data['skill-恐吓'].基础, data['skill-恐吓'].addedPoint)" />
+            <Computed target="说服" deps="skill-说服.addedPoint" expression="SUM(data['skill-说服'].基础, data['skill-说服'].addedPoint)" />
+            <Computed target="心理学" deps="skill-心理学.addedPoint" expression="SUM(data['skill-心理学'].基础, data['skill-心理学'].addedPoint)" />
+            <Computed target="母语" deps="skill-母语.addedPoint" expression="SUM(data['skill-母语'].基础, data['skill-母语'].addedPoint)" />
+            <Computed target="估价" deps="skill-估价.addedPoint" expression="SUM(data['skill-估价'].基础, data['skill-估价'].addedPoint)" />
+            <Computed target="乔装" deps="skill-乔装.addedPoint" expression="SUM(data['skill-乔装'].基础, data['skill-乔装'].addedPoint)" />
+            <Computed target="潜行" deps="skill-潜行.addedPoint" expression="SUM(data['skill-潜行'].基础, data['skill-潜行'].addedPoint)" />
+            <Computed target="追踪" deps="skill-追踪.addedPoint" expression="SUM(data['skill-追踪'].基础, data['skill-追踪'].addedPoint)" />
+            <Computed target="侦查" deps="skill-侦查.addedPoint" expression="SUM(data['skill-侦查'].基础, data['skill-侦查'].addedPoint)" />
+            <Computed target="聆听" deps="skill-聆听.addedPoint" expression="SUM(data['skill-聆听'].基础, data['skill-聆听'].addedPoint)" />
+            <Computed target="读唇" deps="skill-读唇.addedPoint" expression="SUM(data['skill-读唇'].基础, data['skill-读唇'].addedPoint)" />
+            <Computed target="人类学" deps="skill-人类学.addedPoint" expression="SUM(data['skill-人类学'].基础, data['skill-人类学'].addedPoint)" />
+            <Computed target="图书馆使用" deps="skill-图书馆使用.addedPoint" expression="SUM(data['skill-图书馆使用'].基础, data['skill-图书馆使用'].addedPoint)" />
+            <Computed target="攀爬" deps="skill-攀爬.addedPoint" expression="SUM(data['skill-攀爬'].基础, data['skill-攀爬'].addedPoint)" />
+            <Computed target="跳跃" deps="skill-跳跃.addedPoint" expression="SUM(data['skill-跳跃'].基础, data['skill-跳跃'].addedPoint)" />
+            <Computed target="骑术" deps="skill-骑术.addedPoint" expression="SUM(data['skill-骑术'].基础, data['skill-骑术'].addedPoint)" />
+            <Computed target="游泳" deps="skill-游泳.addedPoint" expression="SUM(data['skill-游泳'].基础, data['skill-游泳'].addedPoint)" />
+            <Computed target="潜水" deps="skill-潜水.addedPoint" expression="SUM(data['skill-潜水'].基础, data['skill-潜水'].addedPoint)" />
+            <Computed target="妙手" deps="skill-妙手.addedPoint" expression="SUM(data['skill-妙手'].基础, data['skill-妙手'].addedPoint)" />
+            <Computed target="锁匠" deps="skill-锁匠.addedPoint" expression="SUM(data['skill-锁匠'].基础, data['skill-锁匠'].addedPoint)" />
+            <Computed target="电气维修" deps="skill-电气维修.addedPoint" expression="SUM(data['skill-电气维修'].基础, data['skill-电气维修'].addedPoint)" />
+            <Computed target="机械维修" deps="skill-机械维修.addedPoint" expression="SUM(data['skill-机械维修'].基础, data['skill-机械维修'].addedPoint)" />
+            <Computed target="导航" deps="skill-导航.addedPoint" expression="SUM(data['skill-导航'].基础, data['skill-导航'].addedPoint)" />
+            <Computed target="汽车驾驶" deps="skill-汽车驾驶.addedPoint" expression="SUM(data['skill-汽车驾驶'].基础, data['skill-汽车驾驶'].addedPoint)" />
+            <Computed target="动物驯养" deps="skill-动物驯养.addedPoint" expression="SUM(data['skill-动物驯养'].基础, data['skill-动物驯养'].addedPoint)" />
+            <Computed target="计算机使用" deps="skill-计算机使用.addedPoint" expression="SUM(data['skill-计算机使用'].基础, data['skill-计算机使用'].addedPoint)" />
+            <Computed target="闪避" deps="skill-闪避.addedPoint" expression="SUM(data['skill-闪避'].基础, data['skill-闪避'].addedPoint)" />
+            <Computed target="投掷" deps="skill-投掷.addedPoint" expression="SUM(data['skill-投掷'].基础, data['skill-投掷'].addedPoint)" />
+            <Computed target="爆破" deps="skill-爆破.addedPoint" expression="SUM(data['skill-爆破'].基础, data['skill-爆破'].addedPoint)" />
+            <Computed target="炮术" deps="skill-炮术.addedPoint" expression="SUM(data['skill-炮术'].基础, data['skill-炮术'].addedPoint)" />
+            <Computed target="急救" deps="skill-急救.addedPoint" expression="SUM(data['skill-急救'].基础, data['skill-急救'].addedPoint)" />
+            <Computed target="医学" deps="skill-医学.addedPoint" expression="SUM(data['skill-医学'].基础, data['skill-医学'].addedPoint)" />
+            <Computed target="精神分析" deps="skill-精神分析.addedPoint" expression="SUM(data['skill-精神分析'].基础, data['skill-精神分析'].addedPoint)" />
+            <Computed target="催眠" deps="skill-催眠.addedPoint" expression="SUM(data['skill-催眠'].基础, data['skill-催眠'].addedPoint)" />
+            <Computed target="会计" deps="skill-会计.addedPoint" expression="SUM(data['skill-会计'].基础, data['skill-会计'].addedPoint)" />
+            <Computed target="法律" deps="skill-法律.addedPoint" expression="SUM(data['skill-法律'].基础, data['skill-法律'].addedPoint)" />
+            <Computed target="历史" deps="skill-历史.addedPoint" expression="SUM(data['skill-历史'].基础, data['skill-历史'].addedPoint)" />
+            <Computed target="考古学" deps="skill-考古学.addedPoint" expression="SUM(data['skill-考古学'].基础, data['skill-考古学'].addedPoint)" />
+            <Computed target="博物学" deps="skill-博物学.addedPoint" expression="SUM(data['skill-博物学'].基础, data['skill-博物学'].addedPoint)" />
+            <Computed target="神秘学" deps="skill-神秘学.addedPoint" expression="SUM(data['skill-神秘学'].基础, data['skill-神秘学'].addedPoint)" />
+            <Computed target="电子学" deps="skill-电子学.addedPoint" expression="SUM(data['skill-电子学'].基础, data['skill-电子学'].addedPoint)" />
+            <Computed target="克苏鲁神话" deps="skill-克苏鲁神话.addedPoint" expression="SUM(data['skill-克苏鲁神话'].基础, data['skill-克苏鲁神话'].addedPoint)" />
           </Styled>
         </Col>
         <Col md="8">
