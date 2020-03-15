@@ -3,14 +3,13 @@ import { TagComponent } from '../type';
 import { Form } from '@ant-design/compatible';
 import { UserOutlined } from '@ant-design/icons';
 import '@ant-design/compatible/assets/index.css';
-import { Input } from 'antd';
 import { LayoutCol } from '../Col/shared';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';
 import Avatar from '@web/components/Avatar';
 import { TMemo } from '@shared/components/TMemo';
 import { BaseInfoContainer, BaseInfoForm } from './shared';
+import _isNil from 'lodash/isNil';
 const FormItem = Form.Item;
-const TextArea = Input.TextArea;
 
 export const TagBaseInfoDetail: TagComponent = TMemo((props) => {
   const [name, setName] = useLayoutFieldState('_name');
@@ -34,7 +33,11 @@ export const TagBaseInfoDetail: TagComponent = TMemo((props) => {
         xs={24}
         style={{ textAlign: 'center', marginBottom: 10 }}
       >
-        <Avatar size={64} icon={<UserOutlined />} src={String(avatar)} />
+        <Avatar
+          size={64}
+          icon={<UserOutlined />}
+          src={!_isNil(avatar) ? String(avatar) : undefined}
+        />
       </LayoutCol>
     </BaseInfoContainer>
   );

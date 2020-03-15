@@ -11,7 +11,7 @@ export const useLayoutFieldState = (
 
   const value = useMemo(() => getStateValue(context, name), [
     name,
-    context.state.data,
+    context.state.data, // TODO: 这里的依赖也许可以进行进一步优化
   ]);
   const setValue = useCallback(
     (newValue) => {
