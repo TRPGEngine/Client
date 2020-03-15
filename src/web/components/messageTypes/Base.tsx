@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useContext } from 'react';
 import dateHelper from '@shared/utils/date-helper';
 import config from '@shared/project.config';
 import { MessageProps } from '@shared/components/MessageHandler';
@@ -6,7 +6,46 @@ import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import Avatar from '../Avatar';
 import PopoverMsgSenderInfo from '../popover/MsgSenderInfo';
-import { TPopover } from '../popover';
+import { TPopover, TPopoverContext } from '../popover';
+import { TMemo } from '@shared/components/TMemo';
+import styled from 'styled-components';
+import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import _isFunction from 'lodash/isFunction';
+import { TRPGDispatch } from '@redux/types/__all__';
+
+interface MsgOperationItemContext {
+  dispatch: TRPGDispatch;
+  closePopover: () => void;
+}
+export interface MsgOperationItem {
+  name: string;
+  action: (ctx: MsgOperationItemContext) => void;
+}
+
+const MsgOperationListItemContainer = styled.div`
+  padding: 4px 10px;
+  cursor: pointer;
+  border-bottom: ${(props) => props.theme.border.standard};
+
+  &:hover {
+    background-color: ${(props) => props.theme.color.transparent90};
+  }
+`;
+const MsgOperationListItem: React.FC<MsgOperationItem> = TMemo((props) => {
+  const dispatch = useTRPGDispatch();
+  const context = useContext(TPopoverContext);
+  const handleClick = useCallback(() => {
+    _isFunction(props.action) &&
+      props.action({ dispatch, closePopover: context.closePopover });
+  }, [dispatch, context.closePopover]);
+
+  return (
+    <MsgOperationListItemContainer onClick={handleClick}>
+      {props.name}
+    </MsgOperationListItemContainer>
+  );
+});
+MsgOperationListItem.displayName = 'MsgOperationListItem';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -49,8 +88,13 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     return null;
   }
 
+  getOperation(): MsgOperationItem[] {
+    return [];
+  }
+
   render() {
     const { type, me, name, info, emphasizeTime } = this.props;
+    const operations = this.getOperation();
 
     if (info.revoke === true) {
       // 撤回消息显示
@@ -94,7 +138,32 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
               </TPopover>
             )}
           </div>
-          <div className="body">{this.getContent()}</div>
+          <div className="body">
+            {this.getContent()}
+
+            {operations.length > 0 && (
+              <TPopover
+                overlayClassName="operation-popover"
+                placement="topRight"
+                trigger="click"
+                content={
+                  <div>
+                    {operations.map((op) => (
+                      <MsgOperationListItem
+                        key={op.name}
+                        name={op.name}
+                        action={op.action}
+                      />
+                    ))}
+                  </div>
+                }
+              >
+                <div className="operation">
+                  <i className="iconfont">&#xe625;</i>
+                </div>
+              </TPopover>
+            )}
+          </div>
         </div>
       </div>
     );
