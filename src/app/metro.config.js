@@ -7,12 +7,14 @@
  */
 const path = require('path');
 const blacklist = require('metro-config/src/defaults/blacklist');
+const extraNodeModules = require('./build/metro/spec-modules');
 const NODE_ENV = process.env.NODE_ENV;
 
 module.exports = {
   resolver: {
     blacklistRE: blacklist([/src\/web/]),
     sourceExts: ['js', 'ts', 'tsx'],
+    extraNodeModules,
   },
   transformer: {
     // babelTransformerPath: path.resolve(
