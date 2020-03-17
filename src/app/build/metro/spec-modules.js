@@ -1,7 +1,7 @@
 // 这里主要设置强制将某些模块指定到app的node-modules
 const path = require('path');
 
-const appSpecModules = ['react-native'];
+const appSpecModules = ['react-native', 'styled-components'];
 
 const extraNodeModules = {};
 
