@@ -7,6 +7,8 @@ import { MessageProps } from '@shared/components/MessageHandler';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import { TipMessage } from '../TipMessage';
+import { Popover } from '@ant-design/react-native';
+import PopoverMsgSenderInfo from '../popover/MsgSenderInfo';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -71,12 +73,18 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
             me ? { flexDirection: 'row-reverse' } : null,
           ]}
         >
-          <TAvatar
-            uri={this.getAvatarUrl()}
-            name={name}
-            height={40}
-            width={40}
-          />
+          <Popover
+            overlay={<PopoverMsgSenderInfo payload={info} />}
+            placement={me ? 'left' : 'right'}
+          >
+            <TAvatar
+              uri={this.getAvatarUrl()}
+              name={name}
+              height={40}
+              width={40}
+            />
+          </Popover>
+
           <View style={styles.itemBody}>
             <Text
               style={[...styles.itemName, me ? { textAlign: 'right' } : null]}
