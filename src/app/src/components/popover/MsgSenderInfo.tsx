@@ -4,7 +4,7 @@ import { MsgPayload } from '@redux/types/chat';
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
 import PopoverUserInfo from './UserInfo';
-// import PopoverGroupActorInfo from './GroupActorInfo';
+import PopoverGroupActorInfo from './GroupActorInfo';
 import { TMemo } from '@shared/components/TMemo';
 
 /**
@@ -19,12 +19,7 @@ const PopoverMsgSenderInfo: React.FC<Props> = TMemo((props) => {
   const isGroupActorMessage = !_isNil(groupActorUUID);
 
   if (isGroupActorMessage) {
-    // return <PopoverGroupActorInfo groupActorUUID={groupActorUUID} />;
-    return (
-      <View>
-        <Text>未实现</Text>
-      </View>
-    );
+    return <PopoverGroupActorInfo groupActorUUID={groupActorUUID} />;
   } else {
     const senderUUID = props.payload.sender_uuid;
     return <PopoverUserInfo userUUID={senderUUID} />;

@@ -4,30 +4,12 @@ import config from '@shared/project.config';
 import { useCachedUserInfo } from '@shared/hooks/cache';
 import _isEmpty from 'lodash/isEmpty';
 import { TAvatar } from '../TComponent';
-import styled from 'styled-components/native';
-
-const Container = styled.View`
-  display: flex;
-  flex-direction: row;
-  padding: 10px;
-`;
-
-const AvatarContainer = styled.View`
-  width: 40px;
-  height: 40px;
-  margin: 6px;
-`;
-
-const AttrContainer = styled.View`
-  flex: 1;
-`;
-
-const AttrRow = styled.View`
-  display: flex;
-  flex-direction: row;
-  max-width: 180px;
-  margin-bottom: 4px;
-`;
+import {
+  AttrRow,
+  Container,
+  AvatarContainer,
+  AttrContainer,
+} from './__shared__';
 
 interface Props {
   userUUID: string;
