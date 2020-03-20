@@ -15,6 +15,7 @@ import _isString from 'lodash/isString';
 import { TRPGDispatch } from '@redux/types/__all__';
 import { LoadingSpinnerSmall } from '../LoadingSpinnerSmall';
 import { isUserOrGroupUUID } from '@shared/utils/uuid';
+import { useDelayLoading } from '@shared/hooks/useDelay';
 
 interface MsgOperationItemContext {
   dispatch: TRPGDispatch;
@@ -49,6 +50,15 @@ const MsgOperationListItem: React.FC<MsgOperationItem> = TMemo((props) => {
   );
 });
 MsgOperationListItem.displayName = 'MsgOperationListItem';
+
+const MessageLoading: React.FC<{
+  loading: boolean;
+}> = TMemo((props) => {
+  const isLoading = useDelayLoading(props.loading);
+
+  return isLoading && <LoadingSpinnerSmall />;
+});
+MessageLoading.displayName = 'MessageLoading';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -155,7 +165,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
           <div className="body">
             {this.getContent()}
 
-            {isLoading && <LoadingSpinnerSmall />}
+            <MessageLoading loading={isLoading} />
 
             {!isLoading && operations.length > 0 && (
               <TPopover
