@@ -73,7 +73,7 @@ export const toastHandler = uiStateSwitchFactory('showToast', {
 /**
  * Modal 处理
  */
-export const modelHandler = (
+export const modalHandler = (
   prevUI: UIMap,
   currentUI: UIMap,
   dispatch: TRPGDispatch
@@ -90,4 +90,4 @@ export const modelHandler = (
   }
 };
 
-export const uiHandlerCollection = [alertHandler, toastHandler, modelHandler];
+export const uiHandlerCollection = [alertHandler, toastHandler, modalHandler];

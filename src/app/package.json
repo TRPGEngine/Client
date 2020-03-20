@@ -43,7 +43,7 @@
     "react-native-permissions": "^1.1.1",
     "react-native-progress": "^3.6.0",
     "react-native-qrcode-scanner": "^1.2.3",
-    "react-native-root-siblings": "^3.2.1",
+    "react-native-root-siblings": "^4.0.6",
     "react-native-root-toast": "^3.0.1",
     "react-native-sentry": "^0.42.0",
     "react-native-style-block": "0.0.4",
