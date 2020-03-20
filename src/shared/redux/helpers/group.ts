@@ -2,6 +2,7 @@ import { getStoreState } from '@redux/configureStore/helper';
 import _get from 'lodash/get';
 
 /**
+ * @deprecated 应当用hook来代替
  * 获取当前选择的团角色的角色信息
  */
 export function getCurrentGroupActor(groupUUID: string) {

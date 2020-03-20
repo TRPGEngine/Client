@@ -12,6 +12,8 @@ export const getGroupActorField = (
 ): string => {
   return groupActor[field] || _get(groupActor, ['actor', field]);
 };
+export const getGroupActorName = (groupActor: GroupActorType) =>
+  getGroupActorField(groupActor, 'name');
 
 /**
  * 获取团人物卡信息
