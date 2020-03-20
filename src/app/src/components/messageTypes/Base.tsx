@@ -11,6 +11,7 @@ import { TipMessage } from '../TipMessage';
 import { Popover, ActivityIndicator } from '@ant-design/react-native';
 import PopoverMsgSenderInfo from '../popover/MsgSenderInfo';
 import styled from 'styled-components/native';
+import { isUserOrGroupUUID } from '@shared/utils/uuid';
 
 const MsgContainer = styled.View<{ me: boolean }>`
   display: flex;
@@ -61,6 +62,10 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     return null;
   }
 
+  checkSenderIsUser(): boolean {
+    return isUserOrGroupUUID(_get(this.props.info, ['sender_uuid']));
+  }
+
   get isLoading(): boolean {
     const { info } = this.props;
 
@@ -88,17 +93,26 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
             me ? { flexDirection: 'row-reverse' } : null,
           ]}
         >
-          <Popover
-            overlay={<PopoverMsgSenderInfo payload={info} />}
-            placement={me ? 'left' : 'right'}
-          >
+          {this.checkSenderIsUser() ? (
+            <Popover
+              overlay={<PopoverMsgSenderInfo payload={info} />}
+              placement={me ? 'left' : 'right'}
+            >
+              <TAvatar
+                uri={this.getAvatarUrl()}
+                name={name}
+                height={40}
+                width={40}
+              />
+            </Popover>
+          ) : (
             <TAvatar
               uri={this.getAvatarUrl()}
               name={name}
               height={40}
               width={40}
             />
-          </Popover>
+          )}
 
           <View style={styles.itemBody}>
             <Text
