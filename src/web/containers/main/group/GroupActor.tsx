@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { selectActor } from '@src/shared/redux/actions/actor';
 import { showAlert, showModal } from '@src/shared/redux/actions/ui';
 import {
-  addGroupActor,
+  requestAddGroupActor,
   removeGroupActor,
   requestUpdateGroupActorInfo,
 } from '@src/shared/redux/actions/group';
@@ -36,7 +36,7 @@ interface Props {
   selectedGroupUUID: string;
   showModal: any;
   showAlert: any;
-  addGroupActor: any;
+  requestAddGroupActor: any;
   removeGroupActor: any;
   groupInfo: GroupInfo;
   isGroupManager: boolean;
@@ -56,7 +56,10 @@ class GroupActor extends React.PureComponent<Props> {
     this.props.showModal(
       <ActorSelect
         onSelect={(actorUUID) => {
-          this.props.addGroupActor(this.props.selectedGroupUUID, actorUUID);
+          this.props.requestAddGroupActor(
+            this.props.selectedGroupUUID,
+            actorUUID
+          );
         }}
       />
     );
@@ -293,8 +296,8 @@ export default connect(
     showAlert: (payload) => dispatch(showAlert(payload)),
     showModal: (body) => dispatch(showModal(body)),
     selectActor: (actorUUID: string) => dispatch(selectActor(actorUUID)),
-    addGroupActor: (groupUUID: string, actorUUID: string) =>
-      dispatch(addGroupActor(groupUUID, actorUUID)),
+    requestAddGroupActor: (groupUUID: string, actorUUID: string) =>
+      dispatch(requestAddGroupActor(groupUUID, actorUUID)),
     removeGroupActor: (groupUUID: string, groupActorUUID: string) =>
       dispatch(removeGroupActor(groupUUID, groupActorUUID)),
     requestUpdateGroupActorInfo: (
