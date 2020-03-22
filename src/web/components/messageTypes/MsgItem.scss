@@ -24,6 +24,7 @@
       > .body {
         margin-right: 0;
         margin-left: 140px;
+        flex-direction: row-reverse;
 
         .bubble {
           float: right;
@@ -292,9 +293,12 @@
         height: 100%;
       }
     }
+
     > .body {
       flex: 1;
       margin-right: 140px;
+      display: flex;
+
       .bubble {
         font-family: $font;
         min-width: 0;
@@ -312,8 +316,41 @@
           max-width: 100%;
         }
       }
-    }
 
+      >.loading {
+        align-self: flex-end;
+      }
+
+      >.operation {
+        border: 1px solid #e1e0e4;
+        border-radius: 3px;
+        align-self: flex-end;
+        margin: 0 4px;
+        height: 16px;
+        width: 18px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+        visibility: hidden;
+
+        >.iconfont {
+          font-size: 8px;
+          position: absolute;
+          top:0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          text-align: center;
+          line-height: normal;
+        }
+      }
+
+      &:hover >.operation {
+        visibility: visible;
+      }
+    }
   }
 
   .emphasize-time {
@@ -344,5 +381,11 @@
     padding: 6px 12px;
     font-size: 12px;
     vertical-align: middle;
+  }
+}
+
+.operation-popover {
+  .ant-popover-inner-content {
+    padding: 0;
   }
 }

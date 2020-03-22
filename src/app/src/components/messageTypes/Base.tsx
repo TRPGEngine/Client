@@ -5,8 +5,18 @@ import { TAvatar } from '../TComponent';
 import dateHelper from '@shared/utils/date-helper';
 import { MessageProps } from '@shared/components/MessageHandler';
 import _get from 'lodash/get';
+import _isString from 'lodash/isString';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import { TipMessage } from '../TipMessage';
+import { Popover, ActivityIndicator } from '@ant-design/react-native';
+import PopoverMsgSenderInfo from '../popover/MsgSenderInfo';
+import styled from 'styled-components/native';
+import { isUserOrGroupUUID } from '@shared/utils/uuid';
+
+const MsgContainer = styled.View<{ me: boolean }>`
+  display: flex;
+  flex-direction: ${(props) => (props.me ? 'row-reverse' : 'row')};
+`;
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -52,8 +62,20 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     return null;
   }
 
+  checkSenderIsUser(): boolean {
+    return isUserOrGroupUUID(_get(this.props.info, ['sender_uuid']));
+  }
+
+  get isLoading(): boolean {
+    const { info } = this.props;
+
+    return _isString(info.uuid) && info.uuid.startsWith('local');
+  }
+
   render() {
     const { me, name, info, emphasizeTime } = this.props;
+    const isLoading = this.isLoading;
+
     if (info.revoke === true) {
       return <TipMessage text={`${name} 撤回了一条消息`} />;
     }
@@ -71,27 +93,45 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
             me ? { flexDirection: 'row-reverse' } : null,
           ]}
         >
-          <TAvatar
-            uri={this.getAvatarUrl()}
-            name={name}
-            height={40}
-            width={40}
-          />
+          {this.checkSenderIsUser() ? (
+            <Popover
+              overlay={<PopoverMsgSenderInfo payload={info} />}
+              placement={me ? 'left' : 'right'}
+            >
+              <TAvatar
+                uri={this.getAvatarUrl()}
+                name={name}
+                height={40}
+                width={40}
+              />
+            </Popover>
+          ) : (
+            <TAvatar
+              uri={this.getAvatarUrl()}
+              name={name}
+              height={40}
+              width={40}
+            />
+          )}
+
           <View style={styles.itemBody}>
             <Text
               style={[...styles.itemName, me ? { textAlign: 'right' } : null]}
             >
               {this.getSenderName()}
             </Text>
-            <View
-              style={[
-                ...styles.itemMsg,
-                me ? { alignSelf: 'flex-end' } : null,
-                !this.isMsgPadding ? sb.padding(0) : null,
-              ]}
-            >
-              {this.getContent()}
-            </View>
+            <MsgContainer me={me}>
+              <View
+                style={[
+                  ...styles.itemMsg,
+                  me ? { alignSelf: 'flex-end' } : null,
+                  !this.isMsgPadding ? sb.padding(0) : null,
+                ]}
+              >
+                {this.getContent()}
+              </View>
+              {isLoading && <ActivityIndicator />}
+            </MsgContainer>
           </View>
         </View>
       </View>

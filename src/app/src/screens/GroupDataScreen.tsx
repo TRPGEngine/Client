@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { List, WingBlank, WhiteSpace } from '@ant-design/react-native';
 import { View, ScrollView } from 'react-native';
@@ -33,16 +33,68 @@ import {
 import { GroupInfo } from '@src/shared/redux/types/group';
 import { NavigationScreenProps } from 'react-navigation';
 import { GroupDataParams } from '../types/params';
-import { getCurrentGroupActor } from '@redux/helpers/group';
+import { TMemo } from '@shared/components/TMemo';
+import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { getGroupActorName } from '@web/utils/data-helper';
+import {
+  useSelfGroupActors,
+  useCurrentSelectedGroupActorUUID,
+} from '@redux/hooks/useGroup';
 
 const ListItem = List.Item;
+
+const GroupActorSelector: React.FC<{
+  selectedGroupUUID: string;
+}> = TMemo((props) => {
+  const { selectedGroupUUID } = props;
+  const dispatch = useTRPGDispatch();
+  const selfGroupActors = useSelfGroupActors(selectedGroupUUID);
+  const actorUUID = useCurrentSelectedGroupActorUUID(selectedGroupUUID);
+  const [curActorUUID, setCurActorUUID] = useState(actorUUID);
+
+  const options = useMemo(() => {
+    const opts = [
+      {
+        value: null,
+        label: '不选择',
+      },
+    ];
+    if (selfGroupActors && selfGroupActors.length > 0) {
+      opts.push(
+        ...selfGroupActors.map((item, index) => ({
+          value: item.uuid,
+          label: getGroupActorName(item),
+        }))
+      );
+    }
+
+    return opts;
+  }, [selfGroupActors]);
+
+  return (
+    <TModalPanel
+      onOk={() => {
+        dispatch(changeSelectGroupActor(selectedGroupUUID, curActorUUID));
+        dispatch(hideModal());
+      }}
+    >
+      <TPicker
+        items={options}
+        defaultValue={actorUUID}
+        onValueChange={(val) => {
+          setCurActorUUID(val);
+        }}
+      />
+    </TModalPanel>
+  );
+});
+GroupActorSelector.displayName = 'GroupActorSelector';
 
 interface Props
   extends TRPGDispatchProp,
     NavigationScreenProps<GroupDataParams> {
   userUUID: string;
   groupInfo: GroupInfo;
-  selfGroupActors: any;
   selectedGroupUUID: string;
   friendList: string[];
 }
@@ -77,43 +129,10 @@ class GroupDataScreen extends React.Component<Props> {
    * 切换选中角色
    */
   handleSelectGroupActor = () => {
-    const { dispatch, selectedGroupUUID, selfGroupActors } = this.props;
-
-    const currentGroupActor = getCurrentGroupActor(selectedGroupUUID);
-    let actorUUID = _isNil(currentGroupActor) ? null : currentGroupActor.uuid;
-
-    const options = [
-      {
-        value: null,
-        label: '不选择',
-      },
-    ];
-    if (selfGroupActors && selfGroupActors.length > 0) {
-      options.push(
-        ...selfGroupActors.map((item, index) => ({
-          value: item.uuid,
-          label: _get(item, ['actor', 'name']),
-        }))
-      );
-    }
+    const { dispatch, selectedGroupUUID } = this.props;
 
     dispatch(
-      showModal(
-        <TModalPanel
-          onOk={() => {
-            dispatch(changeSelectGroupActor(selectedGroupUUID, actorUUID));
-            dispatch(hideModal());
-          }}
-        >
-          <TPicker
-            items={options}
-            defaultValue={actorUUID}
-            onValueChange={(val) => {
-              actorUUID = val;
-            }}
-          />
-        </TModalPanel>
-      )
+      showModal(<GroupActorSelector selectedGroupUUID={selectedGroupUUID} />)
     );
   };
 
@@ -283,20 +302,14 @@ class GroupDataScreen extends React.Component<Props> {
 export default connect((state: TRPGState, ownProps: Props) => {
   const selectedGroupUUID = ownProps.navigation.getParam('uuid', '');
 
-  const groupInfo =
-    state.group.groups.find((group) => group.uuid === selectedGroupUUID) ?? {};
-
-  const selfActors = state.actor.selfActors.map((i) => i.uuid);
-
-  const selfGroupActors = _get(groupInfo, 'group_actors', []).filter(
-    (i) => i.enabled && selfActors.indexOf(i.actor_uuid) >= 0
+  const groupInfo = state.group.groups.find(
+    (group) => group.uuid === selectedGroupUUID
   );
 
   return {
     userUUID: state.user.info.uuid,
     usercache: state.cache.user,
     selectedGroupUUID,
-    selfGroupActors,
     groupInfo,
     friendList: state.user.friendList,
   };

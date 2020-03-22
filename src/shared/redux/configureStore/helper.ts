@@ -17,3 +17,7 @@ export function getStoreState(): TRPGState | null {
 
   return _store.getState();
 }
+
+export function getCurrentStore(): TRPGStore | undefined {
+  return _store;
+}

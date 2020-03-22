@@ -1,5 +1,6 @@
 import { ActorType } from './actor';
 import { MsgPayload } from './chat';
+import { UserInfo } from './user';
 
 export type GroupType = 'group' | 'channel' | 'test';
 
@@ -20,6 +21,8 @@ export interface GroupActorType {
   actor_info?: {}; // 当通过审批以后会保存一份。未通过的到actor中查看
   actor_template_uuid?: string; // 当通过审批以后会保存一份。未通过的到actor中查看
   actor: ActorType;
+
+  owner?: Pick<UserInfo, 'uuid'>;
 }
 
 export interface GroupDetail {

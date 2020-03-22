@@ -1,3 +1,6 @@
+import { buildCacheFactory, CachePolicy } from '@shared/utils/cache-factory';
+import { request } from '@portal/utils/request';
+
 export interface PlayerUser {
   id: number;
   name?: string;
@@ -14,3 +17,10 @@ export interface PlayerUser {
   updatedAt: string;
   deletedAt: string;
 }
+
+export const fetchUserInfo = buildCacheFactory<PlayerUser>(
+  CachePolicy.Persistent,
+  (uuid: string) => {
+    return request.get(`/player/info/${uuid}`).then(({ data }) => data.user);
+  }
+);

@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.27](https://github.com/TRPGEngine/Client/compare/v0.2.26...v0.2.27) (2020-03-22)
+
+
+### Features
+
+* **app:** 增加userinfo的popover ([8dc2612](https://github.com/TRPGEngine/Client/commit/8dc26120a364048d15298f336b7af1f7524d11ca))
+* **app:** 增加未发送消息的loading ([3d735a2](https://github.com/TRPGEngine/Client/commit/3d735a270a4443accbf1f50f10337c5cbbff38a8))
+* **app:** 增加角色卡头像点击的popover ([b5d93f8](https://github.com/TRPGEngine/Client/commit/b5d93f8fca5c6130da0631b9c4740a7cbe6be672))
+* **playground:** 增加预览人物卡的功能 ([11e97fa](https://github.com/TRPGEngine/Client/commit/11e97fa1eb2ddb1a81f4de8644e8693971552888))
+* **web:** web端增加loading消息的icon提示 ([f865b41](https://github.com/TRPGEngine/Client/commit/f865b4166ea577e9061ebcf01fbcdcfed7c58b8c))
+* **web:** 增加web端消息撤回 ([555f2ae](https://github.com/TRPGEngine/Client/commit/555f2aeedb9744749b85920b991649557186f32d))
+
+
+### Bug Fixes
+
+* app长久没维护发生的一系列问题 ([c19d279](https://github.com/TRPGEngine/Client/commit/c19d27912c8bc4ef9ba843bb2f974f8bcfedd31d))
+* 修复用户可以选到为通过审批的人物卡的bug ([cee1d0f](https://github.com/TRPGEngine/Client/commit/cee1d0f14d3272e8133b9382b6583359aa9ceb88))
+* **app:** 修复Popup弹出的框无法关联redux状态的问题 ([dde1ae6](https://github.com/TRPGEngine/Client/commit/dde1ae671d8eb21ec632277081c6485675feceb9))
+* **app:** 修复人物卡角色无法正常切换的问题 ([f1fe39c](https://github.com/TRPGEngine/Client/commit/f1fe39cc900529b12cff10c5a13e48e9822d859b))
+* **app:** 修复无法正确获取当前团角色信息的bug ([ebad847](https://github.com/TRPGEngine/Client/commit/ebad8479adbc9656c188eb90e3b649c536a0b8b6))
+* **app:** 修复系统消息可以点开popover的问题 ([06fdfa4](https://github.com/TRPGEngine/Client/commit/06fdfa4837a8a8c339cb24b06c006a70717eea3f))
+
 ### [0.2.26](https://github.com/TRPGEngine/Client/compare/v0.2.25...v0.2.26) (2020-03-13)
 
 

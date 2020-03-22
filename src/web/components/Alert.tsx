@@ -8,13 +8,15 @@ import { Button } from 'antd';
 interface Props extends TRPGDispatchProp {
   showAlert: boolean;
   showAlertInfo: any;
+  showToast: boolean;
+  showToastText: string;
 }
 class Alert extends React.Component<Props> {
   getAlertContent() {
-    const { showAlertInfo } = this.props;
+    const { showAlertInfo, showToastText } = this.props;
 
     const title = showAlertInfo.title ?? '';
-    let content = showAlertInfo.content;
+    let content = showAlertInfo.content || showToastText;
     const confirmTitle = showAlertInfo.confirmTitle;
     const onConfirm = showAlertInfo.onConfirm;
     const onCancel = showAlertInfo.onCancel;
@@ -61,7 +63,7 @@ class Alert extends React.Component<Props> {
   }
 
   render() {
-    const show = this.props.showAlert || false;
+    const show = this.props.showAlert || this.props.showToast || false;
     const type = this.props.showAlertInfo.type || 'alert';
 
     let alertContent: ReactNode = '';
@@ -84,4 +86,8 @@ class Alert extends React.Component<Props> {
 export default connect((state: TRPGState) => ({
   showAlert: state.ui.showAlert,
   showAlertInfo: state.ui.showAlertInfo,
+
+  // 在web端 toast用alert代替
+  showToast: state.ui.showToast,
+  showToastText: state.ui.showToastText,
 }))(Alert);

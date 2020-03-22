@@ -44,6 +44,7 @@ const WindowContainer = styled.div`
     padding: 10px 6px;
     font-size: 18px;
     border-bottom: ${styledTheme.border.standard};
+    cursor: default;
 
     > .window-container-title-action {
       display: flex;

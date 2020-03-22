@@ -14,6 +14,7 @@ import _get from 'lodash/get';
 
 import * as trpgApi from '@shared/api/trpg.api';
 import { getWebToken } from '@shared/utils/portal-helper';
+import { switchSelectGroup } from '@redux/actions/group';
 const api = trpgApi.getInstance();
 
 /**
@@ -66,6 +67,12 @@ export const switchToChatScreen = function switchToChatScreen(
   return function(dispatch, getState) {
     dispatch(backToTop());
     dispatch(switchConverse(uuid)); // 切换会话uuid. 所有的会话。不管是group还是user。共用一个会话UUID
+    if (type === 'group') {
+      // 如果为团则设定当前选择的团
+      dispatch(switchSelectGroup(uuid));
+    } else {
+      dispatch(switchSelectGroup(''));
+    }
     dispatch(
       switchNav('Chat', {
         uuid,

@@ -1,10 +1,13 @@
 import React, { useCallback } from 'react';
-import Base from './Base';
+import Base, { MsgOperationItem } from './Base';
 import { MsgPayload } from '@src/shared/redux/types/chat';
 import BBCode from './bbcode/__all__';
 import { useWebsiteInfo } from '@shared/hooks/useWebsiteInfo';
 import _isString from 'lodash/isString';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { TRPGDispatchProp } from '@redux/types/__all__';
+import { revokeMsg } from '@redux/actions/chat';
 
 const DefaultAddonContentContainer = styled.div`
   border-top: ${(props) => props.theme.border.thin};
@@ -61,6 +64,24 @@ const DefaultAddonContent: React.FC<{ message: string }> = React.memo(
 DefaultAddonContent.displayName = 'DefaultAddonContent';
 
 class Default extends Base {
+  getOperation(): MsgOperationItem[] {
+    const { info, me } = this.props;
+
+    const operations: MsgOperationItem[] = [];
+    if (me) {
+      // 当消息时自己发起的时候，可以撤回
+      operations.push({
+        name: '撤回',
+        action: ({ dispatch, closePopover }) => {
+          dispatch(revokeMsg(info.uuid));
+          closePopover();
+        },
+      });
+    }
+
+    return operations;
+  }
+
   getContent() {
     const info = this.props.info || ({} as MsgPayload);
     return (

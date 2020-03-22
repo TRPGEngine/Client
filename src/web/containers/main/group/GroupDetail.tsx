@@ -352,9 +352,9 @@ export default connect((state: TRPGState) => {
   const groupInfo = state.group.groups.find(
     (group) => group.uuid === selectedUUID
   );
-  const selfActors = state.actor.selfActors.map((i) => i.uuid);
-  const selfGroupActors = (groupInfo.group_actors || []).filter(
-    (i) => i.enabled && selfActors.indexOf(i.actor_uuid) >= 0
+  const userUUID = state.user.info.uuid;
+  const selfGroupActors = (groupInfo?.group_actors || []).filter(
+    (i) => i.enabled && i.passed && i.owner?.uuid === userUUID
   );
   const selectedGroupActorUUID = _get(groupInfo, [
     'extra',
@@ -367,7 +367,7 @@ export default connect((state: TRPGState) => {
       _get(state, ['chat', 'converses', selectedUUID, 'msgList']),
       'date'
     ),
-    userUUID: state.user.info.uuid,
+    userUUID,
     usercache: state.cache.user,
     selfGroupActors,
     selectedGroupActorUUID,

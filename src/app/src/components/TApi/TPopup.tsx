@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, ViewStyle } from 'react-native';
-import RootSiblings from 'react-native-root-siblings';
+import RootSiblings, { setSiblingWrapper } from 'react-native-root-siblings';
+import { getCurrentStore } from '@redux/configureStore/helper';
+import { Provider } from 'react-redux';
 
 const styles = {
   container: {
@@ -18,6 +20,11 @@ class TPopupContainer extends React.Component {
   }
 }
 
+// 设置redux wrapper
+setSiblingWrapper((sibling) => (
+  <Provider store={getCurrentStore()}>{sibling}</Provider>
+));
+
 const TPopup = {
   _window: null,
   show: function(win) {
@@ -25,7 +32,7 @@ const TPopup = {
       this.hide();
     }
 
-    this._window = new RootSiblings(<TPopupContainer>{win}</TPopupContainer>);
+    this._window = new RootSiblings((<TPopupContainer>{win}</TPopupContainer>));
     return this._window;
   },
   hide: function() {

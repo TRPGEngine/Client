@@ -1,12 +1,12 @@
 {
   "name": "trpg-game-app",
-  "version": "0.2.28",
-  "appVersion": "0.2.7",
+  "version": "0.2.29",
+  "appVersion": "0.2.8",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "npm run dev:main",
-    "dev:local": "cross-env TRPG_HOST=$(node build/utils/get-local-ip.js):23256 npm run dev:main",
+    "dev:local": "node build/utils/get-local-ip.js | xargs -I {} cross-env TRPG_HOST={}:23256 npm run dev:main",
     "dev:proserver": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:443 npm run dev:main",
     "dev:main": "npm run build:env && cross-env PLATFORM=app REACT_NATIVE_APP_ROOT=../../ react-native start --reset-cache",
     "dev:android": "react-native run-android",
@@ -14,6 +14,7 @@
     "build:android": "npm run build:env && cd ./android && cross-env NODE_ENV=production PLATFORM=app SENTRY_PROJECT=trpg-client-web REACT_NATIVE_APP_ROOT=../../ ./gradlew assembleRelease",
     "deploy": "npm run build:env && node build/deploy/deploy.js",
     "dump:android-home": "echo \"sdk.dir=$ANDROID_HOME\" >> ./android/local.properties",
+    "assets:update": "bash ./build/copy-iconfont.sh",
     "test": "node ../../node_modules/jest/bin/jest.js"
   },
   "keywords": [
@@ -35,14 +36,14 @@
     "react-native-fs": "^2.14.1",
     "react-native-gesture-handler": "^1.2.0",
     "react-native-image-crop-picker": "^0.24.1",
-    "react-native-image-picker": "^0.28.1",
+    "react-native-image-picker": "^2.3.1",
     "react-native-image-progress": "^1.1.1",
     "react-native-image-zoom-viewer": "^2.2.25",
     "react-native-pdf": "^5.1.7",
     "react-native-permissions": "^1.1.1",
     "react-native-progress": "^3.6.0",
     "react-native-qrcode-scanner": "^1.2.3",
-    "react-native-root-siblings": "^3.2.1",
+    "react-native-root-siblings": "^4.0.6",
     "react-native-root-toast": "^3.0.1",
     "react-native-sentry": "^0.42.0",
     "react-native-style-block": "0.0.4",
@@ -50,7 +51,6 @@
     "react-navigation": "^3.9.1",
     "react-navigation-redux-helpers": "^3.0.2",
     "react-navigation-stack": "^1.4.0",
-    "react-redux": "^7.1.1",
     "rn-fetch-blob": "^0.11.2",
     "styled-components": "^4.3.2"
   },
