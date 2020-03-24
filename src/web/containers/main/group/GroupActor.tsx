@@ -19,7 +19,7 @@ import {
   getGroupActorInfo,
   getGroupActorField,
   getGroupActorTemplateUUID,
-} from '@src/web/utils/data-helper';
+} from '@shared/utils/data-helper';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import { TRPGState } from '@redux/types/__all__';
