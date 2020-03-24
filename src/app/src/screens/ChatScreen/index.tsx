@@ -31,7 +31,7 @@ import { ChatParams } from '../../types/params';
 
 import styled from 'styled-components/native';
 import { sendQuickDice } from '@src/shared/redux/actions/dice';
-import InputView from './InputView';
+import InputView, { UserMsgType } from './InputView';
 import MsgList from './MsgList';
 import { TRPGState, TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 import { clearSelectGroup } from '@src/shared/redux/actions/group';
@@ -60,7 +60,15 @@ interface Props extends TRPGDispatchProp, NavigationScreenProps<Params> {
   selectedConverseUUID: string;
   isWriting: boolean;
 }
-class ChatScreen extends React.Component<Props> {
+interface State {
+  inputMsg: string;
+  msgType: UserMsgType;
+  showExtraPanel: boolean;
+  showEmoticonPanel: boolean;
+  isKeyboardShow: boolean;
+  showQuickDiceModal: boolean;
+}
+class ChatScreen extends React.Component<Props, State> {
   static navigationOptions = (props: Props) => {
     const navigation = props.navigation;
     const { state, getParam, setParams } = navigation;
@@ -81,8 +89,9 @@ class ChatScreen extends React.Component<Props> {
     };
   };
 
-  state = {
+  state: Readonly<State> = {
     inputMsg: '',
+    msgType: 'normal',
     showExtraPanel: false,
     showEmoticonPanel: false,
     isKeyboardShow: false,
@@ -181,7 +190,7 @@ class ChatScreen extends React.Component<Props> {
 
         const payload: MsgPayload = {
           message,
-          type: 'normal',
+          type: this.state.msgType ?? 'normal',
           is_public: false,
           is_group: false,
         };
@@ -270,6 +279,11 @@ class ChatScreen extends React.Component<Props> {
       this.setState({ showExtraPanel: true, showEmoticonPanel: false });
       this.inputRef.current.blur();
     }
+  };
+
+  // 切换当前消息类型
+  handleSwitchMsgType = (msgType: UserMsgType) => {
+    this.setState({ msgType });
   };
 
   /**
@@ -390,11 +404,13 @@ class ChatScreen extends React.Component<Props> {
           <InputView
             inputRef={this.inputRef}
             value={this.state.inputMsg}
+            msgType={this.state.msgType}
             onChange={this.handleChange}
             onSendMsg={this.handleSendMsg}
             onFocus={this.handleFocus}
             onShowEmoticonPanel={this.handleShowEmoticonPanel}
             onShowExtraPanel={this.handleShowExtraPanel}
+            onChangeMsgType={this.handleSwitchMsgType}
           />
           {this.state.showEmoticonPanel &&
             !this.state.showExtraPanel &&
