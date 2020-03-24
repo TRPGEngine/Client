@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Template>
+  <!-- 无限恐怖简版人物卡 -->
+  <BaseInfo />
+  <BaseAttr>
+    <Input name="外号" />
+
+    <Input name="种族" />
+    <InputNumber name="年龄" />
+    <Select name="性别" options="男,女" allowCustom="true" />
+
+    <InputNumber name="身高" label="身高(cm)" />
+    <InputNumber name="体重" label="体重(kg)" />
+
+    <InputNumber name="力量" />
+    <InputNumber name="耐力" />
+    <InputNumber name="灵巧" />
+    <InputNumber name="智力" />
+    <InputNumber name="精神" />
+
+    <InputNumber name="魅力" />
+    <InputNumber name="意志" />
+
+    <TextArea name="能力" />
+    <TextArea name="状态" />
+
+    <TextArea name="爱好" />
+    <TextArea name="性格" />
+
+    <TextArea name="物品" />
+    <TextArea name="卡牌" />
+    <TextArea name="粉尘" />
+
+    <TextArea name="身世" rows="6" />
+  </BaseAttr>
+</Template>
