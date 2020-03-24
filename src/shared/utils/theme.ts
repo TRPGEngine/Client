@@ -53,6 +53,7 @@ const styledTheme = {
     'copper-canyon': '#7E3F12',
     'spicy-mix': '#8C6244',
     'atomic-tangerine': '#FFA160',
+    'hit-pink': '#FFA787',
     tacao: '#EDAB7C',
     'pine-cone': '#726155',
     tan: '#D0A282',
@@ -60,6 +61,7 @@ const styledTheme = {
     gold: '#FFD700',
     warning: '#faad14',
     'alizarin-crimson': '#EC2121',
+    periwinkle: '#BEC9FF',
     transparent90: 'rgba(0,0,0,0.1)',
   },
   boxShadow: {
