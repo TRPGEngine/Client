@@ -1,12 +1,22 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { ChatLogItem } from '@portal/model/chat';
 import MessageHandler from '@web/components/messageTypes/__all__';
 import { useUserInfo } from '@portal/hooks/useUserInfo';
 import styled from 'styled-components';
-import { Row, Button, Checkbox } from 'antd';
+import { Row, Button, Checkbox, Modal, Form, Input } from 'antd';
+import _pick from 'lodash/pick';
+import { useModal } from '@web/hooks/useModal';
 
-interface EditableLogs extends ChatLogItem {
+const logRequireKey = [
+  'uuid',
+  'sender_uuid',
+  'message',
+  'type',
+  'data',
+  'revoke',
+] as const; // 消息log必须的字段
+interface EditableLogs extends Pick<ChatLogItem, typeof logRequireKey[number]> {
   selected: boolean;
 }
 
@@ -19,6 +29,10 @@ const LogEditItemContainer = styled.div`
 
   &:hover {
     background-color: ${(props) => props.theme.color.transparent90};
+  }
+
+  .msg-item {
+    margin: 0;
   }
 `;
 
@@ -34,15 +48,16 @@ const LogEditItem: React.FC<LogEditItemProps> = TMemo((props) => {
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       e.stopPropagation();
+      e.preventDefault();
       props.onSelect();
     },
     [props.onSelect]
   );
 
   return (
-    <LogEditItemContainer onClick={handleClick}>
+    <LogEditItemContainer onClickCapture={handleClick}>
       <div>
-        <Checkbox value={log.selected} />
+        <Checkbox checked={log.selected} />
       </div>
       <div style={{ flex: 1 }}>
         <MessageHandler
@@ -71,10 +86,10 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
       props.logs
         .filter((log) => log.type !== 'card') // 过滤卡片消息
         .map((log) => {
-          const selected = log.type !== 'ooc';
+          const selected = log.type !== 'ooc'; // 如果消息类型为ooc, 则默认不选中
 
           return {
-            ...log,
+            ..._pick(log, logRequireKey), // 压缩字段，只保留必要信息
             selected,
           };
         })
@@ -83,9 +98,35 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
 
   const handleSelect = useCallback(
     (index: number) => {
-      logs[index].selected = !logs[index].selected;
+      const _logs = [...logs];
+      _logs[index].selected = !_logs[index].selected;
+      setLogs(_logs);
     },
-    [logs]
+    [logs, setLogs]
+  );
+
+  const [reportName, setReportName] = useState('');
+
+  // 生成跑团战报
+  const createTRPGReport = useCallback(() => {
+    const selectedLogs = logs.filter((log) => log.selected);
+
+    // TODO
+    console.log(reportName, selectedLogs);
+  }, [reportName, logs]);
+
+  const { modal, showModal } = useModal(
+    '生成战报',
+    <Form labelCol={{ sm: 6 }} wrapperCol={{ sm: 18 }}>
+      <h2 style={{ textAlign: 'center' }}>生成跑团战报</h2>
+      <Form.Item label="战报名">
+        <Input
+          value={reportName}
+          onChange={(e) => setReportName(e.target.value)}
+        />
+      </Form.Item>
+    </Form>,
+    createTRPGReport
   );
 
   return (
@@ -93,6 +134,7 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
       {logs.map((log, index) => {
         return (
           <LogEditItem
+            key={log.uuid}
             log={log}
             playerUUID={props.playerUUID}
             onSelect={() => handleSelect(index)}
@@ -101,9 +143,12 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
       })}
 
       <Row>
-        {/* TODO */}
-        <Button>导出</Button>
+        <Button onClick={showModal} block={true}>
+          生成战报
+        </Button>
       </Row>
+
+      {modal}
     </div>
   );
 });

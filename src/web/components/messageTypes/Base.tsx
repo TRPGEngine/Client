@@ -86,7 +86,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
    * 获取顺序: 消息信息内头像 -> 传递来的头像(发送者) -> 默认头像
    */
   getAvatarUrl(): string {
-    const { avatar, info } = this.props;
+    const { avatar, name, info } = this.props;
     const defaultAvatar =
       info.sender_uuid === 'trpgsystem'
         ? config.defaultImg.trpgsystem

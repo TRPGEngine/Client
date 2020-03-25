@@ -13,6 +13,7 @@ import { Select, Button, DatePicker, Form, Col, message } from 'antd';
 import moment, { Moment } from 'moment';
 import styled from 'styled-components';
 import { LogEdit } from './log-edit';
+import { PortraitContainer } from '@portal/components/PortraitContainer';
 const Option = Select.Option;
 const RangePicker = DatePicker.RangePicker;
 
@@ -150,13 +151,15 @@ const TRPGReportCreate: React.FC = TMemo(() => {
   );
 
   return (
-    <Container>
-      {showSelector ? (
-        Selector
-      ) : (
-        <LogEdit playerUUID={_get(userInfo, 'uuid')} logs={logs} />
-      )}
-    </Container>
+    <PortraitContainer>
+      <Container>
+        {showSelector ? (
+          Selector
+        ) : (
+          <LogEdit playerUUID={_get(userInfo, 'uuid')} logs={logs} />
+        )}
+      </Container>
+    </PortraitContainer>
   );
 });
 TRPGReportCreate.displayName = 'TRPGReportCreate';
