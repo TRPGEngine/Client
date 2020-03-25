@@ -11,6 +11,10 @@
   font-size: 14px;
 }
 
+html, body {
+  overflow: auto;
+}
+
 body {
   padding: 0;
   margin: 0;
