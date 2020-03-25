@@ -14,6 +14,7 @@ export function useModal(
   onOk?: () => void
 ) {
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const showModal = useCallback(() => {
     setVisible(true);
@@ -28,16 +29,20 @@ export function useModal(
     setVisible(false);
   }, []);
 
-  const modal = useMemo(() => {
-    <Modal
-      title={title}
-      visible={visible}
-      onOk={handleOk}
-      onCancel={handleCancel}
-    >
-      {body}
-    </Modal>;
-  }, [title, body]);
+  const modal = useMemo(
+    () => (
+      <Modal
+        title={title}
+        visible={visible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okButtonProps={{ loading }}
+      >
+        {body}
+      </Modal>
+    ),
+    [title, body, visible, handleOk, handleCancel]
+  );
 
-  return { modal, showModal };
+  return { modal, showModal, setLoading };
 }

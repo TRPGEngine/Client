@@ -4,21 +4,17 @@ import { ChatLogItem } from '@portal/model/chat';
 import MessageHandler from '@web/components/messageTypes/__all__';
 import { useUserInfo } from '@portal/hooks/useUserInfo';
 import styled from 'styled-components';
-import { Row, Button, Checkbox, Modal, Form, Input } from 'antd';
+import { Row, Button, Checkbox, Modal, Form, Input, message } from 'antd';
 import _pick from 'lodash/pick';
 import { useModal } from '@web/hooks/useModal';
-
-const logRequireKey = [
-  'uuid',
-  'sender_uuid',
-  'message',
-  'type',
-  'data',
-  'revoke',
-] as const; // 消息log必须的字段
-interface EditableLogs extends Pick<ChatLogItem, typeof logRequireKey[number]> {
-  selected: boolean;
-}
+import {
+  createTRPGGameReport,
+  ReportLogItem,
+  reportLogRequireKey,
+} from '@portal/model/trpg';
+import { handleError } from '@portal/utils/error';
+import history from '@portal/history';
+import { LogItem } from './log-item';
 
 const LogEditItemContainer = styled.div`
   width: 100%;
@@ -37,13 +33,12 @@ const LogEditItemContainer = styled.div`
 `;
 
 interface LogEditItemProps {
-  log: EditableLogs;
+  log: ReportLogItem;
   playerUUID: string;
   onSelect: () => void;
 }
 const LogEditItem: React.FC<LogEditItemProps> = TMemo((props) => {
-  const log = props.log;
-  const userInfo = useUserInfo(log.sender_uuid);
+  const { log } = props;
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -60,15 +55,7 @@ const LogEditItem: React.FC<LogEditItemProps> = TMemo((props) => {
         <Checkbox checked={log.selected} />
       </div>
       <div style={{ flex: 1 }}>
-        <MessageHandler
-          key={log.uuid}
-          type={log.type}
-          me={log.sender_uuid === props.playerUUID}
-          name={userInfo.nickname ?? userInfo.username}
-          avatar={userInfo.avatar}
-          emphasizeTime={false}
-          info={log}
-        />
+        <LogItem logItem={log} playerUUID={props.playerUUID} />
       </div>
     </LogEditItemContainer>
   );
@@ -80,7 +67,8 @@ interface LogEditProps {
   logs: ChatLogItem[];
 }
 export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
-  const [logs, setLogs] = useState<EditableLogs[]>([]);
+  const playerUUID = props.playerUUID;
+  const [logs, setLogs] = useState<ReportLogItem[]>([]);
   useEffect(() => {
     setLogs(
       props.logs
@@ -89,7 +77,7 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
           const selected = log.type !== 'ooc'; // 如果消息类型为ooc, 则默认不选中
 
           return {
-            ..._pick(log, logRequireKey), // 压缩字段，只保留必要信息
+            ..._pick(log, reportLogRequireKey), // 压缩字段，只保留必要信息
             selected,
           };
         })
@@ -111,14 +99,24 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
   const createTRPGReport = useCallback(() => {
     const selectedLogs = logs.filter((log) => log.selected);
 
-    // TODO
-    console.log(reportName, selectedLogs);
-  }, [reportName, logs]);
+    setModalLoading(true);
+    createTRPGGameReport(reportName, playerUUID, selectedLogs)
+      .then((reportUUID) => {
+        message.success('创建成功, 1秒后跳转到预览');
+        setTimeout(
+          () => history.replace(`/trpg/report/preview/${reportUUID}`),
+          1000
+        );
+      })
+      .catch(handleError)
+      .finally(() => {
+        setModalLoading(false);
+      });
+  }, [reportName, playerUUID, logs]);
 
-  const { modal, showModal } = useModal(
+  const { modal, showModal, setLoading: setModalLoading } = useModal(
     '生成战报',
     <Form labelCol={{ sm: 6 }} wrapperCol={{ sm: 18 }}>
-      <h2 style={{ textAlign: 'center' }}>生成跑团战报</h2>
       <Form.Item label="战报名">
         <Input
           value={reportName}
@@ -136,14 +134,14 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
           <LogEditItem
             key={log.uuid}
             log={log}
-            playerUUID={props.playerUUID}
+            playerUUID={playerUUID}
             onSelect={() => handleSelect(index)}
           />
         );
       })}
 
       <Row>
-        <Button onClick={showModal} block={true}>
+        <Button onClick={showModal} block={true} style={{ marginTop: 10 }}>
           生成战报
         </Button>
       </Row>
