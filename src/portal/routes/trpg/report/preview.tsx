@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {
+  Fragment,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { TMemo } from '@shared/components/TMemo';
 import { fetchTRPGGameReport, ReportLogItem } from '@portal/model/trpg';
@@ -8,6 +14,7 @@ import { useNumber } from 'react-use';
 import scrollTo from '@shared/utils/animated-scroll-to';
 import styled from 'styled-components';
 import { Divider, Typography } from 'antd';
+import { QRCode } from '@portal/components/QRCode';
 
 const Container = styled(PortraitContainer)`
   padding: 10px;
@@ -50,6 +57,25 @@ const TRPGReportPreview: React.FC<Props> = TMemo((props) => {
     }, 100);
   }, [incPos]);
 
+  const share = useMemo(() => {
+    const src = window.location.href;
+
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <p>扫一扫二维码分享:</p>
+        <QRCode value={src} />
+        <div>或复制永久链接</div>
+        <Typography.Text copyable={{ text: src }}>
+          <a href={src} target="_blank">
+            {src}
+          </a>
+        </Typography.Text>
+
+        <p>或者在手机端直接分享本页面</p>
+      </div>
+    );
+  }, []);
+
   return (
     <Container onClick={handleClick}>
       <Title>{title}</Title>
@@ -64,9 +90,12 @@ const TRPGReportPreview: React.FC<Props> = TMemo((props) => {
         );
       })}
       {logs.length !== 0 && pos >= logs.length - 1 && (
-        <Divider>
-          <Typography.Text type="secondary">剧终</Typography.Text>
-        </Divider>
+        <Fragment>
+          <Divider>
+            <Typography.Text type="secondary">剧终</Typography.Text>
+          </Divider>
+          {share}
+        </Fragment>
       )}
     </Container>
   );

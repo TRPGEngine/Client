@@ -4,6 +4,7 @@ import { ActionButton } from '@portal/components/ActionButton';
 import history from '@portal/history';
 import { fetchOwnReport, GameReport } from '@portal/model/trpg';
 import { ListItem } from '@portal/components/ListItem';
+import { PortraitContainer } from '@portal/components/PortraitContainer';
 
 const TRPGReportList: React.FC = TMemo(() => {
   const [list, setList] = useState<GameReport[]>([]);
@@ -21,7 +22,7 @@ const TRPGReportList: React.FC = TMemo(() => {
   }, []);
 
   return (
-    <div>
+    <PortraitContainer>
       <ActionButton onClick={handleCreateReport}>创建战报</ActionButton>
       {list.map((item) => (
         <ListItem
@@ -33,7 +34,7 @@ const TRPGReportList: React.FC = TMemo(() => {
           </div>
         </ListItem>
       ))}
-    </div>
+    </PortraitContainer>
   );
 });
 TRPGReportList.displayName = 'TRPGReportList';
