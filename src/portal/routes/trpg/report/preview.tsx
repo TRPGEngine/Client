@@ -28,7 +28,7 @@ interface Props
     reportUUID: string;
   }> {}
 
-const TRPGReportCreatePreview: React.FC<Props> = TMemo((props) => {
+const TRPGReportPreview: React.FC<Props> = TMemo((props) => {
   const reportUUID = props.match.params.reportUUID;
   const [playerUUID, setPlayerUUID] = useState<string>('');
   const [title, setTitle] = useState('');
@@ -71,6 +71,6 @@ const TRPGReportCreatePreview: React.FC<Props> = TMemo((props) => {
     </Container>
   );
 });
-TRPGReportCreatePreview.displayName = 'TRPGReportCreatePreview';
+TRPGReportPreview.displayName = 'TRPGReportPreview';
 
-export default TRPGReportCreatePreview;
+export default TRPGReportPreview;

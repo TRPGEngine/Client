@@ -24,6 +24,7 @@ export interface DetailLogItem extends ReportLogItem {
 }
 
 export interface GameReport {
+  uuid: string;
   title: string;
   cast: any;
   content: {
@@ -66,4 +67,12 @@ export const fetchTRPGGameReport = async (
   }
 
   return report;
+};
+
+export const fetchOwnReport = async (): Promise<GameReport[]> => {
+  const { data } = await request.get('/trpg/game-report/list');
+
+  const reports = data.reports;
+
+  return reports;
 };
