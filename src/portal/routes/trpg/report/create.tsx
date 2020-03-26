@@ -87,7 +87,7 @@ function useGroupTimeRange() {
   };
 }
 
-const Container = styled.div`
+const Container = styled(PortraitContainer)`
   padding: 10px;
 `;
 
@@ -151,15 +151,13 @@ const TRPGReportCreate: React.FC = TMemo(() => {
   );
 
   return (
-    <PortraitContainer>
-      <Container>
-        {showSelector ? (
-          Selector
-        ) : (
-          <LogEdit playerUUID={_get(userInfo, 'uuid')} logs={logs} />
-        )}
-      </Container>
-    </PortraitContainer>
+    <Container>
+      {showSelector ? (
+        Selector
+      ) : (
+        <LogEdit playerUUID={_get(userInfo, 'uuid')} logs={logs} />
+      )}
+    </Container>
   );
 });
 TRPGReportCreate.displayName = 'TRPGReportCreate';

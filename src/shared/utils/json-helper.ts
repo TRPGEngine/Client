@@ -1,4 +1,5 @@
 // [{a: 1, b: 2}] => [1, "a", "b", 1, 2]
+// NOTICE: 只支持单层、固定格式的数据的压缩
 import _chunk from 'lodash/chunk';
 import _zipObject from 'lodash/zipObject';
 

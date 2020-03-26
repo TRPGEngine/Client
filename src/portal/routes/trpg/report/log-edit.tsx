@@ -9,8 +9,8 @@ import _pick from 'lodash/pick';
 import { useModal } from '@web/hooks/useModal';
 import {
   createTRPGGameReport,
-  ReportLogItem,
   reportLogRequireKey,
+  EditLogItem,
 } from '@portal/model/trpg';
 import { handleError } from '@portal/utils/error';
 import history from '@portal/history';
@@ -33,7 +33,7 @@ const LogEditItemContainer = styled.div`
 `;
 
 interface LogEditItemProps {
-  log: ReportLogItem;
+  log: EditLogItem;
   playerUUID: string;
   onSelect: () => void;
 }
@@ -68,7 +68,7 @@ interface LogEditProps {
 }
 export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
   const playerUUID = props.playerUUID;
-  const [logs, setLogs] = useState<ReportLogItem[]>([]);
+  const [logs, setLogs] = useState<EditLogItem[]>([]);
   useEffect(() => {
     setLogs(
       props.logs
@@ -97,14 +97,16 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
 
   // 生成跑团战报
   const createTRPGReport = useCallback(() => {
-    const selectedLogs = logs.filter((log) => log.selected);
+    const selectedLogs = logs
+      .filter((log) => log.selected) // 获取选中的记录
+      .map((log) => _pick(log, reportLogRequireKey)); // 仅提取需要的字段
 
     setModalLoading(true);
     createTRPGGameReport(reportName, playerUUID, selectedLogs)
       .then((reportUUID) => {
         message.success('创建成功, 1秒后跳转到预览');
         setTimeout(
-          () => history.replace(`/trpg/report/preview/${reportUUID}`),
+          () => history.push(`/trpg/report/preview/${reportUUID}`),
           1000
         );
       })

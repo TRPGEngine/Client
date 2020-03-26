@@ -11,9 +11,16 @@ export const reportLogRequireKey = [
   'data',
   'revoke',
 ] as const; // 消息log必须的字段
-export interface ReportLogItem
-  extends Pick<ChatLogItem, typeof reportLogRequireKey[number]> {
+
+export type ReportLogItem = Pick<
+  ChatLogItem,
+  typeof reportLogRequireKey[number]
+>;
+export interface EditLogItem extends ReportLogItem {
   selected: boolean;
+}
+export interface DetailLogItem extends ReportLogItem {
+  isShow: boolean;
 }
 
 export interface GameReport {
