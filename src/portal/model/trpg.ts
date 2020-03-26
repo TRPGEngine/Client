@@ -1,5 +1,7 @@
 import { request } from '@portal/utils/request';
 import { ChatLogItem } from './chat';
+import { hpack, hunpack } from '@shared/utils/json-helper';
+import _isNil from 'lodash/isNil';
 
 export const reportLogRequireKey = [
   'uuid',
@@ -36,7 +38,7 @@ export const createTRPGGameReport = async (
 ): Promise<string> => {
   const { data } = await request.post('/trpg/game-report/create', {
     title,
-    content: { playerUUID, logs },
+    content: { playerUUID, logs: hpack(logs) },
   });
 
   return data.uuid;
@@ -51,5 +53,10 @@ export const fetchTRPGGameReport = async (
 ): Promise<GameReport> => {
   const { data } = await request.get(`/trpg/game-report/${uuid}`);
 
-  return data.report;
+  const report = data.report;
+  if (!_isNil(report.content)) {
+    report.content.logs = hunpack(report.content.logs);
+  }
+
+  return report;
 };
