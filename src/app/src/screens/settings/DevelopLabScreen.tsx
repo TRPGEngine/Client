@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, Text, NativeModules } from 'react-native';
 import Config from 'react-native-config';
+import RootSibling from 'react-native-root-siblings';
 
 import { TButton } from '@app/components/TComponent';
 import styled from 'styled-components/native';
@@ -12,6 +13,7 @@ import config from '@src/shared/project.config';
 import { connect } from 'react-redux';
 import { TRPGDispatchProp, TRPGState } from '@src/shared/redux/types/__all__';
 import rnStorage from '@shared/api/rn-storage.api';
+import SuspensionWindow from '@app/components/SuspensionWindow';
 
 const TRPGModule = NativeModules.TRPGModule;
 
@@ -33,6 +35,25 @@ class DevelopLabScreen extends React.Component<Props> {
 
   handlePortalLogin = () => {
     this.props.dispatch(navPortal('/sso/login'));
+  };
+
+  sibling: RootSibling;
+  handleOpenSuspensionWindow = () => {
+    if (this.sibling) {
+      return;
+    }
+    this.sibling = new RootSibling(
+      (
+        <SuspensionWindow close={this.handleCloseSuspensionWindow} toFloat>
+          <Text>test data</Text>
+        </SuspensionWindow>
+      )
+    );
+  };
+
+  handleCloseSuspensionWindow = () => {
+    this.sibling && this.sibling.destroy();
+    this.sibling = undefined;
   };
 
   render() {
@@ -58,6 +79,9 @@ class DevelopLabScreen extends React.Component<Props> {
           }
         >
           清理当前用户单点登录token
+        </DevButton>
+        <DevButton onPress={this.handleOpenSuspensionWindow}>
+          打开悬浮窗
         </DevButton>
 
         <MessageHandler
