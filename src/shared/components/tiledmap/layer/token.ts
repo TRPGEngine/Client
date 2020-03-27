@@ -3,16 +3,25 @@ import { DrawContext } from '../core/render';
 import _isNumber from 'lodash/isNumber';
 import _inRange from 'lodash/inRange';
 import { isRectInsideRect } from '../core/utils';
+import shortid from 'shortid';
 
 /**
  * 棋子
  * 原则上来说棋子在画布上的大小必须为网格整数倍
  */
 export class Token {
+  private _id: string;
   gridPosition: Position = { x: 0, y: 0 }; // 网格坐标, 0 0 表示网格左上角
   gridAreaSize: Size = { width: 1, height: 1 }; // 当前Token所占据的网格数 所有的Token默认都是1x1 不得为0或负数
 
-  constructor(public name: string) {}
+  constructor(public name: string, id?: string) {
+    // 如果创建时没有指定id则使用shortid生成一个id
+    this._id = id ?? shortid.generate();
+  }
+
+  get id() {
+    return this._id;
+  }
 
   /**
    * 准备
@@ -101,8 +110,8 @@ export class ImageToken extends Token {
   private _promise: Promise<HTMLImageElement>;
   loaded: boolean = false;
 
-  constructor(name: string, public imageSrc: string) {
-    super(name);
+  constructor(name: string, public imageSrc: string, id?: string) {
+    super(name, id);
 
     this._promise = new Promise((resolve, reject) => {
       const image = new Image();

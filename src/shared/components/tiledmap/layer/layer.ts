@@ -1,5 +1,5 @@
 import { Token } from './token';
-import _remove from 'lodash/remove';
+import _pull from 'lodash/pull';
 import { DrawContext } from '../core/render';
 
 export class Layer {
@@ -13,8 +13,12 @@ export class Layer {
     this.tokens.push(token);
   }
 
-  removeToken(tokenName: string) {
-    _remove(this.tokens, (token) => token.name === tokenName);
+  hasToken(token: Token) {
+    return this.tokens.includes(token);
+  }
+
+  removeToken(token: Token) {
+    _pull(this.tokens, token);
   }
 
   /**
