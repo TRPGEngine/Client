@@ -26,6 +26,7 @@ const appVersion = config.version;
 import Login from './Login';
 import Register from './Register';
 import GlobalUI from './GlobalUI';
+import { AppBanner } from '@web/components/AppBanner';
 
 class App extends React.Component {
   render() {
@@ -52,6 +53,7 @@ class App extends React.Component {
             </Switch>
             {config.platform === 'web' ? <NetworkIndicator /> : null}
             <div className="version">当前版本号v{appVersion}</div>
+            <AppBanner />
           </div>
         </ErrorBoundary>
       </Router>
