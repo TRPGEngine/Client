@@ -25,7 +25,7 @@ const {
   GET_GROUP_MEMBERS_SUCCESS,
   SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS,
   UPDATE_PLAYER_SELECTED_GROUP_ACTOR,
-  ADD_GROUP_ACTOR_SUCCESS,
+  ADD_GROUP_ACTOR,
   REMOVE_GROUP_ACTOR_SUCCESS,
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
@@ -307,7 +307,11 @@ export default produce((draft: GroupState, action) => {
       //   groupActorUUID
       // );
     }
-    case ADD_GROUP_ACTOR_SUCCESS: {
+    case ADD_GROUP_ACTOR: {
+      if (_isNil(action.payload)) {
+        return;
+      }
+
       const index = draft.groups.findIndex(
         (group) => group.uuid === action.groupUUID
       );
@@ -315,18 +319,6 @@ export default produce((draft: GroupState, action) => {
         draft.groups[index].group_actors.push(action.payload);
       }
       return;
-
-      // return state.update('groups', (list) => {
-      //   for (var i = 0; i < list.size; i++) {
-      //     if (list.getIn([i, 'uuid']) === action.groupUUID) {
-      //       list = list.updateIn([i, 'group_actors'], (i) =>
-      //         i.push(immutable.fromJS(action.payload))
-      //       );
-      //     }
-      //   }
-
-      //   return list;
-      // });
     }
     case REMOVE_GROUP_ACTOR_SUCCESS: {
       const groupIndex = draft.groups.findIndex(

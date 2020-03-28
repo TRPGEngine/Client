@@ -71,6 +71,12 @@ class ExtraOptions extends React.Component<Props> {
       this.props.dispatch(showModal(<SystemStatus />));
     } else if (menu === 'changePassword') {
       this.props.dispatch(showModal(<ChangePassword />));
+    } else if (menu === 'gameReport') {
+      this.props.dispatch(
+        showPortal('/trpg/report/list', 'standalonewindow', {
+          title: '跑团战报',
+        })
+      );
     } else if (menu === 'relogin') {
       (async () => {
         let uuid = await rnStorage.get('uuid');
@@ -156,6 +162,7 @@ class ExtraOptions extends React.Component<Props> {
           <li onClick={() => this.handleClickMenu('changePassword')}>
             修改密码
           </li>
+          <li onClick={() => this.handleClickMenu('gameReport')}>跑团战报</li>
           {config.environment === 'development' ? (
             <li onClick={() => this.handleClickMenu('relogin')}>重新登录</li>
           ) : null}

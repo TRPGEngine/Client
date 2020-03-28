@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { Formik } from 'formik';
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Input, Button, Typography, Modal, notification } from 'antd';
+import { Col, Input, Button, Typography, Modal, notification, Row } from 'antd';
 import qs from 'qs';
 import _isString from 'lodash/isString';
 import { loginWithPassword } from '@portal/model/sso';
 import { checkToken } from '@portal/utils/auth';
+import { handleError } from '@portal/utils/error';
 
 const Container = styled.div`
   width: 100vw;
@@ -17,12 +18,17 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Window = styled.div`
-  width: 80%;
+const Window = styled(Col).attrs({
+  xs: { span: 22 },
+  sm: { span: 16 },
+  md: { span: 12 },
+  lg: { span: 10 },
+  xl: { span: 8 },
+})`
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 3px;
   box-shadow: ${(props) => props.theme.boxShadow.normal};
-  padding: 10px;
+  padding: 16px;
 `;
 
 interface Values {
@@ -67,23 +73,29 @@ class Login extends React.Component {
       .then(() => {
         this.gotoNextUrl();
       })
-      .catch((err) => notification.error(err));
+      .catch(handleError);
   };
 
   render() {
     return (
       <Container>
         <Window>
-          <Typography>
-            <Typography.Title level={3}>登录TRPG</Typography.Title>
-          </Typography>
+          <Col sm={24} md={{ span: 16, offset: 8 }}>
+            <Typography.Title level={3} style={{ marginBottom: 16 }}>
+              登录TRPG
+            </Typography.Title>
+          </Col>
 
           <Formik<Values>
             initialValues={{ username: '', password: '' }}
             onSubmit={this.handleSubmit}
           >
             {({ values, handleChange, handleSubmit }) => (
-              <Form onSubmit={handleSubmit}>
+              <Form
+                labelCol={{ sm: 24, md: 8 }}
+                wrapperCol={{ sm: 24, md: 16 }}
+                onSubmit={handleSubmit}
+              >
                 <Form.Item label="用户名">
                   <Input
                     name="username"
@@ -101,7 +113,7 @@ class Login extends React.Component {
                     onChange={handleChange}
                   />
                 </Form.Item>
-                <Form.Item>
+                <Form.Item wrapperCol={{ sm: 24, md: { span: 16, offset: 8 } }}>
                   <Button
                     type="primary"
                     size="large"

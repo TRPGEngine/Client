@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { View, Text } from 'react-native';
 import sb from 'react-native-style-block';
-import { TAvatar } from '../TComponent';
+import { TAvatar, TIcon } from '../TComponent';
 import dateHelper from '@shared/utils/date-helper';
 import { MessageProps } from '@shared/components/MessageHandler';
 import _get from 'lodash/get';
+import _has from 'lodash/has';
+import _invoke from 'lodash/invoke';
 import _isString from 'lodash/isString';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import { TipMessage } from '../TipMessage';
@@ -12,10 +14,27 @@ import { Popover, ActivityIndicator } from '@ant-design/react-native';
 import PopoverMsgSenderInfo from '../popover/MsgSenderInfo';
 import styled from 'styled-components/native';
 import { isUserOrGroupUUID } from '@shared/utils/uuid';
+import styledTheme from '@shared/utils/theme';
 
 const MsgContainer = styled.View<{ me: boolean }>`
   display: flex;
   flex-direction: ${(props) => (props.me ? 'row-reverse' : 'row')};
+`;
+
+const MsgBubble = styled.View<{
+  me: boolean;
+  isMsgPadding: boolean;
+}>`
+  background-color: white;
+  padding: ${(props) => (props.isMsgPadding ? '6px 8px' : 0)};
+  border-radius: 3px;
+  border: 0.5px solid #ddd;
+  align-self: ${(props) => (props.me ? 'flex-end' : 'flex-start')};
+`;
+
+const MsgTypeIcon = styled(TIcon)`
+  margin: 0 4px;
+  align-self: center;
 `;
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
@@ -27,6 +46,80 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     name: '',
     info: {},
     emphasizeTime: false,
+  };
+
+  /**
+   * 处理不同消息类型
+   */
+  msgBubbleType = {
+    action: (children: React.ReactNode) => {
+      const me = this.props.me;
+
+      return (
+        <Fragment>
+          <MsgBubble
+            me={me}
+            isMsgPadding={this.isMsgPadding}
+            style={{ borderColor: styledTheme.color['hit-pink'] }}
+          >
+            {children}
+          </MsgBubble>
+          <MsgTypeIcon
+            icon="&#xe619;"
+            style={{
+              color: styledTheme.color['hit-pink'],
+            }}
+          />
+        </Fragment>
+      );
+    },
+    speak: (children: React.ReactNode) => {
+      const me = this.props.me;
+
+      return (
+        <Fragment>
+          <MsgBubble
+            me={me}
+            isMsgPadding={this.isMsgPadding}
+            style={{ borderColor: styledTheme.color['periwinkle'] }}
+          >
+            {children}
+          </MsgBubble>
+          <MsgTypeIcon
+            icon="&#xe61f;"
+            style={{
+              color: styledTheme.color['periwinkle'],
+            }}
+          />
+        </Fragment>
+      );
+    },
+    ooc: (children: React.ReactNode) => {
+      const me = this.props.me;
+
+      return (
+        <MsgBubble
+          me={me}
+          isMsgPadding={this.isMsgPadding}
+          style={{
+            borderColor: styledTheme.color['silver'],
+            borderStyle: 'dashed',
+            opacity: 0.5,
+          }}
+        >
+          {children}
+        </MsgBubble>
+      );
+    },
+    normal: (children: React.ReactNode) => {
+      const me = this.props.me;
+
+      return (
+        <MsgBubble me={me} isMsgPadding={this.isMsgPadding}>
+          {children}
+        </MsgBubble>
+      );
+    },
   };
 
   /**
@@ -73,7 +166,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   }
 
   render() {
-    const { me, name, info, emphasizeTime } = this.props;
+    const { type, me, name, info, emphasizeTime } = this.props;
     const isLoading = this.isLoading;
 
     if (info.revoke === true) {
@@ -121,15 +214,11 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
               {this.getSenderName()}
             </Text>
             <MsgContainer me={me}>
-              <View
-                style={[
-                  ...styles.itemMsg,
-                  me ? { alignSelf: 'flex-end' } : null,
-                  !this.isMsgPadding ? sb.padding(0) : null,
-                ]}
-              >
-                {this.getContent()}
-              </View>
+              {/* 不同消息类型的显示 */}
+              {_has(this.msgBubbleType, type)
+                ? _invoke(this.msgBubbleType, type, this.getContent())
+                : this.msgBubbleType['normal'](this.getContent())}
+
               {isLoading && <ActivityIndicator />}
             </MsgContainer>
           </View>
@@ -149,14 +238,6 @@ const styles = {
   itemView: [sb.direction(), sb.padding(10, 10)],
   itemBody: [sb.padding(0, 4), sb.margin(0, 6), sb.flex()],
   itemName: [{ marginBottom: 4, marginTop: 4 }, sb.font(12)],
-  itemMsg: [
-    sb.bgColor(),
-    sb.padding(6, 8),
-    sb.flex(0),
-    sb.radius(3),
-    sb.border('all', 0.5, '#ddd'),
-    sb.alignSelf('flex-start'),
-  ],
 };
 
 export default Base;

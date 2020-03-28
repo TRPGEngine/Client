@@ -1,14 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { ChatLogItem } from '@portal/model/chat';
 import MessageHandler from '@web/components/messageTypes/__all__';
 import { useUserInfo } from '@portal/hooks/useUserInfo';
 import styled from 'styled-components';
-import { Row, Button, Checkbox } from 'antd';
-
-interface EditableLogs extends ChatLogItem {
-  selected: boolean;
-}
+import { Row, Button, Checkbox, Modal, Form, Input, message } from 'antd';
+import _pick from 'lodash/pick';
+import { useModal } from '@web/hooks/useModal';
+import {
+  createTRPGGameReport,
+  reportLogRequireKey,
+  EditLogItem,
+} from '@portal/model/trpg';
+import { handleError } from '@portal/utils/error';
+import history from '@portal/history';
+import { LogItem } from './log-item';
 
 const LogEditItemContainer = styled.div`
   width: 100%;
@@ -20,40 +26,36 @@ const LogEditItemContainer = styled.div`
   &:hover {
     background-color: ${(props) => props.theme.color.transparent90};
   }
+
+  .msg-item {
+    margin: 0;
+  }
 `;
 
 interface LogEditItemProps {
-  log: EditableLogs;
+  log: EditLogItem;
   playerUUID: string;
   onSelect: () => void;
 }
 const LogEditItem: React.FC<LogEditItemProps> = TMemo((props) => {
-  const log = props.log;
-  const userInfo = useUserInfo(log.sender_uuid);
+  const { log } = props;
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       e.stopPropagation();
+      e.preventDefault();
       props.onSelect();
     },
     [props.onSelect]
   );
 
   return (
-    <LogEditItemContainer onClick={handleClick}>
+    <LogEditItemContainer onClickCapture={handleClick}>
       <div>
-        <Checkbox value={log.selected} />
+        <Checkbox checked={log.selected} />
       </div>
       <div style={{ flex: 1 }}>
-        <MessageHandler
-          key={log.uuid}
-          type={log.type}
-          me={log.sender_uuid === props.playerUUID}
-          name={userInfo.nickname ?? userInfo.username}
-          avatar={userInfo.avatar}
-          emphasizeTime={false}
-          info={log}
-        />
+        <LogItem logItem={log} playerUUID={props.playerUUID} />
       </div>
     </LogEditItemContainer>
   );
@@ -65,16 +67,17 @@ interface LogEditProps {
   logs: ChatLogItem[];
 }
 export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
-  const [logs, setLogs] = useState<EditableLogs[]>([]);
+  const playerUUID = props.playerUUID;
+  const [logs, setLogs] = useState<EditLogItem[]>([]);
   useEffect(() => {
     setLogs(
       props.logs
         .filter((log) => log.type !== 'card') // 过滤卡片消息
         .map((log) => {
-          const selected = log.type !== 'ooc';
+          const selected = log.type !== 'ooc'; // 如果消息类型为ooc, 则默认不选中
 
           return {
-            ...log,
+            ..._pick(log, reportLogRequireKey), // 压缩字段，只保留必要信息
             selected,
           };
         })
@@ -83,9 +86,47 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
 
   const handleSelect = useCallback(
     (index: number) => {
-      logs[index].selected = !logs[index].selected;
+      const _logs = [...logs];
+      _logs[index].selected = !_logs[index].selected;
+      setLogs(_logs);
     },
-    [logs]
+    [logs, setLogs]
+  );
+
+  const [reportName, setReportName] = useState('');
+
+  // 生成跑团战报
+  const createTRPGReport = useCallback(() => {
+    const selectedLogs = logs
+      .filter((log) => log.selected) // 获取选中的记录
+      .map((log) => _pick(log, reportLogRequireKey)); // 仅提取需要的字段
+
+    setModalLoading(true);
+    createTRPGGameReport(reportName, playerUUID, selectedLogs)
+      .then((reportUUID) => {
+        message.success('创建成功, 1秒后跳转到预览');
+        setTimeout(
+          () => history.push(`/trpg/report/preview/${reportUUID}`),
+          1000
+        );
+      })
+      .catch(handleError)
+      .finally(() => {
+        setModalLoading(false);
+      });
+  }, [reportName, playerUUID, logs]);
+
+  const { modal, showModal, setLoading: setModalLoading } = useModal(
+    '生成战报',
+    <Form labelCol={{ sm: 6 }} wrapperCol={{ sm: 18 }}>
+      <Form.Item label="战报名">
+        <Input
+          value={reportName}
+          onChange={(e) => setReportName(e.target.value)}
+        />
+      </Form.Item>
+    </Form>,
+    createTRPGReport
   );
 
   return (
@@ -93,17 +134,21 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
       {logs.map((log, index) => {
         return (
           <LogEditItem
+            key={log.uuid}
             log={log}
-            playerUUID={props.playerUUID}
+            playerUUID={playerUUID}
             onSelect={() => handleSelect(index)}
           />
         );
       })}
 
       <Row>
-        {/* TODO */}
-        <Button>导出</Button>
+        <Button onClick={showModal} block={true} style={{ marginTop: 10 }}>
+          生成战报
+        </Button>
       </Row>
+
+      {modal}
     </div>
   );
 });

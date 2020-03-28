@@ -35,3 +35,12 @@ export function getAvatarColorHex(name: string) {
   const id = str2int(name);
   return color[id % color.length];
 }
+
+/**
+ * 获取portal地址
+ * @param url portal路径
+ */
+export function getPortalUrl(url: string): string {
+  const portalUrl = config.url.portal;
+  return url.startsWith(portalUrl) ? url : portalUrl + url;
+}

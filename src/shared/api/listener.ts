@@ -27,6 +27,7 @@ export function bindEventFunc(
     updatePlayerSelectedGroupActor,
     addGroupMember,
     removeGroupMember,
+    addGroupActor,
     updateGroupActorInfo,
     updateGroupActor,
     updateGroupInfo,
@@ -95,6 +96,10 @@ export function bindEventFunc(
     store.dispatch(
       updateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)
     );
+  });
+  api.on('group::addGroupActor', function(data) {
+    const { groupUUID, groupActor } = data;
+    store.dispatch(addGroupActor(groupUUID, groupActor));
   });
   api.on('group::updateGroupActor', function(data) {
     const { groupUUID, groupActor } = data;

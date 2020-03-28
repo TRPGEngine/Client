@@ -13,6 +13,7 @@ import { Select, Button, DatePicker, Form, Col, message } from 'antd';
 import moment, { Moment } from 'moment';
 import styled from 'styled-components';
 import { LogEdit } from './log-edit';
+import { PortraitContainer } from '@portal/components/PortraitContainer';
 const Option = Select.Option;
 const RangePicker = DatePicker.RangePicker;
 
@@ -86,7 +87,7 @@ function useGroupTimeRange() {
   };
 }
 
-const Container = styled.div`
+const Container = styled(PortraitContainer)`
   padding: 10px;
 `;
 

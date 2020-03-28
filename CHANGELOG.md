@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.28](https://github.com/TRPGEngine/Client/compare/v0.2.27...v0.2.28) (2020-03-28)
+
+
+### Features
+
+* 增加人物卡的新增操作监听 ([3ef20bb](https://github.com/TRPGEngine/Client/commit/3ef20bb6cc75f780150c254335d787b60b34d3f9))
+* **app:** 增加各种消息类型的切换与发送 ([0458efe](https://github.com/TRPGEngine/Client/commit/0458efec6144a867ac1d5097d6d1c1227ab92454))
+* **app:** 增加悬浮窗的基础实现 ([8f5fd93](https://github.com/TRPGEngine/Client/commit/8f5fd931702280ab110cb068ddacd75576abc255))
+* **portal:** 增加战报分享提示 ([cea6bf5](https://github.com/TRPGEngine/Client/commit/cea6bf584a691f7e7882f9acada36eda21196c91))
+* **portal:** 战报列表 ([6251942](https://github.com/TRPGEngine/Client/commit/625194232eda5773fcd9fd163f72372d4828e271))
+* **portal:** 战报预览与动画 ([8233ec5](https://github.com/TRPGEngine/Client/commit/8233ec52081f1e1c42850cd226001795988d796f))
+* **web:** 增加appbanner用于引导手机端打开网页去下载app ([e87f17e](https://github.com/TRPGEngine/Client/commit/e87f17e92f7c7ad400c99c402088d4c0b594d680))
+* 增加跑团战报的入口 ([22e9da8](https://github.com/TRPGEngine/Client/commit/22e9da881f7e572df11aeb9840fd451eae7db016))
+
 ### [0.2.27](https://github.com/TRPGEngine/Client/compare/v0.2.26...v0.2.27) (2020-03-22)
 
 

@@ -21,7 +21,11 @@ export function scrollTo(element, to, duration, isAnimatied = true) {
   animateScroll();
 }
 
-export function scrollToBottom(element, duration, isAnimatied = true) {
+export function scrollToBottom(
+  element: HTMLElement,
+  duration: number,
+  isAnimatied = true
+) {
   if (!element) {
     return;
   }

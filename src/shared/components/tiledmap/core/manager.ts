@@ -66,17 +66,42 @@ export class TiledMapManager {
     return layer;
   }
 
+  /**
+   * 增加一个棋子
+   * @param layerName 层名
+   * @param token 棋子实例
+   */
   public addToken(layerName: string, token: Token): void {
     token.prepare().then(() => {
       // 当 token 准备完毕后增加到层中并绘制
       const layer = this.layerManager.getLayer(layerName);
       layer.appendToken(token);
 
-      this.render.draw(); // 绘制图像
+      this.render.draw(); // 重新绘制图像
     });
   }
 
-  public removeToken(): void {
+  /**
+   * 移除一个棋子
+   * @param token 棋子
+   */
+  public removeToken(token: Token): void {
+    const layers = this.layerManager.getAllLayers();
+    for (const layer of layers) {
+      if (layer.hasToken(token)) {
+        layer.removeToken(token);
+
+        this.render.draw(); // 重新绘制图像
+        return;
+      }
+    }
+  }
+
+  /**
+   * 更新一个棋子 主要是通知
+   * @param token 棋子
+   */
+  public updateToken(token: Token): void {
     // TODO
   }
 }

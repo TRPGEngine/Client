@@ -35,7 +35,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import { GroupDataParams } from '../types/params';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
-import { getGroupActorName } from '@web/utils/data-helper';
+import { getGroupActorName } from '@shared/utils/data-helper';
 import {
   useSelfGroupActors,
   useCurrentSelectedGroupActorUUID,

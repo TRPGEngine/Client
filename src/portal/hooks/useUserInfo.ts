@@ -8,5 +8,5 @@ export function useUserInfo(uuid: string): PlayerUser {
     fetchUserInfo(uuid).then((info) => setUserInfo(info));
   }, [uuid]);
 
-  return userInfo;
+  return userInfo ?? ({} as PlayerUser);
 }

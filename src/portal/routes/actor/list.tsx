@@ -7,19 +7,10 @@ import history from '@portal/history';
 import { ActionButton } from '@portal/components/ActionButton';
 import Loading from '@portal/components/Loading';
 import Avatar from '@web/components/Avatar';
+import { ListItem } from '@portal/components/ListItem';
 
 const Container = styled.div`
   padding: 10px;
-`;
-
-const ActorListItem = styled.div`
-  padding: 10px;
-  display: flex;
-  border-bottom: ${(props) => props.theme.border.thin};
-
-  div {
-    flex: 1;
-  }
 `;
 
 interface State {
@@ -61,7 +52,7 @@ class ActorList extends React.Component<{}, State> {
     }
 
     return list.map((item) => (
-      <ActorListItem
+      <ListItem
         key={item.uuid}
         onClick={() => this.handleSelectActor(item.uuid)}
       >
@@ -72,7 +63,7 @@ class ActorList extends React.Component<{}, State> {
           <div>{item.desc}</div>
         </div>
         <Avatar name={item.name} src={item.avatar} />
-      </ActorListItem>
+      </ListItem>
     ));
   }
 

@@ -17,7 +17,7 @@ const {
   GET_GROUP_ACTOR_SUCCESS,
   GET_GROUP_MEMBERS_SUCCESS,
   SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS,
-  ADD_GROUP_ACTOR_SUCCESS,
+  ADD_GROUP_ACTOR,
   REMOVE_GROUP_ACTOR_SUCCESS,
   AGREE_GROUP_ACTOR_SUCCESS,
   REFUSE_GROUP_ACTOR_SUCCESS,
@@ -503,19 +503,20 @@ export const updatePlayerSelectedGroupActor = function(
   };
 };
 
-export const addGroupActor = function(groupUUID, actorUUID) {
+/**
+ * 增加一个待审核的人物卡
+ * @param groupUUID 团UUID
+ * @param actorUUID 角色UUID
+ */
+export const requestAddGroupActor = function(
+  groupUUID: string,
+  actorUUID: string
+): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('group::addGroupActor', { groupUUID, actorUUID }, function(
       data
     ) {
       if (data.result) {
-        let groupActor = data.groupActor;
-        groupActor.avatar = config.file.getAbsolutePath(groupActor.avatar);
-        dispatch({
-          type: ADD_GROUP_ACTOR_SUCCESS,
-          groupUUID,
-          payload: groupActor,
-        });
         dispatch(hideModal());
         dispatch(showAlert('提交成功!'));
       } else {
@@ -523,6 +524,20 @@ export const addGroupActor = function(groupUUID, actorUUID) {
         console.error(data);
       }
     });
+  };
+};
+
+/**
+ * 增加团人物卡
+ */
+export const addGroupActor = function(
+  groupUUID: string,
+  groupActor: GroupActorType
+) {
+  return {
+    type: ADD_GROUP_ACTOR,
+    groupUUID,
+    payload: groupActor,
   };
 };
 

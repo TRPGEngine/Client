@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import { downloadFileWeb } from '@shared/utils/file-helper';
 import _isEmpty from 'lodash/isEmpty';
 import Loading from '@portal/components/Loading';
-import QRCode from 'qrcode.react';
+import { QRCode } from '@portal/components/QRCode';
 
 interface Props extends RouteComponentProps {}
 
@@ -28,16 +28,7 @@ const DeployLatest: React.FC<Props> = React.memo((props) => {
         <Fragment>
           <div>
             {version.download_url ? (
-              <QRCode
-                size={128}
-                value={version.download_url}
-                imageSettings={{
-                  src: '/src/web/assets/img/logo@192.png',
-                  height: 24,
-                  width: 24,
-                  excavate: true,
-                }}
-              />
+              <QRCode value={version.download_url} />
             ) : (
               <img
                 src="/src/web/assets/img/logo@192.png"
