@@ -30,4 +30,6 @@ const exampleLayout = [
   },
 ];
 
-export { exampleLayout };
+const workingLabel = '无限简版';
+
+export { exampleLayout, workingLabel };
