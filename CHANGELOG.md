@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.29](https://github.com/TRPGEngine/Client/compare/v0.2.28...v0.2.29) (2020-03-28)
+
+
+### Bug Fixes
+
+* 修复unicode编码中解析JWT会出现错误的问题 ([55f30d7](https://github.com/TRPGEngine/Client/commit/55f30d7e9fb8b371e51efd9b01f8ad5c7a23fbd0))
+
 ### [0.2.28](https://github.com/TRPGEngine/Client/compare/v0.2.27...v0.2.28) (2020-03-28)
 
 
