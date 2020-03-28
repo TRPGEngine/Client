@@ -5,6 +5,7 @@ import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import _isObject from 'lodash/isObject';
 import { request } from './request';
+import { getJWTPayload } from '@shared/utils/jwt-helper';
 
 let token: string;
 export const saveToken = (jwt: string): void => {
@@ -35,13 +36,12 @@ interface UserInfo {
 }
 /**
  * 获取token中的明文信息
+ * 明确需要返回一个对象
  */
 export const getJWTInfo = (): UserInfo => {
   try {
     if (_isString(token)) {
-      const infoSection = _get(token.split('.'), '1', '');
-      const json = atob(infoSection);
-      const info = JSON.parse(json);
+      const info = getJWTPayload(token);
       if (_isObject(info)) {
         return info;
       }

@@ -6,6 +6,7 @@ import { checkToken } from '@portal/utils/auth';
 import { editActor } from '@portal/model/actor';
 import history from '@portal/history';
 import { notification } from 'antd';
+import { handleError } from '@portal/utils/error';
 
 interface Props
   extends RouteComponentProps<{
@@ -34,9 +35,7 @@ class ActorEdit extends React.Component<Props> {
         setTimeout(() => history.replace(`/actor/detail/${actorUUID}`), 1000);
       })
       .catch((err) => {
-        notification.error({
-          message: '编辑失败: ' + err,
-        });
+        handleError(err, '编辑失败:');
       });
   };
 

@@ -6,6 +6,7 @@ import { notification } from 'antd';
 import { nav, navReplace } from '@portal/history';
 import ActorEditor from '@portal/components/ActorEditor';
 import { ActionButton } from '@portal/components/ActionButton';
+import { handleError } from '@portal/utils/error';
 
 interface Props
   extends RouteComponentProps<{
@@ -57,9 +58,7 @@ class GroupActorEdit extends React.Component<Props> {
         );
       })
       .catch((err) => {
-        notification.error({
-          message: '编辑失败: ' + err,
-        });
+        handleError(err, '编辑失败:');
       });
   };
 
