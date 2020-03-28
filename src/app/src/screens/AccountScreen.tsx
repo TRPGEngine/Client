@@ -112,6 +112,15 @@ class AccountScreen extends React.Component<Props> {
             人物卡
           </Item>
           <Item
+            thumb={<AccountListThumb color="blueviolet" icon="&#xe624;" />}
+            arrow="horizontal"
+            onPress={() => {
+              this.props.dispatch(navPortal('/trpg/report/list'));
+            }}
+          >
+            战报
+          </Item>
+          <Item
             thumb={<AccountListThumb color="gold" icon="&#xe609;" />}
             arrow="horizontal"
             onPress={() => {
