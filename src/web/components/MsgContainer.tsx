@@ -96,12 +96,17 @@ class MsgContainer extends React.Component<Props> {
     }
   }
 
-  handleContainerScroll(el) {
-    if (el.scrollHeight - el.scrollTop <= el.offsetHeight) {
-      console.log('滚动容器接触到底部!');
+  handleContainerScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    const distance = el.scrollHeight - el.scrollTop - el.offsetHeight; // 滚动条距离底部的距离
+    if (distance <= 20) {
+      // 滚动容器接触到底部
       this.isSeekingLog = false;
+    } else {
+      // 翻阅聊天记录
+      this.isSeekingLog = true;
     }
-  }
+  };
 
   render() {
     const { className, userUUID, msgList, nomore } = this.props;
@@ -111,7 +116,7 @@ class MsgContainer extends React.Component<Props> {
         className={'msg-container ' + className}
         ref={(ref) => (this.containerRef = ref)}
         onLoad={(e) => this.handleContainerLoad(e.target)}
-        onScroll={(e) => this.handleContainerScroll(e.target)}
+        onScroll={this.handleContainerScroll}
       >
         {nomore || msgList.length < 10 ? (
           <button
