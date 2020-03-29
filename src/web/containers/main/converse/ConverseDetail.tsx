@@ -15,7 +15,7 @@ import {
 import DiceRequest from '../dice/DiceRequest';
 import DiceInvite from '../dice/DiceInvite';
 import QuickDice from '../dice/QuickDice';
-import MsgContainer from '../../../components/MsgContainer';
+import { MsgContainer } from '../../../components/MsgContainer';
 import MsgSendBox from '../../../components/MsgSendBox';
 import { isUserUUID } from '@shared/utils/uuid';
 import { sendStartWriting, sendStopWriting } from '@shared/api/event';

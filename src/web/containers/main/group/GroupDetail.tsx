@@ -28,7 +28,7 @@ import DiceRequest from '../dice/DiceRequest';
 import DiceInvite from '../dice/DiceInvite';
 import ListSelect from '../../../components/ListSelect';
 import IsDeveloping from '../../../components/IsDeveloping';
-import MsgContainer from '../../../components/MsgContainer';
+import { MsgContainer } from '../../../components/MsgContainer';
 import MsgSendBox from '../../../components/MsgSendBox';
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
