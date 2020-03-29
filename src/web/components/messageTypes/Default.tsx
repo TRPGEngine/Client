@@ -5,9 +5,8 @@ import BBCode from './bbcode/__all__';
 import { useWebsiteInfo } from '@shared/hooks/useWebsiteInfo';
 import _isString from 'lodash/isString';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { TRPGDispatchProp } from '@redux/types/__all__';
 import { revokeMsg } from '@redux/actions/chat';
+import { TMemo } from '@shared/components/TMemo';
 
 const DefaultAddonContentContainer = styled.div`
   border-top: ${(props) => props.theme.border.thin};
@@ -34,33 +33,31 @@ const DefaultAddonContentContainer = styled.div`
     }
   }
 `;
-const DefaultAddonContent: React.FC<{ message: string }> = React.memo(
-  (props) => {
-    const { loading, hasUrl, info } = useWebsiteInfo(props.message);
+const DefaultAddonContent: React.FC<{ message: string }> = TMemo((props) => {
+  const { loading, hasUrl, info } = useWebsiteInfo(props.message);
 
-    const handleClick = useCallback(() => {
-      if (hasUrl && _isString(info.url)) {
-        window.open(info.url, '_blank');
-      }
-    }, [info.url]);
-
-    if (!hasUrl || loading || info.title === '') {
-      return null;
+  const handleClick = useCallback(() => {
+    if (hasUrl && _isString(info.url)) {
+      window.open(info.url, '_blank');
     }
+  }, [info.url]);
 
-    return (
-      <DefaultAddonContentContainer onClick={handleClick}>
-        <div className="info">
-          <p>{info.title}</p>
-          <p>{info.content}</p>
-        </div>
-        <div className="icon">
-          {_isString(info.icon) && <img src={info.icon} />}
-        </div>
-      </DefaultAddonContentContainer>
-    );
+  if (!hasUrl || loading || info.title === '') {
+    return null;
   }
-);
+
+  return (
+    <DefaultAddonContentContainer onClick={handleClick}>
+      <div className="info">
+        <p>{info.title}</p>
+        <p>{info.content}</p>
+      </div>
+      <div className="icon">
+        {_isString(info.icon) && <img src={info.icon} />}
+      </div>
+    </DefaultAddonContentContainer>
+  );
+});
 DefaultAddonContent.displayName = 'DefaultAddonContent';
 
 class Default extends Base {

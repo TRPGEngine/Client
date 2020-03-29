@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import bbcodeParser from './parser';
 import urlRegex from 'url-regex';
 import { emojify } from '@src/shared/utils/emoji';
+import { TMemo } from '../TMemo';
 
 /**
  * 客户端预处理文本
@@ -25,7 +26,7 @@ export function preProcessText(plainText: string): string {
 interface Props {
   plainText: string;
 }
-const BBCode: React.FC<Props> = React.memo(({ plainText }) => {
+const BBCode: React.FC<Props> = TMemo(({ plainText }) => {
   const bbcodeComponent = bbcodeParser.render(preProcessText(plainText));
 
   return <Fragment>{bbcodeComponent}</Fragment>;

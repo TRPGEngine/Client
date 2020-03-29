@@ -1,4 +1,4 @@
-import { preProcessLinkText } from '@src/shared/components/bbcode';
+import { preProcessLinkText } from '../index';
 
 describe('bbcode common', () => {
   describe('preprocess text', () => {
