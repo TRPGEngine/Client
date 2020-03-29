@@ -1,6 +1,6 @@
 import { preProcessLinkText } from '@src/shared/components/bbcode';
 
-describe('bbcode-parser common', () => {
+describe('bbcode common', () => {
   describe('preprocess text', () => {
     it('simple url parse', () => {
       const text = preProcessLinkText('http://baidu.com');
