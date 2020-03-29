@@ -17,6 +17,8 @@ import { PortraitContainer } from '@portal/components/PortraitContainer';
 const Option = Select.Option;
 const RangePicker = DatePicker.RangePicker;
 
+const WHITE_LIST_MSGTYPE = ['normal', 'ooc', 'action', 'speak', 'tip'];
+
 /**
  * 选择团和选择时间
  */
@@ -123,11 +125,11 @@ const TRPGReportCreate: React.FC = TMemo(() => {
     fetchGroupChatLog(selectedGroupUUID, from, to).then((logs) => {
       setIsLoading(false);
       if (_isEmpty(logs)) {
-        message.warn('数据为空');
+        message.warn('数据为空');
         return;
       }
       setShowSelector(false);
-      setLogs(logs);
+      setLogs(logs.filter((log) => WHITE_LIST_MSGTYPE.includes(log.type)));
     });
   }, [disabled, selectedGroupUUID, timeRange]);
 

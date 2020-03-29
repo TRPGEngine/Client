@@ -8,6 +8,7 @@ import styled from 'styled-components';
 const Container = styled(animated.div)`
   user-select: none;
   pointer-events: none;
+  overflow: hidden;
 `;
 
 interface Props {

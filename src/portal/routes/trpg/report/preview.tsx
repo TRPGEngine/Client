@@ -15,6 +15,7 @@ import scrollTo from '@shared/utils/animated-scroll-to';
 import styled from 'styled-components';
 import { Divider, Typography } from 'antd';
 import { QRCode } from '@portal/components/QRCode';
+import Loading from '@portal/components/Loading';
 
 const Container = styled(PortraitContainer)`
   padding: 10px;
@@ -41,12 +42,15 @@ const TRPGReportPreview: React.FC<Props> = TMemo((props) => {
   const [title, setTitle] = useState('');
   const [logs, setLogs] = useState<ReportLogItem[]>([]);
   const [pos, { inc: incPos }] = useNumber(2);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     fetchTRPGGameReport(reportUUID).then((report) => {
       setTitle(report.title);
       setPlayerUUID(report.content?.playerUUID);
       setLogs(report.content?.logs ?? []);
+      setLoading(false);
     });
   }, [reportUUID]);
 
@@ -75,6 +79,10 @@ const TRPGReportPreview: React.FC<Props> = TMemo((props) => {
       </div>
     );
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Container onClick={handleClick}>

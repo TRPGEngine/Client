@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.30](https://github.com/TRPGEngine/Client/compare/v0.2.29...v0.2.30) (2020-03-29)
+
+
+### Bug Fixes
+
+* **portal:** 修复生成跑团战报当聊天记录中有File类型消息时无法正确加载消息的问题 ([d73b98f](https://github.com/TRPGEngine/Client/commit/d73b98f7772a28bf4a35e66089384027e7961bab))
+
 ### [0.2.29](https://github.com/TRPGEngine/Client/compare/v0.2.28...v0.2.29) (2020-03-28)
 
 
