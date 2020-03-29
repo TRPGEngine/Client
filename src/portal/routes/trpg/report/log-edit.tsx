@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { ChatLogItem } from '@portal/model/chat';
-import MessageHandler from '@web/components/messageTypes/__all__';
-import { useUserInfo } from '@portal/hooks/useUserInfo';
 import styled from 'styled-components';
 import { Row, Button, Checkbox, Modal, Form, Input, message } from 'antd';
 import _pick from 'lodash/pick';
@@ -15,6 +13,7 @@ import {
 import { handleError } from '@portal/utils/error';
 import history from '@portal/history';
 import { LogItem } from './log-item';
+import Loading from '@portal/components/Loading';
 
 const LogEditItemContainer = styled.div`
   width: 100%;
@@ -51,7 +50,7 @@ const LogEditItem: React.FC<LogEditItemProps> = TMemo((props) => {
 
   return (
     <LogEditItemContainer onClickCapture={handleClick}>
-      <div>
+      <div style={{ marginRight: 6 }}>
         <Checkbox checked={log.selected} />
       </div>
       <div style={{ flex: 1 }}>
@@ -142,11 +141,15 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
         );
       })}
 
-      <Row>
-        <Button onClick={showModal} block={true} style={{ marginTop: 10 }}>
-          生成战报
-        </Button>
-      </Row>
+      {logs.length > 0 ? (
+        <Row>
+          <Button onClick={showModal} block={true} style={{ marginTop: 10 }}>
+            生成战报
+          </Button>
+        </Row>
+      ) : (
+        <Loading />
+      )}
 
       {modal}
     </div>

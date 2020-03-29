@@ -27,7 +27,7 @@
     "app:bundle:android": "cross-env START_DIR='../../' PLATFORM=app REACT_NATIVE_APP_ROOT=. react-native bundle --platform android --entry-file index.js --bundle-output ./dist/index.android.bundle --dev false",
     "app:deploy:codepush": "cd ./src/app && npm run deploy",
     "app:test": "cd ./src/app && npm run test",
-    "portal:dev": "cross-env NODE_ENV=development webpack-dev-server --progress --color --config ./build/config/webpack.portal.config.js",
+    "portal:dev": "cross-env NODE_ENV=development NODE_OPTIONS='--max_old_space_size=2048' webpack-dev-server --progress --color --config ./build/config/webpack.portal.config.js",
     "portal:build": "cross-env NODE_ENV=production webpack --progress --color --config ./build/config/webpack.portal.config.js",
     "playground:dev": "cross-env NODE_ENV=development NODE_OPTIONS='--max_old_space_size=4096' webpack-dev-server --progress --colors --config ./build/config/webpack.playground.config.js",
     "playground:build": "cross-env NODE_ENV=production NODE_OPTIONS='--max_old_space_size=4096' webpack --progress --colors --config ./build/config/webpack.playground.config.js",
