@@ -1,4 +1,4 @@
-import { TiledMapOptions } from './types';
+import { TiledMapOptions, TokenAttrs } from './types';
 import { TiledMapRender } from './render';
 import _isNil from 'lodash/isNil';
 import { Toolbox } from './toolbox';
@@ -76,6 +76,7 @@ export class TiledMapManager {
       // 当 token 准备完毕后增加到层中并绘制
       const layer = this.layerManager.getLayer(layerName);
       layer.appendToken(token);
+      this.options.actions.addToken(token);
 
       this.render.draw(); // 重新绘制图像
     });
@@ -90,6 +91,7 @@ export class TiledMapManager {
     for (const layer of layers) {
       if (layer.hasToken(token)) {
         layer.removeToken(token);
+        this.options.actions.removeToken(token.id);
 
         this.render.draw(); // 重新绘制图像
         return;
@@ -101,7 +103,7 @@ export class TiledMapManager {
    * 更新一个棋子 主要是通知
    * @param token 棋子
    */
-  public updateToken(token: Token): void {
-    // TODO
+  public updateToken(tokenId: string, attrs: Partial<TokenAttrs>): void {
+    this.options.actions.updateToken(tokenId, attrs);
   }
 }

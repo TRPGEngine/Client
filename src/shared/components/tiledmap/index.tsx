@@ -2,8 +2,10 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import { TiledMapManager } from './core/manager';
 import './index.less';
 import { ImageToken, Token } from './layer/token';
-import { useKey, useKeyPressEvent } from 'react-use';
+import { useKeyPressEvent } from 'react-use';
 import _isNil from 'lodash/isNil';
+import { joinMapRoom } from './socket';
+import { message } from 'antd';
 
 /**
  * 按下空格键临时切换当前道具
@@ -29,10 +31,23 @@ function useTmpToolSwitch(manager: React.MutableRefObject<TiledMapManager>) {
   useKeyPressEvent(' ', handleSpaceKeydown, handleSpaceKeyup);
 }
 
-export const TiledMap: React.FC = React.memo((props) => {
+interface TiledMapProps {
+  mapUUID: string;
+}
+export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
   const canvasRef = useRef<HTMLCanvasElement>();
   const manager = useRef<TiledMapManager>(null);
   const tiledMapManagerRef = useRef<TiledMapManager>();
+
+  useEffect(() => {
+    if (_isNil(props.mapUUID)) {
+      return;
+    }
+
+    joinMapRoom(props.mapUUID).then(() =>
+      message.success(`连接地图 ${props.mapUUID} 成功`)
+    );
+  }, [props.mapUUID]);
 
   useEffect(() => {
     const tiledMapManager = new TiledMapManager(canvasRef.current, {
@@ -43,6 +58,20 @@ export const TiledMap: React.FC = React.memo((props) => {
       gridSize: {
         width: 40,
         height: 40,
+      },
+      actions: {
+        addToken(token) {
+          // TODO
+          console.log('addToken', token);
+        },
+        updateToken(tokenId, token) {
+          // TODO
+          console.log('updateToken', tokenId, token);
+        },
+        removeToken(tokenId) {
+          // TODO
+          console.log('updateToken', tokenId);
+        },
       },
     });
     tiledMapManagerRef.current = tiledMapManager;
@@ -93,10 +122,13 @@ export const TiledMap: React.FC = React.memo((props) => {
 
     // 生成随机坐标
     const x = Math.floor(Math.random() * 20);
-    const y = Math.floor(Math.random() * 20);
+    const y = Math.floor(Math.random() * 15);
     token.gridPosition = { x, y };
 
     tiledMapManagerRef.current?.addToken('人物', token);
+    message.success(
+      `增加Token ${token.name} [${token.gridPosition.x},${token.gridPosition.y}]`
+    );
     testTokenRefs.current.push(token);
   }, [tiledMapManagerRef]);
   const handleRemoveToken = useCallback(() => {

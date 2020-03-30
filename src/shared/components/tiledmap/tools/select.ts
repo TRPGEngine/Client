@@ -74,7 +74,6 @@ export class TiledMapToolSelect extends TiledMapToolBase {
    * 鼠标点击操作事件
    */
   action(ctx: ActionContext): void {
-    const { ratio, mouseCanvasPos, gridSize } = ctx;
     const currentTokens = ctx.manager.selectedToken;
 
     const clickedHandler = this.checkClickAnyHandler(ctx);
@@ -166,8 +165,11 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     el.addEventListener('mouseenter', handleMouseEnter);
   }
 
+  /**
+   * 修改Token大小
+   */
   handleResizeAction(ctx: ActionContext, clickedHandler: ClickedHander) {
-    const { el, ratio, mouseCanvasPos, gridSize } = ctx;
+    const { el, ratio, mouseCanvasPos, gridSize, manager } = ctx;
     const { token, type: handlerType } = clickedHandler;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -214,6 +216,7 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     };
 
     const handleMouseUp = (e) => {
+      manager.updateToken(token.id, { gridAreaSize: token.gridAreaSize });
       el.removeEventListener('mousemove', handleMouseMove);
       el.removeEventListener('mouseup', handleMouseUp);
       el.removeEventListener('mouseleave', handleMouseUp);
@@ -224,11 +227,15 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     el.addEventListener('mouseleave', handleMouseUp);
   }
 
+  /**
+   * 移动token
+   */
   handleMoveAction(ctx: ActionContext) {
-    const { el, gridSize, mouseCanvasPos } = ctx;
+    const { el, gridSize, mouseCanvasPos, manager } = ctx;
     const currentTokens = ctx.manager.selectedToken;
 
     let startPos = px2gridPos(mouseCanvasPos, gridSize);
+    let moved = false;
 
     const handleMouseMove = (e: MouseEvent) => {
       const curPos = ctx.render.transformMousePosToCanvasPos({
@@ -250,6 +257,7 @@ export class TiledMapToolSelect extends TiledMapToolBase {
 
       if (deltaPos.x !== 0 || deltaPos.y !== 0) {
         // 发生了位移。重置起始点
+        moved = true;
         startPos = px2gridPos(curPos, gridSize);
       }
 
@@ -257,6 +265,12 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     };
 
     const handleMouseUp = (e) => {
+      if (moved) {
+        // 仅发生位移后会通知
+        for (const token of currentTokens) {
+          manager.updateToken(token.id, { gridPosition: token.gridPosition });
+        }
+      }
       el.removeEventListener('mousemove', handleMouseMove);
       el.removeEventListener('mouseup', handleMouseUp);
       el.removeEventListener('mouseleave', handleMouseUp);
