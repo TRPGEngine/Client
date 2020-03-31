@@ -31,7 +31,7 @@ const LocalTimer = () => {
   return <span>{timestamp}</span>;
 };
 
-export default class SystemStatus extends React.Component {
+export default class SystemStatus extends React.PureComponent {
   get status() {
     return [
       {
@@ -49,6 +49,10 @@ export default class SystemStatus extends React.Component {
       {
         label: '编译环境',
         value: config.environment,
+      },
+      {
+        label: '当前版本号',
+        value: config.version,
       },
       {
         label: '本地时间',

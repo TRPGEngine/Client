@@ -24,6 +24,7 @@ export const MenuPannel: React.FC<Props> = TMemo((props) => {
   const avatar = userInfo.avatar ?? config.defaultImg.getUser(name);
   const selectedMenuIndex = useTRPGSelector((state) => state.ui.menuIndex);
   const selectedPannel = useTRPGSelector((state) => state.ui.menuPannel);
+  const network = useTRPGSelector((state) => state.ui.network);
   const dispatch = useTRPGDispatch();
 
   const menus = useMemo(() => {
@@ -64,6 +65,9 @@ export const MenuPannel: React.FC<Props> = TMemo((props) => {
         <div className="profile">
           <div className="avatar" onClick={() => dispatch(showProfileCard())}>
             <img src={avatar} />
+          </div>
+          <div className="network-status">
+            {!network.isOnline && network.msg}
           </div>
         </div>
         <div className="menus">

@@ -17,8 +17,10 @@
 
   .profile {
     padding: 0 10px;
+    padding-bottom: 18px;
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    position: relative;
     .avatar {
       border-radius: 50%;
       overflow: hidden;
@@ -33,6 +35,16 @@
         height: 100%;
         display: block;
       }
+    }
+
+    .network-status {
+      font-size: 9px;
+      line-height: 13px;
+      position: absolute;
+      text-align: center;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
   }
 
