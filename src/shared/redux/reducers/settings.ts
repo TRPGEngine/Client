@@ -34,24 +34,15 @@ export default produce((draft: SettingsState, action) => {
         ...action.payload,
       };
       return;
-    // return state.set(
-    //   'user',
-    //   state.get('user').merge(immutable.fromJS(action.payload))
-    // );
     case SET_SYSTEM_SETTINGS:
       draft.system = {
         ...draft.system,
         ...action.payload,
       };
       return;
-    // return state.set(
-    //   'system',
-    //   state.get('system').merge(immutable.fromJS(action.payload))
-    // );
     case UPDATE_NOTIFICATION_PERMISSION:
       draft.notificationPermission = action.payload;
       return;
-    // return state.set('notificationPermission', action.payload);
     case UPDATE_CONFIG: {
       _merge(draft.config, action.payload);
       return;
@@ -62,22 +53,11 @@ export default produce((draft: SettingsState, action) => {
       }
       draft.user.favoriteDice.push({ title: '常用骰', value: '1d100' });
       return;
-
-    // return state.updateIn(['user', 'favoriteDice'], (list) =>
-    //   list.push(immutable.fromJS({ title: '常用骰', value: '1d100' }))
-    // );
     case REMOVE_FAVORITE_DICE:
       _pullAt(draft.user.favoriteDice, action.index);
       return;
-    // return state.updateIn(['user', 'favoriteDice'], (list) =>
-    //   list.delete(action.index)
-    // );
     case UPDATE_FAVORITE_DICE:
       _set(draft.user, ['favoriteDice', action.index], action.payload);
       return;
-    // return state.setIn(
-    //   ['user', 'favoriteDice', action.index],
-    //   immutable.fromJS(action.payload)
-    // );
   }
 }, initialState);

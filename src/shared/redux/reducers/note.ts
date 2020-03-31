@@ -38,18 +38,11 @@ export default produce((draft: NoteState, action) => {
     case RESET:
       return initialState;
     case ADD_NOTE: {
-      // let showAlertInfo = action.payload || {};
       const blankNote = getBlankNote();
       const blankUUID = blankNote.uuid;
       draft.noteList[blankUUID] = blankNote;
       draft.selectedNoteUUID = blankUUID;
       return;
-
-      // let blankNote = immutable.fromJS(getBlankNote());
-      // let blankUUID = blankNote.get('uuid');
-      // return state
-      //   .setIn(['noteList', blankUUID], blankNote)
-      //   .set('selectedNoteUUID', blankUUID);
     }
     case SAVE_NOTE: {
       const saveUUID = action.payload.uuid;
@@ -60,32 +53,21 @@ export default produce((draft: NoteState, action) => {
       _set(draft.noteList, [saveUUID, 'content'], saveContent);
       _set(draft.noteList, [saveUUID, 'updatedAt'], new Date().getTime());
       return;
-
-      // state = state
-      //   .setIn(['noteList', saveUUID, 'title'], saveTitle)
-      //   .setIn(['noteList', saveUUID, 'content'], saveContent)
-      //   .setIn(['noteList', saveUUID, 'updatedAt'], new Date().getTime());
-
-      // return state;
     }
     case GET_NOTE:
       draft.noteList = action.noteList;
       return;
-    // return state.set('noteList', immutable.fromJS(action.noteList));
     case SWITCH_NOTE:
       draft.selectedNoteUUID = action.noteUUID;
       return;
-    // return state.set('selectedNoteUUID', action.noteUUID);
     case SYNC_NOTE_REQUEST:
       draft.isSync = true;
       draft.isSyncUUID = action.uuid;
       return;
-    // return state.set('isSync', true).set('isSyncUUID', action.uuid);
     case SYNC_NOTE_SUCCESS:
     case SYNC_NOTE_FAILED:
       draft.isSync = false;
       draft.isSyncUUID = '';
       return;
-    // return state.set('isSync', false).set('isSyncUUID', '');
   }
 }, initialState);

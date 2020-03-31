@@ -28,37 +28,17 @@ export default produce((draft: CacheState, action) => {
     case GET_USER_INFO:
       draft.user[action.payload.uuid] = action.payload;
       return;
-    // return state.setIn(
-    //   ['user', action.payload.uuid],
-    //   immutable.fromJS(action.payload)
-    // );
     case GET_TEMPLATE_INFO:
       draft.template[action.payload.uuid] = action.payload;
       return;
-    // return state.setIn(
-    //   ['template', action.payload.uuid],
-    //   immutable.fromJS(action.payload)
-    // );
     case GET_ACTOR_INFO:
       draft.actor[action.payload.uuid] = action.payload;
       return;
-    // return state.setIn(
-    //   ['actor', action.payload.uuid],
-    //   immutable.fromJS(action.payload)
-    // );
     case GET_TEMPLATE_SUCCESS:
       if (action.uuid) {
         draft.template[action.payload.uuid] = action.payload;
-        // return state.setIn(
-        //   ['template', action.payload.uuid],
-        //   immutable.fromJS(action.payload)
-        // );
       } else {
         for (let template of action.payload) {
-          // state = state.setIn(
-          //   ['template', template.uuid],
-          //   immutable.fromJS(template)
-          // );
           draft.template[template.uuid] = template;
         }
       }
@@ -66,25 +46,11 @@ export default produce((draft: CacheState, action) => {
     case GET_GROUP_INFO_SUCCESS:
       draft.group[action.payload.uuid] = action.payload;
       return;
-    // return state.setIn(
-    //   ['group', action.payload.uuid],
-    //   immutable.fromJS(action.payload)
-    // );
     case GET_FRIEND_INVITE_INFO:
       draft.friendInvite[action.payload.uuid] = action.payload;
       return;
-    // return state.setIn(
-    //   ['friendInvite', action.payload.uuid],
-    //   immutable.fromJS(action.payload)
-    // );
     case GET_GROUP_INVITE_INFO:
       draft.groupInvite[action.payload.uuid] = action.payload;
       return;
-    // return state.setIn(
-    //   ['groupInvite', action.payload.uuid],
-    //   immutable.fromJS(action.payload)
-    // );
-    // default:
-    //   return state;
   }
 }, initialState);
