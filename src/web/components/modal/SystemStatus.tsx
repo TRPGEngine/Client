@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import ModalPanel from '../ModalPanel';
 import config from '@shared/project.config';
 import dateHelper from '@shared/utils/date-helper';
+import { TMemo } from '@shared/components/TMemo';
+import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 
 const SystemStatusPanel = styled(ModalPanel)`
   width: 420px;
@@ -15,7 +17,7 @@ const InfoTable = styled.table`
   line-height: 2em;
 `;
 
-const LocalTimer = () => {
+const LocalTimer: React.FC = TMemo(() => {
   const [timestamp, setTimestamp] = useState(dateHelper.getFullDate());
 
   useEffect(() => {
@@ -29,7 +31,15 @@ const LocalTimer = () => {
   }, []); // 传入空数组表示不依赖任何数据进行更新。即只会运行一次
 
   return <span>{timestamp}</span>;
-};
+});
+LocalTimer.displayName = 'LocalTimer';
+
+const CurrentSocketId: React.FC = TMemo(() => {
+  const socketId = useTRPGSelector((state) => state.ui.socketId);
+
+  return <span>{socketId}</span>;
+});
+CurrentSocketId.displayName = 'CurrentSocketId';
 
 export default class SystemStatus extends React.PureComponent {
   get status() {
@@ -53,6 +63,10 @@ export default class SystemStatus extends React.PureComponent {
       {
         label: '当前版本号',
         value: config.version,
+      },
+      {
+        label: '当前连接',
+        value: <CurrentSocketId />,
       },
       {
         label: '本地时间',
