@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import config from '../../shared/project.config';
 import { switchMenuPannel } from '../../shared/redux/actions/ui';
 import ConverseList from './main/converse/ConverseList';
-import MenuPannel from './main/MenuPannel';
+import { MenuPannel } from './main/MenuPannel';
 import ProfileCard from '../components/ProfileCard';
 import IsDeveloping from '../components/IsDeveloping';
 import Webview from '../components/Webview';
