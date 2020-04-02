@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import { TiledMapManager } from './core/manager';
 import './index.less';
 import { ImageToken, Token } from './layer/token';
-import { useKeyPressEvent } from 'react-use';
+import { useKeyPressEvent, useKey } from 'react-use';
 import _isNil from 'lodash/isNil';
 import { joinMapRoom } from './socket';
 import { message } from 'antd';
@@ -19,7 +19,7 @@ function useTmpToolSwitch(manager: React.MutableRefObject<TiledMapManager>) {
         tmpSwitchRef.current = true;
       }
     }
-  }, []);
+  }, [manager]);
   const handleSpaceKeyup = useCallback(() => {
     if (!_isNil(manager.current) && tmpSwitchRef.current === true) {
       if (manager.current.toolbox.getCurrentToolName() === 'move') {
@@ -27,8 +27,19 @@ function useTmpToolSwitch(manager: React.MutableRefObject<TiledMapManager>) {
         tmpSwitchRef.current = false;
       }
     }
-  }, []);
+  }, [manager]);
   useKeyPressEvent(' ', handleSpaceKeydown, handleSpaceKeyup);
+}
+
+function useDeleteToken(manager: React.MutableRefObject<TiledMapManager>) {
+  const handler = useCallback(() => {
+    if (_isNil(manager.current)) {
+      return;
+    }
+
+    manager.current.removeSelectedToken();
+  }, [manager]);
+  useKey('Delete', handler);
 }
 
 interface TiledMapProps {
@@ -106,6 +117,7 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
   }, []);
 
   useTmpToolSwitch(manager);
+  useDeleteToken(manager);
 
   /**
    * 测试

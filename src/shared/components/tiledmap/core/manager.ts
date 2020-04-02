@@ -106,4 +106,13 @@ export class TiledMapManager {
   public updateToken(tokenId: string, attrs: Partial<TokenAttrs>): void {
     this.options.actions.updateToken(tokenId, attrs);
   }
+
+  /**
+   * 移除所有选中的棋子
+   */
+  public removeSelectedToken(): void {
+    for (const token of this.selectedToken) {
+      this.removeToken(token);
+    }
+  }
 }
