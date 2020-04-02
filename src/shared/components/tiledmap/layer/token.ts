@@ -5,6 +5,8 @@ import _inRange from 'lodash/inRange';
 import { isRectInsideRect } from '../core/utils';
 import shortid from 'shortid';
 
+type TokenData = { [any: string]: any };
+
 /**
  * 棋子
  * 原则上来说棋子在画布上的大小必须为网格整数倍
@@ -102,6 +104,22 @@ export class Token {
       y2: rect.y2 * gridSize.height,
     };
   }
+
+  getData(): TokenData {
+    return {
+      _id: this._id,
+      name: this.name,
+      gridPosition: this.gridPosition,
+      gridAreaSize: this.gridAreaSize,
+    };
+  }
+
+  parseData(data: TokenData) {
+    this._id = data._id;
+    this.name = data.name;
+    this.gridPosition = data.gridPosition;
+    this.gridAreaSize = data.gridAreaSize;
+  }
 }
 
 export class ImageToken extends Token {
@@ -156,5 +174,19 @@ export class ImageToken extends Token {
       this.gridAreaSize.width * gridSize.width,
       this.gridAreaSize.height * gridSize.height
     );
+  }
+
+  getData(): TokenData {
+    return {
+      ...super.getData(),
+      imageSize: this.imageSize,
+      imageSrc: this.imageSrc,
+    };
+  }
+
+  parseData(data: TokenData) {
+    super.parseData(data);
+    this.imageSize = data.imageSize;
+    this.imageSrc = data.imageSrc;
   }
 }

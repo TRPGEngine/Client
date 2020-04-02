@@ -4,7 +4,7 @@ import './index.less';
 import { ImageToken, Token } from './layer/token';
 import { useKeyPressEvent, useKey } from 'react-use';
 import _isNil from 'lodash/isNil';
-import { joinMapRoom } from './socket';
+import { joinMapRoom, updateToken } from './socket';
 import { message } from 'antd';
 
 /**
@@ -72,16 +72,16 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
       },
       actions: {
         addToken(token) {
-          // TODO
           console.log('addToken', token);
+          updateToken('add', { token: token.getData() });
         },
-        updateToken(tokenId, token) {
-          // TODO
-          console.log('updateToken', tokenId, token);
+        updateToken(tokenId, tokenAttrs) {
+          console.log('updateToken', tokenId, tokenAttrs);
+          updateToken('update', { tokenId, tokenAttrs });
         },
         removeToken(tokenId) {
-          // TODO
           console.log('updateToken', tokenId);
+          updateToken('remove', { tokenId });
         },
       },
     });
