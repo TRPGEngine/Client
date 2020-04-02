@@ -130,6 +130,7 @@ export class TiledMapToolSelect extends TiledMapToolBase {
 
           ctx.manager.selectedToken = tokens;
         } else {
+          // 点选
           const selectToken = this.getSelectToken(ctx);
 
           if (_isNil(selectToken)) {

@@ -39,7 +39,7 @@ export class LayerManager {
     const layers = this.getAllLayers();
 
     for (const layer of layers) {
-      const tokens = layer.tokens;
+      const tokens = [...layer.tokens].reverse(); // 从后往前选。这样后渲染的(显示在上面的)会优先被选中，更加符合直觉
       for (const token of tokens) {
         if (token.checkPosInside(gridPos)) {
           return token;
