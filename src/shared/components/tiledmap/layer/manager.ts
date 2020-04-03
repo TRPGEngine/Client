@@ -1,14 +1,35 @@
 import { Layer } from './Layer';
 import { DrawContext } from '../core/render';
+import _pull from 'lodash/pull';
 import _orderBy from 'lodash/orderBy';
-import { Position, Rect } from '../core/types';
+import { Position, Rect, LayerAttrs } from '../core/types';
 import { Token } from './token';
 
 export class LayerManager {
   layers: Layer[] = [];
 
+  /**
+   * 追加层
+   */
   appendLayer(layer: Layer) {
     this.layers.push(layer);
+  }
+
+  /**
+   * 更新层
+   * @param layerName
+   */
+  updateLayer(layerName: string, attrs: LayerAttrs) {
+    // TODO
+  }
+
+  /**
+   * 移除层
+   * @param layerName 层名
+   */
+  removeLayer(layerName: string) {
+    const layer = this.getLayer(layerName);
+    _pull(this.layers, layer);
   }
 
   getLayer(name: string) {

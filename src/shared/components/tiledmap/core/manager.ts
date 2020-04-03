@@ -1,4 +1,9 @@
-import { TiledMapOptions, TokenAttrs } from './types';
+import {
+  TiledMapOptions,
+  TokenAttrs,
+  TiledMapActions,
+  LayerAttrs,
+} from './types';
 import { TiledMapRender } from './render';
 import _isNil from 'lodash/isNil';
 import { Toolbox } from './toolbox';
@@ -62,8 +67,19 @@ export class TiledMapManager {
   public addLayer(name: string): Layer {
     const layer = new Layer(name);
     this.layerManager.appendLayer(layer);
+    this.callActionCallback('onAddLayer', layer);
 
     return layer;
+  }
+
+  public updateLayer(name: string, attrs: LayerAttrs) {
+    this.layerManager.updateLayer(name, attrs);
+    this.callActionCallback('onUpdateLayer', name, attrs);
+  }
+
+  public removeLayer(name: string) {
+    this.layerManager.removeLayer(name);
+    this.callActionCallback('onRemoveLayer', name);
   }
 
   /**
@@ -76,7 +92,7 @@ export class TiledMapManager {
       // 当 token 准备完毕后增加到层中并绘制
       const layer = this.layerManager.getLayer(layerName);
       layer.appendToken(token);
-      this.options.actions.addToken(token);
+      this.callActionCallback('onAddToken', token);
 
       this.render.draw(); // 重新绘制图像
     });
@@ -91,7 +107,7 @@ export class TiledMapManager {
     for (const layer of layers) {
       if (layer.hasToken(token)) {
         layer.removeToken(token);
-        this.options.actions.removeToken(token.id);
+        this.callActionCallback('onRemoveToken', token.id);
 
         this.render.draw(); // 重新绘制图像
         return;
@@ -104,7 +120,7 @@ export class TiledMapManager {
    * @param token 棋子
    */
   public updateToken(tokenId: string, attrs: Partial<TokenAttrs>): void {
-    this.options.actions.updateToken(tokenId, attrs);
+    this.callActionCallback('onUpdateToken', tokenId, attrs);
   }
 
   /**
@@ -114,5 +130,18 @@ export class TiledMapManager {
     for (const token of this.selectedToken) {
       this.removeToken(token);
     }
+  }
+
+  private callActionCallback<T extends keyof TiledMapActions>(
+    actionName: T,
+    ...args: Parameters<TiledMapActions[T]>
+  ) {
+    const fn = this.options.actions?.[actionName];
+    if (_isNil(fn)) {
+      console.warn('操作没有注册:', actionName);
+      return;
+    }
+
+    fn.call(this, ...args);
   }
 }

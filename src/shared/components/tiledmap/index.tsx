@@ -71,17 +71,29 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
         height: 40,
       },
       actions: {
-        addToken(token) {
+        onAddToken(token) {
           console.log('addToken', token);
           updateToken('add', { token: token.getData() });
         },
-        updateToken(tokenId, tokenAttrs) {
+        onUpdateToken(tokenId, tokenAttrs) {
           console.log('updateToken', tokenId, tokenAttrs);
           updateToken('update', { tokenId, tokenAttrs });
         },
-        removeToken(tokenId) {
+        onRemoveToken(tokenId) {
           console.log('updateToken', tokenId);
           updateToken('remove', { tokenId });
+        },
+        onAddLayer(layer) {
+          // TODO
+          console.log('addLayer', layer);
+        },
+        onUpdateLayer(layerName, attrs) {
+          // TODO
+          console.log('updateLayer', layerName, attrs);
+        },
+        onRemoveLayer(layerName) {
+          // TODO
+          console.log('removeLayer', layerName);
         },
       },
     });

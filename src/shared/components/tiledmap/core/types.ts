@@ -1,4 +1,5 @@
 import { Token } from '../layer/token';
+import { Layer } from '../layer/layer';
 
 export interface Size {
   width: number;
@@ -16,6 +17,22 @@ export interface TokenAttrs {
   gridAreaSize: Size;
 }
 
+export interface LayerAttrs {
+  _id: string,
+  name: string,
+  index: number,
+  desc: string
+}
+
+export interface TiledMapActions {
+  // 用于通知外部TiledMap进行了那些操作
+  onAddToken: (token: Token) => void;
+  onUpdateToken: (tokenId: string, attrs: Partial<TokenAttrs>) => void;
+  onRemoveToken: (tokenId: string) => void;
+  onAddLayer: (layer: Layer) => void;
+  onUpdateLayer: (layerName: string, attrs: Partial<LayerAttrs>) => void;
+  onRemoveLayer: (layerName: string);
+}
 export interface TiledMapOptions {
   size: Size; // 格子数
   gridSize: Size;
@@ -23,12 +40,7 @@ export interface TiledMapOptions {
   axis?: {
     padding: Axios;
   };
-  actions: {
-    // 用于通知外部TiledMap进行了那些操作
-    addToken: (token: Token) => void;
-    updateToken: (tokenId: string, attrs: Partial<TokenAttrs>) => void;
-    removeToken: (tokenId: string) => void;
-  };
+  actions?: Partial<TiledMapActions>;
 }
 
 export interface Rect {
