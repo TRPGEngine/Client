@@ -13,13 +13,15 @@
 
 html, body {
   overflow: auto;
+  filter: grayscale(1); /* 20200404 */
+  filter:gray;
 }
 
 body {
   padding: 0;
   margin: 0;
   background-color: #333333;
-  background-image: url('/src/web/assets/img/bg.jpg');
+  /* background-image: url('/src/web/assets/img/bg.jpg'); */ /* 20200404 */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
