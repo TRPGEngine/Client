@@ -96,7 +96,7 @@ export class TiledMapManager {
       // 当 token 准备完毕后增加到层中并绘制
       const layer = this.layerManager.getLayer(layerId);
       layer.appendToken(token);
-      this.callActionCallback('onAddToken', token);
+      this.callActionCallback('onAddToken', layerId, token);
 
       this.render.draw(); // 重新绘制图像
     });

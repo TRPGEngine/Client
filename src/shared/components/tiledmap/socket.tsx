@@ -1,4 +1,5 @@
 import { getInstance } from '@shared/api/trpg.api';
+import { TokenAttrs } from './core/types';
 const api = getInstance();
 
 /**
@@ -21,6 +22,20 @@ export async function joinMapRoom(mapUUID: string) {
 
 type UpdateType = 'add' | 'update' | 'remove';
 
+interface UpdateTokenPayload {
+  add: {
+    layerId: string;
+    token: TokenAttrs;
+  };
+  update: {
+    tokenId: string;
+    tokenAttrs: Partial<TokenAttrs>;
+  };
+  remove: {
+    tokenId: string;
+  };
+}
+
 export async function updateLayer(type: UpdateType, payload: {}) {
   return await api.emitP('trpg::updateMapLayer', {
     mapUUID: currentMapUUID,
@@ -29,7 +44,10 @@ export async function updateLayer(type: UpdateType, payload: {}) {
   });
 }
 
-export async function updateToken(type: UpdateType, payload: {}) {
+export async function updateToken<T extends UpdateType>(
+  type: T,
+  payload: UpdateTokenPayload[T]
+) {
   return await api.emitP('trpg::updateMapToken', {
     mapUUID: currentMapUUID,
     type,

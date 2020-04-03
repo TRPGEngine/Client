@@ -71,9 +71,9 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
         height: 40,
       },
       actions: {
-        onAddToken(token) {
+        onAddToken(layerId, token) {
           console.log('addToken', token);
-          updateToken('add', { token: token.getData() });
+          updateToken('add', { layerId, token: token.getData() });
         },
         onUpdateToken(tokenId, tokenAttrs) {
           console.log('updateToken', tokenId, tokenAttrs);

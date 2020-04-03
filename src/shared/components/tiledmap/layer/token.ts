@@ -1,11 +1,13 @@
-import { Position, Size, Rect } from '../core/types';
+import { Position, Size, Rect, TokenAttrs } from '../core/types';
 import { DrawContext } from '../core/render';
 import _isNumber from 'lodash/isNumber';
 import _inRange from 'lodash/inRange';
 import { isRectInsideRect } from '../core/utils';
 import shortid from 'shortid';
 
-type TokenData = { [any: string]: any };
+interface TokenData extends TokenAttrs {
+  [any: string]: any;
+}
 
 /**
  * 棋子

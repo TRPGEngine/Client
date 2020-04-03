@@ -10,7 +10,7 @@ export interface Position {
   x: number;
   y: number;
 }
-export type Axios = Position;
+export type Axis = Position;
 
 export interface TokenAttrs {
   gridPosition: Position;
@@ -26,7 +26,7 @@ export interface LayerAttrs {
 
 export interface TiledMapActions {
   // 用于通知外部TiledMap进行了那些操作
-  onAddToken: (token: Token) => void;
+  onAddToken: (layerId: string, token: Token) => void;
   onUpdateToken: (tokenId: string, attrs: Partial<TokenAttrs>) => void;
   onRemoveToken: (tokenId: string) => void;
   onAddLayer: (layer: Layer) => void;
@@ -38,7 +38,7 @@ export interface TiledMapOptions {
   gridSize: Size;
   ratio?: number; // 绘制精度, 越大越精细但是消耗资源越高
   axis?: {
-    padding: Axios;
+    padding: Axis;
   };
   actions?: Partial<TiledMapActions>;
 }
