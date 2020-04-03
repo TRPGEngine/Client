@@ -64,22 +64,26 @@ export class TiledMapManager {
     });
   }
 
-  public addLayer(name: string): Layer {
-    const layer = new Layer(name);
+  public getDefaultLayer(): Layer {
+    return this.layerManager.defaultLayer;
+  }
+
+  public addLayer(name: string, id?: string): Layer {
+    const layer = new Layer(name, id);
     this.layerManager.appendLayer(layer);
     this.callActionCallback('onAddLayer', layer);
 
     return layer;
   }
 
-  public updateLayer(name: string, attrs: LayerAttrs) {
-    this.layerManager.updateLayer(name, attrs);
-    this.callActionCallback('onUpdateLayer', name, attrs);
+  public updateLayer(id: string, attrs: LayerAttrs) {
+    this.layerManager.updateLayer(id, attrs);
+    this.callActionCallback('onUpdateLayer', id, attrs);
   }
 
-  public removeLayer(name: string) {
-    this.layerManager.removeLayer(name);
-    this.callActionCallback('onRemoveLayer', name);
+  public removeLayer(id: string) {
+    this.layerManager.removeLayer(id);
+    this.callActionCallback('onRemoveLayer', id);
   }
 
   /**
@@ -87,10 +91,10 @@ export class TiledMapManager {
    * @param layerName 层名
    * @param token 棋子实例
    */
-  public addToken(layerName: string, token: Token): void {
+  public addToken(layerId: string, token: Token): void {
     token.prepare().then(() => {
       // 当 token 准备完毕后增加到层中并绘制
-      const layer = this.layerManager.getLayer(layerName);
+      const layer = this.layerManager.getLayer(layerId);
       layer.appendToken(token);
       this.callActionCallback('onAddToken', token);
 

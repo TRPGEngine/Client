@@ -87,13 +87,13 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
           // TODO
           console.log('addLayer', layer);
         },
-        onUpdateLayer(layerName, attrs) {
+        onUpdateLayer(layerId, attrs) {
           // TODO
-          console.log('updateLayer', layerName, attrs);
+          console.log('updateLayer', layerId, attrs);
         },
-        onRemoveLayer(layerName) {
+        onRemoveLayer(layerId) {
           // TODO
-          console.log('removeLayer', layerName);
+          console.log('removeLayer', layerId);
         },
       },
     });
@@ -109,7 +109,7 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
       x: 2,
       y: 4,
     };
-    tiledMapManager.addToken('人物', testToken);
+    tiledMapManager.addToken(layer.id, testToken);
 
     const layer2 = tiledMapManager.addLayer('背景');
     layer2.index = -1; // 应在人物下面
@@ -121,7 +121,7 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
       x: 1,
       y: 1,
     };
-    tiledMapManager.addToken('背景', testToken2);
+    tiledMapManager.addToken(layer2.id, testToken2);
 
     // ------------ test ------------
 
@@ -149,7 +149,10 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
     const y = Math.floor(Math.random() * 15);
     token.gridPosition = { x, y };
 
-    tiledMapManagerRef.current?.addToken('人物', token);
+    tiledMapManagerRef.current?.addToken(
+      tiledMapManagerRef.current?.getDefaultLayer().id,
+      token
+    );
     message.success(
       `增加Token ${token.name} [${token.gridPosition.x},${token.gridPosition.y}]`
     );

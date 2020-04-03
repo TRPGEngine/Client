@@ -18,10 +18,10 @@ export interface TokenAttrs {
 }
 
 export interface LayerAttrs {
-  _id: string,
-  name: string,
-  index: number,
-  desc: string
+  _id: string;
+  name: string;
+  index: number;
+  desc: string;
 }
 
 export interface TiledMapActions {
@@ -30,8 +30,8 @@ export interface TiledMapActions {
   onUpdateToken: (tokenId: string, attrs: Partial<TokenAttrs>) => void;
   onRemoveToken: (tokenId: string) => void;
   onAddLayer: (layer: Layer) => void;
-  onUpdateLayer: (layerName: string, attrs: Partial<LayerAttrs>) => void;
-  onRemoveLayer: (layerName: string);
+  onUpdateLayer: (layerId: string, attrs: Partial<LayerAttrs>) => void;
+  onRemoveLayer: (layerId: string) => void;
 }
 export interface TiledMapOptions {
   size: Size; // 格子数

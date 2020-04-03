@@ -7,6 +7,12 @@ import { Token } from './token';
 
 export class LayerManager {
   layers: Layer[] = [];
+  readonly defaultLayer: Layer;
+
+  constructor() {
+    this.defaultLayer = new Layer('默认', 'default');
+    this.appendLayer(this.defaultLayer);
+  }
 
   /**
    * 追加层
@@ -19,7 +25,7 @@ export class LayerManager {
    * 更新层
    * @param layerName
    */
-  updateLayer(layerName: string, attrs: LayerAttrs) {
+  updateLayer(layerId: string, attrs: LayerAttrs) {
     // TODO
   }
 
@@ -27,13 +33,17 @@ export class LayerManager {
    * 移除层
    * @param layerName 层名
    */
-  removeLayer(layerName: string) {
-    const layer = this.getLayer(layerName);
+  removeLayer(layerId: string) {
+    const layer = this.getLayer(layerId);
     _pull(this.layers, layer);
   }
 
-  getLayer(name: string) {
-    return this.layers.find((layer) => layer.name === name);
+  getLayer(layerId: string) {
+    return this.layers.find((layer) => layer.id === layerId);
+  }
+
+  getLayerByName(layerName: string) {
+    return this.layers.find((layer) => layer.name === layerName);
   }
 
   /**
