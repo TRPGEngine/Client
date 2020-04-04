@@ -23,8 +23,6 @@ import { installServiceWorker } from './utils/sw-helper';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 
-import './grey.less';
-
 installServiceWorker(); // 注册 service worker 服务
 
 const store = configureStore();
