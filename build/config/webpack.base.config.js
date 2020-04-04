@@ -61,7 +61,7 @@ module.exports = {
   },
   output: {
     path: DIST_PATH,
-    filename: '[name].[hash].js',
+    filename: '[name].[contenthash].js',
     publicPath: ASSET_PATH,
   },
   resolve: {

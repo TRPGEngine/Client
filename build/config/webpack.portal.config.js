@@ -6,13 +6,15 @@ process.env.TRPG_APP_NAME = 'Portal';
 
 const webpackMerge = require('webpack-merge');
 const path = require('path');
+const url = require('url');
 const base = require('./webpack.config.js');
 const OfflinePlugin = require('offline-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist/portal');
-const ASSET_PATH = '/portal/';
+const ASSET_PATH = process.env.ASSET_PATH || '/';
+const publicPath = url.resolve(ASSET_PATH, '/portal/');
 
 const dllConfig = require('./dll/vendor-manifest.json');
 const dllHashName = 'dll_' + dllConfig.name;
@@ -26,7 +28,7 @@ const config = webpackMerge({}, base, {
 
   output: {
     path: DIST_PATH,
-    publicPath: ASSET_PATH,
+    publicPath,
   },
 
   devtool: isProduction ? false : 'cheap-module-eval-source-map',
