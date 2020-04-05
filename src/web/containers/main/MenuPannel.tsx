@@ -14,6 +14,7 @@ import {
 } from '@shared/hooks/useTRPGSelector';
 
 import './MenuPannel.scss';
+import Avatar from '@web/components/Avatar';
 
 interface Props {
   className: string;
@@ -64,7 +65,7 @@ export const MenuPannel: React.FC<Props> = TMemo((props) => {
       <div className="sidebar">
         <div className="profile">
           <div className="avatar" onClick={() => dispatch(showProfileCard())}>
-            <img src={avatar} />
+            <Avatar src={avatar} name={name} size={50} />
           </div>
           <div className="network-status">
             {!network.isOnline && network.msg}
