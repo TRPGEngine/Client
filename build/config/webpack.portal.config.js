@@ -41,7 +41,7 @@ const config = webpackMerge({}, base, {
     historyApiFallback: {
       rewrites: [
         { from: `${dllHashName}.js`, to: `/portal/${dllHashName}.js` },
-        { from: /.*/, to: `${ASSET_PATH}index.html` },
+        { from: /.*/, to: url.resolve(publicPath, 'index.html') },
       ],
     },
     hot: true,
