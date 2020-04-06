@@ -119,6 +119,11 @@ export class TiledMapManager {
    * 新增层
    */
   public addLayer(name: string, id?: string): Layer {
+    if (this.layerManager.getLayer(id)) {
+      console.warn(`layer: ${id} 已存在`);
+      return;
+    }
+
     const layer = new Layer(name, id);
     this.layerManager.appendLayer(layer);
     this.callActionCallback('onAddLayer', layer);
@@ -149,9 +154,15 @@ export class TiledMapManager {
    * @param notify 是否通知 默认为通知 主要用于初始化地图时不进行通知
    */
   public addToken(layerId: string, token: Token, notify = true): void {
+    const layer = this.layerManager.getLayer(layerId);
+    if (layer.hasToken(token.id)) {
+      console.warn(`[layer: ${layerId}]Token 已存在: ${token.id}`);
+      return;
+    }
+
     token.prepare().then(() => {
       // 当 token 准备完毕后增加到层中并绘制
-      const layer = this.layerManager.getLayer(layerId);
+
       layer.appendToken(token);
       if (notify) {
         this.callActionCallback('onAddToken', layerId, token);
