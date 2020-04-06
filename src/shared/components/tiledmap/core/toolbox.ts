@@ -25,6 +25,11 @@ export class Toolbox {
    * 绘制工具箱节点
    */
   renderDom(container: HTMLElement) {
+    if (_isNil(container)) {
+      console.warn('Cannot render toolbox because of not parent el container');
+      return;
+    }
+
     container.style.position = 'relative';
 
     // 如果已经创建过了，则先销毁
