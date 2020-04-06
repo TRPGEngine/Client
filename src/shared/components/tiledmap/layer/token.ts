@@ -15,10 +15,11 @@ interface TokenData extends TokenAttrs {
  */
 export class Token {
   private _id: string;
+  name: string;
   gridPosition: Position = { x: 0, y: 0 }; // 网格坐标, 0 0 表示网格左上角
   gridAreaSize: Size = { width: 1, height: 1 }; // 当前Token所占据的网格数 所有的Token默认都是1x1 不得为0或负数
 
-  constructor(public name: string, id?: string) {
+  constructor(id?: string) {
     // 如果创建时没有指定id则使用shortid生成一个id
     this._id = id ?? shortid.generate();
   }
@@ -130,8 +131,8 @@ export class ImageToken extends Token {
   private _promise: Promise<HTMLImageElement>;
   loaded: boolean = false;
 
-  constructor(name: string, public imageSrc: string, id?: string) {
-    super(name, id);
+  constructor(public imageSrc: string, id?: string) {
+    super(id);
 
     this._promise = new Promise((resolve, reject) => {
       const image = new Image();

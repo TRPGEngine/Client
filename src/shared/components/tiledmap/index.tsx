@@ -47,7 +47,6 @@ interface TiledMapProps {
 }
 export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
   const canvasRef = useRef<HTMLCanvasElement>();
-  const manager = useRef<TiledMapManager>(null);
   const tiledMapManagerRef = useRef<TiledMapManager>();
 
   useEffect(() => {
@@ -55,9 +54,13 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
       return;
     }
 
-    joinMapRoom(props.mapUUID).then(() =>
-      message.success(`连接地图 ${props.mapUUID} 成功`)
-    );
+    joinMapRoom(props.mapUUID).then((mapData) => {
+      message.success(`连接地图 ${props.mapUUID} 成功`);
+
+      // 应用地图数据
+      console.log('mapData', mapData);
+      tiledMapManagerRef.current.applyMapData(mapData);
+    });
   }, [props.mapUUID]);
 
   useEffect(() => {
@@ -98,38 +101,10 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
       },
     });
     tiledMapManagerRef.current = tiledMapManager;
-
-    // ------------ test ------------
-    const layer = tiledMapManager.addLayer('人物');
-    const testToken = new ImageToken(
-      '测试人物',
-      'https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2807058697,2434741312&fm=58'
-    );
-    testToken.gridPosition = {
-      x: 2,
-      y: 4,
-    };
-    tiledMapManager.addToken(layer.id, testToken);
-
-    const layer2 = tiledMapManager.addLayer('背景');
-    layer2.index = -1; // 应在人物下面
-    const testToken2 = new ImageToken(
-      '测试背景',
-      'https://www.dytt8.net/images/m.jpg'
-    );
-    testToken2.gridPosition = {
-      x: 1,
-      y: 1,
-    };
-    tiledMapManager.addToken(layer2.id, testToken2);
-
-    // ------------ test ------------
-
-    manager.current = tiledMapManager;
   }, []);
 
-  useTmpToolSwitch(manager);
-  useDeleteToken(manager);
+  useTmpToolSwitch(tiledMapManagerRef);
+  useDeleteToken(tiledMapManagerRef);
 
   /**
    * 测试

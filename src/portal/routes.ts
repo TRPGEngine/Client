@@ -90,7 +90,7 @@ export const routes: RouteConfig[] = [
   },
   {
     title: '地图demo',
-    path: '/map/demo',
+    path: '/map/:mapUUID/demo',
     component: TLoadable(() => import('@portal/routes/map/demo')),
   },
   {

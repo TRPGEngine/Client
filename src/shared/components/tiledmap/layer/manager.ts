@@ -10,7 +10,7 @@ export class LayerManager {
   readonly defaultLayer: Layer;
 
   constructor() {
-    this.defaultLayer = new Layer('默认', 'default');
+    this.defaultLayer = new Layer('默认', 'default'); // 默认层是id为default的层
     this.appendLayer(this.defaultLayer);
   }
 
