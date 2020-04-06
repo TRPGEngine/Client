@@ -22,8 +22,12 @@ export class Layer {
     this.tokens.push(token);
   }
 
-  hasToken(token: Token) {
-    return this.tokens.includes(token);
+  hasToken(tokenId: string): boolean {
+    return this.tokens.findIndex((t) => t.id === tokenId) >= 0;
+  }
+
+  getToken(tokenId: string): Token {
+    return this.tokens.find((t) => t.id === tokenId);
   }
 
   removeToken(token: Token) {

@@ -3,13 +3,15 @@ import {
   TokenAttrs,
   TiledMapActions,
   LayerAttrs,
+  TiledMapData,
 } from './types';
 import { TiledMapRender } from './render';
+import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import { Toolbox } from './toolbox';
 import { LayerManager } from '../layer/manager';
 import { Layer } from '../layer/Layer';
-import { Token } from '../layer/token';
+import { Token, ImageToken } from '../layer/token';
 
 /**
  * TiledMap统一管理类
@@ -44,6 +46,9 @@ export class TiledMapManager {
     this.initEventListener();
   }
 
+  /**
+   * 初始化事件监听器
+   */
   private initEventListener() {
     this.el.addEventListener('mousedown', (e) => {
       const { clientX: x, clientY: y } = e;
@@ -64,10 +69,55 @@ export class TiledMapManager {
     });
   }
 
+  /**
+   * 应用地图数据
+   * @param mapData 地图数据
+   */
+  public applyMapData(mapData: TiledMapData) {
+    const layers = mapData.layers;
+    for (const layerData of layers) {
+      // 应用层数据
+      let layer = this.layerManager.getLayer(layerData._id);
+      if (_isNil(layer)) {
+        layer = new Layer(layerData.name, layerData._id);
+        layer.parseData(layerData);
+        this.layerManager.appendLayer(layer);
+      }
+
+      // 应用棋子数据
+      for (const tokenData of layerData.tokens) {
+        if (layer.hasToken(tokenData._id)) {
+          // 如果已存在Token则更新
+          layer.getToken(tokenData._id).parseData(tokenData);
+        } else {
+          // 如果不存在则新建
+          let newToken: Token;
+          const tokenType = tokenData._type;
+          if (tokenType === 'imageToken') {
+            newToken = new ImageToken(
+              _get(tokenData, 'imageSrc'),
+              tokenData._id
+            );
+          } else {
+            newToken = new Token(tokenData._id);
+          }
+          newToken.parseData(tokenData);
+          this.addToken(layer.id, newToken, false);
+        }
+      }
+    }
+  }
+
+  /**
+   * 获取默认层
+   */
   public getDefaultLayer(): Layer {
     return this.layerManager.defaultLayer;
   }
 
+  /**
+   * 新增层
+   */
   public addLayer(name: string, id?: string): Layer {
     const layer = new Layer(name, id);
     this.layerManager.appendLayer(layer);
@@ -76,11 +126,17 @@ export class TiledMapManager {
     return layer;
   }
 
+  /**
+   * 更新层
+   */
   public updateLayer(id: string, attrs: LayerAttrs) {
     this.layerManager.updateLayer(id, attrs);
     this.callActionCallback('onUpdateLayer', id, attrs);
   }
 
+  /**
+   * 移除层
+   */
   public removeLayer(id: string) {
     this.layerManager.removeLayer(id);
     this.callActionCallback('onRemoveLayer', id);
@@ -90,13 +146,16 @@ export class TiledMapManager {
    * 增加一个棋子
    * @param layerName 层名
    * @param token 棋子实例
+   * @param notify 是否通知 默认为通知 主要用于初始化地图时不进行通知
    */
-  public addToken(layerId: string, token: Token): void {
+  public addToken(layerId: string, token: Token, notify = true): void {
     token.prepare().then(() => {
       // 当 token 准备完毕后增加到层中并绘制
       const layer = this.layerManager.getLayer(layerId);
       layer.appendToken(token);
-      this.callActionCallback('onAddToken', layerId, token);
+      if (notify) {
+        this.callActionCallback('onAddToken', layerId, token);
+      }
 
       this.render.draw(); // 重新绘制图像
     });
@@ -109,7 +168,7 @@ export class TiledMapManager {
   public removeToken(token: Token): void {
     const layers = this.layerManager.getAllLayers();
     for (const layer of layers) {
-      if (layer.hasToken(token)) {
+      if (layer.hasToken(token.id)) {
         layer.removeToken(token);
         this.callActionCallback('onRemoveToken', token.id);
 

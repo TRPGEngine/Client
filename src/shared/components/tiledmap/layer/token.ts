@@ -111,6 +111,7 @@ export class Token {
   getData(): TokenData {
     return {
       _id: this._id,
+      _type: 'token',
       name: this.name,
       gridPosition: this.gridPosition,
       gridAreaSize: this.gridAreaSize,
@@ -147,7 +148,7 @@ export class ImageToken extends Token {
         resolve(image);
       };
       image.onerror = () => {
-        console.error('[ImageToken]', '加载失败:', this.imageSrc);
+        console.error('[ImageToken]', '图片加载失败:', this.imageSrc);
 
         reject();
       };
@@ -182,6 +183,7 @@ export class ImageToken extends Token {
   getData(): TokenData {
     return {
       ...super.getData(),
+      _type: 'imageToken',
       imageSize: this.imageSize,
       imageSrc: this.imageSrc,
     };

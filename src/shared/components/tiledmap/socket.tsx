@@ -14,10 +14,14 @@ let currentMapUUID: string;
  * @param mapUUID 地图UUID
  */
 export async function joinMapRoom(mapUUID: string) {
-  const { result } = await api.emitP('trpg::joinMapRoom', { mapUUID });
-  if (result === true) {
-    currentMapUUID = mapUUID;
+  const { result, mapData } = await api.emitP('trpg::joinMapRoom', { mapUUID });
+
+  if (result === false) {
+    throw new Error('加入房间失败');
   }
+
+  currentMapUUID = mapUUID;
+  return mapData;
 }
 
 type UpdateType = 'add' | 'update' | 'remove';
@@ -54,3 +58,14 @@ export async function updateToken<T extends UpdateType>(
     payload,
   });
 }
+
+/**
+ * 注册地图事件监听器
+ */
+export const registerMapEventListener = () => {
+  api.on('trpg::updateMapToken', function(data) {
+    const { mapUUID, type, payload } = data;
+
+    console.log(mapUUID, type, payload);
+  });
+};

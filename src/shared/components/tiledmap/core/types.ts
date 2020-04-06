@@ -13,6 +13,8 @@ export interface Position {
 export type Axis = Position;
 
 export interface TokenAttrs {
+  _id: string;
+  _type: string;
   gridPosition: Position;
   gridAreaSize: Size;
 }
@@ -48,4 +50,12 @@ export interface Rect {
   y1: number; // 左上角y
   x2: number; // 右上角x
   y2: number; // 右上角y
+}
+
+type TiledMapDataToken = TokenAttrs;
+export interface TiledMapDataLayer extends LayerAttrs {
+  tokens: TiledMapDataToken[];
+}
+export interface TiledMapData {
+  layers: TiledMapDataLayer[];
 }

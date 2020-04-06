@@ -115,7 +115,6 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
       .toString()
       .substr(2);
     const token = new ImageToken(
-      name,
       `https://trpgapi.moonrailgun.com/file/avatar/svg?name=${name}`
     );
 
