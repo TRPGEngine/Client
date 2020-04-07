@@ -36,9 +36,9 @@ export interface TiledMapActions {
   onRemoveLayer: (layerId: string) => void;
 }
 export interface TiledMapOptions {
-  mode: 'edit' | 'preview'; // 地图模式
   size: Size; // 格子数
   gridSize: Size;
+  mode?: 'edit' | 'preview'; // 地图模式。 默认为preview
   ratio?: number; // 绘制精度, 越大越精细但是消耗资源越高
   axis?: {
     padding: Axis;

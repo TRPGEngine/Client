@@ -14,7 +14,7 @@ const Container = styled.div`
   bottom: 0px;
   left: 0px;
   width: 100%;
-  padding: 10px;
+  padding: 6px 10px;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 999;
   color: white;
