@@ -17,6 +17,11 @@ export class Toolbox {
   };
 
   constructor(private _manager: TiledMapManager) {
+    if (_isNil(_manager.el.parentElement)) {
+      console.warn('Cannot render toolbox because of not parent el container');
+      return;
+    }
+
     regAllTool(this);
     this.renderDom(_manager.el.parentElement);
   }
@@ -25,11 +30,6 @@ export class Toolbox {
    * 绘制工具箱节点
    */
   renderDom(container: HTMLElement) {
-    if (_isNil(container)) {
-      console.warn('Cannot render toolbox because of not parent el container');
-      return;
-    }
-
     container.style.position = 'relative';
 
     // 如果已经创建过了，则先销毁

@@ -153,14 +153,18 @@ export class TiledMapManager {
    * @param token 棋子实例
    * @param notify 是否通知 默认为通知 主要用于初始化地图时不进行通知
    */
-  public addToken(layerId: string, token: Token, notify = true): void {
+  public async addToken(
+    layerId: string,
+    token: Token,
+    notify = true
+  ): Promise<void> {
     const layer = this.layerManager.getLayer(layerId);
     if (layer.hasToken(token.id)) {
       console.warn(`[layer: ${layerId}]Token 已存在: ${token.id}`);
       return;
     }
 
-    token.prepare().then(() => {
+    await token.prepare().then(() => {
       // 当 token 准备完毕后增加到层中并绘制
 
       layer.appendToken(token);
