@@ -91,6 +91,9 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     }
   }
 
+  /**
+   * 框选与点选
+   */
   handleNormalAction(ctx: ActionContext) {
     const { el, ratio, mouseCanvasPos, gridSize } = ctx;
     let isMoved = false;
@@ -171,6 +174,11 @@ export class TiledMapToolSelect extends TiledMapToolBase {
    */
   handleResizeAction(ctx: ActionContext, clickedHandler: ClickedHander) {
     const { el, ratio, mouseCanvasPos, gridSize, manager } = ctx;
+    if (manager.editable === false) {
+      // 不允许resize
+      return;
+    }
+
     const { token, type: handlerType } = clickedHandler;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -216,7 +224,7 @@ export class TiledMapToolSelect extends TiledMapToolBase {
       ctx.render.draw();
     };
 
-    const handleMouseUp = (e) => {
+    const handleMouseUp = (e: MouseEvent) => {
       manager.updateToken(token.id, { gridAreaSize: token.gridAreaSize });
       el.removeEventListener('mousemove', handleMouseMove);
       el.removeEventListener('mouseup', handleMouseUp);
@@ -233,6 +241,12 @@ export class TiledMapToolSelect extends TiledMapToolBase {
    */
   handleMoveAction(ctx: ActionContext) {
     const { el, gridSize, mouseCanvasPos, manager } = ctx;
+
+    if (manager.editable === false) {
+      // 不允许移动Token
+      return;
+    }
+
     const currentTokens = ctx.manager.selectedToken;
 
     let startPos = px2gridPos(mouseCanvasPos, gridSize);

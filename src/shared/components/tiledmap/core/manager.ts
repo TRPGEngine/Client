@@ -19,6 +19,7 @@ import { Token, ImageToken } from '../layer/token';
  */
 export class TiledMapManager {
   static defaultOptions: Partial<TiledMapOptions> = {
+    mode: 'preview',
     ratio: window.devicePixelRatio ?? 1,
     axis: {
       padding: {
@@ -44,6 +45,13 @@ export class TiledMapManager {
 
     this.toolbox = new Toolbox(this);
     this.initEventListener();
+  }
+
+  /**
+   * 返回是否可以编辑
+   */
+  get editable() {
+    return this.options.mode === 'edit';
   }
 
   /**

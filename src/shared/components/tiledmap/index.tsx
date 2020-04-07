@@ -65,6 +65,7 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
 
   useEffect(() => {
     const tiledMapManager = new TiledMapManager(canvasRef.current, {
+      mode: 'edit',
       size: {
         width: 20,
         height: 15,
