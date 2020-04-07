@@ -1,46 +1,53 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback } from 'react';
 import ModalPanel from '../ModalPanel';
 import Checkbox from '../Checkbox';
+import { setSystemSettings } from '@shared/redux/actions/settings';
+import { TMemo } from '@shared/components/TMemo';
 import {
-  setSystemSettings,
-  saveSettings,
-} from '../../../shared/redux/actions/settings';
+  useTRPGSelector,
+  useTRPGDispatch,
+} from '@shared/hooks/useTRPGSelector';
+import styled from 'styled-components';
 
-import './SystemSettings.scss';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+const SettingCell = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 4px 12px;
 
-interface Props extends TRPGDispatchProp {
-  notificationPermission: string;
-  systemSettings: any;
-}
-class SystemSettings extends React.Component<Props> {
-  componentWillUnmount() {
-    this.props.dispatch(saveSettings());
+  > label {
+    flex: 1;
+    text-align: left;
   }
+`;
 
-  handleRequestNotificationPermission(isChecked) {
-    this.props.dispatch(setSystemSettings({ notification: isChecked }));
-  }
+/**
+ * 系统设置模态框
+ */
+const SystemSettings: React.FC = TMemo(() => {
+  const notificationPermission = useTRPGSelector(
+    (state) => state.settings.notificationPermission
+  );
+  const systemSettings = useTRPGSelector((state) => state.settings.system);
+  const dispatch = useTRPGDispatch();
 
-  render() {
-    return (
-      <ModalPanel title="系统设置" className="system-settings">
-        <div className="setting-cell">
-          <label>桌面通知权限({this.props.notificationPermission})</label>
-          <Checkbox
-            value={this.props.systemSettings.notification}
-            onChange={(isChecked) =>
-              this.handleRequestNotificationPermission(isChecked)
-            }
-          />
-        </div>
-      </ModalPanel>
-    );
-  }
-}
+  const handleRequestNotificationPermission = useCallback(
+    (isChecked: boolean) => {
+      dispatch(setSystemSettings({ notification: isChecked }));
+    },
+    [dispatch]
+  );
 
-export default connect((state: TRPGState) => ({
-  notificationPermission: state.settings.notificationPermission,
-  systemSettings: state.settings.system,
-}))(SystemSettings);
+  return (
+    <ModalPanel title="系统设置">
+      <SettingCell>
+        <label>桌面通知权限({notificationPermission})</label>
+        <Checkbox
+          value={systemSettings.notification}
+          onChange={handleRequestNotificationPermission}
+        />
+      </SettingCell>
+    </ModalPanel>
+  );
+});
+
+export default SystemSettings;
