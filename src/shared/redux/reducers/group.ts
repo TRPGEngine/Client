@@ -32,6 +32,8 @@ const {
   UPDATE_GROUP_ACTOR_INFO,
   UPDATE_GROUP_ACTOR,
   UPDATE_GROUP_ACTOR_MAPPING,
+  UPDATE_GROUP_MAP_LIST,
+  ADD_GROUP_MAP,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
   TICK_MEMBER_SUCCESS,
@@ -289,6 +291,21 @@ export default produce((draft: GroupState, action) => {
     }
     case UPDATE_GROUP_ACTOR_MAPPING: {
       draft.groupActorMap[action.groupUUID] = action.payload;
+      return;
+    }
+    case UPDATE_GROUP_MAP_LIST: {
+      const { groupUUID, groupMaps } = action.payload;
+      const group = draft.groups.find((g) => g.uuid === groupUUID);
+      group.maps = groupMaps;
+      return;
+    }
+    case ADD_GROUP_MAP: {
+      const { groupUUID, mapUUID, mapName } = action.payload;
+      const group = draft.groups.find((g) => g.uuid === groupUUID);
+      group.maps.push({
+        uuid: mapUUID,
+        name: mapName,
+      });
       return;
     }
     case QUIT_GROUP_SUCCESS:

@@ -26,6 +26,11 @@ const initialValues = {
   layout: '',
 };
 
+const formItemLayout = {
+  labelCol: { sm: 6 },
+  wrapperCol: { sm: 18 },
+};
+
 const tailFormItemLayout = {
   wrapperCol: {
     sm: {
@@ -58,12 +63,7 @@ const TemplateCreate: React.FC = React.memo(() => {
 
   return (
     <Container>
-      <Form
-        layout="horizontal"
-        labelCol={{ sm: 6 }}
-        wrapperCol={{ sm: 18 }}
-        onSubmit={handleSubmit}
-      >
+      <Form layout="horizontal" {...formItemLayout} onSubmit={handleSubmit}>
         <Form.Item label="模板名">
           <Input
             name="name"

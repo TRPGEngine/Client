@@ -24,6 +24,8 @@ const {
   UPDATE_GROUP_ACTOR_INFO,
   UPDATE_GROUP_ACTOR,
   UPDATE_GROUP_ACTOR_MAPPING,
+  UPDATE_GROUP_MAP_LIST,
+  ADD_GROUP_MAP,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
   TICK_MEMBER_SUCCESS,
@@ -144,6 +146,15 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
       } else {
         console.error('获取团聊天记录失败:', data.msg);
       }
+    });
+
+    api.emit('trpg::getGroupMapList', { groupUUID }, function(data) {
+      if (!data.result) {
+        console.error('获取地图列表失败:', data.msg);
+        return;
+      }
+
+      dispatch(updateGroupMapList(groupUUID, data.maps ?? []));
     });
   };
 };
@@ -659,6 +670,66 @@ export const updateGroupActor = function(
     type: UPDATE_GROUP_ACTOR,
     groupUUID,
     groupActor,
+  };
+};
+
+/**
+ * 更新团地图列表
+ * @param groupUUID 团UUID
+ * @param groupMaps 地图列表
+ */
+export const updateGroupMapList = function(
+  groupUUID: string,
+  groupMaps: Pick<GroupInfo, 'maps'>
+) {
+  return {
+    type: UPDATE_GROUP_MAP_LIST,
+    payload: { groupUUID, groupMaps },
+  };
+};
+
+/**
+ * 添加单张团地图
+ * @param groupUUID 团UUID
+ * @param mapUUID 地图UUID
+ * @param mapName 地图名
+ */
+export const addGroupMap = function(
+  groupUUID: string,
+  mapUUID: string,
+  mapName: string
+): TRPGAction {
+  return {
+    type: ADD_GROUP_MAP,
+    payload: { groupUUID, mapUUID, mapName },
+  };
+};
+
+/**
+ * 创建团地图
+ * @param groupUUID 团UUID
+ * @param name 地图名
+ * @param width 地图宽度
+ * @param height 地图高度
+ */
+export const createGroupMap = function(
+  groupUUID: string,
+  name: string,
+  width: number,
+  height: number
+): TRPGAction {
+  return function(dispatch, getState) {
+    return api.emit(
+      'trpg::createGroupMap',
+      { groupUUID, name, width, height },
+      function(data) {
+        if (data.result) {
+          dispatch(hideModal());
+        } else {
+          dispatch(showAlert(data.msg));
+        }
+      }
+    );
   };
 };
 

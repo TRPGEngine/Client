@@ -19,7 +19,6 @@ import {
   sendDiceInvite,
   sendQuickDice,
 } from '@shared/redux/actions/dice';
-// import GroupMap from './GroupMap';
 import GroupInvite from './GroupInvite';
 import GroupActor from './GroupActor';
 import GroupMember from './GroupMember';
@@ -27,7 +26,6 @@ import GroupInfo from './GroupInfo';
 import DiceRequest from '../dice/DiceRequest';
 import DiceInvite from '../dice/DiceInvite';
 import ListSelect from '../../../components/ListSelect';
-import IsDeveloping from '../../../components/IsDeveloping';
 import { MsgContainer } from '../../../components/MsgContainer';
 import MsgSendBox from '../../../components/MsgSendBox';
 import _isNil from 'lodash/isNil';
@@ -44,6 +42,7 @@ import { GroupInfoContext } from '@shared/context/GroupInfoContext';
 import { UserSelector } from '@web/components/modal/UserSelector';
 import { checkIsTestUser } from '@web/utils/debug-helper';
 import { GroupChannelCreate } from './modal/GroupChannelCreate';
+import { GroupMap } from './GroupMap';
 
 interface Props extends DispatchProp<any> {
   selectedUUID: string;
@@ -241,10 +240,7 @@ class GroupDetail extends React.Component<Props> {
     {
       name: '游戏地图',
       icon: '&#xe6d7;',
-      // component: (
-      //   <GroupMap />
-      // )
-      component: <IsDeveloping />,
+      component: <GroupMap />,
     },
     {
       name: '游戏规则',

@@ -24,6 +24,8 @@ import {
   updateGroupActorInfo,
   updateGroupActor,
   updateGroupInfo,
+  updateGroupMapList,
+  addGroupMap,
 } from '@shared/redux/actions/group';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
 
@@ -114,12 +116,22 @@ export function bindEventFunc(
       )
     );
   });
+  api.on('trpg::updateGroupMaps', function(data) {
+    const { groupUUID, groupMaps } = data;
+    store.dispatch(updateGroupMapList(groupUUID, groupMaps));
+  });
+  api.on('trpg::addGroupMap', function(data) {
+    const { groupUUID, mapUUID, mapName } = data;
+    store.dispatch(addGroupMap(groupUUID, mapUUID, mapName));
+  });
   api.on('group::addGroupMember', ({ groupUUID, memberUUID }) => {
     store.dispatch(addGroupMember(groupUUID, memberUUID));
   });
   api.on('group::removeGroupMember', ({ groupUUID, memberUUID }) => {
     store.dispatch(removeGroupMember(groupUUID, memberUUID));
   });
+
+  // ------------------------------------------------
 
   // 网络状态管理
   api.on('connect', function(data) {

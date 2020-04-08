@@ -55,7 +55,11 @@ export interface GroupInfo {
   owner_uuid: string;
 
   managers_uuid?: string[];
+  /**
+   * @deprecated
+   */
   maps_uuid?: string[];
+  maps?: { name: string; uuid: string }[]; // 地图列表
 
   detail?: GroupDetail; // 一开始不存在需要保存后才生成
   channels?: GroupChannel[];
