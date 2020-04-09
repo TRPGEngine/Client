@@ -94,6 +94,11 @@ export const routes: RouteConfig[] = [
     component: TLoadable(() => import('@portal/routes/map/demo')),
   },
   {
+    title: '团地图',
+    path: '/group/:groupUUID/map/:mapUUID/preview',
+    component: TLoadable(() => import('@portal/routes/map/preview')),
+  },
+  {
     title: '战报列表',
     path: '/trpg/report/list',
     component: TLoadable(() => import('@portal/routes/trpg/report/list')),

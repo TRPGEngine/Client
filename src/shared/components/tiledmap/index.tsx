@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, Fragment } from 'react';
 import { TiledMapManager } from './core/manager';
 import './index.less';
 import { ImageToken, Token } from './layer/token';
@@ -6,6 +6,7 @@ import { useKeyPressEvent, useKey } from 'react-use';
 import _isNil from 'lodash/isNil';
 import { joinMapRoom, updateToken } from './socket';
 import { message } from 'antd';
+import { TiledMapMode } from './core/types';
 
 /**
  * 按下空格键临时切换当前道具
@@ -44,28 +45,31 @@ function useDeleteToken(manager: React.MutableRefObject<TiledMapManager>) {
 
 interface TiledMapProps {
   mapUUID: string;
+  mode?: TiledMapMode;
 }
 export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
   const canvasRef = useRef<HTMLCanvasElement>();
   const tiledMapManagerRef = useRef<TiledMapManager>();
 
+  const { mapUUID, mode } = props;
+
   useEffect(() => {
-    if (_isNil(props.mapUUID)) {
+    if (_isNil(mapUUID)) {
       return;
     }
 
-    joinMapRoom(props.mapUUID).then((mapData) => {
-      message.success(`连接地图 ${props.mapUUID} 成功`);
+    joinMapRoom(mapUUID).then((mapData) => {
+      message.success(`连接地图 ${mapUUID} 成功`);
 
       // 应用地图数据
       console.log('mapData', mapData);
       tiledMapManagerRef.current.applyMapData(mapData);
     });
-  }, [props.mapUUID]);
+  }, [mapUUID]);
 
   useEffect(() => {
     const tiledMapManager = new TiledMapManager(canvasRef.current, {
-      mode: 'edit',
+      mode, // 只取加载时获取到的mode。不接受修改
       size: {
         width: 20,
         height: 15,
@@ -145,9 +149,17 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
   return (
     <div className="tiledmap">
       <canvas ref={canvasRef}>请使用现代浏览器打开本页面</canvas>
-      <button onClick={handleAppendToken}>增加Token</button>
-      <button onClick={handleRemoveToken}>移除Token</button>
+      {mode === 'edit' && (
+        <Fragment>
+          <button onClick={handleAppendToken}>增加Token</button>
+          <button onClick={handleRemoveToken}>移除Token</button>
+        </Fragment>
+      )}
     </div>
   );
 });
+TiledMap.defaultProps = {
+  mode: 'preview',
+};
+
 TiledMap.displayName = 'TiledMap';
