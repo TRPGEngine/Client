@@ -109,7 +109,7 @@ export class BaseToken {
   getData(): TokenData {
     return {
       _id: this._id,
-      _type: 'token',
+      _type: BaseToken.TYPE,
       name: this.name,
       gridPosition: this.gridPosition,
       gridAreaSize: this.gridAreaSize,

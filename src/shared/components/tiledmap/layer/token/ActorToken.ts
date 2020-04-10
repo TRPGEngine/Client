@@ -40,6 +40,7 @@ export class ActorToken extends ImageToken {
   getData(): TokenData {
     return {
       ...super.getData(),
+      _type: ActorToken.TYPE,
       actor: this.actorData,
     };
   }
