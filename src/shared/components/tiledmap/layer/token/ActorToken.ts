@@ -15,7 +15,7 @@ interface ActorTokenData extends ImageTokenData {
  * @param avatar 人物卡头像
  */
 function getActorAvatarImage(name: string, avatar: string): string {
-  if (_isEmpty(avatar)) {
+  if (!_isEmpty(avatar)) {
     return getAbsolutePath(avatar);
   } else {
     return config.defaultImg.getUser(name);
@@ -42,36 +42,23 @@ export class ActorToken extends ImageToken {
   parseData(data: ActorTokenData) {
     this.groupActorUUID = data.groupActorUUID;
     super.parseData(data);
-
-    this.promise
-      .catch(() => {
-        // 增加一层图片加载错误的fallback
-        return loadImageP(config.defaultImg.getUser(name));
-      })
-      .then(() => {
-        // 加载完图片后加载角色信息
-        return fetchGroupActorDetail(this.groupActorUUID).then((data) => {
-          // 加载信息完毕
-          this.actorData = data;
-        });
-      });
   }
 
   buildPromise() {
     this._promise = fetchGroupActorDetail(this.groupActorUUID)
       .then((data) => {
         this.actorData = data;
-        return data;
       })
-      .then((data) => {
+      .then(() => {
         const { name, avatar } = this.actorData;
         return loadImageP(getActorAvatarImage(name, avatar));
       })
-      .catch(() => {
+      .catch((e) => {
         // 增加一层图片加载错误的fallback
         return loadImageP(config.defaultImg.getUser(this.actorData.name));
       })
       .then((image) => {
+        this.imageSrc = image.src;
         this.imageSize = {
           width: _isNumber(image.width) ? image.width : 100,
           height: _isNumber(image.height) ? image.height : 100,

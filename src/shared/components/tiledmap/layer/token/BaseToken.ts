@@ -20,7 +20,6 @@ export class BaseToken {
   constructor(id?: string) {
     // 如果创建时没有指定id则使用shortid生成一个id
     this._id = id ?? shortid.generate();
-    console.log(id, this._id);
   }
 
   get id() {
