@@ -1,12 +1,13 @@
 import React, { useRef, useEffect, useCallback, Fragment } from 'react';
 import { TiledMapManager } from './core/manager';
 import './index.less';
-import { ImageToken, Token } from './layer/token';
 import { useKeyPressEvent, useKey } from 'react-use';
 import _isNil from 'lodash/isNil';
 import { joinMapRoom, updateToken } from './socket';
 import { message } from 'antd';
 import { TiledMapMode } from './core/types';
+import { BaseToken } from './layer/token/BaseToken';
+import { ImageToken } from './layer/token/ImageToken';
 
 /**
  * 按下空格键临时切换当前道具
@@ -114,7 +115,7 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
   /**
    * 测试
    */
-  const testTokenRefs = useRef<Token[]>([]);
+  const testTokenRefs = useRef<BaseToken[]>([]);
   const handleAppendToken = useCallback(() => {
     const name = Math.random()
       .toString()

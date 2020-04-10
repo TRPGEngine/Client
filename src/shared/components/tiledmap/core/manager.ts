@@ -11,7 +11,8 @@ import _isNil from 'lodash/isNil';
 import { Toolbox } from './toolbox';
 import { LayerManager } from '../layer/manager';
 import { Layer } from '../layer/Layer';
-import { Token, ImageToken } from '../layer/token';
+import { BaseToken } from '../layer/token/BaseToken';
+import { createTokenByData } from '../layer/token/helper';
 
 /**
  * TiledMap统一管理类
@@ -32,7 +33,7 @@ export class TiledMapManager {
   public render: TiledMapRender;
   public toolbox: Toolbox;
   private layerManager = new LayerManager();
-  public selectedToken: Token[] = [];
+  public selectedToken: BaseToken[] = [];
 
   constructor(public el: HTMLCanvasElement, public options: TiledMapOptions) {
     this.options = {
@@ -99,17 +100,7 @@ export class TiledMapManager {
           layer.getToken(tokenData._id).parseData(tokenData);
         } else {
           // 如果不存在则新建
-          let newToken: Token;
-          const tokenType = tokenData._type;
-          if (tokenType === 'imageToken') {
-            newToken = new ImageToken(
-              _get(tokenData, 'imageSrc'),
-              tokenData._id
-            );
-          } else {
-            newToken = new Token(tokenData._id);
-          }
-          newToken.parseData(tokenData);
+          const newToken = createTokenByData(tokenData);
           this.addToken(layer.id, newToken, false);
         }
       }
@@ -163,12 +154,12 @@ export class TiledMapManager {
    */
   public async addToken(
     layerId: string,
-    token: Token,
+    token: BaseToken,
     notify = true
   ): Promise<void> {
     const layer = this.layerManager.getLayer(layerId);
     if (layer.hasToken(token.id)) {
-      console.warn(`[layer: ${layerId}]Token 已存在: ${token.id}`);
+      console.warn(`[layer: ${layerId}] Token 已存在: ${token.id}`);
       return;
     }
 
@@ -188,7 +179,7 @@ export class TiledMapManager {
    * 移除一个棋子
    * @param token 棋子
    */
-  public removeToken(token: Token): void {
+  public removeToken(token: BaseToken): void {
     const layers = this.layerManager.getAllLayers();
     for (const layer of layers) {
       if (layer.hasToken(token.id)) {

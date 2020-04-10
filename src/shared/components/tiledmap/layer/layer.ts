@@ -1,4 +1,4 @@
-import { Token } from './token';
+import { BaseToken } from './token/BaseToken';
 import _pull from 'lodash/pull';
 import { DrawContext } from '../core/render';
 import { LayerAttrs } from '../core/types';
@@ -7,7 +7,7 @@ import shortid from 'shortid';
 export class Layer {
   private _id: string;
   desc: string;
-  tokens: Token[] = [];
+  tokens: BaseToken[] = [];
   index: number = 0; // 值越高越晚绘制, 显示越在上面
 
   constructor(public name: string, id?: string) {
@@ -18,7 +18,7 @@ export class Layer {
     return this._id;
   }
 
-  appendToken(token: Token) {
+  appendToken(token: BaseToken) {
     this.tokens.push(token);
   }
 
@@ -26,11 +26,11 @@ export class Layer {
     return this.tokens.findIndex((t) => t.id === tokenId) >= 0;
   }
 
-  getToken(tokenId: string): Token {
+  getToken(tokenId: string): BaseToken {
     return this.tokens.find((t) => t.id === tokenId);
   }
 
-  removeToken(token: Token) {
+  removeToken(token: BaseToken) {
     _pull(this.tokens, token);
   }
 

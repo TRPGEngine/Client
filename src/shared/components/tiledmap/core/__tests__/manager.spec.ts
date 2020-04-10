@@ -1,5 +1,5 @@
 import { TiledMapManager } from '../manager';
-import { Token } from '../../layer/token';
+import { BaseToken } from '../../layer/token/BaseToken';
 
 const defaultOpts = {
   size: {
@@ -32,7 +32,7 @@ describe('TiledMapManager', () => {
     });
 
     test('addToken', async () => {
-      const token = new Token();
+      const token = new BaseToken();
       const mockDrawFn = jest.fn();
       token.draw = mockDrawFn;
       await manager.addToken('default', token);

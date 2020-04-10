@@ -3,7 +3,7 @@ import { DrawContext } from '../core/render';
 import _pull from 'lodash/pull';
 import _orderBy from 'lodash/orderBy';
 import { Position, Rect, LayerAttrs } from '../core/types';
-import { Token } from './token';
+import { BaseToken } from './token/BaseToken';
 
 export class LayerManager {
   layers: Layer[] = [];
@@ -66,7 +66,7 @@ export class LayerManager {
    * 根据网格坐标获取最上层的Token
    * @param gridPos 网格坐标
    */
-  getLayerTokenByGridPosition(gridPos: Position): Token | null {
+  getLayerTokenByGridPosition(gridPos: Position): BaseToken | null {
     const layers = this.getAllLayers();
 
     for (const layer of layers) {
@@ -85,7 +85,7 @@ export class LayerManager {
    * 根据网格坐标获取最上层的Token
    * @param gridPos 网格坐标
    */
-  getLayerTokenByGridRectRange(rangeRect: Rect): Token[] {
+  getLayerTokenByGridRectRange(rangeRect: Rect): BaseToken[] {
     const layers = this.getAllLayers();
 
     const ret = [];

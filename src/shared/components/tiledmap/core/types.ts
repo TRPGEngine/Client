@@ -1,5 +1,5 @@
-import { Token } from '../layer/token';
 import { Layer } from '../layer/layer';
+import { BaseToken } from '../layer/token/BaseToken';
 
 export interface Size {
   width: number;
@@ -19,6 +19,10 @@ export interface TokenAttrs {
   gridAreaSize: Size;
 }
 
+export interface TokenData extends TokenAttrs {
+  [any: string]: any;
+}
+
 export interface LayerAttrs {
   _id: string;
   name: string;
@@ -28,7 +32,7 @@ export interface LayerAttrs {
 
 export interface TiledMapActions {
   // 用于通知外部TiledMap进行了那些操作
-  onAddToken: (layerId: string, token: Token) => void;
+  onAddToken: (layerId: string, token: BaseToken) => void;
   onUpdateToken: (tokenId: string, attrs: Partial<TokenAttrs>) => void;
   onRemoveToken: (tokenId: string) => void;
   onAddLayer: (layer: Layer) => void;

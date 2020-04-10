@@ -6,15 +6,15 @@ import {
   getRectWithSize,
   isPositionInsizeRect,
 } from '../core/utils';
-import { Token } from '../layer/token';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import { Position, Size, Rect } from '../core/types';
 import { drawSelectionRect, drawSelectedTokenRect } from '../draw/rect';
+import { BaseToken } from '../layer/token/BaseToken';
 
 type HandlerType = 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom';
 interface ClickedHander {
-  token: Token;
+  token: BaseToken;
   type: HandlerType;
 }
 
@@ -392,7 +392,7 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     return false;
   }
 
-  getSelectToken(ctx: ActionContext): Token {
+  getSelectToken(ctx: ActionContext): BaseToken {
     const { mouseCanvasPos, gridSize } = ctx;
     // 获取当前鼠标选中的Token
     const gridPos = px2gridPos(mouseCanvasPos, gridSize);

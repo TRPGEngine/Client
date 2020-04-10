@@ -1,19 +1,17 @@
-import { Position, Size, Rect, TokenAttrs } from '../core/types';
-import { DrawContext } from '../core/render';
+import { Position, Size, Rect, TokenData } from '../../core/types';
+import { DrawContext } from '../../core/render';
 import _isNumber from 'lodash/isNumber';
 import _inRange from 'lodash/inRange';
-import { isRectInsideRect } from '../core/utils';
+import { isRectInsideRect } from '../../core/utils';
 import shortid from 'shortid';
-
-interface TokenData extends TokenAttrs {
-  [any: string]: any;
-}
 
 /**
  * 棋子
  * 原则上来说棋子在画布上的大小必须为网格整数倍
  */
-export class Token {
+export class BaseToken {
+  static TYPE = 'baseToken';
+
   private _id: string;
   name: string;
   gridPosition: Position = { x: 0, y: 0 }; // 网格坐标, 0 0 表示网格左上角
@@ -123,75 +121,5 @@ export class Token {
     this.name = data.name;
     this.gridPosition = data.gridPosition;
     this.gridAreaSize = data.gridAreaSize;
-  }
-}
-
-export class ImageToken extends Token {
-  imageSize: Size; // 图片的实际大小
-  private _image: HTMLImageElement;
-  private _promise: Promise<HTMLImageElement>;
-  loaded: boolean = false;
-
-  constructor(public imageSrc: string, id?: string) {
-    super(id);
-
-    this._promise = new Promise((resolve, reject) => {
-      const image = new Image();
-      image.src = imageSrc;
-      image.onload = () => {
-        this.imageSize = {
-          width: _isNumber(image.width) ? image.width : 100,
-          height: _isNumber(image.height) ? image.height : 100,
-        };
-        this.loaded = true;
-
-        resolve(image);
-      };
-      image.onerror = () => {
-        console.error('[ImageToken]', '图片加载失败:', this.imageSrc);
-
-        reject();
-      };
-      this._image = image;
-    });
-  }
-
-  get promise() {
-    return this._promise;
-  }
-
-  async prepare(): Promise<void> {
-    await Promise.resolve(this._promise);
-  }
-
-  draw(ctx: DrawContext) {
-    if (!this.loaded) {
-      return;
-    }
-
-    const { gridSize } = ctx;
-
-    ctx.render.canvas.drawImage(
-      this._image,
-      this.gridPosition.x * gridSize.width,
-      this.gridPosition.y * gridSize.height,
-      this.gridAreaSize.width * gridSize.width,
-      this.gridAreaSize.height * gridSize.height
-    );
-  }
-
-  getData(): TokenData {
-    return {
-      ...super.getData(),
-      _type: 'imageToken',
-      imageSize: this.imageSize,
-      imageSrc: this.imageSrc,
-    };
-  }
-
-  parseData(data: TokenData) {
-    super.parseData(data);
-    this.imageSize = data.imageSize;
-    this.imageSrc = data.imageSrc;
   }
 }
