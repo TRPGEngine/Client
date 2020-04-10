@@ -10,7 +10,7 @@ import shortid from 'shortid';
  * 原则上来说棋子在画布上的大小必须为网格整数倍
  */
 export class BaseToken {
-  static TYPE = 'baseToken';
+  static TYPE = 'BaseToken';
 
   private _id: string;
   name: string;

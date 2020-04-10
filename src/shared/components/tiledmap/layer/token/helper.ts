@@ -2,6 +2,7 @@ import { TokenAttrs } from '../../core/types';
 import { BaseToken } from './BaseToken';
 import { ImageToken } from './ImageToken';
 import _get from 'lodash/get';
+import { ActorToken } from './ActorToken';
 
 /**
  * 根据Token信息创建Token实例
@@ -12,6 +13,8 @@ export function createTokenByData(tokenData: TokenAttrs): BaseToken {
   const tokenType = tokenData._type;
   if (tokenType === ImageToken.TYPE) {
     newToken = new ImageToken(_get(tokenData, 'imageSrc'), tokenData._id);
+  } else if (tokenType === ActorToken.TYPE) {
+    newToken = new ActorToken(_get(tokenData, 'actor'), tokenData._id);
   } else {
     newToken = new BaseToken(tokenData._id);
   }

@@ -3,8 +3,23 @@ import { Size, TokenData } from '../../core/types';
 import { DrawContext } from '../../core/render';
 import { BaseToken } from './BaseToken';
 
+export function loadImageP(imageUrl: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.src = imageUrl;
+    image.onload = () => {
+      resolve(image);
+    };
+    image.onerror = () => {
+      console.error('[ImageToken]', '图片加载失败:', imageUrl);
+
+      reject();
+    };
+  });
+}
+
 export class ImageToken extends BaseToken {
-  static TYPE = 'imageToken';
+  static TYPE = 'ImageToken';
 
   imageSize: Size; // 图片的实际大小
   private _image: HTMLImageElement;
@@ -14,24 +29,15 @@ export class ImageToken extends BaseToken {
   constructor(public imageSrc: string, id?: string) {
     super(id);
 
-    this._promise = new Promise((resolve, reject) => {
-      const image = new Image();
-      image.src = imageSrc;
-      image.onload = () => {
-        this.imageSize = {
-          width: _isNumber(image.width) ? image.width : 100,
-          height: _isNumber(image.height) ? image.height : 100,
-        };
-        this.loaded = true;
-
-        resolve(image);
+    this._promise = loadImageP(imageSrc).then((image) => {
+      this.imageSize = {
+        width: _isNumber(image.width) ? image.width : 100,
+        height: _isNumber(image.height) ? image.height : 100,
       };
-      image.onerror = () => {
-        console.error('[ImageToken]', '图片加载失败:', this.imageSrc);
-
-        reject();
-      };
+      this.loaded = true;
       this._image = image;
+
+      return image;
     });
   }
 
