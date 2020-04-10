@@ -18,28 +18,18 @@ export function loadImageP(imageUrl: string): Promise<HTMLImageElement> {
   });
 }
 
+export interface ImageTokenData extends TokenData {
+  imageSrc: string;
+}
+
 export class ImageToken extends BaseToken {
   static TYPE = 'ImageToken';
 
   imageSize: Size; // 图片的实际大小
-  private _image: HTMLImageElement;
-  private _promise: Promise<HTMLImageElement>;
+  imageSrc: string; // 图片路径
+  protected _image: HTMLImageElement;
+  protected _promise: Promise<void>;
   loaded: boolean = false;
-
-  constructor(public imageSrc: string, id?: string) {
-    super(id);
-
-    this._promise = loadImageP(imageSrc).then((image) => {
-      this.imageSize = {
-        width: _isNumber(image.width) ? image.width : 100,
-        height: _isNumber(image.height) ? image.height : 100,
-      };
-      this.loaded = true;
-      this._image = image;
-
-      return image;
-    });
-  }
 
   get promise() {
     return this._promise;
@@ -65,18 +55,29 @@ export class ImageToken extends BaseToken {
     );
   }
 
-  getData(): TokenData {
+  getData(): ImageTokenData {
     return {
       ...super.getData(),
       _type: ImageToken.TYPE,
-      imageSize: this.imageSize,
       imageSrc: this.imageSrc,
     };
   }
 
-  parseData(data: TokenData) {
+  parseData(data: ImageTokenData) {
     super.parseData(data);
-    this.imageSize = data.imageSize;
     this.imageSrc = data.imageSrc;
+
+    this.buildPromise();
+  }
+
+  buildPromise() {
+    this._promise = loadImageP(this.imageSrc).then((image) => {
+      this.imageSize = {
+        width: _isNumber(image.width) ? image.width : 100,
+        height: _isNumber(image.height) ? image.height : 100,
+      };
+      this.loaded = true;
+      this._image = image;
+    });
   }
 }

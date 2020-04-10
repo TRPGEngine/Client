@@ -19,7 +19,7 @@ export interface TokenAttrs {
   gridAreaSize: Size;
 }
 
-export interface TokenData extends TokenAttrs {
+export interface TokenData extends Partial<TokenAttrs> {
   [any: string]: any;
 }
 

@@ -1,5 +1,5 @@
 import { getInstance } from '@shared/api/trpg.api';
-import { TokenAttrs } from './core/types';
+import { TokenAttrs, TokenData } from './core/types';
 const api = getInstance();
 
 /**
@@ -29,11 +29,11 @@ type UpdateType = 'add' | 'update' | 'remove';
 interface UpdateTokenPayload {
   add: {
     layerId: string;
-    token: TokenAttrs;
+    token: TokenData;
   };
   update: {
     tokenId: string;
-    tokenAttrs: Partial<TokenAttrs>;
+    tokenAttrs: TokenData;
   };
   remove: {
     tokenId: string;

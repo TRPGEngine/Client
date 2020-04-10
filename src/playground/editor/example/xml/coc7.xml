@@ -513,14 +513,14 @@
               <span>{{SUM(getAllSkill(getStateData()).map((x) => _get(x, 'addedPoint', 0)))}}</span>
             </p>
             <p>
-              <span>已加职业点数</span>
-              <Tip>已加所有职业点之和</Tip>
-              <span>{{SUM(getAllSkill(getStateData()).map((x) => _get(x, '职业', 0)))}}</span>
-            </p>
-            <p>
               <span>已加兴趣点数</span>
               <Tip>已加所有兴趣点之和</Tip>
               <span>{{SUM(getAllSkill(getStateData()).map((x) => _get(x, '兴趣', 0)))}}</span>
+            </p>
+            <p>
+              <span>已加职业点数</span>
+              <Tip>已加所有职业点之和</Tip>
+              <span>{{SUM(getAllSkill(getStateData()).map((x) => _get(x, '职业', 0)))}}</span>
             </p>
           </FieldSet>
         </Col>

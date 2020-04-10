@@ -123,21 +123,20 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
     const name = Math.random()
       .toString()
       .substr(2);
-    const token = new ImageToken(
-      `https://trpgapi.moonrailgun.com/file/avatar/svg?name=${name}`
-    );
-
+    const token = new ImageToken();
+    token.imageSrc = `https://trpgapi.moonrailgun.com/file/avatar/svg?name=${name}`;
     // 生成随机坐标
     const x = Math.floor(Math.random() * 20);
     const y = Math.floor(Math.random() * 15);
     token.gridPosition = { x, y };
+    token.buildPromise();
 
     tiledMapManagerRef.current?.addToken(
       tiledMapManagerRef.current?.getDefaultLayer().id,
       token
     );
     message.success(
-      `增加Token ${token.name} [${token.gridPosition.x},${token.gridPosition.y}]`
+      `增加Token ${token.id} [${token.gridPosition.x},${token.gridPosition.y}]`
     );
     testTokenRefs.current.push(token);
   }, [tiledMapManagerRef]);

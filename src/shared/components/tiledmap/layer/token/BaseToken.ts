@@ -20,6 +20,7 @@ export class BaseToken {
   constructor(id?: string) {
     // 如果创建时没有指定id则使用shortid生成一个id
     this._id = id ?? shortid.generate();
+    console.log(id, this._id);
   }
 
   get id() {
@@ -119,7 +120,7 @@ export class BaseToken {
   parseData(data: TokenData) {
     this._id = data._id;
     this.name = data.name;
-    this.gridPosition = data.gridPosition;
-    this.gridAreaSize = data.gridAreaSize;
+    this.gridPosition = data.gridPosition ?? { x: 0, y: 0 };
+    this.gridAreaSize = data.gridAreaSize ?? { width: 1, height: 1 };
   }
 }
