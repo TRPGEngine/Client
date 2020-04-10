@@ -6,7 +6,7 @@ import { getPortalUrl } from '@shared/utils/string-helper';
 import { useRNStorage } from '@shared/hooks/useRNStorage';
 
 const Container = styled.div`
-  @media (min-width: 992px) {
+  @media (min-width: 768px) {
     display: none;
   }
 
