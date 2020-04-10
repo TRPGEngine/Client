@@ -7,9 +7,7 @@ import React, {
   useEffect,
 } from 'react';
 import styled from 'styled-components';
-import SplitPane from 'react-split-pane';
 import MonacoEditor, { EditorDidMount } from 'react-monaco-editor';
-import './split-pane.css';
 import { editor, IPosition, KeyMod, KeyCode } from 'monaco-editor';
 import { useLocalStorage, useCounter } from 'react-use';
 import XMLBuilder, {
@@ -29,6 +27,8 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { registerLayoutCodeSuggest } from './editor/suggestions';
 import { exampleLayout, workingLabel } from './editor/example';
 import config from '@shared/project.config';
+import SplitPane from '@shared/components/web/SplitPane';
+
 const { Option } = Select;
 
 declare module 'antd/lib/select' {
