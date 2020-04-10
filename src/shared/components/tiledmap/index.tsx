@@ -3,6 +3,7 @@ import { TiledMapManager } from './core/manager';
 import './index.less';
 import { useKeyPressEvent, useKey } from 'react-use';
 import _isNil from 'lodash/isNil';
+import _isFunction from 'lodash/isFunction';
 import { joinMapRoom, updateToken } from './socket';
 import { message } from 'antd';
 import { TiledMapMode } from './core/types';
@@ -47,12 +48,13 @@ function useDeleteToken(manager: React.MutableRefObject<TiledMapManager>) {
 interface TiledMapProps {
   mapUUID: string;
   mode?: TiledMapMode;
+  onLoad?: (manager: TiledMapManager) => void;
 }
 export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
   const canvasRef = useRef<HTMLCanvasElement>();
   const tiledMapManagerRef = useRef<TiledMapManager>();
 
-  const { mapUUID, mode } = props;
+  const { mapUUID, mode, onLoad } = props;
 
   useEffect(() => {
     if (_isNil(mapUUID)) {
@@ -107,6 +109,7 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
       },
     });
     tiledMapManagerRef.current = tiledMapManager;
+    _isFunction(onLoad) && onLoad(tiledMapManager);
   }, []);
 
   useTmpToolSwitch(tiledMapManagerRef);
