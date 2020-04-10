@@ -1,4 +1,5 @@
 import { BaseToken } from './token/BaseToken';
+import _remove from 'lodash/remove';
 import _pull from 'lodash/pull';
 import { DrawContext } from '../core/render';
 import { LayerAttrs } from '../core/types';
@@ -28,6 +29,10 @@ export class Layer {
 
   getToken(tokenId: string): BaseToken {
     return this.tokens.find((t) => t.id === tokenId);
+  }
+
+  removeTokenById(tokenId: string) {
+    _remove(this.tokens, ['id', tokenId]);
   }
 
   removeToken(token: BaseToken) {

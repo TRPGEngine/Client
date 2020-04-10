@@ -225,7 +225,11 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     };
 
     const handleMouseUp = (e: MouseEvent) => {
-      manager.updateToken(token.id, { gridAreaSize: token.gridAreaSize });
+      // resize操作可能会同时更新两个位置和大小。因此需要都通知
+      manager.updateToken(token.id, {
+        gridAreaSize: token.gridAreaSize,
+        gridPosition: token.gridPosition,
+      });
       el.removeEventListener('mousemove', handleMouseMove);
       el.removeEventListener('mouseup', handleMouseUp);
       el.removeEventListener('mouseleave', handleMouseUp);

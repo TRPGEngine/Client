@@ -13,6 +13,7 @@ import { LayerManager } from '../layer/manager';
 import { Layer } from '../layer/Layer';
 import { BaseToken } from '../layer/token/BaseToken';
 import { createTokenByData } from '../layer/token/helper';
+import { UpdateType, UpdateTokenPayload } from '../socket';
 
 /**
  * TiledMap统一管理类
@@ -147,6 +148,38 @@ export class TiledMapManager {
   }
 
   /**
+   * 处理来自远程的更新Token的操作
+   */
+  public handleReceiveModifyToken = (
+    type: UpdateType,
+    payload: UpdateTokenPayload[UpdateType]
+  ) => {
+    if (type === 'add') {
+      const p = payload as UpdateTokenPayload['add'];
+      const { layerId, token } = p;
+      const newToken = createTokenByData(token as any);
+      this.addToken(layerId, newToken, false);
+    } else if (type === 'update') {
+      const p = payload as UpdateTokenPayload['update'];
+      const { layerId, tokenId, tokenAttrs } = p;
+      const token = this.layerManager.getTokenExact(layerId, tokenId);
+      if (!_isNil(token)) {
+        token.update(tokenAttrs);
+      }
+    } else if (type === 'remove') {
+      const p = payload as UpdateTokenPayload['remove'];
+      const { layerId, tokenId } = p;
+      const layer = this.layerManager.getLayer(layerId);
+
+      if (!_isNil(layer)) {
+        layer.removeTokenById(tokenId);
+      }
+    }
+
+    this.render.draw(); // 重新绘制图像
+  };
+
+  /**
    * 增加一个棋子
    * @param layerName 层名
    * @param token 棋子实例
@@ -179,12 +212,15 @@ export class TiledMapManager {
    * 移除一个棋子
    * @param token 棋子
    */
-  public removeToken(token: BaseToken): void {
+  public removeToken(token: BaseToken, notify = true): void {
     const layers = this.layerManager.getAllLayers();
     for (const layer of layers) {
       if (layer.hasToken(token.id)) {
         layer.removeToken(token);
-        this.callActionCallback('onRemoveToken', token.id);
+
+        if (notify) {
+          this.callActionCallback('onRemoveToken', layer.id, token.id);
+        }
 
         this.render.draw(); // 重新绘制图像
         return;
@@ -196,8 +232,15 @@ export class TiledMapManager {
    * 更新一个棋子 主要是通知
    * @param token 棋子
    */
-  public updateToken(tokenId: string, attrs: Partial<TokenAttrs>): void {
-    this.callActionCallback('onUpdateToken', tokenId, attrs);
+  public updateToken(
+    tokenId: string,
+    attrs: Partial<TokenAttrs>,
+    notify = true
+  ): void {
+    const layer = this.layerManager.getTokenLayerByTokenId(tokenId);
+    if (notify) {
+      this.callActionCallback('onUpdateToken', layer.id, tokenId, attrs);
+    }
   }
 
   /**

@@ -1,4 +1,4 @@
-import { Position, Size, Rect, TokenData } from '../../core/types';
+import { Position, Size, Rect, TokenData, TokenAttrs } from '../../core/types';
 import { DrawContext } from '../../core/render';
 import _isNumber from 'lodash/isNumber';
 import _inRange from 'lodash/inRange';
@@ -24,6 +24,15 @@ export class BaseToken {
 
   get id() {
     return this._id;
+  }
+
+  update(tokenAttrs: TokenData) {
+    if (tokenAttrs.gridPosition) {
+      this.gridPosition = tokenAttrs.gridPosition;
+    }
+    if (tokenAttrs.gridAreaSize) {
+      this.gridAreaSize = tokenAttrs.gridAreaSize;
+    }
   }
 
   /**

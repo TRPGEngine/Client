@@ -24,18 +24,19 @@ export async function joinMapRoom(mapUUID: string) {
   return mapData;
 }
 
-type UpdateType = 'add' | 'update' | 'remove';
-
-interface UpdateTokenPayload {
+export type UpdateType = 'add' | 'update' | 'remove';
+export interface UpdateTokenPayload {
   add: {
     layerId: string;
     token: TokenData;
   };
   update: {
+    layerId: string;
     tokenId: string;
     tokenAttrs: TokenData;
   };
   remove: {
+    layerId: string;
     tokenId: string;
   };
 }
@@ -62,10 +63,19 @@ export async function updateToken<T extends UpdateType>(
 /**
  * 注册地图事件监听器
  */
-export const registerMapEventListener = () => {
+type MapEventCallback = <T extends UpdateType>(
+  type: T,
+  payload: UpdateTokenPayload[T]
+) => void;
+export const registerMapEventListener = (
+  mapUUID: string,
+  cb: MapEventCallback
+) => {
   api.on('trpg::updateMapToken', function(data) {
-    const { mapUUID, type, payload } = data;
+    const { type, payload } = data;
 
-    console.log(mapUUID, type, payload);
+    if (data.mapUUID === mapUUID) {
+      cb(type, payload);
+    }
   });
 };

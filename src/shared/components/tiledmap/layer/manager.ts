@@ -15,6 +15,31 @@ export class LayerManager {
   }
 
   /**
+   * 获取Token所在的层
+   */
+  getTokenLayerByTokenId(tokenId: string): Layer | null {
+    for (const layer of this.layers) {
+      if (layer.hasToken(tokenId)) {
+        return layer;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * 精确获取Token
+   * @param layerId 层id
+   * @param tokenId token id
+   */
+  getTokenExact(
+    layerId: string,
+    tokenId: string
+  ): BaseToken | null | undefined {
+    return this.getLayer(layerId)?.getToken(tokenId);
+  }
+
+  /**
    * 追加层
    */
   appendLayer(layer: Layer) {
@@ -38,7 +63,7 @@ export class LayerManager {
     _pull(this.layers, layer);
   }
 
-  getLayer(layerId: string) {
+  getLayer(layerId: string): Layer | null {
     return this.layers.find((layer) => layer.id === layerId);
   }
 

@@ -33,8 +33,12 @@ export interface LayerAttrs {
 export interface TiledMapActions {
   // 用于通知外部TiledMap进行了那些操作
   onAddToken: (layerId: string, token: BaseToken) => void;
-  onUpdateToken: (tokenId: string, attrs: Partial<TokenAttrs>) => void;
-  onRemoveToken: (tokenId: string) => void;
+  onUpdateToken: (
+    layerId: string,
+    tokenId: string,
+    attrs: Partial<TokenAttrs>
+  ) => void;
+  onRemoveToken: (layerId: string, tokenId: string) => void;
   onAddLayer: (layer: Layer) => void;
   onUpdateLayer: (layerId: string, attrs: Partial<LayerAttrs>) => void;
   onRemoveLayer: (layerId: string) => void;
