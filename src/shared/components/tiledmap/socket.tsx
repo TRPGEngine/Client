@@ -1,5 +1,5 @@
 import { getInstance } from '@shared/api/trpg.api';
-import { TokenAttrs, TokenData } from './core/types';
+import { TokenData } from './core/types';
 const api = getInstance();
 
 /**
@@ -14,11 +14,13 @@ let currentMapUUID: string;
  * @param mapUUID 地图UUID
  */
 export async function joinMapRoom(mapUUID: string) {
-  const { result, mapData } = await api.emitP('trpg::joinMapRoom', { mapUUID });
-
-  if (result === false) {
-    throw new Error('加入房间失败');
-  }
+  const { mapData } = await api
+    .emitP('trpg::joinMapRoom', {
+      mapUUID,
+    })
+    .catch((msg) => {
+      throw new Error('加入房间失败: ' + msg);
+    });
 
   currentMapUUID = mapUUID;
   return mapData;
@@ -27,15 +29,18 @@ export async function joinMapRoom(mapUUID: string) {
 export type UpdateType = 'add' | 'update' | 'remove';
 export interface UpdateTokenPayload {
   add: {
+    jwt?: string;
     layerId: string;
     token: TokenData;
   };
   update: {
+    jwt?: string;
     layerId: string;
     tokenId: string;
     tokenAttrs: TokenData;
   };
   remove: {
+    jwt?: string;
     layerId: string;
     tokenId: string;
   };

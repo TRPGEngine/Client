@@ -17,6 +17,7 @@ import { handleError } from '@portal/utils/error';
 import { PlusOutlined } from '@ant-design/icons';
 import { TiledMapManager } from '@shared/components/tiledmap/core/manager';
 import { ActorToken } from '@shared/components/tiledmap/layer/token/ActorToken';
+import { checkToken, getToken } from '@portal/utils/auth';
 
 const Panel = Collapse.Panel;
 
@@ -45,7 +46,7 @@ const AppendTokenAction: React.FC<{
           max={width + 1}
           precision={0}
         />
-        <span>,</span>
+        <span style={{ margin: 4 }}>x</span>
         <InputNumber
           value={y}
           onChange={setY}
@@ -83,6 +84,7 @@ interface Props
   }> {}
 const MapEditor: React.FC<Props> = React.memo((props) => {
   const { groupUUID, mapUUID } = props.match.params;
+  const [jwt, setJWT] = useState<string>();
   const [actors, setActors] = useState<GroupActorItem[]>([]);
   const tiledMapManagerRef = useRef<TiledMapManager>();
 
@@ -91,6 +93,11 @@ const MapEditor: React.FC<Props> = React.memo((props) => {
       console.warn('没有获取到团UUID');
       return;
     }
+
+    checkToken()
+      .then(() => getToken())
+      .then((jwt) => setJWT(jwt));
+
     fetchGroupActorList(groupUUID)
       .then((list) => setActors(list))
       .catch(handleError);
@@ -98,8 +105,6 @@ const MapEditor: React.FC<Props> = React.memo((props) => {
 
   const handleAddToken = useCallback(
     (actor: GroupActorItem, x: number, y: number) => {
-      // TODO
-      console.log(actor, x, y);
       const groupActorUUID = actor.uuid;
 
       const actorToken = new ActorToken();
@@ -119,8 +124,11 @@ const MapEditor: React.FC<Props> = React.memo((props) => {
   }, []);
 
   const tiledMapEl = useMemo(
-    () => <TiledMap mapUUID={mapUUID} mode="edit" onLoad={handleLoad} />,
-    [mapUUID]
+    () =>
+      jwt && (
+        <TiledMap mapUUID={mapUUID} jwt={jwt} mode="edit" onLoad={handleLoad} />
+      ),
+    [mapUUID, jwt]
   );
 
   const tokenPickerEl = useMemo(
@@ -154,7 +162,7 @@ const MapEditor: React.FC<Props> = React.memo((props) => {
 
   return (
     <SplitPane split="vertical" primary="second" defaultSize={300}>
-      <div>{tiledMapEl}</div>
+      <div style={{ height: '100%' }}>{tiledMapEl}</div>
       <div>{tokenPickerEl}</div>
     </SplitPane>
   );

@@ -35,7 +35,7 @@ export class API {
     return new Promise((resolve, reject) => {
       this.emit(event, data, (res) => {
         if (res.result === false) {
-          reject(res.message);
+          reject(res.msg);
         } else {
           resolve(res);
         }

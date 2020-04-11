@@ -52,7 +52,7 @@ function useTestTokenBtn(
   tiledMapManagerRef: React.MutableRefObject<TiledMapManager>,
   mode: TiledMapMode
 ) {
-  const [isDebug] = useLocalStorage('tiledMapDebug', false);
+  const [isDebug] = useLocalStorage('__tiledMapDebug', false);
   const testTokenRefs = useRef<BaseToken[]>([]);
   const handleAppendToken = useCallback(() => {
     const name = Math.random()
@@ -97,6 +97,7 @@ function useTestTokenBtn(
 
 interface TiledMapProps {
   mapUUID: string;
+  jwt?: string; // 授权
   mode?: TiledMapMode;
   onLoad?: (manager: TiledMapManager) => void;
 }
@@ -104,21 +105,25 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
   const canvasRef = useRef<HTMLCanvasElement>();
   const tiledMapManagerRef = useRef<TiledMapManager>();
 
-  const { mapUUID, mode, onLoad } = props;
+  const { mapUUID, jwt, mode, onLoad } = props;
 
   useEffect(() => {
     if (_isNil(mapUUID)) {
       return;
     }
 
-    joinMapRoom(mapUUID).then((mapData) => {
-      message.success(`连接地图 ${mapUUID} 成功`);
-      const manager = tiledMapManagerRef.current;
-      registerMapEventListener(mapUUID, manager.handleReceiveModifyToken);
+    joinMapRoom(mapUUID)
+      .then((mapData) => {
+        message.success(`连接地图 ${mapUUID} 成功`);
+        const manager = tiledMapManagerRef.current;
+        registerMapEventListener(mapUUID, manager.handleReceiveModifyToken);
 
-      // 应用地图数据
-      manager.applyMapData(mapData);
-    });
+        // 应用地图数据
+        manager.applyMapData(mapData);
+      })
+      .catch((e) => {
+        message.error(String(e));
+      });
   }, [mapUUID]);
 
   useEffect(() => {
@@ -135,15 +140,26 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
       actions: {
         onAddToken(layerId, token) {
           console.log('addToken', token);
-          updateToken('add', { layerId, token: token.getData() });
+          updateToken('add', {
+            jwt,
+            layerId,
+            token: token.getData(),
+          }).catch((e) => message.error(e));
         },
         onUpdateToken(layerId, tokenId, tokenAttrs) {
           console.log('updateToken', tokenId, tokenAttrs);
-          updateToken('update', { layerId, tokenId, tokenAttrs });
+          updateToken('update', {
+            jwt,
+            layerId,
+            tokenId,
+            tokenAttrs,
+          }).catch((e) => message.error(e));
         },
         onRemoveToken(layerId, tokenId) {
           console.log('updateToken', tokenId);
-          updateToken('remove', { layerId, tokenId });
+          updateToken('remove', { jwt, layerId, tokenId }).catch((e) =>
+            message.error(e)
+          );
         },
         onAddLayer(layer) {
           // TODO
