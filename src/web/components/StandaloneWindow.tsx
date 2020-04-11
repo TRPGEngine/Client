@@ -12,7 +12,7 @@ export interface StandaloneWindowConfig {
   title?: string;
   body: ReactNode;
   onMinimize?: () => void;
-  onClose?: () => void;
+  onClose?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 const Container = styled.div`
@@ -151,7 +151,8 @@ StandaloneWindow.open = (config) => {
   ReactDOM.render(
     <StandaloneWindow
       {...config}
-      onClose={() => {
+      onClose={(e) => {
+        e.stopPropagation();
         destroy();
         _isFunction(config.onClose) && config.onClose();
       }}
