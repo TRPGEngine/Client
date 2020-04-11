@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, Fragment } from 'react';
 import config from '@shared/project.config';
 import { showProfileCard, switchMenuPannel } from '@shared/redux/actions/ui';
 import SlidePanel from '../../components/SlidePanel';
@@ -12,6 +12,7 @@ import {
   useTRPGSelector,
   useTRPGDispatch,
 } from '@shared/hooks/useTRPGSelector';
+import _get from 'lodash/get';
 
 import './MenuPannel.scss';
 import Avatar from '@web/components/Avatar';
@@ -60,6 +61,17 @@ export const MenuPannel: React.FC<Props> = TMemo((props) => {
     [dispatch, menus]
   );
 
+  const menuPanelEl = useMemo(() => {
+    return (
+      <Fragment>
+        {selectedPannel ||
+          _get(menus, [selectedMenuIndex, 'component']) ||
+          null}
+        <SlidePanel />
+      </Fragment>
+    );
+  }, [selectedPannel, _get(menus, [selectedMenuIndex, 'component'])]);
+
   return (
     <div className={props.className}>
       <div className="sidebar">
@@ -87,10 +99,7 @@ export const MenuPannel: React.FC<Props> = TMemo((props) => {
         </div>
         <ExtraOptions />
       </div>
-      <div className="menu-panel">
-        {selectedPannel || menus[selectedMenuIndex].component || null}
-        <SlidePanel />
-      </div>
+      <div className="menu-panel">{menuPanelEl}</div>
     </div>
   );
 });
