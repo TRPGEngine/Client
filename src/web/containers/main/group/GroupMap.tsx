@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useAlphaUser } from '@shared/hooks/useAlphaUser';
 import IsDeveloping from '@web/components/IsDeveloping';
-import { useCurrentGroupInfo } from '@app/redux/hooks/useCurrentGroupInfo';
+import { useCurrentGroupInfo } from '@shared/redux/hooks/useCurrentGroupInfo';
 import _isEmpty from 'lodash/isEmpty';
 import { Button, Card } from 'antd';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
