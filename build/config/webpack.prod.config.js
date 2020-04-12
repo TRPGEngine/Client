@@ -41,5 +41,8 @@ if (_.get(process, 'env.npm_config_report', false)) {
 
 module.exports = webpackMerge({}, base, {
   mode: 'production',
+  output: {
+    filename: '[name].[contenthash].js',
+  },
   plugins: [...plugins, new OfflinePlugin()],
 });

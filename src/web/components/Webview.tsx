@@ -3,9 +3,20 @@ import config from '@shared/project.config';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import './Webview.scss';
+import { Result } from 'antd';
 
 let webframeIndex = 0;
 const isElectron = config.platform === 'electron';
+
+function WebviewError(props: { message?: string }) {
+  return (
+    <Result
+      status="warning"
+      title="页面无法正常打开"
+      subTitle={props.message}
+    />
+  );
+}
 
 interface Props {
   src: string;
@@ -18,6 +29,11 @@ class Webview extends React.Component<Props> {
 
   static defaultProps: Partial<Props> = {
     allowExopen: false,
+  };
+
+  state = {
+    isError: false,
+    errorMsg: '',
   };
 
   constructor(props: Props) {
@@ -52,7 +68,21 @@ class Webview extends React.Component<Props> {
     window.open(this.webframe.src, 'square', 'frame=true');
   }
 
+  handleLoad = (e: React.SyntheticEvent<HTMLIFrameElement, Event>) => {
+    try {
+      // 尝试访问iframe内的窗口，如果访问失败则认为出现错误
+      console.log(e.currentTarget.contentWindow);
+    } catch (err) {
+      console.warn(err);
+      this.setState({ isError: true, errorMsg: err.message });
+    }
+  };
+
   render() {
+    if (this.state.isError) {
+      return <WebviewError message={this.state.errorMsg} />;
+    }
+
     return (
       <div className="webview" id={this.id}>
         {this.props.allowExopen && (
@@ -67,7 +97,9 @@ class Webview extends React.Component<Props> {
         {isElectron ? (
           <webview ref={(ref) => (this.webframe = ref as any)} />
         ) : (
-          <iframe ref={(ref) => (this.webframe = ref)} />
+          <iframe ref={(ref) => (this.webframe = ref)} onLoad={this.handleLoad}>
+            <p>请使用现代浏览器打开本页面</p>
+          </iframe>
         )}
       </div>
     );

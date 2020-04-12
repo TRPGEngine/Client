@@ -50,9 +50,10 @@ $ npm run package # 打包当前平台的pc端文件
 - 移动版开发进度：内部开发版。属于一个尚不可用的状态。
 
 ## 关于环境变量
-- `PLATFORM` : 编译的平台, 可选:`web`, `app`, `electron`, 默认为`web`
-- `NODE_ENV` : 编译环境, 可选:`production`, `development`, 默认为`development`
-- `TRPG_HOST` : 编译指定的后端服务端地址, 默认值:(编译环境`development`为`127.0.0.1`, `production`为`trpgapi.moonrailgun.com`)
+- `PLATFORM`: 编译的平台, 可选:`web`, `app`, `electron`, 默认为`web`
+- `NODE_ENV`: 编译环境, 可选:`production`, `development`, 默认为`development`
+- `TRPG_HOST`: 编译指定的后端服务端地址, 默认值:(编译环境`development`为`127.0.0.1`, `production`为`trpgapi.moonrailgun.com`)
+- `ASSET_PATH`: 资源文件路径, 默认为`/`。用于指定打包出来的资源的cdn地址。如`//static3.moonrailgun.com/`
 
 ## NPM命令解释
 详见package.json

@@ -2,7 +2,11 @@ import React, { ComponentType, ReactNode } from 'react';
 import { TagProps, AstNode } from './type';
 import { parse } from '@bbob/parser';
 import _last from 'lodash/last';
+import _get from 'lodash/get';
 import _has from 'lodash/has';
+import _isObject from 'lodash/isObject';
+import _isArray from 'lodash/isArray';
+import _isEmpty from 'lodash/isEmpty';
 
 /**
  * 通用的bbcode解释器
@@ -77,7 +81,30 @@ class BBCodeParser {
 
   // 将bbcode字符串转化为AstNode
   parse(input: string): AstNode[] {
-    return parse(input, this.options);
+    try {
+      return parse(input, this.options).map((node: any) => {
+        if (_isObject(node)) {
+          const content = _get(node, 'content');
+          const attrs = _get(node, 'attrs');
+
+          if (_isEmpty(attrs) && _isArray(content) && content.length === 0) {
+            // 如果是[text]这种格式的话会被误解析成一个节点
+            // 做一下特殊处理
+            // NOTICE: 这种处理方式会将[url][/url]解析成字符串[url]
+            // 最好的解决方案是自己写一个BBCode的词法解释器
+            const tag = _get(node, 'tag');
+            if (typeof tag === 'string') {
+              return `[${tag}]`;
+            }
+          }
+        }
+
+        return node;
+      });
+    } catch (e) {
+      console.warn(e);
+      return [];
+    }
   }
 
   render(input: string): ReactNode[] {

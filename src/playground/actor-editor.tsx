@@ -7,9 +7,7 @@ import React, {
   useEffect,
 } from 'react';
 import styled from 'styled-components';
-import SplitPane from 'react-split-pane';
 import MonacoEditor, { EditorDidMount } from 'react-monaco-editor';
-import './split-pane.css';
 import { editor, IPosition, KeyMod, KeyCode } from 'monaco-editor';
 import { useLocalStorage, useCounter } from 'react-use';
 import XMLBuilder, {
@@ -20,12 +18,17 @@ import ReactJson from 'react-json-view';
 import copy from 'copy-to-clipboard';
 import LZString from 'lz-string';
 import { Block } from './components/Block';
+import _isNil from 'lodash/isNil';
+import _find from 'lodash/find';
 import _debounce from 'lodash/debounce';
 import { SyncOutlined } from '@ant-design/icons';
 import { Select, message, Button, Checkbox, Tooltip } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { registerLayoutCodeSuggest } from './editor/suggestions';
-import { exampleLayout } from './editor/example';
+import { exampleLayout, workingLabel } from './editor/example';
+import config from '@shared/project.config';
+import SplitPane from '@shared/components/web/SplitPane';
+
 const { Option } = Select;
 
 declare module 'antd/lib/select' {
@@ -87,6 +90,17 @@ const ActorEditor = React.memo(() => {
     }
   }, []);
 
+  useEffect(() => {
+    if (config.environment === 'development') {
+      // 如果是开发模式，则强制加载正在工作的布局
+      const workingLayout = _find(exampleLayout, ['label', workingLabel]);
+      if (!_isNil(workingLayout)) {
+        setCode(workingLayout.value);
+        incRenderKey();
+      }
+    }
+  }, []);
+
   const onEditorDidMount: EditorDidMount = useCallback((editor) => {
     editorRef.current = editor;
     editor.focus();
@@ -97,14 +111,10 @@ const ActorEditor = React.memo(() => {
     });
   }, []);
 
-  const handleSelectLayout = useCallback(
-    (value: string, option: any) => {
-      const xml = option.props.xml;
-
-      setCode(xml);
-    },
-    []
-  );
+  const handleSelectLayout = useCallback((value: string, option: any) => {
+    const xml = option.props.xml;
+    setCode(xml);
+  }, []);
   const handleResetCode = useCallback(() => {
     setCode(initCode);
   }, []);

@@ -6,15 +6,15 @@ import {
   getRectWithSize,
   isPositionInsizeRect,
 } from '../core/utils';
-import { Token } from '../layer/token';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import { Position, Size, Rect } from '../core/types';
 import { drawSelectionRect, drawSelectedTokenRect } from '../draw/rect';
+import { BaseToken } from '../layer/token/BaseToken';
 
 type HandlerType = 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom';
 interface ClickedHander {
-  token: Token;
+  token: BaseToken;
   type: HandlerType;
 }
 
@@ -74,7 +74,6 @@ export class TiledMapToolSelect extends TiledMapToolBase {
    * 鼠标点击操作事件
    */
   action(ctx: ActionContext): void {
-    const { ratio, mouseCanvasPos, gridSize } = ctx;
     const currentTokens = ctx.manager.selectedToken;
 
     const clickedHandler = this.checkClickAnyHandler(ctx);
@@ -92,6 +91,9 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     }
   }
 
+  /**
+   * 框选与点选
+   */
   handleNormalAction(ctx: ActionContext) {
     const { el, ratio, mouseCanvasPos, gridSize } = ctx;
     let isMoved = false;
@@ -131,6 +133,7 @@ export class TiledMapToolSelect extends TiledMapToolBase {
 
           ctx.manager.selectedToken = tokens;
         } else {
+          // 点选
           const selectToken = this.getSelectToken(ctx);
 
           if (_isNil(selectToken)) {
@@ -166,8 +169,16 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     el.addEventListener('mouseenter', handleMouseEnter);
   }
 
+  /**
+   * 修改Token大小
+   */
   handleResizeAction(ctx: ActionContext, clickedHandler: ClickedHander) {
-    const { el, ratio, mouseCanvasPos, gridSize } = ctx;
+    const { el, ratio, mouseCanvasPos, gridSize, manager } = ctx;
+    if (manager.editable === false) {
+      // 不允许resize
+      return;
+    }
+
     const { token, type: handlerType } = clickedHandler;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -213,7 +224,12 @@ export class TiledMapToolSelect extends TiledMapToolBase {
       ctx.render.draw();
     };
 
-    const handleMouseUp = (e) => {
+    const handleMouseUp = (e: MouseEvent) => {
+      // resize操作可能会同时更新两个位置和大小。因此需要都通知
+      manager.updateToken(token.id, {
+        gridAreaSize: token.gridAreaSize,
+        gridPosition: token.gridPosition,
+      });
       el.removeEventListener('mousemove', handleMouseMove);
       el.removeEventListener('mouseup', handleMouseUp);
       el.removeEventListener('mouseleave', handleMouseUp);
@@ -224,11 +240,21 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     el.addEventListener('mouseleave', handleMouseUp);
   }
 
+  /**
+   * 移动token
+   */
   handleMoveAction(ctx: ActionContext) {
-    const { el, gridSize, mouseCanvasPos } = ctx;
+    const { el, gridSize, mouseCanvasPos, manager } = ctx;
+
+    if (manager.editable === false) {
+      // 不允许移动Token
+      return;
+    }
+
     const currentTokens = ctx.manager.selectedToken;
 
     let startPos = px2gridPos(mouseCanvasPos, gridSize);
+    let moved = false;
 
     const handleMouseMove = (e: MouseEvent) => {
       const curPos = ctx.render.transformMousePosToCanvasPos({
@@ -250,6 +276,7 @@ export class TiledMapToolSelect extends TiledMapToolBase {
 
       if (deltaPos.x !== 0 || deltaPos.y !== 0) {
         // 发生了位移。重置起始点
+        moved = true;
         startPos = px2gridPos(curPos, gridSize);
       }
 
@@ -257,6 +284,12 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     };
 
     const handleMouseUp = (e) => {
+      if (moved) {
+        // 仅发生位移后会通知
+        for (const token of currentTokens) {
+          manager.updateToken(token.id, { gridPosition: token.gridPosition });
+        }
+      }
       el.removeEventListener('mousemove', handleMouseMove);
       el.removeEventListener('mouseup', handleMouseUp);
       el.removeEventListener('mouseleave', handleMouseUp);
@@ -363,7 +396,7 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     return false;
   }
 
-  getSelectToken(ctx: ActionContext): Token {
+  getSelectToken(ctx: ActionContext): BaseToken {
     const { mouseCanvasPos, gridSize } = ctx;
     // 获取当前鼠标选中的Token
     const gridPos = px2gridPos(mouseCanvasPos, gridSize);

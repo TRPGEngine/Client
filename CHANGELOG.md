@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/TRPGEngine/Client/compare/v0.2.30...v0.3.0) (2020-04-12)
+
+
+### Features
+
+* **portal:** 优化了错误提示。防止应用崩溃时一片白屏 ([b32be36](https://github.com/TRPGEngine/Client/commit/b32be366d04d2fc240b320d745a99cc82a18d4ae))
+* **portal:** 增加图片声明 ([8d1c78c](https://github.com/TRPGEngine/Client/commit/8d1c78c94074bd612a738ba84cba0c550e4b0a19))
+* **portal:** 增加地图编辑路由与团人物卡列表 ([d2bea0e](https://github.com/TRPGEngine/Client/commit/d2bea0ef88298927a1e3bcdaadbebca59ff8b419))
+* **tiledmap:** 增加jwt作为鉴权传输 ([1a7d7c7](https://github.com/TRPGEngine/Client/commit/1a7d7c7c131a3a636843729a921b0d0befb463f5))
+* **tiledmap:** 增加socket的事件处理与地图更新 ([79c35e8](https://github.com/TRPGEngine/Client/commit/79c35e85dda3f7cea9000763bcfecb255648165d))
+* **tiledmap:** 增加tiledmap不同的操作模式 ([6b95521](https://github.com/TRPGEngine/Client/commit/6b955216a4ae4a42f345f02a27d3d00f674f1255))
+* **tiledmap:** 增加一个ActorToken 棋子类型 ([cad128e](https://github.com/TRPGEngine/Client/commit/cad128e3ac357c60bd0208354e677a8fe69a2167))
+* **tiledmap:** 增加移除选中棋子的功能 ([baeef5f](https://github.com/TRPGEngine/Client/commit/baeef5f85f793481c9cb6085f00165690d9ff8ff))
+* **web:** 在系统状态中获取当前SocketId ([0ecf9a9](https://github.com/TRPGEngine/Client/commit/0ecf9a9f26cd65238f1a849ac64f18f879c06bd2))
+* **web:** 增加内测用户状态切换 ([f4b41ac](https://github.com/TRPGEngine/Client/commit/f4b41ac758ccfccc054508e240ecd6ab158be5f2))
+* **web:** 增加团地图的创建与获取 ([d351530](https://github.com/TRPGEngine/Client/commit/d351530cef6cf9ff2c417a074c6f8020821dfdee))
+* **web:** 增加团编辑地图的入口 ([ab3b67e](https://github.com/TRPGEngine/Client/commit/ab3b67e8834be57fe0858c8e030bacb2e9d4922e))
+* **web:** 增加地图入口 ([95c4215](https://github.com/TRPGEngine/Client/commit/95c42152dac036d530567508fe40507d0470ab74))
+* **web:** 将网络状态与版本号收在主面板能显示 ([e9a175b](https://github.com/TRPGEngine/Client/commit/e9a175b280e03c5218006e3091fe5b34d8a90f9a))
+
+
+### Bug Fixes
+
+* 修复在某些情况下当没有设置图片头像时会无法正常显示字母头像的问题 ([22a6716](https://github.com/TRPGEngine/Client/commit/22a6716065f78b205364090693d379518c1f7a5c))
+* 修复文本中带有中括号无法正常显示的问题 ([801dc80](https://github.com/TRPGEngine/Client/commit/801dc8015e25968a6c9c405f2b930b8cca61d502))
+
 ### [0.2.30](https://github.com/TRPGEngine/Client/compare/v0.2.29...v0.2.30) (2020-03-29)
 
 

@@ -17,22 +17,34 @@
 
   .profile {
     padding: 0 10px;
+    padding-bottom: 18px;
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    position: relative;
     .avatar {
       border-radius: 50%;
       overflow: hidden;
       cursor: pointer;
       border: 3px solid white;
-      width: 55px;
-      height: 55px;
-      min-width: 55px;
-      min-height: 55px;
+      width: 56px;
+      height: 56px;
+      min-width: 56px;
+      min-height: 56px;
       img {
         width: 100%;
         height: 100%;
         display: block;
       }
+    }
+
+    .network-status {
+      font-size: 9px;
+      line-height: 13px;
+      position: absolute;
+      text-align: center;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
   }
 

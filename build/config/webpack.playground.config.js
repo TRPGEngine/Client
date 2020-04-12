@@ -7,6 +7,7 @@ process.env.TRPG_APP_NAME = 'Playground';
 const webpackMerge = require('webpack-merge');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const path = require('path');
+const url = require('url');
 const _ = require('lodash');
 const base = require('./webpack.base.config.js');
 const OfflinePlugin = require('offline-plugin');
@@ -14,7 +15,8 @@ const OfflinePlugin = require('offline-plugin');
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const DIST_PATH = path.resolve(ROOT_PATH, 'dist/playground');
-const ASSET_PATH = '/playground/';
+const ASSET_PATH = process.env.ASSET_PATH || '/';
+const publicPath = url.resolve(ASSET_PATH, '/playground/');
 
 const dllConfig = require('./dll/vendor-manifest.json');
 const dllHashName = 'dll_' + dllConfig.name;
@@ -28,7 +30,7 @@ const config = webpackMerge({}, base, {
 
   output: {
     path: DIST_PATH,
-    publicPath: ASSET_PATH,
+    publicPath,
   },
 
   // NOTICE: 会报错。不知道为什么。
@@ -42,7 +44,7 @@ const config = webpackMerge({}, base, {
     historyApiFallback: {
       rewrites: [
         { from: `${dllHashName}.js`, to: `/playground/${dllHashName}.js` },
-        { from: /.*/, to: `${ASSET_PATH}index.html` },
+        { from: /.*/, to: url.resolve(publicPath, 'index.html') },
       ],
     },
     hot: true,

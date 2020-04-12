@@ -1,117 +1,163 @@
-import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import React, { useMemo, useCallback, useRef, useEffect } from 'react';
 import config from '@shared/project.config';
 import { shouleEmphasizeTime } from '@shared/utils/date-helper';
 import scrollTo from '@shared/utils/animated-scroll-to';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
 import { getMoreChatLog } from '@shared/redux/actions/chat';
-import { TRPGState } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _head from 'lodash/head';
+import _isNil from 'lodash/isNil';
 import _orderBy from 'lodash/orderBy';
-import { UserInfo } from '@redux/types/user';
 import { MsgListContextProvider } from '@shared/context/MsgListContext';
 
 import MessageHandler from './messageTypes/__all__';
 
 import './MsgContainer.scss';
+import { TMemo } from '@shared/components/TMemo';
+import {
+  useTRPGSelector,
+  useTRPGDispatch,
+} from '@shared/hooks/useTRPGSelector';
+import { usePrevious } from 'react-use';
 
-interface Props extends DispatchProp<any> {
-  msgList: any[];
-  nomore: boolean;
-  converseUUID: string;
-  userUUID: string;
+interface Props {
   className?: string;
+  converseUUID: string;
   isGroup: boolean;
-  selfInfo: Partial<UserInfo>;
 }
-class MsgContainer extends React.Component<Props> {
-  isSeekingLog = false;
-  containerRef: HTMLDivElement;
-
-  componentDidMount() {
-    if (this.props.msgList.length === 0) {
-      this.setState({ nomore: true });
-    } else {
-      this.setState({ nomore: false });
+export const MsgContainer: React.FC<Props> = TMemo((props) => {
+  const { className, converseUUID, isGroup } = props;
+  const converse = useTRPGSelector(
+    (state) => state.chat.converses[converseUUID]
+  );
+  const msgList = useMemo(() => {
+    if (_isNil(converse.msgList)) {
+      return [];
     }
-  }
+    return _orderBy(converse.msgList, (item) => new Date(item.date));
+  }, [converse.msgList]);
+  const nomore = converse.nomore;
+  const selfInfo = useTRPGSelector((state) => state.user.info);
+  const userUUID = selfInfo.uuid;
+  const dispatch = useTRPGDispatch();
+  const containerRef = useRef<HTMLDivElement>();
+  const isSeekingLogRef = useRef(false);
 
-  componentWillReceiveProps(nextProps) {
-    if (
-      _head(this.props.msgList) &&
-      _head(nextProps.msgList) &&
-      _head<any>(nextProps.msgList).date !== _head(this.props.msgList).date
-    ) {
-      // 加载更多
-      if (this.containerRef) {
-        let bottomDis =
-          this.containerRef.scrollHeight - this.containerRef.scrollTop;
+  const msgListNode = useMemo(() => {
+    return msgList.map((item, index) => {
+      const arr = msgList;
+      const prevDate = index > 0 ? _get(arr, [index - 1, 'date']) : 0;
+      const senderUUID = item.sender_uuid;
+      const isMe = userUUID === senderUUID;
+      const senderInfo = isMe ? selfInfo : getUserInfoCache(senderUUID);
+      const name = senderInfo.nickname || senderInfo.username;
+      const avatar = senderInfo.avatar;
+      const defaultAvatar =
+        item.sender_uuid === 'trpgsystem'
+          ? config.defaultImg.trpgsystem
+          : config.defaultImg.getUser(name);
+      const date = item.date;
+
+      const emphasizeTime = shouleEmphasizeTime(prevDate, date);
+
+      return (
+        <MessageHandler
+          key={item.uuid}
+          type={item.type}
+          me={isMe}
+          name={name}
+          avatar={avatar || defaultAvatar}
+          emphasizeTime={emphasizeTime}
+          info={item}
+        />
+      );
+    });
+  }, [msgList, selfInfo, userUUID]);
+
+  // 处理图片的onLoad
+  const handleContainerLoad = useCallback(
+    (e: React.SyntheticEvent<HTMLDivElement, Event>) => {
+      const el = e.currentTarget;
+      if (isSeekingLogRef.current === true) {
+        return;
+      }
+
+      if (
+        el &&
+        el.nodeName.toLowerCase() === 'img' &&
+        el.getAttribute('role') === 'chatimage'
+      ) {
+        // 仅当加载完毕的元素为聊天图片时
+        // 进度条滚动到底部
         setTimeout(() => {
-          this.containerRef.scrollTop =
-            this.containerRef.scrollHeight - bottomDis;
+          scrollTo.bottom(containerRef.current, 100);
         }, 0);
       }
-    }
-  }
+    },
+    [isSeekingLogRef, containerRef]
+  );
 
-  componentDidUpdate() {
-    if (this.isSeekingLog === true) {
+  const handleContainerScroll = useCallback(
+    (e: React.UIEvent<HTMLDivElement>) => {
+      const el = e.currentTarget;
+      const distance = el.scrollHeight - el.scrollTop - el.offsetHeight; // 滚动条距离底部的距离
+      if (distance <= 20) {
+        // 滚动容器接触到底部
+        isSeekingLogRef.current = false;
+      } else {
+        // 翻阅聊天记录
+        isSeekingLogRef.current = true;
+      }
+    },
+    [isSeekingLogRef]
+  );
+
+  // 获取更多聊天记录
+  const prevBottomDistanceRef = useRef(0);
+  const handleGetMoreLog = useCallback(() => {
+    prevBottomDistanceRef.current =
+      containerRef.current.scrollHeight - containerRef.current.scrollTop; // 记录位置
+    const date = _head(msgList).date;
+    dispatch(getMoreChatLog(converseUUID, date, !isGroup));
+    isSeekingLogRef.current = true;
+  }, [msgList, converseUUID, dispatch, isSeekingLogRef, isGroup, containerRef]);
+
+  useEffect(() => {
+    // msgList变化后自动滚动到底部
+    if (isSeekingLogRef.current === true) {
       return;
     }
 
     // 进度条滚动到底部
     setTimeout(() => {
-      scrollTo.bottom(this.containerRef, 100);
+      scrollTo.bottom(containerRef.current, 100);
     }, 0);
-  }
+  }, [msgList, isSeekingLogRef, containerRef]);
 
-  /**
-   * 处理加载更多时间
-   */
-  handleGetMoreLog() {
-    const date = _head(this.props.msgList).date;
-    const { converseUUID } = this.props;
-    this.props.dispatch(
-      getMoreChatLog(converseUUID, date, !this.props.isGroup)
-    );
-    this.isSeekingLog = true;
-  }
-
-  handleContainerLoad(el) {
-    if (this.isSeekingLog === true) {
-      return;
-    }
-
+  const prevMsgList = usePrevious(msgList);
+  useEffect(() => {
     if (
-      el &&
-      el.nodeName.toLowerCase() === 'img' &&
-      el.getAttribute('role') === 'chatimage'
+      _head(prevMsgList) &&
+      _head(msgList) &&
+      _head(msgList).date !== _head(prevMsgList).date
     ) {
-      // 仅当加载完毕的元素为聊天图片时
-      // 进度条滚动到底部
-      setTimeout(() => {
-        scrollTo.bottom(this.containerRef, 100);
-      }, 0);
+      // 加载更多
+      if (containerRef.current) {
+        setTimeout(() => {
+          containerRef.current.scrollTop =
+            containerRef.current.scrollHeight - prevBottomDistanceRef.current;
+        }, 0);
+      }
     }
-  }
+  }, [msgList, prevMsgList, containerRef, prevBottomDistanceRef]);
 
-  handleContainerScroll(el) {
-    if (el.scrollHeight - el.scrollTop <= el.offsetHeight) {
-      console.log('滚动容器接触到底部!');
-      this.isSeekingLog = false;
-    }
-  }
-
-  render() {
-    const { className, userUUID, msgList, nomore } = this.props;
-
-    return (
+  return useMemo(
+    () => (
       <div
         className={'msg-container ' + className}
-        ref={(ref) => (this.containerRef = ref)}
-        onLoad={(e) => this.handleContainerLoad(e.target)}
-        onScroll={(e) => this.handleContainerScroll(e.target)}
+        ref={containerRef}
+        onLoad={handleContainerLoad}
+        onScroll={handleContainerScroll}
       >
         {nomore || msgList.length < 10 ? (
           <button
@@ -122,64 +168,26 @@ class MsgContainer extends React.Component<Props> {
             没有更多记录了
           </button>
         ) : (
-          <button
-            className="get-more-log-btn"
-            onClick={() => this.handleGetMoreLog()}
-          >
+          <button className="get-more-log-btn" onClick={handleGetMoreLog}>
             点击获取更多记录
           </button>
         )}
         <div className="msg-items">
           <MsgListContextProvider msgList={msgList}>
-            {msgList.map((item, index) => {
-              const arr = msgList;
-              const prevDate = index > 0 ? _get(arr, [index - 1, 'date']) : 0;
-              const senderUUID = item.sender_uuid;
-              const isMe = userUUID === senderUUID;
-              const senderInfo = isMe
-                ? this.props.selfInfo
-                : getUserInfoCache(senderUUID);
-              const name = senderInfo.nickname || senderInfo.username;
-              const avatar = senderInfo.avatar;
-              const defaultAvatar =
-                item.sender_uuid === 'trpgsystem'
-                  ? config.defaultImg.trpgsystem
-                  : config.defaultImg.getUser(name);
-              const date = item.date;
-
-              const emphasizeTime = shouleEmphasizeTime(prevDate, date);
-
-              return (
-                <MessageHandler
-                  key={item.uuid}
-                  type={item.type}
-                  me={isMe}
-                  name={name}
-                  avatar={avatar || defaultAvatar}
-                  emphasizeTime={emphasizeTime}
-                  info={item}
-                />
-              );
-            })}
+            {msgListNode}
           </MsgListContextProvider>
         </div>
       </div>
-    );
-  }
-}
-
-export default connect((state: TRPGState, ownProps: any) => {
-  const converseUUID = ownProps.converseUUID;
-  const msgList = _get(state, ['chat', 'converses', converseUUID, 'msgList']);
-
-  return {
-    msgList: msgList && _orderBy(msgList, (item) => new Date(item.date)),
-    nomore: _get(state, ['chat', 'converses', converseUUID, 'nomore'], false),
-    userUUID: _get(state, ['user', 'info', 'uuid']),
-    selfInfo: state.user.info,
-    friendRequests: state.user.friendRequests,
-    friendList: state.user.friendList,
-    groupInvites: state.group.invites,
-    groupUUIDList: state.group.groups.map((item) => item.uuid),
-  };
-})(MsgContainer);
+    ),
+    [
+      nomore,
+      msgList,
+      className,
+      containerRef,
+      handleContainerLoad,
+      handleContainerScroll,
+      handleGetMoreLog,
+    ]
+  );
+});
+MsgContainer.displayName = 'MsgContainer';

@@ -2,6 +2,33 @@ import { API } from './socket-api';
 import rnStorage from './rn-storage.api';
 import constants from '../redux/constants';
 import { TRPGStore } from '@redux/types/__all__';
+import {
+  changeNetworkStatue,
+  showAlert,
+  updateSocketId,
+} from '@shared/redux/actions/ui';
+import {
+  addMsg,
+  updateMsg,
+  startWriting,
+  stopWriting,
+} from '@shared/redux/actions/chat';
+import { addFriendInvite, loginWithToken } from '@shared/redux/actions/user';
+import {
+  updateGroupStatus,
+  addGroup,
+  updatePlayerSelectedGroupActor,
+  addGroupMember,
+  removeGroupMember,
+  addGroupActor,
+  updateGroupActorInfo,
+  updateGroupActor,
+  updateGroupInfo,
+  updateGroupMapList,
+  addGroupMap,
+} from '@shared/redux/actions/group';
+import { getUserInfoCache } from '@shared/utils/cache-helper';
+
 const { RESET, ADD_FRIEND_SUCCESS } = constants;
 
 export function bindEventFunc(
@@ -9,46 +36,21 @@ export function bindEventFunc(
   store: TRPGStore,
   { onReceiveMessage }: any = {}
 ) {
-  const {
-    changeNetworkStatue,
-    showAlert,
-    updateSocketId,
-  } = require('../redux/actions/ui');
-  const {
-    addMsg,
-    updateMsg,
-    startWriting,
-    stopWriting,
-  } = require('../redux/actions/chat');
-  const { addFriendInvite, loginWithToken } = require('../redux/actions/user');
-  const {
-    updateGroupStatus,
-    addGroup,
-    updatePlayerSelectedGroupActor,
-    addGroupMember,
-    removeGroupMember,
-    addGroupActor,
-    updateGroupActorInfo,
-    updateGroupActor,
-    updateGroupInfo,
-  } = require('../redux/actions/group');
-  const { getUserInfoCache } = require('../utils/cache-helper');
-
   if (!(this instanceof API)) {
     throw new Error('bindEventFunc shound a API object class');
   }
 
   const api = this;
   api.on('chat::message', function(data) {
-    let converseUUID = data.converse_uuid || data.sender_uuid;
+    const converseUUID = data.converse_uuid || data.sender_uuid;
     store.dispatch(addMsg(converseUUID, data));
 
     onReceiveMessage && onReceiveMessage(data);
   });
 
   api.on('chat::updateMessage', function(data) {
-    let converseUUID = data.converseUUID;
-    let payload = data.payload;
+    const converseUUID = data.converseUUID;
+    const payload = data.payload;
     store.dispatch(updateMsg(converseUUID, payload));
   });
 
@@ -65,7 +67,7 @@ export function bindEventFunc(
   });
 
   api.on('player::appendFriend', function(data) {
-    let uuid = data.uuid;
+    const uuid = data.uuid;
     getUserInfoCache(uuid);
     store.dispatch({ type: ADD_FRIEND_SUCCESS, friendUUID: uuid });
   });
@@ -114,12 +116,22 @@ export function bindEventFunc(
       )
     );
   });
+  api.on('trpg::updateGroupMaps', function(data) {
+    const { groupUUID, groupMaps } = data;
+    store.dispatch(updateGroupMapList(groupUUID, groupMaps));
+  });
+  api.on('trpg::addGroupMap', function(data) {
+    const { groupUUID, mapUUID, mapName } = data;
+    store.dispatch(addGroupMap(groupUUID, mapUUID, mapName));
+  });
   api.on('group::addGroupMember', ({ groupUUID, memberUUID }) => {
     store.dispatch(addGroupMember(groupUUID, memberUUID));
   });
   api.on('group::removeGroupMember', ({ groupUUID, memberUUID }) => {
     store.dispatch(removeGroupMember(groupUUID, memberUUID));
   });
+
+  // ------------------------------------------------
 
   // 网络状态管理
   api.on('connect', function(data) {
@@ -139,8 +151,8 @@ export function bindEventFunc(
     const isLogin = store.getState().user.isLogin;
     if (isLogin) {
       (async () => {
-        let uuid = await rnStorage.get('uuid');
-        let token = await rnStorage.get('token');
+        const uuid = await rnStorage.get('uuid');
+        const token = await rnStorage.get('token');
         console.log('正在尝试自动重新登录');
         store.dispatch(loginWithToken(uuid, token));
       })();

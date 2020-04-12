@@ -1,9 +1,14 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, Fragment } from 'react';
 import { TiledMapManager } from './core/manager';
 import './index.less';
-import { ImageToken, Token } from './layer/token';
-import { useKey, useKeyPressEvent } from 'react-use';
+import { useKeyPressEvent, useKey, useLocalStorage } from 'react-use';
 import _isNil from 'lodash/isNil';
+import _isFunction from 'lodash/isFunction';
+import { joinMapRoom, updateToken, registerMapEventListener } from './socket';
+import { message } from 'antd';
+import { TiledMapMode } from './core/types';
+import { BaseToken } from './layer/token/BaseToken';
+import { ImageToken } from './layer/token/ImageToken';
 
 /**
  * 按下空格键临时切换当前道具
@@ -17,7 +22,7 @@ function useTmpToolSwitch(manager: React.MutableRefObject<TiledMapManager>) {
         tmpSwitchRef.current = true;
       }
     }
-  }, []);
+  }, [manager]);
   const handleSpaceKeyup = useCallback(() => {
     if (!_isNil(manager.current) && tmpSwitchRef.current === true) {
       if (manager.current.toolbox.getCurrentToolName() === 'move') {
@@ -25,78 +30,49 @@ function useTmpToolSwitch(manager: React.MutableRefObject<TiledMapManager>) {
         tmpSwitchRef.current = false;
       }
     }
-  }, []);
+  }, [manager]);
   useKeyPressEvent(' ', handleSpaceKeydown, handleSpaceKeyup);
 }
 
-export const TiledMap: React.FC = React.memo((props) => {
-  const canvasRef = useRef<HTMLCanvasElement>();
-  const manager = useRef<TiledMapManager>(null);
-  const tiledMapManagerRef = useRef<TiledMapManager>();
+function useDeleteToken(manager: React.MutableRefObject<TiledMapManager>) {
+  const handler = useCallback(() => {
+    if (_isNil(manager.current)) {
+      return;
+    }
 
-  useEffect(() => {
-    const tiledMapManager = new TiledMapManager(canvasRef.current, {
-      size: {
-        width: 20,
-        height: 15,
-      },
-      gridSize: {
-        width: 40,
-        height: 40,
-      },
-    });
-    tiledMapManagerRef.current = tiledMapManager;
+    manager.current.removeSelectedToken();
+  }, [manager]);
+  useKey('Delete', handler);
+}
 
-    // ------------ test ------------
-    const layer = tiledMapManager.addLayer('人物');
-    const testToken = new ImageToken(
-      '测试人物',
-      'https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2807058697,2434741312&fm=58'
-    );
-    testToken.gridPosition = {
-      x: 2,
-      y: 4,
-    };
-    tiledMapManager.addToken('人物', testToken);
-
-    const layer2 = tiledMapManager.addLayer('背景');
-    layer2.index = -1; // 应在人物下面
-    const testToken2 = new ImageToken(
-      '测试背景',
-      'https://www.dytt8.net/images/m.jpg'
-    );
-    testToken2.gridPosition = {
-      x: 1,
-      y: 1,
-    };
-    tiledMapManager.addToken('背景', testToken2);
-
-    // ------------ test ------------
-
-    manager.current = tiledMapManager;
-  }, []);
-
-  useTmpToolSwitch(manager);
-
-  /**
-   * 测试
-   */
-  const testTokenRefs = useRef<Token[]>([]);
+/**
+ * 测试按钮
+ */
+function useTestTokenBtn(
+  tiledMapManagerRef: React.MutableRefObject<TiledMapManager>,
+  mode: TiledMapMode
+) {
+  const [isDebug] = useLocalStorage('__tiledMapDebug', false);
+  const testTokenRefs = useRef<BaseToken[]>([]);
   const handleAppendToken = useCallback(() => {
     const name = Math.random()
       .toString()
       .substr(2);
-    const token = new ImageToken(
-      name,
-      `https://trpgapi.moonrailgun.com/file/avatar/svg?name=${name}`
-    );
-
+    const token = new ImageToken();
+    token.imageSrc = `https://trpgapi.moonrailgun.com/file/avatar/svg?name=${name}`;
     // 生成随机坐标
     const x = Math.floor(Math.random() * 20);
-    const y = Math.floor(Math.random() * 20);
+    const y = Math.floor(Math.random() * 15);
     token.gridPosition = { x, y };
+    token.buildPromise();
 
-    tiledMapManagerRef.current?.addToken('人物', token);
+    tiledMapManagerRef.current?.addToken(
+      tiledMapManagerRef.current?.getDefaultLayer().id,
+      token
+    );
+    message.success(
+      `增加Token ${token.id} [${token.gridPosition.x},${token.gridPosition.y}]`
+    );
     testTokenRefs.current.push(token);
   }, [tiledMapManagerRef]);
   const handleRemoveToken = useCallback(() => {
@@ -109,11 +85,113 @@ export const TiledMap: React.FC = React.memo((props) => {
   }, [tiledMapManagerRef]);
 
   return (
+    isDebug &&
+    mode === 'edit' && (
+      <Fragment>
+        <button onClick={handleAppendToken}>增加Token</button>
+        <button onClick={handleRemoveToken}>移除Token</button>
+      </Fragment>
+    )
+  );
+}
+
+interface TiledMapProps {
+  mapUUID: string;
+  jwt?: string; // 授权
+  mode?: TiledMapMode;
+  onLoad?: (manager: TiledMapManager) => void;
+}
+export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
+  const canvasRef = useRef<HTMLCanvasElement>();
+  const tiledMapManagerRef = useRef<TiledMapManager>();
+
+  const { mapUUID, jwt, mode, onLoad } = props;
+
+  useEffect(() => {
+    if (_isNil(mapUUID)) {
+      return;
+    }
+
+    joinMapRoom(mapUUID)
+      .then((mapData) => {
+        message.success(`连接地图 ${mapUUID} 成功`);
+        const manager = tiledMapManagerRef.current;
+        registerMapEventListener(mapUUID, manager.handleReceiveModifyToken);
+
+        // 应用地图数据
+        manager.applyMapData(mapData);
+      })
+      .catch((e) => {
+        message.error(String(e));
+      });
+  }, [mapUUID]);
+
+  useEffect(() => {
+    const tiledMapManager = new TiledMapManager(canvasRef.current, {
+      mode, // 只取加载时获取到的mode。不接受修改
+      size: {
+        width: 20,
+        height: 15,
+      },
+      gridSize: {
+        width: 40,
+        height: 40,
+      },
+      actions: {
+        onAddToken(layerId, token) {
+          console.log('addToken', token);
+          updateToken('add', {
+            jwt,
+            layerId,
+            token: token.getData(),
+          }).catch((e) => message.error(e));
+        },
+        onUpdateToken(layerId, tokenId, tokenAttrs) {
+          console.log('updateToken', tokenId, tokenAttrs);
+          updateToken('update', {
+            jwt,
+            layerId,
+            tokenId,
+            tokenAttrs,
+          }).catch((e) => message.error(e));
+        },
+        onRemoveToken(layerId, tokenId) {
+          console.log('updateToken', tokenId);
+          updateToken('remove', { jwt, layerId, tokenId }).catch((e) =>
+            message.error(e)
+          );
+        },
+        onAddLayer(layer) {
+          // TODO
+          console.log('addLayer', layer);
+        },
+        onUpdateLayer(layerId, attrs) {
+          // TODO
+          console.log('updateLayer', layerId, attrs);
+        },
+        onRemoveLayer(layerId) {
+          // TODO
+          console.log('removeLayer', layerId);
+        },
+      },
+    });
+    tiledMapManagerRef.current = tiledMapManager;
+    (window as any).tiledMapManager = tiledMapManager; // debug
+    _isFunction(onLoad) && onLoad(tiledMapManager);
+  }, []);
+
+  useTmpToolSwitch(tiledMapManagerRef);
+  useDeleteToken(tiledMapManagerRef);
+
+  return (
     <div className="tiledmap">
       <canvas ref={canvasRef}>请使用现代浏览器打开本页面</canvas>
-      <button onClick={handleAppendToken}>增加Token</button>
-      <button onClick={handleRemoveToken}>移除Token</button>
+      {useTestTokenBtn(tiledMapManagerRef, mode)}
     </div>
   );
 });
+TiledMap.defaultProps = {
+  mode: 'preview',
+};
+
 TiledMap.displayName = 'TiledMap';

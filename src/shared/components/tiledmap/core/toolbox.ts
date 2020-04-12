@@ -17,6 +17,11 @@ export class Toolbox {
   };
 
   constructor(private _manager: TiledMapManager) {
+    if (_isNil(_manager.el.parentElement)) {
+      console.warn('Cannot render toolbox because of not parent el container');
+      return;
+    }
+
     regAllTool(this);
     this.renderDom(_manager.el.parentElement);
   }

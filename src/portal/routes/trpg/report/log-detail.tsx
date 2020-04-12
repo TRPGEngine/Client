@@ -11,6 +11,25 @@ const Container = styled(animated.div)`
   overflow: hidden;
 `;
 
+const LogDetailContainer: React.FC<{
+  from: number;
+}> = TMemo((props) => {
+  const animationStyle = useSpring({
+    from: {
+      opacity: 0,
+      height: 0,
+      transform: `translate3d(${props.from}px,0,0)`,
+    },
+    to: {
+      opacity: 1,
+      height: 'auto' as any,
+      transform: 'translate3d(0px,0,0)',
+    },
+  });
+
+  return <Container style={{ ...animationStyle }}>{props.children}</Container>;
+});
+
 interface Props {
   playerUUID: string;
   log: ReportLogItem;
@@ -19,27 +38,15 @@ interface Props {
 export const LogDetail: React.FC<Props> = TMemo((props) => {
   const { playerUUID, log, isShow } = props;
   const from = playerUUID === log.sender_uuid ? 20 : -20;
-  const animationStyle = useSpring({
-    from: {
-      opacity: 0,
-      height: 0,
-      transform: `translate3d(${from}px,0,0)`,
-    },
-    to: {
-      opacity: isShow ? 1 : 0,
-      height: isShow ? 'auto' : 0,
-      transform: `translate3d(${isShow ? 0 : from}px,0,0)`,
-    },
-  });
 
   const logNode = useMemo(
     () => (
-      <Container style={{ ...animationStyle }}>
+      <LogDetailContainer from={from}>
         <LogItem playerUUID={playerUUID} logItem={log} />
-      </Container>
+      </LogDetailContainer>
     ),
-    [playerUUID, log]
+    [playerUUID, log, from]
   );
 
-  return logNode;
+  return isShow ? logNode : null;
 });

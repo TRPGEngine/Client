@@ -84,14 +84,29 @@ export const routes: RouteConfig[] = [
     component: TLoadable(() => import('@portal/routes/about/disclaimer')),
   },
   {
+    title: '图片声明',
+    path: '/about/image',
+    component: TLoadable(() => import('@portal/routes/about/image')),
+  },
+  {
     title: 'Portal版本信息',
     path: '/about/health',
     component: TLoadable(() => import('@portal/routes/about/health')),
   },
   {
     title: '地图demo',
-    path: '/map/demo',
+    path: '/map/:mapUUID/demo',
     component: TLoadable(() => import('@portal/routes/map/demo')),
+  },
+  {
+    title: '团地图',
+    path: '/group/:groupUUID/map/:mapUUID/preview',
+    component: TLoadable(() => import('@portal/routes/map/preview')),
+  },
+  {
+    title: '团地图(主持人模式)',
+    path: '/group/:groupUUID/map/:mapUUID/edit',
+    component: TLoadable(() => import('@portal/routes/map/edit')),
   },
   {
     title: '战报列表',

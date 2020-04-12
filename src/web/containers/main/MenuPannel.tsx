@@ -1,5 +1,4 @@
-import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import React, { useMemo, useCallback, Fragment } from 'react';
 import config from '@shared/project.config';
 import { showProfileCard, switchMenuPannel } from '@shared/redux/actions/ui';
 import SlidePanel from '../../components/SlidePanel';
@@ -8,100 +7,100 @@ import ActorList from './actors/ActorList';
 import GroupList from './group/GroupList';
 import NoteList from './note/NoteList';
 import ExtraOptions from './ExtraOptions';
-import { TRPGState } from '@redux/types/__all__';
+import { TMemo } from '@shared/components/TMemo';
+import {
+  useTRPGSelector,
+  useTRPGDispatch,
+} from '@shared/hooks/useTRPGSelector';
+import _get from 'lodash/get';
 
 import './MenuPannel.scss';
+import Avatar from '@web/components/Avatar';
 
-interface Props extends DispatchProp<any> {
+interface Props {
   className: string;
-  avatar: string;
-  name: string;
-  selectedPannel: any;
-  selectedMenuIndex: number;
 }
-class MenuPannel extends React.Component<Props> {
-  menus = [
-    {
-      icon: '&#xe63e;',
-      activeIcon: '&#xe63e;',
-      text: '消息',
-      component: <ConverseList />,
-    },
-    {
-      icon: '&#xe61b;',
-      activeIcon: '&#xe61b;',
-      text: '人物卡',
-      component: <ActorList />,
-    },
-    {
-      icon: '&#xe958;',
-      activeIcon: '&#xe958;',
-      text: '团',
-      component: <GroupList />,
-    },
-    {
-      icon: '&#xe624;',
-      activeIcon: '&#xe624;',
-      text: '记事本',
-      component: <NoteList />,
-    },
-  ];
+export const MenuPannel: React.FC<Props> = TMemo((props) => {
+  const userInfo = useTRPGSelector((state) => state.user.info);
+  const name = userInfo.nickname ?? userInfo.username;
+  const avatar = userInfo.avatar ?? config.defaultImg.getUser(name);
+  const selectedMenuIndex = useTRPGSelector((state) => state.ui.menuIndex);
+  const selectedPannel = useTRPGSelector((state) => state.ui.menuPannel);
+  const network = useTRPGSelector((state) => state.ui.network);
+  const dispatch = useTRPGDispatch();
 
-  handleSwitchMenu(index) {
-    this.props.dispatch(switchMenuPannel(index, this.menus[index].component));
-  }
+  const menus = useMemo(() => {
+    return [
+      {
+        icon: <i className="iconfont">&#xe63e;</i>,
+        text: '消息',
+        component: <ConverseList />,
+      },
+      {
+        icon: <i className="iconfont">&#xe61b;</i>,
+        text: '人物卡',
+        component: <ActorList />,
+      },
+      {
+        icon: <i className="iconfont">&#xe958;</i>,
+        text: '团',
+        component: <GroupList />,
+      },
+      {
+        icon: <i className="iconfont">&#xe624;</i>,
+        text: '记事本',
+        component: <NoteList />,
+      },
+    ];
+  }, []);
 
-  render() {
-    let { className, avatar, name, selectedMenuIndex } = this.props;
+  const handleSwitchMenu = useCallback(
+    (index) => {
+      dispatch(switchMenuPannel(index, menus[index].component));
+    },
+    [dispatch, menus]
+  );
+
+  const menuPanelEl = useMemo(() => {
     return (
-      <div className={className}>
-        <div className="sidebar">
-          <div className="profile">
-            <div
-              className="avatar"
-              onClick={() => this.props.dispatch(showProfileCard())}
-            >
-              <img src={avatar || config.defaultImg.getUser(name)} />
-            </div>
-          </div>
-          <div className="menus">
-            {this.menus.map((item, index) => {
-              return (
-                <a
-                  key={'menu-' + index}
-                  className={selectedMenuIndex === index ? 'active' : ''}
-                  onClick={() => this.handleSwitchMenu(index)}
-                >
-                  <i
-                    className="iconfont"
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        selectedMenuIndex === index
-                          ? item.icon
-                          : item.activeIcon,
-                    }}
-                  />
-                  <span>{item.text}</span>
-                </a>
-              );
-            })}
-          </div>
-          <ExtraOptions />
-        </div>
-        <div className="menu-panel">
-          {this.props.selectedPannel ||
-            this.menus[selectedMenuIndex].component ||
-            null}
-          <SlidePanel />
-        </div>
-      </div>
+      <Fragment>
+        {selectedPannel ||
+          _get(menus, [selectedMenuIndex, 'component']) ||
+          null}
+        <SlidePanel />
+      </Fragment>
     );
-  }
-}
+  }, [selectedPannel, _get(menus, [selectedMenuIndex, 'component'])]);
 
-export default connect((state: TRPGState) => ({
-  avatar: state.user.info.avatar,
-  name: state.user.info.nickname || state.user.info.username,
-  selectedPannel: state.ui.menuPannel,
-  selectedMenuIndex: state.ui.menuIndex,
-}))(MenuPannel);
+  return (
+    <div className={props.className}>
+      <div className="sidebar">
+        <div className="profile">
+          <div className="avatar" onClick={() => dispatch(showProfileCard())}>
+            <Avatar src={avatar} name={name} size={50} />
+          </div>
+          <div className="network-status">
+            {!network.isOnline && network.msg}
+          </div>
+        </div>
+        <div className="menus">
+          {menus.map((item, index) => {
+            return (
+              <a
+                key={'menu-' + index}
+                className={selectedMenuIndex === index ? 'active' : ''}
+                onClick={() => handleSwitchMenu(index)}
+              >
+                {item.icon}
+                <span>{item.text}</span>
+              </a>
+            );
+          })}
+        </div>
+        <ExtraOptions />
+      </div>
+      <div className="menu-panel">{menuPanelEl}</div>
+    </div>
+  );
+});
+MenuPannel.displayName = 'MenuPannel';

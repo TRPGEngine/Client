@@ -4,6 +4,7 @@ import React, {
   useState,
   useCallback,
   useMemo,
+  useRef,
 } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { TMemo } from '@shared/components/TMemo';
@@ -20,7 +21,9 @@ import Loading from '@portal/components/Loading';
 const Container = styled(PortraitContainer)`
   padding: 10px;
   padding-bottom: 30vh; /** 永远预留30%空间防止到底 */
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100vh;
 `;
 
 const Title = styled(Typography.Title).attrs({
@@ -54,10 +57,13 @@ const TRPGReportPreview: React.FC<Props> = TMemo((props) => {
     });
   }, [reportUUID]);
 
+  const containerRef = useRef<HTMLDivElement>();
   const handleClick = useCallback(() => {
     incPos();
     setTimeout(() => {
-      scrollTo.bottom(window.document.body, 100);
+      if (containerRef.current) {
+        scrollTo.bottom(containerRef.current, 100);
+      }
     }, 100);
   }, [incPos]);
 
@@ -85,7 +91,7 @@ const TRPGReportPreview: React.FC<Props> = TMemo((props) => {
   }
 
   return (
-    <Container onClick={handleClick}>
+    <Container ref={containerRef} onClick={handleClick}>
       <Title>{title}</Title>
       {logs.map((log, index) => {
         return (

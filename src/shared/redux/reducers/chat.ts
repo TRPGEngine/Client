@@ -94,22 +94,6 @@ export default produce((draft: ChatState, action) => {
         };
       }
       return;
-      // let uuid = action.payload.uuid;
-      // if (!state.getIn(['converses', uuid])) {
-      //   let payload = Object.assign(
-      //     {},
-      //     {
-      //       msgList: [],
-      //       lastMsg: '',
-      //       lastTime: '',
-      //     },
-      //     action.payload
-      //   );
-      //   return state.setIn(['converses', uuid], immutable.fromJS(payload));
-      // } else {
-      //   // 如果有会话了直接返回
-      //   return state;
-      // }
     }
     case ADD_MSG: {
       const converseUUID = action.converseUUID;
@@ -131,26 +115,6 @@ export default produce((draft: ChatState, action) => {
       draft.converses[converseUUID].lastTime = payload.date;
       draft.converses[converseUUID].unread = action.unread || false; //已读未读
       return;
-
-      // return state
-      //   .updateIn(
-      //     ['converses', converseUUID, 'msgList'],
-      //     (msgList: ChatStateConverseMsgList) => {
-      //       if (
-      //         msgList.findIndex(
-      //           (msg) => msg.get('uuid') === payload.get('uuid')
-      //         ) === -1
-      //       ) {
-      //         // 当在列表中找不到相同UUID的消息时, 才添加到列表中
-      //         msgList = msgList.push(payload);
-      //       }
-
-      //       return msgList;
-      //     }
-      //   )
-      //   .setIn(['converses', converseUUID, 'lastMsg'], payload.get('message'))
-      //   .setIn(['converses', converseUUID, 'lastTime'], payload.get('date'))
-      //   .setIn(['converses', converseUUID, 'unread'], action.unread || false); //已读未读
     }
     case UPDATE_MSG: {
       if (_isNil(draft.converses[action.converseUUID])) {
@@ -180,30 +144,6 @@ export default produce((draft: ChatState, action) => {
 
       return;
     }
-    // return state.updateIn(
-    //   ['converses', action.converseUUID, 'msgList'],
-    //   (msgList) => {
-    //     if (msgList) {
-    //       for (var i = 0; i < msgList.size; i++) {
-    //         let msg = msgList.get(i);
-    //         if (msg.get('uuid') === action.msgUUID) {
-    //           msgList = msgList.set(
-    //             i,
-    //             msg.merge(immutable.fromJS(action.payload))
-    //           );
-    //           break;
-    //         }
-    //       }
-    //     } else {
-    //       console.error(
-    //         'update msglist failed, not find msgList in',
-    //         action.converseUUID
-    //       );
-    //     }
-
-    //     return msgList;
-    //   }
-    // );
     case REMOVE_MSG:
       if (_isNil(draft.converses[action.converseUUID])) {
         return;
@@ -212,29 +152,12 @@ export default produce((draft: ChatState, action) => {
       _remove(msgList, (item) => item.uuid === action.localUUID);
       return;
 
-    // return state.updateIn(
-    //   ['converses', action.converseUUID, 'msgList'],
-    //   (msgList) => {
-    //     if (msgList) {
-    //       const msgIndex = msgList.findIndex(
-    //         (msg) => msg.get('uuid') === action.localUUID
-    //       );
-    //       if (msgIndex >= 0) {
-    //         return msgList.delete(msgIndex);
-    //       }
-    //     }
-
-    //     return msgList;
-    //   }
-    // );
     case GET_CONVERSES_REQUEST:
       draft.conversesDesc = '正在获取会话列表...';
       return;
-    // return state.set('conversesDesc', '正在获取会话列表...');
     case CREATE_CONVERSES_FAILED:
       draft.conversesDesc = '获取会话列表失败, 请重试';
       return;
-    // return state.set('conversesDesc', '获取会话列表失败, 请重试');
     case GET_CONVERSES_SUCCESS:
     case GET_USER_CONVERSES_SUCCESS: {
       const list = action.payload;
@@ -252,26 +175,6 @@ export default produce((draft: ChatState, action) => {
             ...item,
           };
         }
-        // let converses = state.get('converses');
-        // for (var i = 0; i < list.length; i++) {
-        //   const item = list[i];
-        //   const uuid = item.uuid;
-        //   const oldConverseInfo = !_isNil(converses)
-        //     ? _invoke(converses.get(uuid), 'toJS')
-        //     : null;
-        //   const obj = Object.assign(
-        //     {},
-        //     {
-        //       msgList: [],
-        //       lastMsg: '',
-        //       lastTime: '',
-        //     },
-        //     oldConverseInfo,
-        //     item
-        //   );
-        //   converses = converses.set(uuid, immutable.fromJS(obj));
-        // }
-        // return state.setIn(['converses'], converses);
       }
       return;
     }
@@ -298,54 +201,19 @@ export default produce((draft: ChatState, action) => {
         draft.converses[convUUID].lastTime = lastLog.date;
       }
       return;
-
-      // payload = immutable.fromJS(action.payload);
-      // if (payload.size > 0) {
-      //   let oldList = state.getIn(['converses', convUUID, 'msgList']);
-      //   let lastLog = payload
-      //     .concat(oldList)
-      //     .sortBy((item) => item.get('date'))
-      //     .last();
-      //   return state
-      //     .updateIn(
-      //       ['converses', convUUID, 'msgList'],
-      //       (list) =>
-      //         list
-      //           .concat(payload)
-      //           .filter(
-      //             (item, index, arr) =>
-      //               arr.findIndex(
-      //                 (x) => x.get('uuid') === item.get('uuid')
-      //               ) === index
-      //           ) //添加一步去重操作
-      //     )
-      //     .setIn(['converses', convUUID, 'lastMsg'], lastLog.get('message'))
-      //     .setIn(['converses', convUUID, 'lastTime'], lastLog.get('date'));
-      // } else {
-      //   return state;
-      // }
     }
     case UPDATE_CONVERSES_INFO_SUCCESS:
       if (action.payload.name) {
         draft.converses[action.uuid].name = action.payload.name;
-        // state = state.setIn(
-        //   ['converses', action.uuid, 'name'],
-        //   action.payload.name
-        // );
       }
       if (action.payload.icon) {
         draft.converses[action.uuid].icon = action.payload.icon;
-        // state = state.setIn(
-        //   ['converses', action.uuid, 'icon'],
-        //   action.payload.icon
-        // );
       }
       return;
     case REMOVE_CONVERSES_SUCCESS:
     case REMOVE_USER_CONVERSE:
       _unset(draft.converses, action.converseUUID);
       return;
-    // return state.deleteIn(['converses', action.converseUUID]);
     case SWITCH_CONVERSES:
       draft.selectedConverseUUID = action.converseUUID;
       const converse = draft.converses[action.converseUUID];
@@ -356,7 +224,6 @@ export default produce((draft: ChatState, action) => {
     case CLEAR_SELECTED_CONVERSE:
       draft.selectedConverseUUID = '';
       return;
-    // return state.set('selectedConverseUUID', '');
     case SEND_MSG_COMPLETED: {
       const { converseUUID, localUUID, payload } = action;
       const {
@@ -380,40 +247,12 @@ export default produce((draft: ChatState, action) => {
       }
 
       return;
-
-      // return state.updateIn(
-      //   ['converses', converseUUID, 'msgList'],
-      //   (list) => {
-      //     if (list) {
-      //       for (var i = 0; i < list.size; i++) {
-      //         let msg = list.get(i);
-      //         if (msg.get('uuid') === localUUID) {
-      //           list = list.set(i, msg.merge(immutable.fromJS(pkg)));
-      //           break;
-      //         }
-      //       }
-      //     } else {
-      //       console.error(
-      //         'update msglist failed, not find msgList in',
-      //         converseUUID
-      //       );
-      //     }
-
-      //     return list;
-      //   }
-      // );
     }
     case SWITCH_GROUP: {
       if (!_isNil(draft.converses[action.payload])) {
         draft.converses[action.payload].unread = false;
       }
       return;
-
-      // if (!_isNil(state.getIn(['converses', action.payload]))) {
-      //   return state.setIn(['converses', action.payload, 'unread'], false);
-      // } else {
-      //   return state;
-      // }
     }
     case CREATE_CONVERSES_SUCCESS: {
       const createConvUUID = action.payload.uuid;
@@ -434,19 +273,6 @@ export default produce((draft: ChatState, action) => {
         }
       }
       return;
-
-      // return state.updateIn(
-      //   ['converses', 'trpgsystem', 'msgList'],
-      //   (list) => {
-      //     for (var i = 0; i < list.size; i++) {
-      //       if (list.getIn([i, 'uuid']) === action.chatUUID) {
-      //         list = list.set(i, immutable.fromJS(action.payload));
-      //       }
-      //     }
-
-      //     return list;
-      //   }
-      // );
     }
     case UPDATE_WRITING_STATUS: {
       const { type = 'user', isWriting = false, uuid } = action.payload;
@@ -460,16 +286,6 @@ export default produce((draft: ChatState, action) => {
         } else {
           _pull(list, uuid);
         }
-        // return state.updateIn(['writingList', 'user'], (list) => {
-        //   if (isWriting) {
-        //     if (!list.includes(uuid)) {
-        //       list = list.push(uuid);
-        //     }
-        //     return list;
-        //   } else {
-        //     return list.delete(list.findIndex((item) => item === uuid));
-        //   }
-        // });
       }
 
       // TODO: 团正在输入待实现
@@ -479,10 +295,6 @@ export default produce((draft: ChatState, action) => {
       const catalogs = action.payload;
       draft.emotions.catalogs = catalogs;
       return;
-      // return state.setIn(
-      //   ['emotions', 'catalogs'],
-      //   immutable.fromJS(catalogs)
-      // );
     }
     case ADD_USER_CHAT_EMOTION_CATALOG: {
       const catalog = action.payload;
@@ -494,30 +306,17 @@ export default produce((draft: ChatState, action) => {
         draft.emotions.catalogs.push(catalog);
       }
       return;
-
-      // return state.updateIn(['emotions', 'catalogs'], (list) => {
-      //   for (let i = 0; i < list.size; i++) {
-      //     if (list.getIn([i, 'uuid']) === catalog.uuid) {
-      //       console.log('该表情包已添加');
-      //       return list;
-      //     }
-      //   }
-
-      //   return list.push(immutable.fromJS(catalog));
-      // });
     }
     case SET_CONVERSES_MSGLOG_NOMORE: {
       const converseUUID = action.converseUUID;
       const nomore = action.nomore;
       _set(draft, ['converses', converseUUID, 'nomore'], nomore);
       return;
-      // return state.setIn(['converses', converseUUID, 'nomore'], nomore);
     }
     case SET_CONVERSE_ISREAD: {
       const converseUUID = action.converseUUID;
       _set(draft, ['converses', converseUUID, 'unread'], false);
       return;
-      // return state.setIn(['converses', converseUUID, 'unread'], false);
     }
   }
 }, initialState);

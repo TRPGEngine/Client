@@ -377,7 +377,7 @@ export const refuseFriendInvite = function(inviteUUID: string): TRPGAction {
   };
 };
 
-export const addFriendInvite = function(invite: string): TRPGAction {
+export const addFriendInvite = function(invite: any): TRPGAction {
   return { type: ADD_FRIEND_INVITE, payload: invite };
 };
 

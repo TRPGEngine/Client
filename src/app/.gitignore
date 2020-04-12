@@ -3,3 +3,4 @@ android/app/build/
 !android/app/debug.keystore
 .jest/
 version.json
+build/script/.deps
