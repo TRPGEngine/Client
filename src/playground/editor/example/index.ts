@@ -1,7 +1,9 @@
 /**
  * 示例代码
  */
-const exampleLayout = [
+import config from '@shared/project.config';
+
+const completedLayout = [
   { label: '简单示例', value: require('./xml/simple.xml').default },
   { label: '网格布局', value: require('./xml/grid.xml').default },
   { label: '输入', value: require('./xml/input.xml').default },
@@ -30,6 +32,19 @@ const exampleLayout = [
   },
 ];
 
-const workingLabel = '无限简版';
+// 正在开发中的布局。不会再正式环境显示到界面上
+const developLayout = [
+  {
+    label: 'DND 5e',
+    value: require('./xml/dnd5e.xml').default,
+  },
+];
+
+const workingLabel = 'DND 5e';
+
+const exampleLayout = [
+  ...completedLayout,
+  ...(config.environment === 'development' ? developLayout : []),
+];
 
 export { exampleLayout, workingLabel };
