@@ -169,7 +169,7 @@ class ExtraOptions extends React.Component<Props> {
           <li onClick={() => this.handleClickMenu('refresh')}>清理缓存</li>
           <li onClick={() => this.handleClickMenu('help')}>帮助反馈</li>
           <li onClick={() => this.handleClickMenu('disclaimer')}>免责声明</li>
-          <li onClick={() => this.handleClickMenu('blog')}>开发者博客</li>
+          <li onClick={() => this.handleClickMenu('blog')}>开发博客</li>
           <li onClick={() => this.handleClickMenu('logout')}>退出登录</li>
         </ul>
       );

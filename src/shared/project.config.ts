@@ -205,7 +205,7 @@ const config: ProjectConfig = {
   },
   url: {
     goddessfantasy: 'http://www.goddessfantasy.net/',
-    blog: 'http://moonrailgun.com',
+    blog: 'https://trpgdoc.moonrailgun.com/blog/',
     portal: portalUrl,
   },
   defaultSettings: {
