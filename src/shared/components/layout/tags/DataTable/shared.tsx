@@ -8,7 +8,7 @@ import { SizeType } from 'antd/lib/config-provider/SizeContext';
 import { useToNumber } from '@shared/hooks/useToNumber';
 
 interface TagProps {
-  size: SizeType;
+  size?: SizeType;
   rows: string[][];
   height?: number;
   title?: string;

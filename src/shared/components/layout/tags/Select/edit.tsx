@@ -19,7 +19,7 @@ interface TagProps {
   desc?: string;
   showSearch?: boolean | string;
   default?: string;
-  strict?: boolean; // 是否开启严格模式, 如果开启严格模式则当值在数据中心不存在时, 显示一个警告
+  strict?: boolean; // 是否开启严格模式, 如果开启严格模式且当值在数据中不存在时, 显示一个警告
   allowCustom?: boolean; // 是否允许增加自定义
 }
 export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
