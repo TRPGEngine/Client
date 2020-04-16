@@ -12,6 +12,7 @@ import _toNumber from 'lodash/toNumber';
 import _isArray from 'lodash/isArray';
 import _indexOf from 'lodash/indexOf';
 import _flatten from 'lodash/flatten';
+import _range from 'lodash/range';
 import Debug from 'debug';
 import memoizeOne from 'memoize-one';
 const debug = Debug('trpg:layout:sandbox');
@@ -38,6 +39,7 @@ export const generateSandboxContext = memoizeOne(
       _isString,
       _indexOf,
       _flatten,
+      _range,
       AND(a: any, b: any) {
         return a && b;
       },
