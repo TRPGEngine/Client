@@ -38,14 +38,10 @@ export const TagDataTableShared: TagComponent<TagProps> = TMemo((props) => {
 
   const height = useToNumber(props.height);
   const scroll = useMemo(() => {
-    if (typeof height === 'number') {
-      // 如果设定了高度则滚动高度
-      return {
-        y: height,
-      };
-    }
-
-    return undefined;
+    return {
+      x: '100%',
+      y: typeof height === 'number' ? height : undefined, // 如果设定了高度则滚动高度
+    };
   }, [height]);
 
   const title = useCallback(() => props.title, [props.title]);
