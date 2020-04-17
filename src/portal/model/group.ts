@@ -57,12 +57,12 @@ export async function fetchOwnGroupList(): Promise<GroupItem[]> {
  * @param from 开始时间
  * @param to 结束时间
  */
-export async function fetchGroupChatLog(
+export async function fetchGroupRangeChatLog(
   groupUUID: string,
   from: string,
   to: string
 ): Promise<ChatLogItem[]> {
-  const { data } = await request.get(`/group/log/${groupUUID}`, {
+  const { data } = await request.get(`/group/log/${groupUUID}/range`, {
     params: { from, to },
   });
 
