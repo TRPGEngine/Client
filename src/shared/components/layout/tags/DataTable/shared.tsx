@@ -14,19 +14,27 @@ interface TagProps {
   title?: string;
 }
 export const TagDataTableShared: TagComponent<TagProps> = TMemo((props) => {
+  const rows = useMemo(() => {
+    if (Array.isArray(props.rows)) {
+      return props.rows;
+    } else {
+      return [];
+    }
+  }, [props.rows]);
+
   const columns = useMemo(() => {
-    const head = _head(props.rows) ?? [];
+    const head = _head(rows) ?? [];
     return head.map((d, i) => ({
       key: i,
       dataIndex: i,
       title: d,
     }));
-  }, [props.rows]);
+  }, [rows]);
 
   const dataSource = useMemo(() => {
-    const data = _tail(props.rows) ?? [];
+    const data = _tail(rows) ?? [];
     return data;
-  }, [props.rows]);
+  }, [rows]);
 
   const height = useToNumber(props.height);
   const scroll = useMemo(() => {
