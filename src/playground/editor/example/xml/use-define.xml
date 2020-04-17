@@ -32,4 +32,12 @@
   <ul>
     <ForEach name="testForeach" :data="[{a:1}, {a:2}]" define="foreach" />
   </ul>
+
+  <p>循环非对象</p>
+  <Define name="foreach2">
+    <li>{{_get(props, 'data')}}</li>
+  </Define>
+  <ul>
+    <ForEach name="testForeach2" :data="[1,2,3,4]" define="foreach2" />
+  </ul>
 </Template>

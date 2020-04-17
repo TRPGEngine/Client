@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { TagComponent } from '../type';
 import _isArray from 'lodash/isArray';
+import _isPlainObject from 'lodash/isPlainObject';
 import { useToArray } from '@shared/hooks/useToArray';
 import { UseDefineComponent } from '../Use/shared';
 import { TMemo } from '@shared/components/TMemo';
@@ -15,6 +16,11 @@ export const TagForEachShared: TagComponent<TagProps> = TMemo((props) => {
 
   const items = useMemo(() => {
     return data.map((item, i) => {
+      if (!_isPlainObject(item)) {
+        // 处理item为非PlainObject的情况， 如[1,2,3]
+        item = { data: item };
+      }
+
       const useName = item.name ?? `${props.name}-${i}`;
       return (
         <UseDefineComponent
