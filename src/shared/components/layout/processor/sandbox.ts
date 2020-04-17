@@ -12,6 +12,10 @@ import _toNumber from 'lodash/toNumber';
 import _isArray from 'lodash/isArray';
 import _indexOf from 'lodash/indexOf';
 import _flatten from 'lodash/flatten';
+import _isObject from 'lodash/isObject';
+import _forEach from 'lodash/forEach';
+import _assign from 'lodash/assign';
+import _concat from 'lodash/concat';
 import _range from 'lodash/range';
 import Debug from 'debug';
 import memoizeOne from 'memoize-one';
@@ -37,6 +41,10 @@ export const generateSandboxContext = memoizeOne(
       _toNumber,
       _isArray,
       _isString,
+      _isObject,
+      _forEach,
+      _assign,
+      _concat,
       _indexOf,
       _flatten,
       _range,
