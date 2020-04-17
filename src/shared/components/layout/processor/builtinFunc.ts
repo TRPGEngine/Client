@@ -41,8 +41,8 @@ export function getBuiltinFunc() {
     _indexOf,
     _flatten,
     _range,
-    AND(a: any, b: any) {
-      return a && b;
+    AND(...args: any[]): boolean {
+      return args.map(Boolean).reduce((prev, cur) => prev && cur, true);
     },
     debug(first, ...other) {
       debug(first, ...other);
