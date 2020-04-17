@@ -28,6 +28,7 @@ import { TagScriptShared } from './Script/shared';
 import { TagForEachShared } from './ForEach/shared';
 import { TagStaticShared } from './Static/shared';
 import { TagDataTableShared } from './DataTable/shared';
+import { TagDividerShared } from './Divider/shared';
 
 // 展示数据组件
 registerTag('Template', TagTemplateShared);
@@ -53,6 +54,8 @@ registerTag('DataTable', TagDataTableShared);
 registerTag('Radar', TagRadarShared);
 
 registerTag('Styled', TagStyledShared);
+
+registerTag('Divider', TagDividerShared);
 
 // 数据录入组件
 registerTag('BaseAttr', TagBaseAttrShared);
