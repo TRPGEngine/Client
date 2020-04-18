@@ -29,6 +29,8 @@ import { TagForEachShared } from './ForEach/shared';
 import { TagStaticShared } from './Static/shared';
 import { TagDataTableShared } from './DataTable/shared';
 import { TagDividerShared } from './Divider/shared';
+import { TagCheckboxDetail } from './Checkbox/detail';
+import { TagCheckboxEdit } from './Checkbox/edit';
 
 // 展示数据组件
 registerTag('Template', TagTemplateShared);
@@ -67,6 +69,8 @@ registerTag('InputNumber', TagInputDetail, TagInputNumberEdit);
 registerTag('TextArea', TagInputDetail, TagTextAreaEdit);
 
 registerTag('Select', TagInputDetail, TagSelectEdit);
+
+registerTag('Checkbox', TagCheckboxDetail, TagCheckboxEdit);
 
 registerTag('RollBtn', TagRollBtnDetail, TagRollBtnEdit);
 
