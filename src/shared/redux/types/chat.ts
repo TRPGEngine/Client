@@ -15,14 +15,14 @@ export type MsgType =
 export interface MsgPayload {
   type: MsgType;
   message: string;
-  uuid?: string;
-  sender_uuid?: string;
+  uuid: string;
+  sender_uuid: string;
   to_uuid?: string;
   converse_uuid?: string;
-  is_public?: boolean;
-  is_group?: boolean;
-  revoke?: boolean;
-  date?: string;
+  is_public: boolean;
+  is_group: boolean;
+  revoke: boolean;
+  date: string;
   data?: {
     [key: string]: any;
   };

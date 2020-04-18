@@ -6,6 +6,7 @@ import {
   hideAlert,
   showModal,
   hideSlidePanel,
+  showSlidePanel,
 } from '../../../../shared/redux/actions/ui';
 import {
   switchSelectGroup,
@@ -25,6 +26,8 @@ import {
   TRPGDispatchProp,
 } from '@src/shared/redux/types/__all__';
 import { AlertPayload } from '@src/shared/redux/types/ui';
+import DevContainer from '@web/components/DevContainer';
+import { ChatHistory } from '@web/components/ChatHistory';
 
 interface Props extends TRPGDispatchProp {
   showModal: any;
@@ -76,6 +79,13 @@ class GroupInfo extends React.Component<Props> {
   handleSwitchGroupStatus(status = false) {
     this.props.setGroupStatus(this.props.groupInfo.uuid, status);
   }
+
+  handleShowChatHistory = () => {
+    const groupUUID = this.props.groupInfo.uuid;
+    this.props.dispatch(
+      showSlidePanel('聊天记录', <ChatHistory converseUUID={groupUUID} />)
+    );
+  };
 
   render() {
     let { groupInfo, usercache } = this.props;
@@ -138,6 +148,14 @@ class GroupInfo extends React.Component<Props> {
           </div>
         </div>
 
+        <div className="group-info-cells">
+          <DevContainer>
+            <div className="group-info-cell">
+              <button onClick={this.handleShowChatHistory}>聊天记录</button>
+            </div>
+          </DevContainer>
+        </div>
+
         {this.props.userUUID === groupInfo.owner_uuid ? (
           <div>
             <div className="group-info-cells">
@@ -197,5 +215,6 @@ export default connect(
     setGroupStatus: (groupUUID, groupStatus) =>
       dispatch(setGroupStatus(groupUUID, groupStatus)),
     hideSlidePanel: () => dispatch(hideSlidePanel()),
+    dispatch,
   })
 )(GroupInfo);
