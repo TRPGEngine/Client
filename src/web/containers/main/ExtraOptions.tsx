@@ -193,6 +193,12 @@ class ExtraOptions extends React.Component<Props> {
         },
       },
       {
+        label: '官方网站',
+        onClick: () => {
+          window.open(config.url.homepage);
+        },
+      },
+      {
         label: '开发博客',
         onClick: () => {
           window.open(config.url.blog);
