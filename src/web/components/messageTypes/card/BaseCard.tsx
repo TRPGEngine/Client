@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageProps } from '@src/shared/components/MessageHandler';
+import { MessageProps } from '@shared/components/message/MessageHandler';
 
 class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
   P

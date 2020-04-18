@@ -4,7 +4,7 @@ import {
   agreeGroupRequest,
   refuseGroupRequest,
 } from '@shared/redux/actions/group';
-import { MessageProps } from '@src/shared/components/MessageHandler';
+import { MessageProps } from '@shared/components/message/MessageHandler';
 import _isNil from 'lodash/isNil';
 import { TRPGState } from '@redux/types/__all__';
 

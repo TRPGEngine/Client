@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { View, Text } from 'react-native';
 import { TButton } from '../../TComponent';
-import { MessageProps } from '@src/shared/components/MessageHandler';
+import { MessageProps } from '@shared/components/message/MessageHandler';
 
 export interface CardBtn {
   label: string;

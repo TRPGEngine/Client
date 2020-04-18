@@ -4,7 +4,7 @@ import { useChatHistory } from '@shared/hooks/useChatHistory';
 import { Pagination } from 'antd';
 import LoadingSpinner from './LoadingSpinner';
 import styled from 'styled-components';
-import { MessageItem } from '@shared/components/MessageItem';
+import { MessageItem } from '@shared/components/message/MessageItem';
 
 const Container = styled.div`
   padding: 10px;

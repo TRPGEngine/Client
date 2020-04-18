@@ -15,7 +15,7 @@ import {
   useTRPGDispatch,
 } from '@shared/hooks/useTRPGSelector';
 import { usePrevious } from 'react-use';
-import { MessageItem } from '@shared/components/MessageItem';
+import { MessageItem } from '@shared/components/message/MessageItem';
 
 import './MsgContainer.scss';
 

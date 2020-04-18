@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from 'react';
 import dateHelper from '@shared/utils/date-helper';
 import config from '@shared/project.config';
-import { MessageProps } from '@shared/components/MessageHandler';
+import { MessageProps } from '@shared/components/message/MessageHandler';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import Avatar from '../Avatar';

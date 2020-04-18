@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import sb from 'react-native-style-block';
 import { TAvatar, TIcon } from '../TComponent';
 import dateHelper from '@shared/utils/date-helper';
-import { MessageProps } from '@shared/components/MessageHandler';
+import { MessageProps } from '@shared/components/message/MessageHandler';
 import _get from 'lodash/get';
 import _has from 'lodash/has';
 import _invoke from 'lodash/invoke';

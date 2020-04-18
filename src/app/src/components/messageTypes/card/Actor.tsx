@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import config from '@shared/project.config';
 import { TRPGDispatchProp } from '@redux/types/__all__';
 import { navPortal } from '@app/redux/actions/nav';
-import { MessageProps } from '@shared/components/MessageHandler';
+import { MessageProps } from '@shared/components/message/MessageHandler';
 import { TAvatar } from '@app/components/TComponent';
 
 // 投骰请求

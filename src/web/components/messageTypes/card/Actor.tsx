@@ -5,7 +5,7 @@ import { showModal } from '@shared/redux/actions/ui';
 import { getActorInfo } from '@shared/redux/actions/cache';
 import config from '@shared/project.config';
 import ActorCacheProfile from '../../modal/ActorCacheProfile';
-import { MessageProps } from '@src/shared/components/MessageHandler';
+import { MessageProps } from '@shared/components/message/MessageHandler';
 import Avatar from '@web/components/Avatar';
 import { ActorInfoWithUUID } from '@web/components/modal/ActorInfo';
 import { message } from 'antd';
