@@ -5,6 +5,7 @@ import { Pagination } from 'antd';
 import LoadingSpinner from './LoadingSpinner';
 import styled from 'styled-components';
 import { MessageItem } from '@shared/components/message/MessageItem';
+import { MessageItemConfigContext } from '@shared/components/message/MessageItemConfigContext';
 
 const Container = styled.div`
   padding: 10px;
@@ -43,14 +44,16 @@ export const ChatHistory: React.FC<Props> = TMemo((props) => {
   }
 
   return (
-    <Container>
-      {paginationEl}
-      {loading && <LoadingSpinner />}
-      {logs.map((log) => {
-        return <MessageItem emphasizeTime={false} data={log} />;
-      })}
-      {paginationEl}
-    </Container>
+    <MessageItemConfigContext.Provider value={{ operation: false }}>
+      <Container>
+        {paginationEl}
+        {loading && <LoadingSpinner />}
+        {logs.map((log) => {
+          return <MessageItem emphasizeTime={false} data={log} />;
+        })}
+        {paginationEl}
+      </Container>
+    </MessageItemConfigContext.Provider>
   );
 });
 ChatHistory.displayName = 'ChatHistory';

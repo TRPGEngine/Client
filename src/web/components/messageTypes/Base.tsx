@@ -16,6 +16,7 @@ import { TRPGDispatch } from '@redux/types/__all__';
 import { LoadingSpinnerSmall } from '../LoadingSpinnerSmall';
 import { isUserOrGroupUUID } from '@shared/utils/uuid';
 import { useDelayLoading } from '@shared/hooks/useDelay';
+import { useMessageItemConfigContext } from '@shared/components/message/MessageItemConfigContext';
 
 interface MsgOperationItemContext {
   dispatch: TRPGDispatch;
@@ -51,6 +52,9 @@ const MsgOperationListItem: React.FC<MsgOperationItem> = TMemo((props) => {
 });
 MsgOperationListItem.displayName = 'MsgOperationListItem';
 
+/**
+ * 渲染消息loading
+ */
 const MessageLoading: React.FC<{
   loading: boolean;
 }> = TMemo((props) => {
@@ -59,6 +63,44 @@ const MessageLoading: React.FC<{
   return isLoading && <LoadingSpinnerSmall />;
 });
 MessageLoading.displayName = 'MessageLoading';
+
+/**
+ * 渲染消息操作列表
+ */
+const MessageOperations: React.FC<{
+  operations: MsgOperationItem[];
+}> = TMemo((props) => {
+  const { operations } = props;
+  const { operation } = useMessageItemConfigContext();
+
+  if (!operation) {
+    return null;
+  }
+
+  return (
+    <TPopover
+      overlayClassName="operation-popover"
+      placement="topRight"
+      trigger="click"
+      content={
+        <div>
+          {operations.map((op) => (
+            <MsgOperationListItem
+              key={op.name}
+              name={op.name}
+              action={op.action}
+            />
+          ))}
+        </div>
+      }
+    >
+      <div className="operation">
+        <i className="iconfont">&#xe625;</i>
+      </div>
+    </TPopover>
+  );
+});
+MessageOperations.displayName = 'MessageOperations';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -168,26 +210,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
             <MessageLoading loading={isLoading} />
 
             {!isLoading && operations.length > 0 && (
-              <TPopover
-                overlayClassName="operation-popover"
-                placement="topRight"
-                trigger="click"
-                content={
-                  <div>
-                    {operations.map((op) => (
-                      <MsgOperationListItem
-                        key={op.name}
-                        name={op.name}
-                        action={op.action}
-                      />
-                    ))}
-                  </div>
-                }
-              >
-                <div className="operation">
-                  <i className="iconfont">&#xe625;</i>
-                </div>
-              </TPopover>
+              <MessageOperations operations={operations} />
             )}
           </div>
         </div>
