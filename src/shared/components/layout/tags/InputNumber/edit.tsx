@@ -12,11 +12,18 @@ interface TagProps extends TagInputProps {
   max?: number;
   min?: number;
   step?: number;
+
+  /**
+   * 精度。默认为0 即只允许整数
+   */
+  precision?: number;
 }
 export const TagInputNumberEdit: TagComponent<TagProps> = TMemo((props) => {
   const { label, placeholder, stateValue, setStateValue } = useLayoutFormData(
     props
   );
+
+  const precision = useToNumber(props.precision, 0);
 
   const handleChange = useCallback((value: number) => {
     setStateValue(value);
@@ -46,6 +53,7 @@ export const TagInputNumberEdit: TagComponent<TagProps> = TMemo((props) => {
           min={min}
           max={max}
           step={step}
+          precision={precision}
           value={value}
           onChange={handleChange}
           disabled={props.disabled}
