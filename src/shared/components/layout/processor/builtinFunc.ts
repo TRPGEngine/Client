@@ -1,6 +1,7 @@
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import _find from 'lodash/find';
+import _findLast from 'lodash/findLast';
 import _keys from 'lodash/keys';
 import _map from 'lodash/map';
 import _inRange from 'lodash/inRange';
@@ -28,6 +29,7 @@ export function getBuiltinFunc() {
     _get,
     _isNil,
     _find,
+    _findLast,
     _map,
     _keys,
     _inRange,

@@ -112,7 +112,11 @@ export const getStateValue = (
 ): StateDataType => {
   const path = getNamePath(bindingName);
 
-  const ret = _get(context.state.data, path);
+  let ret = _get(context.state.data, path);
+  if (_isNil(ret)) {
+    // 如果没有从data中取到。可能path是有前缀的路径。尝试从上一级获取
+    ret = _get(context.state, path);
+  }
   if (typeof ret === 'object') {
     return '';
   }
