@@ -1,5 +1,5 @@
 import React from 'react';
-import { MsgPayload } from '@redux/types/chat';
+import { RenderMsgPayload } from '@redux/types/chat';
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
 import PopoverUserInfo from './UserInfo';
@@ -11,7 +11,7 @@ import { TMemo } from '@shared/components/TMemo';
  */
 
 interface Props {
-  payload: MsgPayload;
+  payload: RenderMsgPayload;
 }
 const PopoverMsgSenderInfo: React.FC<Props> = TMemo((props) => {
   const groupActorUUID = _get(props.payload, ['data', 'groupActorUUID']);

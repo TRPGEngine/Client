@@ -34,7 +34,11 @@ import config from '../../project.config';
 import _without from 'lodash/without';
 import _isFunction from 'lodash/isFunction';
 import _filter from 'lodash/filter';
-import { MsgPayload, ConverseInfo } from '@src/shared/redux/types/chat';
+import {
+  MsgPayload,
+  ConverseInfo,
+  SendMsgPayload,
+} from '@src/shared/redux/types/chat';
 import { TRPGAction } from '../types/__all__';
 import { isUserUUID } from '@shared/utils/uuid';
 
@@ -409,7 +413,7 @@ export let updateMsg = function updateMsg(converseUUID, payload): TRPGAction {
  */
 export let sendMsg = function sendMsg(
   toUUID: string,
-  payload: MsgPayload
+  payload: SendMsgPayload
 ): TRPGAction {
   return function(dispatch, getState) {
     const info = getState().user.info;
@@ -534,7 +538,7 @@ export const revokeMsg = function revokeMsg(messageUUID: string): TRPGAction {
  * @param callback 添加后的回调
  */
 export const addFakeMsg = function addFakeMsg(
-  pkg: MsgPayload,
+  pkg: Partial<MsgPayload>,
   callback?: (localUUID: string) => void
 ): TRPGAction {
   return function(dispatch, getState) {
@@ -582,7 +586,7 @@ export const addLoadingMsg = function addLoadingMsg(
   cb: (event: LoadingCallbackEvent) => void
 ): TRPGAction {
   return function(dispatch, getState) {
-    const fakeMsgPayload: MsgPayload = {
+    const fakeMsgPayload: Partial<MsgPayload> = {
       message: '[处理中...]',
       type: 'loading',
       converse_uuid: converseUUID,

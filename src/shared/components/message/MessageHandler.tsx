@@ -1,12 +1,12 @@
 import React from 'react';
-import { MsgType, MsgPayload } from '@src/shared/redux/types/chat';
+import { MsgType, RenderMsgPayload } from '@src/shared/redux/types/chat';
 
 export interface MessageProps {
   type: MsgType;
   me: boolean;
   name: string;
   avatar: string;
-  info: MsgPayload;
+  info: RenderMsgPayload;
   emphasizeTime: boolean;
 }
 class MessageHandler extends React.PureComponent<MessageProps> {

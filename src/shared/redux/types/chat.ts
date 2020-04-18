@@ -28,6 +28,18 @@ export interface MsgPayload {
   };
 }
 
+// 渲染消息时所必须的参数
+export type RenderMsgPayload = Pick<
+  MsgPayload,
+  'uuid' | 'sender_uuid' | 'message' | 'type' | 'date' | 'data' | 'revoke'
+>;
+
+// 发送消息时所必须的参数
+export type SendMsgPayload = Pick<
+  MsgPayload,
+  'converse_uuid' | 'type' | 'message' | 'is_public' | 'is_group' | 'data'
+>;
+
 export type MsgListType = MsgPayload[];
 
 export interface ConverseInfo {
