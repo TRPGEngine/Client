@@ -9,16 +9,15 @@ import _head from 'lodash/head';
 import _isNil from 'lodash/isNil';
 import _orderBy from 'lodash/orderBy';
 import { MsgListContextProvider } from '@shared/context/MsgListContext';
-
-import MessageHandler from './messageTypes/__all__';
-
-import './MsgContainer.scss';
 import { TMemo } from '@shared/components/TMemo';
 import {
   useTRPGSelector,
   useTRPGDispatch,
 } from '@shared/hooks/useTRPGSelector';
 import { usePrevious } from 'react-use';
+import { MessageItem } from '@shared/components/MessageItem';
+
+import './MsgContainer.scss';
 
 interface Props {
   className?: string;
@@ -43,7 +42,7 @@ export const MsgContainer: React.FC<Props> = TMemo((props) => {
   const containerRef = useRef<HTMLDivElement>();
   const isSeekingLogRef = useRef(false);
 
-  const msgListNode = useMemo(() => {
+  const msgListEl = useMemo(() => {
     return msgList.map((item, index) => {
       const arr = msgList;
       const prevDate = index > 0 ? _get(arr, [index - 1, 'date']) : 0;
@@ -60,17 +59,7 @@ export const MsgContainer: React.FC<Props> = TMemo((props) => {
 
       const emphasizeTime = shouleEmphasizeTime(prevDate, date);
 
-      return (
-        <MessageHandler
-          key={item.uuid}
-          type={item.type}
-          me={isMe}
-          name={name}
-          avatar={avatar || defaultAvatar}
-          emphasizeTime={emphasizeTime}
-          info={item}
-        />
-      );
+      return <MessageItem data={item} emphasizeTime={emphasizeTime} />;
     });
   }, [msgList, selfInfo, userUUID]);
 
@@ -174,7 +163,7 @@ export const MsgContainer: React.FC<Props> = TMemo((props) => {
         )}
         <div className="msg-items">
           <MsgListContextProvider msgList={msgList}>
-            {msgListNode}
+            {msgListEl}
           </MsgListContextProvider>
         </div>
       </div>

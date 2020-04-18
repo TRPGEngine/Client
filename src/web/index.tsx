@@ -22,6 +22,7 @@ import styledTheme from '@src/shared/utils/theme';
 import { installServiceWorker } from './utils/sw-helper';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
+import './components/messageTypes/__all__';
 
 installServiceWorker(); // 注册 service worker 服务
 
