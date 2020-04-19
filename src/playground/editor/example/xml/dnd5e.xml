@@ -9,12 +9,14 @@
   <FieldSet label="基本属性">
     <Row>
       <Col sm="12">
+        <Input name="当前生命值"/>
         <Input name="年龄" />
         <Input name="身高" />
         <Input name="体重" />
         <Input name="信仰" />
       </Col>
       <Col sm="12">
+        <Input name="最大生命值" label="最大生命值" />
         <Select name="阵营" options="守序善良,中立善良,混乱善良,守序中立,绝对中立,混乱中立,守序邪恶,中立邪恶,混乱邪恶" />
         <InputNumber name="经验值" min="0" step="50" default="0" />
         <Var name="currentLevelDetail" value="_findLast(global.level, (l) => l[0] < 经验值)" />
@@ -129,9 +131,9 @@
         <Col offset="6">
           <Computed target="modifiers" deps="value" expression="Math.floor((value-10)/2)" />
           <Row align="middle">
-            <Col sm="6"><Checkbox name="proficiency" label="熟练" hideLabel="true" /></Col>
-            <Col sm="6">调整: {{modifiers}}</Col>
-            <Col sm="6">豁免: {{SUM(proficiency ? _get(root, '熟练加值') : 0, modifiers)}}</Col>
+            <Col span="6"><Checkbox name="proficiency" label="熟练" hideLabel="true" /></Col>
+            <Col span="6">调整: {{modifiers}}</Col>
+            <Col span="6">豁免: {{SUM(proficiency ? _get(root, '熟练加值') : 0, modifiers)}}</Col>
           </Row>
         </Col>
       </Row>
@@ -151,6 +153,37 @@
         <Var name="abilities" value="['力量','敏捷','体质','智力','感知','魅力'].map(k => _get(data, [k, 'value']))" />
         <Radar dataKey="力量,敏捷,体质,智力,感知,魅力" :dataValue="global.abilities" />
         <div><center>总点数: {{SUM(abilities)}}</center></div>
+      </Col>
+    </Row>
+  </FieldSet>
+
+  <FieldSet label="战斗">
+    <Row>
+      <Col sm="12">
+        <InputNumber name="AC调整值" label="AC调整值" />
+        <Row align="middle">
+          <Col offset="6">
+            <span>AC最终值:</span>
+            <Tip>护甲等级 Armor Class\n数据为10+敏捷调整值+AC调整值</Tip>
+            <span>{{SUM(_get(敏捷, 'modifiers'), 10, AC调整值)}}</span>
+          </Col>
+        </Row>
+
+        <Select name="体型" options="微型,小型,中型,大型,巨型,超巨型" />
+      </Col>
+
+      <Col sm="12">
+        <div>
+          <Select name="关键属性" options="力量,敏捷,体质,智力,感知,魅力" />
+          <span>DC:</span>
+          <Tip>难度等级 Difficulty Class</Tip>
+          <span>{{SUM(_get(getStateData(), [关键属性, 'modifiers']), 10)}}</span>
+        </div>
+
+        <div>
+          <InputNumber name="速度" />
+          <InputNumber name="被动察觉" />
+        </div>
       </Col>
     </Row>
   </FieldSet>
