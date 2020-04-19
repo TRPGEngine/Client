@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import config from '@src/shared/project.config';
 import { logout, loginWithToken } from '@src/shared/redux/actions/user';
@@ -222,8 +222,13 @@ class ExtraOptions extends React.Component<Props> {
         <ul>
           {items.map((item) => {
             const el = <li onClick={item.onClick}>{item.label}</li>;
+            const key = item.label;
 
-            return item.isDev === true ? <DevContainer>{el}</DevContainer> : el;
+            return item.isDev === true ? (
+              <DevContainer key={key}>{el}</DevContainer>
+            ) : (
+              <Fragment key={key}>{el}</Fragment>
+            );
           })}
         </ul>
       );
