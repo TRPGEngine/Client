@@ -59,7 +59,13 @@ export const MsgContainer: React.FC<Props> = TMemo((props) => {
 
       const emphasizeTime = shouleEmphasizeTime(prevDate, date);
 
-      return <MessageItem data={item} emphasizeTime={emphasizeTime} />;
+      return (
+        <MessageItem
+          key={item.uuid}
+          data={item}
+          emphasizeTime={emphasizeTime}
+        />
+      );
     });
   }, [msgList, selfInfo, userUUID]);
 

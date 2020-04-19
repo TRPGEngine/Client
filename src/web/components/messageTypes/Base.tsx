@@ -190,11 +190,13 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
                 trigger="click"
                 content={<PopoverMsgSenderInfo payload={info} />}
               >
-                <Avatar
-                  name={this.getSenderName()}
-                  src={this.getAvatarUrl()}
-                  size={38}
-                />
+                <div>
+                  <Avatar
+                    name={this.getSenderName()}
+                    src={this.getAvatarUrl()}
+                    size={38}
+                  />
+                </div>
               </TPopover>
             ) : (
               <Avatar

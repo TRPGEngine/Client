@@ -25,7 +25,6 @@ export const MessageItem: React.FC<Props> = TMemo((props) => {
 
   return (
     <MessageHandler
-      key={data.uuid}
       type={data.type}
       me={isMe}
       name={name}

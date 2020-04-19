@@ -49,7 +49,9 @@ export const ChatHistory: React.FC<Props> = TMemo((props) => {
         {paginationEl}
         {loading && <LoadingSpinner />}
         {logs.map((log) => {
-          return <MessageItem emphasizeTime={false} data={log} />;
+          return (
+            <MessageItem key={log.uuid} emphasizeTime={false} data={log} />
+          );
         })}
         {paginationEl}
       </Container>
