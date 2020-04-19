@@ -4,6 +4,7 @@ import config from '../../shared/project.config';
 import { switchMenuPannel } from '../../shared/redux/actions/ui';
 import ConverseList from './main/converse/ConverseList';
 import { MenuPannel } from './main/MenuPannel';
+import { GlobalShortcuts } from './main/GlobalShortcuts';
 import ProfileCard from '../components/ProfileCard';
 import IsDeveloping from '../components/IsDeveloping';
 import Webview from '../components/Webview';
@@ -72,6 +73,7 @@ class Main extends React.Component<Props> {
   render() {
     return (
       <div id="main">
+        <GlobalShortcuts />
         <ProfileCard />
         <div className="head">
           <span className="title">TRPG - 桌上角色扮演游戏客户端</span>
