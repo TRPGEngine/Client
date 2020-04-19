@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import dateHelper from '@shared/utils/date-helper';
 import config from '@shared/project.config';
 import { MessageProps } from '@shared/components/message/MessageHandler';
@@ -17,6 +17,33 @@ import { LoadingSpinnerSmall } from '../LoadingSpinnerSmall';
 import { isUserOrGroupUUID } from '@shared/utils/uuid';
 import { useDelayLoading } from '@shared/hooks/useDelay';
 import { useMessageItemConfigContext } from '@shared/components/message/MessageItemConfigContext';
+
+const MsgAvatar: React.FC<{
+  me: boolean;
+  name: string;
+  src: string;
+  info: MessageProps['info'];
+}> = TMemo((props) => {
+  const senderIsUser = useMemo(() => {
+    return isUserOrGroupUUID(_get(props.info, ['sender_uuid']));
+  }, [props.info]);
+  const { popover } = useMessageItemConfigContext();
+
+  return senderIsUser && popover ? (
+    <TPopover
+      placement={props.me ? 'left' : 'right'}
+      trigger="click"
+      content={<PopoverMsgSenderInfo payload={props.info} />}
+    >
+      <div>
+        <Avatar name={props.name} src={props.src} size={38} />
+      </div>
+    </TPopover>
+  ) : (
+    <Avatar name={props.name} src={props.src} size={38} />
+  );
+});
+MsgAvatar.displayName = 'MsgAvatar';
 
 interface MsgOperationItemContext {
   dispatch: TRPGDispatch;
@@ -184,27 +211,12 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
         </div>
         <div className="content">
           <div className="avatar">
-            {this.checkSenderIsUser() ? (
-              <TPopover
-                placement={me ? 'left' : 'right'}
-                trigger="click"
-                content={<PopoverMsgSenderInfo payload={info} />}
-              >
-                <div>
-                  <Avatar
-                    name={this.getSenderName()}
-                    src={this.getAvatarUrl()}
-                    size={38}
-                  />
-                </div>
-              </TPopover>
-            ) : (
-              <Avatar
-                name={this.getSenderName()}
-                src={this.getAvatarUrl()}
-                size={38}
-              />
-            )}
+            <MsgAvatar
+              me={me}
+              name={this.getSenderName()}
+              src={this.getAvatarUrl()}
+              info={info}
+            />
           </div>
           <div className="body">
             {this.getContent()}
