@@ -64,3 +64,6 @@ export const TagInputNumberEdit: TagComponent<TagProps> = TMemo((props) => {
   );
 });
 TagInputNumberEdit.displayName = 'TagInputNumberEdit';
+TagInputNumberEdit.defaultProps = {
+  default: '0',
+};
