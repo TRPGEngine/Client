@@ -30,6 +30,7 @@ const babelQuery = {
   compact: false,
   presets: ['@babel/preset-env', '@babel/preset-react'],
   ignore: [/[\/\\]core-js/, /@babel[\/\\]runtime/],
+  sourceType: 'unambiguous',
   plugins: [
     '@babel/plugin-syntax-dynamic-import',
     [
@@ -38,15 +39,15 @@ const babelQuery = {
         helpers: true,
       },
     ],
-    // [
-    //   'import',
-    //   {
-    //     libraryName: 'antd',
-    //     libraryDirectory: 'es',
-    //     style: true, // `style: true` 会加载 less 文件
-    //   },
-    //   'antd',
-    // ],
+    [
+      'import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true, // `style: true` 会加载 less 文件
+      },
+      'antd',
+    ],
     // [
     //   'import',
     //   {

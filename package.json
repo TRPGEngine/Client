@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development npm run dev:main",
     "dev:pro": "cross-env NODE_ENV=production npm run dev:main",
-    "dev:main": "cross-env NODE_OPTIONS='--max_old_space_size=2048' webpack-dev-server --hot --inline --progress --colors --port 8089 --host 0.0.0.0 --config ./build/config/webpack.config.js",
+    "dev:main": "cross-env NODE_OPTIONS='--max_old_space_size=4096' webpack-dev-server --hot --inline --progress --colors --port 8089 --host 0.0.0.0 --config ./build/config/webpack.config.js",
     "dev:proserver": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:80 npm run dev",
     "build:main": "webpack --progress --colors --display-modules --config ./build/config/webpack.config.js",
     "build:dev": "cross-env PLATFORM=web npm run build:main",
