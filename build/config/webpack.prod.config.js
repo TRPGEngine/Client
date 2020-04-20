@@ -10,7 +10,13 @@ const OfflinePlugin = require('offline-plugin');
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 
-const plugins = [];
+const plugins = [
+  // 设置最小文件大小
+  // 过于小且密的文件反而会降低速度
+  new webpack.optimize.MinChunkSizePlugin({
+    minChunkSize: 10000,
+  }),
+];
 
 // use npm run build:report or npm run build:pro --report
 // to generate bundle-report
