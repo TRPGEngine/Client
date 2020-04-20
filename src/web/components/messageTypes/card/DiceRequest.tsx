@@ -1,7 +1,7 @@
 import BaseCard from './BaseCard';
 import { connect, DispatchProp } from 'react-redux';
 import { acceptDiceRequest } from '../../../../shared/redux/actions/dice';
-import { MessageProps } from '@src/shared/components/MessageHandler';
+import { MessageProps } from '@shared/components/message/MessageHandler';
 import { TRPGState } from '@src/shared/redux/types/__all__';
 
 interface Props extends MessageProps, DispatchProp<any> {

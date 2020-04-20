@@ -51,7 +51,11 @@ const config = webpackMerge({}, base, {
     inline: true,
   },
 
-  plugins: [new MonacoWebpackPlugin()],
+  plugins: [
+    new MonacoWebpackPlugin({
+      languages: ['xml'],
+    }),
+  ],
 });
 
 // use npm run build:report or npm run playground:build --report

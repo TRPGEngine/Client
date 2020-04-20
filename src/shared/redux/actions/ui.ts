@@ -94,7 +94,10 @@ export const showLightbox = function(src: string): TRPGAction {
 export const hideLightbox = function(): TRPGAction {
   return { type: HIDE_LIGHTBOX };
 };
-export const switchMenuPannel = function(index, pannel = null): TRPGAction {
+export const switchMenuPannel = function(
+  index: number,
+  pannel = null
+): TRPGAction {
   return { type: SWITCH_MENU_PANNEL, menuIndex: index, payload: pannel };
 };
 export const setLastDiceType = function(type = 'basicDice'): TRPGAction {

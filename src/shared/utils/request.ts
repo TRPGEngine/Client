@@ -3,11 +3,17 @@ import config from '../project.config';
 
 const fileUrl = config.file.url;
 
+interface CommonResp {
+  result: string;
+  msg?: string;
+}
+
 export default async function request<T = any>(
   path: string,
   method: 'get' | 'post' = 'get',
-  data?: any
-): Promise<AxiosResponse<T>> {
+  data?: any,
+  options?: Omit<AxiosRequestConfig, 'params' | 'data'>
+): Promise<AxiosResponse<T & CommonResp>> {
   const ext: AxiosRequestConfig = {};
   if (method === 'get') {
     ext.params = data;
@@ -18,6 +24,7 @@ export default async function request<T = any>(
   const res = await axios({
     url: fileUrl + path,
     method,
+    ...options,
     ...ext,
   });
 

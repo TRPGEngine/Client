@@ -1,4 +1,4 @@
-import MessageHandler from '@shared/components/MessageHandler';
+import MessageHandler from '@shared/components/message/MessageHandler';
 import Default from './Default';
 import Tip from './Tip';
 import Card from './Card';

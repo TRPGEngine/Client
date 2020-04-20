@@ -93,6 +93,7 @@ interface ProjectConfig {
   };
   url: {
     api?: string;
+    homepage: string;
     goddessfantasy: string;
     blog: string;
     portal: string;
@@ -204,8 +205,9 @@ const config: ProjectConfig = {
       'https://raw.githubusercontent.com/TRPGEngine/Client/master/src/app/package.json',
   },
   url: {
+    homepage: 'https://trpgdoc.moonrailgun.com/',
     goddessfantasy: 'http://www.goddessfantasy.net/',
-    blog: 'http://moonrailgun.com',
+    blog: 'https://trpgdoc.moonrailgun.com/blog/',
     portal: portalUrl,
   },
   defaultSettings: {

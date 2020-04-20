@@ -1,16 +1,21 @@
-import Loadable from 'react-loadable';
 import React from 'react';
-import LoadingSpinner from '../../../components/LoadingSpinner';
 import { connect } from 'react-redux';
 import { saveNote } from '../../../../shared/redux/actions/note';
-const NoteEditor = Loadable({
-  loader: () => import('../../../components/NoteEditor'),
-  loading: LoadingSpinner,
-});
+import TLoadable from '@web/components/TLoadable';
 
 import './NoteDetail.scss';
+import { TRPGDispatchProp } from '@redux/types/__all__';
 
-class NoteDetail extends React.Component {
+const NoteEditor = TLoadable(() => import('../../../components/NoteEditor'));
+
+interface Props extends TRPGDispatchProp {
+  uuid: string;
+}
+interface State {
+  title: string;
+  content: string;
+}
+class NoteDetail extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,13 +24,13 @@ class NoteDetail extends React.Component {
     };
   }
 
-  handleSave() {
+  handleSave = () => {
     console.log('笔记本存储中....');
-    let uuid = this.props.uuid;
-    let title = this.state.title;
-    let content = this.state.content;
+    const uuid = this.props.uuid;
+    const title = this.state.title;
+    const content = this.state.content;
     this.props.dispatch(saveNote(uuid, title, content));
-  }
+  };
 
   render() {
     return (
@@ -36,7 +41,7 @@ class NoteDetail extends React.Component {
             placeholder="笔记标题"
             value={this.state.title}
             onChange={(e) => this.setState({ title: e.target.value })}
-            onBlur={() => this.handleSave()}
+            onBlur={this.handleSave}
           />
         </div>
         <NoteEditor

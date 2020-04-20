@@ -3,14 +3,17 @@ import { ChatLogItem } from './chat';
 import { hpack, hunpack } from '@shared/utils/json-helper';
 import _isNil from 'lodash/isNil';
 
+// 消息log必须的字段
+// 用于消息数据压缩
 export const reportLogRequireKey = [
   'uuid',
   'sender_uuid',
   'message',
   'type',
+  'date',
   'data',
   'revoke',
-] as const; // 消息log必须的字段
+] as const;
 
 export type ReportLogItem = Pick<
   ChatLogItem,

@@ -6,7 +6,7 @@ import { Modal } from '@ant-design/react-native';
 import styled from 'styled-components/native';
 import { connect, useDispatch } from 'react-redux';
 import { TRPGDispatchProp } from '@redux/types/__all__';
-import { MessageProps } from '@shared/components/MessageHandler';
+import { MessageProps } from '@shared/components/message/MessageHandler';
 import { revokeMsg } from '@redux/actions/chat';
 import BBCode from './bbcode/__all__';
 import { useWebsiteInfo } from '@shared/hooks/useWebsiteInfo';

@@ -55,7 +55,7 @@ export const MenuPannel: React.FC<Props> = TMemo((props) => {
   }, []);
 
   const handleSwitchMenu = useCallback(
-    (index) => {
+    (index: number) => {
       dispatch(switchMenuPannel(index, menus[index].component));
     },
     [dispatch, menus]

@@ -1,5 +1,7 @@
 import { useContext, useMemo } from 'react';
 import { LayoutWidthContext } from '@shared/components/layout/context/LayoutWidthContext';
+import _isNil from 'lodash/isNil';
+import _isEmpty from 'lodash/isEmpty';
 import { tryToNumber } from '../tags/utils';
 
 /**
@@ -54,5 +56,13 @@ export const useLayoutGrid = (props: {}) => {
   delete ret['sm'];
   delete ret['xs'];
 
-  return ret;
+  if (_isEmpty(props)) {
+    // 默认布局
+    return {};
+  } else if (!_isNil(props['flex'])) {
+    // flex布局
+    return { flex: tryToNumber(props['flex']) };
+  } else {
+    return ret;
+  }
 };

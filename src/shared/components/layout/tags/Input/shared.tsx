@@ -1,10 +1,10 @@
-import React, { useMemo, Fragment } from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Tooltip } from 'antd';
 import _isEmpty from 'lodash/isEmpty';
-import { parseMultilineText } from '../utils';
 import { TMemo } from '@shared/components/TMemo';
+import { useMultilineText } from '../../hooks/useMultilineText';
 
 export interface TagInputProps {
   name: string;
@@ -50,18 +50,7 @@ export const LabelTip: React.FC<{ tip: string }> = TMemo((props) => {
     return null;
   }
 
-  const tip = useMemo(() => {
-    // 处理换行符
-    return (
-      <Fragment>
-        {parseMultilineText(props.tip)
-          .split('\n')
-          .map((item, index) => (
-            <div key={index}>{item}</div>
-          ))}
-      </Fragment>
-    );
-  }, [props.tip]);
+  const tip = useMultilineText(props.tip);
 
   return useMemo(
     () => (

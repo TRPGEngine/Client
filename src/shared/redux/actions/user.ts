@@ -65,6 +65,8 @@ function loginSuccess(dispatch, getState) {
 
   dispatch(getUserEmotion()); // 获取用户表情数据
 
+  dispatch(fetchWebToken()); // 登录成功后立刻获取最新的jwt信息
+
   runLoginSuccessCallback();
 }
 
@@ -80,7 +82,8 @@ export const login = function(username: string, password: string): TRPGAction {
         dispatch(hideLoading());
 
         if (data.result) {
-          let { uuid, token, app_token } = data.info;
+          // 登录成功
+          const { uuid, token, app_token } = data.info;
           if (isApp) {
             // 如果是app的话，则永久储存
             rnStorage.save({ uuid, token: app_token });

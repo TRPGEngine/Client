@@ -15,7 +15,6 @@ import '@web/assets/css/iconfont.css';
 import 'react-select/dist/react-select.css';
 import 'react-image-lightbox/style.css';
 
-const ActorEditor = TLoadable(() => import('./actor/editor/ActorEditor'));
 const Main = TLoadable(() => import('./Main'));
 
 const Router: any =
@@ -39,11 +38,6 @@ class App extends React.Component {
               <Route name="login" path="/login" component={Login} />
               <Route name="register" path="/register" component={Register} />
               <Route name="main" path="/main" component={Main} />
-              <Route
-                name="actor-editor"
-                path="/actor-editor"
-                component={ActorEditor}
-              />
               <Route name="index" path="/">
                 <Link to="login" className="start-btn">
                   <div className="main">点击屏幕登录</div>

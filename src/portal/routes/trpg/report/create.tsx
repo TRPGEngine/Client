@@ -4,7 +4,7 @@ import { useWebTokenInfo } from '@portal/hooks/useWebTokenInfo';
 import {
   fetchOwnGroupList,
   GroupItem,
-  fetchGroupChatLog,
+  fetchGroupRangeChatLog,
 } from '@portal/model/group';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
@@ -122,7 +122,7 @@ const TRPGReportCreate: React.FC = TMemo(() => {
     const [from, to] = timeRange.map((time) =>
       time.format('YYYY-MM-DD HH:mm:ss')
     );
-    fetchGroupChatLog(selectedGroupUUID, from, to).then((logs) => {
+    fetchGroupRangeChatLog(selectedGroupUUID, from, to).then((logs) => {
       setIsLoading(false);
       if (_isEmpty(logs)) {
         message.warn('数据为空');

@@ -15,18 +15,30 @@ export type MsgType =
 export interface MsgPayload {
   type: MsgType;
   message: string;
-  uuid?: string;
-  sender_uuid?: string;
+  uuid: string;
+  sender_uuid: string;
   to_uuid?: string;
   converse_uuid?: string;
-  is_public?: boolean;
-  is_group?: boolean;
-  revoke?: boolean;
-  date?: string;
+  is_public: boolean;
+  is_group: boolean;
+  revoke: boolean;
+  date: string;
   data?: {
     [key: string]: any;
   };
 }
+
+// 渲染消息时所必须的参数
+export type RenderMsgPayload = Pick<
+  MsgPayload,
+  'uuid' | 'sender_uuid' | 'message' | 'type' | 'date' | 'data' | 'revoke'
+>;
+
+// 发送消息时所必须的参数
+export type SendMsgPayload = Pick<
+  MsgPayload,
+  'converse_uuid' | 'type' | 'message' | 'is_public' | 'is_group' | 'data'
+>;
 
 export type MsgListType = MsgPayload[];
 

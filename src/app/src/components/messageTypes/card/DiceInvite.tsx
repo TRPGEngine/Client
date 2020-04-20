@@ -1,7 +1,7 @@
 import BaseCard from './BaseCard';
 import { connect, DispatchProp } from 'react-redux';
 import { acceptDiceInvite } from '@shared/redux/actions/dice';
-import { MessageProps } from '@shared/components/MessageHandler';
+import { MessageProps } from '@shared/components/message/MessageHandler';
 import { TRPGState } from '@redux/types/__all__';
 
 // 投骰邀请

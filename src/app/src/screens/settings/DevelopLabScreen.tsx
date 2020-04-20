@@ -89,7 +89,9 @@ class DevelopLabScreen extends React.Component<Props> {
           me={true}
           name="test"
           avatar={null}
-          info={{ message: 'test', type: 'loading', data: { progress: 0.5 } }}
+          info={
+            { message: 'test', type: 'loading', data: { progress: 0.5 } } as any
+          }
           emphasizeTime={false}
         />
         <MessageHandler
@@ -97,7 +99,7 @@ class DevelopLabScreen extends React.Component<Props> {
           me={true}
           name="test"
           avatar={null}
-          info={{ message: 'http://www.baidu.com/', type: 'normal' }}
+          info={{ message: 'http://www.baidu.com/', type: 'normal' } as any}
           emphasizeTime={false}
         />
       </ScrollView>

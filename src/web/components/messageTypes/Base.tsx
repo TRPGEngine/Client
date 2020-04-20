@@ -1,7 +1,7 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import dateHelper from '@shared/utils/date-helper';
 import config from '@shared/project.config';
-import { MessageProps } from '@shared/components/MessageHandler';
+import { MessageProps } from '@shared/components/message/MessageHandler';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import Avatar from '../Avatar';
@@ -16,6 +16,34 @@ import { TRPGDispatch } from '@redux/types/__all__';
 import { LoadingSpinnerSmall } from '../LoadingSpinnerSmall';
 import { isUserOrGroupUUID } from '@shared/utils/uuid';
 import { useDelayLoading } from '@shared/hooks/useDelay';
+import { useMessageItemConfigContext } from '@shared/components/message/MessageItemConfigContext';
+
+const MsgAvatar: React.FC<{
+  me: boolean;
+  name: string;
+  src: string;
+  info: MessageProps['info'];
+}> = TMemo((props) => {
+  const senderIsUser = useMemo(() => {
+    return isUserOrGroupUUID(_get(props.info, ['sender_uuid']));
+  }, [props.info]);
+  const { popover } = useMessageItemConfigContext();
+
+  return senderIsUser && popover ? (
+    <TPopover
+      placement={props.me ? 'left' : 'right'}
+      trigger="click"
+      content={<PopoverMsgSenderInfo payload={props.info} />}
+    >
+      <div>
+        <Avatar name={props.name} src={props.src} size={38} />
+      </div>
+    </TPopover>
+  ) : (
+    <Avatar name={props.name} src={props.src} size={38} />
+  );
+});
+MsgAvatar.displayName = 'MsgAvatar';
 
 interface MsgOperationItemContext {
   dispatch: TRPGDispatch;
@@ -51,6 +79,9 @@ const MsgOperationListItem: React.FC<MsgOperationItem> = TMemo((props) => {
 });
 MsgOperationListItem.displayName = 'MsgOperationListItem';
 
+/**
+ * 渲染消息loading
+ */
 const MessageLoading: React.FC<{
   loading: boolean;
 }> = TMemo((props) => {
@@ -59,6 +90,44 @@ const MessageLoading: React.FC<{
   return isLoading && <LoadingSpinnerSmall />;
 });
 MessageLoading.displayName = 'MessageLoading';
+
+/**
+ * 渲染消息操作列表
+ */
+const MessageOperations: React.FC<{
+  operations: MsgOperationItem[];
+}> = TMemo((props) => {
+  const { operations } = props;
+  const { operation } = useMessageItemConfigContext();
+
+  if (!operation) {
+    return null;
+  }
+
+  return (
+    <TPopover
+      overlayClassName="operation-popover"
+      placement="topRight"
+      trigger="click"
+      content={
+        <div>
+          {operations.map((op) => (
+            <MsgOperationListItem
+              key={op.name}
+              name={op.name}
+              action={op.action}
+            />
+          ))}
+        </div>
+      }
+    >
+      <div className="operation">
+        <i className="iconfont">&#xe625;</i>
+      </div>
+    </TPopover>
+  );
+});
+MessageOperations.displayName = 'MessageOperations';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -142,25 +211,12 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
         </div>
         <div className="content">
           <div className="avatar">
-            {this.checkSenderIsUser() ? (
-              <TPopover
-                placement={me ? 'left' : 'right'}
-                trigger="click"
-                content={<PopoverMsgSenderInfo payload={info} />}
-              >
-                <Avatar
-                  name={this.getSenderName()}
-                  src={this.getAvatarUrl()}
-                  size={38}
-                />
-              </TPopover>
-            ) : (
-              <Avatar
-                name={this.getSenderName()}
-                src={this.getAvatarUrl()}
-                size={38}
-              />
-            )}
+            <MsgAvatar
+              me={me}
+              name={this.getSenderName()}
+              src={this.getAvatarUrl()}
+              info={info}
+            />
           </div>
           <div className="body">
             {this.getContent()}
@@ -168,26 +224,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
             <MessageLoading loading={isLoading} />
 
             {!isLoading && operations.length > 0 && (
-              <TPopover
-                overlayClassName="operation-popover"
-                placement="topRight"
-                trigger="click"
-                content={
-                  <div>
-                    {operations.map((op) => (
-                      <MsgOperationListItem
-                        key={op.name}
-                        name={op.name}
-                        action={op.action}
-                      />
-                    ))}
-                  </div>
-                }
-              >
-                <div className="operation">
-                  <i className="iconfont">&#xe625;</i>
-                </div>
-              </TPopover>
+              <MessageOperations operations={operations} />
             )}
           </div>
         </div>

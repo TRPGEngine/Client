@@ -4,7 +4,7 @@ import {
   agreeFriendInvite,
   refuseFriendInvite,
 } from '@shared/redux/actions/user';
-import { MessageProps } from '@src/shared/components/MessageHandler';
+import { MessageProps } from '@shared/components/message/MessageHandler';
 import { TRPGState } from '@src/shared/redux/types/__all__';
 import _get from 'lodash/get';
 import { getFriendInviteInfoCache } from '@shared/utils/cache-helper';

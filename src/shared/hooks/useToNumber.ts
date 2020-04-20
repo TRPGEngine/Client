@@ -5,13 +5,17 @@ import _isNil from 'lodash/isNil';
  * 确保传入数据为数字并缓存
  * @param num 要处理的数字
  */
-export function useToNumber(num: any): number {
+export function useToNumber(
+  num: any,
+  defaultNum = 0
+): number | null | undefined {
   const ret = useMemo(() => {
     if (_isNil(num)) {
       return num;
     }
 
-    return Number(num) || 0;
+    const t = Number(num);
+    return !isNaN(t) ? t : defaultNum;
   }, [num]);
 
   return ret;

@@ -38,7 +38,7 @@ import { clearSelectGroup } from '@src/shared/redux/actions/group';
 import { sendStartWriting } from '@src/shared/api/event';
 import config from '@src/shared/project.config';
 import { getCurrentGroupActor } from '@redux/helpers/group';
-import { MsgPayload, MsgListType } from '@redux/types/chat';
+import { MsgListType, SendMsgPayload } from '@redux/types/chat';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
@@ -188,7 +188,7 @@ class ChatScreen extends React.Component<Props, State> {
       if (!!uuid) {
         message = unemojify(message); // 转成标准文本
 
-        const payload: MsgPayload = {
+        const payload: SendMsgPayload = {
           message,
           type: this.state.msgType ?? 'normal',
           is_public: false,
