@@ -7,6 +7,8 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const _get = require('lodash/get');
 
+const buildTemplate = require('./html-template');
+
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 const BUILD_PATH = path.resolve(ROOT_PATH, 'build');
@@ -18,6 +20,11 @@ const ASSET_PATH = process.env.ASSET_PATH || '/';
 const dllConfig = require('./dll/vendor-manifest.json');
 const dllHashName = 'dll_' + dllConfig.name; // 用于处理文件的hash使其能在修改后通知html模板也进行变更
 
+/**
+ * NOTICE: 移除@babel/plugin-transform-modules-commonjs以应用摇树优化
+ * 摇树优化能自动解析@ant-design/icons的图标并按需加载(节约大量空间)
+ * 但是编译时会抛出一堆warning 因为抛出的warning的不是一个esm文件
+ */
 const babelQuery = {
   babelrc: false,
   compact: false,
@@ -31,26 +38,26 @@ const babelQuery = {
         helpers: true,
       },
     ],
-    [
-      'import',
-      {
-        libraryName: 'antd',
-        libraryDirectory: 'es',
-        style: true, // `style: true` 会加载 less 文件
-      },
-      'antd',
-    ],
-    [
-      'import',
-      {
-        libraryName: 'react-use',
-        libraryDirectory: 'esm',
-        camel2DashComponentName: false,
-      },
-      'react-use',
-    ],
+    // [
+    //   'import',
+    //   {
+    //     libraryName: 'antd',
+    //     libraryDirectory: 'es',
+    //     style: true, // `style: true` 会加载 less 文件
+    //   },
+    //   'antd',
+    // ],
+    // [
+    //   'import',
+    //   {
+    //     libraryName: 'react-use',
+    //     libraryDirectory: 'esm',
+    //     camel2DashComponentName: false,
+    //   },
+    //   'react-use',
+    // ],
     'transform-class-properties',
-    '@babel/plugin-transform-modules-commonjs',
+    // '@babel/plugin-transform-modules-commonjs',
   ],
 };
 
@@ -217,12 +224,12 @@ module.exports = {
     ]),
     new HtmlwebpackPlugin({
       title: 'TRPG-Game',
-      template: path.resolve(BUILD_PATH, './template/index.hbs'),
-      templateParameters: {
+      // 手动编译html文件
+      templateContent: buildTemplate({
         isDev: _get(process, 'env.NODE_ENV') === 'development',
         isPro: _get(process, 'env.NODE_ENV') === 'production',
         dllHashName,
-      },
+      }),
       inject: true,
       favicon: path.resolve(APP_PATH, './web/assets/img/favicon.ico'),
       hash: true,
