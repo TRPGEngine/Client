@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.1](https://github.com/TRPGEngine/Client/compare/v0.3.0...v0.3.1) (2020-04-20)
+
+
+### Features
+
+* **layout:** 增加AND允许无限参数进行AND操作 ([b717d47](https://github.com/TRPGEngine/Client/commit/b717d47aeb44f3e4eae2482ca46c5b7b48e515e2))
+* **layout:** 增加DataTable组件用于渲染表格 ([d8ab14a](https://github.com/TRPGEngine/Client/commit/d8ab14a210e54f03ab38feae47b4c231e5974488))
+* 增加消息配置上下文用于处理是否渲染操作按钮 ([346b8b3](https://github.com/TRPGEngine/Client/commit/346b8b310231724bcf2b4589b4fbe0d6c93c35d4))
+* **layout:** 增加了Checkbox组件 ([9c4f0bd](https://github.com/TRPGEngine/Client/commit/9c4f0bd6d1f4f503abaea4414d3f1b428b6b8681))
+* **layout:** 增加了InputNumber组件的精度属性。默认为0 ([4fba488](https://github.com/TRPGEngine/Client/commit/4fba488c4e6063da142f1fbaab7c8fc5f47c67b7))
+* **layout:** 增加分割线组件 ([0854db0](https://github.com/TRPGEngine/Client/commit/0854db00a27e4be1e30b5aa1017b6849513eeb87))
+* **layout:** 标签ForEach增加非集合数据的循环处理 ([3cf1438](https://github.com/TRPGEngine/Client/commit/3cf143854f71d9d5eb3abf95acfbbfc08d34eaba))
+* **web:** web增加官网链接 ([3956199](https://github.com/TRPGEngine/Client/commit/39561997b931814e48bd3665db6e5f05364887cf))
+* **web:** 增加全局快键键用于切换面板 ([e24e679](https://github.com/TRPGEngine/Client/commit/e24e679dd33e932e155da98af7affd7682fd8291))
+* **web:** 增加聊天历史记录查看 ([9cb74ef](https://github.com/TRPGEngine/Client/commit/9cb74ef835415e349c38ed95e0d5bbc74d38da47))
+
 ## [0.3.0](https://github.com/TRPGEngine/Client/compare/v0.2.30...v0.3.0) (2020-04-12)
 
 
