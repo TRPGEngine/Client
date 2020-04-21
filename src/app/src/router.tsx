@@ -37,6 +37,7 @@ import DebugScreen from './screens/DebugScreen';
 import DocumentScreen from './screens/DocumentScreen';
 import GroupMemberScreen from './screens/GroupMemberScreen';
 import { AboutScreen } from './screens/about/AboutScreen';
+import { GroupRuleScreen } from './screens/GroupRule';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -140,6 +141,12 @@ export const AppNavigator = createStackNavigator(
       navigationOptions: ({ navigation }) => ({
         headerTitle: _get(navigation, 'state.params.name', '详细信息'),
       }),
+    },
+    GroupRule: {
+      screen: GroupRuleScreen,
+      navigationOptions: {
+        headerTitle: '团规则',
+      },
     },
     GroupMember: {
       screen: GroupMemberScreen,
