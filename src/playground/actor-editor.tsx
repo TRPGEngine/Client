@@ -255,9 +255,22 @@ const ActorEditor = React.memo(() => {
     );
   }, [currentGlobal, renderKey]);
 
+  const [splitPos, setSplitPos] = useLocalStorage<number | string>(
+    '_playgroundSplitPos',
+    '50%'
+  );
+  const handleResetSplitPos = useCallback(() => {
+    setSplitPos('50%');
+  }, [setSplitPos]);
+
   return (
     <Container>
-      <SplitPane split="vertical" defaultSize="50%">
+      <SplitPane
+        split="vertical"
+        size={splitPos}
+        onChange={setSplitPos}
+        onResizerDoubleClick={handleResetSplitPos}
+      >
         <Block label="布局" theme="dark" actions={LayoutActions}>
           <div
             style={{
