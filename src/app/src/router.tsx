@@ -29,13 +29,14 @@ import ProfileModifyScreen from './screens/ProfileModifyScreen';
 import WebviewScreen from './screens/WebviewScreen';
 import DeviceInfoScreen from './screens/settings/DeviceInfoScreen';
 import DevelopLabScreen from './screens/settings/DevelopLabScreen';
-import VersionScreen from './screens/VersionScreen';
+import VersionScreen from './screens/about/VersionScreen';
 import CreateGroupScreen from './screens/CreateGroupScreen';
 import GroupDataScreen from './screens/GroupDataScreen';
 import UserSelectScreen from './screens/UserSelectScreen';
 import DebugScreen from './screens/DebugScreen';
 import DocumentScreen from './screens/DocumentScreen';
 import GroupMemberScreen from './screens/GroupMemberScreen';
+import { AboutScreen } from './screens/about/AboutScreen';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -89,6 +90,12 @@ export const AppNavigator = createStackNavigator(
       screen: DevelopLabScreen,
       navigationOptions: {
         headerTitle: '开发实验室',
+      },
+    },
+    About: {
+      screen: AboutScreen,
+      navigationOptions: {
+        headerTitle: '关于TRPG Engine',
       },
     },
     Chat: {
