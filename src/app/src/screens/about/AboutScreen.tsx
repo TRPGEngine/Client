@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { NavigationScreenComponent, NavigationActions } from 'react-navigation';
 import { TMemo } from '@shared/components/TMemo';
-import { List } from '@ant-design/react-native';
+import { List, WhiteSpace } from '@ant-design/react-native';
 import { View } from 'react-native';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import appConfig from '@app/config.app';
@@ -19,23 +19,34 @@ export const AboutScreen: NavigationScreenComponent = TMemo(() => {
     [dispatch]
   );
 
+  const handleLink = useCallback(
+    (url: string) => {
+      dispatch(openWebview(url));
+    },
+    [dispatch]
+  );
+
   return (
     <View>
       <List>
         <Item
           arrow="horizontal"
-          onPress={() => {
-            dispatch(openWebview(config.url.homepage));
-          }}
+          onPress={() => handleLink(config.url.homepage)}
         >
           官网
         </Item>
+        <Item arrow="horizontal" onPress={() => handleLink(config.url.blog)}>
+          开发博客
+        </Item>
+      </List>
+
+      <WhiteSpace size="md" />
+
+      <List>
         <Item
           arrow="horizontal"
           extra={appConfig.version}
-          onPress={() => {
-            handleNav('Version');
-          }}
+          onPress={() => handleNav('Version')}
         >
           当前版本
         </Item>
