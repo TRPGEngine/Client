@@ -117,11 +117,14 @@ export const getStateValue = (
     // 如果没有从data中取到。可能path是有前缀的路径。尝试从上一级获取
     ret = _get(context.state, path);
   }
-  if (typeof ret === 'object') {
-    return '';
-  }
 
-  return ret;
+  // NOTICE: 不知道为什么要不允许获取object
+  // 直接返回匹配的数据，如果有问题再改回来
+  // if (typeof ret === 'object') {
+  //   return '';
+  // }
+
+  return ret as any;
 };
 
 /**

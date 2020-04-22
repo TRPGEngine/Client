@@ -15,6 +15,7 @@ import { StateActionType } from '../types';
 import { LayoutStateContext } from '../context/LayoutStateContext';
 const debug = Debug('trpg:XMLBuilder');
 
+// TODO: 待使用@reduxjs/toolkit改造
 const buildReducer = (onChange?: StateChangeHandler) => {
   const XMLBuilderReducer = (
     prevState: XMLBuilderState,

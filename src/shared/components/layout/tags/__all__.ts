@@ -31,6 +31,8 @@ import { TagDataTableShared } from './DataTable/shared';
 import { TagDividerShared } from './Divider/shared';
 import { TagCheckboxDetail } from './Checkbox/detail';
 import { TagCheckboxEdit } from './Checkbox/edit';
+import { TagCustomListShared } from './CustomList/shared';
+import { TagCustomListEdit } from './CustomList/edit';
 
 // 展示数据组件
 registerTag('Template', TagTemplateShared);
@@ -90,3 +92,5 @@ registerTag('Function', TagFunctionShared);
 registerTag('Script', TagScriptShared);
 
 registerTag('ForEach', TagForEachShared);
+
+registerTag('CustomList', TagCustomListShared, TagCustomListEdit);
