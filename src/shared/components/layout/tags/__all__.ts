@@ -33,6 +33,8 @@ import { TagCheckboxDetail } from './Checkbox/detail';
 import { TagCheckboxEdit } from './Checkbox/edit';
 import { TagCustomListShared } from './CustomList/shared';
 import { TagCustomListEdit } from './CustomList/edit';
+import { TagCurrMaxEdit } from './CurrMax/edit';
+import { TagCurrMaxDetail } from './CurrMax/detail';
 
 // 展示数据组件
 registerTag('Template', TagTemplateShared);
@@ -75,6 +77,8 @@ registerTag('Select', TagInputDetail, TagSelectEdit);
 registerTag('Checkbox', TagCheckboxDetail, TagCheckboxEdit);
 
 registerTag('RollBtn', TagRollBtnDetail, TagRollBtnEdit);
+
+registerTag('CurrMax', TagCurrMaxDetail, TagCurrMaxEdit);
 
 // 高级操作组件
 registerTag('Use', TagUseShared);
