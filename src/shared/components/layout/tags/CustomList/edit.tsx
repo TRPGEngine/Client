@@ -8,8 +8,6 @@ import { TagCustomListSharedProps, TagCustomListShared } from './shared';
 import _isNil from 'lodash/isNil';
 
 /**
- * WIP: 还不能正确的应用新增功能。无法监听到数据的变更
- * ————————————————————
  * 该组件不同于ForEach
  * ForEach是取layout的数据作为数据源
  * 而该组件是取当前state的数据作为数据源
@@ -40,7 +38,7 @@ export const TagCustomListEdit: TagComponent<TagProps> = TMemo((props) => {
         </Button>
       )
     );
-  }, [newBtn]);
+  }, [newBtn, handleAppendNewItem]);
 
   return (
     <Fragment>
