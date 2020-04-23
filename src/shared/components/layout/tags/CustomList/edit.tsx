@@ -3,7 +3,7 @@ import { TagComponent } from '../type';
 import { TMemo } from '@shared/components/TMemo';
 import { useToBoolean } from '@shared/hooks/useToBoolean';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';
-import { Button } from 'antd';
+import { Button, Row } from 'antd';
 import { TagCustomListSharedProps, TagCustomListShared } from './shared';
 import _isNil from 'lodash/isNil';
 
@@ -33,9 +33,11 @@ export const TagCustomListEdit: TagComponent<TagProps> = TMemo((props) => {
   const newBtnEl = useMemo(() => {
     return (
       newBtn && (
-        <Button type="link" onClick={handleAppendNewItem}>
-          新增
-        </Button>
+        <Row justify="end">
+          <Button type="link" onClick={handleAppendNewItem}>
+            新增
+          </Button>
+        </Row>
       )
     );
   }, [newBtn, handleAppendNewItem]);

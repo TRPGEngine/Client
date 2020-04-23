@@ -50,3 +50,10 @@ const exampleLayout = [
 ];
 
 export { exampleLayout, workingLabel };
+
+export const initCode = `<?xml version="1.0" encoding="utf-8" ?>
+<Template>
+  <!-- 在此处输入你的布局 -->
+
+</Template>
+`;
