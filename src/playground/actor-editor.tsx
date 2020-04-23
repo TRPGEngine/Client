@@ -5,7 +5,7 @@ import XMLBuilder from '@shared/components/layout/XMLBuilder';
 import { Block } from './components/Block';
 import _isNil from 'lodash/isNil';
 import _find from 'lodash/find';
-import { Select, Button } from 'antd';
+import { Select, Button, Row, Col } from 'antd';
 import { registerLayoutCodeSuggest } from './editor/suggestions';
 import { exampleLayout, workingLabel, initCode } from './editor/example';
 import config from '@shared/project.config';
@@ -90,20 +90,25 @@ const ActorEditor = TMemo(() => {
   }, []);
   const LayoutActions = useMemo(() => {
     return (
-      <div style={{ display: 'flex' }}>
-        <Select
-          style={{ width: 200, marginRight: 6 }}
-          placeholder="请选择示例"
-          onChange={handleSelectLayout}
-        >
-          {exampleLayout.map((l) => (
-            <Option key={l.label} value={l.label} xml={l.value}>
-              {l.label}
-            </Option>
-          ))}
-        </Select>
-        <Button onClick={handleResetCode}>重置</Button>
-      </div>
+      <Row align="middle" style={{ flex: 1 }}>
+        <Col flex={1}>
+          <Select
+            style={{ width: 200, marginRight: 6 }}
+            placeholder="请选择示例"
+            onChange={handleSelectLayout}
+          >
+            {exampleLayout.map((l) => (
+              <Option key={l.label} value={l.label} xml={l.value}>
+                {l.label}
+              </Option>
+            ))}
+          </Select>
+          <Button onClick={handleResetCode}>重置</Button>
+        </Col>
+        <Col>
+          <div>v{config.version}</div>
+        </Col>
+      </Row>
     );
   }, []);
 
