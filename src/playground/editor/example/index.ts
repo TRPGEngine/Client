@@ -41,8 +41,7 @@ const developLayout = [
 ];
 
 // 正在操作的布局。 在开发模式下会自动加载最新的该布局
-// const workingLabel = 'DND 5e';
-const workingLabel = '模板与复用';
+const workingLabel = 'DND 5e';
 
 const exampleLayout = [
   ...completedLayout,

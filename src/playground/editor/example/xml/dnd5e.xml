@@ -170,6 +170,8 @@
         </Row>
 
         <Select name="体型" options="微型,小型,中型,大型,巨型,超巨型" />
+
+        <CurrMax name="生命骰" label="生命骰(HD)" />
       </Col>
 
       <Col sm="12">
@@ -184,6 +186,59 @@
           <InputNumber name="速度" />
           <InputNumber name="被动察觉" />
         </div>
+      </Col>
+    </Row>
+  </FieldSet>
+
+  <FieldSet label="技能">
+    <Define name="skill">
+      <Row>
+        <Col>
+          <InputNumber name="value" default="0" :label="props.label" :desc="props.desc" />
+        </Col>
+        <Col offset="6">
+          <Row align="middle">
+            <Col span="6"><Checkbox name="proficiency" label="熟练" hideLabel="true" /></Col>
+            <Col span="6">总值: {{SUM(proficiency ? _get(root, '熟练加值') : 0, value)}}</Col>
+          </Row>
+        </Col>
+      </Row>
+    </Define>
+
+    <Row>
+      <Col sm="12">
+        <FieldSet label="力量系">
+          <Use define="skill" name="运动" label="运动 Athletics" />
+        </FieldSet>
+
+        <FieldSet label="敏捷系">
+          <Use define="skill" name="体操" label="体操 Acrobatics" />
+          <Use define="skill" name="巧手" label="巧手 Sleight of Hand" />
+          <Use define="skill" name="隐匿" label="隐匿 Stealth" />
+        </FieldSet>
+
+        <FieldSet label="智力系">
+          <Use define="skill" name="奥秘" label="奥秘 Arcana" />
+          <Use define="skill" name="历史" label="历史 History" />
+          <Use define="skill" name="调查" label="调查 Investigation" />
+          <Use define="skill" name="自然" label="自然 Nature" />
+          <Use define="skill" name="宗教" label="宗教 Religion" />
+        </FieldSet>
+
+        <FieldSet label="感知系">
+          <Use define="skill" name="驯兽" label="驯兽 Animal Handling" />
+          <Use define="skill" name="洞悉" label="洞悉 Insight" />
+          <Use define="skill" name="医药" label="医药 Medicine" />
+          <Use define="skill" name="察觉" label="察觉 Perception" />
+          <Use define="skill" name="求生" label="求生 Survival" />
+        </FieldSet>
+
+        <FieldSet label="魅力系">
+          <Use define="skill" name="欺瞒" label="欺瞒 Deception" />
+          <Use define="skill" name="威吓" label="威吓 Intimidation" />
+          <Use define="skill" name="表演" label="表演 Performance" />
+          <Use define="skill" name="游说" label="游说 Persuasion" />
+        </FieldSet>
       </Col>
     </Row>
   </FieldSet>
