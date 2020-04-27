@@ -11,14 +11,14 @@
 
   <FieldSet label="基本属性">
     <Row>
-      <Col sm="12">
+      <Col sm="8">
         <Input name="当前生命值"/>
         <Input name="年龄" />
         <Input name="身高" />
         <Input name="体重" />
         <Input name="信仰" />
       </Col>
-      <Col sm="12">
+      <Col sm="8">
         <Input name="最大生命值" label="最大生命值" />
         <Select name="阵营" options="守序善良,中立善良,混乱善良,守序中立,绝对中立,混乱中立,守序邪恶,中立邪恶,混乱邪恶" />
         <InputNumber name="经验值" min="0" step="50" default="0" />
@@ -26,7 +26,17 @@
         <Computed target="熟练加值" deps="global.currentLevelDetail.2" expression="_get(global.currentLevelDetail, '2', 2)" />
         <p>等级: {{_get(currentLevelDetail, '1', 1)}}</p>
         <p>熟练加值: {{熟练加值}}</p>
+      </Col>
+      <Col sm="8">
         <p>总负重: {{SUM(armorWeight,weaponWeight,otherEquipWeight)}}</p>
+
+        <InputNumber name="cp" label="铜币" />
+        <InputNumber name="sp" label="银币" />
+        <InputNumber name="ep" label="银金币" />
+        <InputNumber name="gp" label="金币" />
+        <InputNumber name="pp" label="铂金币" />
+        <Computed target="sumgp" deps="cp,sp,ep,gp,pp" expression="SUM(cp*0.01,sp*0.1,ep*0.5,gp,pp*10)" />
+        <p>合计: {{sumgp}}gp</p>
       </Col>
     </Row>
   </FieldSet>
