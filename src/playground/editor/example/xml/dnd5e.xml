@@ -5,6 +5,7 @@
   <Static name="level" value="[[0,1,2],[300,2,2],[900,3,2],[2700,4,2],[6500,5,3],[14000,6,3],[23000,7,3],[34000,8,3],[48000,9,4],[64000,10,4],[85000,11,4],[100000,12,4],[120000,13,5],[140000,14,5],[165000,15,5],[195000,16,5],[225000,17,6],[265000,18,6],[305000,19,6],[355000,20,6],]" />
   <Static name="armorType" value="['-','轻型','中型','重型','盾牌']" />
   <Static name="weapon" value="[['短棒club','1sp','1d4钝击','2磅','轻型'],['匕首dagger','2gp','1d4穿刺','1磅','灵巧，轻型，投掷（射程20/60）'],['巨棒greatclub','2sp','1d8钝击','10磅','双手'],['手斧handaxe','5gp','1d6挥砍','2磅','轻型，投掷（射程20/60）'],['标枪javelin','5sp','1d6穿刺','2磅','投掷（射程30/120）'],['轻锤light hammer','2gp','1d4钝击','2磅','轻型，投掷（射程20/60）'],['硬头锤mace','5gp','1d6钝击','4磅','－'],['长棍quarterstaff','2sp','1d6钝击','4磅','两用（1d8）'],['镰刀sickle','1gp','1d4挥砍','2磅','轻型'],['矛spear','1gp','1d6穿刺','3磅','投掷（射程20/60），两用（1d8）'],['轻弩light crossbow','25gp','1d8穿刺','5磅','弹药（射程80/320），装填，双手'],['飞镖dart','5cp','1d4穿刺','1/4磅','灵巧，投掷（射程20/60）'],['短弓shortbow','25gp','1d6穿刺','2磅','弹药（射程80/320），双手'],['投石索sling','1sp','1d4钝击','—','弹药（射程30/120）'],['战斧battleaxe','10gp','1d8挥砍','4磅','两用（1d10）'],['链枷flail','10gp','1d8钝击','2磅','－'],['长柄刀glaive','20gp','1d10挥砍','6磅','重型，触及，双手'],['巨斧greataxe','30gp','1d12挥砍','7磅','重型，双手'],['巨剑greatsword','50gp','2d6挥砍','6磅','重型，双手'],['戟hallerd','20gp','1d10挥砍','6磅','重型，触及，双手'],['骑枪lance','10gp','1d12穿刺','6磅','触及，特殊'],['长剑longsword','15gp','1d8挥砍','3磅','两用（1d10）'],['巨锤maul','10gp','2d6钝击','10磅','重型，双手'],['钉头锤morningstar','15gp','1d8穿刺','4磅','－'],['长矛pike','5gp','1d10穿刺','18磅','重型，触及，双手'],['刺剑rapier','25gp','1d8穿刺','2磅','灵巧'],['弯刀scimitar','25gp','1d6挥砍','3磅','灵巧，轻型'],['短剑shortsword','10gp','1d6穿刺','2磅','灵巧，轻型'],['三叉戟trident','5gp','1d6穿刺','4磅','投掷（射程20/60），两用（1d8）'],['战镐war pick','5gp','1d8穿刺','2磅','—'],['战锤warhammer','15gp','1d8钝击','2磅','两用（1d10）'],['鞭whip','2gp','1d4挥砍','3磅','灵巧，触及'],['吹箭筒blowgun','10gp','1穿刺','1磅','弹药（射程25/100）装填'],['手弩hand crossbow','75gp','1d6穿刺','3磅','弹药（射程30/120），轻型，装填'],['重弩heavy crossbow','50gp','1d10穿刺','18磅','弹药（射程100/400），重型，装填，双手'],['长弓longbow','50gp','1d8穿刺','2磅','弹药（射程150/600），重型，双手'],['捕网net','1gp','—','3磅','特殊，投掷（射程5/15）'],]" />
+  <Static name="otherEquipType" value="['全头','头部','头发','面部','颈部','身体','肩膀','胸前','背后','腰部','胯间','左脚','右脚','左腿','右腿','双腿','左手','右手','双手','左臂','右臂','双臂','全身',]" />
 
   <BaseInfo />
 
@@ -25,6 +26,7 @@
         <Computed target="熟练加值" deps="global.currentLevelDetail.2" expression="_get(global.currentLevelDetail, '2', 2)" />
         <p>等级: {{_get(currentLevelDetail, '1', 1)}}</p>
         <p>熟练加值: {{熟练加值}}</p>
+        <p>总负重: {{SUM(armorWeight,weaponWeight,otherEquipWeight)}}</p>
       </Col>
     </Row>
   </FieldSet>
@@ -267,6 +269,8 @@
         </Define>
 
         <Use define="armor" name="armor1" />
+
+        <Var name="armorWeight" value="_get(armor1,'weight')" />
       </FieldSet>
 
       <FieldSet label="武器">
@@ -305,6 +309,38 @@
         <Use define="weapon" name="weapon3" />
         <Use define="weapon" name="weapon4" />
         <Use define="weapon" name="weapon5" />
+
+        <Var name="weaponWeight" value="SUM(_get(weapon1,'weight'),_get(weapon2,'weight'),_get(weapon3,'weight'),_get(weapon4,'weight'),_get(weapon5,'weight'))" />
+      </FieldSet>
+
+      <FieldSet label="其他装备">
+        <Define name="otherEquip">
+          <Row>
+            <Col span="6">
+              <Select name="type" placeholder="类型" :options="global.otherEquipType" hideLabel="true" />
+            </Col>
+            <Col span="18">
+              <Input name="name" placeholder="名称" hideLabel="true" />
+            </Col>
+          </Row>
+          <Row align="middle">
+            <Col offset="6" span="6"><Checkbox name="synchron" label="同调" hideLabel="true" /></Col>
+            <Col span="8"><Input name="feature" placeholder="特性" hideLabel="true" /></Col>
+            <Col span="4"><InputNumber name="weight" placeholder="重量" hideLabel="true" /></Col>
+          </Row>
+        </Define>
+
+        <Use define="otherEquip" name="otherEquip1" />
+        <Use define="otherEquip" name="otherEquip2" />
+        <Use define="otherEquip" name="otherEquip3" />
+        <Use define="otherEquip" name="otherEquip4" />
+        <Use define="otherEquip" name="otherEquip5" />
+        <Use define="otherEquip" name="otherEquip6" />
+        <Use define="otherEquip" name="otherEquip7" />
+        <Use define="otherEquip" name="otherEquip8" />
+        <Use define="otherEquip" name="otherEquip9" />
+
+        <Var name="otherEquipWeight" value="SUM(_get(otherEquip1,'weight'),_get(otherEquip2,'weight'),_get(otherEquip3,'weight'),_get(otherEquip4,'weight'),_get(otherEquip5,'weight'),_get(otherEquip6,'weight'),_get(otherEquip7,'weight'),_get(otherEquip8,'weight'),_get(otherEquip9,'weight'))" />
       </FieldSet>
     </Col>
   </Row>
