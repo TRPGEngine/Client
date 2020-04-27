@@ -16,6 +16,7 @@ import { useToBoolean } from '@shared/hooks/useToBoolean';
 interface TagProps {
   name: string;
   options: string | Array<string | { name: string; items: string[] }>;
+  placeholder?: string;
   desc?: string;
   showSearch?: boolean | string;
   default?: string;
@@ -26,6 +27,7 @@ export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
   const { label, stateValue, setStateValue } = useLayoutFormData(props);
   const [customItems, setCustomItems] = useState<string[]>([]);
   const allowCustom = useToBoolean(props.allowCustom);
+  const placeholder = props.placeholder ?? '请选择...'; // Select的placeholder是直接从props中获取的。如果没有则为请选择
 
   const options = useMemo(() => {
     if (typeof props.options === 'string') {
@@ -158,7 +160,7 @@ export const TagSelectEdit: TagComponent<TagProps> = TMemo((props) => {
       <FormContainer label={label}>
         <Select
           style={{ width: '100%' }}
-          placeholder="请选择..."
+          placeholder={placeholder}
           showSearch={showSearch}
           allowClear={true}
           value={stateValue}
