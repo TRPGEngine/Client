@@ -42,10 +42,13 @@ const developLayout = [
 
 // 正在操作的布局。 在开发模式下会自动加载最新的该布局
 const workingLabel = 'DND 5e';
+const showDevLayout =
+  config.environment === 'development' ||
+  localStorage.getItem('__playground_dev') === '1';
 
 const exampleLayout = [
   ...completedLayout,
-  ...(config.environment === 'development' ? developLayout : []),
+  ...(showDevLayout ? developLayout : []),
 ];
 
 export { exampleLayout, workingLabel };
