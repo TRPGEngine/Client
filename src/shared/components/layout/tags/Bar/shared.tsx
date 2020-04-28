@@ -10,8 +10,8 @@ import { TMemo } from '@shared/components/TMemo';
 export interface TagBarSharedProps {
   current: string;
   max: string;
-  label: string;
-  color: string;
+  label?: string;
+  color?: string;
   size?: ProgressSize;
 }
 export const TagBarShared: TagComponent<TagBarSharedProps> = TMemo((props) => {
