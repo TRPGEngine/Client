@@ -43,7 +43,10 @@
 
   <p>自定义可输入列表</p>
   <Define name="customlist">
-    <li><Input name="item" /></li>
+    <li>
+      <Input name="item" />
+      <InputNumber name="num" />
+    </li>
   </Define>
   <CustomList name="testCustomList" define="customlist" />
 </Template>

@@ -25,7 +25,9 @@ export function getDefineState(
   name: string,
   parentContext: XMLBuilderContext
 ): XMLBuilderState {
-  const currentData = _get(parentContext, ['state', 'data', name]);
+  // name可能有多层级。比如ForEach中可能为list.0
+  // 因此最后要用.拼接起来作为获取路径
+  const currentData = _get(parentContext, ['state', 'data', name].join('.'));
 
   return {
     defines: parentContext.state.defines,
