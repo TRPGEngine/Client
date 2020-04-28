@@ -30,15 +30,14 @@ const completedLayout = [
     label: '无限简版',
     value: require('./xml/wuxian-simple.xml').default,
   },
-];
-
-// 正在开发中的布局。不会再正式环境显示到界面上
-const developLayout = [
   {
     label: 'DND 5e',
     value: require('./xml/dnd5e.xml').default,
   },
 ];
+
+// 正在开发中的布局。不会再正式环境显示到界面上
+const developLayout = [];
 
 // 正在操作的布局。 在开发模式下会自动加载最新的该布局
 const workingLabel = 'DND 5e';

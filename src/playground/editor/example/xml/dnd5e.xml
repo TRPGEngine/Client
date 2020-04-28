@@ -28,7 +28,7 @@
         <p>熟练加值: {{熟练加值}}</p>
       </Col>
       <Col sm="8">
-        <p>总负重: {{SUM(armorWeight,weaponWeight,otherEquipWeight)}}</p>
+        <p>总负重: {{SUM(armorWeight,weaponWeight,otherEquipWeight,packWeight)}}</p>
 
         <InputNumber name="cp" label="铜币" />
         <InputNumber name="sp" label="银币" />
@@ -353,5 +353,88 @@
         <Var name="otherEquipWeight" value="SUM(_get(otherEquip1,'weight'),_get(otherEquip2,'weight'),_get(otherEquip3,'weight'),_get(otherEquip4,'weight'),_get(otherEquip5,'weight'),_get(otherEquip6,'weight'),_get(otherEquip7,'weight'),_get(otherEquip8,'weight'),_get(otherEquip9,'weight'))" />
       </FieldSet>
     </Col>
+  </Row>
+
+  <Row style="width: 100%;">
+    <Define name="commonSlot">
+      <Row>
+        <Col sm="4">
+          <InputNumber name="lv" label="LV" hideLabel="true" />
+        </Col>
+        <Col sm="6">
+          <Input name="name" label="名称" hideLabel="true" />
+        </Col>
+        <Col sm="14">
+          <Input name="name" label="描述" hideLabel="true" />
+        </Col>
+      </Row>
+    </Define>
+
+    <Tabs>
+      <Tab label="背包">
+        <Define name="packlist">
+          <Row>
+            <Col sm="6">
+              <Input name="name" label="名称" hideLabel="true" />
+            </Col>
+            <Col sm="10">
+              <Input name="desc" label="描述" hideLabel="true" />
+            </Col>
+            <Col sm="8">
+              <Row align="middle">
+                <InputNumber name="lb" label="单位重量" style="flex: 1;" inline="true" hideLabel="true" />
+                <span>x</span>
+                <InputNumber name="number" label="数量" style="flex: 1;" inline="true" hideLabel="true" default="1" />
+              </Row>
+            </Col>
+          </Row>
+        </Define>
+        <Computed target="packWeight" deps="背包" expression="SUM(_map(背包, (p) => _get(p, 'lb', 0) * _get(p, 'number', 1) ))" />
+        <div>背包总重量: {{packWeight}}</div>
+        <CustomList name="背包" define="packlist" />
+      </Tab>
+
+      <Tab label="法术">
+        <Define name="spelllist">
+          <Col sm="12">
+            <Row>
+              <Col sm="6">
+                <InputNumber name="lv" label="LV" hideLabel="true" />
+              </Col>
+              <Col sm="18">
+                <Input name="name" label="法术名称" hideLabel="true" />
+              </Col>
+            </Row>
+          </Col>
+        </Define>
+        <Row>
+          <CustomList name="法术" define="spelllist" />
+        </Row>
+      </Tab>
+
+      <Tab label="职业能力">
+        <CustomList name="职业能力" define="commonSlot" />
+      </Tab>
+
+      <Tab label="种族特性">
+        <CustomList name="种族特性" define="commonSlot" />
+      </Tab>
+
+      <Tab label="专长">
+        <CustomList name="专长" define="commonSlot" />
+      </Tab>
+
+      <Tab label="特殊能力">
+        <CustomList name="特殊能力" define="commonSlot" />
+      </Tab>
+
+      <Tab label="其他特性">
+        <TextArea name="其他特性" hideLabel="true"  />
+      </Tab>
+
+      <Tab label="笔记">
+        <TextArea name="笔记" hideLabel="true"  />
+      </Tab>
+    </Tabs>
   </Row>
 </Template>
