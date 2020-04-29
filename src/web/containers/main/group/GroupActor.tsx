@@ -40,7 +40,6 @@ interface Props {
   removeGroupActor: any;
   groupInfo: GroupInfo;
   isGroupManager: boolean;
-  templateCache: any;
   requestUpdateGroupActorInfo: (
     groupUUID: string,
     groupActorUUID: string,

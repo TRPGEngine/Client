@@ -13,7 +13,7 @@ type CSSUnit = number | string;
 
 interface Props extends TRPGDispatchProp {
   type: 'actor' | 'user' | 'group';
-  attachUUID: string;
+  attachUUID?: string;
   width?: CSSUnit;
   height?: CSSUnit;
   containerWidth?: CSSUnit;
@@ -21,6 +21,8 @@ interface Props extends TRPGDispatchProp {
   onUploadSuccess?: (imageInfo: any) => void;
 
   user_uuid: string; // 绑定的用户UUID
+
+  children?: React.ReactNode;
 }
 
 /**

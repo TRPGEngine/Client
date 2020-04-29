@@ -15,7 +15,6 @@ interface Props {
   userUUID: string;
   selectedGroupUUID: string;
   groupInfo: GroupInfo;
-  isGroupManager: boolean;
   showModal: any;
   showProfileCard: any;
 }

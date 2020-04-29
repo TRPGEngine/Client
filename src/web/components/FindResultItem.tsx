@@ -28,7 +28,7 @@ interface Props {
   showModal: (body) => void;
 
   info: any;
-  type: string;
+  type?: string;
 }
 class FindResultItem extends React.Component<Props> {
   getUserAction(uuid) {
