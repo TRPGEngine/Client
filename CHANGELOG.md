@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.2](https://github.com/TRPGEngine/Client/compare/v0.3.1...v0.3.2) (2020-04-29)
+
+
+### Features
+
+* **app:** 在"关于"中增加官网的连接 ([1b7d9c7](https://github.com/TRPGEngine/Client/commit/1b7d9c73e3c9f2e93a6066c8b49b297f6bb7667c))
+* **app:** 增加了部分投骰图标。重绘了所有的投骰图标 ([e70d204](https://github.com/TRPGEngine/Client/commit/e70d204ff46f21752afa8c1d11c4202b7550c659))
+* **app:** 增加团规则的查看 ([d3c9c59](https://github.com/TRPGEngine/Client/commit/d3c9c5956e23efd3fcf1aa21176f1b0344727bc4))
+* **app:** 增加开发博客的链接 ([4c9ccaa](https://github.com/TRPGEngine/Client/commit/4c9ccaa861bf1c5cacedc04ee93b63698220bd74))
+* **layout:** 增加CustomList组件 ([2f4b07f](https://github.com/TRPGEngine/Client/commit/2f4b07f8a7fc6888c1453d81ef2fd98ad7d7d7f9))
+* **layout:** 增加Space间隔组件 ([27b43d7](https://github.com/TRPGEngine/Client/commit/27b43d7556937d35e243a0343e72ef346ae06b09))
+* **layout:** 增加一个CurrMax组件用于渲染当前值与最大值的组合输入 ([0799a5a](https://github.com/TRPGEngine/Client/commit/0799a5a3c31996c7dd179490ae6bce11c4a97415))
+* **playground:** 增加分割面板位置记忆与位置重置 ([e700ef7](https://github.com/TRPGEngine/Client/commit/e700ef738a5ee2742d17853c4f45b7331094c584))
+
+
+### Bug Fixes
+
+* **app:** 修复移动版部分位置中文会出现被截掉顶部一部分像素的问题 ([1c6773e](https://github.com/TRPGEngine/Client/commit/1c6773edb0a2b5a7671007c1a711f354ab61de74))
+* **layout:** 修复define无法获取深层name的问题 ([20bd65d](https://github.com/TRPGEngine/Client/commit/20bd65dc323cb611f099956e4a447a77f27e2106))
+
 ### [0.3.1](https://github.com/TRPGEngine/Client/compare/v0.3.0...v0.3.1) (2020-04-20)
 
 
