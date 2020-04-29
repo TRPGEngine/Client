@@ -314,11 +314,13 @@
           </Row>
         </Define>
 
-        <Use define="weapon" name="weapon1" />
-        <Use define="weapon" name="weapon2" />
-        <Use define="weapon" name="weapon3" />
-        <Use define="weapon" name="weapon4" />
-        <Use define="weapon" name="weapon5" />
+        <Space direction="vertical">
+          <Use define="weapon" name="weapon1" />
+          <Use define="weapon" name="weapon2" />
+          <Use define="weapon" name="weapon3" />
+          <Use define="weapon" name="weapon4" />
+          <Use define="weapon" name="weapon5" />
+        </Space>
 
         <Var name="weaponWeight" value="SUM(_get(weapon1,'weight'),_get(weapon2,'weight'),_get(weapon3,'weight'),_get(weapon4,'weight'),_get(weapon5,'weight'))" />
       </FieldSet>
@@ -340,15 +342,17 @@
           </Row>
         </Define>
 
-        <Use define="otherEquip" name="otherEquip1" />
-        <Use define="otherEquip" name="otherEquip2" />
-        <Use define="otherEquip" name="otherEquip3" />
-        <Use define="otherEquip" name="otherEquip4" />
-        <Use define="otherEquip" name="otherEquip5" />
-        <Use define="otherEquip" name="otherEquip6" />
-        <Use define="otherEquip" name="otherEquip7" />
-        <Use define="otherEquip" name="otherEquip8" />
-        <Use define="otherEquip" name="otherEquip9" />
+        <Space direction="vertical">
+          <Use define="otherEquip" name="otherEquip1" />
+          <Use define="otherEquip" name="otherEquip2" />
+          <Use define="otherEquip" name="otherEquip3" />
+          <Use define="otherEquip" name="otherEquip4" />
+          <Use define="otherEquip" name="otherEquip5" />
+          <Use define="otherEquip" name="otherEquip6" />
+          <Use define="otherEquip" name="otherEquip7" />
+          <Use define="otherEquip" name="otherEquip8" />
+          <Use define="otherEquip" name="otherEquip9" />
+        </Space>
 
         <Var name="otherEquipWeight" value="SUM(_get(otherEquip1,'weight'),_get(otherEquip2,'weight'),_get(otherEquip3,'weight'),_get(otherEquip4,'weight'),_get(otherEquip5,'weight'),_get(otherEquip6,'weight'),_get(otherEquip7,'weight'),_get(otherEquip8,'weight'),_get(otherEquip9,'weight'))" />
       </FieldSet>
@@ -357,7 +361,7 @@
 
   <Row style="width: 100%;">
     <Define name="commonSlot">
-      <Row>
+      <Row style="margin-bottom: 8px;">
         <Col sm="4">
           <InputNumber name="lv" label="LV" hideLabel="true" />
         </Col>
@@ -373,7 +377,7 @@
     <Tabs>
       <Tab label="背包">
         <Define name="packlist">
-          <Row>
+          <Row style="margin-bottom: 8px;">
             <Col sm="6">
               <Input name="name" label="名称" hideLabel="true" />
             </Col>
@@ -397,7 +401,7 @@
       <Tab label="法术">
         <Define name="spelllist">
           <Col sm="12">
-            <Row>
+            <Row style="margin-bottom: 8px;">
               <Col sm="6">
                 <InputNumber name="lv" label="LV" hideLabel="true" />
               </Col>
