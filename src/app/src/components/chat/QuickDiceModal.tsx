@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { Modal, WingBlank, PickerView } from '@ant-design/react-native';
 import QuickDiceBtn from './QuickDiceBtn';
 import styled from 'styled-components/native';
-import { TButton } from '../TComponent';
+import { TButton, TIcon } from '../TComponent';
 import _range from 'lodash/range';
 import { PickerData } from '@ant-design/react-native/es/picker/PropsType';
 
@@ -45,6 +45,13 @@ const CustomDiceContainer = styled.View`
   padding: 10px 0;
 `;
 
+const DiceBtnIcon = styled(TIcon)`
+  color: #ccc;
+  font-size: 32px;
+  text-align: center;
+  line-height: 48px;
+`;
+
 const customDices: PickerData[][] = [
   _range(10)
     .map((v) => v + 1)
@@ -69,6 +76,37 @@ export default class QuickDiceModal extends React.Component<Props> {
   state = {
     diceExp: '1d20',
   };
+
+  diceBtns = [
+    {
+      dice: '1d100',
+      icon: <DiceBtnIcon icon="&#xe62c;" />,
+    },
+    {
+      dice: '1d20',
+      icon: <DiceBtnIcon icon="&#xe629;" />,
+    },
+    {
+      dice: '1d12',
+      icon: <DiceBtnIcon icon="&#xe62a;" />,
+    },
+    {
+      dice: '1d10',
+      icon: <DiceBtnIcon icon="&#xe62b;" />,
+    },
+    {
+      dice: '1d8',
+      icon: <DiceBtnIcon icon="&#xe627;" />,
+    },
+    {
+      dice: '1d6',
+      icon: <DiceBtnIcon icon="&#xe628;" />,
+    },
+    {
+      dice: '1d4',
+      icon: <DiceBtnIcon icon="&#xe626;" />,
+    },
+  ];
 
   setDice(diceExp: string) {
     this.setState({ diceExp });
@@ -98,34 +136,15 @@ export default class QuickDiceModal extends React.Component<Props> {
   renderDefaultDiceBtn() {
     const { diceExp } = this.state;
 
-    return (
-      <Fragment>
-        <QuickDiceBtn
-          isSelected={'1d20' === diceExp}
-          icon="&#xe6fd;"
-          text={'1D20'}
-          onPress={() => this.setDice('1d20')}
-        />
-        <QuickDiceBtn
-          isSelected={'1d8' === diceExp}
-          icon="&#xe6fb;"
-          text={'1D8'}
-          onPress={() => this.setDice('1d8')}
-        />
-        <QuickDiceBtn
-          isSelected={'1d6' === diceExp}
-          icon="&#xe6fc;"
-          text={'1D6'}
-          onPress={() => this.setDice('1d6')}
-        />
-        <QuickDiceBtn
-          isSelected={'1d4' === diceExp}
-          icon="&#xe6fa;"
-          text={'1D4'}
-          onPress={() => this.setDice('1d4')}
-        />
-      </Fragment>
-    );
+    return this.diceBtns.map(({ icon, dice }) => (
+      <QuickDiceBtn
+        key={dice}
+        isSelected={dice === diceExp}
+        icon={icon}
+        text={dice.toUpperCase()}
+        onPress={() => this.setDice(dice)}
+      />
+    ));
   }
 
   render() {

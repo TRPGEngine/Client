@@ -29,13 +29,15 @@ import ProfileModifyScreen from './screens/ProfileModifyScreen';
 import WebviewScreen from './screens/WebviewScreen';
 import DeviceInfoScreen from './screens/settings/DeviceInfoScreen';
 import DevelopLabScreen from './screens/settings/DevelopLabScreen';
-import VersionScreen from './screens/VersionScreen';
+import VersionScreen from './screens/about/VersionScreen';
 import CreateGroupScreen from './screens/CreateGroupScreen';
 import GroupDataScreen from './screens/GroupDataScreen';
 import UserSelectScreen from './screens/UserSelectScreen';
 import DebugScreen from './screens/DebugScreen';
 import DocumentScreen from './screens/DocumentScreen';
 import GroupMemberScreen from './screens/GroupMemberScreen';
+import { AboutScreen } from './screens/about/AboutScreen';
+import { GroupRuleScreen } from './screens/GroupRule';
 
 export const MainNavigator = createBottomTabNavigator({
   TRPG: {
@@ -91,6 +93,12 @@ export const AppNavigator = createStackNavigator(
         headerTitle: '开发实验室',
       },
     },
+    About: {
+      screen: AboutScreen,
+      navigationOptions: {
+        headerTitle: '关于TRPG Engine',
+      },
+    },
     Chat: {
       screen: ChatScreen,
       navigationOptions: {
@@ -133,6 +141,12 @@ export const AppNavigator = createStackNavigator(
       navigationOptions: ({ navigation }) => ({
         headerTitle: _get(navigation, 'state.params.name', '详细信息'),
       }),
+    },
+    GroupRule: {
+      screen: GroupRuleScreen,
+      navigationOptions: {
+        headerTitle: '团规则',
+      },
     },
     GroupMember: {
       screen: GroupMemberScreen,

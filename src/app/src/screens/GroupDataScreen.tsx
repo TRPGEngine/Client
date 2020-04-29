@@ -146,6 +146,10 @@ class GroupDataScreen extends React.Component<Props> {
     });
   };
 
+  handleShowGroupRule = () => {
+    this.props.dispatch(switchNav('GroupRule'));
+  };
+
   /**
    * 显示团成员
    */
@@ -247,6 +251,9 @@ class GroupDataScreen extends React.Component<Props> {
           <ListItem extra={groupInfo.maps_uuid.length + '张'}>团地图</ListItem>
           <ListItem multipleLine extra={groupInfo.desc}>
             简介
+          </ListItem>
+          <ListItem onPress={this.handleShowGroupRule} arrow="horizontal">
+            团规则
           </ListItem>
 
           {/* <ListItem onPress={this.handleViewHistory} arrow="horizontal">

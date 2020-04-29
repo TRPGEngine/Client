@@ -1,7 +1,7 @@
 {
   "name": "trpg-game-app",
-  "version": "0.2.30",
-  "appVersion": "0.2.8",
+  "version": "0.2.31",
+  "appVersion": "0.2.9",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -43,6 +43,7 @@
     "react-native-permissions": "^1.1.1",
     "react-native-progress": "^3.6.0",
     "react-native-qrcode-scanner": "^1.2.3",
+    "react-native-render-html": "^4.2.0",
     "react-native-root-siblings": "^4.0.6",
     "react-native-root-toast": "^3.0.1",
     "react-native-sentry": "^0.42.0",

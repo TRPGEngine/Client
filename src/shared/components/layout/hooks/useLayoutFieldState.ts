@@ -4,6 +4,11 @@ import _get from 'lodash/get';
 import { getStateValue, setStateValue } from '../tags/utils';
 
 type FieldValue = string | number;
+/**
+ * 获取与设置布局状态的组件
+ * 用于操作字符串、数字的操作
+ * @param name 变量名
+ */
 export const useLayoutFieldState = (
   name: string
 ): [FieldValue, (newValue: any) => void] => {

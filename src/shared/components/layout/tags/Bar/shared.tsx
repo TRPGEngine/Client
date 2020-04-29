@@ -7,14 +7,14 @@ import styledTheme from '@shared/utils/theme';
 import _isEmpty from 'lodash/isEmpty';
 import { TMemo } from '@shared/components/TMemo';
 
-interface TagProps {
+export interface TagBarSharedProps {
   current: string;
   max: string;
-  label: string;
-  color: string;
+  label?: string;
+  color?: string;
   size?: ProgressSize;
 }
-export const TagBarShared: TagComponent<TagProps> = TMemo((props) => {
+export const TagBarShared: TagComponent<TagBarSharedProps> = TMemo((props) => {
   const [_current] = useLayoutFieldState(props.current);
   const [_max] = useLayoutFieldState(props.max);
 

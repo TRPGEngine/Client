@@ -14,7 +14,7 @@
   <InputNumber name="数字框" />
   <InputNumber name="数字框(步长5)" step="5" />
   <InputNumber name="数字框(范围0 ~ 20)" min="0" max="20" />
-
+  <CurrMax name="生命值" />
 
   ---------------------------
   <p>可以隐藏左侧标签</p>

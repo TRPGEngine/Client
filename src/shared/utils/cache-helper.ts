@@ -36,7 +36,7 @@ export const checkUser = function(uuid, type = 'user') {
   let store = _store;
   if (!!store && !!store.dispatch) {
     if (type === 'user') {
-      exports.getUserInfoCache(uuid);
+      getUserInfoCache(uuid);
     }
   } else {
     throw new Error('checkUser func should bind store');

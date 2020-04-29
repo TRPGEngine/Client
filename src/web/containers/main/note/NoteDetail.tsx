@@ -10,13 +10,17 @@ const NoteEditor = TLoadable(() => import('../../../components/NoteEditor'));
 
 interface Props extends TRPGDispatchProp {
   uuid: string;
+  note: {
+    title: string;
+    content: string;
+  };
 }
 interface State {
   title: string;
   content: string;
 }
 class NoteDetail extends React.Component<Props, State> {
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       title: props.note.title,

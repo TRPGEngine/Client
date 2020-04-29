@@ -281,6 +281,4 @@ class EmotionPanel extends React.Component<Props> {
 
 export default connect((state: TRPGState) => ({
   emotionCatalog: _get(state, ['chat', 'emotions', 'catalogs'], []),
-}))(EmotionPanel) as React.ComponentClass<
-  Omit<Props, 'dispatch' | 'emotionCatalog'>
->;
+}))(EmotionPanel);

@@ -20,7 +20,7 @@ interface Props extends TRPGDispatchProp {
   converseUUID: string;
   isGroup: boolean;
   onQuickDice: () => void;
-  onChange: (val: string) => void;
+  onChange?: (val: string) => void;
   onSendMsg: (message: string, type: any) => void;
   onSendFile: (file: File) => void;
   onSendDiceReq: () => void;

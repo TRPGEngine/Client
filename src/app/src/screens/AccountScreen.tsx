@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
 import styled from 'styled-components/native';
@@ -9,15 +9,16 @@ import appConfig from '@app/config.app';
 import { logout } from '../../../shared/redux/actions/user';
 import { openWebview, switchNav, navPortal } from '../redux/actions/nav';
 import { TButton, TAvatar } from '../components/TComponent';
-import checkVersion from '../../../shared/utils/check-version';
-import * as appUtils from '../utils/apputils';
 import { TIcon } from '../components/TComponent';
 import DevContainer from '../components/DevContainer';
 
 import { List } from '@ant-design/react-native';
-import { showToast } from '@src/shared/redux/actions/ui';
 import { TRPGState } from '@redux/types/__all__';
 const Item = List.Item;
+
+const AccountUserNameText = styled.Text`
+  font-size: 18px;
+`;
 
 const AccountList = styled(List)`
   margin-top: 10px;
@@ -73,7 +74,7 @@ class AccountScreen extends React.Component<Props> {
             width={60}
           />
           <View style={{ flex: 1 }}>
-            <Text style={styles.username}>{name}</Text>
+            <AccountUserNameText>{name}</AccountUserNameText>
             <Text style={styles.userdesc} numberOfLines={1}>
               {userInfo.sign}
             </Text>
@@ -136,14 +137,13 @@ class AccountScreen extends React.Component<Props> {
         <AccountList>
           <Item
             arrow="horizontal"
-            extra={appConfig.version}
             onPress={() => {
               this.props.dispatch(
-                NavigationActions.navigate({ routeName: 'Version' })
+                NavigationActions.navigate({ routeName: 'About' })
               );
             }}
           >
-            当前版本
+            关于TRPG Engine
           </Item>
         </AccountList>
 
@@ -172,7 +172,6 @@ const styles = {
     sb.alignCenter(),
     { height: 80 },
   ],
-  username: [sb.font(18)],
   userdesc: [sb.color('#999')],
   arrow: [
     { fontFamily: 'iconfont', marginRight: 6 },

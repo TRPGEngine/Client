@@ -32,6 +32,14 @@ const MsgBubble = styled.View<{
   align-self: ${(props) => (props.me ? 'flex-end' : 'flex-start')};
 `;
 
+const MsgSenderNameText = styled.Text<{
+  me: boolean;
+}>`
+  margin: 4px 0;
+  font-size: 12px;
+  text-align: ${(props) => (props.me ? 'right' : 'left')};
+`;
+
 const MsgTypeIcon = styled(TIcon)`
   margin: 0 4px;
   align-self: center;
@@ -208,11 +216,9 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
           )}
 
           <View style={styles.itemBody}>
-            <Text
-              style={[...styles.itemName, me ? { textAlign: 'right' } : null]}
-            >
+            <MsgSenderNameText me={me}>
               {this.getSenderName()}
-            </Text>
+            </MsgSenderNameText>
             <MsgContainer me={me}>
               {/* 不同消息类型的显示 */}
               {_has(this.msgBubbleType, type)
@@ -237,7 +243,6 @@ const styles = {
   ],
   itemView: [sb.direction(), sb.padding(10, 10)],
   itemBody: [sb.padding(0, 4), sb.margin(0, 6), sb.flex()],
-  itemName: [{ marginBottom: 4, marginTop: 4 }, sb.font(12)],
 };
 
 export default Base;

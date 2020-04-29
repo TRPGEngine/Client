@@ -40,4 +40,13 @@
   <ul>
     <ForEach name="testForeach2" :data="[1,2,3,4]" define="foreach2" />
   </ul>
+
+  <p>自定义可输入列表</p>
+  <Define name="customlist">
+    <li>
+      <Input name="item" />
+      <InputNumber name="num" />
+    </li>
+  </Define>
+  <CustomList name="testCustomList" define="customlist" />
 </Template>

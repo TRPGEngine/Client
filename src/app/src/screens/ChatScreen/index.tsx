@@ -369,7 +369,7 @@ class ChatScreen extends React.Component<Props, State> {
         />
         <ExtraPanelItem
           text="投骰"
-          icon="&#xe6fd;"
+          icon="&#xe629;"
           onPress={() => this.setState({ showQuickDiceModal: true })}
         />
       </ExtraPanel>

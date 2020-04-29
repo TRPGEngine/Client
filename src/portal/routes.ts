@@ -39,11 +39,6 @@ export const routes: RouteConfig[] = [
     component: TLoadable(() => import('@portal/routes/actor/create')),
   },
   {
-    title: '人物编辑器',
-    path: '/actor/editor',
-    component: TLoadable(() => import('@portal/routes/actor/editor')),
-  },
-  {
     title: '团人物列表',
     path: '/group/:groupUUID/actor/list',
     component: TLoadable(() => import('@portal/routes/group/actor/list')),

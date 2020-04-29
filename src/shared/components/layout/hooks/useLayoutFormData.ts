@@ -4,11 +4,18 @@ import { useMemo, useEffect } from 'react';
 import { useLayoutFieldState } from './useLayoutFieldState';
 import _isNil from 'lodash/isNil';
 
-export const useLayoutFormData = (props: LayoutProps) => {
+export const useLayoutFormLabel = (props: LayoutProps): string => {
   const label = useMemo(() => parseMultilineText(props.label ?? props.name), [
     props.label,
     props.name,
   ]);
+
+  return label;
+};
+
+export const useLayoutFormData = (props: LayoutProps) => {
+  const label = useLayoutFormLabel(props);
+
   const placeholder = useMemo(
     () => parseMultilineText(props.placeholder ?? label),
     [props.placeholder, label]

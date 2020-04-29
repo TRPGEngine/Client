@@ -10,20 +10,13 @@ const OfflinePlugin = require('offline-plugin');
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
 
-const plugins = [];
-if (_.get(config, 'sentry.pushRelease', false) === true) {
-  // 增加推送插件
-  const SentryCliPlugin = require('@sentry/webpack-plugin');
-  plugins.push(
-    new SentryCliPlugin({
-      include: APP_PATH,
-      ignoreFile: '.sentrycliignore',
-      ignore: ['app'],
-      configFile: 'sentry.properties',
-      release: `v${package.version}-${process.env.NODE_ENV}`,
-    })
-  );
-}
+const plugins = [
+  // 设置最小文件大小
+  // 过于小且密的文件反而会降低速度
+  new webpack.optimize.MinChunkSizePlugin({
+    minChunkSize: 10000,
+  }),
+];
 
 // use npm run build:report or npm run build:pro --report
 // to generate bundle-report
@@ -35,6 +28,19 @@ if (_.get(process, 'env.npm_config_report', false)) {
       analyzerMode: 'static',
       reportFilename: 'bundle-report.html',
       openAnalyzer: true,
+    })
+  );
+} else if (_.get(config, 'sentry.pushRelease', false) === true) {
+  // 仅在不使用report功能时生效
+  // 增加推送到sentry插件
+  const SentryCliPlugin = require('@sentry/webpack-plugin');
+  plugins.push(
+    new SentryCliPlugin({
+      include: APP_PATH,
+      ignoreFile: '.sentrycliignore',
+      ignore: ['app'],
+      configFile: 'sentry.properties',
+      release: `v${package.version}-${process.env.NODE_ENV}`,
     })
   );
 }

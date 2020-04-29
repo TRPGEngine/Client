@@ -6,6 +6,62 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "14223250",
+      "name": "DICE-d4",
+      "font_class": "DICE-d4",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "14223251",
+      "name": "DICE-d8",
+      "font_class": "DICE-d8",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "14223252",
+      "name": "DICE-d6",
+      "font_class": "DICE-d6",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "14223253",
+      "name": "DICE-d20",
+      "font_class": "DICE-d20",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "14223254",
+      "name": "DICE-d12",
+      "font_class": "DICE-d12",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "14223255",
+      "name": "DICE-d10",
+      "font_class": "DICE-d10",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "14223256",
+      "name": "DICE-d100",
+      "font_class": "DICE-d100",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "8847045",
+      "name": "layer",
+      "font_class": "layer",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
       "icon_id": "4868907",
       "name": "more",
       "font_class": "more1",

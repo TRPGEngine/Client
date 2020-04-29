@@ -46,6 +46,10 @@ export const TagTabsShared: TagComponent<TagProps> = TMemo((props) => {
       });
   }, [elements, context]);
 
-  return <Tabs tabPosition={position}>{children}</Tabs>;
+  return (
+    <Tabs style={{ width: '100%' }} tabPosition={position}>
+      {children}
+    </Tabs>
+  );
 });
 TagTabsShared.displayName = 'TagTabsShared';

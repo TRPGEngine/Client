@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import parser from './parser/xml-parser';
+import parser, { XMLElement } from './parser/xml-parser';
 import * as processor from './processor';
 import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
@@ -113,7 +113,7 @@ interface Props {
 const XMLBuilder: React.FC<Props> = TMemo((props) => {
   const { xml = '', onChange, layoutType = 'edit' } = props;
   const [error, setError] = useState<Error>(null);
-  const [layout, setLayout] = useState();
+  const [layout, setLayout] = useState<XMLElement>();
 
   const { state, dispatch } = useBuildLayoutStateContext({
     initialData: props.initialData,

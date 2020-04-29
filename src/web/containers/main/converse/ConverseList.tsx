@@ -170,7 +170,7 @@ const ConverseList: React.FC = TMemo(() => {
       </div>
       <div className="detail">
         {selectedUUID ? (
-          <ConverseDetail converseUUID={selectedUUID} />
+          <ConverseDetail />
         ) : (
           <div className="nocontent">
             <p className="nocontent-img">
