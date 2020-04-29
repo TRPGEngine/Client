@@ -23,14 +23,13 @@ const dllHashName = 'dll_' + dllConfig.name; // 用于处理文件的hash使其�
 /**
  * NOTICE: 移除@babel/plugin-transform-modules-commonjs以应用摇树优化
  * 摇树优化能自动解析@ant-design/icons的图标并按需加载(节约大量空间)
- * 但是编译时会抛出一堆warning 因为抛出的warning的不是一个esm文件
  */
 const babelQuery = {
   babelrc: false,
   compact: false,
   presets: ['@babel/preset-env', '@babel/preset-react'],
   ignore: [/[\/\\]core-js/, /@babel[\/\\]runtime/],
-  sourceType: 'unambiguous',
+  sourceType: 'unambiguous', // 如果不加这一行就会抛出一堆warning 因为默认是commonjs
   plugins: [
     '@babel/plugin-syntax-dynamic-import',
     [
