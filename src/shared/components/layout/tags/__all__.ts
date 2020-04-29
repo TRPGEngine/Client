@@ -35,6 +35,7 @@ import { TagCustomListShared } from './CustomList/shared';
 import { TagCustomListEdit } from './CustomList/edit';
 import { TagCurrMaxEdit } from './CurrMax/edit';
 import { TagCurrMaxDetail } from './CurrMax/detail';
+import { TagSpaceShared } from './Space/shared';
 
 // 展示数据组件
 registerTag('Template', TagTemplateShared);
@@ -62,6 +63,8 @@ registerTag('Radar', TagRadarShared);
 registerTag('Styled', TagStyledShared);
 
 registerTag('Divider', TagDividerShared);
+
+registerTag('Space', TagSpaceShared);
 
 // 数据录入组件
 registerTag('BaseAttr', TagBaseAttrShared);
