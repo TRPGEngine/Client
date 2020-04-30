@@ -1,9 +1,10 @@
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useState, useMemo, useContext } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Popover } from 'antd';
 import { PopoverProps } from 'antd/lib/popover';
+import _noop from 'lodash/noop';
 
-export const TPopoverContext = React.createContext({ closePopover: () => {} });
+const TPopoverContext = React.createContext({ closePopover: _noop });
 
 /**
  * 重新封装一层Popover
@@ -34,3 +35,11 @@ export const TPopover: React.FC<PopoverProps> = TMemo((props) => {
   );
 });
 TPopover.displayName = 'TPopover';
+
+export function useTPopoverContext() {
+  const context = useContext(TPopoverContext);
+
+  return {
+    closePopover: context?.closePopover ?? _noop,
+  };
+}

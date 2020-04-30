@@ -2,7 +2,7 @@ import React, { useContext, useCallback } from 'react';
 import { TRPGDispatch } from '@redux/types/__all__';
 import { useMessageItemConfigContext } from '@shared/components/message/MessageItemConfigContext';
 import { TMemo } from '@shared/components/TMemo';
-import { TPopover, TPopoverContext } from '@web/components/popover';
+import { TPopover, useTPopoverContext } from '@web/components/popover';
 import styled from 'styled-components';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import _isFunction from 'lodash/isFunction';
@@ -27,11 +27,10 @@ const MsgOperationListItemContainer = styled.div`
 `;
 const MsgOperationListItem: React.FC<MsgOperationItem> = TMemo((props) => {
   const dispatch = useTRPGDispatch();
-  const context = useContext(TPopoverContext);
+    const { closePopover } = useTPopoverContext();
   const handleClick = useCallback(() => {
-    _isFunction(props.action) &&
-      props.action({ dispatch, closePopover: context.closePopover });
-  }, [dispatch, context.closePopover]);
+      _isFunction(props.action) && props.action({ dispatch, closePopover });
+    }, [dispatch, closePopover]);
 
   return (
     <MsgOperationListItemContainer onClick={handleClick}>
