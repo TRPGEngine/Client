@@ -39,6 +39,7 @@ import { sendStartWriting } from '@src/shared/api/event';
 import config from '@src/shared/project.config';
 import { getCurrentGroupActor } from '@redux/helpers/group';
 import { MsgListType, SendMsgPayload } from '@redux/types/chat';
+import { MsgDataManager } from '@shared/utils/msg-helper';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
@@ -196,8 +197,10 @@ class ChatScreen extends React.Component<Props, State> {
         };
 
         if (converseType === 'user' || converseType === 'system') {
+          // 如果是1对1消息
           this.props.dispatch(sendMsg(uuid, payload));
         } else if (converseType === 'group') {
+          // 如果是群组消息
           payload.converse_uuid = uuid;
           payload.is_public = true;
           payload.is_group = true;
@@ -205,12 +208,11 @@ class ChatScreen extends React.Component<Props, State> {
           const currentGroupActor = getCurrentGroupActor(
             this.props.selectedConverseUUID
           );
+          const msgDataManager = new MsgDataManager();
           if (!_isNil(currentGroupActor)) {
-            payload.data = {
-              groupActorUUID: currentGroupActor.uuid,
-              name: currentGroupActor.name,
-              avatar: currentGroupActor.avatar,
-            };
+            msgDataManager.setGroupActorInfo(currentGroupActor);
+
+            payload.data = msgDataManager.toJS();
           }
           this.props.dispatch(sendMsg(null, payload));
         }

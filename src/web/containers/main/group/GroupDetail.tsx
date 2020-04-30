@@ -43,6 +43,7 @@ import { UserSelector } from '@web/components/modal/UserSelector';
 import { checkIsTestUser } from '@web/utils/debug-helper';
 import { GroupChannelCreate } from './modal/GroupChannelCreate';
 import { GroupMap } from './GroupMap';
+import { MsgDataManager } from '@shared/utils/msg-helper';
 
 interface Props extends DispatchProp<any> {
   selectedUUID: string;
@@ -64,13 +65,10 @@ class GroupDetail extends React.Component<Props> {
 
   handleSendMsg(message, type) {
     console.log('send msg:', message, 'to', this.props.selectedUUID);
-    let msgData: GroupActorMsgData;
+
+    const msgDataManager = new MsgDataManager();
     if (!_isNil(this.props.selectedGroupActorInfo)) {
-      msgData = {
-        groupActorUUID: this.props.selectedGroupActorInfo.uuid,
-        name: this.props.selectedGroupActorInfo.name,
-        avatar: this.props.selectedGroupActorInfo.avatar,
-      };
+      msgDataManager.setGroupActorInfo(this.props.selectedGroupActorInfo);
     }
     this.props.dispatch(
       sendMsg(null, {
@@ -79,7 +77,7 @@ class GroupDetail extends React.Component<Props> {
         is_public: true,
         is_group: true,
         type,
-        data: msgData,
+        data: msgDataManager.toJS(),
       })
     );
   }
