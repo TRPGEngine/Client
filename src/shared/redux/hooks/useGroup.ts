@@ -6,6 +6,17 @@ import _uniq from 'lodash/uniq';
 import _isNil from 'lodash/isNil';
 
 /**
+ * 获取当前选择的团信息
+ */
+export function useSelectedGroupInfo(): GroupInfo | null {
+  return useTRPGSelector((state) => {
+    const selectedGroupUUID = state.group.selectedGroupUUID;
+
+    return state.group.groups.find((group) => group.uuid === selectedGroupUUID);
+  });
+}
+
+/**
  * 获取当前加入的团的信息
  * @param groupUUID 团UUID
  */
@@ -31,9 +42,9 @@ export function useSelfGroupActors(groupUUID: string): GroupActorType[] {
 }
 
 /**
- * 获取当前选中的团角色的UUID
+ * 获取选中的团角色的UUID
  */
-export function useCurrentSelectedGroupActorUUID(
+export function useSelectedGroupActorUUID(
   groupUUID: string
 ): string | undefined {
   const groupInfo = useJoinedGroupInfo(groupUUID);

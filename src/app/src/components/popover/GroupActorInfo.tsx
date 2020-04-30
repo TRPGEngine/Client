@@ -8,7 +8,7 @@ import _isEmpty from 'lodash/isEmpty';
 import { GroupActorType } from '@redux/types/group';
 import { TMemo } from '@shared/components/TMemo';
 import { TAvatar } from '../TComponent';
-import { useCurrentGroupInfo } from '@shared/redux/hooks/useCurrentGroupInfo';
+import { useSelectedGroupInfo } from '@shared/redux/hooks/useGroup';
 import {
   Container,
   AvatarContainer,
@@ -20,7 +20,7 @@ interface Props {
   groupActorUUID: string;
 }
 const PopoverGroupActorInfo: React.FC<Props> = TMemo((props) => {
-  const groupInfo = useCurrentGroupInfo();
+  const groupInfo = useSelectedGroupInfo();
 
   const groupActorInfo: GroupActorType = useMemo(() => {
     const groupActors = _get(groupInfo, ['group_actors'], []);

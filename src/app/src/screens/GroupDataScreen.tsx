@@ -38,7 +38,7 @@ import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { getGroupActorName } from '@shared/utils/data-helper';
 import {
   useSelfGroupActors,
-  useCurrentSelectedGroupActorUUID,
+  useSelectedGroupActorUUID,
 } from '@redux/hooks/useGroup';
 
 const ListItem = List.Item;
@@ -49,7 +49,7 @@ const GroupActorSelector: React.FC<{
   const { selectedGroupUUID } = props;
   const dispatch = useTRPGDispatch();
   const selfGroupActors = useSelfGroupActors(selectedGroupUUID);
-  const actorUUID = useCurrentSelectedGroupActorUUID(selectedGroupUUID);
+  const actorUUID = useSelectedGroupActorUUID(selectedGroupUUID);
   const [curActorUUID, setCurActorUUID] = useState(actorUUID);
 
   const options = useMemo(() => {
