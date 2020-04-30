@@ -46,6 +46,7 @@ import { GroupMap } from './GroupMap';
 import { MsgDataManager } from '@shared/utils/msg-helper';
 import { MsgContainerContextProvider } from '@shared/context/MsgContainerContext';
 import { GroupMsgReply } from './GroupMsgReply';
+import { MsgType } from '@redux/types/chat';
 
 interface Props extends DispatchProp<any> {
   selectedUUID: string;
@@ -65,7 +66,7 @@ class GroupDetail extends React.Component<Props> {
     }
   };
 
-  handleSendMsg(message, type) {
+  handleSendMsg = (message: string, type: MsgType) => {
     console.log('send msg:', message, 'to', this.props.selectedUUID);
 
     const msgDataManager = new MsgDataManager();
@@ -82,10 +83,10 @@ class GroupDetail extends React.Component<Props> {
         data: msgDataManager.toJS(),
       })
     );
-  }
+  };
 
   // 发送文件
-  handleSendFile(file) {
+  handleSendFile = (file: File) => {
     console.log('send file to', this.props.selectedUUID, file);
     this.props.dispatch(
       sendFile(
@@ -98,10 +99,10 @@ class GroupDetail extends React.Component<Props> {
         file
       )
     );
-  }
+  };
 
   // 发送投骰请求
-  handleSendDiceReq() {
+  handleSendDiceReq = () => {
     this.props.dispatch(
       showModal(
         <DiceRequest
@@ -119,10 +120,10 @@ class GroupDetail extends React.Component<Props> {
         />
       )
     );
-  }
+  };
 
   // 发送投骰邀请
-  handleSendDiceInv() {
+  handleSendDiceInv = () => {
     let usercache = this.props.usercache;
     let groupMembers = this.props.groupInfo.group_members ?? [];
     let list = groupMembers
@@ -173,7 +174,7 @@ class GroupDetail extends React.Component<Props> {
         />
       )
     );
-  }
+  };
 
   handleQuickDice = () => {
     console.log('快速投骰');
@@ -334,11 +335,11 @@ class GroupDetail extends React.Component<Props> {
             <MsgSendBox
               converseUUID={this.props.selectedUUID}
               isGroup={true}
-              onSendMsg={(message, type) => this.handleSendMsg(message, type)}
-              onSendFile={(file) => this.handleSendFile(file)}
-              onSendDiceReq={() => this.handleSendDiceReq()}
-              onSendDiceInv={() => this.handleSendDiceInv()}
-              onQuickDice={() => this.handleQuickDice()}
+              onSendMsg={this.handleSendMsg}
+              onSendFile={this.handleSendFile}
+              onSendDiceReq={this.handleSendDiceReq}
+              onSendDiceInv={this.handleSendDiceInv}
+              onQuickDice={this.handleQuickDice}
             />
           </div>
         </MsgContainerContextProvider>
