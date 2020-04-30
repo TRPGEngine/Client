@@ -27,7 +27,9 @@ function reduxHookCacheFactory<T>(
 
   // 检查是否需要跳过处理
   const isSkipUUID = (uuid: string) =>
-    _isNil(uuid) || uuid.toString().substr(0, 4) === 'trpg';
+    _isNil(uuid) ||
+    typeof uuid !== 'string' ||
+    uuid.toString().substr(0, 4) === 'trpg';
 
   return function hook(uuid: string): Partial<T> {
     const data = useSelector<TRPGState, T>((state) =>

@@ -44,6 +44,8 @@ import { checkIsTestUser } from '@web/utils/debug-helper';
 import { GroupChannelCreate } from './modal/GroupChannelCreate';
 import { GroupMap } from './GroupMap';
 import { MsgDataManager } from '@shared/utils/msg-helper';
+import { MsgContainerContextProvider } from '@shared/context/MsgContainerContext';
+import { GroupMsgReply } from './GroupMsgReply';
 
 interface Props extends DispatchProp<any> {
   selectedUUID: string;
@@ -291,51 +293,55 @@ class GroupDetail extends React.Component<Props> {
     }
     return (
       <GroupInfoContext.Provider value={groupInfo}>
-        <div className="detail">
-          <ReactTooltip effect="solid" />
-          <div className="group-header">
-            <div className="avatar">
-              <img
-                src={
-                  groupInfo.avatar || config.defaultImg.getGroup(groupInfo.name)
-                }
-              />
-            </div>
-            <div className="title">
-              <div className="main-title">
-                {groupInfo.name}
-                {groupInfo.status && '(开团中...)'}
+        <MsgContainerContextProvider>
+          <div className="detail">
+            <ReactTooltip effect="solid" />
+            <div className="group-header">
+              <div className="avatar">
+                <img
+                  src={
+                    groupInfo.avatar ||
+                    config.defaultImg.getGroup(groupInfo.name)
+                  }
+                />
               </div>
-              <div className="sub-title">{groupInfo.sub_name}</div>
+              <div className="title">
+                <div className="main-title">
+                  {groupInfo.name}
+                  {groupInfo.status && '(开团中...)'}
+                </div>
+                <div className="sub-title">{groupInfo.sub_name}</div>
+              </div>
+              <Select
+                name="actor-select"
+                className="group-actor-select"
+                value={selectedGroupActorUUID}
+                options={options}
+                clearable={false}
+                searchable={false}
+                placeholder="请选择身份卡"
+                noResultsText="暂无身份卡..."
+                onChange={this.handleSelectGroupActor}
+              />
+              <div className="actions">{this.getHeaderActions()}</div>
             </div>
-            <Select
-              name="actor-select"
-              className="group-actor-select"
-              value={selectedGroupActorUUID}
-              options={options}
-              clearable={false}
-              searchable={false}
-              placeholder="请选择身份卡"
-              noResultsText="暂无身份卡..."
-              onChange={this.handleSelectGroupActor}
+            <MsgContainer
+              className="group-content"
+              converseUUID={this.props.selectedUUID}
+              isGroup={true}
             />
-            <div className="actions">{this.getHeaderActions()}</div>
+            <GroupMsgReply />
+            <MsgSendBox
+              converseUUID={this.props.selectedUUID}
+              isGroup={true}
+              onSendMsg={(message, type) => this.handleSendMsg(message, type)}
+              onSendFile={(file) => this.handleSendFile(file)}
+              onSendDiceReq={() => this.handleSendDiceReq()}
+              onSendDiceInv={() => this.handleSendDiceInv()}
+              onQuickDice={() => this.handleQuickDice()}
+            />
           </div>
-          <MsgContainer
-            className="group-content"
-            converseUUID={this.props.selectedUUID}
-            isGroup={true}
-          />
-          <MsgSendBox
-            converseUUID={this.props.selectedUUID}
-            isGroup={true}
-            onSendMsg={(message, type) => this.handleSendMsg(message, type)}
-            onSendFile={(file) => this.handleSendFile(file)}
-            onSendDiceReq={() => this.handleSendDiceReq()}
-            onSendDiceInv={() => this.handleSendDiceInv()}
-            onQuickDice={() => this.handleQuickDice()}
-          />
-        </div>
+        </MsgContainerContextProvider>
       </GroupInfoContext.Provider>
     );
   }

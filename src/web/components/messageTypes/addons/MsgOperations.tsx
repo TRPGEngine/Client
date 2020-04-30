@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useCallback, Fragment } from 'react';
 import { TRPGDispatch } from '@redux/types/__all__';
 import { useMessageItemConfigContext } from '@shared/components/message/MessageItemConfigContext';
 import { TMemo } from '@shared/components/TMemo';
@@ -6,17 +6,24 @@ import { TPopover, useTPopoverContext } from '@web/components/popover';
 import styled from 'styled-components';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import _isFunction from 'lodash/isFunction';
+import _isNil from 'lodash/isNil';
+import _has from 'lodash/has';
 
 interface MsgOperationItemContext {
   dispatch: TRPGDispatch;
   closePopover: () => void;
 }
-export interface MsgOperationItem {
+
+interface MsgOperationNormalItem {
   name: string;
   action: (ctx: MsgOperationItemContext) => void;
 }
+interface MsgOperationCustomItem {
+  component: React.ReactNode;
+}
+export type MsgOperationItem = MsgOperationNormalItem | MsgOperationCustomItem;
 
-const MsgOperationListItemContainer = styled.div`
+export const MsgOperationListItemContainer = styled.div`
   padding: 4px 10px;
   cursor: pointer;
   border-bottom: ${(props) => props.theme.border.standard};
@@ -25,19 +32,21 @@ const MsgOperationListItemContainer = styled.div`
     background-color: ${(props) => props.theme.color.transparent90};
   }
 `;
-const MsgOperationListItem: React.FC<MsgOperationItem> = TMemo((props) => {
-  const dispatch = useTRPGDispatch();
+const MsgOperationListItem: React.FC<MsgOperationNormalItem> = TMemo(
+  (props) => {
+    const dispatch = useTRPGDispatch();
     const { closePopover } = useTPopoverContext();
-  const handleClick = useCallback(() => {
+    const handleClick = useCallback(() => {
       _isFunction(props.action) && props.action({ dispatch, closePopover });
     }, [dispatch, closePopover]);
 
-  return (
-    <MsgOperationListItemContainer onClick={handleClick}>
-      {props.name}
-    </MsgOperationListItemContainer>
-  );
-});
+    return (
+      <MsgOperationListItemContainer onClick={handleClick}>
+        {props.name}
+      </MsgOperationListItemContainer>
+    );
+  }
+);
 MsgOperationListItem.displayName = 'MsgOperationListItem';
 
 /**
@@ -60,13 +69,19 @@ export const MsgOperations: React.FC<{
       trigger="click"
       content={
         <div>
-          {operations.map((op) => (
-            <MsgOperationListItem
-              key={op.name}
-              name={op.name}
-              action={op.action}
-            />
-          ))}
+          {operations.map((op, i) => {
+            if ('component' in op) {
+              return <Fragment key={i}>{op.component}</Fragment>;
+            } else {
+              return (
+                <MsgOperationListItem
+                  key={op.name}
+                  name={op.name}
+                  action={op.action}
+                />
+              );
+            }
+          })}
         </div>
       }
     >
