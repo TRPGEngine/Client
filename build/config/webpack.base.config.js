@@ -23,6 +23,9 @@ const dllHashName = 'dll_' + dllConfig.name; // 用于处理文件的hash使其�
 /**
  * NOTICE: 移除@babel/plugin-transform-modules-commonjs以应用摇树优化
  * 摇树优化能自动解析@ant-design/icons的图标并按需加载(节约大量空间)
+ * --------------------------以上内容忽略---------------
+ * 无法移除plugin-transform-modules-commonjs插件。生产环境编译后会出现问题(dev环境没有这个问题)
+ * 解决问题前只能统一使用commonjs
  */
 const babelQuery = {
   babelrc: false,
@@ -47,17 +50,17 @@ const babelQuery = {
       },
       'antd',
     ],
-    // [
-    //   'import',
-    //   {
-    //     libraryName: 'react-use',
-    //     libraryDirectory: 'esm',
-    //     camel2DashComponentName: false,
-    //   },
-    //   'react-use',
-    // ],
+    [
+      'import',
+      {
+        libraryName: 'react-use',
+        libraryDirectory: 'esm',
+        camel2DashComponentName: false,
+      },
+      'react-use',
+    ],
     'transform-class-properties',
-    // '@babel/plugin-transform-modules-commonjs',
+    '@babel/plugin-transform-modules-commonjs', // NOTICE: 该组件不能移除，因为目前需要require来实现一些异步加载
   ],
 };
 
