@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import ReactTooltip from 'react-tooltip';
 import { showModal, hideModal, showAlert } from '@shared/redux/actions/ui';
 import { sendMsg, sendFile } from '@shared/redux/actions/chat';
@@ -47,43 +47,49 @@ export const GroupDetail: React.FC = TMemo(() => {
     [selfGroupActors, selectedGroupActorUUID]
   );
 
-  const handleSendMsg = (message: string, type: MsgType) => {
-    console.log('send msg:', message, 'to', groupUUID);
+  const handleSendMsg = useCallback(
+    (message: string, type: MsgType) => {
+      console.log('send msg:', message, 'to', groupUUID);
 
-    const msgDataManager = new MsgDataManager();
-    if (!_isNil(selectedGroupActorInfo)) {
-      msgDataManager.setGroupActorInfo(selectedGroupActorInfo);
-    }
-    dispatch(
-      sendMsg(null, {
-        converse_uuid: groupUUID,
-        message,
-        is_public: true,
-        is_group: true,
-        type,
-        data: msgDataManager.toJS(),
-      })
-    );
-  };
-
-  // 发送文件
-  const handleSendFile = (file: File) => {
-    console.log('send file to', groupUUID, file);
-    dispatch(
-      sendFile(
-        null,
-        {
+      const msgDataManager = new MsgDataManager();
+      if (!_isNil(selectedGroupActorInfo)) {
+        msgDataManager.setGroupActorInfo(selectedGroupActorInfo);
+      }
+      dispatch(
+        sendMsg(null, {
           converse_uuid: groupUUID,
+          message,
           is_public: true,
           is_group: true,
-        },
-        file
-      )
-    );
-  };
+          type,
+          data: msgDataManager.toJS(),
+        })
+      );
+    },
+    [dispatch, groupUUID, selectedGroupActorInfo]
+  );
+
+  // 发送文件
+  const handleSendFile = useCallback(
+    (file: File) => {
+      console.log('send file to', groupUUID, file);
+      dispatch(
+        sendFile(
+          null,
+          {
+            converse_uuid: groupUUID,
+            is_public: true,
+            is_group: true,
+          },
+          file
+        )
+      );
+    },
+    [dispatch, groupUUID]
+  );
 
   // 发送投骰请求
-  const handleSendDiceReq = () => {
+  const handleSendDiceReq = useCallback(() => {
     dispatch(
       showModal(
         <DiceRequest
@@ -94,15 +100,15 @@ export const GroupDetail: React.FC = TMemo(() => {
         />
       )
     );
-  };
+  }, [dispatch, groupUUID]);
 
   // 发送投骰邀请
-  const handleSendDiceInv = () => {
+  const handleSendDiceInv = useCallback(() => {
     const groupMembers = groupInfo.group_members ?? [];
     const list = groupMembers
       .filter((uuid) => uuid !== userUUID)
       .map((uuid) => {
-        // TODO: 这里的逻辑不太靠谱。需要优化
+        // TODO: 这里使用getUserInfoCache的逻辑不太靠谱。需要优化
         const cacheUserInfo = getUserInfoCache(uuid);
         return {
           name: getUserName(cacheUserInfo),
@@ -114,9 +120,9 @@ export const GroupDetail: React.FC = TMemo(() => {
         <ListSelect
           list={list.map((i) => i.name)}
           onListSelect={(selecteds) => {
-            let inviteList = list.filter((_, i) => selecteds.indexOf(i) >= 0);
-            let inviteNameList = inviteList.map((i) => i.name);
-            let inviteUUIDList = inviteList.map((i) => i.uuid);
+            const inviteList = list.filter((_, i) => selecteds.indexOf(i) >= 0);
+            const inviteNameList = inviteList.map((i) => i.name);
+            const inviteUUIDList = inviteList.map((i) => i.uuid);
             if (inviteNameList.length === 0) {
               dispatch(showAlert('请选择邀请对象'));
               return;
@@ -148,9 +154,9 @@ export const GroupDetail: React.FC = TMemo(() => {
         />
       )
     );
-  };
+  }, [dispatch, groupInfo, userUUID, groupUUID]);
 
-  const handleQuickDice = () => {
+  const handleQuickDice = useCallback(() => {
     console.log('快速投骰');
     dispatch(
       showModal(
@@ -162,7 +168,7 @@ export const GroupDetail: React.FC = TMemo(() => {
         />
       )
     );
-  };
+  }, [dispatch, groupUUID]);
 
   return (
     <GroupInfoContext.Provider value={groupInfo}>
