@@ -146,7 +146,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf)$/,
-        loader: 'url-loader?limit=8192&name=assets/[hash].[ext]',
+        loader: 'url-loader?limit=8192&name=assets/[name].[hash:7].[ext]',
       },
       {
         test: /\.(txt|xml)$/,
