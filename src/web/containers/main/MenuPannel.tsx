@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback, Fragment } from 'react';
 import config from '@shared/project.config';
 import { showProfileCard, switchMenuPannel } from '@shared/redux/actions/ui';
-import SlidePanel from '../../components/SlidePanel';
+import { SlidePanel } from '../../components/SlidePanel';
 import ConverseList from './converse/ConverseList';
 import ActorList from './actors/ActorList';
 import GroupList from './group/GroupList';
