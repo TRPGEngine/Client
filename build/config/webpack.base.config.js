@@ -107,13 +107,15 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-              modifyVars: {
-                // https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
-                'primary-color': '#8C6244',
-                'error-color': '#e44a4c',
-                'text-selection-bg': '#1890ff',
+              lessOptions: {
+                modifyVars: {
+                  // https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
+                  'primary-color': '#8C6244',
+                  'error-color': '#e44a4c',
+                  'text-selection-bg': '#1890ff',
+                },
+                javascriptEnabled: true,
               },
-              javascriptEnabled: true,
             },
           },
         ],
@@ -158,9 +160,6 @@ module.exports = {
   externals: {
     electron: "require('electron')",
     'react-native': "require('react-native')",
-    '../../../app/src/router': "require('../../../app/src/router')", // for redux.configureStore
-    'react-navigation-redux-helpers':
-      "require('react-navigation-redux-helpers')",
     config: JSON.stringify({
       // 手动指定部分配置以防止私密配置泄漏
       sentry: require('config').get('sentry'),
