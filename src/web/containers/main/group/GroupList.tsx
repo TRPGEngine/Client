@@ -3,7 +3,7 @@ import config from '@shared/project.config';
 import ConvItem from '@web/components/ConvItem';
 import dateHelper from '@shared/utils/date-helper';
 import { switchSelectGroup } from '@shared/redux/actions/group';
-import GroupDetail from './GroupDetail';
+import { GroupDetail } from './GroupDetail';
 import _get from 'lodash/get';
 import _sortBy from 'lodash/sortBy';
 import { TMemo } from '@shared/components/TMemo';
