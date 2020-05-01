@@ -11,9 +11,10 @@ import {
   useTRPGSelector,
   useTRPGDispatch,
 } from '@shared/hooks/useTRPGSelector';
+import { useConverses } from '@redux/hooks/useConverses';
+import { MsgContainerContextProvider } from '@shared/context/MsgContainerContext';
 
 import './GroupList.scss';
-import { useConverses } from '@redux/hooks/useConverses';
 
 const GroupList: React.FC = TMemo((props) => {
   const selectedUUID = useTRPGSelector(
@@ -48,17 +49,19 @@ const GroupList: React.FC = TMemo((props) => {
   }, [converses, selectedUUID, dispatch]);
 
   return (
-    <div className="group">
-      <div className="list">{groupList}</div>
-      {selectedUUID ? (
-        <GroupDetail />
-      ) : (
-        <div className="none-select-group">
-          <i className="iconfont">&#xe60b;</i>
-          <div className="welcome">一直在跑团，从来不咕咕...大概</div>
-        </div>
-      )}
-    </div>
+    <MsgContainerContextProvider>
+      <div className="group">
+        <div className="list">{groupList}</div>
+        {selectedUUID ? (
+          <GroupDetail />
+        ) : (
+          <div className="none-select-group">
+            <i className="iconfont">&#xe60b;</i>
+            <div className="welcome">一直在跑团，从来不咕咕...大概</div>
+          </div>
+        )}
+      </div>
+    </MsgContainerContextProvider>
   );
 });
 GroupList.displayName = 'GroupList';

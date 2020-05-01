@@ -4,6 +4,10 @@
 import _pick from 'lodash/pick';
 import _isNil from 'lodash/isNil';
 import { GroupActorType } from '@redux/types/group';
+import { MsgPayload } from '@redux/types/chat';
+
+const replyMsgFields = ['uuid', 'message', 'sender_uuid'] as const;
+export type ReplyMsgType = Pick<MsgPayload, typeof replyMsgFields[number]>;
 
 /**
  * 消息数据管理类
@@ -12,6 +16,7 @@ export class MsgDataManager {
   name?: string; // 如果该字段有值，则会替换消息的发送者名称
   avatar?: string; // 如果该字段有值，则会替换消息的发送者头像
   groupActorUUID?: string;
+  replyMsg?: ReplyMsgType;
 
   /**
    * 设置相关的用户角色
@@ -25,6 +30,13 @@ export class MsgDataManager {
     this.name = groupActorInfo.name;
     this.avatar = groupActorInfo.avatar;
     this.groupActorUUID = groupActorInfo.uuid;
+  }
+
+  /**
+   * 设置回复消息内容
+   */
+  setReplyMsg(replyMsg: ReplyMsgType) {
+    this.replyMsg = _pick(replyMsg, replyMsgFields);
   }
 
   parseData(data: any) {

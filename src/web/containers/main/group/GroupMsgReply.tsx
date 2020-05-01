@@ -46,12 +46,12 @@ const Container = styled.div`
   }
 `;
 export const GroupMsgReply: React.FC = TMemo(() => {
-  const { replyMsg, setRelyMsg } = useMsgContainerContext();
+  const { replyMsg, clearReplyMsg } = useMsgContainerContext();
   const replyMsgSenderName = useUserName(replyMsg?.sender_uuid);
 
   const handleClose = useCallback(() => {
-    setRelyMsg(null);
-  }, [setRelyMsg]);
+    clearReplyMsg();
+  }, [clearReplyMsg]);
   const closeBtn = useMemo(() => {
     return <CloseCircleOutlined onClick={handleClose} />;
   }, [handleClose]);

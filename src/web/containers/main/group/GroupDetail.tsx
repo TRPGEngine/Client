@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
 import { showModal, hideModal, showAlert } from '@shared/redux/actions/ui';
 import { sendMsg, sendFile } from '@shared/redux/actions/chat';
@@ -18,7 +18,7 @@ import _orderBy from 'lodash/orderBy';
 import QuickDice from '../dice/QuickDice';
 import { GroupInfoContext } from '@shared/context/GroupInfoContext';
 import { MsgDataManager } from '@shared/utils/msg-helper';
-import { MsgContainerContextProvider } from '@shared/context/MsgContainerContext';
+import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { GroupMsgReply } from './GroupMsgReply';
 import { MsgType } from '@redux/types/chat';
 import { TMemo } from '@shared/components/TMemo';
@@ -40,6 +40,12 @@ export const GroupDetail: React.FC = TMemo(() => {
   const selfGroupActors = useSelfGroupActors(groupUUID);
   const dispatch = useTRPGDispatch();
   const userUUID = useCurrentUserUUID();
+  const { replyMsg, clearReplyMsg } = useMsgContainerContext();
+
+  useEffect(() => {
+    // 当当前groupUUID发生变化时，清空回复消息
+    clearReplyMsg();
+  }, [groupUUID]);
 
   const selectedGroupActorInfo = useMemo(
     () =>
@@ -55,6 +61,11 @@ export const GroupDetail: React.FC = TMemo(() => {
       if (!_isNil(selectedGroupActorInfo)) {
         msgDataManager.setGroupActorInfo(selectedGroupActorInfo);
       }
+      if (!_isNil(replyMsg)) {
+        msgDataManager.setReplyMsg(replyMsg);
+        clearReplyMsg();
+      }
+
       dispatch(
         sendMsg(null, {
           converse_uuid: groupUUID,
@@ -66,7 +77,7 @@ export const GroupDetail: React.FC = TMemo(() => {
         })
       );
     },
-    [dispatch, groupUUID, selectedGroupActorInfo]
+    [dispatch, groupUUID, selectedGroupActorInfo, replyMsg, clearReplyMsg]
   );
 
   // 发送文件
@@ -172,27 +183,25 @@ export const GroupDetail: React.FC = TMemo(() => {
 
   return (
     <GroupInfoContext.Provider value={groupInfo}>
-      <MsgContainerContextProvider>
-        <div className="detail">
-          <ReactTooltip effect="solid" />
-          <GroupHeader />
-          <MsgContainer
-            className="group-content"
-            converseUUID={groupUUID}
-            isGroup={true}
-          />
-          <GroupMsgReply />
-          <MsgSendBox
-            converseUUID={groupUUID}
-            isGroup={true}
-            onSendMsg={handleSendMsg}
-            onSendFile={handleSendFile}
-            onSendDiceReq={handleSendDiceReq}
-            onSendDiceInv={handleSendDiceInv}
-            onQuickDice={handleQuickDice}
-          />
-        </div>
-      </MsgContainerContextProvider>
+      <div className="detail">
+        <ReactTooltip effect="solid" />
+        <GroupHeader />
+        <MsgContainer
+          className="group-content"
+          converseUUID={groupUUID}
+          isGroup={true}
+        />
+        <GroupMsgReply />
+        <MsgSendBox
+          converseUUID={groupUUID}
+          isGroup={true}
+          onSendMsg={handleSendMsg}
+          onSendFile={handleSendFile}
+          onSendDiceReq={handleSendDiceReq}
+          onSendDiceInv={handleSendDiceInv}
+          onQuickDice={handleQuickDice}
+        />
+      </div>
     </GroupInfoContext.Provider>
   );
 });

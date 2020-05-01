@@ -69,13 +69,13 @@ DefaultAddonContent.displayName = 'DefaultAddonContent';
 const DefaultMsgReply: React.FC<{
   payload: RenderMsgPayload;
 }> = TMemo((props) => {
-  const { hasContext, setRelyMsg } = useMsgContainerContext(); // 仅当有上下文的时候才会渲染回复按钮
+  const { hasContext, setReplyMsg } = useMsgContainerContext(); // 仅当有上下文的时候才会渲染回复按钮
   const { closePopover } = useTPopoverContext();
 
   const handleClick = useCallback(() => {
-    setRelyMsg(props.payload);
+    setReplyMsg(props.payload);
     closePopover();
-  }, [props.payload, setRelyMsg, closePopover]);
+  }, [props.payload, setReplyMsg, closePopover]);
 
   return useMemo(
     () =>
