@@ -17,6 +17,7 @@ const Container = styled.div`
     padding: 8px 16px;
     bottom: 0;
     display: flex;
+    border-top: 1px solid ${(props) => props.theme.color['bon-jour']};
 
     &::before {
       content: ' ';
