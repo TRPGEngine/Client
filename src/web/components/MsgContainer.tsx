@@ -16,6 +16,7 @@ import {
 } from '@shared/hooks/useTRPGSelector';
 import { usePrevious } from 'react-use';
 import { MessageItem } from '@shared/components/message/MessageItem';
+import { useMsgList } from '@redux/hooks/useMsgList';
 
 import './MsgContainer.scss';
 
@@ -26,16 +27,7 @@ interface Props {
 }
 export const MsgContainer: React.FC<Props> = TMemo((props) => {
   const { className, converseUUID, isGroup } = props;
-  const converse = useTRPGSelector(
-    (state) => state.chat.converses[converseUUID]
-  );
-  const msgList = useMemo(() => {
-    if (_isNil(converse.msgList)) {
-      return [];
-    }
-    return _orderBy(converse.msgList, (item) => new Date(item.date));
-  }, [converse.msgList]);
-  const nomore = converse.nomore;
+  const { list: msgList, nomore } = useMsgList(converseUUID);
   const selfInfo = useTRPGSelector((state) => state.user.info);
   const userUUID = selfInfo.uuid;
   const dispatch = useTRPGDispatch();
