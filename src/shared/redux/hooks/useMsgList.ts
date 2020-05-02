@@ -12,12 +12,12 @@ export function useMsgList(converseUUID: string, order?: 'asc' | 'desc') {
     (state) => state.chat.converses[converseUUID]
   );
   const msgList = useMemo(() => {
-    if (_isNil(converse.msgList)) {
+    if (_isNil(converse?.msgList)) {
       return [];
     }
-    return _orderBy(converse.msgList, (item) => new Date(item.date), [order]);
-  }, [converse.msgList, order]);
-  const nomore = converse.nomore;
+    return _orderBy(converse?.msgList, (item) => new Date(item.date), [order]);
+  }, [converse?.msgList, order]);
+  const nomore = converse?.nomore;
 
   return {
     list: msgList,
