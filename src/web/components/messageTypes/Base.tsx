@@ -11,6 +11,7 @@ import { MsgRevoke } from './addons/MsgRevoke';
 import { MessageLoading } from './addons/MsgLoading';
 import { MsgOperations, MsgOperationItem } from './addons/MsgOperations';
 import { MsgAvatar } from './addons/MsgAvatar';
+import { MsgDataManager } from '@shared/utils/msg-helper';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -22,6 +23,13 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     info: {},
     emphasizeTime: false,
   };
+
+  msgDataManager = new MsgDataManager();
+
+  constructor(props: P) {
+    super(props);
+    this.msgDataManager.parseData(props.info?.data);
+  }
 
   /**
    * 返回信息显示的发送者的名字

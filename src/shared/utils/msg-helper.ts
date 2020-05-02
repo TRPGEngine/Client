@@ -3,6 +3,8 @@
  */
 import _pick from 'lodash/pick';
 import _isNil from 'lodash/isNil';
+import _isPlainObject from 'lodash/isPlainObject';
+import _has from 'lodash/has';
 import { GroupActorType } from '@redux/types/group';
 import { MsgPayload } from '@redux/types/chat';
 
@@ -39,7 +41,19 @@ export class MsgDataManager {
     this.replyMsg = _pick(replyMsg, replyMsgFields);
   }
 
+  hasReplyMsg(): boolean {
+    return _has(this, 'replyMsg');
+  }
+
+  getReplyMsg(): ReplyMsgType {
+    return this.replyMsg;
+  }
+
   parseData(data: any) {
+    if (_isNil(data) || !_isPlainObject(data)) {
+      return;
+    }
+
     Object.assign(this, data);
   }
 

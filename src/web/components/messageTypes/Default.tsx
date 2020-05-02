@@ -13,6 +13,7 @@ import {
 } from './addons/MsgOperations';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { useTPopoverContext } from '../popover';
+import { MsgQuote } from './addons/MsgQuote';
 
 const DefaultAddonContentContainer = styled.div`
   border-top: ${(props) => props.theme.border.thin};
@@ -115,6 +116,9 @@ class Default extends Base {
     const info = this.props.info || ({} as MsgPayload);
     return (
       <pre className="bubble">
+        {this.msgDataManager.hasReplyMsg() && (
+          <MsgQuote replyMsg={this.msgDataManager.getReplyMsg()} />
+        )}
         <BBCode plainText={info.message} />
         <DefaultAddonContent message={info.message} />
       </pre>
