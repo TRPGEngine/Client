@@ -4,7 +4,7 @@
   <BaseAttr>
     <TextArea
       label="人物卡信息"
-      name="data"
+      name="information"
       :autosize="{ minRows: 4, maxRows: 8 }"
     />
   </BaseAttr>

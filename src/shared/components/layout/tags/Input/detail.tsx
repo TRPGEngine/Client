@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TagComponent } from '../type';
 import { DetailText, TagInputProps, TagLabel } from './shared';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
@@ -10,9 +10,17 @@ export const TagInputDetail: TagComponent<TagInputProps> = TMemo((props) => {
 
   const FormContainer = useLayoutFormContainer(props);
 
+  const displayText = useMemo(() => {
+    if (typeof stateValue === 'object') {
+      return JSON.stringify(stateValue);
+    }
+
+    return stateValue ?? '';
+  }, [stateValue]);
+
   return (
     <FormContainer label={label}>
-      <DetailText>{stateValue}</DetailText>
+      <DetailText>{displayText}</DetailText>
     </FormContainer>
   );
 });
