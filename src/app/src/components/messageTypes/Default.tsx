@@ -14,6 +14,7 @@ import _isString from 'lodash/isString';
 import { openWebview } from '@app/redux/actions/nav';
 import TImage from '../TComponent/TImage';
 import FastImage from 'react-native-fast-image';
+import { MsgQuote } from './addons/MsgQuote';
 
 const MsgContainer = styled.TouchableHighlight.attrs({
   underlayColor: '#eee',
@@ -132,6 +133,9 @@ class Default extends Base<Props> {
     return (
       <MsgContainer isImage={this.isImage} onLongPress={this.handleLongPress}>
         <View>
+          {this.msgDataManager.hasReplyMsg() && (
+            <MsgQuote replyMsg={this.msgDataManager.getReplyMsg()} />
+          )}
           <BBCode plainText={this.message} />
           <DefaultAddonContent message={this.message} />
         </View>
