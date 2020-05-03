@@ -16,6 +16,7 @@ import { TRPGState, TRPGDispatchProp } from '@src/shared/redux/types/__all__';
 import { clearSelectGroup } from '@src/shared/redux/actions/group';
 import { MsgListType } from '@redux/types/chat';
 import { ChatScreenMain } from './Main';
+import { ChatScreenProvider } from './Provider';
 
 type Params = ChatParams & { headerRightFunc?: () => void };
 
@@ -99,10 +100,12 @@ class ChatScreen extends React.Component<Props, State> {
 
   render() {
     return (
-      <ChatScreenMain
-        converseUUID={this.props.selectedConverseUUID}
-        converseType={this.converseType}
-      />
+      <ChatScreenProvider type={this.converseType}>
+        <ChatScreenMain
+          converseUUID={this.props.selectedConverseUUID}
+          converseType={this.converseType}
+        />
+      </ChatScreenProvider>
     );
   }
 }

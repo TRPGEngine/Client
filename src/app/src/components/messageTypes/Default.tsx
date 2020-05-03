@@ -14,7 +14,8 @@ import { openWebview } from '@app/redux/actions/nav';
 import TImage from '../TComponent/TImage';
 import FastImage from 'react-native-fast-image';
 import { MsgQuote } from './addons/MsgQuote';
-import { openMsgModal } from './addons/MsgModal';
+import { openMsgModal, MsgOperationItem } from './addons/MsgModal';
+import { DefaultMsgReply } from './addons/DefaultMsgReply';
 
 const MsgContainer = styled.TouchableHighlight.attrs({
   underlayColor: '#eee',
@@ -106,13 +107,16 @@ class Default extends Base<Props> {
   }
 
   handleLongPress = () => {
-    const operations = [
+    const operations: MsgOperationItem[] = [
       {
         name: '复制到剪切板',
         action: () => {
           // 复制文本到剪切板
           Clipboard.setString(this.message);
         },
+      },
+      {
+        component: <DefaultMsgReply payload={this.props.info} />,
       },
     ];
 

@@ -32,6 +32,8 @@ import styled from 'styled-components/native';
 import ExtraPanelItem from '@app/components/chat/ExtraPanelItem';
 import ImagePicker from 'react-native-image-picker';
 import { uploadChatimg } from '@shared/utils/image-uploader';
+import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
+import { MsgReply } from './MsgReply';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
@@ -57,6 +59,7 @@ export const ChatScreenMain: React.FC<Props> = TMemo((props) => {
   const [inputMsg, setInputMsg] = useState('');
   const [msgType, setMsgType] = useState<UserMsgType>('normal');
   const inputRef = useRef<TextInput>();
+  const { replyMsg, clearReplyMsg } = useMsgContainerContext();
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -77,6 +80,11 @@ export const ChatScreenMain: React.FC<Props> = TMemo((props) => {
       keyboardDidHideListener.remove();
     };
   }, []);
+
+  useEffect(() => {
+    // 当当前converseUUID发生变化时，清空回复消息
+    clearReplyMsg();
+  }, [props.converseUUID]);
 
   const dismissPanel = useCallback(() => {
     // 收起所有面板
@@ -184,8 +192,17 @@ export const ChatScreenMain: React.FC<Props> = TMemo((props) => {
           is_group: false,
         };
 
+        const msgDataManager = new MsgDataManager();
+        if (!_isNil(replyMsg)) {
+          // NOTE: 应当仅group有效。但是MsgContainerContextProvider因为ant-design/react-native实现的问题只能放在最外层导致无法区分当前状态
+          // 因此先放在这里视为所有都能使用回复功能
+          msgDataManager.setReplyMsg(replyMsg);
+          clearReplyMsg();
+        }
+
         if (converseType === 'user' || converseType === 'system') {
           // 如果是1对1消息
+          payload.data = msgDataManager.toJS();
           dispatch(sendMsg(uuid, payload));
         } else if (converseType === 'group') {
           // 如果是群组消息
@@ -194,17 +211,16 @@ export const ChatScreenMain: React.FC<Props> = TMemo((props) => {
           payload.is_group = true;
 
           const currentGroupActor = getCurrentGroupActor(uuid);
-          const msgDataManager = new MsgDataManager();
           if (!_isNil(currentGroupActor)) {
             msgDataManager.setGroupActorInfo(currentGroupActor);
-
-            payload.data = msgDataManager.toJS();
           }
+          payload.data = msgDataManager.toJS();
+
           dispatch(sendMsg(null, payload));
         }
       }
     },
-    [props.converseUUID, props.converseType, msgType]
+    [props.converseUUID, props.converseType, msgType, replyMsg, clearReplyMsg]
   );
 
   const handleSendMsg = useCallback(() => {
@@ -332,6 +348,7 @@ export const ChatScreenMain: React.FC<Props> = TMemo((props) => {
         onTouchStart={dismissAll}
         onRequestMoreChatLog={handleRequestMoreChatLog}
       />
+      <MsgReply />
       <InputView
         inputRef={inputRef}
         value={inputMsg}

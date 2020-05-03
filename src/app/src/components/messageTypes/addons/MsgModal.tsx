@@ -1,8 +1,9 @@
 import React, { useState, useCallback, useMemo, Fragment } from 'react';
 import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
 import { TMemo } from '@shared/components/TMemo';
-import { Portal, Modal } from '@ant-design/react-native';
+import { Modal, Portal } from '@ant-design/react-native';
 import _isFunction from 'lodash/isFunction';
+import _noop from 'lodash/noop';
 import styledTheme from '@shared/utils/theme';
 
 /**
@@ -54,12 +55,18 @@ const MsgOperationListItem: React.FC<MsgOperationNormalItem> = TMemo(
 
     return (
       <MsgOperationListItemContainer onPress={handleClick}>
-        <Text>{props.name}</Text>
+        {props.name}
       </MsgOperationListItemContainer>
     );
   }
 );
 MsgOperationListItem.displayName = 'MsgOperationListItem';
+
+export const MsgModelContext = React.createContext<{
+  closeMsgModal: () => void;
+}>({
+  closeMsgModal: _noop,
+});
 
 interface Props {
   operations: MsgOperationItem[];
@@ -107,7 +114,9 @@ const MsgModalContainer: React.FC<Props> = TMemo((props) => {
       style={{ paddingTop: 0 }}
       bodyStyle={{ paddingBottom: 0, paddingHorizontal: 0 }}
     >
-      <View>{operations}</View>
+      <MsgModelContext.Provider value={{ closeMsgModal: handleClose }}>
+        <View>{operations}</View>
+      </MsgModelContext.Provider>
     </Modal>
   );
 });
