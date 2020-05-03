@@ -38,7 +38,7 @@ const MsgOperationListItem: React.FC<MsgOperationNormalItem> = TMemo(
     const { closePopover } = useTPopoverContext();
     const handleClick = useCallback(() => {
       _isFunction(props.action) && props.action({ dispatch, closePopover });
-    }, [dispatch, closePopover]);
+    }, [dispatch, closePopover, props.action]);
 
     return (
       <MsgOperationListItemContainer onClick={handleClick}>

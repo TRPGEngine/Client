@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { View, Clipboard, TouchableOpacity } from 'react-native';
 import _get from 'lodash/get';
 import Base from './Base';
-import { Modal } from '@ant-design/react-native';
 import styled from 'styled-components/native';
 import { connect, useDispatch } from 'react-redux';
 import { TRPGDispatchProp } from '@redux/types/__all__';
@@ -15,6 +14,7 @@ import { openWebview } from '@app/redux/actions/nav';
 import TImage from '../TComponent/TImage';
 import FastImage from 'react-native-fast-image';
 import { MsgQuote } from './addons/MsgQuote';
+import { openMsgModal } from './addons/MsgModal';
 
 const MsgContainer = styled.TouchableHighlight.attrs({
   underlayColor: '#eee',
@@ -108,8 +108,8 @@ class Default extends Base<Props> {
   handleLongPress = () => {
     const operations = [
       {
-        text: '复制到剪切板',
-        onPress: () => {
+        name: '复制到剪切板',
+        action: () => {
           // 复制文本到剪切板
           Clipboard.setString(this.message);
         },
@@ -118,15 +118,15 @@ class Default extends Base<Props> {
 
     if (this.props.me) {
       operations.push({
-        text: '撤回消息',
-        onPress: () => {
+        name: '撤回消息',
+        action: () => {
           // 撤回消息
           this.props.dispatch(revokeMsg(this.props.info.uuid));
         },
       });
     }
 
-    Modal.operation(operations);
+    openMsgModal(operations);
   };
 
   getContent() {
