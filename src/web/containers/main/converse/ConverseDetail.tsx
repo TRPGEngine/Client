@@ -31,20 +31,16 @@ interface Props extends DispatchProp<any> {
   isWriting: boolean;
 }
 class ConverseDetail extends React.Component<Props> {
-  sendWritingThrottled = _throttle(
-    () => {
-      // 发送正在输入信号
-      sendStartWriting('user', this.props.converseUUID);
-    },
-    config.chat.isWriting.throttle,
-    { leading: true, trailing: false }
-  );
+  sendWriting = () => {
+    // 发送正在输入信号
+    sendStartWriting('user', this.props.converseUUID);
+  };
 
   handleSendBoxChange(text) {
     if (isUserUUID(this.props.converseUUID)) {
       // 通知服务器告知converseUUID当前用户正在输入
       // 增加一个2秒的节流防止频繁发送
-      this.sendWritingThrottled();
+      this.sendWriting();
     }
   }
 

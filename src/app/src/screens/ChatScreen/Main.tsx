@@ -144,17 +144,9 @@ export const ChatScreenMain: React.FC<Props> = TMemo((props) => {
 
   // 发送正在输入信号
   // 增加一个2秒的节流防止频繁发送
-  const sendWritingThrottled = useMemo(
-    () =>
-      _throttle(
-        () => {
-          sendStartWriting('user', props.converseUUID);
-        },
-        config.chat.isWriting.throttle,
-        { leading: true, trailing: false }
-      ),
-    [props.converseUUID]
-  );
+  const sendWriting = useCallback(() => {
+    sendStartWriting('user', props.converseUUID);
+  }, [props.converseUUID]);
 
   const handleChange = useCallback(
     (text: string) => {
@@ -162,10 +154,10 @@ export const ChatScreenMain: React.FC<Props> = TMemo((props) => {
 
       if (props.converseType === 'user') {
         // 通知服务器告知converseUUID当前用户正在输入
-        sendWritingThrottled();
+        sendWriting();
       }
     },
-    [setInputMsg, props.converseType, sendWritingThrottled]
+    [setInputMsg, props.converseType, sendWriting]
   );
 
   /**
