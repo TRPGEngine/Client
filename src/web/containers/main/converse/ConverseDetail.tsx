@@ -31,18 +31,20 @@ interface Props extends DispatchProp<any> {
   isWriting: boolean;
 }
 class ConverseDetail extends React.Component<Props> {
-  sendWriting = () => {
-    // 发送正在输入信号
-    sendStartWriting('user', this.props.converseUUID);
-  };
+  handleSendBoxChange = (text: string) => {
+    const { converseUUID } = this.props;
 
-  handleSendBoxChange(text) {
-    if (isUserUUID(this.props.converseUUID)) {
+    if (isUserUUID(converseUUID)) {
       // 通知服务器告知converseUUID当前用户正在输入
-      // 增加一个2秒的节流防止频繁发送
-      this.sendWriting();
+      if (text === '') {
+        // 停止输入
+        sendStopWriting('user', converseUUID);
+      } else {
+        // 正在输入
+        sendStartWriting('user', converseUUID);
+      }
     }
-  }
+  };
 
   handleSendMsg(message, type) {
     const { converseUUID } = this.props;
@@ -211,7 +213,7 @@ class ConverseDetail extends React.Component<Props> {
         <MsgSendBox
           converseUUID={userUUID}
           isGroup={false}
-          onChange={(text) => this.handleSendBoxChange(text)}
+          onChange={this.handleSendBoxChange}
           onSendMsg={(message, type) => this.handleSendMsg(message, type)}
           onSendFile={(file) => this.handleSendFile(file)}
           onSendDiceReq={() => this.handleSendDiceReq()}

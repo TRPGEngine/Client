@@ -58,7 +58,11 @@ export const GroupDetail: React.FC = TMemo(() => {
 
   const handleSendBoxChange = useCallback(
     (text) => {
-      sendStartWriting('group', groupUUID, text);
+      if (text === '') {
+        sendStopWriting('group', groupUUID);
+      } else {
+        sendStartWriting('group', groupUUID, text);
+      }
     },
     [groupUUID]
   );

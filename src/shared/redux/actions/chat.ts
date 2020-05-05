@@ -29,7 +29,7 @@ import rnStorage from '../../api/rn-storage.api';
 import { checkUser } from '../../utils/cache-helper';
 import { hideProfileCard, switchMenuPannel, showToast, showAlert } from './ui';
 import * as uploadHelper from '../../utils/upload-helper';
-import { renewableDelayTimer } from '../../utils/timer';
+import { renewableDelayTimer, cancelDelayTimer } from '../../utils/timer';
 import config from '../../project.config';
 import _without from 'lodash/without';
 import _isFunction from 'lodash/isFunction';
@@ -720,6 +720,8 @@ export let stopWriting = function(
   uuid: string,
   groupUUID?: string
 ): TRPGAction {
+  cancelDelayTimer(getWriteHash(type, uuid, groupUUID));
+
   return {
     type: UPDATE_WRITING_STATUS,
     payload: {

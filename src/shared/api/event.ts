@@ -12,7 +12,7 @@ export const sendStartWriting = _throttle(
     return api.emit('chat::startWriting', { type, uuid, currentText });
   },
   config.chat.isWriting.throttle,
-  { leading: true, trailing: false }
+  { leading: false, trailing: true }
 );
 
 /**
@@ -23,5 +23,5 @@ export const sendStopWriting = _throttle(
     return api.emit('chat::stopWriting', { type, uuid });
   },
   config.chat.isWriting.throttle,
-  { leading: true, trailing: false }
+  { leading: false, trailing: true }
 );
