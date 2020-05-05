@@ -50,10 +50,14 @@ export interface ConverseInfo {
   name?: string;
 }
 
+export interface WritingListGroupItem {
+  uuid: string; // 此处的UUID指的是用户的UUID
+  text: string;
+}
 type WritingListType = {
   user: string[];
   group: {
-    [name: string]: string[];
+    [name: string]: WritingListGroupItem[];
   };
 };
 

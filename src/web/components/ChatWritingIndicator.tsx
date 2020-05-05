@@ -7,6 +7,7 @@ import _map from 'lodash/map';
 import _take from 'lodash/take';
 import { useSpring, animated } from 'react-spring';
 import { useMeasure } from 'react-use';
+import { WritingListGroupItem } from '@redux/types/chat';
 
 const MOST_DISPLAY_NUM = 3; //最多在summary中显示的人数
 
@@ -58,7 +59,7 @@ interface Props {
   /**
    * uuid列表或者带当前输入的列表
    */
-  list: (string | { uuid: string; text: string })[];
+  list: (string | WritingListGroupItem)[];
 }
 
 const ChatWritingIndicatorInner: React.FC<Props> = TMemo((props) => {

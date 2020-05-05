@@ -19,8 +19,8 @@ export const sendStartWriting = _throttle(
  * 发送终止写
  */
 export const sendStopWriting = _throttle(
-  (type: ConverseType = 'user', uuid: string, currentText?: string) => {
-    return api.emit('chat::stopWriting', { type, uuid, currentText });
+  (type: ConverseType = 'user', uuid: string) => {
+    return api.emit('chat::stopWriting', { type, uuid });
   },
   config.chat.isWriting.throttle,
   { leading: true, trailing: false }

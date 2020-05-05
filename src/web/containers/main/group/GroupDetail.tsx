@@ -32,6 +32,9 @@ import { useCurrentUserUUID } from '@redux/hooks/useUser';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
 import { getUserName } from '@shared/utils/data-helper';
 import { GroupHeader } from './GroupHeader';
+import { ChatWritingIndicator } from '@web/components/ChatWritingIndicator';
+import { sendStartWriting, sendStopWriting } from '@shared/api/event';
+import { useGroupWritingState } from '@redux/hooks/useChat';
 
 export const GroupDetail: React.FC = TMemo(() => {
   const groupInfo = useSelectedGroupInfo();
@@ -51,6 +54,13 @@ export const GroupDetail: React.FC = TMemo(() => {
     () =>
       selfGroupActors.find((actor) => actor.uuid === selectedGroupActorUUID),
     [selfGroupActors, selectedGroupActorUUID]
+  );
+
+  const handleSendBoxChange = useCallback(
+    (text) => {
+      sendStartWriting('group', groupUUID, text);
+    },
+    [groupUUID]
   );
 
   const handleSendMsg = useCallback(
@@ -76,6 +86,8 @@ export const GroupDetail: React.FC = TMemo(() => {
           data: msgDataManager.toJS(),
         })
       );
+
+      sendStopWriting('group', groupUUID);
     },
     [dispatch, groupUUID, selectedGroupActorInfo, replyMsg, clearReplyMsg]
   );
@@ -181,11 +193,14 @@ export const GroupDetail: React.FC = TMemo(() => {
     );
   }, [dispatch, groupUUID]);
 
+  const writingList = useGroupWritingState(groupUUID);
+
   return (
     <GroupInfoContext.Provider value={groupInfo}>
       <div className="detail">
         <ReactTooltip effect="solid" />
         <GroupHeader />
+        <ChatWritingIndicator list={writingList} />
         <MsgContainer
           className="group-content"
           converseUUID={groupUUID}
@@ -195,6 +210,7 @@ export const GroupDetail: React.FC = TMemo(() => {
         <MsgSendBox
           converseUUID={groupUUID}
           isGroup={true}
+          onChange={handleSendBoxChange}
           onSendMsg={handleSendMsg}
           onSendFile={handleSendFile}
           onSendDiceReq={handleSendDiceReq}
