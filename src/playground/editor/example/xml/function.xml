@@ -15,4 +15,13 @@
   </Script>
 
   <p>{{add(1,2)}}</p>
+
+  <Script>
+    function add2(a, b) {
+      return global.add(a, b)
+    }
+
+    setGlobal('add2', add2);
+  </Script>
+  <p>{{add2(3,4)}}</p>
 </Template>
