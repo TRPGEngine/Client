@@ -5,6 +5,13 @@ import _set from 'lodash/set';
 import _isFunction from 'lodash/isFunction';
 
 /**
+ * @deprecated 有无法越过的访问内存问题。使用原来的reduce操作(即useBuildLayoutStateContext的操作)
+ * NOTICE: global必须复用原来的内存地址
+ * 因为要让任意位置的代码在任何时刻都能获取到最新的global数据而不用更新
+ * 如在Script中使用global
+ */
+
+/**
  * 更新数据
  */
 export const updateData = createAction<
