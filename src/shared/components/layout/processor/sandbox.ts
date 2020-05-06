@@ -1,6 +1,6 @@
 import { XMLBuilderContext } from '../XMLBuilder';
 import memoizeOne from 'memoize-one';
-import { getBuiltinFunc } from './builtinFunc';
+import { builtinFunc } from './builtinFunc';
 import { parseDataText } from './';
 import _isEmpty from 'lodash/isEmpty';
 import _isString from 'lodash/isString';
@@ -14,7 +14,7 @@ export const generateSandboxContext = memoizeOne(
       ...context.state.global,
       ...context.state.data,
       ...context.state,
-      ...getBuiltinFunc(),
+      ...builtinFunc,
       evalParse(text: string, fallback: any = undefined) {
         if (_isEmpty(text) || !_isString(text)) {
           return fallback;
