@@ -19,7 +19,7 @@ import { useCurrentUserInfo } from '@redux/hooks/useUser';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { ChatType } from '@app/types/params';
 import { getMoreChatLog, sendMsg, addLoadingMsg } from '@redux/actions/chat';
-import { sendStartWriting } from '@shared/api/event';
+import { sendStartWriting, sendStopWriting } from '@shared/api/event';
 import config from '@shared/project.config';
 import { unemojify } from '@shared/utils/emoji';
 import { SendMsgPayload } from '@redux/types/chat';
@@ -34,6 +34,8 @@ import ImagePicker from 'react-native-image-picker';
 import { uploadChatimg } from '@shared/utils/image-uploader';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { MsgReply } from './MsgReply';
+import { useGroupWritingState, useWritingState } from '@redux/hooks/useChat';
+import { ChatWritingIndicator } from '@app/components/chat/ChatWritingIndicator';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
 
@@ -142,22 +144,25 @@ export const ChatScreenMain: React.FC<Props> = TMemo((props) => {
     );
   }, [props.converseUUID, props.converseType]);
 
-  // 发送正在输入信号
-  // 增加一个2秒的节流防止频繁发送
-  const sendWriting = useCallback(() => {
-    sendStartWriting('user', props.converseUUID);
-  }, [props.converseUUID]);
-
   const handleChange = useCallback(
     (text: string) => {
       setInputMsg(text);
 
-      if (props.converseType === 'user') {
-        // 通知服务器告知converseUUID当前用户正在输入
-        sendWriting();
+      if (['user', 'group'].includes(props.converseType)) {
+        if (text === '') {
+          sendStopWriting(props.converseType, props.converseUUID);
+        } else {
+          // 发送正在输入信号
+          if (props.converseType === 'user') {
+            // 通知服务器告知converseUUID当前用户正在输入
+            sendStartWriting('user', props.converseUUID);
+          } else if (props.converseType === 'group') {
+            sendStartWriting('group', props.converseUUID, text);
+          }
+        }
       }
     },
-    [setInputMsg, props.converseType, sendWriting]
+    [setInputMsg, props.converseUUID, props.converseType]
   );
 
   /**
@@ -331,8 +336,11 @@ export const ChatScreenMain: React.FC<Props> = TMemo((props) => {
     );
   }
 
+  const writingList = useWritingState(props.converseUUID, props.converseType);
+
   return (
     <View style={{ flex: 1 }}>
+      <ChatWritingIndicator list={writingList} />
       <MsgList
         msgList={msgList}
         selfInfo={selfInfo}
