@@ -57,6 +57,7 @@
     "react-native-screens": "^2.8.0",
     "react-native-style-block": "0.0.4",
     "react-native-webview": "^10.1.1",
+    "react-native-webrtc": "^1.75.3",
     "rn-fetch-blob": "^0.11.2",
     "styled-components": "^4.3.2"
   },
