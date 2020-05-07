@@ -107,7 +107,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
           <ProfileInfoItem name="性别" value={userInfo.sex} />
           <ProfileInfoItem
             name="简介"
-            value={userInfo.desc || '这个人很懒什么都没有留下'}
+            value={userInfo.sign || '这个人很懒什么都没有留下'}
           />
           <ProfileInfoItem
             name="上次登录"

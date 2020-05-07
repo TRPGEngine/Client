@@ -14,6 +14,25 @@ import {
 } from '@src/app/src/components/TComponent';
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import _isEmpty from 'lodash/isEmpty';
+import styled from 'styled-components/native';
+
+const LoginTitle = styled.Text`
+  text-align: left;
+  font-size: 20px;
+  padding-left: 10px;
+  margin-bottom: 20px;
+`;
+
+const RegisterText = styled.Text`
+  color: #2f9bd7;
+  text-align: right;
+  font-size: 14px;
+`;
+
+const OAuthTipText = styled.Text`
+  text-align: center;
+  font-size: 12px;
+`;
 
 interface Props extends TRPGDispatchProp {
   oauthList: string[];
@@ -54,7 +73,7 @@ class LoginScreen extends React.Component<Props> {
 
     return (
       <View style={styles.oauth}>
-        <Text style={styles.oauthTip}>第三方登录</Text>
+        <OAuthTipText>第三方登录</OAuthTipText>
         <View style={styles.oauthBtnContainer}>
           {oauthList.includes('qq') ? (
             <TouchableOpacity onPress={() => this.handleQQLogin()}>
@@ -73,7 +92,7 @@ class LoginScreen extends React.Component<Props> {
     return (
       <View style={styles.container}>
         <TLoading />
-        <Text style={styles.title}>欢迎来到TRPG Game</Text>
+        <LoginTitle>欢迎来到TRPG Game</LoginTitle>
         <TFormGroup
           label="用户名"
           value={this.state.username}
@@ -100,7 +119,7 @@ class LoginScreen extends React.Component<Props> {
             )
           }
         >
-          <Text style={styles.registerText}>没有账户？点击此处注册</Text>
+          <RegisterText>没有账户？点击此处注册</RegisterText>
         </TouchableOpacity>
 
         {this.renderOAuth()}
@@ -115,15 +134,8 @@ const styles = {
     sb.flex(),
     sb.padding(80, 20, 0),
   ],
-  title: [
-    sb.textAlign('left'),
-    sb.font(20),
-    { paddingLeft: 10, marginBottom: 20 },
-  ],
   registerBtn: [sb.bgColor('transparent'), { marginTop: 10, height: 32 }],
-  registerText: [sb.color('#2f9bd7'), sb.textAlign('right'), sb.font(14)],
   oauth: [{ justifyContent: 'flex-end' }, sb.flex(), sb.padding(0, 0, 10, 0)],
-  oauthTip: [sb.textAlign('center'), sb.font(12)],
   oauthBtnContainer: [sb.alignCenter(), sb.margin(10, 0)],
   oauthBtnImage: [sb.size(40, 40), sb.radius(20)],
 };
