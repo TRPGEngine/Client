@@ -1,9 +1,13 @@
 import protooClient from 'protoo-client';
-import { Device, parseScalabilityMode } from 'mediasoup-client';
+import {
+  Device,
+  parseScalabilityMode,
+  types as MediasoupType,
+} from 'mediasoup-client';
 import Logger from './Logger';
 import { getProtooUrl } from './urlFactory';
 import { BuiltinHandlerName } from 'mediasoup-client/lib/types';
-// import * as cookiesManager from './cookiesManager';
+import * as settingManager from './settingManager';
 import * as requestActions from './redux/requestActions';
 import * as stateActions from './redux/stateActions';
 
@@ -35,7 +39,29 @@ const logger = new Logger('RoomClient');
 
 let store;
 
-export default class RoomClient {
+export interface RoomClientOptions {
+  roomId: string;
+  peerId: string;
+  displayName: string;
+  device: {
+    flag: string;
+    name: string;
+    version: string;
+  };
+  handlerName?: BuiltinHandlerName;
+  useSimulcast?: boolean;
+  useSharingSimulcast?: boolean;
+  forceTcp: boolean;
+  produce: boolean;
+  consume: boolean;
+  forceH264: boolean;
+  forceVP9: boolean;
+  svc?: string;
+  datachannel: boolean;
+  externalVideo: boolean;
+}
+
+export class RoomClient {
   /**
    * @param  {Object} data
    * @param  {Object} data.store - The Redux store.
@@ -51,7 +77,7 @@ export default class RoomClient {
   _displayName: string;
 
   // Device info.
-  _device: {};
+  _device: RoomClientOptions['device'];
 
   // Whether we want to force RTC over TCP.
   _forceTcp: boolean;
@@ -97,44 +123,36 @@ export default class RoomClient {
   _mediasoupDevice: Device = null;
 
   // mediasoup Transport for sending.
-  // @type {mediasoupClient.Transport}
-  _sendTransport = null;
+  _sendTransport: MediasoupType.Transport = null;
 
   // mediasoup Transport for receiving.
-  // @type {mediasoupClient.Transport}
-  _recvTransport = null;
+  _recvTransport: MediasoupType.Transport = null;
 
   // Local mic mediasoup Producer.
-  // @type {mediasoupClient.Producer}
-  _micProducer = null;
+  _micProducer: MediasoupType.Producer = null;
 
   // Local webcam mediasoup Producer.
-  // @type {mediasoupClient.Producer}
-  _webcamProducer = null;
+  _webcamProducer: MediasoupType.Producer = null;
 
   // Local share mediasoup Producer.
-  // @type {mediasoupClient.Producer}
-  _shareProducer = null;
+  _shareProducer: MediasoupType.Producer = null;
 
   // Local chat DataProducer.
-  // @type {mediasoupClient.DataProducer}
-  _chatDataProducer = null;
+  _chatDataProducer: MediasoupType.DataProducer = null;
 
   // Local bot DataProducer.
-  // @type {mediasoupClient.DataProducer}
-  _botDataProducer = null;
+  _botDataProducer: MediasoupType.DataProducer = null;
 
   // mediasoup Consumers.
-  // @type {Map<String, mediasoupClient.Consumer>}
-  _consumers = new Map();
+  _consumers = new Map<string, MediasoupType.Consumer>();
 
   // mediasoup DataConsumers.
   // @type {Map<String, mediasoupClient.DataConsumer>}
-  _dataConsumers = new Map();
+  _dataConsumers = new Map<string, MediasoupType.DataConsumer>();
 
   // Map of webcam MediaDeviceInfos indexed by deviceId.
   // @type {Map<String, MediaDeviceInfos>}
-  _webcams = new Map();
+  _webcams = new Map<string, MediaDeviceInfo>();
 
   // Local Webcam.
   // @type {Object} with:
@@ -158,7 +176,7 @@ export default class RoomClient {
     svc,
     datachannel,
     externalVideo,
-  }) {
+  }: RoomClientOptions) {
     logger.debug(
       'constructor() [roomId:"%s", peerId:"%s", displayName:"%s", device:%s]',
       roomId,
@@ -297,13 +315,13 @@ export default class RoomClient {
             producerPaused,
           } = request.data;
 
-          let codecOptions;
+          // let codecOptions;
 
-          if (kind === 'audio') {
-            codecOptions = {
-              opusStereo: 1,
-            };
-          }
+          // if (kind === 'audio') {
+          //   codecOptions = {
+          //     opusStereo: 1,
+          //   };
+          // }
 
           try {
             const consumer = await this._recvTransport.consume({
@@ -311,7 +329,7 @@ export default class RoomClient {
               producerId,
               kind,
               rtpParameters,
-              codecOptions,
+              // codecOptions,
               appData: { ...appData, peerId }, // Trick.
             });
 
@@ -736,8 +754,8 @@ export default class RoomClient {
       this._micProducer = await this._sendTransport.produce({
         track,
         codecOptions: {
-          opusStereo: 1,
-          opusDtx: 1,
+          opusStereo: true,
+          opusDtx: true,
         },
         // NOTE: for testing codec selection.
         // codec : this._mediasoupDevice.rtpCapabilities.codecs
@@ -1108,121 +1126,121 @@ export default class RoomClient {
     store.dispatch(stateActions.setWebcamInProgress(false));
   }
 
-  async enableShare() {
-    logger.debug('enableShare()');
+  // async enableShare() {
+  //   logger.debug('enableShare()');
 
-    if (this._shareProducer) return;
-    else if (this._webcamProducer) await this.disableWebcam();
+  //   if (this._shareProducer) return;
+  //   else if (this._webcamProducer) await this.disableWebcam();
 
-    if (!this._mediasoupDevice.canProduce('video')) {
-      logger.error('enableShare() | cannot produce video');
+  //   if (!this._mediasoupDevice.canProduce('video')) {
+  //     logger.error('enableShare() | cannot produce video');
 
-      return;
-    }
+  //     return;
+  //   }
 
-    let track;
+  //   let track;
 
-    store.dispatch(stateActions.setShareInProgress(true));
+  //   store.dispatch(stateActions.setShareInProgress(true));
 
-    try {
-      logger.debug('enableShare() | calling getUserMedia()');
+  //   try {
+  //     logger.debug('enableShare() | calling getUserMedia()');
 
-      const stream = await navigator.mediaDevices.getDisplayMedia({
-        audio: false,
-        video: {
-          displaySurface: 'monitor',
-          logicalSurface: true,
-          cursor: true,
-          width: { max: 1920 },
-          height: { max: 1080 },
-          frameRate: { max: 30 },
-        },
-      });
+  //     const stream = await navigator.mediaDevices.getDisplayMedia({
+  //       audio: false,
+  //       video: {
+  //         displaySurface: 'monitor',
+  //         logicalSurface: true,
+  //         cursor: true,
+  //         width: { max: 1920 },
+  //         height: { max: 1080 },
+  //         frameRate: { max: 30 },
+  //       },
+  //     });
 
-      // May mean cancelled (in some implementations).
-      if (!stream) {
-        store.dispatch(stateActions.setShareInProgress(true));
+  //     // May mean cancelled (in some implementations).
+  //     if (!stream) {
+  //       store.dispatch(stateActions.setShareInProgress(true));
 
-        return;
-      }
+  //       return;
+  //     }
 
-      track = stream.getVideoTracks()[0];
+  //     track = stream.getVideoTracks()[0];
 
-      if (this._useSharingSimulcast) {
-        // If VP9 is the only available video codec then use SVC.
-        const firstVideoCodec = this._mediasoupDevice.rtpCapabilities.codecs.find(
-          (c) => c.kind === 'video'
-        );
+  //     if (this._useSharingSimulcast) {
+  //       // If VP9 is the only available video codec then use SVC.
+  //       const firstVideoCodec = this._mediasoupDevice.rtpCapabilities.codecs.find(
+  //         (c) => c.kind === 'video'
+  //       );
 
-        let encodings;
+  //       let encodings;
 
-        if (firstVideoCodec.mimeType.toLowerCase() === 'video/vp9') {
-          encodings = VIDEO_SVC_ENCODINGS;
-        } else {
-          encodings = VIDEO_SIMULCAST_ENCODINGS.map((encoding) => ({
-            ...encoding,
-            dtx: true,
-          }));
-        }
+  //       if (firstVideoCodec.mimeType.toLowerCase() === 'video/vp9') {
+  //         encodings = VIDEO_SVC_ENCODINGS;
+  //       } else {
+  //         encodings = VIDEO_SIMULCAST_ENCODINGS.map((encoding) => ({
+  //           ...encoding,
+  //           dtx: true,
+  //         }));
+  //       }
 
-        this._shareProducer = await this._sendTransport.produce({
-          track,
-          encodings,
-          codecOptions: {
-            videoGoogleStartBitrate: 1000,
-          },
-          appData: {
-            share: true,
-          },
-        });
-      } else {
-        this._shareProducer = await this._sendTransport.produce({ track });
-      }
+  //       this._shareProducer = await this._sendTransport.produce({
+  //         track,
+  //         encodings,
+  //         codecOptions: {
+  //           videoGoogleStartBitrate: 1000,
+  //         },
+  //         appData: {
+  //           share: true,
+  //         },
+  //       });
+  //     } else {
+  //       this._shareProducer = await this._sendTransport.produce({ track });
+  //     }
 
-      store.dispatch(
-        stateActions.addProducer({
-          id: this._shareProducer.id,
-          type: 'share',
-          paused: this._shareProducer.paused,
-          track: this._shareProducer.track,
-          rtpParameters: this._shareProducer.rtpParameters,
-          codec: this._shareProducer.rtpParameters.codecs[0].mimeType.split(
-            '/'
-          )[1],
-        })
-      );
+  //     store.dispatch(
+  //       stateActions.addProducer({
+  //         id: this._shareProducer.id,
+  //         type: 'share',
+  //         paused: this._shareProducer.paused,
+  //         track: this._shareProducer.track,
+  //         rtpParameters: this._shareProducer.rtpParameters,
+  //         codec: this._shareProducer.rtpParameters.codecs[0].mimeType.split(
+  //           '/'
+  //         )[1],
+  //       })
+  //     );
 
-      this._shareProducer.on('transportclose', () => {
-        this._shareProducer = null;
-      });
+  //     this._shareProducer.on('transportclose', () => {
+  //       this._shareProducer = null;
+  //     });
 
-      this._shareProducer.on('trackended', () => {
-        store.dispatch(
-          requestActions.notify({
-            type: 'error',
-            text: 'Share disconnected!',
-          })
-        );
+  //     this._shareProducer.on('trackended', () => {
+  //       store.dispatch(
+  //         requestActions.notify({
+  //           type: 'error',
+  //           text: 'Share disconnected!',
+  //         })
+  //       );
 
-        this.disableShare().catch(() => {});
-      });
-    } catch (error) {
-      logger.error('enableShare() | failed:%o', error);
+  //       this.disableShare().catch(() => {});
+  //     });
+  //   } catch (error) {
+  //     logger.error('enableShare() | failed:%o', error);
 
-      if (error.name !== 'NotAllowedError') {
-        store.dispatch(
-          requestActions.notify({
-            type: 'error',
-            text: `Error sharing: ${error}`,
-          })
-        );
-      }
+  //     if (error.name !== 'NotAllowedError') {
+  //       store.dispatch(
+  //         requestActions.notify({
+  //           type: 'error',
+  //           text: `Error sharing: ${error}`,
+  //         })
+  //       );
+  //     }
 
-      if (track) track.stop();
-    }
+  //     if (track) track.stop();
+  //   }
 
-    store.dispatch(stateActions.setShareInProgress(false));
-  }
+  //   store.dispatch(stateActions.setShareInProgress(false));
+  // }
 
   async disableShare() {
     logger.debug('disableShare()');
@@ -1272,11 +1290,11 @@ export default class RoomClient {
 
     store.dispatch(stateActions.setAudioOnlyInProgress(true));
 
-    if (
-      !this._webcamProducer &&
-      this._produce &&
-      (cookiesManager.getDevices() || {}).webcamEnabled
-    ) {
+    const devices = (await settingManager.getDevices()) || {
+      webcamEnabled: false,
+    };
+
+    if (!this._webcamProducer && this._produce && devices.webcamEnabled) {
       this.enableWebcam();
     }
 
@@ -1660,8 +1678,8 @@ export default class RoomClient {
   async changeDisplayName(displayName) {
     logger.debug('changeDisplayName() [displayName:"%s"]', displayName);
 
-    // Store in cookie.
-    cookiesManager.setUser({ displayName });
+    // Store in rnStorage.
+    settingManager.setUser({ displayName });
 
     try {
       await this._protoo.request('changeDisplayName', { displayName });
@@ -2086,7 +2104,7 @@ export default class RoomClient {
 
         this.enableMic();
 
-        const devicesCookie = cookiesManager.getDevices();
+        const devicesCookie = await settingManager.getDevices();
 
         if (
           !devicesCookie ||
@@ -2104,11 +2122,11 @@ export default class RoomClient {
       }
 
       // NOTE: For testing.
-      if (window.SHOW_INFO) {
-        const { me } = store.getState();
+      // if (window.SHOW_INFO) {
+      //   const { me } = store.getState();
 
-        store.dispatch(stateActions.setRoomStatsPeerId(me.id));
-      }
+      //   store.dispatch(stateActions.setRoomStatsPeerId(me.id));
+      // }
     } catch (error) {
       logger.error('_joinRoom() failed:%o', error);
 

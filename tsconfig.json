@@ -15,6 +15,7 @@
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
+    "downlevelIteration": true,
     "noImplicitThis": true,
     "paths": {
       "@redux/*": ["src/shared/redux/*"],
