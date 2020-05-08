@@ -98,11 +98,23 @@ interface ProjectConfig {
     blog: string;
     portal: string;
   };
-  defaultSettings: {
-    user: {};
-    system: {};
-  };
+  defaultSettings: DefaultSettings;
 }
+
+/**
+ * 默认设置
+ */
+const defaultSettings = {
+  user: {
+    favoriteDice: [],
+  },
+  system: {
+    notification: true,
+    disableSendWritingState: false,
+  },
+};
+
+export type DefaultSettings = typeof defaultSettings;
 
 const config: ProjectConfig = {
   version: require('../../package.json').version,
@@ -210,14 +222,7 @@ const config: ProjectConfig = {
     blog: 'https://trpgdoc.moonrailgun.com/blog/',
     portal: portalUrl,
   },
-  defaultSettings: {
-    user: {
-      favoriteDice: [],
-    },
-    system: {
-      notification: true,
-    },
-  },
+  defaultSettings,
 };
 config.file.url = `${config.file.protocol}://${config.file.host}:${config.file.port}`;
 config.url.api = config.file.url;

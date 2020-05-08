@@ -39,6 +39,13 @@ const SystemSettings: React.FC = TMemo(() => {
     [dispatch]
   );
 
+  const handleSetDisableSendWritingState = useCallback(
+    (isChecked: boolean) => {
+      dispatch(setSystemSettings({ disableSendWritingState: isChecked }));
+    },
+    [dispatch]
+  );
+
   return (
     <ModalPanel title="系统设置">
       <SettingCell>
@@ -46,6 +53,13 @@ const SystemSettings: React.FC = TMemo(() => {
         <Checkbox
           value={systemSettings.notification}
           onChange={handleRequestNotificationPermission}
+        />
+      </SettingCell>
+      <SettingCell>
+        <label>不发送输入状态</label>
+        <Checkbox
+          value={systemSettings.disableSendWritingState}
+          onChange={handleSetDisableSendWritingState}
         />
       </SettingCell>
       <SettingCell>

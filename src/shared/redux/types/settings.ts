@@ -1,12 +1,18 @@
+import { DefaultSettings } from '@shared/project.config';
+
 type NotificationType = 'granted' | 'denied' | 'default';
 
-export interface ServerConfig {
-  [name: string]: string | boolean | number | string[];
+export type SettingType = string | boolean | number | string[];
+
+interface CustomConfig {
+  [name: string]: SettingType;
 }
 
+export type ServerConfig = CustomConfig;
+
 export interface SettingsState {
-  user: any;
-  system: any;
+  user: DefaultSettings['user'] & CustomConfig;
+  system: DefaultSettings['system'] & CustomConfig;
   notificationPermission: NotificationType;
   config: ServerConfig; // 服务端配置
 }
