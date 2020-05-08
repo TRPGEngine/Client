@@ -1,13 +1,17 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import { View, Switch } from 'react-native';
 import { List } from '@ant-design/react-native';
 import { switchNav } from '../redux/actions/nav';
 import rnStorage from '@src/shared/api/rn-storage.api';
-import config from '@src/shared/project.config';
+import config, { DefaultSettings } from '@src/shared/project.config';
+import { setSystemSettings } from '@redux/actions/settings';
+import { TRPGDispatchProp, TRPGState } from '@redux/types/__all__';
 const Item = List.Item;
 
-interface Props extends DispatchProp {}
+interface Props extends TRPGDispatchProp {
+  systemSettings: DefaultSettings['system'];
+}
 interface State {
   isAlphaUser: boolean;
 }
@@ -25,13 +29,20 @@ class SettingsScreen extends React.Component<Props, State> {
     this.props.dispatch(switchNav(routeName));
   };
 
-  onChangeIsAlphaUser = async (val: boolean) => {
-    await rnStorage.save('isAlphaUser', val);
-    this.setState({ isAlphaUser: val });
+  handleChangeIsAlphaUser = async (checked: boolean) => {
+    await rnStorage.save('isAlphaUser', checked);
+    this.setState({ isAlphaUser: checked });
+  };
+
+  handleSetDisableSendWritingState = (checked: boolean) => {
+    this.props.dispatch(
+      setSystemSettings({ disableSendWritingState: checked })
+    );
   };
 
   render() {
     const { isAlphaUser } = this.state;
+    const { systemSettings } = this.props;
 
     return (
       <View>
@@ -53,8 +64,18 @@ class SettingsScreen extends React.Component<Props, State> {
           <Item
             extra={
               <Switch
+                value={systemSettings.disableSendWritingState}
+                onValueChange={this.handleSetDisableSendWritingState}
+              />
+            }
+          >
+            不发送输入状态
+          </Item>
+          <Item
+            extra={
+              <Switch
                 value={isAlphaUser}
-                onValueChange={this.onChangeIsAlphaUser}
+                onValueChange={this.handleChangeIsAlphaUser}
               />
             }
           >
@@ -71,4 +92,6 @@ class SettingsScreen extends React.Component<Props, State> {
   }
 }
 
-export default connect()(SettingsScreen);
+export default connect((state: TRPGState) => ({
+  systemSettings: state.settings.system,
+}))(SettingsScreen);
