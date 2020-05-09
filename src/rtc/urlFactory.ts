@@ -1,7 +1,6 @@
 let protooPort = 4443;
 
-const hostname = 'test.mediasoup.org';
-// const hostname = window.location.hostname;
+const hostname = window.location.hostname;
 
 if (hostname === 'test.mediasoup.org') protooPort = 4444;
 

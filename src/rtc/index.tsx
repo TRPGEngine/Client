@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { RoomClient, RoomClientOptions } from './RoomClient';
 import shortid from 'shortid';
 import { RoomClientContextProvider } from './RoomContext';
+import _isNil from 'lodash/isNil';
 
 type RTCContainerProps = Partial<Omit<RoomClientOptions, 'peerId'>> &
-  Pick<RoomClientOptions, 'roomId' | 'displayName' | 'device'>;
+  Pick<RoomClientOptions, 'roomId' | 'displayName' | 'device'> & {
+    roomClientRef?: React.MutableRefObject<RoomClient>;
+  };
 export const RTCContainer: React.FC<RTCContainerProps> = TMemo((props) => {
   const {
     roomId,
@@ -36,6 +39,10 @@ export const RTCContainer: React.FC<RTCContainerProps> = TMemo((props) => {
       externalVideo,
     });
     setRoomClient(client);
+
+    if (!_isNil(props.roomClientRef)) {
+      props.roomClientRef.current = client;
+    }
   }, []);
 
   return (
