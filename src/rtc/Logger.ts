@@ -3,6 +3,10 @@ import debug from 'debug';
 const APP_NAME = 'trpg-rtc';
 
 export default class Logger {
+  _debug: debug.Debugger;
+  _warn: debug.Debugger;
+  _error: debug.Debugger;
+
   constructor(prefix) {
     if (prefix) {
       this._debug = debug(`${APP_NAME}:${prefix}`);

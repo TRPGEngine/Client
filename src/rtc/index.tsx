@@ -4,7 +4,8 @@ import { RoomClient, RoomClientOptions } from './RoomClient';
 import shortid from 'shortid';
 import { RoomClientContextProvider } from './RoomContext';
 
-interface RTCContainerProps extends Omit<RoomClientOptions, 'peerId'> {}
+type RTCContainerProps = Partial<Omit<RoomClientOptions, 'peerId'>> &
+  Pick<RoomClientOptions, 'roomId' | 'displayName' | 'device'>;
 export const RTCContainer: React.FC<RTCContainerProps> = TMemo((props) => {
   const {
     roomId,
