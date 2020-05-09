@@ -1,9 +1,9 @@
 import React from 'react';
 import { Router, Switch, Route, RouteProps } from 'react-router';
-
 import { postMessage } from '@portal/utils/event';
 import history from './history';
 import { routes } from './routes';
+import NotFound from './routes/404';
 
 interface TitleRouteProps extends RouteProps {
   title: string;
@@ -38,6 +38,7 @@ class App extends React.Component {
           {routes.map((config) => (
             <TitleRoute key={config.path} {...config} />
           ))}
+          <Route component={NotFound} />
         </Switch>
       </Router>
     );
