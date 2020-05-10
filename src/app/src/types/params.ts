@@ -1,4 +1,6 @@
-export type ChatType = 'user' | 'group' | 'system';
+import { ConverseType } from '@redux/types/chat';
+
+export type ChatType = ConverseType;
 export interface ChatParams {
   uuid: string;
   type: ChatType;

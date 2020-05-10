@@ -3,7 +3,7 @@ import config from '@shared/project.config';
 import { TImageViewer } from '@src/app/src/components/TComponent';
 import { TagProps } from '@src/shared/components/bbcode/type';
 import TImage from '../../TComponent/TImage';
-import { useMsgListImageUrls } from '@shared/context/MsgListContext';
+import { useMsgListContextImageUrls } from '@shared/context/MsgListContext';
 import _findLastIndex from 'lodash/findLastIndex';
 
 const maxWidth = 180;
@@ -14,7 +14,7 @@ const ImageTag = React.memo((props: TagProps) => {
   const { attrs } = node;
   const [width, setWidth] = useState(maxWidth);
   const [height, setHeight] = useState(maxHeight);
-  const imageUrls = useMsgListImageUrls();
+  const imageUrls = useMsgListContextImageUrls();
 
   // 此处有一个反转的Image Urls, 因为app的msgList排序是基于时间倒序的
   // 在此处反转是因为相比在context设置时反转整个msgList性能没有在此处反转几个url字符串性能高(虽然需要更新多次)

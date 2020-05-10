@@ -1,6 +1,6 @@
-import { getBuiltinFunc } from '../builtinFunc';
+import { builtinFunc } from '../builtinFunc';
 
-const { AND, SUM } = getBuiltinFunc();
+const { AND, SUM } = builtinFunc;
 
 describe('builtinFunc', () => {
   describe('AND', () => {

@@ -1,5 +1,11 @@
 import { GroupActorType } from '@src/shared/redux/types/group';
 import _get from 'lodash/get';
+import _isNil from 'lodash/isNil';
+import { UserInfo } from '@redux/types/user';
+
+/**
+ * 数据相关帮助函数
+ */
 
 /**
  * 获取团人物卡字段
@@ -38,3 +44,15 @@ export const getGroupActorTemplateUUID = (
     groupActor.actor_template_uuid ?? _get(groupActor, 'actor.template_uuid')
   );
 };
+
+/**
+ * 获取用户名
+ * @param userInfo 用户信息
+ */
+export function getUserName(userInfo: Partial<UserInfo>): string {
+  if (_isNil(userInfo)) {
+    return '';
+  }
+
+  return userInfo?.nickname || userInfo?.username || '';
+}

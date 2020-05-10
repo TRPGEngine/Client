@@ -15,6 +15,7 @@ import PopoverMsgSenderInfo from '../popover/MsgSenderInfo';
 import styled from 'styled-components/native';
 import { isUserOrGroupUUID } from '@shared/utils/uuid';
 import styledTheme from '@shared/utils/theme';
+import { MsgDataManager } from '@shared/utils/msg-helper';
 
 const MsgContainer = styled.View<{ me: boolean }>`
   display: flex;
@@ -55,6 +56,13 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     info: {},
     emphasizeTime: false,
   };
+
+  msgDataManager = new MsgDataManager();
+
+  constructor(props: P) {
+    super(props);
+    this.msgDataManager.parseData(props.info?.data);
+  }
 
   /**
    * 处理不同消息类型

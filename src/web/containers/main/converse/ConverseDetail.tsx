@@ -22,6 +22,7 @@ import { sendStartWriting, sendStopWriting } from '@shared/api/event';
 import _throttle from 'lodash/throttle';
 import _get from 'lodash/get';
 import { TRPGState } from '@redux/types/__all__';
+import { MsgType } from '@redux/types/chat';
 
 import './ConverseDetail.scss';
 
@@ -31,24 +32,22 @@ interface Props extends DispatchProp<any> {
   isWriting: boolean;
 }
 class ConverseDetail extends React.Component<Props> {
-  sendWritingThrottled = _throttle(
-    () => {
-      // 发送正在输入信号
-      sendStartWriting('user', this.props.converseUUID);
-    },
-    config.chat.isWriting.throttle,
-    { leading: true, trailing: false }
-  );
+  handleSendBoxChange = (text: string) => {
+    const { converseUUID } = this.props;
 
-  handleSendBoxChange(text) {
-    if (isUserUUID(this.props.converseUUID)) {
+    if (isUserUUID(converseUUID)) {
       // 通知服务器告知converseUUID当前用户正在输入
-      // 增加一个2秒的节流防止频繁发送
-      this.sendWritingThrottled();
+      if (text === '') {
+        // 停止输入
+        sendStopWriting('user', converseUUID);
+      } else {
+        // 正在输入
+        sendStartWriting('user', converseUUID);
+      }
     }
-  }
+  };
 
-  handleSendMsg(message, type) {
+  handleSendMsg = (message: string, type: MsgType) => {
     const { converseUUID } = this.props;
 
     console.log('send msg:', message, 'to', converseUUID);
@@ -64,9 +63,9 @@ class ConverseDetail extends React.Component<Props> {
         type,
       })
     );
-  }
+  };
 
-  handleSendFile(file) {
+  handleSendFile = (file: File) => {
     console.log('send file to', this.props.converseUUID, file);
     this.props.dispatch(
       sendFile(
@@ -78,10 +77,10 @@ class ConverseDetail extends React.Component<Props> {
         file
       )
     );
-  }
+  };
 
   // 发送投骰请求
-  handleSendDiceReq() {
+  handleSendDiceReq = () => {
     this.props.dispatch(
       showModal(
         <DiceRequest
@@ -99,10 +98,10 @@ class ConverseDetail extends React.Component<Props> {
         />
       )
     );
-  }
+  };
 
   // 发送投骰邀请
-  handleSendDiceInv() {
+  handleSendDiceInv = () => {
     const uuid = this.props.converseUUID;
     console.log('发送投骰邀请', uuid);
     const usercache = this.props.usercache;
@@ -124,10 +123,10 @@ class ConverseDetail extends React.Component<Props> {
         />
       )
     );
-  }
+  };
 
   // 发送自由投骰
-  handleQuickDice() {
+  handleQuickDice = () => {
     console.log('快速投骰');
     let uuid = this.props.converseUUID;
     this.props.dispatch(
@@ -140,7 +139,7 @@ class ConverseDetail extends React.Component<Props> {
         />
       )
     );
-  }
+  };
 
   getHeaderActions() {
     const actions = [];
@@ -215,12 +214,12 @@ class ConverseDetail extends React.Component<Props> {
         <MsgSendBox
           converseUUID={userUUID}
           isGroup={false}
-          onChange={(text) => this.handleSendBoxChange(text)}
-          onSendMsg={(message, type) => this.handleSendMsg(message, type)}
-          onSendFile={(file) => this.handleSendFile(file)}
-          onSendDiceReq={() => this.handleSendDiceReq()}
-          onSendDiceInv={() => this.handleSendDiceInv()}
-          onQuickDice={() => this.handleQuickDice()}
+          onChange={this.handleSendBoxChange}
+          onSendMsg={this.handleSendMsg}
+          onSendFile={this.handleSendFile}
+          onSendDiceReq={this.handleSendDiceReq}
+          onSendDiceInv={this.handleSendDiceInv}
+          onQuickDice={this.handleQuickDice}
         />
       </div>
     );

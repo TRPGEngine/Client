@@ -27,11 +27,12 @@ export const MsgListContextProvider: React.FC<MsgListContextProviderProps> = Rea
     );
   }
 );
+MsgListContextProvider.displayName = 'MsgListContextProvider';
 
 /**
  * 获取当前聊天列表所有聊天记录
  */
-export const useMsgList = (): MsgListType => {
+export const useMsgListContext = (): MsgListType => {
   const { msgList } = useContext(MsgListContext);
 
   return msgList ?? [];
@@ -41,8 +42,8 @@ export const useMsgList = (): MsgListType => {
  * 获取当前聊天列表的所有图片的url列表
  * 返回去重后的结果
  */
-export const useMsgListImageUrls = (): string[] => {
-  const msgList = useMsgList();
+export const useMsgListContextImageUrls = (): string[] => {
+  const msgList = useMsgListContext();
 
   const imageUrls = useMemo(() => {
     const urls: string[][] = msgList

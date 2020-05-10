@@ -29,7 +29,7 @@ import rnStorage from '../../api/rn-storage.api';
 import { checkUser } from '../../utils/cache-helper';
 import { hideProfileCard, switchMenuPannel, showToast, showAlert } from './ui';
 import * as uploadHelper from '../../utils/upload-helper';
-import { renewableDelayTimer } from '../../utils/timer';
+import { renewableDelayTimer, cancelDelayTimer } from '../../utils/timer';
 import config from '../../project.config';
 import _without from 'lodash/without';
 import _isFunction from 'lodash/isFunction';
@@ -685,35 +685,49 @@ export let updateCardChatData = function(chatUUID, newData): TRPGAction {
   };
 };
 
-const getWriteHash = (type = 'user', uuid) => {
-  return `${type}#${uuid}`;
+const getWriteHash = (type: string, uuid: string, groupUUID?: string) => {
+  return [type, uuid, groupUUID].join('#');
 };
-export let startWriting = function(type = 'user', uuid: string): TRPGAction {
+export let startWriting = function(
+  type = 'user',
+  uuid: string,
+  groupUUID?: string,
+  currentText?: string
+): TRPGAction {
   return function(dispatch, getState) {
     dispatch({
       type: UPDATE_WRITING_STATUS,
       payload: {
         type,
         uuid,
+        groupUUID,
+        currentText,
         isWriting: true,
       },
     });
 
     renewableDelayTimer(
-      getWriteHash(type, uuid),
+      getWriteHash(type, uuid, groupUUID),
       function() {
-        dispatch(stopWriting(type, uuid)); // 如果在规定时间后没有再次收到正在输入的信号，则视为已经停止输入了
+        dispatch(stopWriting(type, uuid, groupUUID)); // 如果在规定时间后没有再次收到正在输入的信号，则视为已经停止输入了
       },
       config.chat.isWriting.timeout
     );
   };
 };
-export let stopWriting = function(type = 'user', uuid: string): TRPGAction {
+export let stopWriting = function(
+  type = 'user',
+  uuid: string,
+  groupUUID?: string
+): TRPGAction {
+  cancelDelayTimer(getWriteHash(type, uuid, groupUUID));
+
   return {
     type: UPDATE_WRITING_STATUS,
     payload: {
       type,
       uuid,
+      groupUUID,
       isWriting: false,
     },
   };

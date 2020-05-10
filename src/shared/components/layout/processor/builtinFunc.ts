@@ -20,46 +20,47 @@ import Debug from 'debug';
 const debug = Debug('trpg:layout:sandbox');
 
 /**
- * 获取沙盒内建函数
+ * 沙盒内建函数
  */
-export function getBuiltinFunc() {
-  return {
-    Math,
-    JSON,
-    _get,
-    _isNil,
-    _find,
-    _findLast,
-    _map,
-    _keys,
-    _inRange,
-    _toNumber,
-    _isArray,
-    _isString,
-    _isObject,
-    _forEach,
-    _assign,
-    _concat,
-    _indexOf,
-    _flatten,
-    _range,
-    AND(...args: any[]): boolean {
-      return args.map(Boolean).reduce((prev, cur) => prev && cur, true);
-    },
-    debug(first, ...other) {
-      debug(first, ...other);
-      return first;
-    },
-    /**
-     * 将参数中所有可用的数字加起来
-     */
-    SUM(...args: any[]) {
-      if (args.length === 1 && _isArray(args[0])) {
-        args = [...args[0]];
-      }
-      const nums = args.map(_toNumber).filter((n) => !isNaN(n));
+export const builtinFunc = {
+  Math,
+  JSON,
+  _get,
+  _isNil,
+  _find,
+  _findLast,
+  _map,
+  _keys,
+  _inRange,
+  _toNumber,
+  _isArray,
+  _isString,
+  _isObject,
+  _forEach,
+  _assign,
+  _concat,
+  _indexOf,
+  _flatten,
+  _range,
+  AND(...args: any[]): boolean {
+    return args.map(Boolean).reduce((prev, cur) => prev && cur, true);
+  },
+  debug(first, ...other) {
+    debug(first, ...other);
+    return first;
+  },
+  /**
+   * 将参数中所有可用的数字加起来
+   */
+  SUM(...args: any[]) {
+    if (args.length === 1 && _isArray(args[0])) {
+      args = [...args[0]];
+    }
+    const nums = args.map(_toNumber).filter((n) => !isNaN(n));
 
-      return nums.reduce((prev, cur) => prev + cur, 0);
-    },
-  };
-}
+    return nums.reduce((prev, cur) => prev + cur, 0);
+  },
+  nextTick(fn) {
+    setTimeout(fn, 1000);
+  },
+};

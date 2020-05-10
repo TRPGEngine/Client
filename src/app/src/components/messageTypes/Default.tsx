@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { View, Clipboard, TouchableOpacity } from 'react-native';
 import _get from 'lodash/get';
 import Base from './Base';
-import { Modal } from '@ant-design/react-native';
 import styled from 'styled-components/native';
 import { connect, useDispatch } from 'react-redux';
 import { TRPGDispatchProp } from '@redux/types/__all__';
@@ -14,6 +13,9 @@ import _isString from 'lodash/isString';
 import { openWebview } from '@app/redux/actions/nav';
 import TImage from '../TComponent/TImage';
 import FastImage from 'react-native-fast-image';
+import { MsgQuote } from './addons/MsgQuote';
+import { openMsgModal, MsgOperationItem } from './addons/MsgModal';
+import { DefaultMsgReply } from './addons/DefaultMsgReply';
 
 const MsgContainer = styled.TouchableHighlight.attrs({
   underlayColor: '#eee',
@@ -105,33 +107,39 @@ class Default extends Base<Props> {
   }
 
   handleLongPress = () => {
-    const operations = [
+    const operations: MsgOperationItem[] = [
       {
-        text: '复制到剪切板',
-        onPress: () => {
+        name: '复制到剪切板',
+        action: () => {
           // 复制文本到剪切板
           Clipboard.setString(this.message);
         },
+      },
+      {
+        component: <DefaultMsgReply payload={this.props.info} />,
       },
     ];
 
     if (this.props.me) {
       operations.push({
-        text: '撤回消息',
-        onPress: () => {
+        name: '撤回消息',
+        action: () => {
           // 撤回消息
           this.props.dispatch(revokeMsg(this.props.info.uuid));
         },
       });
     }
 
-    Modal.operation(operations);
+    openMsgModal(operations);
   };
 
   getContent() {
     return (
       <MsgContainer isImage={this.isImage} onLongPress={this.handleLongPress}>
         <View>
+          {this.msgDataManager.hasReplyMsg() && (
+            <MsgQuote replyMsg={this.msgDataManager.getReplyMsg()} />
+          )}
           <BBCode plainText={this.message} />
           <DefaultAddonContent message={this.message} />
         </View>

@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.4](https://github.com/TRPGEngine/Client/compare/v0.3.3...v0.3.4) (2020-05-10)
+
+
+### Features
+
+* 回复消息数据的发送 ([14f138b](https://github.com/TRPGEngine/Client/commit/14f138b4e6800e1cab0b451aefe52266e8bf11bc))
+* **app:** 增加app端的消息回复功能 ([e5cccc5](https://github.com/TRPGEngine/Client/commit/e5cccc5c3dc0abe264430321b9e5068e20a33e94))
+* **app:** 增加移动版回复消息内容的显示 ([ba927d5](https://github.com/TRPGEngine/Client/commit/ba927d5dad3f679835d59932b43fd18d3a7c5319))
+* **app:** 移动端增加团消息输入状态的发送与显示 ([f2f2db9](https://github.com/TRPGEngine/Client/commit/f2f2db959c17c5939c5008e734ebf954e168a26b))
+* **app:** 移动端增加配置项不发送输入状态 ([ac7abb1](https://github.com/TRPGEngine/Client/commit/ac7abb15fbf47007f4ecddb9764e78803ce0d50d))
+* **portal:** 增加404页面 ([e5762bb](https://github.com/TRPGEngine/Client/commit/e5762bb70192cdc894685530f53f6645536705c8))
+* **web:** 回复的操作按钮与回复内容显示 ([b899e2a](https://github.com/TRPGEngine/Client/commit/b899e2aa5dbdf4cfee820243927620e9eccec5d3))
+* **web:** 增加网页版团输入状态的显示 ([5f231d6](https://github.com/TRPGEngine/Client/commit/5f231d663190a9fdbc44aa0ce3fa587e32e874a9))
+* **web:** 增加配置项不发送输入状态 ([fca42b6](https://github.com/TRPGEngine/Client/commit/fca42b6346c12f16d85f5a0add7a27b8a2439a9f))
+* **web:** 消息列表中增加回复内容的显示 ([021ed59](https://github.com/TRPGEngine/Client/commit/021ed5942b4dc87ac81e351664e7e6915a0b3150))
+
+
+### Bug Fixes
+
+* 将数据reduce的方法切换到原来的方式。用于复用内存地址。 ([7fc47e3](https://github.com/TRPGEngine/Client/commit/7fc47e3a16395b84fc9697a1340cd4eaf6cb2b14))
+* **app:** 修复一部分内容显示不正常的bug ([18c66a6](https://github.com/TRPGEngine/Client/commit/18c66a6d20e802c025fa5b75acb4e37882afe433))
+
 ### [0.3.3](https://github.com/TRPGEngine/Client/compare/v0.3.2...v0.3.3) (2020-05-06)
 
 

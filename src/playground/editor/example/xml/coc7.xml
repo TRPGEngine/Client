@@ -234,14 +234,14 @@
                 <div className="skill-name">
                   <span>{{global.getSkillNameDetail(props.skillName).name}}</span>
                   <Hidden :if="!_isArray(global.getSkillInfo(props.skillName).sub)">
-                    <Select name="专攻" :options="getSkillSubNames(props.skillName)" hideLabel="true" strict="true" />
+                    <Select name="专攻" :options="getSkillSubNames(props.skillName)" hideLabel="true" strict="true" inline="true" />
                   </Hidden>
                 </div>
               </td>
               <td><span>{{基础}}</span></td>
-              <td><Input name="成长" hideLabel="true" /></td>
-              <td><Input name="职业" hideLabel="true" /></td>
-              <td><Input name="兴趣" hideLabel="true" /></td>
+              <td><Input name="成长" hideLabel="true" inline="true" /></td>
+              <td><Input name="职业" hideLabel="true" inline="true" /></td>
+              <td><Input name="兴趣" hideLabel="true" inline="true" /></td>
               <td>{{SUM(基础, addedPoint)}}%</td>
             </tr>
           </Define>
@@ -256,7 +256,7 @@
                 </div>
               </td>
               <td><span>{{基础}}</span></td>
-              <td><Input name="成长" hideLabel="true" /></td>
+              <td><Input name="成长" hideLabel="true" inline="true" /></td>
               <td><center>-</center></td>
               <td><center>-</center></td>
               <td>{{SUM(基础, addedPoint)}}%</td>
@@ -277,6 +277,8 @@
 
           <Styled>
             <Style>
+              overflow-x: auto;
+
               table {
                 white-space: nowrap;
 

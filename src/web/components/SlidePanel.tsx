@@ -1,72 +1,59 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback, useEffect } from 'react';
 import { hideSlidePanel } from '../../shared/redux/actions/ui';
-import { TRPGDispatchProp, TRPGState } from '@src/shared/redux/types/__all__';
 
 import './SlidePanel.scss';
+import { TMemo } from '@shared/components/TMemo';
+import {
+  useTRPGSelector,
+  useTRPGDispatch,
+} from '@shared/hooks/useTRPGSelector';
 
-interface Props extends TRPGDispatchProp {
-  isSlidePanelShow: boolean;
-  showSlidePanelInfo: {
-    title: string;
-    content: any;
-  };
-}
-class SlidePanel extends React.Component<Props> {
-  slideEvent = () => {
+export const SlidePanel: React.FC = TMemo(() => {
+  const isSlidePanelShow = useTRPGSelector((state) => state.ui.showSlidePanel);
+  const showSlidePanelInfo = useTRPGSelector(
+    (state) => state.ui.showSlidePanelInfo
+  );
+  const dispatch = useTRPGDispatch();
+
+  const slideEvent = useCallback(() => {
     console.log('close slide panel with click window');
-    window.removeEventListener('click', this.slideEvent);
-    this.props.dispatch(hideSlidePanel());
-  };
+    window.removeEventListener('click', slideEvent);
+    dispatch(hideSlidePanel());
+  }, []);
 
-  componentWillUpdate(nextProps, nextState) {
-    if (
-      this.props.isSlidePanelShow === false &&
-      nextProps.isSlidePanelShow === true
-    ) {
-      // 检测到显示滑动面板
+  useEffect(() => {
+    // 检测到显示滑动面板
+    if (isSlidePanelShow === true) {
       setTimeout(() => {
-        window.addEventListener('click', this.slideEvent);
+        window.addEventListener('click', slideEvent);
       }, 500);
     }
-  }
+  }, [isSlidePanelShow]);
 
-  componentWillUnmount() {
-    window.removeEventListener('click', this.slideEvent);
-  }
+  useEffect(() => {
+    return () => window.removeEventListener('click', slideEvent);
+  }, []);
 
-  handleHideSlidePanel() {
+  const handleHideSlidePanel = useCallback(() => {
     console.log('close slide panel with click btn');
-    this.props.dispatch(hideSlidePanel());
-    window.removeEventListener('click', this.slideEvent);
-  }
+    dispatch(hideSlidePanel());
+    window.removeEventListener('click', slideEvent);
+  }, [dispatch]);
 
-  render() {
-    const { showSlidePanelInfo, isSlidePanelShow } = this.props;
-    const content = showSlidePanelInfo.content;
-
-    return (
-      <div
-        className={'slide-panel' + (isSlidePanelShow ? '' : ' hide')}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        <div className="header">
-          <div className="title">{showSlidePanelInfo.title}</div>
-          <div className="close" onClick={() => this.handleHideSlidePanel()}>
-            <i className="iconfont">&#xe70c;</i>
-          </div>
+  return (
+    <div
+      className={'slide-panel' + (isSlidePanelShow ? '' : ' hide')}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      <div className="header">
+        <div className="title">{showSlidePanelInfo.title}</div>
+        <div className="close" onClick={handleHideSlidePanel}>
+          <i className="iconfont">&#xe70c;</i>
         </div>
-        <div className="content">{content}</div>
       </div>
-    );
-  }
-}
-
-export default connect((state: TRPGState) => {
-  return {
-    isSlidePanelShow: state.ui.showSlidePanel,
-    showSlidePanelInfo: state.ui.showSlidePanelInfo,
-  };
-})(SlidePanel);
+      <div className="content">{showSlidePanelInfo.content}</div>
+    </div>
+  );
+});

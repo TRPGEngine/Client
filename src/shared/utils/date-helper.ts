@@ -1,5 +1,9 @@
 import moment, { MomentInput } from 'moment';
 
+/**
+ * 日期相关帮助函数
+ */
+
 export const getShortDiff = (str: MomentInput): string => {
   let date = str ? moment(str) : moment();
   if (helper.isToday(date)) {

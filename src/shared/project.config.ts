@@ -98,11 +98,23 @@ interface ProjectConfig {
     blog: string;
     portal: string;
   };
-  defaultSettings: {
-    user: {};
-    system: {};
-  };
+  defaultSettings: DefaultSettings;
 }
+
+/**
+ * 默认设置
+ */
+const defaultSettings = {
+  user: {
+    favoriteDice: [],
+  },
+  system: {
+    notification: true,
+    disableSendWritingState: false,
+  },
+};
+
+export type DefaultSettings = typeof defaultSettings;
 
 const config: ProjectConfig = {
   version: require('../../package.json').version,
@@ -118,7 +130,7 @@ const config: ProjectConfig = {
     maxLength: 800, // 聊天输入框最大长度, 数据库存1000, 前端预留一点存800
     isWriting: {
       throttle: 800, // 节流时间，即至少多少毫秒才会发出一个正在写的信息
-      timeout: 2000, // 超时时间，即多少毫秒后仍未接收到正在写操作则自动视为已经停止写
+      timeout: 5000, // 超时时间，即多少毫秒后仍未接收到正在写操作则自动视为已经停止写。用于处理用户输入一段文字后长时间不进行操作的情况
     },
   },
   file: {
@@ -210,14 +222,7 @@ const config: ProjectConfig = {
     blog: 'https://trpgdoc.moonrailgun.com/blog/',
     portal: portalUrl,
   },
-  defaultSettings: {
-    user: {
-      favoriteDice: [],
-    },
-    system: {
-      notification: true,
-    },
-  },
+  defaultSettings,
 };
 config.file.url = `${config.file.protocol}://${config.file.host}:${config.file.port}`;
 config.url.api = config.file.url;

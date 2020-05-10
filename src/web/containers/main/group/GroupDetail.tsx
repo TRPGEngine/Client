@@ -1,28 +1,12 @@
-import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
-import config from '@shared/project.config';
-import Select from 'react-select';
+import React, { useMemo, useCallback, useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
-import {
-  showModal,
-  hideModal,
-  showAlert,
-  showSlidePanel,
-} from '@shared/redux/actions/ui';
+import { showModal, hideModal, showAlert } from '@shared/redux/actions/ui';
 import { sendMsg, sendFile } from '@shared/redux/actions/chat';
-import {
-  changeSelectGroupActor,
-  sendGroupInvite,
-} from '@shared/redux/actions/group';
 import {
   sendDiceRequest,
   sendDiceInvite,
   sendQuickDice,
 } from '@shared/redux/actions/dice';
-import GroupInvite from './GroupInvite';
-import GroupActor from './GroupActor';
-import GroupMember from './GroupMember';
-import GroupInfo from './GroupInfo';
 import DiceRequest from '../dice/DiceRequest';
 import DiceInvite from '../dice/DiceInvite';
 import ListSelect from '../../../components/ListSelect';
@@ -31,132 +15,156 @@ import MsgSendBox from '../../../components/MsgSendBox';
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
 import _orderBy from 'lodash/orderBy';
-import {
-  GroupActorMsgData,
-  GroupActorType,
-} from '@src/shared/redux/types/group';
 import QuickDice from '../dice/QuickDice';
-import { TRPGState } from '@redux/types/__all__';
-import GroupRule from './GroupRule';
 import { GroupInfoContext } from '@shared/context/GroupInfoContext';
-import { UserSelector } from '@web/components/modal/UserSelector';
-import { checkIsTestUser } from '@web/utils/debug-helper';
-import { GroupChannelCreate } from './modal/GroupChannelCreate';
-import { GroupMap } from './GroupMap';
+import { MsgDataManager } from '@shared/utils/msg-helper';
+import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
+import { GroupMsgReply } from './GroupMsgReply';
+import { MsgType } from '@redux/types/chat';
+import { TMemo } from '@shared/components/TMemo';
+import {
+  useSelectedGroupInfo,
+  useSelfGroupActors,
+  useSelectedGroupActorUUID,
+} from '@redux/hooks/useGroup';
+import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useCurrentUserUUID } from '@redux/hooks/useUser';
+import { getUserInfoCache } from '@shared/utils/cache-helper';
+import { getUserName } from '@shared/utils/data-helper';
+import { GroupHeader } from './GroupHeader';
+import { ChatWritingIndicator } from '@web/components/ChatWritingIndicator';
+import { sendStartWriting, sendStopWriting } from '@shared/api/event';
+import { useGroupWritingState } from '@redux/hooks/useChat';
 
-interface Props extends DispatchProp<any> {
-  selectedUUID: string;
-  userUUID: string;
-  groupInfo: any;
-  usercache: any;
-  selfGroupActors: GroupActorType[];
-  selectedGroupActorUUID: string;
-  selectedGroupActorInfo: any;
-}
-class GroupDetail extends React.Component<Props> {
-  handleSelectGroupActor = (item) => {
-    if (item.value !== this.props.selectedGroupActorUUID) {
-      this.props.dispatch(
-        changeSelectGroupActor(this.props.selectedUUID, item.value)
-      );
-    }
-  };
+export const GroupDetail: React.FC = TMemo(() => {
+  const groupInfo = useSelectedGroupInfo();
+  const groupUUID = groupInfo?.uuid;
+  const selectedGroupActorUUID = useSelectedGroupActorUUID(groupUUID);
+  const selfGroupActors = useSelfGroupActors(groupUUID);
+  const dispatch = useTRPGDispatch();
+  const userUUID = useCurrentUserUUID();
+  const { replyMsg, clearReplyMsg } = useMsgContainerContext();
 
-  handleSendMsg(message, type) {
-    console.log('send msg:', message, 'to', this.props.selectedUUID);
-    let msgData: GroupActorMsgData;
-    if (!_isNil(this.props.selectedGroupActorInfo)) {
-      msgData = {
-        groupActorUUID: this.props.selectedGroupActorInfo.uuid,
-        name: this.props.selectedGroupActorInfo.name,
-        avatar: this.props.selectedGroupActorInfo.avatar,
-      };
-    }
-    this.props.dispatch(
-      sendMsg(null, {
-        converse_uuid: this.props.selectedUUID,
-        message,
-        is_public: true,
-        is_group: true,
-        type,
-        data: msgData,
-      })
-    );
-  }
+  useEffect(() => {
+    // 当当前groupUUID发生变化时，清空回复消息
+    clearReplyMsg();
+  }, [groupUUID]);
 
-  // 发送文件
-  handleSendFile(file) {
-    console.log('send file to', this.props.selectedUUID, file);
-    this.props.dispatch(
-      sendFile(
-        null,
-        {
-          converse_uuid: this.props.selectedUUID,
+  const selectedGroupActorInfo = useMemo(
+    () =>
+      selfGroupActors.find((actor) => actor.uuid === selectedGroupActorUUID),
+    [selfGroupActors, selectedGroupActorUUID]
+  );
+
+  const handleSendBoxChange = useCallback(
+    (text) => {
+      if (text === '') {
+        sendStopWriting('group', groupUUID);
+      } else {
+        sendStartWriting('group', groupUUID, text);
+      }
+    },
+    [groupUUID]
+  );
+
+  const handleSendMsg = useCallback(
+    (message: string, type: MsgType) => {
+      console.log('send msg:', message, 'to', groupUUID);
+
+      const msgDataManager = new MsgDataManager();
+      if (!_isNil(selectedGroupActorInfo)) {
+        msgDataManager.setGroupActorInfo(selectedGroupActorInfo);
+      }
+      if (!_isNil(replyMsg)) {
+        msgDataManager.setReplyMsg(replyMsg);
+        clearReplyMsg();
+      }
+
+      dispatch(
+        sendMsg(null, {
+          converse_uuid: groupUUID,
+          message,
           is_public: true,
           is_group: true,
-        },
-        file
-      )
-    );
-  }
+          type,
+          data: msgDataManager.toJS(),
+        })
+      );
+
+      sendStopWriting('group', groupUUID);
+    },
+    [dispatch, groupUUID, selectedGroupActorInfo, replyMsg, clearReplyMsg]
+  );
+
+  // 发送文件
+  const handleSendFile = useCallback(
+    (file: File) => {
+      console.log('send file to', groupUUID, file);
+      dispatch(
+        sendFile(
+          null,
+          {
+            converse_uuid: groupUUID,
+            is_public: true,
+            is_group: true,
+          },
+          file
+        )
+      );
+    },
+    [dispatch, groupUUID]
+  );
 
   // 发送投骰请求
-  handleSendDiceReq() {
-    this.props.dispatch(
+  const handleSendDiceReq = useCallback(() => {
+    dispatch(
       showModal(
         <DiceRequest
           onSendDiceRequest={(diceReason, diceExp) => {
-            this.props.dispatch(
-              sendDiceRequest(
-                this.props.selectedUUID,
-                true,
-                diceExp,
-                diceReason
-              )
-            );
-            this.props.dispatch(hideModal());
+            dispatch(sendDiceRequest(groupUUID, true, diceExp, diceReason));
+            dispatch(hideModal());
           }}
         />
       )
     );
-  }
+  }, [dispatch, groupUUID]);
 
   // 发送投骰邀请
-  handleSendDiceInv() {
-    let usercache = this.props.usercache;
-    let groupMembers = this.props.groupInfo.group_members ?? [];
-    let list = groupMembers
-      .filter((uuid) => uuid !== this.props.userUUID)
-      .map((uuid) => ({
-        name:
-          _get(usercache, [uuid, 'nickname']) ||
-          _get(usercache, [uuid, 'username']),
-        uuid: _get(usercache, [uuid, 'uuid']),
-      }));
-    this.props.dispatch(
+  const handleSendDiceInv = useCallback(() => {
+    const groupMembers = groupInfo.group_members ?? [];
+    const list = groupMembers
+      .filter((uuid) => uuid !== userUUID)
+      .map((uuid) => {
+        // TODO: 这里使用getUserInfoCache的逻辑不太靠谱。需要优化
+        const cacheUserInfo = getUserInfoCache(uuid);
+        return {
+          name: getUserName(cacheUserInfo),
+          uuid: cacheUserInfo?.uuid,
+        };
+      });
+    dispatch(
       showModal(
         <ListSelect
           list={list.map((i) => i.name)}
           onListSelect={(selecteds) => {
-            let inviteList = list.filter((_, i) => selecteds.indexOf(i) >= 0);
-            let inviteNameList = inviteList.map((i) => i.name);
-            let inviteUUIDList = inviteList.map((i) => i.uuid);
+            const inviteList = list.filter((_, i) => selecteds.indexOf(i) >= 0);
+            const inviteNameList = inviteList.map((i) => i.name);
+            const inviteUUIDList = inviteList.map((i) => i.uuid);
             if (inviteNameList.length === 0) {
-              this.props.dispatch(showAlert('请选择邀请对象'));
+              dispatch(showAlert('请选择邀请对象'));
               return;
             }
             console.log('邀请人物选择结果', selecteds, inviteNameList);
-            this.props.dispatch(
+            dispatch(
               showModal(
                 <DiceInvite
                   inviteList={inviteNameList}
                   onSendDiceInvite={(diceReason, diceExp) => {
                     console.log(inviteUUIDList);
                     console.log('diceReason, diceExp', diceReason, diceExp);
-                    let selectedUUID = this.props.selectedUUID;
-                    this.props.dispatch(
+                    dispatch(
                       sendDiceInvite(
-                        selectedUUID,
+                        groupUUID,
                         true,
                         diceExp,
                         diceReason,
@@ -164,7 +172,7 @@ class GroupDetail extends React.Component<Props> {
                         inviteNameList
                       )
                     );
-                    this.props.dispatch(hideModal());
+                    dispatch(hideModal());
                   }}
                 />
               )
@@ -173,202 +181,48 @@ class GroupDetail extends React.Component<Props> {
         />
       )
     );
-  }
+  }, [dispatch, groupInfo, userUUID, groupUUID]);
 
-  handleQuickDice = () => {
+  const handleQuickDice = useCallback(() => {
     console.log('快速投骰');
-    const uuid = this.props.selectedUUID;
-    this.props.dispatch(
+    dispatch(
       showModal(
         <QuickDice
           onSendQuickDice={(diceExp) => {
-            this.props.dispatch(sendQuickDice(uuid, true, diceExp));
-            this.props.dispatch(hideModal());
+            dispatch(sendQuickDice(groupUUID, true, diceExp));
+            dispatch(hideModal());
           }}
         />
       )
     );
-  };
+  }, [dispatch, groupUUID]);
 
-  /**
-   * 发送邀请入团的邀请
-   */
-  handleSendGroupInvite = (uuids: string[]) => {
-    const groupUUID = this.props.selectedUUID;
-    for (let uuid of uuids) {
-      // TODO: 需要一个待处理的group邀请列表，防止多次提交邀请
-      this.props.dispatch(sendGroupInvite(groupUUID, uuid));
-    }
-    this.props.dispatch(hideModal());
-  };
+  const writingList = useGroupWritingState(groupUUID);
 
-  actions = [
-    ...(checkIsTestUser()
-      ? [
-          {
-            name: '创建频道',
-            icon: '&#xe61c;',
-            onClick: () => {
-              this.props.dispatch(
-                showModal(
-                  <GroupChannelCreate groupUUID={this.props.selectedUUID} />
-                )
-              );
-            },
-          },
-        ]
-      : []),
-    {
-      name: '添加团员',
-      icon: '&#xe61d;',
-      onClick: () => {
-        this.props.dispatch(
-          showModal(<UserSelector onConfirm={this.handleSendGroupInvite} />)
-        );
-      },
-    },
-    {
-      name: '查看团员',
-      icon: '&#xe603;',
-      component: <GroupMember />,
-    },
-    {
-      name: '人物卡',
-      icon: '&#xe61b;',
-      component: <GroupActor />,
-    },
-    {
-      name: '游戏地图',
-      icon: '&#xe6d7;',
-      component: <GroupMap />,
-    },
-    {
-      name: '游戏规则',
-      icon: '&#xe621;',
-      component: <GroupRule />,
-    },
-    {
-      name: '团信息',
-      icon: '&#xe611;',
-      component: <GroupInfo />,
-    },
-  ];
-  getHeaderActions() {
-    return this.actions.map((item, index) => {
-      return (
-        <button
-          key={'group-action-' + index}
-          data-tip={item.name}
-          onClick={
-            item.onClick ??
-            ((e) => {
-              e.stopPropagation();
-              this.props.dispatch(showSlidePanel(item.name, item.component));
-            })
-          }
-        >
-          <i
-            className="iconfont"
-            dangerouslySetInnerHTML={{ __html: item.icon }}
-          />
-        </button>
-      );
-    });
-  }
-
-  render() {
-    let { selfGroupActors, selectedGroupActorUUID, groupInfo } = this.props;
-    let options = [];
-    if (selfGroupActors && selfGroupActors.length > 0) {
-      options = selfGroupActors.map((item, index) => ({
-        value: item.uuid,
-        label: item.name,
-      }));
-    }
-    if (selectedGroupActorUUID) {
-      options.unshift({
-        value: null,
-        label: '取消选择',
-      });
-    }
-    return (
-      <GroupInfoContext.Provider value={groupInfo}>
-        <div className="detail">
-          <ReactTooltip effect="solid" />
-          <div className="group-header">
-            <div className="avatar">
-              <img
-                src={
-                  groupInfo.avatar || config.defaultImg.getGroup(groupInfo.name)
-                }
-              />
-            </div>
-            <div className="title">
-              <div className="main-title">
-                {groupInfo.name}
-                {groupInfo.status && '(开团中...)'}
-              </div>
-              <div className="sub-title">{groupInfo.sub_name}</div>
-            </div>
-            <Select
-              name="actor-select"
-              className="group-actor-select"
-              value={selectedGroupActorUUID}
-              options={options}
-              clearable={false}
-              searchable={false}
-              placeholder="请选择身份卡"
-              noResultsText="暂无身份卡..."
-              onChange={this.handleSelectGroupActor}
-            />
-            <div className="actions">{this.getHeaderActions()}</div>
-          </div>
-          <MsgContainer
-            className="group-content"
-            converseUUID={this.props.selectedUUID}
-            isGroup={true}
-          />
-          <MsgSendBox
-            converseUUID={this.props.selectedUUID}
-            isGroup={true}
-            onSendMsg={(message, type) => this.handleSendMsg(message, type)}
-            onSendFile={(file) => this.handleSendFile(file)}
-            onSendDiceReq={() => this.handleSendDiceReq()}
-            onSendDiceInv={() => this.handleSendDiceInv()}
-            onQuickDice={() => this.handleQuickDice()}
-          />
-        </div>
-      </GroupInfoContext.Provider>
-    );
-  }
-}
-
-export default connect((state: TRPGState) => {
-  const selectedUUID = state.group.selectedGroupUUID;
-  const groupInfo = state.group.groups.find(
-    (group) => group.uuid === selectedUUID
+  return (
+    <GroupInfoContext.Provider value={groupInfo}>
+      <div className="detail">
+        <ReactTooltip effect="solid" />
+        <GroupHeader />
+        <ChatWritingIndicator list={writingList} />
+        <MsgContainer
+          className="group-content"
+          converseUUID={groupUUID}
+          isGroup={true}
+        />
+        <GroupMsgReply />
+        <MsgSendBox
+          converseUUID={groupUUID}
+          isGroup={true}
+          onChange={handleSendBoxChange}
+          onSendMsg={handleSendMsg}
+          onSendFile={handleSendFile}
+          onSendDiceReq={handleSendDiceReq}
+          onSendDiceInv={handleSendDiceInv}
+          onQuickDice={handleQuickDice}
+        />
+      </div>
+    </GroupInfoContext.Provider>
   );
-  const userUUID = state.user.info.uuid;
-  const selfGroupActors = (groupInfo?.group_actors || []).filter(
-    (i) => i.enabled && i.passed && i.owner?.uuid === userUUID
-  );
-  const selectedGroupActorUUID = _get(groupInfo, [
-    'extra',
-    'selected_group_actor_uuid',
-  ]);
-  return {
-    selectedUUID,
-    groupInfo,
-    msgList: _orderBy(
-      _get(state, ['chat', 'converses', selectedUUID, 'msgList']),
-      'date'
-    ),
-    userUUID,
-    usercache: state.cache.user,
-    selfGroupActors,
-    selectedGroupActorUUID,
-    selectedGroupActorInfo: selfGroupActors.find(
-      (actor) => actor.uuid === selectedGroupActorUUID
-    ),
-  };
-})(GroupDetail);
+});
+GroupDetail.displayName = 'GroupDetail';

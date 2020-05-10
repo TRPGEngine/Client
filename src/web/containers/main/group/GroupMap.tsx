@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useAlphaUser } from '@shared/hooks/useAlphaUser';
 import IsDeveloping from '@web/components/IsDeveloping';
-import { useCurrentGroupInfo } from '@shared/redux/hooks/useCurrentGroupInfo';
+import { useSelectedGroupInfo } from '@shared/redux/hooks/useGroup';
 import _isEmpty from 'lodash/isEmpty';
 import { Button, Card } from 'antd';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
@@ -47,7 +47,7 @@ export const GroupMap: React.FC = TMemo(() => {
   const { isAlphaUser } = useAlphaUser();
 
   // 获取地图列表
-  const groupInfo = useCurrentGroupInfo();
+  const groupInfo = useSelectedGroupInfo();
   const groupUUID = groupInfo.uuid;
   const mapList = groupInfo.maps;
   const dispatch = useTRPGDispatch();

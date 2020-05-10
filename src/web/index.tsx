@@ -23,6 +23,7 @@ import { installServiceWorker } from './utils/sw-helper';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import './components/messageTypes/__all__';
+import '@web/assets/css/iconfont.css';
 
 installServiceWorker(); // 注册 service worker 服务
 

@@ -1,133 +1,17 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React from 'react';
 import dateHelper from '@shared/utils/date-helper';
 import config from '@shared/project.config';
 import { MessageProps } from '@shared/components/message/MessageHandler';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
-import Avatar from '../Avatar';
-import PopoverMsgSenderInfo from '../popover/MsgSenderInfo';
-import { TPopover, TPopoverContext } from '../popover';
-import { TMemo } from '@shared/components/TMemo';
-import styled from 'styled-components';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import _isFunction from 'lodash/isFunction';
 import _isString from 'lodash/isString';
-import { TRPGDispatch } from '@redux/types/__all__';
-import { LoadingSpinnerSmall } from '../LoadingSpinnerSmall';
 import { isUserOrGroupUUID } from '@shared/utils/uuid';
-import { useDelayLoading } from '@shared/hooks/useDelay';
-import { useMessageItemConfigContext } from '@shared/components/message/MessageItemConfigContext';
-
-const MsgAvatar: React.FC<{
-  me: boolean;
-  name: string;
-  src: string;
-  info: MessageProps['info'];
-}> = TMemo((props) => {
-  const senderIsUser = useMemo(() => {
-    return isUserOrGroupUUID(_get(props.info, ['sender_uuid']));
-  }, [props.info]);
-  const { popover } = useMessageItemConfigContext();
-
-  return senderIsUser && popover ? (
-    <TPopover
-      placement={props.me ? 'left' : 'right'}
-      trigger="click"
-      content={<PopoverMsgSenderInfo payload={props.info} />}
-    >
-      <div>
-        <Avatar name={props.name} src={props.src} size={38} />
-      </div>
-    </TPopover>
-  ) : (
-    <Avatar name={props.name} src={props.src} size={38} />
-  );
-});
-MsgAvatar.displayName = 'MsgAvatar';
-
-interface MsgOperationItemContext {
-  dispatch: TRPGDispatch;
-  closePopover: () => void;
-}
-export interface MsgOperationItem {
-  name: string;
-  action: (ctx: MsgOperationItemContext) => void;
-}
-
-const MsgOperationListItemContainer = styled.div`
-  padding: 4px 10px;
-  cursor: pointer;
-  border-bottom: ${(props) => props.theme.border.standard};
-
-  &:hover {
-    background-color: ${(props) => props.theme.color.transparent90};
-  }
-`;
-const MsgOperationListItem: React.FC<MsgOperationItem> = TMemo((props) => {
-  const dispatch = useTRPGDispatch();
-  const context = useContext(TPopoverContext);
-  const handleClick = useCallback(() => {
-    _isFunction(props.action) &&
-      props.action({ dispatch, closePopover: context.closePopover });
-  }, [dispatch, context.closePopover]);
-
-  return (
-    <MsgOperationListItemContainer onClick={handleClick}>
-      {props.name}
-    </MsgOperationListItemContainer>
-  );
-});
-MsgOperationListItem.displayName = 'MsgOperationListItem';
-
-/**
- * 渲染消息loading
- */
-const MessageLoading: React.FC<{
-  loading: boolean;
-}> = TMemo((props) => {
-  const isLoading = useDelayLoading(props.loading);
-
-  return isLoading && <LoadingSpinnerSmall />;
-});
-MessageLoading.displayName = 'MessageLoading';
-
-/**
- * 渲染消息操作列表
- */
-const MessageOperations: React.FC<{
-  operations: MsgOperationItem[];
-}> = TMemo((props) => {
-  const { operations } = props;
-  const { operation } = useMessageItemConfigContext();
-
-  if (!operation) {
-    return null;
-  }
-
-  return (
-    <TPopover
-      overlayClassName="operation-popover"
-      placement="topRight"
-      trigger="click"
-      content={
-        <div>
-          {operations.map((op) => (
-            <MsgOperationListItem
-              key={op.name}
-              name={op.name}
-              action={op.action}
-            />
-          ))}
-        </div>
-      }
-    >
-      <div className="operation">
-        <i className="iconfont">&#xe625;</i>
-      </div>
-    </TPopover>
-  );
-});
-MessageOperations.displayName = 'MessageOperations';
+import { MsgRevoke } from './addons/MsgRevoke';
+import { MessageLoading } from './addons/MsgLoading';
+import { MsgOperations, MsgOperationItem } from './addons/MsgOperations';
+import { MsgAvatar } from './addons/MsgAvatar';
+import { MsgDataManager } from '@shared/utils/msg-helper';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -139,6 +23,13 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     info: {},
     emphasizeTime: false,
   };
+
+  msgDataManager = new MsgDataManager();
+
+  constructor(props: P) {
+    super(props);
+    this.msgDataManager.parseData(props.info?.data);
+  }
 
   /**
    * 返回信息显示的发送者的名字
@@ -191,11 +82,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
 
     if (info.revoke === true) {
       // 撤回消息显示
-      return (
-        <div className="msg-item-tip">
-          <div className="content">{name} 撤回了一条消息</div>
-        </div>
-      );
+      return <MsgRevoke senderName={this.getSenderName()} />;
     }
 
     return (
@@ -224,7 +111,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
             <MessageLoading loading={isLoading} />
 
             {!isLoading && operations.length > 0 && (
-              <MessageOperations operations={operations} />
+              <MsgOperations operations={operations} />
             )}
           </div>
         </div>

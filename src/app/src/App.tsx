@@ -49,6 +49,7 @@ import ErrorBoundary from '@shared/components/ErrorBoundary';
 import ErrorView from './ErrorView';
 import TRPGCodePush from './components/TRPGCodePush';
 import { initConfig } from '@redux/actions/settings';
+import { MsgContainerContextProvider } from '@shared/context/MsgContainerContext';
 
 (async () => {
   console.log('读取本地存储的token...');
@@ -68,15 +69,18 @@ class App extends React.Component {
   render() {
     return (
       <ErrorBoundary renderError={ErrorView}>
-        <ReduxProvider store={store}>
-          <AntdProvider>
-            <ThemeProvider theme={styledTheme}>
-              <TRPGCodePush>
-                <AppWithNavigationState />
-              </TRPGCodePush>
-            </ThemeProvider>
-          </AntdProvider>
-        </ReduxProvider>
+        <MsgContainerContextProvider>
+          {/* MsgContainerContextProvider: 这个Provider因为作用效果在Modal上。放在里面无法获取到上下文。没有办法只能先放在最外面(不好看) */}
+          <ReduxProvider store={store}>
+            <AntdProvider>
+              <ThemeProvider theme={styledTheme}>
+                <TRPGCodePush>
+                  <AppWithNavigationState />
+                </TRPGCodePush>
+              </ThemeProvider>
+            </AntdProvider>
+          </ReduxProvider>
+        </MsgContainerContextProvider>
       </ErrorBoundary>
     );
   }

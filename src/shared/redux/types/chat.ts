@@ -1,5 +1,7 @@
 export type LocalMsgType = 'loading';
 
+export type ConverseType = 'user' | 'group' | 'system';
+
 export type MsgType =
   | 'normal'
   | 'system'
@@ -44,14 +46,18 @@ export type MsgListType = MsgPayload[];
 
 export interface ConverseInfo {
   uuid: string;
-  type: 'user' | 'group' | 'system';
+  type: ConverseType;
   name?: string;
 }
 
+export interface WritingListGroupItem {
+  uuid: string; // 此处的UUID指的是用户的UUID
+  text: string;
+}
 type WritingListType = {
   user: string[];
   group: {
-    [name: string]: string[];
+    [name: string]: WritingListGroupItem[];
   };
 };
 

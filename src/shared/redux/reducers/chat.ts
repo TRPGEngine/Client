@@ -8,6 +8,7 @@ import _unset from 'lodash/unset';
 import _set from 'lodash/set';
 import _get from 'lodash/get';
 import _pull from 'lodash/pull';
+import _findIndex from 'lodash/findIndex';
 import constants from '@redux/constants';
 import { ChatState, ChatStateConverseMsgList } from '@redux/types/chat';
 import produce from 'immer';
@@ -275,7 +276,13 @@ export default produce((draft: ChatState, action) => {
       return;
     }
     case UPDATE_WRITING_STATUS: {
-      const { type = 'user', isWriting = false, uuid } = action.payload;
+      const {
+        type = 'user',
+        isWriting = false,
+        uuid,
+        groupUUID,
+        currentText,
+      } = action.payload;
       if (type === 'user') {
         // 处理用户的正在写信息
         const list = draft.writingList.user;
@@ -286,9 +293,32 @@ export default produce((draft: ChatState, action) => {
         } else {
           _pull(list, uuid);
         }
+      } else if (type === 'group') {
+        const map = draft.writingList.group;
+        const groupWritingList = map[groupUUID] ?? [];
+        const targetIndex = _findIndex(groupWritingList, ['uuid', uuid]);
+        if (isWriting) {
+          // 正在写
+          if (targetIndex === -1) {
+            // 新增用户正在写
+            groupWritingList.push({
+              uuid: uuid,
+              text: currentText,
+            });
+          } else {
+            // 更新用户正在写
+            _set(groupWritingList, [targetIndex, 'text'], currentText);
+          }
+        } else {
+          // 取消写
+          if (targetIndex >= 0) {
+            groupWritingList.splice(targetIndex, 1);
+          }
+        }
+
+        _set(map, [groupUUID], groupWritingList);
       }
 
-      // TODO: 团正在输入待实现
       return;
     }
     case UPDATE_USER_CHAT_EMOTION_CATALOG: {
