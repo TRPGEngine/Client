@@ -3,6 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { RTCContainer } from '@src/rtc';
 import { Button } from 'antd';
 import { RoomClient } from '@src/rtc/RoomClient';
+import { Room } from './Room';
 
 const RTCTest: React.FC = TMemo(() => {
   const roomClientRef = useRef<RoomClient>();
@@ -19,6 +20,7 @@ const RTCTest: React.FC = TMemo(() => {
       device={{ flag: '', name: '', version: '' }}
       roomClientRef={roomClientRef}
     >
+      <Room />
       <Button onClick={handleJoinRoom}>加入房间</Button>
     </RTCContainer>
   );

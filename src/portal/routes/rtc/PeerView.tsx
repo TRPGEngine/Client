@@ -35,7 +35,6 @@ interface Props {
   videoCodec?: string;
   audioScore?: any;
   videoScore?: any;
-  faceDetection: boolean;
   onChangeDisplayName?: (displayName: string) => void;
   onChangeMaxSendingSpatialLayer?: (spatialLayer: number) => void;
   onChangeVideoPreferredLayers?: (
@@ -398,7 +397,8 @@ export default class PeerView extends React.Component<Props> {
             <div className="row">
               <span />
               <span className="device-version">
-                {peer.device.name} {peer.device.version || null}
+                {peer.device &&
+                  `${peer.device.name} ${peer.device.version || null}`}
               </span>
             </div>
           </div>
