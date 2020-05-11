@@ -5,7 +5,7 @@ import {
   useRoomStateSelector,
   useRoomStateDispatch,
 } from '@src/rtc/RoomContext';
-import PeerView from './PeerView';
+import {PeerView} from './PeerView';
 import * as stateActions from '@src/rtc/redux/stateActions';
 import * as settingManager from '@src/rtc/settingManager';
 
