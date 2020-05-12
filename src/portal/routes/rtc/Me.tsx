@@ -5,9 +5,10 @@ import {
   useRoomStateSelector,
   useRoomStateDispatch,
 } from '@src/rtc/RoomContext';
-import {PeerView} from './PeerView';
+import { PeerView } from './PeerView';
 import * as stateActions from '@src/rtc/redux/stateActions';
 import * as settingManager from '@src/rtc/settingManager';
+import { Button } from 'antd';
 
 export const Me: React.FC = TMemo(() => {
   const client = useRoomClientContext();
@@ -50,13 +51,16 @@ export const Me: React.FC = TMemo(() => {
       {connected && (
         <Fragment>
           <div className="controls">
-            <div
+            <Button
               onClick={() => {
                 micState === 'on' ? client.muteMic() : client.unmuteMic();
               }}
-            />
+            >
+              {micState === 'on' ? '关闭' : '开启'}
+              语音
+            </Button>
 
-            <div
+            <Button
               onClick={() => {
                 if (webcamState === 'on') {
                   settingManager.setDevices({ webcamEnabled: false });
@@ -66,9 +70,11 @@ export const Me: React.FC = TMemo(() => {
                   client.enableWebcam();
                 }
               }}
-            />
+            >
+              {webcamState === 'on' ? '关闭' : '开启'} 视频
+            </Button>
 
-            <div onClick={() => client.changeWebcam()} />
+            <Button onClick={() => client.changeWebcam()}>切换摄像头</Button>
           </div>
         </Fragment>
       )}

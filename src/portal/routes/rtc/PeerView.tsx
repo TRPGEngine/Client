@@ -294,6 +294,8 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
   return (
     <div data-component="PeerView">
       <div className="info">
+        <div>音量: {audioVolume}</div>
+
         <div className="icons">
           <div onClick={() => setShowInfo(!showInfo)} />
 
