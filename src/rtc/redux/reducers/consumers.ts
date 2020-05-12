@@ -1,54 +1,55 @@
+import { createReducer } from '@reduxjs/toolkit';
+
 const initialState = {};
 
-const consumers = (state = initialState, action) => {
-  switch (action.type) {
-    case 'SET_ROOM_STATE': {
+export default createReducer(initialState, (builder) => {
+  builder
+    .addCase<string, any>('SET_ROOM_STATE', (state, action) => {
       const roomState = action.payload.state;
 
-      if (roomState === 'closed') return {};
-      else return state;
-    }
-
-    case 'ADD_CONSUMER': {
+      if (roomState === 'closed') {
+        state = {};
+      }
+    })
+    .addCase<string, any>('ADD_CONSUMER', (state, action) => {
       const { consumer } = action.payload;
 
-      return { ...state, [consumer.id]: consumer };
-    }
-
-    case 'REMOVE_CONSUMER': {
+      state[consumer.id] = consumer;
+    })
+    .addCase<string, any>('REMOVE_CONSUMER', (state, action) => {
       const { consumerId } = action.payload;
-      const newState = { ...state };
 
-      delete newState[consumerId];
-
-      return newState;
-    }
-
-    case 'SET_CONSUMER_PAUSED': {
+      delete state[consumerId];
+    })
+    .addCase<string, any>('SET_CONSUMER_PAUSED', (state, action) => {
       const { consumerId, originator } = action.payload;
       const consumer = state[consumerId];
+
       let newConsumer;
 
-      if (originator === 'local')
+      if (originator === 'local') {
         newConsumer = { ...consumer, locallyPaused: true };
-      else newConsumer = { ...consumer, remotelyPaused: true };
+      } else {
+        newConsumer = { ...consumer, remotelyPaused: true };
+      }
 
-      return { ...state, [consumerId]: newConsumer };
-    }
-
-    case 'SET_CONSUMER_RESUMED': {
+      state[consumerId] = newConsumer;
+    })
+    .addCase<string, any>('SET_CONSUMER_RESUMED', (state, action) => {
       const { consumerId, originator } = action.payload;
       const consumer = state[consumerId];
+
       let newConsumer;
 
-      if (originator === 'local')
+      if (originator === 'local') {
         newConsumer = { ...consumer, locallyPaused: false };
-      else newConsumer = { ...consumer, remotelyPaused: false };
+      } else {
+        newConsumer = { ...consumer, remotelyPaused: false };
+      }
 
-      return { ...state, [consumerId]: newConsumer };
-    }
-
-    case 'SET_CONSUMER_CURRENT_LAYERS': {
+      state[consumerId] = newConsumer;
+    })
+    .addCase<string, any>('SET_CONSUMER_CURRENT_LAYERS', (state, action) => {
       const { consumerId, spatialLayer, temporalLayer } = action.payload;
       const consumer = state[consumerId];
       const newConsumer = {
@@ -57,10 +58,9 @@ const consumers = (state = initialState, action) => {
         currentTemporalLayer: temporalLayer,
       };
 
-      return { ...state, [consumerId]: newConsumer };
-    }
-
-    case 'SET_CONSUMER_PREFERRED_LAYERS': {
+      state[consumerId] = newConsumer;
+    })
+    .addCase<string, any>('SET_CONSUMER_PREFERRED_LAYERS', (state, action) => {
       const { consumerId, spatialLayer, temporalLayer } = action.payload;
       const consumer = state[consumerId];
       const newConsumer = {
@@ -69,40 +69,32 @@ const consumers = (state = initialState, action) => {
         preferredTemporalLayer: temporalLayer,
       };
 
-      return { ...state, [consumerId]: newConsumer };
-    }
-
-    case 'SET_CONSUMER_PRIORITY': {
+      state[consumerId] = newConsumer;
+    })
+    .addCase<string, any>('SET_CONSUMER_PRIORITY', (state, action) => {
       const { consumerId, priority } = action.payload;
       const consumer = state[consumerId];
       const newConsumer = { ...consumer, priority };
 
-      return { ...state, [consumerId]: newConsumer };
-    }
-
-    case 'SET_CONSUMER_TRACK': {
+      state[consumerId] = newConsumer;
+    })
+    .addCase<string, any>('SET_CONSUMER_TRACK', (state, action) => {
       const { consumerId, track } = action.payload;
       const consumer = state[consumerId];
       const newConsumer = { ...consumer, track };
 
-      return { ...state, [consumerId]: newConsumer };
-    }
-
-    case 'SET_CONSUMER_SCORE': {
+      state[consumerId] = newConsumer;
+    })
+    .addCase<string, any>('SET_CONSUMER_SCORE', (state, action) => {
       const { consumerId, score } = action.payload;
       const consumer = state[consumerId];
 
-      if (!consumer) return state;
+      if (!consumer) {
+        return;
+      }
 
       const newConsumer = { ...consumer, score };
 
-      return { ...state, [consumerId]: newConsumer };
-    }
-
-    default: {
-      return state;
-    }
-  }
-};
-
-export default consumers;
+      state[consumerId] = newConsumer;
+    });
+});

@@ -1,3 +1,5 @@
+import { createReducer } from '@reduxjs/toolkit';
+
 const initialState = {
   id: null,
   displayName: null,
@@ -14,92 +16,78 @@ const initialState = {
   restartIceInProgress: false,
 };
 
-const me = (state = initialState, action) => {
-  switch (action.type) {
-    case 'SET_ROOM_STATE': {
+export default createReducer(initialState, (builder) => {
+  builder
+    .addCase<string, any>('SET_ROOM_STATE', (state, action) => {
       const roomState = action.payload.state;
 
       if (roomState === 'closed') {
-        return {
-          ...state,
-          webcamInProgress: false,
-          shareInProgress: false,
-          audioOnly: false,
-          audioOnlyInProgress: false,
-          audioMuted: false,
-          restartIceInProgress: false,
-        };
-      } else {
-        return state;
+        state.webcamInProgress = false;
+        state.shareInProgress = false;
+        state.audioOnly = false;
+        state.audioOnlyInProgress = false;
+        state.audioMuted = false;
+        state.restartIceInProgress = false;
       }
-    }
-
-    case 'SET_ME': {
+    })
+    .addCase<string, any>('SET_ME', (state, action) => {
       const { peerId, displayName, displayNameSet, device } = action.payload;
 
-      return { ...state, id: peerId, displayName, displayNameSet, device };
-    }
-
-    case 'SET_MEDIA_CAPABILITIES': {
+      state.id = peerId;
+      state.displayName = displayName;
+      state.displayNameSet = displayNameSet;
+      state.device = device;
+    })
+    .addCase<string, any>('SET_MEDIA_CAPABILITIES', (state, action) => {
       const { canSendMic, canSendWebcam } = action.payload;
 
-      return { ...state, canSendMic, canSendWebcam };
-    }
-
-    case 'SET_CAN_CHANGE_WEBCAM': {
+      state.canSendMic = canSendMic;
+      state.canSendWebcam = canSendWebcam;
+    })
+    .addCase<string, any>('SET_CAN_CHANGE_WEBCAM', (state, action) => {
       const canChangeWebcam = action.payload;
 
-      return { ...state, canChangeWebcam };
-    }
-
-    case 'SET_WEBCAM_IN_PROGRESS': {
+      state.canChangeWebcam = canChangeWebcam;
+    })
+    .addCase<string, any>('SET_WEBCAM_IN_PROGRESS', (state, action) => {
       const { flag } = action.payload;
 
-      return { ...state, webcamInProgress: flag };
-    }
-
-    case 'SET_SHARE_IN_PROGRESS': {
+      state.webcamInProgress = flag;
+    })
+    .addCase<string, any>('SET_SHARE_IN_PROGRESS', (state, action) => {
       const { flag } = action.payload;
 
-      return { ...state, shareInProgress: flag };
-    }
-
-    case 'SET_DISPLAY_NAME': {
+      state.shareInProgress = flag;
+    })
+    .addCase<string, any>('SET_DISPLAY_NAME', (state, action) => {
       let { displayName } = action.payload;
 
       // Be ready for undefined displayName (so keep previous one).
-      if (!displayName) displayName = state.displayName;
+      if (!displayName) {
+        displayName = state.displayName;
+      }
 
-      return { ...state, displayName, displayNameSet: true };
-    }
-
-    case 'SET_AUDIO_ONLY_STATE': {
+      state.displayName = displayName;
+      state.displayNameSet = true;
+    })
+    .addCase<string, any>('SET_AUDIO_ONLY_STATE', (state, action) => {
       const { enabled } = action.payload;
 
-      return { ...state, audioOnly: enabled };
-    }
-
-    case 'SET_AUDIO_ONLY_IN_PROGRESS': {
+      state.audioOnly = enabled;
+    })
+    .addCase<string, any>('SET_AUDIO_ONLY_IN_PROGRESS', (state, action) => {
       const { flag } = action.payload;
 
-      return { ...state, audioOnlyInProgress: flag };
-    }
-
-    case 'SET_AUDIO_MUTED_STATE': {
+      state.audioOnlyInProgress = flag;
+    })
+    .addCase<string, any>('SET_AUDIO_MUTED_STATE', (state, action) => {
       const { enabled } = action.payload;
 
-      return { ...state, audioMuted: enabled };
-    }
-
-    case 'SET_RESTART_ICE_IN_PROGRESS': {
+      state.audioMuted = enabled;
+    })
+    .addCase<string, any>('SET_RESTART_ICE_IN_PROGRESS', (state, action) => {
       const { flag } = action.payload;
 
-      return { ...state, restartIceInProgress: flag };
-    }
-
-    default:
-      return state;
-  }
-};
-
-export default me;
+      state.restartIceInProgress = flag;
+    });
+});

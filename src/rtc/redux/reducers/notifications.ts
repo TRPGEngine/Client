@@ -1,26 +1,25 @@
+import { createReducer } from '@reduxjs/toolkit';
+
 const initialState = [];
 
-const notifications = (state = initialState, action) => {
-  switch (action.type) {
-    case 'ADD_NOTIFICATION': {
+export default createReducer(initialState, (builder) => {
+  builder
+    .addCase<string, any>('ADD_NOTIFICATION', (state, action) => {
       const { notification } = action.payload;
 
-      return [...state, notification];
-    }
-
-    case 'REMOVE_NOTIFICATION': {
+      state.push(notification);
+    })
+    .addCase<string, any>('REMOVE_NOTIFICATION', (state, action) => {
       const { notificationId } = action.payload;
 
-      return state.filter((notification) => notification.id !== notificationId);
-    }
-
-    case 'REMOVE_ALL_NOTIFICATIONS': {
-      return [];
-    }
-
-    default:
-      return state;
-  }
-};
-
-export default notifications;
+      const idx = state.findIndex(
+        (notification) => notification.id === notificationId
+      );
+      if (idx >= 0) {
+        state.splice(idx, 1);
+      }
+    })
+    .addCase<string, any>('REMOVE_ALL_NOTIFICATIONS', (state, action) => {
+      state = [];
+    });
+});

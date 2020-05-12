@@ -1,33 +1,24 @@
+import { createReducer } from '@reduxjs/toolkit';
+
 const initialState = {};
 
-const dataConsumers = (state = initialState, action) => {
-  switch (action.type) {
-    case 'SET_ROOM_STATE': {
+export default createReducer(initialState, (builder) => {
+  builder
+    .addCase<string, any>('SET_ROOM_STATE', (state, action) => {
       const roomState = action.payload.state;
 
-      if (roomState === 'closed') return {};
-      else return state;
-    }
-
-    case 'ADD_DATA_CONSUMER': {
+      if (roomState === 'closed') {
+        state = {};
+      }
+    })
+    .addCase<string, any>('ADD_DATA_CONSUMER', (state, action) => {
       const { dataConsumer } = action.payload;
 
-      return { ...state, [dataConsumer.id]: dataConsumer };
-    }
-
-    case 'REMOVE_DATA_CONSUMER': {
+      state[dataConsumer.id] = dataConsumer;
+    })
+    .addCase<string, any>('REMOVE_DATA_CONSUMER', (state, action) => {
       const { dataConsumerId } = action.payload;
-      const newState = { ...state };
 
-      delete newState[dataConsumerId];
-
-      return newState;
-    }
-
-    default: {
-      return state;
-    }
-  }
-};
-
-export default dataConsumers;
+      delete state[dataConsumerId];
+    });
+});

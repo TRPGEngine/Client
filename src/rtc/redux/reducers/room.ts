@@ -1,3 +1,5 @@
+import { createReducer } from '@reduxjs/toolkit';
+
 const initialState = {
   url: null,
   state: 'new', // new/connecting/connected/disconnected/closed,
@@ -6,62 +8,49 @@ const initialState = {
   faceDetection: false,
 };
 
-const room = (state = initialState, action) => {
-  switch (action.type) {
-    case 'SET_ROOM_URL': {
+export default createReducer(initialState, (builder) => {
+  builder
+    .addCase<string, any>('SET_ROOM_URL', (state, action) => {
       const { url } = action.payload;
 
-      return { ...state, url };
-    }
-
-    case 'SET_ROOM_STATE': {
+      state.url = url;
+    })
+    .addCase<string, any>('SET_ROOM_STATE', (state, action) => {
       const roomState = action.payload.state;
 
-      if (roomState === 'connected') return { ...state, state: roomState };
-      else
-        return {
-          ...state,
-          state: roomState,
-          activeSpeakerId: null,
-          statsPeerId: null,
-        };
-    }
-
-    case 'SET_ROOM_ACTIVE_SPEAKER': {
+      state.state = roomState;
+      if (roomState !== 'connected') {
+        state.activeSpeakerId = null;
+        state.statsPeerId = null;
+      }
+    })
+    .addCase<string, any>('SET_ROOM_ACTIVE_SPEAKER', (state, action) => {
+      const { peerId } = action.payload;
+      state.activeSpeakerId = peerId;
+    })
+    .addCase<string, any>('SET_ROOM_STATS_PEER_ID', (state, action) => {
       const { peerId } = action.payload;
 
-      return { ...state, activeSpeakerId: peerId };
-    }
-
-    case 'SET_ROOM_STATS_PEER_ID': {
-      const { peerId } = action.payload;
-
-      if (state.statsPeerId === peerId) return { ...state, statsPeerId: null };
-
-      return { ...state, statsPeerId: peerId };
-    }
-
-    case 'SET_FACE_DETECTION': {
+      if (state.statsPeerId === peerId) {
+        state.statsPeerId = null;
+      } else {
+        state.statsPeerId = peerId;
+      }
+    })
+    .addCase<string, any>('SET_FACE_DETECTION', (state, action) => {
       const flag = action.payload;
 
-      return { ...state, faceDetection: flag };
-    }
-
-    case 'REMOVE_PEER': {
+      state.faceDetection = flag;
+    })
+    .addCase<string, any>('REMOVE_PEER', (state, action) => {
       const { peerId } = action.payload;
-      const newState = { ...state };
 
-      if (peerId && peerId === state.activeSpeakerId)
-        newState.activeSpeakerId = null;
+      if (peerId && peerId === state.activeSpeakerId) {
+        state.activeSpeakerId = null;
+      }
 
-      if (peerId && peerId === state.statsPeerId) newState.statsPeerId = null;
-
-      return newState;
-    }
-
-    default:
-      return state;
-  }
-};
-
-export default room;
+      if (peerId && peerId === state.statsPeerId) {
+        state.statsPeerId = null;
+      }
+    });
+});
