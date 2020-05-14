@@ -1,286 +1,335 @@
-export const setRoomUrl = (url) => {
+import { createAction } from '@reduxjs/toolkit';
+
+export const setRoomUrl = createAction('SET_ROOM_URL', (url: string) => {
   return {
-    type: 'SET_ROOM_URL',
     payload: { url },
   };
-};
+});
 
-export const setRoomState = (state) => {
+export const setRoomState = createAction('SET_ROOM_STATE', (state) => {
   return {
-    type: 'SET_ROOM_STATE',
     payload: { state },
   };
-};
+});
 
-export const setRoomActiveSpeaker = (peerId) => {
-  return {
-    type: 'SET_ROOM_ACTIVE_SPEAKER',
-    payload: { peerId },
-  };
-};
+export const setRoomActiveSpeaker = createAction(
+  'SET_ROOM_ACTIVE_SPEAKER',
+  (peerId) => {
+    return {
+      payload: { peerId },
+    };
+  }
+);
 
-export const setRoomStatsPeerId = (peerId) => {
-  return {
-    type: 'SET_ROOM_STATS_PEER_ID',
-    payload: { peerId },
-  };
-};
+export const setRoomStatsPeerId = createAction(
+  'SET_ROOM_STATS_PEER_ID',
+  (peerId) => {
+    return {
+      payload: { peerId },
+    };
+  }
+);
 
-export const setRoomFaceDetection = (flag) => {
-  return {
-    type: 'SET_FACE_DETECTION',
-    payload: flag,
-  };
-};
+export const setRoomFaceDetection = createAction(
+  'SET_FACE_DETECTION',
+  (flag) => {
+    return {
+      payload: flag,
+    };
+  }
+);
 
-export const setMe = ({ peerId, displayName, displayNameSet, device }) => {
-  return {
-    type: 'SET_ME',
-    payload: { peerId, displayName, displayNameSet, device },
-  };
-};
+export const setMe = createAction(
+  'SET_ME',
+  ({ peerId, displayName, displayNameSet, device }) => {
+    return {
+      payload: { peerId, displayName, displayNameSet, device },
+    };
+  }
+);
 
-export const setMediaCapabilities = ({ canSendMic, canSendWebcam }) => {
-  return {
-    type: 'SET_MEDIA_CAPABILITIES',
-    payload: { canSendMic, canSendWebcam },
-  };
-};
+export const setMediaCapabilities = createAction(
+  'SET_MEDIA_CAPABILITIES',
+  ({ canSendMic, canSendWebcam }) => {
+    return {
+      payload: { canSendMic, canSendWebcam },
+    };
+  }
+);
 
-export const setCanChangeWebcam = (flag) => {
-  return {
-    type: 'SET_CAN_CHANGE_WEBCAM',
-    payload: flag,
-  };
-};
+export const setCanChangeWebcam = createAction(
+  'SET_CAN_CHANGE_WEBCAM',
+  (flag) => {
+    return {
+      payload: flag,
+    };
+  }
+);
 
-export const setDisplayName = (displayName?: string) => {
-  return {
-    type: 'SET_DISPLAY_NAME',
-    payload: { displayName },
-  };
-};
+export const setDisplayName = createAction(
+  'SET_DISPLAY_NAME',
+  (displayName?: string) => {
+    return {
+      payload: { displayName },
+    };
+  }
+);
 
-export const setAudioOnlyState = (enabled) => {
-  return {
-    type: 'SET_AUDIO_ONLY_STATE',
-    payload: { enabled },
-  };
-};
+export const setAudioOnlyState = createAction(
+  'SET_AUDIO_ONLY_STATE',
+  (enabled) => {
+    return {
+      payload: { enabled },
+    };
+  }
+);
 
-export const setAudioOnlyInProgress = (flag) => {
-  return {
-    type: 'SET_AUDIO_ONLY_IN_PROGRESS',
-    payload: { flag },
-  };
-};
+export const setAudioOnlyInProgress = createAction(
+  'SET_AUDIO_ONLY_IN_PROGRESS',
+  (flag) => {
+    return {
+      type: 'SET_AUDIO_ONLY_IN_PROGRESS',
+      payload: { flag },
+    };
+  }
+);
 
-export const setAudioMutedState = (enabled) => {
-  return {
-    type: 'SET_AUDIO_MUTED_STATE',
-    payload: { enabled },
-  };
-};
+export const setAudioMutedState = createAction(
+  'SET_AUDIO_MUTED_STATE',
+  (enabled) => {
+    return {
+      type: 'SET_AUDIO_MUTED_STATE',
+      payload: { enabled },
+    };
+  }
+);
 
-export const setRestartIceInProgress = (flag) => {
-  return {
-    type: 'SET_RESTART_ICE_IN_PROGRESS',
-    payload: { flag },
-  };
-};
+export const setRestartIceInProgress = createAction(
+  'SET_RESTART_ICE_IN_PROGRESS',
+  (flag) => {
+    return {
+      payload: { flag },
+    };
+  }
+);
 
-export const addProducer = (producer) => {
+export const addProducer = createAction('ADD_PRODUCER', (producer) => {
   return {
-    type: 'ADD_PRODUCER',
     payload: { producer },
   };
-};
+});
 
-export const removeProducer = (producerId) => {
+export const removeProducer = createAction('REMOVE_PRODUCER', (producerId) => {
   return {
-    type: 'REMOVE_PRODUCER',
     payload: { producerId },
   };
-};
+});
 
-export const setProducerPaused = (producerId) => {
-  return {
-    type: 'SET_PRODUCER_PAUSED',
-    payload: { producerId },
-  };
-};
+export const setProducerPaused = createAction(
+  'SET_PRODUCER_PAUSED',
+  (producerId) => {
+    return {
+      payload: { producerId },
+    };
+  }
+);
 
-export const setProducerResumed = (producerId) => {
-  return {
-    type: 'SET_PRODUCER_RESUMED',
-    payload: { producerId },
-  };
-};
+export const setProducerResumed = createAction(
+  'SET_PRODUCER_RESUMED',
+  (producerId) => {
+    return {
+      payload: { producerId },
+    };
+  }
+);
 
-export const setProducerTrack = (producerId, track) => {
-  return {
-    type: 'SET_PRODUCER_TRACK',
-    payload: { producerId, track },
-  };
-};
+export const setProducerTrack = createAction(
+  'SET_PRODUCER_TRACK',
+  (producerId, track) => {
+    return {
+      payload: { producerId, track },
+    };
+  }
+);
 
-export const setProducerScore = (producerId, score) => {
-  return {
-    type: 'SET_PRODUCER_SCORE',
-    payload: { producerId, score },
-  };
-};
+export const setProducerScore = createAction(
+  'SET_PRODUCER_SCORE',
+  (producerId, score) => {
+    return {
+      payload: { producerId, score },
+    };
+  }
+);
 
-export const addDataProducer = (dataProducer) => {
-  return {
-    type: 'ADD_DATA_PRODUCER',
-    payload: { dataProducer },
-  };
-};
+export const addDataProducer = createAction(
+  'ADD_DATA_PRODUCER',
+  (dataProducer) => {
+    return {
+      payload: { dataProducer },
+    };
+  }
+);
 
-export const removeDataProducer = (dataProducerId) => {
-  return {
-    type: 'REMOVE_DATA_PRODUCER',
-    payload: { dataProducerId },
-  };
-};
+export const removeDataProducer = createAction(
+  'REMOVE_DATA_PRODUCER',
+  (dataProducerId) => {
+    return {
+      payload: { dataProducerId },
+    };
+  }
+);
 
-export const setWebcamInProgress = (flag) => {
-  return {
-    type: 'SET_WEBCAM_IN_PROGRESS',
-    payload: { flag },
-  };
-};
+export const setWebcamInProgress = createAction(
+  'SET_WEBCAM_IN_PROGRESS',
+  (flag) => {
+    return {
+      payload: { flag },
+    };
+  }
+);
 
-export const setShareInProgress = (flag) => {
-  return {
-    type: 'SET_SHARE_IN_PROGRESS',
-    payload: { flag },
-  };
-};
+export const setShareInProgress = createAction(
+  'SET_SHARE_IN_PROGRESS',
+  (flag) => {
+    return {
+      payload: { flag },
+    };
+  }
+);
 
-export const addPeer = (peer) => {
+export const addPeer = createAction('ADD_PEER', (peer) => {
   return {
-    type: 'ADD_PEER',
     payload: { peer },
   };
-};
+});
 
-export const removePeer = (peerId) => {
+export const removePeer = createAction('REMOVE_PEER', (peerId) => {
   return {
-    type: 'REMOVE_PEER',
     payload: { peerId },
   };
-};
+});
 
-export const setPeerDisplayName = (displayName, peerId) => {
-  return {
-    type: 'SET_PEER_DISPLAY_NAME',
-    payload: { displayName, peerId },
-  };
-};
+export const setPeerDisplayName = createAction(
+  'SET_PEER_DISPLAY_NAME',
+  (displayName, peerId) => {
+    return {
+      payload: { displayName, peerId },
+    };
+  }
+);
 
-export const addConsumer = (consumer, peerId) => {
+export const addConsumer = createAction('ADD_CONSUMER', (consumer, peerId) => {
   return {
-    type: 'ADD_CONSUMER',
     payload: { consumer, peerId },
   };
-};
+});
 
-export const removeConsumer = (consumerId, peerId) => {
-  return {
-    type: 'REMOVE_CONSUMER',
-    payload: { consumerId, peerId },
-  };
-};
+export const removeConsumer = createAction(
+  'REMOVE_CONSUMER',
+  (consumerId, peerId) => {
+    return {
+      payload: { consumerId, peerId },
+    };
+  }
+);
 
-export const setConsumerPaused = (consumerId, originator) => {
-  return {
-    type: 'SET_CONSUMER_PAUSED',
-    payload: { consumerId, originator },
-  };
-};
+export const setConsumerPaused = createAction(
+  'SET_CONSUMER_PAUSED',
+  (consumerId, originator) => {
+    return {
+      payload: { consumerId, originator },
+    };
+  }
+);
 
-export const setConsumerResumed = (consumerId, originator) => {
-  return {
-    type: 'SET_CONSUMER_RESUMED',
-    payload: { consumerId, originator },
-  };
-};
+export const setConsumerResumed = createAction(
+  'SET_CONSUMER_RESUMED',
+  (consumerId, originator) => {
+    return {
+      payload: { consumerId, originator },
+    };
+  }
+);
 
-export const setConsumerCurrentLayers = (
-  consumerId,
-  spatialLayer,
-  temporalLayer
-) => {
-  return {
-    type: 'SET_CONSUMER_CURRENT_LAYERS',
-    payload: { consumerId, spatialLayer, temporalLayer },
-  };
-};
+export const setConsumerCurrentLayers = createAction(
+  'SET_CONSUMER_CURRENT_LAYERS',
+  (consumerId, spatialLayer, temporalLayer) => {
+    return {
+      payload: { consumerId, spatialLayer, temporalLayer },
+    };
+  }
+);
 
-export const setConsumerPreferredLayers = (
-  consumerId,
-  spatialLayer,
-  temporalLayer
-) => {
-  return {
-    type: 'SET_CONSUMER_PREFERRED_LAYERS',
-    payload: { consumerId, spatialLayer, temporalLayer },
-  };
-};
+export const setConsumerPreferredLayers = createAction(
+  'SET_CONSUMER_PREFERRED_LAYERS',
+  (consumerId, spatialLayer, temporalLayer) => {
+    return {
+      payload: { consumerId, spatialLayer, temporalLayer },
+    };
+  }
+);
 
-export const setConsumerPriority = (consumerId, priority) => {
-  return {
-    type: 'SET_CONSUMER_PRIORITY',
-    payload: { consumerId, priority },
-  };
-};
+export const setConsumerPriority = createAction(
+  'SET_CONSUMER_PRIORITY',
+  (consumerId, priority) => {
+    return {
+      payload: { consumerId, priority },
+    };
+  }
+);
 
-export const setConsumerTrack = (consumerId, track) => {
-  return {
-    type: 'SET_CONSUMER_TRACK',
-    payload: { consumerId, track },
-  };
-};
+export const setConsumerTrack = createAction(
+  'SET_CONSUMER_TRACK',
+  (consumerId, track) => {
+    return {
+      payload: { consumerId, track },
+    };
+  }
+);
 
-export const setConsumerScore = (consumerId, score) => {
-  return {
-    type: 'SET_CONSUMER_SCORE',
-    payload: { consumerId, score },
-  };
-};
+export const setConsumerScore = createAction(
+  'SET_CONSUMER_SCORE',
+  (consumerId, score) => {
+    return {
+      payload: { consumerId, score },
+    };
+  }
+);
 
-export const addDataConsumer = (dataConsumer, peerId) => {
-  return {
-    type: 'ADD_DATA_CONSUMER',
-    payload: { dataConsumer, peerId },
-  };
-};
+export const addDataConsumer = createAction(
+  'ADD_DATA_CONSUMER',
+  (dataConsumer, peerId) => {
+    return {
+      payload: { dataConsumer, peerId },
+    };
+  }
+);
 
-export const removeDataConsumer = (dataConsumerId, peerId) => {
-  return {
-    type: 'REMOVE_DATA_CONSUMER',
-    payload: { dataConsumerId, peerId },
-  };
-};
+export const removeDataConsumer = createAction(
+  'REMOVE_DATA_CONSUMER',
+  (dataConsumerId, peerId) => {
+    return {
+      payload: { dataConsumerId, peerId },
+    };
+  }
+);
 
-export const addNotification = (notification) => {
-  return {
-    type: 'ADD_NOTIFICATION',
-    payload: { notification },
-  };
-};
+export const addNotification = createAction(
+  'ADD_NOTIFICATION',
+  (notification) => {
+    return {
+      payload: { notification },
+    };
+  }
+);
 
-export const removeNotification = (notificationId) => {
-  return {
-    type: 'REMOVE_NOTIFICATION',
-    payload: { notificationId },
-  };
-};
+export const removeNotification = createAction(
+  'REMOVE_NOTIFICATION',
+  (notificationId) => {
+    return {
+      payload: { notificationId },
+    };
+  }
+);
 
-export const removeAllNotifications = () => {
-  return {
-    type: 'REMOVE_ALL_NOTIFICATIONS',
-  };
-};
+export const removeAllNotifications = createAction('REMOVE_ALL_NOTIFICATIONS');
