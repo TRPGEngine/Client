@@ -14,8 +14,42 @@ export class BaseToken {
 
   private _id: string;
   name: string;
-  gridPosition: Position = { x: 0, y: 0 }; // 网格坐标, 0 0 表示网格左上角
-  gridAreaSize: Size = { width: 1, height: 1 }; // 当前Token所占据的网格数 所有的Token默认都是1x1 不得为0或负数
+
+  /**
+   * 网格坐标, 0 0 表示网格左上角
+   */
+  private _gridPosition: Position = { x: 0, y: 0 };
+  get gridPosition(): Position {
+    return this._gridPosition;
+  }
+
+  set gridPosition(val: Position) {
+    this._gridPosition = {
+      x: val.x ?? 0,
+      y: val.y ?? 0,
+    };
+  }
+
+  /**
+   * 当前Token所占据的网格数 所有的Token默认都是1x1 不得为0或负数
+   */
+  private _gridAreaSize: Size = { width: 1, height: 1 };
+  get gridAreaSize(): Size {
+    return this._gridAreaSize;
+  }
+
+  set gridAreaSize(val: Size) {
+    this._gridAreaSize = {
+      width: val.width ?? 1,
+      height: val.height ?? 1,
+    };
+  }
+
+  /**
+   * 是否吸附到网格。默认吸附到网格
+   * TODO: 该字段暂时还没使用
+   */
+  snapGrid: boolean = true;
 
   constructor(id?: string) {
     // 如果创建时没有指定id则使用shortid生成一个id
