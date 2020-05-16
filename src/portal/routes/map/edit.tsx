@@ -11,17 +11,31 @@ import { fetchGroupActorList, GroupActorItem } from '@portal/model/group';
 import _isNil from 'lodash/isNil';
 import _isFunction from 'lodash/isFunction';
 import SplitPane from '@shared/components/web/SplitPane';
-import { Collapse, List, Button, Popover, InputNumber } from 'antd';
+import {
+  Collapse,
+  List,
+  Button,
+  Popover,
+  InputNumber,
+  Input,
+  Space,
+} from 'antd';
 import Avatar from '@web/components/Avatar';
 import { handleError } from '@portal/utils/error';
 import { PlusOutlined } from '@ant-design/icons';
 import { TiledMapManager } from '@shared/components/tiledmap/core/manager';
 import { ActorToken } from '@shared/components/tiledmap/layer/token/ActorToken';
 import { checkToken, getToken } from '@portal/utils/auth';
+import { TMemo } from '@shared/components/TMemo';
+import { ImageToken } from '@shared/components/tiledmap/layer/token/ImageToken';
 
 const Panel = Collapse.Panel;
 
+/**
+ * 通用增加棋子操作
+ */
 const AppendTokenAction: React.FC<{
+  content?: React.ReactNode;
   onConfirm: (x: number, y: number) => void;
 }> = React.memo((props) => {
   const [visible, setVisible] = useState(false);
@@ -39,29 +53,34 @@ const AppendTokenAction: React.FC<{
   const content = useMemo(() => {
     return (
       <div>
-        <InputNumber
-          value={x}
-          onChange={setX}
-          min={1}
-          max={width + 1}
-          precision={0}
-        />
-        <span style={{ margin: 4 }}>x</span>
-        <InputNumber
-          value={y}
-          onChange={setY}
-          min={1}
-          max={height + 1}
-          precision={0}
-        />
-        <div>
-          <Button type="link" onClick={handleConfirm}>
-            确认
-          </Button>
-        </div>
+        <Space direction="vertical">
+          <div>
+            <InputNumber
+              value={x}
+              onChange={setX}
+              min={1}
+              max={width + 1}
+              precision={0}
+            />
+            <span style={{ margin: 4 }}>x</span>
+            <InputNumber
+              value={y}
+              onChange={setY}
+              min={1}
+              max={height + 1}
+              precision={0}
+            />
+          </div>
+          <div>{props.content}</div>
+          <div>
+            <Button type="link" onClick={handleConfirm}>
+              确认
+            </Button>
+          </div>
+        </Space>
       </div>
     );
-  }, [x, y, setX, setY, handleConfirm]);
+  }, [x, y, setX, setY, handleConfirm, props.content]);
 
   return (
     <Popover
@@ -74,6 +93,37 @@ const AppendTokenAction: React.FC<{
     >
       <Button shape="circle" icon={<PlusOutlined />} />
     </Popover>
+  );
+});
+
+/**
+ * 增加图片棋子操作
+ */
+const AppendImageTokenAction: React.FC<{
+  onConfirm?: (imageUrl: string, x: number, y: number) => void;
+}> = TMemo((props) => {
+  const [imageUrl, setImageUrl] = useState('');
+  const handleConfirm = useCallback(
+    (x, y) => {
+      if (imageUrl === '') {
+        return;
+      }
+      _isFunction(props.onConfirm) && props.onConfirm(imageUrl, x, y);
+    },
+    [props.onConfirm, imageUrl]
+  );
+
+  return (
+    <AppendTokenAction
+      content={
+        <Input
+          placeholder="网络图片地址"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+        />
+      }
+      onConfirm={handleConfirm}
+    />
   );
 });
 
@@ -103,7 +153,7 @@ const MapEditor: React.FC<Props> = React.memo((props) => {
       .catch(handleError);
   }, []);
 
-  const handleAddToken = useCallback(
+  const handleAddActorToken = useCallback(
     (actor: GroupActorItem, x: number, y: number) => {
       const groupActorUUID = actor.uuid;
 
@@ -114,6 +164,19 @@ const MapEditor: React.FC<Props> = React.memo((props) => {
 
       const manager = tiledMapManagerRef.current;
       manager.addToken(manager.getDefaultLayer().id, actorToken);
+    },
+    []
+  );
+
+  const handleAddImageToken = useCallback(
+    (imageUrl: string, x: number, y: number) => {
+      const imageToken = new ImageToken();
+      imageToken.imageSrc = imageUrl;
+      imageToken.gridPosition = { x, y };
+      imageToken.buildPromise();
+
+      const manager = tiledMapManagerRef.current;
+      manager.addToken(manager.getDefaultLayer().id, imageToken);
     },
     []
   );
@@ -133,7 +196,7 @@ const MapEditor: React.FC<Props> = React.memo((props) => {
 
   const tokenPickerEl = useMemo(
     () => (
-      <Collapse defaultActiveKey="actors">
+      <Collapse defaultActiveKey={['actors', 'other']}>
         <Panel key="actors" header="人物卡">
           <List
             itemLayout="horizontal"
@@ -142,7 +205,7 @@ const MapEditor: React.FC<Props> = React.memo((props) => {
               <List.Item
                 actions={[
                   <AppendTokenAction
-                    onConfirm={(x, y) => handleAddToken(item, x, y)}
+                    onConfirm={(x, y) => handleAddActorToken(item, x, y)}
                   />,
                 ]}
               >
@@ -154,6 +217,15 @@ const MapEditor: React.FC<Props> = React.memo((props) => {
               </List.Item>
             )}
           />
+        </Panel>
+        <Panel key="other" header="其他">
+          <List.Item
+            actions={[
+              <AppendImageTokenAction onConfirm={handleAddImageToken} />,
+            ]}
+          >
+            <List.Item.Meta title="增加网络图片" />
+          </List.Item>
         </Panel>
       </Collapse>
     ),

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.5](https://github.com/TRPGEngine/Client/compare/v0.3.4...v0.3.5) (2020-05-16)
+
+
+### Features
+
+* **tiledmap:** 地图增加网络图片Token的支持 ([22ddac9](https://github.com/TRPGEngine/Client/commit/22ddac9047db91bf3e9237c08ac7f50a06def752))
+
 ### [0.3.4](https://github.com/TRPGEngine/Client/compare/v0.3.3...v0.3.4) (2020-05-10)
 
 
