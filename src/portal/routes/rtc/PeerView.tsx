@@ -11,8 +11,17 @@ import Logger from '@src/rtc/Logger';
 import Spinner from '@web/components/Spinner';
 import { Tooltip, Input } from 'antd';
 import { TMemo } from '@shared/components/TMemo';
+import styled from 'styled-components';
 
 const logger = new Logger('PeerView');
+
+const Video = styled.video.attrs({
+  autoPlay: true,
+  muted: true,
+  controls: false,
+})`
+  width: 320px;
+`;
 
 interface Props {
   isMe?: boolean;
@@ -297,120 +306,228 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
         <div>音量: {audioVolume}</div>
 
         <div className="icons">
-          <div onClick={() => setShowInfo(!showInfo)} />
+          <div onClick={() => setShowInfo(!showInfo)}>信息</div>
 
-          <div onClick={() => onStatsClick(peer.id)} />
+          <div onClick={() => onStatsClick(peer.id)}>状态</div>
         </div>
 
-        <div>
-          {(audioProducerId || audioConsumerId) && (
-            <Fragment>
-              <h1>audio</h1>
+        {showInfo && (
+          <div>
+            {(audioProducerId || audioConsumerId) && (
+              <Fragment>
+                <h1>audio</h1>
 
-              {audioProducerId && (
-                <Fragment>
+                {audioProducerId && (
+                  <Fragment>
+                    <p>
+                      {'id: '}
+                      <Tooltip title="Copy audio producer id to clipboard">
+                        <span
+                          className="copiable"
+                          data-tip=""
+                          onClick={() => copy(`"${audioProducerId}"`)}
+                        >
+                          {audioProducerId}
+                        </span>
+                      </Tooltip>
+                    </p>
+                  </Fragment>
+                )}
+
+                {audioConsumerId && (
+                  <Fragment>
+                    <p>
+                      {'id: '}
+                      <Tooltip title="Copy video producer id to clipboard">
+                        <span
+                          className="copiable"
+                          onClick={() => copy(`"${audioConsumerId}"`)}
+                        >
+                          {audioConsumerId}
+                        </span>
+                      </Tooltip>
+                    </p>
+                  </Fragment>
+                )}
+
+                {audioCodec && <p>codec: {audioCodec}</p>}
+
+                {audioProducerId && audioScore && (
+                  <ProducerScore id={audioProducerId} score={audioScore} />
+                )}
+
+                {audioConsumerId && audioScore && (
+                  <ConsumerScore id={audioConsumerId} score={audioScore} />
+                )}
+              </Fragment>
+            )}
+
+            {(videoProducerId || videoConsumerId) && (
+              <Fragment>
+                <h1>video</h1>
+
+                {videoProducerId && (
+                  <Fragment>
+                    <p>
+                      {'id: '}
+                      <Tooltip title="Copy audio consumer id to clipboard">
+                        <span
+                          className="copiable"
+                          onClick={() => copy(`"${videoProducerId}"`)}
+                        >
+                          {videoProducerId}
+                        </span>
+                      </Tooltip>
+                    </p>
+                  </Fragment>
+                )}
+
+                {videoConsumerId && (
+                  <Fragment>
+                    <p>
+                      {'id: '}
+                      <Tooltip title="Copy video consumer id to clipboard">
+                        <span
+                          className="copiable"
+                          onClick={() => copy(`"${videoConsumerId}"`)}
+                        >
+                          {videoConsumerId}
+                        </span>
+                      </Tooltip>
+                    </p>
+                  </Fragment>
+                )}
+
+                {videoCodec && <p>codec: {videoCodec}</p>}
+
+                {videoVisible && videoResolutionWidth !== null && (
                   <p>
-                    {'id: '}
-                    <Tooltip title="Copy audio producer id to clipboard">
-                      <span
-                        className="copiable"
-                        data-tip=""
-                        onClick={() => copy(`"${audioProducerId}"`)}
-                      >
-                        {audioProducerId}
-                      </span>
-                    </Tooltip>
+                    resolution: {videoResolutionWidth}x{videoResolutionHeight}
                   </p>
-                </Fragment>
-              )}
+                )}
 
-              {audioConsumerId && (
-                <Fragment>
-                  <p>
-                    {'id: '}
-                    <Tooltip title="Copy video producer id to clipboard">
+                {videoVisible &&
+                  videoProducerId &&
+                  videoRtpParameters.encodings.length > 1 && (
+                    <p>
+                      max spatial layer:{' '}
+                      {maxSpatialLayer > -1 ? maxSpatialLayer : 'none'}
+                      <span> </span>
                       <span
-                        className="copiable"
-                        onClick={() => copy(`"${audioConsumerId}"`)}
+                        onClick={(event) => {
+                          event.stopPropagation();
+
+                          const newMaxSpatialLayer = maxSpatialLayer - 1;
+
+                          onChangeMaxSendingSpatialLayer(newMaxSpatialLayer);
+                          setMaxSpatialLayer(newMaxSpatialLayer);
+                        }}
                       >
-                        {audioConsumerId}
+                        {'[ down ]'}
                       </span>
-                    </Tooltip>
-                  </p>
-                </Fragment>
-              )}
-
-              {audioCodec && <p>codec: {audioCodec}</p>}
-
-              {audioProducerId && audioScore && (
-                <ProducerScore id={audioProducerId} score={audioScore} />
-              )}
-
-              {audioConsumerId && audioScore && (
-                <ConsumerScore id={audioConsumerId} score={audioScore} />
-              )}
-            </Fragment>
-          )}
-
-          {(videoProducerId || videoConsumerId) && (
-            <Fragment>
-              <h1>video</h1>
-
-              {videoProducerId && (
-                <Fragment>
-                  <p>
-                    {'id: '}
-                    <Tooltip title="Copy audio consumer id to clipboard">
+                      <span> </span>
                       <span
-                        className="copiable"
-                        onClick={() => copy(`"${videoProducerId}"`)}
-                      >
-                        {videoProducerId}
-                      </span>
-                    </Tooltip>
-                  </p>
-                </Fragment>
-              )}
+                        onClick={(event) => {
+                          event.stopPropagation();
 
-              {videoConsumerId && (
-                <Fragment>
-                  <p>
-                    {'id: '}
-                    <Tooltip title="Copy video consumer id to clipboard">
+                          const newMaxSpatialLayer = maxSpatialLayer + 1;
+
+                          onChangeMaxSendingSpatialLayer(newMaxSpatialLayer);
+                          setMaxSpatialLayer(newMaxSpatialLayer);
+                        }}
+                      >
+                        {'[ up ]'}
+                      </span>
+                    </p>
+                  )}
+
+                {!isMe && videoMultiLayer && (
+                  <Fragment>
+                    <p>
+                      {`current spatial-temporal layers: ${consumerCurrentSpatialLayer} ${consumerCurrentTemporalLayer}`}
+                    </p>
+                    <p>
+                      {`preferred spatial-temporal layers: ${consumerPreferredSpatialLayer} ${consumerPreferredTemporalLayer}`}
+                      <span> </span>
                       <span
-                        className="copiable"
-                        onClick={() => copy(`"${videoConsumerId}"`)}
+                        className="clickable"
+                        onClick={(event) => {
+                          event.stopPropagation();
+
+                          let newPreferredSpatialLayer = consumerPreferredSpatialLayer;
+                          let newPreferredTemporalLayer: number;
+
+                          if (consumerPreferredTemporalLayer > 0) {
+                            newPreferredTemporalLayer =
+                              consumerPreferredTemporalLayer - 1;
+                          } else {
+                            if (consumerPreferredSpatialLayer > 0)
+                              newPreferredSpatialLayer =
+                                consumerPreferredSpatialLayer - 1;
+                            else
+                              newPreferredSpatialLayer =
+                                consumerSpatialLayers - 1;
+
+                            newPreferredTemporalLayer =
+                              consumerTemporalLayers - 1;
+                          }
+
+                          onChangeVideoPreferredLayers(
+                            newPreferredSpatialLayer,
+                            newPreferredTemporalLayer
+                          );
+                        }}
                       >
-                        {videoConsumerId}
+                        {'[ down ]'}
                       </span>
-                    </Tooltip>
-                  </p>
-                </Fragment>
-              )}
+                      <span> </span>
+                      <span
+                        className="clickable"
+                        onClick={(event) => {
+                          event.stopPropagation();
 
-              {videoCodec && <p>codec: {videoCodec}</p>}
+                          let newPreferredSpatialLayer = consumerPreferredSpatialLayer;
+                          let newPreferredTemporalLayer;
 
-              {videoVisible && videoResolutionWidth !== null && (
-                <p>
-                  resolution: {videoResolutionWidth}x{videoResolutionHeight}
-                </p>
-              )}
+                          if (
+                            consumerPreferredTemporalLayer <
+                            consumerTemporalLayers - 1
+                          ) {
+                            newPreferredTemporalLayer =
+                              consumerPreferredTemporalLayer + 1;
+                          } else {
+                            if (
+                              consumerPreferredSpatialLayer <
+                              consumerSpatialLayers - 1
+                            )
+                              newPreferredSpatialLayer =
+                                consumerPreferredSpatialLayer + 1;
+                            else newPreferredSpatialLayer = 0;
 
-              {videoVisible &&
-                videoProducerId &&
-                videoRtpParameters.encodings.length > 1 && (
+                            newPreferredTemporalLayer = 0;
+                          }
+
+                          onChangeVideoPreferredLayers(
+                            newPreferredSpatialLayer,
+                            newPreferredTemporalLayer
+                          );
+                        }}
+                      >
+                        {'[ up ]'}
+                      </span>
+                    </p>
+                  </Fragment>
+                )}
+
+                {!isMe && videoCodec && consumerPriority > 0 && (
                   <p>
-                    max spatial layer:{' '}
-                    {maxSpatialLayer > -1 ? maxSpatialLayer : 'none'}
+                    {`priority: ${consumerPriority}`}
                     <span> </span>
                     <span
                       onClick={(event) => {
                         event.stopPropagation();
 
-                        const newMaxSpatialLayer = maxSpatialLayer - 1;
-
-                        onChangeMaxSendingSpatialLayer(newMaxSpatialLayer);
-                        setMaxSpatialLayer(newMaxSpatialLayer);
+                        onChangeVideoPriority(consumerPriority - 1);
                       }}
                     >
                       {'[ down ]'}
@@ -420,10 +537,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                       onClick={(event) => {
                         event.stopPropagation();
 
-                        const newMaxSpatialLayer = maxSpatialLayer + 1;
-
-                        onChangeMaxSendingSpatialLayer(newMaxSpatialLayer);
-                        setMaxSpatialLayer(newMaxSpatialLayer);
+                        onChangeVideoPriority(consumerPriority + 1);
                       }}
                     >
                       {'[ up ]'}
@@ -431,137 +545,34 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                   </p>
                 )}
 
-              {!isMe && videoMultiLayer && (
-                <Fragment>
+                {!isMe && videoCodec && (
                   <p>
-                    {`current spatial-temporal layers: ${consumerCurrentSpatialLayer} ${consumerCurrentTemporalLayer}`}
-                  </p>
-                  <p>
-                    {`preferred spatial-temporal layers: ${consumerPreferredSpatialLayer} ${consumerPreferredTemporalLayer}`}
-                    <span> </span>
                     <span
                       className="clickable"
                       onClick={(event) => {
                         event.stopPropagation();
 
-                        let newPreferredSpatialLayer = consumerPreferredSpatialLayer;
-                        let newPreferredTemporalLayer: number;
+                        if (!onRequestKeyFrame) return;
 
-                        if (consumerPreferredTemporalLayer > 0) {
-                          newPreferredTemporalLayer =
-                            consumerPreferredTemporalLayer - 1;
-                        } else {
-                          if (consumerPreferredSpatialLayer > 0)
-                            newPreferredSpatialLayer =
-                              consumerPreferredSpatialLayer - 1;
-                          else
-                            newPreferredSpatialLayer =
-                              consumerSpatialLayers - 1;
-
-                          newPreferredTemporalLayer =
-                            consumerTemporalLayers - 1;
-                        }
-
-                        onChangeVideoPreferredLayers(
-                          newPreferredSpatialLayer,
-                          newPreferredTemporalLayer
-                        );
+                        onRequestKeyFrame();
                       }}
                     >
-                      {'[ down ]'}
-                    </span>
-                    <span> </span>
-                    <span
-                      className="clickable"
-                      onClick={(event) => {
-                        event.stopPropagation();
-
-                        let newPreferredSpatialLayer = consumerPreferredSpatialLayer;
-                        let newPreferredTemporalLayer;
-
-                        if (
-                          consumerPreferredTemporalLayer <
-                          consumerTemporalLayers - 1
-                        ) {
-                          newPreferredTemporalLayer =
-                            consumerPreferredTemporalLayer + 1;
-                        } else {
-                          if (
-                            consumerPreferredSpatialLayer <
-                            consumerSpatialLayers - 1
-                          )
-                            newPreferredSpatialLayer =
-                              consumerPreferredSpatialLayer + 1;
-                          else newPreferredSpatialLayer = 0;
-
-                          newPreferredTemporalLayer = 0;
-                        }
-
-                        onChangeVideoPreferredLayers(
-                          newPreferredSpatialLayer,
-                          newPreferredTemporalLayer
-                        );
-                      }}
-                    >
-                      {'[ up ]'}
+                      {'[ request keyframe ]'}
                     </span>
                   </p>
-                </Fragment>
-              )}
+                )}
 
-              {!isMe && videoCodec && consumerPriority > 0 && (
-                <p>
-                  {`priority: ${consumerPriority}`}
-                  <span> </span>
-                  <span
-                    onClick={(event) => {
-                      event.stopPropagation();
+                {videoProducerId && videoScore && (
+                  <ProducerScore id={videoProducerId} score={videoScore} />
+                )}
 
-                      onChangeVideoPriority(consumerPriority - 1);
-                    }}
-                  >
-                    {'[ down ]'}
-                  </span>
-                  <span> </span>
-                  <span
-                    onClick={(event) => {
-                      event.stopPropagation();
-
-                      onChangeVideoPriority(consumerPriority + 1);
-                    }}
-                  >
-                    {'[ up ]'}
-                  </span>
-                </p>
-              )}
-
-              {!isMe && videoCodec && (
-                <p>
-                  <span
-                    className="clickable"
-                    onClick={(event) => {
-                      event.stopPropagation();
-
-                      if (!onRequestKeyFrame) return;
-
-                      onRequestKeyFrame();
-                    }}
-                  >
-                    {'[ request keyframe ]'}
-                  </span>
-                </p>
-              )}
-
-              {videoProducerId && videoScore && (
-                <ProducerScore id={videoProducerId} score={videoScore} />
-              )}
-
-              {videoConsumerId && videoScore && (
-                <ConsumerScore id={videoConsumerId} score={videoScore} />
-              )}
-            </Fragment>
-          )}
-        </div>
+                {videoConsumerId && videoScore && (
+                  <ConsumerScore id={videoConsumerId} score={videoScore} />
+                )}
+              </Fragment>
+            )}
+          </div>
+        )}
 
         <div>
           {isMe ? (
@@ -584,7 +595,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
         </div>
       </div>
 
-      <video ref={videoRef} autoPlay muted controls={false} />
+      <Video ref={videoRef} />
 
       <audio
         ref={audioRef}
