@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { View, Text } from 'react-native';
 import config from '@shared/project.config';
-import { useCachedUserInfo } from '@shared/hooks/cache';
+import { useCachedUserInfo } from '@shared/hooks/useCache';
 import _isEmpty from 'lodash/isEmpty';
 import { TAvatar } from '../TComponent';
 import {

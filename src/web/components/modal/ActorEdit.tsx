@@ -9,7 +9,7 @@ import XMLBuilder from '@shared/components/layout/XMLBuilder';
 import { Row, Button } from 'antd';
 import styled from 'styled-components';
 import { TMemo } from '@shared/components/TMemo';
-import { useCachedActorTemplateInfo } from '@shared/hooks/cache';
+import { useCachedActorTemplateInfo } from '@shared/hooks/useCache';
 
 /**
  * 人物卡编辑模态框

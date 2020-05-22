@@ -12,7 +12,7 @@ import { TMemo } from '@shared/components/TMemo';
 import {
   useCachedActorTemplateInfo,
   useCachedActorInfo,
-} from '@shared/hooks/cache';
+} from '@shared/hooks/useCache';
 
 /**
  * 人物卡信息模态框

@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { TRPGState } from '@redux/types/__all__';
 import _isEmpty from 'lodash/isEmpty';
 import { fetchWebToken } from '@redux/actions/user';
+import { useTRPGSelector, useTRPGDispatch } from './useTRPGSelector';
 
 /**
  * 获取JWT
  */
 export const useWebToken = () => {
-  const jwt = useSelector<TRPGState, string>((state) => state.user.webToken);
-  const dispatch = useDispatch();
+  const jwt = useTRPGSelector((state) => state.user.webToken);
+  const dispatch = useTRPGDispatch();
 
   useEffect(() => {
     if (_isEmpty(jwt)) {

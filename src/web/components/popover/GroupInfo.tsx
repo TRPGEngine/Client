@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useCachedGroupInfo } from '@shared/hooks/cache';
+import { useCachedGroupInfo } from '@shared/hooks/useCache';
 import styled from 'styled-components';
 import Avatar from '../Avatar';
 import config from '@shared/project.config';
