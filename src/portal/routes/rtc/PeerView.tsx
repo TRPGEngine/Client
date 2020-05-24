@@ -21,6 +21,8 @@ const Video = styled.video.attrs({
   controls: false,
 })`
   width: 320px;
+  background: black;
+  border: 1px solid grey;
 `;
 
 interface Props {
