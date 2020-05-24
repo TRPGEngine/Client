@@ -1,6 +1,11 @@
+import config from '@shared/project.config';
+
 let protooPort = 4443;
 
-const hostname = window.location.hostname;
+const hostname =
+  config.environment === 'development'
+    ? 'rtc.moonrailgun.com'
+    : window.location.hostname;
 
 if (hostname === 'test.mediasoup.org') protooPort = 4444;
 
