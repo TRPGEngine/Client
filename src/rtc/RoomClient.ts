@@ -11,6 +11,18 @@ import * as settingManager from './settingManager';
 import * as requestActions from './redux/requestActions';
 import * as stateActions from './redux/stateActions';
 
+declare global {
+  interface MediaDevices {
+    getDisplayMedia(constraints?: MediaStreamConstraints): Promise<MediaStream>;
+  }
+
+  interface MediaTrackConstraintSet {
+    displaySurface?: ConstrainDOMString;
+    logicalSurface?: ConstrainBoolean;
+    cursor?: ConstrainBoolean;
+  }
+}
+
 const VIDEO_CONSTRAINS = {
   qvga: { width: { ideal: 320 }, height: { ideal: 240 } },
   vga: { width: { ideal: 640 }, height: { ideal: 480 } },
@@ -1126,121 +1138,124 @@ export class RoomClient {
     store.dispatch(stateActions.setWebcamInProgress(false));
   }
 
-  // async enableShare() {
-  //   logger.debug('enableShare()');
+  async enableShare() {
+    logger.debug('enableShare()');
 
-  //   if (this._shareProducer) return;
-  //   else if (this._webcamProducer) await this.disableWebcam();
+    if (this._shareProducer) {
+      return;
+    } else if (this._webcamProducer) {
+      await this.disableWebcam();
+    }
 
-  //   if (!this._mediasoupDevice.canProduce('video')) {
-  //     logger.error('enableShare() | cannot produce video');
+    if (!this._mediasoupDevice.canProduce('video')) {
+      logger.error('enableShare() | cannot produce video');
 
-  //     return;
-  //   }
+      return;
+    }
 
-  //   let track;
+    let track;
 
-  //   store.dispatch(stateActions.setShareInProgress(true));
+    store.dispatch(stateActions.setShareInProgress(true));
 
-  //   try {
-  //     logger.debug('enableShare() | calling getUserMedia()');
+    try {
+      logger.debug('enableShare() | calling getUserMedia()');
 
-  //     const stream = await navigator.mediaDevices.getDisplayMedia({
-  //       audio: false,
-  //       video: {
-  //         displaySurface: 'monitor',
-  //         logicalSurface: true,
-  //         cursor: true,
-  //         width: { max: 1920 },
-  //         height: { max: 1080 },
-  //         frameRate: { max: 30 },
-  //       },
-  //     });
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        audio: false,
+        video: {
+          displaySurface: 'monitor',
+          logicalSurface: true,
+          cursor: true,
+          width: { max: 1920 },
+          height: { max: 1080 },
+          frameRate: { max: 30 },
+        },
+      });
 
-  //     // May mean cancelled (in some implementations).
-  //     if (!stream) {
-  //       store.dispatch(stateActions.setShareInProgress(true));
+      // May mean cancelled (in some implementations).
+      if (!stream) {
+        store.dispatch(stateActions.setShareInProgress(true));
 
-  //       return;
-  //     }
+        return;
+      }
 
-  //     track = stream.getVideoTracks()[0];
+      track = stream.getVideoTracks()[0];
 
-  //     if (this._useSharingSimulcast) {
-  //       // If VP9 is the only available video codec then use SVC.
-  //       const firstVideoCodec = this._mediasoupDevice.rtpCapabilities.codecs.find(
-  //         (c) => c.kind === 'video'
-  //       );
+      if (this._useSharingSimulcast) {
+        // If VP9 is the only available video codec then use SVC.
+        const firstVideoCodec = this._mediasoupDevice.rtpCapabilities.codecs.find(
+          (c) => c.kind === 'video'
+        );
 
-  //       let encodings;
+        let encodings;
 
-  //       if (firstVideoCodec.mimeType.toLowerCase() === 'video/vp9') {
-  //         encodings = VIDEO_SVC_ENCODINGS;
-  //       } else {
-  //         encodings = VIDEO_SIMULCAST_ENCODINGS.map((encoding) => ({
-  //           ...encoding,
-  //           dtx: true,
-  //         }));
-  //       }
+        if (firstVideoCodec.mimeType.toLowerCase() === 'video/vp9') {
+          encodings = VIDEO_SVC_ENCODINGS;
+        } else {
+          encodings = VIDEO_SIMULCAST_ENCODINGS.map((encoding) => ({
+            ...encoding,
+            dtx: true,
+          }));
+        }
 
-  //       this._shareProducer = await this._sendTransport.produce({
-  //         track,
-  //         encodings,
-  //         codecOptions: {
-  //           videoGoogleStartBitrate: 1000,
-  //         },
-  //         appData: {
-  //           share: true,
-  //         },
-  //       });
-  //     } else {
-  //       this._shareProducer = await this._sendTransport.produce({ track });
-  //     }
+        this._shareProducer = await this._sendTransport.produce({
+          track,
+          encodings,
+          codecOptions: {
+            videoGoogleStartBitrate: 1000,
+          },
+          appData: {
+            share: true,
+          },
+        });
+      } else {
+        this._shareProducer = await this._sendTransport.produce({ track });
+      }
 
-  //     store.dispatch(
-  //       stateActions.addProducer({
-  //         id: this._shareProducer.id,
-  //         type: 'share',
-  //         paused: this._shareProducer.paused,
-  //         track: this._shareProducer.track,
-  //         rtpParameters: this._shareProducer.rtpParameters,
-  //         codec: this._shareProducer.rtpParameters.codecs[0].mimeType.split(
-  //           '/'
-  //         )[1],
-  //       })
-  //     );
+      store.dispatch(
+        stateActions.addProducer({
+          id: this._shareProducer.id,
+          type: 'share',
+          paused: this._shareProducer.paused,
+          track: this._shareProducer.track,
+          rtpParameters: this._shareProducer.rtpParameters,
+          codec: this._shareProducer.rtpParameters.codecs[0].mimeType.split(
+            '/'
+          )[1],
+        })
+      );
 
-  //     this._shareProducer.on('transportclose', () => {
-  //       this._shareProducer = null;
-  //     });
+      this._shareProducer.on('transportclose', () => {
+        this._shareProducer = null;
+      });
 
-  //     this._shareProducer.on('trackended', () => {
-  //       store.dispatch(
-  //         requestActions.notify({
-  //           type: 'error',
-  //           text: 'Share disconnected!',
-  //         })
-  //       );
+      this._shareProducer.on('trackended', () => {
+        store.dispatch(
+          requestActions.notify({
+            type: 'error',
+            text: 'Share disconnected!',
+          })
+        );
 
-  //       this.disableShare().catch(() => {});
-  //     });
-  //   } catch (error) {
-  //     logger.error('enableShare() | failed:%o', error);
+        this.disableShare().catch(() => {});
+      });
+    } catch (error) {
+      logger.error('enableShare() | failed:%o', error);
 
-  //     if (error.name !== 'NotAllowedError') {
-  //       store.dispatch(
-  //         requestActions.notify({
-  //           type: 'error',
-  //           text: `Error sharing: ${error}`,
-  //         })
-  //       );
-  //     }
+      if (error.name !== 'NotAllowedError') {
+        store.dispatch(
+          requestActions.notify({
+            type: 'error',
+            text: `Error sharing: ${error}`,
+          })
+        );
+      }
 
-  //     if (track) track.stop();
-  //   }
+      if (track) track.stop();
+    }
 
-  //   store.dispatch(stateActions.setShareInProgress(false));
-  // }
+    store.dispatch(stateActions.setShareInProgress(false));
+  }
 
   async disableShare() {
     logger.debug('disableShare()');
@@ -2110,8 +2125,9 @@ export class RoomClient {
           !devicesCookie ||
           devicesCookie.webcamEnabled ||
           this._externalVideo
-        )
+        ) {
           this.enableWebcam();
+        }
 
         this._sendTransport.on('connectionstatechange', (connectionState) => {
           if (connectionState === 'connected') {

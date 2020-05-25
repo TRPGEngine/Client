@@ -32,18 +32,34 @@ export const Me: React.FC = TMemo(() => {
 
   const connected = useMemo(() => room.state === 'connected', [room.state]);
 
-  let micState;
-
+  let micState: string;
   if (!me.canSendMic) micState = 'unsupported';
   else if (!audioProducer) micState = 'unsupported';
   else if (!audioProducer.paused) micState = 'on';
   else micState = 'off';
 
-  let webcamState;
-
+  let webcamState: string;
   if (!me.canSendWebcam) webcamState = 'unsupported';
   else if (videoProducer && videoProducer.type !== 'share') webcamState = 'on';
   else webcamState = 'off';
+
+  let changeWebcamState: string;
+  if (
+    Boolean(videoProducer) &&
+    videoProducer.type !== 'share' &&
+    me.canChangeWebcam
+  ) {
+    changeWebcamState = 'on';
+  } else {
+    changeWebcamState = 'unsupported';
+  }
+
+  let shareState: string;
+  if (Boolean(videoProducer) && videoProducer.type === 'share') {
+    shareState = 'on';
+  } else {
+    shareState = 'off';
+  }
 
   return (
     <div>
@@ -61,6 +77,7 @@ export const Me: React.FC = TMemo(() => {
             </Button>
 
             <Button
+              disabled={me.webcamInProgress || me.shareInProgress}
               onClick={() => {
                 if (webcamState === 'on') {
                   settingManager.setDevices({ webcamEnabled: false });
@@ -74,7 +91,25 @@ export const Me: React.FC = TMemo(() => {
               {webcamState === 'on' ? '关闭' : '开启'} 视频
             </Button>
 
-            <Button onClick={() => client.changeWebcam()}>切换摄像头</Button>
+            <Button
+              disabled={me.webcamInProgress || me.shareInProgress}
+              onClick={() => client.changeWebcam()}
+            >
+              切换摄像头
+            </Button>
+
+            <Button
+              disabled={me.shareInProgress || me.webcamInProgress}
+              onClick={() => {
+                if (shareState === 'on') {
+                  client.disableShare();
+                } else {
+                  client.enableShare();
+                }
+              }}
+            >
+              {shareState === 'on' ? '取消' : '开始'} 分享屏幕
+            </Button>
           </div>
         </Fragment>
       )}
