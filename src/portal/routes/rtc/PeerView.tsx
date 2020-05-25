@@ -9,11 +9,16 @@ import copy from 'copy-to-clipboard';
 import hark from 'hark';
 import Logger from '@src/rtc/Logger';
 import Spinner from '@web/components/Spinner';
-import { Tooltip, Input } from 'antd';
+import { Tooltip, Input, Button } from 'antd';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
+import { VolumeInspector } from './VolumeInspector';
 
 const logger = new Logger('PeerView');
+
+const PeerViewContainer = styled.div`
+  position: relative;
+`;
 
 const Video = styled.video.attrs({
   autoPlay: true,
@@ -303,14 +308,22 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
   }, [isMe, audioTrack, videoTrack, videoRtpParameters, maxSpatialLayer]);
 
   return (
-    <div data-component="PeerView">
+    <PeerViewContainer>
       <div className="info">
-        <div>音量: {audioVolume}</div>
+        <VolumeInspector level={audioVolume} />
 
         <div className="icons">
-          <div onClick={() => setShowInfo(!showInfo)}>信息</div>
+          <Tooltip title="信息">
+            <Button shape="circle" onClick={() => setShowInfo(!showInfo)}>
+              <i className="iconfont">&#xe611;</i>
+            </Button>
+          </Tooltip>
 
-          <div onClick={() => onStatsClick(peer.id)}>状态</div>
+          <Tooltip title="查看状态">
+            <Button shape="circle" onClick={() => onStatsClick(peer.id)}>
+              <i className="iconfont">&#xe6bb;</i>
+            </Button>
+          </Tooltip>
         </div>
 
         {showInfo && (
@@ -577,15 +590,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
         )}
 
         <div>
-          {isMe ? (
-            <Input
-              maxLength={20}
-              value={peer.displayName}
-              onChange={(e) => onChangeDisplayName(e.target.value)}
-            />
-          ) : (
-            <span className="display-name">{peer.displayName}</span>
-          )}
+          <span className="display-name">{peer.displayName}</span>
 
           <div className="row">
             <span />
@@ -617,7 +622,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
       )}
 
       {videoElemPaused && <div className="video-elem-paused" />}
-    </div>
+    </PeerViewContainer>
   );
 });
 PeerView.displayName = 'PeerView';
