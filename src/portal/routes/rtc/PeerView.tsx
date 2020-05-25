@@ -9,7 +9,7 @@ import copy from 'copy-to-clipboard';
 import hark from 'hark';
 import Logger from '@src/rtc/Logger';
 import Spinner from '@web/components/Spinner';
-import { Tooltip, Input, Button } from 'antd';
+import { Tooltip, Input, Button, Space } from 'antd';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { VolumeInspector } from './VolumeInspector';
@@ -20,6 +20,14 @@ const PeerViewContainer = styled.div`
   position: relative;
 `;
 
+const PeerViewController = styled(Space).attrs({
+  size: 4,
+})`
+  position: absolute;
+  top: 4px;
+  right: 4px;
+`;
+
 const Video = styled.video.attrs({
   autoPlay: true,
   muted: true,
@@ -28,6 +36,14 @@ const Video = styled.video.attrs({
   width: 320px;
   background: black;
   border: 1px solid grey;
+  display: block;
+`;
+
+const VideoLoading = styled(Spinner)`
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  border-left-color: white;
 `;
 
 interface Props {
@@ -205,6 +221,10 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
           setAudioVolume(_audioVolume);
         }
       });
+
+      harkRef.current.on('stopped_speaking', () => {
+        setAudioVolume(0);
+      });
     },
     [audioVolume, setAudioVolume]
   );
@@ -312,7 +332,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
       <div className="info">
         <VolumeInspector level={audioVolume} />
 
-        <div className="icons">
+        <PeerViewController>
           <Tooltip title="信息">
             <Button shape="circle" onClick={() => setShowInfo(!showInfo)}>
               <i className="iconfont">&#xe611;</i>
@@ -324,7 +344,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
               <i className="iconfont">&#xe6bb;</i>
             </Button>
           </Tooltip>
-        </div>
+        </PeerViewController>
 
         {showInfo && (
           <div>
@@ -615,11 +635,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
         <div />
       </div>
 
-      {videoVisible && videoScore < 5 && (
-        <div className="spinner-container">
-          <Spinner />
-        </div>
-      )}
+      {videoVisible && videoScore < 5 && <VideoLoading />}
 
       {videoElemPaused && <div className="video-elem-paused" />}
     </PeerViewContainer>

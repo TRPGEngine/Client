@@ -29,12 +29,13 @@ export const Me: React.FC = TMemo(() => {
     [producersArray]
   );
 
-  const connected = useMemo(() => room.state === 'connected', [room.state]);
+  const videoVisible = useMemo(
+    () => Boolean(videoProducer) && !videoProducer.paused,
+    [videoProducer, videoProducer?.paused]
+  );
 
   return (
     <div>
-      <div>state: {room.state}</div>
-      {connected && <MeController />}
       <PeerView
         isMe
         peer={me}
@@ -44,7 +45,7 @@ export const Me: React.FC = TMemo(() => {
         videoRtpParameters={videoProducer ? videoProducer.rtpParameters : null}
         audioTrack={audioProducer ? audioProducer.track : null}
         videoTrack={videoProducer ? videoProducer.track : null}
-        videoVisible={true}
+        videoVisible={videoVisible}
         audioCodec={audioProducer ? audioProducer.codec : null}
         videoCodec={videoProducer ? videoProducer.codec : null}
         audioScore={audioProducer ? audioProducer.score : null}

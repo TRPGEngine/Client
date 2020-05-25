@@ -4,7 +4,7 @@ import {
   useRoomClientContext,
   useRoomStateSelector,
 } from '@src/rtc/RoomContext';
-import { Button, Tooltip } from 'antd';
+import { Button, Tooltip, Space } from 'antd';
 import { setDevices } from '@src/rtc/settingManager';
 import styled from 'styled-components';
 
@@ -107,7 +107,7 @@ export const MeController: React.FC = TMemo(() => {
   }, [shareState, client]);
 
   return (
-    <div>
+    <Space>
       <CapablityBtn className={micState} onClick={handleSwitchMic}>
         {micState === 'on' ? (
           <Tooltip title="关闭语音">
@@ -153,7 +153,7 @@ export const MeController: React.FC = TMemo(() => {
           <i className="iconfont">&#xe69e;</i>
         </Tooltip>
       </CapablityBtn>
-    </div>
+    </Space>
   );
 });
 MeController.displayName = 'MeController';

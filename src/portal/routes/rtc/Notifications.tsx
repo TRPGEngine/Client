@@ -6,6 +6,12 @@ import {
 import { removeNotification } from '@src/rtc/redux/stateActions';
 import { TMemo } from '@shared/components/TMemo';
 import { useTransition, animated, SpringConfig } from 'react-spring';
+import styled from 'styled-components';
+
+const NotificationsContainer = styled.div`
+  position: fixed;
+  top: 0;
+`;
 
 interface Props {
   config?: SpringConfig;
@@ -39,7 +45,7 @@ export const Notifications: React.FC<Props> = TMemo((props) => {
   });
 
   return (
-    <div>
+    <NotificationsContainer>
       {transitions.map(({ key, item, props: { ...style } }) => {
         return (
           <animated.div key={key} style={style}>
@@ -56,7 +62,7 @@ export const Notifications: React.FC<Props> = TMemo((props) => {
           </animated.div>
         );
       })}
-    </div>
+    </NotificationsContainer>
   );
 });
 Notifications.displayName = 'Notifications';
