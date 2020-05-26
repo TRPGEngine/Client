@@ -56,11 +56,14 @@
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-transform-typescript": "^7.9.6",
+    "@babel/runtime": "^7.9.6",
     "@types/inquirer": "^6.5.0",
     "code-push-cli": "^2.1.9",
     "cross-env": "^5.2.1",
     "execa": "^2.0.4",
     "inquirer": "^7.0.0",
-    "metro-react-native-babel-preset": "^0.56.0"
+    "metro-react-native-babel-preset": "^0.59.0"
   }
 }
