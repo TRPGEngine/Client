@@ -105,3 +105,4 @@ export const Peer: React.FC<{
     </div>
   );
 });
+Peer.displayName = 'Peer';

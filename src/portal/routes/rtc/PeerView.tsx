@@ -338,7 +338,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
 
   return (
     <PeerViewContainer isActiveSpeaker={isActiveSpeaker}>
-      <div className="info">
+      <div>
         <VolumeInspector level={audioVolume} />
 
         <PeerViewController>
