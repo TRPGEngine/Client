@@ -1,48 +1,70 @@
 import { createReducer } from '@reduxjs/toolkit';
+import {
+  setRoomState,
+  addProducer,
+  removeProducer,
+  setProducerPaused,
+  setProducerResumed,
+  setProducerTrack,
+  setProducerScore,
+} from '../stateActions';
 
-const initialState = {};
+interface StateType {
+  [producerId: string]: {
+    id: string;
+    deviceLabel?: string;
+    type?: 'front' | 'back' | 'share';
+    paused: boolean;
+    track: MediaStreamTrack;
+    codec: string;
+    rtpParameters?: {};
+    score: { ssrc: number; score: number }[];
+  };
+}
 
-export default createReducer(initialState, (builder) => {
+const initialState: StateType = {};
+
+export default createReducer<StateType>(initialState, (builder) => {
   builder
-    .addCase<string, any>('SET_ROOM_STATE', (state, action) => {
+    .addCase(setRoomState, (state, action) => {
       const roomState = action.payload.state;
 
       if (roomState === 'closed') {
         state = {};
       }
     })
-    .addCase<string, any>('ADD_PRODUCER', (state, action) => {
+    .addCase(addProducer, (state, action) => {
       const { producer } = action.payload;
 
       state[producer.id] = producer;
     })
-    .addCase<string, any>('REMOVE_PRODUCER', (state, action) => {
+    .addCase(removeProducer, (state, action) => {
       const { producerId } = action.payload;
 
       delete state[producerId];
     })
-    .addCase<string, any>('SET_PRODUCER_PAUSED', (state, action) => {
+    .addCase(setProducerPaused, (state, action) => {
       const { producerId } = action.payload;
       const producer = state[producerId];
       const newProducer = { ...producer, paused: true };
 
       state[producerId] = newProducer;
     })
-    .addCase<string, any>('SET_PRODUCER_RESUMED', (state, action) => {
+    .addCase(setProducerResumed, (state, action) => {
       const { producerId } = action.payload;
       const producer = state[producerId];
       const newProducer = { ...producer, paused: false };
 
       state[producerId] = newProducer;
     })
-    .addCase<string, any>('SET_PRODUCER_TRACK', (state, action) => {
+    .addCase(setProducerTrack, (state, action) => {
       const { producerId, track } = action.payload;
       const producer = state[producerId];
       const newProducer = { ...producer, track };
 
       state[producerId] = newProducer;
     })
-    .addCase<string, any>('SET_PRODUCER_SCORE', (state, action) => {
+    .addCase(setProducerScore, (state, action) => {
       const { producerId, score } = action.payload;
       const producer = state[producerId];
 

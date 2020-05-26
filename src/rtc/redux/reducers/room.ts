@@ -1,6 +1,22 @@
 import { createReducer } from '@reduxjs/toolkit';
+import {
+  setRoomUrl,
+  setRoomState,
+  setRoomActiveSpeaker,
+  setRoomStatsPeerId,
+  setRoomFaceDetection,
+  removePeer,
+} from '../stateActions';
 
-const initialState = {
+interface StateType {
+  url: string;
+  state: 'new' | 'connecting' | 'connected' | 'closed';
+  activeSpeakerId: string;
+  statsPeerId: string;
+  faceDetection: boolean;
+}
+
+const initialState: StateType = {
   url: null,
   state: 'new', // new/connecting/connected/disconnected/closed,
   activeSpeakerId: null,
@@ -8,14 +24,14 @@ const initialState = {
   faceDetection: false,
 };
 
-export default createReducer(initialState, (builder) => {
+export default createReducer<StateType>(initialState, (builder) => {
   builder
-    .addCase<string, any>('SET_ROOM_URL', (state, action) => {
+    .addCase(setRoomUrl, (state, action) => {
       const { url } = action.payload;
 
       state.url = url;
     })
-    .addCase<string, any>('SET_ROOM_STATE', (state, action) => {
+    .addCase(setRoomState, (state, action) => {
       const roomState = action.payload.state;
 
       state.state = roomState;
@@ -24,11 +40,11 @@ export default createReducer(initialState, (builder) => {
         state.statsPeerId = null;
       }
     })
-    .addCase<string, any>('SET_ROOM_ACTIVE_SPEAKER', (state, action) => {
+    .addCase(setRoomActiveSpeaker, (state, action) => {
       const { peerId } = action.payload;
       state.activeSpeakerId = peerId;
     })
-    .addCase<string, any>('SET_ROOM_STATS_PEER_ID', (state, action) => {
+    .addCase(setRoomStatsPeerId, (state, action) => {
       const { peerId } = action.payload;
 
       if (state.statsPeerId === peerId) {
@@ -37,12 +53,12 @@ export default createReducer(initialState, (builder) => {
         state.statsPeerId = peerId;
       }
     })
-    .addCase<string, any>('SET_FACE_DETECTION', (state, action) => {
+    .addCase(setRoomFaceDetection, (state, action) => {
       const flag = action.payload;
 
       state.faceDetection = flag;
     })
-    .addCase<string, any>('REMOVE_PEER', (state, action) => {
+    .addCase(removePeer, (state, action) => {
       const { peerId } = action.payload;
 
       if (peerId && peerId === state.activeSpeakerId) {

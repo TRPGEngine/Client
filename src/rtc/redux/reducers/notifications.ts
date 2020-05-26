@@ -1,15 +1,28 @@
 import { createReducer } from '@reduxjs/toolkit';
+import {
+  addNotification,
+  removeNotification,
+  removeAllNotifications,
+} from '../stateActions';
 
-const initialState = [];
+interface NotificationType {
+  id: string;
+  type: 'info' | 'error';
+  text: string;
+}
 
-export default createReducer(initialState, (builder) => {
+type StateType = NotificationType[];
+
+const initialState: StateType = [];
+
+export default createReducer<StateType>(initialState, (builder) => {
   builder
-    .addCase<string, any>('ADD_NOTIFICATION', (state, action) => {
+    .addCase(addNotification, (state, action) => {
       const { notification } = action.payload;
 
       state.push(notification);
     })
-    .addCase<string, any>('REMOVE_NOTIFICATION', (state, action) => {
+    .addCase(removeNotification, (state, action) => {
       const { notificationId } = action.payload;
 
       const idx = state.findIndex(
@@ -19,7 +32,7 @@ export default createReducer(initialState, (builder) => {
         state.splice(idx, 1);
       }
     })
-    .addCase<string, any>('REMOVE_ALL_NOTIFICATIONS', (state, action) => {
+    .addCase(removeAllNotifications, (state, action) => {
       state = [];
     });
 });

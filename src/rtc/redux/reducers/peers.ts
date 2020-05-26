@@ -1,27 +1,48 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { DeviceType } from '@src/rtc/type';
+import {
+  setRoomState,
+  addPeer,
+  removePeer,
+  setPeerDisplayName,
+  addConsumer,
+  removeConsumer,
+  addDataConsumer,
+  removeDataConsumer,
+} from '../stateActions';
 
-const initialState = {};
+interface StateType {
+  [peerId: string]: {
+    id: string;
+    displayName: string;
+    device: DeviceType;
+    consumers: string[];
+    dataConsumers: string[];
+  };
+}
 
-export default createReducer(initialState, (builder) => {
+const initialState: StateType = {};
+
+export default createReducer<StateType>(initialState, (builder) => {
   builder
-    .addCase<string, any>('SET_ROOM_STATE', (state, action) => {
+    .addCase(setRoomState, (state, action) => {
       const roomState = action.payload.state;
 
       if (roomState === 'closed') {
         state = {};
       }
     })
-    .addCase<string, any>('ADD_PEER', (state, action) => {
+    .addCase(addPeer, (state, action) => {
       const { peer } = action.payload;
 
       state[peer.id] = peer;
     })
-    .addCase<string, any>('REMOVE_PEER', (state, action) => {
+    .addCase(removePeer, (state, action) => {
       const { peerId } = action.payload;
 
       delete state[peerId];
     })
-    .addCase<string, any>('SET_PEER_DISPLAY_NAME', (state, action) => {
+    .addCase(setPeerDisplayName, (state, action) => {
       const { displayName, peerId } = action.payload;
       const peer = state[peerId];
 
@@ -31,7 +52,7 @@ export default createReducer(initialState, (builder) => {
 
       peer.displayName = displayName;
     })
-    .addCase<string, any>('ADD_CONSUMER', (state, action) => {
+    .addCase(addConsumer, (state, action) => {
       const { consumer, peerId } = action.payload;
       const peer = state[peerId];
 
@@ -41,7 +62,7 @@ export default createReducer(initialState, (builder) => {
 
       peer.consumers = [...peer.consumers, consumer.id];
     })
-    .addCase<string, any>('REMOVE_CONSUMER', (state, action) => {
+    .addCase(removeConsumer, (state, action) => {
       const { consumerId, peerId } = action.payload;
       const peer = state[peerId];
 
@@ -63,7 +84,7 @@ export default createReducer(initialState, (builder) => {
 
       state[newPeer.id] = newPeer;
     })
-    .addCase<string, any>('ADD_DATA_CONSUMER', (state, action) => {
+    .addCase(addDataConsumer, (state, action) => {
       const { dataConsumer, peerId } = action.payload;
 
       // special case for bot DataConsumer.
@@ -81,7 +102,7 @@ export default createReducer(initialState, (builder) => {
 
       peer.dataConsumers = newDataConsumers;
     })
-    .addCase<string, any>('REMOVE_DATA_CONSUMER', (state, action) => {
+    .addCase(removeDataConsumer, (state, action) => {
       const { dataConsumerId, peerId } = action.payload;
 
       // special case for bot DataConsumer.

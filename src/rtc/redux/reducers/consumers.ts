@@ -1,27 +1,59 @@
 import { createReducer } from '@reduxjs/toolkit';
+import {
+  setRoomState,
+  addConsumer,
+  removeConsumer,
+  setConsumerPaused,
+  setConsumerResumed,
+  setConsumerCurrentLayers,
+  setConsumerPreferredLayers,
+  setConsumerPriority,
+  setConsumerTrack,
+  setConsumerScore,
+} from '../stateActions';
 
-const initialState = {};
+interface StateType {
+  [consumerId: string]: {
+    id: string;
+    type: string;
+    locallyPaused: boolean;
+    remotelyPaused: boolean;
+    rtpParameters: {};
+    codec: string;
+    spatialLayers: number;
+    temporalLayers: number;
+    currentSpatialLayer?: number;
+    currentTemporalLayer?: number;
+    preferredSpatialLayer?: number;
+    preferredTemporalLayer?: number;
+    priority: number;
+    track: MediaStreamTrack;
+    score: { ssrc: number; score: number }[];
+  };
+}
 
-export default createReducer(initialState, (builder) => {
+const initialState: StateType = {};
+
+export default createReducer<StateType>(initialState, (builder) => {
   builder
-    .addCase<string, any>('SET_ROOM_STATE', (state, action) => {
+    .addCase(setRoomState, (state, action) => {
       const roomState = action.payload.state;
 
       if (roomState === 'closed') {
         state = {};
       }
     })
-    .addCase<string, any>('ADD_CONSUMER', (state, action) => {
+    .addCase(addConsumer, (state, action) => {
       const { consumer } = action.payload;
 
       state[consumer.id] = consumer;
     })
-    .addCase<string, any>('REMOVE_CONSUMER', (state, action) => {
+    .addCase(removeConsumer, (state, action) => {
       const { consumerId } = action.payload;
 
       delete state[consumerId];
     })
-    .addCase<string, any>('SET_CONSUMER_PAUSED', (state, action) => {
+    .addCase(setConsumerPaused, (state, action) => {
       const { consumerId, originator } = action.payload;
       const consumer = state[consumerId];
 
@@ -35,7 +67,7 @@ export default createReducer(initialState, (builder) => {
 
       state[consumerId] = newConsumer;
     })
-    .addCase<string, any>('SET_CONSUMER_RESUMED', (state, action) => {
+    .addCase(setConsumerResumed, (state, action) => {
       const { consumerId, originator } = action.payload;
       const consumer = state[consumerId];
 
@@ -49,7 +81,7 @@ export default createReducer(initialState, (builder) => {
 
       state[consumerId] = newConsumer;
     })
-    .addCase<string, any>('SET_CONSUMER_CURRENT_LAYERS', (state, action) => {
+    .addCase(setConsumerCurrentLayers, (state, action) => {
       const { consumerId, spatialLayer, temporalLayer } = action.payload;
       const consumer = state[consumerId];
       const newConsumer = {
@@ -60,7 +92,7 @@ export default createReducer(initialState, (builder) => {
 
       state[consumerId] = newConsumer;
     })
-    .addCase<string, any>('SET_CONSUMER_PREFERRED_LAYERS', (state, action) => {
+    .addCase(setConsumerPreferredLayers, (state, action) => {
       const { consumerId, spatialLayer, temporalLayer } = action.payload;
       const consumer = state[consumerId];
       const newConsumer = {
@@ -71,21 +103,21 @@ export default createReducer(initialState, (builder) => {
 
       state[consumerId] = newConsumer;
     })
-    .addCase<string, any>('SET_CONSUMER_PRIORITY', (state, action) => {
+    .addCase(setConsumerPriority, (state, action) => {
       const { consumerId, priority } = action.payload;
       const consumer = state[consumerId];
       const newConsumer = { ...consumer, priority };
 
       state[consumerId] = newConsumer;
     })
-    .addCase<string, any>('SET_CONSUMER_TRACK', (state, action) => {
+    .addCase(setConsumerTrack, (state, action) => {
       const { consumerId, track } = action.payload;
       const consumer = state[consumerId];
       const newConsumer = { ...consumer, track };
 
       state[consumerId] = newConsumer;
     })
-    .addCase<string, any>('SET_CONSUMER_SCORE', (state, action) => {
+    .addCase(setConsumerScore, (state, action) => {
       const { consumerId, score } = action.payload;
       const consumer = state[consumerId];
 

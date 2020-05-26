@@ -1,22 +1,36 @@
 import { createReducer } from '@reduxjs/toolkit';
+import {
+  setRoomState,
+  addDataProducer,
+  removeDataProducer,
+} from '../stateActions';
 
-const initialState = {};
+interface StateType {
+  [dataProducerId: string]: {
+    id: string;
+    sctpStreamParameters: {};
+    label: string;
+    protocol: string;
+  };
+}
 
-export default createReducer(initialState, (builder) => {
+const initialState: StateType = {};
+
+export default createReducer<StateType>(initialState, (builder) => {
   builder
-    .addCase<string, any>('SET_ROOM_STATE', (state, action) => {
+    .addCase(setRoomState, (state, action) => {
       const roomState = action.payload.state;
 
       if (roomState === 'closed') {
         state = {};
       }
     })
-    .addCase<string, any>('ADD_DATA_PRODUCER', (state, action) => {
+    .addCase(addDataProducer, (state, action) => {
       const { dataProducer } = action.payload;
 
       state[dataProducer.id] = dataProducer;
     })
-    .addCase<string, any>('REMOVE_DATA_PRODUCER', (state, action) => {
+    .addCase(removeDataProducer, (state, action) => {
       const { dataProducerId } = action.payload;
 
       delete state[dataProducerId];
