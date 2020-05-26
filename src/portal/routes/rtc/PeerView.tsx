@@ -13,11 +13,17 @@ import { Tooltip, Input, Button, Space } from 'antd';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { VolumeInspector } from './VolumeInspector';
+import { useRoomStateSelector } from '@src/rtc/RoomContext';
 
 const logger = new Logger('PeerView');
 
-const PeerViewContainer = styled.div`
+const PeerViewContainer = styled.div<{
+  isActiveSpeaker: boolean;
+}>`
   position: relative;
+  border: 1px solid transparent;
+  ${(props) =>
+    props.isActiveSpeaker ? `border-color: ${props.theme.color['tacao']}` : ''};
 `;
 
 const PeerViewController = styled(Space).attrs({
@@ -33,7 +39,7 @@ const Video = styled.video.attrs({
   muted: true,
   controls: false,
 })`
-  width: 320px;
+  width: 100%;
   background: black;
   border: 1px solid grey;
   display: block;
@@ -171,6 +177,9 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
   const audioRef = useRef<HTMLAudioElement>();
   const audioTrackRef = useRef<MediaStreamTrack>(null);
   const videoTrackRef = useRef<MediaStreamTrack>(null);
+  const isActiveSpeaker = useRoomStateSelector(
+    (state) => state.room.activeSpeakerId === peer.id
+  );
 
   const _startVideoResolution = useCallback(() => {
     videoResolutionPeriodicTimerRef.current = setInterval(() => {
@@ -328,7 +337,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
   }, [isMe, audioTrack, videoTrack, videoRtpParameters, maxSpatialLayer]);
 
   return (
-    <PeerViewContainer>
+    <PeerViewContainer isActiveSpeaker={isActiveSpeaker}>
       <div className="info">
         <VolumeInspector level={audioVolume} />
 

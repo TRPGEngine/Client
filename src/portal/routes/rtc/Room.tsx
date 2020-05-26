@@ -17,6 +17,7 @@ export const Room: React.FC = TMemo(() => {
         split="vertical"
         primary="second"
         maxSize={600}
+        minSize={240}
         defaultSize={300}
       >
         <MainScreen />

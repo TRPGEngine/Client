@@ -9,16 +9,12 @@ export const Peers = TMemo((props) => {
     (state) => Object.values(state.peers),
     shallowEqual
   );
-  const activeSpeakerId = useRoomStateSelector(
-    (state) => state.room.activeSpeakerId
-  );
 
   return (
     <div data-component="Peers">
       {peers.map((peer) => {
         return (
           <div key={peer.id}>
-            {peer.id && activeSpeakerId && <div>正在发言</div>}
             <Peer id={peer.id} />
           </div>
         );

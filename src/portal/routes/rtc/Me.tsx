@@ -7,7 +7,6 @@ import {
 } from '@src/rtc/RoomContext';
 import { PeerView } from './PeerView';
 import * as stateActions from '@src/rtc/redux/stateActions';
-import { MeController } from './MeController';
 
 export const Me: React.FC = TMemo(() => {
   const client = useRoomClientContext();
@@ -37,7 +36,7 @@ export const Me: React.FC = TMemo(() => {
   return (
     <div>
       <PeerView
-        isMe
+        isMe={true}
         peer={me}
         audioProducerId={audioProducer ? audioProducer.id : null}
         videoProducerId={videoProducer ? videoProducer.id : null}
