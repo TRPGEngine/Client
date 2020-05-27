@@ -9,12 +9,13 @@ import { PeerView } from './PeerView';
 import { TMemo } from '@shared/components/TMemo';
 
 export const Peer: React.FC<{
-  id: number;
+  id: string;
 }> = TMemo((props) => {
   const roomClient = useRoomClientContext();
   const peer = useRoomStateSelector((state) => state.peers[props.id]);
-  const consumersArray = useRoomStateSelector((state) =>
-    peer.consumers.map((consumerId) => state.consumers[consumerId])
+  const consumersArray = useRoomStateSelector(
+    (state) =>
+      peer?.consumers.map((consumerId) => state.consumers[consumerId]) ?? []
   );
   const audioConsumer = useMemo(
     () => consumersArray.find((consumer) => consumer.track.kind === 'audio'),
@@ -27,7 +28,7 @@ export const Peer: React.FC<{
 
   const dispatch = useRoomStateDispatch();
   const handleStatsClick = useCallback(
-    (peerId: number) => {
+    (peerId: string) => {
       dispatch(stateActions.setRoomStatsPeerId(peerId));
     },
     [dispatch]

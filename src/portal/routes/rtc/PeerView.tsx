@@ -34,6 +34,13 @@ const PeerViewController = styled(Space).attrs({
   right: 4px;
 `;
 
+const PeerInfo = styled(Space)`
+  position: absolute;
+  bottom: 4px;
+  color: white;
+  display: flex;
+`;
+
 const Video = styled.video.attrs({
   autoPlay: true,
   muted: true,
@@ -85,7 +92,7 @@ interface Props {
   ) => void;
   onChangeVideoPriority?: (priority: number) => void;
   onRequestKeyFrame?: () => void;
-  onStatsClick: (id: number) => void;
+  onStatsClick: (id: string) => void;
 }
 
 const ProducerScore: React.FC<{
@@ -178,7 +185,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
   const audioTrackRef = useRef<MediaStreamTrack>(null);
   const videoTrackRef = useRef<MediaStreamTrack>(null);
   const isActiveSpeaker = useRoomStateSelector(
-    (state) => state.room.activeSpeakerId === peer.id
+    (state) => state.room.activeSpeakerId === peer?.id
   );
 
   const _startVideoResolution = useCallback(() => {
@@ -349,7 +356,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
           </Tooltip>
 
           <Tooltip title="查看状态">
-            <Button shape="circle" onClick={() => onStatsClick(peer.id)}>
+            <Button shape="circle" onClick={() => onStatsClick(peer?.id)}>
               <i className="iconfont">&#xe6bb;</i>
             </Button>
           </Tooltip>
@@ -618,17 +625,16 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
           </div>
         )}
 
-        <div>
-          <span className="display-name">{peer.displayName}</span>
+        <PeerInfo>
+          <span className="display-name">{peer?.displayName}</span>
 
-          <div className="row">
-            <span />
+          <div>
             <span className="device-version">
-              {peer.device &&
+              {peer?.device &&
                 `${peer.device.name} ${peer.device.version || null}`}
             </span>
           </div>
-        </div>
+        </PeerInfo>
       </div>
 
       <Video ref={videoRef} />
@@ -639,10 +645,6 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
         muted={isMe || audioMuted}
         controls={false}
       />
-
-      <div className="volume-container">
-        <div />
-      </div>
 
       {videoVisible && videoScore < 5 && <VideoLoading />}
 
