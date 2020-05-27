@@ -37,6 +37,7 @@ const PeerViewController = styled(Space).attrs({
 const PeerInfo = styled(Space)`
   position: absolute;
   bottom: 4px;
+  right: 4px;
   color: white;
   display: flex;
 `;
@@ -50,6 +51,12 @@ const Video = styled.video.attrs({
   background: black;
   border: 1px solid grey;
   display: block;
+`;
+
+const PeerViewStat = styled.div`
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
 `;
 
 const VideoLoading = styled(Spinner)`
@@ -646,9 +653,11 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
         controls={false}
       />
 
-      {videoVisible && videoScore < 5 && <VideoLoading />}
+      <PeerViewStat>
+        {videoVisible && videoScore < 5 && <VideoLoading />}
 
-      {videoElemPaused && <div className="video-elem-paused" />}
+        {videoElemPaused && <i className="iconfont">&#xe6b4;</i>}
+      </PeerViewStat>
     </PeerViewContainer>
   );
 });
