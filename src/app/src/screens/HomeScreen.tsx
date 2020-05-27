@@ -19,7 +19,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { useSpring, animated } from 'react-spring/native';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 
-const NetworkContainer = styled(animated.View)<{
+const NetworkContainer = styled(animated.View as any)<{
   isOnline: boolean;
   tryReconnect: boolean;
 }>`

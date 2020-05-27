@@ -5,7 +5,7 @@ import { LogItem } from './log-item';
 import { useSpring, animated } from 'react-spring';
 import styled from 'styled-components';
 
-const Container = styled(animated.div)`
+const Container = styled(animated.div as any)`
   user-select: none;
   pointer-events: none;
   overflow: hidden;

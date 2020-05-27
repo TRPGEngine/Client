@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TextInputProps, StyleProp } from 'react-native';
-import sb from 'react-native-style-block';
 import TInput from './TInput';
 import styled from 'styled-components/native';
 
@@ -51,7 +50,7 @@ class TFormGroup extends React.Component<Props> {
       this.props.input.style = [];
     }
     return (
-      <FormContainer {...this.props as any}>
+      <FormContainer {...(this.props as any)}>
         <FormLabel>{this.props.label}:</FormLabel>
         <FormInput
           value={this.props.value}

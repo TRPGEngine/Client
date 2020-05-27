@@ -109,14 +109,17 @@ export default class SuspensionWindow extends PureComponent<
       Animated.timing(this.state.animateValue, {
         toValue: isOpen ? 1 : 0,
         duration: 500,
+        useNativeDriver: true,
       }),
       Animated.timing(this.state.translateValue.y, {
         toValue: isOpen ? 0 : this.lastValueY,
         duration: 500,
+        useNativeDriver: true,
       }),
       Animated.timing(this.state.translateValue.x, {
         toValue: isOpen ? 0 : this.lastValueX,
         duration: 500,
+        useNativeDriver: true,
       }),
     ]).start(() => {
       this.setState({ isOpen: isOpen, animating: false });
@@ -218,12 +221,14 @@ export default class SuspensionWindow extends PureComponent<
       Animated.spring(this.state.translateValue.y, {
         toValue: y < 10 ? 10 : height - FloatBallWH - 10,
         // duration: 200,
+        useNativeDriver: true,
       }).start();
     }
     // deal with x position
     Animated.spring(this.state.translateValue.x, {
       toValue: gestureState.moveX > width * 0.5 ? rightPosition : leftPosition,
       // duration: 200,
+      useNativeDriver: true,
     }).start();
 
     // get last time translateValue

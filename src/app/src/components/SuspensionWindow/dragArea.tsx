@@ -37,11 +37,13 @@ export default class extends PureComponent<Props> {
         toValue: { x: -InAreaBigger, y: -InAreaBigger },
         duration: 20,
         easing: Easing.linear,
+        useNativeDriver: true,
       }),
       Animated.timing(this.subAnimaValue, {
         toValue: { x: InAreaBigger, y: InAreaBigger },
         duration: 20,
         easing: Easing.linear,
+        useNativeDriver: true,
       }),
     ]).start();
   };
@@ -52,11 +54,13 @@ export default class extends PureComponent<Props> {
         toValue: { x: 0, y: 0 },
         duration: 50,
         easing: Easing.linear,
+        useNativeDriver: true,
       }),
       Animated.timing(this.subAnimaValue, {
         toValue: { x: 0, y: 0 },
         duration: 50,
         easing: Easing.linear,
+        useNativeDriver: true,
       }),
     ]).start();
   };
@@ -66,6 +70,7 @@ export default class extends PureComponent<Props> {
       toValue: { x: 0, y: 0 },
       duration: 200,
       easing: Easing.linear,
+      useNativeDriver: true,
     }).start();
   };
 
@@ -74,6 +79,7 @@ export default class extends PureComponent<Props> {
       toValue: { x: AreaWH * 0.5, y: AreaWH * 0.5 },
       duration: 200,
       easing: Easing.linear,
+      useNativeDriver: true,
     }).start(() => close && close());
   };
 

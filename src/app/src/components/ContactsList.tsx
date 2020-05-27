@@ -136,7 +136,7 @@ class ContactList extends React.Component<Props, State> {
         renderItem={({ item }) => this.getCell(item)}
         scrollEnabled={true}
         sections={this.getList()}
-        keyExtractor={(item, index) => item + index}
+        keyExtractor={(item, index) => item.uuid + index}
         style={styles.listContainer}
       />
     );
