@@ -24,6 +24,7 @@ import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import './components/messageTypes/__all__';
 import '@web/assets/css/iconfont.css';
+import { bindEventFunc } from '@shared/api/listener';
 
 installServiceWorker(); // 注册 service worker 服务
 
@@ -31,7 +32,7 @@ const store = configureStore();
 attachStore(store);
 
 const api = trpgApi.getInstance();
-trpgApi.bindEventFunc.call(api, store, {
+bindEventFunc.call(api, store, {
   onReceiveMessage: notify(store).onReceiveMessage,
 });
 trpgApi.setEventErrorHandler((info) => {

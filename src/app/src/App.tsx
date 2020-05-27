@@ -19,12 +19,13 @@ import { bindInfo, tryLocalNotify } from './notify';
 import { attachStore } from '@shared/utils/cache-helper';
 import styledTheme from '@src/shared/utils/theme';
 import _get from 'lodash/get';
+import { bindEventFunc } from '@shared/api/listener';
 
 attachStore(store);
 
 import * as trpgApi from '@shared/api/trpg.api';
 const api = trpgApi.getInstance();
-trpgApi.bindEventFunc.call(api, store, {
+bindEventFunc.call(api, store, {
   onReceiveMessage(messageData) {
     const sender_uuid = messageData.sender_uuid;
     const message = messageData.message;
