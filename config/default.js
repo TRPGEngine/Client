@@ -22,6 +22,7 @@ module.exports = {
   },
   sentry: {
     dsn: '',
+    mobileDsn: '', //移动端的dsn
     pushRelease: false, // 仅在production环境使用该变量
   },
   umeng: {
