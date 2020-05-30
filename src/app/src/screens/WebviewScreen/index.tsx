@@ -143,6 +143,8 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
    */
   postMessage(type: string, other: {}) {
     if (this.webview) {
+      // TODO: 即将废弃
+      // check https://github.com/react-native-community/react-native-webview/issues/809
       (this.webview as any).postMessage(
         JSON.stringify({
           type,

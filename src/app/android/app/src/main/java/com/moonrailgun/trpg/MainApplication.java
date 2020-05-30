@@ -2,22 +2,24 @@ package com.moonrailgun.trpg;
 
 import android.app.Application;
 import android.content.Context;
-import com.facebook.react.ReactInstanceManager;
 import java.lang.reflect.InvocationTargetException;
+import android.util.Log;
 
+import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import org.reactnative.camera.RNCameraPackage;
-import org.wonday.pdf.RCTPdfView;
-import com.RNFetchBlob.RNFetchBlobPackage;
-import com.rnfs.RNFSPackage;
-import com.reactnativecommunity.cameraroll.CameraRollPackage;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
-import com.dylanvann.fastimage.FastImageViewPackage;
-import com.reactnativecommunity.webview.RNCWebViewPackage;
-import io.sentry.RNSentryPackage;
+import com.facebook.react.ReactInstanceManager;
+// import org.reactnative.camera.RNCameraPackage;
+// import org.wonday.pdf.RCTPdfView;
+// import com.RNFetchBlob.RNFetchBlobPackage;
+// import com.rnfs.RNFSPackage;
+// import com.reactnativecommunity.cameraroll.CameraRollPackage;
+// import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+// import com.reactnative.ivpusic.imagepicker.PickerPackage;
+// import com.dylanvann.fastimage.FastImageViewPackage;
+// import com.reactnativecommunity.webview.RNCWebViewPackage;
+// import io.sentry.RNSentryPackage;
 import com.microsoft.codepush.react.CodePush;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+// import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -141,4 +143,5 @@ public class MainApplication extends Application implements ReactApplication {
         e.printStackTrace();
       }
     }
+  }
 }

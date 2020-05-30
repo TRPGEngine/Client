@@ -248,13 +248,13 @@ android {
 }
 
 dependencies {
-    implementation project(':@sentry_react-native')
-    implementation project(':react-native-camera')
-    implementation project(':react-native-pdf')
-    implementation project(':rn-fetch-blob')
-    implementation project(':react-native-fs')
-    implementation project(':@react-native-community_cameraroll')
-    implementation project(':react-native-config')
+    // implementation project(':@sentry_react-native')
+    // implementation project(':react-native-camera')
+    // implementation project(':react-native-pdf')
+    // implementation project(':rn-fetch-blob')
+    // implementation project(':react-native-fs')
+    // implementation project(':@react-native-community_cameraroll')
+    // implementation project(':react-native-config')
 
     // 友盟推送
     implementation 'com.umeng.umsdk:vivo-push:2.3.1'
@@ -272,12 +272,13 @@ dependencies {
     implementation 'com.umeng.umsdk:utdid:1.1.5.3' // PushSDK必须依赖utdid库，所以需要加入对应依赖
     implementation 'com.umeng.umsdk:push:6.0.1' // PushSDK
 
-    implementation project(':react-native-image-crop-picker')
-    implementation project(':react-native-fast-image')
-    implementation project(':react-native-webview')
-    implementation project(':react-native-code-push')
-    implementation project(':react-native-gesture-handler')
-    implementation project(':react-native-image-picker')
+    // implementation project(':react-native-image-crop-picker')
+    // implementation project(':react-native-fast-image')
+    // implementation project(':react-native-webview')
+    // implementation project(':react-native-code-push')
+    // implementation project(':react-native-gesture-handler')
+    // implementation project(':react-native-image-picker')
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     // implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
