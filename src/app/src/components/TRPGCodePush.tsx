@@ -5,6 +5,7 @@ import { AppState } from 'react-native';
 
 const options: SyncOptions = {
   updateDialog: null, // 不显示对话框直接更新
+  installMode: CodePush.InstallMode.ON_NEXT_RESUME,
 };
 
 /**
