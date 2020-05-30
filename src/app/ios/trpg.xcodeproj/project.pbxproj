@@ -46,8 +46,6 @@
 		7CB18947996B486BA380C730 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D9BE3F5C0334B3293C54037 /* libCodePush.a */; };
 		673A35FBEC54483A81D92FEF /* antfill.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 151B79ED361A446B958D6A69 /* antfill.ttf */; };
 		916E94F1DF2F40688D38B0BA /* antoutline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA1E3BE4A96E4D6C9103D1F4 /* antoutline.ttf */; };
-		05FA81C8D74E40B498A3FD25 /* libRNSentry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F0221B1BC594CA0A4B87F38 /* libRNSentry.a */; };
-		96FCD085381F419EAEB3E77F /* libRNSentry-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EF15C5C86004DA6B2824FD1 /* libRNSentry-tvOS.a */; };
 		290D07911A1D4F089C449AAC /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE6D0A548BC403283D4A5DF /* libRNCWebView.a */; };
 		B2E85485AF564F8EA63A3C92 /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90E43C7B47BB464F811FB540 /* libFastImage.a */; };
 		81E7BAF4829E4738AEDB27BC /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56B45C0546854721B24AF73F /* libimageCropPicker.a */; };
@@ -59,6 +57,8 @@
 		BFB8CE98FE8C4505B81FA160 /* libRCTPdf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49D39B0BADCB437EAFFC98BB /* libRCTPdf.a */; };
 		B94DDFC13C554D92A9D638A5 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0721E63632024FF9A001AF75 /* libRNCamera.a */; };
 		E1982A47256D46FEA9FE22C6 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7119DED7F744418EAD0B0BC5 /* libReactNativePermissions.a */; };
+		9EC01FBA890741D1B6DE50DC /* libRNSentry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6138F901F41E4AF98ACF1150 /* libRNSentry.a */; };
+		0C3087127B4D46C99CF30CD1 /* libRNSentry-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 861EEB51E03C4381A69EF3EE /* libRNSentry-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -376,9 +376,6 @@
 		6D9BE3F5C0334B3293C54037 /* libCodePush.a */ = {isa = PBXFileReference; name = "libCodePush.a"; path = "libCodePush.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		151B79ED361A446B958D6A69 /* antfill.ttf */ = {isa = PBXFileReference; name = "antfill.ttf"; path = "../node_modules/@ant-design/icons-react-native/fonts/antfill.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		AA1E3BE4A96E4D6C9103D1F4 /* antoutline.ttf */ = {isa = PBXFileReference; name = "antoutline.ttf"; path = "../node_modules/@ant-design/icons-react-native/fonts/antoutline.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CC54BC22BF41412290AD44BB /* RNSentry.xcodeproj */ = {isa = PBXFileReference; name = "RNSentry.xcodeproj"; path = "../node_modules/react-native-sentry/ios/RNSentry.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		0F0221B1BC594CA0A4B87F38 /* libRNSentry.a */ = {isa = PBXFileReference; name = "libRNSentry.a"; path = "libRNSentry.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		2EF15C5C86004DA6B2824FD1 /* libRNSentry-tvOS.a */ = {isa = PBXFileReference; name = "libRNSentry-tvOS.a"; path = "libRNSentry-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		EB325C6FC2034BE380F48CEB /* RNCWebView.xcodeproj */ = {isa = PBXFileReference; name = "RNCWebView.xcodeproj"; path = "../node_modules/react-native-webview/ios/RNCWebView.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		5FE6D0A548BC403283D4A5DF /* libRNCWebView.a */ = {isa = PBXFileReference; name = "libRNCWebView.a"; path = "libRNCWebView.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		46CFEDE41E444372BBE0B79D /* FastImage.xcodeproj */ = {isa = PBXFileReference; name = "FastImage.xcodeproj"; path = "../node_modules/react-native-fast-image/ios/FastImage.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
@@ -400,6 +397,9 @@
 		0721E63632024FF9A001AF75 /* libRNCamera.a */ = {isa = PBXFileReference; name = "libRNCamera.a"; path = "libRNCamera.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		58C759A3BE0C402F9912F6A6 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativePermissions.xcodeproj"; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		7119DED7F744418EAD0B0BC5 /* libReactNativePermissions.a */ = {isa = PBXFileReference; name = "libReactNativePermissions.a"; path = "libReactNativePermissions.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		1C67CEA8CBD04C25B4101734 /* RNSentry.xcodeproj */ = {isa = PBXFileReference; name = "RNSentry.xcodeproj"; path = "../node_modules/@sentry/react-native/ios/RNSentry.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		6138F901F41E4AF98ACF1150 /* libRNSentry.a */ = {isa = PBXFileReference; name = "libRNSentry.a"; path = "libRNSentry.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		861EEB51E03C4381A69EF3EE /* libRNSentry-tvOS.a */ = {isa = PBXFileReference; name = "libRNSentry-tvOS.a"; path = "libRNSentry-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -432,7 +432,6 @@
 				E5E9464CA1554EDA80057144 /* libz.tbd in Frameworks */,
 				0F25702D5A8044BCAFE6F2E1 /* libRNGestureHandler.a in Frameworks */,
 				7CB18947996B486BA380C730 /* libCodePush.a in Frameworks */,
-				05FA81C8D74E40B498A3FD25 /* libRNSentry.a in Frameworks */,
 				290D07911A1D4F089C449AAC /* libRNCWebView.a in Frameworks */,
 				B2E85485AF564F8EA63A3C92 /* libFastImage.a in Frameworks */,
 				81E7BAF4829E4738AEDB27BC /* libimageCropPicker.a in Frameworks */,
@@ -443,6 +442,7 @@
 				BFB8CE98FE8C4505B81FA160 /* libRCTPdf.a in Frameworks */,
 				B94DDFC13C554D92A9D638A5 /* libRNCamera.a in Frameworks */,
 				E1982A47256D46FEA9FE22C6 /* libReactNativePermissions.a in Frameworks */,
+				9EC01FBA890741D1B6DE50DC /* libRNSentry.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +462,7 @@
 				AC20A6077CAB4AE3B33951A8 /* libRNGestureHandler-tvOS.a in Frameworks */,
 				96FCD085381F419EAEB3E77F /* libRNSentry-tvOS.a in Frameworks */,
 				A92316FD2B674F34B0F25035 /* libReactNativeConfig-tvOS.a in Frameworks */,
+				0C3087127B4D46C99CF30CD1 /* libRNSentry-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,7 +640,6 @@
 				34C9A44765754F19BD9DD594 /* RNImagePicker.xcodeproj */,
 				564F9D3D0FB04C88A7C7EA6C /* RNGestureHandler.xcodeproj */,
 				28D17C9C888B441B915FE585 /* CodePush.xcodeproj */,
-				CC54BC22BF41412290AD44BB /* RNSentry.xcodeproj */,
 				EB325C6FC2034BE380F48CEB /* RNCWebView.xcodeproj */,
 				46CFEDE41E444372BBE0B79D /* FastImage.xcodeproj */,
 				1DC34E87DACB43E09B52C0D7 /* imageCropPicker.xcodeproj */,
@@ -650,6 +650,7 @@
 				115B374C676E42FBB83FC701 /* RCTPdf.xcodeproj */,
 				5CD31CD8ABFB426A821C7193 /* RNCamera.xcodeproj */,
 				58C759A3BE0C402F9912F6A6 /* ReactNativePermissions.xcodeproj */,
+				1C67CEA8CBD04C25B4101734 /* RNSentry.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -753,7 +754,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				237F7645B1444F90BAF279C7 /* Upload Debug Symbols to Sentry */,
+				15B1856DA7B147A2BBEA3266 /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
 			);
@@ -1206,7 +1207,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport NODE_BINARY=node\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\nexport NODE_BINARY=node\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1220,9 +1221,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport NODE_BINARY=node\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\nexport NODE_BINARY=node\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		237F7645B1444F90BAF279C7 /* Upload Debug Symbols to Sentry */ = {
+		15B1856DA7B147A2BBEA3266 /* Upload Debug Symbols to Sentry */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1323,9 +1324,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1343,6 +1341,7 @@
 					"$(SRCROOT)/../node_modules/react-native-pdf/ios/RCTPdf/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/..\node_modules\@sentry\react-native\ios",
 				);
 			};
 			name = Debug;
@@ -1366,9 +1365,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1386,6 +1382,7 @@
 					"$(SRCROOT)/../node_modules/react-native-pdf/ios/RCTPdf/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/..\node_modules\@sentry\react-native\ios",
 				);
 			};
 			name = Release;
@@ -1422,6 +1419,7 @@
 					"$(SRCROOT)/../node_modules/react-native-pdf/ios/RCTPdf/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/..\node_modules\@sentry\react-native\ios",
 				);
 			};
 			name = Debug;
@@ -1457,6 +1455,7 @@
 					"$(SRCROOT)/../node_modules/react-native-pdf/ios/RCTPdf/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/..\node_modules\@sentry\react-native\ios",
 				);
 			};
 			name = Release;
@@ -1488,9 +1487,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1508,6 +1504,7 @@
 					"$(SRCROOT)/../node_modules/react-native-pdf/ios/RCTPdf/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/..\node_modules\@sentry\react-native\ios",
 				);
 			};
 			name = Debug;
@@ -1539,9 +1536,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1559,6 +1553,7 @@
 					"$(SRCROOT)/../node_modules/react-native-pdf/ios/RCTPdf/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/..\node_modules\@sentry\react-native\ios",
 				);
 			};
 			name = Release;
@@ -1589,9 +1584,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1608,6 +1600,7 @@
 					"$(SRCROOT)/../node_modules/react-native-pdf/ios/RCTPdf/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/..\node_modules\@sentry\react-native\ios",
 				);
 			};
 			name = Debug;
@@ -1638,9 +1631,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1657,6 +1647,7 @@
 					"$(SRCROOT)/../node_modules/react-native-pdf/ios/RCTPdf/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
+					"$(SRCROOT)/..\node_modules\@sentry\react-native\ios",
 				);
 			};
 			name = Release;

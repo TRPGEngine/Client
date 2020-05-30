@@ -257,6 +257,7 @@ android {
 }
 
 dependencies {
+    implementation project(':@sentry_react-native')
     implementation project(':react-native-camera')
     implementation project(':react-native-pdf')
     implementation project(':rn-fetch-blob')
@@ -283,7 +284,6 @@ dependencies {
     implementation project(':react-native-image-crop-picker')
     implementation project(':react-native-fast-image')
     implementation project(':react-native-webview')
-    implementation project(':react-native-sentry')
     implementation project(':react-native-code-push')
     implementation project(':react-native-gesture-handler')
     implementation project(':react-native-image-picker')
