@@ -75,7 +75,7 @@ jobs:
             - src/app/node_modules
       - run:
           name: bundle
-          command: cd ./src/app && sh ./build/bundle.sh
+          command: cd ./src/app && npm run build:env && sh ./build/bundle.sh
 
   "Build Android App":
     working_directory: ~/trpg
