@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.6](https://github.com/TRPGEngine/Client/compare/v0.3.5...v0.3.6) (2020-06-01)
+
+
+### Bug Fixes
+
+* **app:** 临时修复react-native-progress会引起应用崩溃的bug ([c4ecb31](https://github.com/TRPGEngine/Client/commit/c4ecb31d635e04f6ad85625a7c25a35db7b27a3d))
+
 ### [0.3.5](https://github.com/TRPGEngine/Client/compare/v0.3.4...v0.3.5) (2020-05-16)
 
 
