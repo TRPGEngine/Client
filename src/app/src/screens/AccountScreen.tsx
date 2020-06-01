@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
 import styled from 'styled-components/native';
@@ -61,7 +61,7 @@ class AccountScreen extends React.Component<Props> {
     const name = userInfo.nickname || userInfo.username;
 
     return (
-      <View>
+      <ScrollView>
         <TouchableOpacity
           style={styles.userInfo}
           onPress={() => this.handleModifyProfile()}
@@ -155,7 +155,7 @@ class AccountScreen extends React.Component<Props> {
         >
           退出
         </TButton>
-      </View>
+      </ScrollView>
     );
   }
 }

@@ -1,21 +1,25 @@
 package com.moonrailgun.trpg;
 
 import android.app.Application;
+import android.content.Context;
+import java.lang.reflect.InvocationTargetException;
 import android.util.Log;
 
+import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import org.reactnative.camera.RNCameraPackage;
-import org.wonday.pdf.RCTPdfView;
-import com.RNFetchBlob.RNFetchBlobPackage;
-import com.rnfs.RNFSPackage;
-import com.reactnativecommunity.cameraroll.CameraRollPackage;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
-import com.dylanvann.fastimage.FastImageViewPackage;
-import com.reactnativecommunity.webview.RNCWebViewPackage;
-import io.sentry.RNSentryPackage;
+import com.facebook.react.ReactInstanceManager;
+// import org.reactnative.camera.RNCameraPackage;
+// import org.wonday.pdf.RCTPdfView;
+// import com.RNFetchBlob.RNFetchBlobPackage;
+// import com.rnfs.RNFSPackage;
+// import com.reactnativecommunity.cameraroll.CameraRollPackage;
+// import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+// import com.reactnative.ivpusic.imagepicker.PickerPackage;
+// import com.dylanvann.fastimage.FastImageViewPackage;
+// import com.reactnativecommunity.webview.RNCWebViewPackage;
+// import io.sentry.RNSentryPackage;
 import com.microsoft.codepush.react.CodePush;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+// import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -47,24 +51,30 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-        new MainReactPackage(),
-        new RNCameraPackage(),
-        new RCTPdfView(),
-        new RNFetchBlobPackage(),
-        new RNFSPackage(),
-        new CameraRollPackage(),
-        new ReactNativeConfigPackage(),
-        new DplusReactPackage(),
-        new PickerPackage(),
-        new FastImageViewPackage(),
-        new RNCWebViewPackage(),
-        new RNSentryPackage(),
-        new CodePush(BuildConfig.CODEPUSH_DEPLOYMENTKEY, getApplicationContext(), BuildConfig.DEBUG, BuildConfig.CODEPUSH_URL),
-        new RNGestureHandlerPackage(),
-        new ImagePickerPackage(),
-        new TRPGPackage()
-      );
+      // return Arrays.<ReactPackage>asList(
+      //   new MainReactPackage(),
+      //   new RNCameraPackage(),
+      //   new RCTPdfView(),
+      //   new RNFetchBlobPackage(),
+      //   new RNFSPackage(),
+      //   new CameraRollPackage(),
+      //   new ReactNativeConfigPackage(),
+      //   new DplusReactPackage(),
+      //   new PickerPackage(),
+      //   new FastImageViewPackage(),
+      //   new RNCWebViewPackage(),
+      //   new RNSentryPackage(),
+      //   new CodePush(BuildConfig.CODEPUSH_DEPLOYMENTKEY, getApplicationContext(), BuildConfig.DEBUG, BuildConfig.CODEPUSH_URL),
+      //   new RNGestureHandlerPackage(),
+      //   new ImagePickerPackage(),
+      //   new TRPGPackage()
+      // );
+      @SuppressWarnings("UnnecessaryLocalVariable")
+      List<ReactPackage> packages = new PackageList(this).getPackages();
+      // Packages that cannot be autolinked yet can be added manually here
+      packages.add(new DplusReactPackage());
+      packages.add(new TRPGPackage());
+      return packages;
     }
 
     @Override
@@ -102,5 +112,37 @@ public class MainApplication extends Application implements ReactApplication {
     MiPushRegistar.register(this, BuildConfig.UMENG_MIPUSH_APPID, BuildConfig.UMENG_MIPUSH_APPKEY);
 
     SoLoader.init(this, /* native exopackage */ false);
+    initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+  }
+
+  /**
+   * Loads Flipper in React Native templates. Call this in the onCreate method with something like
+   * initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+   *
+   * @param context
+   * @param reactInstanceManager
+   */
+  private static void initializeFlipper(
+      Context context, ReactInstanceManager reactInstanceManager) {
+    if (BuildConfig.DEBUG) {
+      try {
+        /*
+         We use reflection here to pick up the class that initializes Flipper,
+        since Flipper library is not available in release mode
+        */
+        Class<?> aClass = Class.forName("com.rndiffapp.ReactNativeFlipper");
+        aClass
+            .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
+            .invoke(null, context, reactInstanceManager);
+      } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+      } catch (NoSuchMethodException e) {
+        e.printStackTrace();
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      } catch (InvocationTargetException e) {
+        e.printStackTrace();
+      }
+    }
   }
 }

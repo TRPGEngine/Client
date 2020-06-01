@@ -28,10 +28,10 @@ module.exports = {
       },
     }),
   },
-  // projectRoot: path.resolve(__dirname, './src/app/'),
+  projectRoot: path.resolve(__dirname, '../../src/app/'),
   // projectRoot: path.resolve(
   //   __dirname,
-  //   NODE_ENV === 'production' ? './' : './src/app/'
+  //   NODE_ENV === 'production' ? '../../' : '../../src/app/'
   // ),
-  // watchFolders: [path.resolve(__dirname, './')], // 改为使用REACT_NATIVE_APP_ROOT环境变量
+  watchFolders: [path.resolve(__dirname, '../../')],
 };

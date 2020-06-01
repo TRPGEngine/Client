@@ -19,12 +19,13 @@ import { bindInfo, tryLocalNotify } from './notify';
 import { attachStore } from '@shared/utils/cache-helper';
 import styledTheme from '@src/shared/utils/theme';
 import _get from 'lodash/get';
+import { bindEventFunc } from '@shared/api/listener';
 
 attachStore(store);
 
 import * as trpgApi from '@shared/api/trpg.api';
 const api = trpgApi.getInstance();
-trpgApi.bindEventFunc.call(api, store, {
+bindEventFunc.call(api, store, {
   onReceiveMessage(messageData) {
     const sender_uuid = messageData.sender_uuid;
     const message = messageData.message;
@@ -50,6 +51,7 @@ import ErrorView from './ErrorView';
 import TRPGCodePush from './components/TRPGCodePush';
 import { initConfig } from '@redux/actions/settings';
 import { MsgContainerContextProvider } from '@shared/context/MsgContainerContext';
+import { TMemo } from '@shared/components/TMemo';
 
 (async () => {
   console.log('读取本地存储的token...');
@@ -65,25 +67,24 @@ import { MsgContainerContextProvider } from '@shared/context/MsgContainerContext
   store.dispatch(initConfig());
 })();
 
-class App extends React.Component {
-  render() {
-    return (
-      <ErrorBoundary renderError={ErrorView}>
-        <MsgContainerContextProvider>
-          {/* MsgContainerContextProvider: 这个Provider因为作用效果在Modal上。放在里面无法获取到上下文。没有办法只能先放在最外面(不好看) */}
-          <ReduxProvider store={store}>
-            <AntdProvider>
-              <ThemeProvider theme={styledTheme}>
-                <TRPGCodePush>
-                  <AppWithNavigationState />
-                </TRPGCodePush>
-              </ThemeProvider>
-            </AntdProvider>
-          </ReduxProvider>
-        </MsgContainerContextProvider>
-      </ErrorBoundary>
-    );
-  }
-}
+const App: React.FC = TMemo(() => {
+  return (
+    <ErrorBoundary renderError={ErrorView}>
+      <MsgContainerContextProvider>
+        {/* MsgContainerContextProvider: 这个Provider因为作用效果在Modal上。放在里面无法获取到上下文。没有办法只能先放在最外面(不好看) */}
+        <ReduxProvider store={store}>
+          <AntdProvider>
+            <ThemeProvider theme={styledTheme}>
+              <TRPGCodePush>
+                <AppWithNavigationState />
+              </TRPGCodePush>
+            </ThemeProvider>
+          </AntdProvider>
+        </ReduxProvider>
+      </MsgContainerContextProvider>
+    </ErrorBoundary>
+  );
+});
+App.displayName = 'App';
 
 export default App;

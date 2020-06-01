@@ -34,7 +34,7 @@ interface State {
 
 class UserSelectScreen extends React.Component<Props, State> {
   static navigationOptions: NavigationScreenConfig<NavigationScreenOptions> = (
-    props: Partial<Props>
+    props
   ) => {
     const uuids = props.navigation.getParam('uuids', []);
     const selectedUUIDs = props.navigation.getParam('selectedUUIDs', []);

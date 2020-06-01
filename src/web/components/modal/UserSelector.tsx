@@ -8,7 +8,7 @@ import _uniq from 'lodash/uniq';
 import _without from 'lodash/without';
 import _isEqual from 'lodash/isEqual';
 import _isFunction from 'lodash/isFunction';
-import { useCachedUserInfo } from '@shared/hooks/cache';
+import { useCachedUserInfo } from '@shared/hooks/useCache';
 import { OptionProps, OptionType } from 'antd/lib/select';
 import { GroupInfo } from '@redux/types/group';
 import Avatar from '../Avatar';
@@ -77,14 +77,11 @@ const SelectedUser: React.FC<SelectedUserProps> = React.memo((props) => {
     return props.uuids.map((uuid) => ({ key: uuid }));
   }, [props.uuids]);
 
-  const filterOption = useCallback(
-    (inputValue: string, option: any) => {
-      const label: string = option.props.label ?? '';
+  const filterOption = useCallback((inputValue: string, option: any) => {
+    const label: string = option.props.label ?? '';
 
-      return label.includes(inputValue);
-    },
-    []
-  );
+    return label.includes(inputValue);
+  }, []);
 
   const handleChange = useCallback(
     (items) => {
@@ -212,29 +209,39 @@ export const UserSelector: React.FC<Props> = React.memo((props) => {
     return <Button onClick={handleConfirm}>确认</Button>;
   }, [handleConfirm]);
 
-  return useMemo(() => (
-    <ModalPanel
-      title="选择用户"
-      style={{ width: 600, height: 480 }}
-      actions={actions}
-    >
-      <Container>
-        <div className="select-user">
-          <SelectedUser
-            uuids={selectedUUIDs}
-            allUserUUIDs={allUserUUIDs}
-            onChange={setSelectedUUIDs}
-          />
-        </div>
-        <div className="user-list">
-          <AllUserList
-            selectedUUIDs={selectedUUIDs}
-            allUsers={allUsers}
-            onSelectUUID={handleAppendUUID}
-          />
-        </div>
-      </Container>
-    </ModalPanel>
-  ), [actions, selectedUUIDs, allUserUUIDs, setSelectedUUIDs, allUsers, handleAppendUUID]) ;
+  return useMemo(
+    () => (
+      <ModalPanel
+        title="选择用户"
+        style={{ width: 600, height: 480 }}
+        actions={actions}
+      >
+        <Container>
+          <div className="select-user">
+            <SelectedUser
+              uuids={selectedUUIDs}
+              allUserUUIDs={allUserUUIDs}
+              onChange={setSelectedUUIDs}
+            />
+          </div>
+          <div className="user-list">
+            <AllUserList
+              selectedUUIDs={selectedUUIDs}
+              allUsers={allUsers}
+              onSelectUUID={handleAppendUUID}
+            />
+          </div>
+        </Container>
+      </ModalPanel>
+    ),
+    [
+      actions,
+      selectedUUIDs,
+      allUserUUIDs,
+      setSelectedUUIDs,
+      allUsers,
+      handleAppendUUID,
+    ]
+  );
 });
 UserSelector.displayName = 'UserSelector';

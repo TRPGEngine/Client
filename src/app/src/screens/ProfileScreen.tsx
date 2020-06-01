@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import sb from 'react-native-style-block';
 import appConfig from '../config.app';
@@ -88,7 +88,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
     let name = userInfo.nickname || userInfo.username;
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.header}>
           <TImageViewer images={[avatar.replace('/thumbnail', '')]}>
             <TAvatar
@@ -131,7 +131,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
             )}
           </View>
         ) : null}
-      </View>
+      </ScrollView>
     );
   }
 }

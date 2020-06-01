@@ -1,5 +1,5 @@
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
-import { useCachedUserInfo } from '@shared/hooks/cache';
+import { useCachedUserInfo } from '@shared/hooks/useCache';
 import { getUserName } from '@shared/utils/data-helper';
 
 /**

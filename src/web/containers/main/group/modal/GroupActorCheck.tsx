@@ -10,7 +10,7 @@ import {
 import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
-import { useCachedActorTemplateInfo } from '@shared/hooks/cache';
+import { useCachedActorTemplateInfo } from '@shared/hooks/useCache';
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 

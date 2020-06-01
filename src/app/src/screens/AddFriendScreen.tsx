@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-const {
+import {
   View,
   Text,
   Image,
   TouchableOpacity,
   Keyboard,
   FlatList,
-} = require('react-native');
+} from 'react-native';
 import sb from 'react-native-style-block';
 import { TIcon, TInput, TAvatar } from '../components/TComponent';
 import { findUser } from '../../../shared/redux/actions/user';
@@ -248,8 +248,7 @@ const styles = {
 };
 
 export default connect((state: TRPGState) => ({
-  isFinding:
-    state.user.isFindingUser ?? state.group.isFindingGroup,
+  isFinding: state.user.isFindingUser ?? state.group.isFindingGroup,
   userFindingResult: state.user.findingResult,
   groupFindingResult: state.group.findingResult,
 }))(AddFriendScreen);

@@ -4,3 +4,4 @@ android/app/build/
 .jest/
 version.json
 build/script/.deps
+sentry.properties

@@ -28,7 +28,8 @@ type TMiddleware = Middleware<any, any, any>;
 const middlewares: TMiddleware[] = [thunk];
 middlewares.push(memoryLogger);
 
-if (config.environment === 'development') {
+if (config.environment === 'development' && config.platform !== 'app') {
+  // 移动端不启用logger. 因为远程js调试会非常卡
   middlewares.push(logger);
 }
 

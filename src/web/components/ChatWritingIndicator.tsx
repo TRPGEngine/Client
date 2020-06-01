@@ -39,7 +39,7 @@ const SummaryText = styled.div`
   overflow: hidden;
 `;
 
-const Detail = styled(animated.div)`
+const Detail = styled(animated.div as any)`
   border-top: ${(props) => props.theme.border.thin};
 `;
 
