@@ -118,4 +118,9 @@ export const routes: RouteConfig[] = [
     path: '/trpg/report/preview/:reportUUID',
     component: TLoadable(() => import('@portal/routes/trpg/report/preview')),
   },
+  {
+    title: '招募列表',
+    path: '/trpg/recruit/list',
+    component: TLoadable(() => import('@portal/routes/trpg/recruit/list')),
+  },
 ];
