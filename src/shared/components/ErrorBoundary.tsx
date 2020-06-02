@@ -1,12 +1,16 @@
 import React, { ErrorInfo } from 'react';
+import _isFunction from 'lodash/isFunction';
 
 interface ErrorData {
   error: Error;
   info: ErrorInfo;
 }
 
+export type HandleCatchErrorFn = (error: Error, errorInfo: ErrorInfo) => void;
+
 interface Props {
   renderError: RenderErrorComponent;
+  onCatchError?: HandleCatchErrorFn;
 }
 
 interface State {
@@ -14,7 +18,7 @@ interface State {
   errorInfo: ErrorData;
 }
 
-export type RenderErrorComponent = React.FC<ErrorData | null>;
+export type RenderErrorComponent = React.ComponentType<ErrorData | null>;
 
 /**
  * 通用的错误边界处理组件
@@ -31,6 +35,9 @@ class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    const { onCatchError } = this.props;
+
+    _isFunction(onCatchError) && onCatchError(error, errorInfo);
     this.setState({
       errorInfo: {
         error,
@@ -41,7 +48,11 @@ class ErrorBoundary extends React.Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return this.props.renderError(this.state.errorInfo);
+      const errorInfo = this.state.errorInfo;
+      const RenderComponent = this.props.renderError;
+      return this.state.errorInfo ? (
+        <RenderComponent error={errorInfo.error} info={errorInfo.info} />
+      ) : null;
     }
 
     return this.props.children;
