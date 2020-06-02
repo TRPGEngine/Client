@@ -1,6 +1,7 @@
 // 手动进行配置设置
 // require('../../config/project.config').platform = 'app';
 import '../shared/utils/common';
+import 'react-native-gesture-handler';
 import { AppRegistry, YellowBox } from 'react-native';
 import projectConfig from '../shared/project.config';
 import Config from 'react-native-config';
