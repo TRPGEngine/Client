@@ -18,6 +18,11 @@ import { switchSelectGroup } from '@redux/actions/group';
 const api = trpgApi.getInstance();
 
 /**
+ * TODO: 这里所有的操作都会被弃用
+ * 改用在组件内部使用
+ */
+
+/**
  * 跳转到新的页面
  * @param routeName 路由名
  * @param params 路由参数, 可选

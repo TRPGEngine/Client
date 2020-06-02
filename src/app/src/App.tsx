@@ -1,15 +1,17 @@
 import React from 'react';
 import configureStore from '../../shared/redux/configureStore';
-import navReducer from './redux/reducers/nav';
+// import navReducer from './redux/reducers/nav';
 import {
-  AppWithNavigationState,
-  middleware as routerMiddleware,
+  // AppWithNavigationState,
+  // middleware as routerMiddleware,
+  AppRouter,
 } from './router';
 const store = configureStore({
-  additionReducer: {
-    nav: navReducer,
-  },
-  additionMiddleware: [routerMiddleware],
+  // TODO:
+  // additionReducer: {
+  //   nav: navReducer,
+  // },
+  // additionMiddleware: [routerMiddleware],
 });
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as AntdProvider } from '@ant-design/react-native';
@@ -76,7 +78,7 @@ const App: React.FC = TMemo(() => {
           <AntdProvider>
             <ThemeProvider theme={styledTheme}>
               <TRPGCodePush>
-                <AppWithNavigationState />
+                <AppRouter />
               </TRPGCodePush>
             </ThemeProvider>
           </AntdProvider>
