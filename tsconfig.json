@@ -28,6 +28,7 @@
     "./node_modules/@types/",
     "./config/",
     "./src/",
-    "./test/"
+    "./test/",
+    "./types/"
   ]
 }

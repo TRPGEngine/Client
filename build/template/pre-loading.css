@@ -12,7 +12,11 @@
 }
 
 html, body {
-  overflow: auto;
+  overflow-y: auto;
+  /* 不显示横向滚动条, 至少不在html, body层显示横向滚动条 */
+  overflow-x: hidden;
+  height: auto !important;
+  min-height: 100% !important;
 }
 
 body {
