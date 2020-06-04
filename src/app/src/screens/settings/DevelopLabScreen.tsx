@@ -29,10 +29,6 @@ class DevelopLabScreen extends React.Component<Props> {
     sendBasicNotify({ title: 'test', message: 'message' });
   };
 
-  handleEnvConfig = () => {
-    alert(JSON.stringify(Config, null, 4));
-  };
-
   handlePortalLogin = () => {
     this.props.dispatch(navPortal('/sso/login'));
   };
@@ -56,6 +52,10 @@ class DevelopLabScreen extends React.Component<Props> {
     this.sibling = undefined;
   };
 
+  handleThrowError = () => {
+    throw new Error('error');
+  };
+
   render() {
     const { userUUID } = this.props;
     return (
@@ -69,7 +69,13 @@ class DevelopLabScreen extends React.Component<Props> {
         <DevButton onPress={() => clearAllNotifications()}>
           清理应用通知
         </DevButton>
-        <DevButton onPress={this.handleEnvConfig}>Print Env Config</DevButton>
+        <DevButton onPress={() => alert(JSON.stringify(Config, null, 4))}>
+          Print Env Config
+        </DevButton>
+        <DevButton onPress={() => alert(JSON.stringify(config, null, 4))}>
+          Print Project Config
+        </DevButton>
+        <DevButton onPress={this.handleThrowError}>抛出异常</DevButton>
         <DevButton onPress={this.handlePortalLogin}>打开Portal登录</DevButton>
         <DevButton
           onPress={() =>

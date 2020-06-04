@@ -9,15 +9,14 @@ import Config from 'react-native-config';
 projectConfig.version = Config.JSVERSION;
 import App from './src/App';
 import _get from 'lodash/get';
+import * as Sentry from '@sentry/react-native';
 
 // RN Sentry
 const dsn = Config.SENTRY_MOBILEDSN;
 if (dsn && projectConfig.environment === 'production') {
-  import('@sentry/react-native')
-    .then((module) => module.Sentry)
-    .then((Sentry) => {
-      Sentry.config(dsn).install();
-    });
+  Sentry.init({
+    dsn,
+  });
 }
 
 YellowBox.ignoreWarnings([
