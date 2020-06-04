@@ -4,8 +4,9 @@ import { RecruitItem } from './Item';
 import MasonryLayout from 'react-masonry-layout'; // https://www.npmjs.com/package/react-masonry-layout
 import { RecruitItemType } from '@portal/model/trpg';
 import testRecuitList from './__tests__/data';
-import { Layout, Select, Button, Row } from 'antd';
+import { Layout } from 'antd';
 import Loading from '@portal/components/Loading';
+import { RecruitCreateBtn } from './createBtn';
 
 const { Header, Content } = Layout;
 
@@ -29,18 +30,10 @@ const RecruitList: React.FC = TMemo(() => {
     }, 5000);
   }, [items, setItems, setInfiniteScrollLoading]);
 
-  const handleCreateRecruit = useCallback(() => {
-    // TODO
-    // 打开modal
-    alert('open modal');
-  }, []);
-
   return (
     <Layout>
       <Header style={{ textAlign: 'right' }}>
-        <Button type="primary" ghost={true} onClick={handleCreateRecruit}>
-          发布招募
-        </Button>
+        <RecruitCreateBtn />
       </Header>
       <Content>
         <MasonryLayout

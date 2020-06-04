@@ -10,6 +10,10 @@ import { loginWithPassword } from '@portal/model/sso';
 import { checkToken } from '@portal/utils/auth';
 import { handleError } from '@portal/utils/error';
 
+/**
+ * TODO: 登录表单应当使用LoginForm替换
+ */
+
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
