@@ -1,9 +1,18 @@
 import moment, { MomentInput } from 'moment';
+import './date-init';
 
 /**
  * 日期相关帮助函数
  */
 
+/**
+ * 获取时间距离现在的可读化结果
+ * @param str 时间
+ */
+export function getFromNow(str?: MomentInput): string {
+  const date = str ? moment(str) : moment();
+  return date.fromNow();
+}
 export const getShortDiff = (str: MomentInput): string => {
   let date = str ? moment(str) : moment();
   if (helper.isToday(date)) {

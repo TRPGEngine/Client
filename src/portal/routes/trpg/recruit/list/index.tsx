@@ -1,12 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
+import { RecruitItem } from './Item';
 import MasonryLayout from 'react-masonry-layout'; // https://www.npmjs.com/package/react-masonry-layout
+import { RecruitItemType } from '@portal/model/trpg';
+import testRecuitList from './__tests__/data';
 
-// 或者使用https://github.com/xudafeng/autoresponsive-react?
-// 需要考虑一下哪个库比较大再决定
+// 或者使用 https://codesandbox.io/embed/26mjowzpr ?
 
 const RecruitList: React.FC = TMemo(() => {
-  const [items, setItems] = useState<string[]>([]);
+  const [items, setItems] = useState<RecruitItemType[]>([]);
   const [infiniteScrollLoading, setInfiniteScrollLoading] = useState<boolean>(
     false
   );
@@ -20,7 +22,7 @@ const RecruitList: React.FC = TMemo(() => {
   const loadItems = useCallback(() => {
     setInfiniteScrollLoading(true);
     setTimeout(() => {
-      setItems(items.concat(Array(20).fill('a')));
+      setItems(items.concat(testRecuitList));
       setInfiniteScrollLoading(false);
     }, 1000);
   }, [items, setItems, setInfiniteScrollLoading]);
@@ -36,22 +38,7 @@ const RecruitList: React.FC = TMemo(() => {
         {items.map((item, i) => {
           const height = i % 2 === 0 ? 200 : 100;
 
-          return (
-            <div
-              key={i}
-              style={{
-                width: '180px',
-                height: `${height}px`,
-                lineHeight: `${height}px`,
-                color: 'white',
-                fontSize: '32px',
-                display: 'block',
-                background: 'rgba(0,0,0,0.7)',
-              }}
-            >
-              {i}
-            </div>
-          );
+          return <RecruitItem key={i} data={item} />;
         })}
       </MasonryLayout>
     </div>

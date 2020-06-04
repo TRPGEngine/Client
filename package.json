@@ -83,6 +83,7 @@
     "immer": "^5.1.0",
     "is-uuid": "^1.0.2",
     "lodash": "^4.17.15",
+    "lorem-ipsum": "^2.0.3",
     "lz-string": "^1.4.4",
     "md5": "^2.2.1",
     "memoize-one": "^5.1.1",
@@ -125,6 +126,7 @@
     "tinycon": "^0.6.8",
     "trpg-actor-template": "git+https://github.com/TRPGEngine/ActorTemplate.git",
     "url-regex": "^5.0.0",
+    "uuid": "^3.4.0",
     "wangeditor": "^3.1.1",
     "xml-js": "^1.6.11",
     "xss": "^1.0.6"

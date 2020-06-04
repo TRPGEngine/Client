@@ -26,14 +26,22 @@ export function is(it: string) {
   return !!it && it !== '0' && it !== 'false';
 }
 
-export function getAvatarColorHex(name: string) {
-  if (!name) {
-    return '#ffffff'; // 如果获取不到名字，则返回白色
+/**
+ * 根据文本内容返回一个内置色卡的颜色
+ * @param text 文本
+ */
+export function getTextColorHex(text: string): string {
+  if (!text || !_isString(text)) {
+    return '#ffffff'; // 如果获取不到文本，则返回白色
   }
 
   const color = config.defaultImg.color;
-  const id = str2int(name);
+  const id = str2int(text);
   return color[id % color.length];
+}
+
+export function getAvatarColorHex(name: string) {
+  return getTextColorHex(name);
 }
 
 /**

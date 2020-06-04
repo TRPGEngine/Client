@@ -79,3 +79,15 @@ export const fetchOwnReport = async (): Promise<GameReport[]> => {
 
   return reports;
 };
+
+export interface RecruitItemType {
+  uuid: string;
+  title: string;
+  author: string;
+  content: string;
+  platform: 'trpgengine' | 'qq' | 'other';
+  contact_type: 'user' | 'group';
+  contact_content: string;
+  updatedAt: string;
+  completed: boolean;
+}
