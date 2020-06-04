@@ -4,8 +4,10 @@ import { RecruitItem } from './Item';
 import MasonryLayout from 'react-masonry-layout'; // https://www.npmjs.com/package/react-masonry-layout
 import { RecruitItemType } from '@portal/model/trpg';
 import testRecuitList from './__tests__/data';
+import { Layout, Select, Button, Row } from 'antd';
+import Loading from '@portal/components/Loading';
 
-// 或者使用 https://codesandbox.io/embed/26mjowzpr ?
+const { Header, Content } = Layout;
 
 const RecruitList: React.FC = TMemo(() => {
   const [items, setItems] = useState<RecruitItemType[]>([]);
@@ -16,7 +18,7 @@ const RecruitList: React.FC = TMemo(() => {
   useEffect(() => {
     setTimeout(() => {
       loadItems();
-    }, 1000);
+    }, 2000);
   }, []);
 
   const loadItems = useCallback(() => {
@@ -24,24 +26,37 @@ const RecruitList: React.FC = TMemo(() => {
     setTimeout(() => {
       setItems(items.concat(testRecuitList));
       setInfiniteScrollLoading(false);
-    }, 1000);
+    }, 5000);
   }, [items, setItems, setInfiniteScrollLoading]);
 
-  return (
-    <div>
-      <MasonryLayout
-        id="masonry-layout"
-        style={{ margin: 'auto' }}
-        infiniteScroll={loadItems}
-        infiniteScrollLoading={infiniteScrollLoading}
-      >
-        {items.map((item, i) => {
-          const height = i % 2 === 0 ? 200 : 100;
+  const handleCreateRecruit = useCallback(() => {
+    // TODO
+    // 打开modal
+    alert('open modal');
+  }, []);
 
-          return <RecruitItem key={i} data={item} />;
-        })}
-      </MasonryLayout>
-    </div>
+  return (
+    <Layout>
+      <Header style={{ textAlign: 'right' }}>
+        <Button type="primary" ghost={true} onClick={handleCreateRecruit}>
+          发布招募
+        </Button>
+      </Header>
+      <Content>
+        <MasonryLayout
+          id="masonry-layout"
+          style={{ margin: 'auto' }}
+          infiniteScrollDisabled={true}
+          infiniteScrollSpinner={<Loading style={{ padding: 10 }} />}
+          infiniteScroll={loadItems}
+          infiniteScrollLoading={infiniteScrollLoading}
+        >
+          {items.map((item, i) => {
+            return <RecruitItem key={i} data={item} />;
+          })}
+        </MasonryLayout>
+      </Content>
+    </Layout>
   );
 });
 RecruitList.displayName = 'RecruitList';
