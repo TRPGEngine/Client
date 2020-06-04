@@ -1,18 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Formik } from 'formik';
-import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Col, Input, Button, Typography, Modal, notification, Row } from 'antd';
+import { Col } from 'antd';
 import qs from 'qs';
 import _isString from 'lodash/isString';
-import { loginWithPassword } from '@portal/model/sso';
 import { checkToken } from '@portal/utils/auth';
-import { handleError } from '@portal/utils/error';
-
-/**
- * TODO: 登录表单应当使用LoginForm替换
- */
+import { LoginForm } from '@portal/components/LoginForm';
 
 const Container = styled.div`
   width: 100vw;
@@ -34,11 +27,6 @@ const Window = styled(Col).attrs({
   box-shadow: ${(props) => props.theme.boxShadow.normal};
   padding: 16px;
 `;
-
-interface Values {
-  username: string;
-  password: string;
-}
 
 class Login extends React.Component {
   componentDidMount() {
@@ -66,70 +54,15 @@ class Login extends React.Component {
     }
   }
 
-  handleSubmit = (values: Values) => {
-    const { username, password } = values;
-    if (!values.username || !values.password) {
-      Modal.error({ content: '用户名密码不能为空' });
-      return;
-    }
-
-    loginWithPassword(username, password)
-      .then(() => {
-        this.gotoNextUrl();
-      })
-      .catch(handleError);
+  handleLoginSuccess = () => {
+    this.gotoNextUrl();
   };
 
   render() {
     return (
       <Container>
         <Window>
-          <Col sm={24} md={{ span: 16, offset: 8 }}>
-            <Typography.Title level={3} style={{ marginBottom: 16 }}>
-              登录TRPG
-            </Typography.Title>
-          </Col>
-
-          <Formik<Values>
-            initialValues={{ username: '', password: '' }}
-            onSubmit={this.handleSubmit}
-          >
-            {({ values, handleChange, handleSubmit }) => (
-              <Form
-                labelCol={{ sm: 24, md: 8 }}
-                wrapperCol={{ sm: 24, md: 16 }}
-                onSubmit={handleSubmit}
-              >
-                <Form.Item label="用户名">
-                  <Input
-                    name="username"
-                    size="large"
-                    value={values.username}
-                    onChange={handleChange}
-                  />
-                </Form.Item>
-                <Form.Item label="密码">
-                  <Input
-                    name="password"
-                    type="password"
-                    size="large"
-                    value={values.password}
-                    onChange={handleChange}
-                  />
-                </Form.Item>
-                <Form.Item wrapperCol={{ sm: 24, md: { span: 16, offset: 8 } }}>
-                  <Button
-                    type="primary"
-                    size="large"
-                    htmlType="submit"
-                    style={{ width: '100%' }}
-                  >
-                    提交
-                  </Button>
-                </Form.Item>
-              </Form>
-            )}
-          </Formik>
+          <LoginForm onLoginSuccess={this.handleLoginSuccess} />
         </Window>
       </Container>
     );
