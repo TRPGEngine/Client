@@ -16,8 +16,7 @@ export const LoginEnsureContainer: React.FC = TMemo((props) => {
   useEffect(() => {
     setChecking(true);
 
-    // TODO: 需要改为不跳转
-    checkToken()
+    checkToken(false)
       .then(() => {
         setIsLogin(true);
       })

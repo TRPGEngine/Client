@@ -1,4 +1,4 @@
-import React, { useCallback, Fragment } from 'react';
+import React, { useCallback, Fragment, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { handleError } from '@portal/utils/error';
 import { loginWithPassword } from '@portal/model/sso';
@@ -17,6 +17,7 @@ interface LoginFormProps {
   onLoginSuccess?: () => void;
 }
 export const LoginForm: React.FC<LoginFormProps> = TMemo((props) => {
+  const [loading, setLoading] = useState(false);
   const { values, handleChange, handleSubmit } = useFormik({
     initialValues: { username: '', password: '' },
     onSubmit: useCallback(
@@ -27,13 +28,17 @@ export const LoginForm: React.FC<LoginFormProps> = TMemo((props) => {
           return;
         }
 
+        setLoading(true);
         loginWithPassword(username, password)
           .then(() => {
             _isFunction(props.onLoginSuccess) && props.onLoginSuccess();
           })
-          .catch(handleError);
+          .catch(handleError)
+          .finally(() => {
+            setLoading(false);
+          });
       },
-      [props.onLoginSuccess]
+      [props.onLoginSuccess, setLoading]
     ),
   });
 
@@ -71,6 +76,7 @@ export const LoginForm: React.FC<LoginFormProps> = TMemo((props) => {
           <Button
             type="primary"
             size="large"
+            loading={loading}
             htmlType="submit"
             style={{ width: '100%' }}
           >

@@ -33,14 +33,10 @@ class Login extends React.Component {
     if (window.localStorage.getItem('jwt')) {
       // 处理登录事件
       console.log('正在尝试登录...');
-      checkToken()
-        .then(() => {
-          // 当前Token有效
-          this.gotoNextUrl();
-        })
-        .catch((err) => {
-          console.log('当前Token无效', err);
-        });
+      checkToken().then(() => {
+        // 当前Token有效
+        this.gotoNextUrl();
+      });
     }
   }
 

@@ -35,7 +35,7 @@ const RecruitList: React.FC = TMemo(() => {
       <Header style={{ textAlign: 'right' }}>
         <RecruitCreateBtn />
       </Header>
-      <Content>
+      <Content style={{ paddingTop: 12 }}>
         <MasonryLayout
           id="masonry-layout"
           style={{ margin: 'auto' }}

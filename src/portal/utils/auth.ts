@@ -4,7 +4,7 @@ import _isUndefined from 'lodash/isUndefined';
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import _isObject from 'lodash/isObject';
-import { request } from './request';
+import { request, navToLoginPage } from './request';
 import { getJWTPayload } from '@shared/utils/jwt-helper';
 
 let token: string;
@@ -25,8 +25,16 @@ export const getToken = (): string => {
  * 如果校验不通过会由request的拦截器自动跳转到登录页
  * 该检查一般用于表单填写页面防止填了一堆数据后提交失败跳转到登录页的挫败感
  */
-export const checkToken = (): Promise<void> => {
-  return request.post('/player/sso/check');
+export const checkToken = async (autoNav = true): Promise<void> => {
+  try {
+    await request.post('/player/sso/check');
+  } catch (err) {
+    if (autoNav) {
+      // 如果出错则跳转到登录页面
+      navToLoginPage();
+    }
+    throw err;
+  }
 };
 
 interface UserInfo {
