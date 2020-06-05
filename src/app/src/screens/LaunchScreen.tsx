@@ -3,7 +3,7 @@ import { connect, DispatchProp } from 'react-redux';
 import { View, Text, TouchableOpacity, Animated } from 'react-native';
 import sb from 'react-native-style-block';
 import config from '@shared/project.config';
-import { replaceNav } from '../redux/actions/nav';
+import { replaceNav, resetScreenAction } from '../redux/actions/nav';
 import { Modal } from '@ant-design/react-native';
 import SystemStatus from '../components/SystemStatus';
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
@@ -84,9 +84,9 @@ class LaunchScreen extends React.Component<Props> {
       this.setState({ tipText: '正在尝试自动登陆...' });
     } else {
       if (this.props.isLogin) {
-        this.props.dispatch(replaceNav('Main'));
+        this.props.navigation.dispatch(resetScreenAction('Main'));
       } else {
-        this.props.dispatch(replaceNav('Login'));
+        this.props.navigation.dispatch(resetScreenAction('Login'));
       }
     }
   }

@@ -1,11 +1,9 @@
-import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
-import { login } from '../../../shared/redux/actions/user';
-import { openWebview } from '../redux/actions/nav';
-import config from '../../../shared/project.config';
+import { login } from '@shared/redux/actions/user';
+import { openWebview, resetScreenAction } from '../redux/actions/nav';
+import config from '@shared/project.config';
 import appConfig from '../config.app';
 import {
   TButton,
@@ -15,6 +13,14 @@ import {
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import _isEmpty from 'lodash/isEmpty';
 import styled from 'styled-components/native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '@app/router';
+import { TMemo } from '@shared/components/TMemo';
+import {
+  useTRPGDispatch,
+  useTRPGSelector,
+} from '@shared/hooks/useTRPGSelector';
+import { useNavigation } from '@react-navigation/native';
 
 const LoginTitle = styled.Text`
   text-align: left;
@@ -34,30 +40,39 @@ const OAuthTipText = styled.Text`
   font-size: 12px;
 `;
 
-interface Props extends TRPGDispatchProp {
-  oauthList: string[];
-}
-class LoginScreen extends React.Component<Props> {
-  state = {
-    username: '',
-    password: '',
-  };
-
-  handleLogin() {
-    let { username, password } = this.state;
-    if (!!username && !!password) {
-      this.props.dispatch(login(this.state.username, this.state.password));
+interface Props extends StackScreenProps<RootStackParamList, 'Login'> {}
+export const LoginScreen: React.FC<Props> = TMemo((props) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigation = useNavigation();
+  const dispatch = useTRPGDispatch();
+  const oauthList = useTRPGSelector<string[]>((state) => {
+    const oauth = state.settings.config.oauth;
+    if (Array.isArray(oauth)) {
+      return oauth;
+    } else {
+      return [];
     }
-  }
+  });
 
-  handleQQLogin() {
-    this.props.dispatch(
-      openWebview(config.file.url + '/oauth/qq/login?platform=app')
-    );
-  }
+  const isLogin = useTRPGSelector((state) => state.user.isLogin);
+  useEffect(() => {
+    if (isLogin) {
+      navigation.dispatch(resetScreenAction('Main'));
+    }
+  }, [isLogin, navigation]);
 
-  renderOAuth() {
-    const { oauthList } = this.props;
+  const handleLogin = useCallback(() => {
+    if (!!username && !!password) {
+      dispatch(login(username, password));
+    }
+  }, [dispatch, username, password]);
+
+  const handleQQLogin = useCallback(() => {
+    dispatch(openWebview(config.file.url + '/oauth/qq/login?platform=app'));
+  }, [dispatch]);
+
+  const OAuthNode = useMemo(() => {
     if (_isEmpty(oauthList)) {
       return;
     }
@@ -67,7 +82,7 @@ class LoginScreen extends React.Component<Props> {
         <OAuthTipText>第三方登录</OAuthTipText>
         <View style={styles.oauthBtnContainer}>
           {oauthList.includes('qq') ? (
-            <TouchableOpacity onPress={() => this.handleQQLogin()}>
+            <TouchableOpacity onPress={handleQQLogin}>
               <Image
                 style={styles.oauthBtnImage}
                 source={appConfig.oauth.qq.icon}
@@ -77,47 +92,41 @@ class LoginScreen extends React.Component<Props> {
         </View>
       </View>
     );
-  }
+  }, [oauthList, handleQQLogin]);
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <TLoading />
-        <LoginTitle>欢迎来到TRPG Game</LoginTitle>
-        <TFormGroup
-          label="用户名"
-          value={this.state.username}
-          onChangeText={(username) => this.setState({ username })}
-          input={{
-            placeholder: '请输入用户名',
-          }}
-        />
-        <TFormGroup
-          label="密码"
-          value={this.state.password}
-          onChangeText={(password) => this.setState({ password })}
-          input={{
-            placeholder: '请输入密码',
-            secureTextEntry: true,
-          }}
-        />
-        <TButton onPress={() => this.handleLogin()}>登录</TButton>
-        <TouchableOpacity
-          style={styles.registerBtn}
-          onPress={() =>
-            this.props.dispatch(
-              NavigationActions.navigate({ routeName: 'Register' })
-            )
-          }
-        >
-          <RegisterText>没有账户？点击此处注册</RegisterText>
-        </TouchableOpacity>
+  return (
+    <View style={styles.container}>
+      <TLoading />
+      <LoginTitle>欢迎来到TRPG Game</LoginTitle>
+      <TFormGroup
+        label="用户名"
+        value={username}
+        onChangeText={(username) => setUsername(username)}
+        input={{
+          placeholder: '请输入用户名',
+        }}
+      />
+      <TFormGroup
+        label="密码"
+        value={password}
+        onChangeText={(password) => setPassword(password)}
+        input={{
+          placeholder: '请输入密码',
+          secureTextEntry: true,
+        }}
+      />
+      <TButton onPress={handleLogin}>登录</TButton>
+      <TouchableOpacity
+        style={styles.registerBtn}
+        onPress={() => navigation.navigate('Register')}
+      >
+        <RegisterText>没有账户？点击此处注册</RegisterText>
+      </TouchableOpacity>
 
-        {this.renderOAuth()}
-      </View>
-    );
-  }
-}
+      {OAuthNode}
+    </View>
+  );
+});
 
 const styles = {
   container: [
@@ -131,6 +140,4 @@ const styles = {
   oauthBtnImage: [sb.size(40, 40), sb.radius(20)],
 };
 
-export default connect((state: TRPGState) => ({
-  oauthList: state.settings.config.oauth ?? [],
-}))(LoginScreen);
+export default LoginScreen;

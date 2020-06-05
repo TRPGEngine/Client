@@ -15,6 +15,7 @@ import _get from 'lodash/get';
 import * as trpgApi from '@shared/api/trpg.api';
 import { getWebToken } from '@shared/utils/portal-helper';
 import { switchSelectGroup } from '@redux/actions/group';
+import { CommonActions } from '@react-navigation/native';
 const api = trpgApi.getInstance();
 
 /**
@@ -149,3 +150,14 @@ export const selectUser = function(
     );
   };
 };
+
+export function resetScreenAction(routeName: string) {
+  return CommonActions.reset({
+    index: 0,
+    routes: [
+      {
+        name: routeName,
+      },
+    ],
+  });
+}

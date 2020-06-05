@@ -1,41 +1,38 @@
-import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import React, { useCallback } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
-import { NavigationActions } from 'react-navigation';
 import { TIcon } from '../components/TComponent';
 import ContactsList from '../components/ContactsList';
+import { useNavigation } from '@react-navigation/native';
+import { TMemo } from '@shared/components/TMemo';
 
-class ContactsScreen extends React.Component<DispatchProp> {
-  handlePressAddFriend() {
-    this.props.dispatch(NavigationActions.navigate({ routeName: 'AddFriend' }));
-  }
+const ContactsScreen: React.FC = TMemo(() => {
+  const navigation = useNavigation();
+  const handlePressAddFriend = useCallback(() => {
+    navigation.dangerouslyGetParent().navigate('AddFriend');
+  }, [navigation]);
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.iconBtn}
-            onPress={() => this.handlePressAddFriend()}
-          >
-            <View style={styles.iconBtnView}>
-              <TIcon
-                style={[...styles.icon, sb.bgColor('#16a085')]}
-                icon="&#xe61d;"
-              />
-              <Text>寻找基友/姬友/团</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.list}>
-          <ContactsList />
-        </View>
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.iconBtn} onPress={handlePressAddFriend}>
+          <View style={styles.iconBtnView}>
+            <TIcon
+              style={[...styles.icon, sb.bgColor('#16a085')]}
+              icon="&#xe61d;"
+            />
+            <Text>寻找基友/姬友/团</Text>
+          </View>
+        </TouchableOpacity>
       </View>
-    );
-  }
-}
+
+      <View style={styles.list}>
+        <ContactsList />
+      </View>
+    </View>
+  );
+});
+ContactsScreen.displayName = 'ContactsScreen';
 
 const styles = {
   container: [sb.flex()],
@@ -62,4 +59,4 @@ const styles = {
   list: [sb.flex()],
 };
 
-export default connect()(ContactsScreen);
+export default ContactsScreen;

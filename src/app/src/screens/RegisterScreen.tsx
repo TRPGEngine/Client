@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
 import { TButton, TFormGroup } from '../components/TComponent';
-import { showLoading, showAlert, hideAlert } from '../../../shared/redux/actions/ui';
-import { register } from '../../../shared/redux/actions/user';
+import { showLoading, showAlert, hideAlert } from '@shared/redux/actions/ui';
+import { register } from '@shared/redux/actions/user';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '@app/router';
 
-interface Props {
+interface Props extends StackScreenProps<RootStackParamList, 'Register'> {
   dispatch: any;
 }
 
@@ -72,7 +74,7 @@ class RegisterScreen extends React.Component<Props, State> {
               content: '注册成功',
               onConfirm: () => {
                 this.props.dispatch(hideAlert());
-                this.props.dispatch(NavigationActions.back());
+                this.props.navigation.goBack();
               },
             })
           );

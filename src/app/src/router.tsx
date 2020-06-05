@@ -26,6 +26,7 @@ import { NavigationContainer, RouteConfig } from '@react-navigation/native';
 import {
   createStackNavigator,
   StackNavigationOptions,
+  CardStyleInterpolators,
 } from '@react-navigation/stack';
 import {
   createBottomTabNavigator,
@@ -164,13 +165,13 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
   LaunchScreen: {
     screen: LaunchScreen,
     navigationOptions: {
-      header: null,
+      header: () => null,
     },
   },
   Login: {
     screen: LoginScreen,
     navigationOptions: {
-      header: null,
+      header: () => null,
     },
   },
   Register: {
@@ -182,7 +183,7 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
   Main: {
     screen: MainNavigatorContainer,
     navigationOptions: {
-      headerLeft: null,
+      headerLeft: () => null,
       title: 'TRPG Game',
     },
   },
@@ -364,7 +365,7 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
   },
 };
 
-// TODO
+// ================== TODO ==================
 // transitionConfig: () => ({
 //   screenInterpolator: StackViewStyleInterpolator.forHorizontal,
 // }),
@@ -442,7 +443,10 @@ export const AppRouter: React.FC = TMemo(() => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="LaunchScreen"
-        screenOptions={{ gestureEnabled: false }}
+        screenOptions={{
+          gestureEnabled: false,
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
         mode="card"
       >
         {_toPairs(stackRoutes).map(([name, info]) => {

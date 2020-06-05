@@ -1,19 +1,26 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
 import styled from 'styled-components/native';
 import config from '../../../shared/project.config';
 import appConfig from '@app/config.app';
 import { logout } from '../../../shared/redux/actions/user';
-import { openWebview, switchNav, navPortal } from '../redux/actions/nav';
+import {
+  openWebview,
+  switchNav,
+  navPortal,
+  resetScreenAction,
+} from '../redux/actions/nav';
 import { TButton, TAvatar } from '../components/TComponent';
 import { TIcon } from '../components/TComponent';
 import DevContainer from '../components/DevContainer';
-
 import { List } from '@ant-design/react-native';
 import { TRPGState } from '@redux/types/__all__';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { RootTabParamList } from '@app/router';
+import { CommonActions } from '@react-navigation/native';
+
 const Item = List.Item;
 
 const AccountUserNameText = styled.Text`
@@ -32,17 +39,18 @@ const AccountListThumb = styled(TIcon)<{ color: string }>`
 
 type Props = DispatchProp<any> & {
   userInfo: any;
-};
+} & BottomTabScreenProps<RootTabParamList, 'Account'>;
 
 class AccountScreen extends React.Component<Props> {
   handleModifyProfile() {
-    this.props.dispatch(
-      NavigationActions.navigate({ routeName: 'ProfileModify' })
-    );
+    this.props.navigation.dangerouslyGetParent()?.navigate('ProfileModify');
   }
 
   handleLogout() {
     this.props.dispatch(logout());
+    this.props.navigation
+      .dangerouslyGetParent()
+      .dispatch(resetScreenAction('Login'));
   }
 
   render() {
@@ -115,9 +123,7 @@ class AccountScreen extends React.Component<Props> {
             thumb={<AccountListThumb color="gold" icon="&#xe609;" />}
             arrow="horizontal"
             onPress={() => {
-              this.props.dispatch(
-                NavigationActions.navigate({ routeName: 'Settings' })
-              );
+              this.props.navigation.dangerouslyGetParent().navigate('Settings');
             }}
           >
             设置
@@ -128,9 +134,7 @@ class AccountScreen extends React.Component<Props> {
           <Item
             arrow="horizontal"
             onPress={() => {
-              this.props.dispatch(
-                NavigationActions.navigate({ routeName: 'About' })
-              );
+              this.props.navigation.dangerouslyGetParent().navigate('About');
             }}
           >
             关于TRPG Engine
