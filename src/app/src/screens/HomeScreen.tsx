@@ -67,16 +67,6 @@ interface Props extends DispatchProp<any> {
   usercache: any;
 }
 class HomeScreen extends React.Component<Props> {
-  static navigationOptions = {
-    headerTitle: 'TRPG',
-    // tabBarLabel: 'TRPG',
-    tabBarIcon: ({ tintColor }) => (
-      <Text style={{ fontFamily: 'iconfont', fontSize: 26, color: tintColor }}>
-        &#xe648;
-      </Text>
-    ),
-  };
-
   state = {
     isRefreshing: false,
   };

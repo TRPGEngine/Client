@@ -37,26 +37,6 @@ interface State {
   showQuickDiceModal: boolean;
 }
 class ChatScreen extends React.Component<Props, State> {
-  static navigationOptions = (props: Props) => {
-    const navigation = props.navigation;
-    const { state, getParam, setParams } = navigation;
-    const { params } = state;
-    const type = getParam('type');
-    const isWriting = getParam('isWriting', false);
-    return {
-      headerTitle: isWriting ? '正在输入...' : `与 ${params.name} 的聊天`,
-      headerRight: ['user', 'group'].includes(type) ? (
-        <View style={{ marginRight: 10 }}>
-          <TIcon
-            icon="&#xe607;"
-            style={{ fontSize: 26 } as any}
-            onPress={() => params.headerRightFunc && params.headerRightFunc()}
-          />
-        </View>
-      ) : null,
-    };
-  };
-
   get converseType() {
     return this.props.navigation.getParam('type', 'user');
   }

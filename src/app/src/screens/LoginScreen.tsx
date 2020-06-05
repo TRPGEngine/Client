@@ -38,15 +38,6 @@ interface Props extends TRPGDispatchProp {
   oauthList: string[];
 }
 class LoginScreen extends React.Component<Props> {
-  static navigationOptions = {
-    header: null,
-    tabBarIcon: ({ tintColor }) => (
-      <Text style={{ fontFamily: 'iconfont', fontSize: 26, color: tintColor }}>
-        &#xe958;
-      </Text>
-    ),
-  };
-
   state = {
     username: '',
     password: '',

@@ -7,16 +7,6 @@ import { TIcon } from '../components/TComponent';
 import ContactsList from '../components/ContactsList';
 
 class ContactsScreen extends React.Component<DispatchProp> {
-  static navigationOptions = {
-    // tabBarLabel: '通讯录',
-    title: '通讯录',
-    tabBarIcon: ({ tintColor }) => (
-      <Text style={{ fontFamily: 'iconfont', fontSize: 26, color: tintColor }}>
-        &#xe958;
-      </Text>
-    ),
-  };
-
   handlePressAddFriend() {
     this.props.dispatch(NavigationActions.navigate({ routeName: 'AddFriend' }));
   }

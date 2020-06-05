@@ -33,33 +33,6 @@ interface State {
 }
 
 class UserSelectScreen extends React.Component<Props, State> {
-  static navigationOptions: NavigationScreenConfig<NavigationScreenOptions> = (
-    props
-  ) => {
-    const uuids = props.navigation.getParam('uuids', []);
-    const selectedUUIDs = props.navigation.getParam('selectedUUIDs', []);
-    const onSelected = props.navigation.getParam('onSelected', _noop);
-
-    return {
-      headerTitle:
-        selectedUUIDs.length > 0
-          ? `已选择 ${selectedUUIDs.length} / ${uuids.length}`
-          : props.navigation.getParam('title', '选择用户'),
-      headerRight: (
-        <View style={{ marginRight: 10 }}>
-          <TouchableOpacity
-            onPress={() => {
-              onSelected(selectedUUIDs);
-              props.navigation.dispatch(NavigationActions.back());
-            }}
-          >
-            <Text>完成</Text>
-          </TouchableOpacity>
-        </View>
-      ),
-    };
-  };
-
   state: Readonly<State> = {
     selectedUUIDs: [],
   };

@@ -1,5 +1,12 @@
 import React from 'react';
-import { Text, View, BackHandler, ToastAndroid } from 'react-native';
+import {
+  Text,
+  View,
+  BackHandler,
+  ToastAndroid,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 // import {
 //   NavigationActions,
 //   createStackNavigator as createStackNavigatorOld,
@@ -14,9 +21,16 @@ import { connect, DispatchProp } from 'react-redux';
 import { uiHandlerCollection } from './utils/ui-state-handler';
 import _get from 'lodash/get';
 import _toPairs from 'lodash/toPairs';
+import _noop from 'lodash/noop';
 import { NavigationContainer, RouteConfig } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
+import {
+  createBottomTabNavigator,
+  BottomTabNavigationOptions,
+} from '@react-navigation/bottom-tabs';
 import { TMemo } from '@shared/components/TMemo';
 
 import LaunchScreen from './screens/LaunchScreen';
@@ -43,24 +57,61 @@ import DocumentScreen from './screens/DocumentScreen';
 import GroupMemberScreen from './screens/GroupMemberScreen';
 import { AboutScreen } from './screens/about/AboutScreen';
 import { GroupRuleScreen } from './screens/GroupRule';
+import { ChatParams } from './types/params';
+import { TIcon } from './components/TComponent';
 
-interface RouterMap {
+interface RouterMap<ScreenOptions extends object = any> {
   [screenName: string]: {
     screen: React.ComponentType<any>;
-    navigationOptions?: RouteConfig<any, any, any, any, any>['options'];
+    navigationOptions?: RouteConfig<
+      any,
+      any,
+      any,
+      ScreenOptions,
+      any
+    >['options'];
   };
 }
 
+export type RootTabParamList = {
+  TRPG: undefined;
+  Contacts: undefined;
+  Account: undefined;
+};
 const Tab = createBottomTabNavigator();
-const tabRoutes: RouterMap = {
+const tabRoutes: RouterMap<BottomTabNavigationOptions> = {
   TRPG: {
     screen: HomeScreen,
+    navigationOptions: {
+      tabBarLabel: 'TRPG',
+      tabBarIcon: ({ color }) => (
+        <Text style={{ fontFamily: 'iconfont', fontSize: 26, color }}>
+          &#xe648;
+        </Text>
+      ),
+    },
   },
   Contacts: {
     screen: ContactsScreen,
+    navigationOptions: {
+      tabBarLabel: '通讯录',
+      tabBarIcon: ({ color }) => (
+        <Text style={{ fontFamily: 'iconfont', fontSize: 26, color }}>
+          &#xe958;
+        </Text>
+      ),
+    },
   },
   Account: {
     screen: AccountScreen,
+    navigationOptions: {
+      tabBarLabel: '我',
+      tabBarIcon: ({ color }) => (
+        <Text style={{ fontFamily: 'iconfont', fontSize: 26, color }}>
+          &#xe60d;
+        </Text>
+      ),
+    },
   },
 };
 
@@ -73,7 +124,7 @@ const MainNavigatorContainer: React.FC = TMemo(() => {
         return (
           <Stack.Screen
             key={name}
-            name={name}
+            name={name as any}
             component={info.screen}
             options={options}
           />
@@ -84,15 +135,42 @@ const MainNavigatorContainer: React.FC = TMemo(() => {
 });
 MainNavigatorContainer.displayName = 'MainNavigatorContainer';
 
-const Stack = createStackNavigator();
-const stackRoutes: RouterMap = {
+export type RootStackParamList = {
+  LaunchScreen: undefined;
+  Login: undefined;
+  Register: undefined;
+  Main: undefined;
+  Settings: undefined;
+  SettingsDeviceInfo: undefined;
+  SettingsDevelopLab: undefined;
+  About: undefined;
+  Chat: ChatParams & { headerRightFunc?: () => void };
+  AddFriend: undefined;
+  Profile: undefined;
+  GroupProfile: undefined;
+  ProfileModify: undefined;
+  CreateGroup: undefined;
+  GroupData: undefined;
+  GroupRule: undefined;
+  GroupMember: undefined;
+  UserSelect: undefined;
+  Version: undefined;
+  Debug: undefined;
+  Document: undefined;
+  Webview: undefined;
+};
+const Stack = createStackNavigator<RootStackParamList>();
+const stackRoutes: RouterMap<StackNavigationOptions> = {
   LaunchScreen: {
     screen: LaunchScreen,
+    navigationOptions: {
+      header: null,
+    },
   },
   Login: {
     screen: LoginScreen,
     navigationOptions: {
-      headerLeft: null,
+      header: null,
     },
   },
   Register: {
@@ -134,21 +212,50 @@ const stackRoutes: RouterMap = {
   },
   Chat: {
     screen: ChatScreen,
-    navigationOptions: {
-      gesturesEnabled: true,
+    navigationOptions: (props) => {
+      const navigation = props.navigation;
+      const { state, getParam, setParams } = navigation;
+      const { params } = state;
+      const type = getParam('type');
+      const isWriting = getParam('isWriting', false);
+      return {
+        headerTitle: isWriting ? '正在输入...' : `与 ${params.name} 的聊天`,
+        headerRight: () =>
+          ['user', 'group'].includes(type) ? (
+            <View style={{ marginRight: 10 }}>
+              <TIcon
+                icon="&#xe607;"
+                style={{ fontSize: 26 } as any}
+                onPress={() =>
+                  params.headerRightFunc && params.headerRightFunc()
+                }
+              />
+            </View>
+          ) : null,
+        gestureEnabled: true,
+      };
     },
   },
   AddFriend: {
     screen: AddFriendScreen,
-    navigationOptions: {
+    navigationOptions: (props) => ({
       headerTitle: '添加联系人',
-    },
+      headerRight: () => (
+        <View style={{ marginRight: 10 }}>
+          <TouchableOpacity
+            onPress={() => props.navigation.push('CreateGroup')}
+          >
+            <Text>建团</Text>
+          </TouchableOpacity>
+        </View>
+      ),
+    }),
   },
   Profile: {
     screen: ProfileScreen,
     navigationOptions: ({ navigation }) => ({
       headerTitle: navigation.state.params.name + ' 的个人信息',
-      gesturesEnabled: true,
+      gestureEnabled: true,
     }),
   },
   GroupProfile: {
@@ -189,6 +296,30 @@ const stackRoutes: RouterMap = {
   },
   UserSelect: {
     screen: UserSelectScreen,
+    navigationOptions: (props) => {
+      const uuids = props.navigation.getParam('uuids', []);
+      const selectedUUIDs = props.navigation.getParam('selectedUUIDs', []);
+      const onSelected = props.navigation.getParam('onSelected', _noop);
+
+      return {
+        headerTitle:
+          selectedUUIDs.length > 0
+            ? `已选择 ${selectedUUIDs.length} / ${uuids.length}`
+            : props.navigation.getParam('title', '选择用户'),
+        headerRight: () => (
+          <View style={{ marginRight: 10 }}>
+            <TouchableOpacity
+              onPress={() => {
+                onSelected(selectedUUIDs);
+                props.navigation.back();
+              }}
+            >
+              <Text>完成</Text>
+            </TouchableOpacity>
+          </View>
+        ),
+      };
+    },
   },
   Version: {
     screen: VersionScreen,
@@ -210,6 +341,26 @@ const stackRoutes: RouterMap = {
   },
   Webview: {
     screen: WebviewScreen,
+    navigationOptions: ({ navigation }) => {
+      const url = navigation.getParam('url');
+
+      return {
+        headerTitle: navigation.getParam('title', '加载中...'),
+        headerRight: () => (
+          <View style={{ marginRight: 10 }}>
+            <TIcon
+              icon="&#xe63c;"
+              style={{ fontSize: 26 } as any}
+              onPress={async () => {
+                if (await Linking.canOpenURL(url)) {
+                  Linking.openURL(url);
+                }
+              }}
+            />
+          </View>
+        ),
+      };
+    },
   },
 };
 
@@ -289,14 +440,18 @@ const stackRoutes: RouterMap = {
 export const AppRouter: React.FC = TMemo(() => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ gestureEnabled: false }} mode="card">
+      <Stack.Navigator
+        initialRouteName="LaunchScreen"
+        screenOptions={{ gestureEnabled: false }}
+        mode="card"
+      >
         {_toPairs(stackRoutes).map(([name, info]) => {
           const options = info.navigationOptions;
 
           return (
             <Stack.Screen
               key={name}
-              name={name}
+              name={name as any}
               component={info.screen}
               options={options}
             />

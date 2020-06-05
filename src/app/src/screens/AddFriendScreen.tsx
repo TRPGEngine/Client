@@ -32,22 +32,6 @@ interface Props extends DispatchProp<any>, NavigationScreenProps {
   groupFindingResult: any;
 }
 class AddFriendScreen extends React.Component<Props> {
-  static navigationOptions: NavigationScreenConfig<
-    NavigationStackScreenOptions
-  > = (props) => {
-    return {
-      headerRight: (
-        <View style={{ marginRight: 10 }}>
-          <TouchableOpacity
-            onPress={() => props.navigation.push('CreateGroup')}
-          >
-            <Text>建团</Text>
-          </TouchableOpacity>
-        </View>
-      ),
-    };
-  };
-
   state = {
     searchValue: '',
     showSearchResult: false,

@@ -35,16 +35,6 @@ type Props = DispatchProp<any> & {
 };
 
 class AccountScreen extends React.Component<Props> {
-  static navigationOptions = {
-    tabBarLabel: '我',
-    headerTitle: '我',
-    tabBarIcon: ({ tintColor }) => (
-      <Text style={{ fontFamily: 'iconfont', fontSize: 26, color: tintColor }}>
-        &#xe60d;
-      </Text>
-    ),
-  };
-
   handleModifyProfile() {
     this.props.dispatch(
       NavigationActions.navigate({ routeName: 'ProfileModify' })

@@ -1,30 +1,23 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-const {
-  View,
-  Text,
-  TouchableOpacity,
-  Animated,
-  Alert,
-} = require('react-native');
-import { NavigationActions } from 'react-navigation';
+import { View, Text, TouchableOpacity, Animated } from 'react-native';
 import sb from 'react-native-style-block';
-import config from '../../../shared/project.config';
+import config from '@shared/project.config';
 import { replaceNav } from '../redux/actions/nav';
 import { Modal } from '@ant-design/react-native';
 import SystemStatus from '../components/SystemStatus';
-import { TRPGState } from '@redux/types/__all__';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '@app/router';
 
-interface Props extends DispatchProp<any> {
+interface Props
+  extends TRPGDispatchProp,
+    StackScreenProps<RootStackParamList, 'LaunchScreen'> {
   isTryLogin: boolean;
   isLogin: boolean;
   network: any;
 }
 class LaunchScreen extends React.Component<Props> {
-  static navigationOptions = {
-    header: null,
-  };
-
   animationTimer: number;
   state = {
     tipText: '',
@@ -41,16 +34,19 @@ class LaunchScreen extends React.Component<Props> {
           Animated.parallel([
             Animated.spring(this.state.logoTop, {
               toValue: 20,
-              duration: 3000,
+              useNativeDriver: false,
+              // duration: 3000,
             }),
             Animated.spring(this.state.logoAlpha, {
               toValue: 1,
-              duration: 3000,
+              useNativeDriver: false,
+              // duration: 3000,
             }),
           ]),
           Animated.timing(this.state.tipAlpha, {
             toValue: 20,
-            duration: 1000,
+            useNativeDriver: false,
+            // duration: 1000,
           }),
         ]).start(() => {
           this.handleFinishAnimation();
@@ -68,9 +64,9 @@ class LaunchScreen extends React.Component<Props> {
 
     if (prevProps.isTryLogin === true && this.props.isTryLogin === false) {
       if (this.props.isLogin) {
-        this.props.dispatch(replaceNav('Main'));
+        this.props.navigation.replace('Main');
       } else {
-        this.props.dispatch(replaceNav('Login'));
+        this.props.navigation.replace('Login');
       }
     }
   }
@@ -127,7 +123,7 @@ class LaunchScreen extends React.Component<Props> {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          style={styles.networkIndicator.container}
+          style={styles.networkIndicator.container as any}
           onPress={() => this.setState({ isShowSystemStatusModal: true })}
         >
           <View
@@ -149,7 +145,7 @@ class LaunchScreen extends React.Component<Props> {
             opacity: this.state.logoAlpha,
           }}
         >
-          <Text style={styles.icon}>&#xe60b;</Text>
+          <Text style={styles.icon as any}>&#xe60b;</Text>
           <Text style={{ textAlign: 'center', fontSize: 22 }}>TRPG Game</Text>
         </Animated.View>
 
