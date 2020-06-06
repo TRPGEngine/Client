@@ -2,6 +2,7 @@ import { request } from '@portal/utils/request';
 import { ChatLogItem } from './chat';
 import { hpack, hunpack } from '@shared/utils/json-helper';
 import _isNil from 'lodash/isNil';
+import _isEmpty from 'lodash/isEmpty';
 
 // 消息log必须的字段
 // 用于消息数据压缩
@@ -80,14 +81,60 @@ export const fetchOwnReport = async (): Promise<GameReport[]> => {
   return reports;
 };
 
+export type RecruitPlatform = 'trpgengine' | 'qq' | 'other';
+export type RecruitContactType = 'user' | 'group';
 export interface RecruitItemType {
   uuid: string;
   title: string;
   author: string;
   content: string;
-  platform: 'trpgengine' | 'qq' | 'other';
-  contact_type: 'user' | 'group';
+  platform: RecruitPlatform;
+  contact_type: RecruitContactType;
   contact_content: string;
   updatedAt: string;
   completed: boolean;
 }
+
+/**
+ * 值与显示的映射
+ */
+export const recruitPlatformMap = {
+  trpgengine: 'TRPG Engine',
+  qq: 'QQ',
+  other: '其他',
+};
+export const recruitContactTypeMap = {
+  user: '用户',
+  group: '群组',
+};
+
+/**
+ * 创建一条招募信息
+ * @param title 标题
+ * @param content 内容
+ * @param platform 平台
+ * @param contactType 联系类型
+ * @param contactContent 联系方式
+ */
+export const createRecruit = async (
+  title: string,
+  content: string,
+  platform: RecruitPlatform,
+  contactType: RecruitContactType,
+  contactContent: string
+): Promise<void> => {
+  if (_isEmpty(title) || _isEmpty(content)) {
+    throw new Error('缺少必要字段');
+  }
+
+  const { data } = await request.post(`/trpg/recruit/create`, {
+    title,
+    content,
+    platform,
+    contactType,
+    contactContent,
+  });
+
+  // TODO
+  console.log(data);
+};

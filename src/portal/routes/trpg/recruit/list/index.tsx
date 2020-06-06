@@ -16,9 +16,14 @@ const RecruitList: React.FC = TMemo(() => {
     false
   );
 
+  const fetchRecruitList = useCallback(() => {
+    // TODO: 获取列表 获取新的
+    loadItems();
+  }, []);
+
   useEffect(() => {
     setTimeout(() => {
-      loadItems();
+      fetchRecruitList();
     }, 2000);
   }, []);
 
@@ -33,7 +38,7 @@ const RecruitList: React.FC = TMemo(() => {
   return (
     <Layout>
       <Header style={{ textAlign: 'right' }}>
-        <RecruitCreateBtn />
+        <RecruitCreateBtn onSuccess={fetchRecruitList} />
       </Header>
       <Content style={{ paddingTop: 12 }}>
         <MasonryLayout

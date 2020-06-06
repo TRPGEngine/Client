@@ -1,7 +1,11 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
-import { RecruitItemType } from '@portal/model/trpg';
+import {
+  RecruitItemType,
+  recruitPlatformMap,
+  recruitContactTypeMap,
+} from '@portal/model/trpg';
 import { Divider, Tooltip } from 'antd';
 import { ColorTag } from '@web/components/ColorTag';
 import { getFromNow } from '@shared/utils/date-helper';
@@ -35,7 +39,7 @@ export const RecruitItem: React.FC<RecruitItemProps> = TMemo((props) => {
         title={
           <p>
             <span>
-              <ColorTag text={data.contact_type} />
+              <ColorTag text={recruitContactTypeMap[data.contact_type]} />
             </span>
             <span>{data.contact_content}</span>
           </p>
@@ -43,7 +47,7 @@ export const RecruitItem: React.FC<RecruitItemProps> = TMemo((props) => {
       >
         <p>
           <span>
-            <ColorTag text={data.platform} />
+            <ColorTag text={recruitPlatformMap[data.platform]} />
           </span>
           <span>{data.author}</span>
         </p>
