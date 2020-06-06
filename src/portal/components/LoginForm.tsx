@@ -80,7 +80,7 @@ export const LoginForm: React.FC<LoginFormProps> = TMemo((props) => {
             htmlType="submit"
             style={{ width: '100%' }}
           >
-            提交
+            登录
           </Button>
         </Form.Item>
       </Form>
