@@ -4,11 +4,12 @@ import { postMessage } from '@portal/utils/event';
 import history from './history';
 import { routes } from './routes';
 import NotFound from './routes/404';
+import { TMemo } from '@shared/components/TMemo';
 
 interface TitleRouteProps extends RouteProps {
   title: string;
 }
-const TitleRoute: React.FC<TitleRouteProps> = React.memo((route) => {
+const TitleRoute: React.FC<TitleRouteProps> = TMemo((route) => {
   const { path, title } = route;
 
   return (

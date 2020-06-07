@@ -127,14 +127,19 @@ export const createRecruit = async (
     throw new Error('缺少必要字段');
   }
 
-  const { data } = await request.post(`/trpg/recruit/create`, {
+  await request.post(`/trpg/recruit/create`, {
     title,
     content,
     platform,
     contactType,
     contactContent,
   });
-
-  // TODO
-  console.log(data);
 };
+
+export async function fetchRecruitList(): Promise<RecruitItemType[]> {
+  const { data } = await request.get('/trpg/recruit/list');
+
+  const list = data.list;
+
+  return list;
+}

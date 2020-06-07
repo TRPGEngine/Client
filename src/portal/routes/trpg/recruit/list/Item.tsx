@@ -8,7 +8,8 @@ import {
 } from '@portal/model/trpg';
 import { Divider, Tooltip } from 'antd';
 import { ColorTag } from '@web/components/ColorTag';
-import { getFromNow } from '@shared/utils/date-helper';
+import { getFromNow, getFullDate } from '@shared/utils/date-helper';
+import HTML from '@web/components/HTML';
 
 const RecruitItemContainer = styled.div`
   padding: 12px;
@@ -31,18 +32,18 @@ export const RecruitItem: React.FC<RecruitItemProps> = TMemo((props) => {
   return (
     <RecruitItemContainer>
       <h2>{data.title}</h2>
-      <pre>{data.content}</pre>
+      <HTML html={data.content} />
 
       <Divider />
 
       <Tooltip
         title={
-          <p>
+          <div>
             <span>
               <ColorTag text={recruitContactTypeMap[data.contact_type]} />
             </span>
             <span>{data.contact_content}</span>
-          </p>
+          </div>
         }
       >
         <p>
@@ -53,7 +54,7 @@ export const RecruitItem: React.FC<RecruitItemProps> = TMemo((props) => {
         </p>
       </Tooltip>
 
-      <Tooltip title={data.updatedAt}>
+      <Tooltip title={getFullDate(data.updatedAt)}>
         <p className="time">
           <span>{getFromNow(data.updatedAt)}</span>
         </p>

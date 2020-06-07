@@ -2,8 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { RecruitItem } from './Item';
 import MasonryLayout from 'react-masonry-layout'; // https://www.npmjs.com/package/react-masonry-layout
-import { RecruitItemType } from '@portal/model/trpg';
-import testRecuitList from './__tests__/data';
+import { RecruitItemType, fetchRecruitList } from '@portal/model/trpg';
 import { Layout } from 'antd';
 import Loading from '@portal/components/Loading';
 import { RecruitCreateBtn } from './createBtn';
@@ -16,43 +15,34 @@ const RecruitList: React.FC = TMemo(() => {
     false
   );
 
-  const fetchRecruitList = useCallback(() => {
-    // TODO: 获取列表 获取新的
-    loadItems();
-  }, []);
+  const fetch = useCallback(async () => {
+    // 获取招募列表
+    setInfiniteScrollLoading(true);
+    const list = await fetchRecruitList();
+    setItems(list);
+    setInfiniteScrollLoading(false);
+  }, [setInfiniteScrollLoading, setItems]);
 
   useEffect(() => {
-    setTimeout(() => {
-      fetchRecruitList();
-    }, 2000);
+    fetch();
   }, []);
-
-  const loadItems = useCallback(() => {
-    setInfiniteScrollLoading(true);
-    setTimeout(() => {
-      setItems(items.concat(testRecuitList));
-      setInfiniteScrollLoading(false);
-    }, 5000);
-  }, [items, setItems, setInfiniteScrollLoading]);
 
   return (
     <Layout>
       <Header style={{ textAlign: 'right' }}>
-        <RecruitCreateBtn onSuccess={fetchRecruitList} />
+        <RecruitCreateBtn onSuccess={fetch} />
       </Header>
-      <Content style={{ paddingTop: 12 }}>
+      <Content style={{ padding: '12px 0' }}>
         <MasonryLayout
           id="masonry-layout"
           style={{ margin: 'auto' }}
-          infiniteScrollDisabled={true}
-          infiniteScrollSpinner={<Loading style={{ padding: 10 }} />}
-          infiniteScroll={loadItems}
-          infiniteScrollLoading={infiniteScrollLoading}
+          infiniteScrollDisabled={false}
         >
           {items.map((item, i) => {
             return <RecruitItem key={i} data={item} />;
           })}
         </MasonryLayout>
+        {infiniteScrollLoading && <Loading style={{ padding: 10 }} />}
       </Content>
     </Layout>
   );
