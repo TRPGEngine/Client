@@ -121,6 +121,7 @@ export const RecruitCreateBtn: React.FC<Props> = TMemo((props) => {
                   style={{ flex: 1 }}
                   name="contactContent"
                   value={values.contactContent}
+                  placeholder="这是用户联系到你的唯一方式"
                   onChange={handleChange}
                 />
               </Row>

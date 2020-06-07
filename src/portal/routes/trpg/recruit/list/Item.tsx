@@ -10,6 +10,7 @@ import { Divider, Tooltip } from 'antd';
 import { ColorTag } from '@web/components/ColorTag';
 import { getFromNow, getFullDate } from '@shared/utils/date-helper';
 import HTML from '@web/components/HTML';
+import styledTheme from '@shared/utils/theme';
 
 const RecruitItemContainer = styled.div`
   padding: 12px;
@@ -42,7 +43,13 @@ export const RecruitItem: React.FC<RecruitItemProps> = TMemo((props) => {
             <span>
               <ColorTag text={recruitContactTypeMap[data.contact_type]} />
             </span>
-            <span>{data.contact_content}</span>
+            <span>
+              {data.contact_content || (
+                <span style={{ color: styledTheme.color.silver }}>
+                  未填写联系方式
+                </span>
+              )}
+            </span>
           </div>
         }
       >
