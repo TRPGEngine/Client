@@ -30,5 +30,8 @@
     "./src/",
     "./test/",
     "./types/"
+  ],
+  "exclude": [
+    "./src/app/"
   ]
 }
