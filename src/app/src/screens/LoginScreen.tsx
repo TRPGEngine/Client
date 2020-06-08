@@ -2,7 +2,7 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
 import { login } from '@shared/redux/actions/user';
-import { openWebview, resetScreenAction } from '../redux/actions/nav';
+import { resetScreenAction } from '../redux/actions/nav';
 import config from '@shared/project.config';
 import appConfig from '../config.app';
 import {
@@ -10,17 +10,17 @@ import {
   TFormGroup,
   TLoading,
 } from '@src/app/src/components/TComponent';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import _isEmpty from 'lodash/isEmpty';
 import styled from 'styled-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamList } from '@app/router';
 import { TMemo } from '@shared/components/TMemo';
 import {
   useTRPGDispatch,
   useTRPGSelector,
 } from '@shared/hooks/useTRPGSelector';
 import { useNavigation } from '@react-navigation/native';
+import { TRPGStackParamList } from '@app/types/params';
+import { openWebview } from '@app/navigate';
 
 const LoginTitle = styled.Text`
   text-align: left;
@@ -40,7 +40,7 @@ const OAuthTipText = styled.Text`
   font-size: 12px;
 `;
 
-interface Props extends StackScreenProps<RootStackParamList, 'Login'> {}
+interface Props extends StackScreenProps<TRPGStackParamList, 'Login'> {}
 export const LoginScreen: React.FC<Props> = TMemo((props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -69,8 +69,11 @@ export const LoginScreen: React.FC<Props> = TMemo((props) => {
   }, [dispatch, username, password]);
 
   const handleQQLogin = useCallback(() => {
-    dispatch(openWebview(config.file.url + '/oauth/qq/login?platform=app'));
-  }, [dispatch]);
+    openWebview(
+      props.navigation,
+      config.file.url + '/oauth/qq/login?platform=app'
+    );
+  }, [dispatch, props.navigation]);
 
   const OAuthNode = useMemo(() => {
     if (_isEmpty(oauthList)) {

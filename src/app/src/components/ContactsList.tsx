@@ -11,9 +11,10 @@ import sb from 'react-native-style-block';
 import appConfig from '../config.app';
 import { TIcon } from './TComponent';
 import ConvItem from './ConvItem';
-import { switchNav, navProfile } from '../redux/actions/nav';
-import { TRPGState } from '@redux/types/__all__';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import _get from 'lodash/get';
+import { useTRPGTabNavigation, TRPGTabScreenProps } from '@app/router';
+import { TRPGTabNavigation } from '@app/types/navigation';
 
 interface SectionListItemData {
   uuid: string;
@@ -27,7 +28,8 @@ interface SectionListItem extends SectionListData<SectionListItemData> {
   isShow: boolean;
 }
 
-interface Props extends DispatchProp<any> {
+interface Props extends TRPGDispatchProp {
+  navigation: TRPGTabNavigation<'Contacts'>;
   friends: any;
   groups: any;
 }
@@ -58,17 +60,18 @@ class ContactList extends React.Component<Props, State> {
     }
   }
 
-  handleShowProfile(uuid, type, name) {
+  handleShowProfile(uuid: string, type: string, name: string) {
     if (type === 'user') {
-      this.props.dispatch(navProfile(uuid, name));
+      this.props.navigation.dangerouslyGetParent().navigate('Profile', {
+        uuid,
+        type,
+      });
     } else if (type === 'group') {
-      this.props.dispatch(
-        switchNav('GroupProfile', {
-          uuid,
-          type,
-          name,
-        })
-      );
+      this.props.navigation.dangerouslyGetParent().navigate('GroupProfile', {
+        uuid,
+        type,
+        name,
+      });
     }
   }
 
@@ -176,4 +179,8 @@ export default connect((state: TRPGState) => {
       type: 'group',
     })),
   };
-})(ContactList);
+})((props) => {
+  const navigation = useTRPGTabNavigation();
+
+  return <ContactList {...props} navigation={navigation} />;
+});

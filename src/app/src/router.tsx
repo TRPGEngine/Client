@@ -11,7 +11,12 @@ import { uiHandlerCollection } from './utils/ui-state-handler';
 import _get from 'lodash/get';
 import _toPairs from 'lodash/toPairs';
 import _noop from 'lodash/noop';
-import { NavigationContainer, RouteConfig } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  RouteConfig,
+  useNavigation,
+  NavigationProp,
+} from '@react-navigation/native';
 import {
   createStackNavigator,
   StackNavigationOptions,
@@ -64,6 +69,14 @@ interface RouterMap<ScreenOptions extends object = any> {
   };
 }
 
+///////////////////////
+//// TRPG Tab
+///////////////////////
+export type TRPGTabScreenProps<
+  RouteName extends keyof TRPGTabParamList
+> = StackScreenProps<TRPGTabParamList, RouteName>;
+export const useTRPGTabNavigation = () =>
+  useNavigation<NavigationProp<TRPGTabParamList>>();
 const Tab = createBottomTabNavigator();
 const tabRoutes: RouterMap<BottomTabNavigationOptions> = {
   TRPG: {
@@ -121,9 +134,14 @@ const MainNavigatorContainer: React.FC = TMemo(() => {
 });
 MainNavigatorContainer.displayName = 'MainNavigatorContainer';
 
+///////////////////////
+//// TRPG Stack
+///////////////////////
 export type TRPGStackScreenProps<
   RouteName extends keyof TRPGStackParamList
 > = StackScreenProps<TRPGStackParamList, RouteName>;
+export const useTRPGStackNavigation = () =>
+  useNavigation<NavigationProp<TRPGStackParamList>>();
 const Stack = createStackNavigator<TRPGStackParamList>();
 const stackRoutes: RouterMap<StackNavigationOptions> = {
   LaunchScreen: {

@@ -24,12 +24,7 @@ import _isEmpty from 'lodash/isEmpty';
 import _isNil from 'lodash/isNil';
 import TModalPanel from '../components/TComponent/TModalPanel';
 import TPicker from '../components/TComponent/TPicker';
-import {
-  selectUser,
-  backToTop,
-  switchNav,
-  navPortal,
-} from '../redux/actions/nav';
+import { selectUser, backToTop, switchNav } from '../redux/actions/nav';
 import { GroupInfo } from '@src/shared/redux/types/group';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
@@ -39,6 +34,7 @@ import {
   useSelectedGroupActorUUID,
 } from '@redux/hooks/useGroup';
 import { TRPGStackScreenProps } from '@app/router';
+import { navPortal } from '@app/navigate';
 
 const ListItem = List.Item;
 
@@ -119,7 +115,7 @@ class GroupDataScreen extends React.Component<Props> {
   handleShowGroupActor = () => {
     const { dispatch, selectedGroupUUID } = this.props;
 
-    dispatch(navPortal(`/group/${selectedGroupUUID}/actor/list`));
+    navPortal(this.props.navigation, `/group/${selectedGroupUUID}/actor/list`);
   };
 
   /**

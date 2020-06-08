@@ -10,12 +10,13 @@ import { revokeMsg } from '@redux/actions/chat';
 import BBCode from './bbcode/__all__';
 import { useWebsiteInfo } from '@shared/hooks/useWebsiteInfo';
 import _isString from 'lodash/isString';
-import { openWebview } from '@app/redux/actions/nav';
 import TImage from '../TComponent/TImage';
 import FastImage from 'react-native-fast-image';
 import { MsgQuote } from './addons/MsgQuote';
 import { openMsgModal, MsgOperationItem } from './addons/MsgModal';
 import { DefaultMsgReply } from './addons/DefaultMsgReply';
+import { useTRPGStackNavigation } from '@app/router';
+import { openWebview } from '@app/navigate';
 
 const MsgContainer = styled.TouchableHighlight.attrs({
   underlayColor: '#eee',
@@ -56,13 +57,13 @@ const DefaultAddonImage = styled(TImage).attrs({
 const DefaultAddonContent: React.FC<{ message: string }> = React.memo(
   (props) => {
     const { loading, hasUrl, info } = useWebsiteInfo(props.message);
-    const dispatch = useDispatch();
+    const navigation = useTRPGStackNavigation(); // 该组件位于ChatScreen
 
     const handleClick = useCallback(() => {
       if (hasUrl && _isString(info.url)) {
-        dispatch(openWebview(info.url));
+        openWebview(navigation, info.url);
       }
-    }, [info.url]);
+    }, [info.url, navigation]);
 
     if (!hasUrl || loading || info.title === '') {
       return null;

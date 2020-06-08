@@ -6,12 +6,7 @@ import styled from 'styled-components/native';
 import config from '../../../shared/project.config';
 import appConfig from '@app/config.app';
 import { logout } from '../../../shared/redux/actions/user';
-import {
-  openWebview,
-  switchNav,
-  navPortal,
-  resetScreenAction,
-} from '../redux/actions/nav';
+import { resetScreenAction } from '../redux/actions/nav';
 import { TButton, TAvatar } from '../components/TComponent';
 import { TIcon } from '../components/TComponent';
 import DevContainer from '../components/DevContainer';
@@ -20,6 +15,7 @@ import { TRPGState } from '@redux/types/__all__';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
 import { TRPGTabParamList } from '@app/types/params';
+import { navPortal, openWebview } from '@app/navigate';
 
 const Item = List.Item;
 
@@ -85,7 +81,10 @@ class AccountScreen extends React.Component<Props> {
             thumb={<AccountListThumb color="cornflowerblue" icon="&#xe60b;" />}
             arrow="horizontal"
             onPress={() => {
-              this.props.dispatch(openWebview(config.url.goddessfantasy));
+              openWebview(
+                this.props.navigation.dangerouslyGetParent(),
+                config.url.goddessfantasy
+              );
             }}
           >
             发现
@@ -95,7 +94,9 @@ class AccountScreen extends React.Component<Props> {
               thumb={<AccountListThumb color="orangered" icon="&#xe623;" />}
               arrow="horizontal"
               onPress={() => {
-                this.props.dispatch(switchNav('Document'));
+                this.props.navigation
+                  .dangerouslyGetParent()
+                  .navigate('Document');
               }}
             >
               资料库
@@ -105,7 +106,10 @@ class AccountScreen extends React.Component<Props> {
             thumb={<AccountListThumb color="green" icon="&#xe61b;" />}
             arrow="horizontal"
             onPress={() => {
-              this.props.dispatch(navPortal('/actor/list'));
+              navPortal(
+                this.props.navigation.dangerouslyGetParent(),
+                '/actor/list'
+              );
             }}
           >
             人物卡
@@ -114,7 +118,10 @@ class AccountScreen extends React.Component<Props> {
             thumb={<AccountListThumb color="blueviolet" icon="&#xe624;" />}
             arrow="horizontal"
             onPress={() => {
-              this.props.dispatch(navPortal('/trpg/report/list'));
+              navPortal(
+                this.props.navigation.dangerouslyGetParent(),
+                '/trpg/report/list'
+              );
             }}
           >
             战报

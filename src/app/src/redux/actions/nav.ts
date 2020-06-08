@@ -89,14 +89,6 @@ export const switchToChatScreen = function switchToChatScreen(
   };
 };
 
-export const navProfile = function navProfile(uuid: string, name: string) {
-  return switchNav('Profile', {
-    uuid,
-    type: 'user',
-    name,
-  });
-};
-
 export const navPortal = function navPortal(url: string): TRPGAction {
   return async function(dispatch, getState) {
     const portalUrl = config.url.portal;

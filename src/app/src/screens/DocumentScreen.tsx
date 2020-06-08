@@ -6,15 +6,15 @@ import {
   DocumentListType,
   fetchDocumentLink,
 } from '@src/shared/model/file';
-import { openWebview } from '../redux/actions/nav';
-import { RootStackParamList } from '@app/router';
 import { StackScreenProps } from '@react-navigation/stack';
+import { TRPGStackParamList } from '@app/types/params';
+import { openWebview } from '@app/navigate';
 const Item = List.Item;
 
 interface State {
   docs: DocumentListType[];
 }
-interface Props extends StackScreenProps<RootStackParamList, 'Document'> {}
+interface Props extends StackScreenProps<TRPGStackParamList, 'Document'> {}
 
 class DocumentScreen extends React.Component<Props, State> {
   state: Readonly<State> = {
@@ -29,9 +29,8 @@ class DocumentScreen extends React.Component<Props, State> {
   }
 
   handlePress = async (uuid: string) => {
-    // TODO 需要处理
     const link = await fetchDocumentLink(uuid);
-    this.props.navigation.dispatch(openWebview(link));
+    openWebview(this.props.navigation, link);
   };
 
   render() {

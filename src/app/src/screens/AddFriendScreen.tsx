@@ -1,18 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Keyboard,
-  FlatList,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Keyboard, FlatList } from 'react-native';
 import sb from 'react-native-style-block';
 import { TIcon, TInput, TAvatar } from '../components/TComponent';
 import { findUser } from '@shared/redux/actions/user';
 import { findGroup } from '@shared/redux/actions/group';
-import { switchNav, navProfile } from '../redux/actions/nav';
 import styled from 'styled-components/native';
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { TRPGStackScreenProps } from '@app/router';
@@ -142,7 +134,11 @@ class AddFriendScreen extends React.Component<Props> {
               ...item,
               name: item.nickname || item.username,
             })),
-            (item) => this.props.dispatch(navProfile(item.uuid, item.name))
+            (item) =>
+              this.props.navigation.navigate('Profile', {
+                uuid: item.uuid,
+                type: 'user',
+              })
           );
         } else if (this.state.searchType === 'group') {
           let resultList = this.props.groupFindingResult
@@ -150,9 +146,9 @@ class AddFriendScreen extends React.Component<Props> {
             : [];
 
           return this.getSearchList(resultList, (item) =>
-            this.props.dispatch(
-              switchNav('GroupProfile', { uuid: item.uuid, name: item.name })
-            )
+            this.props.navigation.navigate('GroupProfile', {
+              uuid: item.uuid,
+            })
           );
         } else {
           return <TextTip>搜索结果异常</TextTip>;
