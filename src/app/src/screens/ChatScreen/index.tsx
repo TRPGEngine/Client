@@ -1,8 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
-import { NavigationScreenProps } from 'react-navigation';
-import { TIcon } from '@app/components/TComponent';
 import { clearSelectedConverse } from '@shared/redux/actions/chat';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
@@ -17,10 +14,9 @@ import { clearSelectGroup } from '@src/shared/redux/actions/group';
 import { MsgListType } from '@redux/types/chat';
 import { ChatScreenMain } from './Main';
 import { ChatScreenProvider } from './Provider';
+import { TRPGStackScreenProps } from '@app/router';
 
-type Params = ChatParams & { headerRightFunc?: () => void };
-
-interface Props extends TRPGDispatchProp, NavigationScreenProps<Params> {
+interface Props extends TRPGDispatchProp, TRPGStackScreenProps<'Chat'> {
   msgList: MsgListType;
   selfInfo: any;
   selfUUID: string;
@@ -38,7 +34,7 @@ interface State {
 }
 class ChatScreen extends React.Component<Props, State> {
   get converseType() {
-    return this.props.navigation.getParam('type', 'user');
+    return this.props.route.params?.type ?? 'user';
   }
 
   componentDidMount() {
@@ -47,15 +43,16 @@ class ChatScreen extends React.Component<Props, State> {
     this.props.navigation.setParams({
       headerRightFunc: () => {
         if (converseType === 'user') {
-          this.props.navigation.navigate(
-            'Profile',
-            this.props.navigation.state.params
-          );
+          this.props.navigation.navigate('Profile', {
+            uuid: this.props.route.params?.uuid,
+            type: converseType,
+          });
         } else if (converseType === 'group') {
-          this.props.navigation.navigate(
-            'GroupData',
-            this.props.navigation.state.params
-          );
+          this.props.navigation.navigate('GroupData', {
+            uuid: this.props.route.params?.uuid,
+            name: this.props.route.params?.name,
+            type: converseType,
+          });
         }
       },
     });

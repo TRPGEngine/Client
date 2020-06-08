@@ -11,7 +11,6 @@ import {
 import { WebView } from 'react-native-webview';
 import rnStorage from '@shared/api/rn-storage.api';
 import { loginWithToken } from '@shared/redux/actions/user';
-import { NavigationScreenProps } from 'react-navigation';
 import { TIcon } from '@app/components/TComponent';
 import styled from 'styled-components/native';
 import {
@@ -24,6 +23,7 @@ import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import _isString from 'lodash/isString';
 import PDFRender from './pdf';
+import { TRPGStackScreenProps } from '@app/router';
 
 const TipContainer = styled.View`
   position: absolute;
@@ -58,46 +58,14 @@ const LoadError = React.memo((props: { url: string }) => (
   </TipContainer>
 ));
 
-export type WebviewAfterLoadCallback = (
-  webview: WebView,
-  e: WebViewNavigationEvent
-) => void;
-
 export interface WebviewMessageCallbackData {
   type: string;
   [other: string]: any;
 }
 export type WebviewMessageCallback = (data: WebviewMessageCallbackData) => void;
 
-type WebviewScreenProps = NavigationScreenProps<{
-  url: string;
-  title?: string;
-  injectedJavaScript?: string;
-  afterLoad?: WebviewAfterLoadCallback;
-}> &
-  DispatchProp<any>;
+type WebviewScreenProps = TRPGStackScreenProps<'Webview'> & DispatchProp<any>;
 class WebviewScreen extends React.Component<WebviewScreenProps> {
-  static navigationOptions = ({ navigation }) => {
-    const url = navigation.getParam('url');
-
-    return {
-      headerTitle: navigation.getParam('title', '加载中...'),
-      headerRight: (
-        <View style={{ marginRight: 10 }}>
-          <TIcon
-            icon="&#xe63c;"
-            style={{ fontSize: 26 } as any}
-            onPress={async () => {
-              if (await Linking.canOpenURL(url)) {
-                Linking.openURL(url);
-              }
-            }}
-          />
-        </View>
-      ),
-    };
-  };
-
   state = {
     visible: false,
     percent: 0, //range:  0 - 1
@@ -111,7 +79,7 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
   _messageCb: { [messageType: string]: WebviewMessageCallback[] };
 
   get url(): string {
-    return this.props.navigation.getParam('url', '');
+    return this.props.route.params?.url ?? '';
   }
 
   get isPDF(): boolean {
@@ -119,7 +87,7 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
   }
 
   get injectedJavaScript(): string | undefined {
-    return this.props.navigation.getParam('injectedJavaScript');
+    return this.props.route.params?.injectedJavaScript;
   }
 
   componentDidMount() {
@@ -249,7 +217,7 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
   };
 
   handleLoad = (e: WebViewNavigationEvent) => {
-    const afterLoadFn = this.props.navigation.getParam('afterLoad');
+    const afterLoadFn = this.props.route.params?.afterLoad;
     if (afterLoadFn && this.webview) {
       afterLoadFn(this.webview, e);
     }

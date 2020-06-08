@@ -1,15 +1,15 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import { View, Text } from 'react-native';
 import sb from 'react-native-style-block';
-import appConfig from '../config.app';
-import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
-import { getGroupInfo } from '../../../shared/redux/actions/cache';
-import { backNav, switchToChatScreen } from '../redux/actions/nav';
-import { getGroupInfoCache } from '../../../shared/utils/cache-helper';
-import { NavigationScreenProps } from 'react-navigation';
+import appConfig from '@app/config.app';
+import { TButton, TAvatar, TImageViewer } from '@app/components/TComponent';
+import { getGroupInfo } from '@shared/redux/actions/cache';
+import { backNav, switchToChatScreen } from '@app/redux/actions/nav';
+import { getGroupInfoCache } from '@shared/utils/cache-helper';
 import { requestJoinGroup } from '@src/shared/redux/actions/group';
-import { TRPGState } from '@redux/types/__all__';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import { TRPGStackScreenProps } from '@app/router';
 
 interface ItemProps {
   name: string;
@@ -26,15 +26,13 @@ class ProfileInfoItem extends React.Component<ItemProps> {
   }
 }
 
-interface Props
-  extends DispatchProp<any>,
-    NavigationScreenProps<{ uuid: string }> {
+interface Props extends TRPGDispatchProp, TRPGStackScreenProps<'GroupProfile'> {
   addedGroupUUIDList: string[];
   groupcache: any;
 }
 class ProfileScreen extends React.Component<Props> {
   componentDidMount() {
-    let uuid = this.props.navigation.state.params.uuid;
+    let uuid = this.props.route.params?.uuid;
     if (uuid) {
       // 获取最新团信息
       this.props.dispatch(getGroupInfo(uuid, undefined));
@@ -43,20 +41,20 @@ class ProfileScreen extends React.Component<Props> {
 
   // 处理发送信息事件
   handlePressSendMsg = () => {
-    const groupUUID = this.props.navigation.state.params.uuid;
+    const groupUUID = this.props.route.params?.uuid;
     const groupInfo = getGroupInfoCache(groupUUID);
     this.props.dispatch(switchToChatScreen(groupUUID, 'group', groupInfo.name));
   };
 
   // 处理发送入团申请事件
   handleJoinGroup = () => {
-    const groupUUID = this.props.navigation.state.params.uuid;
+    const groupUUID = this.props.route.params?.uuid;
     this.props.dispatch(requestJoinGroup(groupUUID));
     this.props.dispatch(backNav());
   };
 
   render() {
-    const groupUUID = this.props.navigation.state.params.uuid;
+    const groupUUID = this.props.route.params?.uuid;
     const hasJoined = this.props.addedGroupUUIDList.includes(groupUUID);
     const groupInfo = this.props.groupcache[groupUUID];
 

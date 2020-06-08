@@ -18,8 +18,8 @@ import DevContainer from '../components/DevContainer';
 import { List } from '@ant-design/react-native';
 import { TRPGState } from '@redux/types/__all__';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { RootTabParamList } from '@app/router';
 import { CommonActions } from '@react-navigation/native';
+import { TRPGTabParamList } from '@app/types/params';
 
 const Item = List.Item;
 
@@ -39,7 +39,7 @@ const AccountListThumb = styled(TIcon)<{ color: string }>`
 
 type Props = DispatchProp<any> & {
   userInfo: any;
-} & BottomTabScreenProps<RootTabParamList, 'Account'>;
+} & BottomTabScreenProps<TRPGTabParamList, 'Account'>;
 
 class AccountScreen extends React.Component<Props> {
   handleModifyProfile() {

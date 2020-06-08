@@ -7,17 +7,6 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
-// import {
-//   NavigationActions,
-//   createStackNavigator as createStackNavigatorOld,
-//   createBottomTabNavigator as createBottomTabNavigatorOld,
-// } from 'react-navigation';
-// import {
-//   createReactNavigationReduxMiddleware,
-//   createReduxContainer,
-// } from 'react-navigation-redux-helpers';
-import { connect, DispatchProp } from 'react-redux';
-// import { StackViewStyleInterpolator } from 'react-navigation-stack';
 import { uiHandlerCollection } from './utils/ui-state-handler';
 import _get from 'lodash/get';
 import _toPairs from 'lodash/toPairs';
@@ -27,12 +16,15 @@ import {
   createStackNavigator,
   StackNavigationOptions,
   CardStyleInterpolators,
+  StackScreenProps,
 } from '@react-navigation/stack';
 import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs';
 import { TMemo } from '@shared/components/TMemo';
+import { TRPGStackParamList, TRPGTabParamList } from './types/params';
+import { TIcon } from './components/TComponent';
 
 import LaunchScreen from './screens/LaunchScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -58,8 +50,6 @@ import DocumentScreen from './screens/DocumentScreen';
 import GroupMemberScreen from './screens/GroupMemberScreen';
 import { AboutScreen } from './screens/about/AboutScreen';
 import { GroupRuleScreen } from './screens/GroupRule';
-import { ChatParams } from './types/params';
-import { TIcon } from './components/TComponent';
 
 interface RouterMap<ScreenOptions extends object = any> {
   [screenName: string]: {
@@ -74,11 +64,6 @@ interface RouterMap<ScreenOptions extends object = any> {
   };
 }
 
-export type RootTabParamList = {
-  TRPG: undefined;
-  Contacts: undefined;
-  Account: undefined;
-};
 const Tab = createBottomTabNavigator();
 const tabRoutes: RouterMap<BottomTabNavigationOptions> = {
   TRPG: {
@@ -136,31 +121,10 @@ const MainNavigatorContainer: React.FC = TMemo(() => {
 });
 MainNavigatorContainer.displayName = 'MainNavigatorContainer';
 
-export type RootStackParamList = {
-  LaunchScreen: undefined;
-  Login: undefined;
-  Register: undefined;
-  Main: undefined;
-  Settings: undefined;
-  SettingsDeviceInfo: undefined;
-  SettingsDevelopLab: undefined;
-  About: undefined;
-  Chat: ChatParams & { headerRightFunc?: () => void };
-  AddFriend: undefined;
-  Profile: undefined;
-  GroupProfile: undefined;
-  ProfileModify: undefined;
-  CreateGroup: undefined;
-  GroupData: undefined;
-  GroupRule: undefined;
-  GroupMember: undefined;
-  UserSelect: undefined;
-  Version: undefined;
-  Debug: undefined;
-  Document: undefined;
-  Webview: undefined;
-};
-const Stack = createStackNavigator<RootStackParamList>();
+export type TRPGStackScreenProps<
+  RouteName extends keyof TRPGStackParamList
+> = StackScreenProps<TRPGStackParamList, RouteName>;
+const Stack = createStackNavigator<TRPGStackParamList>();
 const stackRoutes: RouterMap<StackNavigationOptions> = {
   LaunchScreen: {
     screen: LaunchScreen,
@@ -342,8 +306,8 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
   },
   Webview: {
     screen: WebviewScreen,
-    navigationOptions: ({ navigation }) => {
-      const url = navigation.getParam('url');
+    navigationOptions: ({ route, navigation }) => {
+      const url = (route as any).params?.url;
 
       return {
         headerTitle: navigation.getParam('title', '加载中...'),
@@ -351,7 +315,7 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
           <View style={{ marginRight: 10 }}>
             <TIcon
               icon="&#xe63c;"
-              style={{ fontSize: 26 } as any}
+              style={{ fontSize: 26 }}
               onPress={async () => {
                 if (await Linking.canOpenURL(url)) {
                   Linking.openURL(url);

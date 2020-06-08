@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 import sb from 'react-native-style-block';
 import { TButton, TFormGroup } from '../components/TComponent';
 import { showLoading, showAlert, hideAlert } from '@shared/redux/actions/ui';

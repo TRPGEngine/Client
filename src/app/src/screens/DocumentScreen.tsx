@@ -7,13 +7,14 @@ import {
   fetchDocumentLink,
 } from '@src/shared/model/file';
 import { openWebview } from '../redux/actions/nav';
-import { NavigationScreenProps } from 'react-navigation';
+import { RootStackParamList } from '@app/router';
+import { StackScreenProps } from '@react-navigation/stack';
 const Item = List.Item;
 
 interface State {
   docs: DocumentListType[];
 }
-interface Props extends NavigationScreenProps {}
+interface Props extends StackScreenProps<RootStackParamList, 'Document'> {}
 
 class DocumentScreen extends React.Component<Props, State> {
   state: Readonly<State> = {

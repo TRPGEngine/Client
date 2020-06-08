@@ -31,8 +31,6 @@ import {
   navPortal,
 } from '../redux/actions/nav';
 import { GroupInfo } from '@src/shared/redux/types/group';
-import { NavigationScreenProps } from 'react-navigation';
-import { GroupDataParams } from '../types/params';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { getGroupActorName } from '@shared/utils/data-helper';
@@ -40,6 +38,7 @@ import {
   useSelfGroupActors,
   useSelectedGroupActorUUID,
 } from '@redux/hooks/useGroup';
+import { TRPGStackScreenProps } from '@app/router';
 
 const ListItem = List.Item;
 
@@ -90,9 +89,7 @@ const GroupActorSelector: React.FC<{
 });
 GroupActorSelector.displayName = 'GroupActorSelector';
 
-interface Props
-  extends TRPGDispatchProp,
-    NavigationScreenProps<GroupDataParams> {
+interface Props extends TRPGDispatchProp, TRPGStackScreenProps<'GroupData'> {
   userUUID: string;
   groupInfo: GroupInfo;
   selectedGroupUUID: string;

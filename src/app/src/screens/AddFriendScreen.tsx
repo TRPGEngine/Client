@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import {
   View,
   Text,
@@ -10,23 +10,19 @@ import {
 } from 'react-native';
 import sb from 'react-native-style-block';
 import { TIcon, TInput, TAvatar } from '../components/TComponent';
-import { findUser } from '../../../shared/redux/actions/user';
-import { findGroup } from '../../../shared/redux/actions/group';
+import { findUser } from '@shared/redux/actions/user';
+import { findGroup } from '@shared/redux/actions/group';
 import { switchNav, navProfile } from '../redux/actions/nav';
 import styled from 'styled-components/native';
-import {
-  NavigationStackScreenOptions,
-  NavigationScreenConfig,
-  NavigationScreenProps,
-} from 'react-navigation';
-import { TRPGState } from '@redux/types/__all__';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import { TRPGStackScreenProps } from '@app/router';
 
 const TextTip = styled.Text`
   text-align: center;
   margin-top: 20px;
 `;
 
-interface Props extends DispatchProp<any>, NavigationScreenProps {
+interface Props extends TRPGDispatchProp, TRPGStackScreenProps<'AddFriend'> {
   isFinding: boolean;
   userFindingResult: any;
   groupFindingResult: any;
