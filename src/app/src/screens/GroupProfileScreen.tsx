@@ -5,11 +5,11 @@ import sb from 'react-native-style-block';
 import appConfig from '@app/config.app';
 import { TButton, TAvatar, TImageViewer } from '@app/components/TComponent';
 import { getGroupInfo } from '@shared/redux/actions/cache';
-import { backNav, switchToChatScreen } from '@app/redux/actions/nav';
 import { getGroupInfoCache } from '@shared/utils/cache-helper';
 import { requestJoinGroup } from '@src/shared/redux/actions/group';
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { TRPGStackScreenProps } from '@app/router';
+import { switchToChatScreen } from '@app/navigate';
 
 interface ItemProps {
   name: string;
@@ -43,14 +43,19 @@ class ProfileScreen extends React.Component<Props> {
   handlePressSendMsg = () => {
     const groupUUID = this.props.route.params?.uuid;
     const groupInfo = getGroupInfoCache(groupUUID);
-    this.props.dispatch(switchToChatScreen(groupUUID, 'group', groupInfo.name));
+    switchToChatScreen(
+      this.props.navigation,
+      groupUUID,
+      'group',
+      groupInfo.name
+    );
   };
 
   // 处理发送入团申请事件
   handleJoinGroup = () => {
     const groupUUID = this.props.route.params?.uuid;
     this.props.dispatch(requestJoinGroup(groupUUID));
-    this.props.dispatch(backNav());
+    this.props.navigation.goBack();
   };
 
   render() {

@@ -4,13 +4,16 @@ import sb from 'react-native-style-block';
 import BaseCard from './BaseCard';
 import { connect } from 'react-redux';
 import config from '@shared/project.config';
-import { TRPGDispatchProp } from '@redux/types/__all__';
-import { navPortal } from '@app/redux/actions/nav';
 import { MessageProps } from '@shared/components/message/MessageHandler';
 import { TAvatar } from '@app/components/TComponent';
+import { TRPGStackScreenProps, useTRPGStackNavigation } from '@app/router';
+import { navPortal } from '@app/navigate';
+import { useNavigation } from '@react-navigation/native';
 
 // 投骰请求
-interface Props extends TRPGDispatchProp, MessageProps {}
+interface Props
+  extends MessageProps,
+    Pick<TRPGStackScreenProps<'Chat'>, 'navigation'> {}
 class Actor extends BaseCard<Props> {
   showActorProfile(uuid: string) {
     if (!uuid) {
@@ -19,7 +22,7 @@ class Actor extends BaseCard<Props> {
     }
 
     // 获取最新信息
-    this.props.dispatch(navPortal(`/actor/detail/${uuid}`));
+    navPortal(this.props.navigation, `/actor/detail/${uuid}`);
   }
 
   getCardView() {
@@ -63,4 +66,8 @@ const styles = {
   props: [sb.flex(), sb.padding(4)],
 };
 
-export default connect()(Actor);
+export default connect()((props) => {
+  const navigation = useTRPGStackNavigation();
+
+  return <Actor {...props} navigation={navigation} />;
+});

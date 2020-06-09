@@ -24,7 +24,6 @@ import _isEmpty from 'lodash/isEmpty';
 import _isNil from 'lodash/isNil';
 import TModalPanel from '../components/TComponent/TModalPanel';
 import TPicker from '../components/TComponent/TPicker';
-import { selectUser, backToTop, switchNav } from '../redux/actions/nav';
 import { GroupInfo } from '@src/shared/redux/types/group';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
@@ -34,7 +33,7 @@ import {
   useSelectedGroupActorUUID,
 } from '@redux/hooks/useGroup';
 import { TRPGStackScreenProps } from '@app/router';
-import { navPortal } from '@app/navigate';
+import { navPortal, backToTop, selectUser } from '@app/navigate';
 
 const ListItem = List.Item;
 
@@ -140,18 +139,16 @@ class GroupDataScreen extends React.Component<Props> {
   };
 
   handleShowGroupRule = () => {
-    this.props.dispatch(switchNav('GroupRule'));
+    this.props.navigation.navigate('GroupRule');
   };
 
   /**
    * 显示团成员
    */
   handleShowMember = () => {
-    this.props.dispatch(
-      switchNav('GroupMember', {
-        uuid: this.props.navigation.getParam('uuid'),
-      })
-    );
+    this.props.navigation.navigate('GroupMember', {
+      uuid: this.props.route.params?.uuid,
+    });
   };
 
   /**
@@ -159,7 +156,7 @@ class GroupDataScreen extends React.Component<Props> {
    */
   handleGroupInvite = () => {
     // 选择好友
-    const { friendList, groupInfo, dispatch } = this.props;
+    const { friendList, groupInfo, dispatch, navigation } = this.props;
     const groupMembersList: string[] = groupInfo.group_members;
     const groupManagerList: string[] = groupInfo.managers_uuid;
 
@@ -169,11 +166,9 @@ class GroupDataScreen extends React.Component<Props> {
       ...groupManagerList
     );
 
-    dispatch(
-      selectUser(target, (uuids) => {
-        dispatch(sendGroupInviteBatch(groupInfo.uuid, uuids));
-      })
-    );
+    selectUser(navigation, target, (uuids) => {
+      dispatch(sendGroupInviteBatch(groupInfo.uuid, uuids));
+    });
   };
 
   /**
@@ -193,7 +188,7 @@ class GroupDataScreen extends React.Component<Props> {
             let groupUUID = groupInfo.uuid;
             dispatch(switchSelectGroup(''));
             dispatch(dismissGroup(groupUUID));
-            dispatch(backToTop());
+            backToTop(this.props.navigation);
           },
         })
       );
@@ -207,7 +202,7 @@ class GroupDataScreen extends React.Component<Props> {
             let groupUUID = groupInfo.uuid;
             dispatch(switchSelectGroup(''));
             dispatch(quitGroup(groupUUID));
-            dispatch(backToTop());
+            backToTop(this.props.navigation);
           },
         })
       );
@@ -300,7 +295,7 @@ class GroupDataScreen extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState, ownProps: Props) => {
-  const selectedGroupUUID = ownProps.navigation.getParam('uuid', '');
+  const selectedGroupUUID = ownProps.route.params?.uuid ?? '';
 
   const groupInfo = state.group.groups.find(
     (group) => group.uuid === selectedGroupUUID

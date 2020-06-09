@@ -1,17 +1,18 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import sb from 'react-native-style-block';
 import appConfig from '../config.app';
-import { getSimpleDate } from '../../../shared/utils/date-helper';
+import { getSimpleDate } from '@shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
-import { getUserInfo } from '../../../shared/redux/actions/cache';
-import { sendFriendInvite } from '../../../shared/redux/actions/user';
-import { switchToChatScreen } from '../redux/actions/nav';
-import { getUserInfoCache } from '../../../shared/utils/cache-helper';
+import { getUserInfo } from '@shared/redux/actions/cache';
+import { sendFriendInvite } from '@shared/redux/actions/user';
+import { getUserInfoCache } from '@shared/utils/cache-helper';
 import { addUserConverse } from '@src/shared/redux/actions/chat';
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { TRPGStackScreenProps } from '@app/router';
+import { switchToChatScreen } from '@app/navigate';
+import { getUserName } from '@shared/utils/data-helper';
 
 interface ItemProps {
   name: string;
@@ -62,8 +63,11 @@ class ProfileScreen extends React.Component<ScreenProps> {
 
     // 创建用户会话并切换到该会话
     this.props.dispatch(addUserConverse([userUUID]));
-    this.props.dispatch(
-      switchToChatScreen(userUUID, type, userInfo.nickname || userInfo.username)
+    switchToChatScreen(
+      this.props.navigation,
+      userUUID,
+      type,
+      getUserName(userInfo)
     );
   };
 

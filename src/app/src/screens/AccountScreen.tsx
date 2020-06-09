@@ -3,10 +3,9 @@ import { connect, DispatchProp } from 'react-redux';
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
 import styled from 'styled-components/native';
-import config from '../../../shared/project.config';
+import config from '@shared/project.config';
 import appConfig from '@app/config.app';
-import { logout } from '../../../shared/redux/actions/user';
-import { resetScreenAction } from '../redux/actions/nav';
+import { logout } from '@shared/redux/actions/user';
 import { TButton, TAvatar } from '../components/TComponent';
 import { TIcon } from '../components/TComponent';
 import DevContainer from '../components/DevContainer';
@@ -16,6 +15,7 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
 import { TRPGTabParamList } from '@app/types/params';
 import { navPortal, openWebview } from '@app/navigate';
+import { resetScreenAction } from '@app/navigate/actions';
 
 const Item = List.Item;
 

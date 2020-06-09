@@ -7,13 +7,6 @@ const {
   LOGOUT,
   CREATE_GROUP_SUCCESS,
 } = constants;
-import {
-  RESET_NAV,
-  SWITCH_NAV,
-  REPLACE_NAV,
-  BACK_NAV,
-  BACK_TOP_NAV,
-} from '../constants/nav';
 
 let initialNavState = AppNavigator.router.getStateForAction(
   NavigationActions.init()
@@ -21,16 +14,9 @@ let initialNavState = AppNavigator.router.getStateForAction(
 
 export default function nav(state = initialNavState, action) {
   let nextState;
+
+  // TODO: 待处理
   switch (action.type) {
-    case RESET_NAV:
-      nextState = AppNavigator.router.getStateForAction(
-        StackActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName: 'Login' })],
-        }),
-        state
-      );
-      break;
     case LOGIN_SUCCESS:
     case LOGIN_TOKEN_SUCCESS:
       nextState = AppNavigator.router.getStateForAction(
@@ -47,38 +33,6 @@ export default function nav(state = initialNavState, action) {
           index: 0,
           actions: [NavigationActions.navigate({ routeName: 'Login' })],
         }),
-        state
-      );
-      break;
-    case SWITCH_NAV:
-      nextState = AppNavigator.router.getStateForAction(
-        NavigationActions.navigate({
-          routeName: action.routeName,
-          params: action.params || {},
-        }),
-        state
-      );
-      break;
-    case REPLACE_NAV:
-      nextState = AppNavigator.router.getStateForAction(
-        StackActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: action.routeName }),
-          ],
-        }),
-        state
-      );
-      break;
-    case BACK_NAV:
-      nextState = AppNavigator.router.getStateForAction(
-        NavigationActions.back({ key: action.key || null }),
-        state
-      );
-      break;
-    case BACK_TOP_NAV:
-      nextState = AppNavigator.router.getStateForAction(
-        StackActions.popToTop({}),
         state
       );
       break;

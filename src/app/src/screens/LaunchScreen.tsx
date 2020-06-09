@@ -1,18 +1,15 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, Animated } from 'react-native';
 import sb from 'react-native-style-block';
 import config from '@shared/project.config';
-import { replaceNav, resetScreenAction } from '../redux/actions/nav';
 import { Modal } from '@ant-design/react-native';
 import SystemStatus from '../components/SystemStatus';
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
-import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamList } from '@app/router';
+import { TRPGStackScreenProps } from '@app/router';
+import { resetScreenAction } from '@app/navigate/actions';
 
-interface Props
-  extends TRPGDispatchProp,
-    StackScreenProps<RootStackParamList, 'LaunchScreen'> {
+interface Props extends TRPGDispatchProp, TRPGStackScreenProps<'LaunchScreen'> {
   isTryLogin: boolean;
   isLogin: boolean;
   network: any;
