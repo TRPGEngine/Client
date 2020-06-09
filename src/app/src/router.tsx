@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useCallback, Fragment, useRef } from 'react';
 import {
   Text,
   View,
@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
-import { uiHandlerCollection } from './utils/ui-state-handler';
 import _get from 'lodash/get';
 import _toPairs from 'lodash/toPairs';
 import _noop from 'lodash/noop';
@@ -16,6 +15,7 @@ import {
   RouteConfig,
   useNavigation,
   NavigationProp,
+  useNavigationState,
 } from '@react-navigation/native';
 import {
   createStackNavigator,
@@ -55,6 +55,7 @@ import DocumentScreen from './screens/DocumentScreen';
 import GroupMemberScreen from './screens/GroupMemberScreen';
 import { AboutScreen } from './screens/about/AboutScreen';
 import { GroupRuleScreen } from './screens/GroupRule';
+import { navigationRef } from './navigate/global';
 
 interface RouterMap<ScreenOptions extends object = any> {
   [screenName: string]: {
@@ -196,11 +197,11 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
   Chat: {
     screen: ChatScreen,
     navigationOptions: (props) => {
-      const navigation = props.navigation;
-      const { state, getParam, setParams } = navigation;
-      const { params } = state;
-      const type = getParam('type');
-      const isWriting = getParam('isWriting', false);
+      const { navigation, route } = props;
+      const params = (route as any).param ?? {};
+      const { state } = navigation;
+      const type = params.type;
+      const isWriting = params.isWriting ?? false;
       return {
         headerTitle: isWriting ? '正在输入...' : `与 ${params.name} 的聊天`,
         headerRight: () =>
@@ -280,15 +281,16 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
   UserSelect: {
     screen: UserSelectScreen,
     navigationOptions: (props) => {
-      const uuids = props.navigation.getParam('uuids', []);
-      const selectedUUIDs = props.navigation.getParam('selectedUUIDs', []);
-      const onSelected = props.navigation.getParam('onSelected', _noop);
+      const params = (props.route as any).params ?? {};
+      const uuids = params.uuids ?? [];
+      const selectedUUIDs = params.selectedUUIDs ?? [];
+      const onSelected = params.onSelected ?? _noop;
 
       return {
         headerTitle:
           selectedUUIDs.length > 0
             ? `已选择 ${selectedUUIDs.length} / ${uuids.length}`
-            : props.navigation.getParam('title', '选择用户'),
+            : params.title ?? '选择用户',
         headerRight: () => (
           <View style={{ marginRight: 10 }}>
             <TouchableOpacity
@@ -325,10 +327,12 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
   Webview: {
     screen: WebviewScreen,
     navigationOptions: ({ route, navigation }) => {
-      const url = (route as any).params?.url;
+      const params = (route as any).params ?? {};
+      const url = params.url;
+      const headerTitle = params.title ?? '加载中...';
 
       return {
-        headerTitle: navigation.getParam('title', '加载中...'),
+        headerTitle,
         headerRight: () => (
           <View style={{ marginRight: 10 }}>
             <TIcon
@@ -347,103 +351,69 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
   },
 };
 
-// ================== TODO ==================
-// transitionConfig: () => ({
-//   screenInterpolator: StackViewStyleInterpolator.forHorizontal,
-// }),
+const AppHandler: React.FC = TMemo((props) => {
+  const lastBackPressedRef = useRef<number>();
+  const navigation = useNavigation();
+  const index = useNavigationState((state) => state.index);
 
-// export const middleware = createReactNavigationReduxMiddleware(
-//   (state: any) => state.nav,
-//   'root'
-// );
+  const onBackPress = useCallback(() => {
+    if (index !== 0) {
+      navigation.goBack();
+      return true;
+    } else {
+      // 到达主页
+      if (
+        lastBackPressedRef.current &&
+        lastBackPressedRef.current + 2000 >= Date.now()
+      ) {
+        // 最近两秒内按过back 可以退出应用
+        return false;
+      }
 
-// const App = createReduxContainer(AppNavigator, 'root');
+      lastBackPressedRef.current = Date.now();
+      ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
+      return true;
+    }
+  }, [index]);
 
-// interface ReduxNavigationProps extends DispatchProp<any> {
-//   ui: any;
-//   state: any;
-// }
-// class ReduxNavigation extends React.Component<ReduxNavigationProps> {
-//   lastBackPressed: any;
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
-//   componentDidMount() {
-//     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
-//   }
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    };
+  }, [onBackPress]);
 
-//   componentWillUnmount() {
-//     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
-//   }
-
-//   componentDidUpdate(prevProps) {
-//     this.handleUIChange(prevProps.ui, this.props.ui);
-//   }
-
-//   // 处理UI的状态
-//   handleUIChange(prevUI, currentUI) {
-//     const dispatch = this.props.dispatch;
-//     const args: [any, any, any] = [prevUI, currentUI, dispatch];
-
-//     uiHandlerCollection.forEach((handle) => handle(...args));
-//   }
-
-//   onBackPress = () => {
-//     const { dispatch, state } = this.props;
-
-//     if (state.index !== 0) {
-//       dispatch(NavigationActions.back());
-//       return true;
-//     } else {
-//       // 到达主页
-//       if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
-//         // 最近两秒内按过back 可以退出应用
-//         return false;
-//       }
-
-//       this.lastBackPressed = Date.now();
-//       ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
-//       return true;
-//     }
-//   };
-
-//   render() {
-//     const { dispatch, state } = this.props;
-//     return <App dispatch={dispatch} state={state} />;
-//   }
-// }
-
-// const mapStateToProps = (state) => {
-//   return {
-//     state: state.nav,
-//     ui: state.ui,
-//   };
-// };
-
-// export const AppWithNavigationState = connect(mapStateToProps)(ReduxNavigation);
+  return <Fragment>{props.children}</Fragment>;
+});
+AppHandler.displayName = 'AppHandler';
 
 export const AppRouter: React.FC = TMemo(() => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="LaunchScreen"
-        screenOptions={{
-          gestureEnabled: false,
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-        mode="card"
-      >
-        {_toPairs(stackRoutes).map(([name, info]) => {
-          const options = info.navigationOptions;
+    <NavigationContainer ref={navigationRef}>
+      <AppHandler>
+        <Stack.Navigator
+          initialRouteName="LaunchScreen"
+          screenOptions={{
+            gestureEnabled: false,
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+          mode="card"
+        >
+          {_toPairs(stackRoutes).map(([name, info]) => {
+            const options = info.navigationOptions;
 
-          return (
-            <Stack.Screen
-              key={name}
-              name={name as any}
-              component={info.screen}
-              options={options}
-            />
-          );
-        })}
-      </Stack.Navigator>
+            return (
+              <Stack.Screen
+                key={name}
+                name={name as any}
+                component={info.screen}
+                options={options}
+              />
+            );
+          })}
+        </Stack.Navigator>
+      </AppHandler>
     </NavigationContainer>
   );
 });

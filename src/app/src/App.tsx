@@ -1,17 +1,9 @@
 import React from 'react';
-import configureStore from '../../shared/redux/configureStore';
-// import navReducer from './redux/reducers/nav';
-import {
-  // AppWithNavigationState,
-  // middleware as routerMiddleware,
-  AppRouter,
-} from './router';
+import configureStore from '@shared/redux/configureStore';
+import { AppRouter } from './router';
+import { appNavMiddleware } from './redux/middleware/nav';
 const store = configureStore({
-  // TODO:
-  // additionReducer: {
-  //   nav: navReducer,
-  // },
-  // additionMiddleware: [routerMiddleware],
+  additionMiddleware: [appNavMiddleware],
 });
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as AntdProvider } from '@ant-design/react-native';

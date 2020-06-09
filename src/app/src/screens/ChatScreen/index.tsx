@@ -93,7 +93,7 @@ export default connect((state: TRPGState, ownProps: Props) => {
     'navigation.state.params.uuid',
     ''
   );
-  const converseType = ownProps.navigation.getParam('type', 'user');
+  const converseType = ownProps.route.params?.type ?? 'user';
   let isWriting = false;
   if (converseType === 'user') {
     // TODO: 暂时先只实现用户会话的输入中提示

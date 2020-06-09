@@ -2,7 +2,6 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import sb from 'react-native-style-block';
 import { login } from '@shared/redux/actions/user';
-import { resetScreenAction } from '../redux/actions/nav';
 import config from '@shared/project.config';
 import appConfig from '../config.app';
 import {
@@ -21,6 +20,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { TRPGStackParamList } from '@app/types/params';
 import { openWebview } from '@app/navigate';
+import { resetScreenAction } from '@app/navigate/actions';
 
 const LoginTitle = styled.Text`
   text-align: left;
