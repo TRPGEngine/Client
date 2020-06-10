@@ -3,6 +3,7 @@ import { View, ViewStyle } from 'react-native';
 import RootSiblings, { setSiblingWrapper } from 'react-native-root-siblings';
 import { getCurrentStore } from '@redux/configureStore/helper';
 import { Provider } from 'react-redux';
+import { Portal } from '@ant-design/react-native';
 
 const styles = {
   container: {
@@ -27,18 +28,28 @@ setSiblingWrapper((sibling) => (
 
 const TPopup = {
   _window: null,
-  show: function(win) {
-    if (this._window) {
-      this.hide();
+  _index: null,
+  show: function(win: React.ReactNode) {
+    if (this._index) {
+      // this.hide();
+      Portal.remove(this._index);
     }
 
-    this._window = new RootSiblings((<TPopupContainer>{win}</TPopupContainer>));
-    return this._window;
+    this._index = Portal.add(<TPopupContainer>{win}</TPopupContainer>);
+
+    return this._index;
+
+    // this._window = new RootSiblings((<TPopupContainer>{win}</TPopupContainer>));
+    // return this._window;
   },
   hide: function() {
-    if (this._window && this._window.destroy) {
-      this._window.destroy();
-      this._window = null;
+    // if (this._window && this._window.destroy) {
+    //   this._window.destroy();
+    //   this._window = null;
+    // }
+    if (this._index) {
+      Portal.remove(this._index);
+      this._index = null;
     }
   },
 };

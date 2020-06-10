@@ -22,8 +22,7 @@ const AlertView = styled.View`
 `;
 
 const Header = styled.View`
-  border-bottom-width: 0.5px;
-  border-bottom-color: #ccc;
+  border-bottom: ${(props) => props.theme.border.thin};
   padding: 4px 0 8px 0;
 `;
 

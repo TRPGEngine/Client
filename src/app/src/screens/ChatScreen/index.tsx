@@ -15,6 +15,8 @@ import { MsgListType } from '@redux/types/chat';
 import { ChatScreenMain } from './Main';
 import { ChatScreenProvider } from './Provider';
 import { TRPGStackScreenProps } from '@app/router';
+import TIcon from '@app/components/TComponent/TIcon';
+import { View } from 'react-native';
 
 interface Props extends TRPGDispatchProp, TRPGStackScreenProps<'Chat'> {
   msgList: MsgListType;
@@ -40,21 +42,29 @@ class ChatScreen extends React.Component<Props, State> {
   componentDidMount() {
     const converseType = this.converseType;
 
-    this.props.navigation.setParams({
-      headerRightFunc: () => {
-        if (converseType === 'user') {
-          this.props.navigation.navigate('Profile', {
-            uuid: this.props.route.params?.uuid,
-            type: converseType,
-          });
-        } else if (converseType === 'group') {
-          this.props.navigation.navigate('GroupData', {
-            uuid: this.props.route.params?.uuid,
-            name: this.props.route.params?.name,
-            type: converseType,
-          });
-        }
-      },
+    const func = () => {
+      if (converseType === 'user') {
+        this.props.navigation.navigate('Profile', {
+          uuid: this.props.route.params?.uuid,
+          type: converseType,
+          name: this.props.route.params?.name,
+        });
+      } else if (converseType === 'group') {
+        this.props.navigation.navigate('GroupData', {
+          uuid: this.props.route.params?.uuid,
+          name: this.props.route.params?.name,
+          type: converseType,
+        });
+      }
+    };
+
+    this.props.navigation.setOptions({
+      headerRight: () =>
+        ['user', 'group'].includes(converseType) ? (
+          <View style={{ marginRight: 10 }}>
+            <TIcon icon="&#xe607;" style={{ fontSize: 26 }} onPress={func} />
+          </View>
+        ) : null,
     });
   }
 
@@ -88,11 +98,7 @@ class ChatScreen extends React.Component<Props, State> {
 }
 
 export default connect((state: TRPGState, ownProps: Props) => {
-  const selectedConverseUUID = _get(
-    ownProps,
-    'navigation.state.params.uuid',
-    ''
-  );
+  const selectedConverseUUID = ownProps.route.params?.uuid ?? '';
   const converseType = ownProps.route.params?.type ?? 'user';
   let isWriting = false;
   if (converseType === 'user') {

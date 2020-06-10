@@ -55,7 +55,7 @@ import DocumentScreen from './screens/DocumentScreen';
 import GroupMemberScreen from './screens/GroupMemberScreen';
 import { AboutScreen } from './screens/about/AboutScreen';
 import { GroupRuleScreen } from './screens/GroupRule';
-import { navigationRef } from './navigate/global';
+import { navigationRef, getGlobalNavigation } from './navigate/global';
 
 interface RouterMap<ScreenOptions extends object = any> {
   [screenName: string]: {
@@ -197,25 +197,12 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
   Chat: {
     screen: ChatScreen,
     navigationOptions: (props) => {
-      const { navigation, route } = props;
-      const params = (route as any).param ?? {};
-      const { state } = navigation;
+      const { route } = props;
+      const params = (route as any).params ?? {};
       const type = params.type;
       const isWriting = params.isWriting ?? false;
       return {
         headerTitle: isWriting ? '正在输入...' : `与 ${params.name} 的聊天`,
-        headerRight: () =>
-          ['user', 'group'].includes(type) ? (
-            <View style={{ marginRight: 10 }}>
-              <TIcon
-                icon="&#xe607;"
-                style={{ fontSize: 26 } as any}
-                onPress={() =>
-                  params.headerRightFunc && params.headerRightFunc()
-                }
-              />
-            </View>
-          ) : null,
         gestureEnabled: true,
       };
     },
@@ -237,15 +224,15 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
   },
   Profile: {
     screen: ProfileScreen,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: navigation.state.params.name + ' 的个人信息',
+    navigationOptions: ({ route }) => ({
+      headerTitle: (route as any).params?.name + ' 的个人信息',
       gestureEnabled: true,
     }),
   },
   GroupProfile: {
     screen: GroupProfileScreen,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: navigation.state.params.name + ' 可以公开的情报',
+    navigationOptions: ({ route }) => ({
+      headerTitle: (route as any).params?.name + ' 可以公开的情报',
     }),
   },
   ProfileModify: {
@@ -262,8 +249,8 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
   },
   GroupData: {
     screen: GroupDataScreen,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: _get(navigation, 'state.params.name', '详细信息'),
+    navigationOptions: ({ route }) => ({
+      headerTitle: (route as any).params?.name ?? '详细信息',
     }),
   },
   GroupRule: {
@@ -353,12 +340,9 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
 
 const AppHandler: React.FC = TMemo((props) => {
   const lastBackPressedRef = useRef<number>();
-  const navigation = useNavigation();
-  const index = useNavigationState((state) => state.index);
-
   const onBackPress = useCallback(() => {
-    if (index !== 0) {
-      navigation.goBack();
+    if (getGlobalNavigation()?.getRootState().index !== 0) {
+      getGlobalNavigation()?.goBack();
       return true;
     } else {
       // 到达主页
@@ -374,7 +358,7 @@ const AppHandler: React.FC = TMemo((props) => {
       ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
       return true;
     }
-  }, [index]);
+  }, []);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
@@ -384,36 +368,35 @@ const AppHandler: React.FC = TMemo((props) => {
     };
   }, [onBackPress]);
 
-  return <Fragment>{props.children}</Fragment>;
+  return null;
 });
 AppHandler.displayName = 'AppHandler';
 
 export const AppRouter: React.FC = TMemo(() => {
   return (
     <NavigationContainer ref={navigationRef}>
-      <AppHandler>
-        <Stack.Navigator
-          initialRouteName="LaunchScreen"
-          screenOptions={{
-            gestureEnabled: false,
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-          }}
-          mode="card"
-        >
-          {_toPairs(stackRoutes).map(([name, info]) => {
-            const options = info.navigationOptions;
+      <AppHandler />
+      <Stack.Navigator
+        initialRouteName="LaunchScreen"
+        screenOptions={{
+          gestureEnabled: false,
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+        mode="card"
+      >
+        {_toPairs(stackRoutes).map(([name, info]) => {
+          const options = info.navigationOptions;
 
-            return (
-              <Stack.Screen
-                key={name}
-                name={name as any}
-                component={info.screen}
-                options={options}
-              />
-            );
-          })}
-        </Stack.Navigator>
-      </AppHandler>
+          return (
+            <Stack.Screen
+              key={name}
+              name={name as any}
+              component={info.screen}
+              options={options}
+            />
+          );
+        })}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 });

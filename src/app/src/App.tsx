@@ -2,8 +2,9 @@ import React from 'react';
 import configureStore from '@shared/redux/configureStore';
 import { AppRouter } from './router';
 import { appNavMiddleware } from './redux/middleware/nav';
+import { appUIMiddleware } from './redux/middleware/ui';
 const store = configureStore({
-  additionMiddleware: [appNavMiddleware],
+  additionMiddleware: [appNavMiddleware, appUIMiddleware],
 });
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as AntdProvider } from '@ant-design/react-native';

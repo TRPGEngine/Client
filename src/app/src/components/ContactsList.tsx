@@ -65,6 +65,7 @@ class ContactList extends React.Component<Props, State> {
       this.props.navigation.dangerouslyGetParent().navigate('Profile', {
         uuid,
         type,
+        name,
       });
     } else if (type === 'group') {
       this.props.navigation.dangerouslyGetParent().navigate('GroupProfile', {

@@ -63,7 +63,9 @@ export function switchToChatScreen(
     }
   }
 
-  stackNavigation.dispatch(StackActions.popToTop());
+  if (stackNavigation.canGoBack()) {
+    stackNavigation.dispatch(StackActions.popToTop());
+  }
   stackNavigation.navigate('Chat', {
     uuid,
     type,

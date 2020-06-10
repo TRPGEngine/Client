@@ -19,26 +19,34 @@ export const appNavMiddleware: TRPGMiddleware = ({ dispatch, getState }) => (
   const globalNavigation = getGlobalNavigation();
 
   if (!_isNil(globalNavigation)) {
+    const rootState = globalNavigation.getRootState();
     switch (action.type) {
       case LOGIN_SUCCESS:
       case LOGIN_TOKEN_SUCCESS:
-        globalNavigation.dispatch(
-          StackActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'Main' })],
-          })
-        );
+        if (rootState.index > 0 && rootState.routeNames[0] !== 'Main') {
+          globalNavigation.dispatch(
+            StackActions.reset({
+              index: 0,
+              actions: [NavigationActions.navigate({ routeName: 'Main' })],
+            })
+          );
+        }
+
         break;
       case LOGOUT:
-        globalNavigation.dispatch(
-          StackActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'Login' })],
-          })
-        );
+        if (rootState.index > 0 && rootState.routeNames[0] !== 'Login') {
+          globalNavigation.dispatch(
+            StackActions.reset({
+              index: 0,
+              actions: [NavigationActions.navigate({ routeName: 'Login' })],
+            })
+          );
+        }
         break;
       case CREATE_GROUP_SUCCESS:
-        globalNavigation.dispatch(StackActions.popToTop({}));
+        if (globalNavigation.canGoBack()) {
+          globalNavigation.dispatch(StackActions.popToTop({}));
+        }
         break;
       default:
         break;

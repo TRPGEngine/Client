@@ -44,9 +44,10 @@ export type TRPGStackParamList = {
   AddFriend: undefined;
   Profile: {
     uuid: string;
+    name: string;
     type: 'user' | 'group';
   };
-  GroupProfile: { uuid: string };
+  GroupProfile: { uuid: string; name: string };
   ProfileModify: undefined;
   CreateGroup: undefined;
   GroupData: GroupDataParams;
