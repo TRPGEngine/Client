@@ -5,7 +5,7 @@ import moment, { MomentInput } from 'moment';
  */
 
 export const getShortDiff = (str: MomentInput): string => {
-  let date = str ? moment(str) : moment();
+  const date = str ? moment(str) : moment();
   if (helper.isToday(date)) {
     return date.format('HH:mm');
   } else {
@@ -13,7 +13,7 @@ export const getShortDiff = (str: MomentInput): string => {
   }
 };
 export const getShortDate = (str: string): string => {
-  let date = str ? moment(str) : moment();
+  const date = str ? moment(str) : moment();
   if (helper.isToday(date)) {
     return date.format('A hh:mm');
   } else {
@@ -21,7 +21,7 @@ export const getShortDate = (str: string): string => {
   }
 };
 export const getMsgDate = (str: string): string => {
-  let date = str ? moment(str) : moment();
+  const date = str ? moment(str) : moment();
   if (helper.isToday(date)) {
     return date.format('HH:mm:ss');
   } else {
@@ -29,12 +29,11 @@ export const getMsgDate = (str: string): string => {
   }
 };
 export const getFullDate = (str?: string): string => {
-  let date = str ? moment(str) : moment();
+  const date = str ? moment(str) : moment();
   return date.format('YYYY-MM-DD HH:mm:ss');
 };
 export const getSimpleDate = (str: string): string => {
-  let date = str ? moment(str) : moment();
-  return date.format('YYYY-MM-DD');
+  return str ? moment(str).format('YYYY-MM-DD') : '';
 };
 export const isToday = (date: MomentInput): boolean => {
   return moment().isSame(date, 'day');

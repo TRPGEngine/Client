@@ -325,6 +325,11 @@ export default produce((draft: GroupState, action) => {
       const groupIndex = draft.groups.findIndex(
         (group) => group.uuid === action.groupUUID
       );
+
+      if (!Array.isArray(draft.groups[groupIndex].group_members)) {
+        draft.groups[groupIndex].group_members = [];
+      }
+
       const groupMemberIndex = draft.groups[groupIndex].group_members.findIndex(
         (uuid) => uuid === action.memberUUID
       );

@@ -159,11 +159,17 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
   };
 };
 
+/**
+ * 创建团
+ * @param name 团名
+ * @param subname 团副名
+ * @param desc 团描述
+ */
 export const createGroup = function(
   name: string,
   subname: string,
   desc: string
-) {
+): TRPGAction {
   return function(dispatch, getState) {
     dispatch(showLoading());
     api.emit('group::create', { name, subname, desc }, function(data) {
@@ -172,7 +178,7 @@ export const createGroup = function(
         dispatch(hideModal());
         dispatch(showAlert('创建成功'));
         dispatch({ type: CREATE_GROUP_SUCCESS, payload: data.group });
-        dispatch(data.group); // 创建成功后直接初始化
+        dispatch(initGroupInfo(data.group)); // 创建成功后直接初始化
       } else {
         console.error(data);
         dispatch(showAlert(data.msg));

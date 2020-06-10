@@ -68,13 +68,13 @@ const App: React.FC = TMemo(() => {
       <MsgContainerContextProvider>
         {/* MsgContainerContextProvider: 这个Provider因为作用效果在Modal上。放在里面无法获取到上下文。没有办法只能先放在最外面(不好看) */}
         <ReduxProvider store={store}>
-          <AntdProvider>
-            <ThemeProvider theme={styledTheme}>
+          <ThemeProvider theme={styledTheme}>
+            <AntdProvider>
               <TRPGCodePush>
                 <AppRouter />
               </TRPGCodePush>
-            </ThemeProvider>
-          </AntdProvider>
+            </AntdProvider>
+          </ThemeProvider>
         </ReduxProvider>
       </MsgContainerContextProvider>
     </ErrorBoundary>
