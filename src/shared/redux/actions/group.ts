@@ -34,6 +34,7 @@ const {
   SET_MEMBER_TO_MANAGER_SUCCESS,
   UPDATE_GROUP_STATUS,
   UPDATE_PLAYER_SELECTED_GROUP_ACTOR,
+  REMOVE_CONVERSES_SUCCESS,
 } = constants;
 import config from '../../project.config';
 import {
@@ -739,12 +740,13 @@ export const createGroupMap = function(
   };
 };
 
-export const quitGroup = function(groupUUID) {
+export const quitGroup = function(groupUUID: string): TRPGAction {
   return function(dispatch, getState) {
     dispatch(showLoading());
     return api.emit('group::quitGroup', { groupUUID }, function(data) {
       if (data.result) {
         dispatch({ type: QUIT_GROUP_SUCCESS, groupUUID });
+        dispatch({ type: REMOVE_CONVERSES_SUCCESS, converseUUID: groupUUID }); // 移除聊天会话
         dispatch(showAlert('已退出本群!'));
         dispatch(hideLoading());
       } else {
@@ -754,12 +756,13 @@ export const quitGroup = function(groupUUID) {
   };
 };
 
-export const dismissGroup = function(groupUUID) {
+export const dismissGroup = function(groupUUID: string): TRPGAction {
   return function(dispatch, getState) {
     dispatch(showLoading());
     return api.emit('group::dismissGroup', { groupUUID }, function(data) {
       if (data.result) {
         dispatch({ type: DISMISS_GROUP_SUCCESS, groupUUID });
+        dispatch({ type: REMOVE_CONVERSES_SUCCESS, converseUUID: groupUUID }); // 移除聊天会话
         dispatch(showAlert('已解散本群!'));
         dispatch(hideLoading());
       } else {
