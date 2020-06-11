@@ -1,15 +1,10 @@
 import React from 'react';
-import configureStore from '../../shared/redux/configureStore';
-import navReducer from './redux/reducers/nav';
-import {
-  AppWithNavigationState,
-  middleware as routerMiddleware,
-} from './router';
+import configureStore from '@shared/redux/configureStore';
+import { AppRouter } from './router';
+import { appNavMiddleware } from './redux/middleware/nav';
+import { appUIMiddleware } from './redux/middleware/ui';
 const store = configureStore({
-  additionReducer: {
-    nav: navReducer,
-  },
-  additionMiddleware: [routerMiddleware],
+  additionMiddleware: [appNavMiddleware, appUIMiddleware],
 });
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as AntdProvider } from '@ant-design/react-native';
@@ -73,13 +68,13 @@ const App: React.FC = TMemo(() => {
       <MsgContainerContextProvider>
         {/* MsgContainerContextProvider: 这个Provider因为作用效果在Modal上。放在里面无法获取到上下文。没有办法只能先放在最外面(不好看) */}
         <ReduxProvider store={store}>
-          <AntdProvider>
-            <ThemeProvider theme={styledTheme}>
+          <ThemeProvider theme={styledTheme}>
+            <AntdProvider>
               <TRPGCodePush>
-                <AppWithNavigationState />
+                <AppRouter />
               </TRPGCodePush>
-            </ThemeProvider>
-          </AntdProvider>
+            </AntdProvider>
+          </ThemeProvider>
         </ReduxProvider>
       </MsgContainerContextProvider>
     </ErrorBoundary>

@@ -1,8 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
-import { NavigationScreenProps } from 'react-navigation';
-import { TIcon } from '@app/components/TComponent';
 import { clearSelectedConverse } from '@shared/redux/actions/chat';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
@@ -17,10 +14,11 @@ import { clearSelectGroup } from '@src/shared/redux/actions/group';
 import { MsgListType } from '@redux/types/chat';
 import { ChatScreenMain } from './Main';
 import { ChatScreenProvider } from './Provider';
+import { TRPGStackScreenProps } from '@app/router';
+import TIcon from '@app/components/TComponent/TIcon';
+import { View } from 'react-native';
 
-type Params = ChatParams & { headerRightFunc?: () => void };
-
-interface Props extends TRPGDispatchProp, NavigationScreenProps<Params> {
+interface Props extends TRPGDispatchProp, TRPGStackScreenProps<'Chat'> {
   msgList: MsgListType;
   selfInfo: any;
   selfUUID: string;
@@ -37,47 +35,36 @@ interface State {
   showQuickDiceModal: boolean;
 }
 class ChatScreen extends React.Component<Props, State> {
-  static navigationOptions = (props: Props) => {
-    const navigation = props.navigation;
-    const { state, getParam, setParams } = navigation;
-    const { params } = state;
-    const type = getParam('type');
-    const isWriting = getParam('isWriting', false);
-    return {
-      headerTitle: isWriting ? '正在输入...' : `与 ${params.name} 的聊天`,
-      headerRight: ['user', 'group'].includes(type) ? (
-        <View style={{ marginRight: 10 }}>
-          <TIcon
-            icon="&#xe607;"
-            style={{ fontSize: 26 } as any}
-            onPress={() => params.headerRightFunc && params.headerRightFunc()}
-          />
-        </View>
-      ) : null,
-    };
-  };
-
   get converseType() {
-    return this.props.navigation.getParam('type', 'user');
+    return this.props.route.params?.type ?? 'user';
   }
 
   componentDidMount() {
     const converseType = this.converseType;
 
-    this.props.navigation.setParams({
-      headerRightFunc: () => {
-        if (converseType === 'user') {
-          this.props.navigation.navigate(
-            'Profile',
-            this.props.navigation.state.params
-          );
-        } else if (converseType === 'group') {
-          this.props.navigation.navigate(
-            'GroupData',
-            this.props.navigation.state.params
-          );
-        }
-      },
+    const func = () => {
+      if (converseType === 'user') {
+        this.props.navigation.navigate('Profile', {
+          uuid: this.props.route.params?.uuid,
+          type: converseType,
+          name: this.props.route.params?.name,
+        });
+      } else if (converseType === 'group') {
+        this.props.navigation.navigate('GroupData', {
+          uuid: this.props.route.params?.uuid,
+          name: this.props.route.params?.name,
+          type: converseType,
+        });
+      }
+    };
+
+    this.props.navigation.setOptions({
+      headerRight: () =>
+        ['user', 'group'].includes(converseType) ? (
+          <View style={{ marginRight: 10 }}>
+            <TIcon icon="&#xe607;" style={{ fontSize: 26 }} onPress={func} />
+          </View>
+        ) : null,
     });
   }
 
@@ -111,12 +98,8 @@ class ChatScreen extends React.Component<Props, State> {
 }
 
 export default connect((state: TRPGState, ownProps: Props) => {
-  const selectedConverseUUID = _get(
-    ownProps,
-    'navigation.state.params.uuid',
-    ''
-  );
-  const converseType = ownProps.navigation.getParam('type', 'user');
+  const selectedConverseUUID = ownProps.route.params?.uuid ?? '';
+  const converseType = ownProps.route.params?.type ?? 'user';
   let isWriting = false;
   if (converseType === 'user') {
     // TODO: 暂时先只实现用户会话的输入中提示

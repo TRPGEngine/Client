@@ -1,53 +1,25 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Keyboard,
-  FlatList,
-} from 'react-native';
+import { connect } from 'react-redux';
+import { View, Text, TouchableOpacity, Keyboard, FlatList } from 'react-native';
 import sb from 'react-native-style-block';
 import { TIcon, TInput, TAvatar } from '../components/TComponent';
-import { findUser } from '../../../shared/redux/actions/user';
-import { findGroup } from '../../../shared/redux/actions/group';
-import { switchNav, navProfile } from '../redux/actions/nav';
+import { findUser } from '@shared/redux/actions/user';
+import { findGroup } from '@shared/redux/actions/group';
 import styled from 'styled-components/native';
-import {
-  NavigationStackScreenOptions,
-  NavigationScreenConfig,
-  NavigationScreenProps,
-} from 'react-navigation';
-import { TRPGState } from '@redux/types/__all__';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import { TRPGStackScreenProps } from '@app/router';
 
 const TextTip = styled.Text`
   text-align: center;
   margin-top: 20px;
 `;
 
-interface Props extends DispatchProp<any>, NavigationScreenProps {
+interface Props extends TRPGDispatchProp, TRPGStackScreenProps<'AddFriend'> {
   isFinding: boolean;
   userFindingResult: any;
   groupFindingResult: any;
 }
 class AddFriendScreen extends React.Component<Props> {
-  static navigationOptions: NavigationScreenConfig<
-    NavigationStackScreenOptions
-  > = (props) => {
-    return {
-      headerRight: (
-        <View style={{ marginRight: 10 }}>
-          <TouchableOpacity
-            onPress={() => props.navigation.push('CreateGroup')}
-          >
-            <Text>建团</Text>
-          </TouchableOpacity>
-        </View>
-      ),
-    };
-  };
-
   state = {
     searchValue: '',
     showSearchResult: false,
@@ -162,7 +134,11 @@ class AddFriendScreen extends React.Component<Props> {
               ...item,
               name: item.nickname || item.username,
             })),
-            (item) => this.props.dispatch(navProfile(item.uuid, item.name))
+            (item) =>
+              this.props.navigation.navigate('Profile', {
+                uuid: item.uuid,
+                type: 'user',
+              })
           );
         } else if (this.state.searchType === 'group') {
           let resultList = this.props.groupFindingResult
@@ -170,9 +146,9 @@ class AddFriendScreen extends React.Component<Props> {
             : [];
 
           return this.getSearchList(resultList, (item) =>
-            this.props.dispatch(
-              switchNav('GroupProfile', { uuid: item.uuid, name: item.name })
-            )
+            this.props.navigation.navigate('GroupProfile', {
+              uuid: item.uuid,
+            })
           );
         } else {
           return <TextTip>搜索结果异常</TextTip>;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { connect } from 'react-redux';
 import {
   Text,
@@ -13,7 +13,8 @@ import {
   getCachedUserName,
 } from '@shared/utils/cache-helper';
 import TAvatar from './TComponent/TAvatar';
-import { navProfile } from '@app/redux/actions/nav';
+import { TMemo } from '@shared/components/TMemo';
+import { useTRPGStackNavigation } from '@app/router';
 
 export const UserItem = styled.TouchableOpacity`
   padding: 10px 0;
@@ -35,34 +36,45 @@ interface Props extends TRPGDispatchProp {
   renderItem?: ListRenderItem<string>;
 }
 
-class UserList extends React.Component<Props> {
-  handlePress = (uuid: string, name: string) => {
-    this.props.dispatch(navProfile(uuid, name));
-  };
+const UserList: React.FC<Props> = TMemo((props) => {
+  const navigation = useTRPGStackNavigation();
 
-  renderItem = ({ item }: ListRenderItemInfo<string>) => {
-    const uuid = item;
-    const user = getUserInfoCache(uuid);
-    const name = getCachedUserName(uuid);
+  const handlePress = useCallback(
+    (uuid: string, name: string) => {
+      navigation.navigate('Profile', {
+        uuid,
+        type: 'user',
+      });
+    },
+    [navigation]
+  );
 
+  const renderItem = useMemo(() => {
     return (
-      <UserItem onPress={() => this.handlePress(uuid, name)}>
-        <UserAvatar name={name} uri={user.avatar} />
-        <Text>{name}</Text>
-      </UserItem>
-    );
-  };
+      props.renderItem ||
+      (({ item }: ListRenderItemInfo<string>) => {
+        const uuid = item;
+        const user = getUserInfoCache(uuid);
+        const name = getCachedUserName(uuid);
 
-  render() {
-    return (
-      <FlatList
-        data={this.props.uuids}
-        keyExtractor={(uuid) => uuid}
-        renderItem={this.props.renderItem || this.renderItem}
-      />
+        return (
+          <UserItem onPress={() => handlePress(uuid, name)}>
+            <UserAvatar name={name} uri={user.avatar} />
+            <Text>{name}</Text>
+          </UserItem>
+        );
+      })
     );
-  }
-}
+  }, [props.renderItem, handlePress]);
+
+  return (
+    <FlatList
+      data={props.uuids}
+      keyExtractor={(uuid) => uuid}
+      renderItem={renderItem}
+    />
+  );
+});
 
 export default connect((state: TRPGState) => ({
   usercache: state.cache.user,

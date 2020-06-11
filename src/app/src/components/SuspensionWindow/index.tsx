@@ -9,12 +9,10 @@ import {
   Dimensions,
   PanResponder,
   PanResponderInstance,
-  Platform,
 } from 'react-native';
 import RootSibling from 'react-native-root-siblings';
 import DragArea, { Area } from './dragArea';
 import { TMemo } from '@shared/components/TMemo';
-import { NavigationScreenProps } from 'react-navigation';
 
 // Fork from https://github.com/qikong233/react-native-floatWindow/blob/master/SuspensionWindow/index.js
 

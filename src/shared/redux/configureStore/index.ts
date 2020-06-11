@@ -49,7 +49,9 @@ function configureStore(
 ): TRPGStore {
   const initialState = options.initialState;
 
-  middlewares.push(...options.additionMiddleware); // 增加额外中间件
+  if (Array.isArray(options.additionMiddleware)) {
+    middlewares.push(...options.additionMiddleware); // 增加额外中间件
+  }
 
   let enhancer: StoreEnhancer<any> = applyMiddleware(...middlewares);
   if (config.environment === 'development') {

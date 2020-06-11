@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import { View, Text, FlatList } from 'react-native';
 import sb from 'react-native-style-block';
 import dateHelper from '@shared/utils/date-helper';
@@ -9,8 +9,7 @@ import { reloadConverseList } from '@shared/redux/actions/chat';
 import styled from 'styled-components/native';
 import TRefreshControl from '../components/TComponent/TRefreshControl';
 import { ChatType } from '../types/params';
-import { switchToChatScreen } from '../redux/actions/nav';
-import { TRPGState } from '@redux/types/__all__';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _values from 'lodash/values';
 import _sortBy from 'lodash/sortBy';
@@ -18,6 +17,8 @@ import _size from 'lodash/size';
 import { TMemo } from '@shared/components/TMemo';
 import { useSpring, animated } from 'react-spring/native';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { TRPGTabScreenProps } from '@app/router';
+import { switchToChatScreen } from '@app/navigate';
 
 const NetworkContainer = styled(animated.View as any)<{
   isOnline: boolean;
@@ -60,23 +61,13 @@ const NetworkTip: React.FC = TMemo((props) => {
 });
 NetworkTip.displayName = 'NetworkTip';
 
-interface Props extends DispatchProp<any> {
+interface Props extends TRPGDispatchProp, TRPGTabScreenProps<'TRPG'> {
   converses: any;
   conversesDesc: any;
   groups: any;
   usercache: any;
 }
 class HomeScreen extends React.Component<Props> {
-  static navigationOptions = {
-    headerTitle: 'TRPG',
-    // tabBarLabel: 'TRPG',
-    tabBarIcon: ({ tintColor }) => (
-      <Text style={{ fontFamily: 'iconfont', fontSize: 26, color: tintColor }}>
-        &#xe648;
-      </Text>
-    ),
-  };
-
   state = {
     isRefreshing: false,
   };
@@ -147,7 +138,12 @@ class HomeScreen extends React.Component<Props> {
   }
 
   handleSelectConverse(uuid: string, type: ChatType, info) {
-    this.props.dispatch(switchToChatScreen(uuid, type, info.name));
+    switchToChatScreen(
+      this.props.navigation.dangerouslyGetParent(),
+      uuid,
+      type,
+      info.name
+    );
   }
 
   render() {

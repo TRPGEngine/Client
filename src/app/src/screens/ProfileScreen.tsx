@@ -1,17 +1,18 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
-import { NavigationScreenProps } from 'react-navigation';
 import sb from 'react-native-style-block';
 import appConfig from '../config.app';
-import { getSimpleDate } from '../../../shared/utils/date-helper';
+import { getSimpleDate } from '@shared/utils/date-helper';
 import { TButton, TAvatar, TImageViewer } from '../components/TComponent';
-import { getUserInfo } from '../../../shared/redux/actions/cache';
-import { sendFriendInvite } from '../../../shared/redux/actions/user';
-import { switchToChatScreen } from '../redux/actions/nav';
-import { getUserInfoCache } from '../../../shared/utils/cache-helper';
+import { getUserInfo } from '@shared/redux/actions/cache';
+import { sendFriendInvite } from '@shared/redux/actions/user';
+import { getUserInfoCache } from '@shared/utils/cache-helper';
 import { addUserConverse } from '@src/shared/redux/actions/chat';
-import { TRPGState } from '@redux/types/__all__';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import { TRPGStackScreenProps } from '@app/router';
+import { switchToChatScreen } from '@app/navigate';
+import { getUserName } from '@shared/utils/data-helper';
 
 interface ItemProps {
   name: string;
@@ -29,13 +30,9 @@ class ProfileInfoItem extends React.Component<ItemProps> {
   }
 }
 
-interface NavigationParams {
-  uuid: string;
-  type: 'user' | 'group';
-}
 interface ScreenProps
-  extends DispatchProp<any>,
-    NavigationScreenProps<NavigationParams> {
+  extends TRPGDispatchProp,
+    TRPGStackScreenProps<'Profile'> {
   friendList: string[];
   selfUUID: string;
 }
@@ -44,7 +41,7 @@ interface ScreenProps
  */
 class ProfileScreen extends React.Component<ScreenProps> {
   get userUUID(): string {
-    return this.props.navigation.getParam('uuid', '');
+    return this.props.route.params?.uuid ?? '';
   }
 
   get isSelf() {
@@ -52,7 +49,7 @@ class ProfileScreen extends React.Component<ScreenProps> {
   }
 
   componentDidMount() {
-    let uuid = this.props.navigation.state.params.uuid;
+    const uuid = this.props.route.params?.uuid;
     if (uuid) {
       console.log('获取最新用户信息', uuid);
       this.props.dispatch(getUserInfo(uuid));
@@ -60,14 +57,17 @@ class ProfileScreen extends React.Component<ScreenProps> {
   }
 
   handlePressSendMsg = () => {
-    let type = this.props.navigation.state.params.type;
-    let userUUID = this.props.navigation.state.params.uuid;
+    let type = this.props.route.params?.type;
+    let userUUID = this.props.route.params?.uuid;
     let userInfo = getUserInfoCache(userUUID);
 
     // 创建用户会话并切换到该会话
     this.props.dispatch(addUserConverse([userUUID]));
-    this.props.dispatch(
-      switchToChatScreen(userUUID, type, userInfo.nickname || userInfo.username)
+    switchToChatScreen(
+      this.props.navigation,
+      userUUID,
+      type,
+      getUserName(userInfo)
     );
   };
 

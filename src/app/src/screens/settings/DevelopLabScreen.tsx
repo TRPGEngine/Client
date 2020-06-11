@@ -8,12 +8,14 @@ import styled from 'styled-components/native';
 import { sendBasicNotify, clearAllNotifications } from '@app/native/trpg';
 
 import MessageHandler from '@app/components/messageTypes/__all__';
-import { switchNav, navPortal } from '@app/redux/actions/nav';
+// import { switchNav, navPortal } from '@app/redux/actions/nav';
 import config from '@src/shared/project.config';
 import { connect } from 'react-redux';
 import { TRPGDispatchProp, TRPGState } from '@src/shared/redux/types/__all__';
 import rnStorage from '@shared/api/rn-storage.api';
 import SuspensionWindow from '@app/components/SuspensionWindow';
+import { TRPGStackScreenProps } from '@app/router';
+import { navPortal } from '@app/navigate';
 
 const TRPGModule = NativeModules.TRPGModule;
 
@@ -21,7 +23,9 @@ const DevButton = styled(TButton)`
   margin: 10px;
 `;
 
-interface Props extends TRPGDispatchProp {
+interface Props
+  extends TRPGDispatchProp,
+    TRPGStackScreenProps<'SettingsDevelopLab'> {
   userUUID: string;
 }
 class DevelopLabScreen extends React.Component<Props> {
@@ -30,7 +34,7 @@ class DevelopLabScreen extends React.Component<Props> {
   };
 
   handlePortalLogin = () => {
-    this.props.dispatch(navPortal('/sso/login'));
+    navPortal(this.props.navigation, '/sso/login');
   };
 
   sibling: RootSibling;

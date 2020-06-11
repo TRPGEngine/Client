@@ -13,10 +13,10 @@ import _last from 'lodash/last';
 import { List } from '@ant-design/react-native';
 import TModalPanel from '../components/TComponent/TModalPanel';
 import TPicker from '../components/TComponent/TPicker';
-import { TRPGState } from '@redux/types/__all__';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 const Item = List.Item;
 
-interface Props extends DispatchProp<any> {
+interface Props extends TRPGDispatchProp {
   userInfo: any;
 }
 class ProfileModifyScreen extends React.Component<Props> {
@@ -159,6 +159,7 @@ class ProfileModifyScreen extends React.Component<Props> {
             defaultValue={sign}
             onChangeText={(text) => (sign = text)}
             style={{ maxHeight: 320 }}
+            placeholder="请输入您的个性签名"
           />
         </TModalPanel>
       )
