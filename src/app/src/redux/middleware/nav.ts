@@ -1,8 +1,8 @@
 import { getGlobalNavigation } from '@app/navigate/global';
 import _isNil from 'lodash/isNil';
-import { NavigationActions, StackActions } from 'react-navigation';
 import { TRPGMiddleware } from '@redux/types/__all__';
 import constants from '@shared/redux/constants';
+import { resetScreenAction } from '@app/navigate/actions';
 const {
   LOGIN_SUCCESS,
   LOGIN_TOKEN_SUCCESS,
@@ -24,23 +24,13 @@ export const appNavMiddleware: TRPGMiddleware = ({ dispatch, getState }) => (
       case LOGIN_SUCCESS:
       case LOGIN_TOKEN_SUCCESS:
         if (rootState.index > 0 && rootState.routes[0].name !== 'Main') {
-          globalNavigation.dispatch(
-            StackActions.reset({
-              index: 0,
-              actions: [NavigationActions.navigate({ routeName: 'Main' })],
-            })
-          );
+          globalNavigation.dispatch(resetScreenAction('Main'));
         }
 
         break;
       case LOGOUT:
         if (rootState.index > 0 && rootState.routes[0].name !== 'Login') {
-          globalNavigation.dispatch(
-            StackActions.reset({
-              index: 0,
-              actions: [NavigationActions.navigate({ routeName: 'Login' })],
-            })
-          );
+          globalNavigation.dispatch(resetScreenAction('Login'));
         }
         break;
       case CREATE_GROUP_SUCCESS:

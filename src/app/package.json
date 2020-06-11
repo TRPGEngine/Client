@@ -25,7 +25,7 @@
   "dependencies": {
     "@ant-design/icons-react-native": "^1.0.2",
     "@ant-design/react-native": "^3.1.15",
-    "@react-native-community/cameraroll": "^1.2.1",
+    "@react-native-community/cameraroll": "^1.7.2",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.5.1",
     "@react-navigation/native": "^5.5.0",
@@ -56,9 +56,6 @@
     "react-native-screens": "^2.8.0",
     "react-native-style-block": "0.0.4",
     "react-native-webview": "^10.1.1",
-    "react-navigation": "^3.9.1",
-    "react-navigation-redux-helpers": "^3.0.2",
-    "react-navigation-stack": "^1.4.0",
     "rn-fetch-blob": "^0.11.2",
     "styled-components": "^4.3.2"
   },
