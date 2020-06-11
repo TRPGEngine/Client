@@ -51,3 +51,7 @@ body pre {
   word-wrap: break-word;
   white-space: pre-wrap;
 }
+
+body p {
+  margin: 0;
+}

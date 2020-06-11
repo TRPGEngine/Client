@@ -59,6 +59,7 @@ export const RecruitCreateBtn: React.FC<Props> = TMemo((props) => {
       <Button type="primary" ghost={true} onClick={() => setShowModal(true)}>
         发布招募
       </Button>
+
       <Modal
         visible={showModal}
         confirmLoading={loading}

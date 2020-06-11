@@ -136,10 +136,28 @@ export const createRecruit = async (
   });
 };
 
-export async function fetchRecruitList(): Promise<RecruitItemType[]> {
-  const { data } = await request.get('/trpg/recruit/list');
+/**
+ * 获取所有招募列表
+ */
+export async function fetchAllRecruitList(): Promise<RecruitItemType[]> {
+  const { data } = await request.get('/trpg/recruit/list/all');
 
   const list = data.list;
 
   return list;
+}
+
+/**
+ * 获取用户招募列表
+ */
+export async function fetchUserRecruitList(): Promise<RecruitItemType[]> {
+  const { data } = await request.get('/trpg/recruit/list/user');
+
+  const list = data.list;
+
+  return list;
+}
+
+export async function setRecruitCompleted(recruitUUID: string): Promise<void> {
+  await request.post(`/trpg/recruit/${recruitUUID}/complete`);
 }
