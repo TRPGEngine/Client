@@ -1,5 +1,5 @@
 import React from 'react';
-import { Picker } from 'react-native';
+import { Picker } from '@react-native-community/picker';
 const PickerItem = Picker.Item;
 
 interface Props {
