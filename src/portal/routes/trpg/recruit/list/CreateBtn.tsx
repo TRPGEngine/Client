@@ -60,12 +60,7 @@ export const RecruitCreateBtn: React.FC<Props> = TMemo((props) => {
         发布招募
       </Button>
 
-      <Modal
-        visible={showModal}
-        confirmLoading={loading}
-        onOk={handleCreateRecruit}
-        onCancel={() => setShowModal(false)}
-      >
+      <Modal visible={showModal} footer={null}>
         <LoginEnsureContainer>
           <Form
             labelCol={{ span: 6 }}
@@ -126,6 +121,18 @@ export const RecruitCreateBtn: React.FC<Props> = TMemo((props) => {
                   onChange={handleChange}
                 />
               </Row>
+            </Form.Item>
+            <Form.Item wrapperCol={{ sm: 24, md: { span: 18, offset: 6 } }}>
+              <Button
+                type="primary"
+                size="large"
+                loading={loading}
+                htmlType="button"
+                style={{ width: '100%' }}
+                onClick={() => handleCreateRecruit()}
+              >
+                发起招募
+              </Button>
             </Form.Item>
           </Form>
         </LoginEnsureContainer>
