@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Button, Modal, Form, Input, Col, Typography, Select, Row } from 'antd';
-import { LoginEnsureContainer } from '@portal/components/LoginEnsureContainer';
+import { LoginEnsureContainer } from '@portal/components/LoginView/LoginEnsureContainer';
 import { useFormik } from 'formik';
 import TRPGEditor from '@shared/editor';
 import _isFunction from 'lodash/isFunction';

@@ -5,7 +5,7 @@ import { Col } from 'antd';
 import qs from 'qs';
 import _isString from 'lodash/isString';
 import { checkToken } from '@portal/utils/auth';
-import { LoginForm } from '@portal/components/LoginForm';
+import { LoginForm } from '@portal/components/LoginView/LoginForm';
 
 const Container = styled.div`
   width: 100vw;

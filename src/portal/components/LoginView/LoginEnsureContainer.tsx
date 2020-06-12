@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { checkToken } from '@portal/utils/auth';
-import Loading from './Loading';
+import Loading from '../Loading';
 import { LoginForm } from './LoginForm';
 
 /**

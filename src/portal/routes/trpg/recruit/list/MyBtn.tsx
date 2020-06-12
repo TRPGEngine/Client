@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { Button, Modal } from 'antd';
 import { TMemo } from '@shared/components/TMemo';
-import { LoginEnsureContainer } from '@portal/components/LoginEnsureContainer';
+import { LoginEnsureContainer } from '@portal/components/LoginView/LoginEnsureContainer';
 import { MyRecruitList } from './MyRecruitList';
 
 export const MyBtn: React.FC<{
