@@ -31,6 +31,7 @@ export function regField(type: string, component: FastFormFieldComponent) {
  * 容器配置
  */
 export interface FastFormContainerProps {
+  loading?: boolean;
   submitLabel?: string;
   handleSubmit: () => void;
 }
@@ -53,6 +54,7 @@ export interface FastFormFieldMeta extends FastFormFieldCommon {
  */
 export interface FastFormProps {
   fields: FastFormFieldMeta[]; // 字段详情
+  loading?: boolean; // 加载中
   submitLabel?: string; // 提交按钮的标签名
   onSubmit: (values: any) => void; // 点击提交按钮的回调
 }
@@ -107,6 +109,7 @@ export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
   return (
     <FastFormContext.Provider value={formik}>
       <FastFormContainer
+        loading={props.loading}
         submitLabel={props.submitLabel}
         handleSubmit={handleSubmit}
       >

@@ -19,6 +19,7 @@ const FastFormContainer: FastFormContainerComponent = TMemo((props) => {
     return (
       <Form.Item wrapperCol={{ sm: 24, md: { span: 16, offset: 8 } }}>
         <Button
+          loading={props.loading}
           type="primary"
           size="large"
           htmlType="button"
@@ -29,7 +30,7 @@ const FastFormContainer: FastFormContainerComponent = TMemo((props) => {
         </Button>
       </Form.Item>
     );
-  }, [props.handleSubmit, props.submitLabel]);
+  }, [props.loading, props.handleSubmit, props.submitLabel]);
 
   return (
     <Form labelCol={{ sm: 24, md: 8 }} wrapperCol={{ sm: 24, md: 16 }}>

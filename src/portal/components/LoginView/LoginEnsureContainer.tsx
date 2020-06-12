@@ -2,7 +2,7 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { checkToken } from '@portal/utils/auth';
 import Loading from '../Loading';
-import { LoginForm } from './LoginForm';
+import { LoginView } from './index';
 
 /**
  * 一个确保登录的组件
@@ -35,7 +35,7 @@ export const LoginEnsureContainer: React.FC = TMemo((props) => {
   if (isLogin) {
     return <Fragment>{props.children}</Fragment>;
   } else {
-    return <LoginForm onLoginSuccess={() => setIsLogin(true)} />;
+    return <LoginView onLoginSuccess={() => setIsLogin(true)} />;
   }
 });
 LoginEnsureContainer.displayName = 'LoginEnsureContainer';

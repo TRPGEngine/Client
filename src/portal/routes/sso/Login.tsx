@@ -5,7 +5,7 @@ import { Col } from 'antd';
 import qs from 'qs';
 import _isString from 'lodash/isString';
 import { checkToken } from '@portal/utils/auth';
-import { LoginForm } from '@portal/components/LoginView/LoginForm';
+import { LoginView } from '@portal/components/LoginView';
 
 const Container = styled.div`
   width: 100vw;
@@ -58,7 +58,7 @@ class Login extends React.Component {
     return (
       <Container>
         <Window>
-          <LoginForm onLoginSuccess={this.handleLoginSuccess} />
+          <LoginView onLoginSuccess={this.handleLoginSuccess} />
         </Window>
       </Container>
     );
