@@ -3,7 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { Input, Form } from 'antd';
 import { FastFormFieldComponent } from '@shared/components/FastForm';
 
-export const FastFormInput: FastFormFieldComponent = TMemo((props) => {
+export const FastFormText: FastFormFieldComponent = TMemo((props) => {
   const { name, label, value, onChange } = props;
 
   return (
@@ -17,4 +17,4 @@ export const FastFormInput: FastFormFieldComponent = TMemo((props) => {
     </Form.Item>
   );
 });
-FastFormInput.displayName = 'FastFormInput';
+FastFormText.displayName = 'FastFormText';

@@ -2,6 +2,7 @@ import React, { useMemo, useContext } from 'react';
 import { TMemo } from './TMemo';
 import { useFormik } from 'formik';
 import _isNil from 'lodash/isNil';
+import _fromPairs from 'lodash/fromPairs';
 
 /**
  * 字段通用信息
@@ -30,7 +31,8 @@ export function regField(type: string, component: FastFormFieldComponent) {
  * 容器配置
  */
 export interface FastFormContainerProps {
-  handleSubmit?: () => void;
+  submitLabel?: string;
+  handleSubmit: () => void;
 }
 export type FastFormContainerComponent = React.ComponentType<
   FastFormContainerProps
@@ -50,8 +52,9 @@ export interface FastFormFieldMeta extends FastFormFieldCommon {
  * 表单配置
  */
 export interface FastFormProps {
-  fields: FastFormFieldMeta[];
-  onSubmit: (values: any) => void;
+  fields: FastFormFieldMeta[]; // 字段详情
+  submitLabel?: string; // 提交按钮的标签名
+  onSubmit: (values: any) => void; // 点击提交按钮的回调
 }
 
 type FastFormContextType = ReturnType<typeof useFormik>;
@@ -68,7 +71,7 @@ export function useFastFormContext(): FastFormContextType | null {
  */
 export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
   const initialValues = useMemo(() => {
-    return props.fields.map((field) => field.name);
+    return _fromPairs(props.fields.map((field) => [field.name, '']));
   }, [props.fields]);
 
   const formik = useFormik({
@@ -99,14 +102,20 @@ export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
         );
       }
     });
-  }, [props.fields, setFieldValue]);
+  }, [props.fields, values, setFieldValue]);
 
   return (
     <FastFormContext.Provider value={formik}>
-      <FastFormContainer handleSubmit={handleSubmit}>
+      <FastFormContainer
+        submitLabel={props.submitLabel}
+        handleSubmit={handleSubmit}
+      >
         {fieldsRender}
       </FastFormContainer>
     </FastFormContext.Provider>
   );
 });
 FastForm.displayName = 'FastForm';
+FastForm.defaultProps = {
+  submitLabel: '提交',
+};

@@ -8,10 +8,10 @@ import {
 import { TMemo } from '@shared/components/TMemo';
 import { Form, Button } from 'antd';
 
-import { FastFormInput } from './types/Input';
+import { FastFormText } from './types/Text';
 import { FastFormPassword } from './types/Password';
 
-regField('text', FastFormInput);
+regField('text', FastFormText);
 regField('password', FastFormPassword);
 
 const FastFormContainer: FastFormContainerComponent = TMemo((props) => {
@@ -25,11 +25,11 @@ const FastFormContainer: FastFormContainerComponent = TMemo((props) => {
           style={{ width: '100%' }}
           onClick={() => props.handleSubmit()}
         >
-          提交
+          {props.submitLabel ?? '提交'}
         </Button>
       </Form.Item>
     );
-  }, [props.handleSubmit]);
+  }, [props.handleSubmit, props.submitLabel]);
 
   return (
     <Form labelCol={{ sm: 24, md: 8 }} wrapperCol={{ sm: 24, md: 16 }}>
