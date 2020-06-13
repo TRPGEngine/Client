@@ -3,7 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { RecruitItem } from './Item';
 import MasonryLayout from 'react-masonry-layout'; // https://www.npmjs.com/package/react-masonry-layout
 import { RecruitItemType, fetchAllRecruitList } from '@portal/model/trpg';
-import { Layout } from 'antd';
+import { Layout, Empty } from 'antd';
 import Loading from '@portal/components/Loading';
 import { RecruitCreateBtn } from './createBtn';
 import { MyBtn } from './MyBtn';
@@ -35,15 +35,20 @@ const RecruitList: React.FC = TMemo(() => {
         <RecruitCreateBtn onSuccess={fetch} />
       </Header>
       <Content style={{ padding: '12px 0' }}>
-        <MasonryLayout
-          id="masonry-layout"
-          style={{ margin: 'auto' }}
-          infiniteScrollDisabled={false}
-        >
-          {items.map((item, i) => {
-            return <RecruitItem key={i} data={item} />;
-          })}
-        </MasonryLayout>
+        {Array.isArray(items) && items.length > 0 ? (
+          <MasonryLayout
+            id="masonry-layout"
+            style={{ margin: 'auto' }}
+            infiniteScrollDisabled={false}
+          >
+            {items.map((item, i) => {
+              return <RecruitItem key={i} data={item} />;
+            })}
+          </MasonryLayout>
+        ) : infiniteScrollLoading === false ? (
+          <Empty />
+        ) : null}
+
         {infiniteScrollLoading && <Loading style={{ padding: 10 }} />}
       </Content>
     </Layout>
