@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.7](https://github.com/TRPGEngine/Client/compare/v0.3.6...v0.3.7) (2020-06-13)
+
+
+### Features
+
+* 增加一个通用的FastForm表单系统 ([f23b641](https://github.com/TRPGEngine/Client/commit/f23b6411e13762c8b8cfce260af95028ab988298))
+* **portal:** 增加portal端的注册逻辑 ([547b3b7](https://github.com/TRPGEngine/Client/commit/547b3b7fd6c5973d27783a629a9e9d8a5e163565))
+* **portal:** 增加React错误处理机制 ([1a4c6ee](https://github.com/TRPGEngine/Client/commit/1a4c6ee2ab236e171a6d8fcb39892e1ab08c6456))
+* **portal:** 增加发布招募 ([f6fc19f](https://github.com/TRPGEngine/Client/commit/f6fc19fae04243238439a7c7af0d30afeb6ef290))
+* **portal:** 增加招募列表的路由 ([28031f7](https://github.com/TRPGEngine/Client/commit/28031f77aa66dea48a06965905788acddb49b0e3))
+* **portal:** 增加用于显示招募信息的卡片组件 ([fdced48](https://github.com/TRPGEngine/Client/commit/fdced48aa3e94e54a3e40d2a1f4daeb3102a06a7))
+* **portal:** 增加获取最新招募信息列表的功能 ([9c0538f](https://github.com/TRPGEngine/Client/commit/9c0538fe7b2d1c560c0624cc0a1142c21b4c8866))
+* **portal:** 用户自己的招募与完成 ([98b7ddd](https://github.com/TRPGEngine/Client/commit/98b7dddd84c8a7afaec3cac757a7d890e3b0f3e1))
+
+
+### Bug Fixes
+
+* **app:** 修复了切换消息类型会导致应用闪退的bug ([5784ae8](https://github.com/TRPGEngine/Client/commit/5784ae895b48eefdcf419b5e0ee2308066189d8c))
+* 修复fastform数据初始化不正确的bug ([f61ac19](https://github.com/TRPGEngine/Client/commit/f61ac19f93440fc664ce439a4c4f8186f2f27a49))
+* 修复解散/退出团后不会删除会话的bug ([56cf5ee](https://github.com/TRPGEngine/Client/commit/56cf5ee59860b091089d64e1094764822e096b3c))
+
 ### [0.3.6](https://github.com/TRPGEngine/Client/compare/v0.3.5...v0.3.6) (2020-06-01)
 
 
