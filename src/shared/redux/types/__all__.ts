@@ -1,4 +1,4 @@
-import { AnyAction, Action, Store } from 'redux';
+import { AnyAction, Action, Store, Middleware } from 'redux';
 import { ActorState } from './actor';
 import { CacheState } from './cache';
 import { ChatState } from './chat';
@@ -48,3 +48,5 @@ export interface TRPGDispatchProp {
 export type TRPGAction =
   | ThunkAction<any, TRPGState, any, AnyAction>
   | AnyAction;
+
+export type TRPGMiddleware = Middleware<{}, TRPGState, TRPGDispatch>;

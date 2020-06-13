@@ -2,14 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, Switch } from 'react-native';
 import { List } from '@ant-design/react-native';
-import { switchNav } from '../redux/actions/nav';
 import rnStorage from '@src/shared/api/rn-storage.api';
 import config, { DefaultSettings } from '@src/shared/project.config';
 import { setSystemSettings } from '@redux/actions/settings';
 import { TRPGDispatchProp, TRPGState } from '@redux/types/__all__';
+import { TRPGStackScreenProps } from '@app/router';
+import { TRPGStackParamList } from '@app/types/params';
 const Item = List.Item;
 
-interface Props extends TRPGDispatchProp {
+interface Props extends TRPGDispatchProp, TRPGStackScreenProps<'Settings'> {
   systemSettings: DefaultSettings['system'];
 }
 interface State {
@@ -25,8 +26,8 @@ class SettingsScreen extends React.Component<Props, State> {
     this.setState({ isAlphaUser });
   }
 
-  nav = (routeName: string) => {
-    this.props.dispatch(switchNav(routeName));
+  nav = (routeName: keyof TRPGStackParamList) => {
+    this.props.navigation.navigate(routeName);
   };
 
   handleChangeIsAlphaUser = async (checked: boolean) => {

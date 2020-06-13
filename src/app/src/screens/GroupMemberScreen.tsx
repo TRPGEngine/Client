@@ -1,33 +1,24 @@
 import React from 'react';
-import { NavigationScreenProps } from 'react-navigation';
-import { GroupMemberParams } from '@app/types/params';
-import { connect } from 'react-redux';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import { TRPGDispatchProp } from '@redux/types/__all__';
 import UserList from '@app/components/UserList';
 import _isNil from 'lodash/isNil';
+import { TRPGStackScreenProps } from '@app/router';
+import { TMemo } from '@shared/components/TMemo';
+import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 
-interface Props
-  extends NavigationScreenProps<GroupMemberParams>,
-    TRPGDispatchProp {
+interface Props extends TRPGStackScreenProps<'GroupMember'>, TRPGDispatchProp {
   groupMembers: string[];
 }
 
-class GroupMemberScreen extends React.Component<Props> {
-  getUUIDs(): string[] {
-    return this.props.groupMembers;
-  }
+const GroupMemberScreen: React.FC<Props> = TMemo((props) => {
+  const groupUUID = props.route.params?.uuid;
+  const group = useTRPGSelector((state) =>
+    state.group.groups.find((x) => x.uuid === groupUUID)
+  );
+  const groupMembers = (!_isNil(group) ? group.group_members : null) ?? [];
 
-  render() {
-    return <UserList uuids={this.getUUIDs()} />;
-  }
-}
+  return <UserList uuids={groupMembers} />;
+});
+GroupMemberScreen.displayName = 'GroupMemberScreen';
 
-export default connect((state: TRPGState, ownProps: Props) => {
-  const groupUUID = ownProps.navigation.getParam('uuid');
-
-  const group = state.group.groups.find((x) => x.uuid === groupUUID);
-
-  return {
-    groupMembers: (!_isNil(group) ? group.group_members : null) ?? [],
-  };
-})(GroupMemberScreen);
+export default GroupMemberScreen;

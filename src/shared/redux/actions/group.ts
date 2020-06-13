@@ -34,6 +34,7 @@ const {
   SET_MEMBER_TO_MANAGER_SUCCESS,
   UPDATE_GROUP_STATUS,
   UPDATE_PLAYER_SELECTED_GROUP_ACTOR,
+  REMOVE_CONVERSES_SUCCESS,
 } = constants;
 import config from '../../project.config';
 import {
@@ -159,11 +160,17 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
   };
 };
 
+/**
+ * 创建团
+ * @param name 团名
+ * @param subname 团副名
+ * @param desc 团描述
+ */
 export const createGroup = function(
   name: string,
   subname: string,
   desc: string
-) {
+): TRPGAction {
   return function(dispatch, getState) {
     dispatch(showLoading());
     api.emit('group::create', { name, subname, desc }, function(data) {
@@ -172,7 +179,7 @@ export const createGroup = function(
         dispatch(hideModal());
         dispatch(showAlert('创建成功'));
         dispatch({ type: CREATE_GROUP_SUCCESS, payload: data.group });
-        dispatch(data.group); // 创建成功后直接初始化
+        dispatch(initGroupInfo(data.group)); // 创建成功后直接初始化
       } else {
         console.error(data);
         dispatch(showAlert(data.msg));
@@ -733,12 +740,13 @@ export const createGroupMap = function(
   };
 };
 
-export const quitGroup = function(groupUUID) {
+export const quitGroup = function(groupUUID: string): TRPGAction {
   return function(dispatch, getState) {
     dispatch(showLoading());
     return api.emit('group::quitGroup', { groupUUID }, function(data) {
       if (data.result) {
         dispatch({ type: QUIT_GROUP_SUCCESS, groupUUID });
+        dispatch({ type: REMOVE_CONVERSES_SUCCESS, converseUUID: groupUUID }); // 移除聊天会话
         dispatch(showAlert('已退出本群!'));
         dispatch(hideLoading());
       } else {
@@ -748,12 +756,13 @@ export const quitGroup = function(groupUUID) {
   };
 };
 
-export const dismissGroup = function(groupUUID) {
+export const dismissGroup = function(groupUUID: string): TRPGAction {
   return function(dispatch, getState) {
     dispatch(showLoading());
     return api.emit('group::dismissGroup', { groupUUID }, function(data) {
       if (data.result) {
         dispatch({ type: DISMISS_GROUP_SUCCESS, groupUUID });
+        dispatch({ type: REMOVE_CONVERSES_SUCCESS, converseUUID: groupUUID }); // 移除聊天会话
         dispatch(showAlert('已解散本群!'));
         dispatch(hideLoading());
       } else {

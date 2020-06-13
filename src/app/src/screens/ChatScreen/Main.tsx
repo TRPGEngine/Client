@@ -137,7 +137,7 @@ export const ChatScreenMain: React.FC<Props> = TMemo((props) => {
    */
   const handleRequestMoreChatLog = useCallback(() => {
     // 获取时间最前的那条记录
-    const oldestDate = _last(msgList).date ?? new Date().toISOString();
+    const oldestDate = _last(msgList)?.date ?? new Date().toISOString();
     const converseType = props.converseType;
     dispatch(
       getMoreChatLog(props.converseUUID, oldestDate, converseType === 'user')

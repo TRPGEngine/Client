@@ -25,6 +25,6 @@ function base64URLDecode(base64UrlEncodedValue: string) {
   try {
     return decodeURIComponent(escape(window.atob(newValue)));
   } catch (e) {
-    throw 'Base64URL decode of JWT segment failed';
+    throw new Error('Base64URL decode of JWT segment failed');
   }
 }

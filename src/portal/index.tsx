@@ -4,19 +4,20 @@ import App from './App';
 import { ThemeProvider } from 'styled-components';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
-import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
+import styledTheme from '@src/shared/utils/theme';
+import { WebErrorBoundary } from '@web/components/WebErrorBoundary';
+import { PortalErrorView } from './ErrorView';
+
 import '@web/assets/css/iconfont.css';
 import './index.css';
 
-import styledTheme from '@src/shared/utils/theme';
-
 ReactDOM.render(
-  <ErrorBoundary>
+  <WebErrorBoundary renderError={PortalErrorView}>
     <ThemeProvider theme={styledTheme}>
       <ConfigProvider locale={zhCN}>
         <App />
       </ConfigProvider>
     </ThemeProvider>
-  </ErrorBoundary>,
+  </WebErrorBoundary>,
   document.querySelector('#app')
 );

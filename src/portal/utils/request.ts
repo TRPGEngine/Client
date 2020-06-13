@@ -20,16 +20,36 @@ request.interceptors.request.use((val) => {
   return val;
 });
 
+/**
+ * 跳转到登录页面
+ */
+export function navToLoginPage() {
+  const pathname = window.location.pathname;
+  if (pathname.includes('/sso/login')) {
+    // 如果已在登录页，则不再跳转
+    return;
+  }
+
+  const next = encodeURIComponent(pathname);
+  history.push(`/sso/login?next=${next}`);
+}
+
 request.interceptors.response.use(
   (val) => val,
   (err) => {
     if (err.response && err.response.status === 401) {
+      const responseURL = err.request.responseURL;
       const pathname = window.location.pathname; // 获取url路径，不包含querystring
-      if (!pathname.includes('/sso/login')) {
-        // 若当前页不是登录页。则跳过
-        const next = encodeURIComponent(pathname);
+
+      if (
+        !(
+          pathname.includes('/sso/login') ||
+          responseURL.includes('/player/sso/check')
+        )
+      ) {
+        // 若当前页不是登录页, 也不是检查页面。则进行页面跳转
         console.log('未登录: 正在跳转到登录页面...');
-        history.push(`/sso/login?next=${next}`);
+        navToLoginPage();
         return;
       }
     }

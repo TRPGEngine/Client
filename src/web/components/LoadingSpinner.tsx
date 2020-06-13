@@ -1,7 +1,8 @@
 import React from 'react';
+import { TMemo } from '@shared/components/TMemo';
 import './LoadingSpinner.scss';
 
-const LoadingSpinner: React.FC = React.memo(() => {
+const LoadingSpinner: React.FC = TMemo(() => {
   return (
     <div className="loading-spinner-container">
       <div className="loading-spinner-inner">
@@ -14,5 +15,6 @@ const LoadingSpinner: React.FC = React.memo(() => {
     </div>
   );
 });
+LoadingSpinner.displayName = 'LoadingSpinner';
 
 export default LoadingSpinner;

@@ -1,5 +1,7 @@
 {
   "extends": "../../tsconfig.json",
+  "include": ["index.js", "./src/", "./test/"],
+  "exclude": [],
   "compilerOptions": {
     "plugins": [
       {

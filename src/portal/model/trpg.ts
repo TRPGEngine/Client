@@ -2,6 +2,7 @@ import { request } from '@portal/utils/request';
 import { ChatLogItem } from './chat';
 import { hpack, hunpack } from '@shared/utils/json-helper';
 import _isNil from 'lodash/isNil';
+import _isEmpty from 'lodash/isEmpty';
 
 // 消息log必须的字段
 // 用于消息数据压缩
@@ -79,3 +80,84 @@ export const fetchOwnReport = async (): Promise<GameReport[]> => {
 
   return reports;
 };
+
+export type RecruitPlatform = 'trpgengine' | 'qq' | 'other';
+export type RecruitContactType = 'user' | 'group';
+export interface RecruitItemType {
+  uuid: string;
+  title: string;
+  author: string;
+  content: string;
+  platform: RecruitPlatform;
+  contact_type: RecruitContactType;
+  contact_content: string;
+  updatedAt: string;
+  completed: boolean;
+}
+
+/**
+ * 值与显示的映射
+ */
+export const recruitPlatformMap = {
+  trpgengine: 'TRPG Engine',
+  qq: 'QQ',
+  other: '其他',
+};
+export const recruitContactTypeMap = {
+  user: '用户',
+  group: '群组',
+};
+
+/**
+ * 创建一条招募信息
+ * @param title 标题
+ * @param content 内容
+ * @param platform 平台
+ * @param contactType 联系类型
+ * @param contactContent 联系方式
+ */
+export const createRecruit = async (
+  title: string,
+  content: string,
+  platform: RecruitPlatform,
+  contactType: RecruitContactType,
+  contactContent: string
+): Promise<void> => {
+  if (_isEmpty(title) || _isEmpty(content)) {
+    throw new Error('缺少必要字段');
+  }
+
+  await request.post(`/trpg/recruit/create`, {
+    title,
+    content,
+    platform,
+    contactType,
+    contactContent,
+  });
+};
+
+/**
+ * 获取所有招募列表
+ */
+export async function fetchAllRecruitList(): Promise<RecruitItemType[]> {
+  const { data } = await request.get('/trpg/recruit/list/all');
+
+  const list = data.list;
+
+  return list;
+}
+
+/**
+ * 获取用户招募列表
+ */
+export async function fetchUserRecruitList(): Promise<RecruitItemType[]> {
+  const { data } = await request.get('/trpg/recruit/list/user');
+
+  const list = data.list;
+
+  return list;
+}
+
+export async function setRecruitCompleted(recruitUUID: string): Promise<void> {
+  await request.post(`/trpg/recruit/${recruitUUID}/complete`);
+}

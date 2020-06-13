@@ -1,17 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  ListRenderItemInfo,
-  TouchableOpacity,
-} from 'react-native';
-import {
-  NavigationScreenProps,
-  NavigationScreenConfig,
-  NavigationScreenOptions,
-  NavigationActions,
-} from 'react-navigation';
+import { View, Text, ListRenderItemInfo } from 'react-native';
 import { connect } from 'react-redux';
 import { TRPGState } from '@src/shared/redux/types/__all__';
 import _uniq from 'lodash/uniq';
@@ -20,52 +8,20 @@ import _noop from 'lodash/noop';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
 import { Checkbox } from '@ant-design/react-native';
 import UserList, { UserAvatar, UserItem } from '@app/components/UserList';
+import { TRPGStackScreenProps } from '@app/router';
 
-interface Props
-  extends NavigationScreenProps<{
-    uuids: string[];
-    onSelected: (selectedUUID: string[]) => void;
-    title?: string;
-    selectedUUIDs?: string[];
-  }> {}
+interface Props extends TRPGStackScreenProps<'UserSelect'> {}
 interface State {
   selectedUUIDs: string[];
 }
 
 class UserSelectScreen extends React.Component<Props, State> {
-  static navigationOptions: NavigationScreenConfig<NavigationScreenOptions> = (
-    props
-  ) => {
-    const uuids = props.navigation.getParam('uuids', []);
-    const selectedUUIDs = props.navigation.getParam('selectedUUIDs', []);
-    const onSelected = props.navigation.getParam('onSelected', _noop);
-
-    return {
-      headerTitle:
-        selectedUUIDs.length > 0
-          ? `已选择 ${selectedUUIDs.length} / ${uuids.length}`
-          : props.navigation.getParam('title', '选择用户'),
-      headerRight: (
-        <View style={{ marginRight: 10 }}>
-          <TouchableOpacity
-            onPress={() => {
-              onSelected(selectedUUIDs);
-              props.navigation.dispatch(NavigationActions.back());
-            }}
-          >
-            <Text>完成</Text>
-          </TouchableOpacity>
-        </View>
-      ),
-    };
-  };
-
   state: Readonly<State> = {
     selectedUUIDs: [],
   };
 
   get uuids(): string[] {
-    const uuids = this.props.navigation.getParam('uuids', []);
+    const uuids = this.props.route.params?.uuids ?? [];
     return _uniq(uuids);
   }
 
