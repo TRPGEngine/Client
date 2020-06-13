@@ -60,7 +60,11 @@ export const RecruitCreateBtn: React.FC<Props> = TMemo((props) => {
         发布招募
       </Button>
 
-      <Modal visible={showModal} footer={null}>
+      <Modal
+        visible={showModal}
+        onCancel={() => setShowModal(false)}
+        footer={null}
+      >
         <LoginEnsureContainer>
           <Form
             labelCol={{ span: 6 }}
