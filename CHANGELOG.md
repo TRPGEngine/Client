@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.8](https://github.com/TRPGEngine/Client/compare/v0.3.7...v0.3.8) (2020-06-13)
+
+
+### Bug Fixes
+
+* **portal:** 修复发布招募模态框无法无法关闭的bug ([8262656](https://github.com/TRPGEngine/Client/commit/826265668adae18c91fa020315835a5375843d99))
+
 ### [0.3.7](https://github.com/TRPGEngine/Client/compare/v0.3.6...v0.3.7) (2020-06-13)
 
 
