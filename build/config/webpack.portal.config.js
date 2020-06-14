@@ -3,6 +3,7 @@
  */
 
 process.env.TRPG_APP_NAME = 'Portal';
+process.env.SENRTY_RELEASE_URL_PREFIX = '~/portal/';
 
 const webpackMerge = require('webpack-merge');
 const path = require('path');
