@@ -37,10 +37,15 @@ const completedLayout = [
 ];
 
 // 正在开发中的布局。不会再正式环境显示到界面上
-const developLayout = [];
+const developLayout = [
+  {
+    label: '星光无限',
+    value: require('./xml/wuxian.xml').default,
+  },
+];
 
 // 正在操作的布局。 在开发模式下会自动加载最新的该布局
-const workingLabel = 'CoC7';
+const workingLabel = '星光无限';
 const showDevLayout =
   config.environment === 'development' ||
   localStorage.getItem('__playground_dev') === '1';
