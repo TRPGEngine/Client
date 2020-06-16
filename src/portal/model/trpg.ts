@@ -158,6 +158,24 @@ export async function fetchUserRecruitList(): Promise<RecruitItemType[]> {
   return list;
 }
 
+/**
+ * 设置招募已完成
+ * @param recruitUUID 招募UUID
+ */
 export async function setRecruitCompleted(recruitUUID: string): Promise<void> {
   await request.post(`/trpg/recruit/${recruitUUID}/complete`);
+}
+
+/**
+ * 获取招募详情
+ * @param recruitUUID 招募UUID
+ */
+export async function fetchUserRecruitDetail(
+  recruitUUID: string
+): Promise<RecruitItemType> {
+  const { data } = await request.get(`/trpg/recruit/${recruitUUID}`);
+
+  const recruit = data.recruit;
+
+  return recruit;
 }

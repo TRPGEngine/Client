@@ -12,11 +12,24 @@ import { getFromNow, getFullDate } from '@shared/utils/date-helper';
 import HTML from '@web/components/HTML';
 import styledTheme from '@shared/utils/theme';
 
-const RecruitItemContainer = styled.div`
+type RecruitItemSize = 'default' | 'large';
+
+const RecruitItemContainer = styled.div<{
+  size?: RecruitItemSize;
+}>`
   padding: 12px;
-  width: 180px;
+  height: ${(props) => (props.size === 'large' ? '80vh' : 'auto')};
+  width: ${(props) => (props.size === 'large' ? '80vw' : '180px')};
+  max-width: 420px;
   background-color: white;
   box-shadow: ${(props) => props.theme.boxShadow.normal};
+  display: flex;
+  flex-direction: column;
+
+  main {
+    flex: 1;
+    overflow: auto;
+  }
 
   .time {
     color: ${(props) => props.theme.color.gray};
@@ -25,15 +38,19 @@ const RecruitItemContainer = styled.div`
 `;
 
 interface RecruitItemProps {
+  size?: RecruitItemSize;
   data: RecruitItemType;
 }
 export const RecruitItem: React.FC<RecruitItemProps> = TMemo((props) => {
   const data = props.data;
+  const size = props.size;
 
   return (
-    <RecruitItemContainer>
-      <h2>{data.title}</h2>
-      <HTML html={data.content} />
+    <RecruitItemContainer size={size}>
+      <main>
+        <h2>{data.title}</h2>
+        <HTML html={data.content} />
+      </main>
 
       <Divider />
 
@@ -70,3 +87,6 @@ export const RecruitItem: React.FC<RecruitItemProps> = TMemo((props) => {
   );
 });
 RecruitItem.displayName = 'RecruitItem';
+RecruitItem.defaultProps = {
+  size: 'default',
+};
