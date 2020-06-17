@@ -6,7 +6,7 @@ import {
   recruitPlatformMap,
   recruitContactTypeMap,
 } from '@portal/model/trpg';
-import { Divider, Tooltip } from 'antd';
+import { Divider, Tooltip, Tag } from 'antd';
 import { ColorTag } from '@web/components/ColorTag';
 import { getFromNow, getFullDate } from '@shared/utils/date-helper';
 import HTML from '@web/components/HTML';
@@ -48,7 +48,10 @@ export const RecruitItem: React.FC<RecruitItemProps> = TMemo((props) => {
   return (
     <RecruitItemContainer size={size}>
       <main>
-        <h2>{data.title}</h2>
+        <h2>
+          {data.title}
+          {data.completed && <Tag>已满</Tag>}
+        </h2>
         <HTML html={data.content} />
       </main>
 
