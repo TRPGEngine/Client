@@ -40,7 +40,7 @@ if (_.get(process, 'env.npm_config_report', false)) {
       ignoreFile: '.sentrycliignore',
       ignore: ['app'],
       configFile: 'sentry.properties',
-      release: _get(config, 'sentry.release'),
+      release: _.get(config, 'sentry.release'),
       urlPrefix: process.env.SENRTY_RELEASE_URL_PREFIX || '~/',
     })
   );
