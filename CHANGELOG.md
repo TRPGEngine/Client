@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.9](https://github.com/TRPGEngine/Client/compare/v0.3.8...v0.3.9) (2020-06-17)
+
+
+### Features
+
+* **app:** 增加招募内容详情页 ([456404f](https://github.com/TRPGEngine/Client/commit/456404f308723593aaa2f6b4a9fa658b91aecf5e))
+* **portal:** 已满的招募项增加已满标识 ([11e01ab](https://github.com/TRPGEngine/Client/commit/11e01ab07b78cdd9231c1fc534383c802fc635b4))
+
 ### [0.3.8](https://github.com/TRPGEngine/Client/compare/v0.3.7...v0.3.8) (2020-06-13)
 
 
