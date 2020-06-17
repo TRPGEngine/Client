@@ -35,13 +35,11 @@ const api = trpgApi.getInstance();
 bindEventFunc.call(api, store, {
   onReceiveMessage: notify(store).onReceiveMessage,
 });
-trpgApi.setEventErrorHandler((info) => {
-  // socket接口错误捕获
-  import('./utils/sentry').then((module) => module.error(info));
-});
 window.onerror = (event, source, fileno, columnNumber, error) => {
   // 全局错误捕获
-  import('./utils/sentry').then((module) => module.error(error || event));
+  import('./utils/sentry').then((module) =>
+    module.error(error || String(event))
+  );
 };
 
 // 加载本地存储数据进行应用初始化

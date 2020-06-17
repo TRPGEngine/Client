@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Template>
+  <!-- 无限恐怖简版人物卡 -->
+  <BaseInfo />
+  <BaseAttr>
+    <FieldSet label="概念段">
+      <Select name="性别" options="男,女" allowCustom="true" />
+      <InputNumber name="年龄" />
+
+      <InputNumber name="身高" label="身高(cm)" />
+      <InputNumber name="体重" label="体重(kg)" />
+
+      <Input name="种族" />
+      <Input name="国籍" />
+      <Input name="语言" />
+
+      <TextArea name="外貌/特征" />
+      <TextArea name="性格/个性" />
+      <TextArea name="概述" />
+
+      <FieldSet>
+        <Input name="美德" />
+        <Input name="恶德" />
+
+        <Input name="角色特性" />
+      </FieldSet>
+
+      <FieldSet>
+        <Input name="缺陷" />
+        <Input name="天赋" />
+        <Input name="怪癖" />
+      </FieldSet>
+    </FieldSet>
+
+    <FieldSet label="属性段">
+      <table>
+        <thead>
+          <tr>
+            <td></td>
+            <td>强度</td>
+            <td>机动</td>
+            <td>耐久</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>生理属性</td>
+            <td><InputNumber name="力量" default="1" /></td>
+            <td><InputNumber name="敏捷" default="1" /></td>
+            <td><InputNumber name="耐力" default="1" /></td>
+          </tr>
+          <tr>
+            <td>心智属性</td>
+            <td><InputNumber name="智力" default="1" /></td>
+            <td><InputNumber name="感知" default="1" /></td>
+            <td><InputNumber name="决心" default="1" /></td>
+          </tr>
+          <tr>
+            <td>互动属性</td>
+            <td><InputNumber name="风度" default="1" /></td>
+            <td><InputNumber name="操控" default="1" /></td>
+            <td><InputNumber name="沉着" default="1" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </FieldSet>
+
+    <FieldSet label="技能段">
+      <FieldSet label="生理技能">
+        <InputNumber name="运动" />
+        <InputNumber name="肉搏" />
+        <InputNumber name="驾驶" />
+        <InputNumber name="枪械" />
+        <InputNumber name="手上功夫" />
+        <InputNumber name="隐藏" />
+        <InputNumber name="求生" />
+        <InputNumber name="白刃" />
+        <InputNumber name="弓箭" />
+      </FieldSet>
+
+      <FieldSet label="心智技能">
+        <InputNumber name="学识" />
+        <InputNumber name="电脑" />
+        <InputNumber name="调查" />
+        <InputNumber name="医学" />
+        <InputNumber name="神秘学" />
+        <InputNumber name="科学" />
+        <TextArea name="手艺或其他" />
+      </FieldSet>
+
+      <FieldSet label="互动技能">
+        <InputNumber name="动物沟通" />
+        <InputNumber name="感受" />
+        <InputNumber name="胁迫" />
+        <InputNumber name="交际" />
+        <InputNumber name="掩饰" />
+        <TextArea name="表达或其他" />
+      </FieldSet>
+    </FieldSet>
+
+    <FieldSet label="专长段">
+      <!-- TODO -->
+    </FieldSet>
+  </BaseAttr>
+</Template>

@@ -4,6 +4,7 @@ import { bindNotifyInfo } from '@shared/redux/actions/notify';
 import rnStorage from '@shared/api/rn-storage.api';
 import { umPush, Code } from './native/push-utils';
 import { clearAllNotifications, sendBasicNotify } from './native/trpg';
+import _isNil from 'lodash/isNil';
 
 import * as trpgApi from '@shared/api/trpg.api';
 const api = trpgApi.getInstance();
@@ -38,6 +39,11 @@ export async function setAlias(alias: string) {
 export function bindInfo(userUUID: string) {
   // 友盟推送
   umPush.getRegistrationId((registrationID) => {
+    if (_isNil(registrationID)) {
+      console.warn('获取不到设备唯一标识', registrationID);
+      return;
+    }
+
     bindNotifyInfo({ userUUID, registrationID, platform: 'upush' });
     setAlias(userUUID);
   });

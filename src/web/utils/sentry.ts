@@ -1,12 +1,22 @@
 import * as Sentry from '@sentry/browser';
-import config from 'config';
+import Config from 'config';
 import _get from 'lodash/get';
+import config from '@shared/project.config';
+
+const environment = config.environment;
 
 Sentry.init({
-  dsn: _get(config, 'sentry.dsn'),
+  release:
+    environment === 'production' ? _get(Config, 'sentry.release') : undefined,
+  environment,
+  dsn: _get(Config, 'sentry.dsn'),
 });
 
-export function error(err) {
+/**
+ * 汇报错误
+ * @param err 错误
+ */
+export function error(err: Error | string) {
   let fn;
   if (typeof err === 'string') {
     fn = Sentry.captureMessage.bind(Sentry);
@@ -17,6 +27,9 @@ export function error(err) {
   console.warn('error: sentryId', sentryId);
 }
 
+/**
+ * 打开报告面板
+ */
 export function showReportDialog() {
   Sentry.showReportDialog();
 }

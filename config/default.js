@@ -3,6 +3,10 @@
  * 因此，增加新的配置（如果该配置在JS中用到）需要发布二进制文件
  */
 
+const appName = process.env.TRPG_APP_NAME || 'Game';
+const environment = process.env.NODE_ENV;
+const package = require('../package.json');
+
 module.exports = {
   release: {
     // 生产环境必填
@@ -24,6 +28,7 @@ module.exports = {
     dsn: '',
     mobileDsn: '', //移动端的dsn
     pushRelease: false, // 仅在production环境使用该变量
+    release: `${appName}-v${package.version}-${environment}`,
   },
   umeng: {
     push: {
