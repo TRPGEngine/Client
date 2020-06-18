@@ -102,29 +102,13 @@ workflows:
   version: 2
   build:
     jobs:
-      - node:
-          # filters:
-          #   branches:
-          #     only:
-          #       - release
+      - node
       - Build Electron App:
-          # filters:
-          #   branches:
-          #     only:
-          #       - release
           requires:
             - node
       - Build RN Code:
-          # filters:
-          #   branches:
-          #     only:
-          #       - release
           requires:
             - node
       - Build Android App:
-          # filters:
-          #   branches:
-          #     only:
-          #       - release
           requires:
             - node
