@@ -1,6 +1,4 @@
-version: 2.1
-# orbs:
-#   node: circleci/node@1.0.1
+version: 2
 jobs:
   node:
     working_directory: ~/trpg
@@ -10,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: update-npm
-          command: 'sudo npm install -g npm@latest'
+          command: sudo npm install -g npm@latest
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
       - run:
@@ -20,9 +18,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
           paths:
             - node_modules
-
-  "Build Electron App":
-    # TODO: 需要重新测试一下
+  Build Electron App:
     working_directory: ~/trpg
     docker:
       - image: circleci/node
@@ -56,8 +52,7 @@ jobs:
           command: npm run package-all
       - store_artifacts:
           path: ./dist
-
-  "Build RN Code":
+  Build RN Code:
     working_directory: ~/trpg
     docker:
       - image: circleci/node
@@ -76,14 +71,12 @@ jobs:
       - run:
           name: bundle
           command: cd ./src/app && npm run build:env && sh ./build/bundle.sh
-
-  "Build Android App":
+  Build Android App:
     working_directory: ~/trpg
     docker:
       - image: circleci/android:api-28-node
     steps:
       - checkout
-      # 更新node依赖
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "src/app/package.json" }}-{{ arch }}
       - run:
@@ -94,7 +87,6 @@ jobs:
           paths:
             - node_modules
             - src/app/node_modules
-      # cache gradle
       - restore_cache:
           key: gradle-cache-{{ checksum "src/app/android/build.gradle" }}-{{ arch }}
       - run:
@@ -111,28 +103,28 @@ workflows:
   build:
     jobs:
       - node:
-          filters:
-            branches:
-              only:
-                - release
+          # filters:
+          #   branches:
+          #     only:
+          #       - release
       - Build Electron App:
+          # filters:
+          #   branches:
+          #     only:
+          #       - release
           requires:
             - node
-          filters:
-            branches:
-              only:
-                - release
       - Build RN Code:
+          # filters:
+          #   branches:
+          #     only:
+          #       - release
           requires:
             - node
-          filters:
-            branches:
-              only:
-                - release
       - Build Android App:
+          # filters:
+          #   branches:
+          #     only:
+          #       - release
           requires:
             - node
-          filters:
-            branches:
-              only:
-                - release

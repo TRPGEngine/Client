@@ -1,4 +1,4 @@
-import { Layer } from './Layer';
+import { Layer } from './layer';
 import { DrawContext } from '../core/render';
 import _pull from 'lodash/pull';
 import _orderBy from 'lodash/orderBy';

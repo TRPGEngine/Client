@@ -5,7 +5,7 @@ import MasonryLayout from 'react-masonry-layout'; // https://www.npmjs.com/packa
 import { RecruitItemType, fetchAllRecruitList } from '@portal/model/trpg';
 import { Layout, Empty, Button } from 'antd';
 import Loading from '@portal/components/Loading';
-import { RecruitCreateBtn } from './createBtn';
+import { RecruitCreateBtn } from './CreateBtn';
 import { MyBtn } from './MyBtn';
 import config from '@shared/project.config';
 import { QuestionCircleOutlined } from '@ant-design/icons';
