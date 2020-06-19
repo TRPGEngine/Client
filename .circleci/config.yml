@@ -11,8 +11,8 @@ jobs:
           command: sudo npm install -g npm@latest
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
-      - restore_cache_rn:
-          key: dependency-cache-{{ checksum "src/app/package.json" }}-{{ arch }}
+      - restore_cache:
+          key: dependency-cache-rn-{{ checksum "src/app/package.json" }}-{{ arch }}
       - run:
           name: install-npm-wee
           command: npm install
@@ -20,8 +20,8 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
           paths:
             - node_modules
-      - save_cache_rn:
-          key: dependency-cache-{{ checksum "src/app/package.json" }}-{{ arch }}
+      - save_cache:
+          key: dependency-cache-rn-{{ checksum "src/app/package.json" }}-{{ arch }}
           paths:
             - src/app/node_modules
       - run: npm run test
