@@ -103,9 +103,9 @@ workflows:
   build:
     jobs:
       - node
-      - Build Electron App:
-          requires:
-            - node
+      # - Build Electron App:
+      #     requires:
+      #       - node
       - Build RN Code:
           requires:
             - node
