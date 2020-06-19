@@ -24,7 +24,11 @@ jobs:
           key: dependency-cache-rn-{{ checksum "src/app/package.json" }}-{{ arch }}
           paths:
             - src/app/node_modules
-      - run: npm run test
+      - run:
+          name: test
+          command: npm run test
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
   Build Electron App:
     working_directory: ~/trpg
     docker:
