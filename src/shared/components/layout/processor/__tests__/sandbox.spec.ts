@@ -38,7 +38,7 @@ describe('sandbox function', () => {
     expect(ret).toBe(3);
   });
 
-  test.only('sandbox in deep function', () => {
+  test('sandbox in deep function', () => {
     const func = compileCode(
       'return function(a, b) { return global.add2(a, b) }'
     )({

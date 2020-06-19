@@ -21,7 +21,7 @@ import {
 import styledTheme from '@src/shared/utils/theme';
 import { installServiceWorker } from './utils/sw-helper';
 import { ConfigProvider } from 'antd';
-import zhCN from 'antd/es/locale/zh_CN';
+import zhCN from 'antd/lib/locale/zh_CN';
 import './components/messageTypes/__all__';
 import '@web/assets/css/iconfont.css';
 import { bindEventFunc } from '@shared/api/listener';

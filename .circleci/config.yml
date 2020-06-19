@@ -18,6 +18,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
           paths:
             - node_modules
+      - run: npm run test
   Build Electron App:
     working_directory: ~/trpg
     docker:
@@ -107,8 +108,16 @@ workflows:
       #     requires:
       #       - node
       - Build RN Code:
+          filters:
+            branches:
+              only:
+                - release
           requires:
             - node
       - Build Android App:
+          filters:
+            branches:
+              only:
+                - release
           requires:
             - node
