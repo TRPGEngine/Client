@@ -10,7 +10,7 @@ import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import { Toolbox } from './toolbox';
 import { LayerManager } from '../layer/manager';
-import { Layer } from '../layer/Layer';
+import { Layer } from '../layer/layer';
 import { BaseToken } from '../layer/token/BaseToken';
 import { createTokenByData } from '../layer/token/helper';
 import { UpdateType, UpdateTokenPayload } from '../socket';

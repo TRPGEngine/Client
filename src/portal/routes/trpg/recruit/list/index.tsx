@@ -3,10 +3,12 @@ import { TMemo } from '@shared/components/TMemo';
 import { RecruitItem } from '../RecruitItem';
 import MasonryLayout from 'react-masonry-layout'; // https://www.npmjs.com/package/react-masonry-layout
 import { RecruitItemType, fetchAllRecruitList } from '@portal/model/trpg';
-import { Layout, Empty } from 'antd';
+import { Layout, Empty, Button } from 'antd';
 import Loading from '@portal/components/Loading';
-import { RecruitCreateBtn } from './createBtn';
+import { RecruitCreateBtn } from './CreateBtn';
 import { MyBtn } from './MyBtn';
+import config from '@shared/project.config';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 
 const { Header, Content } = Layout;
 
@@ -31,6 +33,12 @@ const RecruitList: React.FC = TMemo(() => {
   return (
     <Layout>
       <Header style={{ textAlign: 'right' }}>
+        <Button
+          type="link"
+          onClick={() => window.open(`${config.url.homepage}docs/recruit`)}
+        >
+          <QuestionCircleOutlined />
+        </Button>
         <MyBtn onUpdate={fetch} />
         <RecruitCreateBtn onSuccess={fetch} />
       </Header>

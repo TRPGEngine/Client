@@ -237,7 +237,7 @@ module.exports = {
       hash: true,
     }),
     new HtmlWebpackIncludeAssetsPlugin({
-      assets: ['pre-loading.css'],
+      assets: [`pre-loading.css?v=${config.version}`],
       append: false,
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),

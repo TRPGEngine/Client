@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.10](https://github.com/TRPGEngine/Client/compare/v0.3.9...v0.3.10) (2020-06-20)
+
+
+### Features
+
+* **portal:** 招募列表增加帮助按钮 ([f24beca](https://github.com/TRPGEngine/Client/commit/f24becaa57e377977033247cb546a83c72b58a1d))
+
 ### [0.3.9](https://github.com/TRPGEngine/Client/compare/v0.3.8...v0.3.9) (2020-06-17)
 
 

@@ -9,6 +9,10 @@ const appVersion = packageConfig.appVersion; // app版本号
 if (require.main === module) {
   const filepath = path.resolve(rootPath, './node_modules/.bin/code-push');
 
+  console.log('===================================');
+  console.log('====请确认: 在配置中的app版本号升级了么?');
+  console.log('===================================');
+
   inquirer
     .prompt([
       {

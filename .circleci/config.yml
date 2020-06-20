@@ -1,6 +1,4 @@
-version: 2.1
-# orbs:
-#   node: circleci/node@1.0.1
+version: 2
 jobs:
   node:
     working_directory: ~/trpg
@@ -10,9 +8,11 @@ jobs:
       - checkout
       - run:
           name: update-npm
-          command: 'sudo npm install -g npm@latest'
+          command: sudo npm install -g npm@latest
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
+      - restore_cache:
+          key: dependency-cache-rn-{{ checksum "src/app/package.json" }}-{{ arch }}
       - run:
           name: install-npm-wee
           command: npm install
@@ -20,9 +20,16 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}-{{ arch }}
           paths:
             - node_modules
-
-  "Build Electron App":
-    # TODO: 需要重新测试一下
+      - save_cache:
+          key: dependency-cache-rn-{{ checksum "src/app/package.json" }}-{{ arch }}
+          paths:
+            - src/app/node_modules
+      - run:
+          name: test
+          command: npm run test
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
+  Build Electron App:
     working_directory: ~/trpg
     docker:
       - image: circleci/node
@@ -54,10 +61,11 @@ jobs:
       - run:
           name: build
           command: npm run package-all
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
       - store_artifacts:
           path: ./dist
-
-  "Build RN Code":
+  Build RN Code:
     working_directory: ~/trpg
     docker:
       - image: circleci/node
@@ -76,14 +84,12 @@ jobs:
       - run:
           name: bundle
           command: cd ./src/app && npm run build:env && sh ./build/bundle.sh
-
-  "Build Android App":
+  Build Android App:
     working_directory: ~/trpg
     docker:
       - image: circleci/android:api-28-node
     steps:
       - checkout
-      # 更新node依赖
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "src/app/package.json" }}-{{ arch }}
       - run:
@@ -94,7 +100,6 @@ jobs:
           paths:
             - node_modules
             - src/app/node_modules
-      # cache gradle
       - restore_cache:
           key: gradle-cache-{{ checksum "src/app/android/build.gradle" }}-{{ arch }}
       - run:
@@ -110,29 +115,21 @@ workflows:
   version: 2
   build:
     jobs:
-      - node:
-          filters:
-            branches:
-              only:
-                - release
-      - Build Electron App:
-          requires:
-            - node
-          filters:
-            branches:
-              only:
-                - release
+      - node
+      # - Build Electron App:
+      #     requires:
+      #       - node
       - Build RN Code:
-          requires:
-            - node
           filters:
             branches:
               only:
                 - release
+          requires:
+            - node
       - Build Android App:
-          requires:
-            - node
           filters:
             branches:
               only:
                 - release
+          requires:
+            - node
