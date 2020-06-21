@@ -32,6 +32,7 @@ export const checkToken = async (autoNav = true): Promise<void> => {
     if (autoNav) {
       // 如果出错则跳转到登录页面
       navToLoginPage();
+      return;
     }
     throw err;
   }
