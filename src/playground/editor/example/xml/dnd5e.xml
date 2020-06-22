@@ -393,7 +393,7 @@
             </Col>
           </Row>
         </Define>
-        <Computed target="packWeight" deps="背包" expression="SUM(_map(背包, (p) => _get(p, 'lb', 0) * _get(p, 'number', 1) ))" />
+        <Var name="packWeight" value="SUM(_map(背包, (p) => _get(p, 'lb', 0) * _get(p, 'number', 1) ))" />
         <div>背包总重量: {{packWeight}}</div>
         <CustomList name="背包" define="packlist" />
       </Tab>

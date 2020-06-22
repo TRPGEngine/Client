@@ -20,6 +20,9 @@ export const useLayoutFormContainer = (props: LayoutProps) => {
   const hideLabel = useToBoolean(props.hideLabel);
   const inline = useToBoolean(props.inline);
   const desc = props.desc;
+
+  // style 的结果是一个对象 不太好比较因此只获取第一次的结果
+  // 当然也可以使用JSON.stringify 但是可能会有性能问题，目前无必要
   const style = props.style;
 
   return useMemo(() => {
@@ -28,7 +31,7 @@ export const useLayoutFormContainer = (props: LayoutProps) => {
         return hideLabel ? (
           <div style={style}>{props.children}</div>
         ) : (
-          <Row>
+          <Row style={style}>
             <Col>
               <TagLabel label={props.label} desc={desc} />
             </Col>
@@ -57,5 +60,5 @@ export const useLayoutFormContainer = (props: LayoutProps) => {
     FormContainer.displayName = 'FormContainer';
 
     return FormContainer;
-  }, [hideLabel, inline, style]);
+  }, [hideLabel, inline]);
 };
