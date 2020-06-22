@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.11](https://github.com/TRPGEngine/Client/compare/v0.3.10...v0.3.11) (2020-06-22)
+
+
+### Bug Fixes
+
+* **layout:** 修复复杂路径名无法获取精确数据的问题 ([3704196](https://github.com/TRPGEngine/Client/commit/370419637713d7444d846a67abdadfe50a3fa204))
+
 ### [0.3.10](https://github.com/TRPGEngine/Client/compare/v0.3.9...v0.3.10) (2020-06-20)
 
 

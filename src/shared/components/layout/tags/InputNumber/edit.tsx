@@ -25,9 +25,12 @@ export const TagInputNumberEdit: TagComponent<TagProps> = TMemo((props) => {
 
   const precision = useToNumber(props.precision, 0);
 
-  const handleChange = useCallback((value: number) => {
-    setStateValue(value);
-  }, []);
+  const handleChange = useCallback(
+    (value: number) => {
+      setStateValue(value);
+    },
+    [setStateValue]
+  );
 
   const FormContainer = useLayoutFormContainer(props);
 

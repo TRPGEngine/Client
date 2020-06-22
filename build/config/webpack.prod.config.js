@@ -51,5 +51,10 @@ module.exports = webpackMerge({}, base, {
   output: {
     filename: '[name].[contenthash].js',
   },
-  plugins: [...plugins, new OfflinePlugin()],
+  plugins: [
+    ...plugins,
+    new OfflinePlugin({
+      publicPath: '/',
+    }),
+  ],
 });
