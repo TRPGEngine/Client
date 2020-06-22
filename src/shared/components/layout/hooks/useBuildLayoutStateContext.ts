@@ -96,7 +96,7 @@ function getDefineState(
   name: string,
   parentContext: XMLBuilderContext
 ): XMLBuilderState {
-  const currentData = _get(parentContext, ['state', 'data', name]);
+  const currentData = _get(parentContext, ['state', 'data', name].join('.'));
 
   return {
     defines: parentContext.state.defines,
