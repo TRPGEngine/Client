@@ -11,128 +11,25 @@ import { fetchGroupActorList, GroupActorItem } from '@portal/model/group';
 import _isNil from 'lodash/isNil';
 import _isFunction from 'lodash/isFunction';
 import SplitPane from '@shared/components/web/SplitPane';
-import {
-  Collapse,
-  List,
-  Button,
-  Popover,
-  InputNumber,
-  Input,
-  Space,
-} from 'antd';
+import { Collapse, List } from 'antd';
 import Avatar from '@web/components/Avatar';
 import { handleError } from '@portal/utils/error';
-import { PlusOutlined } from '@ant-design/icons';
 import { TiledMapManager } from '@shared/components/tiledmap/core/manager';
 import { ActorToken } from '@shared/components/tiledmap/layer/token/ActorToken';
 import { checkToken, getToken } from '@portal/utils/auth';
 import { TMemo } from '@shared/components/TMemo';
 import { ImageToken } from '@shared/components/tiledmap/layer/token/ImageToken';
+import { AppendTokenAction } from './tools/actions/AppendTokenAction';
+import { AppendImageTokenAction } from './tools/actions/AppendImageTokenAction';
 
 const Panel = Collapse.Panel;
-
-/**
- * 通用增加棋子操作
- */
-const AppendTokenAction: React.FC<{
-  content?: React.ReactNode;
-  onConfirm: (x: number, y: number) => void;
-}> = React.memo((props) => {
-  const [visible, setVisible] = useState(false);
-  const [x, setX] = useState(1);
-  const [y, setY] = useState(1);
-
-  const handleConfirm = useCallback(() => {
-    _isFunction(props.onConfirm) && props.onConfirm(x - 1, y - 1);
-    setVisible(false);
-  }, [x, y, props.onConfirm, setVisible]);
-
-  const width = 20;
-  const height = 20;
-
-  const content = useMemo(() => {
-    return (
-      <div>
-        <Space direction="vertical">
-          <div>
-            <InputNumber
-              value={x}
-              onChange={setX}
-              min={1}
-              max={width + 1}
-              precision={0}
-            />
-            <span style={{ margin: 4 }}>x</span>
-            <InputNumber
-              value={y}
-              onChange={setY}
-              min={1}
-              max={height + 1}
-              precision={0}
-            />
-          </div>
-          <div>{props.content}</div>
-          <div>
-            <Button type="link" onClick={handleConfirm}>
-              确认
-            </Button>
-          </div>
-        </Space>
-      </div>
-    );
-  }, [x, y, setX, setY, handleConfirm, props.content]);
-
-  return (
-    <Popover
-      placement="left"
-      title="添加到地图"
-      content={content}
-      trigger="click"
-      visible={visible}
-      onVisibleChange={setVisible}
-    >
-      <Button shape="circle" icon={<PlusOutlined />} />
-    </Popover>
-  );
-});
-
-/**
- * 增加图片棋子操作
- */
-const AppendImageTokenAction: React.FC<{
-  onConfirm?: (imageUrl: string, x: number, y: number) => void;
-}> = TMemo((props) => {
-  const [imageUrl, setImageUrl] = useState('');
-  const handleConfirm = useCallback(
-    (x, y) => {
-      if (imageUrl === '') {
-        return;
-      }
-      _isFunction(props.onConfirm) && props.onConfirm(imageUrl, x, y);
-    },
-    [props.onConfirm, imageUrl]
-  );
-
-  return (
-    <AppendTokenAction
-      content={
-        <Input
-          placeholder="网络图片地址"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-        />
-      }
-      onConfirm={handleConfirm}
-    />
-  );
-});
 
 interface Props
   extends RouteComponentProps<{
     groupUUID: string;
     mapUUID: string;
   }> {}
-const MapEditor: React.FC<Props> = React.memo((props) => {
+const MapEditor: React.FC<Props> = TMemo((props) => {
   const { groupUUID, mapUUID } = props.match.params;
   const [jwt, setJWT] = useState<string>();
   const [actors, setActors] = useState<GroupActorItem[]>([]);
