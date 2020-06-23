@@ -3,7 +3,7 @@ jobs:
   node:
     working_directory: ~/trpg
     docker:
-      - image: circleci/node
+      - image: circleci/node:10.18.1
     steps:
       - checkout
       - run:
@@ -32,7 +32,7 @@ jobs:
   Build Electron App:
     working_directory: ~/trpg
     docker:
-      - image: circleci/node
+      - image: circleci/node:10.18.1
     steps:
       - checkout
       # 更新node依赖
@@ -68,7 +68,7 @@ jobs:
   Build RN Code:
     working_directory: ~/trpg
     docker:
-      - image: circleci/node
+      - image: circleci/node:10.18.1
     steps:
       - checkout
       - restore_cache:
