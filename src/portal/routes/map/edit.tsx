@@ -18,8 +18,6 @@ import { checkToken, getToken } from '@portal/utils/auth';
 import { TMemo } from '@shared/components/TMemo';
 import { TokenPicker } from './tools/TokenPicker';
 
-const Panel = Collapse.Panel;
-
 interface Props
   extends RouteComponentProps<{
     groupUUID: string;

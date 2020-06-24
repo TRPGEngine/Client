@@ -4,7 +4,11 @@ import './index.less';
 import { useKeyPressEvent, useKey, useLocalStorage } from 'react-use';
 import _isNil from 'lodash/isNil';
 import _isFunction from 'lodash/isFunction';
-import { joinMapRoom, updateToken, registerMapEventListener } from './socket';
+import {
+  joinMapRoom,
+  updateToken,
+  registerMapTokenEventListener,
+} from './socket';
 import { message } from 'antd';
 import { TiledMapMode } from './core/types';
 import { BaseToken } from './layer/token/BaseToken';
@@ -112,11 +116,14 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
       return;
     }
 
-    joinMapRoom(mapUUID)
+    joinMapRoom(mapUUID, jwt)
       .then((mapData) => {
         message.success(`连接地图 ${mapUUID} 成功`);
         const manager = tiledMapManagerRef.current;
-        registerMapEventListener(mapUUID, manager.handleReceiveModifyToken);
+        registerMapTokenEventListener(
+          mapUUID,
+          manager.handleReceiveModifyToken
+        );
 
         // 应用地图数据
         manager.applyMapData(mapData);
@@ -124,7 +131,7 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
       .catch((e) => {
         message.error(String(e));
       });
-  }, [mapUUID]);
+  }, [mapUUID, jwt]);
 
   useEffect(() => {
     const tiledMapManager = new TiledMapManager(canvasRef.current, {
