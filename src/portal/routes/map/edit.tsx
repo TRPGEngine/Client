@@ -11,12 +11,23 @@ import { fetchGroupActorList, GroupActorItem } from '@portal/model/group';
 import _isNil from 'lodash/isNil';
 import _isFunction from 'lodash/isFunction';
 import SplitPane from '@shared/components/web/SplitPane';
-import { Collapse } from 'antd';
 import { handleError } from '@portal/utils/error';
 import { TiledMapManager } from '@shared/components/tiledmap/core/manager';
 import { checkToken, getToken } from '@portal/utils/auth';
 import { TMemo } from '@shared/components/TMemo';
 import { TokenPicker } from './tools/TokenPicker';
+import styled from 'styled-components';
+import { Connects } from './tools/Connects';
+
+const TiledMapContainer = styled.div`
+  height: 100%;
+
+  .connects-container {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+  }
+`;
 
 interface Props
   extends RouteComponentProps<{
@@ -59,7 +70,12 @@ const MapEditor: React.FC<Props> = TMemo((props) => {
 
   return (
     <SplitPane split="vertical" primary="second" defaultSize={300}>
-      <div style={{ height: '100%' }}>{tiledMapEl}</div>
+      <TiledMapContainer>
+        {tiledMapEl}
+        <div className="connects-container">
+          <Connects mapUUID={mapUUID} />
+        </div>
+      </TiledMapContainer>
       <div>
         <TokenPicker actors={actors} tiledMapManagerRef={tiledMapManagerRef} />
       </div>
