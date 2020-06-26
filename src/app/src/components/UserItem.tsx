@@ -6,9 +6,10 @@ import { Text } from 'react-native';
 import styled from 'styled-components/native';
 import _isFunction from 'lodash/isFunction';
 import { UserAvatar } from './UserAvatar';
+import { SpaceFull } from './SpaceFull';
 
 export const UserItemContainer = styled.TouchableOpacity`
-  padding: 10px 0;
+  padding: 10px 10px;
   flex-direction: row;
   align-items: center;
   border-bottom-width: 0.5px;
@@ -37,7 +38,9 @@ export const UserItem: React.FC<{
       {prefix}
       <UserAvatar name={name} uri={avatar} />
       <Text>{name}</Text>
+      <SpaceFull />
       {suffix}
     </UserItemContainer>
   );
 });
+UserItem.displayName = 'UserItem';

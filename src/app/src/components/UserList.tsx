@@ -1,7 +1,6 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { FlatList, ListRenderItemInfo, ListRenderItem } from 'react-native';
 import { TMemo } from '@shared/components/TMemo';
-import { useTRPGStackNavigation } from '@app/router';
 import { UserItem } from './UserItem';
 
 interface Props {
@@ -10,32 +9,14 @@ interface Props {
 }
 
 const UserList: React.FC<Props> = TMemo((props) => {
-  const navigation = useTRPGStackNavigation();
-
-  const handlePress = useCallback(
-    (uuid: string, name: string) => {
-      navigation.navigate('Profile', {
-        uuid,
-        type: 'user',
-        name,
-      });
-    },
-    [navigation]
-  );
-
   const renderItem = useMemo(() => {
     return (
       props.renderItem ||
       (({ item }: ListRenderItemInfo<string>) => {
-        return (
-          <UserItem
-            uuid={item}
-            onPress={(uuid, name) => handlePress(uuid, name)}
-          />
-        );
+        return <UserItem uuid={item} />;
       })
     );
-  }, [props.renderItem, handlePress]);
+  }, [props.renderItem]);
 
   return (
     <FlatList
@@ -45,5 +26,6 @@ const UserList: React.FC<Props> = TMemo((props) => {
     />
   );
 });
+UserList.displayName = 'UserList';
 
 export default UserList;

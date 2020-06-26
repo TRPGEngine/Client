@@ -7,3 +7,4 @@ export const UserAvatar = styled(TAvatar).attrs((props) => ({
 }))`
   margin: 0 4px;
 `;
+UserAvatar.displayName = 'UserAvatar';
