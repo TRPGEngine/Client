@@ -1,6 +1,6 @@
 import { AppState, AppStateStatus } from 'react-native';
 // import JPushModule from 'jpush-react-native';
-import { bindNotifyInfo } from '@shared/redux/actions/notify';
+import { bindNotifyInfo } from '@shared/model/notify';
 import rnStorage from '@shared/api/rn-storage.api';
 import { umPush, Code } from './native/push-utils';
 import { clearAllNotifications, sendBasicNotify } from './native/trpg';

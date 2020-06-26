@@ -1,5 +1,5 @@
-import rnStorage from '../../api/rn-storage.api';
-import * as trpgApi from '../../api/trpg.api';
+import rnStorage from '../api/rn-storage.api';
+import * as trpgApi from '../api/trpg.api';
 const api = trpgApi.getInstance();
 
 type PlatformType = 'jpush' | 'upush';
@@ -28,7 +28,7 @@ export const bindNotifyInfo = async (info: NotifyInfo) => {
   if (!bindNotifyUserUUID || bindNotifyUserUUID !== userUUID) {
     // 如果当前绑定记录不存在或者绑定用户UUID不匹配。则发起重新绑定
     const eventName = notifyEventNameMap[platform];
-    api.emit(eventName, { info }, (data) => {
+    api.emit(eventName, { ...info }, (data) => {
       if (data.result) {
         rnStorage.save(storageKey, userUUID);
       }
