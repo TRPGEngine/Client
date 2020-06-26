@@ -29,7 +29,7 @@
     "lint": "eslint --ext .js,.jsx src",
     "lint:fix": "eslint --fix --ext .js,.jsx src",
     "prettier:all": "prettier --write \"src/**/*.js\"",
-    "postinstall": "npm run app:build:env && npm run install:all",
+    "postinstall": "npm run install:all",
     "install:app": "cd ./src/app && npm install",
     "install:web": "cd ./src/web && npm install",
     "install:all": "npm run install:app && npm run install:web",
