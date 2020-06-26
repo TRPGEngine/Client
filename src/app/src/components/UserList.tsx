@@ -44,6 +44,7 @@ const UserList: React.FC<Props> = TMemo((props) => {
       navigation.navigate('Profile', {
         uuid,
         type: 'user',
+        name,
       });
     },
     [navigation]
