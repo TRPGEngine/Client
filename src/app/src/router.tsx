@@ -283,7 +283,7 @@ const stackRoutes: RouterMap<StackNavigationOptions> = {
             <TouchableOpacity
               onPress={() => {
                 onSelected(selectedUUIDs);
-                props.navigation.back();
+                props.navigation.canGoBack() && props.navigation.goBack();
               }}
             >
               <Text>完成</Text>
