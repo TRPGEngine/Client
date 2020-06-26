@@ -14,6 +14,7 @@ import { handleError } from '@portal/utils/error';
 import history from '@portal/history';
 import { LogItem } from './log-item';
 import Loading from '@portal/components/Loading';
+import { ReportContextProvider } from './context';
 
 const LogEditItemContainer = styled.div`
   width: 100%;
@@ -129,30 +130,32 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
   );
 
   return (
-    <div>
-      {logs.map((log, index) => {
-        return (
-          <LogEditItem
-            key={log.uuid}
-            log={log}
-            playerUUID={playerUUID}
-            onSelect={() => handleSelect(index)}
-          />
-        );
-      })}
+    <ReportContextProvider>
+      <div>
+        {logs.map((log, index) => {
+          return (
+            <LogEditItem
+              key={log.uuid}
+              log={log}
+              playerUUID={playerUUID}
+              onSelect={() => handleSelect(index)}
+            />
+          );
+        })}
 
-      {logs.length > 0 ? (
-        <Row>
-          <Button onClick={showModal} block={true} style={{ marginTop: 10 }}>
-            生成战报
-          </Button>
-        </Row>
-      ) : (
-        <Loading />
-      )}
+        {logs.length > 0 ? (
+          <Row>
+            <Button onClick={showModal} block={true} style={{ marginTop: 10 }}>
+              生成战报
+            </Button>
+          </Row>
+        ) : (
+          <Loading />
+        )}
 
-      {modal}
-    </div>
+        {modal}
+      </div>
+    </ReportContextProvider>
   );
 });
 LogEdit.displayName = 'LogEdit';
