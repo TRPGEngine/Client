@@ -12,6 +12,12 @@ const defaultMessageItemConfig = {
    * 是否点击头像后会出现popover
    */
   popover: true,
+
+  /**
+   * 是否显示回复消息
+   * 对于portal来说因为没有Redux的上下文所以不太好显示回复消息。用这个配置将其关闭掉
+   */
+  showMsgReply: true,
 };
 
 type MessageItemConfig = typeof defaultMessageItemConfig;
@@ -29,8 +35,9 @@ MessageItemConfigContext.displayName = 'MessageItemConfigContext';
  * 封装的消息提供器
  * 可以只配置一部分内容，缺少的内容会由默认值替代
  */
+export type MessageItemConfigPartial = Partial<MessageItemConfig>;
 export const MessageItemConfigContextProvider: React.FC<{
-  config: Partial<MessageItemConfig>;
+  config: MessageItemConfigPartial;
 }> = TMemo((props) => {
   const config = useMemo(() => {
     return {
