@@ -13,10 +13,11 @@ let currentMapUUID: string;
  * 加入地图的广播房间
  * @param mapUUID 地图UUID
  */
-export async function joinMapRoom(mapUUID: string) {
+export async function joinMapRoom(mapUUID: string, jwt?: string) {
   const { mapData } = await api
     .emitP('trpg::joinMapRoom', {
       mapUUID,
+      jwt,
     })
     .catch((msg) => {
       throw new Error('加入房间失败: ' + msg);
@@ -66,15 +67,15 @@ export async function updateToken<T extends UpdateType>(
 }
 
 /**
- * 注册地图事件监听器
+ * 注册地图Token事件监听器
  */
-type MapEventCallback = <T extends UpdateType>(
+type MapTokenEventCallback = <T extends UpdateType>(
   type: T,
   payload: UpdateTokenPayload[T]
 ) => void;
-export const registerMapEventListener = (
+export const registerMapTokenEventListener = (
   mapUUID: string,
-  cb: MapEventCallback
+  cb: MapTokenEventCallback
 ) => {
   api.on('trpg::updateMapToken', function(data) {
     const { type, payload } = data;
@@ -84,3 +85,20 @@ export const registerMapEventListener = (
     }
   });
 };
+
+/**
+ * 注册地图连接人更新事件
+ */
+type MapConnectUpdateCallback = (socketIds: string[]) => void;
+export function registerMapConnectsUpdate(
+  mapUUID: string,
+  cb: MapConnectUpdateCallback
+) {
+  api.on('trpg::updateMapConnects', function(data) {
+    const { socketIds } = data;
+
+    if (data.mapUUID === mapUUID) {
+      cb(socketIds);
+    }
+  });
+}

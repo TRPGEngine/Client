@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { RecruitItem } from '../RecruitItem';
-import MasonryLayout from 'react-masonry-layout'; // https://www.npmjs.com/package/react-masonry-layout
+import MasonryLayout from 'react-masonry-layout';
 import { RecruitItemType, fetchAllRecruitList } from '@portal/model/trpg';
 import { Layout, Empty, Button } from 'antd';
 import Loading from '@portal/components/Loading';

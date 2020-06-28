@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.13](https://github.com/TRPGEngine/Client/compare/v0.3.12...v0.3.13) (2020-06-27)
+
+
+### Features
+
+* **app:** 团成员列表增加身份标识(主持人、管理员) ([c5d7dfd](https://github.com/TRPGEngine/Client/commit/c5d7dfd422d60faab7f805661f210424f80bb1f5))
+* **tiledmap:** 加入房间时带入jwt并接受更新socketId监听 ([8fa9234](https://github.com/TRPGEngine/Client/commit/8fa9234dade76e00ad1a399df91caf73daa0c0bd))
+* **trpg:** 地图增加查看者的显示 ([f2933fc](https://github.com/TRPGEngine/Client/commit/f2933fc1dc839c2be17b877d095e4f81d2fdd634))
+* **web:** 增加一个UserAvatar组件用于根据uuid显示用户头像 ([7f6eafc](https://github.com/TRPGEngine/Client/commit/7f6eafc97f20bc840b013c8654a1edb2bd33c47e))
+
+
+### Bug Fixes
+
+* **app:** 修复选择完角色时点完成会导致应用闪退的bug ([8ea6977](https://github.com/TRPGEngine/Client/commit/8ea6977fd6d3b43ad50bb6b649674ef3bbe9d83d))
+* **app:** 修复通过团成员列表打开用户信息标题无法正确显示名字的bug ([bcb84c9](https://github.com/TRPGEngine/Client/commit/bcb84c92ece0cd8736cb79879b6323d9112dac32))
+* **portal:** 修复登录页跳转无限循环问题 ([2838e68](https://github.com/TRPGEngine/Client/commit/2838e68d16455e57020f77fcbc709a0322855ae5))
+* 修复生成战报时有回复消息的消息列表无法正常显示的bug ([9c84b92](https://github.com/TRPGEngine/Client/commit/9c84b924316e9066f6cebd7d9aa75c799baaca3a))
+
 ### [0.3.12](https://github.com/TRPGEngine/Client/compare/v0.3.11...v0.3.12) (2020-06-22)
 
 

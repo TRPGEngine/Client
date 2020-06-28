@@ -5,10 +5,10 @@ import { TRPGState } from '@src/shared/redux/types/__all__';
 import _uniq from 'lodash/uniq';
 import _without from 'lodash/without';
 import _noop from 'lodash/noop';
-import { getUserInfoCache } from '@shared/utils/cache-helper';
 import { Checkbox } from '@ant-design/react-native';
-import UserList, { UserAvatar, UserItem } from '@app/components/UserList';
+import UserList from '@app/components/UserList';
 import { TRPGStackScreenProps } from '@app/router';
+import { UserItem } from '@app/components/UserItem';
 
 interface Props extends TRPGStackScreenProps<'UserSelect'> {}
 interface State {
@@ -35,8 +35,6 @@ class UserSelectScreen extends React.Component<Props, State> {
   renderItem = ({ item }: ListRenderItemInfo<string>) => {
     const { selectedUUIDs } = this.state;
     const uuid = item;
-    const user = getUserInfoCache(uuid);
-    const name = user.nickname || user.username;
     const isChecked = selectedUUIDs.includes(uuid);
 
     const handleClick = (checked: boolean) => {
@@ -48,17 +46,19 @@ class UserSelectScreen extends React.Component<Props, State> {
     };
 
     return (
-      <UserItem onPress={() => handleClick(!isChecked)}>
-        <Checkbox
-          checked={isChecked}
-          onChange={(e) => {
-            const checked = e.target.checked;
-            handleClick(checked);
-          }}
-        />
-        <UserAvatar name={name} uri={user.avatar} />
-        <Text>{name}</Text>
-      </UserItem>
+      <UserItem
+        uuid={uuid}
+        prefix={
+          <Checkbox
+            checked={isChecked}
+            onChange={(e) => {
+              const checked = e.target.checked;
+              handleClick(checked);
+            }}
+          />
+        }
+        onPress={() => handleClick(!isChecked)}
+      ></UserItem>
     );
   };
 

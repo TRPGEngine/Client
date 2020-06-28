@@ -31,7 +31,12 @@ const Avatar: React.FC<Props> = TMemo((props) => {
     <AntdAvatar
       {...props}
       src={src}
-      style={{ ...props.style, backgroundColor: color }}
+      style={{
+        cursor: 'default',
+        userSelect: 'none',
+        ...props.style,
+        backgroundColor: color,
+      }}
     >
       {name}
     </AntdAvatar>

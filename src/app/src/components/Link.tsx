@@ -20,5 +20,6 @@ const Link: React.FC<Props> = TMemo((props) => {
 
   return <LinkText onPress={onPress}>{props.children}</LinkText>;
 });
+Link.displayName = 'Link';
 
 export default Link;

@@ -4,6 +4,7 @@ import { ReportLogItem } from '@portal/model/trpg';
 import { LogItem } from './log-item';
 import { useSpring, animated } from 'react-spring';
 import styled from 'styled-components';
+import { ReportContextProvider } from './context';
 
 const Container = styled(animated.div as any)`
   user-select: none;
@@ -48,5 +49,7 @@ export const LogDetail: React.FC<Props> = TMemo((props) => {
     [playerUUID, log, from]
   );
 
-  return isShow ? logNode : null;
+  return (
+    <ReportContextProvider>{isShow ? logNode : null}</ReportContextProvider>
+  );
 });

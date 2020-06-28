@@ -3,6 +3,8 @@ import { ReplyMsgType } from '@shared/utils/msg-helper';
 import { useUserName } from '@redux/hooks/useUser';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
+import { UserName } from '@web/components/UserName';
+import { useMessageItemConfigContext } from '@shared/components/message/MessageItemConfigContext';
 
 const Container = styled.div`
   color: ${(props) => props.theme.color['dove-gray']};
@@ -22,11 +24,18 @@ interface Props {
 export const MsgQuote: React.FC<Props> = TMemo((props) => {
   const { replyMsg } = props;
   const { uuid, message, sender_uuid } = replyMsg;
-  const senderUserName = useUserName(sender_uuid);
+
+  const { showMsgReply } = useMessageItemConfigContext();
+
+  if (showMsgReply === false) {
+    return null;
+  }
 
   return (
     <Container>
-      <div>{senderUserName}:</div>
+      <div>
+        <UserName uuid={sender_uuid} />:
+      </div>
       <div>{message}</div>
     </Container>
   );

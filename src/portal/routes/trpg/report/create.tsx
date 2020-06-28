@@ -101,6 +101,12 @@ const SelectorCard = styled.div`
   max-width: 480px;
 `;
 
+const TipText = styled.div`
+  color: ${(props) => props.theme.color['dusty-gray']};
+  font-size: 12px;
+  margin-top: 4px;
+`;
+
 const TRPGReportCreate: React.FC = TMemo(() => {
   const userInfo = useWebTokenInfo();
   const {
@@ -146,6 +152,9 @@ const TRPGReportCreate: React.FC = TMemo(() => {
           >
             下一步
           </Button>
+          <TipText>
+            数据需要一定时间准备，建议跑团结束10分后再来生成战报哦！
+          </TipText>
         </Col>
       </SelectorCard>
     ),
