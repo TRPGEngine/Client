@@ -113,7 +113,7 @@ class ExtraOptions extends React.Component<Props> {
       {
         label: '添加团',
         onClick: () => {
-          this.props.dispatch(showModal(<GroupCreate />));
+          this.props.dispatch(showModal(<GroupAdd />));
         },
       },
     ],
