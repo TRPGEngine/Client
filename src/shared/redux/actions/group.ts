@@ -50,6 +50,7 @@ import {
   hideModal,
   hideAlert,
   hideSlidePanel,
+  showToast,
 } from './ui';
 import _set from 'lodash/set';
 import _get from 'lodash/get';
@@ -782,6 +783,7 @@ export const tickMember = function(groupUUID, memberUUID) {
         dispatch(showAlert('操作成功'));
         dispatch(hideModal());
       } else {
+        dispatch(showToast(data?.msg));
         console.error(data);
       }
     });
