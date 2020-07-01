@@ -75,6 +75,9 @@ export type ChatStateConverse = {
   // 客户端信息
   unread?: boolean;
   nomore?: boolean;
+
+  // 其他自定义信息
+  [others: string]: any;
 };
 
 export type ChatState = {
