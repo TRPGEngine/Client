@@ -26,6 +26,7 @@ import {
   updateGroupInfo,
   updateGroupMapList,
   addGroupMap,
+  removeGroup,
 } from '@shared/redux/actions/group';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
 
@@ -129,6 +130,9 @@ export function bindEventFunc(
   });
   api.on('group::removeGroupMember', ({ groupUUID, memberUUID }) => {
     store.dispatch(removeGroupMember(groupUUID, memberUUID));
+  });
+  api.on('group::dismissGroup', ({ groupUUID }) => {
+    store.dispatch(removeGroup(groupUUID));
   });
 
   // ------------------------------------------------

@@ -284,6 +284,22 @@ export const addGroup = function(group) {
   };
 };
 
+// 移除团
+export const removeGroup = function(groupUUID: string): TRPGAction {
+  return function(dispatch, getState) {
+    dispatch({
+      type: QUIT_GROUP_SUCCESS,
+      groupUUID,
+    });
+
+    // 移除聊天会话
+    dispatch({
+      type: REMOVE_CONVERSES_SUCCESS,
+      converseUUID: groupUUID,
+    });
+  };
+};
+
 /**
  * 同意入团邀请
  */
@@ -746,8 +762,7 @@ export const quitGroup = function(groupUUID: string): TRPGAction {
     dispatch(showLoading());
     return api.emit('group::quitGroup', { groupUUID }, function(data) {
       if (data.result) {
-        dispatch({ type: QUIT_GROUP_SUCCESS, groupUUID });
-        dispatch({ type: REMOVE_CONVERSES_SUCCESS, converseUUID: groupUUID }); // 移除聊天会话
+        dispatch(removeGroup(groupUUID));
         dispatch(showAlert('已退出本群!'));
         dispatch(hideLoading());
       } else {
@@ -811,11 +826,20 @@ export const addGroupMember = function(groupUUID: string, memberUUID: string) {
 export const removeGroupMember = function(
   groupUUID: string,
   memberUUID: string
-) {
-  return {
-    type: REMOVE_GROUP_MEMBER,
-    groupUUID,
-    memberUUID,
+): TRPGAction {
+  return function(dispatch, getState) {
+    const userUUID = getState().user.info.uuid;
+    if (memberUUID === userUUID) {
+      // 如果被踢出的是自己
+      dispatch(removeGroup(groupUUID));
+    } else {
+      // 如果被踢出的是团里其他人
+      dispatch({
+        type: REMOVE_GROUP_MEMBER,
+        groupUUID,
+        memberUUID,
+      });
+    }
   };
 };
 
