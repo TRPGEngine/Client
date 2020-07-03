@@ -1,6 +1,7 @@
 import { Middleware } from 'redux';
 import _cloneDeepWith from 'lodash/cloneDeepWith';
 import React from 'react';
+import { TRPGMiddleware } from '@redux/types/__all__';
 
 export type ActionsListItem = Readonly<[string, object]>;
 export type ActionsListType = ActionsListItem[];
@@ -23,9 +24,9 @@ function loggerCloneFn(val: any) {
  * 一个将记录存储在内存中的日志
  * 用于调试
  */
-export const memoryLogger: Middleware = ({ dispatch, getState }) => (next) => (
-  action
-) => {
+export const memoryLogger: TRPGMiddleware = ({ dispatch, getState }) => (
+  next
+) => (action) => {
   const a = _cloneDeepWith(action, loggerCloneFn);
   _actions.push([a.type, a]);
 
