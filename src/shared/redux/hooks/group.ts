@@ -1,6 +1,6 @@
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import { GroupInfo, GroupActorType } from '@redux/types/group';
-import { useCurrentUserInfo } from './useUser';
+import { useCurrentUserInfo } from './user';
 import _get from 'lodash/get';
 import _uniq from 'lodash/uniq';
 import _isNil from 'lodash/isNil';

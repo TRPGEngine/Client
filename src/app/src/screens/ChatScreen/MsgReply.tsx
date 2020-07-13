@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { Text } from 'react-native';
 import { TMemo } from '@shared/components/TMemo';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
-import { useUserName } from '@redux/hooks/useUser';
+import { useUserName } from '@redux/hooks/user';
 import _isNil from 'lodash/isNil';
 import styled from 'styled-components/native';
 import { IconOutline } from '@ant-design/icons-react-native';

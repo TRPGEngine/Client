@@ -4,7 +4,7 @@ import {
   useSelectedGroupInfo,
   useSelectedGroupActorUUID,
   useSelfGroupActors,
-} from '@redux/hooks/useGroup';
+} from '@redux/hooks/group';
 import config from '@shared/project.config';
 import Select from 'react-select';
 import { changeSelectGroupActor, sendGroupInvite } from '@redux/actions/group';

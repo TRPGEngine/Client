@@ -7,7 +7,7 @@ import React, {
   Fragment,
 } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { useMsgList } from '@redux/hooks/useMsgList';
+import { useMsgList } from '@redux/hooks/chat';
 import _isArray from 'lodash/isArray';
 import _last from 'lodash/last';
 import _throttle from 'lodash/throttle';
@@ -15,7 +15,7 @@ import _isNil from 'lodash/isNil';
 import { View, Text, Keyboard, TextInput } from 'react-native';
 import MsgList from './MsgList';
 import InputView, { UserMsgType } from './InputView';
-import { useCurrentUserInfo } from '@redux/hooks/useUser';
+import { useCurrentUserInfo } from '@redux/hooks/user';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { ChatType } from '@app/types/params';
 import { getMoreChatLog, sendMsg, addLoadingMsg } from '@redux/actions/chat';
@@ -34,7 +34,7 @@ import ImagePicker from 'react-native-image-picker';
 import { uploadChatimg } from '@shared/utils/image-uploader';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { MsgReply } from './MsgReply';
-import { useGroupWritingState, useWritingState } from '@redux/hooks/useChat';
+import { useGroupWritingState, useWritingState } from '@redux/hooks/chat';
 import { ChatWritingIndicator } from '@app/components/chat/ChatWritingIndicator';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度

@@ -1,6 +1,7 @@
 export type LocalMsgType = 'loading';
 
-export type ConverseType = 'user' | 'group' | 'system';
+export type SimpleConverseType = 'user' | 'group';
+export type ConverseType = SimpleConverseType | 'system';
 
 export type MsgType =
   | 'normal'

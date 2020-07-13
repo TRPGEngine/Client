@@ -11,7 +11,7 @@ import {
   useTRPGSelector,
   useTRPGDispatch,
 } from '@shared/hooks/useTRPGSelector';
-import { useConverses } from '@redux/hooks/useConverses';
+import { useConverses } from '@redux/hooks/chat';
 import { MsgContainerContextProvider } from '@shared/context/MsgContainerContext';
 
 import './GroupList.scss';
