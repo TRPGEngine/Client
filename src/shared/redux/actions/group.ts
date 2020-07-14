@@ -77,13 +77,13 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
       })
     );
 
-    // TODO: 这里请求太多了。要合并成一个最好
-
-    // 获取团成员
-    api.emit('group::getGroupMembers', { groupUUID }, function(data) {
+    // 获取团初始数据
+    api.emit('group::getGroupInitData', { groupUUID }, function(data) {
       if (data.result) {
-        let members = data.members;
-        let uuidList = [];
+        const { members, groupActors, groupActorsMapping } = data;
+
+        // 处理团成员
+        const uuidList = [];
         for (let member of members) {
           let uuid = member.uuid;
           uuidList.push(uuid);
@@ -94,19 +94,9 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
           groupUUID,
           payload: uuidList,
         });
-      } else {
-        console.error('获取团成员失败:', data.msg);
-      }
-    });
 
-    // 获取自己选择的团角色
-    dispatch(getSelectedGroupActor(groupUUID));
-
-    // 获取团人物
-    api.emit('group::getGroupActors', { groupUUID }, function(data) {
-      if (data.result) {
-        const actors = data.actors;
-        for (let ga of actors) {
+        // 处理团人物
+        for (let ga of groupActors) {
           // 处理头像
           _set(ga, 'avatar', config.file.getAbsolutePath(_get(ga, 'avatar')));
           _set(
@@ -119,25 +109,25 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
             checkTemplate(ga.actor.template_uuid);
           }
         }
-        dispatch({ type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors });
-      } else {
-        console.error('获取团人物失败:', data.msg);
-      }
-    });
+        dispatch({
+          type: GET_GROUP_ACTOR_SUCCESS,
+          groupUUID,
+          payload: groupActors,
+        });
 
-    // 获取团选择人物的Mapping
-    api.emit('group::getGroupActorMapping', { groupUUID }, function(data) {
-      if (data.result) {
-        const { mapping } = data;
+        // 处理团选择人物mapping
         dispatch({
           type: UPDATE_GROUP_ACTOR_MAPPING,
           groupUUID,
-          payload: mapping,
+          payload: groupActorsMapping,
         });
       } else {
-        console.error('获取团人物选择失败:', data.msg);
+        console.error('获取团初始数据失败:', data.msg);
       }
     });
+
+    // 获取自己选择的团角色
+    dispatch(getSelectedGroupActor(groupUUID));
 
     // 获取团聊天日志
     api.emit('chat::getConverseChatLog', { converse_uuid: groupUUID }, function(
