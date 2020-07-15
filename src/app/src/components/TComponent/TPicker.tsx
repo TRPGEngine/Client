@@ -3,7 +3,7 @@ import { Picker } from '@react-native-community/picker';
 const PickerItem = Picker.Item;
 
 interface Props {
-  items: Array<{ label: string; value: any }>;
+  items: { label: string; value: any }[];
   defaultValue?: any;
   selectedValue?: any;
   onValueChange?: (itemValue: any, itemIndex: number) => void;

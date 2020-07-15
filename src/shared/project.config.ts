@@ -4,22 +4,22 @@ const platform = process.env.PLATFORM || 'web';
 let currentHost = '127.0.0.1';
 let isSSL = false;
 
-let localHost = _get(window, 'location.host');
+const localHost = _get(window, 'location.host');
 if (localHost) {
   currentHost = localHost.split(':')[0];
   isSSL = _get(window, 'location.protocol') === 'https:';
 }
-if (environment == 'production') {
+if (environment === 'production') {
   currentHost = 'trpgapi.moonrailgun.com';
   if (platform === 'app') {
     isSSL = true;
   }
 }
 
-let trpgHost = process.env.TRPG_HOST;
+const trpgHost = process.env.TRPG_HOST;
 let trpgPort: string;
 if (trpgHost) {
-  let _tmp = trpgHost.split(':');
+  const _tmp = trpgHost.split(':');
   currentHost = _tmp[0];
   trpgPort = _tmp[1];
 }
@@ -137,7 +137,7 @@ const config: ProjectConfig = {
     protocol: isSSL ? 'https' : 'http',
     host: currentHost,
     port: apiPort,
-    getFileImage: function(ext) {
+    getFileImage(ext) {
       if (ext === 'jpg' || ext === 'png' || ext === 'gif') {
         return config.defaultImg.file.pic;
       }

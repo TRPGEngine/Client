@@ -48,7 +48,7 @@ export interface TModalOptions {
 }
 
 const TModal = {
-  show: function(view: React.ReactNode, opts: TModalOptions = {}) {
+  show(view: React.ReactNode, opts: TModalOptions = {}) {
     return TPopup.show(
       <TModalContainer
         onRequestClose={() =>
@@ -59,7 +59,7 @@ const TModal = {
       </TModalContainer>
     );
   },
-  hide: function() {
+  hide() {
     TPopup.hide();
   },
 };

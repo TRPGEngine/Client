@@ -106,7 +106,7 @@ const TemplateSelect: React.FC<Props> = TMemo((props: Props) => {
           onChange={(e) => setSearch(e.target.value)}
           placeholder="搜索模板"
           onSearch={handleSearch}
-          enterButton
+          enterButton={true}
         />
       </div>
 

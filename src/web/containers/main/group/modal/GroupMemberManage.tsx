@@ -26,9 +26,9 @@ class GroupMemberManage extends React.Component<Props> {
   }
 
   render() {
-    let userInfo = getUserInfoCache(this.props.uuid);
-    let name = userInfo.nickname || userInfo.username;
-    let actions = (
+    const userInfo = getUserInfoCache(this.props.uuid);
+    const name = userInfo.nickname || userInfo.username;
+    const actions = (
       <div>
         <button onClick={() => this.handleRaiseManager()}>提升为管理</button>
         <button onClick={() => this.handleTickGroup()}>踢出本团</button>

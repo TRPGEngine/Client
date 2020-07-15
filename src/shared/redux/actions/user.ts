@@ -73,7 +73,7 @@ function loginSuccess(dispatch, getState) {
 export const login = function(username: string, password: string): TRPGAction {
   return function(dispatch, getState) {
     password = md5(password);
-    let isApp = config.platform === 'app';
+    const isApp = config.platform === 'app';
     dispatch({ type: LOGIN_REQUEST });
     return api.emit(
       'player::login',
@@ -117,7 +117,7 @@ export const loginWithToken = function(
   channel = null
 ): TRPGAction {
   return function(dispatch, getState) {
-    let isApp = config.platform === 'app';
+    const isApp = config.platform === 'app';
     dispatch({ type: LOGIN_REQUEST });
     return api.emit(
       'player::loginWithToken',
@@ -157,11 +157,11 @@ export const updateAllInfo = function(): TRPGAction {
 };
 
 export const logout = function(): TRPGAction {
-  let isApp = config.platform === 'app';
+  const isApp = config.platform === 'app';
   return function(dispatch, getState) {
-    let info = getState().user.info;
-    let uuid = info.uuid;
-    let token = isApp ? info.app_token : info.token;
+    const info = getState().user.info;
+    const uuid = info.uuid;
+    const token = isApp ? info.app_token : info.token;
     dispatch(showLoading());
     dispatch({ type: LOGOUT });
     api.emit('player::logout', { uuid, token, isApp }, function(data) {
@@ -230,10 +230,10 @@ export const findUser = function(text: string, type: string): TRPGAction {
     return api.emit('player::findUser', { text, type }, function(data) {
       console.log('findUser', data);
       if (data.result) {
-        let list = data.results;
+        const list = data.results;
         if (list && list.length > 0) {
-          for (let user of list) {
-            let uuid = user.uuid;
+          for (const user of list) {
+            const uuid = user.uuid;
             if (!!uuid) {
               checkUser(uuid);
             }
@@ -294,9 +294,9 @@ export const getFriends = function(): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('player::getFriends', {}, function(data) {
       if (data.result) {
-        let uuidList = [];
-        for (let item of data.list) {
-          let uuid = item.uuid;
+        const uuidList = [];
+        for (const item of data.list) {
+          const uuid = item.uuid;
           uuidList.push(uuid);
           checkUser(uuid);
         }
@@ -313,7 +313,7 @@ export const getFriendsInvite = function(): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('player::getFriendsInvite', {}, function(data) {
       if (data.result) {
-        for (let item of data.res) {
+        for (const item of data.res) {
           checkUser(item.from_uuid);
         }
         dispatch({ type: GET_FRIEND_INVITE_SUCCESS, payload: data.res });
@@ -388,7 +388,7 @@ export const getSettings = function(): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('player::getSettings', {}, function(data) {
       if (data.result) {
-        let { userSettings, systemSettings } = data;
+        const { userSettings, systemSettings } = data;
         dispatch(setUserSettings(userSettings));
         dispatch(setSystemSettings(systemSettings));
       } else {

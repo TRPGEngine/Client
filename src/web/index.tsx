@@ -45,8 +45,8 @@ window.onerror = (event, source, fileno, columnNumber, error) => {
 // 加载本地存储数据进行应用初始化
 (async () => {
   // token登录
-  let uuid = await rnStorage.get('uuid');
-  let token = await rnStorage.get('token');
+  const uuid = await rnStorage.get('uuid');
+  const token = await rnStorage.get('token');
   if (!!token && !!uuid) {
     store.dispatch(loginWithToken(uuid, token));
   }

@@ -128,7 +128,7 @@ class ConverseDetail extends React.Component<Props> {
   // 发送自由投骰
   handleQuickDice = () => {
     console.log('快速投骰');
-    let uuid = this.props.converseUUID;
+    const uuid = this.props.converseUUID;
     this.props.dispatch(
       showModal(
         <QuickDice
@@ -177,7 +177,9 @@ class ConverseDetail extends React.Component<Props> {
     const usercache = this.props.usercache;
     const isWriting = this.props.isWriting;
 
-    let name, avatar, desc;
+    let name;
+    let avatar;
+    let desc;
     if (userUUID === 'trpgsystem') {
       name = '系统消息';
       desc = 'TRPG Engine 系统消息';

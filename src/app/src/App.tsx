@@ -50,8 +50,8 @@ import { TMemo } from '@shared/components/TMemo';
 
 (async () => {
   console.log('读取本地存储的token...');
-  let uuid = await rnStorage.get('uuid');
-  let token = await rnStorage.get('token');
+  const uuid = await rnStorage.get('uuid');
+  const token = await rnStorage.get('token');
   console.log('uuid:', uuid, 'token:', token);
   if (!!token && !!uuid) {
     console.log('尝试登陆uuid:', uuid);

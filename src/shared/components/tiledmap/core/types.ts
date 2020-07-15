@@ -20,7 +20,7 @@ export interface TokenAttrs {
 }
 
 export interface TokenData extends Partial<TokenAttrs> {
-  [any: string]: any;
+  [key: string]: any;
 }
 
 export interface LayerAttrs {

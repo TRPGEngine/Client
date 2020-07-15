@@ -57,9 +57,9 @@ class ProfileScreen extends React.Component<ScreenProps> {
   }
 
   handlePressSendMsg = () => {
-    let type = this.props.route.params?.type;
-    let userUUID = this.props.route.params?.uuid;
-    let userInfo = getUserInfoCache(userUUID);
+    const type = this.props.route.params?.type;
+    const userUUID = this.props.route.params?.uuid;
+    const userInfo = getUserInfoCache(userUUID);
 
     // 创建用户会话并切换到该会话
     this.props.dispatch(addUserConverse([userUUID]));
@@ -84,8 +84,8 @@ class ProfileScreen extends React.Component<ScreenProps> {
       );
     }
 
-    let avatar = userInfo.avatar ? userInfo.avatar : appConfig.defaultImg.user;
-    let name = userInfo.nickname || userInfo.username;
+    const avatar = userInfo.avatar ? userInfo.avatar : appConfig.defaultImg.user;
+    const name = userInfo.nickname || userInfo.username;
 
     return (
       <ScrollView style={styles.container}>

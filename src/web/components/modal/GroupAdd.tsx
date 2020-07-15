@@ -19,8 +19,8 @@ class GroupAdd extends React.Component<Props> {
   };
 
   handleSearch() {
-    let text = this.state.searchText.trim();
-    let type = this.state.selectValue;
+    const text = this.state.searchText.trim();
+    const type = this.state.selectValue;
     if (!!text) {
       this.props.dispatch(findGroup(text, type));
     } else {
@@ -45,7 +45,7 @@ class GroupAdd extends React.Component<Props> {
   }
 
   render() {
-    let options = [
+    const options = [
       { value: 'uuid', label: '团唯一标示符' },
       { value: 'groupname', label: '团名称' },
       { value: 'groupdesc', label: '团简介' },

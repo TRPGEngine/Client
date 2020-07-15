@@ -41,7 +41,7 @@ class ActorEdit extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     if (this.props.selectedActorUUID) {
-      let actorIndex = this.props.selfActors.findIndex((item, index) => {
+      const actorIndex = this.props.selfActors.findIndex((item, index) => {
         if (item.uuid === this.props.selectedActorUUID) {
           return true;
         } else {
@@ -50,7 +50,7 @@ class ActorEdit extends React.Component<Props, State> {
       });
 
       if (actorIndex >= 0) {
-        let actor = (this.editedActor = this.props.selfActors[actorIndex]);
+        const actor = (this.editedActor = this.props.selfActors[actorIndex]);
         this.state.profileName = actor.name;
         this.state.profileDesc = actor.desc;
         this.state.profileAvatar = actor.avatar;
@@ -62,10 +62,10 @@ class ActorEdit extends React.Component<Props, State> {
 
   componentDidMount() {
     this.template_uuid = this.props.selectedTemplate.uuid;
-    let info = this.props.selectedTemplate.info;
-    let template = (this.template = at.parse(info));
+    const info = this.props.selectedTemplate.info;
+    const template = (this.template = at.parse(info));
     if (this.editedActor) {
-      let data = this.editedActor.info;
+      const data = this.editedActor.info;
       template.setData(data);
     }
     template.eval();
@@ -73,18 +73,18 @@ class ActorEdit extends React.Component<Props, State> {
   }
 
   handleSave() {
-    let isCreate = !this.props.selectedActorUUID; //是否为新建人物
+    const isCreate = !this.props.selectedActorUUID; // 是否为新建人物
 
-    let name = this.state.profileName;
-    let avatar = this.state.profileAvatar;
-    let desc = this.state.profileDesc;
-    let info = this.template.getData();
-    let template_uuid = this.template_uuid;
+    const name = this.state.profileName;
+    const avatar = this.state.profileAvatar;
+    const desc = this.state.profileDesc;
+    const info = this.template.getData();
+    const template_uuid = this.template_uuid;
     if (!name) {
       this.props.showAlert('人物名不能为空');
     } else {
       console.log('save data', { name, avatar, desc, info, template_uuid });
-      let content = (
+      const content = (
         <div>
           <p key={template_uuid + '-cell-tip'}>
             是否要{isCreate ? '创建' : '更新'}人物？数据如下:
@@ -103,7 +103,7 @@ class ActorEdit extends React.Component<Props, State> {
       );
       this.props.showAlert({
         title: isCreate ? '创建人物' : '更新人物',
-        content: content,
+        content,
         type: 'alert',
         onConfirm: () => {
           if (isCreate) {
@@ -111,7 +111,7 @@ class ActorEdit extends React.Component<Props, State> {
             this.props.createActor(name, avatar, desc, info, template_uuid);
           } else {
             // update
-            let uuid = this.props.selectedActorUUID;
+            const uuid = this.props.selectedActorUUID;
             this.props.updateActor(uuid, name, avatar, desc, info);
           }
         },
@@ -160,7 +160,7 @@ class ActorEdit extends React.Component<Props, State> {
           </div>
           <div className="actor-edit-property">
             {this.state.cells.map((item, index) => {
-              let isExpression = item.func === 'expression';
+              const isExpression = item.func === 'expression';
               return (
                 <div
                   key={item.uuid + '-' + index}
@@ -174,7 +174,7 @@ class ActorEdit extends React.Component<Props, State> {
                       value={item.value}
                       onChange={(e) => {
                         try {
-                          let cells = this.state.cells;
+                          const cells = this.state.cells;
                           cells[index].value = e.target.value;
                           this.setState({ cells });
                           this.template.eval();

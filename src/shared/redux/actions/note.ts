@@ -15,8 +15,8 @@ const api = trpgApi.getInstance();
 
 // 同步到服务器
 let isSync = false;
-let syncList = [];
-let trySyncNote = function(dispatch, payload) {
+const syncList = [];
+const trySyncNote = function(dispatch, payload) {
   if (isSync === false) {
     isSync = true;
     dispatch({ type: SYNC_NOTE_REQUEST, uuid: payload.uuid });
@@ -38,7 +38,7 @@ let trySyncNote = function(dispatch, payload) {
 
         // 如果队列有东西，则取出后自我迭代
         if (syncList.length > 0) {
-          let p = syncList.shift();
+          const p = syncList.shift();
           trySyncNote(dispatch, p);
         }
       }
@@ -54,7 +54,7 @@ export const addNote = function addNote() {
 
 export const saveNote = function saveNote(uuid, title, content) {
   return async function(dispatch, getState) {
-    let noteObj = (await rnStorage.get('note')) || {};
+    const noteObj = (await rnStorage.get('note')) || {};
     noteObj[uuid] = Object.assign({}, noteObj[uuid], {
       uuid,
       title,
@@ -62,7 +62,7 @@ export const saveNote = function saveNote(uuid, title, content) {
       updatedAt: new Date().getTime(),
     });
     rnStorage.save('note', noteObj);
-    let payload = { uuid, title, content };
+    const payload = { uuid, title, content };
     dispatch({ type: SAVE_NOTE, payload });
     trySyncNote(dispatch, payload);
   };
@@ -70,7 +70,7 @@ export const saveNote = function saveNote(uuid, title, content) {
 
 export const getNote = function getNote() {
   return async function(dispatch, getState) {
-    let localNote = await rnStorage.get('note');
+    const localNote = await rnStorage.get('note');
     if (localNote) {
       dispatch({ type: GET_NOTE, noteList: localNote });
     }

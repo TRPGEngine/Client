@@ -58,7 +58,7 @@ class UserSelectScreen extends React.Component<Props, State> {
           />
         }
         onPress={() => handleClick(!isChecked)}
-      ></UserItem>
+      />
     );
   };
 

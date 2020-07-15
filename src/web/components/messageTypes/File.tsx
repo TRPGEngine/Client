@@ -10,7 +10,7 @@ import Webview from '@web/components/Webview';
 interface Props extends MessageProps, DispatchProp<any> {}
 class File extends Base<Props> {
   handlePreview() {
-    let data = this.props.info.data;
+    const data = this.props.info.data;
     this.props.dispatch(
       previewFile(data.fileuuid, {
         WebviewComponent: Webview,
@@ -19,7 +19,7 @@ class File extends Base<Props> {
   }
 
   handleDownload() {
-    let data = this.props.info.data;
+    const data = this.props.info.data;
     this.props.dispatch(downloadFile(data.fileuuid));
   }
 

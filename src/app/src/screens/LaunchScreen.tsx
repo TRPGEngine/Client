@@ -18,9 +18,9 @@ class LaunchScreen extends React.Component<Props> {
   animationTimer: number;
   state = {
     tipText: '',
-    logoTop: new Animated.Value(0), //logo动画高度
-    logoAlpha: new Animated.Value(0), //logo动画渐变
-    tipAlpha: new Animated.Value(0), //文字渐变
+    logoTop: new Animated.Value(0), // logo动画高度
+    logoAlpha: new Animated.Value(0), // logo动画渐变
+    tipAlpha: new Animated.Value(0), // 文字渐变
     isShowSystemStatusModal: false, // 是否显示系统状态模态框
   };
 
@@ -109,7 +109,7 @@ class LaunchScreen extends React.Component<Props> {
   }
 
   render() {
-    let network = this.props.network;
+    const network = this.props.network;
     let networkType = 'red';
     if (network.isOnline) {
       networkType = 'green';

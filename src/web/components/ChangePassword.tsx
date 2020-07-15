@@ -52,7 +52,7 @@ class ChangePassword extends React.Component<Props> {
   }
 
   render() {
-    let actions = (
+    const actions = (
       <button onClick={() => this.handleChangePassword()}>确认修改</button>
     );
 

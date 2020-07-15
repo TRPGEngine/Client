@@ -80,8 +80,8 @@ class HomeScreen extends React.Component<Props> {
       )
         .reverse()
         .map((item, index) => {
-          let uuid = item.uuid;
-          let defaultIcon =
+          const uuid = item.uuid;
+          const defaultIcon =
             uuid === 'trpgsystem'
               ? appConfig.defaultImg.trpgsystem
               : appConfig.defaultImg.user;
@@ -89,7 +89,7 @@ class HomeScreen extends React.Component<Props> {
           if (item.type === 'user') {
             avatar = _get(this.props.usercache, [uuid, 'avatar']);
           } else if (item.type === 'group') {
-            let group = this.props.groups.find((g) => g.uuid === uuid);
+            const group = this.props.groups.find((g) => g.uuid === uuid);
             avatar = group ? group.avatar : '';
           }
 
@@ -126,9 +126,9 @@ class HomeScreen extends React.Component<Props> {
 
   handleRefresh() {
     this.setState({ isRefreshing: true });
-    var timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       this.setState({ isRefreshing: false });
-    }, 10000); //10秒后自动取消
+    }, 10000); // 10秒后自动取消
     this.props.dispatch(
       reloadConverseList(() => {
         this.setState({ isRefreshing: false });

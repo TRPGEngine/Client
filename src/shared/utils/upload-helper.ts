@@ -18,7 +18,7 @@ export interface AvatarUpdateData {
 }
 
 export const generateFileMsgData = function(file) {
-  let tmp = file.name.split('.');
+  const tmp = file.name.split('.');
   return {
     originalname: file.name,
     size: file.size,

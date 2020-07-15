@@ -84,8 +84,8 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
 
         // 处理团成员
         const uuidList = [];
-        for (let member of members) {
-          let uuid = member.uuid;
+        for (const member of members) {
+          const uuid = member.uuid;
           uuidList.push(uuid);
           checkUser(uuid);
         }
@@ -96,7 +96,7 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
         });
 
         // 处理团人物
-        for (let ga of groupActors) {
+        for (const ga of groupActors) {
           // 处理头像
           _set(ga, 'avatar', config.file.getAbsolutePath(_get(ga, 'avatar')));
           _set(
@@ -211,7 +211,7 @@ export const requestUpdateGroupInfo = function(
   return function(dispatch, getState) {
     api.emit('group::updateInfo', { groupUUID, groupInfo }, function(data) {
       if (data.result) {
-        let group = data.group;
+        const group = data.group;
         group.avatar = config.file.getAbsolutePath(group.avatar);
         dispatch(updateGroupInfo(group));
         dispatch(hideModal());
@@ -234,7 +234,7 @@ export const findGroup = function(text, type) {
     return api.emit('group::findGroup', { text, type }, function(data) {
       console.log('团搜索结果', data);
       if (data.result) {
-        for (let group of data.results) {
+        for (const group of data.results) {
           group.avatar = config.file.getAbsolutePath(group.avatar);
         }
         dispatch({ type: FIND_GROUP_SUCCESS, payload: data.results });
@@ -378,7 +378,7 @@ export const agreeGroupInvite = function(inviteUUID: string): TRPGAction {
   return function(dispatch, getState) {
     api.emit('group::agreeGroupInvite', { uuid: inviteUUID }, function(data) {
       if (data.result) {
-        let { uuid, group } = data.res;
+        const { uuid, group } = data.res;
         group.avatar = config.file.getAbsolutePath(group.avatar);
         dispatch({
           type: AGREE_GROUP_INVITE_SUCCESS,
@@ -423,7 +423,7 @@ export const getGroupList = function(): TRPGAction {
     return api.emit('group::getGroupList', {}, function(data) {
       if (data.result) {
         const groups: GroupInfo[] = data.groups;
-        for (let group of groups) {
+        for (const group of groups) {
           group.avatar = config.file.getAbsolutePath(group.avatar);
 
           // 初始化部分数据
@@ -433,7 +433,7 @@ export const getGroupList = function(): TRPGAction {
         }
 
         dispatch({ type: GET_GROUP_LIST_SUCCESS, payload: groups });
-        for (let group of groups) {
+        for (const group of groups) {
           dispatch(initGroupInfo(group));
           dispatch(getGroupStatus(group.uuid)); // 获取团状态
         }

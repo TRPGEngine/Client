@@ -1,5 +1,7 @@
 import { NativeModules } from 'react-native';
 
+// tslint:disable: variable-name
+
 export enum Code {
   SUCCESS = 200,
   ERROR = 0,

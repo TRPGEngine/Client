@@ -60,7 +60,7 @@ class Main extends React.Component<Props> {
   }
 
   handleSelectTitleMenu(index) {
-    let menu = this.titleMenu[index];
+    const menu = this.titleMenu[index];
     if (menu) {
       this.props.switchMenuPannel(
         menu.menuIndex !== undefined ? menu.menuIndex : -1,

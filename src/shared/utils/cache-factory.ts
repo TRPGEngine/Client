@@ -12,7 +12,7 @@ function defaultHash(...args): string {
 
 export function buildCacheFactory<T>(
   policy: CachePolicy,
-  fn: Function,
+  fn: (...args: any[]) => T,
   hashFn: (...args: any[]) => string = defaultHash
 ): (...args: any[]) => Promise<T> {
   let cacheManager: CacheManager;

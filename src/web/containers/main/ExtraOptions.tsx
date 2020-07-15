@@ -49,7 +49,7 @@ class ExtraOptions extends React.Component<Props> {
   }
 
   handleClick(type) {
-    let show = this.state.show;
+    const show = this.state.show;
     if (show !== type) {
       this.setState({ show: type });
     } else {

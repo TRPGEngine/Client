@@ -23,14 +23,9 @@ export const CreateGroupMap: React.FC<{
   const dispatch = useTRPGDispatch();
   const { values, handleChange, handleSubmit, setFieldValue } = useFormik({
     initialValues,
-    onSubmit: async (values) => {
+    onSubmit: async (data) => {
       dispatch(
-        createGroupMap(
-          props.groupUUID,
-          values.name,
-          values.width,
-          values.height
-        )
+        createGroupMap(props.groupUUID, data.name, data.width, data.height)
       );
     },
   });

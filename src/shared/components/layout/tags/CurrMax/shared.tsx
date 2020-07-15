@@ -13,7 +13,7 @@ export const TagCurrMaxSplitInput: React.FC = TMemo(() => {
         backgroundColor: 'white',
       }}
       placeholder="/"
-      disabled
+      disabled={true}
     />
   );
 });

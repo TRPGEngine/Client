@@ -1,7 +1,7 @@
 export const getCodeList = function() {
   // import data from 'react-emojione2/lib/data/emoji-data'.default;
   // return data.map((item) => item[2]);
-  let people = [
+  const people = [
     ':smile:',
     ':laughing:',
     ':blush:',
@@ -173,7 +173,7 @@ export const getCodeList = function() {
     ':speech_balloon:',
     ':thought_balloon:',
   ];
-  let nature = [
+  const nature = [
     ':sunny:',
     ':umbrella:',
     ':cloud:',
@@ -286,7 +286,7 @@ export const getCodeList = function() {
     ':milky_way:',
     ':partly_sunny:',
   ];
-  let objects = [
+  const objects = [
     ':bamboo:',
     ':gift_heart:',
     ':dolls:',
@@ -542,7 +542,7 @@ export const getCodeList = function() {
     ':tomato:',
     ':corn:',
   ];
-  let places = [
+  const places = [
     ':house:',
     ':house_with_garden:',
     ':school:',
@@ -638,7 +638,7 @@ export const getCodeList = function() {
     ':round_pushpin:',
     ':triangular_flag_on_post:',
   ];
-  let symbols = [
+  const symbols = [
     ':one:',
     ':two:',
     ':three:',

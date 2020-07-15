@@ -12,6 +12,7 @@ import _isArray from 'lodash/isArray';
 const getInitState = () => chatReducer(undefined, { type: 'any' });
 
 describe('chat reducer', () => {
+  // tslint:disable-next-line: no-empty
   test('TODO', () => {});
 });
 

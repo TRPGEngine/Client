@@ -24,7 +24,7 @@ import { AlertPayload } from '../types/ui';
 import { TRPGAction } from '../types/__all__';
 
 export const showLoading = function(text = '加载中...'): TRPGAction {
-  return { type: SHOW_LOADING, text: text };
+  return { type: SHOW_LOADING, text };
 };
 export const hideLoading = function(): TRPGAction {
   return { type: HIDE_LOADING };

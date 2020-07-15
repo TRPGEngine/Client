@@ -24,21 +24,21 @@ class GroupInvite extends React.Component<Props> {
   };
 
   handleSelect(uuid) {
-    let selectedUUIDs = this.state.selectedUUIDs;
-    let index = selectedUUIDs.indexOf(uuid);
+    const selectedUUIDs = this.state.selectedUUIDs;
+    const index = selectedUUIDs.indexOf(uuid);
     if (index >= 0) {
       selectedUUIDs.splice(index, 1);
-      this.setState({ selectedUUIDs: selectedUUIDs });
+      this.setState({ selectedUUIDs });
     } else {
       selectedUUIDs.push(uuid);
-      this.setState({ selectedUUIDs: selectedUUIDs });
+      this.setState({ selectedUUIDs });
     }
   }
 
   handleSendGroupInvite() {
     console.log('handleSendGroupInvite', this.state.selectedUUIDs);
-    let groupUUID = this.props.selectedGroupUUID;
-    for (let uuid of this.state.selectedUUIDs) {
+    const groupUUID = this.props.selectedGroupUUID;
+    for (const uuid of this.state.selectedUUIDs) {
       // TODO 需要一个待处理的group邀请列表，防止多次提交邀请
       this.props.sendGroupInvite(groupUUID, uuid);
     }
@@ -54,8 +54,8 @@ class GroupInvite extends React.Component<Props> {
               return;
             }
 
-            let user = getUserInfoCache(uuid);
-            let name = user.nickname || user.username;
+            const user = getUserInfoCache(uuid);
+            const name = user.nickname || user.username;
 
             return (
               <div
@@ -78,8 +78,8 @@ class GroupInvite extends React.Component<Props> {
         <i className="iconfont">&#xe606;</i>
         <div className="invite-list">
           {this.props.groupMembers.map((uuid) => {
-            let user = getUserInfoCache(uuid);
-            let name = user.nickname || user.username;
+            const user = getUserInfoCache(uuid);
+            const name = user.nickname || user.username;
 
             return (
               <div

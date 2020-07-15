@@ -105,9 +105,9 @@ const MsgModalContainer: React.FC<Props> = TMemo((props) => {
 
   return (
     <Modal
-      operation
-      transparent
-      maskClosable
+      operation={true}
+      transparent={true}
+      maskClosable={true}
       visible={visible}
       onClose={handleClose}
       onAnimationEnd={props.onAnimationEnd}

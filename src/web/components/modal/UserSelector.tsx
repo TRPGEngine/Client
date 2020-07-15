@@ -94,7 +94,7 @@ const SelectedUser: React.FC<SelectedUserProps> = React.memo((props) => {
   return (
     <Select
       mode="multiple"
-      labelInValue
+      labelInValue={true}
       value={value}
       placeholder="选择用户"
       filterOption={filterOption}

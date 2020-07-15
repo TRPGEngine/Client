@@ -164,7 +164,7 @@ class ActorList extends React.Component<Props> {
 
   getActorInfo() {
     let actor;
-    for (let _actor of this.props.actors) {
+    for (const _actor of this.props.actors) {
       if (_actor.uuid === this.props.selectedActorUUID) {
         actor = _actor;
         break;
@@ -172,10 +172,10 @@ class ActorList extends React.Component<Props> {
     }
 
     if (actor && actor.info) {
-      let template = this.props.templateCache[actor.template_uuid] ?? {};
-      let info = at.parse(template.info ?? {});
+      const template = this.props.templateCache[actor.template_uuid] ?? {};
+      const info = at.parse(template.info ?? {});
       info.setData(actor.info);
-      let cells = info.getCells();
+      const cells = info.getCells();
       return (
         <div>
           <p>
@@ -202,7 +202,7 @@ class ActorList extends React.Component<Props> {
   }
 
   render() {
-    let addNewCard = (
+    const addNewCard = (
       <ActorCardContainer>
         <div
           className="actor-card-new"

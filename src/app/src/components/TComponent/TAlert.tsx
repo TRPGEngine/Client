@@ -29,7 +29,8 @@ class TAlert extends React.Component<Props> {
     const onConfirm = this.props.showAlertInfo.onConfirm;
     const onCancel = this.props.showAlertInfo.onCancel;
 
-    let header, cancelBtn;
+    let header;
+    let cancelBtn;
     if (title) {
       header = (
         <View style={styles.header}>

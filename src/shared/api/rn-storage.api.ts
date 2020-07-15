@@ -2,7 +2,7 @@ import Storage, { NotFoundError } from 'react-native-storage';
 import config from '../project.config';
 import _isNil from 'lodash/isNil';
 
-let storage = new Storage({
+const storage = new Storage({
   // 最大容量，默认值1000条数据循环存储
   size: 1000,
 
@@ -34,7 +34,7 @@ const rnStorage = {
       if (!!key && typeof key === 'string' && !_isNil(data)) {
         await storage.save({ key, data });
       } else if (!!key && typeof key === 'object' && !data) {
-        for (var subKey in key) {
+        for (const subKey in key) {
           if (key.hasOwnProperty(subKey)) {
             await storage.save({
               key: subKey,
@@ -82,7 +82,7 @@ const rnStorage = {
           expires: null,
         });
       } else if (!!key && typeof key === 'object' && !data) {
-        for (var subKey in key) {
+        for (const subKey in key) {
           if (key.hasOwnProperty(subKey)) {
             await storage.save({
               key: subKey,

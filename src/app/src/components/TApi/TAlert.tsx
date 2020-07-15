@@ -79,7 +79,8 @@ class TAlertContainer extends React.Component<Props> {
     const onConfirm = showAlertInfo.onConfirm;
     const onCancel = showAlertInfo.onCancel;
 
-    let header, cancelBtn;
+    let header;
+    let cancelBtn;
     if (title) {
       header = (
         <Header>
@@ -131,7 +132,7 @@ export interface TAlertOptions {
 }
 
 const TAlert = {
-  show: function(alertInfo: AlertInfoType, opts: TAlertOptions = {}) {
+  show(alertInfo: AlertInfoType, opts: TAlertOptions = {}) {
     return TPopup.show(
       <TAlertContainer
         showAlertInfo={alertInfo}
@@ -141,7 +142,7 @@ const TAlert = {
       />
     );
   },
-  hide: function() {
+  hide() {
     TPopup.hide();
   },
 };

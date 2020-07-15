@@ -11,6 +11,8 @@ import { tryToNumber } from '../tags/utils';
  * https://getbootstrap.com/docs/4.0/layout/overview/#responsive-breakpoints
  */
 
+// tslint:disable: no-string-literal
+
 export const useLayoutGrid = (props: {}) => {
   const layoutWidth = useContext(LayoutWidthContext);
 

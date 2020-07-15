@@ -60,7 +60,7 @@ export const GroupHeader: React.FC = TMemo(() => {
    * 发送邀请入团的邀请
    */
   const handleSendGroupInvite = (uuids: string[]) => {
-    for (let uuid of uuids) {
+    for (const uuid of uuids) {
       // TODO: 需要一个待处理的group邀请列表，防止多次提交邀请
       dispatch(sendGroupInvite(groupUUID, uuid));
     }

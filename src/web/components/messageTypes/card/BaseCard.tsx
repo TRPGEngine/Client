@@ -6,7 +6,7 @@ class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
 > {
   // 获取卡片视图
   getCardView() {
-    let info = this.props.info;
+    const info = this.props.info;
 
     return <pre className="card-content">{info.message}</pre>;
   }
@@ -18,7 +18,7 @@ class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
 
   // 获取卡片动作
   getCardAction() {
-    let btns = this.getCardBtn();
+    const btns = this.getCardBtn();
     if (!btns || btns.length === 0) {
       return null;
     }
@@ -26,7 +26,7 @@ class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
     return (
       <div className="card-action">
         {btns.map((btn, index) => {
-          let { label = '', onClick, attrs } = btn;
+          const { label = '', onClick, attrs } = btn;
           return (
             <button
               key={`${index}#${label}`}

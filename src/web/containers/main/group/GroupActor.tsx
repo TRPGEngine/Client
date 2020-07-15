@@ -204,7 +204,7 @@ class GroupActor extends React.PureComponent<Props> {
 
   // 待审人物卡
   getGroupActorChecksList() {
-    let groupActors = this.props.groupInfo.group_actors;
+    const groupActors = this.props.groupInfo.group_actors;
     if (groupActors && groupActors.length > 0) {
       return groupActors
         .filter((item) => item.passed === false)

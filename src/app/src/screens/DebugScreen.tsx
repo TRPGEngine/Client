@@ -38,7 +38,7 @@ class DebugScreen extends React.Component<{}, State> {
       <ScrollView>
         <Text>总计: {logger.length}</Text>
         <Accordion
-          expandMultiple
+          expandMultiple={true}
           activeSections={sections}
           onChange={(sections) => this.setState({ sections })}
         >

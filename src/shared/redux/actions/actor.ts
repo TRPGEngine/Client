@@ -45,7 +45,7 @@ export function getTemplate(uuid?: string) {
   return function(dispatch, getState) {
     return api.emit('actor::getTemplate', { uuid }, function(data) {
       if (data.result) {
-        let payload = uuid ? data.template : data.templates;
+        const payload = uuid ? data.template : data.templates;
         dispatch({ type: GET_TEMPLATE_SUCCESS, uuid, payload });
       } else {
         console.error(data.msg);
@@ -152,9 +152,9 @@ export function getActor(uuid = '') {
   return function(dispatch, getState) {
     return api.emit('actor::getActor', { uuid }, function(data) {
       if (data.result) {
-        let payload = uuid ? data.actor : data.actors;
+        const payload = uuid ? data.actor : data.actors;
         if (data.actors) {
-          for (let i of payload) {
+          for (const i of payload) {
             i.avatar = config.file.getAbsolutePath(i.avatar);
             checkTemplate(i.template_uuid);
           }

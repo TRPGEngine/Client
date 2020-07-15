@@ -77,6 +77,7 @@ class TAvatar extends React.PureComponent<Props> {
   };
 
   render() {
+    // tslint:disable-next-line: prefer-const
     let { uri, name, style, capitalSize, height, width } = this.props;
 
     if (!(style instanceof Array)) {

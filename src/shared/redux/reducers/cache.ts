@@ -38,7 +38,7 @@ export default produce((draft: CacheState, action) => {
       if (action.uuid) {
         draft.template[action.payload.uuid] = action.payload;
       } else {
-        for (let template of action.payload) {
+        for (const template of action.payload) {
           draft.template[template.uuid] = template;
         }
       }

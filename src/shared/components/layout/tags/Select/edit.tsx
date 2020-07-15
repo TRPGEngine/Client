@@ -15,7 +15,7 @@ import { useToBoolean } from '@shared/hooks/useToBoolean';
 
 interface TagProps {
   name: string;
-  options: string | Array<string | { name: string; items: string[] }>;
+  options: string | (string | { name: string; items: string[] })[];
   placeholder?: string;
   desc?: string;
   showSearch?: boolean | string;

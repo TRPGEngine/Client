@@ -56,6 +56,7 @@ export const TokenPicker: React.FC<Props> = TMemo((props) => {
             <List.Item
               actions={[
                 <AppendTokenAction
+                  key="token"
                   onConfirm={(x, y) => handleAddActorToken(item, x, y)}
                 />,
               ]}
@@ -71,7 +72,12 @@ export const TokenPicker: React.FC<Props> = TMemo((props) => {
       </Panel>
       <Panel key="other" header="其他">
         <List.Item
-          actions={[<AppendImageTokenAction onConfirm={handleAddImageToken} />]}
+          actions={[
+            <AppendImageTokenAction
+              key="imageToken"
+              onConfirm={handleAddImageToken}
+            />,
+          ]}
         >
           <List.Item.Meta title="增加网络图片" />
         </List.Item>

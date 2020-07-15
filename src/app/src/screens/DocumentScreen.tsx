@@ -39,8 +39,12 @@ class DocumentScreen extends React.Component<Props, State> {
     return (
       <List>
         {docs.length > 0 ? (
-          docs.map((doc) => (
-            <Item arrow="horizontal" onPress={() => this.handlePress(doc.uuid)}>
+          docs.map((doc, i) => (
+            <Item
+              key={i}
+              arrow="horizontal"
+              onPress={() => this.handlePress(doc.uuid)}
+            >
               {doc.name}
             </Item>
           ))

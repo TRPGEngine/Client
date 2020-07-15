@@ -32,27 +32,27 @@ interface Props {
 }
 class FindResultItem extends React.Component<Props> {
   getUserAction(uuid) {
-    let friendList = this.props.friendList;
-    let friendInvite = this.props.friendInvite;
-    let friendRequests = this.props.friendRequests.map(
+    const friendList = this.props.friendList;
+    const friendInvite = this.props.friendInvite;
+    const friendRequests = this.props.friendRequests.map(
       (item) => item.from_uuid
     );
-    let selfUUID = this.props.selfUUID;
+    const selfUUID = this.props.selfUUID;
     if (selfUUID === uuid) {
       return (
-        <button disabled>
+        <button disabled={true}>
           <i className="iconfont">&#xe607;</i>我自己
         </button>
       );
     } else if (friendList.indexOf(uuid) >= 0) {
       return (
-        <button disabled>
+        <button disabled={true}>
           <i className="iconfont">&#xe604;</i>已添加
         </button>
       );
     } else if (friendInvite.indexOf(uuid) >= 0) {
       return (
-        <button disabled>
+        <button disabled={true}>
           <i className="iconfont">&#xe62e;</i>已发送
         </button>
       );
@@ -72,17 +72,17 @@ class FindResultItem extends React.Component<Props> {
   }
 
   getGroupAction(uuid) {
-    let joinedGroupUUIDs = this.props.joinedGroupUUIDs;
-    let requestingGroupUUID = this.props.requestingGroupUUID;
+    const joinedGroupUUIDs = this.props.joinedGroupUUIDs;
+    const requestingGroupUUID = this.props.requestingGroupUUID;
     if (joinedGroupUUIDs.includes(uuid)) {
       return (
-        <button disabled>
+        <button disabled={true}>
           <i className="iconfont">&#xe604;</i>已加入
         </button>
       );
     } else if (requestingGroupUUID.includes(uuid)) {
       return (
-        <button disabled>
+        <button disabled={true}>
           <i className="iconfont">&#xe604;</i>已申请
         </button>
       );
@@ -160,7 +160,7 @@ export default connect(
         const friendRequests = getState().user.friendRequests;
 
         let inviteUUID = '';
-        for (let req of friendRequests) {
+        for (const req of friendRequests) {
           if (req.from_uuid === fromUUID) {
             inviteUUID = req.uuid;
             break;

@@ -54,7 +54,7 @@ class RegisterScreen extends React.Component<Props, State> {
   }
 
   handleRegister() {
-    let err = this.checkInputErr();
+    const err = this.checkInputErr();
     if (err) {
       this.props.dispatch(
         showAlert({
@@ -64,8 +64,8 @@ class RegisterScreen extends React.Component<Props, State> {
       );
     } else {
       this.props.dispatch(showLoading());
-      let username = this.state.username;
-      let password = this.state.password;
+      const username = this.state.username;
+      const password = this.state.password;
       this.props.dispatch(
         register(username, password, () => {
           this.props.dispatch(

@@ -32,7 +32,7 @@ const NavigationBar: React.FC<NavigationBarProps> = TMemo((props) => {
 
   return (
     <View style={NavStyles.Bar}>
-      {/** Left Button**/}
+      {/* Left Button */}
       <TouchableOpacity onPress={leftBtnClick}>
         <Image
           style={NavStyles.Left}
@@ -120,7 +120,7 @@ export default class SuspensionWindow extends PureComponent<
         useNativeDriver: true,
       }),
     ]).start(() => {
-      this.setState({ isOpen: isOpen, animating: false });
+      this.setState({ isOpen, animating: false });
     });
   };
 
@@ -344,7 +344,7 @@ const NavStyles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    width: width,
+    width,
     height: 64,
     flexDirection: 'row',
     justifyContent: 'space-between',

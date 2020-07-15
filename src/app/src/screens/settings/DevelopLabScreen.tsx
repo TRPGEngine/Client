@@ -44,7 +44,7 @@ class DevelopLabScreen extends React.Component<Props> {
     }
     this.sibling = new RootSibling(
       (
-        <SuspensionWindow close={this.handleCloseSuspensionWindow} toFloat>
+        <SuspensionWindow close={this.handleCloseSuspensionWindow} toFloat={true}>
           <Text>test data</Text>
         </SuspensionWindow>
       )

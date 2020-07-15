@@ -29,7 +29,7 @@ setSiblingWrapper((sibling) => (
 const TPopup = {
   _window: null,
   _index: null,
-  show: function(win: React.ReactNode) {
+  show(win: React.ReactNode) {
     if (this._index) {
       // this.hide();
       Portal.remove(this._index);
@@ -42,7 +42,7 @@ const TPopup = {
     // this._window = new RootSiblings((<TPopupContainer>{win}</TPopupContainer>));
     // return this._window;
   },
-  hide: function() {
+  hide() {
     // if (this._window && this._window.destroy) {
     //   this._window.destroy();
     //   this._window = null;

@@ -27,7 +27,7 @@ class AddFriendScreen extends React.Component<Props> {
   };
 
   handleSearchUser() {
-    let searchValue = this.state.searchValue.trim();
+    const searchValue = this.state.searchValue.trim();
     console.log('搜索用户:', searchValue);
     Keyboard.dismiss();
     this.setState({ showSearchResult: true, searchType: 'user' });
@@ -35,7 +35,7 @@ class AddFriendScreen extends React.Component<Props> {
   }
 
   handleSearchGroup() {
-    let searchValue = this.state.searchValue.trim();
+    const searchValue = this.state.searchValue.trim();
     console.log('搜索团:', searchValue);
     Keyboard.dismiss();
 
@@ -125,7 +125,7 @@ class AddFriendScreen extends React.Component<Props> {
       } else {
         // 显示搜索结果列表
         if (this.state.searchType === 'user') {
-          let userFindingResult = this.props.userFindingResult
+          const userFindingResult = this.props.userFindingResult
             ? this.props.userFindingResult
             : [];
 
@@ -141,7 +141,7 @@ class AddFriendScreen extends React.Component<Props> {
               })
           );
         } else if (this.state.searchType === 'group') {
-          let resultList = this.props.groupFindingResult
+          const resultList = this.props.groupFindingResult
             ? this.props.groupFindingResult
             : [];
 

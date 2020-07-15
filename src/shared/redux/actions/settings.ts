@@ -51,11 +51,11 @@ export const initConfig = function initConfig(): TRPGAction {
 
 export const saveSettings = function saveSettings() {
   return async function(dispatch, getState) {
-    let userSettings = await rnStorage.save(
+    const userSettings = await rnStorage.save(
       'userSettings',
       getState().settings.user
     );
-    let systemSettings = await rnStorage.save(
+    const systemSettings = await rnStorage.save(
       'systemSettings',
       getState().settings.system
     );

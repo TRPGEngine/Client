@@ -122,11 +122,11 @@ const XMLBuilder: React.FC<Props> = TMemo((props) => {
 
   useEffect(() => {
     try {
-      const layout = parser(xml);
-      layout.type = 'root';
-      iterativeConfigKey(layout);
-      console.log('layout', layout);
-      setLayout(layout);
+      const ast = parser(xml);
+      ast.type = 'root';
+      iterativeConfigKey(ast);
+      console.log('layout', ast);
+      setLayout(ast);
       setError(null);
     } catch (err) {
       console.error(err);

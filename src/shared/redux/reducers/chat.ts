@@ -114,7 +114,7 @@ export default produce((draft: ChatState, action) => {
 
       draft.converses[converseUUID].lastMsg = payload.message;
       draft.converses[converseUUID].lastTime = payload.date;
-      draft.converses[converseUUID].unread = action.unread || false; //已读未读
+      draft.converses[converseUUID].unread = action.unread || false; // 已读未读
       return;
     }
     case UPDATE_MSG: {
@@ -219,7 +219,7 @@ export default produce((draft: ChatState, action) => {
       draft.selectedConverseUUID = action.converseUUID;
       const converse = draft.converses[action.converseUUID];
       if (!_isNil(converse)) {
-        converse.unread = false; //已读未读;
+        converse.unread = false; // 已读未读;
       }
       return;
     case CLEAR_SELECTED_CONVERSE:
@@ -302,7 +302,7 @@ export default produce((draft: ChatState, action) => {
           if (targetIndex === -1) {
             // 新增用户正在写
             groupWritingList.push({
-              uuid: uuid,
+              uuid,
               text: currentText,
             });
           } else {
