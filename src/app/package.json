@@ -17,9 +17,7 @@
     "assets:update": "bash ./build/copy-iconfont.sh",
     "test": "node ../../node_modules/jest/bin/jest.js"
   },
-  "keywords": [
-    "trpg"
-  ],
+  "keywords": ["trpg"],
   "author": "moonrailgun",
   "license": "GPL-3.0",
   "dependencies": {

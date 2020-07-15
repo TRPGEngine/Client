@@ -9,7 +9,7 @@ interface UMPush {
   addAlias: (
     alias: string,
     alias_type: string,
-    callback: ((code: Code) => void)
+    callback: (code: Code) => void
   ) => void;
 
   addAliasType: any;
@@ -17,7 +17,7 @@ interface UMPush {
   addExclusiveAlias: (
     alias: string,
     alias_type: string,
-    callback: ((code: Code) => void)
+    callback: (code: Code) => void
   ) => void;
 
   addTag: (tag: string, callback: (code: Code, remain: any) => void) => void;
@@ -33,7 +33,7 @@ interface UMPush {
   deleteAlias: (
     alias: string,
     alias_type: string,
-    callback: ((code: Code) => void)
+    callback: (code: Code) => void
   ) => void;
 
   deleteTag: (tag: string, callback: (code: Code, remain: any) => void) => void;

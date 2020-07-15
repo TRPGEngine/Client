@@ -8,10 +8,7 @@
     "dev:proserver": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:80 npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "moonrailgun",
-    "trpg"
-  ],
+  "keywords": ["moonrailgun", "trpg"],
   "author": "moonrailgun",
   "license": "GPL-2.0",
   "dependencies": {}

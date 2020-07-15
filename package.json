@@ -28,7 +28,7 @@
     "test:watch": "jest --watch",
     "lint": "eslint --ext .js,.jsx src",
     "lint:fix": "eslint --fix --ext .js,.jsx src",
-    "prettier:all": "prettier --write \"src/**/*.js\"",
+    "prettier:all": "prettier --write \"./src/**/*.{ts,tsx,json,less}\" --config ./.prettierrc.json",
     "postinstall": "npm run install:all",
     "install:app": "cd ./src/app && npm install",
     "install:web": "cd ./src/web && npm install",
