@@ -1,5 +1,5 @@
 import '../shared/utils/common';
-import App from './containers/App';
+import { App } from './containers/App';
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
