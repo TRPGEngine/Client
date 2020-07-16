@@ -25,6 +25,7 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import './components/messageTypes/__all__';
 import '@web/assets/css/iconfont.css';
 import { bindEventFunc } from '@shared/api/listener';
+import { App as NewApp } from './routes/App';
 
 installServiceWorker(); // 注册 service worker 服务
 
@@ -86,11 +87,12 @@ if (config.platform === 'web' && config.environment === 'production') {
   };
 }
 
+const isNewApp = localStorage['__isNewApp'] === 'true';
 ReactDom.render(
   <Provider store={store}>
     <ThemeProvider theme={styledTheme}>
       <ConfigProvider locale={zhCN}>
-        <App />
+        {isNewApp ? <NewApp /> : <App />}
       </ConfigProvider>
     </ThemeProvider>
   </Provider>,
