@@ -40,7 +40,6 @@
       "interface ${1:Component}Props {",
       "  $2",
       "}",
-      "",
       "export const $1: React.FC<$1Props> = TMemo((props) => {",
       "  const { $3 } = props;",
       "  return null;",
