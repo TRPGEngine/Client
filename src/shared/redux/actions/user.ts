@@ -47,6 +47,7 @@ import { TRPGAction } from '../types/__all__';
 const api = trpgApi.getInstance();
 
 // 登录成功后获取数据
+// 即设置初始化的用户信息
 function loginSuccess(dispatch, getState) {
   if (!dispatch || !getState) {
     return;
@@ -54,14 +55,13 @@ function loginSuccess(dispatch, getState) {
 
   dispatch(loadLocalCache()); // 加载本地缓存信息
   dispatch(reloadConverseList()); // 重新加载所有会话列表
-  dispatch(getFriends());
-  dispatch(getFriendsInvite());
+
+  dispatch(getUserInitData());
   dispatch(getTemplate());
   dispatch(getActor());
   dispatch(getGroupList()); // 获取团列表
   dispatch(getGroupInvite());
   dispatch(getNote());
-  dispatch(getSettings()); // 获取服务器上的用户设置信息
 
   dispatch(getUserEmotion()); // 获取用户表情数据
 
@@ -222,6 +222,44 @@ export const fetchWebToken = function(): TRPGAction {
   };
 };
 
+/**
+ * 获取用户登录后的初始数据
+ */
+function getUserInitData(): TRPGAction {
+  return (dispatch, getState) => {
+    return api.emit('player::getUserInitData', {}, function(data) {
+      if (!data.result) {
+        console.error(data.msg);
+        return;
+      }
+
+      const { friendList, unprocessedFriendInvites, settings } = data;
+
+      // 处理好友列表
+      const uuidList = [];
+      for (const item of friendList) {
+        const uuid = item.uuid;
+        uuidList.push(uuid);
+        checkUser(uuid);
+      }
+      dispatch({ type: GET_FRIENDS_SUCCESS, payload: uuidList });
+
+      // 处理好友请求
+      for (const item of unprocessedFriendInvites) {
+        checkUser(item.from_uuid);
+      }
+      dispatch({
+        type: GET_FRIEND_INVITE_SUCCESS,
+        payload: unprocessedFriendInvites,
+      });
+
+      // 获取服务器上的用户设置信息
+      dispatch(setUserSettings(settings?.userSettings));
+      dispatch(setSystemSettings(settings?.systemSettings));
+    });
+  };
+}
+
 export const findUser = function(text: string, type: string): TRPGAction {
   return function(dispatch, getState) {
     dispatch({ type: FIND_USER_REQUEST });
@@ -290,40 +328,6 @@ export const changePassword = function(
   };
 };
 
-export const getFriends = function(): TRPGAction {
-  return function(dispatch, getState) {
-    return api.emit('player::getFriends', {}, function(data) {
-      if (data.result) {
-        const uuidList = [];
-        for (const item of data.list) {
-          const uuid = item.uuid;
-          uuidList.push(uuid);
-          checkUser(uuid);
-        }
-
-        dispatch({ type: GET_FRIENDS_SUCCESS, payload: uuidList });
-      } else {
-        console.error(data.msg);
-      }
-    });
-  };
-};
-
-export const getFriendsInvite = function(): TRPGAction {
-  return function(dispatch, getState) {
-    return api.emit('player::getFriendsInvite', {}, function(data) {
-      if (data.result) {
-        for (const item of data.res) {
-          checkUser(item.from_uuid);
-        }
-        dispatch({ type: GET_FRIEND_INVITE_SUCCESS, payload: data.res });
-      } else {
-        console.error(data.msg);
-      }
-    });
-  };
-};
-
 /**
  * 发送好友邀请
  * @param uuid 目标用户UUID
@@ -382,20 +386,6 @@ export const refuseFriendInvite = function(inviteUUID: string): TRPGAction {
 
 export const addFriendInvite = function(invite: any): TRPGAction {
   return { type: ADD_FRIEND_INVITE, payload: invite };
-};
-
-export const getSettings = function(): TRPGAction {
-  return function(dispatch, getState) {
-    return api.emit('player::getSettings', {}, function(data) {
-      if (data.result) {
-        const { userSettings, systemSettings } = data;
-        dispatch(setUserSettings(userSettings));
-        dispatch(setSystemSettings(systemSettings));
-      } else {
-        console.error(data);
-      }
-    });
-  };
 };
 
 export const saveSettings = function(): TRPGAction {

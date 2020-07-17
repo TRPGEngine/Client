@@ -74,7 +74,7 @@ export const saveSettings = function saveSettings() {
   };
 };
 
-export const setUserSettings = function setUserSettings(payload) {
+export const setUserSettings = function setUserSettings(payload): TRPGAction {
   return function(dispatch, getState) {
     rnStorage.save('userSettings', {
       ...getState().settings.user,
@@ -84,7 +84,9 @@ export const setUserSettings = function setUserSettings(payload) {
   };
 };
 
-export const setSystemSettings = function setSystemSettings(payload) {
+export const setSystemSettings = function setSystemSettings(
+  payload
+): TRPGAction {
   return function(dispatch, getState) {
     if (
       config.platform !== 'app' &&
