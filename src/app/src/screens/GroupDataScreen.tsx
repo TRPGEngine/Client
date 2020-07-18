@@ -31,7 +31,7 @@ import { getGroupActorName } from '@shared/utils/data-helper';
 import {
   useSelfGroupActors,
   useSelectedGroupActorUUID,
-} from '@redux/hooks/useGroup';
+} from '@redux/hooks/group';
 import { TRPGStackScreenProps } from '@app/router';
 import { navPortal, backToTop, selectUser } from '@app/navigate';
 

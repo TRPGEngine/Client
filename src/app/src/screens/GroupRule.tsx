@@ -1,7 +1,7 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { ScrollView } from 'react-native';
-import { useSelectedGroupInfo } from '@redux/hooks/useGroup';
+import { useSelectedGroupInfo } from '@redux/hooks/group';
 import { HTML } from '@app/components/HTML';
 
 export const GroupRuleScreen: React.FC = TMemo((props) => {

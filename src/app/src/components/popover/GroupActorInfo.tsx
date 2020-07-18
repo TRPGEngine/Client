@@ -8,7 +8,7 @@ import _isEmpty from 'lodash/isEmpty';
 import { GroupActorType } from '@redux/types/group';
 import { TMemo } from '@shared/components/TMemo';
 import { TAvatar } from '../TComponent';
-import { useSelectedGroupInfo } from '@shared/redux/hooks/useGroup';
+import { useSelectedGroupInfo } from '@shared/redux/hooks/group';
 import {
   Container,
   AvatarContainer,
