@@ -1,7 +1,7 @@
 {
   "name": "trpg-game-app",
   "version": "0.2.36",
-  "appVersion": "0.3.1",
+  "appVersion": "0.3.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,9 @@
     "assets:update": "bash ./build/copy-iconfont.sh",
     "test": "node ../../node_modules/jest/bin/jest.js"
   },
-  "keywords": ["trpg"],
+  "keywords": [
+    "trpg"
+  ],
   "author": "moonrailgun",
   "license": "GPL-3.0",
   "dependencies": {
