@@ -30,7 +30,7 @@ class GroupMember extends React.Component<Props> {
     if (groupInfo.group_members) {
       return (groupInfo.group_members || []).map((uuid) => {
         const user = getUserInfoCache(uuid);
-        const last_login = user.last_login
+        const lastLogin = user.last_login
           ? moment(user.last_login).format('YYYY-M-D HH:mm:ss')
           : '从未登录';
         const isManager = groupInfo.managers_uuid.indexOf(uuid) >= 0;
@@ -49,7 +49,7 @@ class GroupMember extends React.Component<Props> {
               <img src={user.avatar || config.defaultImg.getUser(name)} />
             </td>
             <td className="name">{name}</td>
-            <td className="last-login">{last_login}</td>
+            <td className="last-login">{lastLogin}</td>
             <td className="actions">
               {hasManagerAuth ? (
                 <button onClick={() => this.handleManageMember(uuid)}>
@@ -94,7 +94,7 @@ export default connect(
 
     return {
       userUUID,
-      selectedGroupUUID: selectedGroupUUID,
+      selectedGroupUUID,
       groupInfo,
       usercache: state.cache.user,
     };

@@ -68,7 +68,7 @@ type WebviewScreenProps = TRPGStackScreenProps<'Webview'> & DispatchProp<any>;
 class WebviewScreen extends React.Component<WebviewScreenProps> {
   state = {
     visible: false,
-    percent: 0, //range:  0 - 1
+    percent: 0, // range:  0 - 1
     color: '#3B78E7',
   };
   errorColor = '#f30';
@@ -182,7 +182,7 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
   };
 
   handleStateChange(state: WebViewNavigation) {
-    let { loading, title, url, canGoForward, canGoBack } = state;
+    const { loading, title, url, canGoForward, canGoBack } = state;
 
     this.setTitle(title);
     this.canGoBack = canGoBack;
@@ -196,7 +196,7 @@ class WebviewScreen extends React.Component<WebviewScreenProps> {
       const type = data.type;
       if (type === 'onOAuthFinished') {
         // 处理OAuth登录
-        let { uuid, token } = data;
+        const { uuid, token } = data;
         if (!uuid || !token) {
           console.error('oauth登录失败, 缺少必要参数', uuid, token);
           return;

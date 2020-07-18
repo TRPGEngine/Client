@@ -23,7 +23,7 @@ class ActorSelect extends React.Component<Props> {
     const selectActorUUID = this.state.selectActorUUID;
     if (selectActorUUID) {
       console.log('[人物卡列表]选择了' + selectActorUUID);
-      let selectActorInfo = this.props.selfActors.find(
+      const selectActorInfo = this.props.selfActors.find(
         (a) => a.uuid === selectActorUUID
       );
       this.props.onSelect &&

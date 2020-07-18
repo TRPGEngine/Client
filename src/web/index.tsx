@@ -1,5 +1,5 @@
 import '../shared/utils/common';
-import App from './containers/App';
+import { App } from './containers/App';
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
@@ -25,6 +25,7 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import './components/messageTypes/__all__';
 import '@web/assets/css/iconfont.css';
 import { bindEventFunc } from '@shared/api/listener';
+import { App as NewApp } from './routes/App';
 
 installServiceWorker(); // 注册 service worker 服务
 
@@ -45,8 +46,8 @@ window.onerror = (event, source, fileno, columnNumber, error) => {
 // 加载本地存储数据进行应用初始化
 (async () => {
   // token登录
-  let uuid = await rnStorage.get('uuid');
-  let token = await rnStorage.get('token');
+  const uuid = await rnStorage.get('uuid');
+  const token = await rnStorage.get('token');
   if (!!token && !!uuid) {
     store.dispatch(loginWithToken(uuid, token));
   }
@@ -86,11 +87,12 @@ if (config.platform === 'web' && config.environment === 'production') {
   };
 }
 
+const isNewApp = localStorage['__isNewApp'] === 'true';
 ReactDom.render(
   <Provider store={store}>
     <ThemeProvider theme={styledTheme}>
       <ConfigProvider locale={zhCN}>
-        <App />
+        {isNewApp ? <NewApp /> : <App />}
       </ConfigProvider>
     </ThemeProvider>
   </Provider>,

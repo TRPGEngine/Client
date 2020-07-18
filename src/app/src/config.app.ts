@@ -42,7 +42,7 @@ const out = {
     },
   },
   file: {
-    getFileImage: function(ext) {
+    getFileImage(ext) {
       if (ext === 'jpg' || ext === 'png' || ext === 'gif') {
         return out.defaultImg.file.pic;
       }

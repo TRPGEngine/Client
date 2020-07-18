@@ -32,7 +32,7 @@ interface Props extends TRPGDispatchProp, TRPGStackScreenProps<'GroupProfile'> {
 }
 class ProfileScreen extends React.Component<Props> {
   componentDidMount() {
-    let uuid = this.props.route.params?.uuid;
+    const uuid = this.props.route.params?.uuid;
     if (uuid) {
       // 获取最新团信息
       this.props.dispatch(getGroupInfo(uuid, undefined));

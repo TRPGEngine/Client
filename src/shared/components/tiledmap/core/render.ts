@@ -19,7 +19,7 @@ export class TiledMapRender {
   public position: Position = { x: 0, y: 0 };
   public manager: TiledMapManager;
   public layerManager: LayerManager;
-  public extraDrawFns: DrawFunction[] = []; //额外的渲染事件, 当所有的基础渲染完毕后调用列表中的渲染事件
+  public extraDrawFns: DrawFunction[] = []; // 额外的渲染事件, 当所有的基础渲染完毕后调用列表中的渲染事件
   private _originOptions?: TiledMapOptions;
   public readonly fps = 60; // 每秒渲染60帧最高
 

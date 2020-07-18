@@ -17,13 +17,16 @@ export const UserItemContainer = styled.TouchableOpacity`
   background-color: white;
 `;
 
+type UserItemActionCallback = (uuid: string, name: string) => void;
+
 export const UserItem: React.FC<{
   uuid: string;
-  onPress?: (uuid: string, name: string) => void;
+  onPress?: UserItemActionCallback;
+  onLongPress?: UserItemActionCallback;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
 }> = TMemo((props) => {
-  const { uuid, onPress, prefix, suffix } = props;
+  const { uuid, onPress, onLongPress, prefix, suffix } = props;
 
   const userInfo = useCachedUserInfo(uuid);
   const name = getUserName(userInfo);
@@ -33,8 +36,12 @@ export const UserItem: React.FC<{
     _isFunction(onPress) && onPress(uuid, name);
   }, [uuid, name, onPress]);
 
+  const handleLongPress = useCallback(() => {
+    _isFunction(onLongPress) && onLongPress(uuid, name);
+  }, [uuid, name, onLongPress]);
+
   return (
-    <UserItemContainer onPress={handlePress}>
+    <UserItemContainer onPress={handlePress} onLongPress={handleLongPress}>
       {prefix}
       <UserAvatar name={name} uri={avatar} />
       <Text>{name}</Text>

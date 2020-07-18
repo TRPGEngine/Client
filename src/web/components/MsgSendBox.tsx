@@ -125,16 +125,16 @@ class MsgSendBox extends React.Component<Props> {
   handleMsgInputKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.keyCode === 9) {
       e.preventDefault();
-      let index = this.inputType.findIndex(
+      const index = this.inputType.findIndex(
         (item) => item.type === this.state.inputType
       );
       if (!e.shiftKey) {
         // 正向
-        let i = (index + 1) % this.inputType.length;
+        const i = (index + 1) % this.inputType.length;
         this.setState({ inputType: this.inputType[i].type });
       } else {
         // 反向
-        let i = (index + this.inputType.length - 1) % this.inputType.length;
+        const i = (index + this.inputType.length - 1) % this.inputType.length;
         this.setState({ inputType: this.inputType[i].type });
       }
     }
@@ -181,8 +181,8 @@ class MsgSendBox extends React.Component<Props> {
   };
 
   handleSendMsg() {
-    let message = this.state.inputMsg.trim();
-    let type = this.state.inputType;
+    const message = this.state.inputMsg.trim();
+    const type = this.state.inputType;
     if (!!message) {
       this.props.onSendMsg(message, type);
       this.inputMsgRef.current.focus();
@@ -221,7 +221,7 @@ class MsgSendBox extends React.Component<Props> {
           onSelect={(actorUUID, actorInfo) => {
             this.props.dispatch(hideModal());
             console.log('人物卡信息', actorUUID, actorInfo);
-            let { converseUUID, isGroup } = this.props;
+            const { converseUUID, isGroup } = this.props;
             if (isGroup) {
               // 发送到团
               this.props.dispatch(
@@ -265,15 +265,15 @@ class MsgSendBox extends React.Component<Props> {
 
   handleContainerDrop(e) {
     e.preventDefault();
-    let files = e.dataTransfer.files;
-    for (let f of files) {
+    const files = e.dataTransfer.files;
+    for (const f of files) {
       this.props.onSendFile && this.props.onSendFile(f);
     }
   }
 
   handleFileUploaderChange() {
-    let files = this.fileUploader.current.files as any;
-    for (let f of files) {
+    const files = this.fileUploader.current.files as any;
+    for (const f of files) {
       this.props.onSendFile && this.props.onSendFile(f);
     }
   }

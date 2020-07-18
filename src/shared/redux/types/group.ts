@@ -33,10 +33,13 @@ export interface GroupDetail {
   allow_quick_dice: boolean;
 }
 
+type GroupChannelVisible = 'all' | 'manager' | 'assign';
+
 export interface GroupChannel {
   uuid: string;
   name: string;
   desc: string;
+  visible: GroupChannelVisible;
   members: string[];
 }
 

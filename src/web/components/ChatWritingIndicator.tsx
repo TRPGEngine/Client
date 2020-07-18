@@ -11,7 +11,7 @@ import { useMeasure } from 'react-use';
 import { WritingListGroupItem } from '@redux/types/chat';
 import { useRNStorage } from '@shared/hooks/useRNStorage';
 
-const MOST_DISPLAY_NUM = 3; //最多在summary中显示的人数
+const MOST_DISPLAY_NUM = 3; // 最多在summary中显示的人数
 
 const Container = styled.div`
   position: relative;

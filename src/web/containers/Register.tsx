@@ -23,8 +23,8 @@ class Register extends React.Component<Props> {
 
   handleRegister() {
     this.props.dispatch(showLoading());
-    let username = this.state.username;
-    let password = this.state.password;
+    const username = this.state.username;
+    const password = this.state.password;
     this.props.dispatch(
       register(username, password, () => {
         this.props.dispatch(
@@ -62,7 +62,7 @@ class Register extends React.Component<Props> {
   }
 
   render() {
-    let errMsg = this._getErrorMsg();
+    const errMsg = this._getErrorMsg();
     return (
       <div className="register-screen">
         <h2>注册账号</h2>

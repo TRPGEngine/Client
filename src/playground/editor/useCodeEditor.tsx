@@ -32,12 +32,13 @@ export function useCodeEditor() {
     [setCode]
   );
 
-  const onEditorDidMount: EditorDidMount = useCallback((editor) => {
-    editorRef.current = editor;
-    editor.focus();
-    editor.setPosition(initCodePos);
+  const onEditorDidMount: EditorDidMount = useCallback((editorIns) => {
+    editorRef.current = editorIns;
+    editorIns.focus();
+    editorIns.setPosition(initCodePos);
 
-    editor.addCommand(KeyMod.CtrlCmd | KeyCode.KEY_S, (e) => {
+    // tslint:disable-next-line: no-bitwise
+    editorIns.addCommand(KeyMod.CtrlCmd | KeyCode.KEY_S, (e) => {
       copy(code) && message.success('布局代码已复制到剪切板');
     });
   }, []);

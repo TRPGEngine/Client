@@ -2,7 +2,7 @@
 import _isFunction from 'lodash/isFunction';
 
 let _loginSuccessCallback = null;
-export function injectLoginSuccessCallback(callback: Function) {
+export function injectLoginSuccessCallback(callback: () => void) {
   _loginSuccessCallback = callback;
 }
 export function runLoginSuccessCallback() {
@@ -10,7 +10,7 @@ export function runLoginSuccessCallback() {
 }
 
 let _logoutSuccessCallback = null;
-export function injectLogoutSuccessCallback(callback: Function) {
+export function injectLogoutSuccessCallback(callback: () => void) {
   _logoutSuccessCallback = callback;
 }
 export function runLogoutSuccessCallback() {

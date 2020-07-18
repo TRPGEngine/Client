@@ -84,7 +84,7 @@ export const getActorInfo = function(uuid, onCompleted?) {
   return function(dispatch, getState) {
     return api.emit('actor::getActor', { uuid }, function(data) {
       if (data.result) {
-        let actor = data.actor ? data.actor : data.actors[0];
+        const actor = data.actor ? data.actor : data.actors[0];
         actor.avatar = config.file.getAbsolutePath(actor.avatar);
         dispatch({ type: GET_ACTOR_INFO, payload: actor });
       } else {

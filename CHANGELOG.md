@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.14](https://github.com/TRPGEngine/Client/compare/v0.3.13...v0.3.14) (2020-07-18)
+
+
+### Features
+
+* **app:** 增加了踢出团成员的功能 ([769f438](https://github.com/TRPGEngine/Client/commit/769f43850e814687b747326afadb31989a53b85f))
+* 增加同步解散团与踢出成员的状态处理 ([14ad43b](https://github.com/TRPGEngine/Client/commit/14ad43b5329dc4cb121f9c59c198f83d78309c3c))
+* **web:** 新界面框架 ([9490c60](https://github.com/TRPGEngine/Client/commit/9490c60edd37fafc7e8fdf4ef3dbd9948456284a))
+
+
+### Bug Fixes
+
+* **web:** 修复桌面版无法添加团的问题 ([1a81090](https://github.com/TRPGEngine/Client/commit/1a810902287892283ae20afbb97df06bf5cbac65))
+* error type ([c6b608e](https://github.com/TRPGEngine/Client/commit/c6b608e1c0706f9e75f1f33391e1797d1a4bf71f))
+
 ### [0.3.13](https://github.com/TRPGEngine/Client/compare/v0.3.12...v0.3.13) (2020-06-27)
 
 

@@ -46,13 +46,16 @@ const GroupActorApprovalCard: React.FC<ApprovalCardProps> = React.memo(
     return (
       <ApprovalCardContainer
         actions={[
-          <div onClick={handleViewActor}>
+          <div key="view" onClick={handleViewActor}>
             <i className="iconfont">&#xe613;</i> 查看
           </div>,
-          <div onClick={() => _invoke(props, 'onAgree', props.uuid)}>
+          <div key="pass" onClick={() => _invoke(props, 'onAgree', props.uuid)}>
             <i className="iconfont">&#xe66b;</i> 通过
           </div>,
-          <div onClick={() => _invoke(props, 'onRefuse', props.uuid)}>
+          <div
+            key="reject"
+            onClick={() => _invoke(props, 'onRefuse', props.uuid)}
+          >
             <i className="iconfont">&#xe680;</i> 拒绝
           </div>,
         ]}

@@ -26,15 +26,15 @@ import {
   useSelectedGroupInfo,
   useSelfGroupActors,
   useSelectedGroupActorUUID,
-} from '@redux/hooks/useGroup';
+} from '@redux/hooks/group';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
-import { useCurrentUserUUID } from '@redux/hooks/useUser';
+import { useCurrentUserUUID } from '@redux/hooks/user';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
 import { getUserName } from '@shared/utils/data-helper';
 import { GroupHeader } from './GroupHeader';
 import { ChatWritingIndicator } from '@web/components/ChatWritingIndicator';
 import { sendStartWriting, sendStopWriting } from '@shared/api/event';
-import { useGroupWritingState } from '@redux/hooks/useChat';
+import { useGroupWritingState } from '@redux/hooks/chat';
 
 export const GroupDetail: React.FC = TMemo(() => {
   const groupInfo = useSelectedGroupInfo();

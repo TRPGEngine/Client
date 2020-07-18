@@ -33,7 +33,7 @@ export const checkUser = function(uuid, type = 'user') {
     return;
   }
 
-  let store = _store;
+  const store = _store;
   if (!!store && !!store.dispatch) {
     if (type === 'user') {
       getUserInfoCache(uuid);
@@ -44,10 +44,10 @@ export const checkUser = function(uuid, type = 'user') {
 };
 
 export const checkTemplate = function(uuid) {
-  let store = _store;
+  const store = _store;
   if (!!store && !!store.dispatch) {
     const state = store.getState();
-    let info = _get(state, ['cache', 'template', uuid]);
+    const info = _get(state, ['cache', 'template', uuid]);
     if (!info) {
       store.dispatch(getTemplateInfo(uuid));
     }
@@ -98,7 +98,7 @@ function reduxCacheFactory(
       _store.dispatch(
         getCacheDispatch(uuid, () => {
           // 从列表中移除
-          let index = isGettingDataUUIDList.indexOf(uuid);
+          const index = isGettingDataUUIDList.indexOf(uuid);
           if (index !== -1) {
             isGettingDataUUIDList.splice(index, 1);
           }

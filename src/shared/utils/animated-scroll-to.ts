@@ -5,14 +5,14 @@ export function scrollTo(element, to, duration, isAnimatied = true) {
     return;
   }
 
-  var start = element.scrollTop,
-    change = to - start,
-    currentTime = 0,
-    increment = 20;
+  const start = element.scrollTop;
+  const change = to - start;
+  let currentTime = 0;
+  const increment = 20;
 
-  var animateScroll = function() {
+  const animateScroll = function() {
     currentTime += increment;
-    var val = easeInOutQuad(currentTime, start, change, duration);
+    const val = easeInOutQuad(currentTime, start, change, duration);
     element.scrollTop = val;
     if (currentTime < duration) {
       setTimeout(animateScroll, increment);
@@ -30,14 +30,14 @@ export function scrollToBottom(
     return;
   }
 
-  var to = element.scrollHeight - element.clientHeight;
+  const to = element.scrollHeight - element.clientHeight;
   scrollTo(element, to, duration, isAnimatied);
 }
 
-//t = current time
-//b = start value
-//c = change in value
-//d = duration
+// t = current time
+// b = start value
+// c = change in value
+// d = duration
 function easeInOutQuad(t, b, c, d) {
   t /= d / 2;
   if (t < 1) return (c / 2) * t * t + b;

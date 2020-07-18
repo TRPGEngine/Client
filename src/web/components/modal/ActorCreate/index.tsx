@@ -88,17 +88,23 @@ const ActorCreate: React.FC = TMemo(() => {
 
   const steps = [
     <TemplateSelect
+      key="select"
       onSelectTemplate={(template) => {
         setSelectedTemplate(template);
         setCurrent(current + 1);
       }}
     />,
     <CreateActorDetail
+      key="create"
       template={selectedTemplate}
       data={stateData}
       onChange={setStateData}
     />,
-    <CreateActorConfirm template={selectedTemplate} data={stateData} />,
+    <CreateActorConfirm
+      key="confirm"
+      template={selectedTemplate}
+      data={stateData}
+    />,
   ];
 
   // 操作

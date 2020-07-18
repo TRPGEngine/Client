@@ -50,7 +50,7 @@ const getUserConversesHash = (userUUID: string): string => {
  * 获取本地UUID
  */
 let localIndex = 0;
-let getLocalUUID = function getLocalUUID() {
+const getLocalUUID = function getLocalUUID() {
   return 'local#' + localIndex++;
 };
 
@@ -84,7 +84,7 @@ export let addConverse = function addConverse(payload): TRPGAction {
   //   console.error('[addConverse]payload need uuid', payload);
   //   return;
   // }
-  return { type: ADD_CONVERSES, payload: payload };
+  return { type: ADD_CONVERSES, payload };
 };
 
 export let updateConversesMsglist = function updateConversesMsglist(
@@ -92,7 +92,7 @@ export let updateConversesMsglist = function updateConversesMsglist(
   list
 ): TRPGAction {
   return function(dispatch, getState) {
-    for (let item of list) {
+    for (const item of list) {
       if (item.sender_uuid) {
         checkUser(item.sender_uuid);
       }
@@ -113,13 +113,13 @@ export let getConverses = function getConverses(cb?: () => void): TRPGAction {
     return api.emit('chat::getConverses', {}, function(data) {
       cb && cb();
       if (data.result) {
-        let list = data.list;
+        const list = data.list;
         dispatch({ type: GET_CONVERSES_SUCCESS, payload: list });
-        let uuid = getState().user.info.uuid;
+        const uuid = getState().user.info.uuid;
         checkUser(uuid);
         // 用户聊天记录
-        for (let item of list) {
-          let convUUID = item.uuid;
+        for (const item of list) {
+          const convUUID = item.uuid;
           // 获取日志
           if (!/^trpg/.test(convUUID)) {
             checkUser(convUUID);
@@ -162,10 +162,10 @@ export let createConverse = function createConverse(
     return api.emit('chat::createConverse', { uuid, type }, function(data) {
       console.log('chat::createConverse', data);
       if (data.result) {
-        let conv = data.data;
+        const conv = data.data;
         dispatch({ type: CREATE_CONVERSES_SUCCESS, payload: conv });
 
-        let convUUID = conv.uuid;
+        const convUUID = conv.uuid;
         if (isSwitchToConv) {
           dispatch(switchToConverse(convUUID));
         }
@@ -176,7 +176,7 @@ export let createConverse = function createConverse(
           { converse_uuid: convUUID },
           function(data) {
             if (data.result) {
-              let list = data.list;
+              const list = data.list;
               dispatch(updateConversesMsglist(convUUID, list));
             } else {
               console.error('获取聊天记录失败:' + data.msg);
@@ -256,13 +256,13 @@ export let addUserConverse = function addUserConverse(
           .then((data) => console.log('用户会话缓存完毕:', data));
       });
 
-    for (let uuid of senders) {
+    for (const uuid of senders) {
       if (!isUserUUID(uuid)) {
         continue;
       }
 
       // 更新会话信息
-      api.emit('player::getInfo', { type: 'user', uuid: uuid }, function(data) {
+      api.emit('player::getInfo', { type: 'user', uuid }, function(data) {
         if (data.result) {
           const info = data.info;
           dispatch({
@@ -281,7 +281,7 @@ export let addUserConverse = function addUserConverse(
       // 更新消息列表
       api.emit('chat::getUserChatLog', { user_uuid: uuid }, function(data) {
         if (data.result) {
-          let list = data.list;
+          const list = data.list;
           dispatch(updateConversesMsglist(uuid, list));
         } else {
           console.error('获取聊天记录失败:' + data.msg);
@@ -294,7 +294,7 @@ export let addUserConverse = function addUserConverse(
       data
     ) {
       if (data.result) {
-        let list = data.list;
+        const list = data.list;
         dispatch(updateConversesMsglist('trpgsystem', list));
       } else {
         console.error('获取聊天记录失败:' + data.msg);
@@ -392,7 +392,7 @@ export let addMsg = function addMsg(converseUUID, payload): TRPGAction {
     //   console.error('[addMsg]payload need uuid:', payload);
     //   return;
     // }
-    dispatch({ type: ADD_MSG, converseUUID, unread, payload: payload });
+    dispatch({ type: ADD_MSG, converseUUID, unread, payload });
   };
 };
 
@@ -432,7 +432,7 @@ export let sendMsg = function sendMsg(
     };
     console.log('send msg pkg:', pkg);
 
-    let converseUUID = payload.converse_uuid || toUUID;
+    const converseUUID = payload.converse_uuid || toUUID;
     dispatch(addMsg(converseUUID, pkg));
     return api.emit('chat::message', pkg, function(data) {
       if (data.result) {
@@ -475,12 +475,12 @@ export let sendFile = function sendFile(toUUID, payload, file): TRPGAction {
       data: uploadHelper.generateFileMsgData(file),
       uuid: localUUID,
     };
-    let converseUUID = payload.converse_uuid || toUUID;
+    const converseUUID = payload.converse_uuid || toUUID;
     dispatch(addMsg(converseUUID, pkg));
 
     // 通过该方法发送的文件均为会话文件，存到临时文件夹
     uploadHelper.toTemporary(selfUserUUID, file, {
-      onProgress: function(progress) {
+      onProgress(progress) {
         dispatch(
           updateMsg(payload.converse_uuid || toUUID, {
             uuid: pkg.uuid,
@@ -488,8 +488,8 @@ export let sendFile = function sendFile(toUUID, payload, file): TRPGAction {
           })
         );
       },
-      onCompleted: function(fileinfo) {
-        let filedata = Object.assign({}, pkg.data, fileinfo, { progress: 1 });
+      onCompleted(fileinfo) {
+        const filedata = Object.assign({}, pkg.data, fileinfo, { progress: 1 });
         pkg = Object.assign({}, pkg, { data: filedata });
         // 文件上传完毕。正式发送文件消息
         api.emit('chat::message', pkg, function(data) {

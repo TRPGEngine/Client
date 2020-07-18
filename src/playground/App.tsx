@@ -12,8 +12,8 @@ const App: React.FC = React.memo((props) => {
   return (
     <Router history={history}>
       <Switch>
-        <Route exact path="/" component={ActorEditor} />
-        <Route exact path="/preview" component={ActorTemplatePreviewer} />
+        <Route exact={true} path="/" component={ActorEditor} />
+        <Route exact={true} path="/preview" component={ActorTemplatePreviewer} />
       </Switch>
     </Router>
   );

@@ -1,6 +1,6 @@
 {
   "name": "trpg-game-client",
-  "version": "0.3.13",
+  "version": "0.3.14",
   "description": "专注于TRPG跑团的IM即时应用聊天软件",
   "main": "./dist/entry.js",
   "productName": "TRPG Engine",
@@ -26,9 +26,9 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
-    "lint": "eslint --ext .js,.jsx src",
-    "lint:fix": "eslint --fix --ext .js,.jsx src",
-    "prettier:all": "prettier --write \"src/**/*.js\"",
+    "lint": "tslint -c ./tslint.json 'src/**/*.{ts,tsx}'",
+    "lint:fix": "tslint --fix -c ./tslint.json 'src/**/*.{ts,tsx}'",
+    "prettier:all": "prettier --write \"./src/**/*.{ts,tsx,json,less}\" --config ./.prettierrc.json",
     "postinstall": "npm run install:all",
     "install:app": "cd ./src/app && npm install",
     "install:web": "cd ./src/web && npm install",
@@ -38,6 +38,7 @@
   },
   "husky": {
     "hooks": {
+      "pre-commit": "npm run lint",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
@@ -212,6 +213,9 @@
     "ts-jest": "^25.3.1",
     "ts-loader": "^7.0.2",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "tslint": "^6.1.2",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-react": "^5.0.0",
     "typescript": "^3.9.3",
     "url-loader": "^4.1.0",
     "webpack": "^4.41.1",

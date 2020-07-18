@@ -20,7 +20,7 @@ export const TagBaseInfoDetail: TagComponent = TMemo((props) => {
     <BaseInfoContainer>
       <LayoutCol sm={18} xs={24}>
         <BaseInfoForm>
-          <FormItem label="名称" required>
+          <FormItem label="名称" required={true}>
             <div>{name}</div>
           </FormItem>
           <FormItem label="描述">

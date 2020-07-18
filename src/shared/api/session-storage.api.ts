@@ -1,9 +1,9 @@
-let _sessionStorage = {
-  set: function(key, value) {
+const _sessionStorage = {
+  set(key, value) {
     if (!!key && !!value) {
       sessionStorage[key] = JSON.stringify(value);
     } else if (!!key && typeof key === 'object' && !value) {
-      for (var subKey in key) {
+      for (const subKey in key) {
         if (key.hasOwnProperty(subKey)) {
           sessionStorage[subKey] = key[subKey] || '';
         }
@@ -12,7 +12,7 @@ let _sessionStorage = {
 
     return _sessionStorage;
   },
-  get: function(key) {
+  get(key) {
     let ls = sessionStorage[key];
 
     if (!!ls) {
@@ -27,7 +27,7 @@ let _sessionStorage = {
     }
     return ls;
   },
-  push: function(key, value) {
+  push(key, value) {
     let arr;
     try {
       arr = sessionStorage[key] ? JSON.parse(sessionStorage[key]) : [];
@@ -39,7 +39,7 @@ let _sessionStorage = {
     sessionStorage[key] = JSON.stringify(arr);
     return _sessionStorage;
   },
-  remove: function(key) {
+  remove(key) {
     if (typeof key === 'string') {
       sessionStorage.removeItem(key);
     } else {

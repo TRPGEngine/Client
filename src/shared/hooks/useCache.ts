@@ -47,7 +47,7 @@ function reduxHookCacheFactory<T>(
           dispatch(
             getCacheDispatch(uuid, () => {
               // 从列表中移除
-              let index = isGettingDataUUIDList.indexOf(uuid);
+              const index = isGettingDataUUIDList.indexOf(uuid);
               if (index !== -1) {
                 isGettingDataUUIDList.splice(index, 1);
               }

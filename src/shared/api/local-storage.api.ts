@@ -1,9 +1,9 @@
-let _localStorage = {
-  set: function(key, value) {
+const _localStorage = {
+  set(key, value) {
     if (!!key && !!value) {
       localStorage[key] = JSON.stringify(value);
     } else if (!!key && typeof key === 'object' && !value) {
-      for (var subKey in key) {
+      for (const subKey in key) {
         if (key.hasOwnProperty(subKey)) {
           localStorage[subKey] = key[subKey] || '';
         }
@@ -12,7 +12,7 @@ let _localStorage = {
 
     return _localStorage;
   },
-  get: function(key) {
+  get(key) {
     let ls = localStorage[key];
 
     if (!!ls) {
@@ -26,7 +26,7 @@ let _localStorage = {
     }
     return ls;
   },
-  push: function(key, value) {
+  push(key, value) {
     let arr;
     try {
       arr = localStorage[key] ? JSON.parse(localStorage[key]) : [];
@@ -38,7 +38,7 @@ let _localStorage = {
     localStorage[key] = JSON.stringify(arr);
     return _localStorage;
   },
-  remove: function(key) {
+  remove(key) {
     if (typeof key === 'string') {
       localStorage.removeItem(key);
     } else {

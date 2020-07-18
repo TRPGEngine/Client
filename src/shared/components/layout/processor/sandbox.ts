@@ -15,6 +15,7 @@ export const generateSandboxContext = memoizeOne(
       ...context.state.data,
       ...context.state,
       ...builtinFunc,
+      // tslint:disable-next-line: no-unnecessary-initializer
       evalParse(text: string, fallback: any = undefined) {
         if (_isEmpty(text) || !_isString(text)) {
           return fallback;

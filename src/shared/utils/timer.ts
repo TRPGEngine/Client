@@ -10,7 +10,7 @@ function removeTimerMap(key: string) {
  */
 export function renewableDelayTimer(
   key: string,
-  fn: Function,
+  fn: () => void,
   millisecond: number
 ) {
   if (_timerMapping[key]) {

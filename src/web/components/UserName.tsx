@@ -1,6 +1,6 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { useUserName } from '@redux/hooks/useUser';
+import { useUserName } from '@redux/hooks/user';
 
 interface Props {
   uuid: string;

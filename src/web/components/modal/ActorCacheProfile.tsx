@@ -15,8 +15,8 @@ interface Props {
 }
 class ActorCacheProfile extends React.Component<Props> {
   render() {
-    let uuid = this.props.uuid;
-    let actorcache = this.props.actorcache;
+    const uuid = this.props.uuid;
+    const actorcache = this.props.actorcache;
     return (
       <ModalPanel title="人物信息">
         <ActorProfile actor={actorcache[uuid] ? _get(actorcache, uuid) : {}} />

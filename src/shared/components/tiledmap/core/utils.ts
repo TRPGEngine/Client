@@ -2,20 +2,20 @@ import { Size, Position, Rect } from './types';
 
 /**
  * 计算距离数最近的网格点
- * @param number 真实位置
+ * @param num 真实位置
  * @param gridSizeNum 网格大小
  */
-function calcPx2GridMagnetNum(number: number, gridSizeNum: number): number {
-  return Math.round(number / gridSizeNum);
+function calcPx2GridMagnetNum(num: number, gridSizeNum: number): number {
+  return Math.round(num / gridSizeNum);
 }
 
 /**
  * 计算距离数最左上角的点
- * @param number
+ * @param num
  * @param gridSizeNum
  */
-function calcPx2GridFloorNum(number: number, gridSizeNum: number): number {
-  return Math.floor(number / gridSizeNum);
+function calcPx2GridFloorNum(num: number, gridSizeNum: number): number {
+  return Math.floor(num / gridSizeNum);
 }
 
 /**

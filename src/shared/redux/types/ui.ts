@@ -7,8 +7,8 @@ export type AlertPayload =
       title?: string;
       content: ReactNode;
       confirmTitle?: string;
-      onConfirm?: Function;
-      onCancel?: Function;
+      onConfirm?: () => void;
+      onCancel?: () => void;
     };
 
 export type UIState = {

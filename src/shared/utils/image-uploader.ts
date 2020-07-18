@@ -8,7 +8,7 @@ const uploadPicHost = 'https://sm.ms/api/upload';
 
 // https://sm.ms/api/upload
 export const toNetwork = function(userUUID, file) {
-  let form = new FormData();
+  const form = new FormData();
   form.append('smfile', file);
   form.append('ssl', 'true');
   form.append('format', 'json');
@@ -18,7 +18,7 @@ export const toNetwork = function(userUUID, file) {
     data: form,
   })
     .then((res) => {
-      let data = res.data;
+      const data = res.data;
       if (data.code === 'success') {
         return axios
           .post(fileUrl + '/chatimg/smms', data.data, {
@@ -54,16 +54,16 @@ export const getUploadInfo = memoizeOne(
 /**
  * 上传聊天图片
  */
-interface uploadChatCallback {
+interface UploadChatCallback {
   onUploadProgress: (percent: number) => void;
 }
 export const uploadChatimg = async (
   file: File,
-  callback?: uploadChatCallback
+  callback?: UploadChatCallback
 ): Promise<string> => {
   const { url, imageField, otherData, imagePath } = await getUploadInfo();
 
-  let form = new FormData();
+  const form = new FormData();
   form.append(imageField, file);
   for (const key in otherData) {
     if (otherData.hasOwnProperty(key)) {

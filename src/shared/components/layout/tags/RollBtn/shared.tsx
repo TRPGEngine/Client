@@ -1,8 +1,8 @@
 // Copy from packages/Dice/lib/dice.ts
 
 function rollPoint(maxPoint, minPoint = 1) {
-  maxPoint = parseInt(String(maxPoint));
-  minPoint = parseInt(String(minPoint));
+  maxPoint = parseInt(String(maxPoint), 10);
+  minPoint = parseInt(String(minPoint), 10);
   if (maxPoint <= 1) {
     maxPoint = 100;
   }
@@ -10,21 +10,21 @@ function rollPoint(maxPoint, minPoint = 1) {
     maxPoint = minPoint + 1;
   }
 
-  var range = maxPoint - minPoint + 1;
-  var rand = Math.random();
+  const range = maxPoint - minPoint + 1;
+  const rand = Math.random();
   return minPoint + Math.floor(rand * range);
 }
 
 export function roll(requestStr: string) {
   try {
-    let pattern = /(\d*)\s*d\s*(\d*)/gi;
+    const pattern = /(\d*)\s*d\s*(\d*)/gi;
 
-    requestStr = requestStr.replace(/[^\dd\+-\/\*\(\)]+/gi, ''); //去除无效或危险字符
-    let express = requestStr.replace(pattern, function(tag, num, dice) {
+    requestStr = requestStr.replace(/[^\dd\+-\/\*\(\)]+/gi, ''); // 去除无效或危险字符
+    const express = requestStr.replace(pattern, function(tag, num, dice) {
       num = num || 1;
       dice = dice || 100;
-      let res = [];
-      for (var i = 0; i < num; i++) {
+      const res = [];
+      for (let i = 0; i < num; i++) {
         res.push(rollPoint(dice));
       }
 
@@ -35,8 +35,9 @@ export function roll(requestStr: string) {
       }
     });
 
-    let result = eval(express);
-    let str = requestStr + '=' + express + '=' + result;
+    // tslint:disable-next-line: no-eval
+    const result = eval(express);
+    const str = requestStr + '=' + express + '=' + result;
     return {
       result: true,
       str,

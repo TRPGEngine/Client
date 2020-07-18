@@ -48,16 +48,15 @@ class DiceRequest extends React.Component<Props> {
 
   render() {
     const { diceNum, diceFace, diceExp, diceTempAdd } = this.state;
-    let diceTypeOptions = [
+    const diceTypeOptions = [
       { value: 'basicDice', label: '基本骰' },
       { value: 'complexDice', label: '复合骰' },
       { value: 'favoriteDice', label: '常用骰' },
     ];
-    let favoriteDice = this.props.favoriteDice
-      .map((i) => ({
-        value: i.value,
-        label: `${i.title}(${i.value})`,
-      }))
+    const favoriteDice = this.props.favoriteDice.map((i) => ({
+      value: i.value,
+      label: `${i.title}(${i.value})`,
+    }));
     return (
       <div className="dice-request">
         <span>因为</span>

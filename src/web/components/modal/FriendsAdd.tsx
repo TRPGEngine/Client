@@ -19,8 +19,8 @@ class FriendsAdd extends React.Component<Props> {
   };
 
   handleSearch() {
-    let text = this.state.searchText.trim();
-    let type = this.state.selectValue;
+    const text = this.state.searchText.trim();
+    const type = this.state.selectValue;
     if (!!text) {
       this.props.dispatch(findUser(text, type));
     } else {
@@ -39,7 +39,7 @@ class FriendsAdd extends React.Component<Props> {
   }
 
   render() {
-    let options = [
+    const options = [
       { value: 'uuid', label: '用户唯一标示符' },
       { value: 'username', label: '用户名' },
       { value: 'nickname', label: '昵称' },

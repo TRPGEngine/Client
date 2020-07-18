@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useAlphaUser } from '@shared/hooks/useAlphaUser';
 import IsDeveloping from '@web/components/IsDeveloping';
-import { useSelectedGroupInfo } from '@shared/redux/hooks/useGroup';
+import { useSelectedGroupInfo } from '@redux/hooks/group';
 import _isEmpty from 'lodash/isEmpty';
 import { Button, Card } from 'antd';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
@@ -11,7 +11,7 @@ import { showModal } from '@shared/redux/actions/ui';
 import styled from 'styled-components';
 import { showPortal } from '@web/redux/action/ui';
 import { getPortalUrl } from '@shared/utils/string-helper';
-import { useIsGroupManager } from '@redux/hooks/useGroup';
+import { useIsGroupManager } from '@redux/hooks/group';
 
 const Container = styled.div`
   padding: 10px;

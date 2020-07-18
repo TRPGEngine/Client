@@ -15,13 +15,13 @@ interface Props extends MessageProps, DispatchProp<any> {
 // 入团申请
 class GroupRequest extends BaseCard<Props> {
   getCardBtn() {
-    let info = this.props.info;
-    let data = info.data;
-    let chatlogUUID = info.uuid;
-    let requestUUID = data.requestUUID;
-    let groupUUID = data.groupUUID;
-    let fromUUID = data.fromUUID;
-    let group = this.props.groups.find((g) => g.uuid === groupUUID);
+    const info = this.props.info;
+    const data = info.data;
+    const chatlogUUID = info.uuid;
+    const requestUUID = data.requestUUID;
+    const groupUUID = data.groupUUID;
+    const fromUUID = data.fromUUID;
+    const group = this.props.groups.find((g) => g.uuid === groupUUID);
     if (!_isNil(group)) {
       if ((group.group_members ?? []).includes(fromUUID)) {
         return [{ label: '已同意' }];

@@ -7,13 +7,19 @@
   "trailingComma": "es5",
   "bracketSpacing": true,
   "arrowParens": "always",
-  "parser": "babylon",
+  "parser": "babel",
   "jsxBracketSameLine": false,
   "overrides": [
     {
-      "files": ["*.json", ".babelrc", ".prettierrc.json"],
+      "files": ["src/*.json", ".babelrc", ".prettierrc.json"],
       "options": {
         "parser": "json"
+      }
+    },
+    {
+      "files": "*.less",
+      "options": {
+        "parser": "less"
       }
     },
     {

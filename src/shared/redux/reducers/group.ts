@@ -342,17 +342,21 @@ export default produce((draft: GroupState, action) => {
       const groupIndex = draft.groups.findIndex(
         (group) => group.uuid === action.groupUUID
       );
-      _remove(
-        draft.groups[groupIndex].group_members,
-        (member) => member === action.memberUUID
-      );
+      if (groupIndex >= 0) {
+        _remove(
+          draft.groups[groupIndex].group_members,
+          (member) => member === action.memberUUID
+        );
+      }
       return;
     }
     case SET_MEMBER_TO_MANAGER_SUCCESS: {
       const group = draft.groups.find(
         (group) => group.uuid === action.groupUUID
       );
-      group.managers_uuid.push(action.memberUUID);
+      if (!_isNil(group)) {
+        group.managers_uuid.push(action.memberUUID);
+      }
       return;
     }
 

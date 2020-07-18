@@ -11,11 +11,11 @@ interface Props extends MessageProps, DispatchProp<any> {
 }
 class DiceRequest extends BaseCard<Props> {
   getCardBtn() {
-    let info = this.props.info;
-    let data = info.data;
-    let uuid = info.uuid;
-    let is_accept = data.is_accept;
-    let allow_accept_list = data.allow_accept_list;
+    const info = this.props.info;
+    const data = info.data;
+    const uuid = info.uuid;
+    const is_accept = data.is_accept;
+    const allow_accept_list = data.allow_accept_list;
 
     if (is_accept) {
       return [
@@ -24,7 +24,7 @@ class DiceRequest extends BaseCard<Props> {
         },
       ];
     } else {
-      let canAccept = allow_accept_list.includes(this.props.selfUUID);
+      const canAccept = allow_accept_list.includes(this.props.selfUUID);
 
       return canAccept
         ? [

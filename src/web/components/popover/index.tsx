@@ -14,8 +14,8 @@ const TPopoverContext = React.createContext({ closePopover: _noop });
 export const TPopover: React.FC<PopoverProps> = TMemo((props) => {
   const [visible, setVisible] = useState(false);
 
-  const handleVisibleChange = useCallback((visible) => {
-    setVisible(visible);
+  const handleVisibleChange = useCallback((v) => {
+    setVisible(v);
   }, []);
 
   const closePopover = useCallback(() => {

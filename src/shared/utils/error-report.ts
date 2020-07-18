@@ -28,7 +28,7 @@ export const web = function() {
       if (err.stack) {
         stack = err.stack;
       } else {
-        let data: any = {};
+        const data: any = {};
         Error.captureStackTrace(data);
         stack = data.stack;
       }

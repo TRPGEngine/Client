@@ -16,7 +16,7 @@ class Alert extends React.Component<Props> {
     const { showAlertInfo, showToastText } = this.props;
 
     const title = showAlertInfo.title ?? '';
-    let content = showAlertInfo.content || showToastText;
+    const content = showAlertInfo.content || showToastText;
     const confirmTitle = showAlertInfo.confirmTitle;
     const onConfirm = showAlertInfo.onConfirm;
     const onCancel = showAlertInfo.onCancel;

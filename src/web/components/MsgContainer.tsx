@@ -16,7 +16,7 @@ import {
 } from '@shared/hooks/useTRPGSelector';
 import { usePrevious } from 'react-use';
 import { MessageItem } from '@shared/components/message/MessageItem';
-import { useMsgList } from '@redux/hooks/useMsgList';
+import { useMsgList } from '@redux/hooks/chat';
 
 import './MsgContainer.scss';
 

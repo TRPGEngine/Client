@@ -30,16 +30,16 @@ class NoteList extends React.Component<Props> {
   }
 
   getNoteList() {
-    let notes = this.props.noteList;
-    let selectedNoteUUID = this.props.selectedNoteUUID;
+    const notes = this.props.noteList;
+    const selectedNoteUUID = this.props.selectedNoteUUID;
 
-    let content = notes
+    const content = notes
       ? _orderBy(_values(notes), 'updatedAt', 'desc').map((item, index) => {
           let summary = item.content.replace(/<\/?.+?>/g, '').replace(/ /g, '');
           if (summary.length > 70) {
             summary = summary.slice(0, 70) + '...';
           }
-          let uuid = item.uuid;
+          const uuid = item.uuid;
           return (
             <div
               key={uuid}
@@ -72,7 +72,7 @@ class NoteList extends React.Component<Props> {
   getNoteDetail() {
     const selectedNoteUUID = this.props.selectedNoteUUID;
     if (selectedNoteUUID) {
-      let note = this.props.noteList[selectedNoteUUID];
+      const note = this.props.noteList[selectedNoteUUID];
 
       if (note) {
         return (

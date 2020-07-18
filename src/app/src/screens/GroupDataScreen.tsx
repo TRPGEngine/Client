@@ -185,7 +185,7 @@ class GroupDataScreen extends React.Component<Props> {
           content: '一旦确定无法撤销',
           onConfirm: () => {
             dispatch(hideAlert());
-            let groupUUID = groupInfo.uuid;
+            const groupUUID = groupInfo.uuid;
             dispatch(switchSelectGroup(''));
             dispatch(dismissGroup(groupUUID));
             backToTop(this.props.navigation);
@@ -199,7 +199,7 @@ class GroupDataScreen extends React.Component<Props> {
           content: '一旦确定无法撤销',
           onConfirm: () => {
             dispatch(hideAlert());
-            let groupUUID = groupInfo.uuid;
+            const groupUUID = groupInfo.uuid;
             dispatch(switchSelectGroup(''));
             dispatch(quitGroup(groupUUID));
             backToTop(this.props.navigation);
@@ -237,7 +237,7 @@ class GroupDataScreen extends React.Component<Props> {
             团人物卡
           </ListItem>
           <ListItem extra={groupInfo.maps_uuid.length + '张'}>团地图</ListItem>
-          <ListItem multipleLine extra={groupInfo.desc}>
+          <ListItem multipleLine={true} extra={groupInfo.desc}>
             简介
           </ListItem>
           <ListItem onPress={this.handleShowGroupRule} arrow="horizontal">

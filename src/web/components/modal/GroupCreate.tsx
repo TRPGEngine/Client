@@ -25,7 +25,7 @@ class GroupCreate extends React.Component<Props> {
   }
 
   render() {
-    let actions = (
+    const actions = (
       <div>
         <button onClick={() => this.handleCreate()}>创建</button>
       </div>

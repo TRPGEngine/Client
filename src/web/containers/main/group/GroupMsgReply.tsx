@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import _isNil from 'lodash/isNil';
-import { useUserName } from '@redux/hooks/useUser';
+import { useUserName } from '@redux/hooks/user';
 
 const Container = styled.div`
   position: relative;

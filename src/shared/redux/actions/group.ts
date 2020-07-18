@@ -50,6 +50,7 @@ import {
   hideModal,
   hideAlert,
   hideSlidePanel,
+  showToast,
 } from './ui';
 import _set from 'lodash/set';
 import _get from 'lodash/get';
@@ -76,15 +77,15 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
       })
     );
 
-    // TODO: 这里请求太多了。要合并成一个最好
-
-    // 获取团成员
-    api.emit('group::getGroupMembers', { groupUUID }, function(data) {
+    // 获取团初始数据
+    api.emit('group::getGroupInitData', { groupUUID }, function(data) {
       if (data.result) {
-        let members = data.members;
-        let uuidList = [];
-        for (let member of members) {
-          let uuid = member.uuid;
+        const { members, groupActors, groupActorsMapping } = data;
+
+        // 处理团成员
+        const uuidList = [];
+        for (const member of members) {
+          const uuid = member.uuid;
           uuidList.push(uuid);
           checkUser(uuid);
         }
@@ -93,19 +94,9 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
           groupUUID,
           payload: uuidList,
         });
-      } else {
-        console.error('获取团成员失败:', data.msg);
-      }
-    });
 
-    // 获取自己选择的团角色
-    dispatch(getSelectedGroupActor(groupUUID));
-
-    // 获取团人物
-    api.emit('group::getGroupActors', { groupUUID }, function(data) {
-      if (data.result) {
-        const actors = data.actors;
-        for (let ga of actors) {
+        // 处理团人物
+        for (const ga of groupActors) {
           // 处理头像
           _set(ga, 'avatar', config.file.getAbsolutePath(_get(ga, 'avatar')));
           _set(
@@ -118,25 +109,25 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
             checkTemplate(ga.actor.template_uuid);
           }
         }
-        dispatch({ type: GET_GROUP_ACTOR_SUCCESS, groupUUID, payload: actors });
-      } else {
-        console.error('获取团人物失败:', data.msg);
-      }
-    });
+        dispatch({
+          type: GET_GROUP_ACTOR_SUCCESS,
+          groupUUID,
+          payload: groupActors,
+        });
 
-    // 获取团选择人物的Mapping
-    api.emit('group::getGroupActorMapping', { groupUUID }, function(data) {
-      if (data.result) {
-        const { mapping } = data;
+        // 处理团选择人物mapping
         dispatch({
           type: UPDATE_GROUP_ACTOR_MAPPING,
           groupUUID,
-          payload: mapping,
+          payload: groupActorsMapping,
         });
       } else {
-        console.error('获取团人物选择失败:', data.msg);
+        console.error('获取团初始数据失败:', data.msg);
       }
     });
+
+    // 获取自己选择的团角色
+    dispatch(getSelectedGroupActor(groupUUID));
 
     // 获取团聊天日志
     api.emit('chat::getConverseChatLog', { converse_uuid: groupUUID }, function(
@@ -220,7 +211,7 @@ export const requestUpdateGroupInfo = function(
   return function(dispatch, getState) {
     api.emit('group::updateInfo', { groupUUID, groupInfo }, function(data) {
       if (data.result) {
-        let group = data.group;
+        const group = data.group;
         group.avatar = config.file.getAbsolutePath(group.avatar);
         dispatch(updateGroupInfo(group));
         dispatch(hideModal());
@@ -243,7 +234,7 @@ export const findGroup = function(text, type) {
     return api.emit('group::findGroup', { text, type }, function(data) {
       console.log('团搜索结果', data);
       if (data.result) {
-        for (let group of data.results) {
+        for (const group of data.results) {
           group.avatar = config.file.getAbsolutePath(group.avatar);
         }
         dispatch({ type: FIND_GROUP_SUCCESS, payload: data.results });
@@ -280,6 +271,22 @@ export const addGroup = function(group) {
       dispatch({ type: ADD_GROUP_SUCCESS, payload: group });
       dispatch(initGroupInfo(group));
     }
+  };
+};
+
+// 移除团
+export const removeGroup = function(groupUUID: string): TRPGAction {
+  return function(dispatch, getState) {
+    dispatch({
+      type: QUIT_GROUP_SUCCESS,
+      groupUUID,
+    });
+
+    // 移除聊天会话
+    dispatch({
+      type: REMOVE_CONVERSES_SUCCESS,
+      converseUUID: groupUUID,
+    });
   };
 };
 
@@ -371,7 +378,7 @@ export const agreeGroupInvite = function(inviteUUID: string): TRPGAction {
   return function(dispatch, getState) {
     api.emit('group::agreeGroupInvite', { uuid: inviteUUID }, function(data) {
       if (data.result) {
-        let { uuid, group } = data.res;
+        const { uuid, group } = data.res;
         group.avatar = config.file.getAbsolutePath(group.avatar);
         dispatch({
           type: AGREE_GROUP_INVITE_SUCCESS,
@@ -416,7 +423,7 @@ export const getGroupList = function(): TRPGAction {
     return api.emit('group::getGroupList', {}, function(data) {
       if (data.result) {
         const groups: GroupInfo[] = data.groups;
-        for (let group of groups) {
+        for (const group of groups) {
           group.avatar = config.file.getAbsolutePath(group.avatar);
 
           // 初始化部分数据
@@ -426,7 +433,7 @@ export const getGroupList = function(): TRPGAction {
         }
 
         dispatch({ type: GET_GROUP_LIST_SUCCESS, payload: groups });
-        for (let group of groups) {
+        for (const group of groups) {
           dispatch(initGroupInfo(group));
           dispatch(getGroupStatus(group.uuid)); // 获取团状态
         }
@@ -745,8 +752,7 @@ export const quitGroup = function(groupUUID: string): TRPGAction {
     dispatch(showLoading());
     return api.emit('group::quitGroup', { groupUUID }, function(data) {
       if (data.result) {
-        dispatch({ type: QUIT_GROUP_SUCCESS, groupUUID });
-        dispatch({ type: REMOVE_CONVERSES_SUCCESS, converseUUID: groupUUID }); // 移除聊天会话
+        dispatch(removeGroup(groupUUID));
         dispatch(showAlert('已退出本群!'));
         dispatch(hideLoading());
       } else {
@@ -782,6 +788,7 @@ export const tickMember = function(groupUUID, memberUUID) {
         dispatch(showAlert('操作成功'));
         dispatch(hideModal());
       } else {
+        dispatch(showToast(data?.msg));
         console.error(data);
       }
     });
@@ -809,11 +816,20 @@ export const addGroupMember = function(groupUUID: string, memberUUID: string) {
 export const removeGroupMember = function(
   groupUUID: string,
   memberUUID: string
-) {
-  return {
-    type: REMOVE_GROUP_MEMBER,
-    groupUUID,
-    memberUUID,
+): TRPGAction {
+  return function(dispatch, getState) {
+    const userUUID = getState().user.info.uuid;
+    if (memberUUID === userUUID) {
+      // 如果被踢出的是自己
+      dispatch(removeGroup(groupUUID));
+    } else {
+      // 如果被踢出的是团里其他人
+      dispatch({
+        type: REMOVE_GROUP_MEMBER,
+        groupUUID,
+        memberUUID,
+      });
+    }
   };
 };
 

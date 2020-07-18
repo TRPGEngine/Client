@@ -54,7 +54,7 @@ class GroupInfo extends React.Component<Props> {
       content: '一旦确定无法撤销',
       onConfirm: () => {
         this.props.hideAlert();
-        let groupUUID = this.props.groupInfo.uuid;
+        const groupUUID = this.props.groupInfo.uuid;
         this.props.switchSelectGroup('');
         this.props.dismissGroup(groupUUID);
         this.props.hideSlidePanel();
@@ -68,7 +68,7 @@ class GroupInfo extends React.Component<Props> {
       content: '一旦确定无法撤销',
       onConfirm: () => {
         this.props.hideAlert();
-        let groupUUID = this.props.groupInfo.uuid;
+        const groupUUID = this.props.groupInfo.uuid;
         this.props.switchSelectGroup('');
         this.props.quitGroup(groupUUID);
         this.props.hideSlidePanel();
@@ -88,12 +88,12 @@ class GroupInfo extends React.Component<Props> {
   };
 
   render() {
-    let { groupInfo, usercache } = this.props;
+    const { groupInfo, usercache } = this.props;
     if (!groupInfo) {
       return null;
     }
-    let avatar = groupInfo.avatar || '';
-    let originAvatar = avatar.replace('/thumbnail', '');
+    const avatar = groupInfo.avatar || '';
+    const originAvatar = avatar.replace('/thumbnail', '');
     return (
       <div className="group-info">
         <div className="group-info-cells">

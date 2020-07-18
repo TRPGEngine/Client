@@ -2,7 +2,7 @@ import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { ReplyMsgType } from '@shared/utils/msg-helper';
 import styled from 'styled-components/native';
-import { useUserName } from '@redux/hooks/useUser';
+import { useUserName } from '@redux/hooks/user';
 
 const Container = styled.View`
   border-left-width: 3px;

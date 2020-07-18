@@ -37,7 +37,7 @@ export default function(store: TRPGStore) {
   window.addEventListener('blur', () => (isBlur = true));
 
   return {
-    onReceiveMessage: function(data) {
+    onReceiveMessage(data) {
       // web||electron通知
       const hidden = _get(window, 'document.hidden', false);
       if (hidden || isBlur) {

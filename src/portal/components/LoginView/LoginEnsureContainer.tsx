@@ -13,19 +13,20 @@ import { LoginView } from './index';
 export const LoginEnsureContainer: React.FC = TMemo((props) => {
   const [checking, setChecking] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  useEffect(() => {
-    setChecking(true);
 
-    checkToken(false)
-      .then(() => {
+  useEffect(() => {
+    (async () => {
+      setChecking(true);
+
+      try {
+        await checkToken(false);
         setIsLogin(true);
-      })
-      .catch(() => {
+      } catch (err) {
         setIsLogin(false);
-      })
-      .finally(() => {
+      } finally {
         setChecking(false);
-      });
+      }
+    })();
   }, []);
 
   if (checking) {

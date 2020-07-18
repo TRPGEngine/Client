@@ -11,12 +11,12 @@ interface Props extends MessageProps, DispatchProp<any> {
 // 投骰邀请
 class DiceInvite extends BaseCard<Props> {
   getCardBtn() {
-    let info = this.props.info;
-    let me = this.props.me;
-    let data = info.data;
-    let uuid = info.uuid;
-    let allow_accept_list = data.allow_accept_list;
-    let is_accept_list = data.is_accept_list;
+    const info = this.props.info;
+    const me = this.props.me;
+    const data = info.data;
+    const uuid = info.uuid;
+    const allow_accept_list = data.allow_accept_list;
+    const is_accept_list = data.is_accept_list;
     // TODO: 需要服务端配合实现即时显示所有邀请完成(目前只能通过刷新后显示)
 
     if (allow_accept_list.length === is_accept_list.length) {

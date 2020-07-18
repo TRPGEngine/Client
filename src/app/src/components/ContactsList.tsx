@@ -93,7 +93,7 @@ class ContactList extends React.Component<Props, State> {
   }
 
   getCell(item) {
-    let defaultAvatar = appConfig.defaultImg.user;
+    const defaultAvatar = appConfig.defaultImg.user;
 
     return (
       <ConvItem

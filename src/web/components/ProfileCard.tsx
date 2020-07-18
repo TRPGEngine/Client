@@ -66,7 +66,7 @@ class ProfileCard extends React.Component<Props, State> {
   }
 
   checkEditedIsChange() {
-    let info = this.props.userInfo;
+    const info = this.props.userInfo;
     if (JSON.stringify(this.state.editedInfo) === JSON.stringify(info)) {
       return false;
     } else {
@@ -75,18 +75,18 @@ class ProfileCard extends React.Component<Props, State> {
   }
 
   setEditedInfo() {
-    let info = this.props.userInfo;
+    const info = this.props.userInfo;
     this.setState({ editedInfo: info ?? {} });
   }
 
   getActions() {
-    let friendList = this.props.friendList;
-    let disabledAddFriend =
+    const friendList = this.props.friendList;
+    const disabledAddFriend =
       friendList.indexOf(this.props.selectedUUID) >= 0 || this.props.isSelf;
-    let uuid = this.props.selectedUUID;
+    const uuid = this.props.selectedUUID;
     console.log(uuid);
     if (this.state.isEdited) {
-      let isChanged = this.checkEditedIsChange();
+      const isChanged = this.checkEditedIsChange();
       return (
         <div className="actions">
           <button
@@ -155,10 +155,10 @@ class ProfileCard extends React.Component<Props, State> {
   }
 
   getBody() {
-    let isShow = this.props.isShow;
+    const isShow = this.props.isShow;
     if (isShow) {
-      let isSelf = this.props.isSelf;
-      let editBtn = this.state.isEdited ? (
+      const isSelf = this.props.isSelf;
+      const editBtn = this.state.isEdited ? (
         <button
           className="action"
           onClick={() => this.setState({ isEdited: false })}
@@ -171,7 +171,7 @@ class ProfileCard extends React.Component<Props, State> {
         </button>
       );
 
-      let bodyContent = this.state.isEdited ? (
+      const bodyContent = this.state.isEdited ? (
         <div className="body">
           <div className="item">
             <span>唯一标识符:</span>
@@ -263,8 +263,8 @@ class ProfileCard extends React.Component<Props, State> {
         </div>
       );
 
-      let avatar = this.props.userInfo.avatar || '';
-      let name = this.props.userInfo.nickname || this.props.userInfo.username;
+      const avatar = this.props.userInfo.avatar || '';
+      const name = this.props.userInfo.nickname || this.props.userInfo.username;
 
       return (
         <div className="mask" onClick={(e) => e.stopPropagation()}>

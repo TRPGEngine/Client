@@ -51,7 +51,7 @@ export const downloadFileWeb = (url: string) => {
     return;
   }
 
-  let a = document.createElement('a');
+  const a = document.createElement('a');
   a.style.display = 'none';
   a.href = url;
   a.download = url;

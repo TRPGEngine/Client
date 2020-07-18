@@ -2,7 +2,7 @@ const tagRE = /\{\{((?:.|\r?\n)+?)\}\}/g;
 
 type TextParseResult = {
   expression: string;
-  tokens: Array<string | { '@binding': string }>;
+  tokens: (string | { '@binding': string })[];
 };
 
 /**
@@ -23,6 +23,7 @@ const parseText = (text: string): TextParseResult => {
   let match: RegExpExecArray;
   let index: number;
   let tokenValue: string;
+  // tslint:disable-next-line: no-conditional-assignment
   while ((match = tagRE.exec(text))) {
     index = match.index;
     // push text token
