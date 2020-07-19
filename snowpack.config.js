@@ -38,4 +38,8 @@ module.exports = {
     'mount:src': 'mount src --to /_dist_',
   },
   plugins: [],
+  devOptions: {
+    open: 'none',
+    port: 8089,
+  },
 };
