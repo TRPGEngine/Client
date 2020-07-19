@@ -7,14 +7,17 @@ const tspathMountMapping = _.mapValues(pathMap, (val, key) => {
   const target = val[0];
   const mountedPath = path.relative('./src', target);
 
-  return mountedPath.replace(`${path.sep}*`, '');
+  return mountedPath.replace(`${path.sep}*`, '').replace(`${path.sep}`, '/');
 });
 
 const scriptsPathsMapping = _.fromPairs(
   _.toPairs(tspathMountMapping)
     .map(([key, val]) => {
       if (/^[a-zA-Z]/.test(val)) {
-        return [`mount:tsp:${key}`, `mount src/${val} --to /_dist_/${val}`];
+        return [
+          `mount:tspath:${key}`,
+          `mount ${key.replace(`/*`, '')} --to /_dist_/${val}`,
+        ];
       }
     })
     .filter(_.isArray)
@@ -31,8 +34,8 @@ module.exports = {
   ],
   scripts: {
     ...scriptsPathsMapping,
-    'mount:redux': 'mount src/shared/redux --to /_dist_/shared/redux',
-    'mount:src': 'mount src/web --to /_dist_',
+    'mount:@src': 'mount @src --to /_dist_',
+    'mount:src': 'mount src --to /_dist_',
   },
   plugins: [],
 };

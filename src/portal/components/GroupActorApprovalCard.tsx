@@ -6,7 +6,7 @@ import _isString from 'lodash/isString';
 import _invoke from 'lodash/invoke';
 import _isEmpty from 'lodash/isEmpty';
 import { nav } from '@portal/history';
-import { fetchGroupActorDetail } from '@portal/model/group';
+import { fetchGroupActorDetail } from '@shared/model/group';
 
 const Meta = Card.Meta;
 
