@@ -16,7 +16,6 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": true,
     "paths": {
-      "@config/*": ["./config/*"],
       "@redux/*": ["src/shared/redux/*"],
       "@shared/*": ["./src/shared/*"],
       "@web/*": ["./src/web/*"],
