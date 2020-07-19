@@ -1,7 +1,7 @@
 import { Avatar } from '@web/components/Avatar';
 import styled from 'styled-components';
 
-export const SidebarAvatar = styled(Avatar).attrs({
+export const NavbarAvatar = styled(Avatar).attrs({
   size: 50,
   style: {
     cursor: 'pointer',
@@ -10,6 +10,7 @@ export const SidebarAvatar = styled(Avatar).attrs({
   transition: border-radius 0.2s ease-in-out;
 
   &:hover {
-    border-radius: 20%;
+    border-radius: 25%;
   }
 `;
+NavbarAvatar.displayName = 'NavbarAvatar';

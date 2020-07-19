@@ -6,7 +6,7 @@ import { useCurrentUserInfo } from '@redux/hooks/user';
 import { getUserName } from '@shared/utils/data-helper';
 import config from '@shared/project.config';
 import { Divider, Space } from 'antd';
-import { SidebarAvatar } from './SidebarAvatar';
+import { NavbarAvatar } from './NavbarAvatar';
 import { MainContentType } from './Content/type';
 import { MainContent } from './Content';
 import { GroupSelectedContext } from './GroupSelectedContext';
@@ -17,12 +17,12 @@ const Root = styled.div`
   position: relative;
 `;
 
-const SideBar = styled.div`
+const NavBar = styled.nav`
   position: absolute;
   left: 0;
   bottom: 0;
   top: 0;
-  width: 72px;
+  width: ${(props) => props.theme.style.navbarWidth};
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -31,7 +31,7 @@ const SideBar = styled.div`
   background-color: ${(props) => props.theme.color.graySet[8]};
 `;
 
-const SidebarSection = styled(Space).attrs({
+const NavbarSection = styled(Space).attrs({
   direction: 'vertical',
 })`
   display: flex;
@@ -50,7 +50,7 @@ const BaseContent = styled.div`
   background-color: ${(props) => props.theme.color.graySet[7]};
 `;
 
-const GroupsContainer = styled(SidebarSection)`
+const GroupsContainer = styled(NavbarSection)`
   flex: 1;
   overflow: hidden;
 
@@ -75,12 +75,12 @@ export const MainRoute: React.FC = TMemo(() => {
 
   const sidebar = useMemo(
     () => (
-      <SideBar>
-        <SidebarSection>
+      <NavBar>
+        <NavbarSection>
           <div onClick={() => setComponentType('personal')}>
-            <SidebarAvatar src={avatar} name={name} size={50} />
+            <NavbarAvatar src={avatar} name={name} size={50} />
           </div>
-        </SidebarSection>
+        </NavbarSection>
 
         <Divider />
 
@@ -93,11 +93,11 @@ export const MainRoute: React.FC = TMemo(() => {
                 setGroupUUID(group.uuid);
               }}
             >
-              <SidebarAvatar src={group.avatar} name={group.name} />
+              <NavbarAvatar src={group.avatar} name={group.name} />
             </div>
           ))}
         </GroupsContainer>
-      </SideBar>
+      </NavBar>
     ),
     [avatar, name, groups]
   );

@@ -7,6 +7,7 @@ import * as antdColor from '@ant-design/colors';
 
 declare module 'styled-components' {
   interface DefaultTheme {
+    style: ThemeType['style'];
     border: ThemeType['border'];
     radius: ThemeType['radius'];
     color: ThemeType['color'];
@@ -18,6 +19,12 @@ declare module 'styled-components' {
 
 type ThemeType = typeof styledTheme;
 const styledTheme = {
+  style: {
+    // 这里主要是放一些样式方面的主题设置
+    // 方便统一管理
+    navbarWidth: '72px',
+    sidebarWidth: '240px',
+  },
   border: {
     thin: '.5px solid rgba(232, 232, 232, 0.8)',
     standard: '1px solid rgba(232, 232, 232, 0.8)',
