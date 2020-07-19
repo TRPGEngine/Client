@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import styled from 'styled-components';
@@ -7,6 +7,9 @@ import { getUserName } from '@shared/utils/data-helper';
 import config from '@shared/project.config';
 import { Divider, Space } from 'antd';
 import { SidebarAvatar } from './SidebarAvatar';
+import { MainContentType } from './Content/type';
+import { MainContent } from './Content';
+import { GroupSelectedContext } from './GroupSelectedContext';
 
 const Root = styled.div`
   width: 100vw;
@@ -47,30 +50,53 @@ const BaseContent = styled.div`
   background-color: ${(props) => props.theme.color.graySet[7]};
 `;
 
+const GroupsContainer = styled(SidebarSection)`
+  flex: 1;
+  overflow: hidden;
+
+  &:hover {
+    overflow: auto;
+    overflow: overlay;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+`;
+
 export const MainRoute: React.FC = TMemo(() => {
   const groups = useTRPGSelector((state) => state.group.groups);
   const currentUserInfo = useCurrentUserInfo();
   const name = getUserName(currentUserInfo);
   const avatar = currentUserInfo.avatar ?? config.defaultImg.getUser(name);
+  const [componentType, setComponentType] = useState<MainContentType>('init');
+  const [groupUUID, setGroupUUID] = useState<string>(null);
 
   const sidebar = useMemo(
     () => (
       <SideBar>
         <SidebarSection>
-          <SidebarAvatar src={avatar} name={name} size={50} />
+          <div onClick={() => setComponentType('personal')}>
+            <SidebarAvatar src={avatar} name={name} size={50} />
+          </div>
         </SidebarSection>
 
         <Divider />
 
-        <SidebarSection>
+        <GroupsContainer>
           {groups.map((group) => (
-            <SidebarAvatar
+            <div
               key={group.uuid}
-              src={group.avatar}
-              name={group.name}
-            />
+              onClick={() => {
+                setComponentType('group');
+                setGroupUUID(group.uuid);
+              }}
+            >
+              <SidebarAvatar src={group.avatar} name={group.name} />
+            </div>
           ))}
-        </SidebarSection>
+        </GroupsContainer>
       </SideBar>
     ),
     [avatar, name, groups]
@@ -79,7 +105,11 @@ export const MainRoute: React.FC = TMemo(() => {
   return (
     <Root>
       {sidebar}
-      <BaseContent>content</BaseContent>
+      <BaseContent>
+        <GroupSelectedContext.Provider value={{ uuid: groupUUID }}>
+          <MainContent type={componentType} />
+        </GroupSelectedContext.Provider>
+      </BaseContent>
     </Root>
   );
 });
