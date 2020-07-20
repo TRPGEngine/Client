@@ -6,7 +6,7 @@ import { useCurrentUserInfo } from '@redux/hooks/user';
 import { getUserName } from '@shared/utils/data-helper';
 import config from '@shared/project.config';
 import { Divider, Space } from 'antd';
-import { NavbarAvatar } from './NavbarAvatar';
+import { NavbarLink } from './NavbarLink';
 import { MainContent } from './Content';
 import { Link } from 'react-router-dom';
 
@@ -74,18 +74,19 @@ export const MainRoute: React.FC = TMemo(() => {
     () => (
       <NavBar>
         <NavbarSection>
-          <Link to="/main/personal">
-            <NavbarAvatar src={avatar} name={name} size={50} />
-          </Link>
+          <NavbarLink src={avatar} name={name} to="/main/personal" />
         </NavbarSection>
 
         <Divider />
 
         <GroupsContainer>
           {groups.map((group) => (
-            <Link key={group.uuid} to={`/main/group/${group.uuid}`}>
-              <NavbarAvatar src={group.avatar} name={group.name} />
-            </Link>
+            <NavbarLink
+              key={group.uuid}
+              src={group.avatar}
+              name={group.name}
+              to={`/main/group/${group.uuid}`}
+            />
           ))}
         </GroupsContainer>
       </NavBar>
