@@ -7,9 +7,8 @@ import { getUserName } from '@shared/utils/data-helper';
 import config from '@shared/project.config';
 import { Divider, Space } from 'antd';
 import { NavbarAvatar } from './NavbarAvatar';
-import { MainContentType } from './Content/type';
 import { MainContent } from './Content';
-import { GroupSelectedContext } from './GroupSelectedContext';
+import { Link } from 'react-router-dom';
 
 const Root = styled.div`
   width: 100vw;
@@ -28,7 +27,7 @@ const NavBar = styled.nav`
   flex-shrink: 0;
   align-items: center;
   padding: 20px 10px;
-  background-color: ${(props) => props.theme.color.graySet[8]};
+  background-color: ${(props) => props.theme.style.navbarBackgroundColor};
 `;
 
 const NavbarSection = styled(Space).attrs({
@@ -47,7 +46,7 @@ const BaseContent = styled.div`
   right: 0;
   bottom: 0;
   top: 0;
-  background-color: ${(props) => props.theme.color.graySet[7]};
+  background-color: ${(props) => props.theme.style.contentBackgroundColor};
 `;
 
 const GroupsContainer = styled(NavbarSection)`
@@ -70,31 +69,23 @@ export const MainRoute: React.FC = TMemo(() => {
   const currentUserInfo = useCurrentUserInfo();
   const name = getUserName(currentUserInfo);
   const avatar = currentUserInfo.avatar ?? config.defaultImg.getUser(name);
-  const [componentType, setComponentType] = useState<MainContentType>('init');
-  const [groupUUID, setGroupUUID] = useState<string>(null);
 
   const sidebar = useMemo(
     () => (
       <NavBar>
         <NavbarSection>
-          <div onClick={() => setComponentType('personal')}>
+          <Link to="/main/personal">
             <NavbarAvatar src={avatar} name={name} size={50} />
-          </div>
+          </Link>
         </NavbarSection>
 
         <Divider />
 
         <GroupsContainer>
           {groups.map((group) => (
-            <div
-              key={group.uuid}
-              onClick={() => {
-                setComponentType('group');
-                setGroupUUID(group.uuid);
-              }}
-            >
+            <Link key={group.uuid} to={`/main/group/${group.uuid}`}>
               <NavbarAvatar src={group.avatar} name={group.name} />
-            </div>
+            </Link>
           ))}
         </GroupsContainer>
       </NavBar>
@@ -106,9 +97,7 @@ export const MainRoute: React.FC = TMemo(() => {
     <Root>
       {sidebar}
       <BaseContent>
-        <GroupSelectedContext.Provider value={{ uuid: groupUUID }}>
-          <MainContent type={componentType} />
-        </GroupSelectedContext.Provider>
+        <MainContent />
       </BaseContent>
     </Root>
   );
