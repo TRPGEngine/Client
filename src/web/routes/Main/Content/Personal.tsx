@@ -3,6 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { useConverses } from '@redux/hooks/chat';
 import { SidebarItem } from './SidebarItem';
+import { UserOutlined } from '@ant-design/icons';
 
 const Container = styled.div`
   display: flex;
@@ -58,7 +59,10 @@ export const Personal: React.FC = TMemo((props) => {
       <Sidebar>
         <PersonalSection />
         <SidebarItemsContainer>
-          <SidebarItem icon="" name="好友" />
+          <SidebarItem
+            icon={<UserOutlined style={{ fontSize: 24 }} />}
+            name="好友"
+          />
           <SidebarHeaderText>私信</SidebarHeaderText>
           <div>
             {converses.map((converse) => {

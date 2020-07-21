@@ -17,14 +17,18 @@ const Container = styled.div`
 `;
 
 interface SidebarItemProps {
-  icon: string;
+  icon: string | React.ReactElement;
   name: string;
 }
 export const SidebarItem: React.FC<SidebarItemProps> = TMemo((props) => {
   const { icon, name } = props;
+
   return (
     <Container>
-      <Avatar src={icon} name={name} style={{ marginRight: 8 }} />
+      <div style={{ marginRight: 8 }}>
+        {React.isValidElement(icon) ? icon : <Avatar src={icon} name={name} />}
+      </div>
+
       <span>{name}</span>
     </Container>
   );
