@@ -44,6 +44,7 @@ const styledTheme = {
     sidebarWidth: '240px',
     sidebarBackgroundColor: graySet[7],
     contentBackgroundColor: graySet[6],
+    sectionHeight: '48px',
   },
   border: {
     thin: '.5px solid rgba(232, 232, 232, 0.8)',
@@ -94,6 +95,11 @@ const styledTheme = {
   },
   boxShadow: {
     normal: 'rgba(0, 0, 0, 0.15) 0 0 8px',
+    elevationStroke: '0 0 0 1px rgba(4,4,5,0.15)',
+    elevationLow:
+      '0 1px 0 rgba(4,4,5,0.2),0 1.5px 0 rgba(6,6,7,0.05),0 2px 0 rgba(4,4,5,0.05)',
+    elevationMedium: '0 4px 4px rgba(0,0,0,0.16)',
+    elevationHigh: '0 8px 16px rgba(0,0,0,0.24)',
   },
   filter: {
     grey100: 'grayscale(100%)',

@@ -24,7 +24,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = TMemo((props) => {
   const { icon, name } = props;
   return (
     <Container>
-      <Avatar src={icon} name={name} />
+      <Avatar src={icon} name={name} style={{ marginRight: 8 }} />
       <span>{name}</span>
     </Container>
   );
