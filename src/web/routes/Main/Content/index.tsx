@@ -10,7 +10,7 @@ export const MainContent: React.FC<MainContentProps> = TMemo((props) => {
       <Route name="personal" path="/main/personal">
         <Personal />
       </Route>
-      <Route name="group" path="/main/group/:sad">
+      <Route name="group" path="/main/group/:groupUUID">
         <div>group</div>
       </Route>
       <Redirect to="/main/personal" />

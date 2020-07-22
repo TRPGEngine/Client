@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import { useConverses } from '@redux/hooks/chat';
 import { SidebarItem } from '../SidebarItem';
 import { UserOutlined } from '@ant-design/icons';
+import { PersonalSection } from './PersonalSection';
+import { Switch, Route } from 'react-router-dom';
+import { FriendPanel } from './FriendPanel';
 
 const Container = styled.div`
   display: flex;
@@ -33,24 +36,6 @@ const DetailContent = styled.div`
   flex-direction: column;
 `;
 
-const PersonalSection = styled.div`
-  height: ${(props) => props.theme.style.sectionHeight};
-  position: relative;
-
-  &::after {
-    content: ' ';
-    position: absolute;
-    display: block;
-    bottom: 1px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    box-shadow: ${(props) => props.theme.boxShadow.elevationLow};
-    z-index: 1;
-    pointer-events: none;
-  }
-`;
-
 export const Personal: React.FC = TMemo((props) => {
   const converses = useConverses(['user']);
 
@@ -60,8 +45,9 @@ export const Personal: React.FC = TMemo((props) => {
         <PersonalSection />
         <SidebarItemsContainer>
           <SidebarItem
-            icon={<UserOutlined style={{ fontSize: 24 }} />}
+            icon={<UserOutlined style={{ color: 'white', fontSize: 24 }} />}
             name="好友"
+            to="/main/personal"
           />
           <SidebarHeaderText>私信</SidebarHeaderText>
           <div>
@@ -71,6 +57,7 @@ export const Personal: React.FC = TMemo((props) => {
                   key={converse.uuid}
                   icon={converse.icon}
                   name={converse.name}
+                  to={`/main/personal/${converse.uuid}`}
                 />
               );
             })}
@@ -78,8 +65,13 @@ export const Personal: React.FC = TMemo((props) => {
         </SidebarItemsContainer>
       </Sidebar>
       <DetailContent>
-        <PersonalSection>标题</PersonalSection>
-        <div>详情内容</div>
+        <Switch>
+          <Route path="/main/personal/:converseUUID">
+            <PersonalSection>标题</PersonalSection>
+            <div>详情内容</div>
+          </Route>
+          <Route path="/main/personal/" component={FriendPanel} />
+        </Switch>
       </DetailContent>
     </Container>
   );

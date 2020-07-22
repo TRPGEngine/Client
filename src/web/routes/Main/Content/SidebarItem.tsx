@@ -2,6 +2,8 @@ import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { Avatar } from '@web/components/Avatar';
+import { Link } from 'react-router-dom';
+import { Typography } from 'antd';
 
 const Container = styled.div`
   cursor: pointer;
@@ -19,18 +21,25 @@ const Container = styled.div`
 interface SidebarItemProps {
   icon: string | React.ReactElement;
   name: string;
+  to: string;
 }
 export const SidebarItem: React.FC<SidebarItemProps> = TMemo((props) => {
-  const { icon, name } = props;
+  const { icon, name, to } = props;
 
   return (
-    <Container>
-      <div style={{ marginRight: 8 }}>
-        {React.isValidElement(icon) ? icon : <Avatar src={icon} name={name} />}
-      </div>
+    <Link to={to}>
+      <Container>
+        <div style={{ marginRight: 8 }}>
+          {React.isValidElement(icon) ? (
+            icon
+          ) : (
+            <Avatar src={icon} name={name} />
+          )}
+        </div>
 
-      <span>{name}</span>
-    </Container>
+        <Typography>{name}</Typography>
+      </Container>
+    </Link>
   );
 });
 SidebarItem.displayName = 'SidebarItem';
