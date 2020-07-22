@@ -2,7 +2,7 @@ import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { useConverses } from '@redux/hooks/chat';
-import { SidebarItem } from './SidebarItem';
+import { SidebarItem } from '../SidebarItem';
 import { UserOutlined } from '@ant-design/icons';
 
 const Container = styled.div`
