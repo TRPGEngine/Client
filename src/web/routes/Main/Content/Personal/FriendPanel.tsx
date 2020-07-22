@@ -3,6 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import { Tabs, Badge } from 'antd';
 import { UserListItem } from '@web/components/UserListItem';
+import { SectionTabs } from '@web/components/SectionTabs';
 const { TabPane } = Tabs;
 
 export const FriendPanel: React.FC = TMemo(() => {
@@ -11,7 +12,7 @@ export const FriendPanel: React.FC = TMemo(() => {
   const friendRequests = useTRPGSelector((state) => state.user.friendRequests);
 
   return (
-    <Tabs defaultActiveKey="1">
+    <SectionTabs defaultActiveKey="1">
       <TabPane tab="全部" key="1">
         {friendList.map((uuid) => (
           <UserListItem key={uuid} userUUID={uuid} />
@@ -37,7 +38,7 @@ export const FriendPanel: React.FC = TMemo(() => {
       >
         {JSON.stringify(friendRequests)}
       </TabPane>
-    </Tabs>
+    </SectionTabs>
   );
 });
 FriendPanel.displayName = 'FriendPanel';
