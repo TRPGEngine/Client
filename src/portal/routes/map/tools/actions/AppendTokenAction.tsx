@@ -29,7 +29,7 @@ export const AppendTokenAction: React.FC<{
           <div>
             <InputNumber
               value={x}
-              onChange={setX}
+              onChange={(val) => setX(Number(val))}
               min={1}
               max={width + 1}
               precision={0}
@@ -37,7 +37,7 @@ export const AppendTokenAction: React.FC<{
             <span style={{ margin: 4 }}>x</span>
             <InputNumber
               value={y}
-              onChange={setY}
+              onChange={(val) => setY(Number(val))}
               min={1}
               max={height + 1}
               precision={0}

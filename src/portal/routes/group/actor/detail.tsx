@@ -76,7 +76,11 @@ class GroupActorDetail extends React.Component<Props, State> {
           </ActionButton>
         ) : null}
         {_get(access, 'removeable') === true ? (
-          <ActionButton type="danger" onClick={this.handleRemoveGroupActor}>
+          <ActionButton
+            type="primary"
+            danger={true}
+            onClick={this.handleRemoveGroupActor}
+          >
             删除
           </ActionButton>
         ) : null}

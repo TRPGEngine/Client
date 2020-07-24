@@ -27,7 +27,7 @@ interface Props extends TRPGDispatchProp {
   onSendDiceInv: () => void;
 }
 class MsgSendBox extends React.Component<Props> {
-  inputMsgRef = React.createRef<Mentions>();
+  inputMsgRef = React.createRef<HTMLElement>();
   fileUploader = React.createRef<HTMLInputElement>();
   inputIME = false;
   state = {
