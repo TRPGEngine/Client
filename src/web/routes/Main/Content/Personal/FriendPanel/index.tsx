@@ -6,6 +6,7 @@ import { UserListItem } from '@web/components/UserListItem';
 import { SectionTabs } from '@web/components/SectionTabs';
 import styled from 'styled-components';
 import { MessageOutlined } from '@ant-design/icons';
+import { AddFriend } from './AddFriend';
 const { TabPane } = Tabs;
 
 const PaneContainer = styled.div`
@@ -96,6 +97,7 @@ export const FriendPanel: React.FC = TMemo(() => {
       <TabPane tab={<AddFriendTabLabel>添加好友</AddFriendTabLabel>} key="4">
         <PaneContainer>
           <Typography.Title level={4}>添加好友</Typography.Title>
+          <AddFriend />
         </PaneContainer>
       </TabPane>
     ),

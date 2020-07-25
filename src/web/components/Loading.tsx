@@ -1,28 +1,24 @@
 import React from 'react';
+import { TMemo } from '@shared/components/TMemo';
 import LoadingSpinner from './LoadingSpinner';
+import styled from 'styled-components';
 
-import './Loading.scss';
+const Description = styled.p`
+  color: ${(props) => props.theme.color.textNormal};
+  text-align: center;
+`;
 
-interface Props {
-  show: boolean;
-  text: string;
+interface LoadingProps {
+  style?: React.CSSProperties;
+  description?: string;
 }
-
-const Loading: React.FC<Props> = React.memo((props) => {
-  if (!props.show) {
-    return null;
-  }
-
+export const Loading: React.FC<LoadingProps> = TMemo((props) => {
+  const { style, description = '' } = props;
   return (
-    <div className="loading">
-      <div className="mask">
-        <div className="content">
-          <LoadingSpinner />
-          <span>{props.text}</span>
-        </div>
-      </div>
+    <div style={style}>
+      <LoadingSpinner />
+      <Description>{description}</Description>
     </div>
   );
 });
-
-export default Loading;
+Loading.displayName = 'Loading';
