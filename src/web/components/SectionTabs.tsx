@@ -9,6 +9,7 @@ export const SectionTabs = styled(Tabs).attrs({
 })`
   &.ant-tabs.ant-tabs-card .ant-tabs-nav {
     padding: 6px 10px;
+    margin: 0;
 
     &::before {
       border: 0;

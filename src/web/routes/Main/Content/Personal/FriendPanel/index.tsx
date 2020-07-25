@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
-import { Tabs, Badge, Tooltip, Button } from 'antd';
+import { Tabs, Badge, Tooltip, Button, Typography } from 'antd';
 import { UserListItem } from '@web/components/UserListItem';
 import { SectionTabs } from '@web/components/SectionTabs';
 import styled from 'styled-components';
@@ -12,13 +12,17 @@ const PaneContainer = styled.div`
   padding: 10px 20px;
 `;
 
+const AddFriendTabLabel = styled.div`
+  color: ${(props) => props.theme.color.downy};
+`;
+
 export const FriendPanel: React.FC = TMemo(() => {
   const friendList = useTRPGSelector((state) => state.user.friendList);
   const friendInvite = useTRPGSelector((state) => state.user.friendInvite);
   const friendRequests = useTRPGSelector((state) => state.user.friendRequests);
 
-  return (
-    <SectionTabs defaultActiveKey="1">
+  const friendListPane = useMemo(
+    () => (
       <TabPane tab="全部" key="1">
         <PaneContainer>
           {friendList.map((uuid) => (
@@ -34,6 +38,12 @@ export const FriendPanel: React.FC = TMemo(() => {
           ))}
         </PaneContainer>
       </TabPane>
+    ),
+    [friendList]
+  );
+
+  const friendInviteListPane = useMemo(
+    () => (
       <TabPane
         tab={
           <Badge count={friendInvite.length}>
@@ -42,8 +52,14 @@ export const FriendPanel: React.FC = TMemo(() => {
         }
         key="2"
       >
-        {JSON.stringify(friendInvite)}
+        <PaneContainer>{JSON.stringify(friendInvite)}</PaneContainer>
       </TabPane>
+    ),
+    [friendInvite]
+  );
+
+  const friendRequestsPane = useMemo(
+    () => (
       <TabPane
         tab={
           <Badge count={friendRequests.length}>
@@ -52,23 +68,46 @@ export const FriendPanel: React.FC = TMemo(() => {
         }
         key="3"
       >
-        {friendRequests
-          .filter((req) => req.is_agree === false && req.is_refuse === false)
-          .map((request) => (
-            <UserListItem
-              key={request.uuid}
-              userUUID={request.from_uuid}
-              actions={[
-                <Button key="refuse" danger={true} type="primary">
-                  拒绝
-                </Button>,
-                <Button key="agree" type="primary">
-                  同意
-                </Button>,
-              ]}
-            />
-          ))}
+        <PaneContainer>
+          {friendRequests
+            .filter((req) => req.is_agree === false && req.is_refuse === false)
+            .map((request) => (
+              <UserListItem
+                key={request.uuid}
+                userUUID={request.from_uuid}
+                actions={[
+                  <Button key="refuse" danger={true} type="primary">
+                    拒绝
+                  </Button>,
+                  <Button key="agree" type="primary">
+                    同意
+                  </Button>,
+                ]}
+              />
+            ))}
+        </PaneContainer>
       </TabPane>
+    ),
+    [friendRequests]
+  );
+
+  const addFriendPane = useMemo(
+    () => (
+      <TabPane tab={<AddFriendTabLabel>添加好友</AddFriendTabLabel>} key="4">
+        <PaneContainer>
+          <Typography.Title level={4}>添加好友</Typography.Title>
+        </PaneContainer>
+      </TabPane>
+    ),
+    []
+  );
+
+  return (
+    <SectionTabs defaultActiveKey="1">
+      {friendListPane}
+      {friendInviteListPane}
+      {friendRequestsPane}
+      {addFriendPane}
     </SectionTabs>
   );
 });
