@@ -3,10 +3,9 @@ import { TMemo } from '@shared/components/TMemo';
 import { useCachedUserInfo } from '@shared/hooks/useCache';
 import { Avatar } from './Avatar';
 import { getUserName } from '@shared/utils/data-helper';
-import { MessageOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import _isNil from 'lodash/isNil';
-import { Skeleton, Button, Typography, Tooltip } from 'antd';
+import { Skeleton, Typography, Space } from 'antd';
 
 const Root = styled.div`
   display: flex;
@@ -23,6 +22,7 @@ const Root = styled.div`
 
 const UserNameText = styled(Typography)`
   flex: 1;
+  color: ${(props) => props.theme.color.headerPrimary} !important;
 `;
 
 interface Props {
@@ -48,13 +48,7 @@ export const UserListItem: React.FC<Props> = TMemo((props) => {
           style={{ marginRight: 10 }}
         />
         <UserNameText>{userName}</UserNameText>
-        <div>
-          <Tooltip title="发送消息">
-            <Button shape="circle" icon={<MessageOutlined />} />
-          </Tooltip>
-
-          {...actions}
-        </div>
+        <Space>{...actions}</Space>
       </Skeleton>
     </Root>
   );

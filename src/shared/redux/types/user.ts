@@ -27,14 +27,26 @@ export interface UserInfo {
   alignment: UserAlignment;
 }
 
+// 别人发给我的
+export interface FriendRequest {
+  id: number;
+  uuid: string;
+  from_uuid: string;
+  to_uuid: string;
+  is_agree: boolean;
+  is_refuse: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export type UserState = {
   isTryLogin: boolean;
   isLogin: boolean;
   info: Partial<UserInfo>;
   webToken: string; // 用于portal登录的token
   friendList: string[];
-  friendInvite: any[];
-  friendRequests: any[];
+  friendInvite: any[]; // 好友邀请
+  friendRequests: FriendRequest[];
   isFindingUser: boolean;
   findingResult: any[];
 };

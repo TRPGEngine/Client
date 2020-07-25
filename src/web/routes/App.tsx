@@ -10,6 +10,7 @@ import { LaunchRoute } from './Launch';
 import Login from '@web/containers/Login';
 import Register from '@web/containers/Register';
 import { MainRoute } from './Main';
+import { GlobalStyle } from './style';
 
 // 新版Web页面
 
@@ -22,6 +23,7 @@ export const App = TMemo(() => {
   return (
     <Router>
       <ErrorBoundary>
+        <GlobalStyle />
         <GlobalUI />
         <div className="app">
           <Switch>

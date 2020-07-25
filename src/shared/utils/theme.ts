@@ -40,10 +40,10 @@ const styledTheme = {
     // 这里主要是放一些样式方面的主题设置
     // 方便统一管理
     navbarWidth: '72px',
-    navbarBackgroundColor: graySet[8],
+    navbarBackgroundColor: graySet[9],
     sidebarWidth: '240px',
-    sidebarBackgroundColor: graySet[7],
-    contentBackgroundColor: graySet[6],
+    sidebarBackgroundColor: graySet[8],
+    contentBackgroundColor: graySet[7],
     sectionHeight: '48px',
   },
   border: {
@@ -92,6 +92,18 @@ const styledTheme = {
     'alizarin-crimson': '#EC2121',
     periwinkle: '#BEC9FF',
     transparent90: 'rgba(0,0,0,0.1)',
+    transparent80: 'rgba(0,0,0,0.2)',
+
+    // 功能性分类
+    textNormal: '#dcddde',
+    textLink: '#00b0f4',
+    textMuted: '#72767d',
+    interactiveActive: '#fff',
+    interactiveHover: '#dcddde',
+    interactiveMuted: '#4f545c',
+    interactiveNormal: '#b9bbbe',
+    headerPrimary: '#fff',
+    headerSecondary: '#b9bbbe',
   },
   boxShadow: {
     normal: 'rgba(0, 0, 0, 0.15) 0 0 8px',

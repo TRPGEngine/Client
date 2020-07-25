@@ -1,10 +1,11 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
-import { Tabs, Badge } from 'antd';
+import { Tabs, Badge, Tooltip, Button } from 'antd';
 import { UserListItem } from '@web/components/UserListItem';
 import { SectionTabs } from '@web/components/SectionTabs';
 import styled from 'styled-components';
+import { MessageOutlined } from '@ant-design/icons';
 const { TabPane } = Tabs;
 
 const PaneContainer = styled.div`
@@ -21,7 +22,15 @@ export const FriendPanel: React.FC = TMemo(() => {
       <TabPane tab="全部" key="1">
         <PaneContainer>
           {friendList.map((uuid) => (
-            <UserListItem key={uuid} userUUID={uuid} />
+            <UserListItem
+              key={uuid}
+              userUUID={uuid}
+              actions={[
+                <Tooltip title="发送消息" key="sendMsg">
+                  <Button shape="circle" icon={<MessageOutlined />} />
+                </Tooltip>,
+              ]}
+            />
           ))}
         </PaneContainer>
       </TabPane>
@@ -43,7 +52,22 @@ export const FriendPanel: React.FC = TMemo(() => {
         }
         key="3"
       >
-        {JSON.stringify(friendRequests)}
+        {friendRequests
+          .filter((req) => req.is_agree === false && req.is_refuse === false)
+          .map((request) => (
+            <UserListItem
+              key={request.uuid}
+              userUUID={request.from_uuid}
+              actions={[
+                <Button key="refuse" danger={true} type="primary">
+                  拒绝
+                </Button>,
+                <Button key="agree" type="primary">
+                  同意
+                </Button>,
+              ]}
+            />
+          ))}
       </TabPane>
     </SectionTabs>
   );
