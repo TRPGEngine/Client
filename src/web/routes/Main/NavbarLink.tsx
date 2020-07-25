@@ -4,6 +4,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { useLocation } from 'react-router';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Tooltip } from 'antd';
 
 const NavbarAvtar = styled(Avatar).attrs({
   size: 50,
@@ -30,13 +31,19 @@ export const NavbarLink: React.FC<NavbarLinkProps> = TMemo((props) => {
   const isActive = props.to === location.pathname;
 
   return (
-    <Link to={props.to}>
-      <NavbarAvtar
-        className={isActive ? 'active' : ''}
-        src={props.src}
-        name={props.name}
-      />
-    </Link>
+    <Tooltip
+      title={props.name}
+      placement="right"
+      overlayStyle={{ fontSize: 16 }}
+    >
+      <Link to={props.to}>
+        <NavbarAvtar
+          className={isActive ? 'active' : ''}
+          src={props.src}
+          name={props.name}
+        />
+      </Link>
+    </Tooltip>
   );
 });
 NavbarLink.displayName = 'NavbarLink';
