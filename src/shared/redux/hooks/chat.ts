@@ -76,3 +76,13 @@ export function useConverses(
     );
   }, [converses, filterType]);
 }
+
+/**
+ * 获取会话详情内容
+ * @param converseUUID 会话UUID
+ */
+export function useConverseDetail(
+  converseUUID: string
+): ChatStateConverse | undefined {
+  return useTRPGSelector((state) => state.chat.converses[converseUUID]);
+}

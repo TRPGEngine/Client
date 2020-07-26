@@ -28,7 +28,7 @@ interface NavbarLinkProps {
 }
 export const NavbarLink: React.FC<NavbarLinkProps> = TMemo((props) => {
   const location = useLocation();
-  const isActive = props.to === location.pathname;
+  const isActive = location.pathname.startsWith(props.to);
 
   return (
     <Tooltip

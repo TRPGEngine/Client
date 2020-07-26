@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import { useConverses } from '@redux/hooks/chat';
 import { SidebarItem } from '../SidebarItem';
 import { UserOutlined } from '@ant-design/icons';
-import { PersonalSection } from './PersonalSection';
 import { Switch, Route } from 'react-router-dom';
 import { FriendPanel } from './FriendPanel';
+import { SectionHeader } from '@web/components/SectionHeader';
+import { UserConversePanel } from './UserConversePanel';
 
 const Container = styled.div`
   display: flex;
@@ -42,7 +43,7 @@ export const Personal: React.FC = TMemo((props) => {
   return (
     <Container>
       <Sidebar>
-        <PersonalSection />
+        <SectionHeader />
         <SidebarItemsContainer>
           <SidebarItem
             icon={<UserOutlined style={{ color: 'white', fontSize: 24 }} />}
@@ -67,8 +68,7 @@ export const Personal: React.FC = TMemo((props) => {
       <DetailContent>
         <Switch>
           <Route path="/main/personal/:converseUUID">
-            <PersonalSection>标题</PersonalSection>
-            <div>详情内容</div>
+            <UserConversePanel />
           </Route>
           <Route path="/main/personal/" component={FriendPanel} />
         </Switch>

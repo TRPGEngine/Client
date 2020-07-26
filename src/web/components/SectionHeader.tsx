@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 
-export const PersonalSection = styled.div`
+export const SectionHeader = styled.div`
   height: ${(props) => props.theme.style.sectionHeight};
   position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 16px;
+  font-weight: bold;
+  flex-shrink: 0;
 
   &::after {
     content: ' ';
