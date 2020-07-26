@@ -1,14 +1,12 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import styled from 'styled-components';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { getUserName } from '@shared/utils/data-helper';
-import config from '@shared/project.config';
 import { Divider, Space } from 'antd';
 import { NavbarLink } from './NavbarLink';
 import { MainContent } from './Content';
-import { Link } from 'react-router-dom';
 
 const Root = styled.div`
   width: 100vw;
@@ -68,7 +66,7 @@ export const MainRoute: React.FC = TMemo(() => {
   const groups = useTRPGSelector((state) => state.group.groups);
   const currentUserInfo = useCurrentUserInfo();
   const name = getUserName(currentUserInfo);
-  const avatar = currentUserInfo.avatar ?? config.defaultImg.getUser(name);
+  const avatar = currentUserInfo.avatar;
 
   const sidebar = useMemo(
     () => (
