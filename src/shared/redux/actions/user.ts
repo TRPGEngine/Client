@@ -67,7 +67,9 @@ function loginSuccess(dispatch, getState) {
 
   dispatch(fetchWebToken()); // 登录成功后立刻获取最新的jwt信息
 
-  runLoginSuccessCallback();
+  setTimeout(() => {
+    runLoginSuccessCallback();
+  }, 0);
 }
 
 export const login = function(username: string, password: string): TRPGAction {
@@ -169,7 +171,9 @@ export const logout = function(): TRPGAction {
       if (data.result) {
         rnStorage.remove('uuid');
         rnStorage.remove('token');
-        runLogoutSuccessCallback();
+        setTimeout(() => {
+          runLogoutSuccessCallback();
+        }, 0);
         dispatch({ type: RESET });
       } else {
         dispatch(showAlert(data.msg));

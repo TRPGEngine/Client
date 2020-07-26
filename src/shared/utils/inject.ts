@@ -1,4 +1,8 @@
 // 该文件用于在一些通用逻辑内注射一些各个平台特有代码来实现部分逻辑区分的目的
+
+/**
+ * TODO: 这些操作应当使用 shared/redux/middlewares/watchLoginStatus.tsx 来实现
+ */
 import _isFunction from 'lodash/isFunction';
 
 let _loginSuccessCallback = null;
