@@ -5,7 +5,7 @@ import { Tabs, Badge, Tooltip, Button, Typography } from 'antd';
 import { UserListItem } from '@web/components/UserListItem';
 import { SectionTabs } from '@web/components/SectionTabs';
 import styled from 'styled-components';
-import { MessageOutlined } from '@ant-design/icons';
+import { MessageOutlined, CloseOutlined } from '@ant-design/icons';
 import { AddFriend } from './AddFriend';
 const { TabPane } = Tabs;
 
@@ -53,7 +53,19 @@ export const FriendPanel: React.FC = TMemo(() => {
         }
         key="2"
       >
-        <PaneContainer>{JSON.stringify(friendInvite)}</PaneContainer>
+        <PaneContainer>
+          {friendInvite.map((userUUID) => (
+            <UserListItem
+              key={userUUID}
+              userUUID={userUUID}
+              actions={[
+                <Tooltip title="取消" key="cancel">
+                  <Button shape="circle" icon={<CloseOutlined />} />
+                </Tooltip>,
+              ]}
+            />
+          ))}
+        </PaneContainer>
       </TabPane>
     ),
     [friendInvite]
