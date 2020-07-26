@@ -54,10 +54,10 @@ export const FriendPanel: React.FC = TMemo(() => {
         key="2"
       >
         <PaneContainer>
-          {friendInvite.map((userUUID) => (
+          {friendInvite.map((inv) => (
             <UserListItem
-              key={userUUID}
-              userUUID={userUUID}
+              key={inv.to_uuid}
+              userUUID={inv.to_uuid}
               actions={[
                 <Tooltip title="取消" key="cancel">
                   <Button shape="circle" icon={<CloseOutlined />} />

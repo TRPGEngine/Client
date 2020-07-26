@@ -27,8 +27,8 @@ export interface UserInfo {
   alignment: UserAlignment;
 }
 
-// 别人发给我的
-export interface FriendRequest {
+// 用户好友邀请
+interface UserInvite {
   id: number;
   uuid: string;
   from_uuid: string;
@@ -45,8 +45,8 @@ export type UserState = {
   info: Partial<UserInfo>;
   webToken: string; // 用于portal登录的token
   friendList: string[];
-  friendInvite: string[]; // 好友邀请(自己发给别人的)
-  friendRequests: FriendRequest[]; // 好友请求(别人发给自己的)
+  friendInvite: UserInvite[]; // 好友邀请(自己发给别人的)
+  friendRequests: UserInvite[]; // 好友请求(别人发给自己的)
   isFindingUser: boolean;
   findingResult: any[];
 };

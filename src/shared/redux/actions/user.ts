@@ -350,7 +350,6 @@ export const sendFriendInvite = function(uuid: string): TRPGAction {
         dispatch({
           type: SEND_FRIEND_INVITE_SUCCESS,
           payload: data.invite,
-          uuid,
         });
       } else {
         console.error(data.msg);
