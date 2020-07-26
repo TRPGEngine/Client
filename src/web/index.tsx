@@ -14,8 +14,6 @@ import { showAlert } from '../shared/redux/actions/ui';
 import { loginWithToken } from '../shared/redux/actions/user';
 import {
   setNotificationPermission,
-  setUserSettings,
-  setSystemSettings,
   initConfig,
 } from '../shared/redux/actions/settings';
 import styledTheme from '@src/shared/utils/theme';
@@ -26,10 +24,20 @@ import './components/messageTypes/__all__';
 import '@web/assets/css/iconfont.css';
 import { bindEventFunc } from '@shared/api/listener';
 import { App as NewApp } from './routes/App';
+import { watchLoginStatus } from '@redux/middlewares/watchLoginStatus';
+import { setUser } from './utils/sentry';
 
 installServiceWorker(); // 注册 service worker 服务
 
-const store = configureStore();
+const store = configureStore({
+  additionMiddleware: [
+    watchLoginStatus({
+      onLoginSuccess(info) {
+        setUser(info);
+      },
+    }),
+  ],
+});
 attachStore(store);
 
 const api = trpgApi.getInstance();
