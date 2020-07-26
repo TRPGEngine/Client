@@ -98,7 +98,9 @@ export default produce((draft: UserState, action) => {
       return;
     }
     case GET_FRIEND_INVITE_SUCCESS:
-      draft.friendRequests = action.payload || [];
+      draft.friendInvite =
+        action.payload.invites.map((item) => item.to_uuid) ?? [];
+      draft.friendRequests = action.payload.requests ?? [];
       return;
     case AGREE_FRIEND_INVITE_SUCCESS: {
       const agreeUUID = action.payload.uuid;

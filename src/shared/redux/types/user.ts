@@ -45,8 +45,8 @@ export type UserState = {
   info: Partial<UserInfo>;
   webToken: string; // 用于portal登录的token
   friendList: string[];
-  friendInvite: any[]; // 好友邀请
-  friendRequests: FriendRequest[];
+  friendInvite: string[]; // 好友邀请(自己发给别人的)
+  friendRequests: FriendRequest[]; // 好友请求(别人发给自己的)
   isFindingUser: boolean;
   findingResult: any[];
 };

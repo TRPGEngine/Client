@@ -233,6 +233,7 @@ function getUserInitData(): TRPGAction {
         return;
       }
 
+      const selfUUID = getState().user.info.uuid;
       const { friendList, unprocessedFriendInvites, settings } = data;
 
       // 处理好友列表
@@ -250,7 +251,16 @@ function getUserInitData(): TRPGAction {
       }
       dispatch({
         type: GET_FRIEND_INVITE_SUCCESS,
-        payload: unprocessedFriendInvites,
+        payload: {
+          // 我接收的
+          requests: unprocessedFriendInvites.filter(
+            (item) => item.to_uuid === selfUUID
+          ),
+          // 我发起的
+          invites: unprocessedFriendInvites.filter(
+            (item) => item.from_uuid === selfUUID
+          ),
+        },
       });
 
       // 获取服务器上的用户设置信息
