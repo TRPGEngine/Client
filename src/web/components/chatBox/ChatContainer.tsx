@@ -3,6 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { ChatHeader } from './ChatHeader';
 import { ChatMsgList } from './ChatMsgList';
 import styled from 'styled-components';
+import { ChatSendBox } from './ChatSendBox';
 
 const Root = styled.div`
   display: flex;
@@ -20,6 +21,7 @@ export const ChatContainer: React.FC<Props> = TMemo((props) => {
     <Root>
       <ChatHeader converseUUID={converseUUID} />
       <ChatMsgList converseUUID={converseUUID} />
+      <ChatSendBox converseUUID={converseUUID} />
     </Root>
   );
 });
