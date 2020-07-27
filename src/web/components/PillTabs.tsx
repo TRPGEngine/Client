@@ -2,9 +2,9 @@ import { Tabs } from 'antd';
 import styled from 'styled-components';
 
 /**
- * 分端式的Tab
+ * 胶囊式的Tab
  */
-export const SectionTabs = styled(Tabs).attrs({
+export const PillTabs = styled(Tabs).attrs({
   type: 'card',
 })`
   &.ant-tabs.ant-tabs-card {

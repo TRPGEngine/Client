@@ -3,7 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import { Tabs, Badge, Tooltip, Button, Typography } from 'antd';
 import { UserListItem } from '@web/components/UserListItem';
-import { SectionTabs } from '@web/components/SectionTabs';
+import { PillTabs } from '@web/components/PillTabs';
 import styled from 'styled-components';
 import { MessageOutlined, CloseOutlined } from '@ant-design/icons';
 import { AddFriend } from './AddFriend';
@@ -117,12 +117,12 @@ export const FriendPanel: React.FC = TMemo(() => {
   );
 
   return (
-    <SectionTabs defaultActiveKey="1">
+    <PillTabs defaultActiveKey="1">
       {friendListPane}
       {friendInviteListPane}
       {friendRequestsPane}
       {addFriendPane}
-    </SectionTabs>
+    </PillTabs>
   );
 });
 FriendPanel.displayName = 'FriendPanel';
