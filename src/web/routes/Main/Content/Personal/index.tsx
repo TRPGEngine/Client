@@ -8,17 +8,7 @@ import { Switch, Route } from 'react-router-dom';
 import { FriendPanel } from './FriendPanel';
 import { SectionHeader } from '@web/components/SectionHeader';
 import { UserConversePanel } from './UserConversePanel';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-`;
-
-const Sidebar = styled.div`
-  width: ${(props) => props.theme.style.sidebarWidth};
-  background-color: ${(props) => props.theme.style.sidebarBackgroundColor};
-`;
+import { ContentContainer, Sidebar, ContentDetail } from '../style';
 
 const SidebarItemsContainer = styled.div`
   padding: 0 8px;
@@ -30,18 +20,11 @@ const SidebarHeaderText = styled.div`
   height: 40px;
 `;
 
-const DetailContent = styled.div`
-  flex: 1;
-  background-color: ${(props) => props.theme.style.contentBackgroundColor};
-  display: flex;
-  flex-direction: column;
-`;
-
 export const Personal: React.FC = TMemo((props) => {
   const converses = useConverses(['user']);
 
   return (
-    <Container>
+    <ContentContainer>
       <Sidebar>
         <SectionHeader />
         <SidebarItemsContainer>
@@ -65,15 +48,15 @@ export const Personal: React.FC = TMemo((props) => {
           </div>
         </SidebarItemsContainer>
       </Sidebar>
-      <DetailContent>
+      <ContentDetail>
         <Switch>
           <Route path="/main/personal/:converseUUID">
             <UserConversePanel />
           </Route>
           <Route path="/main/personal/" component={FriendPanel} />
         </Switch>
-      </DetailContent>
-    </Container>
+      </ContentDetail>
+    </ContentContainer>
   );
 });
 Personal.displayName = 'Personal';
