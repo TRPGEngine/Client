@@ -20,7 +20,7 @@ export function useSelectedGroupInfo(): GroupInfo | null {
  * 获取当前加入的团的信息
  * @param groupUUID 团UUID
  */
-export function useJoinedGroupInfo(groupUUID: string): GroupInfo | null {
+export function useJoinedGroupInfo(groupUUID: string): GroupInfo | undefined {
   const groupInfo = useTRPGSelector((state) =>
     state.group.groups.find((group) => group.uuid === groupUUID)
   );
