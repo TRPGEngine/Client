@@ -27,20 +27,17 @@ interface NavbarLinkProps {
   to: string;
 }
 export const NavbarLink: React.FC<NavbarLinkProps> = TMemo((props) => {
+  const { name, src, to } = props;
   const location = useLocation();
-  const isActive = location.pathname.startsWith(props.to);
+  const isActive = location.pathname.startsWith(to);
 
   return (
-    <Tooltip
-      title={props.name}
-      placement="right"
-      overlayStyle={{ fontSize: 16 }}
-    >
-      <Link to={props.to}>
+    <Tooltip title={name} placement="right" overlayStyle={{ fontSize: 16 }}>
+      <Link to={to}>
         <NavbarAvtar
           className={isActive ? 'active' : ''}
-          src={props.src}
-          name={props.name}
+          src={src}
+          name={name}
         />
       </Link>
     </Tooltip>
