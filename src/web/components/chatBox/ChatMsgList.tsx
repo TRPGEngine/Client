@@ -1,11 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useMsgList } from '@redux/hooks/chat';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { shouleEmphasizeTime } from '@shared/utils/date-helper';
 import { MessageItem } from '@shared/components/message/MessageItem';
 import _get from 'lodash/get';
+import _last from 'lodash/last';
 import styled from 'styled-components';
+import { scrollToBottom } from '@shared/utils/animated-scroll-to';
 
 const Root = styled.div`
   padding: 0 10px;
@@ -20,6 +22,7 @@ interface ChatMsgListProps {
 export const ChatMsgList: React.FC<ChatMsgListProps> = TMemo((props) => {
   const { converseUUID } = props;
   const selfInfo = useCurrentUserInfo();
+  const containerRef = useRef<HTMLDivElement>();
   const userUUID = selfInfo.uuid;
   const { list: msgList, nomore } = useMsgList(converseUUID);
 
@@ -40,6 +43,11 @@ export const ChatMsgList: React.FC<ChatMsgListProps> = TMemo((props) => {
     });
   }, [msgList, selfInfo, userUUID]);
 
-  return <Root>{msgListEl}</Root>;
+  useEffect(() => {
+    // 元素更新时滚动到底部
+    scrollToBottom(containerRef.current, 100);
+  }, [_last(msgList)]);
+
+  return <Root ref={containerRef}>{msgListEl}</Root>;
 });
 ChatMsgList.displayName = 'ChatMsgList';

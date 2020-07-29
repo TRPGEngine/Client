@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { Input } from 'antd';
 import { useConverseDetail } from '@redux/hooks/chat';
+import { useMsgSend } from './useMsgSend';
 
 const Wrapper = styled.div`
   padding: 0 16px 24px;
@@ -28,17 +29,31 @@ interface ChatSendBoxProps {
 export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
   const { converseUUID } = props;
   const converse = useConverseDetail(converseUUID);
+  const [msg, setMsg] = useState('');
+  const inputRef = useRef<Input>();
+  const { sendMsg } = useMsgSend(converseUUID);
 
   const placeholder = `给 @${converse?.name} 发消息`;
 
   const handleSendMsg = useCallback(() => {
-    console.log('send msg');
-  }, []);
+    const type = 'normal';
+    if (!!msg) {
+      sendMsg(msg, type);
+      inputRef.current.focus();
+      setMsg('');
+    }
+  }, [msg, sendMsg]);
 
   return (
     <Wrapper>
       <div className="inner">
-        <Input placeholder={placeholder} onPressEnter={handleSendMsg} />
+        <Input
+          ref={inputRef}
+          placeholder={placeholder}
+          value={msg}
+          onChange={(e) => setMsg(e.target.value)}
+          onPressEnter={handleSendMsg}
+        />
       </div>
     </Wrapper>
   );
