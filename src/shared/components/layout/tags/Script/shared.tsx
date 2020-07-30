@@ -8,7 +8,7 @@ import { getChildrenText } from '../utils';
 import { TMemo } from '@shared/components/TMemo';
 
 export const TagScriptShared: TagComponent = TMemo((props) => {
-  const context = useContext(LayoutStateContext);
+  const context = useContext(LayoutStateContext)!;
 
   useEffect(() => {
     // 永远只执行一次

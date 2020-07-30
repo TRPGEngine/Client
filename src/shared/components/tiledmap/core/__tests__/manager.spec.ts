@@ -28,7 +28,7 @@ describe('TiledMapManager', () => {
     });
 
     afterEach(() => {
-      manager = null;
+      manager = null as any;
     });
 
     test('addToken', async () => {

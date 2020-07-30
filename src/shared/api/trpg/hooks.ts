@@ -6,7 +6,7 @@ import { getMapMemberSocketInfo } from './event';
 export function useMapMemberSocketInfo(
   socketId: string
 ): PlayerTokenInfo | null {
-  const [info, setInfo] = useState(null);
+  const [info, setInfo] = useState<PlayerTokenInfo | null>(null);
 
   useEffect(() => {
     if (!_isString(socketId)) {

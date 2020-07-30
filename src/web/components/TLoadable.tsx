@@ -4,7 +4,7 @@ import LoadingSpinner from './LoadingSpinner';
 import { TMemo } from '@shared/components/TMemo';
 
 const Loading: React.FC<LoadingComponentProps> = TMemo((props) => {
-  return props.pastDelay && <LoadingSpinner />;
+  return props.pastDelay ? <LoadingSpinner /> : null;
 });
 Loading.displayName = 'Loading';
 

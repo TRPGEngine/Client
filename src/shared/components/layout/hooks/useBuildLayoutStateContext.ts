@@ -163,7 +163,7 @@ export const useBuildLayoutDefineStateContext = (
   props: DefineStateContextProps
 ) => {
   const { name, ...otherProps } = props;
-  const parentContext = useContext(LayoutStateContext);
+  const parentContext = useContext(LayoutStateContext)!;
   const initialState = useMemo(() => getDefineState(name, parentContext), [
     parentContext,
   ]);

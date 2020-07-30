@@ -18,11 +18,11 @@ interface Props
   }> {}
 
 interface State {
-  template: TemplateItem;
+  template: TemplateItem | null;
 }
 
 class ActorCreate extends React.Component<Props, State> {
-  state = {
+  state: State = {
     template: null,
   };
   actorData: DataMap = {};

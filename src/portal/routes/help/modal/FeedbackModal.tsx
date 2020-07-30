@@ -6,7 +6,7 @@ import { Modal, Input } from 'antd';
 
 interface FeedbackModalProps {
   visible: boolean;
-  onSubmit?: (
+  onSubmit: (
     values: FeedbackValues,
     formikHelpers: FormikHelpers<FeedbackValues>
   ) => void;

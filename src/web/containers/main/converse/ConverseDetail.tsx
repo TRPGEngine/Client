@@ -142,7 +142,7 @@ class ConverseDetail extends React.Component<Props> {
   };
 
   getHeaderActions() {
-    const actions = [];
+    const actions: any[] = [];
     if (this.props.usercache[this.props.converseUUID]) {
       actions.push({
         name: '个人信息',

@@ -14,7 +14,7 @@ interface TagDefineComponentProps {
 }
 export const TagDefineComponent: TagComponent<TagDefineComponentProps> = TMemo(
   (props) => {
-    const parentContext = useContext(LayoutStateContext);
+    const parentContext = useContext(LayoutStateContext)!;
     const { state, dispatch } = useBuildLayoutDefineStateContext(props);
 
     const ChildrenComponent = useCallback(() => {
@@ -41,7 +41,7 @@ interface TagProps {
   name: string; // 用于存储数据
 }
 export const TagDefineShared: TagComponent<TagProps> = TMemo((props) => {
-  const context = useContext(LayoutStateContext);
+  const context = useContext(LayoutStateContext)!;
   useEffect(() => {
     context.dispatch({
       type: StateActionType.AddDefine,

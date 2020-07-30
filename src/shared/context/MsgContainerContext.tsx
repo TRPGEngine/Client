@@ -11,8 +11,8 @@ import { ReplyMsgType } from '@shared/utils/msg-helper';
  */
 
 interface MsgContainerContextType {
-  replyMsg: ReplyMsgType;
-  setReplyMsg: (msg: ReplyMsgType) => void;
+  replyMsg: ReplyMsgType | null;
+  setReplyMsg: (msg: ReplyMsgType | null) => void;
 }
 
 const MsgContainerContext = React.createContext<MsgContainerContextType>({
@@ -21,7 +21,7 @@ const MsgContainerContext = React.createContext<MsgContainerContextType>({
 });
 
 export const MsgContainerContextProvider: React.FC<{}> = TMemo((props) => {
-  const [replyMsg, setReplyMsg] = useState<ReplyMsgType>(null);
+  const [replyMsg, setReplyMsg] = useState<ReplyMsgType | null>(null);
 
   return (
     <MsgContainerContext.Provider value={{ replyMsg, setReplyMsg }}>

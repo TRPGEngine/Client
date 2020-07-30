@@ -12,6 +12,6 @@ interface Props {
 export const MessageLoading: React.FC<Props> = TMemo((props) => {
   const isLoading = useDelayLoading(props.loading);
 
-  return isLoading && <LoadingSpinnerSmall />;
+  return isLoading ? <LoadingSpinnerSmall /> : null;
 });
 MessageLoading.displayName = 'MessageLoading';

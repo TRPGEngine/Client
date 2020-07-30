@@ -13,16 +13,17 @@ import {
   useTRPGDispatch,
 } from '@shared/hooks/useTRPGSelector';
 import _get from 'lodash/get';
+import Avatar from '@web/components/Avatar';
+import { getUserName } from '@shared/utils/data-helper';
 
 import './MenuPannel.scss';
-import Avatar from '@web/components/Avatar';
 
 interface Props {
   className: string;
 }
 export const MenuPannel: React.FC<Props> = TMemo((props) => {
   const userInfo = useTRPGSelector((state) => state.user.info);
-  const name = userInfo.nickname ?? userInfo.username;
+  const name = getUserName(userInfo);
   const avatar = userInfo.avatar ?? config.defaultImg.getUser(name);
   const selectedMenuIndex = useTRPGSelector((state) => state.ui.menuIndex);
   const selectedPannel = useTRPGSelector((state) => state.ui.menuPannel);

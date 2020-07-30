@@ -65,6 +65,6 @@ console.error = jest.fn(mockConsoleMethod(console.error));
 /**
  * 用于判定环境变量的值
  */
-function is(it: string) {
+function is(it?: string) {
   return !!it && it !== '0' && it !== 'false';
 }

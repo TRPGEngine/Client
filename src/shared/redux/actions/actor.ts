@@ -128,7 +128,7 @@ export function createActor(
         dispatch(hideModal());
         if (data.result) {
           const actor = data.actor;
-          actor.avatar = config.file.getAbsolutePath(actor.avatar);
+          actor.avatar = config.file.getAbsolutePath!(actor.avatar);
 
           if (actor.avatar !== '' && !_isUndefined(avatar_uuid)) {
             // 创建完毕后绑定头像关系
@@ -155,11 +155,11 @@ export function getActor(uuid = '') {
         const payload = uuid ? data.actor : data.actors;
         if (data.actors) {
           for (const i of payload) {
-            i.avatar = config.file.getAbsolutePath(i.avatar);
+            i.avatar = config.file.getAbsolutePath!(i.avatar);
             checkTemplate(i.template_uuid);
           }
         } else if (data.actor) {
-          payload.avatar = config.file.getAbsolutePath(payload.avatar);
+          payload.avatar = config.file.getAbsolutePath!(payload.avatar);
           checkTemplate(payload.template_uuid);
         }
         dispatch({ type: GET_ACTOR_SUCCESS, uuid, payload });

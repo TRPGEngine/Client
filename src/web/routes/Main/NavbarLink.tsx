@@ -23,7 +23,7 @@ NavbarAvtar.displayName = 'NavbarAvtar';
 
 interface NavbarLinkProps {
   name: string;
-  src: string;
+  src?: string;
   to: string;
 }
 export const NavbarLink: React.FC<NavbarLinkProps> = TMemo((props) => {

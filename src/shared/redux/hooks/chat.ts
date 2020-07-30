@@ -43,7 +43,10 @@ export function useGroupWritingState(
  * 获取会话中的消息列表
  * @param converseUUID 会话UUID
  */
-export function useMsgList(converseUUID: string, order?: 'asc' | 'desc') {
+export function useMsgList(
+  converseUUID: string,
+  order: 'asc' | 'desc' = 'asc'
+) {
   const converse = useTRPGSelector(
     (state) => state.chat.converses[converseUUID]
   );

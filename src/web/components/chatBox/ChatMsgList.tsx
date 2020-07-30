@@ -22,7 +22,7 @@ interface ChatMsgListProps {
 export const ChatMsgList: React.FC<ChatMsgListProps> = TMemo((props) => {
   const { converseUUID } = props;
   const selfInfo = useCurrentUserInfo();
-  const containerRef = useRef<HTMLDivElement>();
+  const containerRef = useRef<HTMLDivElement>(null);
   const userUUID = selfInfo.uuid;
   const { list: msgList, nomore } = useMsgList(converseUUID);
 
@@ -45,7 +45,9 @@ export const ChatMsgList: React.FC<ChatMsgListProps> = TMemo((props) => {
 
   useEffect(() => {
     // 元素更新时滚动到底部
-    scrollToBottom(containerRef.current, 100);
+    if (containerRef.current) {
+      scrollToBottom(containerRef.current, 100);
+    }
   }, [_last(msgList)]);
 
   return <Root ref={containerRef}>{msgListEl}</Root>;

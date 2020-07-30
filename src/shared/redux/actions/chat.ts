@@ -211,7 +211,7 @@ export const removeUserConverse = (userConverseUUID: string): TRPGAction => {
     dispatch({ type: REMOVE_USER_CONVERSE, converseUUID: userConverseUUID });
 
     // 在localStorage删除
-    const userUUID = getState().user.info.uuid;
+    const userUUID = getState().user.info.uuid!;
     const converses = getState().chat.converses;
     const uuids = Object.keys(_filter(converses, (c) => c.type === 'user'));
     rnStorage.set(
@@ -244,7 +244,7 @@ export let addUserConverse = function addUserConverse(
     });
 
     // 用户会话缓存
-    const userUUID = getState().user.info.uuid;
+    const userUUID = getState().user.info.uuid!;
     rnStorage
       .get(getUserConversesHash(userUUID), [])
       .then(function(cachedConverse: string[]) {
@@ -336,7 +336,7 @@ export const reloadConverseList = function reloadConverseList(
 ): TRPGAction {
   return function(dispatch, getState) {
     const userInfo = getState().user.info;
-    const userUUID = userInfo.uuid;
+    const userUUID = userInfo.uuid!;
 
     dispatch(getConverses(cb)); // 从服务端获取多人会话列表
     rnStorage.get(getUserConversesHash(userUUID)).then(function(converse) {
@@ -344,7 +344,7 @@ export const reloadConverseList = function reloadConverseList(
       if (converse && converse.length > 0) {
         // 如果本地缓存有存在用户会话，则根据上次登录时间获取这段时间内新建的用户会话
         dispatch(addUserConverse(converse));
-        dispatch(getOfflineUserConverse(userInfo.last_login));
+        dispatch(getOfflineUserConverse(userInfo.last_login!));
       } else {
         // 如果本地没有存在用户会话，则获取所有的用户会话
         dispatch(getAllUserConverse());
@@ -412,7 +412,7 @@ export let updateMsg = function updateMsg(converseUUID, payload): TRPGAction {
  * @param payload 信息数据
  */
 export let sendMsg = function sendMsg(
-  toUUID: string,
+  toUUID: string | null,
   payload: SendMsgPayload
 ): TRPGAction {
   return function(dispatch, getState) {
@@ -455,12 +455,12 @@ export let sendMsg = function sendMsg(
 export let sendFile = function sendFile(toUUID, payload, file): TRPGAction {
   if (!file) {
     console.error('发送文件错误。没有找到要发送的文件');
-    return;
+    return function(dispatch, getState) {};
   }
 
   return function(dispatch, getState) {
     const info = getState().user.info;
-    const selfUserUUID = info.uuid;
+    const selfUserUUID = info.uuid!;
     const localUUID = getLocalUUID();
     let pkg = {
       room: payload.room || '',

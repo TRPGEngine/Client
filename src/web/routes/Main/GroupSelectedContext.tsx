@@ -7,11 +7,11 @@ import React, { useContext } from 'react';
 interface Props {
   uuid: string;
 }
-export const GroupSelectedContext = React.createContext<Props>(null);
+export const GroupSelectedContext = React.createContext<Props | null>(null);
 GroupSelectedContext.displayName = 'GroupSelectedContext';
 
-export function useGroupSelectedContext(): string {
+export function useGroupSelectedContext(): string | undefined {
   const context = useContext(GroupSelectedContext);
 
-  return context.uuid;
+  return context?.uuid;
 }

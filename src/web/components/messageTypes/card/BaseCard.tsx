@@ -1,5 +1,6 @@
 import React from 'react';
 import { MessageProps } from '@shared/components/message/MessageHandler';
+import { AnyKindOfDictionary } from 'lodash';
 
 class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
   P
@@ -12,7 +13,7 @@ class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
   }
 
   // 返回一个形如:[{label: '按钮1', onClick:()=>{}}]的数组
-  getCardBtn() {
+  getCardBtn(): { label: string; onClick?: () => void; attrs?: any }[] {
     return [];
   }
 

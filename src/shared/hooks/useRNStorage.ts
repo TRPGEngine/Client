@@ -12,7 +12,7 @@ export function useRNStorage<T = {}>(
   defaultValue?: T,
   isPersist = false
 ): [T | null, (val: T) => Promise<T>] {
-  const [value, setValue] = useState<T>(defaultValue ?? null);
+  const [value, setValue] = useState<T | null>(defaultValue ?? null);
 
   useEffect(() => {
     rnStorage.get(key, defaultValue).then((val) => setValue(val));
@@ -22,9 +22,9 @@ export function useRNStorage<T = {}>(
     (val: T): Promise<T> => {
       const p = isPersist ? rnStorage.save(key, val) : rnStorage.set(key, val);
 
-      return p.then((val: T) => {
-        setValue(val);
-        return val;
+      return p.then((val: any) => {
+        setValue(val!);
+        return val!;
       });
     },
     [key, isPersist]

@@ -31,8 +31,8 @@ export const TagCurrMaxEdit: TagComponent<TagProps> = TMemo((props) => {
 
   const FormContainer = useLayoutFormContainer(props);
 
-  const currValue = useToNumber(stateValue);
-  const maxValue = useToNumber(maxStateValue);
+  const currValue = useToNumber(stateValue)!;
+  const maxValue = useToNumber(maxStateValue)!;
 
   const handleChangeCurrValue = useCallback(
     (num: number) => {
@@ -60,7 +60,7 @@ export const TagCurrMaxEdit: TagComponent<TagProps> = TMemo((props) => {
     }
   }, [defaultValue]);
 
-  const precision = useToNumber(props.precision, 0);
+  const precision = useToNumber(props.precision, 0)!;
 
   return (
     <FormContainer label={label}>
@@ -71,7 +71,7 @@ export const TagCurrMaxEdit: TagComponent<TagProps> = TMemo((props) => {
           precision={precision}
           max={maxValue}
           value={currValue}
-          onChange={handleChangeCurrValue}
+          onChange={(val) => handleChangeCurrValue(Number(val))}
         />
         <TagCurrMaxSplitInput />
         <InputNumber
@@ -84,7 +84,7 @@ export const TagCurrMaxEdit: TagComponent<TagProps> = TMemo((props) => {
           precision={precision}
           min={currValue}
           value={maxValue}
-          onChange={handleChangeMaxValue}
+          onChange={(val) => handleChangeMaxValue(Number(val))}
         />
       </Input.Group>
     </FormContainer>

@@ -86,7 +86,7 @@ function reduxCacheFactory(
   cacheScope: CacheKey,
   getCacheDispatch: GetCacheDispatchActionFn
 ): ReduxCacheFactoryInstance {
-  const isGettingDataUUIDList = [];
+  const isGettingDataUUIDList: string[] = [];
 
   /**
    * 从服务端获取缓存信息

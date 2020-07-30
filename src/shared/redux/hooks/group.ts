@@ -12,7 +12,10 @@ export function useSelectedGroupInfo(): GroupInfo | null {
   return useTRPGSelector((state) => {
     const selectedGroupUUID = state.group.selectedGroupUUID;
 
-    return state.group.groups.find((group) => group.uuid === selectedGroupUUID);
+    return (
+      state.group.groups.find((group) => group.uuid === selectedGroupUUID) ??
+      null
+    );
   });
 }
 
@@ -62,7 +65,7 @@ export function useGroupManagerUUIDs(groupUUID: string): string[] {
   if (_isNil(group)) {
     return [];
   }
-  return _uniq([group.owner_uuid, ...group.managers_uuid]);
+  return _uniq([group.owner_uuid, ...group.managers_uuid!]);
 }
 
 /**
@@ -77,5 +80,5 @@ export function useIsGroupManager(
   const currentUserInfo = useCurrentUserInfo();
   const managers = useGroupManagerUUIDs(groupUUID);
 
-  return managers.includes(playerUUID ?? currentUserInfo.uuid);
+  return managers.includes(playerUUID ?? currentUserInfo.uuid!);
 }

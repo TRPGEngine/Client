@@ -21,7 +21,7 @@ const Container = styled.div`
 `;
 
 interface SidebarItemProps {
-  icon: string | React.ReactElement;
+  icon?: string | React.ReactElement;
   name: string;
   to: string;
 }

@@ -17,7 +17,9 @@ import { ImageToken } from './layer/token/ImageToken';
 /**
  * 按下空格键临时切换当前道具
  */
-function useTmpToolSwitch(manager: React.MutableRefObject<TiledMapManager>) {
+function useTmpToolSwitch(
+  manager: React.MutableRefObject<TiledMapManager | undefined>
+) {
   const tmpSwitchRef = useRef<boolean>(false); // 标识当前是否为临时切换(通过按空格)
   const handleSpaceKeydown = useCallback(() => {
     if (!_isNil(manager.current)) {
@@ -38,7 +40,9 @@ function useTmpToolSwitch(manager: React.MutableRefObject<TiledMapManager>) {
   useKeyPressEvent(' ', handleSpaceKeydown, handleSpaceKeyup);
 }
 
-function useDeleteToken(manager: React.MutableRefObject<TiledMapManager>) {
+function useDeleteToken(
+  manager: React.MutableRefObject<TiledMapManager | undefined>
+) {
   const handler = useCallback(() => {
     if (_isNil(manager.current)) {
       return;
@@ -53,7 +57,7 @@ function useDeleteToken(manager: React.MutableRefObject<TiledMapManager>) {
  * 测试按钮
  */
 function useTestTokenBtn(
-  tiledMapManagerRef: React.MutableRefObject<TiledMapManager>,
+  tiledMapManagerRef: React.MutableRefObject<TiledMapManager | undefined>,
   mode: TiledMapMode
 ) {
   const [isDebug] = useLocalStorage('__tiledMapDebug', false);
@@ -106,7 +110,7 @@ interface TiledMapProps {
   onLoad?: (manager: TiledMapManager) => void;
 }
 export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
-  const canvasRef = useRef<HTMLCanvasElement>();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const tiledMapManagerRef = useRef<TiledMapManager>();
 
   const { mapUUID, jwt, mode, onLoad } = props;
@@ -120,6 +124,10 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
       .then((mapData) => {
         message.success(`连接地图 ${mapUUID} 成功`);
         const manager = tiledMapManagerRef.current;
+        if (_isNil(manager)) {
+          return;
+        }
+
         registerMapTokenEventListener(
           mapUUID,
           manager.handleReceiveModifyToken
@@ -134,7 +142,7 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
   }, [mapUUID, jwt]);
 
   useEffect(() => {
-    const tiledMapManager = new TiledMapManager(canvasRef.current, {
+    const tiledMapManager = new TiledMapManager(canvasRef.current!, {
       mode, // 只取加载时获取到的mode。不接受修改
       size: {
         width: 20,
@@ -193,7 +201,7 @@ export const TiledMap: React.FC<TiledMapProps> = React.memo((props) => {
   return (
     <div className="tiledmap">
       <canvas ref={canvasRef}>请使用现代浏览器打开本页面</canvas>
-      {useTestTokenBtn(tiledMapManagerRef, mode)}
+      {useTestTokenBtn(tiledMapManagerRef, mode!)}
     </div>
   );
 });

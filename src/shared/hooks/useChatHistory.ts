@@ -29,7 +29,7 @@ export function useChatHistory(converseUUID: string, size: number) {
       return;
     }
 
-    setCount(value.count);
+    setCount(value!.count);
   }, [value?.count]);
 
   const totalPage = useMemo(() => Math.ceil(count / size), [count, size]);

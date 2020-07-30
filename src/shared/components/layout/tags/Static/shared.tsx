@@ -13,7 +13,7 @@ interface TagProps {
   value: any;
 }
 export const TagStaticShared: TagComponent<TagProps> = TMemo((props) => {
-  const context = useContext(LayoutStateContext);
+  const context = useContext(LayoutStateContext)!;
   const isRunRef = useRef(false);
 
   if (isRunRef.current === false) {
@@ -36,7 +36,7 @@ export const TagStaticShared: TagComponent<TagProps> = TMemo((props) => {
         console.warn('Cannot parse attr:', props.name, props.value, e);
       }
 
-      return;
+      return null;
     }
   }
 

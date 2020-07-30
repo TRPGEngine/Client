@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import _isFunction from 'lodash/Function';
+import _isFunction from 'lodash/isFunction';
 import { AppendTokenAction } from './AppendTokenAction';
 import { Input } from 'antd';
 import { TMemo } from '@shared/components/TMemo';

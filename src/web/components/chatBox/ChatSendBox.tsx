@@ -30,7 +30,7 @@ export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
   const { converseUUID } = props;
   const converse = useConverseDetail(converseUUID);
   const [msg, setMsg] = useState('');
-  const inputRef = useRef<Input>();
+  const inputRef = useRef<Input>(null);
   const { sendMsg } = useMsgSend(converseUUID);
 
   const placeholder = `给 @${converse?.name} 发消息`;
@@ -39,7 +39,7 @@ export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
     const type = 'normal';
     if (!!msg) {
       sendMsg(msg, type);
-      inputRef.current.focus();
+      inputRef.current?.focus();
       setMsg('');
     }
   }, [msg, sendMsg]);

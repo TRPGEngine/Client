@@ -24,7 +24,7 @@ if (trpgHost) {
   trpgPort = _tmp[1];
 }
 
-if (trpgPort === '443') {
+if (trpgPort! === '443') {
   isSSL = true;
 }
 
@@ -36,8 +36,8 @@ const portalUrl =
 
 const standardPort = isSSL ? '443' : '80';
 let apiPort = environment === 'production' ? standardPort : '23256';
-if (trpgPort) {
-  apiPort = trpgPort;
+if (trpgPort!) {
+  apiPort = trpgPort!;
 }
 
 interface ProjectConfig {
@@ -63,7 +63,7 @@ interface ProjectConfig {
     port: string;
     url?: string;
     getFileImage: (ext: string) => string;
-    getAbsolutePath?: (path: string) => string;
+    getAbsolutePath?: (path?: string) => string;
     getRelativePath?: (path: string) => string;
     getUploadsImagePath?: (filename: string, isTemporary: boolean) => string;
   };
@@ -106,7 +106,7 @@ interface ProjectConfig {
  */
 const defaultSettings = {
   user: {
-    favoriteDice: [],
+    favoriteDice: [] as { title: string; value: string }[],
   },
   system: {
     notification: true,
@@ -228,7 +228,7 @@ config.file.url = `${config.file.protocol}://${config.file.host}:${config.file.p
 config.url.api = config.file.url;
 
 // 获取基于API的绝对路径
-config.file.getAbsolutePath = function getAbsolutePath(path) {
+config.file.getAbsolutePath = function getAbsolutePath(path?: string) {
   if (!path) {
     path = ''; // 设置默认值
   }
@@ -243,7 +243,7 @@ config.file.getRelativePath = function getAbsolutePath(path) {
   if (!path) {
     path = ''; // 设置默认值
   }
-  return path.replace(config.file.url, '');
+  return path.replace(config.file.url!, '');
 };
 
 config.file.getUploadsImagePath = function getUploadsImagePath(

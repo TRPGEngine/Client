@@ -13,7 +13,7 @@ export class BaseToken {
   static TYPE = 'BaseToken';
 
   private _id: string;
-  name: string;
+  name?: string;
 
   /**
    * 网格坐标, 0 0 表示网格左上角
@@ -160,7 +160,7 @@ export class BaseToken {
   }
 
   parseData(data: TokenData) {
-    this._id = data._id;
+    this._id = data._id!;
     this.name = data.name;
     this.gridPosition = data.gridPosition ?? { x: 0, y: 0 };
     this.gridAreaSize = data.gridAreaSize ?? { width: 1, height: 1 };

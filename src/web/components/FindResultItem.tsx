@@ -144,7 +144,7 @@ class FindResultItem extends React.Component<Props> {
 
 export default connect(
   (state: TRPGState) => ({
-    selfUUID: state.user.info.uuid,
+    selfUUID: state.user.info.uuid!,
     friendList: state.user.friendList,
     friendInvite: state.user.friendInvite,
     friendRequests: state.user.friendRequests,

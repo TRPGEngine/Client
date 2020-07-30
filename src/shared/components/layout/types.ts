@@ -1,4 +1,4 @@
-export type StateDataType = number | string | null;
+export type StateDataType = number | string | null | undefined;
 
 export enum StateActionType {
   UpdateData = 'update_data',

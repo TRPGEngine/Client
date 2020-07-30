@@ -23,7 +23,7 @@ const TitleRoute: React.FC<TitleRouteProps> = TMemo((route) => {
           path,
         });
 
-        const Component = route.component;
+        const Component = route.component as any;
         return <Component {...props}>{route.children}</Component>;
       }}
     />

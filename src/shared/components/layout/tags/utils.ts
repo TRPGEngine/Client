@@ -173,14 +173,16 @@ export const parseMultilineText = (text: string) => {
  * 获取元素子节点的文本
  */
 export const getChildrenText = (el: XMLElement): string => {
-  const childrenEl = el.elements;
+  const childrenEl = el.elements!;
 
   return childrenEl
-    .map((el) => {
+    .map<string>((el) => {
       if (el.type === 'text') {
         return String(el.text);
       } else if (el.type === 'element') {
         return getChildrenText(el);
+      } else {
+        return '';
       }
     })
     .reduce((prev, curr) => {

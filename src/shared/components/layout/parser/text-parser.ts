@@ -17,14 +17,14 @@ const parseText = (text: string): TextParseResult => {
       tokens: [text],
     };
   }
-  const tokens = [];
-  const rawTokens = [];
+  const tokens: string[] = [];
+  const rawTokens: (string | { '@binding': string })[] = [];
   let lastIndex = (tagRE.lastIndex = 0);
   let match: RegExpExecArray;
   let index: number;
   let tokenValue: string;
   // tslint:disable-next-line: no-conditional-assignment
-  while ((match = tagRE.exec(text))) {
+  while ((match = tagRE.exec(text)!)) {
     index = match.index;
     // push text token
     if (index > lastIndex) {

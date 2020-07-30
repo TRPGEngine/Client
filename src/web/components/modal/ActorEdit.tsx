@@ -51,7 +51,7 @@ const ActorEdit: React.FC<Props> = TMemo((props) => {
 
   return useMemo(
     () =>
-      _isString(layout) && (
+      _isString(layout) ? (
         <ModalPanel title={title} actions={actions} allowMaximize={true}>
           <Container>
             <XMLBuilder
@@ -62,7 +62,7 @@ const ActorEdit: React.FC<Props> = TMemo((props) => {
             />
           </Container>
         </ModalPanel>
-      ),
+      ) : null,
     [layout, title, actions, actorData, setActorData]
   );
 });

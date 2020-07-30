@@ -283,8 +283,8 @@ export default connect(
     const selectedGroupUUID = state.group.selectedGroupUUID;
     const groupInfo = state.group.groups.find(
       (group) => group.uuid === selectedGroupUUID
-    );
-    const userUUID = state.user.info.uuid;
+    )!;
+    const userUUID = state.user.info.uuid!;
     return {
       selectedGroupUUID,
       groupInfo,

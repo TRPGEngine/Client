@@ -11,7 +11,7 @@ interface UseDefineComponentProps {
 }
 export const UseDefineComponent: React.FC<UseDefineComponentProps> = TMemo(
   (props) => {
-    const context = useContext(LayoutStateContext);
+    const context = useContext(LayoutStateContext)!;
     const defines = context.state.defines;
     const { name, define, ...useProps } = props;
 

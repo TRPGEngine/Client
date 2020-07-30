@@ -46,7 +46,7 @@ const ActorInfo: React.FC<Props> = TMemo((props) => {
 
   return useMemo(
     () =>
-      _isString(layout) && (
+      _isString(layout) ? (
         <ModalPanel title={title}>
           <Container>
             <XMLBuilder
@@ -56,7 +56,7 @@ const ActorInfo: React.FC<Props> = TMemo((props) => {
             />
           </Container>
         </ModalPanel>
-      ),
+      ) : null,
     [layout, initialData]
   );
 });
@@ -74,13 +74,10 @@ interface ActorInfoWithUUIDProps {
 export const ActorInfoWithUUID: React.FC<ActorInfoWithUUIDProps> = TMemo(
   (props) => {
     const actorInfo = useCachedActorInfo(props.uuid);
-    const template = useCachedActorTemplateInfo(actorInfo.template_uuid);
+    const template = useCachedActorTemplateInfo(actorInfo.template_uuid!);
 
-    return (
-      _isString(template.uuid) &&
-      !_isEmpty(actorInfo) && (
-        <ActorInfo templateUUID={template.uuid} data={actorInfo.info} />
-      )
-    );
+    return _isString(template.uuid) && !_isEmpty(actorInfo) ? (
+      <ActorInfo templateUUID={template.uuid} data={actorInfo.info!} />
+    ) : null;
   }
 );

@@ -59,7 +59,7 @@ export function render(el: XMLElement, context: XMLBuilderContext) {
   const layoutType = context.layoutType || 'edit';
 
   // 仅渲染元素类型与文本类型与根节点
-  if (!['element', 'text', 'root'].includes(type)) {
+  if (!['element', 'text', 'root'].includes(type!)) {
     return;
   }
 
@@ -94,7 +94,7 @@ export function render(el: XMLElement, context: XMLBuilderContext) {
   }
 
   // 尝试使用新的注册机制
-  const tag = tags.getTag(layoutType, name);
+  const tag = tags.getTag(layoutType, name!);
   if (!_isNil(tag)) {
     // 如果存在新机制注册的元素
     return React.createElement(tag, {

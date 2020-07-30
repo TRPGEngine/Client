@@ -28,10 +28,10 @@ interface State {
 }
 class ActorEdit extends React.Component<Props, State> {
   editedActor: any;
-  template_uuid: string;
+  template_uuid?: string;
   template: any;
 
-  state = {
+  state: State = {
     cells: [],
     profileName: '',
     profileDesc: '',
@@ -144,7 +144,7 @@ class ActorEdit extends React.Component<Props, State> {
               <div
                 className="avatar"
                 style={{
-                  backgroundImage: `url(${config.file.getAbsolutePath(
+                  backgroundImage: `url(${config.file.getAbsolutePath!(
                     this.state.profileAvatar
                   )})`,
                 }}

@@ -15,7 +15,7 @@ interface Props {
 
 interface State {
   hasError: boolean;
-  errorInfo: ErrorData;
+  errorInfo: ErrorData | null;
 }
 
 export type RenderErrorComponent = React.ComponentType<ErrorData | null>;
@@ -50,7 +50,7 @@ class ErrorBoundary extends React.Component<Props, State> {
     if (this.state.hasError) {
       const errorInfo = this.state.errorInfo;
       const RenderComponent = this.props.renderError;
-      return this.state.errorInfo ? (
+      return errorInfo ? (
         <RenderComponent error={errorInfo.error} info={errorInfo.info} />
       ) : null;
     }

@@ -14,7 +14,7 @@ type PortalMethods = {
   update: (key: number, children: React.ReactNode) => void;
   unmount: (key: number) => void;
 };
-const PortalContext = React.createContext<PortalMethods>(null);
+const PortalContext = React.createContext<PortalMethods | null>(null);
 
 // events
 const addType = 'ADD_PORTAL';
@@ -47,7 +47,7 @@ export const PortalHost: React.FC<{
     hostNameRef.current = props.name;
   }, [props.name]);
 
-  const mount = useCallback(
+  const mount: any = useCallback(
     (children: React.ReactNode, _key?: number, name?: string) => {
       if (name !== hostNameRef.current) {
         return;
@@ -120,7 +120,7 @@ export const PortalHost: React.FC<{
       }}
     >
       <Fragment>{props.children}</Fragment>
-      <PortalManager ref={managerRef} />
+      <PortalManager ref={managerRef as any} />
     </PortalContext.Provider>
   );
 });

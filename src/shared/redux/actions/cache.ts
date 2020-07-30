@@ -42,7 +42,7 @@ export const getUserInfo = function(uuid, onCompleted?) {
   return function(dispatch, getState) {
     return api.emit('player::getInfo', { type: 'user', uuid }, function(data) {
       if (data.result) {
-        data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
+        data.info.avatar = config.file.getAbsolutePath!(data.info.avatar);
         dispatch({ type: GET_USER_INFO, payload: data.info });
         dispatch(saveLocalCache()); // 保存到本地缓存
       } else {
@@ -85,7 +85,7 @@ export const getActorInfo = function(uuid, onCompleted?) {
     return api.emit('actor::getActor', { uuid }, function(data) {
       if (data.result) {
         const actor = data.actor ? data.actor : data.actors[0];
-        actor.avatar = config.file.getAbsolutePath(actor.avatar);
+        actor.avatar = config.file.getAbsolutePath!(actor.avatar);
         dispatch({ type: GET_ACTOR_INFO, payload: actor });
       } else {
         console.error(data.msg);
@@ -109,7 +109,7 @@ export const getGroupInfo = function(uuid, onCompleted?) {
   return function(dispatch, getState) {
     return api.emit('group::getInfo', { uuid }, function(data) {
       if (data.result) {
-        data.group.avatar = config.file.getAbsolutePath(data.group.avatar);
+        data.group.avatar = config.file.getAbsolutePath!(data.group.avatar);
         dispatch({ type: GET_GROUP_INFO_SUCCESS, payload: data.group });
       } else {
         console.error(data.msg);

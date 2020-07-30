@@ -16,7 +16,7 @@ interface Props extends MessageProps, DispatchProp<any> {
 class GroupRequest extends BaseCard<Props> {
   getCardBtn() {
     const info = this.props.info;
-    const data = info.data;
+    const data = info.data!;
     const chatlogUUID = info.uuid;
     const requestUUID = data.requestUUID;
     const groupUUID = data.groupUUID;

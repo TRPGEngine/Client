@@ -98,7 +98,7 @@ export const createActor = async (
   let avatar;
   if (_isString(avatarUrl) && isBlobUrl(avatarUrl)) {
     const userInfo = getJWTInfo();
-    avatar = await toAvatarWithBlobUrl(userInfo.uuid, avatarUrl);
+    avatar = await toAvatarWithBlobUrl(userInfo.uuid!, avatarUrl);
     _set(actorInfo, '_avatar', avatar.url);
   }
 
@@ -134,7 +134,7 @@ export const editActor = async (
   let avatar;
   if (_isString(avatarUrl) && isBlobUrl(avatarUrl)) {
     const userInfo = getJWTInfo();
-    avatar = await toAvatarWithBlobUrl(userInfo.uuid, avatarUrl);
+    avatar = await toAvatarWithBlobUrl(userInfo.uuid!, avatarUrl);
     _set(actorInfo, '_avatar', avatar.url);
   }
 

@@ -25,7 +25,7 @@ export const TagComputedShared: TagComponent<TagProps> = TMemo((props) => {
     console.warn('Tag Computed Required Expression');
   }
 
-  const context = useContext(LayoutStateContext);
+  const context = useContext(LayoutStateContext)!;
   const [_, setStateValue] = useLayoutFieldState(props.target);
 
   const deps = useMemo(() => {

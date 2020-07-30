@@ -5,7 +5,7 @@
  */
 import _isFunction from 'lodash/isFunction';
 
-let _loginSuccessCallback = null;
+let _loginSuccessCallback: any = null;
 export function injectLoginSuccessCallback(callback: () => void) {
   _loginSuccessCallback = callback;
 }
@@ -13,7 +13,7 @@ export function runLoginSuccessCallback() {
   _isFunction(_loginSuccessCallback) && _loginSuccessCallback();
 }
 
-let _logoutSuccessCallback = null;
+let _logoutSuccessCallback: any = null;
 export function injectLogoutSuccessCallback(callback: () => void) {
   _logoutSuccessCallback = callback;
 }

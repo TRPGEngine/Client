@@ -95,7 +95,7 @@ const SelectedUser: React.FC<SelectedUserProps> = React.memo((props) => {
     <Select
       mode="multiple"
       labelInValue={true}
-      value={value}
+      value={value as any}
       placeholder="选择用户"
       filterOption={filterOption}
       onChange={handleChange}
@@ -182,7 +182,7 @@ export const UserSelector: React.FC<Props> = React.memo((props) => {
       },
       ...groups.map((group) => ({
         name: group.name,
-        uuids: group.group_members,
+        uuids: group.group_members ?? [],
       })),
     ];
   }, [friends, groups]);

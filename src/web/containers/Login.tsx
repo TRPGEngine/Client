@@ -130,7 +130,7 @@ class Login extends React.Component<Props> {
 function mapStateToProps(state: TRPGState) {
   return {
     isLogin: state.user.isLogin,
-    oauthList: state.settings.config.oauth ?? [],
+    oauthList: (state.settings.config.oauth as string[]) ?? [],
   };
 }
 

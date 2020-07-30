@@ -7,14 +7,14 @@ describe('sandbox function', () => {
       data: {},
       global: {},
     },
-    dispatch: null,
+    dispatch: null as any,
     layoutType: 'edit',
   });
 
-  test.each([
+  test.each<[any[], number]>([
     [[1, 2, 3, 4, 5], 15],
     [[1, 2, null, undefined, 5], 8],
-  ])('sum %o = %d', (nums: any[], res: number) => {
+  ])('sum %o = %d', (nums, res) => {
     expect(sandbox.SUM(...nums)).toBe(res);
   });
 

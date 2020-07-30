@@ -23,8 +23,8 @@ import GroupInfo from './GroupInfo';
  * 团会话的头部
  */
 export const GroupHeader: React.FC = TMemo(() => {
-  const groupInfo = useSelectedGroupInfo();
-  const groupUUID = groupInfo?.uuid;
+  const groupInfo = useSelectedGroupInfo()!;
+  const groupUUID = groupInfo?.uuid!;
   const selectedGroupActorUUID = useSelectedGroupActorUUID(groupUUID);
   const selfGroupActors = useSelfGroupActors(groupUUID);
   const dispatch = useTRPGDispatch();
@@ -39,7 +39,10 @@ export const GroupHeader: React.FC = TMemo(() => {
    * 人物卡列表
    */
   const options = useMemo(() => {
-    let list = [];
+    let list: {
+      value: string | null;
+      label: string;
+    }[] = [];
     if (selfGroupActors && selfGroupActors.length > 0) {
       list = selfGroupActors.map((item) => ({
         value: item.uuid,

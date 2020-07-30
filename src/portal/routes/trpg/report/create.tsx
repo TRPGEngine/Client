@@ -14,6 +14,7 @@ import moment, { Moment } from 'moment';
 import styled from 'styled-components';
 import { LogEdit } from './log-edit';
 import { PortraitContainer } from '@portal/components/PortraitContainer';
+import { MsgPayload } from '@redux/types/chat';
 const Option = Select.Option;
 const RangePicker = DatePicker.RangePicker;
 
@@ -25,7 +26,7 @@ const WHITE_LIST_MSGTYPE = ['normal', 'ooc', 'action', 'speak', 'tip'];
 function useGroupTimeRange() {
   const [groupList, setGroupList] = useState<GroupItem[]>([]);
   const [selectedGroupUUID, setSelectedGroupUUID] = useState<string>();
-  const [timeRange, setTimeRange] = useState<[Moment, Moment]>([
+  const [timeRange, setTimeRange] = useState<[Moment | null, Moment | null]>([
     moment()
       .subtract(1, 'days')
       .second(0)
@@ -64,7 +65,7 @@ function useGroupTimeRange() {
             showSecond={false}
             minuteStep={5}
             value={timeRange}
-            onChange={(values) => setTimeRange(values)}
+            onChange={(values) => setTimeRange(values!)}
           />
         </Form.Item>
       </Form>
@@ -117,7 +118,7 @@ const TRPGReportCreate: React.FC = TMemo(() => {
   } = useGroupTimeRange();
   const [showSelector, setShowSelector] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [logs, setLogs] = useState([]);
+  const [logs, setLogs] = useState<MsgPayload[]>([]);
 
   const handleSelectGroupAndTimeRange = useCallback(() => {
     if (disabled) {
@@ -125,18 +126,23 @@ const TRPGReportCreate: React.FC = TMemo(() => {
     }
 
     setIsLoading(true);
-    const [from, to] = timeRange.map((time) =>
-      time.format('YYYY-MM-DD HH:mm:ss')
+    const [from, to] = timeRange.map<string>(
+      (time) => time?.format('YYYY-MM-DD HH:mm:ss') ?? ''
     );
-    fetchGroupRangeChatLog(selectedGroupUUID, from, to).then((logs) => {
-      setIsLoading(false);
-      if (_isEmpty(logs)) {
-        message.warn('数据为空');
-        return;
-      }
-      setShowSelector(false);
-      setLogs(logs.filter((log) => WHITE_LIST_MSGTYPE.includes(log.type)));
-    });
+
+    if (selectedGroupUUID) {
+      fetchGroupRangeChatLog(selectedGroupUUID, from, to).then((logs) => {
+        setIsLoading(false);
+        if (_isEmpty(logs)) {
+          message.warn('数据为空');
+          return;
+        }
+        setShowSelector(false);
+        setLogs(logs.filter((log) => WHITE_LIST_MSGTYPE.includes(log.type)));
+      });
+    } else {
+      console.error('need selectedGroupUUID');
+    }
   }, [disabled, selectedGroupUUID, timeRange]);
 
   const Selector = useMemo(

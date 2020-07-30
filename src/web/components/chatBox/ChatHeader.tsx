@@ -19,7 +19,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = TMemo((props) => {
   return (
     <SectionHeader>
       <HeaderIdentify>
-        {['user', 'system'].includes(converse?.type) ? '@' : '#'}
+        {['user', 'system'].includes(converse?.type!) ? '@' : '#'}
       </HeaderIdentify>
       <span>{converse?.name}</span>
     </SectionHeader>

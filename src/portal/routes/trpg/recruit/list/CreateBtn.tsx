@@ -69,7 +69,7 @@ export const RecruitCreateBtn: React.FC<Props> = TMemo((props) => {
           <Form
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 18 }}
-            onFinish={handleSubmit}
+            onFinish={() => handleSubmit()}
           >
             <Col sm={24} md={{ span: 18, offset: 6 }}>
               <Typography.Title level={3} style={{ marginBottom: 16 }}>

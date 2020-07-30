@@ -15,7 +15,7 @@ const api = trpgApi.getInstance();
 
 // 同步到服务器
 let isSync = false;
-const syncList = [];
+const syncList: any[] = [];
 const trySyncNote = function(dispatch, payload) {
   if (isSync === false) {
     isSync = true;

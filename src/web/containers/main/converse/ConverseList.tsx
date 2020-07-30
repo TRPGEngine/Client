@@ -71,7 +71,7 @@ const ConverseList: React.FC = TMemo(() => {
               : config.defaultImg.getUser(item.name);
           const userUUID = uuid;
           let icon = item.icon || _get(usercache, [uuid, 'avatar']);
-          icon = config.file.getAbsolutePath(icon) || defaultIcon;
+          icon = config.file.getAbsolutePath!(icon) || defaultIcon;
 
           return (
             <ConvItem

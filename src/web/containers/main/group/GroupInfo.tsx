@@ -198,7 +198,7 @@ class GroupInfo extends React.Component<Props> {
 
 export default connect(
   (state: TRPGState) => ({
-    userUUID: state.user.info.uuid,
+    userUUID: state.user.info.uuid!,
     usercache: state.cache.user,
     selectedGroupUUID: state.group.selectedGroupUUID,
     groupInfo: state.group.groups.find(

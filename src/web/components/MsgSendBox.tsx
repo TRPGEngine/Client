@@ -110,7 +110,7 @@ class MsgSendBox extends React.Component<Props> {
   }
 
   componentDidMount() {
-    this.inputMsgRef.current.focus();
+    this.inputMsgRef.current!.focus();
   }
 
   componentWillUnmount() {
@@ -170,7 +170,7 @@ class MsgSendBox extends React.Component<Props> {
         // 上传图片
         e.preventDefault();
         const file = image.getAsFile();
-        const chatimgUrl = await pasteUtils.upload(file);
+        const chatimgUrl = await pasteUtils.upload(file!);
         if (chatimgUrl) {
           this.setState({
             inputMsg: this.state.inputMsg + `[img]${chatimgUrl}[/img]`,
@@ -185,7 +185,7 @@ class MsgSendBox extends React.Component<Props> {
     const type = this.state.inputType;
     if (!!message) {
       this.props.onSendMsg(message, type);
-      this.inputMsgRef.current.focus();
+      this.inputMsgRef.current!.focus();
       this.setState({ inputMsg: '' });
     }
   }
@@ -203,7 +203,7 @@ class MsgSendBox extends React.Component<Props> {
   handleSelectEmoticon = (code: string) => {
     this.setState({ inputMsg: this.state.inputMsg + code });
     this.hidePopup();
-    this.inputMsgRef.current.focus();
+    this.inputMsgRef.current!.focus();
   };
 
   // 显示投骰方式弹出框
@@ -234,7 +234,7 @@ class MsgSendBox extends React.Component<Props> {
                   data: {
                     type: 'actor',
                     uuid: actorUUID,
-                    avatar: config.file.getRelativePath(actorInfo.avatar),
+                    avatar: config.file.getRelativePath!(actorInfo.avatar),
                     name: actorInfo.name,
                     desc: actorInfo.desc,
                   },
@@ -250,7 +250,7 @@ class MsgSendBox extends React.Component<Props> {
                   data: {
                     type: 'actor',
                     uuid: actorUUID,
-                    avatar: config.file.getRelativePath(actorInfo.avatar),
+                    avatar: config.file.getRelativePath!(actorInfo.avatar),
                     name: actorInfo.name,
                     desc: actorInfo.desc,
                   },
@@ -272,7 +272,7 @@ class MsgSendBox extends React.Component<Props> {
   }
 
   handleFileUploaderChange() {
-    const files = this.fileUploader.current.files as any;
+    const files = this.fileUploader.current!.files as any;
     for (const f of files) {
       this.props.onSendFile && this.props.onSendFile(f);
     }

@@ -27,7 +27,7 @@ const CardType = {
 class Card extends Base {
   getContent() {
     const info = this.props.info;
-    const data = info.data;
+    const data = info.data!;
     const Card = CardType[data.type] || CardType['default'];
 
     return <Card {...this.props} />;

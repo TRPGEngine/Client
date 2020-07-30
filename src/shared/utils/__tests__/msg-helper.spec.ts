@@ -32,7 +32,7 @@ describe('MsgDataManager', () => {
       passed: true,
       enabled: true,
       actor_uuid: '',
-      actor: null,
+      actor: null as any,
     });
 
     expect(msgDataManager.toJS()).toMatchObject({

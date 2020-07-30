@@ -19,14 +19,14 @@ registerCustomToken(ActorToken.TYPE, ActorToken);
  * 根据Token信息创建Token实例
  * @param tokenData Token信息
  */
-export function createTokenByData(tokenData: TokenAttrs): BaseToken {
+export function createTokenByData(tokenData: TokenAttrs): BaseToken | null {
   let newToken: BaseToken;
   const tokenType = tokenData._type;
 
   const tokenId = tokenData._id;
   if (_isNil(tokenId)) {
     console.warn('无法创建Token, id为空', tokenData);
-    return;
+    return null;
   }
 
   if (customToken[tokenType]) {

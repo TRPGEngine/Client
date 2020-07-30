@@ -93,7 +93,7 @@ export const login = function(username: string, password: string): TRPGAction {
             rnStorage.set({ uuid, token });
           }
           console.log('set user token, user:', uuid);
-          data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
+          data.info.avatar = config.file.getAbsolutePath!(data.info.avatar);
           dispatch({ type: LOGIN_SUCCESS, payload: data.info, isApp });
           loginSuccess(dispatch, getState); // 获取用户信息
         } else {
@@ -116,7 +116,7 @@ export const login = function(username: string, password: string): TRPGAction {
 export const loginWithToken = function(
   uuid: string,
   token: string,
-  channel = null
+  channel: any = null
 ): TRPGAction {
   return function(dispatch, getState) {
     const isApp = config.platform === 'app';
@@ -126,7 +126,7 @@ export const loginWithToken = function(
       { uuid, token, platform: config.platform, isApp, channel },
       function(data) {
         if (data.result) {
-          data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
+          data.info.avatar = config.file.getAbsolutePath!(data.info.avatar);
           dispatch({ type: LOGIN_TOKEN_SUCCESS, payload: data.info, isApp });
           loginSuccess(dispatch, getState); // 获取用户信息
         } else {
@@ -241,7 +241,7 @@ function getUserInitData(): TRPGAction {
       const { friendList, unprocessedFriendInvites, settings } = data;
 
       // 处理好友列表
-      const uuidList = [];
+      const uuidList: string[] = [];
       for (const item of friendList) {
         const uuid = item.uuid;
         uuidList.push(uuid);
@@ -289,7 +289,7 @@ export const findUser = function(text: string, type: string): TRPGAction {
             if (!!uuid) {
               checkUser(uuid);
             }
-            user.avatar = config.file.getAbsolutePath(user.avatar);
+            user.avatar = config.file.getAbsolutePath!(user.avatar);
           }
         }
         dispatch({ type: FIND_USER_SUCCESS, payload: list });
@@ -307,7 +307,7 @@ export const updateInfo = function(
   return function(dispatch, getState) {
     return api.emit('player::updateInfo', updatedData, function(data) {
       if (data.result) {
-        data.user.avatar = config.file.getAbsolutePath(data.user.avatar);
+        data.user.avatar = config.file.getAbsolutePath!(data.user.avatar);
         dispatch({ type: UPDATE_INFO_SUCCESS, payload: data.user });
         onSuccess && onSuccess();
       } else {

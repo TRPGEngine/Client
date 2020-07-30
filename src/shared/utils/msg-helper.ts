@@ -45,7 +45,7 @@ export class MsgDataManager {
     return _has(this, 'replyMsg');
   }
 
-  getReplyMsg(): ReplyMsgType {
+  getReplyMsg(): ReplyMsgType | undefined {
     return this.replyMsg;
   }
 

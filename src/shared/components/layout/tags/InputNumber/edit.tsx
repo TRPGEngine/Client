@@ -26,8 +26,8 @@ export const TagInputNumberEdit: TagComponent<TagProps> = TMemo((props) => {
   const precision = useToNumber(props.precision, 0);
 
   const handleChange = useCallback(
-    (value: number) => {
-      setStateValue(value);
+    (value: number | string | undefined) => {
+      setStateValue(Number(value));
     },
     [setStateValue]
   );
@@ -53,11 +53,11 @@ export const TagInputNumberEdit: TagComponent<TagProps> = TMemo((props) => {
         <InputNumber
           style={{ width: '100%' }}
           placeholder={placeholder}
-          min={min}
-          max={max}
-          step={step}
-          precision={precision}
-          value={value}
+          min={min!}
+          max={max!}
+          step={step!}
+          precision={precision!}
+          value={value!}
           onChange={handleChange}
           disabled={props.disabled}
         />

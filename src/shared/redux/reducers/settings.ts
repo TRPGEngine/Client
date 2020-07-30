@@ -19,7 +19,7 @@ const {
 } = constants;
 
 const initialState: SettingsState = {
-  ...config.defaultSettings,
+  ...(config.defaultSettings as any),
   notificationPermission: 'default', // granted, denied, default in web
   config: {},
 };

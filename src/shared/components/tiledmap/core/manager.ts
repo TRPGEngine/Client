@@ -98,11 +98,13 @@ export class TiledMapManager {
       for (const tokenData of layerData.tokens) {
         if (layer.hasToken(tokenData._id)) {
           // 如果已存在Token则更新
-          layer.getToken(tokenData._id).parseData(tokenData);
+          layer.getToken(tokenData._id)?.parseData(tokenData);
         } else {
           // 如果不存在则新建
           const newToken = createTokenByData(tokenData);
-          this.addToken(layer.id, newToken, false);
+          if (newToken) {
+            this.addToken(layer.id, newToken, false);
+          }
         }
       }
     }
@@ -118,10 +120,10 @@ export class TiledMapManager {
   /**
    * 新增层
    */
-  public addLayer(name: string, id?: string): Layer {
-    if (this.layerManager.getLayer(id)) {
+  public addLayer(name: string, id?: string): Layer | null {
+    if (this.layerManager.getLayer(id!)) {
       console.warn(`layer: ${id} 已存在`);
-      return;
+      return null;
     }
 
     const layer = new Layer(name, id);
@@ -158,7 +160,9 @@ export class TiledMapManager {
       const p = payload as UpdateTokenPayload['add'];
       const { layerId, token } = p;
       const newToken = createTokenByData(token as any);
-      this.addToken(layerId, newToken, false);
+      if (newToken) {
+        this.addToken(layerId, newToken, false);
+      }
     } else if (type === 'update') {
       const p = payload as UpdateTokenPayload['update'];
       const { layerId, tokenId, tokenAttrs } = p;
@@ -191,6 +195,10 @@ export class TiledMapManager {
     notify = true
   ): Promise<void> {
     const layer = this.layerManager.getLayer(layerId);
+    if (_isNil(layer)) {
+      console.warn(`[layer: ${layerId}] 找不到 Layer`);
+      return;
+    }
     if (layer.hasToken(token.id)) {
       console.warn(`[layer: ${layerId}] Token 已存在: ${token.id}`);
       return;
@@ -237,9 +245,11 @@ export class TiledMapManager {
     attrs: Partial<TokenAttrs>,
     notify = true
   ): void {
-    const layer = this.layerManager.getTokenLayerByTokenId(tokenId);
     if (notify) {
-      this.callActionCallback('onUpdateToken', layer.id, tokenId, attrs);
+      const layer = this.layerManager.getTokenLayerByTokenId(tokenId);
+      if (layer) {
+        this.callActionCallback('onUpdateToken', layer.id, tokenId, attrs);
+      }
     }
   }
 
@@ -256,7 +266,7 @@ export class TiledMapManager {
     actionName: T,
     ...args: Parameters<TiledMapActions[T]>
   ) {
-    const fn = this.options.actions?.[actionName];
+    const fn = this.options.actions?.[actionName] as any;
     if (_isNil(fn)) {
       console.warn('操作没有注册:', actionName);
       return;

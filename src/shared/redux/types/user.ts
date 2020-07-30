@@ -43,7 +43,7 @@ export type UserState = {
   isTryLogin: boolean;
   isLogin: boolean;
   info: Partial<UserInfo>;
-  webToken: string; // 用于portal登录的token
+  webToken: string | null; // 用于portal登录的token
   friendList: string[];
   friendInvite: UserInvite[]; // 好友邀请(自己发给别人的)
   friendRequests: UserInvite[]; // 好友请求(别人发给自己的)

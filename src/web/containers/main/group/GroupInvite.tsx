@@ -18,8 +18,11 @@ interface Props {
   groupMembers: any[];
   sendGroupInvite: any;
 }
-class GroupInvite extends React.Component<Props> {
-  state = {
+interface State {
+  selectedUUIDs: string[];
+}
+class GroupInvite extends React.Component<Props, State> {
+  state: Readonly<State> = {
     selectedUUIDs: [],
   };
 
@@ -107,7 +110,7 @@ export default connect(
     const selectedGroupUUID = state.group.selectedGroupUUID;
     const groupInfo = state.group.groups.find(
       (group) => group.uuid === selectedGroupUUID
-    );
+    )!;
     return {
       usercache: state.cache.user,
       friendList: state.user.friendList,

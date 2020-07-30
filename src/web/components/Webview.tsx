@@ -25,7 +25,7 @@ interface Props {
 
 class Webview extends React.Component<Props> {
   id: string;
-  webframe: HTMLElement & { src: string };
+  webframe?: HTMLElement & { src: string };
 
   static defaultProps: Partial<Props> = {
     allowExopen: false,
@@ -45,19 +45,20 @@ class Webview extends React.Component<Props> {
   componentDidMount() {
     NProgress.configure({ parent: '#' + this.id });
     NProgress.start();
+    const webframe = this.webframe!;
     if (isElectron) {
-      this.webframe.src = this.props.src;
-      this.webframe.addEventListener('dom-ready', function() {
+      webframe.src = this.props.src;
+      webframe.addEventListener('dom-ready', function() {
         console.log('webview loadCompleted');
         NProgress.done();
       });
-      this.webframe.addEventListener('will-navigate', function(e: any) {
+      webframe.addEventListener('will-navigate', function(e: any) {
         console.log('webview change, url:', e.url);
         NProgress.start();
       });
     } else {
-      this.webframe.src = this.props.src;
-      this.webframe.onload = function(e) {
+      webframe.src = this.props.src;
+      webframe.onload = function(e) {
         console.log('webview loadCompleted');
         NProgress.done();
       };
@@ -65,7 +66,7 @@ class Webview extends React.Component<Props> {
   }
 
   handleOpenInNewWindow() {
-    window.open(this.webframe.src, 'square', 'frame=true');
+    window.open(this.webframe!.src, 'square', 'frame=true');
   }
 
   handleLoad = (e: React.SyntheticEvent<HTMLIFrameElement, Event>) => {
@@ -97,7 +98,10 @@ class Webview extends React.Component<Props> {
         {isElectron ? (
           <webview ref={(ref) => (this.webframe = ref as any)} />
         ) : (
-          <iframe ref={(ref) => (this.webframe = ref)} onLoad={this.handleLoad}>
+          <iframe
+            ref={(ref) => (this.webframe = ref as any)}
+            onLoad={this.handleLoad}
+          >
             <p>请使用现代浏览器打开本页面</p>
           </iframe>
         )}

@@ -22,8 +22,8 @@ const tagMap = {
  */
 export const registerTag = (
   name: string,
-  detailTag: React.ComponentType,
-  editTag?: React.ComponentType
+  detailTag: React.ComponentType<any>,
+  editTag?: React.ComponentType<any>
 ) => {
   _set(tagMap, ['detail', name], detailTag);
   if (_isNil(editTag)) {
