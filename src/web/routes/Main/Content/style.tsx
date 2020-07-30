@@ -17,3 +17,7 @@ export const Sidebar = styled.div`
   width: ${(props) => props.theme.style.sidebarWidth};
   background-color: ${(props) => props.theme.style.sidebarBackgroundColor};
 `;
+
+export const SidebarItemsContainer = styled.div`
+  padding: 8px;
+`;

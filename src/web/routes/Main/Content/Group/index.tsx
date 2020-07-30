@@ -1,6 +1,11 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { ContentContainer, Sidebar, ContentDetail } from '../style';
+import {
+  ContentContainer,
+  Sidebar,
+  ContentDetail,
+  SidebarItemsContainer,
+} from '../style';
 import { useParams } from 'react-router';
 import { SectionHeader } from '@web/components/SectionHeader';
 import { useJoinedGroupInfo } from '@redux/hooks/group';
@@ -20,11 +25,13 @@ export const Group: React.FC = TMemo(() => {
     <ContentContainer>
       <Sidebar>
         <SectionHeader>{groupInfo?.name}</SectionHeader>
-        <SidebarItem
-          name="综合"
-          icon={<span>#</span>}
-          to={`/main/group/${groupUUID}/main`}
-        />
+        <SidebarItemsContainer>
+          <SidebarItem
+            name="综合"
+            icon={<span>#</span>}
+            to={`/main/group/${groupUUID}/main`}
+          />
+        </SidebarItemsContainer>
       </Sidebar>
       <ContentDetail>
         <Switch>

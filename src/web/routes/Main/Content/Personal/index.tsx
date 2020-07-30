@@ -8,11 +8,12 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { FriendPanel } from './FriendPanel';
 import { SectionHeader } from '@web/components/SectionHeader';
 import { UserConversePanel } from './UserConversePanel';
-import { ContentContainer, Sidebar, ContentDetail } from '../style';
-
-const SidebarItemsContainer = styled.div`
-  padding: 0 8px;
-`;
+import {
+  ContentContainer,
+  Sidebar,
+  ContentDetail,
+  SidebarItemsContainer,
+} from '../style';
 
 const SidebarHeaderText = styled.div`
   display: flex;
