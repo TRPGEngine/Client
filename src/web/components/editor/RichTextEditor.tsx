@@ -95,9 +95,11 @@ const toggleMark = (editor, format) => {
 };
 
 const isBlockActive = (editor, format) => {
-  const [match] = Array.from(Editor.nodes(editor, {
-    match: (n) => n.type === format,
-  }));
+  const [match] = Array.from(
+    Editor.nodes(editor, {
+      match: (n) => n.type === format,
+    })
+  );
 
   return !!match;
 };

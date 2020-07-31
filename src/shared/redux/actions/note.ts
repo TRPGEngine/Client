@@ -11,6 +11,7 @@ const {
 } = constants;
 import rnStorage from '../../api/rn-storage.api';
 import * as trpgApi from '../../api/trpg.api';
+import { TRPGAction } from '@redux/types/__all__';
 const api = trpgApi.getInstance();
 
 // 同步到服务器
@@ -68,7 +69,7 @@ export const saveNote = function saveNote(uuid, title, content) {
   };
 };
 
-export const getNote = function getNote() {
+export const getNote = function(): TRPGAction {
   return async function(dispatch, getState) {
     const localNote = await rnStorage.get('note');
     if (localNote) {

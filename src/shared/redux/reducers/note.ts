@@ -17,6 +17,7 @@ const {
 } = constants;
 
 const initialState: NoteState = {
+  list: [],
   noteList: {},
   selectedNoteUUID: '',
   isSync: false,
