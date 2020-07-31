@@ -12,14 +12,9 @@ import {
   ContentContainer,
   Sidebar,
   ContentDetail,
+  SidebarHeaderText,
   SidebarItemsContainer,
 } from '../style';
-
-const SidebarHeaderText = styled.div`
-  display: flex;
-  padding: 10px;
-  height: 40px;
-`;
 
 export const Personal: React.FC = TMemo((props) => {
   const converses = useConverses(['user']);

@@ -18,6 +18,13 @@ export const Sidebar = styled.div`
   background-color: ${(props) => props.theme.style.sidebarBackgroundColor};
 `;
 
+export const SidebarHeaderText = styled.div`
+  display: flex;
+  padding: 10px;
+  height: 40px;
+  font-weight: bold;
+`;
+
 export const SidebarItemsContainer = styled.div`
   padding: 8px;
 `;

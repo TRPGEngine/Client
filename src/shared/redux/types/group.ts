@@ -43,6 +43,15 @@ export interface GroupChannel {
   members: string[];
 }
 
+export type GroupPanelType = 'channel' | 'richtext';
+export interface GroupPanel {
+  uuid: string;
+  name: string;
+  type: GroupPanelType;
+  color: string;
+  order: number;
+}
+
 export interface GroupInfo {
   id: number;
   uuid: string;
@@ -70,6 +79,7 @@ export interface GroupInfo {
   // group初始化后获取的参数
   group_actors?: GroupActorType[];
   group_members?: string[];
+  panels?: GroupPanel[];
   extra?: any;
   status?: boolean;
 }

@@ -25,6 +25,7 @@ const {
   UPDATE_GROUP_ACTOR,
   UPDATE_GROUP_ACTOR_MAPPING,
   UPDATE_GROUP_MAP_LIST,
+  UPDATE_GROUP_PANEL_LIST,
   ADD_GROUP_MAP,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
@@ -80,7 +81,7 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
     // 获取团初始数据
     api.emit('group::getGroupInitData', { groupUUID }, function(data) {
       if (data.result) {
-        const { members, groupActors, groupActorsMapping } = data;
+        const { members, groupActors, groupActorsMapping, groupPanels } = data;
 
         // 处理团成员
         const uuidList: string[] = [];
@@ -120,6 +121,15 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
           type: UPDATE_GROUP_ACTOR_MAPPING,
           groupUUID,
           payload: groupActorsMapping,
+        });
+
+        // 处理团面板
+        dispatch({
+          type: UPDATE_GROUP_PANEL_LIST,
+          payload: {
+            groupUUID,
+            groupPanels,
+          },
         });
       } else {
         console.error('获取团初始数据失败:', data.msg);
