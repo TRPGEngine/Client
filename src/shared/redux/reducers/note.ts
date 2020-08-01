@@ -1,10 +1,10 @@
 import constants from '@redux/constants';
 import uuid from 'uuid/v1';
 import { NoteState } from '@redux/types/note';
-import produce from 'immer';
 import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
 import _findIndex from 'lodash/findIndex';
+import { createReducer } from '@reduxjs/toolkit';
 
 const {
   RESET,
@@ -16,7 +16,7 @@ const {
   SYNC_NOTE_REQUEST,
   SYNC_NOTE_SUCCESS,
   SYNC_NOTE_FAILED,
-
+  // =========== 以上为旧版 以下为新版
   CREATE_NOTE,
   GET_USER_NOTES,
 } = constants;
@@ -39,67 +39,66 @@ function getBlankNote() {
   };
 }
 
-export default produce((draft: NoteState, action) => {
-  const payload = action.payload;
-  switch (action.type) {
-    case RESET:
-      return initialState;
-    case ADD_NOTE: {
+export default createReducer(initialState, (builder) => {
+  builder
+    .addCase(RESET, (state) => {
+      state = initialState;
+    })
+    .addCase(ADD_NOTE, (state) => {
       const blankNote = getBlankNote();
       const blankUUID = blankNote.uuid;
-      draft.noteList[blankUUID] = blankNote;
-      draft.selectedNoteUUID = blankUUID;
-      return;
-    }
-    case SAVE_NOTE: {
+      state.noteList[blankUUID] = blankNote;
+      state.selectedNoteUUID = blankUUID;
+    })
+    .addCase(SAVE_NOTE, (state, action: any) => {
       const saveUUID = action.payload.uuid;
       const saveTitle = action.payload.title;
       const saveContent = action.payload.content;
 
-      _set(draft.noteList, [saveUUID, 'title'], saveTitle);
-      _set(draft.noteList, [saveUUID, 'content'], saveContent);
-      _set(draft.noteList, [saveUUID, 'updatedAt'], new Date().getTime());
-      return;
-    }
-    case GET_NOTE:
-      draft.noteList = action.noteList;
-      return;
-    case SWITCH_NOTE:
-      draft.selectedNoteUUID = action.noteUUID;
-      return;
-    case SYNC_NOTE_REQUEST:
-      draft.isSync = true;
-      draft.isSyncUUID = action.uuid;
-      return;
-    case SYNC_NOTE_SUCCESS:
-    case SYNC_NOTE_FAILED:
-      draft.isSync = false;
-      draft.isSyncUUID = '';
-      return;
-    // 以上为旧版的笔记管理系统 已弃置
-    case CREATE_NOTE: {
-      const isExistedItemIndex = draft.list.findIndex(
-        (item) => item.uuid === payload.uuid
+      _set(state.noteList, [saveUUID, 'title'], saveTitle);
+      _set(state.noteList, [saveUUID, 'content'], saveContent);
+      _set(state.noteList, [saveUUID, 'updatedAt'], new Date().getTime());
+    })
+    .addCase(GET_NOTE, (state, action: any) => {
+      state.noteList = action.noteList;
+    })
+    .addCase(SWITCH_NOTE, (state, action: any) => {
+      state.selectedNoteUUID = action.noteUUID;
+    })
+    .addCase(SYNC_NOTE_REQUEST, (state, action: any) => {
+      state.isSync = true;
+      state.isSyncUUID = action.uuid;
+    })
+    .addCase(SYNC_NOTE_SUCCESS, (state) => {
+      state.isSync = false;
+      state.isSyncUUID = '';
+    })
+    .addCase(SYNC_NOTE_FAILED, (state) => {
+      state.isSync = false;
+      state.isSyncUUID = '';
+    });
+  // 以上为旧版的笔记管理系统 已弃置
+
+  builder
+    .addCase(CREATE_NOTE, (state, action: any) => {
+      const isExistedItemIndex = state.list.findIndex(
+        (item) => item.uuid === action.payload.uuid
       );
       if (isExistedItemIndex >= 0) {
         // 如果有重复的则删除先前的
-        draft.list.splice(isExistedItemIndex, 1);
+        state.list.splice(isExistedItemIndex, 1);
       }
-      draft.list.push(payload);
-
-      return;
-    }
-    case GET_USER_NOTES: {
-      const notes = payload;
+      state.list.push(action.payload);
+    })
+    .addCase(GET_USER_NOTES, (state, action: any) => {
+      const notes = action.payload;
 
       for (const note of notes) {
-        if (_findIndex(draft.list, ['uuid', note.uuid]) === -1) {
+        if (_findIndex(state.list, ['uuid', note.uuid]) === -1) {
           // 仅当列表中不存在时才会加入
           // 这样会防止一些操作会覆盖掉之前的
-          draft.list.push(note);
+          state.list.push(note);
         }
       }
-      return;
-    }
-  }
-}, initialState);
+    });
+});
