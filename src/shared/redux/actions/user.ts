@@ -40,7 +40,7 @@ import { setUserSettings, setSystemSettings } from './settings';
 import { reloadConverseList, getUserEmotion } from './chat';
 import { getTemplate, getActor } from './actor';
 import { getGroupList, getGroupInvite } from './group';
-import { getNote } from './note';
+import { getNote, getNotes } from './note';
 import { loadLocalCache } from './cache';
 import { TRPGAction } from '../types/__all__';
 
@@ -61,7 +61,12 @@ function loginSuccess(dispatch, getState) {
   dispatch(getActor());
   dispatch(getGroupList()); // 获取团列表
   dispatch(getGroupInvite());
+
+  /**
+   * @deprecated 旧版的获取笔记 准备弃用
+   */
   dispatch(getNote());
+  dispatch(getNotes()); // 新版的获取笔记 与旧版的不冲突
 
   dispatch(getUserEmotion()); // 获取用户表情数据
 

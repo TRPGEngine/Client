@@ -4,6 +4,7 @@ import { NoteState } from '@redux/types/note';
 import produce from 'immer';
 import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
+import _findIndex from 'lodash/findIndex';
 
 const {
   RESET,
@@ -15,7 +16,9 @@ const {
   SYNC_NOTE_REQUEST,
   SYNC_NOTE_SUCCESS,
   SYNC_NOTE_FAILED,
+
   CREATE_NOTE,
+  GET_USER_NOTES,
 } = constants;
 
 const initialState: NoteState = {
@@ -84,6 +87,18 @@ export default produce((draft: NoteState, action) => {
       }
       draft.list.push(payload);
 
+      return;
+    }
+    case GET_USER_NOTES: {
+      const notes = payload;
+
+      for (const note of notes) {
+        if (_findIndex(draft.list, ['uuid', note.uuid]) === -1) {
+          // 仅当列表中不存在时才会加入
+          // 这样会防止一些操作会覆盖掉之前的
+          draft.list.push(note);
+        }
+      }
       return;
     }
   }

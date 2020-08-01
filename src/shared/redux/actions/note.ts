@@ -9,6 +9,7 @@ const {
   SYNC_NOTE_SUCCESS,
   SYNC_NOTE_FAILED,
   CREATE_NOTE,
+  GET_USER_NOTES,
 } = constants;
 import rnStorage from '../../api/rn-storage.api';
 import * as trpgApi from '../../api/trpg.api';
@@ -96,6 +97,20 @@ export function createNote(): TRPGAction {
     dispatch({
       type: CREATE_NOTE,
       payload: note,
+    });
+  };
+}
+
+/**
+ * 获取笔记
+ */
+export function getNotes(): TRPGAction {
+  return async (dispatch, getState) => {
+    const { notes } = await api.emitP('note::getUserNotes');
+
+    dispatch({
+      type: GET_USER_NOTES,
+      payload: notes,
     });
   };
 }

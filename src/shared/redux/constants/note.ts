@@ -10,4 +10,5 @@ export default {
   // 以上为旧版的笔记管理系统 已弃置
 
   CREATE_NOTE: 'CREATE_NOTE',
+  GET_USER_NOTES: 'GET_USER_NOTES',
 };
