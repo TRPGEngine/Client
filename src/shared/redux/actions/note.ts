@@ -8,6 +8,7 @@ const {
   SYNC_NOTE_REQUEST,
   SYNC_NOTE_SUCCESS,
   SYNC_NOTE_FAILED,
+  CREATE_NOTE,
 } = constants;
 import rnStorage from '../../api/rn-storage.api';
 import * as trpgApi from '../../api/trpg.api';
@@ -81,3 +82,20 @@ export const getNote = function(): TRPGAction {
 export const switchNote = function switchNote(uuid) {
   return { type: SWITCH_NOTE, noteUUID: uuid };
 };
+
+// -------------------------------------- 以上为旧版的笔记管理操作 已弃用
+// -------------------------------------- 以下为旧版的笔记管理操作
+
+/**
+ * 创建笔记
+ */
+export function createNote(): TRPGAction {
+  return async (dispatch, getState) => {
+    const { note } = await api.emitP('note::createNote');
+
+    dispatch({
+      type: CREATE_NOTE,
+      payload: note,
+    });
+  };
+}

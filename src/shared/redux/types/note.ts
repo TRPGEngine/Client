@@ -1,7 +1,9 @@
-interface NoteInfo {
+import type { Node } from 'slate';
+
+export interface NoteInfo {
   uuid: string;
   title: string;
-  data: string; // 笔记内容 为slate的结构化数据
+  data: Node[]; // 笔记内容 为slate的结构化数据
   isSync: boolean;
   updatedAt: number; // 最后编辑的时间戳
 }

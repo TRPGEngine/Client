@@ -14,15 +14,21 @@ import {
   SidebarHeaderText,
   SidebarItemsContainer,
 } from '../style';
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import {
+  useTRPGSelector,
+  useTRPGDispatch,
+} from '@shared/hooks/useTRPGSelector';
 import { SidebarHeader } from '../SidebarHeader';
 import { NotePanel } from './NotePanel';
+import { Iconfont } from '@web/components/Iconfont';
+import { createNote } from '@redux/actions/note';
 
 export const Personal: React.FC = TMemo((props) => {
   const converses = useConverses(['user']);
   const noteList = useTRPGSelector((state) => state.note.list);
+  const dispatch = useTRPGDispatch();
   const handleAddNote = useCallback(() => {
-    console.log('TODO: add note');
+    dispatch(createNote());
   }, []);
 
   return (
@@ -37,11 +43,7 @@ export const Personal: React.FC = TMemo((props) => {
           />
           <SidebarHeader
             title="笔记"
-            action={
-              <i className="iconfont" onClick={handleAddNote}>
-                &#xe604;
-              </i>
-            }
+            action={<Iconfont onClick={handleAddNote}>&#xe604;</Iconfont>}
           />
           <div>
             {noteList.map((note) => {

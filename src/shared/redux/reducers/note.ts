@@ -3,6 +3,7 @@ import uuid from 'uuid/v1';
 import { NoteState } from '@redux/types/note';
 import produce from 'immer';
 import _set from 'lodash/set';
+import _isNil from 'lodash/isNil';
 
 const {
   RESET,
@@ -14,6 +15,7 @@ const {
   SYNC_NOTE_REQUEST,
   SYNC_NOTE_SUCCESS,
   SYNC_NOTE_FAILED,
+  CREATE_NOTE,
 } = constants;
 
 const initialState: NoteState = {
@@ -35,6 +37,7 @@ function getBlankNote() {
 }
 
 export default produce((draft: NoteState, action) => {
+  const payload = action.payload;
   switch (action.type) {
     case RESET:
       return initialState;
@@ -70,5 +73,18 @@ export default produce((draft: NoteState, action) => {
       draft.isSync = false;
       draft.isSyncUUID = '';
       return;
+    // 以上为旧版的笔记管理系统 已弃置
+    case CREATE_NOTE: {
+      const isExistedItemIndex = draft.list.findIndex(
+        (item) => item.uuid === payload.uuid
+      );
+      if (isExistedItemIndex >= 0) {
+        // 如果有重复的则删除先前的
+        draft.list.splice(isExistedItemIndex, 1);
+      }
+      draft.list.push(payload);
+
+      return;
+    }
   }
 }, initialState);
