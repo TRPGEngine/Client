@@ -274,6 +274,17 @@
               </tr>
             </thead>
           </Define>
+          <Define name="customSkill">
+            <Computed target="sum" deps="初始,成长,职业,兴趣" expression="SUM(初始,成长, 职业, 兴趣)" />
+            <tr>
+              <td><Input name="技能" hideLabel="true" inline="true" /></td>
+              <td><Input name="初始" hideLabel="true" inline="true" /></td>
+              <td><Input name="成长" hideLabel="true" inline="true" /></td>
+              <td><Input name="职业" hideLabel="true" inline="true" /></td>
+              <td><Input name="兴趣" hideLabel="true" inline="true" /></td>
+              <td>{{sum}}</td>
+            </tr>
+          </Define>
 
           <Styled>
             <Style>
@@ -437,7 +448,14 @@
                   </tbody>
                 </table>
               </Tab>
-              <Tab label="自定义"></Tab>
+              <Tab label="自定义">
+                <table>
+                  <Use define="skillTableHead" />
+                  <tbody>
+                    <CustomList name="自定义技能" define="customSkill" />
+                  </tbody>
+                </table>
+              </Tab>
             </Tabs>
 
             <!-- 下面是用于将技能里面的数据放到外面方便投骰判定 -->
@@ -570,6 +588,20 @@
             <td><span>{{_get(武器信息, '9', '')}}</span></td>
           </tr>
         </Define>
+        <Define name="customWeapon">
+          <tr>
+            <td><Input name="名称" hideLabel="true" inline="true" /></td>
+            <td><Input name="技能" hideLabel="true" inline="true" /></td>
+            <td><Input name="伤害" hideLabel="true" inline="true" /></td>
+            <td><Input name="贯穿" hideLabel="true" inline="true" /></td>
+            <td><Input name="基础射程" hideLabel="true" inline="true" /></td>
+            <td><Input name="每轮" hideLabel="true" inline="true" /></td>
+            <td><Input name="装弹量" hideLabel="true" inline="true" /></td>
+            <td><Input name="价格" hideLabel="true" inline="true" /></td>
+            <td><Input name="故障值" hideLabel="true" inline="true" /></td>
+            <td><Input name="时代" hideLabel="true" inline="true" /></td>
+          </tr>
+        </Define>
 
         <thead>
           <tr>
@@ -592,6 +624,8 @@
           <Use name="武器3" define="weapon" />
           <Use name="武器4" define="weapon" />
           <Use name="武器5" define="weapon" />
+
+          <CustomList name="自定义武器" define="customWeapon" />
         </tbody>
       </table>
 
