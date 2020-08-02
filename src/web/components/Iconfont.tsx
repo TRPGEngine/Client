@@ -4,5 +4,5 @@ export const Iconfont = styled.i.attrs({
   className: 'iconfont',
 })`
   color: inherit;
-  cursor: ${(props) => (props.onClick ? 'pointer' : 'default')};
+  cursor: ${(props) => (props.onClick ? 'pointer' : 'inherit')};
 `;

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
-export const Button = styled.span<{
+export const ToolbarButton = styled.span<{
   active?: boolean;
   reversed?: boolean;
 }>`
@@ -32,8 +32,8 @@ export const Portal = ({ children }) => {
 
 export const Toolbar = styled(Menu)`
   position: relative;
-  padding: 1px 18px 17px;
-  margin: 0 -20px;
+  padding: 10px 18px;
+  margin: 0;
   border-bottom: 2px solid #eee;
   margin-bottom: 20px;
 `;

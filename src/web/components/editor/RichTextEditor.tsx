@@ -8,56 +8,71 @@ import {
 } from 'slate-react';
 import { Editor, Transforms, Node } from 'slate';
 import { TMemo } from '@shared/components/TMemo';
-import { Button, Toolbar } from './style';
+import { ToolbarButton, Toolbar } from './style';
 import { createFullEditor } from './instance';
 import styled from 'styled-components';
+import { Iconfont } from '../Iconfont';
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `;
 
-export const RichTextEditor: React.FC = TMemo(() => {
-  const [value, setValue] = useState(initialValue);
+const EditArea = styled(Editable).attrs({
+  spellCheck: true,
+  autoFocus: true,
+  placeholder: '请输入文本',
+})`
+  flex: 1;
+  overflow: auto;
+`;
+
+interface RichTextEditorProps {
+  value: Node[];
+  onChange: (val: Node[]) => void;
+  onBlur?: () => void;
+}
+export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(() => createFullEditor(), []);
 
   return (
     <Container>
-      <Slate
-        editor={editor}
-        value={value}
-        onChange={(value) => setValue(value)}
-      >
+      <Slate editor={editor} value={props.value} onChange={props.onChange}>
         <Toolbar>
-          <MarkButton format="bold" icon="format_bold" />
-          <MarkButton format="italic" icon="format_italic" />
-          <MarkButton format="underline" icon="format_underlined" />
-          <MarkButton format="code" icon="code" />
-          <BlockButton format="heading-one" icon="looks_one" />
-          <BlockButton format="heading-two" icon="looks_two" />
-          <BlockButton format="block-quote" icon="format_quote" />
+          <MarkButton format="bold" icon={<Iconfont>&#xe62d;</Iconfont>} />
+          <MarkButton format="italic" icon={<Iconfont>&#xe636;</Iconfont>} />
+          <MarkButton format="underline" icon={<Iconfont>&#xe633;</Iconfont>} />
+          <MarkButton format="code" icon={<Iconfont>&#xe630;</Iconfont>} />
+          <BlockButton
+            format="heading-one"
+            icon={<Iconfont>&#xe646;</Iconfont>}
+          />
+          <BlockButton
+            format="heading-two"
+            icon={<Iconfont>&#xe644;</Iconfont>}
+          />
+          {/* <BlockButton format="block-quote" icon="format_quote" />
           <BlockButton format="numbered-list" icon="format_list_numbered" />
-          <BlockButton format="bulleted-list" icon="format_list_bulleted" />
+          <BlockButton format="bulleted-list" icon="format_list_bulleted" /> */}
         </Toolbar>
-        <Editable
+        <EditArea
           renderElement={renderElement}
           renderLeaf={renderLeaf}
-          placeholder="Enter some rich text…"
-          spellCheck={true}
-          autoFocus={true}
-          onKeyDown={(event) => {
-            // for (const hotkey in HOTKEYS) {
-            //   if (isHotkey(hotkey, event)) {
-            //     event.preventDefault()
-            //     const mark = HOTKEYS[hotkey]
-            //     toggleMark(editor, mark)
-            //   }
-            // }
-          }}
+          onBlur={props.onBlur}
+          // onKeyDown={(event) => {
+          //   for (const hotkey in HOTKEYS) {
+          //     if (isHotkey(hotkey, event)) {
+          //       event.preventDefault()
+          //       const mark = HOTKEYS[hotkey]
+          //       toggleMark(editor, mark)
+          //     }
+          //   }
+          // }}
         />
       </Slate>
     </Container>
@@ -155,7 +170,7 @@ const Leaf: React.FC<RenderLeafProps> = ({ attributes, children, leaf }) => {
 const BlockButton = ({ format, icon }) => {
   const editor = useSlate();
   return (
-    <Button
+    <ToolbarButton
       active={isBlockActive(editor, format)}
       onMouseDown={(event) => {
         event.preventDefault();
@@ -163,14 +178,14 @@ const BlockButton = ({ format, icon }) => {
       }}
     >
       {icon}
-    </Button>
+    </ToolbarButton>
   );
 };
 
 const MarkButton = ({ format, icon }) => {
   const editor = useSlate();
   return (
-    <Button
+    <ToolbarButton
       active={isMarkActive(editor, format)}
       onMouseDown={(event) => {
         event.preventDefault();
@@ -178,7 +193,7 @@ const MarkButton = ({ format, icon }) => {
       }}
     >
       {icon}
-    </Button>
+    </ToolbarButton>
   );
 };
 

@@ -21,10 +21,11 @@ export function useRNStorage<T = {}>(
 
   const set = useCallback(
     (val: T): Promise<T> => {
+      setValue(val!);
+
       const p = isPersist ? rnStorage.save(key, val) : rnStorage.set(key, val);
 
       return p.then((val: any) => {
-        setValue(val!);
         return val!;
       });
     },
