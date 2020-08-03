@@ -42,7 +42,9 @@ export const SidebarItem: React.FC<SidebarItemProps> = TMemo((props) => {
           )}
         </div>
 
-        <Typography style={{ flex: 1 }}>{name}</Typography>
+        <Typography.Text ellipsis={true} style={{ flex: 1 }}>
+          {name}
+        </Typography.Text>
 
         {badge === true ? (
           <Badge status="error" />

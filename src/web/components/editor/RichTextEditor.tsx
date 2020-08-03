@@ -12,10 +12,9 @@ import { ToolbarButton, Toolbar } from './style';
 import { createFullEditor } from './instance';
 import styled from 'styled-components';
 import { Iconfont } from '../Iconfont';
-import isHotkey from 'is-hotkey';
+import { isSaveHotkey } from '@web/utils/hot-key';
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
-const isSaveHotkey = isHotkey('mod+s');
 
 const Container = styled.div`
   display: flex;

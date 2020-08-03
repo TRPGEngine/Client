@@ -14,6 +14,9 @@ import { WebErrorBoundary } from '@web/components/WebErrorBoundary';
 import { AlertErrorView } from '@web/components/AlertErrorView';
 import { syncNote, markUnsyncNote } from '@redux/actions/note';
 import { useDebounce } from 'react-use';
+import { SectionHeader } from '@web/components/SectionHeader';
+import { Input } from 'antd';
+import { isSaveHotkey } from '@web/utils/hot-key';
 
 function getNoteInitData(data?: Node[]): Node[] {
   if (_isEmpty(data)) {
@@ -29,6 +32,7 @@ function getNoteInitData(data?: Node[]): Node[] {
 }
 function useNoteData(noteUUID: string) {
   const noteInfo = useNoteInfo(noteUUID);
+  const [title, setTitle] = useState(noteInfo?.title ?? '');
   const [value, setValue] = useState<Node[]>(() =>
     getNoteInitData(noteInfo?.data)
   );
@@ -39,12 +43,12 @@ function useNoteData(noteUUID: string) {
       dispatch(
         syncNote({
           uuid: noteInfo.uuid,
-          title: noteInfo.title,
+          title,
           data: value,
         })
       );
     }
-  }, [value, noteInfo]);
+  }, [title, value, noteInfo]);
 
   useDebounce(
     () => {
@@ -65,6 +69,8 @@ function useNoteData(noteUUID: string) {
   );
 
   return {
+    title,
+    setTitle,
     value,
     setValue,
     onSave,
@@ -73,11 +79,26 @@ function useNoteData(noteUUID: string) {
 
 const NoteEditor: React.FC<{ noteUUID: string }> = TMemo((props) => {
   const noteUUID = props.noteUUID;
-  const noteInfo = useNoteInfo(noteUUID);
-  const { value, setValue, onSave } = useNoteData(noteUUID);
+  const { title, setTitle, value, setValue, onSave } = useNoteData(noteUUID);
 
   return (
     <WebErrorBoundary renderError={AlertErrorView}>
+      <SectionHeader>
+        <Input
+          style={{ color: 'white' }}
+          placeholder="笔记标题"
+          bordered={false}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          onBlur={onSave}
+          onKeyDown={(e) => {
+            if (isSaveHotkey(e.nativeEvent)) {
+              e.preventDefault();
+              onSave();
+            }
+          }}
+        />
+      </SectionHeader>
       <RichTextEditor
         key={noteUUID}
         value={value}
@@ -101,6 +122,6 @@ export const NotePanel: React.FC = TMemo(() => {
     return <Loading description="正在加载笔记" showAnimation={true} />;
   }
 
-  return <NoteEditor noteUUID={noteUUID} />;
+  return <NoteEditor key={noteUUID} noteUUID={noteUUID} />;
 });
 NotePanel.displayName = 'NotePanel';
