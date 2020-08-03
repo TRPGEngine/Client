@@ -5,6 +5,7 @@ import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
 import _findIndex from 'lodash/findIndex';
 import { createReducer } from '@reduxjs/toolkit';
+import { syncNote, markUnsyncNote } from '@redux/actions/note';
 
 const {
   RESET,
@@ -99,6 +100,30 @@ export default createReducer(initialState, (builder) => {
           // 这样会防止一些操作会覆盖掉之前的
           state.list.push(note);
         }
+      }
+    })
+    .addCase(syncNote.pending, (state, action) => {
+      const noteUUID = action.meta.arg.uuid;
+      const note = state.list.find((n) => n.uuid === noteUUID);
+      if (!_isNil(note)) {
+        note.isSyncing = true;
+      }
+    })
+    .addCase(syncNote.fulfilled, (state, action) => {
+      const payload = action.payload;
+      const noteUUID = payload.uuid;
+      const note = state.list.find((n) => n.uuid === noteUUID);
+      if (!_isNil(note)) {
+        note.title = payload.title;
+        note.data = payload.data;
+        note.isSyncing = false;
+        note.unsync = false;
+      }
+    })
+    .addCase(markUnsyncNote, (state, action) => {
+      const note = state.list.find((n) => n.uuid === action.payload.noteUUID);
+      if (!_isNil(note)) {
+        note.unsync = true;
       }
     });
 });

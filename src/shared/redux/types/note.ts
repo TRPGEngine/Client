@@ -4,7 +4,8 @@ export interface NoteInfo {
   uuid: string;
   title: string;
   data: Node[]; // 笔记内容 为slate的结构化数据
-  isSync: boolean;
+  isSyncing: boolean; // 正在同步
+  unsync: boolean; // 未同步
   updatedAt: number; // 最后编辑的时间戳
 }
 

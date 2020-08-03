@@ -53,6 +53,7 @@ export const Personal: React.FC = TMemo((props) => {
                   icon=""
                   name={note.title}
                   to={`/main/personal/note/${note.uuid}`}
+                  badge={note.unsync}
                 />
               );
             })}

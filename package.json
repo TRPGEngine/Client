@@ -74,6 +74,7 @@
     "handlebars": "^4.4.3",
     "html-to-react": "^1.4.2",
     "immer": "^5.1.0",
+    "is-hotkey": "^0.1.6",
     "is-uuid": "^1.0.2",
     "lodash": "^4.17.15",
     "lorem-ipsum": "^2.0.3",

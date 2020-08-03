@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Avatar } from '@web/components/Avatar';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Typography } from 'antd';
+import { Typography, Badge } from 'antd';
 
 const Container = styled.div`
   cursor: pointer;
@@ -24,9 +24,10 @@ interface SidebarItemProps {
   icon?: string | React.ReactElement;
   name: string;
   to: string;
+  badge?: boolean | number;
 }
 export const SidebarItem: React.FC<SidebarItemProps> = TMemo((props) => {
-  const { icon, name, to } = props;
+  const { icon, name, to, badge } = props;
   const location = useLocation();
   const isActive = location.pathname.startsWith(to);
 
@@ -41,7 +42,13 @@ export const SidebarItem: React.FC<SidebarItemProps> = TMemo((props) => {
           )}
         </div>
 
-        <Typography>{name}</Typography>
+        <Typography style={{ flex: 1 }}>{name}</Typography>
+
+        {badge === true ? (
+          <Badge status="error" />
+        ) : (
+          <Badge count={Number(badge) || 0} />
+        )}
       </Container>
     </Link>
   );

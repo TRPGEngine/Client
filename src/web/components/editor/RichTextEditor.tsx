@@ -12,8 +12,10 @@ import { ToolbarButton, Toolbar } from './style';
 import { createFullEditor } from './instance';
 import styled from 'styled-components';
 import { Iconfont } from '../Iconfont';
+import isHotkey from 'is-hotkey';
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
+const isSaveHotkey = isHotkey('mod+s');
 
 const Container = styled.div`
   display: flex;
@@ -24,16 +26,18 @@ const Container = styled.div`
 const EditArea = styled(Editable).attrs({
   spellCheck: true,
   autoFocus: true,
-  placeholder: '请输入文本',
+  // placeholder: '请输入文本', // NOTE: 这里不使用placeholder的原因是有默认占位符下使用输入法会导致崩溃
 })`
   flex: 1;
   overflow: auto;
+  padding: 0 10px;
 `;
 
 interface RichTextEditorProps {
   value: Node[];
   onChange: (val: Node[]) => void;
   onBlur?: () => void;
+  onSave?: () => void;
 }
 export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
   const renderElement = useCallback((props) => <Element {...props} />, []);
@@ -64,15 +68,12 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
           renderElement={renderElement}
           renderLeaf={renderLeaf}
           onBlur={props.onBlur}
-          // onKeyDown={(event) => {
-          //   for (const hotkey in HOTKEYS) {
-          //     if (isHotkey(hotkey, event)) {
-          //       event.preventDefault()
-          //       const mark = HOTKEYS[hotkey]
-          //       toggleMark(editor, mark)
-          //     }
-          //   }
-          // }}
+          onKeyDown={(e) => {
+            if (isSaveHotkey(e.nativeEvent)) {
+              e.preventDefault();
+              props.onSave?.();
+            }
+          }}
         />
       </Slate>
     </Container>
