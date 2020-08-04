@@ -86,7 +86,11 @@ export default produce((draft: ChatState, action) => {
       return initialState;
     case ADD_CONVERSES: {
       const uuid = action.payload.uuid;
-      if (_isNil(draft.converses[uuid])) {
+      const type = action.payload.type;
+      if (
+        _isNil(draft.converses[uuid]) ||
+        (type === 'group' && _get(draft.converses, ['uuid', 'type']) === 'user') // 这个case会强制将会话列表中错误的用户会话变成团会话
+      ) {
         draft.converses[uuid] = {
           msgList: [],
           lastMsg: '',
