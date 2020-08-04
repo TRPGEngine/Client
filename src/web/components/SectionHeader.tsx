@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TMemo } from '@shared/components/TMemo';
-import { Dropdown } from 'antd';
+import { Dropdown, Button } from 'antd';
 import { Iconfont } from './Iconfont';
 
 export const SectionHeaderContainer = styled.div`

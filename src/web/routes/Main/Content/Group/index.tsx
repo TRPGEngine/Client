@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import {
   ContentContainer,
@@ -12,7 +12,7 @@ import { useJoinedGroupInfo } from '@redux/hooks/group';
 import { SidebarItem } from '../SidebarItem';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { GroupPanel } from './GroupPanel';
-import { GroupMenu } from './GroupMenu';
+import { GroupHeader } from './GroupHeader';
 
 interface GroupParams {
   groupUUID: string;
@@ -20,14 +20,11 @@ interface GroupParams {
 export const Group: React.FC = TMemo(() => {
   const params = useParams<GroupParams>();
   const groupUUID = params.groupUUID;
-  const groupInfo = useJoinedGroupInfo(groupUUID);
 
   return (
     <ContentContainer>
       <Sidebar>
-        <SectionHeader menu={<GroupMenu groupUUID={groupUUID} />}>
-          {groupInfo?.name}
-        </SectionHeader>
+        <GroupHeader groupUUID={groupUUID} />
         <SidebarItemsContainer>
           <SidebarItem
             name="综合"
