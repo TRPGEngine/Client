@@ -125,6 +125,11 @@ const styledTheme = {
         overflow-y: overlay;
       }
     `,
+    oneline: `
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    `,
     linkBtn: `
       font-size: 14px;
       background-color: transparent;

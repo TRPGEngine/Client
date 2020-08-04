@@ -12,6 +12,7 @@ import { useJoinedGroupInfo } from '@redux/hooks/group';
 import { SidebarItem } from '../SidebarItem';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { GroupPanel } from './GroupPanel';
+import { GroupMenu } from './GroupMenu';
 
 interface GroupParams {
   groupUUID: string;
@@ -24,7 +25,9 @@ export const Group: React.FC = TMemo(() => {
   return (
     <ContentContainer>
       <Sidebar>
-        <SectionHeader>{groupInfo?.name}</SectionHeader>
+        <SectionHeader menu={<GroupMenu groupUUID={groupUUID} />}>
+          {groupInfo?.name}
+        </SectionHeader>
         <SidebarItemsContainer>
           <SidebarItem
             name="综合"
