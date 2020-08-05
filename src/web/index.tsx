@@ -23,9 +23,13 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import './components/messageTypes/__all__';
 import '@web/assets/css/iconfont.css';
 import { bindEventFunc } from '@shared/api/listener';
-import { App as NewApp } from './routes/App';
 import { watchLoginStatus } from '@redux/middlewares/watchLoginStatus';
 import { setUser } from './utils/sentry';
+import TLoadable from './components/TLoadable';
+
+const NewApp = TLoadable<{}>(() =>
+  import('./routes/App').then((module) => module.App)
+);
 
 installServiceWorker(); // 注册 service worker 服务
 
