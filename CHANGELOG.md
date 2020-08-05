@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.15](https://github.com/TRPGEngine/Client/compare/v0.3.14...v0.3.15) (2020-08-05)
+
+
+### Features
+
+* **layout:** coc7模板增加自定义的武器和技能 ([51bd7d9](https://github.com/TRPGEngine/Client/commit/51bd7d98ddcd007c3bed95c44f1b754b9acf2e28))
+* **web:** new rich text editor ([54f39ec](https://github.com/TRPGEngine/Client/commit/54f39ec6faa1dcf5c0dd6c6bee25c726f2088f6d))
+
+
+### Bug Fixes
+
+* fix error import ([196d603](https://github.com/TRPGEngine/Client/commit/196d603ae6f6aaed977b8649a3758e2f75888779))
+* **web:** 修复ProfileCard在某些情况下可能会拿不到userInfo导致报错的bug ([4735b0b](https://github.com/TRPGEngine/Client/commit/4735b0b81bb9686e46bd2324e81db2116a899d84))
+* 修复会话系统类型出现错乱的问题 ([5d7e2bb](https://github.com/TRPGEngine/Client/commit/5d7e2bb1503da550f40f371459e3f018e47c2dbf))
+
 ### [0.3.14](https://github.com/TRPGEngine/Client/compare/v0.3.13...v0.3.14) (2020-07-18)
 
 
