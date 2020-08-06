@@ -39,14 +39,14 @@ class ImageViewer extends React.PureComponent<Props> {
   /**
    * 获取当前图片的Url
    */
-  getImageUrlByOffset(offset: number): string {
+  getImageUrlByOffset(offset: number): string | undefined {
     const { originImageUrl, allImageUrls } = this.props;
 
     if (this.state.currentIndex === -1) {
       return offset === 0 ? originImageUrl : undefined;
     }
 
-    return allImageUrls[this.state.currentIndex + offset] ?? undefined;
+    return allImageUrls?.[this.state.currentIndex + offset] ?? undefined;
   }
 
   handleCloseRequest = () => {
@@ -71,9 +71,9 @@ class ImageViewer extends React.PureComponent<Props> {
         {this.props.children}
         {this.props.originImageUrl && this.state.isOpen && (
           <Lightbox
-            mainSrc={this.getImageUrlByOffset(0)}
-            prevSrc={this.getImageUrlByOffset(-1)}
-            nextSrc={this.getImageUrlByOffset(+1)}
+            mainSrc={this.getImageUrlByOffset(0)!}
+            prevSrc={this.getImageUrlByOffset(-1)!}
+            nextSrc={this.getImageUrlByOffset(+1)!}
             imageLoadErrorMessage="图片加载失败"
             onCloseRequest={this.handleCloseRequest}
             onMovePrevRequest={this.handleMovePrevRequest}

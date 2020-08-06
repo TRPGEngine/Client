@@ -64,7 +64,7 @@ export class LayerManager {
   }
 
   getLayer(layerId: string): Layer | null {
-    return this.layers.find((layer) => layer.id === layerId);
+    return this.layers.find((layer) => layer.id === layerId) ?? null;
   }
 
   getLayerByName(layerName: string) {
@@ -113,7 +113,7 @@ export class LayerManager {
   getLayerTokenByGridRectRange(rangeRect: Rect): BaseToken[] {
     const layers = this.getAllLayers();
 
-    const ret = [];
+    const ret: BaseToken[] = [];
     for (const layer of layers) {
       const tokens = layer.tokens;
 

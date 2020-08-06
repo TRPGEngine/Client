@@ -9,7 +9,7 @@ interface TagProps {
   if: any;
 }
 export const TagHiddenShared: TagComponent<TagProps> = TMemo((props) => {
-  const { layoutType } = useContext(LayoutStateContext);
+  const { layoutType } = useContext(LayoutStateContext)!;
   const children = useLayoutChildren(props);
 
   const isHidden = useMemo(() => layoutType === props.in || props.if === true, [

@@ -91,14 +91,18 @@ export default produce((draft: UserState, action) => {
       draft.friendList = action.payload;
       return;
     case SEND_FRIEND_INVITE_SUCCESS: {
-      const toUUID = action.uuid;
-      if (!draft.friendInvite.includes(toUUID)) {
-        draft.friendInvite.push(toUUID);
+      const payload = action.payload;
+
+      const notExist =
+        draft.friendInvite.findIndex((inv) => inv.uuid === payload.uuid) === -1;
+      if (notExist) {
+        draft.friendInvite.push(payload);
       }
       return;
     }
     case GET_FRIEND_INVITE_SUCCESS:
-      draft.friendRequests = action.payload || [];
+      draft.friendInvite = action.payload.invites ?? [];
+      draft.friendRequests = action.payload.requests ?? [];
       return;
     case AGREE_FRIEND_INVITE_SUCCESS: {
       const agreeUUID = action.payload.uuid;

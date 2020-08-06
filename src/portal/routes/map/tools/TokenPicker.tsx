@@ -13,7 +13,7 @@ const Panel = Collapse.Panel;
 
 interface Props {
   actors: GroupActorItem[];
-  tiledMapManagerRef: React.MutableRefObject<TiledMapManager>;
+  tiledMapManagerRef: React.MutableRefObject<TiledMapManager | undefined>;
 }
 export const TokenPicker: React.FC<Props> = TMemo((props) => {
   const tiledMapManagerRef = props.tiledMapManagerRef;
@@ -27,7 +27,7 @@ export const TokenPicker: React.FC<Props> = TMemo((props) => {
       actorToken.gridPosition = { x, y };
       actorToken.buildPromise();
 
-      const manager = tiledMapManagerRef.current;
+      const manager = tiledMapManagerRef.current!;
       manager.addToken(manager.getDefaultLayer().id, actorToken);
     },
     []
@@ -40,7 +40,7 @@ export const TokenPicker: React.FC<Props> = TMemo((props) => {
       imageToken.gridPosition = { x, y };
       imageToken.buildPromise();
 
-      const manager = tiledMapManagerRef.current;
+      const manager = tiledMapManagerRef.current!;
       manager.addToken(manager.getDefaultLayer().id, imageToken);
     },
     []

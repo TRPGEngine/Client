@@ -97,7 +97,7 @@ class GroupActorList extends React.Component<Props, State> {
    */
   handleApplyActor = async () => {
     try {
-      const actorUUID = _head(this.state.selectedActorUUID);
+      const actorUUID = _head(this.state.selectedActorUUID)!;
       const groupActor = await applyGroupActor(this.groupUUID, actorUUID);
 
       this.setState({

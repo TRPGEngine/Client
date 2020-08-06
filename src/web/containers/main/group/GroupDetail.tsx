@@ -38,7 +38,7 @@ import { useGroupWritingState } from '@redux/hooks/chat';
 
 export const GroupDetail: React.FC = TMemo(() => {
   const groupInfo = useSelectedGroupInfo();
-  const groupUUID = groupInfo?.uuid;
+  const groupUUID = groupInfo?.uuid!;
   const selectedGroupActorUUID = useSelectedGroupActorUUID(groupUUID);
   const selfGroupActors = useSelfGroupActors(groupUUID);
   const dispatch = useTRPGDispatch();
@@ -131,7 +131,7 @@ export const GroupDetail: React.FC = TMemo(() => {
 
   // 发送投骰邀请
   const handleSendDiceInv = useCallback(() => {
-    const groupMembers = groupInfo.group_members ?? [];
+    const groupMembers = groupInfo?.group_members ?? [];
     const list = groupMembers
       .filter((uuid) => uuid !== userUUID)
       .map((uuid) => {

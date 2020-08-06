@@ -17,14 +17,14 @@ export type DrawFunction = (ctx: DrawContext) => void;
 export class TiledMapRender {
   private ctx: CanvasRenderingContext2D;
   public position: Position = { x: 0, y: 0 };
-  public manager: TiledMapManager;
-  public layerManager: LayerManager;
+  public manager?: TiledMapManager;
+  public layerManager?: LayerManager;
   public extraDrawFns: DrawFunction[] = []; // 额外的渲染事件, 当所有的基础渲染完毕后调用列表中的渲染事件
   private _originOptions?: TiledMapOptions;
   public readonly fps = 60; // 每秒渲染60帧最高
 
   constructor(private el: HTMLCanvasElement, public options: TiledMapOptions) {
-    this.ctx = el.getContext('2d');
+    this.ctx = el.getContext('2d')!;
 
     this.init();
     this.draw();
@@ -39,7 +39,7 @@ export class TiledMapRender {
   }
 
   get ratio(): number {
-    return this.options.ratio;
+    return this.options.ratio ?? 1;
   }
 
   getCanvasSize(): Size {
@@ -78,7 +78,8 @@ export class TiledMapRender {
   resetOptionSize() {
     const options = this.options;
     this._originOptions = options;
-    const { ratio, size, gridSize, axis } = options;
+    const { size, gridSize, axis } = options;
+    const ratio = this.ratio;
 
     this.options = {
       ...this.options,
@@ -92,8 +93,8 @@ export class TiledMapRender {
       },
       axis: {
         padding: {
-          x: axis.padding.x * ratio,
-          y: axis.padding.y * ratio,
+          x: axis!.padding.x * ratio,
+          y: axis!.padding.y * ratio,
         },
       },
     };
@@ -163,7 +164,7 @@ export class TiledMapRender {
     const ctx = this.ctx;
     const interval = this.options.gridSize;
     const { width, height } = this.options.size;
-    const padding = this.options.axis.padding;
+    const padding = this.options.axis!.padding;
 
     const fontSize = 18;
 
@@ -224,7 +225,7 @@ export class TiledMapRender {
       el: this.el,
       render: this,
       gridSize: this.gridSize,
-      ratio: this.options.ratio,
+      ratio: this.ratio,
     };
   }
 

@@ -5,7 +5,7 @@ import _zip from 'lodash/zip';
 import { useDeepCompareMemo } from '@shared/hooks/useDeepCompareMemo';
 import { TMemo } from '@shared/components/TMemo';
 
-const Radar = TLoadable(() =>
+const Radar = TLoadable<any>(() =>
   import('./radar').then((module) => module.TRadar)
 );
 
@@ -25,7 +25,7 @@ export const TagRadarShared: TagComponent<TagProps> = TMemo((props) => {
 
   const data = useDeepCompareMemo(() => {
     return _zip(dataKey, props.dataValue).map(([name, value]) => ({
-      name,
+      name: name!,
       value: value ?? 0,
     }));
   }, [props.dataValue]);

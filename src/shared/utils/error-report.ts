@@ -3,7 +3,7 @@ import config from '../project.config';
 
 export function sendErrorReport(data) {
   axios
-    .post(config.file.getAbsolutePath('/report/error'), data)
+    .post(config.file.getAbsolutePath!('/report/error'), data)
     .then((res) => {
       console.log(res);
     })

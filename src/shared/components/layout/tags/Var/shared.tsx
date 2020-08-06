@@ -17,7 +17,7 @@ interface TagProps {
 }
 export const TagVarShared: TagComponent<TagProps> = TMemo(
   (props) => {
-    const context = useContext(LayoutStateContext);
+    const context = useContext(LayoutStateContext)!;
 
     const watchDeps = useMemo(() => {
       if (is(props.static)) {

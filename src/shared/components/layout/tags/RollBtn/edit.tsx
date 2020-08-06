@@ -11,11 +11,11 @@ interface TagProps {
   label?: string;
 }
 export const TagRollBtnEdit: TagComponent<TagProps> = TMemo((props) => {
-  const context = useContext(LayoutStateContext);
+  const context = useContext(LayoutStateContext)!;
 
   const items = useMemo(() => {
     return props._childrenEl.map((e) => {
-      const attr = e.attributes;
+      const attr = e.attributes!;
       return {
         dice: String(attr.dice),
         target: String(attr.target),

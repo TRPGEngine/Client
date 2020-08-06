@@ -35,7 +35,7 @@ const PopoverGroupInfo: React.FC<Props> = React.memo((props) => {
   const avatar = useMemo(
     () =>
       _isEmpty(groupInfo.avatar)
-        ? config.defaultImg.getGroup(groupInfo.name)
+        ? config.defaultImg.getGroup(groupInfo.name!)
         : groupInfo.avatar,
     [groupInfo.avatar]
   );

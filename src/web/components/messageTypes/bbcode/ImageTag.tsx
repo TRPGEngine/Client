@@ -9,7 +9,7 @@ const ImageTag: React.FC<TagProps> = React.memo((props) => {
   const { node } = props;
   const { attrs } = node;
   let src = node.content.join('');
-  src = config.file.getAbsolutePath(src);
+  src = config.file.getAbsolutePath!(src);
 
   const imageUrls = useMsgListContextImageUrls();
 

@@ -80,11 +80,11 @@ const DefaultMsgReply: React.FC<{
 
   return useMemo(
     () =>
-      hasContext && (
+      hasContext ? (
         <MsgOperationListItemContainer onClick={handleClick}>
           回复
         </MsgOperationListItemContainer>
-      ),
+      ) : null,
     [hasContext, handleClick]
   );
 });
@@ -117,7 +117,7 @@ class Default extends Base {
     return (
       <pre className="bubble">
         {this.msgDataManager.hasReplyMsg() && (
-          <MsgQuote replyMsg={this.msgDataManager.getReplyMsg()} />
+          <MsgQuote replyMsg={this.msgDataManager.getReplyMsg()!} />
         )}
         <BBCode plainText={info.message} />
         <DefaultAddonContent message={info.message} />

@@ -15,12 +15,12 @@ const hiddenProperty =
     : 'mozHidden' in document
     ? 'mozHidden'
     : null;
-const visibilityChangeEvent = hiddenProperty.replace(
+const visibilityChangeEvent = hiddenProperty?.replace(
   /hidden/i,
   'visibilitychange'
 );
 const onVisibilityChange = function() {
-  if (!document[hiddenProperty]) {
+  if (!document[hiddenProperty ?? '']) {
     // 显示标签页
     tinycon.setBubble(null);
     num = 0;
@@ -28,7 +28,9 @@ const onVisibilityChange = function() {
     // 隐藏标签页
   }
 };
-document.addEventListener(visibilityChangeEvent, onVisibilityChange); // TODO: 需要在electron环境下测试是否可以运行
+if (typeof visibilityChangeEvent === 'string') {
+  document.addEventListener(visibilityChangeEvent, onVisibilityChange); // TODO: 需要在electron环境下测试是否可以运行
+}
 
 export default function(store: TRPGStore) {
   // 通过blur事件处理浏览器不是当前激活窗口的情况

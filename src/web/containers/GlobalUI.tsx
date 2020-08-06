@@ -2,7 +2,7 @@ import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import Lightbox from 'react-image-lightbox';
 import Modal from '../components/Modal';
-import Loading from '../components/Loading';
+import LoadingScreen from '../components/LoadingScreen';
 import Alert from '../components/Alert';
 import { hideLightbox } from '../../shared/redux/actions/ui';
 import { TRPGState } from '@redux/types/__all__';
@@ -24,7 +24,7 @@ class GlobalUI extends React.Component<Props> {
           />
         ) : null}
         <Modal />
-        <Loading
+        <LoadingScreen
           show={this.props.showLoading}
           text={this.props.showLoadingText}
         />

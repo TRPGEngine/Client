@@ -13,8 +13,8 @@ interface Props {
 }
 export const LayoutNode: React.FC<Props> = TMemo((props) => {
   const node = props.node;
-  const type = node.type;
-  const context = useContext(LayoutStateContext);
+  const type = node.type!;
+  const context = useContext(LayoutStateContext)!;
   const layoutType = context.layoutType ?? 'edit';
 
   // 仅渲染元素类型与文本类型与根节点
@@ -59,7 +59,7 @@ export const LayoutNode: React.FC<Props> = TMemo((props) => {
   }, [attributes, context]); // TODO: 需要改为动态依赖
 
   const tag = useMemo(() => {
-    return getTag(layoutType, name);
+    return getTag(layoutType, name!);
   }, [getTag, layoutType, name]);
 
   return useMemo(() => {

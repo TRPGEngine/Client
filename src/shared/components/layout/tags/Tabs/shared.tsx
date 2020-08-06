@@ -34,7 +34,7 @@ export const TagTabsShared: TagComponent<TagProps> = TMemo((props) => {
     return (elements || [])
       .filter((el) => el.name === 'Tab')
       .map((el, index) => {
-        const label = el.attributes.label || '';
+        const label = el.attributes!.label || '';
 
         return (
           <TabPane tab={label} key={`${label}#${index}`}>

@@ -7,7 +7,7 @@ import shortid from 'shortid';
 
 export class Layer {
   private _id: string;
-  desc: string;
+  desc?: string;
   tokens: BaseToken[] = [];
   index: number = 0; // 值越高越晚绘制, 显示越在上面
 
@@ -27,8 +27,8 @@ export class Layer {
     return this.tokens.findIndex((t) => t.id === tokenId) >= 0;
   }
 
-  getToken(tokenId: string): BaseToken {
-    return this.tokens.find((t) => t.id === tokenId);
+  getToken(tokenId: string): BaseToken | null {
+    return this.tokens.find((t) => t.id === tokenId) ?? null;
   }
 
   removeTokenById(tokenId: string) {

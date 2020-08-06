@@ -40,7 +40,7 @@ import { setUserSettings, setSystemSettings } from './settings';
 import { reloadConverseList, getUserEmotion } from './chat';
 import { getTemplate, getActor } from './actor';
 import { getGroupList, getGroupInvite } from './group';
-import { getNote } from './note';
+import { getNote, getNotes } from './note';
 import { loadLocalCache } from './cache';
 import { TRPGAction } from '../types/__all__';
 
@@ -61,13 +61,20 @@ function loginSuccess(dispatch, getState) {
   dispatch(getActor());
   dispatch(getGroupList()); // 获取团列表
   dispatch(getGroupInvite());
+
+  /**
+   * @deprecated 旧版的获取笔记 准备弃用
+   */
   dispatch(getNote());
+  dispatch(getNotes()); // 新版的获取笔记 与旧版的不冲突
 
   dispatch(getUserEmotion()); // 获取用户表情数据
 
   dispatch(fetchWebToken()); // 登录成功后立刻获取最新的jwt信息
 
-  runLoginSuccessCallback();
+  setTimeout(() => {
+    runLoginSuccessCallback();
+  }, 0);
 }
 
 export const login = function(username: string, password: string): TRPGAction {
@@ -91,7 +98,7 @@ export const login = function(username: string, password: string): TRPGAction {
             rnStorage.set({ uuid, token });
           }
           console.log('set user token, user:', uuid);
-          data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
+          data.info.avatar = config.file.getAbsolutePath!(data.info.avatar);
           dispatch({ type: LOGIN_SUCCESS, payload: data.info, isApp });
           loginSuccess(dispatch, getState); // 获取用户信息
         } else {
@@ -114,7 +121,7 @@ export const login = function(username: string, password: string): TRPGAction {
 export const loginWithToken = function(
   uuid: string,
   token: string,
-  channel = null
+  channel: any = null
 ): TRPGAction {
   return function(dispatch, getState) {
     const isApp = config.platform === 'app';
@@ -124,7 +131,7 @@ export const loginWithToken = function(
       { uuid, token, platform: config.platform, isApp, channel },
       function(data) {
         if (data.result) {
-          data.info.avatar = config.file.getAbsolutePath(data.info.avatar);
+          data.info.avatar = config.file.getAbsolutePath!(data.info.avatar);
           dispatch({ type: LOGIN_TOKEN_SUCCESS, payload: data.info, isApp });
           loginSuccess(dispatch, getState); // 获取用户信息
         } else {
@@ -169,7 +176,9 @@ export const logout = function(): TRPGAction {
       if (data.result) {
         rnStorage.remove('uuid');
         rnStorage.remove('token');
-        runLogoutSuccessCallback();
+        setTimeout(() => {
+          runLogoutSuccessCallback();
+        }, 0);
         dispatch({ type: RESET });
       } else {
         dispatch(showAlert(data.msg));
@@ -233,10 +242,11 @@ function getUserInitData(): TRPGAction {
         return;
       }
 
+      const selfUUID = getState().user.info.uuid;
       const { friendList, unprocessedFriendInvites, settings } = data;
 
       // 处理好友列表
-      const uuidList = [];
+      const uuidList: string[] = [];
       for (const item of friendList) {
         const uuid = item.uuid;
         uuidList.push(uuid);
@@ -250,7 +260,16 @@ function getUserInitData(): TRPGAction {
       }
       dispatch({
         type: GET_FRIEND_INVITE_SUCCESS,
-        payload: unprocessedFriendInvites,
+        payload: {
+          // 我接收的
+          requests: unprocessedFriendInvites.filter(
+            (item) => item.to_uuid === selfUUID
+          ),
+          // 我发起的
+          invites: unprocessedFriendInvites.filter(
+            (item) => item.from_uuid === selfUUID
+          ),
+        },
       });
 
       // 获取服务器上的用户设置信息
@@ -275,7 +294,7 @@ export const findUser = function(text: string, type: string): TRPGAction {
             if (!!uuid) {
               checkUser(uuid);
             }
-            user.avatar = config.file.getAbsolutePath(user.avatar);
+            user.avatar = config.file.getAbsolutePath!(user.avatar);
           }
         }
         dispatch({ type: FIND_USER_SUCCESS, payload: list });
@@ -293,7 +312,7 @@ export const updateInfo = function(
   return function(dispatch, getState) {
     return api.emit('player::updateInfo', updatedData, function(data) {
       if (data.result) {
-        data.user.avatar = config.file.getAbsolutePath(data.user.avatar);
+        data.user.avatar = config.file.getAbsolutePath!(data.user.avatar);
         dispatch({ type: UPDATE_INFO_SUCCESS, payload: data.user });
         onSuccess && onSuccess();
       } else {
@@ -340,7 +359,6 @@ export const sendFriendInvite = function(uuid: string): TRPGAction {
         dispatch({
           type: SEND_FRIEND_INVITE_SUCCESS,
           payload: data.invite,
-          uuid,
         });
       } else {
         console.error(data.msg);

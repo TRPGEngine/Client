@@ -12,7 +12,7 @@ interface Props extends MessageProps, DispatchProp<any> {
 class DiceRequest extends BaseCard<Props> {
   getCardBtn() {
     const info = this.props.info;
-    const data = info.data;
+    const data = info.data!;
     const uuid = info.uuid;
     const is_accept = data.is_accept;
     const allow_accept_list = data.allow_accept_list;
@@ -43,5 +43,5 @@ class DiceRequest extends BaseCard<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  selfUUID: state.user.info.uuid,
+  selfUUID: state.user.info.uuid!,
 }))(DiceRequest);

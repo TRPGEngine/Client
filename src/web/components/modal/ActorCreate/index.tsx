@@ -44,11 +44,12 @@ const Actions = styled(Row).attrs(() => ({
 
 const ActorCreate: React.FC = TMemo(() => {
   const [current, setCurrent] = useState(0);
-  const [selectedTemplate, setSelectedTemplate] = useState<ActorTemplateType>(
-    null
-  );
+  const [
+    selectedTemplate,
+    setSelectedTemplate,
+  ] = useState<ActorTemplateType | null>(null);
   const [stateData, setStateData] = useState<DataMap>({});
-  const selfUUID = useTRPGSelector((state) => state.user.info.uuid);
+  const selfUUID = useTRPGSelector((state) => state.user.info.uuid!);
   const dispatch = useTRPGDispatch();
 
   const handleCreateActor = async () => {
@@ -76,12 +77,12 @@ const ActorCreate: React.FC = TMemo(() => {
     console.log('创建人物...');
     dispatch(
       createActor(
-        stateData._name,
-        stateData._avatar,
-        stateData._desc,
+        stateData._name!,
+        stateData._avatar!,
+        stateData._desc!,
         stateData,
-        selectedTemplate.uuid,
-        _get(avatar, 'uuid')
+        selectedTemplate!.uuid,
+        _get(avatar!, 'uuid')
       )
     );
   };
@@ -96,13 +97,13 @@ const ActorCreate: React.FC = TMemo(() => {
     />,
     <CreateActorDetail
       key="create"
-      template={selectedTemplate}
+      template={selectedTemplate!}
       data={stateData}
       onChange={setStateData}
     />,
     <CreateActorConfirm
       key="confirm"
-      template={selectedTemplate}
+      template={selectedTemplate!}
       data={stateData}
     />,
   ];

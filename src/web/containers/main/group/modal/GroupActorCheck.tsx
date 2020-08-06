@@ -55,7 +55,7 @@ export const GroupActorCheck: React.FC<Props> = TMemo((props) => {
 
   return useMemo(
     () =>
-      _isString(layout) && (
+      _isString(layout) ? (
         <ModalPanel
           className="group-actor-check"
           title="审核人物"
@@ -70,7 +70,7 @@ export const GroupActorCheck: React.FC<Props> = TMemo((props) => {
             // onChange={(newState) => setEditingData(newState.data)}
           />
         </ModalPanel>
-      ),
+      ) : null,
     [layout, actions, props.actorData]
   );
 });

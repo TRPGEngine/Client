@@ -25,9 +25,9 @@ class Actor extends BaseCard<Props> {
 
   getCardView() {
     const info = this.props.info;
-    const data = info.data;
+    const data = info.data!;
     const url =
-      config.file.getAbsolutePath(data.avatar) || config.defaultImg.actor;
+      config.file.getAbsolutePath!(data.avatar) || config.defaultImg.actor;
     return (
       <div className="card-content-actor">
         <Avatar className="card-content-avatar" name={data.name} src={url} />
@@ -41,7 +41,7 @@ class Actor extends BaseCard<Props> {
 
   getCardBtn() {
     const info = this.props.info;
-    const data = info.data;
+    const data = info.data!;
     return [
       {
         label: '查看',

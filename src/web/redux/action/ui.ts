@@ -7,6 +7,7 @@ import StandaloneWindow, {
   StandaloneWindowConfig,
 } from '@web/components/StandaloneWindow';
 import { getPortalUrl } from '@shared/utils/string-helper';
+import _isString from 'lodash/isString';
 
 type PortalPreviewType = 'slidepanel' | 'standalonewindow';
 
@@ -20,19 +21,21 @@ export const showPortal = (
   options?: Omit<StandaloneWindowConfig, 'body'>
 ): TRPGAction => {
   return async function(dispatch, getState) {
-    const userUUID = getState().user.info.uuid;
+    const userUUID = getState().user.info.uuid!;
 
     const jwt = await getWebToken(userUUID); // 检查WebToken
 
     // 将获取到的当前用户的WebToken设置到jwt上。jwt为portal需要使用的localStorage
-    window.localStorage.setItem('jwt', jwt);
+    if (_isString(jwt)) {
+      window.localStorage.setItem('jwt', jwt);
+    }
 
     const node = React.createElement(Webview, { src: getPortalUrl(url) });
 
     if (type === 'slidepanel') {
       dispatch(showSlidePanel('', node));
     } else if (type === 'standalonewindow') {
-      StandaloneWindow.open({
+      StandaloneWindow.open!({
         ...options,
         body: node,
       });

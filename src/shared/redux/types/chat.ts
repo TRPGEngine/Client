@@ -66,7 +66,7 @@ export type ChatStateConverseMsgList = MsgPayload[];
 
 export type ChatStateConverse = {
   uuid: string;
-  type: string;
+  type: ConverseType;
   name: string;
   icon?: string;
   lastMsg: string;

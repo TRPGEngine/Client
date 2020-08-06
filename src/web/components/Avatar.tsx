@@ -13,7 +13,7 @@ interface AvatarProps extends AntdAvatarProps {
   name?: string;
 }
 export const Avatar: React.FC<AvatarProps> = TMemo((props) => {
-  const src = !_isEmpty(props.src) ? getAbsolutePath(props.src) : undefined;
+  const src = !_isEmpty(props.src) ? getAbsolutePath(props.src!) : undefined;
 
   const name = useMemo(() => _upperCase(_head(props.name)), [props.name]);
 
@@ -21,7 +21,7 @@ export const Avatar: React.FC<AvatarProps> = TMemo((props) => {
     () =>
       // 如果src为空 且 icon为空 则给个固定颜色
       _isEmpty(src) && _isNil(props.icon)
-        ? getAvatarColorHex(props.name)
+        ? getAvatarColorHex(props.name!)
         : undefined,
     [src, props.name]
   );

@@ -5,6 +5,7 @@ import { useCurrentUserInfo } from '@redux/hooks/user';
 import { useCachedUserInfo } from '@shared/hooks/useCache';
 import config from '@shared/project.config';
 import { MsgPayload } from '@redux/types/chat';
+import { getUserName } from '@shared/utils/data-helper';
 
 interface Props {
   data: MsgPayload;
@@ -16,7 +17,7 @@ export const MessageItem: React.FC<Props> = TMemo((props) => {
   const senderUUID = data.sender_uuid;
   const isMe = selfInfo.uuid === senderUUID;
   const senderInfo = useCachedUserInfo(senderUUID);
-  const name = senderInfo.nickname || senderInfo.username;
+  const name = getUserName(senderInfo);
   const avatar = senderInfo.avatar;
   const defaultAvatar =
     senderUUID === 'trpgsystem'

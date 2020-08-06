@@ -38,14 +38,14 @@ const _upload = function(
   options?: UploadOption
 ) {
   const form = new FormData();
-  form.append(options.uploadField || 'file', file);
+  form.append(options?.uploadField || 'file', file);
   return axios({
     url: fileUrl + path,
     method: 'post',
     data: form,
     headers: {
       'user-uuid': userUUID,
-      ...options.headers,
+      ...options?.headers,
     },
     onUploadProgress: (progressEvent) => {
       if (progressEvent.lengthComputable) {

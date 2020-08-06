@@ -19,7 +19,7 @@ export const getAbsolutePath = (path: string) => {
     return path;
   }
 
-  return config.file.getAbsolutePath(path);
+  return config.file.getAbsolutePath!(path);
 };
 
 /**
@@ -27,7 +27,7 @@ export const getAbsolutePath = (path: string) => {
  * @param path 地址路径
  */
 export const getRelativePath = (path: string) => {
-  return config.file.getRelativePath(path);
+  return config.file.getRelativePath!(path);
 };
 
 /**
@@ -36,7 +36,7 @@ export const getRelativePath = (path: string) => {
  * @param isTemporary 是否为临时文件
  */
 export const getUploadsImagePath = (filename: string, isTemporary = false) => {
-  return config.file.getUploadsImagePath(filename, isTemporary);
+  return config.file.getUploadsImagePath!(filename, isTemporary);
 };
 
 /**

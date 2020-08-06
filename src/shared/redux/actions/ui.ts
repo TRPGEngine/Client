@@ -47,7 +47,7 @@ export const hideModal = function(): TRPGAction {
   return { type: HIDE_MODAL };
 };
 
-let toastTimer: number;
+let toastTimer: number | null;
 export const showToast = function(msg: string): TRPGAction {
   return (dispatch, getState) => {
     dispatch({ type: SHOW_TOAST, text: msg });
@@ -96,7 +96,7 @@ export const hideLightbox = function(): TRPGAction {
 };
 export const switchMenuPannel = function(
   index: number,
-  pannel = null
+  pannel: any = null
 ): TRPGAction {
   return { type: SWITCH_MENU_PANNEL, menuIndex: index, payload: pannel };
 };

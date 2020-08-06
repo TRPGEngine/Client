@@ -12,7 +12,7 @@ export const SocketInfo: React.FC<{
   socketId: string;
 }> = TMemo((props) => {
   const info = useMapMemberSocketInfo(props.socketId);
-  const userInfo = useUserInfo(info?.uuid);
+  const userInfo = useUserInfo(info?.uuid!);
 
   return (
     <Tooltip title={userInfo.name}>

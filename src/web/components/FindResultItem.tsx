@@ -31,9 +31,9 @@ interface Props {
   type?: string;
 }
 class FindResultItem extends React.Component<Props> {
-  getUserAction(uuid) {
+  getUserAction(uuid: string) {
     const friendList = this.props.friendList;
-    const friendInvite = this.props.friendInvite;
+    const friendInvite = this.props.friendInvite.map((item) => item.from_uuid);
     const friendRequests = this.props.friendRequests.map(
       (item) => item.from_uuid
     );
@@ -144,10 +144,10 @@ class FindResultItem extends React.Component<Props> {
 
 export default connect(
   (state: TRPGState) => ({
-    selfUUID: _get(state, ['user', 'info', 'uuid']),
-    friendList: _get(state, ['user', 'friendList']),
-    friendInvite: _get(state, ['user', 'friendInvite']),
-    friendRequests: _get(state, ['user', 'friendRequests']),
+    selfUUID: state.user.info.uuid!,
+    friendList: state.user.friendList,
+    friendInvite: state.user.friendInvite,
+    friendRequests: state.user.friendRequests,
     joinedGroupUUIDs: state.group.groups.map((g) => g.uuid),
     requestingGroupUUID: state.group.requestingGroupUUID,
   }),

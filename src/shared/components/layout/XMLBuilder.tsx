@@ -112,12 +112,12 @@ interface Props {
 }
 const XMLBuilder: React.FC<Props> = TMemo((props) => {
   const { xml = '', onChange, layoutType = 'edit' } = props;
-  const [error, setError] = useState<Error>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [layout, setLayout] = useState<XMLElement>();
 
   const { state, dispatch } = useBuildLayoutStateContext({
-    initialData: props.initialData,
-    onChange,
+    initialData: props.initialData!,
+    onChange: onChange!,
   });
 
   useEffect(() => {
@@ -155,7 +155,7 @@ const XMLBuilder: React.FC<Props> = TMemo((props) => {
     }
 
     try {
-      return <LayoutNode node={layout} />;
+      return <LayoutNode node={layout!} />;
     } catch (err) {
       console.error(err);
       setError(err);

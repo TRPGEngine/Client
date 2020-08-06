@@ -47,7 +47,7 @@ const Container = styled.div`
 `;
 export const GroupMsgReply: React.FC = TMemo(() => {
   const { replyMsg, clearReplyMsg } = useMsgContainerContext();
-  const replyMsgSenderName = useUserName(replyMsg?.sender_uuid);
+  const replyMsgSenderName = useUserName(replyMsg?.sender_uuid!);
 
   const handleClose = useCallback(() => {
     clearReplyMsg();
@@ -56,18 +56,16 @@ export const GroupMsgReply: React.FC = TMemo(() => {
     return <CloseCircleOutlined onClick={handleClose} />;
   }, [handleClose]);
 
-  return (
-    !_isNil(replyMsg) && (
-      <Container>
-        <div>
-          <div className="reply-info">
-            <div>回复 {replyMsgSenderName}:</div>
-            <div title={replyMsg.message}>{replyMsg.message}</div>
-          </div>
-          {closeBtn}
+  return !_isNil(replyMsg) ? (
+    <Container>
+      <div>
+        <div className="reply-info">
+          <div>回复 {replyMsgSenderName}:</div>
+          <div title={replyMsg.message}>{replyMsg.message}</div>
         </div>
-      </Container>
-    )
-  );
+        {closeBtn}
+      </div>
+    </Container>
+  ) : null;
 });
 GroupMsgReply.displayName = 'GroupMsgReply';

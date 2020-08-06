@@ -37,7 +37,7 @@ export function updateActor(
     dispatch(showLoading('正在更新人物卡信息，请稍后...'));
     if (_isString(avatar) && isBlobUrl(avatar)) {
       // 如果avatar是blob url的话, 则上传一下
-      const userUUID = getState().user.info.uuid;
+      const userUUID = getState().user.info.uuid!;
       try {
         const { url } = await toAvatarWithBlobUrl(userUUID, avatar);
         // 上传成功后更新属性
@@ -58,7 +58,7 @@ export function updateActor(
         dispatch(hideAlert());
         if (data.result) {
           const actor = data.actor;
-          actor.avatar = config.file.getAbsolutePath(actor.avatar);
+          actor.avatar = config.file.getAbsolutePath?.(actor.avatar);
           dispatch(hideModal()); // 保存成功后再隐藏模态框
           dispatch({ type: UPDATE_ACTOR_SUCCESS, payload: actor });
         } else {

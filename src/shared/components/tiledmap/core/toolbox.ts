@@ -9,7 +9,7 @@ import { TiledMapManager } from './manager';
 export class Toolbox {
   private tools: TiledMapToolBase[] = [];
   private currentToolName = '';
-  private containerEl: HTMLDivElement;
+  private containerEl?: HTMLDivElement;
 
   iconSize: Size = {
     width: 32,
@@ -129,14 +129,16 @@ export class Toolbox {
 
     this.containerEl
       .querySelector(`.toolbox-item[data-icon-name=${this.currentToolName}]`)
-      .classList.add('toolbox-item-selected');
+      ?.classList.add('toolbox-item-selected');
   }
 
   /**
    * 获取当前的工具
    */
   getCurrentTool(): TiledMapToolBase | null {
-    return this.tools.find((tool) => tool.name === this.currentToolName);
+    return (
+      this.tools.find((tool) => tool.name === this.currentToolName) ?? null
+    );
   }
 
   /**

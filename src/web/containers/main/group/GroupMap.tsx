@@ -47,7 +47,7 @@ export const GroupMap: React.FC = TMemo(() => {
   const { isAlphaUser } = useAlphaUser();
 
   // 获取地图列表
-  const groupInfo = useSelectedGroupInfo();
+  const groupInfo = useSelectedGroupInfo()!;
   const groupUUID = groupInfo.uuid;
   const mapList = groupInfo.maps;
   const dispatch = useTRPGDispatch();
@@ -84,7 +84,7 @@ export const GroupMap: React.FC = TMemo(() => {
       return <p>暂无地图</p>;
     }
 
-    return mapList.map((map) => {
+    return mapList!.map((map) => {
       return (
         <MapItem key={map.uuid}>
           <div className="info">{map.name}</div>

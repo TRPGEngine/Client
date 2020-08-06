@@ -4,9 +4,9 @@ import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import styled from 'styled-components';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { getUserName } from '@shared/utils/data-helper';
-import config from '@shared/project.config';
 import { Divider, Space } from 'antd';
-import { SidebarAvatar } from './SidebarAvatar';
+import { NavbarLink } from './NavbarLink';
+import { MainContent } from './Content';
 
 const Root = styled.div`
   width: 100vw;
@@ -14,21 +14,21 @@ const Root = styled.div`
   position: relative;
 `;
 
-const SideBar = styled.div`
+const NavBar = styled.nav`
   position: absolute;
   left: 0;
   bottom: 0;
   top: 0;
-  width: 72px;
+  width: ${(props) => props.theme.style.navbarWidth};
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   align-items: center;
   padding: 20px 10px;
-  background-color: ${(props) => props.theme.color.graySet[8]};
+  background-color: ${(props) => props.theme.style.navbarBackgroundColor};
 `;
 
-const SidebarSection = styled(Space).attrs({
+const NavbarSection = styled(Space).attrs({
   direction: 'vertical',
 })`
   display: flex;
@@ -44,34 +44,50 @@ const BaseContent = styled.div`
   right: 0;
   bottom: 0;
   top: 0;
-  background-color: ${(props) => props.theme.color.graySet[7]};
+  background-color: ${(props) => props.theme.style.contentBackgroundColor};
+`;
+
+const GroupsContainer = styled(NavbarSection)`
+  flex: 1;
+  overflow: hidden;
+
+  &:hover {
+    overflow: auto;
+    overflow: overlay;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
 `;
 
 export const MainRoute: React.FC = TMemo(() => {
   const groups = useTRPGSelector((state) => state.group.groups);
   const currentUserInfo = useCurrentUserInfo();
   const name = getUserName(currentUserInfo);
-  const avatar = currentUserInfo.avatar ?? config.defaultImg.getUser(name);
+  const avatar = currentUserInfo.avatar;
 
   const sidebar = useMemo(
     () => (
-      <SideBar>
-        <SidebarSection>
-          <SidebarAvatar src={avatar} name={name} size={50} />
-        </SidebarSection>
+      <NavBar>
+        <NavbarSection>
+          <NavbarLink src={avatar} name={name} to="/main/personal" />
+        </NavbarSection>
 
         <Divider />
 
-        <SidebarSection>
+        <GroupsContainer>
           {groups.map((group) => (
-            <SidebarAvatar
+            <NavbarLink
               key={group.uuid}
               src={group.avatar}
               name={group.name}
+              to={`/main/group/${group.uuid}`}
             />
           ))}
-        </SidebarSection>
-      </SideBar>
+        </GroupsContainer>
+      </NavBar>
     ),
     [avatar, name, groups]
   );
@@ -79,7 +95,9 @@ export const MainRoute: React.FC = TMemo(() => {
   return (
     <Root>
       {sidebar}
-      <BaseContent>content</BaseContent>
+      <BaseContent>
+        <MainContent />
+      </BaseContent>
     </Root>
   );
 });

@@ -6,12 +6,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { TRPGState } from '@redux/types/__all__';
 import { requestUpdateGroupInfo } from '@redux/actions/group';
 import { GroupInfo } from '@redux/types/group';
+import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 
 interface Props {}
 const GroupRuleEditor: React.FC<Props> = React.memo((props) => {
   const [content, setContent] = useState('');
   const dispatch = useDispatch();
-  const groupInfo = useSelector<TRPGState, GroupInfo>((state) => {
+  const groupInfo = useTRPGSelector((state) => {
     const selectedGroupUUID = state.group.selectedGroupUUID;
     return state.group.groups.find((group) => group.uuid === selectedGroupUUID);
   });
@@ -21,7 +22,7 @@ const GroupRuleEditor: React.FC<Props> = React.memo((props) => {
 
   const handleSave = useCallback(() => {
     dispatch(
-      requestUpdateGroupInfo(groupUUID, {
+      requestUpdateGroupInfo(groupUUID!, {
         rule: content,
       })
     );
@@ -34,7 +35,7 @@ const GroupRuleEditor: React.FC<Props> = React.memo((props) => {
       padding={0}
       actions={<Button onClick={handleSave}>保存</Button>}
     >
-      <TRPGEditor defaultValue={groupInfo.rule} onChange={setContent} />
+      <TRPGEditor defaultValue={groupInfo?.rule} onChange={setContent} />
     </ModalPanel>
   );
 });

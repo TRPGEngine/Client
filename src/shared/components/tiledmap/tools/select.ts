@@ -26,7 +26,7 @@ export class TiledMapToolSelect extends TiledMapToolBase {
   handlerSize = 8;
 
   drawAlway = (ctx: DrawContext) => {
-    const currentTokens = ctx.render.manager.selectedToken;
+    const currentTokens = ctx.render.manager!.selectedToken;
     if (_isEmpty(currentTokens)) {
       return;
     }
@@ -61,7 +61,7 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     ctx.el.style.cursor = 'default';
   }
 
-  selectionRect: Rect = null;
+  selectionRect: Rect | null = null;
   draw = (ctx: DrawContext) => {
     if (!_isNil(this.selectionRect)) {
       const { canvas } = ctx.render;
@@ -403,6 +403,6 @@ export class TiledMapToolSelect extends TiledMapToolBase {
     return ctx.layerManager.getLayerTokenByGridPosition({
       x: gridPos.x + 0.5,
       y: gridPos.y + 0.5,
-    });
+    })!;
   }
 }

@@ -14,7 +14,7 @@ class MessageHandler extends React.PureComponent<MessageProps> {
 
   static registerMessageHandler(
     messageType: string,
-    messageHandler: React.ComponentType
+    messageHandler: React.ComponentType<any>
   ) {
     if (typeof messageType !== 'string') {
       throw new Error('[registerMessageHandler] messageType mustbe a string');
@@ -23,7 +23,9 @@ class MessageHandler extends React.PureComponent<MessageProps> {
     MessageHandler.messageHandlers[messageType] = messageHandler;
   }
 
-  static registerDefaultMessageHandler(messageHandler: React.ComponentType) {
+  static registerDefaultMessageHandler(
+    messageHandler: React.ComponentType<any>
+  ) {
     MessageHandler.registerMessageHandler('default', messageHandler);
   }
 

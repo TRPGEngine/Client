@@ -23,7 +23,7 @@ export function roll(requestStr: string) {
     const express = requestStr.replace(pattern, function(tag, num, dice) {
       num = num || 1;
       dice = dice || 100;
-      const res = [];
+      const res: number[] = [];
       for (let i = 0; i < num; i++) {
         res.push(rollPoint(dice));
       }

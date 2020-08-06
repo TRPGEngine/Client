@@ -65,7 +65,11 @@ class ActorDetail extends React.Component<Props> {
           </ActionButton>
         ) : null}
         {_get(actorAccess, 'removeable') === true ? (
-          <ActionButton type="danger" onClick={this.handleRemoveActor}>
+          <ActionButton
+            type="primary"
+            danger={true}
+            onClick={this.handleRemoveActor}
+          >
             删除
           </ActionButton>
         ) : null}

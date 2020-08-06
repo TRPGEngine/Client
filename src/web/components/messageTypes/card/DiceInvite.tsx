@@ -13,7 +13,7 @@ class DiceInvite extends BaseCard<Props> {
   getCardBtn() {
     const info = this.props.info;
     const me = this.props.me;
-    const data = info.data;
+    const data = info.data!;
     const uuid = info.uuid;
     const allow_accept_list = data.allow_accept_list;
     const is_accept_list = data.is_accept_list;
@@ -46,5 +46,5 @@ class DiceInvite extends BaseCard<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  selfUUID: state.user.info.uuid,
+  selfUUID: state.user.info.uuid!,
 }))(DiceInvite);

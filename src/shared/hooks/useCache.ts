@@ -23,7 +23,7 @@ function reduxHookCacheFactory<T>(
   cacheScope: CacheKey,
   getCacheDispatch: GetCacheDispatchActionFn
 ) {
-  const isGettingDataUUIDList = []; // 正在请求的UUID列表
+  const isGettingDataUUIDList: string[] = []; // 正在请求的UUID列表
 
   // 检查是否需要跳过处理
   const isSkipUUID = (uuid: string) =>

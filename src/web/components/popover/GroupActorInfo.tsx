@@ -49,7 +49,10 @@ const PopoverGroupActorInfo: React.FC<Props> = TMemo((props) => {
 
   const groupActorInfo: GroupActorType = useMemo(() => {
     const groupActors = _get(groupInfo, ['group_actors'], []);
-    return _find(groupActors, ['uuid', props.groupActorUUID]) || {};
+    return (
+      _find(groupActors, ['uuid', props.groupActorUUID]) ||
+      ({} as GroupActorType)
+    );
   }, [groupInfo, props.groupActorUUID]);
 
   const handleShowActorInfo = useCallback(() => {
@@ -57,8 +60,8 @@ const PopoverGroupActorInfo: React.FC<Props> = TMemo((props) => {
     dispatch(
       showModal(
         <ActorInfo
-          templateUUID={groupActorInfo.actor_template_uuid}
-          data={groupActorInfo.actor_info}
+          templateUUID={groupActorInfo.actor_template_uuid!}
+          data={groupActorInfo.actor_info!}
         />
       )
     );

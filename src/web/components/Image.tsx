@@ -15,7 +15,7 @@ class Image extends React.PureComponent<Props> {
   };
 
   componentDidMount() {
-    let mImg = new window.Image();
+    let mImg: HTMLImageElement | null = new window.Image();
 
     mImg.src = this.props.src;
     mImg.onload = () => {

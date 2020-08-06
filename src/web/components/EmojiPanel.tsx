@@ -44,7 +44,7 @@ interface Props {
 
 const EmojiPanel: React.FC<Props> = React.memo((props) => {
   const onSelect = useCallback((emoji: EmojiData) => {
-    const code = emoji.colons;
+    const code = emoji.colons!;
     _isFunction(props.onSelect) && props.onSelect(code);
   }, []);
 

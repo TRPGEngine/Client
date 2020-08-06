@@ -12,7 +12,7 @@ interface TagProps {
   params: string | string[];
 }
 export const TagFunctionShared: TagComponent<TagProps> = TMemo((props) => {
-  const context = useContext(LayoutStateContext);
+  const context = useContext(LayoutStateContext)!;
   const params = useMemo(() => {
     if (typeof props.params === 'string') {
       return props.params.split(',');

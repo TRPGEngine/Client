@@ -57,7 +57,7 @@ const TRPGReportPreview: React.FC<Props> = TMemo((props) => {
     });
   }, [reportUUID]);
 
-  const containerRef = useRef<HTMLDivElement>();
+  const containerRef = useRef<HTMLDivElement>(null);
   const handleClick = useCallback(() => {
     incPos();
     setTimeout(() => {

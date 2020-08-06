@@ -17,7 +17,7 @@ const DeployLatest: React.FC<Props> = React.memo((props) => {
   }, []);
 
   const handleClick = useCallback(() => {
-    downloadFileWeb(version.download_url);
+    downloadFileWeb(version.download_url!);
   }, [version.download_url]);
 
   return (

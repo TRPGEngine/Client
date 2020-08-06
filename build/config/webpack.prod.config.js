@@ -9,6 +9,9 @@ const OfflinePlugin = require('offline-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
+const DIST_PATH = path.resolve(ROOT_PATH, 'dist');
+
+const extraConfig = {};
 
 const plugins = [
   // 设置最小文件大小
@@ -34,9 +37,10 @@ if (_.get(process, 'env.npm_config_report', false)) {
   // 仅在不使用report功能时生效
   // 增加推送到sentry插件
   const SentryCliPlugin = require('@sentry/webpack-plugin');
+  extraConfig.devtool = 'hidden-source-map'; // 增加编译后输出sourcemap https://webpack.docschina.org/configuration/devtool/
   plugins.push(
     new SentryCliPlugin({
-      include: APP_PATH,
+      include: DIST_PATH,
       ignoreFile: '.sentrycliignore',
       ignore: ['app'],
       configFile: 'sentry.properties',
@@ -51,6 +55,9 @@ module.exports = webpackMerge({}, base, {
   output: {
     filename: '[name].[contenthash].js',
   },
+
+  ...extraConfig,
+
   plugins: [
     ...plugins,
     new OfflinePlugin({

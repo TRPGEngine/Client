@@ -6,7 +6,7 @@ import _get from 'lodash/get';
  * 获取当前选择的团角色的角色信息
  */
 export function getCurrentGroupActor(groupUUID: string) {
-  const state = getStoreState();
+  const state = getStoreState()!;
 
   const userUUID = state.user.info.uuid;
   const groupInfo = state.group.groups.find(

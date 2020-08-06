@@ -34,7 +34,7 @@ export abstract class TiledMapToolBase {
    * 总是绘制的绘制方法
    * 与draw不同的是就算工具不被激活也会渲染
    */
-  drawAlway: DrawFunction = null;
+  drawAlway: DrawFunction | null = null;
 
   // 选择事件
   abstract select(ctx: DrawContext): void;

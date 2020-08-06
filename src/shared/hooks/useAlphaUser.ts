@@ -10,5 +10,5 @@ export function useAlphaUser() {
     true
   );
 
-  return { isAlphaUser, setIsAlphaUser };
+  return { isAlphaUser: isAlphaUser!, setIsAlphaUser };
 }

@@ -43,7 +43,10 @@ export function useGroupWritingState(
  * 获取会话中的消息列表
  * @param converseUUID 会话UUID
  */
-export function useMsgList(converseUUID: string, order?: 'asc' | 'desc') {
+export function useMsgList(
+  converseUUID: string,
+  order: 'asc' | 'desc' = 'asc'
+) {
   const converse = useTRPGSelector(
     (state) => state.chat.converses[converseUUID]
   );
@@ -75,4 +78,14 @@ export function useConverses(
       filterType.includes(converse.type as SimpleConverseType)
     );
   }, [converses, filterType]);
+}
+
+/**
+ * 获取会话详情内容
+ * @param converseUUID 会话UUID
+ */
+export function useConverseDetail(
+  converseUUID: string
+): ChatStateConverse | undefined {
+  return useTRPGSelector((state) => state.chat.converses[converseUUID]);
 }

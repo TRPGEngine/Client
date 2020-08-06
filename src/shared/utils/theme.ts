@@ -7,6 +7,7 @@ import * as antdColor from '@ant-design/colors';
 
 declare module 'styled-components' {
   interface DefaultTheme {
+    style: ThemeType['style'];
     border: ThemeType['border'];
     radius: ThemeType['radius'];
     color: ThemeType['color'];
@@ -16,8 +17,35 @@ declare module 'styled-components' {
   }
 }
 
+// 中性色 来自antd: https://ant.design/docs/spec/colors-cn
+const graySet = [
+  '#ffffff',
+  '#fafafa',
+  '#f5f5f5',
+  '#f0f0f0',
+  '#d9d9d9',
+  '#bfbfbf',
+  '#8c8c8c',
+  '#595959',
+  '#434343',
+  '#262626',
+  '#1f1f1f',
+  '#141414',
+  '#000000',
+];
+
 type ThemeType = typeof styledTheme;
 const styledTheme = {
+  style: {
+    // 这里主要是放一些样式方面的主题设置
+    // 方便统一管理
+    navbarWidth: '72px',
+    navbarBackgroundColor: graySet[9],
+    sidebarWidth: '240px',
+    sidebarBackgroundColor: graySet[8],
+    contentBackgroundColor: graySet[7],
+    sectionHeight: '48px',
+  },
   border: {
     thin: '.5px solid rgba(232, 232, 232, 0.8)',
     standard: '1px solid rgba(232, 232, 232, 0.8)',
@@ -28,21 +56,7 @@ const styledTheme = {
   },
   color: {
     antd: antdColor,
-    graySet: [
-      '#ffffff',
-      '#fafafa',
-      '#f5f5f5',
-      '#f0f0f0',
-      '#d9d9d9',
-      '#bfbfbf',
-      '#8c8c8c',
-      '#595959',
-      '#434343',
-      '#262626',
-      '#1f1f1f',
-      '#141414',
-      '#000000',
-    ], // 中性色 来自antd: https://ant.design/docs/spec/colors-cn
+    graySet,
     borderBase: '#dddddd',
     gallery: '#EFEFEF',
     alabaster: '#FCFCFC',
@@ -78,9 +92,26 @@ const styledTheme = {
     'alizarin-crimson': '#EC2121',
     periwinkle: '#BEC9FF',
     transparent90: 'rgba(0,0,0,0.1)',
+    transparent80: 'rgba(0,0,0,0.2)',
+
+    // 功能性分类
+    textNormal: '#dcddde',
+    textLink: '#00b0f4',
+    textMuted: '#72767d',
+    interactiveActive: '#fff',
+    interactiveHover: '#dcddde',
+    interactiveMuted: '#4f545c',
+    interactiveNormal: '#b9bbbe',
+    headerPrimary: '#fff',
+    headerSecondary: '#b9bbbe',
   },
   boxShadow: {
     normal: 'rgba(0, 0, 0, 0.15) 0 0 8px',
+    elevationStroke: '0 0 0 1px rgba(4,4,5,0.15)',
+    elevationLow:
+      '0 1px 0 rgba(4,4,5,0.2),0 1.5px 0 rgba(6,6,7,0.05),0 2px 0 rgba(4,4,5,0.05)',
+    elevationMedium: '0 4px 4px rgba(0,0,0,0.16)',
+    elevationHigh: '0 8px 16px rgba(0,0,0,0.24)',
   },
   filter: {
     grey100: 'grayscale(100%)',
@@ -93,6 +124,11 @@ const styledTheme = {
         overflow-y: auto;
         overflow-y: overlay;
       }
+    `,
+    oneline: `
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     `,
     linkBtn: `
       font-size: 14px;

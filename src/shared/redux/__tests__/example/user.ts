@@ -14,5 +14,5 @@ export const testUserInfo: UserInfo = {
   app_token: '',
   sex: '男' as const,
   sign: '',
-  alignment: null,
+  alignment: null as any,
 };

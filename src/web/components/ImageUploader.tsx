@@ -104,5 +104,5 @@ class ImageUploader extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  user_uuid: state.user.info.uuid,
+  user_uuid: state.user.info.uuid!,
 }))(ImageUploader);

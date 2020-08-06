@@ -3,7 +3,7 @@ import { Alert } from 'antd';
 import { RenderErrorComponent } from '@shared/components/ErrorBoundary';
 import { TMemo } from '@shared/components/TMemo';
 
-export const PortalErrorView: RenderErrorComponent = TMemo((props) => {
+export const AlertErrorView: RenderErrorComponent = TMemo((props) => {
   return (
     <Alert
       type="error"
@@ -12,4 +12,4 @@ export const PortalErrorView: RenderErrorComponent = TMemo((props) => {
     />
   );
 });
-PortalErrorView.displayName = 'PortalErrorView';
+AlertErrorView.displayName = 'AlertErrorView';

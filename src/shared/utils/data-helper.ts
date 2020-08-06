@@ -49,7 +49,9 @@ export const getGroupActorTemplateUUID = (
  * 获取用户名
  * @param userInfo 用户信息
  */
-export function getUserName(userInfo: Partial<UserInfo>): string {
+export function getUserName(
+  userInfo: Partial<UserInfo> | null | undefined
+): string {
   if (_isNil(userInfo)) {
     return '';
   }

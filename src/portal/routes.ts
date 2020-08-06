@@ -128,4 +128,9 @@ export const routes: RouteConfig[] = [
     path: '/trpg/recruit/:recruitUUID',
     component: TLoadable(() => import('@portal/routes/trpg/recruit/detail')),
   },
+  {
+    title: '富文本编辑器demo',
+    path: '/demo/editor',
+    component: TLoadable(() => import('@portal/routes/demo/editor')),
+  },
 ];

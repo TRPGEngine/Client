@@ -72,6 +72,7 @@ const rnStorage = {
   },
   /**
    * 持久化存储, 永不过期
+   * TODO: 移除key允许为对象的写法
    */
   save: async (key: string | {}, data?: {}) => {
     try {
@@ -96,7 +97,7 @@ const rnStorage = {
       console.error(e);
     }
 
-    return data;
+    return data!;
   },
 };
 

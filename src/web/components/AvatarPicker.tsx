@@ -4,8 +4,9 @@ import { Modal } from 'antd';
 import 'react-image-crop/dist/ReactCrop.css';
 import Avatar from './Avatar';
 import { UserOutlined } from '@ant-design/icons';
+import _isNil from 'lodash/isNil';
 
-let fileUrlTemp: string = null; // 缓存裁剪后的图片url
+let fileUrlTemp: string | null = null; // 缓存裁剪后的图片url
 
 /**
  * 根据裁剪信息裁剪原始图片
@@ -23,21 +24,23 @@ function getCroppedImg(
   const canvas = document.createElement('canvas');
   const scaleX = image.naturalWidth / image.width;
   const scaleY = image.naturalHeight / image.height;
-  canvas.width = crop.width;
-  canvas.height = crop.height;
+  canvas.width = crop.width!;
+  canvas.height = crop.height!;
   const ctx = canvas.getContext('2d');
 
-  ctx.drawImage(
-    image,
-    crop.x * scaleX,
-    crop.y * scaleY,
-    crop.width * scaleX,
-    crop.height * scaleY,
-    0,
-    0,
-    crop.width,
-    crop.height
-  );
+  if (!_isNil(ctx)) {
+    ctx.drawImage(
+      image,
+      crop.x! * scaleX,
+      crop.y! * scaleY,
+      crop.width! * scaleX,
+      crop.height! * scaleY,
+      0,
+      0,
+      crop.width!,
+      crop.height!
+    );
+  }
 
   return new Promise<string>((resolve, reject) => {
     canvas.toBlob((blob) => {
@@ -47,7 +50,7 @@ function getCroppedImg(
         return;
       }
       (blob as any).name = fileName;
-      window.URL.revokeObjectURL(fileUrlTemp);
+      window.URL.revokeObjectURL(fileUrlTemp!);
       fileUrlTemp = window.URL.createObjectURL(blob);
       resolve(fileUrlTemp);
     }, 'image/jpeg');
@@ -69,15 +72,16 @@ const AvatarPicker = (props: Props) => {
   const [originImageUrl, setOriginImageUrl] = useState<string>(''); // 原始图片的url
   const [cropUrl, setCropUrl] = useState<string>(props.imageUrl || ''); // 裁剪后并使用的url
   const fileRef = useRef<HTMLInputElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const imageRef = useRef<HTMLImageElement>();
 
   const handleSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     setModalVisible(true);
 
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
-      reader.addEventListener('load', () =>
-        setOriginImageUrl(reader.result.toString())
+      reader.addEventListener(
+        'load',
+        () => reader.result && setOriginImageUrl(reader.result.toString())
       );
       reader.readAsDataURL(e.target.files[0]);
     }
@@ -86,7 +90,7 @@ const AvatarPicker = (props: Props) => {
   const makeClientCrop = async (crop: Crop) => {
     if (imageRef && crop.width && crop.height) {
       const croppedImageUrl = await getCroppedImg(
-        imageRef.current,
+        imageRef.current!,
         crop,
         'newFile.jpeg'
       );
@@ -95,7 +99,7 @@ const AvatarPicker = (props: Props) => {
 
       // 完成后清理UI
       setModalVisible(false);
-      fileRef.current.value = '';
+      fileRef.current!.value = '';
     }
   };
 
@@ -108,7 +112,7 @@ const AvatarPicker = (props: Props) => {
     <div className={props.className}>
       <div
         style={{ cursor: 'pointer', display: 'inline-block' }}
-        onClick={() => !props.disabled && fileRef.current.click()}
+        onClick={() => !props.disabled && fileRef.current?.click()}
       >
         <input
           ref={fileRef}

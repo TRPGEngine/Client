@@ -3,10 +3,10 @@ import rnStorage from '@shared/api/rn-storage.api';
 
 describe('buildCacheFactory', () => {
   describe('result should be cache', () => {
-    test.each([
+    test.each<[string, CachePolicy]>([
       ['Temporary', CachePolicy.Temporary],
       ['Persistent', CachePolicy.Persistent],
-    ])('%s', async (desc: string, policy: CachePolicy) => {
+    ])('%s', async (desc, policy) => {
       const testFn = jest.fn((a: string) => {
         return a;
       });

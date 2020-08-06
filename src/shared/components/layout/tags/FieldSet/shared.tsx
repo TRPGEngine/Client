@@ -63,7 +63,7 @@ export const TagFieldSetShared: TagComponent<TagProps> = TMemo((props) => {
 
   const orientation = useMemo(
     () =>
-      ['left', 'right', 'center'].includes(props.orientation)
+      ['left', 'right', 'center'].includes(props.orientation!)
         ? props.orientation
         : 'left',
     [props.orientation]

@@ -28,14 +28,14 @@ function getActorAvatarImage(name: string, avatar: string): string {
  */
 export class ActorToken extends ImageToken {
   static TYPE = 'ActorToken';
-  groupActorUUID: string;
-  actorData: GroupActorItem;
+  groupActorUUID?: string;
+  actorData?: GroupActorItem;
 
   getData(): ActorTokenData {
     return {
       ...super.getData(),
       _type: ActorToken.TYPE,
-      groupActorUUID: this.groupActorUUID,
+      groupActorUUID: this.groupActorUUID!,
     };
   }
 
@@ -45,17 +45,17 @@ export class ActorToken extends ImageToken {
   }
 
   buildPromise() {
-    this._promise = fetchGroupActorDetail(this.groupActorUUID)
+    this._promise = fetchGroupActorDetail(this.groupActorUUID!)
       .then((data) => {
         this.actorData = data;
       })
       .then(() => {
-        const { name, avatar } = this.actorData;
+        const { name, avatar } = this.actorData!;
         return loadImageP(getActorAvatarImage(name, avatar));
       })
       .catch((e) => {
         // 增加一层图片加载错误的fallback
-        return loadImageP(config.defaultImg.getUser(this.actorData.name));
+        return loadImageP(config.defaultImg.getUser(this.actorData!.name));
       })
       .then((image) => {
         this.imageSrc = image.src;

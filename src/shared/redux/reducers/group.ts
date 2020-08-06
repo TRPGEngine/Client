@@ -33,6 +33,7 @@ const {
   UPDATE_GROUP_ACTOR,
   UPDATE_GROUP_ACTOR_MAPPING,
   UPDATE_GROUP_MAP_LIST,
+  UPDATE_GROUP_PANEL_LIST,
   ADD_GROUP_MAP,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
@@ -180,7 +181,7 @@ export default produce((draft: GroupState, action) => {
         (group) => group.uuid === action.groupUUID
       );
       if (index >= 0) {
-        draft.groups[index].group_actors.push(action.payload);
+        draft.groups[index].group_actors!.push(action.payload);
       }
       return;
     }
@@ -189,7 +190,7 @@ export default produce((draft: GroupState, action) => {
         (group) => group.uuid === action.groupUUID
       );
       if (groupIndex >= 0) {
-        const group_actors = draft.groups[groupIndex].group_actors;
+        const group_actors = draft.groups[groupIndex].group_actors!;
         _remove(group_actors, (ga) => ga.uuid === action.groupActorUUID);
       }
       return;
@@ -200,11 +201,11 @@ export default produce((draft: GroupState, action) => {
       );
       if (index >= 0) {
         const groupActorUUID = action.payload.uuid;
-        const groupActorIndex = draft.groups[index].group_actors.findIndex(
+        const groupActorIndex = draft.groups[index].group_actors!.findIndex(
           (item) => item.uuid === groupActorUUID
         );
         if (groupActorIndex >= 0) {
-          draft.groups[index].group_actors[groupActorIndex].passed = true;
+          draft.groups[index].group_actors![groupActorIndex].passed = true;
         }
       }
       return;
@@ -216,7 +217,7 @@ export default produce((draft: GroupState, action) => {
       if (index >= 0) {
         const groupActorUUID = action.groupActorUUID;
         _remove(
-          draft.groups[index].group_actors,
+          draft.groups[index].group_actors!,
           (item) => item.uuid === groupActorUUID
         );
       }
@@ -230,7 +231,7 @@ export default produce((draft: GroupState, action) => {
       if (groupIndex === -1) {
         return;
       }
-      const groupActorIndex = draft.groups[groupIndex].group_actors.findIndex(
+      const groupActorIndex = draft.groups[groupIndex].group_actors!.findIndex(
         (g) => g.uuid === action.groupActorUUID
       );
 
@@ -274,7 +275,7 @@ export default produce((draft: GroupState, action) => {
       if (groupIndex === -1) {
         return;
       }
-      const groupActorIndex = draft.groups[groupIndex].group_actors.findIndex(
+      const groupActorIndex = draft.groups[groupIndex].group_actors!.findIndex(
         (ga) => ga.uuid === action.groupActor.uuid
       );
 
@@ -296,13 +297,23 @@ export default produce((draft: GroupState, action) => {
     case UPDATE_GROUP_MAP_LIST: {
       const { groupUUID, groupMaps } = action.payload;
       const group = draft.groups.find((g) => g.uuid === groupUUID);
-      group.maps = groupMaps;
+      if (!_isNil(group)) {
+        group.maps = groupMaps;
+      }
+      return;
+    }
+    case UPDATE_GROUP_PANEL_LIST: {
+      const { groupUUID, groupPanels } = action.payload;
+      const group = draft.groups.find((g) => g.uuid === groupUUID);
+      if (!_isNil(group)) {
+        group.panels = groupPanels ?? [];
+      }
       return;
     }
     case ADD_GROUP_MAP: {
       const { groupUUID, mapUUID, mapName } = action.payload;
-      const group = draft.groups.find((g) => g.uuid === groupUUID);
-      group.maps.push({
+      const group = draft.groups.find((g) => g.uuid === groupUUID)!;
+      group.maps!.push({
         uuid: mapUUID,
         name: mapName,
       });
@@ -317,7 +328,7 @@ export default produce((draft: GroupState, action) => {
         (group) => group.uuid === action.groupUUID
       );
       if (!_isNil(group)) {
-        _remove(group.group_members, (member) => member === action.memberUUID);
+        _remove(group.group_members!, (member) => member === action.memberUUID);
       }
       return;
     }
@@ -330,11 +341,11 @@ export default produce((draft: GroupState, action) => {
         draft.groups[groupIndex].group_members = [];
       }
 
-      const groupMemberIndex = draft.groups[groupIndex].group_members.findIndex(
-        (uuid) => uuid === action.memberUUID
-      );
+      const groupMemberIndex = draft.groups[
+        groupIndex
+      ].group_members!.findIndex((uuid) => uuid === action.memberUUID);
       if (groupMemberIndex === -1) {
-        draft.groups[groupIndex].group_members.push(action.memberUUID);
+        draft.groups[groupIndex].group_members!.push(action.memberUUID);
       }
       return;
     }
@@ -344,7 +355,7 @@ export default produce((draft: GroupState, action) => {
       );
       if (groupIndex >= 0) {
         _remove(
-          draft.groups[groupIndex].group_members,
+          draft.groups[groupIndex].group_members!,
           (member) => member === action.memberUUID
         );
       }
@@ -355,7 +366,7 @@ export default produce((draft: GroupState, action) => {
         (group) => group.uuid === action.groupUUID
       );
       if (!_isNil(group)) {
-        group.managers_uuid.push(action.memberUUID);
+        group.managers_uuid!.push(action.memberUUID);
       }
       return;
     }
@@ -363,7 +374,7 @@ export default produce((draft: GroupState, action) => {
     case UPDATE_GROUP_STATUS: {
       const group = draft.groups.find(
         (group) => group.uuid === action.groupUUID
-      );
+      )!;
       group.status = action.groupStatus;
       return;
     }

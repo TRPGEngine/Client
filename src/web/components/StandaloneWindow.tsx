@@ -96,12 +96,14 @@ const StandaloneWindow: React.FC<StandaloneWindowConfig> & {
   const { width, height } = useWindowSize();
 
   const defaultPos = useMemo(() => {
-    const defaultPos = props.options.default;
+    const defaultPos = props.options!.default!;
 
     return {
       ...defaultPos,
       x: width / 2 + currentWindowNum * 40,
-      y: _isNumber(defaultPos.height) ? height - defaultPos.height : height / 2,
+      y: _isNumber(defaultPos?.height)
+        ? height - defaultPos!.height
+        : height / 2,
     };
   }, []);
 
@@ -154,7 +156,7 @@ StandaloneWindow.open = (config) => {
       onClose={(e) => {
         e.stopPropagation();
         destroy();
-        _isFunction(config.onClose) && config.onClose();
+        _isFunction(config.onClose) && config.onClose(e);
       }}
     />,
     div

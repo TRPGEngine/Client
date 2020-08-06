@@ -31,7 +31,7 @@ export const MsgContainer: React.FC<Props> = TMemo((props) => {
   const selfInfo = useTRPGSelector((state) => state.user.info);
   const userUUID = selfInfo.uuid;
   const dispatch = useTRPGDispatch();
-  const containerRef = useRef<HTMLDivElement>();
+  const containerRef = useRef<HTMLDivElement>(null);
   const isSeekingLogRef = useRef(false);
 
   const msgListEl = useMemo(() => {
@@ -70,6 +70,7 @@ export const MsgContainer: React.FC<Props> = TMemo((props) => {
       }
 
       if (
+        containerRef.current &&
         el &&
         el.nodeName.toLowerCase() === 'img' &&
         el.getAttribute('role') === 'chatimage'
@@ -77,7 +78,7 @@ export const MsgContainer: React.FC<Props> = TMemo((props) => {
         // 仅当加载完毕的元素为聊天图片时
         // 进度条滚动到底部
         setTimeout(() => {
-          scrollTo.bottom(containerRef.current, 100);
+          scrollTo.bottom(containerRef.current!, 100);
         }, 0);
       }
     },
@@ -102,9 +103,13 @@ export const MsgContainer: React.FC<Props> = TMemo((props) => {
   // 获取更多聊天记录
   const prevBottomDistanceRef = useRef(0);
   const handleGetMoreLog = useCallback(() => {
+    if (!containerRef.current) {
+      return;
+    }
+
     prevBottomDistanceRef.current =
       containerRef.current.scrollHeight - containerRef.current.scrollTop; // 记录位置
-    const date = _head(msgList).date;
+    const date = _head(msgList)!.date;
     dispatch(getMoreChatLog(converseUUID, date, !isGroup));
     isSeekingLogRef.current = true;
   }, [msgList, converseUUID, dispatch, isSeekingLogRef, isGroup, containerRef]);
@@ -117,6 +122,10 @@ export const MsgContainer: React.FC<Props> = TMemo((props) => {
 
     // 进度条滚动到底部
     setTimeout(() => {
+      if (!containerRef.current) {
+        return;
+      }
+
       scrollTo.bottom(containerRef.current, 100);
     }, 0);
   }, [msgList, isSeekingLogRef, containerRef]);
@@ -126,11 +135,15 @@ export const MsgContainer: React.FC<Props> = TMemo((props) => {
     if (
       _head(prevMsgList) &&
       _head(msgList) &&
-      _head(msgList).date !== _head(prevMsgList).date
+      _head(msgList)!.date !== _head(prevMsgList)!.date
     ) {
       // 加载更多
       if (containerRef.current) {
         setTimeout(() => {
+          if (!containerRef.current) {
+            return;
+          }
+
           containerRef.current.scrollTop =
             containerRef.current.scrollHeight - prevBottomDistanceRef.current;
         }, 0);

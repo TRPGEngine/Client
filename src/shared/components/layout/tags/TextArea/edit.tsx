@@ -5,7 +5,7 @@ import { useLayoutFormData } from '../../hooks/useLayoutFormData';
 import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
 import { TMemo } from '@shared/components/TMemo';
 import { Input } from 'antd';
-import { AutoSizeType } from 'antd/lib/input/ResizableTextArea';
+import { AutoSizeType } from 'rc-textarea';
 const TextArea = Input.TextArea;
 
 interface TagProps extends TagInputProps {

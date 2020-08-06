@@ -60,7 +60,7 @@ export interface FastFormProps {
 }
 
 type FastFormContextType = ReturnType<typeof useFormik>;
-const FastFormContext = React.createContext<FastFormContextType>(null);
+const FastFormContext = React.createContext<FastFormContextType | null>(null);
 FastFormContext.displayName = 'FastFormContext';
 
 export function useFastFormContext(): FastFormContextType | null {

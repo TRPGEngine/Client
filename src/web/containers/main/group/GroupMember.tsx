@@ -33,7 +33,7 @@ class GroupMember extends React.Component<Props> {
         const lastLogin = user.last_login
           ? moment(user.last_login).format('YYYY-M-D HH:mm:ss')
           : '从未登录';
-        const isManager = groupInfo.managers_uuid.indexOf(uuid) >= 0;
+        const isManager = groupInfo.managers_uuid!.indexOf(uuid) >= 0;
         const isOwner = groupInfo.owner_uuid === uuid;
         const auth = isOwner ? 'owner' : isManager ? 'manager' : 'none';
         const name = user.nickname || user.username;
@@ -86,11 +86,11 @@ class GroupMember extends React.Component<Props> {
 
 export default connect(
   (state: TRPGState) => {
-    const userUUID = state.user.info.uuid;
+    const userUUID = state.user.info.uuid!;
     const selectedGroupUUID = state.group.selectedGroupUUID;
     const groupInfo = state.group.groups.find(
       (group) => group.uuid === selectedGroupUUID
-    );
+    )!;
 
     return {
       userUUID,
