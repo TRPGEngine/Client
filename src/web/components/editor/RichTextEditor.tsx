@@ -14,6 +14,11 @@ import styled from 'styled-components';
 import { Iconfont } from '../Iconfont';
 import { isSaveHotkey } from '@web/utils/hot-key';
 
+interface CustomAction {
+  icon: React.ReactNode;
+  action: () => void;
+}
+
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 
 const Container = styled.div`
@@ -35,6 +40,7 @@ const EditArea = styled(Editable).attrs({
 interface RichTextEditorProps {
   value: Node[];
   onChange: (val: Node[]) => void;
+  customActions?: CustomAction[];
   onBlur?: () => void;
   onSave?: () => void;
 }
@@ -62,6 +68,19 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
           {/* <BlockButton format="block-quote" icon="format_quote" />
           <BlockButton format="numbered-list" icon="format_list_numbered" />
           <BlockButton format="bulleted-list" icon="format_list_bulleted" /> */}
+
+          {/* 自定义操作 */}
+          {props.customActions?.map((item, i) => (
+            <ToolbarButton
+              key={i}
+              onMouseDown={(event) => {
+                event.preventDefault();
+                item.action();
+              }}
+            >
+              {item.icon}
+            </ToolbarButton>
+          ))}
         </Toolbar>
         <EditArea
           renderElement={renderElement}

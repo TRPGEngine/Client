@@ -17,6 +17,7 @@ import { useDebounce } from 'react-use';
 import { SectionHeader } from '@web/components/SectionHeader';
 import { Input } from 'antd';
 import { isSaveHotkey } from '@web/utils/hot-key';
+import { Iconfont } from '@web/components/Iconfont';
 
 function getNoteInitData(data?: Node[]): Node[] {
   if (_isEmpty(data)) {
@@ -81,6 +82,10 @@ const NoteEditor: React.FC<{ noteUUID: string }> = TMemo((props) => {
   const noteUUID = props.noteUUID;
   const { title, setTitle, value, setValue, onSave } = useNoteData(noteUUID);
 
+  const handleRemoveNote = useCallback(() => {
+    // TODO
+  }, []);
+
   return (
     <WebErrorBoundary renderError={AlertErrorView}>
       <SectionHeader>
@@ -103,6 +108,11 @@ const NoteEditor: React.FC<{ noteUUID: string }> = TMemo((props) => {
         key={noteUUID}
         value={value}
         onChange={setValue}
+        customActions={[
+          <Iconfont key="del" onClick={handleRemoveNote}>
+            &#xe76b;
+          </Iconfont>,
+        ]}
         onBlur={onSave}
         onSave={onSave}
       />
@@ -117,6 +127,7 @@ interface NotePanelParams {
 export const NotePanel: React.FC = TMemo(() => {
   const { noteUUID } = useParams<NotePanelParams>();
   const noteInfo = useNoteInfo(noteUUID);
+  const dispatch = useTRPGDispatch();
 
   if (_isNil(noteInfo)) {
     return <Loading description="正在加载笔记" showAnimation={true} />;
