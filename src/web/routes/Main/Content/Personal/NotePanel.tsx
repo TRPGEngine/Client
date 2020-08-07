@@ -12,10 +12,10 @@ import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { Node } from 'slate';
 import { WebErrorBoundary } from '@web/components/WebErrorBoundary';
 import { AlertErrorView } from '@web/components/AlertErrorView';
-import { syncNote, markUnsyncNote } from '@redux/actions/note';
+import { syncNote, markUnsyncNote, deleteNote } from '@redux/actions/note';
 import { useDebounce } from 'react-use';
 import { SectionHeader } from '@web/components/SectionHeader';
-import { Input } from 'antd';
+import { Input, Empty, Modal } from 'antd';
 import { isSaveHotkey } from '@web/utils/hot-key';
 import { Iconfont } from '@web/components/Iconfont';
 
@@ -81,16 +81,23 @@ function useNoteData(noteUUID: string) {
 const NoteEditor: React.FC<{ noteUUID: string }> = TMemo((props) => {
   const noteUUID = props.noteUUID;
   const { title, setTitle, value, setValue, onSave } = useNoteData(noteUUID);
+  const dispatch = useTRPGDispatch();
 
-  const handleRemoveNote = useCallback(() => {
-    // TODO
-  }, []);
+  // 删除笔记
+  const handleDeleteNote = useCallback(() => {
+    Modal.confirm({
+      content: '确定要删除该笔记么',
+      onOk: () => {
+        dispatch(deleteNote({ uuid: noteUUID }));
+      },
+    });
+  }, [noteUUID]);
 
   return (
     <WebErrorBoundary renderError={AlertErrorView}>
       <SectionHeader>
         <Input
-          style={{ color: 'white' }}
+          style={{ color: 'white', fontWeight: 'bold' }}
           placeholder="笔记标题"
           bordered={false}
           value={title}
@@ -109,9 +116,10 @@ const NoteEditor: React.FC<{ noteUUID: string }> = TMemo((props) => {
         value={value}
         onChange={setValue}
         customActions={[
-          <Iconfont key="del" onClick={handleRemoveNote}>
-            &#xe76b;
-          </Iconfont>,
+          {
+            icon: <Iconfont key="del">&#xe76b;</Iconfont>,
+            action: handleDeleteNote,
+          },
         ]}
         onBlur={onSave}
         onSave={onSave}
@@ -127,10 +135,9 @@ interface NotePanelParams {
 export const NotePanel: React.FC = TMemo(() => {
   const { noteUUID } = useParams<NotePanelParams>();
   const noteInfo = useNoteInfo(noteUUID);
-  const dispatch = useTRPGDispatch();
 
   if (_isNil(noteInfo)) {
-    return <Loading description="正在加载笔记" showAnimation={true} />;
+    return <Empty style={{ paddingTop: 100 }} description="找不到笔记" />;
   }
 
   return <NoteEditor key={noteUUID} noteUUID={noteUUID} />;

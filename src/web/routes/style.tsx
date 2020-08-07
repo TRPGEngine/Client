@@ -9,6 +9,10 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  h1, h2, h3, h4, h5 {
+    color: ${(props) => props.theme.color.textNormal};
+  }
+
 
   /* 新版滚动条 */
   ::-webkit-scrollbar {
