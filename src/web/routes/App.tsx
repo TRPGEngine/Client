@@ -11,6 +11,7 @@ import Login from '@web/containers/Login';
 import Register from '@web/containers/Register';
 import { MainRoute } from './Main';
 import { GlobalStyle } from './style';
+import { t } from '@shared/i18n';
 
 // 新版Web页面
 
@@ -33,7 +34,9 @@ export const App = TMemo(() => {
             <Route name="index" path="/" component={LaunchRoute} />
           </Switch>
           {config.platform === 'web' ? <NetworkIndicator /> : null}
-          <div className="version">当前版本号v{config.version}</div>
+          <div className="version">
+            {t('当前版本号')} v{config.version}
+          </div>
           <AppBanner />
         </div>
       </ErrorBoundary>
