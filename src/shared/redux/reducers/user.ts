@@ -85,6 +85,10 @@ export default produce((draft: UserState, action) => {
       if (!draft.friendList.includes(friendUUID)) {
         draft.friendList.push(friendUUID);
       }
+
+      // 检查一下移除好友请求与好友邀请
+      _remove(draft.friendInvite, (item) => item.to_uuid === friendUUID); // 好友邀请的to_uuid是目标的UUID
+      _remove(draft.friendRequests, (item) => item.from_uuid === friendUUID); // 好友请求的from_uuid是目标的UUID
       return;
     }
     case GET_FRIENDS_SUCCESS:
