@@ -12,6 +12,7 @@ import Register from '@web/containers/Register';
 import { MainRoute } from './Main';
 import { GlobalStyle } from './style';
 import { t } from '@shared/i18n';
+import { LoginCheck } from './LoginCheck';
 
 // 新版Web页面
 
@@ -38,6 +39,7 @@ export const App = TMemo(() => {
             {t('当前版本号')} v{config.version}
           </div>
           <AppBanner />
+          <LoginCheck />
         </div>
       </ErrorBoundary>
     </Router>
