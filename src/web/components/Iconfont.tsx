@@ -5,4 +5,5 @@ export const Iconfont = styled.i.attrs({
 })`
   color: inherit;
   cursor: ${(props) => (props.onClick ? 'pointer' : 'inherit')};
+  font-size: inherit;
 `;

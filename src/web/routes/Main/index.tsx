@@ -7,6 +7,7 @@ import { getUserName } from '@shared/utils/data-helper';
 import { Divider, Space } from 'antd';
 import { NavbarLink } from './NavbarLink';
 import { MainContent } from './Content';
+import { Iconfont } from '@web/components/Iconfont';
 
 const Root = styled.div`
   width: 100vw;
@@ -86,6 +87,11 @@ export const MainRoute: React.FC = TMemo(() => {
               to={`/main/group/${group.uuid}`}
             />
           ))}
+          <NavbarLink
+            icon={<Iconfont>&#xe604;</Iconfont>}
+            name="添加团"
+            to="/main/group/find"
+          />
         </GroupsContainer>
       </NavBar>
     ),

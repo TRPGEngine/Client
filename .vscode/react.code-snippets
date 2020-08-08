@@ -25,6 +25,7 @@
       "}",
       "export const $1 = (props: $1Props) => {",
       "  const { $3 } = props;",
+      "",
       "  return null;",
       "};",
       "$1.displayName = '$1';"
@@ -42,6 +43,7 @@
       "}",
       "export const $1: React.FC<$1Props> = TMemo((props) => {",
       "  const { $3 } = props;",
+      "",
       "  return null;",
       "});",
       "$1.displayName = '$1';"
