@@ -1,12 +1,18 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import {
+  useTRPGSelector,
+  useTRPGDispatch,
+} from '@shared/hooks/useTRPGSelector';
 import { Tabs, Badge, Tooltip, Button, Typography } from 'antd';
 import { UserListItem } from '@web/components/UserListItem';
 import { PillTabs } from '@web/components/PillTabs';
 import styled from 'styled-components';
 import { MessageOutlined, CloseOutlined } from '@ant-design/icons';
 import { AddFriend } from './AddFriend';
+import { t } from '@shared/i18n';
+import { useHistory } from 'react-router';
+import { addUserConverse } from '@redux/actions/chat';
 const { TabPane } = Tabs;
 
 const PaneContainer = styled.div`
@@ -21,6 +27,13 @@ export const FriendPanel: React.FC = TMemo(() => {
   const friendList = useTRPGSelector((state) => state.user.friendList);
   const friendInvite = useTRPGSelector((state) => state.user.friendInvite);
   const friendRequests = useTRPGSelector((state) => state.user.friendRequests);
+  const history = useHistory();
+  const dispatch = useTRPGDispatch();
+
+  const handleNavMsg = (userUUID: string) => {
+    dispatch(addUserConverse([userUUID]));
+    history.push(`/main/personal/converse/${userUUID}`);
+  };
 
   const friendListPane = useMemo(
     () => (
@@ -31,8 +44,12 @@ export const FriendPanel: React.FC = TMemo(() => {
               key={uuid}
               userUUID={uuid}
               actions={[
-                <Tooltip title="发送消息" key="sendMsg">
-                  <Button shape="circle" icon={<MessageOutlined />} />
+                <Tooltip title={t('发送消息')} key="sendMsg">
+                  <Button
+                    shape="circle"
+                    icon={<MessageOutlined />}
+                    onClick={() => handleNavMsg(uuid)}
+                  />
                 </Tooltip>,
               ]}
             />

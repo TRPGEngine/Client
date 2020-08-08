@@ -17,7 +17,7 @@ export const t: TFunction = (key, defaultValue?, options?) => {
   let words = i18next.t(hashKey);
   if (words === hashKey) {
     words = key;
-    console.log(`翻译缺失: [${hashKey}]${key}`);
+    console.warn(`翻译缺失: [${hashKey}]${key}`);
   }
   return words;
 };
