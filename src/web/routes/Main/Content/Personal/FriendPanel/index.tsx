@@ -37,7 +37,7 @@ export const FriendPanel: React.FC = TMemo(() => {
 
   const friendListPane = useMemo(
     () => (
-      <TabPane tab="全部" key="1">
+      <TabPane tab={t('全部')} key="1">
         <PaneContainer>
           {friendList.map((uuid) => (
             <UserListItem

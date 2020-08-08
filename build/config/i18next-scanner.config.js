@@ -12,6 +12,7 @@ module.exports = {
   output: './', //输出目录
   options: {
     debug: true,
+    sort: true,
     func: false,
     trans: false,
     lngs: ['zh-CN', 'en-US'],
@@ -20,25 +21,31 @@ module.exports = {
       loadPath: './src/shared/i18n/langs/{{lng}}/{{ns}}.json', //输入路径
       savePath: './src/shared/i18n/langs/{{lng}}/{{ns}}.json', //输出路径
       jsonIndent: 2,
-      lineEnding: '\n'
+      lineEnding: '\n',
+      endWithEmptyTrans: true,
     },
     removeUnusedKeys: true,
     nsSeparator: false, // namespace separator
     keySeparator: false, // key separator
     interpolation: {
       prefix: '{{',
-      suffix: '}}'
-    }
+      suffix: '}}',
+    },
   },
-  transform: function customTransform(file, enc, done) {//自己通过该函数来加工key或value
-    "use strict";
+  transform: function customTransform(file, enc, done) {
+    //自己通过该函数来加工key或value
+    'use strict';
     const parser = this.parser;
     const content = fs.readFileSync(file.path, enc);
-    parser.parseFuncFromString(content, { list: ['lang', 't'] }, (key, options) => {
-      options.defaultValue = key;
-      let hashKey=`k${crc32(key).toString(16)}`;
-      parser.set(hashKey, options);
-    });
+    parser.parseFuncFromString(
+      content,
+      { list: ['lang', 't'] },
+      (key, options) => {
+        options.defaultValue = key;
+        let hashKey = `k${crc32(key).toString(16)}`;
+        parser.set(hashKey, options);
+      }
+    );
     done();
-  }
+  },
 };
