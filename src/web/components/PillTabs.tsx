@@ -42,3 +42,4 @@ export const PillTabs = styled(Tabs).attrs({
     }
   }
 `;
+PillTabs.TabPane = Tabs.TabPane;

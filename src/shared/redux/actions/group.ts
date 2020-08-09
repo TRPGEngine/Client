@@ -237,7 +237,7 @@ export function updateGroupInfo(groupInfo: object): TRPGAction {
   return { type: UPDATE_GROUP_INFO, payload: groupInfo };
 }
 
-export const findGroup = function(text, type) {
+export function findGroup(text: string, type: string): TRPGAction {
   return function(dispatch, getState) {
     dispatch({ type: FIND_GROUP_REQUEST });
     console.log('搜索团:', text, type);
@@ -253,7 +253,7 @@ export const findGroup = function(text, type) {
       }
     });
   };
-};
+}
 
 /**
  * 发送申请加入团

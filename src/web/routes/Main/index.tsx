@@ -90,7 +90,7 @@ export const MainRoute: React.FC = TMemo(() => {
           <NavbarLink
             icon={<Iconfont>&#xe604;</Iconfont>}
             name="添加团"
-            to="/main/group/find"
+            to="/main/group/add"
           />
         </GroupsContainer>
       </NavBar>
