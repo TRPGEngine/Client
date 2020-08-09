@@ -130,6 +130,8 @@ const styledTheme = {
       text-overflow: ellipsis;
       white-space: nowrap;
     `,
+    transition: (property: string, duration: number) =>
+      `transition: ${property} ${duration}s ease-in-out;`,
     linkBtn: `
       font-size: 14px;
       background-color: transparent;

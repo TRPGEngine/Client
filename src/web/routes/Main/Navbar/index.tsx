@@ -7,6 +7,7 @@ import { NavbarLink } from './NavbarLink';
 import { Iconfont } from '@web/components/Iconfont';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import { TMemo } from '@shared/components/TMemo';
+import { MobileNavbarSwitch } from './MobileNavbarSwitch';
 
 const NavBar = styled.nav`
   position: absolute;
@@ -53,6 +54,8 @@ export const MainNavbar: React.FC = TMemo(() => {
 
   return (
     <NavBar>
+      <MobileNavbarSwitch />
+
       <NavbarSection>
         <NavbarLink src={avatar} name={name} to="/main/personal" />
       </NavbarSection>

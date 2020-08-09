@@ -3,6 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { MainContent } from './Content';
 import { MainNavbar } from './Navbar';
+import { SidebarContextProvider } from './SidebarContext';
 
 const Root = styled.div`
   width: 100vw;
@@ -23,12 +24,14 @@ const BaseContent = styled.div`
 
 export const MainRoute: React.FC = TMemo(() => {
   return (
-    <Root>
-      <MainNavbar />
-      <BaseContent>
-        <MainContent />
-      </BaseContent>
-    </Root>
+    <SidebarContextProvider>
+      <Root>
+        <MainNavbar />
+        <BaseContent>
+          <MainContent />
+        </BaseContent>
+      </Root>
+    </SidebarContextProvider>
   );
 });
 MainRoute.displayName = 'MainRoute';
