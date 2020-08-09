@@ -219,6 +219,10 @@ module.exports = {
         to: `${dllHashName}.js`,
       },
       {
+        from: path.resolve(BUILD_PATH, './config/dll/dll_vendor.js.map'),
+        to: `${dllHashName}.js.map`,
+      },
+      {
         from: path.resolve(APP_PATH, './web/assets'),
         to: './src/web/assets',
         ignore: ['fonts/*.html'],

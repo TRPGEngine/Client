@@ -27,4 +27,5 @@ module.exports = {
     new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /zh-cn/),
   ],
   mode: 'production',
+  devtool: 'hidden-source-map',
 };
