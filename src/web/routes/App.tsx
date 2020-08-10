@@ -13,6 +13,7 @@ import { MainRoute } from './Main';
 import { GlobalStyle } from './style';
 import { t } from '@shared/i18n';
 import { LoginCheck } from './LoginCheck';
+import { PortalProvider } from '@web/components/portal/PortalProvider';
 
 // 新版Web页面
 
@@ -28,18 +29,20 @@ export const App = TMemo(() => {
         <GlobalStyle />
         <GlobalUI />
         <div className="app">
-          <Switch>
-            <Route name="login" path="/login" component={Login} />
-            <Route name="register" path="/register" component={Register} />
-            <Route name="main" path="/main" component={MainRoute} />
-            <Route name="index" path="/" component={LaunchRoute} />
-          </Switch>
-          {config.platform === 'web' ? <NetworkIndicator /> : null}
-          <div className="version">
-            {t('当前版本号')} v{config.version}
-          </div>
-          <AppBanner />
-          <LoginCheck />
+          <PortalProvider>
+            <Switch>
+              <Route name="login" path="/login" component={Login} />
+              <Route name="register" path="/register" component={Register} />
+              <Route name="main" path="/main" component={MainRoute} />
+              <Route name="index" path="/" component={LaunchRoute} />
+            </Switch>
+            {config.platform === 'web' ? <NetworkIndicator /> : null}
+            <div className="version">
+              {t('当前版本号')} v{config.version}
+            </div>
+            <AppBanner />
+            <LoginCheck />
+          </PortalProvider>
         </div>
       </ErrorBoundary>
     </Router>

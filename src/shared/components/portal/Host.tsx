@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, Fragment } from 'react';
-import { DeviceEventEmitter, NativeEventEmitter, View } from 'react-native';
+import { DeviceEventEmitter, NativeEventEmitter } from 'react-native';
 import { useEffect } from 'react';
 import { TMemo } from '../TMemo';
 import PortalManager from './Manager';
