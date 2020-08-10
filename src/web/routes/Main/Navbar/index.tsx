@@ -8,6 +8,7 @@ import { Iconfont } from '@web/components/Iconfont';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import { TMemo } from '@shared/components/TMemo';
 import { MobileNavbarSwitch } from './MobileNavbarSwitch';
+import { MoreAction } from './MoreAction';
 
 const NavBar = styled.nav`
   position: absolute;
@@ -46,6 +47,10 @@ const GroupsContainer = styled(NavbarSection)`
   }
 `;
 
+const NavbarFooter = styled.div`
+  font-size: 26px;
+`;
+
 export const MainNavbar: React.FC = TMemo(() => {
   const groups = useTRPGSelector((state) => state.group.groups);
   const currentUserInfo = useCurrentUserInfo();
@@ -77,6 +82,10 @@ export const MainNavbar: React.FC = TMemo(() => {
           to="/main/group/add"
         />
       </GroupsContainer>
+
+      <NavbarFooter>
+        <MoreAction />
+      </NavbarFooter>
     </NavBar>
   );
 });
