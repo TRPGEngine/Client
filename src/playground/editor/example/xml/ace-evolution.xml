@@ -48,7 +48,7 @@
       <table>
         <thead>
           <tr>
-            <td width="80"></td>
+            <td width="80" />
             <td width="40">总属性</td>
             <td width="60">基础属性</td>
             <td width="60">职业加成</td>
@@ -111,8 +111,14 @@
           <InputNumber name="精神力值" desc="精神力+调整值" />
           <InputNumber name="感知距离" desc="精神力X5+调整值" />
           <InputNumber name="视觉距离" desc="精神力X10+调整值" />
-          <InputNumber name="原地/助跑跳远距离" desc="【2+力量/10】/（【原地跳跃距离+敏捷/10】+调整值" />
-          <InputNumber name="原地/助跑跳跃高度" desc="【1+力量/15】/（【原地跳跃高度+敏捷/20】+调整值" />
+          <InputNumber
+            name="原地/助跑跳远距离"
+            desc="【2+力量/10】/（【原地跳跃距离+敏捷/10】+调整值"
+          />
+          <InputNumber
+            name="原地/助跑跳跃高度"
+            desc="【1+力量/15】/（【原地跳跃高度+敏捷/20】+调整值"
+          />
           <InputNumber name="体积" desc="成年男子5" />
         </FieldSet>
       </Col>
@@ -193,7 +199,9 @@
           <Row>
             <Col md="12">
               <FieldSet label="梦魇印记储存位">
-                <Tip>每格可携带物品大小为1X1X1M，可组合使用，不同种物品不可重复使用</Tip>
+                <Tip>
+                  每格可携带物品大小为1X1X1M，可组合使用，不同种物品不可重复使用
+                </Tip>
 
                 <CustomList name="印记储存位" define="item" />
               </FieldSet>
@@ -216,7 +224,10 @@
         <FieldSet label="装备">
           <h2>武器</h2>
           <Input name="主手武器" />
-          <Input name="副手武器" desc="PS1：通常情况下，只能装备一件单手武器，当你双持单手武器时，将失去第二把单手武器带来的所有效果。\nPS2：武器分类特效，详见子项。" />
+          <Input
+            name="副手武器"
+            desc="PS1：通常情况下，只能装备一件单手武器，当你双持单手武器时，将失去第二把单手武器带来的所有效果。\nPS2：武器分类特效，详见子项。"
+          />
 
           <h2>防具</h2>
           <Input name="头部" />
@@ -235,9 +246,18 @@
           <Input name="项链" />
           <Input name="戒指（左）" />
           <Input name="戒指（右）" />
-          <Input name="勋章1" desc="三枚，进入空间时只会开启第一个勋章位，后两位需特殊道具及完成相关任务" />
-          <Input name="勋章2" desc="三枚，进入空间时只会开启第一个勋章位，后两位需特殊道具及完成相关任务" />
-          <Input name="勋章3" desc="三枚，进入空间时只会开启第一个勋章位，后两位需特殊道具及完成相关任务" />
+          <Input
+            name="勋章1"
+            desc="三枚，进入空间时只会开启第一个勋章位，后两位需特殊道具及完成相关任务"
+          />
+          <Input
+            name="勋章2"
+            desc="三枚，进入空间时只会开启第一个勋章位，后两位需特殊道具及完成相关任务"
+          />
+          <Input
+            name="勋章3"
+            desc="三枚，进入空间时只会开启第一个勋章位，后两位需特殊道具及完成相关任务"
+          />
           <Input name="耳环" />
           <Input name="耳环（左）" />
           <Input name="耳环（右）" />
@@ -248,7 +268,10 @@
           <Input name="挂坠" desc="如怀表，腰链等" />
           <Input name="纹身" />
           <Input name="内甲" />
-          <Input name="背囊位" desc="如剑匣、箭囊、大型图腾、大十字架、特殊弹夹等" />
+          <Input
+            name="背囊位"
+            desc="如剑匣、箭囊、大型图腾、大十字架、特殊弹夹等"
+          />
           <Input name="面具位或眼镜" />
         </FieldSet>
       </Col>

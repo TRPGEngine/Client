@@ -16,10 +16,24 @@
   </FieldSet>
 
   <FieldSet label="表格">
-    <DataTable title="简单表格" :rows="[['表头1','表头2','表头3'], ['内容1','内容2','内容3']]" />
-    <DataTable title="紧凑表格" size="small" :rows="[['表头1','表头2','表头3'], ['内容1','内容2','内容3']]" />
-    <Var name="tableExample" value="_range(100).map((x) => _range(3).map(y => `内容${x}-${y}`))" />
-    <DataTable title="大量数据" height="200" :rows="[['表头1','表头2','表头3'], ...tableExample]" />
+    <DataTable
+      title="简单表格"
+      :rows="[['表头1','表头2','表头3'], ['内容1','内容2','内容3']]"
+    />
+    <DataTable
+      title="紧凑表格"
+      size="small"
+      :rows="[['表头1','表头2','表头3'], ['内容1','内容2','内容3']]"
+    />
+    <Var
+      name="tableExample"
+      value="_range(100).map((x) => _range(3).map(y => `内容${x}-${y}`))"
+    />
+    <DataTable
+      title="大量数据"
+      height="200"
+      :rows="[['表头1','表头2','表头3'], ...tableExample]"
+    />
   </FieldSet>
 
   <FieldSet label="雷达图">
@@ -47,7 +61,9 @@
   </FieldSet>
 
   <FieldSet label="实体字符">
-    <p>在布局文件中，不能使用小于号(&lt;)和大于号(&gt;), 这是因为解释器会误认为它们是标签</p>
+    <p>
+      在布局文件中，不能使用小于号(&lt;)和大于号(&gt;), 这是因为解释器会误认为它们是标签
+    </p>
     <p>如果希望正确地显示预留字符，我们必须在 布局文件 源代码中使用字符实体</p>
 
     <table>

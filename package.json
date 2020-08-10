@@ -147,6 +147,7 @@
     "@babel/runtime": "^7.6.3",
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
+    "@prettier/plugin-xml": "^0.10.0",
     "@sentry/webpack-plugin": "^1.9.1",
     "@types/crc": "^3.4.0",
     "@types/emoji-mart": "^2.11.0",
