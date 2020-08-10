@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Template>
+  <BaseInfo />
+
+  <div>
+    <Row>
+      <Col span="12">
+        <Input name="姓名" />
+      </Col>
+    </Row>
+    <Row>
+      <Col span="12">
+        <Input name="性别" />
+      </Col>
+      <Col span="12">
+        <Input name="年龄" />
+      </Col>
+    </Row>
+
+    <Input name="身高／体重／三围" />
+    <Input name="发型／瞳色／外貌／特征" />
+    <Input name="衣着习惯" />
+    <Input name="种族／出生地／国藉" />
+    <Input name="母语" />
+    <Input name="个性" />
+    <Input name="婚姻、家庭状况" />
+    <Input name="工作、学校环境" />
+    <Input name="生活娱乐／品味喜好" />
+
+    <TextArea name="内心深处最想实现的愿望" desc="即进入梦魇世界的理由" />
+    <TextArea name="个人经历概述" />
+
+    <FieldSet label="基本能力值">
+      <Define name="ability">
+        <tr>
+          <td><span>{{props.abilityName}}</span></td>
+          <td><span>{{SUM(基础,职业,装备,临时,其他)}}</span></td>
+          <td><InputNumber name="基础" hideLabel="true" inline="true" /></td>
+          <td><InputNumber name="职业" hideLabel="true" inline="true" /></td>
+          <td><InputNumber name="装备" hideLabel="true" inline="true" /></td>
+          <td><InputNumber name="临时" hideLabel="true" inline="true" /></td>
+          <td><InputNumber name="其他" hideLabel="true" inline="true" /></td>
+        </tr>
+      </Define>
+
+      <Tip>5/5/5/5/+7点初始自由属性分配点</Tip>
+
+      <table>
+        <thead>
+          <tr>
+            <td width="80"></td>
+            <td width="40">总属性</td>
+            <td width="60">基础属性</td>
+            <td width="60">职业加成</td>
+            <td width="60">装备加成</td>
+            <td width="60">临时属性加成</td>
+            <td width="60">其他</td>
+          </tr>
+        </thead>
+        <tbody>
+          <Use name="力量能力" define="ability" abilityName="力量" />
+          <Use name="敏捷能力" define="ability" abilityName="敏捷" />
+          <Use name="体质能力" define="ability" abilityName="体质" />
+          <Use name="精神能力" define="ability" abilityName="精神力" />
+        </tbody>
+      </table>
+    </FieldSet>
+
+    <FieldSet label="通用技能">
+      <Tip>5/5/5/+5点自由点，3个初始专业，举例：学识3（专业：甲骨文）</Tip>
+
+      <Row>
+        <Col span="8"><InputNumber name="学识" /></Col>
+        <Col span="8"><InputNumber name="运动" /></Col>
+        <Col span="8"><InputNumber name="驯兽" /></Col>
+        <Col span="8"><InputNumber name="电脑" /></Col>
+        <Col span="8"><InputNumber name="肉搏" /></Col>
+        <Col span="8"><InputNumber name="理解" /></Col>
+        <Col span="8"><InputNumber name="工艺" /></Col>
+        <Col span="8"><InputNumber name="驾驶" /></Col>
+        <Col span="8"><InputNumber name="表达" /></Col>
+        <Col span="8"><InputNumber name="调查" /></Col>
+        <Col span="8"><InputNumber name="枪械" /></Col>
+        <Col span="8"><InputNumber name="胁迫" /></Col>
+        <Col span="8"><InputNumber name="医学" /></Col>
+        <Col span="8"><InputNumber name="盗窃" /></Col>
+        <Col span="8"><InputNumber name="说服" /></Col>
+        <Col span="8"><InputNumber name="神秘" /></Col>
+        <Col span="8"><InputNumber name="隐藏" /></Col>
+        <Col span="8"><InputNumber name="交际" /></Col>
+        <Col span="8"><InputNumber name="政治" /></Col>
+        <Col span="8"><InputNumber name="生存" /></Col>
+        <Col span="8"><InputNumber name="黑街" /></Col>
+        <Col span="8"><InputNumber name="科学" /></Col>
+        <Col span="8"><InputNumber name="白刃" /></Col>
+        <Col span="8"><InputNumber name="掩饰" /></Col>
+      </Row>
+    </FieldSet>
+
+    <Row>
+      <Col sm="12">
+        <FieldSet label="其它能力值">
+          <InputNumber name="命中" desc="1d20+敏捷+调整值" />
+          <InputNumber name="回避" desc="敏捷+调整值" />
+          <InputNumber name="速度" desc="裸装力量/2+裸装敏捷+调整值" />
+          <InputNumber name="奔跑" desc="1体质x3轮+调整值" />
+          <InputNumber name="先攻" desc="1d20+敏捷+调整值" />
+          <InputNumber name="抗性" desc="0+调整值" />
+          <InputNumber name="防御力" desc="体质X60%/70%+调整值" />
+          <InputNumber name="生命值" desc="体质X10+调整值" />
+          <InputNumber name="精神力值" desc="精神力+调整值" />
+          <InputNumber name="感知距离" desc="精神力X5+调整值" />
+          <InputNumber name="视觉距离" desc="精神力X10+调整值" />
+          <InputNumber name="原地/助跑跳远距离" desc="【2+力量/10】/（【原地跳跃距离+敏捷/10】+调整值" />
+          <InputNumber name="原地/助跑跳跃高度" desc="【1+力量/15】/（【原地跳跃高度+敏捷/20】+调整值" />
+          <InputNumber name="体积" desc="成年男子5" />
+        </FieldSet>
+      </Col>
+
+      <Col sm="12">
+        <FieldSet label="战斗能力值">
+          <InputNumber name="基础攻击力" desc="近战/远程+调整值" />
+          <InputNumber name="平时防御力" desc="体质X60%/70%+调整值" />
+          <InputNumber name="全力防御力" desc="体质X100%+调整值" />
+          <InputNumber name="格挡防御力" desc="体质60%/70%+调整值" />
+        </FieldSet>
+      </Col>
+    </Row>
+
+    <FieldSet label="其它能力值">
+      <Row>
+        <Col sm="6" xs="12"><InputNumber name="基本拳法" /></Col>
+        <Col sm="6" xs="12"><InputNumber name="基本腿法" /></Col>
+        <Col sm="6" xs="12"><InputNumber name="基本步法" /></Col>
+        <Col sm="6" xs="12"><InputNumber name="基本腰力" /></Col>
+        <Col sm="6" xs="12"><InputNumber name="基本擒拿" /></Col>
+        <Col sm="6" xs="12"><InputNumber name="基本近战" /></Col>
+        <Col sm="6" xs="12"><InputNumber name="基本远战" /></Col>
+        <Col sm="6" xs="12"><InputNumber name="基本掌法" /></Col>
+      </Row>
+    </FieldSet>
+
+    <FieldSet label="专长">
+      <Row>
+        <Col sm="8"><Input name="专长1" /></Col>
+        <Col sm="8"><Input name="专长2" /></Col>
+        <Col sm="8"><Input name="专长3" /></Col>
+        <Col sm="8"><Input name="专长4" /></Col>
+        <Col sm="8"><Input name="专长5" /></Col>
+      </Row>
+    </FieldSet>
+
+    <Row>
+      <Col sm="12">
+        <FieldSet label="职业">
+          <Input name="基础职业" />
+          <Input name="一转职业" />
+          <Input name="二转职业" />
+        </FieldSet>
+
+        <FieldSet label="称号">
+          <Input name="起效称号" />
+          <TextArea name="拥有称号" />
+        </FieldSet>
+
+        <FieldSet label="战斗技能">
+          <Input name="技能位1" />
+          <Input name="技能位2" />
+          <Input name="技能位3" />
+          <Input name="技能位4" />
+          <Input name="技能位5" />
+          <Input name="技能位6" />
+        </FieldSet>
+
+        <FieldSet label="生活技能">
+          <Input name="第一生活技能" />
+          <Input name="第二生活技能" />
+        </FieldSet>
+
+        <Styled>
+          <Style>
+            .ant-row {
+              margin-bottom: 10px;
+            }
+          </Style>
+
+          <Define name="item">
+            <Row>
+              <Input name="content" label="道具" hideLabel="true" />
+            </Row>
+          </Define>
+
+          <Row>
+            <Col md="12">
+              <FieldSet label="梦魇印记储存位">
+                <Tip>每格可携带物品大小为1X1X1M，可组合使用，不同种物品不可重复使用</Tip>
+
+                <CustomList name="印记储存位" define="item" />
+              </FieldSet>
+            </Col>
+
+            <Col md="12">
+              <FieldSet label="随身携带物品">
+                <Tip>最大负重量为力量X10KG</Tip>
+
+                <CustomList name="随身物品" define="item" />
+
+                <TextArea name="其他" hideLabel="true" />
+              </FieldSet>
+            </Col>
+          </Row>
+        </Styled>
+      </Col>
+
+      <Col sm="12">
+        <FieldSet label="装备">
+          <h2>武器</h2>
+          <Input name="主手武器" />
+          <Input name="副手武器" desc="PS1：通常情况下，只能装备一件单手武器，当你双持单手武器时，将失去第二把单手武器带来的所有效果。\nPS2：武器分类特效，详见子项。" />
+
+          <h2>防具</h2>
+          <Input name="头部" />
+          <Input name="铠甲" />
+          <Input name="铠甲(上身)" />
+          <Input name="铠甲(下身)" />
+          <Input name="鞋子" />
+          <Input name="手套" />
+          <Input name="护腕" />
+          <Input name="肩部" />
+          <Input name="披风" />
+          <Input name="腰带" />
+          <Input name="护腿" />
+
+          <h2>饰品</h2>
+          <Input name="项链" />
+          <Input name="戒指（左）" />
+          <Input name="戒指（右）" />
+          <Input name="勋章1" desc="三枚，进入空间时只会开启第一个勋章位，后两位需特殊道具及完成相关任务" />
+          <Input name="勋章2" desc="三枚，进入空间时只会开启第一个勋章位，后两位需特殊道具及完成相关任务" />
+          <Input name="勋章3" desc="三枚，进入空间时只会开启第一个勋章位，后两位需特殊道具及完成相关任务" />
+          <Input name="耳环" />
+          <Input name="耳环（左）" />
+          <Input name="耳环（右）" />
+          <Input name="手镯" />
+
+          <h2>特殊</h2>
+          <Input name="围巾" />
+          <Input name="挂坠" desc="如怀表，腰链等" />
+          <Input name="纹身" />
+          <Input name="内甲" />
+          <Input name="背囊位" desc="如剑匣、箭囊、大型图腾、大十字架、特殊弹夹等" />
+          <Input name="面具位或眼镜" />
+        </FieldSet>
+      </Col>
+    </Row>
+  </div>
+</Template>

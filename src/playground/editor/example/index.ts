@@ -34,6 +34,10 @@ const completedLayout = [
     label: 'DND 5e',
     value: require('./xml/dnd5e.xml').default,
   },
+  {
+    label: '王牌进化',
+    value: require('./xml/ace-evolution.xml').default,
+  },
 ];
 
 // 正在开发中的布局。不会再正式环境显示到界面上
@@ -45,7 +49,7 @@ const developLayout = [
 ];
 
 // 正在操作的布局。 在开发模式下会自动加载最新的该布局
-const workingLabel = '星光无限';
+const workingLabel = '王牌进化';
 const showDevLayout =
   config.environment === 'development' ||
   localStorage.getItem('__playground_dev') === '1';
