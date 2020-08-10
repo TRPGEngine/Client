@@ -15,7 +15,7 @@ import 'react-select/dist/react-select.css';
 import 'react-image-lightbox/style.css';
 import Login from './Login';
 import Register from './Register';
-import GlobalUI from './GlobalUI';
+import { GlobalUI } from './GlobalUI';
 import { AppBanner } from '@web/components/AppBanner';
 import { TMemo } from '@shared/components/TMemo';
 

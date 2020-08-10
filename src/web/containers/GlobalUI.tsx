@@ -10,7 +10,7 @@ import {
 } from '@shared/hooks/useTRPGSelector';
 import { TMemo } from '@shared/components/TMemo';
 
-const GlobalUI: React.FC = TMemo(() => {
+export const GlobalUI: React.FC = TMemo(() => {
   const showLigthbox = useTRPGSelector((state) => state.ui.showLigthbox);
   const showLigthboxInfo = useTRPGSelector(
     (state) => state.ui.showLigthboxInfo

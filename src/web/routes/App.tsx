@@ -4,7 +4,7 @@ import config from '@shared/project.config';
 import { TMemo } from '@shared/components/TMemo';
 import ErrorBoundary from '@web/containers/ErrorBoundary';
 import { AppBanner } from '@web/components/AppBanner';
-import GlobalUI from '@web/containers/GlobalUI';
+import { GlobalUI } from '@web/containers/GlobalUI';
 import NetworkIndicator from '@web/components/NetworkIndicator';
 import { LaunchRoute } from './Launch';
 import Login from '@web/containers/Login';
