@@ -7,9 +7,4 @@
 
 用于处理对于每个节点都需要创建一个相关的Modal的情况
 
-> 参考https://github.com/ant-design/ant-design-mobile-rn/blob/master/components/portal/ 的实现
-
-
-### NOTICE
-
-虽然目前这个文件放在Shared里面。但是里面有react-native的组件没有被抽象。需要进一步的改造
+> 参考 https://github.com/ant-design/ant-design-mobile-rn/blob/master/components/portal/ 的实现

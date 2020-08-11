@@ -1,6 +1,3 @@
-import { PortalHost } from './Host';
+import { buildPortal } from './buildPortal';
 
-export { PortalHost };
-
-export const addPortal = PortalHost.add;
-export const removePortal = PortalHost.remove;
+export { buildPortal };
