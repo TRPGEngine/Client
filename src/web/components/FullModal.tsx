@@ -8,19 +8,24 @@ import { PortalRender } from './portal/PortalRender';
 const Container = styled.div<{
   visible: boolean;
 }>`
-  display: ${(props) => (props.visible ? 'block' : 'none')};
+  opacity: ${(props) => (props.visible ? 1 : 0)};
+  pointer-events: ${(props) => (props.visible ? 'auto' : 'none')};
+  transition: opacity 0.2s ease-in-out;
   position: fixed;
   width: 100vw;
   height: 100vh;
   z-index: 100;
   background-color: ${(props) => props.theme.color.graySet[9]};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CloseBtn = styled.div`
   position: absolute;
-  right: 16px;
-  top: 16px;
-  font-size: 26px;
+  right: 32px;
+  top: 32px;
+  font-size: 32px;
   cursor: pointer;
 `;
 
