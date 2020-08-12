@@ -106,16 +106,16 @@
           <InputNumber name="奔跑" desc="1体质x3轮+调整值" />
           <InputNumber name="先攻" desc="1d20+敏捷+调整值" />
           <InputNumber name="抗性" desc="0+调整值" />
-          <InputNumber name="防御力" desc="体质X60%/70%+调整值" />
+          <Input name="防御力" desc="体质X60%/70%+调整值" />
           <InputNumber name="生命值" desc="体质X10+调整值" />
           <InputNumber name="精神力值" desc="精神力+调整值" />
           <InputNumber name="感知距离" desc="精神力X5+调整值" />
           <InputNumber name="视觉距离" desc="精神力X10+调整值" />
-          <InputNumber
+          <Input
             name="原地/助跑跳远距离"
             desc="【2+力量/10】/（【原地跳跃距离+敏捷/10】+调整值"
           />
-          <InputNumber
+          <Input
             name="原地/助跑跳跃高度"
             desc="【1+力量/15】/（【原地跳跃高度+敏捷/20】+调整值"
           />
@@ -125,10 +125,10 @@
 
       <Col sm="12">
         <FieldSet label="战斗能力值">
-          <InputNumber name="基础攻击力" desc="近战/远程+调整值" />
-          <InputNumber name="平时防御力" desc="体质X60%/70%+调整值" />
-          <InputNumber name="全力防御力" desc="体质X100%+调整值" />
-          <InputNumber name="格挡防御力" desc="体质60%/70%+调整值" />
+          <Input name="基础攻击力" desc="近战/远程+调整值" />
+          <Input name="平时防御力" desc="体质X60%/70%+调整值" />
+          <Input name="全力防御力" desc="体质X100%+调整值" />
+          <Input name="格挡防御力" desc="体质60%/70%+调整值" />
         </FieldSet>
       </Col>
     </Row>
