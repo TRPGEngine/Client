@@ -7,3 +7,10 @@ import memoizeOne from 'memoize-one';
 export const checkIsTestUser = memoizeOne(() => {
   return localStorage.getItem('trpg_test') === 'true';
 });
+
+/**
+ * 获取是否使用新的界面
+ */
+export const checkIsNewApp = memoizeOne(() => {
+  return localStorage.getItem('__isNewApp') === 'true';
+});

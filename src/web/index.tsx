@@ -26,6 +26,7 @@ import { bindEventFunc } from '@shared/api/listener';
 import { watchLoginStatus } from '@redux/middlewares/watchLoginStatus';
 import { setUser } from './utils/sentry';
 import TLoadable from './components/TLoadable';
+import { checkIsNewApp } from './utils/debug-helper';
 
 const NewApp = TLoadable<{}>(() =>
   import('./routes/App').then((module) => module.App)
@@ -92,14 +93,19 @@ if (config.platform !== 'web') {
   });
 }
 
+const isNewApp = checkIsNewApp();
+
 // 离开页面确认
-if (config.platform === 'web' && config.environment === 'production') {
+if (
+  config.platform === 'web' &&
+  config.environment === 'production' &&
+  !isNewApp // 仅旧UI需要全局设定, 新UI根据当前场景决定是否使用退出阻止
+) {
   window.onbeforeunload = function() {
     return '确认离开当前页面吗？';
   };
 }
 
-const isNewApp = localStorage['__isNewApp'] === 'true';
 ReactDom.render(
   <Provider store={store}>
     <ThemeProvider theme={styledTheme}>
