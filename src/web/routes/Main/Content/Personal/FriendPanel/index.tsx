@@ -13,7 +13,11 @@ import { AddFriend } from './AddFriend';
 import { t } from '@shared/i18n';
 import { useHistory } from 'react-router';
 import { addUserConverse } from '@redux/actions/chat';
-import { requestRemoveFriendInvite } from '@redux/actions/user';
+import {
+  requestRemoveFriendInvite,
+  agreeFriendInvite,
+  refuseFriendInvite,
+} from '@redux/actions/user';
 const { TabPane } = Tabs;
 
 const PaneContainer = styled.div`
@@ -43,6 +47,14 @@ export const FriendPanel: React.FC = TMemo(() => {
         inviteUUID,
       })
     );
+  };
+
+  const handleAgreeFriendInvite = (inviteUUID: string) => {
+    dispatch(agreeFriendInvite(inviteUUID));
+  };
+
+  const handleRefuseFriendInvite = (inviteUUID: string) => {
+    dispatch(refuseFriendInvite(inviteUUID));
   };
 
   const friendListPane = useMemo(
@@ -75,7 +87,7 @@ export const FriendPanel: React.FC = TMemo(() => {
       <TabPane
         tab={
           <Badge count={friendInvite.length}>
-            <span>已发送</span>
+            <span>{t('已发送')}</span>
           </Badge>
         }
         key="2"
@@ -86,7 +98,7 @@ export const FriendPanel: React.FC = TMemo(() => {
               key={inv.to_uuid}
               userUUID={inv.to_uuid}
               actions={[
-                <Tooltip title="取消" key="cancel">
+                <Tooltip title={t('取消')} key="cancel">
                   <Button
                     shape="circle"
                     icon={<CloseOutlined />}
@@ -107,7 +119,7 @@ export const FriendPanel: React.FC = TMemo(() => {
       <TabPane
         tab={
           <Badge count={friendRequests.length}>
-            <span>好友请求</span>
+            <span>{t('好友请求')}</span>
           </Badge>
         }
         key="3"
@@ -120,11 +132,20 @@ export const FriendPanel: React.FC = TMemo(() => {
                 key={request.uuid}
                 userUUID={request.from_uuid}
                 actions={[
-                  <Button key="refuse" danger={true} type="primary">
-                    拒绝
+                  <Button
+                    key="refuse"
+                    danger={true}
+                    type="primary"
+                    onClick={() => handleRefuseFriendInvite(request.uuid)}
+                  >
+                    {t('拒绝')}
                   </Button>,
-                  <Button key="agree" type="primary">
-                    同意
+                  <Button
+                    key="agree"
+                    type="primary"
+                    onClick={() => handleAgreeFriendInvite(request.uuid)}
+                  >
+                    {t('同意')}
                   </Button>,
                 ]}
               />
@@ -137,9 +158,12 @@ export const FriendPanel: React.FC = TMemo(() => {
 
   const addFriendPane = useMemo(
     () => (
-      <TabPane tab={<AddFriendTabLabel>添加好友</AddFriendTabLabel>} key="4">
+      <TabPane
+        tab={<AddFriendTabLabel>{t('添加好友')}</AddFriendTabLabel>}
+        key="4"
+      >
         <PaneContainer>
-          <Typography.Title level={4}>添加好友</Typography.Title>
+          <Typography.Title level={4}>{t('添加好友')}</Typography.Title>
           <AddFriend />
         </PaneContainer>
       </TabPane>
