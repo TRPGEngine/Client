@@ -1,7 +1,7 @@
 import constants from '@redux/constants';
 import { UserState } from '@redux/types/user';
-import produce from 'immer';
 import _remove from 'lodash/remove';
+import { createReducer } from '@reduxjs/toolkit';
 
 const {
   RESET,
@@ -10,9 +10,6 @@ const {
   LOGIN_FAILED,
   LOGIN_TOKEN_SUCCESS,
   LOGOUT,
-  REGISTER_REQUEST,
-  REGISTER_SUCCESS,
-  REGISTER_FAILED,
   SET_WEB_TOKEN,
   FIND_USER_REQUEST,
   FIND_USER_SUCCESS,
@@ -39,88 +36,86 @@ const initialState: UserState = {
   findingResult: [],
 };
 
-export default produce((draft: UserState, action) => {
-  switch (action.type) {
-    case RESET:
-      return initialState;
-    case LOGIN_REQUEST:
-      draft.isTryLogin = true;
-      return;
-    case LOGIN_SUCCESS:
-    case LOGIN_TOKEN_SUCCESS:
-      draft.isLogin = true;
-      draft.isTryLogin = false;
-      draft.info = action.payload;
-      return;
-    case LOGIN_FAILED:
-      draft.isLogin = false;
-      draft.isTryLogin = false;
-      draft.info = {};
-      return;
-    case LOGOUT:
-      // sessionStorage.remove('uuid').remove('token');
-      draft.isLogin = false;
-      draft.info = {};
-      return;
-    case REGISTER_REQUEST:
-    case REGISTER_FAILED:
-    case REGISTER_SUCCESS:
-      return;
-    case SET_WEB_TOKEN:
-      draft.webToken = action.token ?? null;
-      return;
-    case FIND_USER_REQUEST:
-      draft.isFindingUser = false;
-      return;
-    case FIND_USER_SUCCESS:
-    case FIND_USER_FAILED:
-      draft.isFindingUser = false;
-      draft.findingResult = action.payload || [];
-      return;
-    case UPDATE_INFO_SUCCESS:
-      draft.info = action.payload;
-      return;
-    case ADD_FRIEND_SUCCESS: {
+export default createReducer(initialState, (builder) => {
+  builder
+    .addCase(RESET, (state) => {
+      state = initialState;
+    })
+    .addCase(LOGIN_REQUEST, (state) => {
+      state.isTryLogin = true;
+    })
+    .addCase(LOGIN_SUCCESS, (state, action: any) => {
+      state.isLogin = true;
+      state.isTryLogin = false;
+      state.info = action.payload;
+    })
+    .addCase(LOGIN_TOKEN_SUCCESS, (state, action: any) => {
+      state.isLogin = true;
+      state.isTryLogin = false;
+      state.info = action.payload;
+    })
+    .addCase(LOGIN_FAILED, (state) => {
+      state.isLogin = false;
+      state.isTryLogin = false;
+      state.info = {};
+    })
+    .addCase(LOGOUT, (state) => {
+      state.isLogin = false;
+      state.info = {};
+    })
+    .addCase(SET_WEB_TOKEN, (state, action: any) => {
+      state.webToken = action.token ?? null;
+    })
+    .addCase(FIND_USER_REQUEST, (state) => {
+      state.isFindingUser = false;
+    })
+    .addCase(FIND_USER_SUCCESS, (state, action: any) => {
+      state.isFindingUser = false;
+      state.findingResult = action.payload || [];
+    })
+    .addCase(FIND_USER_FAILED, (state, action: any) => {
+      state.isFindingUser = false;
+      state.findingResult = action.payload || [];
+    })
+    .addCase(UPDATE_INFO_SUCCESS, (state, action: any) => {
+      state.info = action.payload;
+    })
+    .addCase(ADD_FRIEND_SUCCESS, (state, action: any) => {
       const friendUUID = action.friendUUID;
-      if (!draft.friendList.includes(friendUUID)) {
-        draft.friendList.push(friendUUID);
+      if (!state.friendList.includes(friendUUID)) {
+        state.friendList.push(friendUUID);
       }
 
       // 检查一下移除好友请求与好友邀请
-      _remove(draft.friendInvite, (item) => item.to_uuid === friendUUID); // 好友邀请的to_uuid是目标的UUID
-      _remove(draft.friendRequests, (item) => item.from_uuid === friendUUID); // 好友请求的from_uuid是目标的UUID
-      return;
-    }
-    case GET_FRIENDS_SUCCESS:
-      draft.friendList = action.payload;
-      return;
-    case SEND_FRIEND_INVITE_SUCCESS: {
+      _remove(state.friendInvite, (item) => item.to_uuid === friendUUID); // 好友邀请的to_uuid是目标的UUID
+      _remove(state.friendRequests, (item) => item.from_uuid === friendUUID); // 好友请求的from_uuid是目标的UUID
+    })
+    .addCase(GET_FRIENDS_SUCCESS, (state, action: any) => {
+      state.friendList = action.payload;
+    })
+    .addCase(SEND_FRIEND_INVITE_SUCCESS, (state, action: any) => {
       const payload = action.payload;
 
       const notExist =
-        draft.friendInvite.findIndex((inv) => inv.uuid === payload.uuid) === -1;
+        state.friendInvite.findIndex((inv) => inv.uuid === payload.uuid) === -1;
       if (notExist) {
-        draft.friendInvite.push(payload);
+        state.friendInvite.push(payload);
       }
-      return;
-    }
-    case GET_FRIEND_INVITE_SUCCESS:
-      draft.friendInvite = action.payload.invites ?? [];
-      draft.friendRequests = action.payload.requests ?? [];
-      return;
-    case AGREE_FRIEND_INVITE_SUCCESS: {
+    })
+    .addCase(GET_FRIEND_INVITE_SUCCESS, (state, action: any) => {
+      state.friendInvite = action.payload.invites ?? [];
+      state.friendRequests = action.payload.requests ?? [];
+    })
+    .addCase(AGREE_FRIEND_INVITE_SUCCESS, (state, action: any) => {
       const agreeUUID = action.payload.uuid;
-      _remove(draft.friendRequests, (r) => r.uuid === agreeUUID);
-      draft.friendList.push(action.payload.from_uuid);
-      return;
-    }
-    case REFUSE_FRIEND_INVITE_SUCCESS: {
+      _remove(state.friendRequests, (r) => r.uuid === agreeUUID);
+      state.friendList.push(action.payload.from_uuid);
+    })
+    .addCase(REFUSE_FRIEND_INVITE_SUCCESS, (state, action: any) => {
       const refuseUUID = action.payload.uuid;
-      _remove(draft.friendRequests, (r) => r.uuid === refuseUUID);
-      return;
-    }
-    case ADD_FRIEND_INVITE:
-      draft.friendRequests.push(action.payload);
-      return;
-  }
-}, initialState);
+      _remove(state.friendRequests, (r) => r.uuid === refuseUUID);
+    })
+    .addCase(ADD_FRIEND_INVITE, (state, action: any) => {
+      state.friendRequests.push(action.payload);
+    });
+});
