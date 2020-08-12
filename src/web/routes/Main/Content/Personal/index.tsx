@@ -22,8 +22,9 @@ import { SidebarHeader } from '../SidebarHeader';
 import { NotePanel } from './NotePanel';
 import { Iconfont } from '@web/components/Iconfont';
 import { createNote } from '@redux/actions/note';
+import { ActorPanel } from './ActorPanel';
 
-export const Personal: React.FC = TMemo((props) => {
+export const Personal: React.FC = TMemo(() => {
   const converses = useConverses(['user']);
   const noteList = useTRPGSelector((state) => state.note.list);
   const dispatch = useTRPGDispatch();
@@ -40,6 +41,15 @@ export const Personal: React.FC = TMemo((props) => {
             icon={<UserOutlined style={{ color: 'white', fontSize: 24 }} />}
             name="好友"
             to="/main/personal/friends"
+          />
+          <SidebarItem
+            icon={
+              <Iconfont style={{ color: 'white', fontSize: 24 }}>
+                &#xe61b;
+              </Iconfont>
+            }
+            name="角色"
+            to="/main/personal/actors"
           />
           <SidebarHeader
             title="笔记"
@@ -76,6 +86,7 @@ export const Personal: React.FC = TMemo((props) => {
       <ContentDetail>
         <Switch>
           <Route path="/main/personal/friends" component={FriendPanel} />
+          <Route path="/main/personal/actors" component={ActorPanel} />
           <Route path="/main/personal/note/:noteUUID" component={NotePanel} />
           <Route
             path="/main/personal/converse/:converseUUID"
