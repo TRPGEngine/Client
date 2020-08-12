@@ -2,6 +2,7 @@ import constants from '@redux/constants';
 import { UserState } from '@redux/types/user';
 import _remove from 'lodash/remove';
 import { createReducer } from '@reduxjs/toolkit';
+import { removeFriendInvite } from '@redux/actions/user';
 
 const {
   RESET,
@@ -117,5 +118,10 @@ export default createReducer(initialState, (builder) => {
     })
     .addCase(ADD_FRIEND_INVITE, (state, action: any) => {
       state.friendRequests.push(action.payload);
+    })
+    .addCase(removeFriendInvite, (state, action) => {
+      const { inviteUUID } = action.payload;
+      _remove(state.friendInvite, (item) => item.uuid === inviteUUID);
+      _remove(state.friendRequests, (item) => item.uuid === inviteUUID);
     });
 });

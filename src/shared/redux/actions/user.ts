@@ -20,6 +20,8 @@ const {
   GET_FRIEND_INVITE_SUCCESS,
   REFUSE_FRIEND_INVITE_SUCCESS,
   ADD_FRIEND_INVITE,
+  REMOVE_FRIEND_INVITE,
+  REQUEST_REMOVE_FRIEND_INVITE,
 } = constants;
 import md5 from 'md5';
 import rnStorage from '@shared/api/rn-storage.api';
@@ -42,6 +44,7 @@ import { getGroupList, getGroupInvite } from './group';
 import { getNote, getNotes } from './note';
 import { loadLocalCache } from './cache';
 import { TRPGAction } from '../types/__all__';
+import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 
 const api = trpgApi.getInstance();
 
@@ -404,6 +407,30 @@ export const refuseFriendInvite = function(inviteUUID: string): TRPGAction {
 export const addFriendInvite = function(invite: any): TRPGAction {
   return { type: ADD_FRIEND_INVITE, payload: invite };
 };
+
+/**
+ * 移除好友请求
+ */
+export const removeFriendInvite = createAction<{
+  inviteUUID: string;
+}>(REMOVE_FRIEND_INVITE);
+
+/**
+ * 发送请求移除好友请求
+ */
+export const requestRemoveFriendInvite = createAsyncThunk<
+  void,
+  { inviteUUID: string }
+>(REQUEST_REMOVE_FRIEND_INVITE, async ({ inviteUUID }, { dispatch }) => {
+  try {
+    await api.emitP('player::removeFriendInvite', { inviteUUID });
+
+    dispatch(removeFriendInvite({ inviteUUID }));
+  } catch (err) {
+    // TODO: 需要处理 showToast 的类型
+    dispatch(showToast('取消好友邀请失败:' + String(err)) as any);
+  }
+});
 
 export const saveSettings = function(): TRPGAction {
   return function(dispatch, getState) {

@@ -13,7 +13,11 @@ import {
   startWriting,
   stopWriting,
 } from '@shared/redux/actions/chat';
-import { addFriendInvite, loginWithToken } from '@shared/redux/actions/user';
+import {
+  addFriendInvite,
+  loginWithToken,
+  removeFriendInvite,
+} from '@shared/redux/actions/user';
 import {
   updateGroupStatus,
   addGroup,
@@ -74,6 +78,10 @@ export function bindEventFunc(
   });
   api.on('player::invite', function(data) {
     store.dispatch(addFriendInvite(data));
+  });
+  api.on('player::removeInvite', function(data) {
+    const { inviteUUID } = data;
+    store.dispatch(removeFriendInvite({ inviteUUID }));
   });
   api.on('player::tick', function(data) {
     store.dispatch(showAlert(data.msg));

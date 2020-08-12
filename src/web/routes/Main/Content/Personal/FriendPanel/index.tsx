@@ -13,6 +13,7 @@ import { AddFriend } from './AddFriend';
 import { t } from '@shared/i18n';
 import { useHistory } from 'react-router';
 import { addUserConverse } from '@redux/actions/chat';
+import { requestRemoveFriendInvite } from '@redux/actions/user';
 const { TabPane } = Tabs;
 
 const PaneContainer = styled.div`
@@ -33,6 +34,15 @@ export const FriendPanel: React.FC = TMemo(() => {
   const handleNavMsg = (userUUID: string) => {
     dispatch(addUserConverse([userUUID]));
     history.push(`/main/personal/converse/${userUUID}`);
+  };
+
+  // 取消好友邀请
+  const handleCancelFriendInvite = (inviteUUID: string) => {
+    dispatch(
+      requestRemoveFriendInvite({
+        inviteUUID,
+      })
+    );
   };
 
   const friendListPane = useMemo(
@@ -65,7 +75,7 @@ export const FriendPanel: React.FC = TMemo(() => {
       <TabPane
         tab={
           <Badge count={friendInvite.length}>
-            <span>好友邀请</span>
+            <span>已发送</span>
           </Badge>
         }
         key="2"
@@ -77,7 +87,11 @@ export const FriendPanel: React.FC = TMemo(() => {
               userUUID={inv.to_uuid}
               actions={[
                 <Tooltip title="取消" key="cancel">
-                  <Button shape="circle" icon={<CloseOutlined />} />
+                  <Button
+                    shape="circle"
+                    icon={<CloseOutlined />}
+                    onClick={() => handleCancelFriendInvite(inv.uuid)}
+                  />
                 </Tooltip>,
               ]}
             />
