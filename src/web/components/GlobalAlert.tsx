@@ -1,9 +1,10 @@
 import React, { ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { hideAlert } from '../../shared/redux/actions/ui';
-import './Alert.scss';
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { Button } from 'antd';
+
+import './GlobalAlert.scss';
 
 interface Props extends TRPGDispatchProp {
   showAlert: boolean;

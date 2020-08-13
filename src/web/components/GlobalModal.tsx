@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
 import { hideModal } from '../../shared/redux/actions/ui';
-import './Modal.scss';
 import {
   useTRPGSelector,
   useTRPGDispatch,
 } from '@shared/hooks/useTRPGSelector';
 import { TMemo } from '@shared/components/TMemo';
+import './GlobalModal.scss';
 
-const Modal: React.FC = TMemo(() => {
+const GlobalModal: React.FC = TMemo(() => {
   const modalStack = useTRPGSelector((state) => state.ui.modalStack);
   const dispatch = useTRPGDispatch();
 
@@ -30,6 +30,6 @@ const Modal: React.FC = TMemo(() => {
 
   return <div className="modal">{body}</div>;
 });
-Modal.displayName = 'Modal';
+GlobalModal.displayName = 'GlobalModal';
 
-export default Modal;
+export default GlobalModal;

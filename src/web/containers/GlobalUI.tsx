@@ -1,8 +1,8 @@
 import React from 'react';
 import Lightbox from 'react-image-lightbox';
-import Modal from '../components/Modal';
+import GlobalModal from '../components/GlobalModal';
 import LoadingScreen from '../components/LoadingScreen';
-import Alert from '../components/Alert';
+import GlobalAlert from '../components/GlobalAlert';
 import { hideLightbox } from '../../shared/redux/actions/ui';
 import {
   useTRPGSelector,
@@ -27,9 +27,9 @@ export const GlobalUI: React.FC = TMemo(() => {
           onCloseRequest={() => dispatch(hideLightbox())}
         />
       ) : null}
-      <Modal />
+      <GlobalModal />
       <LoadingScreen show={showLoading} text={showLoadingText} />
-      <Alert />
+      <GlobalAlert />
     </React.Fragment>
   );
 });
