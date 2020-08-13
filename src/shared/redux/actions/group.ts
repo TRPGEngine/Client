@@ -766,6 +766,7 @@ export const quitGroup = function(groupUUID: string): TRPGAction {
         dispatch(showAlert('已退出本群!'));
         dispatch(hideLoading());
       } else {
+        dispatch(showToast(data?.msg));
         console.error(data);
       }
     });
@@ -782,6 +783,7 @@ export const dismissGroup = function(groupUUID: string): TRPGAction {
         dispatch(showAlert('已解散本群!'));
         dispatch(hideLoading());
       } else {
+        dispatch(showToast(data?.msg));
         console.error(data);
       }
     });

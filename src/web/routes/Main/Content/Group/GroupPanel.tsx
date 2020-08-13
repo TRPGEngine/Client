@@ -2,6 +2,7 @@ import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useParams } from 'react-router';
 import { ChatContainer } from '@web/components/chatBox/ChatContainer';
+import { Result } from 'antd';
 
 interface GroupPanelParams {
   groupUUID: string;
@@ -16,6 +17,10 @@ export const GroupPanel: React.FC = TMemo(() => {
     return <ChatContainer converseUUID={groupUUID} />;
   }
 
-  return <div>{JSON.stringify(params)}</div>;
+  return (
+    <div>
+      <Result status="warning" title="找不到该面板" />
+    </div>
+  );
 });
 GroupPanel.displayName = 'GroupPanel';
