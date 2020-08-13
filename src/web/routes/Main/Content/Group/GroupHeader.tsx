@@ -9,6 +9,7 @@ import _isNil from 'lodash/isNil';
 import { showAlert } from '@redux/actions/ui';
 import { dismissGroup, quitGroup } from '@redux/actions/group';
 import { showToasts } from '@shared/manager/ui';
+import { PortalAdd } from '@web/utils/portal';
 
 interface GroupHeaderProps {
   groupUUID: string;
@@ -21,6 +22,7 @@ export const GroupHeader: React.FC<GroupHeaderProps> = TMemo((props) => {
 
   const handleShowGroupInfo = useCallback(() => {
     console.log('TODO');
+    PortalAdd(<div>TODO</div>);
   }, []);
 
   // 解散/退出团

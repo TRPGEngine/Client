@@ -30,13 +30,13 @@ export function buildPortal(options: BuildPortalOptions) {
   const { hostName, eventEmitter, renderManagerView } = options;
   let nextKey = 10000;
 
-  const add = (el: React.ReactNode) => {
+  const add = (el: React.ReactNode): number => {
     const key = nextKey++;
     eventEmitter.emit(addType, el, key, hostName);
     return key;
   };
 
-  const remove = (key: number) => {
+  const remove = (key: number): void => {
     eventEmitter.emit(removeType, key, hostName);
   };
 

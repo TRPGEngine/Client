@@ -14,6 +14,7 @@ import { GlobalStyle } from './style';
 import { t } from '@shared/i18n';
 import { LoginCheck } from './LoginCheck';
 import { PortalProvider } from '@web/components/portal/PortalProvider';
+import { PortalHost } from '@web/utils/portal';
 import './init';
 
 // 新版Web页面
@@ -23,6 +24,14 @@ const Router: any =
     ? BrowserRouter
     : HashRouter;
 
+const CustomProvider: React.FC = (props) => {
+  return (
+    <PortalProvider>
+      <PortalHost>{props.children}</PortalHost>
+    </PortalProvider>
+  );
+};
+
 export const App = TMemo(() => {
   return (
     <Router>
@@ -30,7 +39,7 @@ export const App = TMemo(() => {
         <GlobalStyle />
         <GlobalUI />
         <div className="app">
-          <PortalProvider>
+          <CustomProvider>
             <Switch>
               <Route name="login" path="/login" component={Login} />
               <Route name="register" path="/register" component={Register} />
@@ -43,7 +52,7 @@ export const App = TMemo(() => {
             </div>
             <AppBanner />
             <LoginCheck />
-          </PortalProvider>
+          </CustomProvider>
         </div>
       </ErrorBoundary>
     </Router>

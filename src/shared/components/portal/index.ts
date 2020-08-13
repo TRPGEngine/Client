@@ -1,3 +1,4 @@
 import { buildPortal } from './buildPortal';
+import { DefaultEventEmitter } from './defaultEventEmitter';
 
-export { buildPortal };
+export { buildPortal, DefaultEventEmitter };
