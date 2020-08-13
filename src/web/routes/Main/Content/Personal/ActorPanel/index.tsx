@@ -7,6 +7,7 @@ import { Button } from 'antd';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { showModal } from '@redux/actions/ui';
 import ActorCreate from '@web/components/modal/ActorCreate';
+import { ActorList } from './ActorList';
 const { TabPane } = PillTabs;
 
 const PaneContainer = styled.div`
@@ -20,31 +21,17 @@ export const ActorPanel: React.FC = TMemo(() => {
     () => (
       <TabPane tab={t('所有')} key="1">
         <PaneContainer>
-          <div>所有</div>
-        </PaneContainer>
-      </TabPane>
-    ),
-    []
-  );
-
-  const createNewActorPanel = useMemo(
-    () => (
-      <TabPane tab={t('创建角色')} key="2">
-        <PaneContainer>
           <Button onClick={() => dispatch(showModal(<ActorCreate />))} key="2">
-            创建角色
+            {t('创建新角色')}
           </Button>
+
+          <ActorList />
         </PaneContainer>
       </TabPane>
     ),
     []
   );
 
-  return (
-    <PillTabs defaultActiveKey="1">
-      {allActorPane}
-      {createNewActorPanel}
-    </PillTabs>
-  );
+  return <PillTabs defaultActiveKey="1">{allActorPane}</PillTabs>;
 });
 ActorPanel.displayName = 'ActorPanel';

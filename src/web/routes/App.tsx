@@ -14,6 +14,7 @@ import { GlobalStyle } from './style';
 import { t } from '@shared/i18n';
 import { LoginCheck } from './LoginCheck';
 import { PortalProvider } from '@web/components/portal/PortalProvider';
+import './init';
 
 // 新版Web页面
 

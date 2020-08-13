@@ -1,6 +1,8 @@
 const fs = require('fs');
 const { crc32 } = require('crc');
 
+console.log('Scanning Translation in src folder...')
+
 module.exports = {
   input: [
     'src/**/*.{ts,tsx}',
@@ -11,7 +13,7 @@ module.exports = {
   ],
   output: './', //输出目录
   options: {
-    debug: true,
+    debug: false,
     sort: true,
     func: false,
     trans: false,

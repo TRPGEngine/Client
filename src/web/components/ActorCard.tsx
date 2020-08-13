@@ -89,16 +89,17 @@ const Container = styled(ActorCardContainer)`
 interface Props {
   actor: ActorType;
   actions?: React.ReactNode;
+  style?: React.CSSProperties;
 }
 export const ActorCard: React.FC<Props> = TMemo((props) => {
-  const { actor } = props;
+  const { actor, style } = props;
 
   const backgroundStyle = {
     backgroundImage: `url(${getAbsolutePath(actor.avatar)})`,
   };
 
   return (
-    <Container>
+    <Container style={style}>
       <div className="avatar" style={backgroundStyle} />
       <div className="profile">
         <p>
