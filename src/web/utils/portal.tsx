@@ -10,6 +10,7 @@ const PortalView = styled.div`
   height: 100vh;
   top: 0;
   left: 0;
+  z-index: 10;
 `;
 
 const { PortalHost, add, remove } = buildPortal({

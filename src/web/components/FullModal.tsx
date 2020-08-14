@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import _isFunction from 'lodash/isFunction';
 import { CloseCircleOutlined } from '@ant-design/icons';
-import { PortalRender } from './portal/PortalRender';
+import { useKey } from 'react-use';
 
 const Container = styled.div<{
   visible: boolean;
@@ -25,8 +25,16 @@ const CloseBtn = styled.div`
   position: absolute;
   right: 32px;
   top: 32px;
-  font-size: 32px;
+
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+`;
+
+const CloseTip = styled.span`
+  text-align: center;
+  margin-top: 2px;
+  font-weight: bold;
 `;
 
 /**
@@ -38,23 +46,27 @@ interface FullModalProps {
 }
 export const FullModal: React.FC<FullModalProps> = TMemo((props) => {
   const { visible = true, onChangeVisible } = props;
+  const ref = useRef<HTMLDivElement | null>(null);
 
   const handleClose = useCallback(() => {
     _isFunction(onChangeVisible) && onChangeVisible(false);
   }, [onChangeVisible]);
 
-  return (
-    <PortalRender>
-      <Container visible={visible}>
-        {props.children}
+  useKey('Escape', handleClose, {
+    event: 'keyup',
+  });
 
-        {_isFunction(onChangeVisible) && (
-          <CloseBtn onClick={handleClose}>
-            <CloseCircleOutlined />
-          </CloseBtn>
-        )}
-      </Container>
-    </PortalRender>
+  return (
+    <Container visible={visible} ref={ref}>
+      {props.children}
+
+      {_isFunction(onChangeVisible) && (
+        <CloseBtn onClick={handleClose}>
+          <CloseCircleOutlined style={{ fontSize: 32 }} />
+          <CloseTip>ESC</CloseTip>
+        </CloseBtn>
+      )}
+    </Container>
   );
 });
 FullModal.displayName = 'FullModal';

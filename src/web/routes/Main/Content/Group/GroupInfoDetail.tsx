@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { GroupInfo } from '@redux/types/group';
 import { SidebarView, SidebarViewMenuType } from '@web/components/SidebarView';
-import { FullModal } from '@web/components/FullModal';
 
 interface GroupInfoDetailProps {
   groupInfo: GroupInfo;
