@@ -5,5 +5,10 @@ export type PortalMethods = {
   update: (key: number, children: React.ReactNode) => void;
   unmount: (key: number) => void;
 };
-export const PortalContext = React.createContext<PortalMethods | null>(null);
-PortalContext.displayName = 'PortalContext';
+
+export function createPortalContext(name: string) {
+  const PortalContext = React.createContext<PortalMethods | null>(null);
+  PortalContext.displayName = 'PortalContext-' + name;
+
+  return PortalContext;
+}

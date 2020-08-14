@@ -1,19 +1,22 @@
-import React, { useCallback, useRef, Fragment } from 'react';
+import React, { useCallback, useRef, Fragment, useContext } from 'react';
 // import { DeviceEventEmitter, NativeEventEmitter } from 'react-native';
 import { useEffect } from 'react';
 import { TMemo } from '../TMemo';
 import { PortalManager } from './Manager';
-import { PortalContext } from './context';
+import { createPortalContext } from './context';
+import { PortalConsumer } from './Consumer';
+import _isNil from 'lodash/isNil';
 
 type Operation =
   | { type: 'mount'; key: number; children: React.ReactNode }
   | { type: 'update'; key: number; children: React.ReactNode }
   | { type: 'unmount'; key: number };
 
-// events const
+// Events const
 const addType = 'ADD_PORTAL';
 const removeType = 'REMOVE_PORTAL';
 
+// For react-native
 // const TopViewEventEmitter = DeviceEventEmitter || new NativeEventEmitter();
 
 interface EventEmitterFunc {
@@ -39,6 +42,8 @@ export function buildPortal(options: BuildPortalOptions) {
   const remove = (key: number): void => {
     eventEmitter.emit(removeType, key, hostName);
   };
+
+  const PortalContext = createPortalContext(hostName);
 
   const PortalHost = TMemo((props) => {
     const managerRef = useRef<PortalManager>();
@@ -105,7 +110,7 @@ export function buildPortal(options: BuildPortalOptions) {
 
     useEffect(() => {
       eventEmitter.addListener(addType, mount);
-      eventEmitter.addListener(addType, unmount);
+      eventEmitter.addListener(removeType, unmount);
 
       return () => {
         eventEmitter.removeListener(addType, mount);
@@ -131,5 +136,17 @@ export function buildPortal(options: BuildPortalOptions) {
   });
   PortalHost.displayName = 'PortalHost-' + hostName;
 
-  return { add, remove, PortalHost };
+  const PortalRender = TMemo((props) => {
+    const manager = useContext(PortalContext);
+
+    if (_isNil(manager)) {
+      console.error('Not find PortalContext');
+      return null;
+    }
+
+    return <PortalConsumer manager={manager}>{props.children}</PortalConsumer>;
+  });
+  PortalRender.displayName = 'PortalRender-' + hostName;
+
+  return { add, remove, PortalHost, PortalRender };
 }
