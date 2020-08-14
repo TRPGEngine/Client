@@ -15,7 +15,7 @@ const Container = styled.div<{
   width: 100vw;
   height: 100vh;
   z-index: 100;
-  background-color: ${(props) => props.theme.color.graySet[9]};
+  background-color: ${(props) => props.theme.color.graySet[8]};
   display: flex;
   justify-content: center;
   align-items: center;
