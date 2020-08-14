@@ -37,7 +37,7 @@ interface FullModalProps {
   onChangeVisible?: (visible: boolean) => void;
 }
 export const FullModal: React.FC<FullModalProps> = TMemo((props) => {
-  const { visible = false, onChangeVisible } = props;
+  const { visible = true, onChangeVisible } = props;
 
   const handleClose = useCallback(() => {
     _isFunction(onChangeVisible) && onChangeVisible(false);
