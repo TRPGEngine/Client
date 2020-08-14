@@ -11,7 +11,7 @@ import { TMemo } from '../TMemo';
 export function preProcessLinkText(plainText: string): string {
   let text = emojify(plainText); // 将:<emojicode>: 转化为 unicode字符
   text = text.replace(
-    new RegExp(urlRegex({ exact: false, strict: true }), 'g'),
+    urlRegex({ exact: false, strict: true }),
     '[url]$&[/url]'
   ); // 将聊天记录中的url提取成bbcode 需要过滤掉被bbcode包住的部分
 
