@@ -1,25 +1,27 @@
 import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { GroupInfo } from '@redux/types/group';
 import { SidebarView, SidebarViewMenuType } from '@web/components/SidebarView';
+import { GroupInfoSummary } from './GroupInfoSummary';
+import { useJoinedGroupInfo } from '@redux/hooks/group';
 
 interface GroupInfoDetailProps {
-  groupInfo: GroupInfo;
+  groupUUID: string;
 }
 export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
   (props) => {
-    const { groupInfo } = props;
+    const { groupUUID } = props;
+    const groupInfo = useJoinedGroupInfo(groupUUID);
 
     const menu: SidebarViewMenuType[] = useMemo(
       () => [
         {
           type: 'group',
-          title: 'a',
+          title: groupInfo?.name ?? '',
           children: [
             {
               type: 'item',
-              title: 'Test',
-              content: <div>aaaa</div>,
+              title: '概况',
+              content: <GroupInfoSummary groupUUID={groupUUID} />,
             },
             {
               type: 'item',
@@ -29,7 +31,7 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
           ],
         },
       ],
-      []
+      [groupInfo?.name, groupUUID]
     );
 
     return (

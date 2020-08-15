@@ -18,7 +18,7 @@ export function useGroupHeaderAction(groupInfo: GroupInfo) {
   const handleShowGroupInfo = useCallback(() => {
     const key = PortalAdd(
       <FullModal visible={true} onChangeVisible={() => PortalRemove(key)}>
-        <GroupInfoDetail groupInfo={groupInfo} />
+        <GroupInfoDetail groupUUID={groupInfo.uuid} />
       </FullModal>
     );
   }, []);

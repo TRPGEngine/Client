@@ -104,6 +104,7 @@ const styledTheme = {
     interactiveNormal: '#b9bbbe',
     headerPrimary: '#fff',
     headerSecondary: '#b9bbbe',
+    channelsDefault: '#8e9297',
   },
   boxShadow: {
     normal: 'rgba(0, 0, 0, 0.15) 0 0 8px',
