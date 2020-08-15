@@ -25,7 +25,6 @@ const CloseBtn = styled.div`
   position: absolute;
   right: 32px;
   top: 32px;
-
   cursor: pointer;
   display: flex;
   flex-direction: column;
