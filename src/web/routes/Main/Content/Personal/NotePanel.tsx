@@ -40,15 +40,25 @@ function useNoteData(noteUUID: string) {
 
   const dispatch = useTRPGDispatch();
   const onSave = useCallback(() => {
-    if (!_isNil(noteInfo) && _isString(noteInfo.uuid)) {
-      dispatch(
-        syncNote({
-          uuid: noteInfo.uuid,
-          title,
-          data: value,
-        })
-      );
+    if (_isNil(noteInfo)) {
+      return;
     }
+
+    if (!_isString(noteInfo.uuid)) {
+      return;
+    }
+
+    if (noteInfo.unsync === false) {
+      return;
+    }
+
+    dispatch(
+      syncNote({
+        uuid: noteInfo.uuid,
+        title,
+        data: value,
+      })
+    );
   }, [title, value, noteInfo]);
 
   useDebounce(
