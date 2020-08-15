@@ -111,7 +111,11 @@ const AvatarPicker = (props: Props) => {
   return (
     <div className={props.className}>
       <div
-        style={{ cursor: 'pointer', display: 'inline-block' }}
+        style={{
+          cursor: 'pointer',
+          display: 'inline-block',
+          position: 'relative',
+        }}
         onClick={() => !props.disabled && fileRef.current?.click()}
       >
         <input

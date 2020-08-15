@@ -4,6 +4,7 @@ import _head from 'lodash/head';
 import _upperCase from 'lodash/upperCase';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
+import _isNumber from 'lodash/isNumber';
 import { AvatarProps as AntdAvatarProps } from 'antd/lib/avatar';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import { getAvatarColorHex } from '@shared/utils/string-helper';
@@ -26,17 +27,21 @@ export const Avatar: React.FC<AvatarProps> = TMemo((props) => {
     [src, props.name]
   );
 
+  const style: React.CSSProperties = {
+    cursor: 'default',
+    userSelect: 'none',
+    ...props.style,
+    backgroundColor: color,
+  };
+
+  if (_isNumber(props.size) && typeof style.fontSize === 'undefined') {
+    // 如果props.size是数字且没有指定文字大小
+    // 则自动增加fontSize大小
+    style.fontSize = props.size * 0.4;
+  }
+
   return (
-    <AntdAvatar
-      {...props}
-      src={src}
-      style={{
-        cursor: 'default',
-        userSelect: 'none',
-        ...props.style,
-        backgroundColor: color,
-      }}
-    >
+    <AntdAvatar {...props} src={src} style={style}>
       {name}
     </AntdAvatar>
   );

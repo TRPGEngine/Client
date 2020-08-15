@@ -2,12 +2,13 @@ import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { showAlert } from '../../shared/redux/actions/ui';
 import _get from 'lodash/get';
-
-import './ImageUploader.scss';
 import AvatarPicker from './AvatarPicker';
 import { blobUrlToFile } from '@web/utils/file-helper';
 import { toAvatar } from '@shared/utils/upload-helper';
 import { TRPGDispatchProp, TRPGState } from '@src/shared/redux/types/__all__';
+import classnames from 'classnames';
+
+import './ImageUploader.scss';
 
 type CSSUnit = number | string;
 
@@ -19,6 +20,7 @@ interface Props extends TRPGDispatchProp {
   containerWidth?: CSSUnit;
   containerHeight?: CSSUnit;
   onUploadSuccess?: (imageInfo: any) => void;
+  circle?: boolean;
 
   user_uuid: string; // 绑定的用户UUID
 
@@ -90,14 +92,19 @@ class ImageUploader extends React.Component<Props> {
         disabled={this.state.isUploading}
         onChange={this.handlePickImage}
       >
-        <div className={'mask' + (this.state.isUploading ? ' active' : '')}>
+        {this.props.children}
+        <div
+          className={classnames('mask', {
+            active: this.state.isUploading,
+            circle: this.props.circle,
+          })}
+        >
           {this.state.isUploading
             ? this.state.uploadProgress
               ? `${this.state.uploadProgress}%`
               : '图片上传中...'
             : '点击上传图片'}
         </div>
-        {this.props.children}
       </AvatarPicker>
     );
   }

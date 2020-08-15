@@ -2,6 +2,7 @@
   position: relative;
   width: 100%;
   height: 100%;
+
   .mask {
     position: absolute;
     top: 0;
@@ -18,6 +19,11 @@
 
     &:hover, &.active {
       opacity: 1;
+    }
+
+    &.circle {
+      border-radius: 50%;
+      overflow: hidden;
     }
   }
 
