@@ -2,11 +2,18 @@ import React, { useState, useContext } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import _get from 'lodash/get';
 import styled from 'styled-components';
+import classNames from 'classnames';
 
 interface SidebarViewMenuItemType {
   type: 'item';
   title: string;
   content: React.ReactNode;
+}
+
+interface SidebarViewLinkType {
+  type: 'link';
+  title: string;
+  onClick: () => void;
   isDanger?: boolean;
 }
 
@@ -21,7 +28,19 @@ const Sidebar = styled.nav`
   padding: 60px 10px 80px 0;
   background-color: ${(props) => props.theme.color.transparent90};
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+
+  > div {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: ${(props) => props.theme.border.thin};
+
+    &:last-child {
+      border: 0;
+    }
+  }
 `;
 
 const Content = styled.div`
@@ -56,6 +75,10 @@ const SidebarViewMenuItemTitle = styled.div`
   &.active {
     color: ${(props) => props.theme.color.interactiveActive};
   }
+
+  &.danger {
+    color: ${(props) => props.theme.color['sunset-orange']};
+  }
 `;
 
 interface SidebarViewContextProps {
@@ -70,9 +93,10 @@ export type SidebarViewMenuType =
   | {
       type: 'group';
       title: string;
-      children: SidebarViewMenuItemType[];
+      children: (SidebarViewMenuItemType | SidebarViewLinkType)[];
     }
-  | SidebarViewMenuItemType;
+  | SidebarViewMenuItemType
+  | SidebarViewLinkType;
 
 interface SidebarViewMenuProps {
   menu: SidebarViewMenuType;
@@ -104,6 +128,19 @@ const SidebarViewMenuItem: React.FC<SidebarViewMenuProps> = TMemo((props) => {
         <SidebarViewMenuItemTitle
           className={content === menu.content ? 'active' : ''}
           onClick={() => setContent(menu.content)}
+        >
+          {menu.title}
+        </SidebarViewMenuItemTitle>
+      </div>
+    );
+  } else if (menu.type === 'link') {
+    return (
+      <div>
+        <SidebarViewMenuItemTitle
+          className={classNames({
+            danger: menu.isDanger,
+          })}
+          onClick={menu.onClick}
         >
           {menu.title}
         </SidebarViewMenuItemTitle>

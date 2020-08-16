@@ -90,6 +90,7 @@ const styledTheme = {
     gold: '#FFD700',
     warning: '#faad14',
     'alizarin-crimson': '#EC2121',
+    'sunset-orange': '#FF4D4F',
     periwinkle: '#BEC9FF',
     transparent90: 'rgba(0,0,0,0.1)',
     transparent80: 'rgba(0,0,0,0.2)',
