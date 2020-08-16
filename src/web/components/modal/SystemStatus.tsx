@@ -41,52 +41,57 @@ const CurrentSocketId: React.FC = TMemo(() => {
 });
 CurrentSocketId.displayName = 'CurrentSocketId';
 
-export default class SystemStatus extends React.PureComponent {
-  get status() {
-    return [
-      {
-        label: '后台服务地址',
-        value: `${config.io.protocol}://${config.io.host}:${config.io.port}`,
-      },
-      {
-        label: '网页服务地址',
-        value: config.file.url,
-      },
-      {
-        label: 'Portal服务地址',
-        value: config.url.portal,
-      },
-      {
-        label: '编译环境',
-        value: config.environment,
-      },
-      {
-        label: '当前版本号',
-        value: config.version,
-      },
-      {
-        label: '当前连接',
-        value: <CurrentSocketId />,
-      },
-      {
-        label: '本地时间',
-        value: <LocalTimer />,
-      },
-    ];
-  }
+export const SystemStatusInfo: React.FC = TMemo(() => {
+  const status = [
+    {
+      label: '后台服务地址',
+      value: `${config.io.protocol}://${config.io.host}:${config.io.port}`,
+    },
+    {
+      label: '网页服务地址',
+      value: config.file.url,
+    },
+    {
+      label: 'Portal服务地址',
+      value: config.url.portal,
+    },
+    {
+      label: '编译环境',
+      value: config.environment,
+    },
+    {
+      label: '当前版本号',
+      value: config.version,
+    },
+    {
+      label: '当前连接',
+      value: <CurrentSocketId />,
+    },
+    {
+      label: '本地时间',
+      value: <LocalTimer />,
+    },
+  ];
 
-  render() {
-    return (
-      <SystemStatusPanel title="系统状态">
-        <InfoTable>
-          {this.status.map((item) => (
-            <tr key={item.label}>
-              <td>{item.label}:</td>
-              <td>{item.value}</td>
-            </tr>
-          ))}
-        </InfoTable>
-      </SystemStatusPanel>
-    );
-  }
-}
+  return (
+    <InfoTable>
+      {status.map((item) => (
+        <tr key={item.label}>
+          <td>{item.label}:</td>
+          <td>{item.value}</td>
+        </tr>
+      ))}
+    </InfoTable>
+  );
+});
+SystemStatusInfo.displayName = 'SystemStatusInfo';
+
+const SystemStatus: React.FC = TMemo(() => {
+  return (
+    <SystemStatusPanel title="系统状态">
+      <SystemStatusInfo />
+    </SystemStatusPanel>
+  );
+});
+SystemStatus.displayName = 'SystemStatus';
+export default SystemStatus;

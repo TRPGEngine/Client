@@ -49,7 +49,7 @@ export const initConfig = function initConfig(): TRPGAction {
   };
 };
 
-export const saveSettings = function saveSettings() {
+export const saveSettings = function saveSettings(): TRPGAction {
   return async function(dispatch, getState) {
     const userSettings = await rnStorage.save(
       'userSettings',

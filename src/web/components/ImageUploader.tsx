@@ -6,7 +6,7 @@ import AvatarPicker from './AvatarPicker';
 import { blobUrlToFile } from '@web/utils/file-helper';
 import { toAvatar } from '@shared/utils/upload-helper';
 import { TRPGDispatchProp, TRPGState } from '@src/shared/redux/types/__all__';
-import classnames from 'classnames';
+import classNames from 'classnames';
 
 import './ImageUploader.scss';
 
@@ -94,7 +94,7 @@ class ImageUploader extends React.Component<Props> {
       >
         {this.props.children}
         <div
-          className={classnames('mask', {
+          className={classNames('mask', {
             active: this.state.isUploading,
             circle: this.props.circle,
           })}

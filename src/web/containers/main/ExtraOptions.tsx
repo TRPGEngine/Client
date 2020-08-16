@@ -10,7 +10,7 @@ import GroupCreate from '@web/components/modal/GroupCreate';
 import ChangePassword from '@web/components/ChangePassword';
 import FriendsAdd from '@web/components/modal/FriendsAdd';
 import GroupAdd from '@web/components/modal/GroupAdd';
-import UserSettings from '@web/components/modal/UserSettings';
+import UserSettingsModal from '@web/components/modal/UserSettings';
 import SystemSettings from '@web/components/modal/SystemSettings';
 import SystemStatus from '@web/components/modal/SystemStatus';
 import ModalPanel from '@web/components/ModalPanel';
@@ -121,7 +121,7 @@ class ExtraOptions extends React.Component<Props> {
       {
         label: '个人设置',
         onClick: () => {
-          this.props.dispatch(showModal(<UserSettings />));
+          this.props.dispatch(showModal(<UserSettingsModal />));
         },
       },
       {
