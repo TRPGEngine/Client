@@ -19,6 +19,8 @@ import './init';
 
 // 新版Web页面
 
+import 'antd/dist/antd.dark.less'; // 需要确保新版的UI是异步加载的，以确保黑暗模式不会影响到旧UI
+
 const Router: any =
   config.platform === 'web' || config.environment === 'development'
     ? BrowserRouter
