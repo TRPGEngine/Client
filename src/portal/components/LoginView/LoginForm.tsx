@@ -1,12 +1,12 @@
 import React, { useCallback, Fragment, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { handleError } from '@portal/utils/error';
-import { loginWithPassword } from '@portal/model/sso';
 import { message, Input, Button, Col, Typography } from 'antd';
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 import { useFormik } from 'formik';
 import _isFunction from 'lodash/isFunction';
+import { loginWithPassword } from '@shared/model/player';
 
 interface Values {
   username: string;

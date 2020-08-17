@@ -13,11 +13,12 @@ import _isFunction from 'lodash/isFunction';
 import SplitPane from '@shared/components/web/SplitPane';
 import { handleError } from '@portal/utils/error';
 import { TiledMapManager } from '@shared/components/tiledmap/core/manager';
-import { checkToken, getToken } from '@portal/utils/auth';
+import { checkToken } from '@portal/utils/auth';
 import { TMemo } from '@shared/components/TMemo';
 import { TokenPicker } from './tools/TokenPicker';
 import styled from 'styled-components';
 import { Connects } from './tools/Connects';
+import { getUserJWT } from '@shared/utils/jwt-helper';
 
 const TiledMapContainer = styled.div`
   height: 100%;
@@ -47,7 +48,7 @@ const MapEditor: React.FC<Props> = TMemo((props) => {
     }
 
     checkToken()
-      .then(() => getToken())
+      .then(() => getUserJWT())
       .then((jwt) => setJWT(jwt));
 
     fetchGroupActorList(groupUUID)

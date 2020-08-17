@@ -5,20 +5,7 @@ import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import _isObject from 'lodash/isObject';
 import { request, navToLoginPage } from './request';
-import { getJWTPayload } from '@shared/utils/jwt-helper';
-
-let token: string | null = null;
-export const saveToken = (jwt: string): void => {
-  window.localStorage.setItem('jwt', jwt);
-  token = jwt; // 更新内存中的数据
-};
-
-export const getToken = (): string => {
-  if (_isNull(token)) {
-    token = window.localStorage.getItem('jwt');
-  }
-  return token!;
-};
+import { getJWTPayload, getUserJWT } from '@shared/utils/jwt-helper';
 
 /**
  * 发送一个校验token的请求到服务端
@@ -48,13 +35,12 @@ interface UserInfo {
  * 获取token中的明文信息
  * 明确需要返回一个对象
  */
-export const getJWTInfo = (): UserInfo => {
+export const getJWTInfo = async (): Promise<UserInfo> => {
   try {
-    if (_isString(token)) {
-      const info = getJWTPayload(token);
-      if (_isObject(info)) {
-        return info;
-      }
+    const token = await getUserJWT();
+    const info = getJWTPayload(token);
+    if (_isObject(info)) {
+      return info;
     }
   } catch (e) {
     console.error('getJWTInfo Error:', e);

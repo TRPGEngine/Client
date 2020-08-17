@@ -29,7 +29,7 @@ const storage = new Storage({
 });
 
 const rnStorage = {
-  set: async (key: string | {}, data?: {}) => {
+  set: async (key: string | {}, data?: any) => {
     try {
       if (!!key && typeof key === 'string' && !_isNil(data)) {
         await storage.save({ key, data });

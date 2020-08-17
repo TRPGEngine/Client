@@ -5,8 +5,8 @@ import { FastFormFieldMeta } from '@shared/components/FastForm';
 import { message, Col, Typography } from 'antd';
 import { registerAccount } from '@portal/model/player';
 import { handleError } from '@portal/utils/error';
-import { loginWithPassword } from '@portal/model/sso';
 import _isFunction from 'lodash/isFunction';
+import { loginWithPassword } from '@shared/model/player';
 
 const fields: FastFormFieldMeta[] = [
   {

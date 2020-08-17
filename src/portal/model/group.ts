@@ -146,7 +146,7 @@ export const editGroupActor = async (
   const avatarUrl = _get(groupActorInfo, '_avatar');
   let avatar;
   if (_isString(avatarUrl) && isBlobUrl(avatarUrl)) {
-    const userInfo = getJWTInfo();
+    const userInfo = await getJWTInfo();
     avatar = await toGroupActorWithBlobUrl(userInfo.uuid!, avatarUrl);
     _set(groupActorInfo, '_avatar', avatar.url);
   }

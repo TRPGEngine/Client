@@ -1,5 +1,9 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-import config from '../project.config';
+import config from '@shared/project.config';
+import _get from 'lodash/get';
+import { showToasts } from '@shared/manager/ui';
+import { getUserJWT } from './jwt-helper';
+import _isFunction from 'lodash/isFunction';
 
 const fileUrl = config.file.url;
 
@@ -8,7 +12,10 @@ interface CommonResp {
   msg?: string;
 }
 
-export default async function request<T = any>(
+/**
+ * @deprecated 旧版请求接口
+ */
+export default async function requestOld<T = any>(
   path: string,
   method: 'get' | 'post' = 'get',
   data?: any,
@@ -30,3 +37,55 @@ export default async function request<T = any>(
 
   return res;
 }
+
+// ====================以下为新版请求接口
+
+/**
+ * 创建请求实例
+ */
+interface RequestOptions {
+  errorHook?: (err: any) => boolean;
+}
+export function createRequest(options?: RequestOptions) {
+  const ins = axios.create({
+    baseURL: config.url.api,
+  });
+
+  ins.interceptors.request.use(async (val) => {
+    if (
+      ['post', 'get'].includes(String(val.method).toLowerCase()) &&
+      !val.headers['X-Token']
+    ) {
+      // 任何请求都尝试增加token
+      val.headers['X-Token'] = await getUserJWT();
+    }
+
+    return val;
+  });
+
+  ins.interceptors.response.use(
+    (val) => {
+      if (val.data.result === false) {
+        // 通用错误处理
+        showToasts(val.data.msg);
+      }
+
+      return val;
+    },
+    (err) => {
+      if (_isFunction(options?.errorHook)) {
+        const res = options?.errorHook(err);
+        if (res === false) {
+          return;
+        }
+      }
+
+      // 尝试获取msg
+      throw _get(err, 'response.data.msg', err);
+    }
+  );
+
+  return ins;
+}
+
+export const request = createRequest();
