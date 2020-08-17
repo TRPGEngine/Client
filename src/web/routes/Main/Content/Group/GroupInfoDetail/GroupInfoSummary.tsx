@@ -10,46 +10,13 @@ import ImageUploader from '@web/components/ImageUploader';
 import { requestUpdateGroupInfo } from '@redux/actions/group';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { useJoinedGroupInfo, useIsGroupManager } from '@redux/hooks/group';
-
-const GroupInfoItemContainer = styled.div`
-  margin-bottom: 16px;
-`;
-
-const GroupInfoItemTitle = styled.div`
-  font-size: 12px;
-  line-height: 16px;
-  color: ${(props) => props.theme.color.channelsDefault};
-  margin-bottom: 8px;
-`;
-
-const GroupInfoItemValue = styled.div`
-  line-height: 40px;
-  font-size: 16px;
-  ${(props) => props.theme.mixins.oneline};
-`;
+import { FullModalField } from '@web/components/FullModalField';
 
 const GroupInfoAvatarContainer = styled.div`
   display: flex;
   height: 100%;
   align-items: center;
 `;
-
-const GroupInfoItem: React.FC<{
-  title: string;
-  value: React.ReactNode;
-  editable?: boolean;
-  onSave?: (val: string) => void;
-}> = TMemo((props) => {
-  const valueTitle = _isString(props.value) ? props.value : undefined;
-
-  return (
-    <GroupInfoItemContainer>
-      <GroupInfoItemTitle>{props.title}</GroupInfoItemTitle>
-      <GroupInfoItemValue title={valueTitle}>{props.value}</GroupInfoItemValue>
-    </GroupInfoItemContainer>
-  );
-});
-GroupInfoItem.displayName = 'GroupInfoItem';
 
 interface GroupInfoSummaryProps {
   groupUUID: string;
@@ -112,8 +79,8 @@ export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
             </GroupInfoAvatarContainer>
           </Col>
           <Col sm={12}>
-            <GroupInfoItem title="团名称" value={groupInfo.name} />
-            <GroupInfoItem title="团唯一标识" value={groupInfo.uuid} />
+            <FullModalField title="团名称" value={groupInfo.name} />
+            <FullModalField title="团唯一标识" value={groupInfo.uuid} />
           </Col>
         </Row>
 
@@ -121,13 +88,13 @@ export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
 
         <Row>
           <Col flex={1}>
-            <GroupInfoItem
+            <FullModalField
               title="主持人"
               value={<UserName uuid={groupInfo.owner_uuid} />}
             />
           </Col>
           <Col flex={1}>
-            <GroupInfoItem title="简介" value={groupInfo.desc} />
+            <FullModalField title="简介" value={groupInfo.desc} />
           </Col>
         </Row>
 
@@ -135,25 +102,25 @@ export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
 
         <Row>
           <Col flex={1}>
-            <GroupInfoItem
+            <FullModalField
               title="团管理数"
               value={`${groupInfo.managers_uuid?.length} 人`}
             />
           </Col>
           <Col flex={1}>
-            <GroupInfoItem
+            <FullModalField
               title="成员数"
               value={`${groupInfo.group_members?.length} 人`}
             />
           </Col>
           <Col flex={1}>
-            <GroupInfoItem
+            <FullModalField
               title="团人物卡数"
               value={`${groupInfo.group_actors?.length} 人`}
             />
           </Col>
           <Col flex={1}>
-            <GroupInfoItem
+            <FullModalField
               title="团地图数"
               value={`${groupInfo.maps_uuid?.length} 人`}
             />
