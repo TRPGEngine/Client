@@ -1,3 +1,4 @@
+import './init';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
@@ -7,7 +8,6 @@ import zhCN from 'antd/es/locale/zh_CN';
 import styledTheme from '@src/shared/utils/theme';
 import { WebErrorBoundary } from '@web/components/WebErrorBoundary';
 import { AlertErrorView } from '@web/components/AlertErrorView';
-import './init';
 
 import '@web/assets/css/iconfont.css';
 import './index.css';

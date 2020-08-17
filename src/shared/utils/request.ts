@@ -4,6 +4,7 @@ import _get from 'lodash/get';
 import { showToasts } from '@shared/manager/ui';
 import { getUserJWT } from './jwt-helper';
 import _isFunction from 'lodash/isFunction';
+import { getErrorHook } from '@shared/manager/request';
 
 const fileUrl = config.file.url;
 
@@ -43,10 +44,7 @@ export default async function requestOld<T = any>(
 /**
  * 创建请求实例
  */
-interface RequestOptions {
-  errorHook?: (err: any) => boolean;
-}
-export function createRequest(options?: RequestOptions) {
+export function createRequest() {
   const ins = axios.create({
     baseURL: config.url.api,
   });
@@ -73,8 +71,8 @@ export function createRequest(options?: RequestOptions) {
       return val;
     },
     (err) => {
-      if (_isFunction(options?.errorHook)) {
-        const res = options?.errorHook(err);
+      if (_isFunction(getErrorHook)) {
+        const res = getErrorHook(err);
         if (res === false) {
           return;
         }
