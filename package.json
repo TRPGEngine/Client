@@ -40,9 +40,20 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint",
+      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "lint-staged": {
+    "src/*.{json,less}": [
+      "prettier --write --config ./.prettierrc.json",
+      "git add"
+    ],
+    "**/*.{ts,tsx}": [
+      "tslint --fix -c ./tslint.json",
+      "prettier --write --config ./.prettierrc.json",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -215,6 +226,7 @@
     "jest": "^25.2.7",
     "less": "^3.10.3",
     "less-loader": "^6.0.0",
+    "lint-staged": "^10.2.11",
     "metro-react-native-babel-preset": "^0.53.1",
     "monaco-editor-webpack-plugin": "^1.7.0",
     "node-sass": "^4.12.0",
