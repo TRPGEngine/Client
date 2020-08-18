@@ -10,9 +10,11 @@ import { Form, Button } from 'antd';
 
 import { FastFormText } from './types/Text';
 import { FastFormPassword } from './types/Password';
+import { FastFormSelect } from './types/Select';
 
 regField('text', FastFormText);
 regField('password', FastFormPassword);
+regField('select', FastFormSelect);
 
 const FastFormContainer: FastFormContainerComponent = TMemo((props) => {
   const submitButtonRender = useMemo(() => {

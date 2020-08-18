@@ -10,6 +10,7 @@ import _fromPairs from 'lodash/fromPairs';
 interface FastFormFieldCommon {
   name: string; // 字段名
   label?: string; // 字段标签
+  [other: string]: any; // 其他字段
 }
 
 interface FastFormFieldProps extends FastFormFieldCommon {
@@ -20,10 +21,12 @@ interface FastFormFieldProps extends FastFormFieldCommon {
 /**
  * 字段组件
  */
-export type FastFormFieldComponent = React.ComponentType<FastFormFieldProps>;
+export type FastFormFieldComponent<T = {}> = React.ComponentType<
+  FastFormFieldProps & T
+>;
 
 const fieldMap = new Map<string, FastFormFieldComponent>();
-export function regField(type: string, component: FastFormFieldComponent) {
+export function regField(type: string, component: FastFormFieldComponent<any>) {
   fieldMap.set(type, component);
 }
 
