@@ -10,18 +10,30 @@ import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { useCurrentUserUUID } from '@redux/hooks/user';
 import { showAlert } from '@redux/actions/ui';
 import { dismissGroup, quitGroup } from '@redux/actions/group';
+import { GroupPanelCreate } from '@web/components/modal/GroupPanelCreate';
+import { openModal, ModalWrapper } from '@web/components/Modal';
 
 export function useGroupHeaderAction(groupInfo: GroupInfo) {
   const dispatch = useTRPGDispatch();
   const currentUserUUID = useCurrentUserUUID();
+  const groupUUID = groupInfo.uuid;
 
   const handleShowGroupInfo = useCallback(() => {
     const key = PortalAdd(
       <FullModal visible={true} onChangeVisible={() => PortalRemove(key)}>
-        <GroupInfoDetail groupUUID={groupInfo.uuid} />
+        <GroupInfoDetail groupUUID={groupUUID} />
       </FullModal>
     );
-  }, []);
+  }, [groupUUID]);
+
+  // 创建面板
+  const handleCreateGroupPanel = useCallback(() => {
+    openModal(
+      <ModalWrapper>
+        <GroupPanelCreate groupUUID={groupUUID} />
+      </ModalWrapper>
+    );
+  }, [groupUUID]);
 
   // 解散/退出团
   const handleQuitGroup = useCallback(() => {
@@ -55,5 +67,5 @@ export function useGroupHeaderAction(groupInfo: GroupInfo) {
     }
   }, [currentUserUUID, groupInfo?.owner_uuid, groupInfo?.uuid]);
 
-  return { handleShowGroupInfo, handleQuitGroup };
+  return { handleShowGroupInfo, handleCreateGroupPanel, handleQuitGroup };
 }
