@@ -89,7 +89,6 @@
     "handlebars": "^4.4.3",
     "html-to-react": "^1.4.2",
     "i18next": "^19.6.3",
-    "i18next-browser-languagedetector": "^5.0.0",
     "i18next-resource-store-loader": "^0.1.2",
     "immer": "^5.1.0",
     "is-hotkey": "^0.1.6",

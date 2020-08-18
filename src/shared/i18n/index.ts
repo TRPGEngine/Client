@@ -1,12 +1,12 @@
 import i18next, { TFunction } from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
 import { crc32 } from 'crc';
-const resBundle = require('i18next-resource-store-loader!./langs/index.js');
+import { resources } from './resources';
+import { languageDetector } from './language';
 
-i18next.use(LanguageDetector).init({
+i18next.use(languageDetector).init({
   debug: true,
   fallbackLng: 'zh-CN',
-  resources: resBundle,
+  resources,
 });
 
 /**

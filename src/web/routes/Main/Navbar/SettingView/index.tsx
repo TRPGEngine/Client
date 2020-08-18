@@ -9,6 +9,7 @@ import { UserSettings } from '@web/components/modal/UserSettings';
 import { SettingAccountView } from './SettingAccountView';
 import { AccountLoginLog } from './AccountLoginLog';
 import { t } from '@shared/i18n';
+import { SelectLanguage } from './SelectLanguage';
 
 export const SettingView: React.FC = TMemo(() => {
   const dispatch = useTRPGDispatch();
@@ -32,6 +33,11 @@ export const SettingView: React.FC = TMemo(() => {
             type: 'item',
             title: t('个人设置'),
             content: <UserSettings />, // 注意。这里没有办法保存设置. 里面内置的保存是取消挂载时生效。并不好用，需要修改
+          },
+          {
+            type: 'item',
+            title: t('系统语言'),
+            content: <SelectLanguage />, // 注意。这里没有办法保存设置. 里面内置的保存是取消挂载时生效。并不好用，需要修改
           },
         ],
       },
