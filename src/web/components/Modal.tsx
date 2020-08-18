@@ -2,15 +2,24 @@ import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { TMemo } from '@shared/components/TMemo';
 import _isFunction from 'lodash/isFunction';
+import { PortalAdd, PortalRemove } from '@web/utils/portal';
+
+/**
+ * 新版模态框解决方案
+ */
 
 const ModalMask = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: ${(props) => props.theme.color.transparent80};
+  background-color: ${(props) => props.theme.color.transparent70};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ModalInner = styled.div`
-  background-color: white;
+  background-color: ${(props) => props.theme.color.graySet[7]};
+  border-radius: ${(props) => props.theme.radius.standard};
 `;
 
 interface ModalProps {
@@ -41,3 +50,28 @@ export const Modal: React.FC<ModalProps> = TMemo((props) => {
   );
 });
 Modal.displayName = 'Modal';
+
+export function openModal(content: React.ReactNode): number {
+  const key = PortalAdd(
+    <Modal
+      visible={true}
+      onChangeVisible={(visible) => {
+        if (visible === false) {
+          PortalRemove(key);
+        }
+      }}
+    >
+      {content}
+    </Modal>
+  );
+
+  return key;
+}
+
+/**
+ * 标准模态框包装器
+ */
+export const ModalWrapper = styled.div`
+  padding: 16px;
+  min-width: 440px;
+`;

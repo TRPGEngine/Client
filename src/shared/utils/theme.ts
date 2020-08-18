@@ -94,6 +94,7 @@ const styledTheme = {
     periwinkle: '#BEC9FF',
     transparent90: 'rgba(0,0,0,0.1)',
     transparent80: 'rgba(0,0,0,0.2)',
+    transparent70: 'rgba(0,0,0,0.3)',
 
     // 功能性分类
     textNormal: '#dcddde',
