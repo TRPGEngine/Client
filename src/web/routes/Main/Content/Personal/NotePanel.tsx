@@ -67,6 +67,24 @@ function useNoteData(noteUUID: string) {
         return;
       }
 
+      if (!_isEqual(title, noteInfo.title)) {
+        dispatch(
+          markUnsyncNote({
+            noteUUID,
+          })
+        );
+      }
+    },
+    200,
+    [title]
+  );
+
+  useDebounce(
+    () => {
+      if (_isNil(noteInfo)) {
+        return;
+      }
+
       if (!_isEqual(value, noteInfo.data)) {
         dispatch(
           markUnsyncNote({
@@ -123,6 +141,7 @@ const NoteEditor: React.FC<{ noteUUID: string }> = TMemo((props) => {
       </SectionHeader>
       <RichTextEditor
         key={noteUUID}
+        style={{ flex: 1, overflow: 'hidden' }}
         value={value}
         onChange={setValue}
         customActions={[

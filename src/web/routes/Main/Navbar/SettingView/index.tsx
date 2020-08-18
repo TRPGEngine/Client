@@ -8,6 +8,7 @@ import { SystemStatusInfo } from '@web/components/modal/SystemStatus';
 import { UserSettings } from '@web/components/modal/UserSettings';
 import { SettingAccountView } from './SettingAccountView';
 import { AccountLoginLog } from './AccountLoginLog';
+import { t } from '@shared/i18n';
 
 export const SettingView: React.FC = TMemo(() => {
   const dispatch = useTRPGDispatch();
@@ -15,33 +16,33 @@ export const SettingView: React.FC = TMemo(() => {
     () => [
       {
         type: 'group',
-        title: '设置',
+        title: t('设置'),
         children: [
           {
             type: 'item',
-            title: '我的账号',
+            title: t('我的账号'),
             content: <SettingAccountView />,
           },
           {
             type: 'item',
-            title: '登录记录',
+            title: t('登录记录'),
             content: <AccountLoginLog />,
           },
           {
             type: 'item',
-            title: '个人设置',
+            title: t('个人设置'),
             content: <UserSettings />, // 注意。这里没有办法保存设置. 里面内置的保存是取消挂载时生效。并不好用，需要修改
           },
         ],
       },
       {
         type: 'group',
-        title: '更多',
+        title: t('更多'),
         children: [
           {
             type: 'item',
-            title: '系统状态',
-            content: <SystemStatusInfo />,
+            title: t('系统状态'),
+            content: <SystemStatusInfo style={{ color: 'white' }} />,
           },
         ],
       },
@@ -51,7 +52,7 @@ export const SettingView: React.FC = TMemo(() => {
         children: [
           {
             type: 'link',
-            title: '清理缓存',
+            title: t('清理缓存'),
             onClick: () => {
               window.localStorage.clear();
               window.sessionStorage.clear();
@@ -60,17 +61,17 @@ export const SettingView: React.FC = TMemo(() => {
           },
           {
             type: 'link',
-            title: '官方网站',
+            title: t('官方网站'),
             onClick: () => window.open(config.url.homepage),
           },
           {
             type: 'link',
-            title: '开发博客',
+            title: t('开发博客'),
             onClick: () => window.open(config.url.blog),
           },
           {
             type: 'link',
-            title: '退出登录',
+            title: t('退出登录'),
             onClick: () => dispatch(logout()),
             isDanger: true,
           },

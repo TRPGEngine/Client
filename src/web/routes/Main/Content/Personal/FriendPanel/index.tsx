@@ -1,10 +1,10 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import {
   useTRPGSelector,
   useTRPGDispatch,
 } from '@shared/hooks/useTRPGSelector';
-import { Tabs, Badge, Tooltip, Button, Typography } from 'antd';
+import { Tabs, Badge, Tooltip as AntdTooltip, Button, Typography } from 'antd';
 import { UserListItem } from '@web/components/UserListItem';
 import { PillTabs } from '@web/components/PillTabs';
 import styled from 'styled-components';
@@ -27,6 +27,11 @@ const PaneContainer = styled.div`
 const AddFriendTabLabel = styled.div`
   color: ${(props) => props.theme.color.downy};
 `;
+
+const Tooltip = styled(AntdTooltip).attrs({
+  overlayStyle: { pointerEvents: 'none' },
+  mouseEnterDelay: 0.5,
+})``;
 
 export const FriendPanel: React.FC = TMemo(() => {
   const friendList = useTRPGSelector((state) => state.user.friendList);

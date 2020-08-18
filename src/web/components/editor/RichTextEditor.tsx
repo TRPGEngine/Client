@@ -24,7 +24,6 @@ const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
 `;
 
 const EditArea = styled(Editable).attrs({
@@ -40,6 +39,7 @@ const EditArea = styled(Editable).attrs({
 interface RichTextEditorProps {
   value: Node[];
   onChange: (val: Node[]) => void;
+  style?: React.CSSProperties;
   customActions?: CustomAction[];
   onBlur?: () => void;
   onSave?: () => void;
@@ -50,7 +50,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
   const editor = useMemo(() => createFullEditor(), []);
 
   return (
-    <Container>
+    <Container style={props.style}>
       <Slate editor={editor} value={props.value} onChange={props.onChange}>
         <Toolbar>
           <MarkButton format="bold" icon={<Iconfont>&#xe62d;</Iconfont>} />
