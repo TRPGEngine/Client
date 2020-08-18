@@ -1,8 +1,8 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useParams } from 'react-router';
-import { ChatContainer } from '@web/components/chatBox/ChatContainer';
 import { Result } from 'antd';
+import { GroupChatPanel } from './GroupPanel/GroupChatPanel';
 
 interface GroupPanelParams {
   groupUUID: string;
@@ -14,7 +14,7 @@ export const GroupPanel: React.FC = TMemo(() => {
   const { groupUUID, panelUUID } = params;
 
   if (panelUUID === 'main') {
-    return <ChatContainer converseUUID={groupUUID} />;
+    return <GroupChatPanel groupUUID={groupUUID} />;
   }
 
   return (
