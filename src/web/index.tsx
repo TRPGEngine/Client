@@ -24,7 +24,7 @@ import './components/messageTypes/__all__';
 import '@web/assets/css/iconfont.css';
 import { bindEventFunc } from '@shared/api/listener';
 import { watchLoginStatus } from '@redux/middlewares/watchLoginStatus';
-import { setUser } from './utils/sentry';
+import { setUser as setUserSentryInfo } from './utils/sentry';
 import TLoadable from './components/TLoadable';
 import { checkIsNewApp } from './utils/debug-helper';
 
@@ -38,7 +38,7 @@ const store = configureStore({
   additionMiddleware: [
     watchLoginStatus({
       onLoginSuccess(info) {
-        setUser(info);
+        setUserSentryInfo(info);
       },
     }),
   ],

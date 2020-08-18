@@ -1,6 +1,7 @@
-import { PlayerUser, fetchUserInfo } from '@portal/model/player';
+import { fetchUserInfo } from '@portal/model/player';
 import { useState, useEffect } from 'react';
 import { isUUID } from '@shared/utils/uuid';
+import { PlayerUser } from '@shared/model/player';
 
 export function useUserInfo(uuid: string): PlayerUser {
   const [userInfo, setUserInfo] = useState<PlayerUser>();

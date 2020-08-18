@@ -1,23 +1,7 @@
 import { buildCacheFactory, CachePolicy } from '@shared/utils/cache-factory';
 import { request } from '@portal/utils/request';
 import md5 from 'md5';
-
-export interface PlayerUser {
-  id: number;
-  name?: string;
-  uuid: string;
-  username: string;
-  nickname: string;
-  avatar: string;
-  last_login: string;
-  last_ip: string;
-  sex: string;
-  sign: string;
-  alignment: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string;
-}
+import { PlayerUser } from '@shared/model/player';
 
 /**
  * 获取用户信息

@@ -13,12 +13,13 @@ export async function navPortal(
 ) {
   const portalUrl = config.url.portal;
 
-  const userUUID = getStoreState()?.user.info.uuid;
+  const userUUID = getStoreState()?.user.info.uuid!;
   const jwt = await getWebToken(userUUID);
 
   url = url.startsWith(portalUrl) ? url : portalUrl + url;
 
   // const injectedJavaScript = `location.href.indexOf('${portalUrl}') === 0 && window.localStorage.setItem('jwt', '${jwt}')`;
+  // TODO: 这里不太正确 因为localStorage改为rnStorage控制了 且key改为了 jsonwebtoken. 需要修改相关代码以实现同步
   const injectedJavaScript = `(function(){
     if(location.href.indexOf('${portalUrl}') !== 0) {
       return;

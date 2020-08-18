@@ -7,6 +7,7 @@ import config from '@shared/project.config';
 import { SystemStatusInfo } from '@web/components/modal/SystemStatus';
 import { UserSettings } from '@web/components/modal/UserSettings';
 import { SettingAccountView } from './SettingAccountView';
+import { AccountLoginLog } from './AccountLoginLog';
 
 export const SettingView: React.FC = TMemo(() => {
   const dispatch = useTRPGDispatch();
@@ -20,6 +21,11 @@ export const SettingView: React.FC = TMemo(() => {
             type: 'item',
             title: '我的账号',
             content: <SettingAccountView />,
+          },
+          {
+            type: 'item',
+            title: '登录记录',
+            content: <AccountLoginLog />,
           },
           {
             type: 'item',

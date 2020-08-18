@@ -9,8 +9,8 @@ import { isBlobUrl } from '@shared/utils/string-helper';
 import { bindFileAvatarAttachUUID } from './file';
 import { ActorItem } from './actor';
 import { ModelAccess } from './types';
-import { PlayerUser } from './player';
 import { ChatLogItem } from './chat';
+import { PlayerUser } from '@shared/model/player';
 
 export interface GroupItem {
   uuid: string;

@@ -37,7 +37,7 @@ import {
   runLogoutSuccessCallback,
 } from '@shared/utils/inject';
 import { setUserSettings, setSystemSettings } from './settings';
-
+import _isNil from 'lodash/isNil';
 import { reloadConverseList, getUserEmotion } from './chat';
 import { getTemplate, getActor } from './actor';
 import { getGroupList, getGroupInvite } from './group';
@@ -45,6 +45,7 @@ import { getNote, getNotes } from './note';
 import { loadLocalCache } from './cache';
 import { TRPGAction } from '../types/__all__';
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
+import { setUserJWT } from '@shared/utils/jwt-helper';
 
 const api = trpgApi.getInstance();
 
@@ -224,7 +225,12 @@ export const fetchWebToken = function(): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('player::getWebToken', null, (data) => {
       const token = data.jwt ?? null;
-      rnStorage.set('jwt', token);
+      if (_isNil(token)) {
+        console.error('jwt 无法正确获取到');
+        return;
+      }
+      setUserJWT(token);
+
       dispatch({
         type: SET_WEB_TOKEN,
         token,
