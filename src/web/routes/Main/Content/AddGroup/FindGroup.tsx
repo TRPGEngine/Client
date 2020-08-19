@@ -74,7 +74,7 @@ export const FindGroup: React.FC = TMemo(() => {
       <SearchBar>
         <Input
           size="large"
-          placeholder="请输入你要添加的好友信息"
+          placeholder="请输入你要搜索的团..."
           onPressEnter={handleSearch}
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}

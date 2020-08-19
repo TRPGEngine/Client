@@ -10,6 +10,7 @@ import { SettingAccountView } from './SettingAccountView';
 import { AccountLoginLog } from './AccountLoginLog';
 import { t } from '@shared/i18n';
 import { SelectLanguage } from './SelectLanguage';
+import { ErrorReportView } from '@web/components/ErrorReportView';
 
 export const SettingView: React.FC = TMemo(() => {
   const dispatch = useTRPGDispatch();
@@ -49,6 +50,11 @@ export const SettingView: React.FC = TMemo(() => {
             type: 'item',
             title: t('系统状态'),
             content: <SystemStatusInfo style={{ color: 'white' }} />,
+          },
+          {
+            type: 'item',
+            title: t('汇报错误'),
+            content: <ErrorReportView />,
           },
         ],
       },

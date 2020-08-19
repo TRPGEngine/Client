@@ -40,7 +40,7 @@ export const App = TMemo(() => {
       <ErrorBoundary>
         <GlobalStyle />
         <GlobalUI />
-        <div className="app">
+        <div className="app new-ui">
           <CustomProvider>
             <Switch>
               <Route name="login" path="/login" component={Login} />

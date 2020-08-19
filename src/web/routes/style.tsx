@@ -13,6 +13,12 @@ export const GlobalStyle = createGlobalStyle`
     color: ${(props) => props.theme.color.textNormal};
   }
 
+  /* antd 黑夜模式下样式 */
+  .app.new-ui {
+    .ant-input, .ant-select-selector {
+      border-color: ${(props) => props.theme.color.graySet[6]};
+    }
+  }
 
   /* 新版滚动条 */
   ::-webkit-scrollbar {
