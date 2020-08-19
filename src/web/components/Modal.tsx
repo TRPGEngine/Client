@@ -2,6 +2,9 @@ import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { TMemo } from '@shared/components/TMemo';
 import _isFunction from 'lodash/isFunction';
+import _isNil from 'lodash/isNil';
+import _last from 'lodash/last';
+import _pull from 'lodash/pull';
 import { PortalAdd, PortalRemove } from '@web/utils/portal';
 
 /**
@@ -51,19 +54,41 @@ export const Modal: React.FC<ModalProps> = TMemo((props) => {
 });
 Modal.displayName = 'Modal';
 
+const modelKeyStack: number[] = [];
+
+/**
+ * 关闭Modal
+ */
+export function closeModal(key?: number): void {
+  if (_isNil(key)) {
+    key = _last(modelKeyStack);
+  }
+
+  if (typeof key === 'number') {
+    _pull(modelKeyStack, key);
+
+    PortalRemove(key);
+  }
+}
+
+/**
+ * 打开新的Modal
+ */
 export function openModal(content: React.ReactNode): number {
   const key = PortalAdd(
     <Modal
       visible={true}
       onChangeVisible={(visible) => {
         if (visible === false) {
-          PortalRemove(key);
+          closeModal(key);
         }
       }}
     >
       {content}
     </Modal>
   );
+
+  modelKeyStack.push(key);
 
   return key;
 }

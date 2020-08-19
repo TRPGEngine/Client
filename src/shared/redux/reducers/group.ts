@@ -33,7 +33,6 @@ const {
   UPDATE_GROUP_ACTOR,
   UPDATE_GROUP_ACTOR_MAPPING,
   UPDATE_GROUP_MAP_LIST,
-  UPDATE_GROUP_PANEL_LIST,
   ADD_GROUP_MAP,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
@@ -299,14 +298,6 @@ export default produce((draft: GroupState, action) => {
       const group = draft.groups.find((g) => g.uuid === groupUUID);
       if (!_isNil(group)) {
         group.maps = groupMaps;
-      }
-      return;
-    }
-    case UPDATE_GROUP_PANEL_LIST: {
-      const { groupUUID, groupPanels } = action.payload;
-      const group = draft.groups.find((g) => g.uuid === groupUUID);
-      if (!_isNil(group)) {
-        group.panels = groupPanels ?? [];
       }
       return;
     }

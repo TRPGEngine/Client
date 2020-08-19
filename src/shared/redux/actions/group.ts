@@ -25,7 +25,6 @@ const {
   UPDATE_GROUP_ACTOR,
   UPDATE_GROUP_ACTOR_MAPPING,
   UPDATE_GROUP_MAP_LIST,
-  UPDATE_GROUP_PANEL_LIST,
   ADD_GROUP_MAP,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
@@ -60,6 +59,7 @@ import * as trpgApi from '../../api/trpg.api';
 import { TRPGAction } from '../types/__all__';
 import { getGroupInviteInfo } from './cache';
 import { GroupInfo, GroupActorType } from '@redux/types/group';
+import { showToasts } from '@shared/manager/ui';
 const api = trpgApi.getInstance();
 
 // 当state->group->groups状态添加新的group时使用来初始化
@@ -121,15 +121,6 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
           type: UPDATE_GROUP_ACTOR_MAPPING,
           groupUUID,
           payload: groupActorsMapping,
-        });
-
-        // 处理团面板
-        dispatch({
-          type: UPDATE_GROUP_PANEL_LIST,
-          payload: {
-            groupUUID,
-            groupPanels,
-          },
         });
       } else {
         console.error('获取团初始数据失败:', data.msg);
@@ -925,3 +916,36 @@ export const createGroupChannel = function(
     );
   };
 };
+
+/**
+ * 创建面板
+ * @param groupUUID 团UUID
+ * @param name 面板名
+ * @param type 面板类型
+ */
+export function createGroupPanel(
+  groupUUID: string,
+  name: string,
+  type: string,
+  onSuccess: () => void
+): TRPGAction {
+  return function(dispatch) {
+    return api.emit(
+      'group::createGroupPanel',
+      {
+        groupUUID,
+        name,
+        type,
+      },
+      function(data) {
+        if (data.result) {
+          // TODO
+          console.log(data);
+          onSuccess();
+        } else {
+          showToasts(data.msg);
+        }
+      }
+    );
+  };
+}
