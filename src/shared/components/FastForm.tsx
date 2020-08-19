@@ -100,7 +100,7 @@ export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
   }
 
   const fieldsRender = useMemo(() => {
-    return props.fields.map((fieldMeta) => {
+    return props.fields.map((fieldMeta, i) => {
       const fieldName = fieldMeta.name;
       const Component = fieldMap.get(fieldMeta.type);
 
@@ -109,6 +109,7 @@ export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
       } else {
         return (
           <Component
+            key={fieldName + i}
             {...fieldMeta}
             value={values[fieldName]}
             onChange={(val) => setFieldValue(fieldName, val)}
