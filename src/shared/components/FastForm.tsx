@@ -1,8 +1,9 @@
-import React, { useMemo, useContext } from 'react';
+import React, { useMemo, useContext, useState } from 'react';
 import { TMemo } from './TMemo';
 import { useFormik } from 'formik';
 import _isNil from 'lodash/isNil';
 import _fromPairs from 'lodash/fromPairs';
+import _isFunction from 'lodash/isFunction';
 
 /**
  * 字段通用信息
@@ -34,7 +35,7 @@ export function regField(type: string, component: FastFormFieldComponent<any>) {
  * 容器配置
  */
 export interface FastFormContainerProps {
-  loading?: boolean;
+  loading: boolean;
   submitLabel?: string;
   handleSubmit: () => void;
 }
@@ -57,9 +58,8 @@ export interface FastFormFieldMeta extends FastFormFieldCommon {
  */
 export interface FastFormProps {
   fields: FastFormFieldMeta[]; // 字段详情
-  loading?: boolean; // 加载中
   submitLabel?: string; // 提交按钮的标签名
-  onSubmit: (values: any) => void; // 点击提交按钮的回调
+  onSubmit: (values: any) => Promise<void> | void; // 点击提交按钮的回调
 }
 
 type FastFormContextType = ReturnType<typeof useFormik>;
@@ -79,9 +79,18 @@ export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
     return _fromPairs(props.fields.map((field) => [field.name, '']));
   }, [props.fields]);
 
+  const [loading, setLoading] = useState(false);
+
   const formik = useFormik({
     initialValues,
-    onSubmit: props.onSubmit,
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        _isFunction(props.onSubmit) && (await props.onSubmit(values));
+      } finally {
+        setLoading(false);
+      }
+    },
   });
   const { handleSubmit, setFieldValue, values } = formik;
 
@@ -112,7 +121,7 @@ export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
   return (
     <FastFormContext.Provider value={formik}>
       <FastFormContainer
-        loading={props.loading}
+        loading={loading}
         submitLabel={props.submitLabel}
         handleSubmit={handleSubmit}
       >

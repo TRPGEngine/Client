@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   FastForm,
   regField,
@@ -16,7 +16,7 @@ regField('text', FastFormText);
 regField('password', FastFormPassword);
 regField('select', FastFormSelect);
 
-const FastFormContainer: FastFormContainerComponent = TMemo((props) => {
+const WebFastFormContainer: FastFormContainerComponent = TMemo((props) => {
   const submitButtonRender = useMemo(() => {
     return (
       <Form.Item wrapperCol={{ sm: 24, md: { span: 16, offset: 8 } }}>
@@ -41,8 +41,8 @@ const FastFormContainer: FastFormContainerComponent = TMemo((props) => {
     </Form>
   );
 });
-FastFormContainer.displayName = 'FastFormContainer';
-regFormContainer(FastFormContainer);
+WebFastFormContainer.displayName = 'WebFastFormContainer';
+regFormContainer(WebFastFormContainer);
 
 export const WebFastForm = FastForm;
 WebFastForm.displayName = 'WebFastForm';
