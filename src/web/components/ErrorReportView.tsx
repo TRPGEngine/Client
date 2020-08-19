@@ -1,6 +1,10 @@
 import React, { useMemo, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { getFeedbackUrl, showReportDialog } from '@web/utils/sentry';
+import {
+  getFeedbackUrl,
+  showReportDialog,
+  getLastEventId,
+} from '@web/utils/sentry';
 import _isNil from 'lodash/isNil';
 import { Button, Row, Col } from 'antd';
 import { WebFastForm } from './WebFastForm';
@@ -44,6 +48,11 @@ export const ErrorReportView: React.FC = TMemo(() => {
   );
 
   const reportView = useMemo(() => {
+    const lastEventId = getLastEventId();
+    if (_isNil(lastEventId)) {
+      return <div>暂时没有发生错误...</div>;
+    }
+
     const feedbackUrl = getFeedbackUrl();
     if (_isNil(feedbackUrl)) {
       return (
