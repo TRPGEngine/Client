@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { WebFastForm } from '../WebFastForm';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
-import { createGroupPanel } from '@redux/actions/group';
 import { closeModal } from '../Modal';
+import { showToasts } from '@shared/manager/ui';
+import { createGroupPanel } from '@shared/model/group';
 
 const fields = [
   { type: 'text', name: 'name', label: '面板名' },
@@ -30,15 +30,17 @@ interface GroupPanelCreateProps {
 export const GroupPanelCreate: React.FC<GroupPanelCreateProps> = TMemo(
   (props) => {
     const { groupUUID } = props;
-    const dispatch = useTRPGDispatch();
 
     const handleCreatePanel = useCallback(
-      (values) => {
-        dispatch(
-          createGroupPanel(groupUUID, values.name, values.type, () => {
-            closeModal();
-          })
-        );
+      async (values) => {
+        try {
+          await createGroupPanel(groupUUID, values.name, values.type);
+
+          closeModal();
+          showToasts('面板创建成功');
+        } catch (err) {
+          showToasts(err);
+        }
       },
       [groupUUID]
     );

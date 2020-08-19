@@ -916,36 +916,3 @@ export const createGroupChannel = function(
     );
   };
 };
-
-/**
- * 创建面板
- * @param groupUUID 团UUID
- * @param name 面板名
- * @param type 面板类型
- */
-export function createGroupPanel(
-  groupUUID: string,
-  name: string,
-  type: string,
-  onSuccess: () => void
-): TRPGAction {
-  return function(dispatch) {
-    return api.emit(
-      'group::createGroupPanel',
-      {
-        groupUUID,
-        name,
-        type,
-      },
-      function(data) {
-        if (data.result) {
-          // TODO
-          console.log(data);
-          onSuccess();
-        } else {
-          showToasts(data.msg);
-        }
-      }
-    );
-  };
-}
