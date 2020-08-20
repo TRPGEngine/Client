@@ -15,23 +15,23 @@ describe('parseAttrStyle should be ok', () => {
     expect(
       parseAttrStyle({
         style: 'color: red;',
-        any: 'other',
+        somthing: 'other',
       })
     ).toMatchObject({
       style: {
         color: 'red',
       },
-      any: 'other',
+      somthing: 'other',
     });
   });
 
   test('no style', () => {
     expect(
       parseAttrStyle({
-        any: 'other',
+        somthing: 'other',
       })
     ).toMatchObject({
-      any: 'other',
+      somthing: 'other',
     });
   });
 
@@ -39,10 +39,10 @@ describe('parseAttrStyle should be ok', () => {
     expect(
       parseAttrStyle({
         style: 'co',
-        any: 'other',
+        somthing: 'other',
       })
     ).toMatchObject({
-      any: 'other',
+      somthing: 'other',
     });
   });
 

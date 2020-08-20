@@ -23,7 +23,7 @@ export const GroupChannelCreate: React.FC<Props> = TMemo((props) => {
   const dispatch = useTRPGDispatch();
   const { values, handleSubmit, handleChange } = useFormik<ChannelFormValues>({
     initialValues,
-    onSubmit: async (data) => {
+    onSubmit: (data) => {
       const { name, desc } = data;
       dispatch(createGroupChannel(props.groupUUID, name, desc));
     },

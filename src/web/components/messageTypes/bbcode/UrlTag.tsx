@@ -6,7 +6,7 @@ const UrlTag: React.FC<TagProps> = React.memo((props) => {
   const url = node.content.join('');
 
   return (
-    <a href={url} title={url} target="_blank">
+    <a href={url} title={url} target="_blank" rel="noreferrer">
       {url}
     </a>
   );

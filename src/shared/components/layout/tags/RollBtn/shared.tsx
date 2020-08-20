@@ -35,7 +35,7 @@ export function roll(requestStr: string) {
       }
     });
 
-    // tslint:disable-next-line: no-eval
+    // eslint-disable-next-line no-eval
     const result = eval(express);
     const str = requestStr + '=' + express + '=' + result;
     return {

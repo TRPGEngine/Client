@@ -11,7 +11,7 @@ import _isFunction from 'lodash/isFunction';
 export function useModal(
   title: string,
   body: React.ReactNode,
-  onOk?: () => void
+  onOk?: () => void | Promise<void>
 ) {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ export function useModal(
     setVisible(false);
   }, [onOk, setVisible]);
 
-  const handleCancel = useCallback(async () => {
+  const handleCancel = useCallback(() => {
     setVisible(false);
   }, []);
 
