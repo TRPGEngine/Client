@@ -1,10 +1,16 @@
+/* eslint-disable @typescript-eslint/tslint/config */
+/* eslint-disable react/no-string-refs */
 import React from 'react';
-import PropTypes from 'prop-types';
 import E from 'wangeditor';
 
 import './NoteEditor.scss';
 
-class NoteEditor extends React.Component {
+interface Props {
+  value: string;
+  onChange: (html: string) => void;
+  onSave: (html: string) => void;
+}
+class NoteEditor extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -61,16 +67,10 @@ class NoteEditor extends React.Component {
     return (
       <div className="note-editor">
         <div ref="toolbar" />
-        <div ref="editor" className="editor-content" spellCheck="false" />
+        <div ref="editor" className="editor-content" spellCheck={false} />
       </div>
     );
   }
 }
-
-NoteEditor.propTypes = {
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-  onSave: PropTypes.func,
-};
 
 export default NoteEditor;

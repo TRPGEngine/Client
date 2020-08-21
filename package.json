@@ -46,13 +46,11 @@
   },
   "lint-staged": {
     "src/*.{json,less}": [
-      "prettier --write --config ./.prettierrc.json",
-      "git add"
+      "prettier --write --config ./.prettierrc.json"
     ],
     "**/*.{ts,tsx}": [
       "eslint --fix",
-      "prettier --write --config ./.prettierrc.json",
-      "git add"
+      "prettier --write --config ./.prettierrc.json"
     ]
   },
   "repository": {
