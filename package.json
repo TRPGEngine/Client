@@ -28,7 +28,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
-    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fix": "eslint --fix 'src/**/*.{ts,tsx}'",
     "prettier:all": "prettier --write \"./src/**/*.{ts,tsx,json,less}\" --config ./.prettierrc.json",
     "postinstall": "npm run install:all",
