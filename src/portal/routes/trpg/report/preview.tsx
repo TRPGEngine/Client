@@ -76,7 +76,7 @@ const TRPGReportPreview: React.FC<Props> = TMemo((props) => {
         <QRCode value={src} />
         <div>或复制永久链接</div>
         <Typography.Text copyable={{ text: src }}>
-          <a href={src} target="_blank">
+          <a href={src} target="_blank" rel="noreferrer">
             {src}
           </a>
         </Typography.Text>

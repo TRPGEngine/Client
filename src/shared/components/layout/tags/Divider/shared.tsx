@@ -16,6 +16,7 @@ export const TagDividerShared: TagComponent<TagProps> = TMemo((props) => {
     <Divider
       type={props.type}
       orientation={props.orientation}
+      // eslint-disable-next-line react/no-children-prop
       children={children}
     />
   );

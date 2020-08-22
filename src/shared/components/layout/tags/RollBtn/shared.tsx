@@ -1,3 +1,5 @@
+/* eslint-disable no-eval */
+/* eslint-disable @typescript-eslint/tslint/config */
 // Copy from packages/Dice/lib/dice.ts
 
 function rollPoint(maxPoint, minPoint = 1) {
@@ -35,7 +37,6 @@ export function roll(requestStr: string) {
       }
     });
 
-    // tslint:disable-next-line: no-eval
     const result = eval(express);
     const str = requestStr + '=' + express + '=' + result;
     return {

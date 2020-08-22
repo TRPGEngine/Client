@@ -28,8 +28,8 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
-    "lint": "tslint -c ./tslint.json 'src/**/*.{ts,tsx}'",
-    "lint:fix": "tslint --fix -c ./tslint.json 'src/**/*.{ts,tsx}'",
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "lint:fix": "eslint --fix 'src/**/*.{ts,tsx}'",
     "prettier:all": "prettier --write \"./src/**/*.{ts,tsx,json,less}\" --config ./.prettierrc.json",
     "postinstall": "npm run install:all",
     "install:app": "cd ./src/app && npm install",
@@ -46,13 +46,11 @@
   },
   "lint-staged": {
     "src/*.{json,less}": [
-      "prettier --write --config ./.prettierrc.json",
-      "git add"
+      "prettier --write --config ./.prettierrc.json"
     ],
     "**/*.{ts,tsx}": [
-      "tslint --fix -c ./tslint.json",
-      "prettier --write --config ./.prettierrc.json",
-      "git add"
+      "eslint --fix",
+      "prettier --write --config ./.prettierrc.json"
     ]
   },
   "repository": {
@@ -192,6 +190,9 @@
     "@types/socket.io-client": "^1.4.32",
     "@types/styled-components": "^5.1.0",
     "@types/uuid": "^3.4.6",
+    "@typescript-eslint/eslint-plugin": "^3.9.1",
+    "@typescript-eslint/eslint-plugin-tslint": "^3.9.1",
+    "@typescript-eslint/parser": "^3.9.1",
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.12.2",
     "babel-plugin-module-resolver": "^3.2.0",
@@ -211,8 +212,11 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-to-json": "^3.4.3",
-    "eslint": "^4.19.1",
-    "eslint-plugin-react": "^7.16.0",
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-jsdoc": "^30.2.4",
+    "eslint-plugin-prefer-arrow": "^1.2.2",
+    "eslint-plugin-react": "^7.20.6",
     "fancy-log": "^1.3.3",
     "file-loader": "^6.0.0",
     "fs-extra": "^7.0.1",
