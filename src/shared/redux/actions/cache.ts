@@ -12,6 +12,8 @@ const api = trpgApi.getInstance();
 import config from '@shared/project.config';
 import rnStorage from '@shared/api/rn-storage.api';
 import { TRPGAction } from '@shared/redux/types/__all__';
+import _isNil from 'lodash/isNil';
+import { showToasts } from '@shared/manager/ui';
 
 // 加载本地缓存信息
 export const loadLocalCache = function() {
@@ -54,25 +56,47 @@ export const getUserInfo = function(uuid, onCompleted?) {
   };
 };
 
-export const getTemplateInfo = function(uuid, onCompleted?) {
+/**
+ * 获取角色模板信息
+ */
+export const getTemplateInfo = function(
+  uuid: string,
+  onCompleted?: () => void
+): TRPGAction {
   if (!uuid) {
     throw new Error('getTemplateInfo need uuid');
   }
 
-  return function(dispatch, getState) {
-    return api.emit('actor::getTemplate', { uuid }, function(data) {
-      if (data.result) {
-        if (data.template) {
-          dispatch({ type: GET_TEMPLATE_INFO, payload: data.template });
-        } else {
-          console.warn('获取模板失败, 该模板不存在:', uuid);
-        }
-      } else {
-        console.error(data.msg);
-      }
+  const cacheKey = `cache$template#${uuid}`;
 
-      onCompleted && onCompleted(data);
-    });
+  return async function(dispatch, getState) {
+    // 先尝试从storage中获取
+    try {
+      const cache = await rnStorage.get(cacheKey);
+      if (!_isNil(cache)) {
+        dispatch({ type: GET_TEMPLATE_INFO, payload: cache });
+        onCompleted && onCompleted();
+        return;
+      }
+    } catch (err) {}
+
+    // 没有在缓存中找到
+    console.log('没有在缓存中找到');
+    const data = await api.emitP('actor::getTemplate', { uuid });
+
+    if (data.result) {
+      const template = data.template;
+      if (template) {
+        dispatch({ type: GET_TEMPLATE_INFO, payload: template });
+        rnStorage.set(cacheKey, template); // 添加到缓存中
+      } else {
+        showToasts(`获取模板失败, 该模板不存在: ${uuid}`);
+      }
+    } else {
+      console.error(data.msg);
+    }
+
+    onCompleted && onCompleted();
   };
 };
 
