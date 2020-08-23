@@ -12,7 +12,8 @@ import { ToolbarButton, Toolbar } from './style';
 import { createFullEditor } from './instance';
 import styled from 'styled-components';
 import { Iconfont } from '../Iconfont';
-import { isSaveHotkey } from '@web/utils/hot-key';
+import { isSaveHotkey, isTabHotkey } from '@web/utils/hot-key';
+import indentLines from './changes/indentLines';
 
 interface CustomAction {
   icon: React.ReactNode;
@@ -28,12 +29,38 @@ const Container = styled.div`
 
 const EditArea = styled(Editable).attrs({
   spellCheck: true,
-  autoFocus: true,
+  autoFocus: false,
   // placeholder: '请输入文本', // NOTE: 这里不使用placeholder的原因是有默认占位符下使用输入法会导致崩溃
 })`
   flex: 1;
   overflow: auto;
   padding: 0 10px;
+
+  blockquote {
+    border-left: 2px solid #ddd;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 10px;
+    color: #aaa;
+    font-style: italic;
+    margin-bottom: 0;
+  }
+
+  ul {
+    list-style-type: decimal;
+    padding-left: 26px;
+    margin-bottom: 1em;
+  }
+
+  ol {
+    list-style-type: disc;
+    padding-left: 26px;
+    margin-bottom: 1em;
+  }
+
+  li {
+    list-style: inherit;
+  }
 `;
 
 interface RichTextEditorProps {
@@ -65,9 +92,18 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
             format="heading-two"
             icon={<Iconfont>&#xe644;</Iconfont>}
           />
-          {/* <BlockButton format="block-quote" icon="format_quote" />
-          <BlockButton format="numbered-list" icon="format_list_numbered" />
-          <BlockButton format="bulleted-list" icon="format_list_bulleted" /> */}
+          <BlockButton
+            format="block-quote"
+            icon={<Iconfont>&#xe639;</Iconfont>}
+          />
+          <BlockButton
+            format="numbered-list"
+            icon={<Iconfont>&#xe637;</Iconfont>}
+          />
+          <BlockButton
+            format="bulleted-list"
+            icon={<Iconfont>&#xe638;</Iconfont>}
+          />
 
           {/* 自定义操作 */}
           {props.customActions?.map((item, i) => (
@@ -87,7 +123,10 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
           renderLeaf={renderLeaf}
           onBlur={props.onBlur}
           onKeyDown={(e) => {
-            if (isSaveHotkey(e.nativeEvent)) {
+            if (isTabHotkey(e.nativeEvent)) {
+              e.preventDefault();
+              indentLines(editor);
+            } else if (isSaveHotkey(e.nativeEvent)) {
               e.preventDefault();
               props.onSave?.();
             }
