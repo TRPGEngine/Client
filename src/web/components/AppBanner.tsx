@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Button } from 'antd';
 import { getPortalUrl } from '@shared/utils/string-helper';
 import { useRNStorage } from '@shared/hooks/useRNStorage';
+import { APP_BANNER_CLOSE } from '@shared/utils/consts';
 
 const Container = styled.div`
   @media (min-width: 768px) {
@@ -50,7 +51,7 @@ const Container = styled.div`
 `;
 export const AppBanner: React.FC = TMemo(() => {
   const [appBannerClose, setAppBannerClose] = useRNStorage(
-    'appBannerClose',
+    APP_BANNER_CLOSE,
     false
   );
 

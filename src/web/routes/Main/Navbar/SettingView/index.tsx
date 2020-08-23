@@ -68,7 +68,7 @@ export const SettingView: React.FC = TMemo(() => {
             onClick: () => {
               window.localStorage.clear();
               window.sessionStorage.clear();
-              window.location.reload();
+              window.location.href = '/';
             },
           },
           {
