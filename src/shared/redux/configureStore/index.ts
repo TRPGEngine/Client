@@ -1,11 +1,5 @@
 import thunk from 'redux-thunk';
-import {
-  createStore,
-  applyMiddleware,
-  Store,
-  Middleware,
-  StoreEnhancer,
-} from 'redux';
+import { createStore, applyMiddleware, StoreEnhancer } from 'redux';
 import { createLogger } from 'redux-logger';
 import config from '../../project.config';
 import { getCombineReducers } from '../reducers';

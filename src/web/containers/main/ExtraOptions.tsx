@@ -14,7 +14,6 @@ import UserSettingsModal from '@web/components/modal/UserSettings';
 import SystemSettings from '@web/components/modal/SystemSettings';
 import SystemStatus from '@web/components/modal/SystemStatus';
 import ModalPanel from '@web/components/ModalPanel';
-import Webview from '@web/components/Webview';
 import rnStorage from '@shared/api/rn-storage.api';
 
 import './ExtraOptions.scss';
@@ -22,6 +21,7 @@ import { showPortal } from '@web/redux/action/ui';
 import DevContainer from '@web/components/DevContainer';
 import { PortalView } from '@web/components/PortalView';
 import { UserSelector } from '@web/components/modal/UserSelector';
+import { switchToAppVersion } from '@web/utils/debug-helper';
 
 interface ExtraActionItems {
   label: string;
@@ -134,6 +134,13 @@ class ExtraOptions extends React.Component<Props> {
         label: '系统状态',
         onClick: () => {
           this.props.dispatch(showModal(<SystemStatus />));
+        },
+      },
+      {
+        label: '切换到新版UI',
+        isDev: true,
+        onClick: () => {
+          switchToAppVersion(true);
         },
       },
       {

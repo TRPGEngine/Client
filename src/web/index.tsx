@@ -27,6 +27,7 @@ import { watchLoginStatus } from '@redux/middlewares/watchLoginStatus';
 import { setUser as setUserSentryInfo } from './utils/sentry';
 import TLoadable from './components/TLoadable';
 import { checkIsNewApp } from './utils/debug-helper';
+import './init';
 
 const NewApp = TLoadable<{}>(() =>
   import('./routes/App').then((module) => module.App)

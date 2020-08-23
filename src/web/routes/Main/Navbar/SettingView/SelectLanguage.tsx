@@ -1,10 +1,11 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Select, Alert } from 'antd';
+import { Select, Alert, Button, Space, Divider } from 'antd';
 import { FullModalField } from '@web/components/FullModalField';
 import { useLanguage } from '@shared/i18n/language';
+import { switchToAppVersion } from '@web/utils/debug-helper';
 
-export const SelectLanguage: React.FC = TMemo(() => {
+const SelectLanguage: React.FC = TMemo(() => {
   const { language, setLanguage, isChanged } = useLanguage();
 
   return (
@@ -37,3 +38,27 @@ export const SelectLanguage: React.FC = TMemo(() => {
   );
 });
 SelectLanguage.displayName = 'SelectLanguage';
+
+/**
+ * 系统设置
+ */
+export const SettingSystemConfig: React.FC = TMemo((props) => {
+  return (
+    <div>
+      <Space direction="vertical">
+        <SelectLanguage />
+
+        <Divider />
+
+        <Button
+          size="large"
+          type="primary"
+          onClick={() => switchToAppVersion(false)}
+        >
+          切换到旧版UI
+        </Button>
+      </Space>
+    </div>
+  );
+});
+SettingSystemConfig.displayName = 'SettingSystemConfig';

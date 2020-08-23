@@ -79,12 +79,14 @@ export const SystemStatusInfo: React.FC<SystemStatusInfoProps> = TMemo(
 
     return (
       <InfoTable style={props.style}>
-        {status.map((item) => (
-          <tr key={item.label}>
-            <td>{item.label}:</td>
-            <td>{item.value}</td>
-          </tr>
-        ))}
+        <tbody>
+          {status.map((item) => (
+            <tr key={item.label}>
+              <td>{item.label}:</td>
+              <td>{item.value}</td>
+            </tr>
+          ))}
+        </tbody>
       </InfoTable>
     );
   }
