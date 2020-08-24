@@ -69,6 +69,10 @@ $ npm run package # 打包当前平台的pc端文件
 - `lint`: eslint检测
 - `lint:fix`: eslint检测并尝试自动修复
 
+## 环境变量
+
+- `ASSET_PATH` 指定编译时访问的路径, 对于指定CDN很有用
+
 ## 部分截图
 ![](./doc/login.png)
 ![](./doc/converse.png)
