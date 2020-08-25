@@ -9,7 +9,7 @@ import { UserSettings } from '@web/components/modal/UserSettings';
 import { SettingAccountView } from './SettingAccountView';
 import { AccountLoginLog } from './AccountLoginLog';
 import { t } from '@shared/i18n';
-import { SettingSystemConfig } from './SelectLanguage';
+import { SettingSystemConfig } from './SettingSystemConfig';
 import { ErrorReportView } from '@web/components/ErrorReportView';
 import { DevelopLab } from './DevelopLab';
 
