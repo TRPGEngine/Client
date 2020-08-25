@@ -1,10 +1,53 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useJoinedGroupInfo } from '@redux/hooks/group';
 import _isNil from 'lodash/isNil';
 import { GroupPanel } from '@redux/types/group';
 import { SortableList } from '@web/components/SortableList';
-import { Button } from 'antd';
+import { Button, Space, Typography } from 'antd';
+import styled from 'styled-components';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+
+const GroupPanelListItemContainer = styled.div`
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  cursor: move;
+
+  .name {
+    flex: 1;
+    font-size: 18px;
+  }
+`;
+
+const GroupPanelListItem: React.FC<{
+  item: GroupPanel;
+}> = TMemo((props) => {
+  const { item } = props;
+
+  const handleEdit = useCallback(() => {
+    console.log('handleEdit');
+  }, []);
+
+  const handleRemove = useCallback(() => {
+    console.log('handleRemove');
+  }, []);
+
+  return (
+    <GroupPanelListItemContainer>
+      <span className="name">{item.name}</span>
+      <Space>
+        <Button type="primary" icon={<EditOutlined />} onClick={handleEdit}>
+          编辑
+        </Button>
+        <Button danger={true} icon={<DeleteOutlined />} onClick={handleRemove}>
+          移除
+        </Button>
+      </Space>
+    </GroupPanelListItemContainer>
+  );
+});
+GroupPanelListItem.displayName = 'GroupPanelListItem';
 
 interface GroupPanelListProps {
   panels: GroupPanel[];
@@ -19,15 +62,28 @@ const GroupPanelList: React.FC<GroupPanelListProps> = TMemo((props) => {
     );
   }, [panels, props.panels]);
 
+  // 保存
+  const handleSave = useCallback(() => {}, []);
+
+  // 重置
+  const handleReset = useCallback(() => {
+    setPanels(props.panels);
+  }, [props.panels]);
+
   return (
     <div>
       <SortableList
         list={panels}
         itemKey="uuid"
         onChange={setPanels}
-        renderItem={(item: GroupPanel) => <div>{item.name}</div>}
+        renderItem={(item: GroupPanel) => <GroupPanelListItem item={item} />}
       />
-      {isChanged && <Button type="primary">保存</Button>}
+      {isChanged && (
+        <Space direction="horizontal">
+          <Button type="primary">保存</Button>
+          <Button onClick={handleReset}>重置</Button>
+        </Space>
+      )}
     </div>
   );
 });
@@ -46,7 +102,13 @@ export const GroupPanelManager: React.FC<GroupPanelManagerProps> = TMemo(
 
     const panels = groupInfo.panels ?? [];
 
-    return <GroupPanelList panels={panels} />;
+    return (
+      <div>
+        <Typography.Title level={3}>面板({panels.length})</Typography.Title>
+
+        <GroupPanelList panels={panels} />
+      </div>
+    );
   }
 );
 GroupPanelManager.displayName = 'GroupPanelManager';
