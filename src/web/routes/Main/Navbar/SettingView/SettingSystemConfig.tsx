@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Select, Alert, Button, Space, Divider, Checkbox } from 'antd';
+import { Select, Alert, Button, Space, Divider, Switch } from 'antd';
 import { FullModalField } from '@web/components/FullModalField';
 import { useLanguage } from '@shared/i18n/language';
 import { switchToAppVersion } from '@web/utils/debug-helper';
@@ -52,12 +52,7 @@ const AlphaUser: React.FC = TMemo(() => {
   return (
     <FullModalField
       title="是否为内测用户"
-      value={
-        <Checkbox
-          value={isAlphaUser}
-          onChange={(e) => setIsAlphaUser(e.target.checked)}
-        />
-      }
+      value={<Switch checked={isAlphaUser} onChange={setIsAlphaUser} />}
     />
   );
 });
@@ -74,20 +69,15 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
   const dispatch = useTRPGDispatch();
 
   const handleRequestNotificationPermission = useCallback(
-    (e: CheckboxChangeEvent) => {
-      dispatch(setSystemSettings({ notification: e.target.checked }));
+    (checked: boolean) => {
+      dispatch(setSystemSettings({ notification: checked }));
     },
     []
   );
 
-  const handleSetDisableSendWritingState = useCallback(
-    (e: CheckboxChangeEvent) => {
-      dispatch(
-        setSystemSettings({ disableSendWritingState: e.target.checked })
-      );
-    },
-    []
-  );
+  const handleSetDisableSendWritingState = useCallback((checked: boolean) => {
+    dispatch(setSystemSettings({ disableSendWritingState: checked }));
+  }, []);
 
   return (
     <div>
@@ -97,21 +87,21 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
         <FullModalField
           title="桌面通知权限"
           value={
-            <div>
-              <span>{notificationPermission}</span>
-              <Checkbox
-                value={systemSettings.notification}
+            <Space>
+              <Switch
+                checked={systemSettings.notification}
                 onChange={handleRequestNotificationPermission}
               />
-            </div>
+              <span>{notificationPermission}</span>
+            </Space>
           }
         />
 
         <FullModalField
           title="不发送输入状态"
           value={
-            <Checkbox
-              value={systemSettings.disableSendWritingState}
+            <Switch
+              checked={systemSettings.disableSendWritingState}
               onChange={handleSetDisableSendWritingState}
             />
           }
