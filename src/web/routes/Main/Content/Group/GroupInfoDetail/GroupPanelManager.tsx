@@ -7,6 +7,8 @@ import { SortableList } from '@web/components/SortableList';
 import { Button, Space, Typography } from 'antd';
 import styled from 'styled-components';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { updatePanelOrder } from '@shared/model/panel';
+import { showToasts } from '@shared/manager/ui';
 
 const GroupPanelListItemContainer = styled.div`
   padding: 10px;
@@ -50,9 +52,11 @@ const GroupPanelListItem: React.FC<{
 GroupPanelListItem.displayName = 'GroupPanelListItem';
 
 interface GroupPanelListProps {
+  groupUUID: string;
   panels: GroupPanel[];
 }
 const GroupPanelList: React.FC<GroupPanelListProps> = TMemo((props) => {
+  const { groupUUID } = props;
   const [panels, setPanels] = useState(props.panels);
 
   const isChanged = useMemo(() => {
@@ -63,7 +67,14 @@ const GroupPanelList: React.FC<GroupPanelListProps> = TMemo((props) => {
   }, [panels, props.panels]);
 
   // 保存
-  const handleSave = useCallback(() => {}, []);
+  const handleSave = useCallback(async () => {
+    try {
+      await updatePanelOrder(groupUUID, panels);
+      showToasts('保存成功');
+    } catch (err) {
+      showToasts(err, 'error');
+    }
+  }, [groupUUID, panels]);
 
   // 重置
   const handleReset = useCallback(() => {
@@ -80,7 +91,9 @@ const GroupPanelList: React.FC<GroupPanelListProps> = TMemo((props) => {
       />
       {isChanged && (
         <Space direction="horizontal">
-          <Button type="primary">保存</Button>
+          <Button type="primary" onClick={handleSave}>
+            保存
+          </Button>
           <Button onClick={handleReset}>重置</Button>
         </Space>
       )}
@@ -106,7 +119,7 @@ export const GroupPanelManager: React.FC<GroupPanelManagerProps> = TMemo(
       <div>
         <Typography.Title level={3}>面板({panels.length})</Typography.Title>
 
-        <GroupPanelList panels={panels} />
+        <GroupPanelList groupUUID={groupInfo.uuid} panels={panels} />
       </div>
     );
   }
