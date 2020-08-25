@@ -11,6 +11,7 @@ import { AccountLoginLog } from './AccountLoginLog';
 import { t } from '@shared/i18n';
 import { SettingSystemConfig } from './SelectLanguage';
 import { ErrorReportView } from '@web/components/ErrorReportView';
+import { DevelopLab } from './DevelopLab';
 
 export const SettingView: React.FC = TMemo(() => {
   const dispatch = useTRPGDispatch();
@@ -55,6 +56,11 @@ export const SettingView: React.FC = TMemo(() => {
             type: 'item',
             title: t('汇报错误'),
             content: <ErrorReportView />,
+          },
+          {
+            type: 'item',
+            title: t('开发实验室'),
+            content: <DevelopLab />,
           },
         ],
       },
