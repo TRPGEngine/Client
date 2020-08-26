@@ -6,7 +6,7 @@ import { navToLoginPage } from './utils/request';
 setToasts((msg, type = 'info') => {
   message.open({
     type,
-    duration: null,
+    duration: 3,
     content: msg,
   });
 });

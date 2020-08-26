@@ -4,7 +4,7 @@ import { message } from 'antd';
 setToasts((msg, type = 'info') => {
   message.open({
     type,
-    duration: null,
+    duration: 3,
     content: msg,
   });
 });

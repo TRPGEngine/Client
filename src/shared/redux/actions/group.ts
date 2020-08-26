@@ -170,13 +170,22 @@ export const createGroup = function(
       if (data.result) {
         dispatch(hideModal());
         dispatch(showAlert('创建成功'));
-        dispatch({ type: CREATE_GROUP_SUCCESS, payload: data.group });
-        dispatch(initGroupInfo(data.group)); // 创建成功后直接初始化
+        dispatch(createGroupSuccess(data.group));
       } else {
         console.error(data);
         dispatch(showAlert(data.msg));
       }
     });
+  };
+};
+
+/**
+ * 创建团成功
+ */
+export const createGroupSuccess = function(group: GroupInfo): TRPGAction {
+  return function(dispatch, getState) {
+    dispatch({ type: CREATE_GROUP_SUCCESS, payload: group });
+    dispatch(initGroupInfo(group)); // 创建成功后直接初始化
   };
 };
 

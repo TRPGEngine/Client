@@ -23,6 +23,21 @@ export function isGroupManager(
 }
 
 /**
+ * 创建团
+ */
+export async function createGroup(
+  name: string,
+  desc: string
+): Promise<GroupInfo> {
+  const { data } = await request.post(`/group/create`, {
+    name,
+    desc,
+  });
+
+  return data.group;
+}
+
+/**
  * 创建团面板
  * @param groupUUID 团UUID
  * @param name 面板名
