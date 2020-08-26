@@ -15,6 +15,7 @@ import { t } from '@shared/i18n';
 import { LoginCheck } from './LoginCheck';
 import { PortalProvider } from '@web/components/portal/PortalProvider';
 import { PortalHost } from '@web/utils/portal';
+import { NetworkStatusModal } from '@web/components/NetworkStatusModal';
 
 // 新版Web页面
 
@@ -47,7 +48,7 @@ export const App = TMemo(() => {
               <Route name="main" path="/main" component={MainRoute} />
               <Route name="index" path="/" component={LaunchRoute} />
             </Switch>
-            {config.platform === 'web' ? <NetworkIndicator /> : null}
+            {config.platform === 'web' && <NetworkStatusModal />}
             <div className="version">
               {t('当前版本号')} v{config.version}
             </div>
