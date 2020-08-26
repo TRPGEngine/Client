@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import _isNil from 'lodash/isNil';
 import _fromPairs from 'lodash/fromPairs';
 import _isFunction from 'lodash/isFunction';
+import { ObjectSchema } from 'yup';
 
 /**
  * 字段通用信息
@@ -16,6 +17,7 @@ interface FastFormFieldCommon {
 
 interface FastFormFieldProps extends FastFormFieldCommon {
   value: any;
+  error: string | undefined;
   onChange: (val: any) => void; // 修改数据的回调函数
 }
 
@@ -58,6 +60,7 @@ export interface FastFormFieldMeta extends FastFormFieldCommon {
  */
 export interface FastFormProps {
   fields: FastFormFieldMeta[]; // 字段详情
+  schema?: ObjectSchema; // yup schame object 用于表单校验
   submitLabel?: string; // 提交按钮的标签名
   onSubmit: (values: any) => Promise<void> | void; // 点击提交按钮的回调
 }
@@ -83,6 +86,7 @@ export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
 
   const formik = useFormik({
     initialValues,
+    validationSchema: props.schema,
     onSubmit: async (values) => {
       setLoading(true);
       try {
@@ -92,7 +96,7 @@ export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
       }
     },
   });
-  const { handleSubmit, setFieldValue, values } = formik;
+  const { handleSubmit, setFieldValue, values, errors } = formik;
 
   if (_isNil(FastFormContainer)) {
     console.warn('FastFormContainer 没有被注册');
@@ -102,6 +106,8 @@ export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
   const fieldsRender = useMemo(() => {
     return props.fields.map((fieldMeta, i) => {
       const fieldName = fieldMeta.name;
+      const value = values[fieldName];
+      const error = errors[fieldName];
       const Component = fieldMap.get(fieldMeta.type);
 
       if (_isNil(Component)) {
@@ -111,13 +117,14 @@ export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
           <Component
             key={fieldName + i}
             {...fieldMeta}
-            value={values[fieldName]}
+            value={value}
+            error={error}
             onChange={(val) => setFieldValue(fieldName, val)}
           />
         );
       }
     });
-  }, [props.fields, values, setFieldValue]);
+  }, [props.fields, values, errors, setFieldValue]);
 
   return (
     <FastFormContext.Provider value={formik}>
