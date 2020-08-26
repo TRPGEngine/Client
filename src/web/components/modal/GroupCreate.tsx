@@ -1,12 +1,20 @@
 import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
+import { FastFormFieldMeta } from '@shared/components/FastForm/field';
 import { WebFastForm } from '../WebFastForm';
-import { FastFormFieldMeta } from '@shared/components/FastForm';
 import { createGroup } from '@shared/model/group';
 import { showToasts } from '@shared/manager/ui';
 import { closeModal } from '../Modal';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { createGroupSuccess } from '@redux/actions/group';
+import {
+  createFastFormSchema,
+  fieldSchema,
+} from '@shared/components/FastForm/schema';
+
+const schema = createFastFormSchema({
+  name: fieldSchema.string().required('团名不能为空'),
+});
 
 const fields: FastFormFieldMeta[] = [
   { type: 'text', name: 'name', label: '团名', maxLength: 16 },
@@ -34,6 +42,8 @@ export const GroupCreate: React.FC = TMemo(() => {
     }
   }, []);
 
-  return <WebFastForm fields={fields} onSubmit={handleCreateGroup} />;
+  return (
+    <WebFastForm schema={schema} fields={fields} onSubmit={handleCreateGroup} />
+  );
 });
 GroupCreate.displayName = 'GroupCreate';

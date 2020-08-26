@@ -95,6 +95,8 @@ const styledTheme = {
     transparent90: 'rgba(0,0,0,0.1)',
     transparent80: 'rgba(0,0,0,0.2)',
     transparent70: 'rgba(0,0,0,0.3)',
+    transparent60: 'rgba(0,0,0,0.4)',
+    transparent50: 'rgba(0,0,0,0.5)',
 
     // 功能性分类
     textNormal: '#dcddde',

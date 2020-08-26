@@ -1,12 +1,12 @@
 import React, { useCallback, useState, Fragment } from 'react';
 import { WebFastForm } from '@web/components/WebFastForm';
 import { TMemo } from '@shared/components/TMemo';
-import { FastFormFieldMeta } from '@shared/components/FastForm';
 import { message, Col, Typography } from 'antd';
 import { registerAccount } from '@portal/model/player';
 import { handleError } from '@portal/utils/error';
 import _isFunction from 'lodash/isFunction';
 import { loginWithPassword } from '@shared/model/player';
+import { FastFormFieldMeta } from '@shared/components/FastForm/field';
 
 const fields: FastFormFieldMeta[] = [
   {

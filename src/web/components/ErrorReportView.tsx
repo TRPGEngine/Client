@@ -8,12 +8,12 @@ import {
 import _isNil from 'lodash/isNil';
 import { Button, Row, Col } from 'antd';
 import { WebFastForm } from './WebFastForm';
-import { FastFormFieldMeta } from '@shared/components/FastForm';
 import { t } from '@shared/i18n';
 import { sendUserFeedback } from '@shared/model/sentry';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { getUserName } from '@shared/utils/data-helper';
 import { showToasts } from '@shared/manager/ui';
+import { FastFormFieldMeta } from '@shared/components/FastForm/field';
 
 const fields: FastFormFieldMeta[] = [
   {

@@ -14,7 +14,7 @@ import { PortalAdd, PortalRemove } from '@web/utils/portal';
 const ModalMask = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: ${(props) => props.theme.color.transparent70};
+  background-color: ${(props) => props.theme.color.transparent50};
   display: flex;
   justify-content: center;
   align-items: center;

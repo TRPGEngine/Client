@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Select, Form } from 'antd';
-import { FastFormFieldComponent } from '@shared/components/FastForm';
 import _get from 'lodash/get';
+import { FastFormFieldComponent } from '@shared/components/FastForm/field';
 
 const Option = Select.Option;
 

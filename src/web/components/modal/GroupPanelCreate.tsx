@@ -4,7 +4,7 @@ import { WebFastForm } from '../WebFastForm';
 import { closeModal } from '../Modal';
 import { showToasts } from '@shared/manager/ui';
 import { createGroupPanel } from '@shared/model/group';
-import { FastFormFieldMeta } from '@shared/components/FastForm';
+import { FastFormFieldMeta } from '@shared/components/FastForm/field';
 
 const fields: FastFormFieldMeta[] = [
   { type: 'text', name: 'name', label: '面板名' },
