@@ -2,6 +2,7 @@ import React from 'react';
 import { PortalMethods } from './context';
 
 export type PortalConsumerProps = {
+  hostName: string;
   manager: PortalMethods;
   children: React.ReactNode;
 };
@@ -15,15 +16,22 @@ export class PortalConsumer extends React.Component<PortalConsumerProps> {
       );
     }
 
-    this._key = this.props.manager.mount(this.props.children);
+    this._key = this.props.manager.mount(
+      this.props.hostName,
+      this.props.children
+    );
   }
 
   componentDidUpdate() {
-    this.props.manager.update(this._key, this.props.children);
+    this.props.manager.update(
+      this.props.hostName,
+      this._key,
+      this.props.children
+    );
   }
 
   componentWillUnmount() {
-    this.props.manager.unmount(this._key);
+    this.props.manager.unmount(this.props.hostName, this._key);
   }
 
   render() {

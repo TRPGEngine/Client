@@ -13,10 +13,10 @@ const PortalView = styled.div`
   z-index: 10;
 `;
 
-const { PortalHost, add, remove } = buildPortal({
+const { PortalHost, PortalRender, add, remove } = buildPortal({
   hostName: 'default',
   eventEmitter,
   renderManagerView: (children) => <PortalView>{children}</PortalView>,
 });
 
-export { PortalHost, add as PortalAdd, remove as PortalRemove };
+export { PortalHost, PortalRender, add as PortalAdd, remove as PortalRemove };

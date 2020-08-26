@@ -35,12 +35,12 @@ export function buildPortal(options: BuildPortalOptions) {
 
   const add = (el: React.ReactNode): number => {
     const key = nextKey++;
-    eventEmitter.emit(addType, el, key, hostName);
+    eventEmitter.emit(addType, hostName, el, key);
     return key;
   };
 
   const remove = (key: number): void => {
-    eventEmitter.emit(removeType, key, hostName);
+    eventEmitter.emit(removeType, hostName, key);
   };
 
   const PortalContext = createPortalContext(hostName);
@@ -55,7 +55,7 @@ export function buildPortal(options: BuildPortalOptions) {
     }, [hostName]);
 
     const mount: any = useCallback(
-      (children: React.ReactNode, _key?: number, name?: string) => {
+      (name: string, children: React.ReactNode, _key?: number) => {
         if (name !== hostNameRef.current) {
           return;
         }
@@ -73,7 +73,7 @@ export function buildPortal(options: BuildPortalOptions) {
     );
 
     const update = useCallback(
-      (key: number, children: React.ReactNode, name?: string) => {
+      (name: string, key: number, children: React.ReactNode) => {
         if (name !== hostNameRef.current) {
           return;
         }
@@ -96,7 +96,7 @@ export function buildPortal(options: BuildPortalOptions) {
       []
     );
 
-    const unmount = useCallback((key: number, name?: string) => {
+    const unmount = useCallback((name: string, key: number) => {
       if (name !== hostNameRef.current) {
         return;
       }
@@ -117,6 +117,31 @@ export function buildPortal(options: BuildPortalOptions) {
         eventEmitter.removeListener(removeType, unmount);
       };
     }, [mount, unmount]);
+
+    useEffect(() => {
+      // 处理队列
+      const queue = queueRef.current;
+      const manager = managerRef.current;
+
+      while (queue.length && manager) {
+        const action = queue.pop();
+        if (!action) {
+          continue;
+        }
+
+        switch (action.type) {
+          case 'mount':
+            manager.mount(action.key, action.children);
+            break;
+          case 'update':
+            manager.update(action.key, action.children);
+            break;
+          case 'unmount':
+            manager.unmount(action.key);
+            break;
+        }
+      }
+    }, []);
 
     return (
       <PortalContext.Provider
@@ -144,7 +169,11 @@ export function buildPortal(options: BuildPortalOptions) {
       return null;
     }
 
-    return <PortalConsumer manager={manager}>{props.children}</PortalConsumer>;
+    return (
+      <PortalConsumer hostName={hostName} manager={manager}>
+        {props.children}
+      </PortalConsumer>
+    );
   });
   PortalRender.displayName = 'PortalRender-' + hostName;
 
