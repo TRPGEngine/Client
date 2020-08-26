@@ -1,6 +1,7 @@
-import React from 'react';
-import config from '../../shared/project.config';
+import React, { useEffect, useState } from 'react';
+import config from '@shared/project.config';
 import Spin from './Spin';
+import { TMemo } from '@shared/components/TMemo';
 
 interface Props
   extends React.DetailedHTMLProps<
@@ -9,39 +10,44 @@ interface Props
   > {
   src: string;
 }
-class Image extends React.PureComponent<Props> {
-  state = {
-    isLoading: true,
-  };
 
-  componentDidMount() {
+const Image: React.FC<Props> = TMemo((props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [src, setSrc] = useState(props.src);
+
+  useEffect(() => {
     let mImg: HTMLImageElement | null = new window.Image();
 
-    mImg.src = this.props.src;
+    setIsLoading(true);
+    mImg.src = props.src;
     mImg.onload = () => {
-      this.setState({ isLoading: false });
+      setIsLoading(false);
+      mImg = null; // 释放内存
     };
     mImg.onerror = () => {
-      this.setState({ isLoading: false });
+      setIsLoading(false);
+      mImg = null; // 释放内存
     };
-    mImg = null; // 释放内存
+  }, [props.src]);
+
+  useEffect(() => {
+    setSrc(props.src);
+  }, [props.src]);
+
+  if (isLoading) {
+    return <Spin />;
   }
 
-  render() {
-    if (this.state.isLoading) {
-      return <Spin />;
-    }
-
-    return (
-      <img
-        {...this.props}
-        src={this.props.src}
-        onError={() => {
-          this.setState({ src: config.defaultImg.chatimg_fail });
-        }}
-      />
-    );
-  }
-}
+  return (
+    <img
+      {...props}
+      src={src}
+      onError={() => {
+        setSrc(config.defaultImg.chatimg_fail);
+      }}
+    />
+  );
+});
+Image.displayName = 'Image';
 
 export default Image;
