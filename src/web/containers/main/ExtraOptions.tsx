@@ -6,7 +6,7 @@ import { showModal, switchMenuPannel } from '@shared/redux/actions/ui';
 import { addNote } from '@shared/redux/actions/note';
 import ActorCreate from '@web/components/modal/ActorCreate';
 // import IsDeveloping from '../../components/IsDeveloping';
-import GroupCreate from '@web/components/modal/GroupCreate';
+import GroupCreateOld from '@web/components/modal/GroupCreateOld';
 import ChangePassword from '@web/components/ChangePassword';
 import FriendsAdd from '@web/components/modal/FriendsAdd';
 import GroupAdd from '@web/components/modal/GroupAdd';
@@ -94,7 +94,7 @@ class ExtraOptions extends React.Component<Props> {
       {
         label: '创建团',
         onClick: () => {
-          this.props.dispatch(showModal(<GroupCreate />));
+          this.props.dispatch(showModal(<GroupCreateOld />));
         },
       },
       {

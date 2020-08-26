@@ -2,12 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ModalPanel from '../ModalPanel';
 import { createGroup } from '../../../shared/redux/actions/group';
-
-import './GroupCreate.scss';
 import { TRPGDispatchProp } from '@redux/types/__all__';
 
+import './GroupCreateOld.scss';
+
 interface Props extends TRPGDispatchProp {}
-class GroupCreate extends React.Component<Props> {
+class GroupCreateOld extends React.Component<Props> {
   state = {
     groupName: '',
     groupSubName: '',
@@ -68,4 +68,4 @@ class GroupCreate extends React.Component<Props> {
   }
 }
 
-export default connect()(GroupCreate);
+export default connect()(GroupCreateOld);
