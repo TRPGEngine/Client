@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
+import { FastForm } from '@shared/components/FastForm';
+import { regField } from '@shared/components/FastForm/field';
 import {
-  FastForm,
-  regField,
   FastFormContainerComponent,
   regFormContainer,
-} from '@shared/components/FastForm';
+} from '@shared/components/FastForm/container';
 import { TMemo } from '@shared/components/TMemo';
 import { Form, Button } from 'antd';
 
