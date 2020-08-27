@@ -4,6 +4,7 @@ import { useCurrentUserInfo } from './user';
 import _get from 'lodash/get';
 import _uniq from 'lodash/uniq';
 import _isNil from 'lodash/isNil';
+import { useMemo } from 'react';
 
 /**
  * 获取当前选择的团信息
@@ -52,6 +53,29 @@ export function useSelectedGroupActorUUID(
 ): string | undefined {
   const groupInfo = useJoinedGroupInfo(groupUUID);
   return _get(groupInfo, ['extra', 'selected_group_actor_uuid']);
+}
+
+/**
+ * 获取选中角色的信息
+ * @param groupUUID 团UUID
+ */
+export function useSelectedGroupActorInfo(
+  groupUUID: string
+): GroupActorType | undefined {
+  const selectedGroupActorUUID = useSelectedGroupActorUUID(groupUUID);
+  const selfGroupActors = useSelfGroupActors(groupUUID);
+
+  const selectedGroupActorInfo = useMemo(() => {
+    if (typeof selectedGroupActorUUID === 'undefined') {
+      return undefined;
+    }
+
+    return selfGroupActors.find(
+      (actor) => actor.uuid === selectedGroupActorUUID
+    );
+  }, [selfGroupActors, selectedGroupActorUUID]);
+
+  return selectedGroupActorInfo;
 }
 
 /**

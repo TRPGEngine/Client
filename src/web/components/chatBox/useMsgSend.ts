@@ -1,5 +1,5 @@
 import { useConverseDetail } from '@redux/hooks/chat';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { isUserUUID } from '@shared/utils/uuid';
 import { sendStopWriting } from '@shared/api/event';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
@@ -7,11 +7,22 @@ import { sendMsg as sendMsgAction } from '@redux/actions/chat';
 import { MsgType } from '@redux/types/chat';
 import { MsgDataManager } from '@shared/utils/msg-helper';
 import _isNil from 'lodash/isNil';
+import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
+import { useSelectedGroupActorInfo } from '@redux/hooks/group';
 
 export function useMsgSend(converseUUID: string) {
   const converse = useConverseDetail(converseUUID);
   const converseType = converse?.type;
   const dispatch = useTRPGDispatch();
+  const { replyMsg, clearReplyMsg } = useMsgContainerContext();
+
+  // 获取选中团角色的信息 仅group类型会话有用
+  const selectedGroupActorInfo = useSelectedGroupActorInfo(converseUUID);
+
+  useEffect(() => {
+    // 当当前会话发生变化时，清空回复消息
+    clearReplyMsg();
+  }, [converseUUID]);
 
   /**
    * 发送消息到远程服务器
@@ -37,16 +48,16 @@ export function useMsgSend(converseUUID: string) {
 
         const msgDataManager = new MsgDataManager();
 
-        // TODO: 选中的角色
-        // if (!_isNil(selectedGroupActorInfo)) {
-        //   msgDataManager.setGroupActorInfo(selectedGroupActorInfo);
-        // }
+        // 选中的角色
+        if (!_isNil(selectedGroupActorInfo)) {
+          msgDataManager.setGroupActorInfo(selectedGroupActorInfo);
+        }
 
-        // TODO: 回复消息
-        // if (!_isNil(replyMsg)) {
-        //   msgDataManager.setReplyMsg(replyMsg);
-        //   clearReplyMsg();
-        // }
+        // 回复消息
+        if (!_isNil(replyMsg)) {
+          msgDataManager.setReplyMsg(replyMsg);
+          clearReplyMsg();
+        }
 
         dispatch(
           sendMsgAction(null, {
@@ -60,7 +71,13 @@ export function useMsgSend(converseUUID: string) {
         );
       }
     },
-    [converseUUID, converseType]
+    [
+      converseUUID,
+      converseType,
+      selectedGroupActorInfo,
+      replyMsg,
+      clearReplyMsg,
+    ]
   );
 
   return { sendMsg };

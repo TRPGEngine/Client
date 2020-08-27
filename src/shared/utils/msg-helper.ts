@@ -38,6 +38,10 @@ export class MsgDataManager {
    * 设置回复消息内容
    */
   setReplyMsg(replyMsg: ReplyMsgType) {
+    if (_isNil(replyMsg)) {
+      return;
+    }
+
     this.replyMsg = _pick(replyMsg, replyMsgFields);
   }
 

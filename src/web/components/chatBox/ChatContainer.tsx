@@ -4,6 +4,8 @@ import { ChatHeader } from './ChatHeader';
 import { ChatMsgList } from './ChatMsgList';
 import styled from 'styled-components';
 import { ChatSendBox } from './ChatSendBox';
+import { MsgContainerContextProvider } from '@shared/context/MsgContainerContext';
+import { GroupMsgReply } from '@web/containers/main/group/GroupMsgReply';
 
 const Root = styled.div`
   display: flex;
@@ -45,8 +47,11 @@ export const ChatContainer: React.FC<Props> = TMemo((props) => {
       <ChatHeader converseUUID={converseUUID} headerActions={headerActions} />
       <ChatMain>
         <ChatContent>
-          <ChatMsgList converseUUID={converseUUID} />
-          <ChatSendBox converseUUID={converseUUID} />
+          <MsgContainerContextProvider>
+            <ChatMsgList converseUUID={converseUUID} />
+            <GroupMsgReply />
+            <ChatSendBox converseUUID={converseUUID} />
+          </MsgContainerContextProvider>
         </ChatContent>
 
         {rightPanel && <ChatRightPanel>{rightPanel}</ChatRightPanel>}
