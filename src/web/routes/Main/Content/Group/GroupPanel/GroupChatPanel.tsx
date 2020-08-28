@@ -10,6 +10,7 @@ import { UserListItem } from '@web/components/UserListItem';
 const Root = styled.div`
   display: flex;
   flex-direction: row;
+  flex: 1;
 `;
 
 interface GroupChatPanelProps {
