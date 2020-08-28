@@ -4,7 +4,7 @@ import {
   useTRPGSelector,
   useTRPGDispatch,
 } from '@shared/hooks/useTRPGSelector';
-import { ActorCard } from '@web/components/ActorCard';
+import { ActorCard, ActorCardListContainer } from '@web/components/ActorCard';
 import { removeActor, unshareActor, shareActor } from '@redux/actions/actor';
 import { showAlert, showModal } from '@redux/actions/ui';
 import _isNil from 'lodash/isNil';
@@ -12,19 +12,8 @@ import ActorEdit from '@web/components/modal/ActorEdit';
 import { updateActor } from '@web/redux/action/actor';
 import { showToasts } from '@shared/manager/ui';
 import ActorInfo from '@web/components/modal/ActorInfo';
-import styled from 'styled-components';
 import { Typography } from 'antd';
 import { t } from '@shared/i18n';
-
-const ListContainer = styled.div`
-  flex: 1;
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: flex-start;
-  align-content: flex-start;
-  padding: 12px 0;
-`;
 
 export const ActorList: React.FC = TMemo(() => {
   const selfActors = useTRPGSelector((state) => state.actor.selfActors);
@@ -120,14 +109,13 @@ export const ActorList: React.FC = TMemo(() => {
         共 {selfActors.length} 张角色卡
       </Typography.Title>
 
-      <ListContainer>
+      <ActorCardListContainer>
         {selfActors.map((item, index) => {
           const uuid = item.uuid;
 
           return (
             <ActorCard
               key={`${uuid}-${index}`}
-              style={{ marginRight: 8 }}
               actor={item}
               actions={
                 <Fragment>
@@ -154,7 +142,7 @@ export const ActorList: React.FC = TMemo(() => {
             />
           );
         })}
-      </ListContainer>
+      </ActorCardListContainer>
     </div>
   );
 });

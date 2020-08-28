@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActorType } from '@redux/types/actor';
+import { ActorType, ActorBaseAttr } from '@redux/types/actor';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { getAbsolutePath } from '@shared/utils/file-helper';
@@ -87,7 +87,7 @@ const Container = styled(ActorCardContainer)`
 `;
 
 interface Props {
-  actor: ActorType;
+  actor: ActorBaseAttr;
   actions?: React.ReactNode;
   style?: React.CSSProperties;
 }
@@ -99,7 +99,7 @@ export const ActorCard: React.FC<Props> = TMemo((props) => {
   };
 
   return (
-    <Container style={style}>
+    <Container className="actor-card" style={style}>
       <div className="avatar" style={backgroundStyle} />
       <div className="profile">
         <p>
@@ -116,3 +116,17 @@ export const ActorCard: React.FC<Props> = TMemo((props) => {
   );
 });
 ActorCard.displayName = 'ActorCard';
+
+export const ActorCardListContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: flex-start;
+  align-content: flex-start;
+  padding: 12px 0;
+
+  .actor-card {
+    margin-right: 8px;
+  }
+`;

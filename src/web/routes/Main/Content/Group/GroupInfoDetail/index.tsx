@@ -4,6 +4,7 @@ import { SidebarView, SidebarViewMenuType } from '@web/components/SidebarView';
 import { GroupInfoSummary } from './GroupInfoSummary';
 import { useJoinedGroupInfo } from '@redux/hooks/group';
 import { GroupPanelManager } from './GroupPanelManager';
+import { GroupActorManager } from './GroupActorManager';
 
 interface GroupInfoDetailProps {
   groupUUID: string;
@@ -28,6 +29,11 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
               type: 'item',
               title: '面板',
               content: <GroupPanelManager groupUUID={groupUUID} />,
+            },
+            {
+              type: 'item',
+              title: '人物卡管理',
+              content: <GroupActorManager groupUUID={groupUUID} />,
             },
           ],
         },
