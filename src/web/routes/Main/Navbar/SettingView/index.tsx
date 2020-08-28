@@ -59,6 +59,7 @@ export const SettingView: React.FC = TMemo(() => {
           },
           {
             type: 'item',
+            isDev: true,
             title: t('开发实验室'),
             content: <DevelopLab />,
           },

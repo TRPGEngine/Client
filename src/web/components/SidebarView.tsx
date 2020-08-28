@@ -3,11 +3,13 @@ import { TMemo } from '@shared/components/TMemo';
 import _get from 'lodash/get';
 import styled from 'styled-components';
 import classNames from 'classnames';
+import { DevContainer } from './DevContainer';
 
 interface SidebarViewMenuItemType {
   type: 'item';
   title: string;
   content: React.ReactNode;
+  isDev?: boolean;
 }
 
 interface SidebarViewLinkType {
@@ -123,16 +125,20 @@ const SidebarViewMenuItem: React.FC<SidebarViewMenuProps> = TMemo((props) => {
       </div>
     );
   } else if (menu.type === 'item') {
-    return (
-      <div>
-        <SidebarViewMenuItemTitle
-          className={content === menu.content ? 'active' : ''}
-          onClick={() => setContent(menu.content)}
-        >
-          {menu.title}
-        </SidebarViewMenuItemTitle>
-      </div>
+    const t = (
+      <SidebarViewMenuItemTitle
+        className={content === menu.content ? 'active' : ''}
+        onClick={() => setContent(menu.content)}
+      >
+        {menu.title}
+      </SidebarViewMenuItemTitle>
     );
+
+    if (menu.isDev === true) {
+      return <DevContainer>{t}</DevContainer>;
+    } else {
+      return <div>{t}</div>;
+    }
   } else if (menu.type === 'link') {
     return (
       <div>
