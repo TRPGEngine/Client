@@ -61,6 +61,7 @@ const babelQuery = {
     ],
     'transform-class-properties',
     '@babel/plugin-transform-modules-commonjs', // NOTICE: 该组件不能移除，因为目前需要require来实现一些异步加载
+    'babel-plugin-styled-components',
   ],
 };
 
