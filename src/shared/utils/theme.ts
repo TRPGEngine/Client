@@ -34,150 +34,157 @@ const graySet = [
   '#000000',
 ];
 
-type ThemeType = typeof styledTheme;
-const styledTheme = {
-  style: {
-    // 这里主要是放一些样式方面的主题设置
-    // 方便统一管理
-    navbarWidth: '72px',
-    navbarBackgroundColor: graySet[9],
-    sidebarWidth: '240px',
-    sidebarBackgroundColor: graySet[8],
-    contentBackgroundColor: graySet[7],
-    sectionHeight: '48px',
-  },
-  border: {
-    thin: '.5px solid rgba(232, 232, 232, 0.8)',
-    standard: '1px solid rgba(232, 232, 232, 0.8)',
-  },
-  radius: {
-    standard: '3px',
-    card: '10px',
-  },
-  color: {
-    antd: antdColor,
-    graySet,
-    borderBase: '#dddddd',
-    gallery: '#EFEFEF',
-    alabaster: '#FCFCFC',
-    'seashell-peach': '#FFF4EB',
-    whisper: '#FAFAFC',
-    soapstone: '#FFFBF8',
-    'white-linen': '#FBF5F1',
-    'wild-sand': '#F5F5F5',
-    'pearl-bush': '#F1EBE6',
-    saltpan: '#F9FCFA',
-    'bon-jour': '#DDDCDD',
-    silver: '#CCCCCC',
-    'french-gray': '#C7C7CC',
-    'silver-sand': '#BDBEBF',
-    'dusty-gray': '#999999',
-    gray: '#878787',
-    'dove-gray': '#666666',
-    tundora: '#4a4a4a',
-    'mine-shaft': '#333333',
-    'cod-gray': '#222222',
-    'jungle-mist': '#BACED9',
-    'tobacco-brown': '#705949',
-    'copper-canyon': '#7E3F12',
-    'spicy-mix': '#8C6244',
-    'atomic-tangerine': '#FFA160',
-    'hit-pink': '#FFA787',
-    tacao: '#EDAB7C',
-    'pine-cone': '#726155',
-    tan: '#D0A282',
-    downy: '#65CAB0',
-    gold: '#FFD700',
-    warning: '#faad14',
-    'alizarin-crimson': '#EC2121',
-    'sunset-orange': '#FF4D4F',
-    periwinkle: '#BEC9FF',
-    transparent90: 'rgba(0,0,0,0.1)',
-    transparent80: 'rgba(0,0,0,0.2)',
-    transparent70: 'rgba(0,0,0,0.3)',
-    transparent60: 'rgba(0,0,0,0.4)',
-    transparent50: 'rgba(0,0,0,0.5)',
+type ThemeType = ReturnType<typeof getStyledTheme>;
+export type ThemeMode = 'light' | 'dark';
 
-    // 功能性分类
-    textNormal: '#dcddde',
-    textLink: '#00b0f4',
-    textMuted: '#72767d',
-    interactiveActive: '#fff',
-    interactiveHover: '#dcddde',
-    interactiveMuted: '#4f545c',
-    interactiveNormal: '#b9bbbe',
-    headerPrimary: '#fff',
-    headerSecondary: '#b9bbbe',
-    channelsDefault: '#8e9297',
-  },
-  boxShadow: {
-    normal: 'rgba(0, 0, 0, 0.15) 0 0 8px',
-    elevationStroke: '0 0 0 1px rgba(4,4,5,0.15)',
-    elevationLow:
-      '0 1px 0 rgba(4,4,5,0.2),0 1.5px 0 rgba(6,6,7,0.05),0 2px 0 rgba(4,4,5,0.05)',
-    elevationMedium: '0 4px 4px rgba(0,0,0,0.16)',
-    elevationHigh: '0 8px 16px rgba(0,0,0,0.24)',
-  },
-  filter: {
-    grey100: 'grayscale(100%)',
-  },
-  mixins: {
-    autoScrollBar: `
-      overflow: hidden;
+export function getStyledTheme(mode: ThemeMode) {
+  const theme = {
+    style: {
+      // 这里主要是放一些样式方面的主题设置
+      // 方便统一管理
+      navbarWidth: '72px',
+      navbarBackgroundColor: graySet[9],
+      sidebarWidth: '240px',
+      sidebarBackgroundColor: graySet[8],
+      contentBackgroundColor: graySet[7],
+      sectionHeight: '48px',
+    },
+    border: {
+      thin: '.5px solid rgba(232, 232, 232, 0.8)',
+      standard: '1px solid rgba(232, 232, 232, 0.8)',
+    },
+    radius: {
+      standard: '3px',
+      card: '10px',
+    },
+    color: {
+      antd: antdColor,
+      graySet,
+      borderBase: '#dddddd',
+      gallery: '#EFEFEF',
+      alabaster: '#FCFCFC',
+      'seashell-peach': '#FFF4EB',
+      whisper: '#FAFAFC',
+      soapstone: '#FFFBF8',
+      'white-linen': '#FBF5F1',
+      'wild-sand': '#F5F5F5',
+      'pearl-bush': '#F1EBE6',
+      saltpan: '#F9FCFA',
+      'bon-jour': '#DDDCDD',
+      silver: '#CCCCCC',
+      'french-gray': '#C7C7CC',
+      'silver-sand': '#BDBEBF',
+      'dusty-gray': '#999999',
+      gray: '#878787',
+      'dove-gray': '#666666',
+      tundora: '#4a4a4a',
+      'mine-shaft': '#333333',
+      'cod-gray': '#222222',
+      'jungle-mist': '#BACED9',
+      'tobacco-brown': '#705949',
+      'copper-canyon': '#7E3F12',
+      'spicy-mix': '#8C6244',
+      'atomic-tangerine': '#FFA160',
+      'hit-pink': '#FFA787',
+      tacao: '#EDAB7C',
+      'pine-cone': '#726155',
+      tan: '#D0A282',
+      downy: '#65CAB0',
+      gold: '#FFD700',
+      warning: '#faad14',
+      'alizarin-crimson': '#EC2121',
+      'sunset-orange': '#FF4D4F',
+      periwinkle: '#BEC9FF',
+      transparent90: 'rgba(0,0,0,0.1)',
+      transparent80: 'rgba(0,0,0,0.2)',
+      transparent70: 'rgba(0,0,0,0.3)',
+      transparent60: 'rgba(0,0,0,0.4)',
+      transparent50: 'rgba(0,0,0,0.5)',
 
-      &:hover {
-        overflow-y: auto;
-        overflow-y: overlay;
-      }
-    `,
-    oneline: `
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    `,
-    transition: (property: string, duration: number) =>
-      `transition: ${property} ${duration}s ease-in-out;`,
-    linkBtn: `
-      font-size: 14px;
-      background-color: transparent;
-      border: 0;
-      cursor: pointer;
-      color: #705949;
-      padding: 0 2px;
-      margin: 4px 6px;
-      outline: 0;
-      position: relative;
-      user-select: none;
+      // 功能性分类
+      textNormal: '#dcddde',
+      textLink: '#00b0f4',
+      textMuted: '#72767d',
+      interactiveActive: '#fff',
+      interactiveHover: '#dcddde',
+      interactiveMuted: '#4f545c',
+      interactiveNormal: '#b9bbbe',
+      headerPrimary: '#fff',
+      headerSecondary: '#b9bbbe',
+      channelsDefault: '#8e9297',
+    },
+    boxShadow: {
+      normal: 'rgba(0, 0, 0, 0.15) 0 0 8px',
+      elevationStroke: '0 0 0 1px rgba(4,4,5,0.15)',
+      elevationLow:
+        '0 1px 0 rgba(4,4,5,0.2),0 1.5px 0 rgba(6,6,7,0.05),0 2px 0 rgba(4,4,5,0.05)',
+      elevationMedium: '0 4px 4px rgba(0,0,0,0.16)',
+      elevationHigh: '0 8px 16px rgba(0,0,0,0.24)',
+    },
+    filter: {
+      grey100: 'grayscale(100%)',
+    },
+    mixins: {
+      autoScrollBar: `
+        overflow: hidden;
 
-      &:disabled {
-        cursor: not-allowed;
-        color: #999999;
-      }
+        &:hover {
+          overflow-y: auto;
+          overflow-y: overlay;
+        }
+      `,
+      oneline: `
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      `,
+      transition: (property: string, duration: number) =>
+        `transition: ${property} ${duration}s ease-in-out;`,
+      linkBtn: `
+        font-size: 14px;
+        background-color: transparent;
+        border: 0;
+        cursor: pointer;
+        color: #705949;
+        padding: 0 2px;
+        margin: 4px 6px;
+        outline: 0;
+        position: relative;
+        user-select: none;
 
-      &:enabled {
-        &:after {
-          content: ' ';
-          position: absolute;
-          border-top: 1px solid #705949;
-          bottom: 0;
-          transition: all 0.2s ease-in-out;
-
-          left: 0;
-          width: 0;
+        &:disabled {
+          cursor: not-allowed;
+          color: #999999;
         }
 
-        &:hover,
-        &:active,
-        &.active {
+        &:enabled {
           &:after {
+            content: ' ';
+            position: absolute;
             border-top: 1px solid #705949;
+            bottom: 0;
+            transition: all 0.2s ease-in-out;
 
-            width: 100%;
+            left: 0;
+            width: 0;
+          }
+
+          &:hover,
+          &:active,
+          &.active {
+            &:after {
+              border-top: 1px solid #705949;
+
+              width: 100%;
+            }
           }
         }
-      }
-    `,
-  },
-};
+      `,
+    },
+  };
 
-export default styledTheme;
+  return theme;
+}
+
+const defaultStyledTheme = getStyledTheme('light'); // 这个是为了兼容原来的写法, 有机会应当移除掉
+export default defaultStyledTheme;

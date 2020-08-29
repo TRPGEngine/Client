@@ -3,7 +3,6 @@ import { App } from './containers/App';
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
-import { ThemeProvider } from 'styled-components';
 import { attachStore } from '../shared/utils/cache-helper';
 import config from '../shared/project.config';
 import configureStore from '../shared/redux/configureStore';
@@ -27,6 +26,7 @@ import { watchLoginStatus } from '@redux/middlewares/watchLoginStatus';
 import { setUser as setUserSentryInfo } from './utils/sentry';
 import TLoadable from './components/TLoadable';
 import { checkIsNewApp } from './utils/debug-helper';
+import { ThemeContextProvider } from '@shared/context/ThemeContext';
 import './init';
 
 const NewApp = TLoadable<{}>(() =>
@@ -109,11 +109,11 @@ if (
 
 ReactDom.render(
   <Provider store={store}>
-    <ThemeProvider theme={styledTheme}>
+    <ThemeContextProvider>
       <ConfigProvider locale={zhCN}>
         {isNewApp ? <NewApp /> : <App />}
       </ConfigProvider>
-    </ThemeProvider>
+    </ThemeContextProvider>
   </Provider>,
   document.querySelector('#app')
 );
