@@ -20,3 +20,8 @@ export const IS_DEVELOPER = '__isDeveloper';
  * 用于确保如果用户手动关闭其不多次显示
  */
 export const APP_BANNER_CLOSE = 'appBannerClose';
+
+/**
+ * 系统消息用的UUID
+ */
+export const SYSTE_CONVERSE_SPEC = 'trpgsystem';

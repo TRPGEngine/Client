@@ -23,9 +23,13 @@ import { NotePanel } from './NotePanel';
 import { Iconfont } from '@web/components/Iconfont';
 import { createNote } from '@redux/actions/note';
 import { ActorPanel } from './ActorPanel';
+import { SYSTE_CONVERSE_SPEC } from '@shared/utils/consts';
 
 export const Personal: React.FC = TMemo(() => {
-  const converses = useConverses(['user']);
+  const userConverses = useConverses(['user']);
+  const systemConverse = useTRPGSelector(
+    (state) => state.chat.converses[SYSTE_CONVERSE_SPEC]
+  );
   const noteList = useTRPGSelector((state) => state.note.list);
   const dispatch = useTRPGDispatch();
   const handleAddNote = useCallback(() => {
@@ -51,6 +55,12 @@ export const Personal: React.FC = TMemo(() => {
             name="角色"
             to="/main/personal/actors"
           />
+          <SidebarItem
+            icon={'系统消息'}
+            name={'系统消息'}
+            to={`/main/personal/converse/${SYSTE_CONVERSE_SPEC}`}
+            badge={systemConverse?.unread}
+          />
           <SidebarHeader
             title="笔记"
             action={<Iconfont onClick={handleAddNote}>&#xe604;</Iconfont>}
@@ -70,13 +80,14 @@ export const Personal: React.FC = TMemo(() => {
           </div>
           <SidebarHeaderText>私信</SidebarHeaderText>
           <div>
-            {converses.map((converse) => {
+            {userConverses.map((converse) => {
               return (
                 <SidebarItem
                   key={converse.uuid}
                   icon={converse.icon}
                   name={converse.name}
                   to={`/main/personal/converse/${converse.uuid}`}
+                  badge={converse.unread}
                 />
               );
             })}
