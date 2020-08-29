@@ -1,8 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import './ModalPanel.scss';
-
 const ModalPanelContainer = styled.div<{ maximize?: boolean }>`
   display: flex;
   flex-direction: column;
@@ -20,6 +18,38 @@ const ModalPanelContainer = styled.div<{ maximize?: boolean }>`
       max-width: 100vw;
       max-height: 100vh;
     `}
+
+  > .head {
+    height: 50px;
+    line-height: 52px;
+    text-align: center;
+    background-color: ${(props) => props.theme.style.modelPanel.baseBackground};
+    padding: 0 30px;
+    position: relative;
+    border-bottom: 1px solid
+      ${(props) => props.theme.style.modelPanel.borderColor};
+    border-radius: 3px;
+  }
+
+  > .body {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    background-color: ${(props) => props.theme.style.modelPanel.bodyBackground};
+  }
+
+  > .foot {
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: ${(props) => props.theme.style.modelPanel.baseBackground};
+
+    button {
+      margin: 0 4px;
+      ${(props) => props.theme.mixins.blockBtn};
+    }
+  }
 `;
 
 const ModalPanelActionGroup = styled.div`

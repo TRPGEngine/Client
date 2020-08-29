@@ -16,10 +16,9 @@ import { LoginCheck } from './LoginCheck';
 import { PortalProvider } from '@web/components/portal/PortalProvider';
 import { PortalHost } from '@web/utils/portal';
 import { NetworkStatusModal } from '@web/components/NetworkStatusModal';
+import { DarkMode } from './DarkMode';
 
 // 新版Web页面
-
-import 'antd/dist/antd.dark.less'; // 需要确保新版的UI是异步加载的，以确保黑暗模式不会影响到旧UI
 
 const Router: any =
   config.platform === 'web' || config.environment === 'development'
@@ -38,6 +37,7 @@ export const App = TMemo(() => {
   return (
     <Router>
       <ErrorBoundary>
+        <DarkMode />
         <GlobalStyle />
         <GlobalUI />
         <div className="app new-ui">

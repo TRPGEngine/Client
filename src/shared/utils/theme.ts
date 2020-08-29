@@ -38,6 +38,74 @@ type ThemeType = ReturnType<typeof getStyledTheme>;
 export type ThemeMode = 'light' | 'dark';
 
 export function getStyledTheme(mode: ThemeMode) {
+  const modeValue = (val: [string, string]) => {
+    if (mode === 'light') {
+      return val[0];
+    } else if (mode === 'dark') {
+      return val[1];
+    } else {
+      // 没有匹配到任何主题则默认light
+      return val[0];
+    }
+  };
+
+  const color = {
+    antd: antdColor,
+    graySet,
+    borderBase: '#dddddd',
+    gallery: '#EFEFEF',
+    alabaster: '#FCFCFC',
+    'seashell-peach': '#FFF4EB',
+    whisper: '#FAFAFC',
+    soapstone: '#FFFBF8',
+    'white-linen': '#FBF5F1',
+    'wild-sand': '#F5F5F5',
+    'pearl-bush': '#F1EBE6',
+    saltpan: '#F9FCFA',
+    'bon-jour': '#DDDCDD',
+    silver: '#CCCCCC',
+    'french-gray': '#C7C7CC',
+    'silver-sand': '#BDBEBF',
+    'dusty-gray': '#999999',
+    gray: '#878787',
+    'dove-gray': '#666666',
+    tundora: '#4a4a4a',
+    'mine-shaft': '#333333',
+    'cod-gray': '#222222',
+    'jungle-mist': '#BACED9',
+    'tobacco-brown': '#705949',
+    'copper-canyon': '#7E3F12',
+    'spicy-mix': '#8C6244',
+    'atomic-tangerine': '#FFA160',
+    'hit-pink': '#FFA787',
+    tacao: '#EDAB7C',
+    'pine-cone': '#726155',
+    tan: '#D0A282',
+    downy: '#65CAB0',
+    gold: '#FFD700',
+    warning: '#faad14',
+    'alizarin-crimson': '#EC2121',
+    'sunset-orange': '#FF4D4F',
+    periwinkle: '#BEC9FF',
+    transparent90: 'rgba(0,0,0,0.1)',
+    transparent80: 'rgba(0,0,0,0.2)',
+    transparent70: 'rgba(0,0,0,0.3)',
+    transparent60: 'rgba(0,0,0,0.4)',
+    transparent50: 'rgba(0,0,0,0.5)',
+
+    // 功能性分类
+    textNormal: '#dcddde',
+    textLink: '#00b0f4',
+    textMuted: '#72767d',
+    interactiveActive: '#fff',
+    interactiveHover: '#dcddde',
+    interactiveMuted: '#4f545c',
+    interactiveNormal: '#b9bbbe',
+    headerPrimary: '#fff',
+    headerSecondary: '#b9bbbe',
+    channelsDefault: '#8e9297',
+  };
+
   const theme = {
     style: {
       // 这里主要是放一些样式方面的主题设置
@@ -48,6 +116,11 @@ export function getStyledTheme(mode: ThemeMode) {
       sidebarBackgroundColor: graySet[8],
       contentBackgroundColor: graySet[7],
       sectionHeight: '48px',
+      modelPanel: {
+        bodyBackground: modeValue([color['whisper'], graySet[6]]),
+        baseBackground: modeValue(['white', graySet[7]]),
+        borderColor: modeValue([color['bon-jour'], color['dove-gray']]),
+      },
     },
     border: {
       thin: '.5px solid rgba(232, 232, 232, 0.8)',
@@ -57,62 +130,7 @@ export function getStyledTheme(mode: ThemeMode) {
       standard: '3px',
       card: '10px',
     },
-    color: {
-      antd: antdColor,
-      graySet,
-      borderBase: '#dddddd',
-      gallery: '#EFEFEF',
-      alabaster: '#FCFCFC',
-      'seashell-peach': '#FFF4EB',
-      whisper: '#FAFAFC',
-      soapstone: '#FFFBF8',
-      'white-linen': '#FBF5F1',
-      'wild-sand': '#F5F5F5',
-      'pearl-bush': '#F1EBE6',
-      saltpan: '#F9FCFA',
-      'bon-jour': '#DDDCDD',
-      silver: '#CCCCCC',
-      'french-gray': '#C7C7CC',
-      'silver-sand': '#BDBEBF',
-      'dusty-gray': '#999999',
-      gray: '#878787',
-      'dove-gray': '#666666',
-      tundora: '#4a4a4a',
-      'mine-shaft': '#333333',
-      'cod-gray': '#222222',
-      'jungle-mist': '#BACED9',
-      'tobacco-brown': '#705949',
-      'copper-canyon': '#7E3F12',
-      'spicy-mix': '#8C6244',
-      'atomic-tangerine': '#FFA160',
-      'hit-pink': '#FFA787',
-      tacao: '#EDAB7C',
-      'pine-cone': '#726155',
-      tan: '#D0A282',
-      downy: '#65CAB0',
-      gold: '#FFD700',
-      warning: '#faad14',
-      'alizarin-crimson': '#EC2121',
-      'sunset-orange': '#FF4D4F',
-      periwinkle: '#BEC9FF',
-      transparent90: 'rgba(0,0,0,0.1)',
-      transparent80: 'rgba(0,0,0,0.2)',
-      transparent70: 'rgba(0,0,0,0.3)',
-      transparent60: 'rgba(0,0,0,0.4)',
-      transparent50: 'rgba(0,0,0,0.5)',
-
-      // 功能性分类
-      textNormal: '#dcddde',
-      textLink: '#00b0f4',
-      textMuted: '#72767d',
-      interactiveActive: '#fff',
-      interactiveHover: '#dcddde',
-      interactiveMuted: '#4f545c',
-      interactiveNormal: '#b9bbbe',
-      headerPrimary: '#fff',
-      headerSecondary: '#b9bbbe',
-      channelsDefault: '#8e9297',
-    },
+    color,
     boxShadow: {
       normal: 'rgba(0, 0, 0, 0.15) 0 0 8px',
       elevationStroke: '0 0 0 1px rgba(4,4,5,0.15)',
@@ -140,6 +158,26 @@ export function getStyledTheme(mode: ThemeMode) {
       `,
       transition: (property: string, duration: number) =>
         `transition: ${property} ${duration}s ease-in-out;`,
+      blockBtn: `
+        font-size: 16px;
+        border: 0;
+        cursor: pointer;
+        color: white;
+        border-radius: 3px;
+        background-color: #999;
+        padding: 6px 12px;
+        outline: 0;
+        user-select: none;
+
+        &:hover, &:active, &.active {
+          background-color: #705949;
+        }
+
+        &:disabled {
+          cursor: not-allowed;
+          background-color: #999999;
+        }
+      `,
       linkBtn: `
         font-size: 14px;
         background-color: transparent;
