@@ -17,6 +17,7 @@ export const GroupHeader: React.FC<GroupHeaderProps> = TMemo((props) => {
 
   const {
     handleShowGroupInfo,
+    handleShowInvite,
     handleCreateGroupPanel,
     handleQuitGroup,
   } = useGroupHeaderAction(groupInfo!);
@@ -28,7 +29,7 @@ export const GroupHeader: React.FC<GroupHeaderProps> = TMemo((props) => {
   const menu = (
     <Menu>
       <Menu.Item onClick={handleShowGroupInfo}>查看详情</Menu.Item>
-      <Menu.Item>邀请成员</Menu.Item>
+      <Menu.Item onClick={handleShowInvite}>邀请成员</Menu.Item>
       <Menu.Item onClick={handleCreateGroupPanel}>创建面板</Menu.Item>
       <Menu.Item danger={true} onClick={handleQuitGroup}>
         {currentUserUUID === groupInfo.owner_uuid ? '解散团' : '退出团'}

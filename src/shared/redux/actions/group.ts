@@ -400,6 +400,7 @@ export const agreeGroupInvite = function(inviteUUID: string): TRPGAction {
         }
       } else {
         console.error(data);
+        showToasts(data.msg, 'error');
       }
     });
   };
