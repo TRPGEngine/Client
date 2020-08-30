@@ -12,6 +12,7 @@ import { t } from '@shared/i18n';
 import { SettingSystemConfig } from './SettingSystemConfig';
 import { ErrorReportView } from '@web/components/ErrorReportView';
 import { DevelopLab } from './DevelopLab';
+import { AboutView } from './AboutView';
 
 export const SettingView: React.FC = TMemo(() => {
   const dispatch = useTRPGDispatch();
@@ -62,6 +63,11 @@ export const SettingView: React.FC = TMemo(() => {
             isDev: true,
             title: t('开发实验室'),
             content: <DevelopLab />,
+          },
+          {
+            type: 'item',
+            title: t('关于'),
+            content: <AboutView />,
           },
         ],
       },

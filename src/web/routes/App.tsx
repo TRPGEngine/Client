@@ -49,9 +49,6 @@ export const App = TMemo(() => {
               <Route name="index" path="/" component={LaunchRoute} />
             </Switch>
             {config.platform === 'web' && <NetworkStatusModal />}
-            <div className="version">
-              {t('当前版本号')} v{config.version}
-            </div>
             <AppBanner />
             <LoginCheck />
           </CustomProvider>
