@@ -1,5 +1,5 @@
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
-import { GroupInfo, GroupActorType } from '@redux/types/group';
+import { GroupInfo, GroupActorType, GroupPanel } from '@redux/types/group';
 import { useCurrentUserInfo } from './user';
 import _get from 'lodash/get';
 import _uniq from 'lodash/uniq';
@@ -105,4 +105,19 @@ export function useIsGroupManager(
   const managers = useGroupManagerUUIDs(groupUUID);
 
   return managers.includes(playerUUID ?? currentUserInfo.uuid!);
+}
+
+/**
+ * 获取团面板相关信息
+ * @param groupUUID 团UUID 必须是已加入的团
+ * @param panelUUID 面板UUID
+ */
+export function useGroupPanelInfo(
+  groupUUID: string,
+  panelUUID: string
+): GroupPanel | undefined {
+  const groupInfo = useJoinedGroupInfo(groupUUID);
+  const panelInfo = groupInfo?.panels?.find((p) => p.uuid === panelUUID);
+
+  return panelInfo;
 }

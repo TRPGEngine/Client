@@ -4,6 +4,7 @@
 interface FastFormFieldCommon {
   name: string; // 字段名
   label?: string; // 字段标签
+  defaultValue?: string; // 默认值
   [other: string]: any; // 其他字段
 }
 

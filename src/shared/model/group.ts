@@ -55,3 +55,22 @@ export async function createGroupPanel(
 
   return data;
 }
+
+/**
+ * 更新团面板信息
+ * @param info 要更新的内容
+ */
+export async function updateGroupPanelInfo(
+  groupUUID: string,
+  panelUUID: string,
+  info: {
+    name: string;
+  }
+) {
+  const { data } = await request.post(`/group/${groupUUID}/panel/updateInfo`, {
+    panelUUID,
+    info,
+  });
+
+  return data;
+}

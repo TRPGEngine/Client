@@ -9,7 +9,7 @@ export const GroupRuleScreen: React.FC = TMemo((props) => {
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <HTML html={groupInfo?.rule} />
+      <HTML html={groupInfo?.rule ?? ''} />
     </ScrollView>
   );
 });

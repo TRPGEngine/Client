@@ -25,7 +25,9 @@ export interface FastFormProps {
  */
 export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
   const initialValues = useMemo(() => {
-    return _fromPairs(props.fields.map((field) => [field.name, '']));
+    return _fromPairs(
+      props.fields.map((field) => [field.name, field.defaultValue ?? ''])
+    );
   }, [props.fields]);
 
   const [loading, setLoading] = useState(false);

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useJoinedGroupInfo } from '@redux/hooks/group';
 import _isNil from 'lodash/isNil';
@@ -9,6 +9,8 @@ import styled from 'styled-components';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { updatePanelOrder } from '@shared/model/panel';
 import { showToasts } from '@shared/manager/ui';
+import { openModal, ModalWrapper } from '@web/components/Modal';
+import { GroupPanelUpdateInfo } from '@web/components/modal/GroupPanelUpdateInfo';
 
 const GroupPanelListItemContainer = styled.div`
   padding: 10px;
@@ -23,13 +25,18 @@ const GroupPanelListItemContainer = styled.div`
 `;
 
 const GroupPanelListItem: React.FC<{
+  groupUUID: string;
   item: GroupPanel;
 }> = TMemo((props) => {
-  const { item } = props;
+  const { groupUUID, item } = props;
 
   const handleEdit = useCallback(() => {
-    console.log('handleEdit');
-  }, []);
+    openModal(
+      <ModalWrapper>
+        <GroupPanelUpdateInfo groupUUID={groupUUID} panelUUID={item.uuid} />
+      </ModalWrapper>
+    );
+  }, [groupUUID, item.uuid]);
 
   const handleRemove = useCallback(() => {
     console.log('handleRemove');
@@ -81,13 +88,19 @@ const GroupPanelList: React.FC<GroupPanelListProps> = TMemo((props) => {
     setPanels(props.panels);
   }, [props.panels]);
 
+  useEffect(() => {
+    setPanels(props.panels); // 总状态更新时强制更新内部状态
+  }, [props.panels]);
+
   return (
     <div>
       <SortableList
         list={panels}
         itemKey="uuid"
         onChange={setPanels}
-        renderItem={(item: GroupPanel) => <GroupPanelListItem item={item} />}
+        renderItem={(item: GroupPanel) => (
+          <GroupPanelListItem groupUUID={groupUUID} item={item} />
+        )}
       />
       {isChanged && (
         <Space direction="horizontal">
