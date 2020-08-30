@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { useJoinedGroupInfo } from '@redux/hooks/group';
 import _isNil from 'lodash/isNil';
 import { UserListItem } from '@web/components/UserListItem';
+import { GroupActorSelector } from './GroupActorSelector';
 
 const Root = styled.div`
   display: flex;
@@ -35,6 +36,7 @@ export const GroupChatPanel: React.FC<GroupChatPanelProps> = TMemo((props) => {
         style={{ flex: 1 }}
         converseUUID={groupUUID}
         headerActions={[
+          <GroupActorSelector key="actor" groupUUID={groupUUID} />,
           <Iconfont
             key="members"
             active={showMembers}

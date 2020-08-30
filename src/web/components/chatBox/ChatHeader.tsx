@@ -3,6 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { SectionHeader } from '../SectionHeader';
 import { useConverseDetail } from '@redux/hooks/chat';
 import styled from 'styled-components';
+import { Space } from 'antd';
 
 const Container = styled.div`
   display: flex;
@@ -36,7 +37,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = TMemo((props) => {
         </HeaderIdentify>
         <HeaderName>{converse?.name}</HeaderName>
 
-        <div>{headerActions}</div>
+        <Space>{headerActions}</Space>
       </Container>
     </SectionHeader>
   );

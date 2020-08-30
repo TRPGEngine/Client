@@ -5,7 +5,11 @@ import { PillTabs } from '@web/components/PillTabs';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
-import { useJoinedGroupInfo, useIsGroupManager } from '@redux/hooks/group';
+import {
+  useJoinedGroupInfo,
+  useIsGroupManager,
+  useSelfGroupActors,
+} from '@redux/hooks/group';
 import {
   getGroupActorField,
   getGroupActorInfo,
@@ -44,6 +48,45 @@ function handleShowActorProfile(groupActor: GroupActorType) {
     showToasts('需要groupActor');
   }
 }
+
+const NoCard = TMemo(() => {
+  return <div className="no-content">暂无卡片</div>;
+});
+NoCard.displayName = 'NoCard';
+
+/**
+ * 我的人物卡
+ */
+const SelfGroupActorList: React.FC<{
+  groupUUID: string;
+}> = TMemo((props) => {
+  const { groupUUID } = props;
+  const selfGroupActors = useSelfGroupActors(groupUUID);
+
+  if (selfGroupActors.length === 0) {
+    return <NoCard />;
+  }
+
+  return (
+    <ActorCardListContainer>
+      {selfGroupActors.map((actor) => {
+        return (
+          <ActorCard
+            key={actor.uuid}
+            actor={actor}
+            actions={[
+              <Tooltip key="query" title="查询">
+                <button onClick={() => handleShowActorProfile(actor)}>
+                  <Iconfont>&#xe61b;</Iconfont>
+                </button>
+              </Tooltip>,
+            ]}
+          />
+        );
+      })}
+    </ActorCardListContainer>
+  );
+});
 
 /**
  * 正式人物卡列表
@@ -92,7 +135,7 @@ const GroupActorsList: React.FC<{
   );
 
   if (passedActors.length === 0) {
-    return <div className="no-content">暂无卡片</div>;
+    return <NoCard />;
   }
 
   return (
@@ -169,7 +212,7 @@ const GroupActorChecksList: React.FC<{
   };
 
   if (noPassedActors.length === 0) {
-    return <div className="no-content">暂无卡片</div>;
+    return <NoCard />;
   }
 
   return (
@@ -231,10 +274,13 @@ export const GroupActorManager: React.FC<GroupActorManagerProps> = TMemo(
 
         <div>
           <PillTabs>
-            <TabPane key="1" tab="正式人物卡">
+            <TabPane key="1" tab="我的人物卡">
+              <SelfGroupActorList groupUUID={groupUUID} />
+            </TabPane>
+            <TabPane key="2" tab="正式人物卡">
               <GroupActorsList groupUUID={groupUUID} />
             </TabPane>
-            <TabPane key="2" tab="待审核人物卡">
+            <TabPane key="3" tab="待审核人物卡">
               <GroupActorChecksList groupUUID={groupUUID} />
             </TabPane>
           </PillTabs>
