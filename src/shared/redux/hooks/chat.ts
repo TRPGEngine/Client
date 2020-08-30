@@ -56,7 +56,7 @@ export function useMsgList(
     }
     return _orderBy(converse?.msgList, (item) => new Date(item.date), [order]);
   }, [converse?.msgList, order]);
-  const nomore = converse?.nomore;
+  const nomore = converse?.nomore ?? false;
 
   return {
     list: msgList,
