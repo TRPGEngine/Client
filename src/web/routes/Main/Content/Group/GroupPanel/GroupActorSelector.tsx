@@ -21,9 +21,8 @@ export const GroupActorSelector: React.FC<GroupActorSelectorProps> = TMemo(
 
     const handleChange = useCallback(
       (value: string) => {
-        // handleChange
         if (value !== selectedGroupActorUUID) {
-          dispatch(changeSelectGroupActor(groupUUID, value));
+          dispatch(changeSelectGroupActor(groupUUID, value ?? null));
         }
       },
       [groupUUID, selectedGroupActorUUID]
