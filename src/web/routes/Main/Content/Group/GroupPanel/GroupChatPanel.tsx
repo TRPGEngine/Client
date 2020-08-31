@@ -7,6 +7,8 @@ import { useJoinedGroupInfo } from '@redux/hooks/group';
 import _isNil from 'lodash/isNil';
 import { UserListItem } from '@web/components/UserListItem';
 import { GroupActorSelector } from './GroupActorSelector';
+import { TPopover } from '@web/components/popover';
+import PopoverUserInfo from '@web/components/popover/UserInfo';
 
 const Root = styled.div`
   display: flex;
@@ -27,7 +29,16 @@ export const GroupChatPanel: React.FC<GroupChatPanelProps> = TMemo((props) => {
   }
 
   const members = (groupInfo.group_members ?? []).map((uuid) => (
-    <UserListItem key={uuid} userUUID={uuid} />
+    <TPopover
+      key={uuid}
+      placement="left"
+      trigger="click"
+      content={<PopoverUserInfo userUUID={uuid} />}
+    >
+      <div>
+        <UserListItem userUUID={uuid} />
+      </div>
+    </TPopover>
   ));
 
   return (

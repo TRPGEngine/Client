@@ -26,7 +26,7 @@ module.exports = {
   },
   sentry: {
     dsn: '',
-    mobileDsn: '', //移动端的dsn
+    mobileDsn: '', // 移动端的dsn
     feedbackUrl: '', // 见https://docs.sentry.io/api/projects/post-project-user-reports/
     pushRelease: false, // 仅在production环境使用该变量
     release: `${appName}-v${package.version}-${environment}`,

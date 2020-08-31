@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Avatar from '../Avatar';
 import config from '@shared/project.config';
 import _isEmpty from 'lodash/isEmpty';
+import { TMemo } from '@shared/components/TMemo';
 
 const Container = styled.div`
   display: flex;
@@ -29,7 +30,7 @@ const Container = styled.div`
 interface Props {
   groupUUID: string;
 }
-const PopoverGroupInfo: React.FC<Props> = React.memo((props) => {
+const PopoverGroupInfo: React.FC<Props> = TMemo((props) => {
   const groupInfo = useCachedGroupInfo(props.groupUUID);
 
   const avatar = useMemo(

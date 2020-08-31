@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Avatar from '../Avatar';
 import config from '@shared/project.config';
 import _isEmpty from 'lodash/isEmpty';
+import { TMemo } from '@shared/components/TMemo';
 
 const Container = styled.div`
   display: flex;
@@ -11,7 +12,6 @@ const Container = styled.div`
 
   .avatar {
     overflow: hidden;
-    border: 1px solid white;
 
     > img {
       width: 100%;
@@ -29,7 +29,7 @@ const Container = styled.div`
 interface Props {
   userUUID: string;
 }
-const PopoverUserInfo: React.FC<Props> = React.memo((props) => {
+const PopoverUserInfo: React.FC<Props> = TMemo((props) => {
   const userInfo = useCachedUserInfo(props.userUUID);
 
   const name = useMemo(() => userInfo.nickname ?? userInfo.username ?? '', [
