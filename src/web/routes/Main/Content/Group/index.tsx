@@ -14,6 +14,7 @@ import { GroupPanel } from './GroupPanel';
 import { GroupHeader } from './GroupHeader';
 import { Result } from 'antd';
 import _isNil from 'lodash/isNil';
+import { GroupInfoContext } from '@shared/context/GroupInfoContext';
 
 interface GroupParams {
   groupUUID: string;
@@ -31,28 +32,41 @@ export const Group: React.FC = TMemo(() => {
     );
   }
 
+  const panels = groupInfo.panels ?? [];
+
   return (
-    <ContentContainer>
-      <Sidebar>
-        <GroupHeader groupUUID={groupUUID} />
-        <SidebarItemsContainer>
-          <SidebarItem
-            name="综合"
-            icon={<span>#</span>}
-            to={`/main/group/${groupUUID}/main`}
-          />
-        </SidebarItemsContainer>
-      </Sidebar>
-      <ContentDetail>
-        <Switch>
-          <Route
-            path="/main/group/:groupUUID/:panelUUID"
-            component={GroupPanel}
-          />
-          <Redirect to={`/main/group/${groupUUID}/main`} />
-        </Switch>
-      </ContentDetail>
-    </ContentContainer>
+    <GroupInfoContext.Provider value={groupInfo}>
+      <ContentContainer>
+        <Sidebar>
+          <GroupHeader groupUUID={groupUUID} />
+          <SidebarItemsContainer>
+            <SidebarItem
+              name="综合"
+              icon={<span>#</span>}
+              to={`/main/group/${groupUUID}/main`}
+            />
+
+            {panels.map((panel) => (
+              <SidebarItem
+                key={panel.uuid}
+                name={panel.name}
+                icon={<span>#</span>}
+                to={`/main/group/${groupUUID}/${panel.uuid}`}
+              />
+            ))}
+          </SidebarItemsContainer>
+        </Sidebar>
+        <ContentDetail>
+          <Switch>
+            <Route
+              path="/main/group/:groupUUID/:panelUUID"
+              component={GroupPanel}
+            />
+            <Redirect to={`/main/group/${groupUUID}/main`} />
+          </Switch>
+        </ContentDetail>
+      </ContentContainer>
+    </GroupInfoContext.Provider>
   );
 });
 Group.displayName = 'Group';

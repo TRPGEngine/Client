@@ -1,11 +1,8 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { ChatMsgList } from './ChatMsgList';
-import { ChatSendBox } from './ChatSendBox';
-import { MsgContainerContextProvider } from '@shared/context/MsgContainerContext';
-import { GroupMsgReply } from '@web/containers/main/group/GroupMsgReply';
 import { CommonPanel } from '../panels/CommonPanel';
 import { useConverseDetail } from '@redux/hooks/chat';
+import { ChatBody } from './ChatBody';
 
 interface Props {
   converseUUID: string;
@@ -25,11 +22,7 @@ export const ChatContainer: React.FC<Props> = TMemo((props) => {
       rightPanel={rightPanel}
       headerActions={headerActions}
     >
-      <MsgContainerContextProvider>
-        <ChatMsgList converseUUID={converseUUID} />
-        <GroupMsgReply />
-        <ChatSendBox converseUUID={converseUUID} />
-      </MsgContainerContextProvider>
+      <ChatBody converseUUID={converseUUID} />
     </CommonPanel>
   );
 });

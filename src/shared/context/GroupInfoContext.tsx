@@ -6,3 +6,4 @@ import { GroupInfo } from '@redux/types/group';
  */
 
 export const GroupInfoContext = React.createContext<GroupInfo | null>(null);
+GroupInfoContext.displayName = 'GroupInfoContext';

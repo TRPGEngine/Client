@@ -22,6 +22,7 @@ export interface MsgPayload {
   sender_uuid: string;
   to_uuid?: string;
   converse_uuid?: string;
+  group_uuid?: string;
   is_public: boolean;
   is_group: boolean;
   revoke: boolean;
@@ -40,7 +41,13 @@ export type RenderMsgPayload = Pick<
 // 发送消息时所必须的参数
 export type SendMsgPayload = Pick<
   MsgPayload,
-  'converse_uuid' | 'type' | 'message' | 'is_public' | 'is_group' | 'data'
+  | 'converse_uuid'
+  | 'group_uuid'
+  | 'type'
+  | 'message'
+  | 'is_public'
+  | 'is_group'
+  | 'data'
 >;
 
 export type MsgListType = MsgPayload[];

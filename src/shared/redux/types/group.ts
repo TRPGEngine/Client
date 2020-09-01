@@ -50,6 +50,7 @@ export interface GroupPanel {
   type: GroupPanelType;
   color: string;
   order: number;
+  target_uuid: string;
 }
 
 export interface GroupInfo {

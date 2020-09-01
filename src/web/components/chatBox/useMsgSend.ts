@@ -1,5 +1,5 @@
 import { useConverseDetail } from '@redux/hooks/chat';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useContext } from 'react';
 import { isUserUUID } from '@shared/utils/uuid';
 import { sendStopWriting } from '@shared/api/event';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
@@ -9,12 +9,15 @@ import { MsgDataManager } from '@shared/utils/msg-helper';
 import _isNil from 'lodash/isNil';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { useSelectedGroupActorInfo } from '@redux/hooks/group';
+import { GroupInfoContext } from '@shared/context/GroupInfoContext';
 
 export function useMsgSend(converseUUID: string) {
   const converse = useConverseDetail(converseUUID);
   const converseType = converse?.type;
   const dispatch = useTRPGDispatch();
   const { replyMsg, clearReplyMsg } = useMsgContainerContext();
+  const groupInfo = useContext(GroupInfoContext);
+  const currentGroupUUID = groupInfo?.uuid;
 
   // 获取选中团角色的信息 仅group类型会话有用
   const selectedGroupActorInfo = useSelectedGroupActorInfo(converseUUID);
@@ -62,6 +65,7 @@ export function useMsgSend(converseUUID: string) {
         dispatch(
           sendMsgAction(null, {
             converse_uuid: converseUUID,
+            group_uuid: currentGroupUUID,
             message,
             is_public: true,
             is_group: true,
@@ -77,6 +81,7 @@ export function useMsgSend(converseUUID: string) {
       selectedGroupActorInfo,
       replyMsg,
       clearReplyMsg,
+      currentGroupUUID,
     ]
   );
 
