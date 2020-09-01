@@ -32,10 +32,11 @@ const SelectLanguage: React.FC = TMemo(() => {
         }
       />
 
+      {/* TODO: 完全弄好后可以移除 */}
       {isChanged && (
         <Alert
           style={{ marginBottom: 10 }}
-          message="语言变更需要重启后生效"
+          message="语言变更需要重启后完全生效"
           type="error"
         />
       )}

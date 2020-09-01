@@ -3,6 +3,7 @@ import rnStorage from '@shared/api/rn-storage.api';
 import { useRNStorage } from '@shared/hooks/useRNStorage';
 import { useRef, useMemo, useCallback } from 'react';
 import _isNil from 'lodash/isNil';
+import { setLanguage as setI18NLanguage } from './index';
 
 const LANGUAGE_KEY = 'trpg:i18n:language';
 
@@ -30,6 +31,7 @@ export function useLanguage() {
       }
 
       set(newLanguage);
+      setI18NLanguage(newLanguage);
     },
     [language, set]
   );

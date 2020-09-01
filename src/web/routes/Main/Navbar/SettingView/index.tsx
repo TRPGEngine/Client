@@ -8,14 +8,15 @@ import { SystemStatusInfo } from '@web/components/modal/SystemStatus';
 import { UserSettings } from '@web/components/modal/UserSettings';
 import { SettingAccountView } from './SettingAccountView';
 import { AccountLoginLog } from './AccountLoginLog';
-import { t } from '@shared/i18n';
 import { SettingSystemConfig } from './SettingSystemConfig';
 import { ErrorReportView } from '@web/components/ErrorReportView';
 import { DevelopLab } from './DevelopLab';
 import { AboutView } from './AboutView';
+import { useTranslation } from '@shared/i18n';
 
 export const SettingView: React.FC = TMemo(() => {
   const dispatch = useTRPGDispatch();
+  const { t } = useTranslation();
   const menu: SidebarViewMenuType[] = useMemo(
     () => [
       {
@@ -103,7 +104,7 @@ export const SettingView: React.FC = TMemo(() => {
         ],
       },
     ],
-    []
+    [t]
   );
 
   return <SidebarView defaultContentPath="0.children.0.content" menu={menu} />;
