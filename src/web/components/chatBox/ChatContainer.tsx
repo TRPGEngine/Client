@@ -1,37 +1,11 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { ChatHeader } from './ChatHeader';
 import { ChatMsgList } from './ChatMsgList';
-import styled from 'styled-components';
 import { ChatSendBox } from './ChatSendBox';
 import { MsgContainerContextProvider } from '@shared/context/MsgContainerContext';
 import { GroupMsgReply } from '@web/containers/main/group/GroupMsgReply';
-
-const Root = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  max-height: 100vh;
-`;
-
-const ChatMain = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  overflow: auto;
-`;
-
-const ChatContent = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-`;
-
-const ChatRightPanel = styled.div`
-  width: ${(props) => props.theme.style.sidebarWidth};
-  background-color: ${(props) => props.theme.style.sidebarBackgroundColor};
-  padding: 8px;
-`;
+import { CommonPanel } from '../panels/CommonPanel';
+import { useConverseDetail } from '@redux/hooks/chat';
 
 interface Props {
   converseUUID: string;
@@ -41,22 +15,22 @@ interface Props {
 }
 export const ChatContainer: React.FC<Props> = TMemo((props) => {
   const { converseUUID, style, headerActions, rightPanel } = props;
+  const converse = useConverseDetail(converseUUID);
 
   return (
-    <Root style={style}>
-      <ChatHeader converseUUID={converseUUID} headerActions={headerActions} />
-      <ChatMain>
-        <ChatContent>
-          <MsgContainerContextProvider>
-            <ChatMsgList converseUUID={converseUUID} />
-            <GroupMsgReply />
-            <ChatSendBox converseUUID={converseUUID} />
-          </MsgContainerContextProvider>
-        </ChatContent>
-
-        {rightPanel && <ChatRightPanel>{rightPanel}</ChatRightPanel>}
-      </ChatMain>
-    </Root>
+    <CommonPanel
+      style={style}
+      headerPrefix={['user', 'system'].includes(converse?.type!) ? '@' : '#'}
+      header={converse?.name}
+      rightPanel={rightPanel}
+      headerActions={headerActions}
+    >
+      <MsgContainerContextProvider>
+        <ChatMsgList converseUUID={converseUUID} />
+        <GroupMsgReply />
+        <ChatSendBox converseUUID={converseUUID} />
+      </MsgContainerContextProvider>
+    </CommonPanel>
   );
 });
 ChatContainer.displayName = 'ChatContainer';
