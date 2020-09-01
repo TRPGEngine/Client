@@ -20,3 +20,10 @@ export async function updatePanelOrder(
     panelOrderList,
   });
 }
+
+/**
+ * 移除面板
+ */
+export async function removePanel(groupUUID: string, panelUUID: string) {
+  await request.post(`/group/${groupUUID}/panel/${panelUUID}/remove`);
+}
