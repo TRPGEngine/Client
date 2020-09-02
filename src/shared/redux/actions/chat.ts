@@ -22,6 +22,7 @@ const {
   ADD_USER_CHAT_EMOTION_CATALOG,
   SET_CONVERSES_MSGLOG_NOMORE,
   SET_CONVERSE_ISREAD,
+  MARK_CONVERSE_MSGLIST_QUERYED,
 } = constants;
 import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
@@ -38,9 +39,11 @@ import {
   MsgPayload,
   ConverseInfo,
   SendMsgPayload,
+  ChatStateConverse,
 } from '@src/shared/redux/types/chat';
 import { TRPGAction } from '../types/__all__';
 import { isUserUUID } from '@shared/utils/uuid';
+import { createAction } from '@reduxjs/toolkit';
 
 const getUserConversesHash = (userUUID: string): string => {
   return `userConverses#${userUUID}`;
@@ -79,17 +82,13 @@ export const clearSelectedConverse = function clearSelectedConverse(): TRPGActio
   return { type: CLEAR_SELECTED_CONVERSE };
 };
 
-export const addConverse = function addConverse(payload): TRPGAction {
-  // if(!payload.uuid) {
-  //   console.error('[addConverse]payload need uuid', payload);
-  //   return;
-  // }
-  return { type: ADD_CONVERSES, payload };
-};
+export const addConverse = createAction<
+  Partial<ChatStateConverse> & Pick<ChatStateConverse, 'uuid' | 'type' | 'name'>
+>(ADD_CONVERSES);
 
 export const updateConversesMsglist = function updateConversesMsglist(
-  convUUID,
-  list
+  convUUID: string,
+  list: any[]
 ): TRPGAction {
   return function(dispatch, getState) {
     for (const item of list) {
@@ -145,7 +144,9 @@ export const getConverses = function getConverses(cb?: () => void): TRPGAction {
   };
 };
 
-// 弃用
+/**
+ * @deprecated 弃用
+ */
 export const createConverse = function createConverse(
   uuid,
   type,
@@ -190,7 +191,10 @@ export const createConverse = function createConverse(
   };
 };
 
-// 移除多人会话
+/**
+ * 移除多人会话
+ * @param converseUUID 会话UUID
+ */
 export const removeConverse = function removeConverse(
   converseUUID: string
 ): TRPGAction {
@@ -786,3 +790,13 @@ export const addUserEmotionCatalogWithSecretSignal = function(
 export const setConverseIsRead = function(converseUUID: string): TRPGAction {
   return { type: SET_CONVERSE_ISREAD, converseUUID };
 };
+
+/**
+ * 标记一个会话以及被请求过
+ */
+export const markConverseMsgListQueryed = createAction(
+  MARK_CONVERSE_MSGLIST_QUERYED,
+  (converseUUID: string) => {
+    return { payload: { converseUUID } };
+  }
+);

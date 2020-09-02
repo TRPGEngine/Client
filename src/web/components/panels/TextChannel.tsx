@@ -7,18 +7,31 @@ import { Result } from 'antd';
 import { CommonPanel } from './CommonPanel';
 import { GroupActorSelector } from '@web/routes/Main/Content/Group/GroupPanel/GroupActorSelector';
 import { ChatBody } from '../chatBox/ChatBody';
+import { ensureGroupChannelConverse } from '@redux/actions/group';
+import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 
-function useCheckConverse(converseUUID: string) {
+function useCheckGroupChannel(
+  groupUUID: string,
+  channelUUID: string,
+  channelName: string
+) {
+  const dispatch = useTRPGDispatch();
   useEffect(() => {
-    // TODO: 需要确保会话被正确创建
-  }, []);
+    // 需要确保会话被正确创建
+    dispatch(
+      ensureGroupChannelConverse({ groupUUID, channelUUID, channelName })
+    );
+  }, [channelUUID]);
 }
 
+/**
+ * 文字频道
+ */
 export const TextChannel: React.FC<CommonPanelProps> = TMemo((props) => {
   const { panel } = props;
   const groupInfo = useContext(GroupInfoContext);
-  const converseUUID = panel.target_uuid;
-  useCheckConverse(converseUUID);
+  const channelUUID = panel.target_uuid;
+  useCheckGroupChannel(groupInfo?.uuid ?? '', channelUUID, panel.name);
 
   if (_isNil(groupInfo)) {
     return <Result status="warning" title="无法获取团信息" />;

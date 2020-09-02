@@ -1,6 +1,6 @@
 export type LocalMsgType = 'loading';
 
-export type SimpleConverseType = 'user' | 'group';
+export type SimpleConverseType = 'user' | 'group' | 'channel';
 export type ConverseType = SimpleConverseType | 'system';
 
 export type MsgType =
@@ -90,6 +90,7 @@ export type ChatStateConverse = {
 
 export type ChatState = {
   selectedConverseUUID: string;
+  queryedConverseList: string[];
   conversesDesc: string;
   converses: { [name: string]: ChatStateConverse };
   writingList: WritingListType;

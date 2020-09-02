@@ -35,12 +35,14 @@ const {
   UPDATE_GROUP_STATUS,
   UPDATE_PLAYER_SELECTED_GROUP_ACTOR,
   REMOVE_CONVERSES_SUCCESS,
+  ENSURE_GROUP_CHANNEL_CONVERSE,
 } = constants;
 import config from '../../project.config';
 import {
   addConverse,
   updateConversesMsglist,
   updateCardChatData,
+  markConverseMsgListQueryed,
 } from './chat';
 import { checkUser, checkTemplate } from '../../utils/cache-helper';
 import {
@@ -54,9 +56,10 @@ import {
 } from './ui';
 import _set from 'lodash/set';
 import _get from 'lodash/get';
+import _isNil from 'lodash/isNil';
 
 import * as trpgApi from '../../api/trpg.api';
-import { TRPGAction } from '../types/__all__';
+import { TRPGAction, createTRPGAsyncThunk } from '../types/__all__';
 import { getGroupInviteInfo } from './cache';
 import { GroupInfo, GroupActorType } from '@redux/types/group';
 import { showToasts } from '@shared/manager/ui';
@@ -926,3 +929,46 @@ export const createGroupChannel = function(
     );
   };
 };
+
+/**
+ * 确保团频道聊天频道会话存在
+ */
+export const ensureGroupChannelConverse = createTRPGAsyncThunk<{
+  groupUUID: string;
+  channelUUID: string;
+  channelName: string;
+}>(
+  ENSURE_GROUP_CHANNEL_CONVERSE,
+  async ({ groupUUID, channelUUID, channelName }, thunkAPI) => {
+    const isQueryed = thunkAPI
+      .getState()
+      .chat.queryedConverseList.includes(channelUUID);
+
+    if (isQueryed) {
+      // 如果请求过则直接跳过
+      return;
+    }
+
+    thunkAPI.dispatch(markConverseMsgListQueryed(channelUUID));
+    // 没有会话，要添加会话
+    thunkAPI.dispatch(
+      addConverse({
+        uuid: channelUUID,
+        type: 'channel',
+        name: channelName,
+        _groupUUID: groupUUID,
+      })
+    );
+
+    // 获取频道聊天日志
+    const data = await api.emitP('chat::getConverseChatLog', {
+      converse_uuid: channelUUID,
+    });
+
+    if (data.result) {
+      thunkAPI.dispatch(updateConversesMsglist(channelUUID, data.list));
+    } else {
+      console.error('获取团聊天记录失败:', data.msg);
+    }
+  }
+);

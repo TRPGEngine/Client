@@ -12,6 +12,7 @@ import _findIndex from 'lodash/findIndex';
 import constants from '@redux/constants';
 import { ChatState } from '@redux/types/chat';
 import { createReducer } from '@reduxjs/toolkit';
+import { addConverse, markConverseMsgListQueryed } from '@redux/actions/chat';
 const {
   RESET,
   ADD_CONVERSES,
@@ -41,6 +42,7 @@ const {
 
 const initialState: ChatState = {
   selectedConverseUUID: '',
+  queryedConverseList: [],
   conversesDesc: '', // 获取会话列表的提示信息
   converses: {
     // "systemUUID": {
@@ -84,17 +86,17 @@ export default createReducer(initialState, (builder) => {
     .addCase(RESET, (state) => {
       state = initialState;
     })
-    .addCase(ADD_CONVERSES, (state, action: any) => {
+    .addCase(addConverse, (state, action) => {
       const uuid = action.payload.uuid;
       const type = action.payload.type;
       if (
         _isNil(state.converses[uuid]) ||
-        (type === 'group' && _get(state.converses, ['uuid', 'type']) === 'user') // 这个case会强制将会话列表中错误的用户会话变成团会话
+        (type === 'group' && _get(state.converses, [uuid, 'type']) === 'user') // 这个case会强制将会话列表中错误的用户会话变成团会话
       ) {
         state.converses[uuid] = {
           msgList: [],
           lastMsg: '',
-          lastTime: '',
+          lastTime: '' as any,
           ...action.payload,
         };
       }
@@ -340,5 +342,8 @@ export default createReducer(initialState, (builder) => {
     .addCase(SET_CONVERSE_ISREAD, (state, action: any) => {
       const converseUUID = action.converseUUID;
       _set(state, ['converses', converseUUID, 'unread'], false);
+    })
+    .addCase(markConverseMsgListQueryed, (state, action) => {
+      state.queryedConverseList.push(action.payload.converseUUID);
     });
 });
