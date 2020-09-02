@@ -27,7 +27,14 @@ import { setUser as setUserSentryInfo } from './utils/sentry';
 import TLoadable from './components/TLoadable';
 import { checkIsNewApp } from './utils/debug-helper';
 import { ThemeContextProvider } from '@shared/context/ThemeContext';
+import { TRPGStore } from '@redux/types/__all__';
 import './init';
+
+declare global {
+  interface Window {
+    store: TRPGStore;
+  }
+}
 
 const NewApp = TLoadable<{}>(() =>
   import('./routes/App').then((module) => module.App)
@@ -45,6 +52,7 @@ const store = configureStore({
   ],
 });
 attachStore(store);
+window.store = store; //
 
 const api = trpgApi.getInstance();
 bindEventFunc.call(api, store, {
