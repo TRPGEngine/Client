@@ -426,6 +426,7 @@ export const sendMsg = function sendMsg(
       sender_uuid: info.uuid, // 此处虽然构造了sender_uuid。但只用于本地消息临时自己的显示, 服务端不会接受该数据
       to_uuid: toUUID,
       converse_uuid: payload.converse_uuid,
+      group_uuid: payload.group_uuid,
       type: payload.type,
       message: payload.message,
       is_public: payload.is_public,

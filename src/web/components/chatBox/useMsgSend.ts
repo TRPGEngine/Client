@@ -46,7 +46,7 @@ export function useMsgSend(converseUUID: string) {
             type,
           })
         );
-      } else if (converseType === 'group') {
+      } else if (converseType === 'group' || converseType === 'channel') {
         sendStopWriting('group', converseUUID);
 
         const msgDataManager = new MsgDataManager();
