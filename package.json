@@ -9,6 +9,7 @@
     "dev:pro": "cross-env NODE_ENV=production npm run dev:main",
     "dev:main": "cross-env NODE_OPTIONS='--max_old_space_size=4096' webpack-dev-server --progress --color --config ./build/config/webpack.config.js",
     "dev:proserver": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:80 npm run dev",
+    "dev:sandbox": "webpack-dev-server --config ./build/config/webpack.sandbox.config.js",
     "build:main": "webpack --progress --color --config ./build/config/webpack.config.js",
     "build:dev": "cross-env PLATFORM=web npm run build:main",
     "build:pro": "cross-env NODE_ENV=production ASSET_PATH=//static3.moonrailgun.com/ npm run build:main && npm run clean:sourcemap",
