@@ -25,6 +25,7 @@ import {
 import { EditorMentionListContext } from './context/EditorMentionListContext';
 import ReactDOM from 'react-dom';
 import { insertMention } from './changes/insertMention';
+import { checkMention } from './utils/checkMention';
 
 const MentionsPortal = ({ children }) => {
   return ReactDOM.createPortal(children, document.body);
