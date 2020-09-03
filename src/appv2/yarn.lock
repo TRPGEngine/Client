@@ -1149,6 +1149,14 @@
     react-is "^16.13.0"
     use-subscription "^1.4.0"
 
+"@react-navigation/drawer@^5.9.0":
+  version "5.9.0"
+  resolved "https://registry.npm.taobao.org/@react-navigation/drawer/download/@react-navigation/drawer-5.9.0.tgz#e8813df2f1aa5694521c1a46c88d0b42c50fbe6c"
+  integrity sha1-6IE98vGqVpRSHBpGyI0LQsUPvmw=
+  dependencies:
+    color "^3.1.2"
+    react-native-iphone-x-helper "^1.2.1"
+
 "@react-navigation/native@^5.7.3":
   version "5.7.3"
   resolved "https://registry.npm.taobao.org/@react-navigation/native/download/@react-navigation/native-5.7.3.tgz#3cda5ee7b0fe0d980db6d788419f0af50a64deac"
