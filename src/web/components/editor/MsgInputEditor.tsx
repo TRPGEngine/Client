@@ -24,6 +24,7 @@ import {
 } from '@web/utils/hot-key';
 import { EditorMentionListContext } from './context/EditorMentionListContext';
 import ReactDOM from 'react-dom';
+import { insertMention } from './changes/insertMention';
 
 const MentionsPortal = ({ children }) => {
   return ReactDOM.createPortal(children, document.body);
@@ -47,26 +48,12 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
   const handleChange = useCallback(
     (value: TRPGEditorNode[]) => {
       _isFunction(props.onChange) && props.onChange(value);
-      const { selection } = editor;
+      const mention = checkMention(editor);
 
-      if (selection && Range.isCollapsed(selection)) {
-        const [start] = Range.edges(selection);
-        const wordBefore = Editor.before(editor, start, { unit: 'word' });
-        const before = wordBefore && Editor.before(editor, wordBefore);
-        const beforeRange = before && Editor.range(editor, before, start);
-        const beforeText = beforeRange && Editor.string(editor, beforeRange);
-        const beforeMatch = beforeText && beforeText.match(/^@(\w+)$/);
-        const after = Editor.after(editor, start);
-        const afterRange = Editor.range(editor, start, after);
-        const afterText = Editor.string(editor, afterRange);
-        const afterMatch = afterText.match(/^(\s|$)/);
-
-        if (beforeMatch && afterMatch) {
-          setTarget(beforeRange);
-          setSearch(beforeMatch[1]);
-          setIndex(0);
-          return;
-        }
+      if (mention) {
+        setTarget(mention.target);
+        setSearch(mention.searchText);
+        setIndex(0);
       }
 
       setTarget(undefined);
@@ -150,12 +137,3 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
   );
 });
 MsgInputEditor.displayName = 'MsgInputEditor';
-
-/**
- * 插入提及
- */
-const insertMention = (editor: Editor, character: string) => {
-  const mention = { type: 'mention', character, children: [{ text: '' }] };
-  Transforms.insertNodes(editor, mention);
-  Transforms.move(editor);
-};
