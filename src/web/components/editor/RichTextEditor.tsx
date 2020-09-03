@@ -1,13 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
-import {
-  Editable,
-  Slate,
-  RenderLeafProps,
-  RenderElementProps,
-} from 'slate-react';
+import { Slate } from 'slate-react';
 import { TMemo } from '@shared/components/TMemo';
 import { ToolbarButton, Toolbar } from './style';
-import { createFullEditor } from './instance';
+import { createStandardEditor } from './instance';
 import styled from 'styled-components';
 import { Iconfont } from '../Iconfont';
 import { isSaveHotkey, isTabHotkey } from '@web/utils/hot-key';
@@ -15,7 +10,10 @@ import indentLines from './changes/indentLines';
 import { useBeforeUnload } from 'react-use';
 import { BlockButton } from './toolbar/BlockButton';
 import { MarkButton } from './toolbar/MarkButton';
-import { TRPGEditorNode } from './types';
+import { SlateLeaf } from './render/Leaf';
+import { SlateElement } from './render/Element';
+import { EditArea } from './render/EditArea';
+import { EditorBaseProps } from './types';
 
 interface CustomAction {
   icon: React.ReactNode;
@@ -27,54 +25,16 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const EditArea = styled(Editable).attrs({
-  spellCheck: false,
-  autoFocus: false,
-  // placeholder: '请输入文本', // NOTE: 这里不使用placeholder的原因是有默认占位符下使用输入法会导致崩溃
-})`
-  flex: 1;
-  overflow: auto;
-  padding: 0 10px;
-
-  blockquote {
-    border-left: 2px solid #ddd;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 10px;
-    color: #aaa;
-    font-style: italic;
-    margin-bottom: 0;
-  }
-
-  ul {
-    list-style-type: decimal;
-    padding-left: 26px;
-    margin-bottom: 1em;
-  }
-
-  ol {
-    list-style-type: disc;
-    padding-left: 26px;
-    margin-bottom: 1em;
-  }
-
-  li {
-    list-style: inherit;
-  }
-`;
-
-interface RichTextEditorProps {
-  value: TRPGEditorNode[];
-  onChange: (val: TRPGEditorNode[]) => void;
+interface RichTextEditorProps extends EditorBaseProps {
   style?: React.CSSProperties;
   customActions?: CustomAction[];
   onBlur?: () => void;
   onSave?: () => void;
 }
 export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
-  const renderElement = useCallback((props) => <Element {...props} />, []);
-  const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
-  const editor = useMemo(() => createFullEditor(), []);
+  const renderElement = useCallback((props) => <SlateElement {...props} />, []);
+  const renderLeaf = useCallback((props) => <SlateLeaf {...props} />, []);
+  const editor = useMemo(() => createStandardEditor(), []);
   useBeforeUnload(true, '确定要离开页面么? 未保存的笔记会丢失');
 
   return (
@@ -138,46 +98,3 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
   );
 });
 RichTextEditor.displayName = 'RichTextEditor';
-
-const Element: React.FC<RenderElementProps> = ({
-  attributes,
-  children,
-  element,
-}) => {
-  switch (element.type) {
-    case 'block-quote':
-      return <blockquote {...attributes}>{children}</blockquote>;
-    case 'bulleted-list':
-      return <ul {...attributes}>{children}</ul>;
-    case 'heading-one':
-      return <h1 {...attributes}>{children}</h1>;
-    case 'heading-two':
-      return <h2 {...attributes}>{children}</h2>;
-    case 'list-item':
-      return <li {...attributes}>{children}</li>;
-    case 'numbered-list':
-      return <ol {...attributes}>{children}</ol>;
-    default:
-      return <p {...attributes}>{children}</p>;
-  }
-};
-
-const Leaf: React.FC<RenderLeafProps> = ({ attributes, children, leaf }) => {
-  if (leaf.bold) {
-    children = <strong>{children}</strong>;
-  }
-
-  if (leaf.code) {
-    children = <code>{children}</code>;
-  }
-
-  if (leaf.italic) {
-    children = <em>{children}</em>;
-  }
-
-  if (leaf.underline) {
-    children = <u>{children}</u>;
-  }
-
-  return <span {...attributes}>{children}</span>;
-};
