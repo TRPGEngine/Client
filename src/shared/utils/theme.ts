@@ -10,6 +10,7 @@ declare module 'styled-components' {
     style: ThemeType['style'];
     border: ThemeType['border'];
     radius: ThemeType['radius'];
+    font: ThemeType['font'];
     color: ThemeType['color'];
     boxShadow: ThemeType['boxShadow'];
     filter: ThemeType['filter'];
@@ -108,6 +109,8 @@ export function getStyledTheme(mode: ThemeMode) {
 
   const theme = {
     style: {
+      mode,
+
       // 这里主要是放一些样式方面的主题设置
       // 方便统一管理
       navbarWidth: '72px',
@@ -129,6 +132,9 @@ export function getStyledTheme(mode: ThemeMode) {
     radius: {
       standard: '3px',
       card: '10px',
+    },
+    font: {
+      normal: 'PingFang SC, "Microsoft YaHei", arial, serif',
     },
     color,
     boxShadow: {
