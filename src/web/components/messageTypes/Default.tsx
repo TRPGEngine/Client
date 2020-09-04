@@ -14,32 +14,8 @@ import {
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { useTPopoverContext } from '../popover';
 import { MsgQuote } from './addons/MsgQuote';
+import { Bubble, DefaultAddonContentContainer } from './style';
 
-const DefaultAddonContentContainer = styled.div`
-  border-top: ${(props) => props.theme.border.thin};
-  display: flex;
-  padding: 4px 0;
-  cursor: pointer;
-
-  > .info {
-    flex: 1;
-
-    > p:nth-child(2) {
-      color: ${(props) => props.theme.color.gray};
-    }
-  }
-
-  > .icon {
-    padding: 6px;
-    align-self: center;
-
-    > img {
-      max-width: 96px !important;
-      max-height: 48px;
-      border-radius: ${(props) => props.theme.radius.card};
-    }
-  }
-`;
 const DefaultAddonContent: React.FC<{ message: string }> = TMemo((props) => {
   const { loading, hasUrl, info } = useWebsiteInfo(props.message);
 
@@ -115,13 +91,13 @@ class Default extends Base {
   getContent() {
     const info = this.props.info || ({} as MsgPayload);
     return (
-      <pre className="bubble">
+      <Bubble>
         {this.msgDataManager.hasReplyMsg() && (
           <MsgQuote replyMsg={this.msgDataManager.getReplyMsg()!} />
         )}
         <BBCode plainText={info.message} />
         <DefaultAddonContent message={info.message} />
-      </pre>
+      </Bubble>
     );
   }
 }

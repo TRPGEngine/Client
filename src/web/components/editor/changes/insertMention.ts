@@ -1,3 +1,5 @@
+import { Editor, Transforms } from 'slate';
+
 /**
  * 插入提及
  */

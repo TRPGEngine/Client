@@ -32,8 +32,9 @@ export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
   const [msg, setMsg] = useState('');
   const inputRef = useRef<Input>(null);
   const { sendMsg } = useMsgSend(converseUUID);
+  const prefix = converse?.type === 'user' ? '@' : '#';
 
-  const placeholder = `给 @${converse?.name} 发消息`;
+  const placeholder = `给 ${prefix}${converse?.name} 发消息`;
 
   const handleSendMsg = useCallback(() => {
     const type = 'normal';

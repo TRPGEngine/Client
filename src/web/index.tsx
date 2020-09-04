@@ -15,7 +15,6 @@ import {
   setNotificationPermission,
   initConfig,
 } from '../shared/redux/actions/settings';
-import styledTheme from '@src/shared/utils/theme';
 import { installServiceWorker } from './utils/sw-helper';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
