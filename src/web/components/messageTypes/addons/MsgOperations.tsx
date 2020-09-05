@@ -9,6 +9,8 @@ import _isFunction from 'lodash/isFunction';
 import _isNil from 'lodash/isNil';
 import _has from 'lodash/has';
 
+import './MsgOperations.less';
+
 interface MsgOperationItemContext {
   dispatch: TRPGDispatch;
   closePopover: () => void;

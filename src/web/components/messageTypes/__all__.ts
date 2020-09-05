@@ -5,7 +5,6 @@ import Card from './Card';
 import File from './File';
 import Loading from './Loading';
 // import './bbcode/__all__';
-import './MsgItem.scss';
 
 MessageHandler.registerDefaultMessageHandler(Default);
 MessageHandler.registerMessageHandler('tip', Tip);

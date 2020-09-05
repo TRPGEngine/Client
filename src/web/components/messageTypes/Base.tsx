@@ -15,6 +15,7 @@ import { MsgDataManager } from '@shared/utils/msg-helper';
 import { EmphasizeTime } from './addons/EmphasizeTime';
 import classNames from 'classnames';
 import { MsgProfile } from './addons/MsgProfile';
+import { MsgItem } from './style';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -90,7 +91,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     }
 
     return (
-      <div className={classNames('msg-item', { me }, type)}>
+      <MsgItem className={classNames({ me }, type)}>
         {emphasizeTime ? <EmphasizeTime date={info.date} /> : null}
         <MsgProfile name={senderName} date={info.date} />
         <div className="content">
@@ -112,7 +113,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
             )}
           </div>
         </div>
-      </div>
+      </MsgItem>
     );
   }
 }
