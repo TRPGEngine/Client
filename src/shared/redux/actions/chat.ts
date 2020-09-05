@@ -697,6 +697,7 @@ export const startWriting = function(
   type = 'user',
   uuid: string,
   groupUUID?: string,
+  channelUUID?: string,
   currentText?: string
 ): TRPGAction {
   return function(dispatch, getState) {
@@ -706,6 +707,7 @@ export const startWriting = function(
         type,
         uuid,
         groupUUID,
+        channelUUID,
         currentText,
         isWriting: true,
       },
@@ -723,7 +725,8 @@ export const startWriting = function(
 export const stopWriting = function(
   type = 'user',
   uuid: string,
-  groupUUID?: string
+  groupUUID?: string,
+  channelUUID?: string
 ): TRPGAction {
   cancelDelayTimer(getWriteHash(type, uuid, groupUUID));
 
@@ -733,6 +736,7 @@ export const stopWriting = function(
       type,
       uuid,
       groupUUID,
+      channelUUID,
       isWriting: false,
     },
   };

@@ -8,7 +8,7 @@ import { useMsgSend } from './useMsgSend';
 const Wrapper = styled.div`
   padding: 0 16px 24px;
 
-  .inner {
+  > .inner {
     border-radius: ${(props) => props.theme.radius.card};
     padding: 6px;
     background-color: ${(props) => props.theme.color.graySet[6]};
@@ -29,21 +29,19 @@ interface ChatSendBoxProps {
 export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
   const { converseUUID } = props;
   const converse = useConverseDetail(converseUUID);
-  const [msg, setMsg] = useState('');
-  const inputRef = useRef<Input>(null);
-  const { sendMsg } = useMsgSend(converseUUID);
+  const { message, setMessage, handleSendMsg, inputRef } = useMsgSend(
+    converseUUID
+  );
   const prefix = converse?.type === 'user' ? '@' : '#';
 
   const placeholder = `给 ${prefix}${converse?.name} 发消息`;
 
-  const handleSendMsg = useCallback(() => {
-    const type = 'normal';
-    if (!!msg) {
-      sendMsg(msg, type);
-      inputRef.current?.focus();
-      setMsg('');
-    }
-  }, [msg, sendMsg]);
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setMessage(e.target.value);
+    },
+    []
+  );
 
   return (
     <Wrapper>
@@ -51,8 +49,8 @@ export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
         <Input
           ref={inputRef}
           placeholder={placeholder}
-          value={msg}
-          onChange={(e) => setMsg(e.target.value)}
+          value={message}
+          onChange={handleInputChange}
           onPressEnter={handleSendMsg}
         />
       </div>

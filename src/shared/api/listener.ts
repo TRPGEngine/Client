@@ -60,15 +60,17 @@ export function bindEventFunc(
   });
 
   api.on('chat::startWriting', function(data) {
-    const { type = 'user', from, groupUUID, currentText } = data;
+    const { type = 'user', from, groupUUID, channelUUID, currentText } = data;
     const uuid = from;
-    store.dispatch(startWriting(type, uuid, groupUUID, currentText));
+    store.dispatch(
+      startWriting(type, uuid, groupUUID, channelUUID, currentText)
+    );
   });
 
   api.on('chat::stopWriting', function(data) {
-    const { type = 'user', from, groupUUID } = data;
+    const { type = 'user', from, groupUUID, channelUUID } = data;
     const uuid = from;
-    store.dispatch(stopWriting(type, uuid, groupUUID));
+    store.dispatch(stopWriting(type, uuid, groupUUID, channelUUID));
   });
 
   api.on('player::appendFriend', function(data) {

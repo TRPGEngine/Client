@@ -1,7 +1,7 @@
 import { useConverseDetail } from '@redux/hooks/chat';
-import { useCallback, useEffect, useContext } from 'react';
+import { useCallback, useEffect, useContext, useState, useRef } from 'react';
 import { isUserUUID } from '@shared/utils/uuid';
-import { sendStopWriting } from '@shared/api/event';
+import { sendStopWriting, sendStartWriting } from '@shared/api/event';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { sendMsg as sendMsgAction } from '@redux/actions/chat';
 import { MsgType } from '@redux/types/chat';
@@ -10,8 +10,15 @@ import _isNil from 'lodash/isNil';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { useSelectedGroupActorInfo } from '@redux/hooks/group';
 import { GroupInfoContext } from '@shared/context/GroupInfoContext';
+import { Input } from 'antd';
 
+/**
+ * 消息输入相关事件
+ * @param converseUUID 会话UUID
+ */
 export function useMsgSend(converseUUID: string) {
+  const [message, setMessage] = useState('');
+  const inputRef = useRef<Input>(null);
   const converse = useConverseDetail(converseUUID);
   const converseType = converse?.type;
   const dispatch = useTRPGDispatch();
@@ -85,5 +92,23 @@ export function useMsgSend(converseUUID: string) {
     ]
   );
 
-  return { sendMsg };
+  const handleSendMsg = useCallback(() => {
+    const type = 'normal';
+    if (!!message) {
+      sendMsg(message, type);
+      inputRef.current?.focus();
+      setMessage('');
+    }
+  }, [message, sendMsg]);
+
+  // 发送输入状态
+  useEffect(() => {
+    if (message === '') {
+      sendStopWriting(converseType, converseUUID);
+    } else {
+      sendStartWriting(converseType, converseUUID, message);
+    }
+  }, [converseType, message]);
+
+  return { message, setMessage, handleSendMsg, inputRef };
 }

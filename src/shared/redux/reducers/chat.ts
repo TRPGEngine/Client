@@ -72,6 +72,7 @@ const initialState: ChatState = {
   writingList: {
     user: [], // 用户会话: [useruuid1, useruuid2]
     group: {}, // 团会话: {groupUUID: [useruuid1, useruuid2]}
+    channel: {},
   },
 
   // 当前用户的所有表情包(除了emoji)
@@ -282,6 +283,7 @@ export default createReducer(initialState, (builder) => {
         isWriting = false,
         uuid,
         groupUUID,
+        channelUUID,
         currentText,
       } = action.payload;
       if (type === 'user') {
@@ -318,6 +320,30 @@ export default createReducer(initialState, (builder) => {
         }
 
         _set(map, [groupUUID], groupWritingList);
+      } else if (type === 'channel') {
+        const map = state.writingList.channel;
+        const channelWritingList = map[channelUUID] ?? [];
+        const targetIndex = _findIndex(channelWritingList, ['uuid', uuid]);
+        if (isWriting) {
+          // 正在写
+          if (targetIndex === -1) {
+            // 新增用户正在写
+            channelWritingList.push({
+              uuid,
+              text: currentText,
+            });
+          } else {
+            // 更新用户正在写
+            _set(channelWritingList, [targetIndex, 'text'], currentText);
+          }
+        } else {
+          // 取消写
+          if (targetIndex >= 0) {
+            channelWritingList.splice(targetIndex, 1);
+          }
+        }
+
+        _set(map, [channelUUID], channelWritingList);
       }
     })
     .addCase(UPDATE_USER_CHAT_EMOTION_CATALOG, (state, action: any) => {

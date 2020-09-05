@@ -67,6 +67,9 @@ type WritingListType = {
   group: {
     [name: string]: WritingListGroupItem[];
   };
+  channel: {
+    [name: string]: WritingListGroupItem[];
+  };
 };
 
 export type ChatStateConverseMsgList = MsgPayload[];
