@@ -15,28 +15,27 @@ import _values from 'lodash/values';
  * @param converseUUID 会话UUID
  * @param type 会话类型
  */
-export function useWritingState(
-  converseUUID: string,
-  type: ConverseType = 'group'
-): WritingListGroupItem[] {
+export function useWritingState(converseUUID: string): WritingListGroupItem[] {
+  const converse = useConverseDetail(converseUUID);
+  const type = converse?.type;
+
+  if (_isNil(converseUUID)) {
+    return [];
+  }
+
   return useTRPGSelector((state) => {
     if (type === 'group') {
       return state.chat.writingList.group[converseUUID] ?? [];
+    } else if (type === 'channel') {
+      return state.chat.writingList.channel[converseUUID] ?? [];
+    } else if (type === 'user') {
+      // TODO: 先不处理用户会话
+      return [];
     } else {
-      // TODO: 先不处理
+      // 未知类型
       return [];
     }
   });
-}
-
-/**
- * 获取团当前输入状态列表
- * @param groupUUID 团UUID
- */
-export function useGroupWritingState(
-  groupUUID: string
-): WritingListGroupItem[] {
-  return useWritingState(groupUUID, 'group');
 }
 
 /**

@@ -33,7 +33,7 @@ import { getUserName } from '@shared/utils/data-helper';
 import { GroupHeader } from './GroupHeader';
 import { ChatWritingIndicator } from '@web/components/ChatWritingIndicator';
 import { sendStartWriting, sendStopWriting } from '@shared/api/event';
-import { useGroupWritingState } from '@redux/hooks/chat';
+import { useWritingState } from '@redux/hooks/chat';
 
 export const GroupDetail: React.FC = TMemo(() => {
   const groupInfo = useSelectedGroupInfo();
@@ -189,7 +189,7 @@ export const GroupDetail: React.FC = TMemo(() => {
     );
   }, [dispatch, groupUUID]);
 
-  const writingList = useGroupWritingState(groupUUID);
+  const writingList = useWritingState(groupUUID);
 
   return (
     <GroupInfoContext.Provider value={groupInfo}>
