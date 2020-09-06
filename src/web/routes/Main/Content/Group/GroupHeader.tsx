@@ -6,6 +6,7 @@ import { useJoinedGroupInfo } from '@redux/hooks/group';
 import { useCurrentUserUUID } from '@redux/hooks/user';
 import _isNil from 'lodash/isNil';
 import { useGroupHeaderAction } from './useGroupHeaderAction';
+import { useTranslation } from '@shared/i18n';
 
 interface GroupHeaderProps {
   groupUUID: string;
@@ -14,6 +15,7 @@ export const GroupHeader: React.FC<GroupHeaderProps> = TMemo((props) => {
   const { groupUUID } = props;
   const groupInfo = useJoinedGroupInfo(groupUUID);
   const currentUserUUID = useCurrentUserUUID();
+  const { t } = useTranslation();
 
   const {
     handleShowGroupInfo,
@@ -28,11 +30,11 @@ export const GroupHeader: React.FC<GroupHeaderProps> = TMemo((props) => {
 
   const menu = (
     <Menu>
-      <Menu.Item onClick={handleShowGroupInfo}>查看详情</Menu.Item>
-      <Menu.Item onClick={handleShowInvite}>邀请成员</Menu.Item>
-      <Menu.Item onClick={handleCreateGroupPanel}>创建面板</Menu.Item>
+      <Menu.Item onClick={handleShowGroupInfo}>{t('查看详情')}</Menu.Item>
+      <Menu.Item onClick={handleShowInvite}>{t('邀请成员')}</Menu.Item>
+      <Menu.Item onClick={handleCreateGroupPanel}>{t('创建面板')}</Menu.Item>
       <Menu.Item danger={true} onClick={handleQuitGroup}>
-        {currentUserUUID === groupInfo.owner_uuid ? '解散团' : '退出团'}
+        {currentUserUUID === groupInfo.owner_uuid ? t('解散团') : t('退出团')}
       </Menu.Item>
     </Menu>
   );

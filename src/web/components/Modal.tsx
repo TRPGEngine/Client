@@ -5,7 +5,9 @@ import _isFunction from 'lodash/isFunction';
 import _isNil from 'lodash/isNil';
 import _last from 'lodash/last';
 import _pull from 'lodash/pull';
+import _isString from 'lodash/isString';
 import { PortalAdd, PortalRemove } from '@web/utils/portal';
+import { Typography } from 'antd';
 
 /**
  * 新版模态框解决方案
@@ -96,7 +98,29 @@ export function openModal(content: React.ReactNode): number {
 /**
  * 标准模态框包装器
  */
-export const ModalWrapper = styled.div`
+const ModalWrapperContainer = styled.div`
   padding: 16px;
   min-width: 440px;
 `;
+export const ModalWrapper: React.FC<{
+  title?: string;
+}> = TMemo((props) => {
+  const title = _isString(props.title) ? (
+    <div>
+      <Typography.Title
+        level={4}
+        style={{ textAlign: 'center', marginBottom: 16 }}
+      >
+        {props.title}
+      </Typography.Title>
+    </div>
+  ) : null;
+
+  return (
+    <ModalWrapperContainer>
+      {title}
+      {props.children}
+    </ModalWrapperContainer>
+  );
+});
+ModalWrapper.displayName = 'ModalWrapper';

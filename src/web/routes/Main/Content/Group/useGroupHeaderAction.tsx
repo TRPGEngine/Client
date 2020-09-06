@@ -14,8 +14,10 @@ import { dismissGroup, quitGroup, sendGroupInvite } from '@redux/actions/group';
 import { GroupPanelCreate } from '@web/components/modal/GroupPanelCreate';
 import { openModal, ModalWrapper, closeModal } from '@web/components/Modal';
 import { UserSelector } from '@web/components/modal/UserSelector';
+import { useTranslation } from '@shared/i18n';
 
 export function useGroupHeaderAction(groupInfo: GroupInfo) {
+  const { t } = useTranslation();
   const dispatch = useTRPGDispatch();
   const currentUserUUID = useCurrentUserUUID();
   const groupUUID = groupInfo.uuid;
@@ -51,7 +53,7 @@ export function useGroupHeaderAction(groupInfo: GroupInfo) {
   // 创建面板
   const handleCreateGroupPanel = useCallback(() => {
     openModal(
-      <ModalWrapper>
+      <ModalWrapper title={t('创建面板')}>
         <GroupPanelCreate groupUUID={groupUUID} />
       </ModalWrapper>
     );
