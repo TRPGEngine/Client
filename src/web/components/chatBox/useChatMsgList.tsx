@@ -1,4 +1,10 @@
-import React, { useMemo, useRef, useEffect, useCallback } from 'react';
+import React, {
+  useMemo,
+  useRef,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
+} from 'react';
 import { shouleEmphasizeTime } from '@shared/utils/date-helper';
 import _head from 'lodash/head';
 import _get from 'lodash/get';
@@ -55,7 +61,7 @@ function useChatMsgListLoadMore(
     isSeekingLogRef.current = true;
   };
   const prevMsgList = usePrevious(msgList);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (
       _head(prevMsgList) &&
       _head(msgList) &&
@@ -63,14 +69,8 @@ function useChatMsgListLoadMore(
     ) {
       // 加载更多
       if (containerRef.current) {
-        setTimeout(() => {
-          if (!containerRef.current) {
-            return;
-          }
-
-          containerRef.current.scrollTop =
-            containerRef.current.scrollHeight - prevBottomDistanceRef.current;
-        }, 0);
+        containerRef.current.scrollTop =
+          containerRef.current.scrollHeight - prevBottomDistanceRef.current;
       }
     }
   }, [msgList, prevMsgList, containerRef, prevBottomDistanceRef]);
