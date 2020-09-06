@@ -36,7 +36,11 @@ import {
   runLoginSuccessCallback,
   runLogoutSuccessCallback,
 } from '@shared/utils/inject';
-import { setUserSettings, setSystemSettings } from './settings';
+import {
+  setUserSettings,
+  setSystemSettings,
+  fetchRemoteSettings,
+} from './settings';
 import _isNil from 'lodash/isNil';
 import { reloadConverseList, getUserEmotion } from './chat';
 import { getTemplate, getActor } from './actor';
@@ -74,6 +78,8 @@ function loginSuccess(dispatch, getState) {
   dispatch(getUserEmotion()); // 获取用户表情数据
 
   dispatch(fetchWebToken()); // 登录成功后立刻获取最新的jwt信息
+
+  dispatch(fetchRemoteSettings());
 
   setTimeout(() => {
     runLoginSuccessCallback();

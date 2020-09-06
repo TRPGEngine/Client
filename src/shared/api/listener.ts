@@ -158,7 +158,7 @@ export function bindEventFunc(
     console.log('正在连接');
   });
   api.on('reconnect', function(data) {
-    store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
+    store.dispatch(changeNetworkStatue(true, '重连成功, 网络连接畅通'));
     store.dispatch(updateSocketId(api.socket.id));
     console.log('重连成功');
 
@@ -173,7 +173,7 @@ export function bindEventFunc(
     }
   });
   api.on('reconnecting', function(data) {
-    store.dispatch(changeNetworkStatue(false, '正在连接...', true));
+    store.dispatch(changeNetworkStatue(false, '正在重新连接...', true));
     console.log('重连中...', api.serverUrl);
   });
   api.on('disconnect', function(data) {

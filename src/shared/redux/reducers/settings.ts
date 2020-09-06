@@ -6,6 +6,7 @@ import _pullAt from 'lodash/pullAt';
 import _set from 'lodash/set';
 import _merge from 'lodash/merge';
 import { createReducer } from '@reduxjs/toolkit';
+import { addFavoriteDice, removeFavoriteDice } from '@redux/actions/settings';
 
 const {
   RESET,
@@ -47,14 +48,14 @@ export default createReducer(initialState, (builder) => {
     .addCase(UPDATE_CONFIG, (state, action: any) => {
       _merge(state.config, action.payload);
     })
-    .addCase(ADD_FAVORITE_DICE, (state, action: any) => {
+    .addCase(addFavoriteDice, (state) => {
       if (_isNil(state.user.favoriteDice)) {
         state.user.favoriteDice = [];
       }
       state.user.favoriteDice.push({ title: '常用骰', value: '1d100' });
     })
-    .addCase(REMOVE_FAVORITE_DICE, (state, action: any) => {
-      _pullAt(state.user.favoriteDice, action.index);
+    .addCase(removeFavoriteDice, (state, action) => {
+      _pullAt(state.user.favoriteDice, action.payload);
     })
     .addCase(UPDATE_FAVORITE_DICE, (state, action: any) => {
       _set(state.user, ['favoriteDice', action.index], action.payload);
