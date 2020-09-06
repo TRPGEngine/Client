@@ -10,7 +10,6 @@ import _isNil from 'lodash/isNil';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { useSelectedGroupActorInfo } from '@redux/hooks/group';
 import { GroupInfoContext } from '@shared/context/GroupInfoContext';
-import { Input } from 'antd';
 
 /**
  * 消息输入相关事件
@@ -18,7 +17,7 @@ import { Input } from 'antd';
  */
 export function useMsgSend(converseUUID: string) {
   const [message, setMessage] = useState('');
-  const inputRef = useRef<Input>(null);
+  const inputRef = useRef<any>(null);
   const converse = useConverseDetail(converseUUID);
   const converseType = converse?.type;
   const dispatch = useTRPGDispatch();

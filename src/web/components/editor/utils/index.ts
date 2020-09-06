@@ -1,7 +1,29 @@
-import { Editor, Transforms } from 'slate';
+import { Editor, Transforms, Range } from 'slate';
 import { ReactEditor } from 'slate-react';
+import { TRPGEditorNode } from '../types';
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
+
+/**
+ * 创建一个空的slate数据对象
+ */
+export function buildBlankInputData(): TRPGEditorNode[] {
+  return [
+    {
+      children: [{ text: '' }],
+    },
+  ];
+}
+
+/**
+ * 获取文档开始位置
+ */
+export function getHeadSelection(): Range {
+  return {
+    anchor: { path: [0, 0], offset: 0 },
+    focus: { path: [0, 0], offset: 0 },
+  };
+}
 
 /**
  * 判定块级元素是否生效

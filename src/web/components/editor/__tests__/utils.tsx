@@ -1,4 +1,5 @@
 import { Editor, createEditor } from 'slate';
+import { getHeadSelection } from '../utils';
 
 /**
  * 创建一个测试用的编辑器实例
@@ -10,10 +11,7 @@ export function createTestEditorWithContent(text: string): Editor {
       children: [{ text: '' }],
     },
   ];
-  editor.selection = {
-    anchor: { path: [0, 0], offset: 0 },
-    focus: { path: [0, 0], offset: 0 },
-  };
+  editor.selection = getHeadSelection();
 
   editor.insertText(text);
 

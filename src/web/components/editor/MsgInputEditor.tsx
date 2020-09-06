@@ -15,6 +15,7 @@ import { Slate, ReactEditor } from 'slate-react';
 import { EditArea } from './render/EditArea';
 import { EditorBaseProps, TRPGEditorNode } from './types';
 import _isFunction from 'lodash/isFunction';
+import _isString from 'lodash/isString';
 import {
   isArrowUpHotkey,
   isArrowDownHotkey,
@@ -26,17 +27,69 @@ import { EditorMentionListContext } from './context/EditorMentionListContext';
 import ReactDOM from 'react-dom';
 import { insertMention } from './changes/insertMention';
 import { checkMention } from './utils/checkMention';
+import { serializeToPlaintext } from './utils/serialize/plaintext';
+import { PlaceholderContainer } from './style';
 
 const MentionsPortal = ({ children }) => {
   return ReactDOM.createPortal(children, document.body);
 };
 
-interface MsgInputEditorProps extends EditorBaseProps {}
+interface MsgInputEditorProps extends EditorBaseProps {
+  placeholder: string;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
+  onEditor?: (editor: Editor) => void;
+}
+
+/**
+ * 占位符相关实现
+ */
+function usePlaceholder(props: MsgInputEditorProps) {
+  const [showPlaceholder, setShowPlaceholder] = useState(true);
+
+  useEffect(() => {
+    if (!_isString(props.placeholder)) {
+      return;
+    }
+
+    // 检测是否需要
+    if (serializeToPlaintext(props.value) === '') {
+      setShowPlaceholder(true);
+    } else {
+      setShowPlaceholder(false);
+    }
+  }, [props.placeholder, props.value]);
+  const handleCompositionStart = useCallback(() => {
+    if (showPlaceholder === true) {
+      setShowPlaceholder(false);
+    }
+  }, [showPlaceholder]);
+  const handleCompositionEnd = useCallback(() => {
+    if (!_isString(props.placeholder)) {
+      return;
+    }
+
+    if (showPlaceholder === false && serializeToPlaintext(props.value) === '') {
+      setShowPlaceholder(true);
+    }
+  }, [showPlaceholder, props.placeholder, props.value]);
+
+  const placeholderEl = (
+    <>
+      {props.placeholder && showPlaceholder && (
+        <PlaceholderContainer>{props.placeholder}</PlaceholderContainer>
+      )}
+    </>
+  );
+
+  return { placeholderEl, handleCompositionStart, handleCompositionEnd };
+}
+
 export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const renderElement = useCallback((props) => <SlateElement {...props} />, []);
   const renderLeaf = useCallback((props) => <SlateLeaf {...props} />, []);
   const editor = useMemo(() => createMsgInputEditor(), []);
+
   const [target, setTarget] = useState<Range | undefined>(undefined);
   const [index, setIndex] = useState(0);
   const [search, setSearch] = useState('');
@@ -64,6 +117,8 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
+      _isFunction(props.onKeyDown) && props.onKeyDown(e);
+
       if (target) {
         if (isArrowUpHotkey(e.nativeEvent)) {
           e.preventDefault();
@@ -84,7 +139,7 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
         }
       }
     },
-    [index, search, target]
+    [index, search, target, props.onKeyDown]
   );
 
   useEffect(() => {
@@ -97,13 +152,28 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
     }
   }, [chars.length, editor, index, search, target]);
 
+  useEffect(() => {
+    _isFunction(props.onEditor) && props.onEditor(editor);
+  }, [editor]);
+
+  const {
+    placeholderEl,
+    handleCompositionStart,
+    handleCompositionEnd,
+  } = usePlaceholder(props);
+
   return (
     <Slate editor={editor} value={props.value} onChange={handleChange}>
+      {placeholderEl}
+
       <EditArea
         renderElement={renderElement}
         renderLeaf={renderLeaf}
         onKeyDown={handleKeyDown}
+        onCompositionStart={handleCompositionStart}
+        onCompositionEnd={handleCompositionEnd}
       />
+
       {target && chars.length > 0 && (
         <MentionsPortal>
           <div

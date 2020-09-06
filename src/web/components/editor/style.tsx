@@ -37,3 +37,10 @@ export const Toolbar = styled(Menu)`
   border-bottom: 2px solid #eee;
   margin-bottom: 20px;
 `;
+
+export const PlaceholderContainer = styled.div`
+  position: absolute;
+  pointer-events: none;
+  color: ${(props) => props.theme.color.interactiveNormal};
+  padding: 0 14px;
+`;
