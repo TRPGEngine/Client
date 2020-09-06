@@ -1,11 +1,11 @@
 import constants from '@redux/constants';
 import config from '@shared/project.config';
 import { SettingsState } from '@redux/types/settings';
-import produce from 'immer';
 import _isNil from 'lodash/isNil';
 import _pullAt from 'lodash/pullAt';
 import _set from 'lodash/set';
 import _merge from 'lodash/merge';
+import { createReducer } from '@reduxjs/toolkit';
 
 const {
   RESET,
@@ -24,40 +24,39 @@ const initialState: SettingsState = {
   config: {},
 };
 
-export default produce((draft: SettingsState, action) => {
-  switch (action.type) {
-    case RESET:
-      return initialState;
-    case SET_USER_SETTINGS:
-      draft.user = {
-        ...draft.user,
+export default createReducer(initialState, (builder) => {
+  builder
+    .addCase(RESET, (state) => {
+      state = initialState;
+    })
+    .addCase(SET_USER_SETTINGS, (state, action: any) => {
+      state.user = {
+        ...state.user,
         ...action.payload,
       };
-      return;
-    case SET_SYSTEM_SETTINGS:
-      draft.system = {
-        ...draft.system,
+    })
+    .addCase(SET_SYSTEM_SETTINGS, (state, action: any) => {
+      state.system = {
+        ...state.system,
         ...action.payload,
       };
-      return;
-    case UPDATE_NOTIFICATION_PERMISSION:
-      draft.notificationPermission = action.payload;
-      return;
-    case UPDATE_CONFIG: {
-      _merge(draft.config, action.payload);
-      return;
-    }
-    case ADD_FAVORITE_DICE:
-      if (_isNil(draft.user.favoriteDice)) {
-        draft.user.favoriteDice = [];
+    })
+    .addCase(UPDATE_NOTIFICATION_PERMISSION, (state, action: any) => {
+      state.notificationPermission = action.payload;
+    })
+    .addCase(UPDATE_CONFIG, (state, action: any) => {
+      _merge(state.config, action.payload);
+    })
+    .addCase(ADD_FAVORITE_DICE, (state, action: any) => {
+      if (_isNil(state.user.favoriteDice)) {
+        state.user.favoriteDice = [];
       }
-      draft.user.favoriteDice.push({ title: '常用骰', value: '1d100' });
-      return;
-    case REMOVE_FAVORITE_DICE:
-      _pullAt(draft.user.favoriteDice, action.index);
-      return;
-    case UPDATE_FAVORITE_DICE:
-      _set(draft.user, ['favoriteDice', action.index], action.payload);
-      return;
-  }
-}, initialState);
+      state.user.favoriteDice.push({ title: '常用骰', value: '1d100' });
+    })
+    .addCase(REMOVE_FAVORITE_DICE, (state, action: any) => {
+      _pullAt(state.user.favoriteDice, action.index);
+    })
+    .addCase(UPDATE_FAVORITE_DICE, (state, action: any) => {
+      _set(state.user, ['favoriteDice', action.index], action.payload);
+    });
+});
