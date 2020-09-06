@@ -13,9 +13,11 @@ export const MoreAction: React.FC = TMemo((props) => {
       <Iconfont onClick={() => setVisible(true)}>&#xe625;</Iconfont>
 
       <PortalRender>
-        <FullModal visible={visible} onChangeVisible={setVisible}>
-          <SettingView />
-        </FullModal>
+        {visible && (
+          <FullModal visible={true} onChangeVisible={setVisible}>
+            <SettingView />
+          </FullModal>
+        )}
       </PortalRender>
     </div>
   );

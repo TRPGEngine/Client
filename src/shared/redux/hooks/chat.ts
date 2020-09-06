@@ -2,13 +2,14 @@ import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import {
   WritingListGroupItem,
   SimpleConverseType,
-  ConverseType,
   ChatStateConverse,
 } from '@redux/types/chat';
 import { useMemo } from 'react';
 import _isNil from 'lodash/isNil';
 import _orderBy from 'lodash/orderBy';
 import _values from 'lodash/values';
+import { useSystemSetting } from './settings';
+import { useCurrentUserUUID } from './user';
 
 /**
  * 获取当前输入状态
@@ -18,12 +19,14 @@ import _values from 'lodash/values';
 export function useWritingState(converseUUID: string): WritingListGroupItem[] {
   const converse = useConverseDetail(converseUUID);
   const type = converse?.type;
+  const currentUserUUID = useCurrentUserUUID();
+  const showSelfInWritingState = useSystemSetting('showSelfInWritingState');
 
   if (_isNil(converseUUID)) {
     return [];
   }
 
-  return useTRPGSelector((state) => {
+  const writingList = useTRPGSelector((state) => {
     if (type === 'group') {
       return state.chat.writingList.group[converseUUID] ?? [];
     } else if (type === 'channel') {
@@ -36,6 +39,15 @@ export function useWritingState(converseUUID: string): WritingListGroupItem[] {
       return [];
     }
   });
+
+  return useMemo(() => {
+    if (showSelfInWritingState !== true) {
+      // 从列表中过滤掉自己
+      return writingList.filter((item) => item.uuid !== currentUserUUID);
+    }
+
+    return writingList;
+  }, [writingList, currentUserUUID, showSelfInWritingState]);
 }
 
 /**

@@ -17,7 +17,7 @@ export const AboutView: React.FC = TMemo(() => {
         <Typography.Link href="https://shang.qq.com/wpa/qunwpa?idkey=7be5cfe70436a65c965ae9c86d9e6cfc36c16258634a42897724dce026accf3d">
           387587760
         </Typography.Link>{' '}
-        来找到开发者
+        来找到开发者, 提出你的建议或者意见
       </Typography.Paragraph>
 
       <Typography.Paragraph>

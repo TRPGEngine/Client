@@ -153,6 +153,9 @@ const ChatWritingIndicatorInner: React.FC<Props> = TMemo((props) => {
 });
 ChatWritingIndicatorInner.displayName = 'ChatWritingIndicatorInner';
 
+/**
+ * 正在输入指示器
+ */
 export const ChatWritingIndicator: React.FC<Props> = TMemo((props) => {
   return (
     <Container>

@@ -80,6 +80,10 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
     dispatch(setSystemSettings({ disableSendWritingState: checked }));
   }, []);
 
+  const setSystemSetting = useCallback((key: string, value: any) => {
+    dispatch(setSystemSettings({ [key]: value }));
+  }, []);
+
   return (
     <div>
       <Space direction="vertical">
@@ -104,6 +108,18 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
             <Switch
               checked={systemSettings.disableSendWritingState}
               onChange={handleSetDisableSendWritingState}
+            />
+          }
+        />
+
+        <FullModalField
+          title="输入状态显示自己"
+          value={
+            <Switch
+              checked={systemSettings.showSelfInWritingState}
+              onChange={(checked) =>
+                setSystemSetting('showSelfInWritingState', checked)
+              }
             />
           }
         />
