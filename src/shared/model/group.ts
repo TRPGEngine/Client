@@ -46,11 +46,13 @@ export async function createGroup(
 export async function createGroupPanel(
   groupUUID: string,
   name: string,
-  type: string
+  type: string,
+  extra: object
 ) {
   const { data } = await request.post(`/group/${groupUUID}/panel/create`, {
     name,
     type,
+    extra,
   });
 
   return data;

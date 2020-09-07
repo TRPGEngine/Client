@@ -17,6 +17,7 @@ export interface FastFormProps {
   schema?: ObjectSchema; // yup schame object 用于表单校验
   submitLabel?: string; // 提交按钮的标签名
   onSubmit: (values: any) => Promise<void> | void; // 点击提交按钮的回调
+  onChange?: (values: any) => void; // 数据更新回调
 }
 
 /**
@@ -42,6 +43,9 @@ export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
       } finally {
         setLoading(false);
       }
+    },
+    validate: (values) => {
+      _isFunction(props.onChange) && props.onChange(values);
     },
   });
   const { handleSubmit, setFieldValue, values, errors } = formik;
