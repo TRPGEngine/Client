@@ -21,13 +21,18 @@ i18next
  * 国际化翻译
  */
 export const t: TFunction = (key, defaultValue?, options?) => {
-  const hashKey = `k${crc32(key).toString(16)}`;
-  let words = i18next.t(hashKey);
-  if (words === hashKey) {
-    words = key;
-    console.warn(`翻译缺失: [${hashKey}]${key}`);
+  try {
+    const hashKey = `k${crc32(key).toString(16)}`;
+    let words = i18next.t(hashKey);
+    if (words === hashKey) {
+      words = key;
+      console.warn(`翻译缺失: [${hashKey}]${key}`);
+    }
+    return words;
+  } catch (err) {
+    console.error(err);
+    return key;
   }
-  return words;
 };
 
 /**
