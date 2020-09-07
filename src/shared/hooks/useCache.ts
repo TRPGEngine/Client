@@ -10,7 +10,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { TRPGState } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
-import { useEffect } from 'react';
+import _toPairs from 'lodash/toPairs';
+import _fromPairs from 'lodash/fromPairs';
+import { useEffect, useMemo } from 'react';
 import { UserInfo } from '@redux/types/user';
 import { GroupInfo } from '@redux/types/group';
 import { ActorType } from '@redux/types/actor';
@@ -88,4 +90,60 @@ export const useCachedActorInfo = reduxHookCacheFactory<ActorType>(
 export const useCachedActorTemplateInfo = reduxHookCacheFactory<GroupInfo>(
   'template',
   (uuid, onCompleted) => getTemplateInfo(uuid, onCompleted)
+);
+
+/**
+ * redux 的批量获取hooks的构造器
+ * 用于列表
+ * @param cacheScope 缓存的域
+ * @param getCacheDispatch 请求缓存的dispatch
+ */
+function reduxHookCacheListFactory<T>(
+  cacheScope: CacheKey,
+  getCacheDispatch: GetCacheDispatchActionFn
+) {
+  const isGettingDataUUIDList: string[] = []; // 正在请求的UUID列表
+
+  return function hook<R = { [uuid: string]: T }>(uuids: string[]): R {
+    const cacheList = useSelector<TRPGState, { [uuid: string]: T }>((state) =>
+      _get(state, ['cache', cacheScope])
+    );
+    const dispatch = useDispatch();
+
+    const resMap = useMemo<R>(() => {
+      const map = {} as R;
+      for (const uuid of uuids) {
+        if (_isNil(cacheList[uuid]) && !isSkipUUID(uuid)) {
+          // 如果没有数据则请求数据
+          // 从服务端获取缓存信息
+          if (isGettingDataUUIDList.indexOf(uuid) === -1) {
+            // 没有正在获取缓存信息
+            console.log(`缓存[${cacheScope}: ${uuid}]不存在， 自动获取`);
+            dispatch(
+              getCacheDispatch(uuid, () => {
+                // 从列表中移除
+                const index = isGettingDataUUIDList.indexOf(uuid);
+                if (index !== -1) {
+                  isGettingDataUUIDList.splice(index, 1);
+                }
+              })
+            );
+            isGettingDataUUIDList.push(uuid);
+          }
+          continue;
+        }
+
+        // 加入返回的map中
+        map[uuid] = cacheList[uuid];
+      }
+
+      return map;
+    }, [cacheList, uuids.join(',')]);
+
+    return resMap;
+  };
+}
+export const useCachedUserInfoList = reduxHookCacheListFactory<UserInfo>(
+  'user',
+  (uuid, onCompleted) => getUserInfo(uuid, onCompleted)
 );
