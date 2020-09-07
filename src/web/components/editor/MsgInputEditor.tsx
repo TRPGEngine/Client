@@ -93,10 +93,9 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
   const [target, setTarget] = useState<Range | undefined>(undefined);
   const [index, setIndex] = useState(0);
   const [search, setSearch] = useState('');
-  const mentionList = useContext(EditorMentionListContext);
-  const chars = mentionList
-    .map((val) => val.text)
-    .filter((c) => c.toLowerCase().startsWith(search.toLowerCase()))
+  const mentionAllList = useContext(EditorMentionListContext);
+  const mentionMatchList = mentionAllList
+    .filter((item) => item.text.toLowerCase().startsWith(search.toLowerCase()))
     .slice(0, 10);
 
   const handleChange = useCallback(
@@ -108,6 +107,7 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
         setTarget(mention.target);
         setSearch(mention.searchText);
         setIndex(0);
+        return;
       }
 
       setTarget(undefined);
@@ -117,40 +117,48 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      _isFunction(props.onKeyDown) && props.onKeyDown(e);
-
       if (target) {
         if (isArrowUpHotkey(e.nativeEvent)) {
           e.preventDefault();
-          const nextIndex = index <= 0 ? chars.length - 1 : index - 1;
+          const nextIndex =
+            index <= 0 ? mentionMatchList.length - 1 : index - 1;
           setIndex(nextIndex);
         } else if (isArrowDownHotkey(e.nativeEvent)) {
           e.preventDefault();
-          const prevIndex = index >= chars.length - 1 ? 0 : index + 1;
+          const prevIndex =
+            index >= mentionMatchList.length - 1 ? 0 : index + 1;
           setIndex(prevIndex);
         } else if (isTabHotkey(e.nativeEvent) || isEnterHotkey(e.nativeEvent)) {
           e.preventDefault();
           Transforms.select(editor, target);
-          insertMention(editor, chars[index]);
+          insertMention(editor, mentionMatchList[index]);
           setTarget(undefined);
         } else if (isEscHotkey(e.nativeEvent)) {
           e.preventDefault();
           setTarget(undefined);
         }
+
+        // 如果正在选择阶段则阻止任何自定义keydown
+        return;
       }
+
+      _isFunction(props.onKeyDown) && props.onKeyDown(e);
     },
-    [index, search, target, props.onKeyDown]
+    [index, search, target, mentionMatchList, props.onKeyDown]
   );
 
   useEffect(() => {
     const el = ref.current;
-    if (target && el && chars.length > 0) {
+    if (target && el && mentionMatchList.length > 0) {
       const domRange = ReactEditor.toDOMRange(editor, target);
       const rect = domRange.getBoundingClientRect();
-      el.style.top = `${rect.top + window.pageYOffset + 24}px`;
+      el.style.bottom = `${document.body.clientHeight -
+        rect.bottom +
+        window.pageYOffset +
+        24}px`;
       el.style.left = `${rect.left + window.pageXOffset}px`;
     }
-  }, [chars.length, editor, index, search, target]);
+  }, [mentionMatchList.length, editor, index, search, target]);
 
   useEffect(() => {
     _isFunction(props.onEditor) && props.onEditor(editor);
@@ -174,12 +182,12 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
         onCompositionEnd={handleCompositionEnd}
       />
 
-      {target && chars.length > 0 && (
+      {target && mentionMatchList.length > 0 && (
         <MentionsPortal>
           <div
             ref={ref}
             style={{
-              top: '-9999px',
+              bottom: '-9999px',
               left: '-9999px',
               position: 'absolute',
               zIndex: 1,
@@ -189,16 +197,16 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
               boxShadow: '0 1px 5px rgba(0,0,0,.2)',
             }}
           >
-            {chars.map((char, i) => (
+            {mentionMatchList.map((item, i) => (
               <div
-                key={char}
+                key={item.text}
                 style={{
                   padding: '1px 3px',
                   borderRadius: '3px',
                   background: i === index ? '#B4D5FF' : 'transparent',
                 }}
               >
-                {char}
+                {item.text}
               </div>
             ))}
           </div>

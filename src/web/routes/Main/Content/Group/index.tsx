@@ -14,7 +14,7 @@ import { GroupPanel } from './GroupPanel';
 import { GroupHeader } from './GroupHeader';
 import { Result } from 'antd';
 import _isNil from 'lodash/isNil';
-import { GroupInfoContext } from '@shared/context/GroupInfoContext';
+import { GroupProvider } from './GroupProvider';
 
 interface GroupParams {
   groupUUID: string;
@@ -35,7 +35,7 @@ export const Group: React.FC = TMemo(() => {
   const panels = groupInfo.panels ?? [];
 
   return (
-    <GroupInfoContext.Provider value={groupInfo}>
+    <GroupProvider groupInfo={groupInfo}>
       <ContentContainer>
         <Sidebar>
           <GroupHeader groupUUID={groupUUID} />
@@ -66,7 +66,7 @@ export const Group: React.FC = TMemo(() => {
           </Switch>
         </ContentDetail>
       </ContentContainer>
-    </GroupInfoContext.Provider>
+    </GroupProvider>
   );
 });
 Group.displayName = 'Group';

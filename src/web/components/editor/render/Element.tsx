@@ -1,6 +1,7 @@
 import React from 'react';
 import { RenderElementProps, useSelected, useFocused } from 'slate-react';
 import { TMemo } from '@shared/components/TMemo';
+import _get from 'lodash/get';
 
 export const SlateElement: React.FC<RenderElementProps> = (props) => {
   const { attributes, children, element } = props;
@@ -45,7 +46,7 @@ const MentionElement: React.FC<RenderElementProps> = TMemo((props) => {
         boxShadow: selected && focused ? '0 0 0 2px #B4D5FF' : 'none',
       }}
     >
-      @{element.character}
+      @{_get(element, 'data.text', '')}
       {children}
     </span>
   );

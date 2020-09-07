@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface EditorMentionListItem {
+export interface EditorMentionListItem {
   text: string;
   [other: string]: any;
 }
