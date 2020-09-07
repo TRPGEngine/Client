@@ -28,7 +28,11 @@ import ReactDOM from 'react-dom';
 import { insertMention } from './changes/insertMention';
 import { checkMention } from './utils/checkMention';
 import { serializeToPlaintext } from './utils/serialize/plaintext';
-import { PlaceholderContainer } from './style';
+import {
+  PlaceholderContainer,
+  MentionListContainer,
+  MentionMatchedItem,
+} from './style';
 
 const MentionsPortal = ({ children }) => {
   return ReactDOM.createPortal(children, document.body);
@@ -184,32 +188,18 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
 
       {target && mentionMatchList.length > 0 && (
         <MentionsPortal>
-          <div
-            ref={ref}
-            style={{
-              bottom: '-9999px',
-              left: '-9999px',
-              position: 'absolute',
-              zIndex: 1,
-              padding: '3px',
-              background: 'white',
-              borderRadius: '4px',
-              boxShadow: '0 1px 5px rgba(0,0,0,.2)',
-            }}
-          >
+          <MentionListContainer ref={ref}>
             {mentionMatchList.map((item, i) => (
-              <div
+              <MentionMatchedItem
                 key={item.text}
                 style={{
-                  padding: '1px 3px',
-                  borderRadius: '3px',
                   background: i === index ? '#B4D5FF' : 'transparent',
                 }}
               >
                 {item.text}
-              </div>
+              </MentionMatchedItem>
             ))}
-          </div>
+          </MentionListContainer>
         </MentionsPortal>
       )}
     </Slate>

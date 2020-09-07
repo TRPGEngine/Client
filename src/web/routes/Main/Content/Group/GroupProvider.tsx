@@ -22,10 +22,12 @@ export const GroupProvider: React.FC<GroupProviderProps> = TMemo((props) => {
   const cachedUserInfoList = useCachedUserInfoList(members);
 
   const mentionList: EditorMentionListItem[] = useMemo(() => {
-    return Object.values(cachedUserInfoList).map((item) => ({
-      uuid: item.uuid,
-      text: getUserName(item),
-    }));
+    return (
+      Object.values(cachedUserInfoList).map((item) => ({
+        uuid: item.uuid,
+        text: getUserName(item),
+      })) ?? []
+    );
   }, [cachedUserInfoList]);
 
   return (
