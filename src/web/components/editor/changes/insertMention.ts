@@ -6,13 +6,15 @@ import { EditorMentionListItem } from '../context/EditorMentionListContext';
  */
 export const insertMention = (
   editor: Editor,
-  character: EditorMentionListItem
+  mentionData: EditorMentionListItem
 ) => {
-  const mention = {
-    type: 'mention',
-    data: character,
-    children: [{ text: '' }],
-  };
+  const mention = [
+    {
+      type: 'mention',
+      data: mentionData,
+      children: [{ text: `@${mentionData.text}` }],
+    },
+  ];
   Transforms.insertNodes(editor, mention);
   Transforms.move(editor);
 };

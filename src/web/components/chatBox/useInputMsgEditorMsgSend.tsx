@@ -2,13 +2,13 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { TRPGEditorNode } from '../editor/types';
 import { buildBlankInputData, getHeadSelection } from '../editor/utils';
 import { isEnterHotkey } from '@web/utils/hot-key';
-import { serializeToPlaintext } from '../editor/utils/serialize/plaintext';
 import { useMsgSend } from '@shared/hooks/useMsgSend';
-import { Transforms, Editor } from 'slate';
+import { Editor } from 'slate';
 import React from 'react';
 import { MsgInputEditor } from '../editor/MsgInputEditor';
 import { useConverseDetail } from '@redux/hooks/chat';
 import styled from 'styled-components';
+import { serializeToBBCode } from '../editor/utils/serialize/bbcode';
 
 export function useInputMsgEditorMsgSend(converseUUID: string) {
   const editorRef = useRef<Editor>();
@@ -41,7 +41,7 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
   }, [message]);
 
   useEffect(() => {
-    setMessage(serializeToPlaintext(messageData));
+    setMessage(serializeToBBCode({ children: messageData }));
   }, [messageData]);
 
   const handleMessageDataChange = useCallback((data) => {
