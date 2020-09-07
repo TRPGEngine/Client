@@ -133,12 +133,12 @@ export const MsgItem = styled.div`
       border-color: #bec9ff;
       box-shadow: 0px 0px 2px 0px #bec9ff;
       &:before {
-        content: '\e605';
+        content: '\\e605';
         top: 0;
         left: 6px;
       }
       &:after {
-        content: '\e601';
+        content: '\\e601';
         bottom: 13px;
         right: 6px;
       }
@@ -158,7 +158,7 @@ export const MsgItem = styled.div`
       box-shadow: 0px 0px 2px 0px #ffa787;
 
       &:before {
-        content: '\e619';
+        content: '\\e619';
         font-family: 'iconfont';
         color: #ccc;
         position: absolute;
