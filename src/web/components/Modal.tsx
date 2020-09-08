@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import styled from 'styled-components';
 import { TMemo } from '@shared/components/TMemo';
 import _isFunction from 'lodash/isFunction';
@@ -6,6 +6,7 @@ import _isNil from 'lodash/isNil';
 import _last from 'lodash/last';
 import _pull from 'lodash/pull';
 import _isString from 'lodash/isString';
+import _noop from 'lodash/noop';
 import { PortalAdd, PortalRemove } from '@web/utils/portal';
 import { Typography } from 'antd';
 
@@ -26,6 +27,12 @@ const ModalInner = styled.div`
   background-color: ${(props) => props.theme.color.graySet[7]};
   border-radius: ${(props) => props.theme.radius.standard};
 `;
+
+const ModalContext = React.createContext<{
+  closeModal: () => void;
+}>({
+  closeModal: _noop,
+});
 
 interface ModalProps {
   visible?: boolean;
@@ -50,7 +57,9 @@ export const Modal: React.FC<ModalProps> = TMemo((props) => {
 
   return (
     <ModalMask onClick={handleClose}>
-      <ModalInner onClick={stopPropagation}>{props.children}</ModalInner>
+      <ModalContext.Provider value={{ closeModal: handleClose }}>
+        <ModalInner onClick={stopPropagation}>{props.children}</ModalInner>
+      </ModalContext.Provider>
     </ModalMask>
   );
 });
@@ -93,6 +102,15 @@ export function openModal(content: React.ReactNode): number {
   modelKeyStack.push(key);
 
   return key;
+}
+
+/**
+ * 获取modal上下文
+ */
+export function useModalContext() {
+  const { closeModal } = useContext(ModalContext);
+
+  return { closeModal };
 }
 
 /**

@@ -362,10 +362,10 @@ export const changePassword = function(
 };
 
 /**
- * 发送好友邀请
+ * 发送好友请求
  * @param uuid 目标用户UUID
  */
-export const sendFriendInvite = function(uuid: string): TRPGAction {
+export const sendFriendRequest = function(uuid: string): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('player::sendFriendInvite', { to: uuid }, function(data) {
       if (data.result) {
@@ -381,6 +381,7 @@ export const sendFriendInvite = function(uuid: string): TRPGAction {
     });
   };
 };
+export const sendFriendInvite = sendFriendRequest; // 兼容旧名字
 
 export const agreeFriendInvite = function(inviteUUID: string): TRPGAction {
   return function(dispatch, getState) {
