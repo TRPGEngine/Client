@@ -58,11 +58,10 @@ const getLocalUUID = function getLocalUUID() {
 };
 
 // 切换当前会话页面
-export const switchConverse = function switchConverse(
-  converseUUID: string
-): TRPGAction {
-  return { type: SWITCH_CONVERSES, converseUUID };
-};
+export const switchConverse = createAction(
+  SWITCH_CONVERSES,
+  (converseUUID: string) => ({ payload: { converseUUID } })
+);
 
 // 跳转到会话页面并切换到会话
 export const switchToConverse = function switchToConverse(
@@ -78,9 +77,7 @@ export const switchToConverse = function switchToConverse(
 /**
  * 清理当前选择的会话
  */
-export const clearSelectedConverse = function clearSelectedConverse(): TRPGAction {
-  return { type: CLEAR_SELECTED_CONVERSE };
-};
+export const clearSelectedConverse = createAction('CLEAR_SELECTED_CONVERSE');
 
 export const addConverse = createAction<
   Partial<ChatStateConverse> & Pick<ChatStateConverse, 'uuid' | 'type' | 'name'>
@@ -251,7 +248,7 @@ export const addUserConverse = function addUserConverse(
     const userUUID = getState().user.info.uuid!;
     rnStorage
       .get(getUserConversesHash(userUUID), [])
-      .then(function(cachedConverse: string[]) {
+      .then((cachedConverse: string[]) => {
         const allConverse: string[] = Array.from(
           new Set([...cachedConverse, ...senders])
         );
@@ -266,7 +263,7 @@ export const addUserConverse = function addUserConverse(
       }
 
       // 更新会话信息
-      api.emit('player::getInfo', { type: 'user', uuid }, function(data) {
+      api.emit('player::getInfo', { type: 'user', uuid }, (data) => {
         if (data.result) {
           const info = data.info;
           dispatch({

@@ -12,7 +12,12 @@ import _findIndex from 'lodash/findIndex';
 import constants from '@redux/constants';
 import { ChatState } from '@redux/types/chat';
 import { createReducer } from '@reduxjs/toolkit';
-import { addConverse, markConverseMsgListQueryed } from '@redux/actions/chat';
+import {
+  addConverse,
+  markConverseMsgListQueryed,
+  switchConverse,
+  clearSelectedConverse,
+} from '@redux/actions/chat';
 const {
   RESET,
   ADD_CONVERSES,
@@ -222,14 +227,15 @@ export default createReducer(initialState, (builder) => {
     .addCase(REMOVE_USER_CONVERSE, (state, action: any) => {
       _unset(state.converses, action.converseUUID);
     })
-    .addCase(SWITCH_CONVERSES, (state, action: any) => {
-      state.selectedConverseUUID = action.converseUUID;
-      const converse = state.converses[action.converseUUID];
+    .addCase(switchConverse, (state, action) => {
+      const converseUUID = action.payload.converseUUID;
+      state.selectedConverseUUID = converseUUID;
+      const converse = state.converses[converseUUID];
       if (!_isNil(converse)) {
         converse.unread = false; // 已读未读;
       }
     })
-    .addCase(CLEAR_SELECTED_CONVERSE, (state, action: any) => {
+    .addCase(clearSelectedConverse, (state, action) => {
       state.selectedConverseUUID = '';
     })
     .addCase(SEND_MSG_COMPLETED, (state, action: any) => {

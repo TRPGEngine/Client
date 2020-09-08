@@ -1,15 +1,19 @@
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import {
+  useTRPGSelector,
+  useTRPGDispatch,
+} from '@shared/hooks/useTRPGSelector';
 import {
   WritingListGroupItem,
   SimpleConverseType,
   ChatStateConverse,
 } from '@redux/types/chat';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import _isNil from 'lodash/isNil';
 import _orderBy from 'lodash/orderBy';
 import _values from 'lodash/values';
 import { useSystemSetting } from './settings';
 import { useCurrentUserUUID } from './user';
+import { switchConverse, clearSelectedConverse } from '@redux/actions/chat';
 
 /**
  * 获取当前输入状态
@@ -99,4 +103,15 @@ export function useConverseDetail(
   converseUUID: string
 ): ChatStateConverse | undefined {
   return useTRPGSelector((state) => state.chat.converses[converseUUID]);
+}
+
+export function useSelectConverse(converseUUID: string) {
+  const dispatch = useTRPGDispatch();
+  useEffect(() => {
+    dispatch(switchConverse(converseUUID));
+
+    return () => {
+      dispatch(clearSelectedConverse());
+    };
+  }, [converseUUID]);
 }

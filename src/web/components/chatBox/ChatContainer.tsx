@@ -1,7 +1,7 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { CommonPanel } from '../panels/CommonPanel';
-import { useConverseDetail } from '@redux/hooks/chat';
+import { useConverseDetail, useSelectConverse } from '@redux/hooks/chat';
 import { ChatBody } from './ChatBody';
 
 interface Props {
@@ -13,6 +13,7 @@ interface Props {
 export const ChatContainer: React.FC<Props> = TMemo((props) => {
   const { converseUUID, style, headerActions, rightPanel } = props;
   const converse = useConverseDetail(converseUUID);
+  useSelectConverse(converseUUID);
 
   return (
     <CommonPanel
