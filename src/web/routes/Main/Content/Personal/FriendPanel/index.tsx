@@ -91,7 +91,7 @@ export const FriendPanel: React.FC = TMemo(() => {
     () => (
       <TabPane
         tab={
-          <Badge count={friendInvite.length}>
+          <Badge size="small" count={friendInvite.length}>
             <span>{t('已发送')}</span>
           </Badge>
         }
@@ -123,7 +123,7 @@ export const FriendPanel: React.FC = TMemo(() => {
     () => (
       <TabPane
         tab={
-          <Badge count={friendRequests.length}>
+          <Badge size="small" count={friendRequests.length}>
             <span>{t('好友请求')}</span>
           </Badge>
         }
