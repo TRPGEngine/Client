@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useCachedUserInfo } from '@shared/hooks/useCache';
 import { Avatar } from './Avatar';
@@ -6,6 +6,8 @@ import { getUserName } from '@shared/utils/data-helper';
 import styled from 'styled-components';
 import _isNil from 'lodash/isNil';
 import { Skeleton, Typography, Space } from 'antd';
+import { isUUID } from '@shared/utils/uuid';
+import { openUserProfile } from './modal/UserProfile';
 
 const Root = styled.div`
   display: flex;
@@ -18,6 +20,11 @@ const Root = styled.div`
   &:hover {
     background-color: ${(props) => props.theme.color.transparent90};
   }
+`;
+
+const UserAvatar = styled(Avatar)`
+  cursor: pointer !important;
+  margin-right: 10px;
 `;
 
 const UserNameText = styled(Typography)`
@@ -34,19 +41,23 @@ export const UserListItem: React.FC<Props> = TMemo((props) => {
   const userInfo = useCachedUserInfo(props.userUUID);
   const userName = getUserName(userInfo);
 
+  const handleClick = useCallback(() => {
+    if (isUUID(userInfo.uuid)) {
+      openUserProfile(userInfo.uuid);
+    }
+  }, [userInfo.uuid]);
+
   return (
     <Root>
       <Skeleton
+        loading={_isNil(userInfo)}
         avatar={true}
         title={false}
-        loading={_isNil(userInfo)}
         active={true}
       >
-        <Avatar
-          src={userInfo.avatar}
-          name={userName}
-          style={{ marginRight: 10 }}
-        />
+        <div onClick={handleClick}>
+          <UserAvatar src={userInfo.avatar} name={userName} />
+        </div>
         <UserNameText>{userName}</UserNameText>
         <Space>{...actions}</Space>
       </Skeleton>
