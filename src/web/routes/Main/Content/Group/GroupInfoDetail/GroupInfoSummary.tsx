@@ -90,7 +90,7 @@ export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
           <Col flex={1}>
             <FullModalField
               title="主持人"
-              value={<UserName uuid={groupInfo.owner_uuid} />}
+              content={<UserName uuid={groupInfo.owner_uuid} />}
             />
           </Col>
           <Col flex={1}>

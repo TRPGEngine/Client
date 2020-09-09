@@ -19,7 +19,7 @@ const SelectLanguage: React.FC = TMemo(() => {
     <div>
       <FullModalField
         title="系统语言"
-        value={
+        content={
           <Select
             style={{ width: 320 }}
             size="large"
@@ -53,7 +53,7 @@ const AlphaUser: React.FC = TMemo(() => {
   return (
     <FullModalField
       title="是否为内测用户"
-      value={<Switch checked={isAlphaUser} onChange={setIsAlphaUser} />}
+      content={<Switch checked={isAlphaUser} onChange={setIsAlphaUser} />}
     />
   );
 });
@@ -91,7 +91,7 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
 
         <FullModalField
           title="桌面通知权限"
-          value={
+          content={
             <Space>
               <Switch
                 checked={systemSettings.notification}
@@ -104,7 +104,7 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
 
         <FullModalField
           title="不发送输入状态"
-          value={
+          content={
             <Switch
               checked={systemSettings.disableSendWritingState}
               onChange={handleSetDisableSendWritingState}
@@ -114,7 +114,7 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
 
         <FullModalField
           title="输入状态显示自己"
-          value={
+          content={
             <Switch
               checked={systemSettings.showSelfInWritingState}
               onChange={(checked) =>

@@ -135,7 +135,7 @@ export const UserProfile: React.FC<UserProfileProps> = TMemo((props) => {
             <Row>
               <FullModalField
                 title={t('简介')}
-                value={<pre style={{ maxHeight: 240 }}>{userInfo.sign}</pre>}
+                content={<pre style={{ maxHeight: 240 }}>{userInfo.sign}</pre>}
               />
             </Row>
           </Tabs.TabPane>
