@@ -1,9 +1,7 @@
 import React, { useCallback, Fragment, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { handleError } from '@portal/utils/error';
-import { message, Input, Button, Col, Typography } from 'antd';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
+import { message, Input, Button, Col, Typography, Form } from 'antd';
 import { useFormik } from 'formik';
 import _isFunction from 'lodash/isFunction';
 import { loginWithPassword } from '@shared/model/player';
@@ -50,11 +48,7 @@ export const LoginForm: React.FC<LoginFormProps> = TMemo((props) => {
         </Typography.Title>
       </Col>
 
-      <Form
-        labelCol={{ sm: 24, md: 8 }}
-        wrapperCol={{ sm: 24, md: 16 }}
-        onSubmit={handleSubmit}
-      >
+      <Form labelCol={{ sm: 24, md: 8 }} wrapperCol={{ sm: 24, md: 16 }}>
         <Form.Item label="用户名">
           <Input
             name="username"
@@ -77,8 +71,8 @@ export const LoginForm: React.FC<LoginFormProps> = TMemo((props) => {
             type="primary"
             size="large"
             loading={loading}
-            htmlType="submit"
             style={{ width: '100%' }}
+            onClick={() => handleSubmit()}
           >
             登录
           </Button>

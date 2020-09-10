@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import _isNil from 'lodash/isNil';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
+import { Form } from 'antd';
 import { Input, Button, message } from 'antd';
 import { checkToken } from '@portal/utils/auth';
 import { useFormik } from 'formik';
@@ -63,7 +62,7 @@ const TemplateCreate: React.FC = React.memo(() => {
 
   return (
     <Container>
-      <Form layout="horizontal" {...formItemLayout} onSubmit={handleSubmit}>
+      <Form layout="horizontal" {...formItemLayout}>
         <Form.Item label="模板名">
           <Input
             name="name"
@@ -99,8 +98,8 @@ const TemplateCreate: React.FC = React.memo(() => {
             type="primary"
             size="large"
             loading={loading}
-            htmlType="submit"
             style={{ width: '100%' }}
+            onClick={() => handleSubmit()}
           >
             创建
           </Button>

@@ -1,8 +1,7 @@
 import React from 'react';
 import { TagComponent } from '../type';
-import { Form } from '@ant-design/compatible';
+import { Form } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import '@ant-design/compatible/assets/index.css';
 import { LayoutCol } from '../Col/shared';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';
 import Avatar from '@web/components/Avatar';

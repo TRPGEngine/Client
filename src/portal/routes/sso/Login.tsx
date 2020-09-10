@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import '@ant-design/compatible/assets/index.css';
 import { Col } from 'antd';
 import qs from 'qs';
 import _isString from 'lodash/isString';

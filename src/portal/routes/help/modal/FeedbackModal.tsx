@@ -1,7 +1,6 @@
 import React from 'react';
 import { Formik, FormikHelpers } from 'formik';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
+import { Form } from 'antd';
 import { Modal, Input } from 'antd';
 
 interface FeedbackModalProps {
