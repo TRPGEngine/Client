@@ -1,6 +1,5 @@
 .DS_Store
 dist/
-yarn.lock
 config/local.js
 .sentryclirc
 .buildcache/
