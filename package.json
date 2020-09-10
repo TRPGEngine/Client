@@ -34,8 +34,9 @@
     "prettier:all": "prettier --write \"./src/**/*.{ts,tsx,json,less}\" --config ./.prettierrc.json",
     "postinstall": "npm run install:all",
     "install:app": "cd ./src/app && npm install",
+    "install:appv2": "cd ./src/appv2 && yarn",
     "install:web": "cd ./src/web && npm install",
-    "install:all": "npm run install:app && npm run install:web",
+    "install:all": "npm run install:app && install:appv2 && npm run install:web",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "release": "standard-version -a"
   },
