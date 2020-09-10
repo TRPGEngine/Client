@@ -54,6 +54,11 @@ export const routes: RouteConfig[] = [
     component: TLoadable(() => import('@portal/routes/group/actor/edit')),
   },
   {
+    title: '团邀请',
+    path: '/group/invite/:inviteCode',
+    component: TLoadable(() => import('@portal/routes/group/invite/code')),
+  },
+  {
     title: '创建模板',
     path: '/template/create',
     component: TLoadable(() => import('@portal/routes/template/create')),

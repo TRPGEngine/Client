@@ -9,6 +9,7 @@ export enum CachePolicy {
 
   /**
    * 存储在rnStorage中
+   * 过期时间为rnStorage的过期时间
    */
   Persistent,
 }

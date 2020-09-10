@@ -1,6 +1,7 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import config from '@shared/project.config';
 import _get from 'lodash/get';
+import _isString from 'lodash/isString';
 import { showToasts } from '@shared/manager/ui';
 import { getUserJWT } from './jwt-helper';
 import _isFunction from 'lodash/isFunction';
@@ -65,21 +66,22 @@ export function createRequest() {
     (val) => {
       if (val.data.result === false) {
         // 通用错误处理
-        showToasts(val.data.msg);
+        showToasts(val.data.msg, 'error');
       }
 
       return val;
     },
     (err) => {
+      // 尝试获取错误信息
+      const errorMsg: string = _get(err, 'response.data.msg');
       if (_isFunction(getErrorHook)) {
-        const res = getErrorHook(err);
-        if (res === false) {
-          return;
+        const isContinue = getErrorHook(err);
+        if (isContinue === false) {
+          return { data: { result: false, msg: errorMsg } };
         }
       }
 
-      // 尝试获取msg
-      throw _get(err, 'response.data.msg', err);
+      throw errorMsg ?? err;
     }
   );
 

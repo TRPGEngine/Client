@@ -53,6 +53,16 @@ export async function loginWithPassword(
 }
 
 /**
+ * 获取用户信息
+ */
+export const fetchUserInfo = buildCacheFactory<PlayerUser>(
+  CachePolicy.Persistent,
+  (uuid: string) => {
+    return request.get(`/player/info/${uuid}`).then(({ data }) => data.user);
+  }
+);
+
+/**
  * 获取用户登录记录
  */
 export const fetchUserPrivateLoginLog = buildCacheFactory<
