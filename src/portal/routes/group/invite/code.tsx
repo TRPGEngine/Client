@@ -70,9 +70,11 @@ const GroupInviteCode: React.FC<Props> = TMemo((props) => {
     );
     if (isSuccess) {
       // 跳转到结果页
-      showToasts('您已成功加入团');
+      props.history.replace(
+        '/result/success?title=您已成功加入团&subTitle=您现在可以回到TRPG Engine客户端查看结果'
+      );
     }
-  }, [value?.inviteCode]);
+  }, [value?.inviteCode, props.history]);
 
   if (loading) {
     return <Loading />;

@@ -59,6 +59,16 @@ export const routes: RouteConfig[] = [
     component: TLoadable(() => import('@portal/routes/group/invite/code')),
   },
   {
+    title: '操作成功',
+    path: '/result/success',
+    component: TLoadable(() => import('@portal/routes/result/success')),
+  },
+  {
+    title: '操作失败',
+    path: '/result/error',
+    component: TLoadable(() => import('@portal/routes/result/error')),
+  },
+  {
     title: '创建模板',
     path: '/template/create',
     component: TLoadable(() => import('@portal/routes/template/create')),
