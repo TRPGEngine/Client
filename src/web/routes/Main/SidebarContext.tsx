@@ -1,6 +1,7 @@
 import React, { useContext, useState, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import _noop from 'lodash/noop';
+import { useIsMobile } from '@web/hooks/useIsMobile';
 
 /**
  * 记录选中团的UUID
@@ -17,7 +18,8 @@ const SidebarContext = React.createContext<SidebarContextProps>({
 SidebarContext.displayName = 'SidebarContext';
 
 export const SidebarContextProvider: React.FC = TMemo((props) => {
-  const [showSidebar, setShowSidebar] = useState(true);
+  const isMobile = useIsMobile();
+  const [showSidebar, setShowSidebar] = useState(!isMobile);
 
   const switchSidebar = useCallback(() => {
     setShowSidebar(!showSidebar);

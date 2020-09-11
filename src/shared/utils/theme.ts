@@ -164,6 +164,20 @@ export function getStyledTheme(mode: ThemeMode) {
       `,
       transition: (property: string, duration: number) =>
         `transition: ${property} ${duration}s ease-in-out;`,
+      /**
+       * mobile apply css media query
+       * NOTE: rn端不可用
+       * @usage
+       * ${(props) => props.theme.mixins.mobile('margin-right: 0;')}
+       */
+      mobile: (css: string) => `@media (max-width: 768px) { ${css} }`,
+      /**
+       * desktop apply css media query
+       * NOTE: rn端不可用
+       * @usage
+       * ${(props) => props.theme.mixins.desktop('margin-right: 0;')}
+       */
+      desktop: (css: string) => `@media (min-width: 768px) { ${css} }`,
       blockBtn: `
         font-size: 16px;
         border: 0;

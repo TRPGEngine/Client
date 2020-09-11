@@ -367,6 +367,8 @@ export const MsgItem = styled.div`
       margin-right: 140px;
       display: flex;
 
+      ${(props) => props.theme.mixins.mobile('margin: 0 !important;')}
+
       .bubble {
         font-family: $font;
         min-width: 0;

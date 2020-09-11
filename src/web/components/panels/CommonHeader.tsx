@@ -7,6 +7,10 @@ import { Space } from 'antd';
 const Container = styled.div`
   display: flex;
   font-size: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  ${(props) => props.theme.mixins.mobile('padding: 8px 0;')}
 `;
 
 const HeaderPrefix = styled.span`
@@ -15,9 +19,13 @@ const HeaderPrefix = styled.span`
 `;
 
 const HeaderText = styled.span`
-  flex: 1;
   font-size: 16px;
   line-height: 28px;
+`;
+
+const HeaderActionContainer = styled(Space)`
+  ${(props) =>
+    props.theme.mixins.mobile('width: 100%;justify-content: flex-end;')}
 `;
 
 interface CommonHeaderProps {
@@ -30,9 +38,11 @@ export const CommonHeader: React.FC<CommonHeaderProps> = TMemo((props) => {
   return (
     <SectionHeader>
       <Container>
-        <HeaderPrefix>{props.headerPrefix}</HeaderPrefix>
-        <HeaderText>{props.children}</HeaderText>
-        <Space>{headerActions}</Space>
+        <div>
+          <HeaderPrefix>{props.headerPrefix}</HeaderPrefix>
+          <HeaderText>{props.children}</HeaderText>
+        </div>
+        <HeaderActionContainer>{headerActions}</HeaderActionContainer>
       </Container>
     </SectionHeader>
   );

@@ -21,7 +21,7 @@ const SelectLanguage: React.FC = TMemo(() => {
         title="系统语言"
         content={
           <Select
-            style={{ width: 320 }}
+            style={{ width: 300 }}
             size="large"
             value={language}
             onChange={(val) => setLanguage(val)}

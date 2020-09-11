@@ -14,6 +14,10 @@ export const ContentDetail = styled.div`
   background-color: ${(props) => props.theme.style.contentBackgroundColor};
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    width: ${(props) => `calc(100vw - ${props.theme.style.navbarWidth})`};
+  }
 `;
 
 const SidebarContainer = styled.div<{

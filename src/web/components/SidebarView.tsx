@@ -23,6 +23,9 @@ const Root = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
+
+  ${(props) =>
+    props.theme.mixins.mobile('flex-direction: column;overflow: auto;')}
 `;
 
 const Sidebar = styled.nav`
@@ -34,10 +37,14 @@ const Sidebar = styled.nav`
   justify-content: flex-start;
   align-items: flex-end;
 
+  ${(props) => props.theme.mixins.mobile('align-items: flex-end;')}
+
   > div {
     padding-bottom: 10px;
     margin-bottom: 10px;
     border-bottom: ${(props) => props.theme.border.thin};
+
+    ${(props) => props.theme.mixins.mobile('width: 100%;')}
 
     &:last-child {
       border: 0;
