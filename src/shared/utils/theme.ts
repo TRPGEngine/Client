@@ -20,33 +20,33 @@ declare module 'styled-components' {
 
 // 中性色 来自antd: https://ant.design/docs/spec/colors-cn
 const graySet = [
-  '#ffffff',
-  '#fafafa',
-  '#f5f5f5',
-  '#f0f0f0',
-  '#d9d9d9',
-  '#bfbfbf',
-  '#8c8c8c',
-  '#595959',
-  '#434343',
-  '#262626',
-  '#1f1f1f',
-  '#141414',
-  '#000000',
+  '#ffffff', // 0
+  '#fafafa', // 1
+  '#f5f5f5', // 2
+  '#f0f0f0', // 3
+  '#d9d9d9', // 4
+  '#bfbfbf', // 5
+  '#8c8c8c', // 6
+  '#595959', // 7
+  '#434343', // 8
+  '#262626', // 9
+  '#1f1f1f', // 10
+  '#141414', // 11
+  '#000000', // 12
 ];
 
 type ThemeType = ReturnType<typeof getStyledTheme>;
 export type ThemeMode = 'light' | 'dark';
 
 export function getStyledTheme(mode: ThemeMode) {
-  const modeValue = (val: [string, string]) => {
+  const modeValue = (val: [string | number, string | number]): string => {
     if (mode === 'light') {
-      return val[0];
+      return String(val[0]);
     } else if (mode === 'dark') {
-      return val[1];
+      return String(val[1]);
     } else {
       // 没有匹配到任何主题则默认light
-      return val[0];
+      return String(val[0]);
     }
   };
 
@@ -126,8 +126,8 @@ export function getStyledTheme(mode: ThemeMode) {
       },
     },
     border: {
-      thin: '.5px solid rgba(232, 232, 232, 0.8)',
-      standard: '1px solid rgba(232, 232, 232, 0.8)',
+      thin: `.5px solid rgba(232, 232, 232, ${modeValue([0.8, 0.2])})`,
+      standard: `1px solid rgba(232, 232, 232, ${modeValue([0.8, 0.2])})`,
     },
     radius: {
       standard: '3px',

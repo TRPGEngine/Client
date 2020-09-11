@@ -14,9 +14,13 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   /* antd 黑夜模式下样式 */
-  .app.new-ui {
+  .app.new-ui-dark {
     .ant-input, .ant-select-selector {
       border-color: ${(props) => props.theme.color.graySet[6]};
+    }
+
+    .ant-dropdown-menu {
+      background-color: ${(props) => props.theme.color.graySet[9]};
     }
   }
 

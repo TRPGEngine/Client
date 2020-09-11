@@ -40,7 +40,7 @@ export const App = TMemo(() => {
         <DarkMode />
         <GlobalStyle />
         <GlobalUI />
-        <div className="app new-ui">
+        <div className="app new-ui-dark">
           <CustomProvider>
             <Switch>
               <Route name="login" path="/login" component={Login} />
