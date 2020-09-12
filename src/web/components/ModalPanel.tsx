@@ -62,12 +62,20 @@ const ModalPanelActionGroup = styled.div`
 
   .iconfont {
     cursor: pointer;
-    color: rgba(0, 0, 0, 0.2);
+    color: ${(props) =>
+      props.theme.mixins.modeValue([
+        'rgba(0, 0, 0, 0.2)',
+        'rgba(255, 255, 255, 0.6)',
+      ])};
     font-size: 21px;
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      color: rgba(0, 0, 0, 0.6);
+      color: ${(props) =>
+        props.theme.mixins.modeValue([
+          'rgba(0, 0, 0, 0.6)',
+          'rgba(255, 255, 255, 0.8)',
+        ])};
     }
   }
 `;

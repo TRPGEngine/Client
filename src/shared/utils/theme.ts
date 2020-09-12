@@ -163,6 +163,7 @@ export function getStyledTheme(mode: ThemeMode) {
         text-overflow: ellipsis;
         white-space: nowrap;
       `,
+      modeValue,
       transition: (property: string, duration: number) =>
         `transition: ${property} ${duration}s ease-in-out;`,
       /**

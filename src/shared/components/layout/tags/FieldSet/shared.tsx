@@ -23,7 +23,8 @@ const Container = styled.div<{ left: number }>`
     width: 100%;
     left: 0;
     right: 0;
-    color: rgba(0, 0, 0, 0.85);
+    color: ${(props) =>
+      props.theme.mixins.modeValue(['rgba(0, 0, 0, 0.85)', 'white'])};
     font-weight: 500;
     font-size: 16px;
     white-space: nowrap;

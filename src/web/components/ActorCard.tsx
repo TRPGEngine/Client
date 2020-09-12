@@ -29,7 +29,7 @@ const Container = styled(ActorCardContainer)`
     overflow: hidden;
     align-items: center;
     justify-content: center;
-    border: 1px solid $color-bon-jour;
+    border: 1px solid ${(props) => props.theme.color['bon-jour']};
     background-position: center;
     background-size: cover;
 
@@ -58,7 +58,7 @@ const Container = styled(ActorCardContainer)`
       }
 
       span:nth-child(1) {
-        color: $color-dove-gray;
+        color: ${(props) => props.theme.color['dove-gray']};
         word-break: keep-all;
         margin-right: 2px;
       }
@@ -128,5 +128,7 @@ export const ActorCardListContainer = styled.div`
 
   .actor-card {
     margin-right: 8px;
+
+    ${(props) => props.theme.mixins.mobile('margin-right: 0;')}
   }
 `;

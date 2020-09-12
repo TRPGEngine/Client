@@ -28,7 +28,7 @@ export const Avatar: React.FC<AvatarProps> = TMemo((props) => {
   );
 
   const style: React.CSSProperties = {
-    cursor: 'default',
+    cursor: 'auto',
     userSelect: 'none',
     ...props.style,
     backgroundColor: color,

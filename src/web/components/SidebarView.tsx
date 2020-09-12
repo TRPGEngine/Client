@@ -30,7 +30,7 @@ const Root = styled.div`
 
 const Sidebar = styled.nav`
   flex: 1 0 218px;
-  padding: 60px 10px 80px 0;
+  padding: 60px 10px 80px;
   background-color: ${(props) => props.theme.color.transparent90};
   display: flex;
   flex-direction: column;
