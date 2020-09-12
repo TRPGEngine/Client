@@ -56,6 +56,7 @@ export function getStyledTheme(mode: ThemeMode) {
     borderBase: '#dddddd',
     gallery: '#EFEFEF',
     alabaster: '#FCFCFC',
+    'athens-gray': '#F5F7F9',
     'seashell-peach': '#FFF4EB',
     whisper: '#FAFAFC',
     soapstone: '#FFFBF8',

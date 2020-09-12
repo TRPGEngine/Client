@@ -98,8 +98,9 @@ const SelectorCard = styled.div`
   box-shadow: ${(props) => props.theme.boxShadow.normal};
   border-radius: ${(props) => props.theme.radius.card};
   padding: 10px;
-  margin: 15vh auto 10px;
+  /* margin: 15vh auto 10px; */
   max-width: 480px;
+  background-color: white;
 `;
 
 const TipText = styled.div`
