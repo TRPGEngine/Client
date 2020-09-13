@@ -12,7 +12,7 @@ interface Props {
   selfActors: any;
   showAlert: any;
   showModal: any;
-  onSelect: any;
+  onSelect: (selectActorUUID: string, selectActorInfo: any) => void;
 }
 class ActorSelect extends React.Component<Props> {
   state = {

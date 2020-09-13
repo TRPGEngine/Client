@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Typography, Tooltip, Result } from 'antd';
+import { Typography, Tooltip, Result, Button } from 'antd';
 import { PillTabs } from '@web/components/PillTabs';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import _isNil from 'lodash/isNil';
@@ -17,18 +17,20 @@ import {
 } from '@shared/utils/data-helper';
 import { showToasts } from '@shared/manager/ui';
 import ActorInfo from '@web/components/modal/ActorInfo';
-import { openModal, ModalWrapper } from '@web/components/Modal';
+import { openModal, ModalWrapper, closeModal } from '@web/components/Modal';
 import { GroupActorType } from '@redux/types/group';
 import { Iconfont } from '@web/components/Iconfont';
 import ActorEdit from '@web/components/modal/ActorEdit';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import {
   requestUpdateGroupActorInfo,
+  requestAddGroupActor,
   removeGroupActor,
 } from '@redux/actions/group';
 import { showAlert } from '@redux/actions/ui';
 import { ActorCard, ActorCardListContainer } from '@web/components/ActorCard';
 import { GroupActorCheck } from '@web/containers/main/group/modal/GroupActorCheck';
+import ActorSelect from '@web/components/modal/ActorSelect';
 const TabPane = PillTabs.TabPane;
 
 /**
@@ -256,7 +258,19 @@ export const GroupActorManager: React.FC<GroupActorManagerProps> = TMemo(
   (props) => {
     const { groupUUID } = props;
     const groupInfo = useJoinedGroupInfo(groupUUID);
+    const dispatch = useTRPGDispatch();
     const groupActorNum = groupInfo?.group_actors?.length ?? 0;
+
+    const handleSendGroupActorCheck = useCallback(() => {
+      const key = openModal(
+        <ActorSelect
+          onSelect={(actorUUID) => {
+            dispatch(requestAddGroupActor(groupUUID, actorUUID));
+            closeModal(key);
+          }}
+        />
+      );
+    }, [groupUUID]);
 
     if (_isNil(groupInfo)) {
       return <Result status="warning" title="找不到相关信息" />;
@@ -267,7 +281,10 @@ export const GroupActorManager: React.FC<GroupActorManagerProps> = TMemo(
         <Typography.Title level={3}>人物卡管理</Typography.Title>
 
         <Typography.Title level={4}>
-          共 {groupActorNum} 张角色卡
+          <span style={{ marginRight: 10 }}>共 {groupActorNum} 张角色卡</span>
+          <Button type="primary" onClick={handleSendGroupActorCheck}>
+            提交人物卡
+          </Button>
         </Typography.Title>
 
         <div>

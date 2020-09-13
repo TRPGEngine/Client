@@ -10,6 +10,7 @@
   text-align: left;
   padding: 6px 10px;
   user-select: none;
+  cursor: pointer;
 
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
@@ -20,18 +21,13 @@
     border-bottom: 1px solid #dddcdd;
     padding: 6px;
     font-weight: bold;
-    cursor: pointer;
+
     display: flex;
 
     .name {
       flex: 1;
+      color: #333;
       @include one-line;
-    }
-    .actions {
-      display: flex;
-      button {
-        @include icon-btn;
-      }
     }
   }
 
@@ -57,7 +53,6 @@
       text-overflow:ellipsis;
       white-space: nowrap;
       margin-right: 10px;
-      cursor: pointer;
     }
   }
 }
