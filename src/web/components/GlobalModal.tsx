@@ -40,7 +40,7 @@ const ModalRoot = styled.div`
       .modal-close {
         position: absolute;
         right: 10px;
-        top: 10px;
+        top: 14px;
         cursor: pointer;
         z-index: 1;
 

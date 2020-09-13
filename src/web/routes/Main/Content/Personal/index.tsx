@@ -24,6 +24,7 @@ import { Iconfont } from '@web/components/Iconfont';
 import { createNote } from '@redux/actions/note';
 import { ActorPanel } from './ActorPanel';
 import { SYSTE_CONVERSE_SPEC } from '@shared/utils/consts';
+import { Divider } from 'antd';
 
 export const Personal: React.FC = TMemo(() => {
   const userConverses = useConverses(['user']);
@@ -55,6 +56,7 @@ export const Personal: React.FC = TMemo(() => {
             name="角色"
             to="/main/personal/actors"
           />
+          <Divider />
           <SidebarItem
             icon={'系统消息'}
             name={'系统消息'}

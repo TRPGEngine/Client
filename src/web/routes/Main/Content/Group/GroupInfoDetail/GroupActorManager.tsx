@@ -37,12 +37,10 @@ const TabPane = PillTabs.TabPane;
 function handleShowActorProfile(groupActor: GroupActorType) {
   if (groupActor) {
     openModal(
-      <ModalWrapper>
-        <ActorInfo
-          data={getGroupActorInfo(groupActor)}
-          templateUUID={getGroupActorTemplateUUID(groupActor)}
-        />
-      </ModalWrapper>
+      <ActorInfo
+        data={getGroupActorInfo(groupActor)}
+        templateUUID={getGroupActorTemplateUUID(groupActor)}
+      />
     );
   } else {
     showToasts('需要groupActor');

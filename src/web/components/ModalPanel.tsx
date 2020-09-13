@@ -6,6 +6,7 @@ const ModalPanelContainer = styled.div<{ maximize?: boolean }>`
   flex-direction: column;
   height: 100%;
   width: 100%;
+  position: relative;
 
   max-width: 80vw;
   max-height: 80vh;
@@ -54,7 +55,7 @@ const ModalPanelContainer = styled.div<{ maximize?: boolean }>`
 
 const ModalPanelActionGroup = styled.div`
   position: absolute;
-  top: 10px;
+  top: 14px;
   right: 40px;
   line-height: 21px;
   height: auto;

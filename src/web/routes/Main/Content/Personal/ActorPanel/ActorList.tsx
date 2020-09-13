@@ -14,6 +14,7 @@ import { showToasts } from '@shared/manager/ui';
 import ActorInfo from '@web/components/modal/ActorInfo';
 import { Typography } from 'antd';
 import { t } from '@shared/i18n';
+import { openModal } from '@web/components/Modal';
 
 export const ActorList: React.FC = TMemo(() => {
   const selfActors = useTRPGSelector((state) => state.actor.selfActors);
@@ -66,16 +67,14 @@ export const ActorList: React.FC = TMemo(() => {
       return;
     }
 
-    dispatch(
-      showModal(
-        <ActorInfo
-          name={actor.name}
-          desc={actor.desc}
-          avatar={actor.avatar}
-          data={actor.info}
-          templateUUID={actor.template_uuid}
-        />
-      )
+    openModal(
+      <ActorInfo
+        name={actor.name}
+        desc={actor.desc}
+        avatar={actor.avatar}
+        data={actor.info}
+        templateUUID={actor.template_uuid}
+      />
     );
   };
 
