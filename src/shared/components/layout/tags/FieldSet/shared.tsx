@@ -36,7 +36,7 @@ const Container = styled.div<{ left: number }>`
       display: table-cell;
       position: relative;
       content: '';
-      border-top: 1px solid #e8e8e8;
+      border-top: ${(props) => props.theme.border.standard};
     }
 
     &::after {
@@ -45,7 +45,7 @@ const Container = styled.div<{ left: number }>`
       display: table-cell;
       position: relative;
       content: '';
-      border-top: 1px solid #e8e8e8;
+      border-top: ${(props) => props.theme.border.standard};
     }
 
     .inner-text {
