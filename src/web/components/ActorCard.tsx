@@ -80,6 +80,10 @@ const Container = styled(ActorCardContainer)`
         button {
           ${(props) => props.theme.mixins.linkBtn}
           font-size: 12px;
+
+          .iconfont {
+            font-size: 16px;
+          }
         }
       }
     }

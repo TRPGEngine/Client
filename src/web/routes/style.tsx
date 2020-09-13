@@ -14,14 +14,29 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   /* antd 黑夜模式下样式 */
-  .app.new-ui-dark {
-    .ant-input, .ant-select-selector {
-      border-color: ${(props) => props.theme.color.graySet[6]};
-    }
 
-    .ant-dropdown-menu {
-      background-color: ${(props) => props.theme.color.graySet[9]};
+  .ant-dropdown-menu {
+    background-color: ${(props) => props.theme.color.graySet[8]};
+  }
+
+  .ant-select-dropdown {
+    background-color: ${(props) => props.theme.color.graySet[8]};
+
+    .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+      background-color: ${(props) => props.theme.color.graySet[6]};
     }
+  }
+
+  .ant-input, .ant-select-selector {
+    border-color: ${(props) => props.theme.color.graySet[9]};
+  }
+
+  .ant-select-selector {
+    background-color: ${(props) => props.theme.color.graySet[6]};
+  }
+
+  .ant-select-clear {
+    background-color: ${(props) => props.theme.color.graySet[6]};
   }
 
   /* 新版滚动条 */

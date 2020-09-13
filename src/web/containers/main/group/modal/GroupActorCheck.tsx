@@ -54,14 +54,14 @@ export const GroupActorCheck: React.FC<Props> = TMemo((props) => {
   }, [handleRefuse, handleAgree]);
 
   return useMemo(
-    () =>
-      _isString(layout) ? (
-        <ModalPanel
-          className="group-actor-check"
-          title="审核人物"
-          actions={actions}
-          allowMaximize={true}
-        >
+    () => (
+      <ModalPanel
+        className="group-actor-check"
+        title="审核人物"
+        actions={actions}
+        allowMaximize={true}
+      >
+        {_isString(layout) ? (
           <XMLBuilder
             xml={layout}
             initialData={props.actorData}
@@ -69,8 +69,11 @@ export const GroupActorCheck: React.FC<Props> = TMemo((props) => {
             // layoutType="edit"
             // onChange={(newState) => setEditingData(newState.data)}
           />
-        </ModalPanel>
-      ) : null,
+        ) : (
+          <div>数据获取失败...</div>
+        )}
+      </ModalPanel>
+    ),
     [layout, actions, props.actorData]
   );
 });

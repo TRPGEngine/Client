@@ -223,7 +223,7 @@ const GroupActorChecksList: React.FC<{
         const actions = [
           <Tooltip key="query" title="查询">
             <button onClick={() => handleShowActorProfile(groupActor)}>
-              <i className="iconfont">&#xe61b;</i>
+              <Iconfont>&#xe61b;</Iconfont>
             </button>
           </Tooltip>,
         ];
@@ -232,7 +232,7 @@ const GroupActorChecksList: React.FC<{
           actions.push(
             <Tooltip title="审批">
               <button onClick={() => handleApprove(groupActor)}>
-                <i className="iconfont">&#xe83f;</i>
+                <Iconfont>&#xe83f;</Iconfont>
               </button>
             </Tooltip>
           );

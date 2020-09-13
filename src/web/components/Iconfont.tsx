@@ -10,3 +10,4 @@ export const Iconfont = styled.i.attrs({
   cursor: ${(props) => (props.onClick ? 'pointer' : 'inherit')};
   font-size: inherit;
 `;
+Iconfont.displayName = 'Iconfont';
