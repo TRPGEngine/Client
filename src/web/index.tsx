@@ -58,6 +58,12 @@ bindEventFunc.call(api, store, {
   onReceiveMessage: notify(store).onReceiveMessage,
 });
 window.onerror = (event, source, fileno, columnNumber, error) => {
+  if (String(event) === 'ResizeObserver loop limit exceeded') {
+    // antd tooltip 会有问题。不知道什么原因 说是修好了但是还是有问题
+    // https://github.com/ant-design/ant-design/issues/23246
+    return;
+  }
+
   // 全局错误捕获
   import('./utils/sentry').then((module) =>
     module.error(error || String(event))
