@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { SidebarView, SidebarViewMenuType } from '@web/components/SidebarView';
 import { GroupInfoSummary } from './GroupInfoSummary';
-import { useJoinedGroupInfo } from '@redux/hooks/group';
+import { useIsGroupManager, useJoinedGroupInfo } from '@redux/hooks/group';
 import { GroupPanelManager } from './GroupPanelManager';
 import { GroupActorManager } from './GroupActorManager';
 import { useTranslation } from '@shared/i18n';
@@ -15,6 +15,7 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
     const { groupUUID } = props;
     const groupInfo = useJoinedGroupInfo(groupUUID);
     const { t } = useTranslation();
+    const isGroupManager = useIsGroupManager(groupUUID);
 
     const menu: SidebarViewMenuType[] = useMemo(
       () => [
@@ -30,6 +31,7 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
             {
               type: 'item',
               title: t('面板'),
+              hidden: !isGroupManager,
               content: <GroupPanelManager groupUUID={groupUUID} />,
             },
             {
@@ -40,7 +42,7 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
           ],
         },
       ],
-      [groupInfo?.name, groupUUID, t]
+      [groupInfo?.name, groupUUID, t, isGroupManager]
     );
 
     return (

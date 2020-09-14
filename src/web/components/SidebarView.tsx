@@ -9,7 +9,16 @@ interface SidebarViewMenuItemType {
   type: 'item';
   title: string;
   content: React.ReactNode;
+
+  /**
+   * 是否是仅开发者可见
+   */
   isDev?: boolean;
+
+  /**
+   * 隐藏这个项
+   */
+  hidden?: boolean;
 }
 
 interface SidebarViewLinkType {
@@ -132,7 +141,11 @@ const SidebarViewMenuItem: React.FC<SidebarViewMenuProps> = TMemo((props) => {
       </div>
     );
   } else if (menu.type === 'item') {
-    const t = (
+    if (menu.hidden === true) {
+      return null;
+    }
+
+    const component = (
       <SidebarViewMenuItemTitle
         className={content === menu.content ? 'active' : ''}
         onClick={() => setContent(menu.content)}
@@ -142,9 +155,9 @@ const SidebarViewMenuItem: React.FC<SidebarViewMenuProps> = TMemo((props) => {
     );
 
     if (menu.isDev === true) {
-      return <DevContainer>{t}</DevContainer>;
+      return <DevContainer>{component}</DevContainer>;
     } else {
-      return <div>{t}</div>;
+      return <div>{component}</div>;
     }
   } else if (menu.type === 'link') {
     return (
