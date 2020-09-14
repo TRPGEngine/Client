@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { MenuOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -11,19 +11,35 @@ const Root = styled.div`
   font-size: 26px;
 `;
 
-export const MobileNavbarSwitch: React.FC = TMemo(() => {
-  const isMobile = useIsMobile();
-  const { switchSidebar } = useSidebarContext();
+const MobileNavbarSwitchButton: React.FC = TMemo(() => {
+  const { switchSidebar, setShowSidebar } = useSidebarContext();
 
-  if (!isMobile) {
-    return null;
-  }
+  useEffect(() => {
+    // 当按钮出现时强制移除侧边栏
+    setShowSidebar(false);
 
-  // 视为手机
+    return () => {
+      // 当按钮隐藏时强制显示侧边栏
+      setShowSidebar(true);
+    };
+  }, []);
+
   return (
     <Root>
       <MenuOutlined onClick={switchSidebar} />
     </Root>
   );
+});
+MobileNavbarSwitchButton.displayName = 'MobileNavbarSwitchButton';
+
+export const MobileNavbarSwitch: React.FC = TMemo(() => {
+  const isMobile = useIsMobile();
+
+  if (!isMobile) {
+    return null;
+  }
+
+  // 视为手机 显示切换按钮
+  return <MobileNavbarSwitchButton />;
 });
 MobileNavbarSwitch.displayName = 'MobileNavbarSwitch';

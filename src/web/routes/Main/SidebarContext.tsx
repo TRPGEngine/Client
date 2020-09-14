@@ -1,6 +1,7 @@
 import React, { useContext, useState, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import _noop from 'lodash/noop';
+import _isBoolean from 'lodash/isBoolean';
 import { useIsMobile } from '@web/hooks/useIsMobile';
 
 /**
@@ -10,23 +11,27 @@ import { useIsMobile } from '@web/hooks/useIsMobile';
 interface SidebarContextProps {
   showSidebar: boolean;
   switchSidebar: () => void;
+  setShowSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const SidebarContext = React.createContext<SidebarContextProps>({
   showSidebar: true,
   switchSidebar: _noop,
+  setShowSidebar: _noop,
 });
 SidebarContext.displayName = 'SidebarContext';
 
 export const SidebarContextProvider: React.FC = TMemo((props) => {
-  const isMobile = useIsMobile();
-  const [showSidebar, setShowSidebar] = useState(!isMobile);
+  const [showSidebar, setShowSidebar] = useState(false);
 
+  // 切换
   const switchSidebar = useCallback(() => {
     setShowSidebar(!showSidebar);
   }, [showSidebar]);
 
   return (
-    <SidebarContext.Provider value={{ showSidebar, switchSidebar }}>
+    <SidebarContext.Provider
+      value={{ showSidebar, switchSidebar, setShowSidebar }}
+    >
       {props.children}
     </SidebarContext.Provider>
   );
