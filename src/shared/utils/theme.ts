@@ -39,6 +39,10 @@ type ThemeType = ReturnType<typeof getStyledTheme>;
 export type ThemeMode = 'light' | 'dark';
 
 export function getStyledTheme(mode: ThemeMode) {
+  /**
+   * 根据主题返回合适的值
+   * @param val [lightVal, darkVal]
+   */
   const modeValue = (val: [string | number, string | number]): string => {
     if (mode === 'light') {
       return String(val[0]);
