@@ -43,13 +43,16 @@ export interface PlayerUserLoginLogType {
 export async function loginWithPassword(
   username: string,
   password: string
-): Promise<void> {
+): Promise<string> {
   const { data } = await request.post('/player/sso/login', {
     username,
     password: md5(password),
   });
 
-  await setUserJWT(data.jwt);
+  const jwt = data.jwt;
+  await setUserJWT(jwt);
+
+  return jwt;
 }
 
 /**

@@ -30,3 +30,8 @@ export const SYSTE_CONVERSE_SPEC = 'trpgsystem';
  * 系统语言的常量
  */
 export const LANGUAGE_KEY = 'trpg:i18n:language';
+
+/**
+ * portal端的jwt键
+ */
+export const PORTAL_JWT_KEY = 'jwt';

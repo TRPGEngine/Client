@@ -1,7 +1,8 @@
 import { message } from 'antd';
 import { setToasts } from '@shared/manager/ui';
-import { setErrorHook } from '@shared/manager/request';
+import { setErrorHook, setTokenGetter } from '@shared/manager/request';
 import { navToLoginPage } from './utils/request';
+import { getPortalJWT } from './utils/auth';
 
 setToasts((msg, type = 'info') => {
   message.open({
@@ -30,4 +31,10 @@ setErrorHook((err) => {
   }
 
   return true;
+});
+
+setTokenGetter(() => {
+  // portal 端使用简单的jwt作为沟通方式
+  // 因为跨webview写入比较麻烦
+  return Promise.resolve(getPortalJWT());
 });

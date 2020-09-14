@@ -5,6 +5,7 @@ import { message, Input, Button, Col, Typography, Form } from 'antd';
 import { useFormik } from 'formik';
 import _isFunction from 'lodash/isFunction';
 import { loginWithPassword } from '@shared/model/player';
+import { setPortalJWT } from '@portal/utils/auth';
 
 interface Values {
   username: string;
@@ -28,7 +29,8 @@ export const LoginForm: React.FC<LoginFormProps> = TMemo((props) => {
 
         setLoading(true);
         loginWithPassword(username, password)
-          .then(() => {
+          .then((jwt) => {
+            setPortalJWT(jwt);
             _isFunction(props.onLoginSuccess) && props.onLoginSuccess();
           })
           .catch(handleError)

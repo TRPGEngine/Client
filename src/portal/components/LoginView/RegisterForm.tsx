@@ -7,6 +7,7 @@ import { handleError } from '@portal/utils/error';
 import _isFunction from 'lodash/isFunction';
 import { loginWithPassword } from '@shared/model/player';
 import { FastFormFieldMeta } from '@shared/components/FastForm/field';
+import { setPortalJWT } from '@portal/utils/auth';
 
 const fields: FastFormFieldMeta[] = [
   {
@@ -53,8 +54,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = TMemo((props) => {
 
       try {
         await registerAccount(username, password);
-        await loginWithPassword(username, password); // 注册成功后自动登录
+        const jwt = await loginWithPassword(username, password); // 注册成功后自动登录
 
+        setPortalJWT(jwt);
         _isFunction(props.onLoginSuccess) && props.onLoginSuccess();
       } catch (err) {
         handleError(err);

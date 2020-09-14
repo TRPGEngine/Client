@@ -5,7 +5,7 @@ import _isString from 'lodash/isString';
 import { showToasts } from '@shared/manager/ui';
 import { getUserJWT } from './jwt-helper';
 import _isFunction from 'lodash/isFunction';
-import { getErrorHook } from '@shared/manager/request';
+import { getErrorHook, tokenGetter } from '@shared/manager/request';
 
 const fileUrl = config.file.url;
 
@@ -56,7 +56,7 @@ export function createRequest() {
       !val.headers['X-Token']
     ) {
       // 任何请求都尝试增加token
-      val.headers['X-Token'] = await getUserJWT();
+      val.headers['X-Token'] = await tokenGetter();
     }
 
     return val;
