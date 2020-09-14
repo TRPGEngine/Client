@@ -23,14 +23,15 @@ import { Iconfont } from '@web/components/Iconfont';
 import ActorEdit from '@web/components/modal/ActorEdit';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import {
-  requestUpdateGroupActorInfo,
   requestAddGroupActor,
   removeGroupActor,
+  updateGroupActorInfo,
 } from '@redux/actions/group';
 import { showAlert } from '@redux/actions/ui';
 import { ActorCard, ActorCardListContainer } from '@web/components/ActorCard';
 import { GroupActorCheck } from '@web/containers/main/group/modal/GroupActorCheck';
 import ActorSelect from '@web/components/modal/ActorSelect';
+import { editGroupActor } from '@shared/model/group';
 const TabPane = PillTabs.TabPane;
 
 /**
@@ -103,7 +104,7 @@ const GroupActorsList: React.FC<{
   const handleEditActorInfo = (groupActor: GroupActorType) => {
     const templateUUID = getGroupActorTemplateUUID(groupActor);
 
-    openModal(
+    const key = openModal(
       <ActorEdit
         name={groupActor.name}
         avatar={groupActor.avatar}
@@ -111,9 +112,18 @@ const GroupActorsList: React.FC<{
         data={getGroupActorInfo(groupActor)}
         templateUUID={templateUUID}
         onSave={(data) => {
-          dispatch(
-            requestUpdateGroupActorInfo(groupInfo.uuid, groupActor.uuid, data)
-          );
+          editGroupActor(groupInfo.uuid, groupActor.uuid, data)
+            .then(() => {
+              dispatch(
+                updateGroupActorInfo(groupInfo.uuid, groupActor.uuid, data)
+              );
+              dispatch(showAlert('保存完毕!'));
+              closeModal(key);
+            })
+            .catch((err) => {
+              dispatch(showAlert(err));
+              console.error(err);
+            });
         }}
       />
     );

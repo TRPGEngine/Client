@@ -621,47 +621,19 @@ export const refuseGroupActor = createAction<{
 }>(REFUSE_GROUP_ACTOR_SUCCESS);
 
 /**
- * 更新团人物的人物卡信息
- */
-export const requestUpdateGroupActorInfo = function(
-  groupUUID: string,
-  groupActorUUID: string,
-  groupActorInfo: {}
-) {
-  return function(dispatch, getState) {
-    return api.emit(
-      'group::updateGroupActorInfo',
-      { groupActorUUID, groupActorInfo },
-      function(data) {
-        if (data.result) {
-          dispatch(
-            updateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)
-          );
-          dispatch(hideModal());
-          dispatch(showAlert('保存完毕!'));
-        } else {
-          dispatch(showAlert(data.msg));
-          console.error(data);
-        }
-      }
-    );
-  };
-};
-/**
  * 更新团人物卡数据
  */
-export const updateGroupActorInfo = function(
-  groupUUID: string,
-  groupActorUUID: string,
-  groupActorInfo: {}
-): TRPGAction {
-  return {
-    type: UPDATE_GROUP_ACTOR_INFO,
-    groupUUID,
-    groupActorUUID,
-    groupActorInfo,
-  };
-};
+export const updateGroupActorInfo = createAction(
+  UPDATE_GROUP_ACTOR_INFO,
+  (
+    groupUUID: string,
+    groupActorUUID: string,
+    groupActorInfo: { [key: string]: any }
+  ) => ({
+    payload: { groupUUID, groupActorUUID, groupActorInfo },
+  })
+);
+
 /**
  * 更新团人物卡信息
  */

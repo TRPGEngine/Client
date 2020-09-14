@@ -2,6 +2,10 @@ import rnStorage from '../api/rn-storage.api';
 import * as trpgApi from '../api/trpg.api';
 const api = trpgApi.getInstance();
 
+/**
+ * NOTE: 因为引入了trpgApi所以该文件不允许被portal使用
+ */
+
 type PlatformType = 'jpush' | 'upush';
 
 interface NotifyInfo {

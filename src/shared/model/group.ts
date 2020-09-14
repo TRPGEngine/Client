@@ -1,8 +1,15 @@
 import { GroupInfo } from '@redux/types/group';
 import _isNil from 'lodash/isNil';
 import _isArray from 'lodash/isArray';
+import _get from 'lodash/get';
+import _isString from 'lodash/isString';
+import _set from 'lodash/set';
 import { request } from '@shared/utils/request';
 import { PlayerUser } from './player';
+import { isBlobUrl } from '@shared/utils/string-helper';
+import { toGroupActorWithBlobUrl } from '@web/utils/upload-helper';
+import { bindFileAvatarAttachUUID } from './file';
+import { getJWTUserInfo } from '@shared/utils/jwt-helper';
 
 export interface GroupItem {
   uuid: string;
@@ -180,3 +187,40 @@ export const requestRefuseGroupActor = async (
     groupActorUUID,
   });
 };
+
+/**
+ * 编辑团角色信息
+ * @param groupUUID 团UUID
+ * @param groupActorUUID 团角色UUID
+ * @param groupActorInfo 团角色信息
+ */
+export async function editGroupActor(
+  groupUUID: string,
+  groupActorUUID: string,
+  groupActorInfo: { [key: string]: any }
+): Promise<GroupActorItem> {
+  // 头像的修改与绑定
+  const avatarUrl = _get(groupActorInfo, '_avatar');
+  let avatar;
+  if (_isString(avatarUrl) && isBlobUrl(avatarUrl)) {
+    const userInfo = await getJWTUserInfo();
+    avatar = await toGroupActorWithBlobUrl(userInfo.uuid!, avatarUrl);
+    _set(groupActorInfo, '_avatar', avatar.url);
+  }
+
+  const { data } = await request.post(
+    `/group/${groupUUID}/actor/${groupActorUUID}/edit`,
+    {
+      info: groupActorInfo,
+    }
+  );
+
+  const groupActor: GroupActorItem = data.groupActor;
+
+  if (!_isNil(avatar)) {
+    // 如果有头像， 则绑定头像关系
+    await bindFileAvatarAttachUUID(avatar.uuid, groupActor.uuid);
+  }
+
+  return groupActor;
+}

@@ -6,7 +6,11 @@ import { GroupState } from '@redux/types/group';
 import constants from '@redux/constants';
 import produce from 'immer';
 import { createReducer } from '@reduxjs/toolkit';
-import { agreeGroupActor, refuseGroupActor } from '@redux/actions/group';
+import {
+  agreeGroupActor,
+  refuseGroupActor,
+  updateGroupActorInfo,
+} from '@redux/actions/group';
 const {
   RESET,
   CREATE_GROUP_SUCCESS,
@@ -210,22 +214,21 @@ export default createReducer(initialState, (builder) => {
         );
       }
     })
-    .addCase(UPDATE_GROUP_ACTOR_INFO, (state, action: any) => {
-      const groupIndex = state.groups.findIndex(
-        (g) => g.uuid === action.groupUUID
-      );
+    .addCase(updateGroupActorInfo, (state, action) => {
+      const { groupUUID, groupActorUUID, groupActorInfo } = action.payload;
+
+      const groupIndex = state.groups.findIndex((g) => g.uuid === groupUUID);
       if (groupIndex === -1) {
         return;
       }
       const groupActorIndex = state.groups[groupIndex].group_actors!.findIndex(
-        (g) => g.uuid === action.groupActorUUID
+        (g) => g.uuid === groupActorUUID
       );
 
       if (groupActorIndex === -1) {
         return;
       }
 
-      const groupActorInfo = action.groupActorInfo;
       _set(
         state.groups[groupIndex],
         ['group_actors', groupActorIndex, 'actor_info'],

@@ -25,26 +25,3 @@ export const checkToken = async (autoNav = true): Promise<void> => {
     throw err;
   }
 };
-
-interface UserInfo {
-  name?: string;
-  uuid?: string;
-  avatar?: string;
-}
-/**
- * 获取token中的明文信息
- * 明确需要返回一个对象
- */
-export const getJWTInfo = async (): Promise<UserInfo> => {
-  try {
-    const token = await getUserJWT();
-    const info = getJWTPayload(token);
-    if (_isObject(info)) {
-      return info;
-    }
-  } catch (e) {
-    console.error('getJWTInfo Error:', e);
-  }
-
-  return {};
-};

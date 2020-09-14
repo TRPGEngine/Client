@@ -4,12 +4,12 @@ import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
 import { toGroupActorWithBlobUrl } from '@web/utils/upload-helper';
-import { getJWTInfo } from '@portal/utils/auth';
 import { isBlobUrl } from '@shared/utils/string-helper';
-import { bindFileAvatarAttachUUID } from './file';
 import { ModelAccess } from './types';
 import { ChatLogItem } from './chat';
 import { GroupActorItem, GroupItem } from '@shared/model/group';
+import { bindFileAvatarAttachUUID } from '@shared/model/file';
+import { getJWTUserInfo } from '@shared/utils/jwt-helper';
 
 /**
  * 获取自己拥有的所有团
@@ -68,43 +68,6 @@ export const applyGroupActor = async (
   });
 
   return data.actor;
-};
-
-/**
- * 编辑团角色信息
- * @param groupUUID 团UUID
- * @param groupActorUUID 团角色UUID
- * @param groupActorInfo 团角色信息
- */
-export const editGroupActor = async (
-  groupUUID: string,
-  groupActorUUID: string,
-  groupActorInfo: { [key: string]: any }
-): Promise<GroupActorItem> => {
-  // 头像的修改与绑定
-  const avatarUrl = _get(groupActorInfo, '_avatar');
-  let avatar;
-  if (_isString(avatarUrl) && isBlobUrl(avatarUrl)) {
-    const userInfo = await getJWTInfo();
-    avatar = await toGroupActorWithBlobUrl(userInfo.uuid!, avatarUrl);
-    _set(groupActorInfo, '_avatar', avatar.url);
-  }
-
-  const { data } = await request.post(
-    `/group/${groupUUID}/actor/${groupActorUUID}/edit`,
-    {
-      info: groupActorInfo,
-    }
-  );
-
-  const groupActor: GroupActorItem = data.groupActor;
-
-  if (!_isNil(avatar)) {
-    // 如果有头像， 则绑定头像关系
-    await bindFileAvatarAttachUUID(avatar.uuid, groupActor.uuid);
-  }
-
-  return groupActor;
 };
 
 /**
