@@ -13,6 +13,7 @@ import { ErrorReportView } from '@web/components/ErrorReportView';
 import { DevelopLab } from './DevelopLab';
 import { AboutView } from './AboutView';
 import { useTranslation } from '@shared/i18n';
+import { showAlert } from '@shared/manager/ui';
 
 export const SettingView: React.FC = TMemo(() => {
   const dispatch = useTRPGDispatch();
@@ -36,6 +37,7 @@ export const SettingView: React.FC = TMemo(() => {
           {
             type: 'item',
             title: t('个人设置'),
+            hidden: true, // 暂时没有设置
             content: <UserSettings />, // 注意。这里没有办法保存设置. 里面内置的保存是取消挂载时生效。并不好用，需要修改
           },
           {
@@ -80,9 +82,14 @@ export const SettingView: React.FC = TMemo(() => {
             type: 'link',
             title: t('清理缓存'),
             onClick: () => {
-              window.localStorage.clear();
-              window.sessionStorage.clear();
-              window.location.href = '/';
+              showAlert({
+                message: t('确认要清除缓存么'),
+                onConfirm() {
+                  window.localStorage.clear();
+                  window.sessionStorage.clear();
+                  window.location.href = '/';
+                },
+              });
             },
           },
           {

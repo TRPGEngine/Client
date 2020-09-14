@@ -32,11 +32,15 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .ant-select-selector {
-    background-color: ${(props) => props.theme.color.graySet[6]};
+    background-color: ${(props) => props.theme.color.graySet[6]} !important;
   }
 
   .ant-select-clear {
     background-color: ${(props) => props.theme.color.graySet[6]};
+  }
+
+  .ant-collapse-content {
+    background-color: ${(props) => props.theme.color.graySet[7]};
   }
 
   /* 新版滚动条 */
