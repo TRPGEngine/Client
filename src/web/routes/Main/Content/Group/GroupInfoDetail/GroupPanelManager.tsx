@@ -11,7 +11,7 @@ import { updatePanelOrder, removePanel } from '@shared/model/panel';
 import { showToasts, showAlert } from '@shared/manager/ui';
 import { openModal, ModalWrapper } from '@web/components/Modal';
 import { GroupPanelUpdateInfo } from '@web/components/modal/GroupPanelUpdateInfo';
-import { t } from '@shared/i18n';
+import { useTranslation } from '@shared/i18n';
 
 const GroupPanelListItemContainer = styled.div`
   padding: 10px;
@@ -32,6 +32,7 @@ const GroupPanelListItem: React.FC<{
   const { groupUUID, item } = props;
   const panelUUID = item.uuid;
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const handleEdit = useCallback(() => {
     openModal(
@@ -85,6 +86,7 @@ interface GroupPanelListProps {
 const GroupPanelList: React.FC<GroupPanelListProps> = TMemo((props) => {
   const { groupUUID } = props;
   const [panels, setPanels] = useState(props.panels);
+  const { t } = useTranslation();
 
   const isChanged = useMemo(() => {
     return (
@@ -97,7 +99,7 @@ const GroupPanelList: React.FC<GroupPanelListProps> = TMemo((props) => {
   const handleSave = useCallback(async () => {
     try {
       await updatePanelOrder(groupUUID, panels);
-      showToasts('保存成功');
+      showToasts(t('保存成功'));
     } catch (err) {
       showToasts(err, 'error');
     }
@@ -141,6 +143,7 @@ interface GroupPanelManagerProps {
 export const GroupPanelManager: React.FC<GroupPanelManagerProps> = TMemo(
   (props) => {
     const groupInfo = useJoinedGroupInfo(props.groupUUID);
+    const { t } = useTranslation();
 
     if (_isNil(groupInfo)) {
       return null;

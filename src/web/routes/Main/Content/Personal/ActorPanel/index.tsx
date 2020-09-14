@@ -2,12 +2,12 @@ import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { PillTabs } from '@web/components/PillTabs';
 import styled from 'styled-components';
-import { t } from '@shared/i18n';
 import { Button } from 'antd';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { showModal } from '@redux/actions/ui';
 import ActorCreate from '@web/components/modal/ActorCreate';
 import { ActorList } from './ActorList';
+import { useTranslation } from '@shared/i18n';
 const { TabPane } = PillTabs;
 
 const PaneContainer = styled.div`
@@ -16,6 +16,7 @@ const PaneContainer = styled.div`
 
 export const ActorPanel: React.FC = TMemo(() => {
   const dispatch = useTRPGDispatch();
+  const { t } = useTranslation();
 
   const allActorPane = useMemo(
     () => (
@@ -29,7 +30,7 @@ export const ActorPanel: React.FC = TMemo(() => {
         </PaneContainer>
       </TabPane>
     ),
-    []
+    [t]
   );
 
   return <PillTabs defaultActiveKey="1">{allActorPane}</PillTabs>;

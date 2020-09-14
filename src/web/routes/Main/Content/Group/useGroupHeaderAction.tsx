@@ -62,7 +62,7 @@ export function useGroupHeaderAction(groupInfo: GroupInfo) {
   // 解散/退出团
   const handleQuitGroup = useCallback(() => {
     if (_isNil(groupInfo)) {
-      showToasts('找不到该团');
+      showToasts(t('找不到该团'));
       return;
     }
 
@@ -71,8 +71,8 @@ export function useGroupHeaderAction(groupInfo: GroupInfo) {
       // 解散团
       dispatch(
         showAlert({
-          title: '是否要解散群',
-          content: '一旦确定无法撤销',
+          title: t('是否要解散群'),
+          content: t('一旦确定无法撤销'),
           onConfirm: () => {
             dispatch(dismissGroup(groupUUID));
           },
@@ -81,15 +81,15 @@ export function useGroupHeaderAction(groupInfo: GroupInfo) {
     } else {
       dispatch(
         showAlert({
-          title: '是否要退出群',
-          content: '一旦确定无法撤销',
+          title: t('是否要退出群'),
+          content: t('一旦确定无法撤销'),
           onConfirm: () => {
             dispatch(quitGroup(groupUUID));
           },
         })
       );
     }
-  }, [currentUserUUID, groupInfo?.owner_uuid, groupInfo?.uuid]);
+  }, [currentUserUUID, groupInfo?.owner_uuid, groupInfo?.uuid, t]);
 
   return {
     handleShowGroupInfo,

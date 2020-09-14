@@ -7,6 +7,7 @@ import { useGroupPanelInfo } from '@redux/hooks/group';
 import _isNil from 'lodash/isNil';
 import { hasPanel } from '@shared/components/panel/reg';
 import { GroupPanelView } from '@web/components/panels/__all__';
+import { useTranslation } from '@shared/i18n';
 
 interface GroupPanelParams {
   groupUUID: string;
@@ -16,11 +17,12 @@ interface GroupPanelParams {
 const GroupPanelRender: React.FC<GroupPanelParams> = TMemo((props) => {
   const { groupUUID, panelUUID } = props;
   const panel = useGroupPanelInfo(groupUUID, panelUUID);
+  const { t } = useTranslation();
 
   if (_isNil(panel)) {
     return (
       <div>
-        <Result status="warning" title="找不到该面板" />
+        <Result status="warning" title={t('找不到该面板')} />
       </div>
     );
   }
@@ -33,7 +35,7 @@ const GroupPanelRender: React.FC<GroupPanelParams> = TMemo((props) => {
 
   return (
     <div>
-      <Result status="warning" title="未知的面板类型, 请检查客户端版本" />
+      <Result status="warning" title={t('未知的面板类型, 请检查客户端版本')} />
     </div>
   );
 });
@@ -44,7 +46,7 @@ export const GroupPanel: React.FC = TMemo(() => {
   const { groupUUID, panelUUID } = params;
 
   // 固定的显示
-  if (panelUUID === 'main') {
+  if (panelUUID === 'lobby') {
     return <GroupChatPanel groupUUID={groupUUID} />;
   }
 

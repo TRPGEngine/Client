@@ -8,12 +8,12 @@ import {
 import _isNil from 'lodash/isNil';
 import { Button, Row, Col } from 'antd';
 import { WebFastForm } from './WebFastForm';
-import { t } from '@shared/i18n';
 import { sendUserFeedback } from '@shared/model/sentry';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { getUserName } from '@shared/utils/data-helper';
 import { showToasts } from '@shared/manager/ui';
 import { FastFormFieldMeta } from '@shared/components/FastForm/field';
+import { useTranslation } from '@shared/i18n';
 
 const fields: FastFormFieldMeta[] = [
   {
@@ -31,6 +31,7 @@ const fields: FastFormFieldMeta[] = [
 export const ErrorReportView: React.FC = TMemo(() => {
   const userInfo = useCurrentUserInfo();
   const userName = getUserName(userInfo);
+  const { t } = useTranslation();
   const handleSendUserFeedback = useCallback(
     async (values) => {
       try {
@@ -67,7 +68,7 @@ export const ErrorReportView: React.FC = TMemo(() => {
     } else {
       return <WebFastForm fields={fields} onSubmit={handleSendUserFeedback} />;
     }
-  }, [handleSendUserFeedback]);
+  }, [handleSendUserFeedback, t]);
 
   return (
     <div>

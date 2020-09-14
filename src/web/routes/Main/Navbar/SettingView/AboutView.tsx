@@ -1,9 +1,11 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Typography } from 'antd';
-import { t } from '@shared/i18n';
+import { useTranslation } from '@shared/i18n';
 
 export const AboutView: React.FC = TMemo(() => {
+  const { t } = useTranslation();
+
   return (
     <div>
       <Typography.Title level={3}>{t('关于')}</Typography.Title>

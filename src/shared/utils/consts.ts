@@ -25,3 +25,8 @@ export const APP_BANNER_CLOSE = 'appBannerClose';
  * 系统消息用的UUID
  */
 export const SYSTE_CONVERSE_SPEC = 'trpgsystem';
+
+/**
+ * 系统语言的常量
+ */
+export const LANGUAGE_KEY = 'trpg:i18n:language';

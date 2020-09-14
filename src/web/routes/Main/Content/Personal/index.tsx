@@ -25,7 +25,13 @@ import { createNote } from '@redux/actions/note';
 import { ActorPanel } from './ActorPanel';
 import { SYSTE_CONVERSE_SPEC } from '@shared/utils/consts';
 import { Divider } from 'antd';
+import { useCurrentUserInfo } from '@redux/hooks/user';
+import { getUserName } from '@shared/utils/data-helper';
+import { useTranslation } from '@shared/i18n';
 
+/**
+ * 个人面板
+ */
 export const Personal: React.FC = TMemo(() => {
   const userConverses = useConverses(['user']);
   const systemConverse = useTRPGSelector(
@@ -36,15 +42,17 @@ export const Personal: React.FC = TMemo(() => {
   const handleAddNote = useCallback(() => {
     dispatch(createNote());
   }, []);
+  const currentUserInfo = useCurrentUserInfo();
+  const { t } = useTranslation();
 
   return (
     <ContentContainer>
       <Sidebar>
-        <SectionHeader />
+        <SectionHeader>{getUserName(currentUserInfo)}</SectionHeader>
         <SidebarItemsContainer>
           <SidebarItem
             icon={<UserOutlined style={{ color: 'white', fontSize: 24 }} />}
-            name="好友"
+            name={t('好友')}
             to="/main/personal/friends"
           />
           <SidebarItem
@@ -53,18 +61,18 @@ export const Personal: React.FC = TMemo(() => {
                 &#xe61b;
               </Iconfont>
             }
-            name="角色"
+            name={t('角色')}
             to="/main/personal/actors"
           />
           <Divider />
           <SidebarItem
-            icon={'系统消息'}
-            name={'系统消息'}
+            icon="系统消息"
+            name={t('系统消息')}
             to={`/main/personal/converse/${SYSTE_CONVERSE_SPEC}`}
             badge={systemConverse?.unread}
           />
           <SidebarHeader
-            title="笔记"
+            title={t('笔记')}
             action={<Iconfont onClick={handleAddNote}>&#xe604;</Iconfont>}
           />
           <div>
@@ -80,7 +88,7 @@ export const Personal: React.FC = TMemo(() => {
               );
             })}
           </div>
-          <SidebarHeaderText>私信</SidebarHeaderText>
+          <SidebarHeaderText>{t('私信')}</SidebarHeaderText>
           <div>
             {userConverses.map((converse) => {
               return (

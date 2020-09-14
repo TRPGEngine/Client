@@ -4,8 +4,7 @@ import { useRNStorage } from '@shared/hooks/useRNStorage';
 import { useRef, useMemo, useCallback } from 'react';
 import _isNil from 'lodash/isNil';
 import { setLanguage as setI18NLanguage } from './index';
-
-const LANGUAGE_KEY = 'trpg:i18n:language';
+import { LANGUAGE_KEY } from '@shared/utils/consts';
 
 export const defaultLanguage = 'zh-CN';
 

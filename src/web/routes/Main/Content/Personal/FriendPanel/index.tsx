@@ -10,7 +10,6 @@ import { PillTabs } from '@web/components/PillTabs';
 import styled from 'styled-components';
 import { MessageOutlined, CloseOutlined } from '@ant-design/icons';
 import { AddFriend } from './AddFriend';
-import { t } from '@shared/i18n';
 import { useHistory } from 'react-router';
 import { addUserConverse } from '@redux/actions/chat';
 import {
@@ -18,6 +17,7 @@ import {
   agreeFriendInvite,
   refuseFriendInvite,
 } from '@redux/actions/user';
+import { useTranslation } from '@shared/i18n';
 const { TabPane } = Tabs;
 
 const PaneContainer = styled.div`
@@ -39,6 +39,7 @@ export const FriendPanel: React.FC = TMemo(() => {
   const friendRequests = useTRPGSelector((state) => state.user.friendRequests);
   const history = useHistory();
   const dispatch = useTRPGDispatch();
+  const { t } = useTranslation();
 
   const handleNavMsg = (userUUID: string) => {
     dispatch(addUserConverse([userUUID]));

@@ -5,6 +5,7 @@ import { GroupInfoSummary } from './GroupInfoSummary';
 import { useJoinedGroupInfo } from '@redux/hooks/group';
 import { GroupPanelManager } from './GroupPanelManager';
 import { GroupActorManager } from './GroupActorManager';
+import { useTranslation } from '@shared/i18n';
 
 interface GroupInfoDetailProps {
   groupUUID: string;
@@ -13,6 +14,7 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
   (props) => {
     const { groupUUID } = props;
     const groupInfo = useJoinedGroupInfo(groupUUID);
+    const { t } = useTranslation();
 
     const menu: SidebarViewMenuType[] = useMemo(
       () => [
@@ -22,23 +24,23 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
           children: [
             {
               type: 'item',
-              title: '概况',
+              title: t('概况'),
               content: <GroupInfoSummary groupUUID={groupUUID} />,
             },
             {
               type: 'item',
-              title: '面板',
+              title: t('面板'),
               content: <GroupPanelManager groupUUID={groupUUID} />,
             },
             {
               type: 'item',
-              title: '人物卡管理',
+              title: t('人物卡管理'),
               content: <GroupActorManager groupUUID={groupUUID} />,
             },
           ],
         },
       ],
-      [groupInfo?.name, groupUUID]
+      [groupInfo?.name, groupUUID, t]
     );
 
     return (

@@ -15,6 +15,7 @@ import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { useTPopoverContext } from '../popover';
 import { MsgQuote } from './addons/MsgQuote';
 import { Bubble, DefaultAddonContentContainer } from './style';
+import { t, useTranslation } from '@shared/i18n';
 
 const DefaultAddonContent: React.FC<{ message: string }> = TMemo((props) => {
   const { loading, hasUrl, info } = useWebsiteInfo(props.message);
@@ -48,6 +49,7 @@ const DefaultMsgReply: React.FC<{
 }> = TMemo((props) => {
   const { hasContext, setReplyMsg } = useMsgContainerContext(); // 仅当有上下文的时候才会渲染回复按钮
   const { closePopover } = useTPopoverContext();
+  const { t } = useTranslation();
 
   const handleClick = useCallback(() => {
     setReplyMsg(props.payload);
@@ -58,7 +60,7 @@ const DefaultMsgReply: React.FC<{
     () =>
       hasContext ? (
         <MsgOperationListItemContainer onClick={handleClick}>
-          回复
+          {t('回复')}
         </MsgOperationListItemContainer>
       ) : null,
     [hasContext, handleClick]
@@ -77,7 +79,7 @@ class Default extends Base {
     if (me) {
       // 当消息时自己发起的时候，可以撤回
       operations.push({
-        name: '撤回',
+        name: t('撤回'),
         action: ({ dispatch, closePopover }) => {
           dispatch(revokeMsg(info.uuid));
           closePopover();

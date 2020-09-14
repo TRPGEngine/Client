@@ -11,7 +11,6 @@ import Login from '@web/containers/Login';
 import Register from '@web/containers/Register';
 import { MainRoute } from './Main';
 import { GlobalStyle } from './style';
-import { t } from '@shared/i18n';
 import { LoginCheck } from './LoginCheck';
 import { PortalProvider } from '@web/components/portal/PortalProvider';
 import { PortalHost } from '@web/utils/portal';

@@ -23,7 +23,7 @@ i18next
 export const t: TFunction = (key, defaultValue?, options?) => {
   try {
     const hashKey = `k${crc32(key).toString(16)}`;
-    let words = i18next.t(hashKey);
+    let words = i18next.t(hashKey, defaultValue, options);
     if (words === hashKey) {
       words = key;
       console.warn(`翻译缺失: [${hashKey}]${key}`);
@@ -55,12 +55,12 @@ export async function setLanguage(lang: string): Promise<void> {
  * i18n for react 使用hooks
  */
 export function useTranslation() {
-  const { t: i18nT } = useI18NTranslation();
+  const { t: i18nT, ready } = useI18NTranslation();
 
   const [_t, _setT] = useState<TFunction>(() => t);
   useEffect(() => {
     _setT(() => (...args) => (t as any)(...args));
   }, [i18nT]);
 
-  return { t: _t };
+  return { t: _t, ready };
 }

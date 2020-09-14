@@ -7,6 +7,7 @@ import {
 } from '@redux/hooks/group';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { changeSelectGroupActor } from '@redux/actions/group';
+import { useTranslation } from '@shared/i18n';
 const Option = Select.Option;
 
 interface GroupActorSelectorProps {
@@ -18,6 +19,7 @@ export const GroupActorSelector: React.FC<GroupActorSelectorProps> = TMemo(
     const selectedGroupActorUUID = useSelectedGroupActorUUID(groupUUID);
     const selfGroupActors = useSelfGroupActors(groupUUID);
     const dispatch = useTRPGDispatch();
+    const { t } = useTranslation();
 
     const handleChange = useCallback(
       (value: string) => {
@@ -30,7 +32,7 @@ export const GroupActorSelector: React.FC<GroupActorSelectorProps> = TMemo(
 
     return (
       <Select
-        placeholder="请选择人物卡"
+        placeholder={t('请选择人物卡')}
         style={{ width: 200 }}
         allowClear={true}
         value={selectedGroupActorUUID}

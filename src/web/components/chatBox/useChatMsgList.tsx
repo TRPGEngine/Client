@@ -18,6 +18,7 @@ import { useCurrentUserInfo } from '@redux/hooks/user';
 import styled from 'styled-components';
 import { usePrevious } from 'react-use';
 import { MsgPayload } from '@redux/types/chat';
+import { useTranslation } from '@shared/i18n';
 
 const LoadmoreText = styled.div<{
   disable?: boolean;
@@ -49,6 +50,7 @@ function useChatMsgListLoadMore(
   const isGroup = converseDetail?.type === 'group';
   const prevBottomDistanceRef = useRef(0);
   const isSeekingLogRef = useRef(false);
+  const { t } = useTranslation();
   const handleGetMoreLog = () => {
     if (!containerRef.current) {
       return;
@@ -80,10 +82,12 @@ function useChatMsgListLoadMore(
         disable={true}
         style={{ display: msgList.length < 10 ? 'none' : 'block' }}
       >
-        没有更多记录了
+        {t('没有更多记录了')}
       </LoadmoreText>
     ) : (
-      <LoadmoreText onClick={handleGetMoreLog}>点击获取更多记录</LoadmoreText>
+      <LoadmoreText onClick={handleGetMoreLog}>
+        {t('点击获取更多记录')}
+      </LoadmoreText>
     );
 
   return { isSeekingLogRef, loadMoreEl };

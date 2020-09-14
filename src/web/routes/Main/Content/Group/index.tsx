@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import {
   ContentContainer,
@@ -15,6 +15,7 @@ import { GroupHeader } from './GroupHeader';
 import { Result } from 'antd';
 import _isNil from 'lodash/isNil';
 import { GroupProvider } from './GroupProvider';
+import { useTranslation } from '@shared/i18n';
 
 interface GroupParams {
   groupUUID: string;
@@ -23,11 +24,12 @@ export const Group: React.FC = TMemo(() => {
   const params = useParams<GroupParams>();
   const groupUUID = params.groupUUID;
   const groupInfo = useJoinedGroupInfo(groupUUID);
+  const { t } = useTranslation();
 
   if (_isNil(groupInfo)) {
     return (
       <div style={{ flex: 1 }}>
-        <Result status="warning" title="找不到该团" />
+        <Result status="warning" title={t('找不到该团')} />
       </div>
     );
   }
@@ -41,9 +43,9 @@ export const Group: React.FC = TMemo(() => {
           <GroupHeader groupUUID={groupUUID} />
           <SidebarItemsContainer>
             <SidebarItem
-              name="综合"
+              name={t('大厅')}
               icon={<span>#</span>}
-              to={`/main/group/${groupUUID}/main`}
+              to={`/main/group/${groupUUID}/lobby`}
             />
 
             {panels.map((panel) => (
@@ -62,7 +64,7 @@ export const Group: React.FC = TMemo(() => {
               path="/main/group/:groupUUID/:panelUUID"
               component={GroupPanel}
             />
-            <Redirect to={`/main/group/${groupUUID}/main`} />
+            <Redirect to={`/main/group/${groupUUID}/lobby`} />
           </Switch>
         </ContentDetail>
       </ContentContainer>

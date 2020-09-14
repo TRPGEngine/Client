@@ -32,6 +32,7 @@ import { ActorCard, ActorCardListContainer } from '@web/components/ActorCard';
 import { GroupActorCheck } from '@web/containers/main/group/modal/GroupActorCheck';
 import ActorSelect from '@web/components/modal/ActorSelect';
 import { editGroupActor } from '@shared/model/group';
+import { useTranslation } from '@shared/i18n';
 const TabPane = PillTabs.TabPane;
 
 /**
@@ -51,7 +52,8 @@ function handleShowActorProfile(groupActor: GroupActorType) {
 }
 
 const NoCard = TMemo(() => {
-  return <div className="no-content">暂无卡片</div>;
+  const { t } = useTranslation();
+  return <div className="no-content">{t('暂无卡片')}</div>;
 });
 NoCard.displayName = 'NoCard';
 
@@ -63,6 +65,7 @@ const SelfGroupActorList: React.FC<{
 }> = TMemo((props) => {
   const { groupUUID } = props;
   const selfGroupActors = useSelfGroupActors(groupUUID);
+  const { t } = useTranslation();
 
   if (selfGroupActors.length === 0) {
     return <NoCard />;
@@ -76,7 +79,7 @@ const SelfGroupActorList: React.FC<{
             key={actor.uuid}
             actor={actor}
             actions={[
-              <Tooltip key="query" title="查询">
+              <Tooltip key="query" title={t('查询')}>
                 <button onClick={() => handleShowActorProfile(actor)}>
                   <Iconfont>&#xe61b;</Iconfont>
                 </button>
@@ -100,6 +103,7 @@ const GroupActorsList: React.FC<{
   const groupActors = groupInfo.group_actors;
   const isGroupManager = useIsGroupManager(groupUUID);
   const dispatch = useTRPGDispatch();
+  const { t } = useTranslation();
 
   const handleEditActorInfo = (groupActor: GroupActorType) => {
     const templateUUID = getGroupActorTemplateUUID(groupActor);
@@ -117,7 +121,7 @@ const GroupActorsList: React.FC<{
               dispatch(
                 updateGroupActorInfo(groupInfo.uuid, groupActor.uuid, data)
               );
-              dispatch(showAlert('保存完毕!'));
+              dispatch(showAlert(t('保存完毕!')));
               closeModal(key);
             })
             .catch((err) => {
@@ -132,7 +136,7 @@ const GroupActorsList: React.FC<{
   const handleRemoveGroupActor = (groupActorUUID: string) => {
     dispatch(
       showAlert({
-        content: '你确定要删除该人物卡么？删除后无法找回',
+        content: t('你确定要删除该人物卡么？删除后无法找回'),
         onConfirm: () => {
           dispatch(removeGroupActor(groupUUID, groupActorUUID));
         },
@@ -156,7 +160,7 @@ const GroupActorsList: React.FC<{
         const groupActorUUID = groupActor.uuid;
 
         const actions = [
-          <Tooltip key="query" title="查询">
+          <Tooltip key="query" title={t('查询')}>
             <button onClick={() => handleShowActorProfile(groupActor)}>
               <Iconfont>&#xe61b;</Iconfont>
             </button>
@@ -165,12 +169,12 @@ const GroupActorsList: React.FC<{
 
         if (isGroupManager) {
           actions.push(
-            <Tooltip key="edit" title="编辑">
+            <Tooltip key="edit" title={t('编辑')}>
               <button onClick={() => handleEditActorInfo(groupActor)}>
                 <Iconfont>&#xe612;</Iconfont>
               </button>
             </Tooltip>,
-            <Tooltip key="delete" title="删除">
+            <Tooltip key="delete" title={t('删除')}>
               <button onClick={() => handleRemoveGroupActor(groupActorUUID)}>
                 <Iconfont>&#xe76b;</Iconfont>
               </button>
@@ -204,10 +208,11 @@ const GroupActorChecksList: React.FC<{
   const noPassedActors = (groupActors ?? []).filter(
     (item) => item.passed === false
   );
+  const { t } = useTranslation();
 
   const handleApprove = (groupActorInfo: GroupActorType) => {
     if (_isNil(groupActorInfo)) {
-      showToasts('需要groupActor');
+      showToasts(t('需要groupActor'));
       return;
     }
 
@@ -231,7 +236,7 @@ const GroupActorChecksList: React.FC<{
         const groupActor: GroupActorType = item; // 团人物卡信息
 
         const actions = [
-          <Tooltip key="query" title="查询">
+          <Tooltip key="query" title={t('查询')}>
             <button onClick={() => handleShowActorProfile(groupActor)}>
               <Iconfont>&#xe61b;</Iconfont>
             </button>
@@ -240,7 +245,7 @@ const GroupActorChecksList: React.FC<{
 
         if (isGroupManager) {
           actions.push(
-            <Tooltip title="审批">
+            <Tooltip title={t('审批')}>
               <button onClick={() => handleApprove(groupActor)}>
                 <Iconfont>&#xe83f;</Iconfont>
               </button>
@@ -267,6 +272,7 @@ interface GroupActorManagerProps {
 export const GroupActorManager: React.FC<GroupActorManagerProps> = TMemo(
   (props) => {
     const { groupUUID } = props;
+    const { t } = useTranslation();
     const groupInfo = useJoinedGroupInfo(groupUUID);
     const dispatch = useTRPGDispatch();
     const groupActorNum = groupInfo?.group_actors?.length ?? 0;
@@ -283,29 +289,31 @@ export const GroupActorManager: React.FC<GroupActorManagerProps> = TMemo(
     }, [groupUUID]);
 
     if (_isNil(groupInfo)) {
-      return <Result status="warning" title="找不到相关信息" />;
+      return <Result status="warning" title={t('找不到相关信息')} />;
     }
 
     return (
       <div>
-        <Typography.Title level={3}>人物卡管理</Typography.Title>
+        <Typography.Title level={3}>{t('人物卡管理')}</Typography.Title>
 
         <Typography.Title level={4}>
-          <span style={{ marginRight: 10 }}>共 {groupActorNum} 张角色卡</span>
+          <span style={{ marginRight: 10 }}>
+            {t('共 {{groupActorNum}} 张角色卡', { groupActorNum })}
+          </span>
           <Button type="primary" onClick={handleSendGroupActorCheck}>
-            提交人物卡
+            {t('提交人物卡')}
           </Button>
         </Typography.Title>
 
         <div>
           <PillTabs>
-            <TabPane key="1" tab="我的人物卡">
+            <TabPane key="1" tab={t('我的人物卡')}>
               <SelfGroupActorList groupUUID={groupUUID} />
             </TabPane>
-            <TabPane key="2" tab="正式人物卡">
+            <TabPane key="2" tab={t('正式人物卡')}>
               <GroupActorsList groupUUID={groupUUID} />
             </TabPane>
-            <TabPane key="3" tab="待审核人物卡">
+            <TabPane key="3" tab={t('待审核人物卡')}>
               <GroupActorChecksList groupUUID={groupUUID} />
             </TabPane>
           </PillTabs>
