@@ -63,6 +63,7 @@ import { TRPGAction, createTRPGAsyncThunk } from '../types/__all__';
 import { getGroupInviteInfo } from './cache';
 import { GroupInfo, GroupActorType } from '@redux/types/group';
 import { showToasts } from '@shared/manager/ui';
+import { createAction } from '@reduxjs/toolkit';
 const api = trpgApi.getInstance();
 
 // 当state->group->groups状态添加新的group时使用来初始化
@@ -603,47 +604,21 @@ export const removeGroupActor = function(groupUUID, groupActorUUID) {
   };
 };
 
-export const agreeGroupActor = function(groupUUID, groupActorUUID) {
-  return function(dispatch, getState) {
-    return api.emit('group::agreeGroupActor', { groupActorUUID }, function(
-      data
-    ) {
-      if (data.result) {
-        dispatch({
-          type: AGREE_GROUP_ACTOR_SUCCESS,
-          groupUUID,
-          payload: data.groupActor,
-        });
-        dispatch(hideModal());
-        dispatch(showAlert('已同意该人物加入本团!'));
-      } else {
-        dispatch(showAlert(data.msg));
-        console.error(data);
-      }
-    });
-  };
-};
+/**
+ * 同意团角色
+ */
+export const agreeGroupActor = createAction<{
+  groupUUID: string;
+  groupActor: any;
+}>(AGREE_GROUP_ACTOR_SUCCESS);
 
-export const refuseGroupActor = function(groupUUID, groupActorUUID) {
-  return function(dispatch, getState) {
-    return api.emit('group::refuseGroupActor', { groupActorUUID }, function(
-      data
-    ) {
-      if (data.result) {
-        dispatch({
-          type: REFUSE_GROUP_ACTOR_SUCCESS,
-          groupUUID,
-          groupActorUUID,
-        });
-        dispatch(hideModal());
-        dispatch(showAlert('已拒绝该人物加入本团!'));
-      } else {
-        dispatch(showAlert(data.msg));
-        console.error(data);
-      }
-    });
-  };
-};
+/**
+ * 拒绝团角色
+ */
+export const refuseGroupActor = createAction<{
+  groupUUID: string;
+  groupActorUUID: string;
+}>(REFUSE_GROUP_ACTOR_SUCCESS);
 
 /**
  * 更新团人物的人物卡信息

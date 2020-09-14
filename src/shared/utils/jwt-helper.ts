@@ -1,6 +1,7 @@
 import _isObject from 'lodash/isObject';
 import _get from 'lodash/get';
 import _isNull from 'lodash/isNull';
+import _isNil from 'lodash/isNil';
 import rnStorage from '@shared/api/rn-storage.api';
 
 /**
@@ -47,7 +48,10 @@ export async function setUserJWT(jwt: string): Promise<void> {
  */
 export async function getUserJWT(): Promise<string> {
   if (_isNull(_userJWT)) {
-    return await rnStorage.get('jsonwebtoken');
+    const jwt = await rnStorage.get('jsonwebtoken');
+    _userJWT = jwt; // 将其缓存到内存中
+
+    return jwt;
   }
   return _userJWT;
 }

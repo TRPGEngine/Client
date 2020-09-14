@@ -7,7 +7,8 @@ import React, {
 } from 'react';
 import { TiledMap } from '@shared/components/tiledmap';
 import { RouteComponentProps } from 'react-router-dom';
-import { fetchGroupActorList, GroupActorItem } from '@portal/model/group';
+import { fetchGroupActorList } from '@portal/model/group';
+import { GroupActorItem } from '@shared/model/group';
 import _isNil from 'lodash/isNil';
 import _isFunction from 'lodash/isFunction';
 import SplitPane from '@shared/components/web/SplitPane';

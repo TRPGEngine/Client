@@ -1,11 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useWebTokenInfo } from '@portal/hooks/useWebTokenInfo';
-import {
-  fetchOwnGroupList,
-  GroupItem,
-  fetchGroupRangeChatLog,
-} from '@portal/model/group';
+import { fetchOwnGroupList, fetchGroupRangeChatLog } from '@portal/model/group';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
@@ -15,6 +11,7 @@ import styled from 'styled-components';
 import { LogEdit } from './log-edit';
 import { PortraitContainer } from '@portal/components/PortraitContainer';
 import { MsgPayload } from '@redux/types/chat';
+import { GroupItem } from '@shared/model/group';
 const Option = Select.Option;
 const RangePicker = DatePicker.RangePicker;
 

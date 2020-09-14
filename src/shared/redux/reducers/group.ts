@@ -6,6 +6,7 @@ import { GroupState } from '@redux/types/group';
 import constants from '@redux/constants';
 import produce from 'immer';
 import { createReducer } from '@reduxjs/toolkit';
+import { agreeGroupActor, refuseGroupActor } from '@redux/actions/group';
 const {
   RESET,
   CREATE_GROUP_SUCCESS,
@@ -185,12 +186,12 @@ export default createReducer(initialState, (builder) => {
         _remove(group_actors, (ga) => ga.uuid === action.groupActorUUID);
       }
     })
-    .addCase(AGREE_GROUP_ACTOR_SUCCESS, (state, action: any) => {
-      const index = state.groups.findIndex(
-        (group) => group.uuid === action.groupUUID
-      );
+    .addCase(agreeGroupActor, (state, action) => {
+      const { groupUUID, groupActor } = action.payload;
+      const index = state.groups.findIndex((group) => group.uuid === groupUUID);
+
       if (index >= 0) {
-        const groupActorUUID = action.payload.uuid;
+        const groupActorUUID = groupActor.uuid;
         const groupActorIndex = state.groups[index].group_actors!.findIndex(
           (item) => item.uuid === groupActorUUID
         );
@@ -199,12 +200,10 @@ export default createReducer(initialState, (builder) => {
         }
       }
     })
-    .addCase(REFUSE_GROUP_ACTOR_SUCCESS, (state, action: any) => {
-      const index = state.groups.findIndex(
-        (group) => group.uuid === action.groupUUID
-      );
+    .addCase(refuseGroupActor, (state, action) => {
+      const { groupUUID, groupActorUUID } = action.payload;
+      const index = state.groups.findIndex((group) => group.uuid === groupUUID);
       if (index >= 0) {
-        const groupActorUUID = action.groupActorUUID;
         _remove(
           state.groups[index].group_actors!,
           (item) => item.uuid === groupActorUUID

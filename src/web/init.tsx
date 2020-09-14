@@ -6,7 +6,7 @@ setToasts((msg, type = 'info') => {
   message.open({
     type,
     duration: 3,
-    content: msg,
+    content: String(msg),
   });
 });
 

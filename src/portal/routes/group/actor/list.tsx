@@ -1,12 +1,11 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { fetchGroupActorList, applyGroupActor } from '@portal/model/group';
 import {
-  fetchGroupActorList,
   GroupActorItem,
-  applyGroupActor,
-  agreeGroupActor,
-  refuseGroupActor,
-} from '@portal/model/group';
+  requestAgreeGroupActor,
+  requestRefuseGroupActor,
+} from '@shared/model/group';
 import styled from 'styled-components';
 import _isEmpty from 'lodash/isEmpty';
 import _head from 'lodash/head';
@@ -120,7 +119,7 @@ class GroupActorList extends React.Component<Props, State> {
    * 同意团角色
    */
   handleAgreeGroupActor = async (uuid: string) => {
-    await agreeGroupActor(this.groupUUID, uuid)
+    await requestAgreeGroupActor(this.groupUUID, uuid)
       .then(() => {
         notification.success({
           message: '操作成功',
@@ -138,7 +137,7 @@ class GroupActorList extends React.Component<Props, State> {
    * 拒绝团角色
    */
   handleRefuseGroupActor = async (uuid: string) => {
-    await refuseGroupActor(this.groupUUID, uuid)
+    await requestRefuseGroupActor(this.groupUUID, uuid)
       .then(() => {
         notification.success({
           message: '操作成功',

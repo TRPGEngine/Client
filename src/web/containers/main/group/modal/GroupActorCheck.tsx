@@ -1,21 +1,22 @@
-import React, { useState, useCallback, useMemo } from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback, useMemo } from 'react';
 import ModalPanel from '@web/components/ModalPanel';
-import ActorProfile from '@web/components/modal/ActorProfile';
-import {
-  agreeGroupActor,
-  refuseGroupActor,
-  requestUpdateGroupActorInfo,
-} from '@shared/redux/actions/group';
-import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { useCachedActorTemplateInfo } from '@shared/hooks/useCache';
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
+import XMLBuilder from '@shared/components/layout/XMLBuilder';
+import { Iconfont } from '@web/components/Iconfont';
+import {
+  requestAgreeGroupActor,
+  requestRefuseGroupActor,
+} from '@shared/model/group';
+import { closeModal } from '@web/components/Modal';
+import { showToasts } from '@shared/manager/ui';
+import { agreeGroupActor, refuseGroupActor } from '@redux/actions/group';
+import { hideModal } from '@redux/actions/ui';
 
 import './GroupActorCheck.scss';
-import XMLBuilder from '@shared/components/layout/XMLBuilder';
 
 interface Props {
   actorData: {};
@@ -30,12 +31,42 @@ export const GroupActorCheck: React.FC<Props> = TMemo((props) => {
   const dispatch = useTRPGDispatch();
 
   const handleAgree = useCallback(() => {
-    dispatch(agreeGroupActor(props.groupUUID, props.groupActorUUID));
-  }, [dispatch, props.groupUUID, props.groupActorUUID]);
+    requestAgreeGroupActor(props.groupUUID, props.groupActorUUID)
+      .then((groupActor) => {
+        dispatch(
+          agreeGroupActor({
+            groupUUID: props.groupUUID,
+            groupActor,
+          })
+        );
+        showToasts('已同意该人物加入本团!');
+        dispatch(hideModal()); // TODO: 这是兼容老UI
+        closeModal();
+      })
+      .catch((err) => {
+        showToasts(err, 'error');
+        console.error(err);
+      });
+  }, [props.groupUUID, props.groupActorUUID]);
 
   const handleRefuse = useCallback(() => {
-    dispatch(refuseGroupActor(props.groupUUID, props.groupActorUUID));
-  }, [dispatch, props.groupUUID, props.groupActorUUID]);
+    requestRefuseGroupActor(props.groupUUID, props.groupActorUUID)
+      .then(() => {
+        dispatch(
+          refuseGroupActor({
+            groupUUID: props.groupUUID,
+            groupActorUUID: props.groupActorUUID,
+          })
+        );
+        showToasts('已拒绝该人物加入本团!');
+        dispatch(hideModal()); // TODO: 这是兼容老UI
+        closeModal();
+      })
+      .catch((err) => {
+        showToasts(err, 'error');
+        console.error(err);
+      });
+  }, [props.groupUUID, props.groupActorUUID]);
 
   const template = useCachedActorTemplateInfo(props.templateUUID);
   const layout = _get(template, 'layout');
@@ -44,10 +75,10 @@ export const GroupActorCheck: React.FC<Props> = TMemo((props) => {
     return (
       <div className="actions">
         <button onClick={handleRefuse}>
-          <i className="iconfont">&#xe680;</i>拒绝
+          <Iconfont>&#xe680;</Iconfont>拒绝
         </button>
         <button onClick={handleAgree}>
-          <i className="iconfont">&#xe66b;</i>通过
+          <Iconfont>&#xe66b;</Iconfont>通过
         </button>
       </div>
     );

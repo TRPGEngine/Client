@@ -7,40 +7,9 @@ import { toGroupActorWithBlobUrl } from '@web/utils/upload-helper';
 import { getJWTInfo } from '@portal/utils/auth';
 import { isBlobUrl } from '@shared/utils/string-helper';
 import { bindFileAvatarAttachUUID } from './file';
-import { ActorItem } from './actor';
 import { ModelAccess } from './types';
 import { ChatLogItem } from './chat';
-import { PlayerUser } from '@shared/model/player';
-
-export interface GroupItem {
-  uuid: string;
-  type: string;
-  name: string;
-  sub_name: string;
-  desc: string;
-  avatar: string;
-  max_member: number;
-  allow_search: boolean;
-  creator_uuid: string;
-  owner_uuid: string;
-  managers_uuid: string[];
-  maps_uuid: string[];
-  rule: string;
-}
-
-export interface GroupActorItem {
-  uuid: string;
-  actor_uuid: string;
-  actor_info: {};
-  actor_template_uuid: string;
-  name: string;
-  desc: string;
-  avatar: string;
-  passed: boolean;
-  enabled: boolean;
-
-  owner?: PlayerUser;
-}
+import { GroupActorItem, GroupItem } from '@shared/model/group';
 
 /**
  * 获取自己拥有的所有团
@@ -99,36 +68,6 @@ export const applyGroupActor = async (
   });
 
   return data.actor;
-};
-
-/**
- * 同意团角色的申请
- * @param groupUUID 团UUID
- * @param groupActorUUID 团角色UUID
- */
-export const agreeGroupActor = async (
-  groupUUID: string,
-  groupActorUUID: string
-): Promise<GroupActorItem> => {
-  const { data } = await request.post(`/group/${groupUUID}/actor/agree`, {
-    groupActorUUID,
-  });
-
-  return data.groupActor;
-};
-
-/**
- * 拒绝团角色的申请
- * @param groupUUID 团UUID
- * @param groupActorUUID 团角色UUID
- */
-export const refuseGroupActor = async (
-  groupUUID: string,
-  groupActorUUID: string
-): Promise<void> => {
-  await request.post(`/group/${groupUUID}/actor/refuse`, {
-    groupActorUUID,
-  });
 };
 
 /**

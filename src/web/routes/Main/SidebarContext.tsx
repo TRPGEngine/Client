@@ -21,7 +21,7 @@ const SidebarContext = React.createContext<SidebarContextProps>({
 SidebarContext.displayName = 'SidebarContext';
 
 export const SidebarContextProvider: React.FC = TMemo((props) => {
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true);
 
   // 切换
   const switchSidebar = useCallback(() => {
