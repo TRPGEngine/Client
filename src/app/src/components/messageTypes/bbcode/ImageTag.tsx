@@ -38,7 +38,7 @@ const ImageTag = React.memo((props: TagProps) => {
   };
 
   let url = node.content.join('');
-  url = config.file.getAbsolutePath(url);
+  url = config.file.getAbsolutePath!(url);
 
   // 获取当前图片在所有图片中的位置
   const imageIndex = _findLastIndex(reversedImageUrls, (u) => u === url);

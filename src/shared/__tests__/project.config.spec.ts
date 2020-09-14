@@ -69,6 +69,7 @@ describe('project.config', () => {
       system: {
         notification: expect.any(Boolean),
         disableSendWritingState: expect.any(Boolean),
+        showSelfInWritingState: expect.any(Boolean),
       },
     });
   });
