@@ -48,7 +48,8 @@ export const App = TMemo(() => {
               <Route name="index" path="/" component={LaunchRoute} />
             </Switch>
             {config.platform === 'web' && <NetworkStatusModal />}
-            <AppBanner />
+            {/* 新版本先注释掉, 等新版app做好了再放出来 */}
+            {/* <AppBanner /> */}
             <LoginCheck />
           </CustomProvider>
         </div>
