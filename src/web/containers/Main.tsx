@@ -8,6 +8,7 @@ import { GlobalShortcuts } from './main/GlobalShortcuts';
 import ProfileCard from '../components/ProfileCard';
 import IsDeveloping from '../components/IsDeveloping';
 import Webview from '../components/Webview';
+import { AnnouncementBar } from '@web/components/AnnouncementBar';
 const TitleToolbar =
   config.platform === 'electron'
     ? require('../components/electron/TitleToolbar')
@@ -73,6 +74,7 @@ class Main extends React.Component<Props> {
   render() {
     return (
       <div id="main">
+        <AnnouncementBar />
         <GlobalShortcuts />
         <ProfileCard />
         <div className="head">

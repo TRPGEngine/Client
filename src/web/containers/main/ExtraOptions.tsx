@@ -138,7 +138,6 @@ class ExtraOptions extends React.Component<Props> {
       },
       {
         label: '切换到新版UI',
-        isDev: true,
         onClick: () => {
           switchToAppVersion(true);
         },

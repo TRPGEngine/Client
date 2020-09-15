@@ -22,6 +22,11 @@ export const IS_DEVELOPER = '__isDeveloper';
 export const APP_BANNER_CLOSE = 'appBannerClose';
 
 /**
+ * 公告是否关闭
+ */
+export const ANNOUNCEMENT_BAR_CLOSE = 'announcementBarClose';
+
+/**
  * 系统消息用的UUID
  */
 export const SYSTE_CONVERSE_SPEC = 'trpgsystem';
