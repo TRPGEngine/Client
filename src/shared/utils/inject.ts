@@ -18,5 +18,5 @@ export function injectLogoutSuccessCallback(callback: () => void) {
   _logoutSuccessCallback = callback;
 }
 export function runLogoutSuccessCallback() {
-  _isFunction(_logoutSuccessCallback) && _loginSuccessCallback();
+  _isFunction(_logoutSuccessCallback) && _logoutSuccessCallback();
 }

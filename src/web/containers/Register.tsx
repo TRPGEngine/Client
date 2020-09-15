@@ -100,7 +100,7 @@ class Register extends React.Component<Props> {
         >
           成为祭品
         </button>
-        <Link to="login">已有账号？现在登录</Link>
+        <Link to="/login">已有账号？现在登录</Link>
       </div>
     );
   }

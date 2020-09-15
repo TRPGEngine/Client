@@ -58,7 +58,8 @@ export const SettingView: React.FC = TMemo(() => {
           },
           {
             type: 'item',
-            title: t('汇报错误'),
+            title: t('汇报错误'), // TODO: 这个功能不应当依赖于sentry报错
+            isDev: true,
             content: <ErrorReportView />,
           },
           {

@@ -35,4 +35,11 @@ export const EditArea = styled(Editable).attrs({
   li {
     list-style: inherit;
   }
+
+  code {
+    font-family: monospace;
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 3px;
+    border-radius: 3px;
+  }
 `;
