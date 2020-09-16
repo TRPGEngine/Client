@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/TRPGEngine/Client/compare/v0.4.0...v0.4.1) (2020-09-16)
+
+
+### Bug Fixes
+
+* **web:** 修复笔记预览时如果数据为空(出现于旧版笔记)则会报错的bug ([0c9c6bc](https://github.com/TRPGEngine/Client/commit/0c9c6bc32c00a875f34571616c186afabc6553f5))
+
 ## [0.4.0](https://github.com/TRPGEngine/Client/compare/v0.3.15...v0.4.0) (2020-09-16)
 
 
