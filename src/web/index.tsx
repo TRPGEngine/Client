@@ -50,7 +50,7 @@ const store = configureStore({
   ],
 });
 attachStore(store);
-window.store = store; //
+window.store = store; // for debug
 
 const api = trpgApi.getInstance();
 bindEventFunc.call(api, store, {
