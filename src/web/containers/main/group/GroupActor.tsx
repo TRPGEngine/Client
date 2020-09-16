@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { selectActor } from '@src/shared/redux/actions/actor';
-import { showAlert, showModal } from '@src/shared/redux/actions/ui';
+import { hideModal, showAlert, showModal } from '@src/shared/redux/actions/ui';
 import {
   requestAddGroupActor,
   removeGroupActor,
-  requestUpdateGroupActorInfo,
+  updateGroupActorInfo,
 } from '@src/shared/redux/actions/group';
 import { TabsController, Tab } from '../../../components/Tabs';
 import ActorSelect from '../../../components/modal/ActorSelect';
@@ -22,8 +22,8 @@ import {
 } from '@shared/utils/data-helper';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
-import { TRPGState } from '@redux/types/__all__';
-import { isGroupManager } from '@shared/model/group';
+import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
+import { editGroupActor, isGroupManager } from '@shared/model/group';
 import ActorInfo from '@web/components/modal/ActorInfo';
 
 import './GroupActor.scss';
@@ -36,11 +36,12 @@ interface Props {
   selectedGroupUUID: string;
   showModal: any;
   showAlert: any;
+  hideModal: () => void;
   requestAddGroupActor: any;
   removeGroupActor: any;
   groupInfo: GroupInfo;
   isGroupManager: boolean;
-  requestUpdateGroupActorInfo: (
+  updateGroupActorInfo: (
     groupUUID: string,
     groupActorUUID: string,
     groupActorInfo: {}
@@ -83,7 +84,13 @@ class GroupActor extends React.PureComponent<Props> {
    * @param groupActor 团人物卡
    */
   handleEditActorInfo(groupActor: GroupActorType) {
-    const { showModal, groupInfo, requestUpdateGroupActorInfo } = this.props;
+    const {
+      showModal,
+      hideModal,
+      showAlert,
+      groupInfo,
+      updateGroupActorInfo,
+    } = this.props;
     const templateUUID = getGroupActorTemplateUUID(groupActor);
 
     showModal(
@@ -93,9 +100,17 @@ class GroupActor extends React.PureComponent<Props> {
         desc={groupActor.desc}
         data={getGroupActorInfo(groupActor)}
         templateUUID={templateUUID}
-        onSave={(data) =>
-          requestUpdateGroupActorInfo(groupInfo.uuid, groupActor.uuid, data)
-        }
+        onSave={(data) => {
+          editGroupActor(groupInfo.uuid, groupActor.uuid, data)
+            .then(() => {
+              updateGroupActorInfo(groupInfo.uuid, groupActor.uuid, data);
+              hideModal();
+              showAlert('保存完毕!');
+            })
+            .catch((err) => {
+              showAlert(String(err));
+            });
+        }}
       />
     );
   }
@@ -291,21 +306,20 @@ export default connect(
       isGroupManager: isGroupManager(groupInfo, userUUID),
     };
   },
-  (dispatch: any, ownProps) => ({
+  (dispatch: TRPGDispatch) => ({
     showAlert: (payload) => dispatch(showAlert(payload)),
     showModal: (body) => dispatch(showModal(body)),
+    hideModal: () => dispatch(hideModal()),
+    updateGroupActorInfo: (
+      groupUUID: string,
+      groupActorUUID: string,
+      groupActorInfo: {}
+    ) =>
+      dispatch(updateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)),
     selectActor: (actorUUID: string) => dispatch(selectActor(actorUUID)),
     requestAddGroupActor: (groupUUID: string, actorUUID: string) =>
       dispatch(requestAddGroupActor(groupUUID, actorUUID)),
     removeGroupActor: (groupUUID: string, groupActorUUID: string) =>
       dispatch(removeGroupActor(groupUUID, groupActorUUID)),
-    requestUpdateGroupActorInfo: (
-      groupUUID: string,
-      groupActorUUID: string,
-      groupActorInfo: {}
-    ) =>
-      dispatch(
-        requestUpdateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)
-      ),
   })
 )(GroupActor);

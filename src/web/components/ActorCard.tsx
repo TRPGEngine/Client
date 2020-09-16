@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActorType } from '@redux/types/actor';
+import { ActorType, ActorBaseAttr } from '@redux/types/actor';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { getAbsolutePath } from '@shared/utils/file-helper';
@@ -29,7 +29,7 @@ const Container = styled(ActorCardContainer)`
     overflow: hidden;
     align-items: center;
     justify-content: center;
-    border: 1px solid $color-bon-jour;
+    border: 1px solid ${(props) => props.theme.color['bon-jour']};
     background-position: center;
     background-size: cover;
 
@@ -58,7 +58,7 @@ const Container = styled(ActorCardContainer)`
       }
 
       span:nth-child(1) {
-        color: $color-dove-gray;
+        color: ${(props) => props.theme.color['dove-gray']};
         word-break: keep-all;
         margin-right: 2px;
       }
@@ -80,6 +80,10 @@ const Container = styled(ActorCardContainer)`
         button {
           ${(props) => props.theme.mixins.linkBtn}
           font-size: 12px;
+
+          .iconfont {
+            font-size: 16px;
+          }
         }
       }
     }
@@ -87,18 +91,19 @@ const Container = styled(ActorCardContainer)`
 `;
 
 interface Props {
-  actor: ActorType;
+  actor: ActorBaseAttr;
   actions?: React.ReactNode;
+  style?: React.CSSProperties;
 }
 export const ActorCard: React.FC<Props> = TMemo((props) => {
-  const { actor } = props;
+  const { actor, style } = props;
 
   const backgroundStyle = {
     backgroundImage: `url(${getAbsolutePath(actor.avatar)})`,
   };
 
   return (
-    <Container>
+    <Container className="actor-card" style={style}>
       <div className="avatar" style={backgroundStyle} />
       <div className="profile">
         <p>
@@ -115,3 +120,19 @@ export const ActorCard: React.FC<Props> = TMemo((props) => {
   );
 });
 ActorCard.displayName = 'ActorCard';
+
+export const ActorCardListContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: flex-start;
+  align-content: flex-start;
+  padding: 12px 0;
+
+  .actor-card {
+    margin-right: 8px;
+
+    ${(props) => props.theme.mixins.mobile('margin-right: 0;')}
+  }
+`;

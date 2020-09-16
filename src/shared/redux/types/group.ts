@@ -50,6 +50,7 @@ export interface GroupPanel {
   type: GroupPanelType;
   color: string;
   order: number;
+  target_uuid: string;
 }
 
 export interface GroupInfo {
@@ -88,6 +89,10 @@ export type GroupState = {
   info: { [name: string]: any };
   invites: any[];
   groups: GroupInfo[];
+
+  /**
+   * @deprecated 弃用 对于新版来说统一用chat.selectedConverseUUID即可满足需求
+   */
   selectedGroupUUID: string;
   isFindingGroup: boolean;
   findingResult: any[];

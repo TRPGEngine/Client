@@ -1,11 +1,5 @@
 import thunk from 'redux-thunk';
-import {
-  createStore,
-  applyMiddleware,
-  Store,
-  Middleware,
-  StoreEnhancer,
-} from 'redux';
+import { createStore, applyMiddleware, StoreEnhancer } from 'redux';
 import { createLogger } from 'redux-logger';
 import config from '../../project.config';
 import { getCombineReducers } from '../reducers';
@@ -15,21 +9,21 @@ import { memoryLogger } from './memory-logger';
 import { initStoreHelper } from './helper';
 import { TRPGStore, TRPGState, TRPGMiddleware } from '@redux/types/__all__';
 
-const logger = createLogger({
-  level: 'info',
-  logger: console,
-  collapsed: true,
-});
 console.log('当前环境:', config.environment);
 console.log('当前平台:', config.platform);
 
 const middlewares: TRPGMiddleware[] = [thunk];
 middlewares.push(memoryLogger);
 
-if (config.environment === 'development' && config.platform !== 'app') {
-  // 移动端不启用logger. 因为远程js调试会非常卡
-  middlewares.push(logger);
-}
+// if (config.environment === 'development' && config.platform !== 'app') {
+//   // 移动端不启用logger. 因为远程js调试会非常卡
+//   const logger = createLogger({
+//     level: 'info',
+//     logger: console,
+//     collapsed: true,
+//   });
+//   middlewares.push(logger);
+// }
 
 interface StoreOptions {
   initialState?: TRPGState;

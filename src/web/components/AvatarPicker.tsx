@@ -5,6 +5,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import Avatar from './Avatar';
 import { UserOutlined } from '@ant-design/icons';
 import _isNil from 'lodash/isNil';
+import { TMemo } from '@shared/components/TMemo';
 
 let fileUrlTemp: string | null = null; // 缓存裁剪后的图片url
 
@@ -67,7 +68,7 @@ interface Props {
 /**
  * 头像选择器
  */
-const AvatarPicker = (props: Props) => {
+const AvatarPicker = TMemo((props: Props) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false); // 是否显示模态框
   const [originImageUrl, setOriginImageUrl] = useState<string>(''); // 原始图片的url
   const [cropUrl, setCropUrl] = useState<string>(props.imageUrl || ''); // 裁剪后并使用的url
@@ -111,7 +112,11 @@ const AvatarPicker = (props: Props) => {
   return (
     <div className={props.className}>
       <div
-        style={{ cursor: 'pointer', display: 'inline-block' }}
+        style={{
+          cursor: 'pointer',
+          display: 'inline-block',
+          position: 'relative',
+        }}
         onClick={() => !props.disabled && fileRef.current?.click()}
       >
         <input
@@ -148,6 +153,7 @@ const AvatarPicker = (props: Props) => {
       </Modal>
     </div>
   );
-};
+});
+AvatarPicker.displayName = 'AvatarPicker';
 
 export default AvatarPicker;

@@ -25,10 +25,13 @@ import {
 import _isUndefined from 'lodash/isUndefined';
 import _isString from 'lodash/isString';
 import _set from 'lodash/set';
+import _isNil from 'lodash/isNil';
 
 import { TRPGAction } from '@redux/types/__all__';
 
 import * as trpgApi from '../../api/trpg.api';
+import rnStorage from '@shared/api/rn-storage.api';
+import { showToasts } from '@shared/manager/ui';
 const api = trpgApi.getInstance();
 
 export function setTemplate(uuid, name, desc, avatar, info) {
@@ -59,21 +62,34 @@ export function getTemplate(uuid?: string) {
  * 只获取一次，如果之前获取过则不再重复获取
  */
 export function getSuggestTemplate(): TRPGAction {
-  return function(dispatch, getState) {
+  const cacheKey = 'cache$suggestTemplate';
+
+  return async function(dispatch, getState) {
     if (getState().actor.suggestTemplate.length > 0) {
       return;
     }
 
-    return api.emit('actor::getSuggestTemplate', {}, function(data) {
-      if (data.result) {
-        dispatch({
-          type: GET_SUGGEST_TEMPLATES_SUCCESS,
-          payload: data.templates || [],
-        });
-      } else {
-        console.error(data.msg);
+    // 先尝试从storage中获取
+    try {
+      const cache = await rnStorage.get(cacheKey);
+      if (!_isNil(cache)) {
+        dispatch({ type: GET_SUGGEST_TEMPLATES_SUCCESS, payload: cache });
+        return;
       }
-    });
+    } catch (err) {}
+
+    // 没有的话再发请求
+    const data = await api.emitP('actor::getSuggestTemplate', {});
+
+    if (data.result) {
+      dispatch({
+        type: GET_SUGGEST_TEMPLATES_SUCCESS,
+        payload: data.templates || [],
+      });
+      rnStorage.set(cacheKey, data.templates); // 添加到缓存中
+    } else {
+      showToasts(data.msg);
+    }
   };
 }
 

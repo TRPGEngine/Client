@@ -2,10 +2,15 @@ import * as Sentry from '@sentry/browser';
 import Config from 'config';
 import _get from 'lodash/get';
 import _once from 'lodash/once';
+import _isNil from 'lodash/isNil';
 import config from '@shared/project.config';
 import { UserInfo } from '@redux/types/user';
 
 const environment = config.environment;
+
+export function getDSN(): string {
+  return _get(Config, 'sentry.dsn');
+}
 
 /**
  * 初始化Sentry
@@ -16,7 +21,7 @@ const initSentry = _once(() => {
     release:
       environment === 'production' ? _get(Config, 'sentry.release') : undefined,
     environment,
-    dsn: _get(Config, 'sentry.dsn'),
+    dsn: getDSN(),
   });
 });
 
@@ -52,4 +57,20 @@ export function setUser(userInfo: UserInfo) {
  */
 export function showReportDialog() {
   Sentry.showReportDialog();
+}
+
+/**
+ * 获取api路径
+ */
+export function getFeedbackUrl(): string | null {
+  const feedbackUrl = _get(Config, 'sentry.feedbackUrl');
+  if (_isNil(feedbackUrl) || feedbackUrl === '') {
+    return null;
+  }
+
+  return feedbackUrl;
+}
+
+export function getLastEventId(): string | undefined {
+  return Sentry.lastEventId();
 }

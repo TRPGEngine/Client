@@ -1,7 +1,7 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Input, Form } from 'antd';
-import { FastFormFieldComponent } from '@shared/components/FastForm';
+import { FastFormFieldComponent } from '@shared/components/FastForm/field';
 
 export const FastFormPassword: FastFormFieldComponent = TMemo((props) => {
   const { name, label, value, onChange } = props;

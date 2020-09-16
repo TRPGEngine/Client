@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Collapse, List } from 'antd';
 import Avatar from '@web/components/Avatar';
-import { GroupActorItem } from '@portal/model/group';
+import { GroupActorItem } from '@shared/model/group';
 import { AppendTokenAction } from './actions/AppendTokenAction';
 import { AppendImageTokenAction } from './actions/AppendImageTokenAction';
 import { ActorToken } from '@shared/components/tiledmap/layer/token/ActorToken';

@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/TRPGEngine/Client/compare/v0.3.15...v0.4.0) (2020-09-16)
+
+
+### Features
+
+* 增加取消好友邀请的处理 ([0d01aea](https://github.com/TRPGEngine/Client/commit/0d01aeaf4a2bae53937573c1aa3bfa1c65b95d0e))
+* 增加国际化翻译解决方案 ([0de4950](https://github.com/TRPGEngine/Client/commit/0de4950c45e84240be3390e246da4b7e8fb4c302))
+* **playground:** add san in coc7 ([2f53787](https://github.com/TRPGEngine/Client/commit/2f537878bf067ee29c4526ebd468ff3a7f555acb))
+* **portal:** 增加团邀请代码入团的入口 ([7ff30ec](https://github.com/TRPGEngine/Client/commit/7ff30ec2ea7731d4855404c65e18925e91625ed1))
+* **portal:** 增加通用结果页并增加邀请码加入跳转 ([06d8eb6](https://github.com/TRPGEngine/Client/commit/06d8eb67438e20e0d6f745f85322093b3f7f1189))
+* **web:** fastform 增加Select类型的字段 ([55f14f9](https://github.com/TRPGEngine/Client/commit/55f14f9d41825cce416cfeab8bbfdf8574ccbc31))
+
+
+### Bug Fixes
+
+* **web:** 修复一个低版本浏览器的兼容问题 ([80abb53](https://github.com/TRPGEngine/Client/commit/80abb53906dc1edc8f0477bc5c16f0b9e339e10b))
+* **web:** 修复在某些情况下favicon通知无法被清空的bug ([cb58ef2](https://github.com/TRPGEngine/Client/commit/cb58ef2533e699d869a916329fb51b81b1e5ca5b))
+
 ### [0.3.15](https://github.com/TRPGEngine/Client/compare/v0.3.14...v0.3.15) (2020-08-05)
 
 

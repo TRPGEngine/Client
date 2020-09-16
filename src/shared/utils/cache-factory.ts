@@ -2,8 +2,16 @@ import rnStorage from '@shared/api/rn-storage.api';
 import _isNil from 'lodash/isNil';
 
 export enum CachePolicy {
-  Temporary, // 存储在内存中
-  Persistent, // 存储在rnStorage中
+  /**
+   * 存储在内存中
+   */
+  Temporary,
+
+  /**
+   * 存储在rnStorage中
+   * 过期时间为rnStorage的过期时间
+   */
+  Persistent,
 }
 
 function defaultHash(...args): string {

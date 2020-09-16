@@ -5,20 +5,7 @@ import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import _isObject from 'lodash/isObject';
 import { request, navToLoginPage } from './request';
-import { getJWTPayload } from '@shared/utils/jwt-helper';
-
-let token: string | null = null;
-export const saveToken = (jwt: string): void => {
-  window.localStorage.setItem('jwt', jwt);
-  token = jwt; // 更新内存中的数据
-};
-
-export const getToken = (): string => {
-  if (_isNull(token)) {
-    token = window.localStorage.getItem('jwt');
-  }
-  return token!;
-};
+import { PORTAL_JWT_KEY } from '@shared/utils/consts';
 
 /**
  * 发送一个校验token的请求到服务端
@@ -39,26 +26,14 @@ export const checkToken = async (autoNav = true): Promise<void> => {
   }
 };
 
-interface UserInfo {
-  name?: string;
-  uuid?: string;
-  avatar?: string;
-}
 /**
- * 获取token中的明文信息
- * 明确需要返回一个对象
+ * 设置portal端的JWT
+ * portal端的jwt数据结构简单，这样可以方便的进行代码注入(app)
  */
-export const getJWTInfo = (): UserInfo => {
-  try {
-    if (_isString(token)) {
-      const info = getJWTPayload(token);
-      if (_isObject(info)) {
-        return info;
-      }
-    }
-  } catch (e) {
-    console.error('getJWTInfo Error:', e);
-  }
+export function setPortalJWT(jwt: string) {
+  window.localStorage.setItem(PORTAL_JWT_KEY, jwt);
+}
 
-  return {};
-};
+export function getPortalJWT(): string {
+  return localStorage.getItem(PORTAL_JWT_KEY) ?? '';
+}

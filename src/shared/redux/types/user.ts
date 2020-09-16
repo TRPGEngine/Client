@@ -16,7 +16,7 @@ export interface UserInfo {
   uuid: string;
   username: string;
   nickname: string;
-  name: string;
+  name?: string;
   avatar: string;
   last_login: string;
   last_ip: string;

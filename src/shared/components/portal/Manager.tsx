@@ -1,19 +1,21 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
 export type State = {
   portals: {
     key: number;
     children: React.ReactNode;
   }[];
 };
-export type PortalManagerState = {
+interface PortalManagerProps {
+  renderManagerView: (children: React.ReactNode) => React.ReactElement;
+}
+export interface PortalManagerState {
   portals: any[];
-};
+}
 /**
  * Portal host is the component which actually renders all Portals.
  */
-export default class PortalManager extends React.PureComponent<
-  {},
+export class PortalManager extends React.PureComponent<
+  PortalManagerProps,
   PortalManagerState
 > {
   state: State = {
@@ -44,17 +46,19 @@ export default class PortalManager extends React.PureComponent<
   };
 
   render() {
+    const { renderManagerView } = this.props;
     return this.state.portals.map(({ key, children }, i) => (
-      <View
-        key={key}
-        collapsable={
-          false /* Need collapsable=false here to clip the elevations, otherwise they appear above sibling components */
-        }
-        pointerEvents="box-none"
-        style={[StyleSheet.absoluteFill, { zIndex: 1000 + i }]}
-      >
-        {children}
-      </View>
+      <React.Fragment key={key}>{renderManagerView(children)}</React.Fragment>
+      // <View
+      //   key={key}
+      //   collapsable={
+      //     false /* Need collapsable=false here to clip the elevations, otherwise they appear above sibling components */
+      //   }
+      //   pointerEvents="box-none"
+      //   style={[StyleSheet.absoluteFill, { zIndex: 1000 + i }]}
+      // >
+      //   {children}
+      // </View>
     ));
   }
 }

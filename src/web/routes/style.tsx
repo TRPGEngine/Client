@@ -9,6 +9,39 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  h1, h2, h3, h4, h5 {
+    color: ${(props) => props.theme.color.textNormal};
+  }
+
+  /* antd 黑夜模式下样式 */
+
+  .ant-dropdown-menu {
+    background-color: ${(props) => props.theme.color.graySet[8]};
+  }
+
+  .ant-select-dropdown {
+    background-color: ${(props) => props.theme.color.graySet[8]};
+
+    .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+      background-color: ${(props) => props.theme.color.graySet[6]};
+    }
+  }
+
+  .ant-input, .ant-select-selector {
+    border-color: ${(props) => props.theme.color.graySet[9]};
+  }
+
+  .ant-select-selector {
+    background-color: ${(props) => props.theme.color.graySet[6]} !important;
+  }
+
+  .ant-select-clear {
+    background-color: ${(props) => props.theme.color.graySet[6]};
+  }
+
+  .ant-collapse-content {
+    background-color: ${(props) => props.theme.color.graySet[7]};
+  }
 
   /* 新版滚动条 */
   ::-webkit-scrollbar {

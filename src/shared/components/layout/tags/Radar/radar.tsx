@@ -11,6 +11,7 @@ import {
 import styled from 'styled-components';
 import _get from 'lodash/get';
 import { TMemo } from '@shared/components/TMemo';
+import { useThemeContext } from '@shared/context/ThemeContext';
 
 interface RadarData {
   name: string;
@@ -27,6 +28,7 @@ const CustomTooltipContainer = styled.div`
   padding: 10px;
   border-radius: ${(props) => props.theme.radius.standard};
   box-shadow: ${(props) => props.theme.boxShadow.normal};
+  color: ${(props) => props.theme.color['mine-shaft']};
 `;
 
 const CustomTooltip: React.FC<TooltipProps> = TMemo(
@@ -45,13 +47,17 @@ const CustomTooltip: React.FC<TooltipProps> = TMemo(
 
 export const TRadar: React.FC<Props> = TMemo((props) => {
   const height = props.height ?? 300;
+  const { theme } = useThemeContext();
 
   return (
     <div style={{ width: '100%', height }}>
       <ResponsiveContainer>
         <RadarChart data={props.data}>
           <PolarGrid />
-          <PolarAngleAxis dataKey="name" />
+          <PolarAngleAxis
+            dataKey="name"
+            stroke={theme.mixins.modeValue(['#333333', '#dddddd'])}
+          />
           <Tooltip content={<CustomTooltip />} />
           <Radar
             dataKey="value"

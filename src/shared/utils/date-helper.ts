@@ -21,7 +21,7 @@ export const getShortDiff = (str: MomentInput): string => {
     return date.fromNow();
   }
 };
-export const getShortDate = (str: string): string => {
+export const getShortDate = (str?: string): string => {
   const date = str ? moment(str) : moment();
   if (helper.isToday(date)) {
     return date.format('A hh:mm');

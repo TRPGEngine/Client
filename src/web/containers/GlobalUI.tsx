@@ -1,42 +1,36 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
 import Lightbox from 'react-image-lightbox';
-import Modal from '../components/Modal';
+import GlobalModal from '../components/GlobalModal';
 import LoadingScreen from '../components/LoadingScreen';
-import Alert from '../components/Alert';
+import GlobalAlert from '../components/GlobalAlert';
 import { hideLightbox } from '../../shared/redux/actions/ui';
-import { TRPGState } from '@redux/types/__all__';
+import {
+  useTRPGSelector,
+  useTRPGDispatch,
+} from '@shared/hooks/useTRPGSelector';
+import { TMemo } from '@shared/components/TMemo';
 
-interface Props extends DispatchProp<any> {
-  showLigthbox: boolean;
-  showLigthboxInfo: any;
-  showLoading: boolean;
-  showLoadingText: string;
-}
-class GlobalUI extends React.Component<Props> {
-  render() {
-    return (
-      <React.Fragment>
-        {this.props.showLigthbox ? (
-          <Lightbox
-            mainSrc={this.props.showLigthboxInfo.src}
-            onCloseRequest={() => this.props.dispatch(hideLightbox())}
-          />
-        ) : null}
-        <Modal />
-        <LoadingScreen
-          show={this.props.showLoading}
-          text={this.props.showLoadingText}
+export const GlobalUI: React.FC = TMemo(() => {
+  const showLigthbox = useTRPGSelector((state) => state.ui.showLigthbox);
+  const showLigthboxInfo = useTRPGSelector(
+    (state) => state.ui.showLigthboxInfo
+  );
+  const showLoading = useTRPGSelector((state) => state.ui.showLoading);
+  const showLoadingText = useTRPGSelector((state) => state.ui.showLoadingText);
+  const dispatch = useTRPGDispatch();
+
+  return (
+    <React.Fragment>
+      {showLigthbox ? (
+        <Lightbox
+          mainSrc={showLigthboxInfo.src}
+          onCloseRequest={() => dispatch(hideLightbox())}
         />
-        <Alert />
-      </React.Fragment>
-    );
-  }
-}
-
-export default connect((state: TRPGState) => ({
-  showLoading: state.ui.showLoading,
-  showLoadingText: state.ui.showLoadingText,
-  showLigthbox: state.ui.showLigthbox,
-  showLigthboxInfo: state.ui.showLigthboxInfo,
-}))(GlobalUI);
+      ) : null}
+      <GlobalModal />
+      <LoadingScreen show={showLoading} text={showLoadingText} />
+      <GlobalAlert />
+    </React.Fragment>
+  );
+});
+GlobalUI.displayName = 'GlobalUI';

@@ -41,9 +41,12 @@ const CurrentSocketId: React.FC = TMemo(() => {
 });
 CurrentSocketId.displayName = 'CurrentSocketId';
 
-export default class SystemStatus extends React.PureComponent {
-  get status() {
-    return [
+interface SystemStatusInfoProps {
+  style?: React.CSSProperties;
+}
+export const SystemStatusInfo: React.FC<SystemStatusInfoProps> = TMemo(
+  (props) => {
+    const status = [
       {
         label: '后台服务地址',
         value: `${config.io.protocol}://${config.io.host}:${config.io.port}`,
@@ -73,20 +76,29 @@ export default class SystemStatus extends React.PureComponent {
         value: <LocalTimer />,
       },
     ];
-  }
 
-  render() {
     return (
-      <SystemStatusPanel title="系统状态">
-        <InfoTable>
-          {this.status.map((item) => (
+      <InfoTable style={props.style}>
+        <tbody>
+          {status.map((item) => (
             <tr key={item.label}>
               <td>{item.label}:</td>
               <td>{item.value}</td>
             </tr>
           ))}
-        </InfoTable>
-      </SystemStatusPanel>
+        </tbody>
+      </InfoTable>
     );
   }
-}
+);
+SystemStatusInfo.displayName = 'SystemStatusInfo';
+
+const SystemStatus: React.FC = TMemo(() => {
+  return (
+    <SystemStatusPanel title="系统状态">
+      <SystemStatusInfo />
+    </SystemStatusPanel>
+  );
+});
+SystemStatus.displayName = 'SystemStatus';
+export default SystemStatus;

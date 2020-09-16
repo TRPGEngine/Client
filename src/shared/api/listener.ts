@@ -13,7 +13,11 @@ import {
   startWriting,
   stopWriting,
 } from '@shared/redux/actions/chat';
-import { addFriendInvite, loginWithToken } from '@shared/redux/actions/user';
+import {
+  addFriendInvite,
+  loginWithToken,
+  removeFriendInvite,
+} from '@shared/redux/actions/user';
 import {
   updateGroupStatus,
   addGroup,
@@ -56,15 +60,17 @@ export function bindEventFunc(
   });
 
   api.on('chat::startWriting', function(data) {
-    const { type = 'user', from, groupUUID, currentText } = data;
+    const { type = 'user', from, groupUUID, channelUUID, currentText } = data;
     const uuid = from;
-    store.dispatch(startWriting(type, uuid, groupUUID, currentText));
+    store.dispatch(
+      startWriting(type, uuid, groupUUID, channelUUID, currentText)
+    );
   });
 
   api.on('chat::stopWriting', function(data) {
-    const { type = 'user', from, groupUUID } = data;
+    const { type = 'user', from, groupUUID, channelUUID } = data;
     const uuid = from;
-    store.dispatch(stopWriting(type, uuid, groupUUID));
+    store.dispatch(stopWriting(type, uuid, groupUUID, channelUUID));
   });
 
   api.on('player::appendFriend', function(data) {
@@ -74,6 +80,10 @@ export function bindEventFunc(
   });
   api.on('player::invite', function(data) {
     store.dispatch(addFriendInvite(data));
+  });
+  api.on('player::removeInvite', function(data) {
+    const { inviteUUID } = data;
+    store.dispatch(removeFriendInvite({ inviteUUID }));
   });
   api.on('player::tick', function(data) {
     store.dispatch(showAlert(data.msg));
@@ -148,7 +158,7 @@ export function bindEventFunc(
     console.log('正在连接');
   });
   api.on('reconnect', function(data) {
-    store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
+    store.dispatch(changeNetworkStatue(true, '重连成功, 网络连接畅通'));
     store.dispatch(updateSocketId(api.socket.id));
     console.log('重连成功');
 
@@ -163,7 +173,7 @@ export function bindEventFunc(
     }
   });
   api.on('reconnecting', function(data) {
-    store.dispatch(changeNetworkStatue(false, '正在连接...', true));
+    store.dispatch(changeNetworkStatue(false, '正在重新连接...', true));
     console.log('重连中...', api.serverUrl);
   });
   api.on('disconnect', function(data) {

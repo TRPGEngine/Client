@@ -17,10 +17,14 @@ class TButton extends React.Component<Props> {
         {...this.props}
         textStyle={[
           textStyles.default,
-          textStyles[this.props.type],
+          textStyles[this.props.type as any],
           this.props.textStyle,
         ]}
-        style={[styles.default, styles[this.props.type], this.props.style]}
+        style={[
+          styles.default,
+          styles[this.props.type as any],
+          this.props.style,
+        ]}
         isDisabled={this.props.disabled}
       >
         {this.props.children}

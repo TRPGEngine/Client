@@ -1,42 +1,57 @@
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import {
+  useTRPGSelector,
+  useTRPGDispatch,
+} from '@shared/hooks/useTRPGSelector';
 import {
   WritingListGroupItem,
   SimpleConverseType,
-  ConverseType,
   ChatStateConverse,
 } from '@redux/types/chat';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import _isNil from 'lodash/isNil';
 import _orderBy from 'lodash/orderBy';
 import _values from 'lodash/values';
+import { useSystemSetting } from './settings';
+import { useCurrentUserUUID } from './user';
+import { switchConverse, clearSelectedConverse } from '@redux/actions/chat';
 
 /**
  * 获取当前输入状态
  * @param converseUUID 会话UUID
  * @param type 会话类型
  */
-export function useWritingState(
-  converseUUID: string,
-  type: ConverseType = 'group'
-): WritingListGroupItem[] {
-  return useTRPGSelector((state) => {
+export function useWritingState(converseUUID: string): WritingListGroupItem[] {
+  const converse = useConverseDetail(converseUUID);
+  const type = converse?.type;
+  const currentUserUUID = useCurrentUserUUID();
+  const showSelfInWritingState = useSystemSetting('showSelfInWritingState');
+
+  if (_isNil(converseUUID)) {
+    return [];
+  }
+
+  const writingList = useTRPGSelector((state) => {
     if (type === 'group') {
       return state.chat.writingList.group[converseUUID] ?? [];
+    } else if (type === 'channel') {
+      return state.chat.writingList.channel[converseUUID] ?? [];
+    } else if (type === 'user') {
+      // TODO: 先不处理用户会话
+      return [];
     } else {
-      // TODO: 先不处理
+      // 未知类型
       return [];
     }
   });
-}
 
-/**
- * 获取团当前输入状态列表
- * @param groupUUID 团UUID
- */
-export function useGroupWritingState(
-  groupUUID: string
-): WritingListGroupItem[] {
-  return useWritingState(groupUUID, 'group');
+  return useMemo(() => {
+    if (showSelfInWritingState !== true) {
+      // 从列表中过滤掉自己
+      return writingList.filter((item) => item.uuid !== currentUserUUID);
+    }
+
+    return writingList;
+  }, [writingList, currentUserUUID, showSelfInWritingState]);
 }
 
 /**
@@ -56,7 +71,7 @@ export function useMsgList(
     }
     return _orderBy(converse?.msgList, (item) => new Date(item.date), [order]);
   }, [converse?.msgList, order]);
-  const nomore = converse?.nomore;
+  const nomore = converse?.nomore ?? false;
 
   return {
     list: msgList,
@@ -88,4 +103,15 @@ export function useConverseDetail(
   converseUUID: string
 ): ChatStateConverse | undefined {
   return useTRPGSelector((state) => state.chat.converses[converseUUID]);
+}
+
+export function useSelectConverse(converseUUID: string) {
+  const dispatch = useTRPGDispatch();
+  useEffect(() => {
+    dispatch(switchConverse(converseUUID));
+
+    return () => {
+      dispatch(clearSelectedConverse());
+    };
+  }, [converseUUID]);
 }

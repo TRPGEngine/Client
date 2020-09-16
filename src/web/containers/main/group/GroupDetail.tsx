@@ -24,8 +24,7 @@ import { MsgType } from '@redux/types/chat';
 import { TMemo } from '@shared/components/TMemo';
 import {
   useSelectedGroupInfo,
-  useSelfGroupActors,
-  useSelectedGroupActorUUID,
+  useSelectedGroupActorInfo,
 } from '@redux/hooks/group';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { useCurrentUserUUID } from '@redux/hooks/user';
@@ -34,27 +33,20 @@ import { getUserName } from '@shared/utils/data-helper';
 import { GroupHeader } from './GroupHeader';
 import { ChatWritingIndicator } from '@web/components/ChatWritingIndicator';
 import { sendStartWriting, sendStopWriting } from '@shared/api/event';
-import { useGroupWritingState } from '@redux/hooks/chat';
+import { useWritingState } from '@redux/hooks/chat';
 
 export const GroupDetail: React.FC = TMemo(() => {
   const groupInfo = useSelectedGroupInfo();
   const groupUUID = groupInfo?.uuid!;
-  const selectedGroupActorUUID = useSelectedGroupActorUUID(groupUUID);
-  const selfGroupActors = useSelfGroupActors(groupUUID);
   const dispatch = useTRPGDispatch();
   const userUUID = useCurrentUserUUID();
   const { replyMsg, clearReplyMsg } = useMsgContainerContext();
+  const selectedGroupActorInfo = useSelectedGroupActorInfo(groupUUID);
 
   useEffect(() => {
     // 当当前groupUUID发生变化时，清空回复消息
     clearReplyMsg();
   }, [groupUUID]);
-
-  const selectedGroupActorInfo = useMemo(
-    () =>
-      selfGroupActors.find((actor) => actor.uuid === selectedGroupActorUUID),
-    [selfGroupActors, selectedGroupActorUUID]
-  );
 
   const handleSendBoxChange = useCallback(
     (text) => {
@@ -197,7 +189,7 @@ export const GroupDetail: React.FC = TMemo(() => {
     );
   }, [dispatch, groupUUID]);
 
-  const writingList = useGroupWritingState(groupUUID);
+  const writingList = useWritingState(groupUUID);
 
   return (
     <GroupInfoContext.Provider value={groupInfo}>

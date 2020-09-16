@@ -1,5 +1,4 @@
 import { TRPGAction } from '@redux/types/__all__';
-import { getWebToken } from '@shared/utils/portal-helper';
 import { showSlidePanel } from '@redux/actions/ui';
 import Webview from '@web/components/Webview';
 import React from 'react';
@@ -8,6 +7,7 @@ import StandaloneWindow, {
 } from '@web/components/StandaloneWindow';
 import { getPortalUrl } from '@shared/utils/string-helper';
 import _isString from 'lodash/isString';
+import { getUserJWT } from '@shared/utils/jwt-helper';
 
 type PortalPreviewType = 'slidepanel' | 'standalonewindow';
 
@@ -21,9 +21,7 @@ export const showPortal = (
   options?: Omit<StandaloneWindowConfig, 'body'>
 ): TRPGAction => {
   return async function(dispatch, getState) {
-    const userUUID = getState().user.info.uuid!;
-
-    const jwt = await getWebToken(userUUID); // 检查WebToken
+    const jwt = await getUserJWT(); // 检查WebToken
 
     // 将获取到的当前用户的WebToken设置到jwt上。jwt为portal需要使用的localStorage
     if (_isString(jwt)) {

@@ -47,12 +47,17 @@
         border: 1px solid $color-bon-jour;
         background-position: center;
         background-size: cover;
+        margin-right: 10px;
       }
 
       .actor-info {
         display: flex;
         flex-direction: column;
         flex: 1;
+
+        .actor-name {
+          color: $color-dove-gray;
+        }
       }
 
       .actor-extra {

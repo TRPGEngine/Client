@@ -1,0 +1,54 @@
+@import "../../shared/utils/mixins";
+
+.alert {
+  .mask {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 100;
+    .content {
+      padding: 20px;
+      border-radius: 4px;
+      // background-color: rgba(white,0.6);
+      background-color: white;
+      text-align: center;
+      min-width: 300px;
+      min-height: 100px;
+      max-width: 400px;
+
+      .header {
+        color: #333333;
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      .body {
+        color: #666666;
+        line-height: 1.5em;
+        max-height: 200px;
+        @include auto-scroll-bar;
+
+        p {
+          margin: 0;
+        }
+      }
+
+      .action {
+        display: flex;
+        margin-top: 10px;
+
+        > .ant-btn {
+          margin-right: 10px;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { Dropdown, Button } from 'antd';
 import { Iconfont } from './Iconfont';
 
 export const SectionHeaderContainer = styled.div`
+  min-height: ${(props) => props.theme.style.sectionHeight};
   height: ${(props) => props.theme.style.sectionHeight};
   position: relative;
   display: flex;
@@ -13,6 +14,8 @@ export const SectionHeaderContainer = styled.div`
   font-size: 16px;
   font-weight: bold;
   flex-shrink: 0;
+
+  ${(props) => props.theme.mixins.mobile('height: auto;')}
 
   &::after {
     content: ' ';

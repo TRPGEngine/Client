@@ -7,6 +7,11 @@ import { NoteState } from './note';
 import { SettingsState } from './settings';
 import { UIState } from './ui';
 import { UserState } from './user';
+import {
+  createAsyncThunk,
+  AsyncThunkPayloadCreator,
+  AsyncThunk,
+} from '@reduxjs/toolkit';
 
 interface AllState {
   actor: ActorState;
@@ -50,3 +55,22 @@ export type TRPGAction =
   | AnyAction;
 
 export type TRPGMiddleware = Middleware<{}, TRPGState, TRPGDispatch>;
+
+interface TRPGThunkApiConfig {
+  state: TRPGState;
+  dispatch: TRPGDispatch;
+  extra?: unknown;
+  rejectValue?: unknown;
+}
+
+export function createTRPGAsyncThunk<ThunkArg, Returned = void>(
+  typePrefix: string,
+  payloadCreator: AsyncThunkPayloadCreator<
+    Returned,
+    ThunkArg,
+    TRPGThunkApiConfig
+  >,
+  options?: any
+): AsyncThunk<Returned, ThunkArg, TRPGThunkApiConfig> {
+  return createAsyncThunk(typePrefix, payloadCreator, options);
+}

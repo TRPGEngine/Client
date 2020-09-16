@@ -25,7 +25,6 @@ const {
   UPDATE_GROUP_ACTOR,
   UPDATE_GROUP_ACTOR_MAPPING,
   UPDATE_GROUP_MAP_LIST,
-  UPDATE_GROUP_PANEL_LIST,
   ADD_GROUP_MAP,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
@@ -36,12 +35,14 @@ const {
   UPDATE_GROUP_STATUS,
   UPDATE_PLAYER_SELECTED_GROUP_ACTOR,
   REMOVE_CONVERSES_SUCCESS,
+  ENSURE_GROUP_CHANNEL_CONVERSE,
 } = constants;
 import config from '../../project.config';
 import {
   addConverse,
   updateConversesMsglist,
   updateCardChatData,
+  markConverseMsgListQueryed,
 } from './chat';
 import { checkUser, checkTemplate } from '../../utils/cache-helper';
 import {
@@ -55,11 +56,14 @@ import {
 } from './ui';
 import _set from 'lodash/set';
 import _get from 'lodash/get';
+import _isNil from 'lodash/isNil';
 
 import * as trpgApi from '../../api/trpg.api';
-import { TRPGAction } from '../types/__all__';
+import { TRPGAction, createTRPGAsyncThunk } from '../types/__all__';
 import { getGroupInviteInfo } from './cache';
 import { GroupInfo, GroupActorType } from '@redux/types/group';
+import { showToasts } from '@shared/manager/ui';
+import { createAction } from '@reduxjs/toolkit';
 const api = trpgApi.getInstance();
 
 // 当state->group->groups状态添加新的group时使用来初始化
@@ -122,15 +126,6 @@ const initGroupInfo = function(group: GroupInfo): TRPGAction {
           groupUUID,
           payload: groupActorsMapping,
         });
-
-        // 处理团面板
-        dispatch({
-          type: UPDATE_GROUP_PANEL_LIST,
-          payload: {
-            groupUUID,
-            groupPanels,
-          },
-        });
       } else {
         console.error('获取团初始数据失败:', data.msg);
       }
@@ -179,13 +174,22 @@ export const createGroup = function(
       if (data.result) {
         dispatch(hideModal());
         dispatch(showAlert('创建成功'));
-        dispatch({ type: CREATE_GROUP_SUCCESS, payload: data.group });
-        dispatch(initGroupInfo(data.group)); // 创建成功后直接初始化
+        dispatch(createGroupSuccess(data.group));
       } else {
         console.error(data);
         dispatch(showAlert(data.msg));
       }
     });
+  };
+};
+
+/**
+ * 创建团成功
+ */
+export const createGroupSuccess = function(group: GroupInfo): TRPGAction {
+  return function(dispatch, getState) {
+    dispatch({ type: CREATE_GROUP_SUCCESS, payload: group });
+    dispatch(initGroupInfo(group)); // 创建成功后直接初始化
   };
 };
 
@@ -237,7 +241,7 @@ export function updateGroupInfo(groupInfo: object): TRPGAction {
   return { type: UPDATE_GROUP_INFO, payload: groupInfo };
 }
 
-export const findGroup = function(text, type) {
+export function findGroup(text: string, type: string): TRPGAction {
   return function(dispatch, getState) {
     dispatch({ type: FIND_GROUP_REQUEST });
     console.log('搜索团:', text, type);
@@ -253,7 +257,7 @@ export const findGroup = function(text, type) {
       }
     });
   };
-};
+}
 
 /**
  * 发送申请加入团
@@ -400,6 +404,7 @@ export const agreeGroupInvite = function(inviteUUID: string): TRPGAction {
         }
       } else {
         console.error(data);
+        showToasts(data.msg, 'error');
       }
     });
   };
@@ -599,90 +604,36 @@ export const removeGroupActor = function(groupUUID, groupActorUUID) {
   };
 };
 
-export const agreeGroupActor = function(groupUUID, groupActorUUID) {
-  return function(dispatch, getState) {
-    return api.emit('group::agreeGroupActor', { groupActorUUID }, function(
-      data
-    ) {
-      if (data.result) {
-        dispatch({
-          type: AGREE_GROUP_ACTOR_SUCCESS,
-          groupUUID,
-          payload: data.groupActor,
-        });
-        dispatch(hideModal());
-        dispatch(showAlert('已同意该人物加入本团!'));
-      } else {
-        dispatch(showAlert(data.msg));
-        console.error(data);
-      }
-    });
-  };
-};
-
-export const refuseGroupActor = function(groupUUID, groupActorUUID) {
-  return function(dispatch, getState) {
-    return api.emit('group::refuseGroupActor', { groupActorUUID }, function(
-      data
-    ) {
-      if (data.result) {
-        dispatch({
-          type: REFUSE_GROUP_ACTOR_SUCCESS,
-          groupUUID,
-          groupActorUUID,
-        });
-        dispatch(hideModal());
-        dispatch(showAlert('已拒绝该人物加入本团!'));
-      } else {
-        dispatch(showAlert(data.msg));
-        console.error(data);
-      }
-    });
-  };
-};
+/**
+ * 同意团角色
+ */
+export const agreeGroupActor = createAction<{
+  groupUUID: string;
+  groupActor: any;
+}>(AGREE_GROUP_ACTOR_SUCCESS);
 
 /**
- * 更新团人物的人物卡信息
+ * 拒绝团角色
  */
-export const requestUpdateGroupActorInfo = function(
-  groupUUID: string,
-  groupActorUUID: string,
-  groupActorInfo: {}
-) {
-  return function(dispatch, getState) {
-    return api.emit(
-      'group::updateGroupActorInfo',
-      { groupActorUUID, groupActorInfo },
-      function(data) {
-        if (data.result) {
-          dispatch(
-            updateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)
-          );
-          dispatch(hideModal());
-          dispatch(showAlert('保存完毕!'));
-        } else {
-          dispatch(showAlert(data.msg));
-          console.error(data);
-        }
-      }
-    );
-  };
-};
+export const refuseGroupActor = createAction<{
+  groupUUID: string;
+  groupActorUUID: string;
+}>(REFUSE_GROUP_ACTOR_SUCCESS);
+
 /**
  * 更新团人物卡数据
  */
-export const updateGroupActorInfo = function(
-  groupUUID: string,
-  groupActorUUID: string,
-  groupActorInfo: {}
-): TRPGAction {
-  return {
-    type: UPDATE_GROUP_ACTOR_INFO,
-    groupUUID,
-    groupActorUUID,
-    groupActorInfo,
-  };
-};
+export const updateGroupActorInfo = createAction(
+  UPDATE_GROUP_ACTOR_INFO,
+  (
+    groupUUID: string,
+    groupActorUUID: string,
+    groupActorInfo: { [key: string]: any }
+  ) => ({
+    payload: { groupUUID, groupActorUUID, groupActorInfo },
+  })
+);
+
 /**
  * 更新团人物卡信息
  */
@@ -766,6 +717,7 @@ export const quitGroup = function(groupUUID: string): TRPGAction {
         dispatch(showAlert('已退出本群!'));
         dispatch(hideLoading());
       } else {
+        dispatch(showToast(data?.msg));
         console.error(data);
       }
     });
@@ -782,6 +734,7 @@ export const dismissGroup = function(groupUUID: string): TRPGAction {
         dispatch(showAlert('已解散本群!'));
         dispatch(hideLoading());
       } else {
+        dispatch(showToast(data?.msg));
         console.error(data);
       }
     });
@@ -923,3 +876,46 @@ export const createGroupChannel = function(
     );
   };
 };
+
+/**
+ * 确保团频道聊天频道会话存在
+ */
+export const ensureGroupChannelConverse = createTRPGAsyncThunk<{
+  groupUUID: string;
+  channelUUID: string;
+  channelName: string;
+}>(
+  ENSURE_GROUP_CHANNEL_CONVERSE,
+  async ({ groupUUID, channelUUID, channelName }, thunkAPI) => {
+    const isQueryed = thunkAPI
+      .getState()
+      .chat.queryedConverseList.includes(channelUUID);
+
+    if (isQueryed) {
+      // 如果请求过则直接跳过
+      return;
+    }
+
+    thunkAPI.dispatch(markConverseMsgListQueryed(channelUUID));
+    // 没有会话，要添加会话
+    thunkAPI.dispatch(
+      addConverse({
+        uuid: channelUUID,
+        type: 'channel',
+        name: channelName,
+        _groupUUID: groupUUID,
+      })
+    );
+
+    // 获取频道聊天日志
+    const data = await api.emitP('chat::getConverseChatLog', {
+      converse_uuid: channelUUID,
+    });
+
+    if (data.result) {
+      thunkAPI.dispatch(updateConversesMsglist(channelUUID, data.list));
+    } else {
+      console.error('获取团聊天记录失败:', data.msg);
+    }
+  }
+);

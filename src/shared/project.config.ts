@@ -109,8 +109,9 @@ const defaultSettings = {
     favoriteDice: [] as { title: string; value: string }[],
   },
   system: {
-    notification: true,
-    disableSendWritingState: false,
+    notification: true, // 是否通知
+    disableSendWritingState: false, // 不发送输入状态
+    showSelfInWritingState: false, // 在输入状态中显示自己
   },
 };
 

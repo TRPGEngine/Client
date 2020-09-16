@@ -1,11 +1,11 @@
-import { getStoreState, getCurrentStore } from '@redux/configureStore/helper';
-import { getWebToken } from '@shared/utils/portal-helper';
+import { getCurrentStore } from '@redux/configureStore/helper';
 import config from '@shared/project.config';
 import { NavigationProp, StackActions } from '@react-navigation/native';
 import { TRPGStackParamList, ChatType } from '@app/types/params';
 import _isNil from 'lodash/isNil';
 import { switchConverse } from '@redux/actions/chat';
 import { switchSelectGroup } from '@redux/actions/group';
+import { getUserJWT } from '@shared/utils/jwt-helper';
 
 export async function navPortal(
   stackNavigation: NavigationProp<TRPGStackParamList>,
@@ -13,12 +13,10 @@ export async function navPortal(
 ) {
   const portalUrl = config.url.portal;
 
-  const userUUID = getStoreState()?.user.info.uuid;
-  const jwt = await getWebToken(userUUID);
+  const jwt = await getUserJWT();
 
   url = url.startsWith(portalUrl) ? url : portalUrl + url;
 
-  // const injectedJavaScript = `location.href.indexOf('${portalUrl}') === 0 && window.localStorage.setItem('jwt', '${jwt}')`;
   const injectedJavaScript = `(function(){
     if(location.href.indexOf('${portalUrl}') !== 0) {
       return;

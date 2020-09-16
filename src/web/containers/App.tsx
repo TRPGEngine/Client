@@ -15,7 +15,7 @@ import 'react-select/dist/react-select.css';
 import 'react-image-lightbox/style.css';
 import Login from './Login';
 import Register from './Register';
-import GlobalUI from './GlobalUI';
+import { GlobalUI } from './GlobalUI';
 import { AppBanner } from '@web/components/AppBanner';
 import { TMemo } from '@shared/components/TMemo';
 
@@ -43,7 +43,7 @@ export const App: React.FC = TMemo(() => {
             />
             <Route name="main" path="/main" exact={true} component={Main} />
             <Route name="index" path="/">
-              <Link to="login" className="start-btn">
+              <Link to="/login" className="start-btn">
                 <div className="main">点击屏幕登录</div>
                 <div className="sub">Press screen to login</div>
               </Link>

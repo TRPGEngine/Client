@@ -19,7 +19,7 @@ import {
  */
 
 const Container = styled(Row)`
-  width: 600px;
+  min-width: 600px;
 `;
 
 interface Props {

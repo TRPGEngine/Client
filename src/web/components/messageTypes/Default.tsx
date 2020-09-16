@@ -14,32 +14,9 @@ import {
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { useTPopoverContext } from '../popover';
 import { MsgQuote } from './addons/MsgQuote';
+import { Bubble, DefaultAddonContentContainer } from './style';
+import { t, useTranslation } from '@shared/i18n';
 
-const DefaultAddonContentContainer = styled.div`
-  border-top: ${(props) => props.theme.border.thin};
-  display: flex;
-  padding: 4px 0;
-  cursor: pointer;
-
-  > .info {
-    flex: 1;
-
-    > p:nth-child(2) {
-      color: ${(props) => props.theme.color.gray};
-    }
-  }
-
-  > .icon {
-    padding: 6px;
-    align-self: center;
-
-    > img {
-      max-width: 96px !important;
-      max-height: 48px;
-      border-radius: ${(props) => props.theme.radius.card};
-    }
-  }
-`;
 const DefaultAddonContent: React.FC<{ message: string }> = TMemo((props) => {
   const { loading, hasUrl, info } = useWebsiteInfo(props.message);
 
@@ -72,6 +49,7 @@ const DefaultMsgReply: React.FC<{
 }> = TMemo((props) => {
   const { hasContext, setReplyMsg } = useMsgContainerContext(); // 仅当有上下文的时候才会渲染回复按钮
   const { closePopover } = useTPopoverContext();
+  const { t } = useTranslation();
 
   const handleClick = useCallback(() => {
     setReplyMsg(props.payload);
@@ -82,7 +60,7 @@ const DefaultMsgReply: React.FC<{
     () =>
       hasContext ? (
         <MsgOperationListItemContainer onClick={handleClick}>
-          回复
+          {t('回复')}
         </MsgOperationListItemContainer>
       ) : null,
     [hasContext, handleClick]
@@ -101,7 +79,7 @@ class Default extends Base {
     if (me) {
       // 当消息时自己发起的时候，可以撤回
       operations.push({
-        name: '撤回',
+        name: t('撤回'),
         action: ({ dispatch, closePopover }) => {
           dispatch(revokeMsg(info.uuid));
           closePopover();
@@ -115,13 +93,13 @@ class Default extends Base {
   getContent() {
     const info = this.props.info || ({} as MsgPayload);
     return (
-      <pre className="bubble">
+      <Bubble>
         {this.msgDataManager.hasReplyMsg() && (
           <MsgQuote replyMsg={this.msgDataManager.getReplyMsg()!} />
         )}
         <BBCode plainText={info.message} />
         <DefaultAddonContent message={info.message} />
-      </pre>
+      </Bubble>
     );
   }
 }

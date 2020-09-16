@@ -1,7 +1,7 @@
 import { TRPGMiddleware } from '@redux/types/__all__';
 import constants from '../constants/index';
 import { UserInfo } from '@redux/types/user';
-const { LOGIN_SUCCESS, LOGIN_TOKEN_SUCCESS } = constants;
+const { LOGIN_SUCCESS, LOGIN_TOKEN_SUCCESS, LOGIN_FAILED } = constants;
 
 /**
  * 监听登录状态的变更
@@ -10,6 +10,7 @@ const { LOGIN_SUCCESS, LOGIN_TOKEN_SUCCESS } = constants;
 
 interface LoginStatusCallback {
   onLoginSuccess?: (info: UserInfo) => void;
+  onLoginFailed?: () => void;
 }
 export const watchLoginStatus = (cb: LoginStatusCallback): TRPGMiddleware => ({
   dispatch,
@@ -17,6 +18,10 @@ export const watchLoginStatus = (cb: LoginStatusCallback): TRPGMiddleware => ({
 }) => (next) => (action) => {
   if (action.type === LOGIN_SUCCESS || action.type === LOGIN_TOKEN_SUCCESS) {
     cb.onLoginSuccess?.(action.payload);
+  }
+
+  if (action.type === LOGIN_FAILED) {
+    cb.onLoginFailed?.();
   }
 
   next(action);

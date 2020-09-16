@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import Avatar from '../Avatar';
 import config from '@shared/project.config';
 import _isEmpty from 'lodash/isEmpty';
+import { TMemo } from '@shared/components/TMemo';
+import { useTranslation } from '@shared/i18n';
 
 const Container = styled.div`
   display: flex;
@@ -11,7 +13,6 @@ const Container = styled.div`
 
   .avatar {
     overflow: hidden;
-    border: 1px solid white;
 
     > img {
       width: 100%;
@@ -29,8 +30,9 @@ const Container = styled.div`
 interface Props {
   userUUID: string;
 }
-const PopoverUserInfo: React.FC<Props> = React.memo((props) => {
+const PopoverUserInfo: React.FC<Props> = TMemo((props) => {
   const userInfo = useCachedUserInfo(props.userUUID);
+  const { t } = useTranslation();
 
   const name = useMemo(() => userInfo.nickname ?? userInfo.username ?? '', [
     userInfo.nickname,
@@ -52,15 +54,15 @@ const PopoverUserInfo: React.FC<Props> = React.memo((props) => {
       </div>
       <div className="info">
         <div>
-          <span>用户名: </span>
+          <span>{t('用户名')}: </span>
           <span>{name}</span>
         </div>
         <div>
-          <span>性别: </span>
+          <span>{t('性别')}: </span>
           <span>{userInfo.sex}</span>
         </div>
         <div>
-          <span>签名: </span>
+          <span>{t('签名')}: </span>
           <p>{userInfo.sign}</p>
         </div>
       </div>

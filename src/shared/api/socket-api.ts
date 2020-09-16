@@ -1,6 +1,18 @@
 import io from 'socket.io-client';
 import config from '../project.config';
 
+interface EmitSuccessResponse {
+  result: true;
+  [key: string]: any;
+}
+
+interface EmitErrorResponse {
+  result: false;
+  msg: string;
+}
+
+type EmitResponse = EmitSuccessResponse | EmitErrorResponse;
+
 const platformSocketParam = {
   jsonp: false,
 };
@@ -31,9 +43,9 @@ export class API {
     });
   }
 
-  emitP(this: API, event: string, data?: {}): Promise<any> {
+  emitP(this: API, event: string, data?: {}): Promise<EmitSuccessResponse> {
     return new Promise((resolve, reject) => {
-      this.emit(event, data, (res) => {
+      this.emit(event, data, (res: EmitResponse) => {
         if (res.result === false) {
           reject(res.msg);
         } else {

@@ -5,7 +5,19 @@ import { switchMenuPannel } from '../../shared/redux/actions/ui';
 import { switchConverse } from '../../shared/redux/actions/chat';
 import _get from 'lodash/get';
 import { TRPGStore } from '@redux/types/__all__';
-let num = 0;
+
+/**
+ * 设置小红点
+ * @param num 小红点数
+ */
+let bubbleNum = 0;
+function setBubble(num: number) {
+  bubbleNum = num;
+  if (num < 0) {
+    num = 0;
+  }
+  tinycon.setBubble(num >= 100 ? 99 : num);
+}
 
 const hiddenProperty =
   'hidden' in document
@@ -21,9 +33,8 @@ const visibilityChangeEvent = hiddenProperty?.replace(
 );
 const onVisibilityChange = function() {
   if (!document[hiddenProperty ?? '']) {
-    // 显示标签页
-    tinycon.setBubble(null);
-    num = 0;
+    // 显示标签页时清空
+    tinycon.setBubble(0);
   } else {
     // 隐藏标签页
   }
@@ -35,7 +46,10 @@ if (typeof visibilityChangeEvent === 'string') {
 export default function(store: TRPGStore) {
   // 通过blur事件处理浏览器不是当前激活窗口的情况
   let isBlur = false;
-  window.addEventListener('focus', () => (isBlur = false));
+  window.addEventListener('focus', () => {
+    setBubble(0); // 点击时清空
+    isBlur = false;
+  });
   window.addEventListener('blur', () => (isBlur = true));
 
   return {
@@ -71,8 +85,8 @@ export default function(store: TRPGStore) {
         }
 
         // 增加小红点
-        num++;
-        tinycon.setBubble(num >= 100 ? 99 : num);
+        bubbleNum++;
+        setBubble(bubbleNum);
       }
     },
   };

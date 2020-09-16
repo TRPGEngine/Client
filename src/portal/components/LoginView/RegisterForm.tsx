@@ -1,12 +1,13 @@
 import React, { useCallback, useState, Fragment } from 'react';
 import { WebFastForm } from '@web/components/WebFastForm';
 import { TMemo } from '@shared/components/TMemo';
-import { FastFormFieldMeta } from '@shared/components/FastForm';
 import { message, Col, Typography } from 'antd';
 import { registerAccount } from '@portal/model/player';
 import { handleError } from '@portal/utils/error';
-import { loginWithPassword } from '@portal/model/sso';
 import _isFunction from 'lodash/isFunction';
+import { loginWithPassword } from '@shared/model/player';
+import { FastFormFieldMeta } from '@shared/components/FastForm/field';
+import { setPortalJWT } from '@portal/utils/auth';
 
 const fields: FastFormFieldMeta[] = [
   {
@@ -32,7 +33,7 @@ interface RegisterFormProps {
 export const RegisterForm: React.FC<RegisterFormProps> = TMemo((props) => {
   const [loading, setLoading] = useState(false);
   const handleSubmit = useCallback(
-    (values) => {
+    async (values) => {
       const { username, password, passwordReply } = values;
       if (username === '') {
         message.error('用户名不能为空');
@@ -51,18 +52,15 @@ export const RegisterForm: React.FC<RegisterFormProps> = TMemo((props) => {
         return;
       }
 
-      setLoading(true);
+      try {
+        await registerAccount(username, password);
+        const jwt = await loginWithPassword(username, password); // 注册成功后自动登录
 
-      registerAccount(username, password)
-        .then(() => {
-          // 成功后自动登录
-          return loginWithPassword(username, password);
-        })
-        .then(() => {
-          _isFunction(props.onLoginSuccess) && props.onLoginSuccess();
-        })
-        .catch(handleError)
-        .finally(() => setLoading(false));
+        setPortalJWT(jwt);
+        _isFunction(props.onLoginSuccess) && props.onLoginSuccess();
+      } catch (err) {
+        handleError(err);
+      }
     },
     [setLoading]
   );
@@ -75,12 +73,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = TMemo((props) => {
         </Typography.Title>
       </Col>
 
-      <WebFastForm
-        submitLabel="注册"
-        loading={loading}
-        fields={fields}
-        onSubmit={handleSubmit}
-      />
+      <WebFastForm submitLabel="注册" fields={fields} onSubmit={handleSubmit} />
     </Fragment>
   );
 });

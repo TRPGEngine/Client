@@ -34,7 +34,7 @@ import ImagePicker from 'react-native-image-picker';
 import { uploadChatimg } from '@shared/utils/image-uploader';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { MsgReply } from './MsgReply';
-import { useGroupWritingState, useWritingState } from '@redux/hooks/chat';
+import { useWritingState } from '@redux/hooks/chat';
 import { ChatWritingIndicator } from '@app/components/chat/ChatWritingIndicator';
 
 const EXTRA_PANEL_HEIGHT = 220; // 额外面板高度
@@ -336,7 +336,7 @@ export const ChatScreenMain: React.FC<Props> = TMemo((props) => {
     );
   }
 
-  const writingList = useWritingState(props.converseUUID, props.converseType);
+  const writingList = useWritingState(props.converseUUID);
 
   return (
     <View style={{ flex: 1 }}>

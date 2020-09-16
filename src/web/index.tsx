@@ -1,9 +1,7 @@
-import '../shared/utils/common';
 import { App } from './containers/App';
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
-import { ThemeProvider } from 'styled-components';
 import { attachStore } from '../shared/utils/cache-helper';
 import config from '../shared/project.config';
 import configureStore from '../shared/redux/configureStore';
@@ -16,7 +14,6 @@ import {
   setNotificationPermission,
   initConfig,
 } from '../shared/redux/actions/settings';
-import styledTheme from '@src/shared/utils/theme';
 import { installServiceWorker } from './utils/sw-helper';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
@@ -24,8 +21,18 @@ import './components/messageTypes/__all__';
 import '@web/assets/css/iconfont.css';
 import { bindEventFunc } from '@shared/api/listener';
 import { watchLoginStatus } from '@redux/middlewares/watchLoginStatus';
-import { setUser } from './utils/sentry';
+import { setUser as setUserSentryInfo } from './utils/sentry';
 import TLoadable from './components/TLoadable';
+import { checkIsNewApp } from './utils/debug-helper';
+import { ThemeContextProvider } from '@shared/context/ThemeContext';
+import { TRPGStore } from '@redux/types/__all__';
+import './init';
+
+declare global {
+  interface Window {
+    store: TRPGStore;
+  }
+}
 
 const NewApp = TLoadable<{}>(() =>
   import('./routes/App').then((module) => module.App)
@@ -37,18 +44,25 @@ const store = configureStore({
   additionMiddleware: [
     watchLoginStatus({
       onLoginSuccess(info) {
-        setUser(info);
+        setUserSentryInfo(info);
       },
     }),
   ],
 });
 attachStore(store);
+window.store = store; // for debug
 
 const api = trpgApi.getInstance();
 bindEventFunc.call(api, store, {
   onReceiveMessage: notify(store).onReceiveMessage,
 });
 window.onerror = (event, source, fileno, columnNumber, error) => {
+  if (String(event) === 'ResizeObserver loop limit exceeded') {
+    // antd tooltip 会有问题。不知道什么原因 说是修好了但是还是有问题
+    // https://github.com/ant-design/ant-design/issues/23246
+    return;
+  }
+
   // 全局错误捕获
   import('./utils/sentry').then((module) =>
     module.error(error || String(event))
@@ -92,21 +106,26 @@ if (config.platform !== 'web') {
   });
 }
 
+const isNewApp = checkIsNewApp();
+
 // 离开页面确认
-if (config.platform === 'web' && config.environment === 'production') {
+if (
+  config.platform === 'web' &&
+  config.environment === 'production' &&
+  !isNewApp // 仅旧UI需要全局设定, 新UI根据当前场景决定是否使用退出阻止
+) {
   window.onbeforeunload = function() {
     return '确认离开当前页面吗？';
   };
 }
 
-const isNewApp = localStorage['__isNewApp'] === 'true';
 ReactDom.render(
   <Provider store={store}>
-    <ThemeProvider theme={styledTheme}>
+    <ThemeContextProvider>
       <ConfigProvider locale={zhCN}>
         {isNewApp ? <NewApp /> : <App />}
       </ConfigProvider>
-    </ThemeProvider>
+    </ThemeContextProvider>
   </Provider>,
   document.querySelector('#app')
 );

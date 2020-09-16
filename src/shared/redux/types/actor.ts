@@ -1,9 +1,12 @@
-export interface ActorType {
-  id: number;
-  uuid: string;
+export interface ActorBaseAttr {
   name: string;
   desc: string;
   avatar: string;
+}
+
+export interface ActorType extends ActorBaseAttr {
+  id: number;
+  uuid: string;
   template_uuid: string;
   info: ActorDataType;
   shared: boolean;

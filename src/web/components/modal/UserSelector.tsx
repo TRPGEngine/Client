@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import ModalPanel from '../ModalPanel';
-import { Select, Collapse, Button } from 'antd';
+import { Select, Collapse, Button, Empty } from 'antd';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import _flatten from 'lodash/flatten';
 import _uniq from 'lodash/uniq';
@@ -142,15 +142,20 @@ const AllUserList: React.FC<AllUserListProps> = React.memo((props) => {
   const panels = useMemo(() => {
     return props.allUsers.map((item, index) => (
       <Panel header={item.name} key={index} style={{ padding: 0 }}>
-        {item.uuids.map((uuid) => (
-          <UserListItem
-            key={uuid}
-            onClick={() => props.onSelectUUID(uuid)}
-            selected={props.selectedUUIDs.includes(uuid)}
-          >
-            <UserItemName uuid={uuid} />
-          </UserListItem>
-        ))}
+        {item.uuids.length > 0 ? (
+          item.uuids.map((uuid) => (
+            <UserListItem
+              key={uuid}
+              onClick={() => props.onSelectUUID(uuid)}
+              selected={props.selectedUUIDs.includes(uuid)}
+            >
+              <UserItemName uuid={uuid} />
+            </UserListItem>
+          ))
+        ) : (
+          // <p style={}>暂无符合条件的用户</p>
+          <Empty />
+        )}
       </Panel>
     ));
   }, [props.selectedUUIDs, props.allUsers, props.onSelectUUID]);
@@ -164,12 +169,16 @@ const AllUserList: React.FC<AllUserListProps> = React.memo((props) => {
 AllUserList.displayName = 'AllUserList';
 
 interface Props {
-  // TODO: 需要增加一个移除部分uuid的操作
+  /**
+   * 排除的UUID
+   */
+  excludeUUIDs?: string[];
 
   onConfirm?: (uuids: string[]) => void;
 }
 export const UserSelector: React.FC<Props> = React.memo((props) => {
   const [selectedUUIDs, setSelectedUUIDs] = useState<string[]>([]);
+  const { excludeUUIDs = [] } = props;
 
   const friends = useTRPGSelector<string[]>((state) => state.user.friendList);
   const groups = useTRPGSelector<GroupInfo[]>((state) => state.group.groups);
@@ -178,14 +187,16 @@ export const UserSelector: React.FC<Props> = React.memo((props) => {
     return [
       {
         name: '好友',
-        uuids: friends,
+        uuids: friends.filter((uuid) => !excludeUUIDs.includes(uuid)),
       },
       ...groups.map((group) => ({
         name: group.name,
-        uuids: group.group_members ?? [],
+        uuids: (group.group_members ?? []).filter(
+          (uuid) => !excludeUUIDs.includes(uuid)
+        ),
       })),
     ];
-  }, [friends, groups]);
+  }, [friends, groups, excludeUUIDs]);
 
   const allUserUUIDs: string[] = useMemo(() => {
     return _uniq(_flatten(allUsers.map((x) => x.uuids)));

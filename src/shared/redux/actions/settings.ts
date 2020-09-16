@@ -7,15 +7,16 @@ const {
   ADD_FAVORITE_DICE,
   REMOVE_FAVORITE_DICE,
   UPDATE_FAVORITE_DICE,
+  FETCH_REMOTE_SETTINGS,
 } = constants;
-import { showAlert } from './ui';
 import config from '@src/shared/project.config';
 import rnStorage from '../../api/rn-storage.api';
 import * as trpgApi from '../../api/trpg.api';
-import { TRPGAction } from '@redux/types/__all__';
+import { TRPGAction, createTRPGAsyncThunk } from '@redux/types/__all__';
 import { ServerConfig } from '@redux/types/settings';
 import request from '@shared/utils/request';
-// import { message } from 'antd'; // 这里会被app引用 请不要增加antd
+import { createAction } from '@reduxjs/toolkit';
+import { showToasts } from '@shared/manager/ui';
 const api = trpgApi.getInstance();
 
 /**
@@ -49,7 +50,10 @@ export const initConfig = function initConfig(): TRPGAction {
   };
 };
 
-export const saveSettings = function saveSettings() {
+/**
+ * 将本地的设置同步到云端
+ */
+export const saveSettings = function(): TRPGAction {
   return async function(dispatch, getState) {
     const userSettings = await rnStorage.save(
       'userSettings',
@@ -74,6 +78,25 @@ export const saveSettings = function saveSettings() {
   };
 };
 
+/**
+ * 从云端拉取用户设置
+ */
+export const fetchRemoteSettings = createTRPGAsyncThunk<void>(
+  FETCH_REMOTE_SETTINGS,
+  async (_, { dispatch }) => {
+    // 从远程获取相关配置
+
+    const res = await api.emitP('player::getSettings');
+
+    if (res.result === true) {
+      const { userSettings, systemSettings } = res;
+
+      dispatch(setUserSettings(userSettings));
+      dispatch(setSystemSettings(systemSettings));
+    }
+  }
+);
+
 export const setUserSettings = function setUserSettings(payload): TRPGAction {
   return function(dispatch, getState) {
     rnStorage.save('userSettings', {
@@ -94,8 +117,7 @@ export const setSystemSettings = function setSystemSettings(
       payload.notification === true
     ) {
       if (Notification.permission === 'denied') {
-        // message.warn('桌面通知权限已被禁止, 请手动修改后刷新应用');
-        dispatch(showAlert('桌面通知权限已被禁止'));
+        showToasts('桌面通知权限已被禁止');
         payload.notification = false;
       } else if (Notification.permission === 'default') {
         dispatch(requestNotificationPermission());
@@ -143,14 +165,27 @@ export const updateConfig = function updateConfig(
   };
 };
 
-export const addFavoriteDice = function addFavoriteDice() {
-  return { type: ADD_FAVORITE_DICE };
-};
+/**
+ * 增加常用骰
+ */
+export const addFavoriteDice = createAction(ADD_FAVORITE_DICE);
 
-export const removeFavoriteDice = function removeFavoriteDice(index) {
-  return { type: REMOVE_FAVORITE_DICE, index };
-};
+/**
+ * 移除常用骰
+ * @param index 常用骰位置
+ */
+export const removeFavoriteDice = createAction(
+  REMOVE_FAVORITE_DICE,
+  (index: number) => {
+    return { payload: index };
+  }
+);
 
+/**
+ * 更新常用骰
+ * @param index 更新常用骰
+ * @param payload 常用骰信息
+ */
 export const updateFavoriteDice = function updateFavoriteDice(index, payload) {
   return { type: UPDATE_FAVORITE_DICE, index, payload };
 };

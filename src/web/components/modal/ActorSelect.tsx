@@ -1,97 +1,85 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback, useState } from 'react';
 import config from '@shared/project.config';
-import { showAlert, showModal } from '@shared/redux/actions/ui';
+import { showAlert } from '@shared/redux/actions/ui';
 import ActorCreate from '@web/components/modal/ActorCreate';
-import { AlertPayload } from '@redux/types/ui';
-import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
+import { TMemo } from '@shared/components/TMemo';
+import {
+  useTRPGDispatch,
+  useTRPGSelector,
+} from '@shared/hooks/useTRPGSelector';
+import { openModal } from '../Modal';
 
 import './ActorSelect.scss';
 
 interface Props {
-  selfActors: any;
-  showAlert: any;
-  showModal: any;
-  onSelect: any;
+  onSelect: (selectActorUUID: string, selectActorInfo: any) => void;
 }
-class ActorSelect extends React.Component<Props> {
-  state = {
-    selectActorUUID: '',
-  };
+const ActorSelect: React.FC<Props> = TMemo((props) => {
+  const [selectActorUUID, setSelectActorUUID] = useState<string | null>(null);
+  const selfActors = useTRPGSelector((state) => state.actor.selfActors);
+  const dispatch = useTRPGDispatch();
 
-  handleSelect = () => {
-    const selectActorUUID = this.state.selectActorUUID;
+  const handleSelect = useCallback(() => {
     if (selectActorUUID) {
       console.log('[人物卡列表]选择了' + selectActorUUID);
-      const selectActorInfo = this.props.selfActors.find(
+      const selectActorInfo = selfActors.find(
         (a) => a.uuid === selectActorUUID
       );
-      this.props.onSelect &&
-        this.props.onSelect(selectActorUUID, selectActorInfo);
+      props.onSelect && props.onSelect(selectActorUUID, selectActorInfo);
     } else {
-      this.props.showAlert('请选择人物卡');
+      dispatch(showAlert('请选择人物卡'));
     }
-  };
+  }, [props.onSelect, selfActors, selectActorUUID]);
 
-  handleActorCreate = () => {
-    this.props.showModal(<ActorCreate />);
-  };
+  const handleActorCreate = useCallback(() => {
+    openModal(<ActorCreate />);
+  }, []);
 
-  render() {
-    return (
-      <div className="actor-select">
-        <h3>请选择人物卡</h3>
-        <div className="actor-list">
-          {this.props.selfActors.length > 0 ? (
-            this.props.selfActors.map((item, index) => {
-              const uuid = item.uuid;
-              return (
+  return (
+    <div className="actor-select">
+      <h3>请选择人物卡</h3>
+      <div className="actor-list">
+        {selfActors.length > 0 ? (
+          selfActors.map((item, index) => {
+            const uuid = item.uuid;
+            return (
+              <div
+                key={`actor-item#${uuid}#${index}`}
+                className={
+                  'actor-item' + (selectActorUUID === uuid ? ' active' : '')
+                }
+                onClick={() => setSelectActorUUID(uuid)}
+              >
                 <div
-                  key={`actor-item#${uuid}#${index}`}
-                  className={
-                    'actor-item' +
-                    (this.state.selectActorUUID === uuid ? ' active' : '')
-                  }
-                  onClick={() => this.setState({ selectActorUUID: uuid })}
-                >
-                  <div
-                    className="actor-avatar"
-                    style={{
-                      backgroundImage: `url(${item.avatar ||
-                        config.defaultImg.actor})`,
-                    }}
-                  />
-                  <div className="actor-info">
-                    <div className="actor-name">{item.name}</div>
-                    <div className="actor-desc">{item.desc}</div>
-                  </div>
-                  <div className="actor-extra">
-                    <i className="iconfont">&#xe620;</i>
-                  </div>
+                  className="actor-avatar"
+                  style={{
+                    backgroundImage: `url(${item.avatar ||
+                      config.defaultImg.actor})`,
+                  }}
+                />
+                <div className="actor-info">
+                  <div className="actor-name">{item.name}</div>
+                  <div className="actor-desc">{item.desc}</div>
                 </div>
-              );
-            })
-          ) : (
-            <div className="no-actor">
-              尚无人物卡, 现在去
-              <span onClick={this.handleActorCreate}>创建</span>
-            </div>
-          )}
-        </div>
-        <div className="action">
-          <button onClick={this.handleSelect}>确定</button>
-        </div>
+                <div className="actor-extra">
+                  <i className="iconfont">&#xe620;</i>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="no-actor">
+            尚无人物卡, 现在去
+            <span onClick={handleActorCreate}>创建</span>
+          </div>
+        )}
       </div>
-    );
-  }
-}
+      <div className="action">
+        <button onClick={handleSelect}>确定</button>
+      </div>
+    </div>
+  );
+});
+ActorSelect.displayName = 'ActorSelect';
 
-export default connect(
-  (state: TRPGState) => ({
-    selfActors: state.actor.selfActors,
-  }),
-  (dispatch: TRPGDispatch) => ({
-    showAlert: (payload: AlertPayload) => dispatch(showAlert(payload)),
-    showModal: (body) => dispatch(showModal(body)),
-  })
-)(ActorSelect);
+export default ActorSelect;

@@ -5,6 +5,12 @@ import _remove from 'lodash/remove';
 import { GroupState } from '@redux/types/group';
 import constants from '@redux/constants';
 import produce from 'immer';
+import { createReducer } from '@reduxjs/toolkit';
+import {
+  agreeGroupActor,
+  refuseGroupActor,
+  updateGroupActorInfo,
+} from '@redux/actions/group';
 const {
   RESET,
   CREATE_GROUP_SUCCESS,
@@ -33,7 +39,6 @@ const {
   UPDATE_GROUP_ACTOR,
   UPDATE_GROUP_ACTOR_MAPPING,
   UPDATE_GROUP_MAP_LIST,
-  UPDATE_GROUP_PANEL_LIST,
   ADD_GROUP_MAP,
   QUIT_GROUP_SUCCESS,
   DISMISS_GROUP_SUCCESS,
@@ -57,225 +62,208 @@ const initialState: GroupState = {
   groupActorMap: {}, // {groupUUID: {userUUID: groupActorUUID}} 如果为自己，可以使用self代替userUUID
 };
 
-export default produce((draft: GroupState, action) => {
-  switch (action.type) {
-    case RESET:
-      return initialState;
-    case CREATE_GROUP_SUCCESS:
+export default createReducer(initialState, (builder) => {
+  builder
+    .addCase(RESET, (state) => {
+      state = initialState;
+    })
+    .addCase(CREATE_GROUP_SUCCESS, (state, action: any) => {
       if (
-        draft.groups.findIndex(
+        state.groups.findIndex(
           (g) => g.uuid === _get(action.payload, 'uuid', '')
         ) === -1
       ) {
-        draft.groups.push(action.payload);
+        state.groups.push(action.payload);
       }
-      return;
-    case GET_GROUP_INFO_SUCCESS: {
+    })
+    .addCase(GET_GROUP_INFO_SUCCESS, (state, action: any) => {
       const groupUUID = action.payload.uuid;
-      draft.info[groupUUID] = {
-        ...draft.info[groupUUID],
+      state.info[groupUUID] = {
+        ...state.info[groupUUID],
         ...action.payload,
       };
-      return;
-    }
-    case UPDATE_GROUP_INFO: {
-      const groupIndex = draft.groups.findIndex(
+    })
+    .addCase(UPDATE_GROUP_INFO, (state, action: any) => {
+      const groupIndex = state.groups.findIndex(
         (i) => i.uuid === action.payload.uuid
       );
       if (groupIndex >= 0) {
-        draft.groups[groupIndex] = {
-          ...draft.groups[groupIndex],
+        state.groups[groupIndex] = {
+          ...state.groups[groupIndex],
           ...action.payload,
         };
       }
-      return;
-    }
-    case FIND_GROUP_REQUEST:
-      draft.isFindingGroup = true;
-      return;
-    case FIND_GROUP_SUCCESS:
-      draft.isFindingGroup = false;
-      draft.findingResult = action.payload;
-      return;
-    case REQUEST_JOIN_GROUP_SUCCESS:
-      draft.requestingGroupUUID.push(action.payload.group_uuid);
-      return;
-    case ADD_GROUP_SUCCESS: {
+    })
+    .addCase(FIND_GROUP_REQUEST, (state) => {
+      state.isFindingGroup = true;
+    })
+    .addCase(FIND_GROUP_SUCCESS, (state, action: any) => {
+      state.isFindingGroup = false;
+      state.findingResult = action.payload;
+    })
+    .addCase(REQUEST_JOIN_GROUP_SUCCESS, (state, action: any) => {
+      state.requestingGroupUUID.push(action.payload.group_uuid);
+    })
+    .addCase(ADD_GROUP_SUCCESS, (state, action: any) => {
       const payload = action.payload;
-      const groupIndex = draft.groups.findIndex((g) => g.uuid === payload.uuid);
+      const groupIndex = state.groups.findIndex((g) => g.uuid === payload.uuid);
       if (groupIndex === -1) {
-        draft.groups.push(payload);
+        state.groups.push(payload);
       }
-      return;
-    }
-    case AGREE_GROUP_REQUEST_SUCCESS:
-      const group = draft.groups.find(
+    })
+    .addCase(AGREE_GROUP_REQUEST_SUCCESS, (state, action: any) => {
+      const group = state.groups.find(
         (group) => group.uuid === action.groupUUID
       );
       if (!_isNil(group)) {
         group.group_members = action.payload || [];
       }
-      return;
-    case GET_GROUP_INVITE_SUCCESS:
-      draft.invites = action.payload;
-      return;
-    case AGREE_GROUP_INVITE_SUCCESS: {
+    })
+    .addCase(GET_GROUP_INVITE_SUCCESS, (state, action: any) => {
+      state.invites = action.payload;
+    })
+    .addCase(AGREE_GROUP_INVITE_SUCCESS, (state, action: any) => {
       const agreeUUID = action.payload.uuid;
-      _remove(draft.invites, (invite) => invite.uuid === agreeUUID);
-      return;
-    }
-    case REFUSE_GROUP_INVITE_SUCCESS:
+      _remove(state.invites, (invite) => invite.uuid === agreeUUID);
+    })
+    .addCase(REFUSE_GROUP_INVITE_SUCCESS, (state, action: any) => {
       const refuseUUID = action.payload.uuid;
-      _remove(draft.invites, (invite) => invite.uuid === refuseUUID);
-      return;
-    case GET_GROUP_LIST_SUCCESS:
-      draft.groups = action.payload ?? [];
-      return;
-    case SWITCH_GROUP:
-      draft.selectedGroupUUID = action.payload;
-      return;
-    case GET_GROUP_ACTOR_SUCCESS: {
-      const index = draft.groups.findIndex(
+      _remove(state.invites, (invite) => invite.uuid === refuseUUID);
+    })
+    .addCase(GET_GROUP_LIST_SUCCESS, (state, action: any) => {
+      state.groups = action.payload ?? [];
+    })
+    .addCase(SWITCH_GROUP, (state, action: any) => {
+      state.selectedGroupUUID = action.payload;
+    })
+    .addCase(GET_GROUP_ACTOR_SUCCESS, (state, action: any) => {
+      const index = state.groups.findIndex(
         (group) => group.uuid === action.groupUUID
       );
       if (index >= 0) {
-        draft.groups[index].group_actors = action.payload;
+        state.groups[index].group_actors = action.payload;
       }
-
-      return;
-    }
-    case GET_GROUP_MEMBERS_SUCCESS: {
-      const index = draft.groups.findIndex(
+    })
+    .addCase(GET_GROUP_MEMBERS_SUCCESS, (state, action: any) => {
+      const index = state.groups.findIndex(
         (group) => group.uuid === action.groupUUID
       );
       if (index >= 0) {
-        draft.groups[index].group_members = action.payload;
+        state.groups[index].group_members = action.payload;
       }
-
-      return;
-    }
-    case SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS: {
+    })
+    .addCase(SET_PLAYER_SELECTED_GROUP_ACTOR_SUCCESS, (state, action: any) => {
       const { groupUUID, groupActorUUID } = action.payload;
-      const index = draft.groups.findIndex((group) => group.uuid === groupUUID);
+      const index = state.groups.findIndex((group) => group.uuid === groupUUID);
       if (index >= 0) {
         _set(
-          draft.groups[index],
+          state.groups[index],
           'extra.selected_group_actor_uuid',
           groupActorUUID
         );
       }
-      _set(draft.groupActorMap, [groupUUID, 'self'], groupActorUUID);
-      return;
-    }
-    case UPDATE_PLAYER_SELECTED_GROUP_ACTOR: {
+      _set(state.groupActorMap, [groupUUID, 'self'], groupActorUUID);
+    })
+    .addCase(UPDATE_PLAYER_SELECTED_GROUP_ACTOR, (state, action: any) => {
       const { groupUUID, userUUID, groupActorUUID } = action.payload;
-      _set(draft.groupActorMap, [groupUUID, userUUID], groupActorUUID);
+      _set(state.groupActorMap, [groupUUID, userUUID], groupActorUUID);
       return;
-    }
-    case ADD_GROUP_ACTOR: {
+    })
+    .addCase(ADD_GROUP_ACTOR, (state, action: any) => {
       if (_isNil(action.payload)) {
         return;
       }
 
-      const index = draft.groups.findIndex(
+      const index = state.groups.findIndex(
         (group) => group.uuid === action.groupUUID
       );
       if (index >= 0) {
-        draft.groups[index].group_actors!.push(action.payload);
+        state.groups[index].group_actors!.push(action.payload);
       }
-      return;
-    }
-    case REMOVE_GROUP_ACTOR_SUCCESS: {
-      const groupIndex = draft.groups.findIndex(
+    })
+    .addCase(REMOVE_GROUP_ACTOR_SUCCESS, (state, action: any) => {
+      const groupIndex = state.groups.findIndex(
         (group) => group.uuid === action.groupUUID
       );
       if (groupIndex >= 0) {
-        const group_actors = draft.groups[groupIndex].group_actors!;
+        const group_actors = state.groups[groupIndex].group_actors!;
         _remove(group_actors, (ga) => ga.uuid === action.groupActorUUID);
       }
-      return;
-    }
-    case AGREE_GROUP_ACTOR_SUCCESS: {
-      const index = draft.groups.findIndex(
-        (group) => group.uuid === action.groupUUID
-      );
+    })
+    .addCase(agreeGroupActor, (state, action) => {
+      const { groupUUID, groupActor } = action.payload;
+      const index = state.groups.findIndex((group) => group.uuid === groupUUID);
+
       if (index >= 0) {
-        const groupActorUUID = action.payload.uuid;
-        const groupActorIndex = draft.groups[index].group_actors!.findIndex(
+        const groupActorUUID = groupActor.uuid;
+        const groupActorIndex = state.groups[index].group_actors!.findIndex(
           (item) => item.uuid === groupActorUUID
         );
         if (groupActorIndex >= 0) {
-          draft.groups[index].group_actors![groupActorIndex].passed = true;
+          state.groups[index].group_actors![groupActorIndex].passed = true;
         }
       }
-      return;
-    }
-    case REFUSE_GROUP_ACTOR_SUCCESS: {
-      const index = draft.groups.findIndex(
-        (group) => group.uuid === action.groupUUID
-      );
+    })
+    .addCase(refuseGroupActor, (state, action) => {
+      const { groupUUID, groupActorUUID } = action.payload;
+      const index = state.groups.findIndex((group) => group.uuid === groupUUID);
       if (index >= 0) {
-        const groupActorUUID = action.groupActorUUID;
         _remove(
-          draft.groups[index].group_actors!,
+          state.groups[index].group_actors!,
           (item) => item.uuid === groupActorUUID
         );
       }
+    })
+    .addCase(updateGroupActorInfo, (state, action) => {
+      const { groupUUID, groupActorUUID, groupActorInfo } = action.payload;
 
-      return;
-    }
-    case UPDATE_GROUP_ACTOR_INFO: {
-      const groupIndex = draft.groups.findIndex(
-        (g) => g.uuid === action.groupUUID
-      );
+      const groupIndex = state.groups.findIndex((g) => g.uuid === groupUUID);
       if (groupIndex === -1) {
         return;
       }
-      const groupActorIndex = draft.groups[groupIndex].group_actors!.findIndex(
-        (g) => g.uuid === action.groupActorUUID
+      const groupActorIndex = state.groups[groupIndex].group_actors!.findIndex(
+        (g) => g.uuid === groupActorUUID
       );
 
       if (groupActorIndex === -1) {
         return;
       }
 
-      const groupActorInfo = action.groupActorInfo;
       _set(
-        draft.groups[groupIndex],
+        state.groups[groupIndex],
         ['group_actors', groupActorIndex, 'actor_info'],
         groupActorInfo
       );
       if (!_isNil(groupActorInfo._name)) {
         _set(
-          draft.groups[groupIndex],
+          state.groups[groupIndex],
           ['group_actors', groupActorIndex, 'name'],
           groupActorInfo._name
         );
       }
       if (!_isNil(groupActorInfo._desc)) {
         _set(
-          draft.groups[groupIndex],
+          state.groups[groupIndex],
           ['group_actors', groupActorIndex, 'desc'],
           groupActorInfo._desc
         );
       }
       if (!_isNil(groupActorInfo._avatar)) {
         _set(
-          draft.groups[groupIndex],
+          state.groups[groupIndex],
           ['group_actors', groupActorIndex, 'avatar'],
           groupActorInfo._avatar
         );
       }
-      return;
-    }
-    case UPDATE_GROUP_ACTOR: {
-      const groupIndex = draft.groups.findIndex(
+    })
+    .addCase(UPDATE_GROUP_ACTOR, (state, action: any) => {
+      const groupIndex = state.groups.findIndex(
         (g) => g.uuid === action.groupUUID
       );
       if (groupIndex === -1) {
         return;
       }
-      const groupActorIndex = draft.groups[groupIndex].group_actors!.findIndex(
+      const groupActorIndex = state.groups[groupIndex].group_actors!.findIndex(
         (ga) => ga.uuid === action.groupActor.uuid
       );
 
@@ -284,99 +272,82 @@ export default produce((draft: GroupState, action) => {
       }
 
       _set(
-        draft.groups[groupIndex],
+        state.groups[groupIndex],
         ['group_actors', groupActorIndex],
         action.groupActor
       );
-      return;
-    }
-    case UPDATE_GROUP_ACTOR_MAPPING: {
-      draft.groupActorMap[action.groupUUID] = action.payload;
-      return;
-    }
-    case UPDATE_GROUP_MAP_LIST: {
+    })
+    .addCase(UPDATE_GROUP_ACTOR_MAPPING, (state, action: any) => {
+      state.groupActorMap[action.groupUUID] = action.payload;
+    })
+    .addCase(UPDATE_GROUP_MAP_LIST, (state, action: any) => {
       const { groupUUID, groupMaps } = action.payload;
-      const group = draft.groups.find((g) => g.uuid === groupUUID);
+      const group = state.groups.find((g) => g.uuid === groupUUID);
       if (!_isNil(group)) {
         group.maps = groupMaps;
       }
-      return;
-    }
-    case UPDATE_GROUP_PANEL_LIST: {
-      const { groupUUID, groupPanels } = action.payload;
-      const group = draft.groups.find((g) => g.uuid === groupUUID);
-      if (!_isNil(group)) {
-        group.panels = groupPanels ?? [];
-      }
-      return;
-    }
-    case ADD_GROUP_MAP: {
+    })
+    .addCase(ADD_GROUP_MAP, (state, action: any) => {
       const { groupUUID, mapUUID, mapName } = action.payload;
-      const group = draft.groups.find((g) => g.uuid === groupUUID)!;
+      const group = state.groups.find((g) => g.uuid === groupUUID)!;
       group.maps!.push({
         uuid: mapUUID,
         name: mapName,
       });
-      return;
-    }
-    case QUIT_GROUP_SUCCESS:
-    case DISMISS_GROUP_SUCCESS:
-      _remove(draft.groups, (group) => group.uuid === action.groupUUID);
-      return;
-    case TICK_MEMBER_SUCCESS: {
-      const group = draft.groups.find(
+    })
+    .addCase(QUIT_GROUP_SUCCESS, (state, action: any) => {
+      _remove(state.groups, (group) => group.uuid === action.groupUUID);
+    })
+    .addCase(DISMISS_GROUP_SUCCESS, (state, action: any) => {
+      _remove(state.groups, (group) => group.uuid === action.groupUUID);
+    })
+    .addCase(TICK_MEMBER_SUCCESS, (state, action: any) => {
+      const group = state.groups.find(
         (group) => group.uuid === action.groupUUID
       );
       if (!_isNil(group)) {
         _remove(group.group_members!, (member) => member === action.memberUUID);
       }
-      return;
-    }
-    case ADD_GROUP_MEMBER: {
-      const groupIndex = draft.groups.findIndex(
+    })
+    .addCase(ADD_GROUP_MEMBER, (state, action: any) => {
+      const groupIndex = state.groups.findIndex(
         (group) => group.uuid === action.groupUUID
       );
 
-      if (!Array.isArray(draft.groups[groupIndex].group_members)) {
-        draft.groups[groupIndex].group_members = [];
+      if (!Array.isArray(state.groups[groupIndex].group_members)) {
+        state.groups[groupIndex].group_members = [];
       }
 
-      const groupMemberIndex = draft.groups[
+      const groupMemberIndex = state.groups[
         groupIndex
       ].group_members!.findIndex((uuid) => uuid === action.memberUUID);
       if (groupMemberIndex === -1) {
-        draft.groups[groupIndex].group_members!.push(action.memberUUID);
+        state.groups[groupIndex].group_members!.push(action.memberUUID);
       }
-      return;
-    }
-    case REMOVE_GROUP_MEMBER: {
-      const groupIndex = draft.groups.findIndex(
+    })
+    .addCase(REMOVE_GROUP_MEMBER, (state, action: any) => {
+      const groupIndex = state.groups.findIndex(
         (group) => group.uuid === action.groupUUID
       );
       if (groupIndex >= 0) {
         _remove(
-          draft.groups[groupIndex].group_members!,
+          state.groups[groupIndex].group_members!,
           (member) => member === action.memberUUID
         );
       }
-      return;
-    }
-    case SET_MEMBER_TO_MANAGER_SUCCESS: {
-      const group = draft.groups.find(
+    })
+    .addCase(SET_MEMBER_TO_MANAGER_SUCCESS, (state, action: any) => {
+      const group = state.groups.find(
         (group) => group.uuid === action.groupUUID
       );
       if (!_isNil(group)) {
         group.managers_uuid!.push(action.memberUUID);
       }
-      return;
-    }
-
-    case UPDATE_GROUP_STATUS: {
-      const group = draft.groups.find(
+    })
+    .addCase(UPDATE_GROUP_STATUS, (state, action: any) => {
+      const group = state.groups.find(
         (group) => group.uuid === action.groupUUID
       )!;
       group.status = action.groupStatus;
-      return;
-    }
-  }
-}, initialState);
+    });
+});

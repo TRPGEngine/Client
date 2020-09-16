@@ -61,6 +61,7 @@ const babelQuery = {
     ],
     'transform-class-properties',
     '@babel/plugin-transform-modules-commonjs', // NOTICE: 该组件不能移除，因为目前需要require来实现一些异步加载
+    'babel-plugin-styled-components',
   ],
 };
 
@@ -217,6 +218,10 @@ module.exports = {
       {
         from: path.resolve(BUILD_PATH, './config/dll/dll_vendor.js'),
         to: `${dllHashName}.js`,
+      },
+      {
+        from: path.resolve(BUILD_PATH, './config/dll/dll_vendor.js.map'),
+        to: `${dllHashName}.js.map`,
       },
       {
         from: path.resolve(APP_PATH, './web/assets'),

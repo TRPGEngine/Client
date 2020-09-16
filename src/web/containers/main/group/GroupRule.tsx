@@ -2,9 +2,7 @@ import React, { useCallback } from 'react';
 import { Button } from 'antd';
 import { showModal } from '@redux/actions/ui';
 import GroupRuleEditor from './modal/GroupRuleEditor';
-import { TRPGState } from '@redux/types/__all__';
 import { isGroupManager } from '@shared/model/group';
-import { GroupInfo } from '@redux/types/group';
 import HTML from '@web/components/HTML';
 import _isEmpty from 'lodash/isEmpty';
 import {

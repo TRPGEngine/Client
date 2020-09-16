@@ -14,13 +14,14 @@ const {
   FIND_USER_SUCCESS,
   FIND_USER_FAILED,
   UPDATE_INFO_SUCCESS,
-  ADD_FRIEND_SUCCESS,
   GET_FRIENDS_SUCCESS,
   SEND_FRIEND_INVITE_SUCCESS,
   AGREE_FRIEND_INVITE_SUCCESS,
   GET_FRIEND_INVITE_SUCCESS,
   REFUSE_FRIEND_INVITE_SUCCESS,
   ADD_FRIEND_INVITE,
+  REMOVE_FRIEND_INVITE,
+  REQUEST_REMOVE_FRIEND_INVITE,
 } = constants;
 import md5 from 'md5';
 import rnStorage from '@shared/api/rn-storage.api';
@@ -35,14 +36,20 @@ import {
   runLoginSuccessCallback,
   runLogoutSuccessCallback,
 } from '@shared/utils/inject';
-import { setUserSettings, setSystemSettings } from './settings';
-
+import {
+  setUserSettings,
+  setSystemSettings,
+  fetchRemoteSettings,
+} from './settings';
+import _isNil from 'lodash/isNil';
 import { reloadConverseList, getUserEmotion } from './chat';
 import { getTemplate, getActor } from './actor';
 import { getGroupList, getGroupInvite } from './group';
 import { getNote, getNotes } from './note';
 import { loadLocalCache } from './cache';
 import { TRPGAction } from '../types/__all__';
+import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
+import { setUserJWT } from '@shared/utils/jwt-helper';
 
 const api = trpgApi.getInstance();
 
@@ -71,6 +78,8 @@ function loginSuccess(dispatch, getState) {
   dispatch(getUserEmotion()); // 获取用户表情数据
 
   dispatch(fetchWebToken()); // 登录成功后立刻获取最新的jwt信息
+
+  dispatch(fetchRemoteSettings());
 
   setTimeout(() => {
     runLoginSuccessCallback();
@@ -222,7 +231,12 @@ export const fetchWebToken = function(): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('player::getWebToken', null, (data) => {
       const token = data.jwt ?? null;
-      rnStorage.set('jwt', token);
+      if (_isNil(token)) {
+        console.error('jwt 无法正确获取到');
+        return;
+      }
+      setUserJWT(token);
+
       dispatch({
         type: SET_WEB_TOKEN,
         token,
@@ -348,10 +362,10 @@ export const changePassword = function(
 };
 
 /**
- * 发送好友邀请
+ * 发送好友请求
  * @param uuid 目标用户UUID
  */
-export const sendFriendInvite = function(uuid: string): TRPGAction {
+export const sendFriendRequest = function(uuid: string): TRPGAction {
   return function(dispatch, getState) {
     return api.emit('player::sendFriendInvite', { to: uuid }, function(data) {
       if (data.result) {
@@ -367,6 +381,7 @@ export const sendFriendInvite = function(uuid: string): TRPGAction {
     });
   };
 };
+export const sendFriendInvite = sendFriendRequest; // 兼容旧名字
 
 export const agreeFriendInvite = function(inviteUUID: string): TRPGAction {
   return function(dispatch, getState) {
@@ -405,6 +420,30 @@ export const refuseFriendInvite = function(inviteUUID: string): TRPGAction {
 export const addFriendInvite = function(invite: any): TRPGAction {
   return { type: ADD_FRIEND_INVITE, payload: invite };
 };
+
+/**
+ * 移除好友请求
+ */
+export const removeFriendInvite = createAction<{
+  inviteUUID: string;
+}>(REMOVE_FRIEND_INVITE);
+
+/**
+ * 发送请求移除好友请求
+ */
+export const requestRemoveFriendInvite = createAsyncThunk<
+  void,
+  { inviteUUID: string }
+>(REQUEST_REMOVE_FRIEND_INVITE, async ({ inviteUUID }, { dispatch }) => {
+  try {
+    await api.emitP('player::removeFriendInvite', { inviteUUID });
+
+    dispatch(removeFriendInvite({ inviteUUID }));
+  } catch (err) {
+    // TODO: 需要处理 showToast 的类型
+    dispatch(showToast('取消好友邀请失败:' + String(err)) as any);
+  }
+});
 
 export const saveSettings = function(): TRPGAction {
   return function(dispatch, getState) {

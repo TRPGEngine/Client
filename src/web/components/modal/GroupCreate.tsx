@@ -1,71 +1,49 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import ModalPanel from '../ModalPanel';
-import { createGroup } from '../../../shared/redux/actions/group';
+import React, { useCallback } from 'react';
+import { TMemo } from '@shared/components/TMemo';
+import { FastFormFieldMeta } from '@shared/components/FastForm/field';
+import { WebFastForm } from '../WebFastForm';
+import { createGroup } from '@shared/model/group';
+import { showToasts } from '@shared/manager/ui';
+import { closeModal } from '../Modal';
+import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { createGroupSuccess } from '@redux/actions/group';
+import {
+  createFastFormSchema,
+  fieldSchema,
+} from '@shared/components/FastForm/schema';
 
-import './GroupCreate.scss';
-import { TRPGDispatchProp } from '@redux/types/__all__';
+const schema = createFastFormSchema({
+  name: fieldSchema.string().required('团名不能为空'),
+});
 
-interface Props extends TRPGDispatchProp {}
-class GroupCreate extends React.Component<Props> {
-  state = {
-    groupName: '',
-    groupSubName: '',
-    groupDesc: '',
-  };
+const fields: FastFormFieldMeta[] = [
+  { type: 'text', name: 'name', label: '团名', maxLength: 16 },
+  {
+    type: 'textarea',
+    name: 'desc',
+    label: '简介',
+    maxLength: 100,
+    placeholder: '简单介绍一下你的团吧',
+  },
+];
 
-  handleCreate() {
-    this.props.dispatch(
-      createGroup(
-        this.state.groupName,
-        this.state.groupSubName,
-        this.state.groupDesc
-      )
-    );
-  }
+export const GroupCreate: React.FC = TMemo(() => {
+  const dispatch = useTRPGDispatch();
+  const handleCreateGroup = useCallback(async (values) => {
+    const { name, desc } = values;
 
-  render() {
-    const actions = (
-      <div>
-        <button onClick={() => this.handleCreate()}>创建</button>
-      </div>
-    );
-    return (
-      <ModalPanel title="创建团" actions={actions}>
-        <div className="group-create">
-          <div>
-            <label>团名</label>
-            <input
-              type="text"
-              maxLength={16}
-              value={this.state.groupName}
-              onChange={(e) => this.setState({ groupName: e.target.value })}
-            />
-          </div>
-          <div>
-            <label>团副名</label>
-            <input
-              type="text"
-              placeholder="选填"
-              maxLength={32}
-              value={this.state.groupSubName}
-              onChange={(e) => this.setState({ groupSubName: e.target.value })}
-            />
-          </div>
-          <div>
-            <label>团简介</label>
-            <textarea
-              placeholder="简单介绍下你的团吧"
-              maxLength={100}
-              rows={4}
-              value={this.state.groupDesc}
-              onChange={(e) => this.setState({ groupDesc: e.target.value })}
-            />
-          </div>
-        </div>
-      </ModalPanel>
-    );
-  }
-}
+    try {
+      const group = await createGroup(name, desc);
+      dispatch(createGroupSuccess(group));
+      showToasts('创建成功');
+      closeModal();
+    } catch (err) {
+      showToasts(err, 'error');
+    }
+  }, []);
 
-export default connect()(GroupCreate);
+  return (
+    <WebFastForm schema={schema} fields={fields} onSubmit={handleCreateGroup} />
+  );
+});
+GroupCreate.displayName = 'GroupCreate';

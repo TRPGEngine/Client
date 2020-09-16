@@ -1,6 +1,4 @@
-import { PortalHost } from './Host';
+import { buildPortal } from './buildPortal';
+import { DefaultEventEmitter } from './defaultEventEmitter';
 
-export { PortalHost };
-
-export const addPortal = PortalHost.add;
-export const removePortal = PortalHost.remove;
+export { buildPortal, DefaultEventEmitter };

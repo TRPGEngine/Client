@@ -1,14 +1,14 @@
 import { request } from '@portal/utils/request';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import { ModelAccess } from './types';
-import { getJWTInfo } from '@portal/utils/auth';
 import { isBlobUrl } from '@shared/utils/string-helper';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
 import _isString from 'lodash/isString';
 import _isNil from 'lodash/isNil';
 import { toAvatarWithBlobUrl } from '@web/utils/upload-helper';
-import { bindFileAvatarAttachUUID } from './file';
+import { bindFileAvatarAttachUUID } from '@shared/model/file';
+import { getJWTUserInfo } from '@shared/utils/jwt-helper';
 
 export interface ActorItem {
   id: number;
@@ -97,7 +97,7 @@ export const createActor = async (
   const avatarUrl = _get(actorInfo, '_avatar');
   let avatar;
   if (_isString(avatarUrl) && isBlobUrl(avatarUrl)) {
-    const userInfo = getJWTInfo();
+    const userInfo = await getJWTUserInfo();
     avatar = await toAvatarWithBlobUrl(userInfo.uuid!, avatarUrl);
     _set(actorInfo, '_avatar', avatar.url);
   }
@@ -133,7 +133,7 @@ export const editActor = async (
   const avatarUrl = _get(actorInfo, '_avatar');
   let avatar;
   if (_isString(avatarUrl) && isBlobUrl(avatarUrl)) {
-    const userInfo = getJWTInfo();
+    const userInfo = await getJWTUserInfo();
     avatar = await toAvatarWithBlobUrl(userInfo.uuid!, avatarUrl);
     _set(actorInfo, '_avatar', avatar.url);
   }

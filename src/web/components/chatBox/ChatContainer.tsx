@@ -1,28 +1,30 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { ChatHeader } from './ChatHeader';
-import { ChatMsgList } from './ChatMsgList';
-import styled from 'styled-components';
-import { ChatSendBox } from './ChatSendBox';
-
-const Root = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-`;
+import { CommonPanel } from '../panels/CommonPanel';
+import { useConverseDetail, useSelectConverse } from '@redux/hooks/chat';
+import { ChatBody } from './ChatBody';
 
 interface Props {
   converseUUID: string;
+  style?: React.CSSProperties;
+  headerActions?: React.ReactNode[];
+  rightPanel?: React.ReactNode;
 }
 export const ChatContainer: React.FC<Props> = TMemo((props) => {
-  const { converseUUID } = props;
+  const { converseUUID, style, headerActions, rightPanel } = props;
+  const converse = useConverseDetail(converseUUID);
+  useSelectConverse(converseUUID);
 
   return (
-    <Root>
-      <ChatHeader converseUUID={converseUUID} />
-      <ChatMsgList converseUUID={converseUUID} />
-      <ChatSendBox converseUUID={converseUUID} />
-    </Root>
+    <CommonPanel
+      style={style}
+      headerPrefix={['user', 'system'].includes(converse?.type!) ? '@' : '#'}
+      header={converse?.name}
+      rightPanel={rightPanel}
+      headerActions={headerActions}
+    >
+      <ChatBody converseUUID={converseUUID} />
+    </CommonPanel>
   );
 });
 ChatContainer.displayName = 'ChatContainer';

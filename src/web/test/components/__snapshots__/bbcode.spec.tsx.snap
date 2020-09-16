@@ -4,13 +4,19 @@ exports[`bbcode render render ":cat:" 1`] = `
 <Memo(BBCode)
   plainText=":cat:"
 >
-  <PlainText
+  <Memo(PlainText)
     key="0"
   >
-    <pre>
+    <pre
+      style={
+        Object {
+          "display": "inline",
+        }
+      }
+    >
       🐱
     </pre>
-  </PlainText>
+  </Memo(PlainText)>
 </Memo(BBCode)>
 `;
 
@@ -38,11 +44,17 @@ exports[`bbcode render render "[asd]unrecognized tag should be ignore[/asd]" 1`]
       }
     }
   >
-    <PlainText>
-      <pre>
+    <Memo(PlainText)>
+      <pre
+        style={
+          Object {
+            "display": "inline",
+          }
+        }
+      >
         unrecognized, ,tag, ,should, ,be, ,ignore
       </pre>
-    </PlainText>
+    </Memo(PlainText)>
   </DefaultBBCodeComponent>
 </Memo(BBCode)>
 `;
@@ -51,7 +63,7 @@ exports[`bbcode render render "[img]http://example.com[/img]" 1`] = `
 <Memo(BBCode)
   plainText="[img]http://example.com[/img]"
 >
-  <ImageTag
+  <Memo(ImageTag)
     key="0"
     node={
       TagNode {
@@ -77,7 +89,7 @@ exports[`bbcode render render "[img]http://example.com[/img]" 1`] = `
         />
       </div>
     </ImageViewer>
-  </ImageTag>
+  </Memo(ImageTag)>
 </Memo(BBCode)>
 `;
 
@@ -85,7 +97,7 @@ exports[`bbcode render render "[url]http://baidu.com[/url]" 1`] = `
 <Memo(BBCode)
   plainText="[url]http://baidu.com[/url]"
 >
-  <UrlTag
+  <Memo(UrlTag)
     key="0"
     node={
       TagNode {
@@ -99,12 +111,13 @@ exports[`bbcode render render "[url]http://baidu.com[/url]" 1`] = `
   >
     <a
       href="http://baidu.com"
+      rel="noreferrer"
       target="_blank"
       title="http://baidu.com"
     >
       http://baidu.com
     </a>
-  </UrlTag>
+  </Memo(UrlTag)>
 </Memo(BBCode)>
 `;
 
@@ -112,7 +125,7 @@ exports[`bbcode render render "http://baidu.com" 1`] = `
 <Memo(BBCode)
   plainText="http://baidu.com"
 >
-  <UrlTag
+  <Memo(UrlTag)
     key="0"
     node={
       TagNode {
@@ -126,12 +139,13 @@ exports[`bbcode render render "http://baidu.com" 1`] = `
   >
     <a
       href="http://baidu.com"
+      rel="noreferrer"
       target="_blank"
       title="http://baidu.com"
     >
       http://baidu.com
     </a>
-  </UrlTag>
+  </Memo(UrlTag)>
 </Memo(BBCode)>
 `;
 
@@ -139,14 +153,20 @@ exports[`bbcode render render "mix text image[img]http://example.com[/img]" 1`] 
 <Memo(BBCode)
   plainText="mix text image[img]http://example.com[/img]"
 >
-  <PlainText
+  <Memo(PlainText)
     key="0"
   >
-    <pre>
+    <pre
+      style={
+        Object {
+          "display": "inline",
+        }
+      }
+    >
       mix text image
     </pre>
-  </PlainText>
-  <ImageTag
+  </Memo(PlainText)>
+  <Memo(ImageTag)
     key="1"
     node={
       TagNode {
@@ -172,7 +192,7 @@ exports[`bbcode render render "mix text image[img]http://example.com[/img]" 1`] 
         />
       </div>
     </ImageViewer>
-  </ImageTag>
+  </Memo(ImageTag)>
 </Memo(BBCode)>
 `;
 
@@ -180,12 +200,18 @@ exports[`bbcode render render "some sample text" 1`] = `
 <Memo(BBCode)
   plainText="some sample text"
 >
-  <PlainText
+  <Memo(PlainText)
     key="0"
   >
-    <pre>
+    <pre
+      style={
+        Object {
+          "display": "inline",
+        }
+      }
+    >
       some sample text
     </pre>
-  </PlainText>
+  </Memo(PlainText)>
 </Memo(BBCode)>
 `;

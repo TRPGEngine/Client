@@ -12,6 +12,10 @@ import { MessageLoading } from './addons/MsgLoading';
 import { MsgOperations, MsgOperationItem } from './addons/MsgOperations';
 import { MsgAvatar } from './addons/MsgAvatar';
 import { MsgDataManager } from '@shared/utils/msg-helper';
+import { EmphasizeTime } from './addons/EmphasizeTime';
+import classNames from 'classnames';
+import { MsgProfile } from './addons/MsgProfile';
+import { MsgItem } from './style';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -79,28 +83,22 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     const { type, me, name, info, emphasizeTime } = this.props;
     const operations = this.getOperation();
     const isLoading = this.isLoading;
+    const senderName = this.getSenderName();
 
     if (info.revoke === true) {
       // 撤回消息显示
-      return <MsgRevoke senderName={this.getSenderName()} />;
+      return <MsgRevoke senderName={senderName} />;
     }
 
     return (
-      <div className={'msg-item ' + (me ? 'me ' : '') + type}>
-        {emphasizeTime ? (
-          <div className="emphasize-time">
-            <span>{dateHelper.getShortDate(info.date)}</span>
-          </div>
-        ) : null}
-        <div className="profile">
-          <span className="name">{this.getSenderName()}</span>
-          <span className="time">{dateHelper.getMsgDate(info.date)}</span>
-        </div>
+      <MsgItem className={classNames({ me }, type)}>
+        {emphasizeTime ? <EmphasizeTime date={info.date} /> : null}
+        <MsgProfile name={senderName} date={info.date} />
         <div className="content">
           <div className="avatar">
             <MsgAvatar
               me={me}
-              name={this.getSenderName()}
+              name={senderName}
               src={this.getAvatarUrl()}
               info={info}
             />
@@ -115,7 +113,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
             )}
           </div>
         </div>
-      </div>
+      </MsgItem>
     );
   }
 }

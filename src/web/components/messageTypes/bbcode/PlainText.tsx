@@ -1,8 +1,9 @@
 import React from 'react';
 import { TagProps } from '@shared/components/bbcode/type';
+import { TMemo } from '@shared/components/TMemo';
 
-const PlainText: React.FC<TagProps> = React.memo((props) => (
-  <pre>{props.children}</pre>
+const PlainText: React.FC<TagProps> = TMemo((props) => (
+  <pre style={{ display: 'inline' }}>{props.children}</pre>
 ));
 PlainText.displayName = 'PlainText';
 

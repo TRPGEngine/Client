@@ -1,7 +1,7 @@
 import { GroupActorType } from '@src/shared/redux/types/group';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
-import { UserInfo } from '@redux/types/user';
+import { PlayerUser } from '@shared/model/player';
 
 /**
  * 数据相关帮助函数
@@ -50,7 +50,7 @@ export const getGroupActorTemplateUUID = (
  * @param userInfo 用户信息
  */
 export function getUserName(
-  userInfo: Partial<UserInfo> | null | undefined
+  userInfo: Partial<PlayerUser> | null | undefined
 ): string {
   if (_isNil(userInfo)) {
     return '';

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import {
   ContentContainer,
@@ -7,12 +7,15 @@ import {
   SidebarItemsContainer,
 } from '../style';
 import { useParams } from 'react-router';
-import { SectionHeader } from '@web/components/SectionHeader';
 import { useJoinedGroupInfo } from '@redux/hooks/group';
 import { SidebarItem } from '../SidebarItem';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { GroupPanel } from './GroupPanel';
 import { GroupHeader } from './GroupHeader';
+import { Result } from 'antd';
+import _isNil from 'lodash/isNil';
+import { GroupProvider } from './GroupProvider';
+import { useTranslation } from '@shared/i18n';
 
 interface GroupParams {
   groupUUID: string;
@@ -20,29 +23,52 @@ interface GroupParams {
 export const Group: React.FC = TMemo(() => {
   const params = useParams<GroupParams>();
   const groupUUID = params.groupUUID;
+  const groupInfo = useJoinedGroupInfo(groupUUID);
+  const { t } = useTranslation();
+
+  if (_isNil(groupInfo)) {
+    return (
+      <div style={{ flex: 1 }}>
+        <Result status="warning" title={t('找不到该团')} />
+      </div>
+    );
+  }
+
+  const panels = groupInfo.panels ?? [];
 
   return (
-    <ContentContainer>
-      <Sidebar>
-        <GroupHeader groupUUID={groupUUID} />
-        <SidebarItemsContainer>
-          <SidebarItem
-            name="综合"
-            icon={<span>#</span>}
-            to={`/main/group/${groupUUID}/main`}
-          />
-        </SidebarItemsContainer>
-      </Sidebar>
-      <ContentDetail>
-        <Switch>
-          <Route
-            path="/main/group/:groupUUID/:panelUUID"
-            component={GroupPanel}
-          />
-          <Redirect to={`/main/group/${groupUUID}/main`} />
-        </Switch>
-      </ContentDetail>
-    </ContentContainer>
+    <GroupProvider groupInfo={groupInfo}>
+      <ContentContainer>
+        <Sidebar>
+          <GroupHeader groupUUID={groupUUID} />
+          <SidebarItemsContainer>
+            <SidebarItem
+              name={t('大厅')}
+              icon={<span>#</span>}
+              to={`/main/group/${groupUUID}/lobby`}
+            />
+
+            {panels.map((panel) => (
+              <SidebarItem
+                key={panel.uuid}
+                name={panel.name}
+                icon={<span>#</span>}
+                to={`/main/group/${groupUUID}/${panel.uuid}`}
+              />
+            ))}
+          </SidebarItemsContainer>
+        </Sidebar>
+        <ContentDetail>
+          <Switch>
+            <Route
+              path="/main/group/:groupUUID/:panelUUID"
+              component={GroupPanel}
+            />
+            <Redirect to={`/main/group/${groupUUID}/lobby`} />
+          </Switch>
+        </ContentDetail>
+      </ContentContainer>
+    </GroupProvider>
   );
 });
 Group.displayName = 'Group';

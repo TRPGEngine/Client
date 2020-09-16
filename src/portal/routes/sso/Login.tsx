@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import '@ant-design/compatible/assets/index.css';
 import { Col } from 'antd';
 import qs from 'qs';
 import _isString from 'lodash/isString';
 import { checkToken } from '@portal/utils/auth';
 import { LoginView } from '@portal/components/LoginView';
+import { WaveBackground } from '@web/components/WaveBackground';
 
 const Container = styled.div`
   width: 100vw;
@@ -60,6 +60,7 @@ class Login extends React.Component {
         <Window>
           <LoginView onLoginSuccess={this.handleLoginSuccess} />
         </Window>
+        <WaveBackground />
       </Container>
     );
   }

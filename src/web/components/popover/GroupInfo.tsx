@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import Avatar from '../Avatar';
 import config from '@shared/project.config';
 import _isEmpty from 'lodash/isEmpty';
+import { TMemo } from '@shared/components/TMemo';
+import { useTranslation } from '@shared/i18n';
 
 const Container = styled.div`
   display: flex;
@@ -29,8 +31,9 @@ const Container = styled.div`
 interface Props {
   groupUUID: string;
 }
-const PopoverGroupInfo: React.FC<Props> = React.memo((props) => {
+const PopoverGroupInfo: React.FC<Props> = TMemo((props) => {
   const groupInfo = useCachedGroupInfo(props.groupUUID);
+  const { t } = useTranslation();
 
   const avatar = useMemo(
     () =>
@@ -47,15 +50,15 @@ const PopoverGroupInfo: React.FC<Props> = React.memo((props) => {
       </div>
       <div className="info">
         <div>
-          <span>团名称: </span>
+          <span>{t('团名称')}: </span>
           <span>{groupInfo.name}</span>
         </div>
         <div>
-          <span>团副名: </span>
+          <span>{t('团副名')}: </span>
           <span>{groupInfo.sub_name}</span>
         </div>
         <div>
-          <span>团简介: </span>
+          <span>{t('团简介')}: </span>
           <p>{groupInfo.desc}</p>
         </div>
       </div>

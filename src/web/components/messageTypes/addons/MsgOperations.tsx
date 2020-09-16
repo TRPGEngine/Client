@@ -9,6 +9,8 @@ import _isFunction from 'lodash/isFunction';
 import _isNil from 'lodash/isNil';
 import _has from 'lodash/has';
 
+import './MsgOperations.less';
+
 interface MsgOperationItemContext {
   dispatch: TRPGDispatch;
   closePopover: () => void;
@@ -30,6 +32,10 @@ export const MsgOperationListItemContainer = styled.div`
 
   &:hover {
     background-color: ${(props) => props.theme.color.transparent90};
+  }
+
+  &:last-child {
+    border-bottom: 0;
   }
 `;
 const MsgOperationListItem: React.FC<MsgOperationNormalItem> = TMemo(

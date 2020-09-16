@@ -1,20 +1,24 @@
 import React, { useMemo } from 'react';
+import { FastForm } from '@shared/components/FastForm';
+import { regField } from '@shared/components/FastForm/field';
 import {
-  FastForm,
-  regField,
   FastFormContainerComponent,
   regFormContainer,
-} from '@shared/components/FastForm';
+} from '@shared/components/FastForm/container';
 import { TMemo } from '@shared/components/TMemo';
 import { Form, Button } from 'antd';
 
 import { FastFormText } from './types/Text';
+import { FastFormTextArea } from './types/TextArea';
 import { FastFormPassword } from './types/Password';
+import { FastFormSelect } from './types/Select';
 
 regField('text', FastFormText);
+regField('textarea', FastFormTextArea);
 regField('password', FastFormPassword);
+regField('select', FastFormSelect);
 
-const FastFormContainer: FastFormContainerComponent = TMemo((props) => {
+const WebFastFormContainer: FastFormContainerComponent = TMemo((props) => {
   const submitButtonRender = useMemo(() => {
     return (
       <Form.Item wrapperCol={{ sm: 24, md: { span: 16, offset: 8 } }}>
@@ -39,8 +43,8 @@ const FastFormContainer: FastFormContainerComponent = TMemo((props) => {
     </Form>
   );
 });
-FastFormContainer.displayName = 'FastFormContainer';
-regFormContainer(FastFormContainer);
+WebFastFormContainer.displayName = 'WebFastFormContainer';
+regFormContainer(WebFastFormContainer);
 
 export const WebFastForm = FastForm;
 WebFastForm.displayName = 'WebFastForm';
