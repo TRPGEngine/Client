@@ -1,6 +1,6 @@
 # TRPG Engine - 一个专为TRPG打造的即时即时通讯应用
 
-[![CircleCI](https://circleci.com/gh/TRPGEngine/Client/tree/release.svg?style=svg)](https://circleci.com/gh/TRPGEngine/Client/tree/release)
+![node test](https://github.com/TRPGEngine/Client/workflows/node%20test/badge.svg)
 [![Release](https://img.shields.io/github/release/TRPGEngine/Client.svg)](https://github.com/TRPGEngine/Client/releases)
 [![Android](https://img.shields.io/badge/platform-android-orange.svg)]()
 [![Web](https://img.shields.io/badge/platform-web-green.svg)]()
