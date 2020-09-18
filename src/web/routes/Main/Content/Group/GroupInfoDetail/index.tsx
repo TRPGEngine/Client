@@ -6,6 +6,7 @@ import { useIsGroupManager, useJoinedGroupInfo } from '@redux/hooks/group';
 import { GroupPanelManager } from './GroupPanelManager';
 import { GroupActorManager } from './GroupActorManager';
 import { useTranslation } from '@shared/i18n';
+import { GroupMemberManager } from './GroupMemberManager';
 
 interface GroupInfoDetailProps {
   groupUUID: string;
@@ -33,6 +34,12 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
               title: t('面板'),
               hidden: !isGroupManager,
               content: <GroupPanelManager groupUUID={groupUUID} />,
+            },
+            {
+              type: 'item',
+              title: t('成员管理'),
+              hidden: !isGroupManager,
+              content: <GroupMemberManager groupUUID={groupUUID} />,
             },
             {
               type: 'item',

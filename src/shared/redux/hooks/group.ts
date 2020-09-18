@@ -7,6 +7,7 @@ import _isNil from 'lodash/isNil';
 import { useMemo } from 'react';
 
 /**
+ * @deprecated
  * 获取当前选择的团信息
  */
 export function useSelectedGroupInfo(): GroupInfo | null {

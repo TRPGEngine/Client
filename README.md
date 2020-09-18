@@ -9,6 +9,8 @@
 [![Linux](https://img.shields.io/badge/platform-linux-blue.svg)]() -->
 <!-- [![iOS](https://img.shields.io/badge/platform-ios-orange.svg)]() -->
 
+简单的来说就是类似于钉钉, Slack, Discord 那种以即时通讯为核心，以其他的业务需求为辅助而制作的功能性聊天软件。
+
 本项目包含以下内容:
 - TRPG Engine 前端网页
 - TRPG Engine 手机移动端

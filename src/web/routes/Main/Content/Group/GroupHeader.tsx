@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { SectionHeader } from '@web/components/SectionHeader';
 import { Menu } from 'antd';
@@ -33,12 +33,10 @@ export const GroupHeader: React.FC<GroupHeaderProps> = TMemo((props) => {
     <Menu>
       <Menu.Item onClick={handleShowGroupInfo}>{t('查看详情')}</Menu.Item>
       {isGroupManager && (
-        <Fragment>
-          <Menu.Item onClick={handleShowInvite}>{t('邀请成员')}</Menu.Item>
-          <Menu.Item onClick={handleCreateGroupPanel}>
-            {t('创建面板')}
-          </Menu.Item>
-        </Fragment>
+        <Menu.Item onClick={handleShowInvite}>{t('邀请成员')}</Menu.Item>
+      )}
+      {isGroupManager && (
+        <Menu.Item onClick={handleCreateGroupPanel}>{t('创建面板')}</Menu.Item>
       )}
       <Menu.Item danger={true} onClick={handleQuitGroup}>
         {currentUserUUID === groupInfo.owner_uuid ? t('解散团') : t('退出团')}
