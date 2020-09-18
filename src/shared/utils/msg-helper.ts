@@ -18,7 +18,7 @@ export class MsgDataManager {
   name?: string; // 如果该字段有值，则会替换消息的发送者名称
   avatar?: string; // 如果该字段有值，则会替换消息的发送者头像
   groupActorUUID?: string;
-  replyMsg?: ReplyMsgType;
+  replyMsg?: ReplyMsgType; // 回复消息相关
 
   /**
    * 设置相关的用户角色
