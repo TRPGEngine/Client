@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useSidebarContext } from '../SidebarContext';
 import { TMemo } from '@shared/components/TMemo';
 import _isNil from 'lodash/isNil';
+import { useIsMobile } from '@web/hooks/useIsMobile';
 
 const PageContentRoot = styled.div`
   display: flex;
@@ -50,6 +51,7 @@ interface PageContentProps {
 export const PageContent: React.FC<PageContentProps> = TMemo((props) => {
   const { sidebar, children } = props;
   const { showSidebar, setShowSidebar } = useSidebarContext();
+  const isMobile = useIsMobile();
   const handleHideSidebar = useCallback(() => {
     setShowSidebar(false);
   }, []);
@@ -60,10 +62,13 @@ export const PageContent: React.FC<PageContentProps> = TMemo((props) => {
     </SidebarContainer>
   );
 
-  const contentMaskEl =
-    showSidebar === true && !_isNil(sidebarEl) ? (
-      <ContentDetailMask onClick={handleHideSidebar} />
-    ) : null;
+  // 是否显示遮罩层
+  const showMask =
+    isMobile === true && showSidebar === true && !_isNil(sidebarEl);
+
+  const contentMaskEl = showMask ? (
+    <ContentDetailMask onClick={handleHideSidebar} />
+  ) : null;
 
   const contentEl = children;
 
