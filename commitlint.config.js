@@ -1,4 +1,6 @@
 /**
+ * document: https://commitlint.js.org/#/reference-configuration
+ *
  * https://github.com/angular/angular/blob/master/CONTRIBUTING.md#type
  * feat：新功能（feature）
  * fix：修补bug
@@ -12,4 +14,7 @@
 
 module.exports = {
   extends: ['@commitlint/config-conventional'],
+  rules: {
+    'subject-case': [2, 'always', ['lowerCase', 'pascal-case']],
+  },
 };

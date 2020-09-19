@@ -26,6 +26,9 @@ const ModalMask = styled.div`
 const ModalInner = styled.div`
   background-color: ${(props) => props.theme.color.graySet[7]};
   border-radius: ${(props) => props.theme.radius.standard};
+  max-width: 80vw;
+  max-height: 80vh;
+  overflow: auto;
 `;
 
 const ModalContext = React.createContext<{
