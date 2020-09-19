@@ -7,7 +7,6 @@ import { Editor } from 'slate';
 import React from 'react';
 import { MsgInputEditor } from '../editor/MsgInputEditor';
 import { useConverseDetail } from '@redux/hooks/chat';
-import styled from 'styled-components';
 import { serializeToBBCode } from '../editor/utils/serialize/bbcode';
 
 export function useInputMsgEditorMsgSend(converseUUID: string) {
