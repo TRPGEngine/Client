@@ -33,6 +33,7 @@ import {
   MentionListContainer,
   MentionMatchedItem,
 } from './style';
+import { WebErrorBoundary } from '../WebErrorBoundary';
 
 const MentionsPortal = ({ children }) => {
   return ReactDOM.createPortal(children, document.body);
@@ -175,34 +176,36 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
   } = usePlaceholder(props);
 
   return (
-    <Slate editor={editor} value={props.value} onChange={handleChange}>
-      {placeholderEl}
+    <WebErrorBoundary>
+      <Slate editor={editor} value={props.value} onChange={handleChange}>
+        {placeholderEl}
 
-      <EditArea
-        renderElement={renderElement}
-        renderLeaf={renderLeaf}
-        onKeyDown={handleKeyDown}
-        onCompositionStart={handleCompositionStart}
-        onCompositionEnd={handleCompositionEnd}
-      />
+        <EditArea
+          renderElement={renderElement}
+          renderLeaf={renderLeaf}
+          onKeyDown={handleKeyDown}
+          onCompositionStart={handleCompositionStart}
+          onCompositionEnd={handleCompositionEnd}
+        />
 
-      {target && mentionMatchList.length > 0 && (
-        <MentionsPortal>
-          <MentionListContainer ref={ref}>
-            {mentionMatchList.map((item, i) => (
-              <MentionMatchedItem
-                key={item.text}
-                style={{
-                  background: i === index ? '#B4D5FF' : 'transparent',
-                }}
-              >
-                {item.text}
-              </MentionMatchedItem>
-            ))}
-          </MentionListContainer>
-        </MentionsPortal>
-      )}
-    </Slate>
+        {target && mentionMatchList.length > 0 && (
+          <MentionsPortal>
+            <MentionListContainer ref={ref}>
+              {mentionMatchList.map((item, i) => (
+                <MentionMatchedItem
+                  key={item.text}
+                  style={{
+                    background: i === index ? '#B4D5FF' : 'transparent',
+                  }}
+                >
+                  {item.text}
+                </MentionMatchedItem>
+              ))}
+            </MentionListContainer>
+          </MentionsPortal>
+        )}
+      </Slate>
+    </WebErrorBoundary>
   );
 });
 MsgInputEditor.displayName = 'MsgInputEditor';
