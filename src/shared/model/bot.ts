@@ -1,6 +1,6 @@
 import { request } from '@shared/utils/request';
 
-interface MsgTokenBot {
+export interface MsgTokenBot {
   token: string;
   name: string;
   group_uuid: string;
@@ -22,4 +22,20 @@ export async function createMsgTokenBot(
   });
 
   return data.bot;
+}
+
+/**
+ * 获取机器人列表
+ * @param groupUUID 团UUID
+ */
+export async function getMsgTokenBotList(
+  groupUUID: string
+): Promise<MsgTokenBot[]> {
+  const { data } = await request.get(
+    `/bot/msg/token/list?groupUUID=${groupUUID}`
+  );
+
+  console.log('data', data);
+
+  return data.list ?? [];
 }

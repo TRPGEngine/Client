@@ -8,6 +8,7 @@ import { createMsgTokenBot } from '@shared/model/bot';
 import { useGroupChannel } from '@redux/hooks/group';
 import { showAlert, showToasts } from '@shared/manager/ui';
 import { BotResultTip } from '../BotResultTip';
+import _isFunction from 'lodash/isFunction';
 
 const baseFields: FastFormFieldMeta[] = [
   { type: 'text', name: 'name', label: '机器人名', maxLength: 16 },
@@ -15,13 +16,14 @@ const baseFields: FastFormFieldMeta[] = [
 
 interface BotCreateProps {
   groupUUID: string;
+  onSuccess?: () => void;
 }
 
 /**
  * 创建机器人
  */
 export const BotCreate: React.FC<BotCreateProps> = TMemo((props) => {
-  const { groupUUID } = props;
+  const { groupUUID, onSuccess } = props;
   const { t } = useTranslation();
   const channels = useGroupChannel(groupUUID);
   const { closeModal } = useModalContext();
@@ -56,6 +58,7 @@ export const BotCreate: React.FC<BotCreateProps> = TMemo((props) => {
           values.channelUUID
         );
 
+        _isFunction(onSuccess) && onSuccess();
         closeModal();
         showAlert({
           message: <BotResultTip name={bot.name} token={bot.token} />,
@@ -64,7 +67,7 @@ export const BotCreate: React.FC<BotCreateProps> = TMemo((props) => {
         showToasts(err, 'error');
       }
     },
-    [groupUUID, closeModal]
+    [groupUUID, onSuccess, closeModal]
   );
 
   return (

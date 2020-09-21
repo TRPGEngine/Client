@@ -15,6 +15,7 @@ const rotate = keyframes`
 const Icon = styled.i.attrs({
   className: 'iconfont loading',
 })`
+  display: inline-block;
   width: 18px;
   height: 18px;
   vertical-align: bottom;

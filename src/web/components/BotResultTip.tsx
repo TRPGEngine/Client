@@ -24,13 +24,13 @@ export const BotResultTip: React.FC<BotResultTipProps> = TMemo((props) => {
       <span>唯一标识: {token}</span>
 
       <div>尝试以下方式使用机器人</div>
-      <div>
+      <p>
         <span>简单访问:</span>
         <Typography.Link href={getUrl} target="_blank">
           {getUrl}
         </Typography.Link>
-        <span>或发送POST请求到{requestUrl}</span>
-      </div>
+      </p>
+      <p>或发送POST请求到{requestUrl}</p>
     </div>
   );
 });
