@@ -76,10 +76,10 @@ const GroupMemberItem: React.FC<{
   );
 });
 
-interface GroupMemberManagerProps {
+interface GroupMemberManageProps {
   groupUUID: string;
 }
-export const GroupMemberManager: React.FC<GroupMemberManagerProps> = TMemo(
+export const GroupMemberManage: React.FC<GroupMemberManageProps> = TMemo(
   (props) => {
     const { groupUUID } = props;
     const groupInfo = useJoinedGroupInfo(groupUUID);
@@ -99,4 +99,4 @@ export const GroupMemberManager: React.FC<GroupMemberManagerProps> = TMemo(
     );
   }
 );
-GroupMemberManager.displayName = 'GroupMemberManager';
+GroupMemberManage.displayName = 'GroupMemberManage';
