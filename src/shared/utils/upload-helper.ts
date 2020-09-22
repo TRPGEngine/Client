@@ -2,6 +2,7 @@ import axios from 'axios';
 import { fileUrl } from '../api/trpg.api';
 import _set from 'lodash/set';
 import _isFunction from 'lodash/isFunction';
+import _isNil from 'lodash/isNil';
 
 export interface UploadOption {
   headers?: {};
@@ -109,6 +110,10 @@ export const toAvatar = function(
   file: File,
   options: UploadOption = {}
 ): UploadReturn<AvatarUpdateData> {
+  if (_isNil(userUUID)) {
+    throw new Error('当前未登录, 无法上传头像');
+  }
+
   options.uploadField = 'avatar';
   return _upload('/v2/avatar/upload', userUUID, file, options);
 };

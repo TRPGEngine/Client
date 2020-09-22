@@ -10,7 +10,7 @@ export const [showToasts, setToasts] = buildRegFn<
 >('toasts');
 
 interface AlertOptions {
-  message: string;
+  message: React.ReactNode;
   onConfirm?: () => void | Promise<void>;
 }
 export const [showAlert, setAlert] = buildRegFn<

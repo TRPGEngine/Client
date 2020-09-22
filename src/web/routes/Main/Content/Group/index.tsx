@@ -1,11 +1,7 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import {
-  ContentContainer,
-  Sidebar,
-  ContentDetail,
-  SidebarItemsContainer,
-} from '../style';
+import { PageContent } from '../PageContent';
+import { SidebarItemsContainer } from '../style';
 import { useParams } from 'react-router';
 import { useJoinedGroupInfo } from '@redux/hooks/group';
 import { SidebarItem } from '../SidebarItem';
@@ -38,36 +34,37 @@ export const Group: React.FC = TMemo(() => {
 
   return (
     <GroupProvider groupInfo={groupInfo}>
-      <ContentContainer>
-        <Sidebar>
-          <GroupHeader groupUUID={groupUUID} />
-          <SidebarItemsContainer>
-            <SidebarItem
-              name={t('大厅')}
-              icon={<span>#</span>}
-              to={`/main/group/${groupUUID}/lobby`}
-            />
-
-            {panels.map((panel) => (
+      <PageContent
+        sidebar={
+          <div>
+            <GroupHeader groupUUID={groupUUID} />
+            <SidebarItemsContainer>
               <SidebarItem
-                key={panel.uuid}
-                name={panel.name}
+                name={t('大厅')}
                 icon={<span>#</span>}
-                to={`/main/group/${groupUUID}/${panel.uuid}`}
+                to={`/main/group/${groupUUID}/lobby`}
               />
-            ))}
-          </SidebarItemsContainer>
-        </Sidebar>
-        <ContentDetail>
-          <Switch>
-            <Route
-              path="/main/group/:groupUUID/:panelUUID"
-              component={GroupPanel}
-            />
-            <Redirect to={`/main/group/${groupUUID}/lobby`} />
-          </Switch>
-        </ContentDetail>
-      </ContentContainer>
+
+              {panels.map((panel) => (
+                <SidebarItem
+                  key={panel.uuid}
+                  name={panel.name}
+                  icon={<span>#</span>}
+                  to={`/main/group/${groupUUID}/${panel.uuid}`}
+                />
+              ))}
+            </SidebarItemsContainer>
+          </div>
+        }
+      >
+        <Switch>
+          <Route
+            path="/main/group/:groupUUID/:panelUUID"
+            component={GroupPanel}
+          />
+          <Redirect to={`/main/group/${groupUUID}/lobby`} />
+        </Switch>
+      </PageContent>
     </GroupProvider>
   );
 });

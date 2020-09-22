@@ -16,7 +16,6 @@ import { useEffect, useMemo, useRef } from 'react';
 import { UserInfo } from '@redux/types/user';
 import { GroupInfo } from '@redux/types/group';
 import { ActorType } from '@redux/types/actor';
-import rnStorage from '@shared/api/rn-storage.api';
 
 // 检查是否需要跳过处理
 const isSkipUUID = (uuid: string) =>

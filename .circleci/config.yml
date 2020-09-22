@@ -116,20 +116,21 @@ workflows:
   build:
     jobs:
       - node
+      # 先注释掉, 先专注于web端
       # - Build Electron App:
       #     requires:
       #       - node
-      - Build RN Code:
-          filters:
-            branches:
-              only:
-                - release
-          requires:
-            - node
-      - Build Android App:
-          filters:
-            branches:
-              only:
-                - release
-          requires:
-            - node
+      # - Build RN Code:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - release
+      #     requires:
+      #       - node
+      # - Build Android App:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - release
+      #     requires:
+      #       - node

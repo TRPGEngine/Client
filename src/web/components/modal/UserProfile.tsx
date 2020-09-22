@@ -23,6 +23,7 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   width: 600px;
+  max-width: 100%;
 `;
 
 const Info = styled.div`
@@ -122,10 +123,10 @@ export const UserProfile: React.FC<UserProfileProps> = TMemo((props) => {
         <Tabs defaultActiveKey="1">
           <Tabs.TabPane key="1" tab={t('用户信息')}>
             <Row>
-              <Col sm={12}>
+              <Col xs={24} sm={12}>
                 <FullModalField title={t('性别')} value={userInfo.sex} />
               </Col>
-              <Col sm={12}>
+              <Col xs={24} sm={12}>
                 <FullModalField
                   title={t('最后登录时间')}
                   value={getFullDate(userInfo.last_login)}

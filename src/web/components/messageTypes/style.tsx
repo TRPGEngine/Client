@@ -28,7 +28,11 @@ export const MsgItemTip = styled.div`
   .content {
     display: inline-block;
     background-color: ${(props) => props.theme.color.transparent90};
-    color: ${(props) => props.theme.color['dove-gray']};
+    color: ${({ theme }) =>
+      theme.mixins.modeValue([
+        theme.color['dove-gray'],
+        theme.color['silver'],
+      ])};
     max-width: 360px;
     margin: auto;
     overflow: hidden;

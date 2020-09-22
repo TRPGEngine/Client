@@ -3,9 +3,11 @@ import { TMemo } from '@shared/components/TMemo';
 import { SidebarView, SidebarViewMenuType } from '@web/components/SidebarView';
 import { GroupInfoSummary } from './GroupInfoSummary';
 import { useIsGroupManager, useJoinedGroupInfo } from '@redux/hooks/group';
-import { GroupPanelManager } from './GroupPanelManager';
-import { GroupActorManager } from './GroupActorManager';
+import { GroupPanelManage } from './GroupPanelManage';
+import { GroupActorManage } from './GroupActorManage';
 import { useTranslation } from '@shared/i18n';
+import { GroupMemberManage } from './GroupMemberManage';
+import { GroupBotManage } from './GroupBotManage';
 
 interface GroupInfoDetailProps {
   groupUUID: string;
@@ -32,12 +34,24 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
               type: 'item',
               title: t('面板'),
               hidden: !isGroupManager,
-              content: <GroupPanelManager groupUUID={groupUUID} />,
+              content: <GroupPanelManage groupUUID={groupUUID} />,
+            },
+            {
+              type: 'item',
+              title: t('成员管理'),
+              hidden: !isGroupManager,
+              content: <GroupMemberManage groupUUID={groupUUID} />,
             },
             {
               type: 'item',
               title: t('人物卡管理'),
-              content: <GroupActorManager groupUUID={groupUUID} />,
+              content: <GroupActorManage groupUUID={groupUUID} />,
+            },
+            {
+              type: 'item',
+              title: t('机器人管理'),
+              hidden: !isGroupManager,
+              content: <GroupBotManage groupUUID={groupUUID} />,
             },
           ],
         },

@@ -38,7 +38,7 @@ export function useMsgSend(converseUUID: string) {
    */
   const sendMsg = useCallback(
     (message: string, type: MsgType) => {
-      if (converseType === 'user') {
+      if (converseType === 'user' || converseType === 'system') {
         if (isUserUUID(converseUUID)) {
           // 通知服务器告知converseUUID当前用户停止输入
           sendStopWriting('user', converseUUID);

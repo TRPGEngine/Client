@@ -137,10 +137,10 @@ const GroupPanelList: React.FC<GroupPanelListProps> = TMemo((props) => {
 });
 GroupPanelList.displayName = 'GroupPanelList';
 
-interface GroupPanelManagerProps {
+interface GroupPanelManageProps {
   groupUUID: string;
 }
-export const GroupPanelManager: React.FC<GroupPanelManagerProps> = TMemo(
+export const GroupPanelManage: React.FC<GroupPanelManageProps> = TMemo(
   (props) => {
     const groupInfo = useJoinedGroupInfo(props.groupUUID);
     const { t } = useTranslation();
@@ -162,4 +162,4 @@ export const GroupPanelManager: React.FC<GroupPanelManagerProps> = TMemo(
     );
   }
 );
-GroupPanelManager.displayName = 'GroupPanelManager';
+GroupPanelManage.displayName = 'GroupPanelManage';

@@ -1,5 +1,10 @@
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
-import { GroupInfo, GroupActorType, GroupPanel } from '@redux/types/group';
+import {
+  GroupInfo,
+  GroupActorType,
+  GroupPanel,
+  GroupChannel,
+} from '@redux/types/group';
 import { useCurrentUserInfo } from './user';
 import _get from 'lodash/get';
 import _uniq from 'lodash/uniq';
@@ -7,6 +12,7 @@ import _isNil from 'lodash/isNil';
 import { useMemo } from 'react';
 
 /**
+ * @deprecated
  * 获取当前选择的团信息
  */
 export function useSelectedGroupInfo(): GroupInfo | null {
@@ -120,4 +126,15 @@ export function useGroupPanelInfo(
   const panelInfo = groupInfo?.panels?.find((p) => p.uuid === panelUUID);
 
   return panelInfo;
+}
+
+/**
+ * 获取团的频道列表
+ * @param groupUUID 团UUID
+ */
+export function useGroupChannel(groupUUID: string): GroupChannel[] {
+  const groupInfo = useJoinedGroupInfo(groupUUID);
+  const channels = groupInfo?.channels ?? [];
+
+  return channels;
 }

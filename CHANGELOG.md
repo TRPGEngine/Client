@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.2](https://github.com/TRPGEngine/Client/compare/v0.4.1...v0.4.2) (2020-09-22)
+
+
+### Features
+
+* **web:** 增加创建简易机器人的功能 ([f98b1c0](https://github.com/TRPGEngine/Client/commit/f98b1c0458fb8cfd11b1c201a8d6c461d6fbb9ba))
+* **web:** 增加成员管理 ([b7a18ab](https://github.com/TRPGEngine/Client/commit/b7a18ab83039966fecec165b1dc023b1b0686d90))
+* **web:** 增加机器人列表的获取 ([6c3da24](https://github.com/TRPGEngine/Client/commit/6c3da24bf98535e7ad44d3fc035f245db13a81d5))
+* **web:** 增加移动端适配，可以点击内容部分收起导航栏 ([b9c87d0](https://github.com/TRPGEngine/Client/commit/b9c87d0b4c56451139a77b497ee04137f5c9b7c7))
+
+
+### Bug Fixes
+
+* **web:** 修复上传头像时没有用户UUID会在服务端报错的问题 ([2e00daf](https://github.com/TRPGEngine/Client/commit/2e00dafe14ed35d496e3a2466375e91b9055cc19))
+
+### [0.4.1](https://github.com/TRPGEngine/Client/compare/v0.4.0...v0.4.1) (2020-09-16)
+
+
+### Bug Fixes
+
+* **web:** 修复笔记预览时如果数据为空(出现于旧版笔记)则会报错的bug ([0c9c6bc](https://github.com/TRPGEngine/Client/commit/0c9c6bc32c00a875f34571616c186afabc6553f5))
+
 ## [0.4.0](https://github.com/TRPGEngine/Client/compare/v0.3.15...v0.4.0) (2020-09-16)
 
 

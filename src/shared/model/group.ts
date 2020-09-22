@@ -95,6 +95,36 @@ export async function createGroup(
 }
 
 /**
+ * 将某位成员提升为管理员
+ * @param groupUUID 团UUID
+ * @param memberUUID 成员UUID
+ */
+export async function setMemberToManager(
+  groupUUID: string,
+  memberUUID: string
+): Promise<void> {
+  await request.post(`/group/setMemberToManager`, {
+    groupUUID,
+    memberUUID,
+  });
+}
+
+/**
+ * 将某位成员踢出团
+ * @param groupUUID 团UUID
+ * @param memberUUID 成员UUID
+ */
+export async function tickMember(
+  groupUUID: string,
+  memberUUID: string
+): Promise<void> {
+  await request.post(`/group/tickMember`, {
+    groupUUID,
+    memberUUID,
+  });
+}
+
+/**
  * 创建团面板
  * @param groupUUID 团UUID
  * @param name 面板名

@@ -266,10 +266,10 @@ const GroupActorChecksList: React.FC<{
 });
 GroupActorChecksList.displayName = 'GroupActorChecksList';
 
-interface GroupActorManagerProps {
+interface GroupActorManageProps {
   groupUUID: string;
 }
-export const GroupActorManager: React.FC<GroupActorManagerProps> = TMemo(
+export const GroupActorManage: React.FC<GroupActorManageProps> = TMemo(
   (props) => {
     const { groupUUID } = props;
     const { t } = useTranslation();
@@ -322,4 +322,4 @@ export const GroupActorManager: React.FC<GroupActorManagerProps> = TMemo(
     );
   }
 );
-GroupActorManager.displayName = 'GroupActorManager';
+GroupActorManage.displayName = 'GroupActorManage';
