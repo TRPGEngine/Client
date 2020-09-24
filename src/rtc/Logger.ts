@@ -7,7 +7,7 @@ export default class Logger {
   _warn: debug.Debugger;
   _error: debug.Debugger;
 
-  constructor(prefix) {
+  constructor(prefix: string) {
     if (prefix) {
       this._debug = debug(`${APP_NAME}:${prefix}`);
       this._warn = debug(`${APP_NAME}:WARN:${prefix}`);

@@ -10,6 +10,7 @@ import { BuiltinHandlerName } from 'mediasoup-client/lib/types';
 import * as settingManager from './settingManager';
 import * as requestActions from './redux/requestActions';
 import * as stateActions from './redux/stateActions';
+import _isNil from 'lodash/isNil';
 
 declare global {
   interface MediaDevices {
@@ -109,51 +110,51 @@ export class RoomClient {
 
   // MediaStream of the external video.
   // @type {MediaStream}
-  _externalVideoStream: MediaStream = null;
+  _externalVideoStream: MediaStream | null = null;
 
   // Next expected dataChannel test number.
   _nextDataChannelTestNumber = 0;
 
   // Custom mediasoup-client handler name (to override default browser
   // detection if desired).
-  _handlerName: BuiltinHandlerName;
+  _handlerName?: BuiltinHandlerName;
 
   // Whether simulcast should be used.
-  _useSimulcast: boolean;
+  _useSimulcast?: boolean;
 
   // Whether simulcast should be used in desktop sharing.
-  _useSharingSimulcast: boolean;
+  _useSharingSimulcast?: boolean;
 
   // Protoo URL.
   _protooUrl: string;
 
   // protoo-client Peer instance.
   // @type {protooClient.Peer}
-  _protoo = null;
+  _protoo: protooClient.Peer | null = null;
 
   // mediasoup-client Device instance.
-  _mediasoupDevice: Device = null;
+  _mediasoupDevice: Device | null = null;
 
   // mediasoup Transport for sending.
-  _sendTransport: MediasoupType.Transport = null;
+  _sendTransport: MediasoupType.Transport | null = null;
 
   // mediasoup Transport for receiving.
-  _recvTransport: MediasoupType.Transport = null;
+  _recvTransport: MediasoupType.Transport | null = null;
 
   // Local mic mediasoup Producer.
-  _micProducer: MediasoupType.Producer = null;
+  _micProducer: MediasoupType.Producer | null = null;
 
   // Local webcam mediasoup Producer.
-  _webcamProducer: MediasoupType.Producer = null;
+  _webcamProducer: MediasoupType.Producer | null = null;
 
   // Local share mediasoup Producer.
-  _shareProducer: MediasoupType.Producer = null;
+  _shareProducer: MediasoupType.Producer | null = null;
 
   // Local chat DataProducer.
-  _chatDataProducer: MediasoupType.DataProducer = null;
+  _chatDataProducer: MediasoupType.DataProducer | null = null;
 
   // Local bot DataProducer.
-  _botDataProducer: MediasoupType.DataProducer = null;
+  _botDataProducer: MediasoupType.DataProducer | null = null;
 
   // mediasoup Consumers.
   _consumers = new Map<string, MediasoupType.Consumer>();
@@ -242,7 +243,9 @@ export class RoomClient {
     logger.debug('close()');
 
     // Close protoo Peer
-    this._protoo.close();
+    if (!_isNil(this._protoo)) {
+      this._protoo.close();
+    }
 
     // Close mediasoup Transports.
     if (this._sendTransport) this._sendTransport.close();
@@ -336,6 +339,10 @@ export class RoomClient {
           // }
 
           try {
+            if (_isNil(this._recvTransport)) {
+              throw new Error('can not get _recvTransport');
+            }
+
             const consumer = await this._recvTransport.consume({
               id,
               producerId,
@@ -353,19 +360,19 @@ export class RoomClient {
             });
 
             const { spatialLayers, temporalLayers } = parseScalabilityMode(
-              consumer.rtpParameters.encodings[0].scalabilityMode
+              consumer.rtpParameters.encodings?.[0].scalabilityMode
             );
 
             store.dispatch(
               stateActions.addConsumer(
                 {
                   id: consumer.id,
-                  type: type,
+                  type,
                   locallyPaused: false,
                   remotelyPaused: producerPaused,
                   rtpParameters: consumer.rtpParameters,
-                  spatialLayers: spatialLayers,
-                  temporalLayers: temporalLayers,
+                  spatialLayers,
+                  temporalLayers,
                   preferredSpatialLayer: spatialLayers - 1,
                   preferredTemporalLayer: temporalLayers - 1,
                   priority: 1,
@@ -425,6 +432,10 @@ export class RoomClient {
           } = request.data;
 
           try {
+            if (_isNil(this._recvTransport)) {
+              throw new Error('can not get _recvTransport');
+            }
+
             const dataConsumer = await this._recvTransport.consumeData({
               id,
               dataProducerId,
@@ -480,9 +491,9 @@ export class RoomClient {
 
               if (message instanceof ArrayBuffer) {
                 const view = new DataView(message);
-                const number = view.getUint32(0);
+                const num = view.getUint32(0);
 
-                if (number == Math.pow(2, 32) - 1) {
+                if (num === Math.pow(2, 32) - 1) {
                   logger.warn('dataChannelTest finished!');
 
                   this._nextDataChannelTestNumber = 0;
@@ -490,14 +501,14 @@ export class RoomClient {
                   return;
                 }
 
-                if (number > this._nextDataChannelTestNumber) {
+                if (num > this._nextDataChannelTestNumber) {
                   logger.warn(
                     'dataChannelTest: %s packets missing',
-                    number - this._nextDataChannelTestNumber
+                    num - this._nextDataChannelTestNumber
                   );
                 }
 
-                this._nextDataChannelTestNumber = number + 1;
+                this._nextDataChannelTestNumber = num + 1;
 
                 return;
               } else if (typeof message !== 'string') {
@@ -740,7 +751,7 @@ export class RoomClient {
 
     if (this._micProducer) return;
 
-    if (!this._mediasoupDevice.canProduce('audio')) {
+    if (!this._mediasoupDevice?.canProduce('audio')) {
       logger.error('enableMic() | cannot produce audio');
 
       return;
@@ -760,7 +771,11 @@ export class RoomClient {
       } else {
         const stream = await this._getExternalVideoStream();
 
-        track = stream.getAudioTracks()[0].clone();
+        track = stream?.getAudioTracks()[0].clone();
+      }
+
+      if (_isNil(this._sendTransport)) {
+        throw new Error('can not get _sendTransport');
       }
 
       this._micProducer = await this._sendTransport.produce({
@@ -824,6 +839,10 @@ export class RoomClient {
     store.dispatch(stateActions.removeProducer(this._micProducer.id));
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Can not get this._protoo');
+      }
+
       await this._protoo.request('closeProducer', {
         producerId: this._micProducer.id,
       });
@@ -842,14 +861,18 @@ export class RoomClient {
   async muteMic() {
     logger.debug('muteMic()');
 
-    this._micProducer.pause();
+    this._micProducer?.pause();
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Can not get this._protoo');
+      }
+
       await this._protoo.request('pauseProducer', {
-        producerId: this._micProducer.id,
+        producerId: this._micProducer?.id,
       });
 
-      store.dispatch(stateActions.setProducerPaused(this._micProducer.id));
+      store.dispatch(stateActions.setProducerPaused(this._micProducer?.id));
     } catch (error) {
       logger.error('muteMic() | failed: %o', error);
 
@@ -865,14 +888,18 @@ export class RoomClient {
   async unmuteMic() {
     logger.debug('unmuteMic()');
 
-    this._micProducer.resume();
+    this._micProducer?.resume();
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Can not get this._protoo');
+      }
+
       await this._protoo.request('resumeProducer', {
-        producerId: this._micProducer.id,
+        producerId: this._micProducer?.id,
       });
 
-      store.dispatch(stateActions.setProducerResumed(this._micProducer.id));
+      store.dispatch(stateActions.setProducerResumed(this._micProducer?.id));
     } catch (error) {
       logger.error('unmuteMic() | failed: %o', error);
 
@@ -891,7 +918,7 @@ export class RoomClient {
     if (this._webcamProducer) return;
     else if (this._shareProducer) await this.disableShare();
 
-    if (!this._mediasoupDevice.canProduce('video')) {
+    if (!this._mediasoupDevice?.canProduce('video')) {
       logger.error('enableWebcam() | cannot produce video');
 
       return;
@@ -926,20 +953,24 @@ export class RoomClient {
 
         const stream = await this._getExternalVideoStream();
 
-        track = stream.getVideoTracks()[0].clone();
+        track = stream?.getVideoTracks()[0].clone();
       }
 
       if (this._useSimulcast) {
         // If VP9 is the only available video codec then use SVC.
-        const firstVideoCodec = this._mediasoupDevice.rtpCapabilities.codecs.find(
+        const firstVideoCodec = this._mediasoupDevice.rtpCapabilities.codecs?.find(
           (c) => c.kind === 'video'
         );
 
         let encodings;
 
-        if (firstVideoCodec.mimeType.toLowerCase() === 'video/vp9')
+        if (firstVideoCodec?.mimeType.toLowerCase() === 'video/vp9')
           encodings = VIDEO_KSVC_ENCODINGS;
         else encodings = VIDEO_SIMULCAST_ENCODINGS;
+
+        if (_isNil(this._sendTransport)) {
+          throw new Error('Cannot get this._sendTransport');
+        }
 
         this._webcamProducer = await this._sendTransport.produce({
           track,
@@ -952,6 +983,10 @@ export class RoomClient {
           // 	.find((codec) => codec.mimeType.toLowerCase() === 'video/h264')
         });
       } else {
+        if (_isNil(this._sendTransport)) {
+          throw new Error('Cannot get this._sendTransport');
+        }
+
         this._webcamProducer = await this._sendTransport.produce({ track });
       }
 
@@ -1009,6 +1044,10 @@ export class RoomClient {
     store.dispatch(stateActions.removeProducer(this._webcamProducer.id));
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Cannot get this._protoo');
+      }
+
       await this._protoo.request('closeProducer', {
         producerId: this._webcamProducer.id,
       });
@@ -1056,7 +1095,7 @@ export class RoomClient {
 
       // Closing the current video track before asking for a new one (mobiles do not like
       // having both front/back cameras open at the same time).
-      this._webcamProducer.track.stop();
+      this._webcamProducer?.track?.stop();
 
       logger.debug('changeWebcam() | calling getUserMedia()');
 
@@ -1069,10 +1108,10 @@ export class RoomClient {
 
       const track = stream.getVideoTracks()[0];
 
-      await this._webcamProducer.replaceTrack({ track });
+      await this._webcamProducer?.replaceTrack({ track });
 
       store.dispatch(
-        stateActions.setProducerTrack(this._webcamProducer.id, track)
+        stateActions.setProducerTrack(this._webcamProducer?.id, track)
       );
     } catch (error) {
       logger.error('changeWebcam() | failed: %o', error);
@@ -1119,10 +1158,10 @@ export class RoomClient {
 
       const track = stream.getVideoTracks()[0];
 
-      await this._webcamProducer.replaceTrack({ track });
+      await this._webcamProducer?.replaceTrack({ track });
 
       store.dispatch(
-        stateActions.setProducerTrack(this._webcamProducer.id, track)
+        stateActions.setProducerTrack(this._webcamProducer?.id, track)
       );
     } catch (error) {
       logger.error('changeWebcamResolution() | failed: %o', error);
@@ -1147,7 +1186,7 @@ export class RoomClient {
       await this.disableWebcam();
     }
 
-    if (!this._mediasoupDevice.canProduce('video')) {
+    if (!this._mediasoupDevice?.canProduce('video')) {
       logger.error('enableShare() | cannot produce video');
 
       return;
@@ -1183,19 +1222,23 @@ export class RoomClient {
 
       if (this._useSharingSimulcast) {
         // If VP9 is the only available video codec then use SVC.
-        const firstVideoCodec = this._mediasoupDevice.rtpCapabilities.codecs.find(
+        const firstVideoCodec = this._mediasoupDevice.rtpCapabilities.codecs?.find(
           (c) => c.kind === 'video'
         );
 
         let encodings;
 
-        if (firstVideoCodec.mimeType.toLowerCase() === 'video/vp9') {
+        if (firstVideoCodec?.mimeType.toLowerCase() === 'video/vp9') {
           encodings = VIDEO_SVC_ENCODINGS;
         } else {
           encodings = VIDEO_SIMULCAST_ENCODINGS.map((encoding) => ({
             ...encoding,
             dtx: true,
           }));
+        }
+
+        if (_isNil(this._sendTransport)) {
+          throw new Error('Cannot get this._sendTransport');
         }
 
         this._shareProducer = await this._sendTransport.produce({
@@ -1209,6 +1252,10 @@ export class RoomClient {
           },
         });
       } else {
+        if (_isNil(this._sendTransport)) {
+          throw new Error('Cannot get this._sendTransport');
+        }
+
         this._shareProducer = await this._sendTransport.produce({ track });
       }
 
@@ -1267,6 +1314,10 @@ export class RoomClient {
     store.dispatch(stateActions.removeProducer(this._shareProducer.id));
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Cannot get this._protoo');
+      }
+
       await this._protoo.request('closeProducer', {
         producerId: this._shareProducer.id,
       });
@@ -1289,7 +1340,7 @@ export class RoomClient {
 
     this.disableWebcam();
 
-    for (const consumer of this._consumers.values()) {
+    for (const consumer of Array.from(this._consumers.values())) {
       if (consumer.kind !== 'video') continue;
 
       this._pauseConsumer(consumer);
@@ -1313,7 +1364,7 @@ export class RoomClient {
       this.enableWebcam();
     }
 
-    for (const consumer of this._consumers.values()) {
+    for (const consumer of Array.from(this._consumers.values())) {
       if (consumer.kind !== 'video') continue;
 
       this._resumeConsumer(consumer);
@@ -1342,6 +1393,10 @@ export class RoomClient {
     store.dispatch(stateActions.setRestartIceInProgress(true));
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Cannot get this._protoo');
+      }
+
       if (this._sendTransport) {
         const iceParameters = await this._protoo.request('restartIce', {
           transportId: this._sendTransport.id,
@@ -1406,6 +1461,10 @@ export class RoomClient {
     );
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Cannot get this._protoo');
+      }
+
       await this._protoo.request('setConsumerPreferredLayers', {
         consumerId,
         spatialLayer,
@@ -1439,6 +1498,10 @@ export class RoomClient {
     );
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Cannot get this._protoo');
+      }
+
       await this._protoo.request('setConsumerPriority', {
         consumerId,
         priority,
@@ -1461,6 +1524,10 @@ export class RoomClient {
     logger.debug('requestConsumerKeyFrame() [consumerId:%s]', consumerId);
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Cannot get this._protoo');
+      }
+
       await this._protoo.request('requestConsumerKeyFrame', { consumerId });
 
       store.dispatch(
@@ -1490,6 +1557,10 @@ export class RoomClient {
     // 	return;
 
     try {
+      if (_isNil(this._sendTransport)) {
+        throw new Error('Cannot get this._sendTransport');
+      }
+
       // Create chat DataProducer.
       this._chatDataProducer = await this._sendTransport.produceData({
         ordered: false,
@@ -1567,6 +1638,10 @@ export class RoomClient {
     // 	return;
 
     try {
+      if (_isNil(this._sendTransport)) {
+        throw new Error('Cannot get this._sendTransport');
+      }
+
       // Create chat DataProducer.
       this._botDataProducer = await this._sendTransport.produceData({
         ordered: false,
@@ -1697,6 +1772,10 @@ export class RoomClient {
     settingManager.setUser({ displayName });
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Cannot get this._protoo');
+      }
+
       await this._protoo.request('changeDisplayName', { displayName });
 
       this._displayName = displayName;
@@ -1729,7 +1808,7 @@ export class RoomClient {
 
     if (!this._sendTransport) return;
 
-    return this._protoo.request('getTransportStats', {
+    return this._protoo?.request('getTransportStats', {
       transportId: this._sendTransport.id,
     });
   }
@@ -1739,7 +1818,7 @@ export class RoomClient {
 
     if (!this._recvTransport) return;
 
-    return this._protoo.request('getTransportStats', {
+    return this._protoo?.request('getTransportStats', {
       transportId: this._recvTransport.id,
     });
   }
@@ -1749,7 +1828,7 @@ export class RoomClient {
 
     if (!this._micProducer) return;
 
-    return this._protoo.request('getProducerStats', {
+    return this._protoo?.request('getProducerStats', {
       producerId: this._micProducer.id,
     });
   }
@@ -1761,7 +1840,7 @@ export class RoomClient {
 
     if (!producer) return;
 
-    return this._protoo.request('getProducerStats', {
+    return this._protoo?.request('getProducerStats', {
       producerId: producer.id,
     });
   }
@@ -1773,7 +1852,7 @@ export class RoomClient {
 
     if (!consumer) return;
 
-    return this._protoo.request('getConsumerStats', { consumerId });
+    return this._protoo?.request('getConsumerStats', { consumerId });
   }
 
   async getChatDataProducerRemoteStats() {
@@ -1783,7 +1862,7 @@ export class RoomClient {
 
     if (!dataProducer) return;
 
-    return this._protoo.request('getDataProducerStats', {
+    return this._protoo?.request('getDataProducerStats', {
       dataProducerId: dataProducer.id,
     });
   }
@@ -1795,7 +1874,7 @@ export class RoomClient {
 
     if (!dataProducer) return;
 
-    return this._protoo.request('getDataProducerStats', {
+    return this._protoo?.request('getDataProducerStats', {
       dataProducerId: dataProducer.id,
     });
   }
@@ -1807,7 +1886,7 @@ export class RoomClient {
 
     if (!dataConsumer) return;
 
-    return this._protoo.request('getDataConsumerStats', { dataConsumerId });
+    return this._protoo?.request('getDataConsumerStats', { dataConsumerId });
   }
 
   async getSendTransportLocalStats() {
@@ -1861,6 +1940,10 @@ export class RoomClient {
     );
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Cannot get this._protoo');
+      }
+
       await this._protoo.request('applyNetworkThrottle', {
         uplink,
         downlink,
@@ -1883,6 +1966,10 @@ export class RoomClient {
     logger.debug('resetNetworkThrottle()');
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Cannot get this._protoo');
+      }
+
       await this._protoo.request('resetNetworkThrottle', { secret });
     } catch (error) {
       if (!silent) {
@@ -1905,6 +1992,10 @@ export class RoomClient {
       this._mediasoupDevice = new Device({
         handlerName: this._handlerName,
       });
+
+      if (_isNil(this._protoo)) {
+        throw new Error('Cannot get this._protoo');
+      }
 
       const routerRtpCapabilities = await this._protoo.request(
         'getRouterRtpCapabilities'
@@ -1967,8 +2058,8 @@ export class RoomClient {
             errback // eslint-disable-line no-shadow
           ) => {
             this._protoo
-              .request('connectWebRtcTransport', {
-                transportId: this._sendTransport.id,
+              ?.request('connectWebRtcTransport', {
+                transportId: this._sendTransport?.id,
                 dtlsParameters,
               })
               .then(callback)
@@ -1978,11 +2069,16 @@ export class RoomClient {
 
         this._sendTransport.on(
           'produce',
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           async ({ kind, rtpParameters, appData }, callback, errback) => {
             try {
+              if (_isNil(this._protoo)) {
+                throw new Error('Cannot get this._protoo');
+              }
+
               // eslint-disable-next-line no-shadow
               const { id } = await this._protoo.request('produce', {
-                transportId: this._sendTransport.id,
+                transportId: this._sendTransport?.id,
                 kind,
                 rtpParameters,
                 appData,
@@ -1997,6 +2093,7 @@ export class RoomClient {
 
         this._sendTransport.on(
           'producedata',
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           async (
             { sctpStreamParameters, label, protocol, appData },
             callback,
@@ -2009,9 +2106,13 @@ export class RoomClient {
             );
 
             try {
+              if (_isNil(this._protoo)) {
+                throw new Error('Cannot get this._protoo');
+              }
+
               // eslint-disable-next-line no-shadow
               const { id } = await this._protoo.request('produceData', {
-                transportId: this._sendTransport.id,
+                transportId: this._sendTransport?.id,
                 sctpStreamParameters,
                 label,
                 protocol,
@@ -2065,8 +2166,8 @@ export class RoomClient {
             errback // eslint-disable-line no-shadow
           ) => {
             this._protoo
-              .request('connectWebRtcTransport', {
-                transportId: this._recvTransport.id,
+              ?.request('connectWebRtcTransport', {
+                transportId: this._recvTransport?.id,
                 dtlsParameters,
               })
               .then(callback)
@@ -2129,7 +2230,7 @@ export class RoomClient {
           this.enableWebcam();
         }
 
-        this._sendTransport.on('connectionstatechange', (connectionState) => {
+        this._sendTransport?.on('connectionstatechange', (connectionState) => {
           if (connectionState === 'connected') {
             this.enableChatDataProducer();
             this.enableBotDataProducer();
@@ -2204,6 +2305,10 @@ export class RoomClient {
     if (consumer.paused) return;
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Cannot get this._protoo');
+      }
+
       await this._protoo.request('pauseConsumer', { consumerId: consumer.id });
 
       consumer.pause();
@@ -2225,6 +2330,10 @@ export class RoomClient {
     if (!consumer.paused) return;
 
     try {
+      if (_isNil(this._protoo)) {
+        throw new Error('Cannot get this._protoo');
+      }
+
       await this._protoo.request('resumeConsumer', { consumerId: consumer.id });
 
       consumer.resume();

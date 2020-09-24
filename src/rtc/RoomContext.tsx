@@ -11,6 +11,7 @@ import {
   Provider as ReduxProvider,
   createSelectorHook,
   createDispatchHook,
+  ReactReduxContextValue,
 } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
@@ -19,13 +20,23 @@ interface RoomClientContextState {
   client: RoomClient;
 }
 
-const RoomClientContext = React.createContext<RoomClientContextState>(null);
+const RoomClientContext = React.createContext<RoomClientContextState | null>(
+  null
+);
 RoomClientContext.displayName = 'RoomClientContext';
 
-const RoomReduxContext = React.createContext(null);
-RoomReduxContext.displayName = 'RoomReduxContext';
-
 const reduxMiddlewares: Middleware[] = [thunk];
+
+const store = createReduxStore(
+  reducers,
+  undefined,
+  applyReduxMiddleware(...reduxMiddlewares)
+);
+const RoomReduxContext = React.createContext<ReactReduxContextValue>({
+  store,
+  storeState: undefined,
+});
+RoomReduxContext.displayName = 'RoomReduxContext';
 
 if (window.localStorage.getItem('__rtc_debug') === 'true') {
   // 特殊标识下增加redux日志
@@ -33,7 +44,7 @@ if (window.localStorage.getItem('__rtc_debug') === 'true') {
     level: 'info',
     logger: console,
     collapsed: true,
-    titleFormatter(action: any, time?: string, took?: number) {
+    titleFormatter(action: any, time, took) {
       return `rtc-action @ ${action.type} (in ${took.toFixed(2)} ms)`;
     },
   });
@@ -43,25 +54,20 @@ if (window.localStorage.getItem('__rtc_debug') === 'true') {
 export const RoomClientContextProvider: React.FC<{
   roomClient: RoomClient;
 }> = TMemo((props) => {
-  const store = useMemo(() => {
-    return createReduxStore(
-      reducers,
-      undefined,
-      applyReduxMiddleware(...reduxMiddlewares)
-    );
-  }, []);
-
   useEffect(() => {
     RoomClient.init({
-      store: store,
+      store,
     });
   }, []);
 
   return (
     <RoomClientContext.Provider
-      value={{
-        client: props.roomClient,
-      }}
+      value={useMemo(
+        () => ({
+          client: props.roomClient,
+        }),
+        []
+      )}
     >
       <ReduxProvider store={store} context={RoomReduxContext}>
         {props.children}
@@ -71,10 +77,12 @@ export const RoomClientContextProvider: React.FC<{
 });
 RoomClientContextProvider.displayName = 'RoomClientContextProvider';
 
-export function useRoomClientContext(): RoomClientContextState['client'] {
-  const { client } = useContext(RoomClientContext);
+export function useRoomClientContext():
+  | RoomClientContextState['client']
+  | undefined {
+  const context = useContext(RoomClientContext);
 
-  return client;
+  return context?.client;
 }
 
 type UseRoomStateSelector = <TState = any, TSelected = unknown>(
