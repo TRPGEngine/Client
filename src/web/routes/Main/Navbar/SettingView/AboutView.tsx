@@ -2,6 +2,7 @@ import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Typography } from 'antd';
 import { useTranslation } from '@shared/i18n';
+import { PWAButton } from '@web/components/PWAButton';
 
 export const AboutView: React.FC = TMemo(() => {
   const { t } = useTranslation();
@@ -26,6 +27,10 @@ export const AboutView: React.FC = TMemo(() => {
         本项目尚在不断完善中，现有的产品不代表最终实际效果。TRPG
         Engine会根据不断的场景变更与迭代来不断完善自己。
       </Typography.Paragraph>
+
+      <div>
+        <PWAButton />
+      </div>
     </div>
   );
 });
