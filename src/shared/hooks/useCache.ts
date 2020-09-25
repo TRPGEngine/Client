@@ -20,6 +20,7 @@ import { ActorType } from '@redux/types/actor';
 // 检查是否需要跳过处理
 const isSkipUUID = (uuid: string) =>
   _isNil(uuid) ||
+  uuid === '' ||
   typeof uuid !== 'string' ||
   uuid.toString().substr(0, 4) === 'trpg';
 
