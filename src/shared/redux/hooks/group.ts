@@ -1,15 +1,12 @@
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
-import {
-  GroupInfo,
-  GroupActorType,
-  GroupPanel,
-  GroupChannel,
-} from '@redux/types/group';
-import { useCurrentUserInfo } from './user';
+import { GroupInfo, GroupActorType, GroupChannel } from '@redux/types/group';
+import { useCurrentUserInfo, useCurrentUserUUID } from './user';
 import _get from 'lodash/get';
 import _uniq from 'lodash/uniq';
 import _isNil from 'lodash/isNil';
 import { useMemo } from 'react';
+import { GroupPanel } from '@shared/types/panel';
+import { isGroupPanelVisible } from '@shared/helper/group';
 
 /**
  * @deprecated
@@ -111,6 +108,20 @@ export function useIsGroupManager(
   const managers = useGroupManagerUUIDs(groupUUID);
 
   return managers.includes(playerUUID ?? currentUserInfo.uuid!);
+}
+
+/**
+ * 获取团UUID列表
+ * @param groupUUID 团UUID
+ */
+export function useGroupPanelList(groupUUID: string): GroupPanel[] {
+  const currentUserUUID = useCurrentUserUUID();
+  const groupInfo = useJoinedGroupInfo(groupUUID);
+  const allPanels = groupInfo?.panels ?? [];
+
+  return allPanels.filter((panel) => {
+    return isGroupPanelVisible(groupInfo, panel, currentUserUUID);
+  });
 }
 
 /**

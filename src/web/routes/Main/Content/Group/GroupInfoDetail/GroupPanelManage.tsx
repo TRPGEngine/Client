@@ -12,6 +12,7 @@ import { showToasts, showAlert } from '@shared/manager/ui';
 import { openModal, ModalWrapper } from '@web/components/Modal';
 import { GroupPanelUpdateInfo } from '@web/components/modal/GroupPanelUpdateInfo';
 import { useTranslation } from '@shared/i18n';
+import { GroupPanel } from '@shared/types/panel';
 
 const GroupPanelListItemContainer = styled.div`
   padding: 10px;

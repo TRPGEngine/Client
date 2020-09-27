@@ -3,7 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { PageContent } from '../PageContent';
 import { SidebarItemsContainer } from '../style';
 import { useParams } from 'react-router';
-import { useJoinedGroupInfo } from '@redux/hooks/group';
+import { useGroupPanelList, useJoinedGroupInfo } from '@redux/hooks/group';
 import { SidebarItem } from '../SidebarItem';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { GroupPanel } from './GroupPanel';
@@ -20,6 +20,7 @@ export const Group: React.FC = TMemo(() => {
   const params = useParams<GroupParams>();
   const groupUUID = params.groupUUID;
   const groupInfo = useJoinedGroupInfo(groupUUID);
+  const panels = useGroupPanelList(groupUUID);
   const { t } = useTranslation();
 
   if (_isNil(groupInfo)) {
@@ -29,8 +30,6 @@ export const Group: React.FC = TMemo(() => {
       </div>
     );
   }
-
-  const panels = groupInfo.panels ?? [];
 
   return (
     <GroupProvider groupInfo={groupInfo}>
