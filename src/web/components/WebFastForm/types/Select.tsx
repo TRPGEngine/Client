@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Select, Form } from 'antd';
 import _get from 'lodash/get';
+import _isNil from 'lodash/isNil';
 import { FastFormFieldComponent } from '@shared/components/FastForm/field';
 
 const Option = Select.Option;
@@ -17,8 +18,10 @@ export const FastFormSelect: FastFormFieldComponent<{
   const { name, label, value, onChange, options } = props;
 
   useEffect(() => {
-    // 设置默认值
-    onChange(_get(options, [0, 'value']));
+    if (_isNil(value) || value === '') {
+      // 如果没有值的话则自动设置默认值
+      onChange(_get(options, [0, 'value']));
+    }
   }, []);
 
   return (

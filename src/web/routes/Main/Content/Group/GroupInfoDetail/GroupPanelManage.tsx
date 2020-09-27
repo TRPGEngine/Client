@@ -36,9 +36,7 @@ const GroupPanelListItem: React.FC<{
 
   const handleEdit = useCallback(() => {
     openModal(
-      <ModalWrapper>
-        <GroupPanelUpdateInfo groupUUID={groupUUID} panelUUID={item.uuid} />
-      </ModalWrapper>
+      <GroupPanelUpdateInfo groupUUID={groupUUID} panelUUID={item.uuid} />
     );
   }, [groupUUID, item.uuid]);
 

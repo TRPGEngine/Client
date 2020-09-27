@@ -9,6 +9,7 @@ import { isBlobUrl } from '@shared/utils/string-helper';
 import { toGroupActorWithBlobUrl } from '@web/utils/upload-helper';
 import { bindFileAvatarAttachUUID } from './file';
 import { getJWTUserInfo } from '@shared/utils/jwt-helper';
+import { GroupPanelVisible } from '@shared/types/panel';
 
 export interface GroupItem {
   uuid: string;
@@ -134,6 +135,8 @@ export async function updateGroupPanelInfo(
   panelUUID: string,
   info: {
     name: string;
+    visible: GroupPanelVisible;
+    members?: string[];
   }
 ) {
   const { data } = await request.post(`/group/${groupUUID}/panel/updateInfo`, {

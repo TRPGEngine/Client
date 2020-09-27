@@ -24,7 +24,7 @@ export function useSelectedGroupInfo(): GroupInfo | null {
 }
 
 /**
- * 获取当前加入的团的信息
+ * 获取加入的团的信息
  * @param groupUUID 团UUID
  */
 export function useJoinedGroupInfo(groupUUID: string): GroupInfo | undefined {
@@ -33,6 +33,15 @@ export function useJoinedGroupInfo(groupUUID: string): GroupInfo | undefined {
   );
 
   return groupInfo;
+}
+
+/**
+ * 获取团成员列表
+ * @param groupUUID 团UUID
+ */
+export function useGroupMemberUUIDs(groupUUID: string): string[] {
+  const groupInfo = useJoinedGroupInfo(groupUUID);
+  return groupInfo?.group_members ?? [];
 }
 
 /**
