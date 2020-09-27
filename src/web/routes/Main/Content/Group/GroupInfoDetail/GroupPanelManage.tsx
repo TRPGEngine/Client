@@ -2,7 +2,6 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useJoinedGroupInfo } from '@redux/hooks/group';
 import _isNil from 'lodash/isNil';
-import { GroupPanel } from '@redux/types/group';
 import { SortableList } from '@web/components/SortableList';
 import { Button, Space, Typography } from 'antd';
 import styled from 'styled-components';

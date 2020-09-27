@@ -23,7 +23,8 @@ import {
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
-import { editGroupActor, isGroupManager } from '@shared/model/group';
+import { editGroupActor } from '@shared/model/group';
+import { isGroupManager } from '@shared/helper/group';
 import ActorInfo from '@web/components/modal/ActorInfo';
 
 import './GroupActor.scss';
