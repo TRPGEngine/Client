@@ -1,7 +1,6 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
-import Emoticon from './Emoticon';
 import EmojiPanel from './EmojiPanel';
 import * as pasteUtils from '@shared/utils/paste-utils';
 import { sendMsg } from '@shared/redux/actions/chat';
@@ -297,7 +296,6 @@ class MsgSendBox extends React.Component<Props> {
                 onClick={this.handleEmoticonClick}
                 onSelect={this.handleSelectEmoticon}
               />
-              {/* <Emoticon onSelect={(code) => this.handleSelectEmoticon(code)} /> */}
             </div>
 
             <div
