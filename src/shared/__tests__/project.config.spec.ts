@@ -35,6 +35,7 @@ describe('project.config', () => {
       user: expect.any(String),
       getUser: expect.any(Function),
       group: expect.any(String),
+      robot: expect.any(String),
       getGroup: expect.any(Function),
       trpgsystem: expect.any(String),
       actor: expect.any(String),
