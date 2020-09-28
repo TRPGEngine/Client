@@ -37,10 +37,14 @@ function useShowLoading(isOnline: boolean) {
 export const NetworkStatusModal: React.FC = TMemo(() => {
   const network = useTRPGSelector((state) => state.ui.network);
   const isOnline = network.isOnline;
+  const tryReconnect = network.tryReconnect;
   const showLoading = useShowLoading(isOnline);
 
   return showLoading ? (
-    <FullScreenLoading text={`网络断开: ${network.msg}`} />
+    <FullScreenLoading
+      text={`网络断开: ${network.msg}`}
+      shouldJump={tryReconnect}
+    />
   ) : null;
 });
 NetworkStatusModal.displayName = 'NetworkStatusModal';

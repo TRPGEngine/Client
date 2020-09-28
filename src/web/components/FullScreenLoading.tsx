@@ -9,6 +9,7 @@ const Container = styled.div``;
 
 interface FullScreenLoadingProps {
   text: string;
+  shouldJump: boolean;
 }
 export const FullScreenLoading: React.FC<FullScreenLoadingProps> = TMemo(
   (props) => {
@@ -18,7 +19,7 @@ export const FullScreenLoading: React.FC<FullScreenLoadingProps> = TMemo(
       <PortalRender>
         <FullModal>
           <Container>
-            <JumpLogo />
+            <JumpLogo enabled={props.shouldJump} />
             <p>{text}</p>
           </Container>
         </FullModal>
