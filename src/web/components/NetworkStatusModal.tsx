@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import { FullScreenLoading } from './FullScreenLoading';
 import { useDebounce } from 'react-use';
+import { Button } from 'antd';
 
 /**
  * 超过5s后仍无法连接则显示loading
@@ -40,10 +41,19 @@ export const NetworkStatusModal: React.FC = TMemo(() => {
   const tryReconnect = network.tryReconnect;
   const showLoading = useShowLoading(isOnline);
 
+  const handleRefresh = useCallback(() => {
+    location.reload();
+  }, []);
+
   return showLoading ? (
     <FullScreenLoading
       text={`网络断开: ${network.msg}`}
       shouldJump={tryReconnect}
+      extra={
+        <Button type="link" onClick={handleRefresh}>
+          刷新页面
+        </Button>
+      }
     />
   ) : null;
 });
