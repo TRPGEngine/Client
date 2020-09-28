@@ -244,7 +244,7 @@
     "node-sass": "^4.12.0",
     "offline-plugin": "^5.0.7",
     "plugin-error": "^1.0.1",
-    "prettier": "^1.19.1",
+    "prettier": "^2.1.2",
     "raw-loader": "^4.0.1",
     "react-test-renderer": "16.8.4",
     "rimraf": "^3.0.2",
