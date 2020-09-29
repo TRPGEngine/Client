@@ -1,4 +1,4 @@
-import { GroupPanel } from '@redux/types/group';
+import { GroupPanel } from '@shared/types/panel';
 
 export interface CommonPanelProps {
   panel: GroupPanel;

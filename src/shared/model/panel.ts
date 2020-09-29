@@ -1,4 +1,4 @@
-import { GroupPanel } from '@redux/types/group';
+import { GroupPanel } from '@shared/types/panel';
 import { request } from '@shared/utils/request';
 
 /**

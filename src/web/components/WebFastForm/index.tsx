@@ -12,11 +12,13 @@ import { FastFormText } from './types/Text';
 import { FastFormTextArea } from './types/TextArea';
 import { FastFormPassword } from './types/Password';
 import { FastFormSelect } from './types/Select';
+import { FastFormCustom } from './types/Custom';
 
 regField('text', FastFormText);
 regField('textarea', FastFormTextArea);
 regField('password', FastFormPassword);
 regField('select', FastFormSelect);
+regField('custom', FastFormCustom);
 
 const WebFastFormContainer: FastFormContainerComponent = TMemo((props) => {
   const submitButtonRender = useMemo(() => {

@@ -2,7 +2,6 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useJoinedGroupInfo } from '@redux/hooks/group';
 import _isNil from 'lodash/isNil';
-import { GroupPanel } from '@redux/types/group';
 import { SortableList } from '@web/components/SortableList';
 import { Button, Space, Typography } from 'antd';
 import styled from 'styled-components';
@@ -12,6 +11,7 @@ import { showToasts, showAlert } from '@shared/manager/ui';
 import { openModal, ModalWrapper } from '@web/components/Modal';
 import { GroupPanelUpdateInfo } from '@web/components/modal/GroupPanelUpdateInfo';
 import { useTranslation } from '@shared/i18n';
+import { GroupPanel } from '@shared/types/panel';
 
 const GroupPanelListItemContainer = styled.div`
   padding: 10px;
@@ -36,9 +36,7 @@ const GroupPanelListItem: React.FC<{
 
   const handleEdit = useCallback(() => {
     openModal(
-      <ModalWrapper>
-        <GroupPanelUpdateInfo groupUUID={groupUUID} panelUUID={item.uuid} />
-      </ModalWrapper>
+      <GroupPanelUpdateInfo groupUUID={groupUUID} panelUUID={item.uuid} />
     );
   }, [groupUUID, item.uuid]);
 

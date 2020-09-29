@@ -1,6 +1,5 @@
 import { GroupInfo } from '@redux/types/group';
 import _isNil from 'lodash/isNil';
-import _isArray from 'lodash/isArray';
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import _set from 'lodash/set';
@@ -10,6 +9,7 @@ import { isBlobUrl } from '@shared/utils/string-helper';
 import { toGroupActorWithBlobUrl } from '@web/utils/upload-helper';
 import { bindFileAvatarAttachUUID } from './file';
 import { getJWTUserInfo } from '@shared/utils/jwt-helper';
+import { GroupPanelVisible } from '@shared/types/panel';
 
 export interface GroupItem {
   uuid: string;
@@ -48,25 +48,6 @@ export interface GroupInviteCodeInfo {
   from_uuid: string;
   expiredAt: string;
   times: number;
-}
-
-/**
- * 判断某个用户是否为团管理员
- * @param groupInfo 团信息
- */
-export function isGroupManager(
-  groupInfo: GroupInfo,
-  userUUID: string
-): boolean {
-  if (_isNil(groupInfo) || _isNil(userUUID)) {
-    return false;
-  }
-
-  return (
-    groupInfo.owner_uuid === userUUID ||
-    (_isArray(groupInfo.managers_uuid) &&
-      groupInfo.managers_uuid.includes(userUUID))
-  );
 }
 
 /**
@@ -154,6 +135,8 @@ export async function updateGroupPanelInfo(
   panelUUID: string,
   info: {
     name: string;
+    visible: GroupPanelVisible;
+    members?: string[];
   }
 ) {
   const { data } = await request.post(`/group/${groupUUID}/panel/updateInfo`, {

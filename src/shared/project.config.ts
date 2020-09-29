@@ -1,4 +1,6 @@
 import _get from 'lodash/get';
+import robotImg from '@web/assets/img/robot_dark.svg';
+
 const environment = process.env.NODE_ENV || 'development';
 const platform = process.env.PLATFORM || 'web';
 let currentHost = '127.0.0.1';
@@ -73,6 +75,7 @@ interface ProjectConfig {
     group: string;
     getGroup: (name: string) => string;
     trpgsystem: string;
+    robot: string;
     actor: string;
     chatimg_fail: string;
     file: {
@@ -180,6 +183,7 @@ const config: ProjectConfig = {
       }
     },
     trpgsystem: '/src/web/assets/img/system_notice.png',
+    robot: robotImg,
     actor: '',
     chatimg_fail: '/src/web/assets/img/img_fail.png',
     file: {

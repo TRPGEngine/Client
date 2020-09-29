@@ -40,3 +40,9 @@ export const LANGUAGE_KEY = 'trpg:i18n:language';
  * portal端的jwt键
  */
 export const PORTAL_JWT_KEY = 'jwt';
+
+/**
+ * 是否已安装PWA
+ * 仅用于web端 chrome浏览器
+ */
+export const PWA_INSTALLED = 'pwaInstalled';

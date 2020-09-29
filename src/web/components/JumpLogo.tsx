@@ -48,30 +48,38 @@ const loadingSquash = keyframes`
   }
 `;
 
-const Root = styled.div`
+const Logo = styled.div<{
+  enabled: boolean;
+}>`
   text-align: center;
-  animation-name: ${loadingBounce};
+  animation-name: ${({ enabled = true }) => (enabled ? loadingBounce : 'none')};
   animation-duration: 0.9s;
   animation-iteration-count: infinite;
+
+  > div {
+    display: inline-block;
+    animation-name: ${({ enabled = true }) =>
+      enabled ? loadingSquash : 'none'};
+    animation-duration: 0.9s;
+    animation-iteration-count: infinite;
+    width: 60px;
+    height: 60px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(${imageUrl});
+  }
 `;
 
-const Logo = styled.div`
-  display: inline-block;
-  animation-name: ${loadingSquash};
-  animation-duration: 0.9s;
-  animation-iteration-count: infinite;
-  width: 60px;
-  height: 60px;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-image: url(${imageUrl});
-`;
+interface Props {
+  enabled?: boolean;
+}
+export const JumpLogo: React.FC<Props> = TMemo((props) => {
+  const { enabled = true } = props;
 
-export const JumpLogo: React.FC = TMemo(() => {
   return (
-    <Root>
-      <Logo />
-    </Root>
+    <Logo enabled={enabled}>
+      <div />
+    </Logo>
   );
 });
 JumpLogo.displayName = 'JumpLogo';

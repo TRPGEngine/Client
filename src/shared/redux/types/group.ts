@@ -1,3 +1,4 @@
+import { GroupPanel } from '@shared/types/panel';
 import { ActorType } from './actor';
 import { MsgPayload } from './chat';
 import { UserInfo } from './user';
@@ -41,16 +42,6 @@ export interface GroupChannel {
   desc: string;
   visible: GroupChannelVisible;
   members: string[];
-}
-
-export type GroupPanelType = 'channel' | 'richtext';
-export interface GroupPanel {
-  uuid: string;
-  name: string;
-  type: GroupPanelType;
-  color: string;
-  order: number;
-  target_uuid: string;
 }
 
 export interface GroupInfo {

@@ -7,8 +7,14 @@ import { FullModal } from './FullModal';
 
 const Container = styled.div``;
 
+const ExtraContainer = styled.div`
+  text-align: center;
+`;
+
 interface FullScreenLoadingProps {
   text: string;
+  shouldJump?: boolean;
+  extra?: React.ReactNode;
 }
 export const FullScreenLoading: React.FC<FullScreenLoadingProps> = TMemo(
   (props) => {
@@ -18,8 +24,9 @@ export const FullScreenLoading: React.FC<FullScreenLoadingProps> = TMemo(
       <PortalRender>
         <FullModal>
           <Container>
-            <JumpLogo />
+            <JumpLogo enabled={props.shouldJump} />
             <p>{text}</p>
+            <ExtraContainer>{props.extra}</ExtraContainer>
           </Container>
         </FullModal>
       </PortalRender>

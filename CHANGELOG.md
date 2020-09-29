@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.3](https://github.com/TRPGEngine/Client/compare/v0.4.2...v0.4.3) (2020-09-29)
+
+
+### Features
+
+* 增加团面板的可见性过滤 ([8fb30c5](https://github.com/TRPGEngine/Client/commit/8fb30c5bc98defdd2aa8563d7adb7b6db409100a))
+* **web:** 为网络状态异常全屏模态框增加刷新页面的按钮 ([9af2290](https://github.com/TRPGEngine/Client/commit/9af2290606ea33111b65bc0ce965adc4cd055eb7))
+* **web:** 增加pwabutton ([d4cdde2](https://github.com/TRPGEngine/Client/commit/d4cdde2475444cffdd347707a728abddb2d7b102))
+* **web:** 增加团面板的可见性编辑 ([7a89c0b](https://github.com/TRPGEngine/Client/commit/7a89c0bc769f3a0a4feed1dd95183cce9cf02708))
+* 通用限流出错时增加通用toast提示 ([885bb0a](https://github.com/TRPGEngine/Client/commit/885bb0a54ed3be94da99f3d38c0ed37fc6f41fac))
+
 ### [0.4.2](https://github.com/TRPGEngine/Client/compare/v0.4.1...v0.4.2) (2020-09-22)
 
 

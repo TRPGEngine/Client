@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Button } from 'antd';
 import { showModal } from '@redux/actions/ui';
 import GroupRuleEditor from './modal/GroupRuleEditor';
-import { isGroupManager } from '@shared/model/group';
+import { isGroupManager } from '@shared/helper/group';
 import HTML from '@web/components/HTML';
 import _isEmpty from 'lodash/isEmpty';
 import {

@@ -1,5 +1,7 @@
 import io from 'socket.io-client';
 import config from '../project.config';
+import { showLimitedToasts } from '@shared/utils/ui';
+import { errorCode } from '@shared/utils/error';
 
 interface EmitSuccessResponse {
   result: true;
@@ -33,12 +35,17 @@ export class API {
     }
     return this.socket.emit(event, data, (res) => {
       cb && cb(res);
+
       if (res.result === false) {
         // 如果检测到错误则汇报错误信息
         const info = `${res.msg}\n事件: ${event}\n发送信息: ${JSON.stringify(
           data
         )}`;
         this.handleEventError && this.handleEventError(info);
+        if (res.code === errorCode.LIMITED) {
+          // limited
+          showLimitedToasts();
+        }
       }
     });
   }

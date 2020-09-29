@@ -16,6 +16,7 @@ import { EmphasizeTime } from './addons/EmphasizeTime';
 import classNames from 'classnames';
 import { MsgProfile } from './addons/MsgProfile';
 import { MsgItem } from './style';
+import { getWebMsgDefaultAvatar } from '@web/utils/msg-helper';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -51,13 +52,11 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
    */
   getAvatarUrl(): string {
     const { avatar, name, info } = this.props;
-    const defaultAvatar =
-      info.sender_uuid === 'trpgsystem'
-        ? config.defaultImg.trpgsystem
-        : config.defaultImg.getUser(name);
+    const defaultAvatar = getWebMsgDefaultAvatar(info.sender_uuid, name);
 
-    const dataAvatar = getAbsolutePath(_get(info, 'data.avatar', ''));
+    const dataAvatar = getAbsolutePath(_get(info, ['data', 'avatar']) ?? '');
 
+    // 这里就是要处理dataAvatar avatar 为空字符串的情况
     return dataAvatar || avatar || defaultAvatar;
   }
 

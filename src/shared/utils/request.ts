@@ -2,10 +2,13 @@ import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import config from '@shared/project.config';
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
+import _isNil from 'lodash/isNil';
 import { showToasts } from '@shared/manager/ui';
 import { getUserJWT } from './jwt-helper';
 import _isFunction from 'lodash/isFunction';
 import { getErrorHook, tokenGetter } from '@shared/manager/request';
+import { errorCode } from './error';
+import { showLimitedToasts } from './ui';
 
 const fileUrl = config.file.url;
 
@@ -74,10 +77,17 @@ export function createRequest() {
     (err) => {
       // 尝试获取错误信息
       const errorMsg: string = _get(err, 'response.data.msg');
+      const code: number = _get(err, 'response.data.code');
       if (_isFunction(getErrorHook)) {
         const isContinue = getErrorHook(err);
         if (isContinue === false) {
-          return { data: { result: false, msg: errorMsg } };
+          return { data: { result: false, msg: errorMsg, code } };
+        }
+      }
+
+      if (!_isNil(code)) {
+        if (code === errorCode.LIMITED) {
+          showLimitedToasts();
         }
       }
 

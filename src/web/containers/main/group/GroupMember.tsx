@@ -6,7 +6,7 @@ import { showModal, showProfileCard } from '@shared/redux/actions/ui';
 import GroupMemberManage from './modal/GroupMemberManage';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
 import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
-import { isGroupManager } from '@shared/model/group';
+import { isGroupManager } from '@shared/helper/group';
 import { GroupInfo } from '@redux/types/group';
 
 import './GroupMember.scss';
