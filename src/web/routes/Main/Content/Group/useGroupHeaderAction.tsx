@@ -10,11 +10,11 @@ import _isString from 'lodash/isString';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { useCurrentUserUUID } from '@redux/hooks/user';
 import { showAlert } from '@redux/actions/ui';
-import { dismissGroup, quitGroup, sendGroupInvite } from '@redux/actions/group';
+import { dismissGroup, quitGroup } from '@redux/actions/group';
 import { GroupPanelCreate } from '@web/components/modal/GroupPanelCreate';
-import { openModal, ModalWrapper, closeModal } from '@web/components/Modal';
-import { UserSelector } from '@web/components/modal/UserSelector';
+import { openModal, ModalWrapper } from '@web/components/Modal';
 import { useTranslation } from '@shared/i18n';
+import { GroupInvite } from '@web/components/modal/GroupInvite';
 
 export function useGroupHeaderAction(groupInfo: GroupInfo) {
   const { t } = useTranslation();
@@ -31,24 +31,8 @@ export function useGroupHeaderAction(groupInfo: GroupInfo) {
   }, [groupUUID]);
 
   const handleShowInvite = useCallback(() => {
-    const excludeUUIDs = _isString(currentUserUUID) ? [currentUserUUID] : [];
-    console.log('groupInfo.group_members', groupInfo.group_members);
-    if (Array.isArray(groupInfo.group_members)) {
-      excludeUUIDs.push(...groupInfo.group_members);
-    }
-
-    const key = openModal(
-      <UserSelector
-        excludeUUIDs={excludeUUIDs}
-        onConfirm={(uuids) => {
-          uuids.forEach((uuid) => {
-            dispatch(sendGroupInvite(groupUUID, uuid));
-          });
-          closeModal(key);
-        }}
-      />
-    );
-  }, [currentUserUUID, groupUUID, groupInfo.group_members]);
+    openModal(<GroupInvite groupUUID={groupUUID} />);
+  }, [groupUUID]);
 
   // 创建面板
   const handleCreateGroupPanel = useCallback(() => {

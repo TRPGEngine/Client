@@ -160,6 +160,20 @@ export async function fetchGroupInviteCodeInfo(
 }
 
 /**
+ * 创建团邀请码
+ * @param groupUUID 团UUID
+ */
+export async function createGroupInviteCode(
+  groupUUID: string
+): Promise<GroupInviteCodeInfo> {
+  const { data } = await request.post(`/group/invite/code/create`, {
+    groupUUID,
+  });
+
+  return data.invite;
+}
+
+/**
  * 应用团邀请代码
  * @param inviteCode 邀请代码
  */

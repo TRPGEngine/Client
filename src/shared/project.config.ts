@@ -100,6 +100,7 @@ interface ProjectConfig {
     goddessfantasy: string;
     blog: string;
     portal: string;
+    getInviteUrl: (inviteCode: string) => string;
   };
   defaultSettings: DefaultSettings;
 }
@@ -226,6 +227,9 @@ const config: ProjectConfig = {
     goddessfantasy: 'http://www.goddessfantasy.net/',
     blog: 'https://trpgdoc.moonrailgun.com/blog/',
     portal: portalUrl,
+    getInviteUrl(inviteCode: string) {
+      return `${portalUrl}/group/invite/${inviteCode}`;
+    },
   },
   defaultSettings,
 };
