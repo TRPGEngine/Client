@@ -16,6 +16,7 @@ import { PortalProvider } from '@web/components/portal/PortalProvider';
 import { PortalHost } from '@web/utils/portal';
 import { NetworkStatusModal } from '@web/components/NetworkStatusModal';
 import { DarkMode } from './DarkMode';
+import { PWAContextProvider } from '@web/components/PWAContext';
 
 // 新版Web页面
 
@@ -26,9 +27,11 @@ const Router: any =
 
 const CustomProvider: React.FC = (props) => {
   return (
-    <PortalProvider>
-      <PortalHost>{props.children}</PortalHost>
-    </PortalProvider>
+    <PWAContextProvider>
+      <PortalProvider>
+        <PortalHost>{props.children}</PortalHost>
+      </PortalProvider>
+    </PWAContextProvider>
   );
 };
 

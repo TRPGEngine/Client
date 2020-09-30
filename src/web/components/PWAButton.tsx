@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
-import { PWA_INSTALLED } from '@shared/utils/consts';
 import _get from 'lodash/get';
+import { usePWAContext } from './PWAContext';
 
 const Button = styled.div`
   padding: 8px 16px;
@@ -22,38 +22,7 @@ const Button = styled.div`
  * 仅会在chrome中出现
  */
 export const PWAButton: React.FC = TMemo((props) => {
-  const [pwaInstalled, setPwaInstalled] = useState(true); // 默认已安装(即不显示)
-  const deferredPromptRef = useRef<any>(null);
-
-  useEffect(() => {
-    let installed = localStorage.getItem(PWA_INSTALLED) === 'yes';
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      localStorage.setItem(PWA_INSTALLED, 'yes');
-      installed = true;
-    } else if (_get(window.navigator, 'standalone') === true) {
-      localStorage.setItem(PWA_INSTALLED, 'yes');
-      installed = true;
-    }
-
-    setPwaInstalled(installed);
-  }, []);
-
-  useEffect(() => {
-    const beforeinstallprompt = (e) => {
-      deferredPromptRef.current = e;
-    };
-    const appinstalled = (e) => {
-      localStorage.setItem(PWA_INSTALLED, 'yes');
-      setPwaInstalled(true);
-    };
-
-    window.addEventListener('beforeinstallprompt', beforeinstallprompt);
-    window.addEventListener('appinstalled', appinstalled);
-    return () => {
-      window.removeEventListener('beforeinstallprompt', beforeinstallprompt);
-      window.removeEventListener('appinstalled', appinstalled);
-    };
-  }, []);
+  const { pwaInstalled, deferredPromptRef } = usePWAContext();
 
   const handleInstallPWA = useCallback(() => {
     const deferredPrompt = deferredPromptRef.current;
