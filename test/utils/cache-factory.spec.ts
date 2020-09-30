@@ -35,7 +35,7 @@ describe('buildCacheFactory', () => {
     const cacheTestFn = buildCacheFactory(CachePolicy.Persistent, testFn);
 
     const ret = await cacheTestFn('a', 'b');
-    const cachedRet = await rnStorage.get('trpg:a$b');
+    const cachedRet = await rnStorage.get('cache:factory$a$b');
     expect(cachedRet).toBe(ret);
   });
 });

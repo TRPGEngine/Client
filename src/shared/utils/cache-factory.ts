@@ -33,7 +33,7 @@ function stringifyArgs(arg: any): string {
 /**
  * 拼接参数
  */
-function joinArgs(...args: any[]): string {
+function joinArgs(args: any[]): string {
   return args.map(stringifyArgs).join('$');
 }
 
