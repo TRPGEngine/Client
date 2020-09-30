@@ -1,19 +1,19 @@
 import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import {
-  useRoomClientContext,
-  useRoomStateSelector,
-  useRoomStateDispatch,
+  useRTCRoomClientContext,
+  useRTCRoomStateSelector,
+  useRTCRoomStateDispatch,
 } from '@src/rtc/RoomContext';
 import { PeerView } from './PeerView';
 import * as stateActions from '@src/rtc/redux/stateActions';
 
 export const Me: React.FC = TMemo(() => {
-  const client = useRoomClientContext();
-  const me = useRoomStateSelector((state) => state.me);
-  const producers = useRoomStateSelector((state) => state.producers);
-  const room = useRoomStateSelector((state) => state.room);
-  const dispatch = useRoomStateDispatch();
+  const client = useRTCRoomClientContext();
+  const me = useRTCRoomStateSelector((state) => state.me);
+  const producers = useRTCRoomStateSelector((state) => state.producers);
+  const room = useRTCRoomStateSelector((state) => state.room);
+  const dispatch = useRTCRoomStateDispatch();
 
   const producersArray = useMemo(() => Object.values<any>(producers), [
     producers,

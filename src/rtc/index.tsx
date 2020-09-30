@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { RoomClient, RoomClientOptions } from './RoomClient';
 import shortid from 'shortid';
-import { RoomClientContextProvider } from './RoomContext';
+import { RTCRoomClientContextProvider } from './RoomContext';
 import _isNil from 'lodash/isNil';
 
 type RTCContainerProps = Partial<Omit<RoomClientOptions, 'peerId'>> &
@@ -46,9 +46,9 @@ export const RTCContainer: React.FC<RTCContainerProps> = TMemo((props) => {
   }, []);
 
   return (
-    <RoomClientContextProvider roomClient={roomClient}>
+    <RTCRoomClientContextProvider roomClient={roomClient}>
       {props.children}
-    </RoomClientContextProvider>
+    </RTCRoomClientContextProvider>
   );
 });
 RTCContainer.displayName = 'RTCContainer';

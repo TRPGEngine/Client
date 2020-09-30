@@ -8,23 +8,11 @@ import {
   setProducerTrack,
   setProducerScore,
 } from '../stateActions';
+import { ProducersStateType } from '../types/producers';
 
-interface StateType {
-  [producerId: string]: {
-    id: string;
-    deviceLabel?: string;
-    type?: 'front' | 'back' | 'share';
-    paused: boolean;
-    track: MediaStreamTrack;
-    codec: string;
-    rtpParameters?: {};
-    score: { ssrc: number; score: number }[];
-  };
-}
+const initialState: ProducersStateType = {};
 
-const initialState: StateType = {};
-
-export default createReducer<StateType>(initialState, (builder) => {
+export default createReducer<ProducersStateType>(initialState, (builder) => {
   builder
     .addCase(setRoomState, (state, action) => {
       const roomState = action.payload.state;

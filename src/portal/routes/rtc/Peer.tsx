@@ -1,8 +1,8 @@
 import React, { useMemo, useCallback } from 'react';
 import {
-  useRoomClientContext,
-  useRoomStateSelector,
-  useRoomStateDispatch,
+  useRTCRoomClientContext,
+  useRTCRoomStateSelector,
+  useRTCRoomStateDispatch,
 } from '@src/rtc/RoomContext';
 import * as stateActions from '@src/rtc/redux/stateActions';
 import { PeerView } from './PeerView';
@@ -11,9 +11,9 @@ import { TMemo } from '@shared/components/TMemo';
 export const Peer: React.FC<{
   id: string;
 }> = TMemo((props) => {
-  const roomClient = useRoomClientContext();
-  const peer = useRoomStateSelector((state) => state.peers[props.id]);
-  const consumersArray = useRoomStateSelector(
+  const roomClient = useRTCRoomClientContext();
+  const peer = useRTCRoomStateSelector((state) => state.peers[props.id]);
+  const consumersArray = useRTCRoomStateSelector(
     (state) =>
       peer?.consumers.map((consumerId) => state.consumers[consumerId]) ?? []
   );
@@ -26,7 +26,7 @@ export const Peer: React.FC<{
     [consumersArray]
   );
 
-  const dispatch = useRoomStateDispatch();
+  const dispatch = useRTCRoomStateDispatch();
   const handleStatsClick = useCallback(
     (peerId: string) => {
       dispatch(stateActions.setRoomStatsPeerId(peerId));
@@ -34,7 +34,7 @@ export const Peer: React.FC<{
     [dispatch]
   );
 
-  const audioMuted = useRoomStateSelector((state) => state.me.audioMuted);
+  const audioMuted = useRTCRoomStateSelector((state) => state.me.audioMuted);
 
   const audioEnabled =
     Boolean(audioConsumer) &&

@@ -83,6 +83,8 @@ export class RoomClient {
     store = data.store;
   }
 
+  private _roomId: string;
+
   // Closed flag.
   _closed = false;
 
@@ -198,6 +200,7 @@ export class RoomClient {
       device.flag
     );
 
+    this._roomId = roomId;
     this._displayName = displayName;
     this._device = device;
     this._forceTcp = forceTcp;
@@ -233,6 +236,10 @@ export class RoomClient {
       VIDEO_SVC_ENCODINGS[0].scalabilityMode = svc;
       VIDEO_KSVC_ENCODINGS[0].scalabilityMode = `${svc}_KEY`;
     }
+  }
+
+  get roomId() {
+    return this._roomId;
   }
 
   close() {

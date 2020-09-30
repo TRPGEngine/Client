@@ -4,35 +4,31 @@ import {
   removeNotification,
   removeAllNotifications,
 } from '../stateActions';
+import { NotificationsStateType } from '../types/notifications';
 
-interface NotificationType {
-  id: string;
-  type: 'info' | 'error';
-  text: string;
-}
+const initialState: NotificationsStateType = [];
 
-type StateType = NotificationType[];
+export default createReducer<NotificationsStateType>(
+  initialState,
+  (builder) => {
+    builder
+      .addCase(addNotification, (state, action) => {
+        const { notification } = action.payload;
 
-const initialState: StateType = [];
+        state.push(notification);
+      })
+      .addCase(removeNotification, (state, action) => {
+        const { notificationId } = action.payload;
 
-export default createReducer<StateType>(initialState, (builder) => {
-  builder
-    .addCase(addNotification, (state, action) => {
-      const { notification } = action.payload;
-
-      state.push(notification);
-    })
-    .addCase(removeNotification, (state, action) => {
-      const { notificationId } = action.payload;
-
-      const idx = state.findIndex(
-        (notification) => notification.id === notificationId
-      );
-      if (idx >= 0) {
-        state.splice(idx, 1);
-      }
-    })
-    .addCase(removeAllNotifications, (state, action) => {
-      state = [];
-    });
-});
+        const idx = state.findIndex(
+          (notification) => notification.id === notificationId
+        );
+        if (idx >= 0) {
+          state.splice(idx, 1);
+        }
+      })
+      .addCase(removeAllNotifications, (state, action) => {
+        state = [];
+      });
+  }
+);

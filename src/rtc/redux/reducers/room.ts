@@ -7,16 +7,9 @@ import {
   setRoomFaceDetection,
   removePeer,
 } from '../stateActions';
+import { RoomStateType } from '../types/room';
 
-interface StateType {
-  url: string;
-  state: 'new' | 'connecting' | 'connected' | 'closed';
-  activeSpeakerId: string;
-  statsPeerId: string;
-  faceDetection: boolean;
-}
-
-const initialState: StateType = {
+const initialState: RoomStateType = {
   url: null,
   state: 'new', // new/connecting/connected/disconnected/closed,
   activeSpeakerId: null,
@@ -24,7 +17,7 @@ const initialState: StateType = {
   faceDetection: false,
 };
 
-export default createReducer<StateType>(initialState, (builder) => {
+export default createReducer<RoomStateType>(initialState, (builder) => {
   builder
     .addCase(setRoomUrl, (state, action) => {
       const { url } = action.payload;

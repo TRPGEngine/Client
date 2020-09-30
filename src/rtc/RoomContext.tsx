@@ -15,15 +15,16 @@ import {
 } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import { AllRTCStateType } from './redux/types';
 
-interface RoomClientContextState {
+interface RTCRoomClientContextState {
   client: RoomClient;
 }
 
-const RoomClientContext = React.createContext<RoomClientContextState | null>(
+const RTCRoomClientContext = React.createContext<RTCRoomClientContextState | null>(
   null
 );
-RoomClientContext.displayName = 'RoomClientContext';
+RTCRoomClientContext.displayName = 'RTCRoomClientContext';
 
 const reduxMiddlewares: Middleware[] = [thunk];
 
@@ -51,7 +52,7 @@ if (window.localStorage.getItem('__rtc_debug') === 'true') {
   reduxMiddlewares.push(logger);
 }
 
-export const RoomClientContextProvider: React.FC<{
+export const RTCRoomClientContextProvider: React.FC<{
   roomClient: RoomClient;
 }> = TMemo((props) => {
   useEffect(() => {
@@ -61,7 +62,7 @@ export const RoomClientContextProvider: React.FC<{
   }, []);
 
   return (
-    <RoomClientContext.Provider
+    <RTCRoomClientContext.Provider
       value={useMemo(
         () => ({
           client: props.roomClient,
@@ -72,25 +73,25 @@ export const RoomClientContextProvider: React.FC<{
       <ReduxProvider store={store} context={RoomReduxContext}>
         {props.children}
       </ReduxProvider>
-    </RoomClientContext.Provider>
+    </RTCRoomClientContext.Provider>
   );
 });
-RoomClientContextProvider.displayName = 'RoomClientContextProvider';
+RTCRoomClientContextProvider.displayName = 'RTCRoomClientContextProvider';
 
-export function useRoomClientContext():
-  | RoomClientContextState['client']
+export function useRTCRoomClientContext():
+  | RTCRoomClientContextState['client']
   | undefined {
-  const context = useContext(RoomClientContext);
+  const context = useContext(RTCRoomClientContext);
 
   return context?.client;
 }
 
-type UseRoomStateSelector = <TState = any, TSelected = unknown>(
-  selector: (state: TState) => TSelected,
+type UseRTCRoomStateSelector = <TSelected = unknown>(
+  selector: (state: AllRTCStateType) => TSelected,
   equalityFn?: (left: TSelected, right: TSelected) => boolean
 ) => TSelected;
-export const useRoomStateSelector: UseRoomStateSelector = createSelectorHook(
+export const useRTCRoomStateSelector: UseRTCRoomStateSelector = createSelectorHook(
   RoomReduxContext
 );
 
-export const useRoomStateDispatch = createDispatchHook(RoomReduxContext);
+export const useRTCRoomStateDispatch = createDispatchHook(RoomReduxContext);

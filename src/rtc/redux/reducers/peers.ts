@@ -10,20 +10,11 @@ import {
   addDataConsumer,
   removeDataConsumer,
 } from '../stateActions';
+import { PeersStateType } from '../types/peers';
 
-interface StateType {
-  [peerId: string]: {
-    id: string;
-    displayName: string;
-    device: DeviceType;
-    consumers: string[];
-    dataConsumers: string[];
-  };
-}
+const initialState: PeersStateType = {};
 
-const initialState: StateType = {};
-
-export default createReducer<StateType>(initialState, (builder) => {
+export default createReducer<PeersStateType>(initialState, (builder) => {
   builder
     .addCase(setRoomState, (state, action) => {
       const roomState = action.payload.state;

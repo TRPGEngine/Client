@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import {
-  useRoomStateDispatch,
-  useRoomStateSelector,
+  useRTCRoomStateDispatch,
+  useRTCRoomStateSelector,
 } from '@src/rtc/RoomContext';
 import { removeNotification } from '@src/rtc/redux/stateActions';
 import { TMemo } from '@shared/components/TMemo';
@@ -20,8 +20,8 @@ interface Props {
 export const Notifications: React.FC<Props> = TMemo((props) => {
   const [refMap] = useState(() => new WeakMap());
   const [cancelMap] = useState(() => new WeakMap());
-  const notifications = useRoomStateSelector((state) => state.notifications);
-  const dispatch = useRoomStateDispatch();
+  const notifications = useRTCRoomStateSelector((state) => state.notifications);
+  const dispatch = useRTCRoomStateDispatch();
   const handleRemove = useCallback((notificationId: string) => {
     dispatch(removeNotification(notificationId));
   }, []);

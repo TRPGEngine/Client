@@ -1,8 +1,8 @@
 import React, { useMemo, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import {
-  useRoomClientContext,
-  useRoomStateSelector,
+  useRTCRoomClientContext,
+  useRTCRoomStateSelector,
 } from '@src/rtc/RoomContext';
 import { Button, Tooltip, Space } from 'antd';
 import { setDevices } from '@src/rtc/settingManager';
@@ -20,10 +20,10 @@ const CapablityBtn = styled(Button).attrs({
 `;
 
 export const MeController: React.FC = TMemo(() => {
-  const client = useRoomClientContext();
-  const me = useRoomStateSelector((state) => state.me);
+  const client = useRTCRoomClientContext();
+  const me = useRTCRoomStateSelector((state) => state.me);
 
-  const producers = useRoomStateSelector((state) => state.producers);
+  const producers = useRTCRoomStateSelector((state) => state.producers);
   const producersArray = useMemo(() => Object.values<any>(producers), [
     producers,
   ]);
@@ -81,21 +81,25 @@ export const MeController: React.FC = TMemo(() => {
   }, []);
 
   const handleSwitchMic = useCallback(() => {
-    micState === 'on' ? client.muteMic() : client.unmuteMic();
+    if (micState === 'on') {
+      client?.muteMic();
+    } else {
+      client?.unmuteMic();
+    }
   }, [micState, client]);
 
   const handleSwitchWebcam = useCallback(() => {
     if (webcamState === 'on') {
       setDevices({ webcamEnabled: false });
-      client.disableWebcam();
+      client?.disableWebcam();
     } else {
       setDevices({ webcamEnabled: true });
-      client.enableWebcam();
+      client?.enableWebcam();
     }
   }, [webcamState, client]);
 
   const handleChangeWebcam = useCallback(() => {
-    client.changeWebcam();
+    client?.changeWebcam();
   }, [client]);
 
   const handleSwitchShareScreen = useCallback(() => {

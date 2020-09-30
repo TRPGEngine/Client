@@ -11,30 +11,11 @@ import {
   setConsumerTrack,
   setConsumerScore,
 } from '../stateActions';
+import { ConsumersStateType } from '../types/consumers';
 
-interface StateType {
-  [consumerId: string]: {
-    id: string;
-    type: string;
-    locallyPaused: boolean;
-    remotelyPaused: boolean;
-    rtpParameters: {};
-    codec: string;
-    spatialLayers: number;
-    temporalLayers: number;
-    currentSpatialLayer?: number;
-    currentTemporalLayer?: number;
-    preferredSpatialLayer?: number;
-    preferredTemporalLayer?: number;
-    priority: number;
-    track: MediaStreamTrack;
-    score: { ssrc: number; score: number }[];
-  };
-}
+const initialState: ConsumersStateType = {};
 
-const initialState: StateType = {};
-
-export default createReducer<StateType>(initialState, (builder) => {
+export default createReducer<ConsumersStateType>(initialState, (builder) => {
   builder
     .addCase(setRoomState, (state, action) => {
       const roomState = action.payload.state;

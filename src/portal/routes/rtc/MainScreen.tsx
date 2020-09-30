@@ -3,7 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { Me } from './Me';
 import styled from 'styled-components';
 import { MeController } from './MeController';
-import { useRoomStateSelector } from '@src/rtc/RoomContext';
+import { useRTCRoomStateSelector } from '@src/rtc/RoomContext';
 import { useSelectedPeerContext } from './SelectedPeerContext';
 import { Peer } from './Peer';
 import _isString from 'lodash/isString';
@@ -47,7 +47,7 @@ const Toolbar = styled.div`
 `;
 
 export const MainScreen: React.FC = TMemo(() => {
-  const room = useRoomStateSelector((state) => state.room);
+  const room = useRTCRoomStateSelector((state) => state.room);
   const connected = useMemo(() => room.state === 'connected', [room.state]);
   const { selectedPeerId } = useSelectedPeerContext();
 

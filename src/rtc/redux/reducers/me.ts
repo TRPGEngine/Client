@@ -13,24 +13,9 @@ import {
   setAudioMutedState,
   setRestartIceInProgress,
 } from '../stateActions';
+import { MeStateType } from '../types/me';
 
-interface StateType {
-  id: string;
-  displayName: string;
-  displayNameSet: boolean;
-  device: DeviceType;
-  canSendMic: boolean;
-  canSendWebcam: boolean;
-  canChangeWebcam: boolean;
-  webcamInProgress: boolean;
-  shareInProgress: boolean;
-  audioOnly: boolean;
-  audioOnlyInProgress: boolean;
-  audioMuted: boolean;
-  restartIceInProgress: boolean;
-}
-
-const initialState: StateType = {
+const initialState: MeStateType = {
   id: null,
   displayName: null,
   displayNameSet: false,
@@ -46,7 +31,7 @@ const initialState: StateType = {
   restartIceInProgress: false,
 };
 
-export default createReducer<StateType>(initialState, (builder) => {
+export default createReducer<MeStateType>(initialState, (builder) => {
   builder
     .addCase(setRoomState, (state, action) => {
       const roomState = action.payload.state;

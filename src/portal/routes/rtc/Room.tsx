@@ -1,6 +1,6 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { useRoomClientContext } from '@src/rtc/RoomContext';
+import { useRTCRoomClientContext } from '@src/rtc/RoomContext';
 import { Peers } from './Peers';
 import { Notifications } from './Notifications';
 import SplitPane from '@shared/components/web/SplitPane';
@@ -8,7 +8,7 @@ import { MainScreen } from './MainScreen';
 import { SelectedPeerContextProvider } from './SelectedPeerContext';
 
 export const Room: React.FC = TMemo(() => {
-  useRoomClientContext();
+  useRTCRoomClientContext();
 
   return (
     <div>

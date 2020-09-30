@@ -13,7 +13,7 @@ import { Tooltip, Input, Button, Space } from 'antd';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { VolumeInspector } from './VolumeInspector';
-import { useRoomStateSelector } from '@src/rtc/RoomContext';
+import { useRTCRoomStateSelector } from '@src/rtc/RoomContext';
 
 const logger = new Logger('PeerView');
 
@@ -191,7 +191,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
   const audioRef = useRef<HTMLAudioElement>();
   const audioTrackRef = useRef<MediaStreamTrack>(null);
   const videoTrackRef = useRef<MediaStreamTrack>(null);
-  const isActiveSpeaker = useRoomStateSelector(
+  const isActiveSpeaker = useRTCRoomStateSelector(
     (state) => state.room.activeSpeakerId === peer?.id
   );
 
@@ -470,7 +470,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                     <p>
                       max spatial layer:{' '}
                       {maxSpatialLayer > -1 ? maxSpatialLayer : 'none'}
-                      <span> </span>
+                      <span />
                       <span
                         onClick={(event) => {
                           event.stopPropagation();
@@ -483,7 +483,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                       >
                         {'[ down ]'}
                       </span>
-                      <span> </span>
+                      <span />
                       <span
                         onClick={(event) => {
                           event.stopPropagation();
@@ -506,7 +506,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                     </p>
                     <p>
                       {`preferred spatial-temporal layers: ${consumerPreferredSpatialLayer} ${consumerPreferredTemporalLayer}`}
-                      <span> </span>
+                      <span />
                       <span
                         className="clickable"
                         onClick={(event) => {
@@ -538,7 +538,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                       >
                         {'[ down ]'}
                       </span>
-                      <span> </span>
+                      <span />
                       <span
                         className="clickable"
                         onClick={(event) => {
@@ -580,7 +580,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                 {!isMe && videoCodec && consumerPriority > 0 && (
                   <p>
                     {`priority: ${consumerPriority}`}
-                    <span> </span>
+                    <span />
                     <span
                       onClick={(event) => {
                         event.stopPropagation();
@@ -590,7 +590,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                     >
                       {'[ down ]'}
                     </span>
-                    <span> </span>
+                    <span />
                     <span
                       onClick={(event) => {
                         event.stopPropagation();
@@ -648,7 +648,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
 
       <audio
         ref={audioRef}
-        autoPlay
+        autoPlay={true}
         muted={isMe || audioMuted}
         controls={false}
       />
