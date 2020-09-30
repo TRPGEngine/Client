@@ -16,6 +16,7 @@ import { NetworkStatusModal } from '@web/components/NetworkStatusModal';
 import { DarkMode } from './DarkMode';
 import { PWAContextProvider } from '@web/components/PWAContext';
 import { wrapSentry } from '@web/utils/sentry';
+import { RTCRoomClientContextProvider } from '@rtc/RoomContext';
 
 import './App.less';
 
@@ -29,9 +30,11 @@ const Router: any =
 const CustomProvider: React.FC = (props) => {
   return (
     <PWAContextProvider>
-      <PortalProvider>
-        <PortalHost>{props.children}</PortalHost>
-      </PortalProvider>
+      <RTCRoomClientContextProvider>
+        <PortalProvider>
+          <PortalHost>{props.children}</PortalHost>
+        </PortalProvider>
+      </RTCRoomClientContextProvider>
     </PWAContextProvider>
   );
 };

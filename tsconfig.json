@@ -23,6 +23,7 @@
       "@web/*": ["./src/web/*"],
       "@app/*": ["./src/app/src/*"],
       "@portal/*": ["./src/portal/*"],
+      "@rtc/*": ["./src/rtc/*"],
       "@test/*": ["./test/*"],
       "@src/*": ["./src/*"]
     }

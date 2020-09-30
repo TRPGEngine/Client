@@ -1,30 +1,22 @@
-import React, { useMemo, useCallback } from 'react';
-import {
-  useRTCRoomClientContext,
-  useRTCRoomStateSelector,
-  useRTCRoomStateDispatch,
-} from '@src/rtc/RoomContext';
+import React, { useCallback } from 'react';
+import { useRTCRoomClientContext } from '@src/rtc/RoomContext';
 import * as stateActions from '@src/rtc/redux/stateActions';
 import { PeerView } from './PeerView';
 import { TMemo } from '@shared/components/TMemo';
+import { useRTCRoomStateDispatch, useRTCRoomStateSelector } from '@rtc/redux';
+import {
+  useRTCPeerConsumersAudio,
+  useRTCPeerConsumersVideo,
+} from '@rtc/hooks/useRTCPeerConsumers';
+import _isNil from 'lodash/isNil';
 
 export const Peer: React.FC<{
-  id: string;
+  id: string; // peerId
 }> = TMemo((props) => {
   const roomClient = useRTCRoomClientContext();
   const peer = useRTCRoomStateSelector((state) => state.peers[props.id]);
-  const consumersArray = useRTCRoomStateSelector(
-    (state) =>
-      peer?.consumers.map((consumerId) => state.consumers[consumerId]) ?? []
-  );
-  const audioConsumer = useMemo(
-    () => consumersArray.find((consumer) => consumer.track.kind === 'audio'),
-    [consumersArray]
-  );
-  const videoConsumer = useMemo(
-    () => consumersArray.find((consumer) => consumer.track.kind === 'video'),
-    [consumersArray]
-  );
+  const audioConsumer = useRTCPeerConsumersAudio(props.id);
+  const videoConsumer = useRTCPeerConsumersVideo(props.id);
 
   const dispatch = useRTCRoomStateDispatch();
   const handleStatsClick = useCallback(
@@ -37,12 +29,12 @@ export const Peer: React.FC<{
   const audioMuted = useRTCRoomStateSelector((state) => state.me.audioMuted);
 
   const audioEnabled =
-    Boolean(audioConsumer) &&
+    !_isNil(audioConsumer) &&
     !audioConsumer.locallyPaused &&
     !audioConsumer.remotelyPaused;
 
   const videoVisible =
-    Boolean(videoConsumer) &&
+    !_isNil(videoConsumer) &&
     !videoConsumer.locallyPaused &&
     !videoConsumer.remotelyPaused;
 

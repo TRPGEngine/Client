@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { RoomClient, RoomClientOptions } from './RoomClient';
+import { RoomClient } from './RoomClient';
 import shortid from 'shortid';
 import { RTCRoomClientContextProvider } from './RoomContext';
 import _isNil from 'lodash/isNil';
+import { RoomClientOptions } from './type';
 
 type RTCContainerProps = Partial<Omit<RoomClientOptions, 'peerId'>> &
   Pick<RoomClientOptions, 'roomId' | 'displayName' | 'device'> & {

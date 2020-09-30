@@ -11,6 +11,7 @@ import * as settingManager from './settingManager';
 import * as requestActions from './redux/requestActions';
 import * as stateActions from './redux/stateActions';
 import _isNil from 'lodash/isNil';
+import { RoomClientOptions } from './type';
 
 declare global {
   interface MediaDevices {
@@ -51,28 +52,6 @@ const EXTERNAL_VIDEO_SRC = '/resources/videos/video-audio-stereo.mp4';
 const logger = new Logger('RoomClient');
 
 let store;
-
-export interface RoomClientOptions {
-  roomId: string;
-  peerId: string;
-  displayName: string;
-  device: {
-    flag: string;
-    name: string;
-    version: string;
-  };
-  handlerName?: BuiltinHandlerName;
-  useSimulcast?: boolean;
-  useSharingSimulcast?: boolean;
-  forceTcp: boolean;
-  produce: boolean;
-  consume: boolean;
-  forceH264: boolean;
-  forceVP9: boolean;
-  svc?: string;
-  datachannel: boolean;
-  externalVideo: boolean;
-}
 
 export class RoomClient {
   /**
@@ -183,14 +162,14 @@ export class RoomClient {
     handlerName,
     useSimulcast,
     useSharingSimulcast,
-    forceTcp,
-    produce,
-    consume,
+    forceTcp = false,
+    produce = true,
+    consume = true,
     forceH264,
     forceVP9,
     svc,
-    datachannel,
-    externalVideo,
+    datachannel = false,
+    externalVideo = false,
   }: RoomClientOptions) {
     logger.debug(
       'constructor() [roomId:"%s", peerId:"%s", displayName:"%s", device:%s]',
@@ -238,7 +217,7 @@ export class RoomClient {
     }
   }
 
-  get roomId() {
+  get roomId(): string {
     return this._roomId;
   }
 

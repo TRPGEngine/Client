@@ -1,97 +1,67 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useRef, useContext, useState, useCallback } from 'react';
 import { RoomClient } from './RoomClient';
 import { TMemo } from '@shared/components/TMemo';
-import reducers from './redux/reducers';
-import {
-  applyMiddleware as applyReduxMiddleware,
-  createStore as createReduxStore,
-  Middleware,
-} from 'redux';
-import {
-  Provider as ReduxProvider,
-  createSelectorHook,
-  createDispatchHook,
-  ReactReduxContextValue,
-} from 'react-redux';
-import thunk from 'redux-thunk';
-import { createLogger } from 'redux-logger';
-import { AllRTCStateType } from './redux/types';
+import _once from 'lodash/once';
+import _noop from 'lodash/noop';
+import _isNil from 'lodash/isNil';
+import type { RoomClientOptions } from './type';
+import { getStore, RoomReduxProvider } from './redux';
 
 interface RTCRoomClientContextState {
-  client: RoomClient;
+  client: RoomClient | undefined;
+  createClient: (options: RoomClientOptions) => void;
 }
 
-const RTCRoomClientContext = React.createContext<RTCRoomClientContextState | null>(
-  null
-);
+const RTCRoomClientContext = React.createContext<RTCRoomClientContextState>({
+  client: undefined,
+  createClient: _noop,
+});
 RTCRoomClientContext.displayName = 'RTCRoomClientContext';
 
-const reduxMiddlewares: Middleware[] = [thunk];
-
-const store = createReduxStore(
-  reducers,
-  undefined,
-  applyReduxMiddleware(...reduxMiddlewares)
-);
-const RoomReduxContext = React.createContext<ReactReduxContextValue>({
-  store,
-  storeState: undefined,
-});
-RoomReduxContext.displayName = 'RoomReduxContext';
-
-if (window.localStorage.getItem('__rtc_debug') === 'true') {
-  // 特殊标识下增加redux日志
-  const logger = createLogger({
-    level: 'info',
-    logger: console,
-    collapsed: true,
-    titleFormatter(action: any, time, took) {
-      return `rtc-action @ ${action.type} (in ${took.toFixed(2)} ms)`;
-    },
+const initRoomClientStore = _once(() => {
+  RoomClient.init({
+    store: getStore(),
   });
-  reduxMiddlewares.push(logger);
-}
+});
+export const RTCRoomClientContextProvider: React.FC = TMemo((props) => {
+  const [client, setClient] = useState<RoomClient>();
 
-export const RTCRoomClientContextProvider: React.FC<{
-  roomClient: RoomClient;
-}> = TMemo((props) => {
-  useEffect(() => {
-    RoomClient.init({
-      store,
-    });
-  }, []);
+  const createClient = useCallback(
+    (options: RoomClientOptions) => {
+      initRoomClientStore();
+
+      if (!_isNil(client)) {
+        client.close();
+      }
+
+      const newClient = new RoomClient(options);
+      newClient.join();
+      setClient(newClient);
+    },
+    [client]
+  );
 
   return (
-    <RTCRoomClientContext.Provider
-      value={useMemo(
-        () => ({
-          client: props.roomClient,
-        }),
-        []
-      )}
-    >
-      <ReduxProvider store={store} context={RoomReduxContext}>
-        {props.children}
-      </ReduxProvider>
+    <RTCRoomClientContext.Provider value={{ client, createClient }}>
+      <RoomReduxProvider>{props.children}</RoomReduxProvider>
     </RTCRoomClientContext.Provider>
   );
 });
 RTCRoomClientContextProvider.displayName = 'RTCRoomClientContextProvider';
 
-export function useRTCRoomClientContext():
-  | RTCRoomClientContextState['client']
-  | undefined {
+export function useRTCRoomClientContext(): RTCRoomClientContextState {
   const context = useContext(RTCRoomClientContext);
 
-  return context?.client;
+  return context;
 }
 
-type UseRTCRoomStateSelector = <TSelected = unknown>(
-  selector: (state: AllRTCStateType) => TSelected,
-  equalityFn?: (left: TSelected, right: TSelected) => boolean
-) => TSelected;
-export const useRTCRoomStateSelector: UseRTCRoomStateSelector = createSelectorHook(
-  RoomReduxContext
-);
+export function useRTCRoomClientRef(): React.MutableRefObject<
+  RoomClient | undefined
+> {
+  const { client } = useRTCRoomClientContext();
 
-export const useRTCRoomStateDispatch = createDispatchHook(RoomReduxContext);
+  const clientRef = useRef(client);
+  clientRef.current = client;
+
+  return clientRef;
+}
