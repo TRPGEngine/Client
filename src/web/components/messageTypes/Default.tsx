@@ -20,18 +20,12 @@ import { t, useTranslation } from '@shared/i18n';
 const DefaultAddonContent: React.FC<{ message: string }> = TMemo((props) => {
   const { loading, hasUrl, info } = useWebsiteInfo(props.message);
 
-  const handleClick = useCallback(() => {
-    if (hasUrl && _isString(info.url)) {
-      window.open(info.url, '_blank');
-    }
-  }, [info.url]);
-
   if (!hasUrl || loading || info.title === '') {
     return null;
   }
 
   return (
-    <DefaultAddonContentContainer onClick={handleClick}>
+    <DefaultAddonContentContainer href={info.url} target="_blank">
       <div className="info">
         <p>{info.title}</p>
         <p>{info.content}</p>

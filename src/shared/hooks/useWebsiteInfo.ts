@@ -2,21 +2,23 @@ import { useState, useEffect, useMemo } from 'react';
 import _isObject from 'lodash/isObject';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
-import request from '@shared/utils/request';
 import { preProcessText } from '@shared/components/bbcode';
 import bbcodeParser from '@shared/components/bbcode/parser';
 import { AstNodeObj } from '@shared/components/bbcode/type';
+import { fetchWebsiteInfo, WebsiteInfo } from '@shared/model/info';
 
-interface WebsiteInfo {
-  title: string;
-  content: string;
-  icon?: string;
+interface WebsiteInfoWithUrl extends WebsiteInfo {
   url: string;
 }
 
-export const useWebsiteInfo = (rawMessage: string) => {
+interface UseWebsiteInfoRet {
+  loading: boolean;
+  hasUrl: boolean;
+  info: WebsiteInfoWithUrl;
+}
+export function useWebsiteInfo(rawMessage: string): UseWebsiteInfoRet {
   const [loading, setLoading] = useState(false);
-  const [info, setInfo] = useState<WebsiteInfo>({
+  const [info, setInfo] = useState<WebsiteInfoWithUrl>({
     title: '',
     content: '',
     url: '',
@@ -42,16 +44,14 @@ export const useWebsiteInfo = (rawMessage: string) => {
     return '';
   }, [rawMessage]);
 
-  const hasUrl = useMemo(() => !_isEmpty(messageUrl), [messageUrl]);
+  const hasUrl = !_isEmpty(messageUrl);
 
   useEffect(() => {
     if (hasUrl) {
       // 如果messageUrl有值的话则获取
       setLoading(true);
-      // TODO: 可能需要缓存
-      request(`/info/website/info?url=${messageUrl}`).then((res) => {
+      fetchWebsiteInfo(messageUrl).then((info) => {
         setLoading(false);
-        const info = res.data.info;
         setInfo({ ...info, url: messageUrl });
       });
     }
@@ -62,4 +62,4 @@ export const useWebsiteInfo = (rawMessage: string) => {
     hasUrl,
     info,
   };
-};
+}
