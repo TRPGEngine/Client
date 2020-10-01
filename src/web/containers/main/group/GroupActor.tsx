@@ -21,6 +21,7 @@ import {
   getGroupActorTemplateUUID,
 } from '@shared/utils/data-helper';
 import _get from 'lodash/get';
+import _isNil from 'lodash/isNil';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
 import { editGroupActor } from '@shared/model/group';
@@ -147,7 +148,7 @@ class GroupActor extends React.PureComponent<Props> {
   // 正式人物卡
   getGroupActorsList() {
     const { groupInfo } = this.props;
-    const groupActors = this.props.groupInfo.group_actors;
+    const groupActors = groupInfo.group_actors;
     if (groupActors && groupActors.length > 0) {
       return groupActors
         .filter((item) => item.passed === true)
@@ -266,6 +267,10 @@ class GroupActor extends React.PureComponent<Props> {
   }
 
   render() {
+    if (_isNil(this.props.groupInfo)) {
+      return <div>无法获取到团信息</div>;
+    }
+
     return (
       <div className="group-actor">
         <TabsController>
