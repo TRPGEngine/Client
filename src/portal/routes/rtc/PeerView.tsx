@@ -13,7 +13,10 @@ import { Tooltip, Input, Button, Space } from 'antd';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { VolumeInspector } from './VolumeInspector';
-import { useRTCRoomStateSelector } from '@src/rtc/RoomContext';
+import _isFunction from 'lodash/isFunction';
+import _isNull from 'lodash/isNull';
+import _isNil from 'lodash/isNil';
+import { useRTCRoomStateSelector } from '@rtc/redux';
 
 const logger = new Logger('PeerView');
 
@@ -151,13 +154,13 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
     audioConsumerId,
     videoConsumerId,
     videoRtpParameters,
-    consumerSpatialLayers,
-    consumerTemporalLayers,
+    consumerSpatialLayers = 0,
+    consumerTemporalLayers = 0,
     consumerCurrentSpatialLayer,
     consumerCurrentTemporalLayer,
-    consumerPreferredSpatialLayer,
-    consumerPreferredTemporalLayer,
-    consumerPriority,
+    consumerPreferredSpatialLayer = 0,
+    consumerPreferredTemporalLayer = 0,
+    consumerPriority = 0,
     audioMuted,
     videoVisible,
     videoMultiLayer,
@@ -176,21 +179,21 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
   } = props;
   const [audioVolume, setAudioVolume] = useState(0);
   const [showInfo, setShowInfo] = useState(false);
-  const [videoResolutionWidth, setVideoResolutionWidth] = useState<number>(
-    null
-  );
-  const [videoResolutionHeight, setVideoResolutionHeight] = useState<number>(
-    null
-  );
+  const [videoResolutionWidth, setVideoResolutionWidth] = useState<
+    number | null
+  >(null);
+  const [videoResolutionHeight, setVideoResolutionHeight] = useState<
+    number | null
+  >(null);
   const [videoCanPlay, setVideoCanPlay] = useState(false);
   const [videoElemPaused, setVideoElemPaused] = useState(false);
   const [maxSpatialLayer, setMaxSpatialLayer] = useState(0);
-  const harkRef = useRef<hark.Harker>(null);
+  const harkRef = useRef<hark.Harker>();
   const videoResolutionPeriodicTimerRef = useRef<number>();
-  const videoRef = useRef<HTMLVideoElement>();
-  const audioRef = useRef<HTMLAudioElement>();
-  const audioTrackRef = useRef<MediaStreamTrack>(null);
-  const videoTrackRef = useRef<MediaStreamTrack>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioTrackRef = useRef<MediaStreamTrack>();
+  const videoTrackRef = useRef<MediaStreamTrack>();
   const isActiveSpeaker = useRTCRoomStateSelector(
     (state) => state.room.activeSpeakerId === peer?.id
   );
@@ -198,6 +201,10 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
   const _startVideoResolution = useCallback(() => {
     videoResolutionPeriodicTimerRef.current = setInterval(() => {
       const videoElem = videoRef.current;
+
+      if (_isNull(videoElem)) {
+        return;
+      }
 
       if (
         videoElem.videoWidth !== videoResolutionWidth ||
@@ -253,7 +260,10 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
   );
 
   const _setTracks = useCallback(
-    (audioTrack: MediaStreamTrack, videoTrack: MediaStreamTrack) => {
+    (
+      audioTrack: MediaStreamTrack | undefined,
+      videoTrack: MediaStreamTrack | undefined
+    ) => {
       if (
         audioTrackRef.current === audioTrack &&
         videoTrackRef.current === videoTrack
@@ -271,46 +281,52 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
       const videoElem = videoRef.current;
       const audioElem = audioRef.current;
 
-      if (audioTrack) {
-        const stream = new MediaStream();
+      if (!_isNil(audioElem)) {
+        if (!_isNil(audioTrack)) {
+          const stream = new MediaStream();
 
-        stream.addTrack(audioTrack);
-        audioElem.srcObject = stream;
-
-        audioElem
-          .play()
-          .catch((error) => logger.warn('audioElem.play() failed:%o', error));
-
-        _runHark(stream);
-      } else {
-        audioElem.srcObject = null;
-      }
-
-      if (videoTrack) {
-        const stream = new MediaStream();
-
-        stream.addTrack(videoTrack);
-        videoElem.srcObject = stream;
-
-        videoElem.oncanplay = () => setVideoCanPlay(true);
-
-        videoElem.onplay = () => {
-          setVideoElemPaused(false);
+          stream.addTrack(audioTrack);
+          audioElem.srcObject = stream;
 
           audioElem
             .play()
             .catch((error) => logger.warn('audioElem.play() failed:%o', error));
-        };
 
-        videoElem.onpause = () => setVideoElemPaused(true);
+          _runHark(stream);
+        } else {
+          audioElem.srcObject = null;
+        }
+      }
 
-        videoElem
-          .play()
-          .catch((error) => logger.warn('videoElem.play() failed:%o', error));
+      if (!_isNil(videoElem)) {
+        if (!_isNil(videoTrack)) {
+          const stream = new MediaStream();
 
-        _startVideoResolution();
-      } else {
-        videoElem.srcObject = null;
+          stream.addTrack(videoTrack);
+          videoElem.srcObject = stream;
+
+          videoElem.oncanplay = () => setVideoCanPlay(true);
+
+          videoElem.onplay = () => {
+            setVideoElemPaused(false);
+
+            audioElem
+              ?.play()
+              .catch((error) =>
+                logger.warn('audioElem.play() failed:%o', error)
+              );
+          };
+
+          videoElem.onpause = () => setVideoElemPaused(true);
+
+          videoElem
+            .play()
+            .catch((error) => logger.warn('videoElem.play() failed:%o', error));
+
+          _startVideoResolution();
+        } else {
+          videoElem.srcObject = null;
+        }
       }
     },
     [
@@ -344,7 +360,7 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
     if (isMe && videoRtpParameters && maxSpatialLayer === null) {
       setMaxSpatialLayer(videoRtpParameters.encodings.length - 1);
     } else if (isMe && !videoRtpParameters && maxSpatialLayer !== null) {
-      setMaxSpatialLayer(null);
+      setMaxSpatialLayer(0);
     }
 
     _setTracks(audioTrack, videoTrack);
@@ -477,7 +493,8 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
 
                           const newMaxSpatialLayer = maxSpatialLayer - 1;
 
-                          onChangeMaxSendingSpatialLayer(newMaxSpatialLayer);
+                          _isFunction(onChangeMaxSendingSpatialLayer) &&
+                            onChangeMaxSendingSpatialLayer(newMaxSpatialLayer);
                           setMaxSpatialLayer(newMaxSpatialLayer);
                         }}
                       >
@@ -490,7 +507,8 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
 
                           const newMaxSpatialLayer = maxSpatialLayer + 1;
 
-                          onChangeMaxSendingSpatialLayer(newMaxSpatialLayer);
+                          _isFunction(onChangeMaxSendingSpatialLayer) &&
+                            onChangeMaxSendingSpatialLayer(newMaxSpatialLayer);
                           setMaxSpatialLayer(newMaxSpatialLayer);
                         }}
                       >
@@ -530,10 +548,11 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                               consumerTemporalLayers - 1;
                           }
 
-                          onChangeVideoPreferredLayers(
-                            newPreferredSpatialLayer,
-                            newPreferredTemporalLayer
-                          );
+                          _isFunction(onChangeVideoPreferredLayers) &&
+                            onChangeVideoPreferredLayers(
+                              newPreferredSpatialLayer,
+                              newPreferredTemporalLayer
+                            );
                         }}
                       >
                         {'[ down ]'}
@@ -565,10 +584,11 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                             newPreferredTemporalLayer = 0;
                           }
 
-                          onChangeVideoPreferredLayers(
-                            newPreferredSpatialLayer,
-                            newPreferredTemporalLayer
-                          );
+                          _isFunction(onChangeVideoPreferredLayers) &&
+                            onChangeVideoPreferredLayers(
+                              newPreferredSpatialLayer,
+                              newPreferredTemporalLayer
+                            );
                         }}
                       >
                         {'[ up ]'}
@@ -585,7 +605,8 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                       onClick={(event) => {
                         event.stopPropagation();
 
-                        onChangeVideoPriority(consumerPriority - 1);
+                        _isFunction(onChangeVideoPriority) &&
+                          onChangeVideoPriority(consumerPriority - 1);
                       }}
                     >
                       {'[ down ]'}
@@ -595,7 +616,8 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                       onClick={(event) => {
                         event.stopPropagation();
 
-                        onChangeVideoPriority(consumerPriority + 1);
+                        _isFunction(onChangeVideoPriority) &&
+                          onChangeVideoPriority(consumerPriority + 1);
                       }}
                     >
                       {'[ up ]'}

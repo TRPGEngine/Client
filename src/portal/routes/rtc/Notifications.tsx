@@ -1,12 +1,9 @@
 import React, { useCallback, useState } from 'react';
-import {
-  useRTCRoomStateDispatch,
-  useRTCRoomStateSelector,
-} from '@src/rtc/RoomContext';
 import { removeNotification } from '@src/rtc/redux/stateActions';
 import { TMemo } from '@shared/components/TMemo';
 import { useTransition, animated, SpringConfig } from 'react-spring';
 import styled from 'styled-components';
+import { useRTCRoomStateDispatch, useRTCRoomStateSelector } from '@rtc/redux';
 
 const NotificationsContainer = styled.div`
   position: fixed;
@@ -54,8 +51,6 @@ export const Notifications: React.FC<Props> = TMemo((props) => {
               onClick={() => handleRemove(item.id)}
             >
               <div className="body">
-                {item.title && <p className="title">{item.title}</p>}
-
                 <p className="text">{item.text}</p>
               </div>
             </div>

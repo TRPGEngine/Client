@@ -1,10 +1,10 @@
 import { DeviceType } from '@src/rtc/type';
 
 export interface MeStateType {
-  id: string;
-  displayName: string;
+  id: string | null;
+  displayName: string | null | undefined;
   displayNameSet: boolean;
-  device: DeviceType;
+  device: DeviceType | null;
   canSendMic: boolean;
   canSendWebcam: boolean;
   canChangeWebcam: boolean;

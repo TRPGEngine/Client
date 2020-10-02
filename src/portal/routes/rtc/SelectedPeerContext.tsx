@@ -3,21 +3,21 @@ import { TMemo } from '@shared/components/TMemo';
 import _noop from 'lodash/noop';
 
 interface ContextType {
-  selectedPeerId: string;
-  setSelectedPeerId: React.Dispatch<React.SetStateAction<string>>;
+  selectedPeerId: string | null;
+  setSelectedPeerId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 /**
  * 用于全局交流最新的选择的peerId的操作
  */
 const SelectedPeerContext = React.createContext<ContextType>({
-  selectedPeerId: undefined,
+  selectedPeerId: null,
   setSelectedPeerId: _noop,
 });
 SelectedPeerContext.displayName = 'SelectedPeerContext';
 
 export const SelectedPeerContextProvider: React.FC = TMemo((props) => {
-  const [selectedPeerId, setSelectedPeerId] = useState(null);
+  const [selectedPeerId, setSelectedPeerId] = useState<string | null>(null);
 
   return (
     <SelectedPeerContext.Provider value={{ selectedPeerId, setSelectedPeerId }}>

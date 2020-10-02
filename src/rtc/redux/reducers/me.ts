@@ -1,5 +1,4 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { DeviceType } from '@src/rtc/type';
 import {
   setRoomState,
   setMe,
@@ -14,6 +13,7 @@ import {
   setRestartIceInProgress,
 } from '../stateActions';
 import { MeStateType } from '../types/me';
+import _isString from 'lodash/isString';
 
 const initialState: MeStateType = {
   id: null,
@@ -75,14 +75,12 @@ export default createReducer<MeStateType>(initialState, (builder) => {
       state.shareInProgress = flag;
     })
     .addCase(setDisplayName, (state, action) => {
-      let { displayName } = action.payload;
+      const { displayName } = action.payload;
 
-      // Be ready for undefined displayName (so keep previous one).
-      if (!displayName) {
-        displayName = state.displayName;
+      if (_isString(displayName)) {
+        state.displayName = displayName;
       }
 
-      state.displayName = displayName;
       state.displayNameSet = true;
     })
     .addCase(setAudioOnlyState, (state, action) => {

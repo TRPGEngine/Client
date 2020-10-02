@@ -13,7 +13,7 @@ import _isNil from 'lodash/isNil';
 export const Peer: React.FC<{
   id: string; // peerId
 }> = TMemo((props) => {
-  const roomClient = useRTCRoomClientContext();
+  const { client: roomClient } = useRTCRoomClientContext();
   const peer = useRTCRoomStateSelector((state) => state.peers[props.id]);
   const audioConsumer = useRTCPeerConsumersAudio(props.id);
   const videoConsumer = useRTCPeerConsumersVideo(props.id);
@@ -48,50 +48,50 @@ export const Peer: React.FC<{
 
       <PeerView
         peer={peer}
-        audioConsumerId={audioConsumer ? audioConsumer.id : null}
-        videoConsumerId={videoConsumer ? videoConsumer.id : null}
+        audioConsumerId={audioConsumer ? audioConsumer.id : undefined}
+        videoConsumerId={videoConsumer ? videoConsumer.id : undefined}
         audioRtpParameters={audioConsumer ? audioConsumer.rtpParameters : null}
         videoRtpParameters={videoConsumer ? videoConsumer.rtpParameters : null}
         consumerSpatialLayers={
-          videoConsumer ? videoConsumer.spatialLayers : null
+          videoConsumer ? videoConsumer.spatialLayers : undefined
         }
         consumerTemporalLayers={
-          videoConsumer ? videoConsumer.temporalLayers : null
+          videoConsumer ? videoConsumer.temporalLayers : undefined
         }
         consumerCurrentSpatialLayer={
-          videoConsumer ? videoConsumer.currentSpatialLayer : null
+          videoConsumer ? videoConsumer.currentSpatialLayer : undefined
         }
         consumerCurrentTemporalLayer={
-          videoConsumer ? videoConsumer.currentTemporalLayer : null
+          videoConsumer ? videoConsumer.currentTemporalLayer : undefined
         }
         consumerPreferredSpatialLayer={
-          videoConsumer ? videoConsumer.preferredSpatialLayer : null
+          videoConsumer ? videoConsumer.preferredSpatialLayer : undefined
         }
         consumerPreferredTemporalLayer={
-          videoConsumer ? videoConsumer.preferredTemporalLayer : null
+          videoConsumer ? videoConsumer.preferredTemporalLayer : undefined
         }
-        consumerPriority={videoConsumer ? videoConsumer.priority : null}
-        audioTrack={audioConsumer ? audioConsumer.track : null}
-        videoTrack={videoConsumer ? videoConsumer.track : null}
+        consumerPriority={videoConsumer ? videoConsumer.priority : undefined}
+        audioTrack={audioConsumer ? audioConsumer.track : undefined}
+        videoTrack={videoConsumer ? videoConsumer.track : undefined}
         audioMuted={audioMuted}
         videoVisible={videoVisible}
         videoMultiLayer={videoConsumer && videoConsumer.type !== 'simple'}
-        audioCodec={audioConsumer ? audioConsumer.codec : null}
-        videoCodec={videoConsumer ? videoConsumer.codec : null}
+        audioCodec={audioConsumer ? audioConsumer.codec : undefined}
+        videoCodec={videoConsumer ? videoConsumer.codec : undefined}
         audioScore={audioConsumer ? audioConsumer.score : null}
         videoScore={videoConsumer ? videoConsumer.score : null}
         onChangeVideoPreferredLayers={(spatialLayer, temporalLayer) => {
-          roomClient.setConsumerPreferredLayers(
-            videoConsumer.id,
+          roomClient?.setConsumerPreferredLayers(
+            videoConsumer?.id,
             spatialLayer,
             temporalLayer
           );
         }}
         onChangeVideoPriority={(priority) => {
-          roomClient.setConsumerPriority(videoConsumer.id, priority);
+          roomClient?.setConsumerPriority(videoConsumer?.id, priority);
         }}
         onRequestKeyFrame={() => {
-          roomClient.requestConsumerKeyFrame(videoConsumer.id);
+          roomClient?.requestConsumerKeyFrame(videoConsumer?.id);
         }}
         onStatsClick={handleStatsClick}
       />

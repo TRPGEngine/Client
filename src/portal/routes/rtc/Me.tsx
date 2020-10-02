@@ -1,15 +1,12 @@
 import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import {
-  useRTCRoomClientContext,
-  useRTCRoomStateSelector,
-  useRTCRoomStateDispatch,
-} from '@src/rtc/RoomContext';
+import { useRTCRoomClientContext } from '@src/rtc/RoomContext';
 import { PeerView } from './PeerView';
 import * as stateActions from '@src/rtc/redux/stateActions';
+import { useRTCRoomStateDispatch, useRTCRoomStateSelector } from '@rtc/redux';
 
 export const Me: React.FC = TMemo(() => {
-  const client = useRTCRoomClientContext();
+  const { client } = useRTCRoomClientContext();
   const me = useRTCRoomStateSelector((state) => state.me);
   const producers = useRTCRoomStateSelector((state) => state.producers);
   const room = useRTCRoomStateSelector((state) => state.room);
@@ -50,10 +47,10 @@ export const Me: React.FC = TMemo(() => {
         audioScore={audioProducer ? audioProducer.score : null}
         videoScore={videoProducer ? videoProducer.score : null}
         onChangeDisplayName={(displayName) => {
-          client.changeDisplayName(displayName);
+          client?.changeDisplayName(displayName);
         }}
         onChangeMaxSendingSpatialLayer={(spatialLayer) => {
-          client.setMaxSendingSpatialLayer(spatialLayer);
+          client?.setMaxSendingSpatialLayer(spatialLayer);
         }}
         onStatsClick={(peerId) => {
           dispatch(stateActions.setRoomStatsPeerId(peerId));

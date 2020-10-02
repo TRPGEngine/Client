@@ -3,10 +3,10 @@ import { TMemo } from '@shared/components/TMemo';
 import { Me } from './Me';
 import styled from 'styled-components';
 import { MeController } from './MeController';
-import { useRTCRoomStateSelector } from '@src/rtc/RoomContext';
 import { useSelectedPeerContext } from './SelectedPeerContext';
 import { Peer } from './Peer';
 import _isString from 'lodash/isString';
+import { useRTCRoomStateSelector } from '@rtc/redux';
 
 const Container = styled.div`
   height: 100%;

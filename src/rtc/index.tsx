@@ -8,8 +8,11 @@ import { RoomClientOptions } from './type';
 
 type RTCContainerProps = Partial<Omit<RoomClientOptions, 'peerId'>> &
   Pick<RoomClientOptions, 'roomId' | 'displayName' | 'device'> & {
-    roomClientRef?: React.MutableRefObject<RoomClient>;
+    roomClientRef?: React.MutableRefObject<RoomClient | undefined>;
   };
+/**
+ * @deprecated
+ */
 export const RTCContainer: React.FC<RTCContainerProps> = TMemo((props) => {
   const {
     roomId,
@@ -23,7 +26,7 @@ export const RTCContainer: React.FC<RTCContainerProps> = TMemo((props) => {
     datachannel = true,
     externalVideo = false,
   } = props;
-  const [roomClient, setRoomClient] = useState<RoomClient>(null);
+  const [roomClient, setRoomClient] = useState<RoomClient | null>(null);
   useEffect(() => {
     const peerId = shortid.generate();
     const client = new RoomClient({
@@ -47,7 +50,8 @@ export const RTCContainer: React.FC<RTCContainerProps> = TMemo((props) => {
   }, []);
 
   return (
-    <RTCRoomClientContextProvider roomClient={roomClient}>
+    // <RTCRoomClientContextProvider roomClient={roomClient}>
+    <RTCRoomClientContextProvider>
       {props.children}
     </RTCRoomClientContextProvider>
   );

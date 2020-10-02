@@ -9,7 +9,7 @@ const RTCTest: React.FC = TMemo(() => {
 
   useEffect(() => {
     console.log('正在加入房间');
-    roomClientRef.current.join().then(() => console.log('加入成功'));
+    roomClientRef.current?.join().then(() => console.log('加入成功'));
   }, []);
 
   return (

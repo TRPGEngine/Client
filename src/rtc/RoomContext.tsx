@@ -31,6 +31,7 @@ export const RTCRoomClientContextProvider: React.FC = TMemo((props) => {
       initRoomClientStore();
 
       if (!_isNil(client)) {
+        // 关闭上一个连接
         client.close();
       }
 

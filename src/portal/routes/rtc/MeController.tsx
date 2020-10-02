@@ -1,12 +1,10 @@
 import React, { useMemo, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import {
-  useRTCRoomClientContext,
-  useRTCRoomStateSelector,
-} from '@src/rtc/RoomContext';
+import { useRTCRoomClientContext } from '@src/rtc/RoomContext';
 import { Button, Tooltip, Space } from 'antd';
 import { setDevices } from '@src/rtc/settingManager';
 import styled from 'styled-components';
+import { useRTCRoomStateSelector } from '@rtc/redux';
 
 type CapablityState = 'on' | 'off' | 'unsupported';
 
@@ -20,7 +18,7 @@ const CapablityBtn = styled(Button).attrs({
 `;
 
 export const MeController: React.FC = TMemo(() => {
-  const client = useRTCRoomClientContext();
+  const { client } = useRTCRoomClientContext();
   const me = useRTCRoomStateSelector((state) => state.me);
 
   const producers = useRTCRoomStateSelector((state) => state.producers);
@@ -104,9 +102,9 @@ export const MeController: React.FC = TMemo(() => {
 
   const handleSwitchShareScreen = useCallback(() => {
     if (shareState === 'on') {
-      client.disableShare();
+      client?.disableShare();
     } else {
-      client.enableShare();
+      client?.enableShare();
     }
   }, [shareState, client]);
 
