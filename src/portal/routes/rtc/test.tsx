@@ -1,28 +1,37 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { RTCContainer } from '@src/rtc';
-import { RoomClient } from '@src/rtc/RoomClient';
 import { Room } from './Room';
+import {
+  RTCRoomClientContextProvider,
+  useRTCRoomClientContext,
+} from '@rtc/RoomContext';
+import shortid from 'shortid';
+import { getUrlQuerySeach } from '@web/utils/url-helper';
 
 const RTCTest: React.FC = TMemo(() => {
-  const roomClientRef = useRef<RoomClient>();
+  const { createClient } = useRTCRoomClientContext();
 
   useEffect(() => {
+    const roomId = getUrlQuerySeach('room') ?? 'testroom';
+    const peerId = shortid();
+
     console.log('正在加入房间');
-    roomClientRef.current?.join().then(() => console.log('加入成功'));
+    createClient({
+      roomId,
+      peerId,
+      displayName: peerId,
+      device: { name: '', flag: '', version: '' },
+    }).then(() => console.log('加入成功'));
   }, []);
 
-  return (
-    <RTCContainer
-      roomId={'dasfals'}
-      displayName={'testadmin'}
-      device={{ flag: '', name: '', version: '' }}
-      roomClientRef={roomClientRef}
-    >
-      <Room />
-    </RTCContainer>
-  );
+  return <Room />;
 });
 RTCTest.displayName = 'RTCTest';
 
-export default RTCTest;
+export default () => {
+  return (
+    <RTCRoomClientContextProvider>
+      <RTCTest />
+    </RTCRoomClientContextProvider>
+  );
+};

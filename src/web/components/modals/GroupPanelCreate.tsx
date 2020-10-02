@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { WebFastForm } from '../WebFastForm';
-import { closeModal } from '../Modal';
+import { closeModal, ModalWrapper } from '../Modal';
 import { showToasts } from '@shared/manager/ui';
 import { createGroupPanel } from '@shared/model/group';
 import { FastFormFieldMeta } from '@shared/components/FastForm/field';
@@ -11,6 +11,8 @@ import {
 } from '@shared/components/FastForm/schema';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import _isString from 'lodash/isString';
+import { useTranslation } from '@shared/i18n';
+import { checkIsTestUser } from '@web/utils/debug-helper';
 
 const schema = createFastFormSchema({
   name: fieldSchema.string().required('面板名不能为空'),
@@ -36,6 +38,13 @@ const baseFields: FastFormFieldMeta[] = [
     ],
   },
 ];
+
+if (checkIsTestUser()) {
+  baseFields[1].options.push({
+    label: '语音频道',
+    value: 'voicechannel',
+  });
+}
 
 /**
  * 动态变更的创建面板fields
@@ -77,6 +86,7 @@ interface GroupPanelCreateProps {
 export const GroupPanelCreate: React.FC<GroupPanelCreateProps> = TMemo(
   (props) => {
     const { groupUUID } = props;
+    const { t } = useTranslation();
 
     const handleCreatePanel = useCallback(
       async (values) => {
@@ -96,12 +106,14 @@ export const GroupPanelCreate: React.FC<GroupPanelCreateProps> = TMemo(
     const { fields, handleChange } = useGroupPanelCreateFields();
 
     return (
-      <WebFastForm
-        schema={schema}
-        fields={fields}
-        onSubmit={handleCreatePanel}
-        onChange={handleChange}
-      />
+      <ModalWrapper title={t('创建面板')}>
+        <WebFastForm
+          schema={schema}
+          fields={fields}
+          onSubmit={handleCreatePanel}
+          onChange={handleChange}
+        />
+      </ModalWrapper>
     );
   }
 );

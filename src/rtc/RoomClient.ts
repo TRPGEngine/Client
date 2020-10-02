@@ -224,6 +224,7 @@ export class RoomClient {
   close() {
     if (this._closed) return;
 
+    this._roomId = '';
     this._closed = true;
 
     logger.debug('close()');
@@ -238,6 +239,7 @@ export class RoomClient {
 
     if (this._recvTransport) this._recvTransport.close();
 
+    store.dispatch(stateActions.setRoomId(null));
     store.dispatch(stateActions.setRoomState('closed'));
   }
 
@@ -248,6 +250,7 @@ export class RoomClient {
 
     this._protoo = new protooClient.Peer(protooTransport);
 
+    store.dispatch(stateActions.setRoomId(this.roomId));
     store.dispatch(stateActions.setRoomState('connecting'));
 
     this._protoo.on('open', () => this._joinRoom());

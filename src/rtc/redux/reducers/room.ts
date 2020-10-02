@@ -1,6 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import {
   setRoomUrl,
+  setRoomId,
   setRoomState,
   setRoomActiveSpeaker,
   setRoomStatsPeerId,
@@ -11,6 +12,7 @@ import { RoomStateType } from '../types/room';
 
 const initialState: RoomStateType = {
   url: null,
+  roomId: null,
   state: 'new', // new/connecting/connected/disconnected/closed,
   activeSpeakerId: null,
   statsPeerId: null,
@@ -23,6 +25,11 @@ export default createReducer<RoomStateType>(initialState, (builder) => {
       const { url } = action.payload;
 
       state.url = url;
+    })
+    .addCase(setRoomId, (state, action) => {
+      const { roomId } = action.payload;
+
+      state.roomId = roomId;
     })
     .addCase(setRoomState, (state, action) => {
       const roomState = action.payload.state;

@@ -1,6 +1,9 @@
+export type RoomState = 'new' | 'connecting' | 'connected' | 'closed';
+
 export interface RoomStateType {
   url: string | null;
-  state: 'new' | 'connecting' | 'connected' | 'closed';
+  roomId: string | null;
+  state: RoomState;
   activeSpeakerId: string | null;
   statsPeerId: string | null;
   faceDetection: boolean;

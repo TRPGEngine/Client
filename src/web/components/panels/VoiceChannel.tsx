@@ -7,6 +7,7 @@ import { useRTCPeers } from '@rtc/hooks/useRTCPeers';
 import { getUserName } from '@shared/utils/data-helper';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { buildDeviceInfo } from '@web/utils/rtc-helper';
+import { useRTCRoomStateSelector } from '@rtc/redux';
 
 const VoiceMembers: React.FC = TMemo(() => {
   const peers = useRTCPeers();
@@ -23,26 +24,33 @@ export const VoiceChannel: React.FC<CommonPanelProps> = TMemo((props) => {
   const channelUUID = panel.target_uuid;
   const { client, createClient } = useRTCRoomClientContext();
   const currentUserInfo = useCurrentUserInfo();
+  const isInRoom = useRTCRoomStateSelector(
+    (state) => state.room.roomId === channelUUID
+  );
 
-  const isInRoom = client?.roomId === channelUUID;
-
-  const handleJoinChannel = useCallback(() => {
+  const handleJoinRoom = useCallback(() => {
     createClient({
       roomId: channelUUID,
       peerId: currentUserInfo.uuid ?? '',
       displayName: getUserName(currentUserInfo), // TODO: 这个应该取消
+
       device: buildDeviceInfo(),
     });
   }, [createClient, channelUUID, currentUserInfo]);
 
+  const handleLeaveRoom = useCallback(() => {
+    client?.close();
+  }, [client]);
+
   return (
     <div>
       {!isInRoom ? (
-        <Button onClick={handleJoinChannel}>加入房间</Button>
+        <Button onClick={handleJoinRoom}>加入房间</Button>
       ) : (
         <div>
           <div>已加入房间</div>
           <VoiceMembers />
+          <Button onClick={handleLeaveRoom}>离开房间</Button>
         </div>
       )}
     </div>

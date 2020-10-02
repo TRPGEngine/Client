@@ -6,6 +6,6 @@ import { VoiceChannel } from './VoiceChannel';
 
 regPanel('channel', TextChannel);
 regPanel('note', NotePanel);
-regPanel('voice', VoiceChannel);
+regPanel('voicechannel', VoiceChannel);
 
 export { GroupPanelView };

@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import type { RoomState } from './types/room';
 
 export const setRoomUrl = createAction('SET_ROOM_URL', (url: string) => {
   return {
@@ -6,11 +7,23 @@ export const setRoomUrl = createAction('SET_ROOM_URL', (url: string) => {
   };
 });
 
-export const setRoomState = createAction('SET_ROOM_STATE', (state) => {
-  return {
-    payload: { state },
-  };
-});
+export const setRoomId = createAction(
+  'SET_ROOM_ID',
+  (roomId: string | null) => {
+    return {
+      payload: { roomId },
+    };
+  }
+);
+
+export const setRoomState = createAction(
+  'SET_ROOM_STATE',
+  (state: RoomState) => {
+    return {
+      payload: { state },
+    };
+  }
+);
 
 export const setRoomActiveSpeaker = createAction(
   'SET_ROOM_ACTIVE_SPEAKER',
