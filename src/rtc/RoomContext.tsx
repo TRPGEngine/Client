@@ -5,7 +5,7 @@ import _once from 'lodash/once';
 import _noop from 'lodash/noop';
 import _isNil from 'lodash/isNil';
 import type { RoomClientOptions } from './type';
-import { getStore, RoomReduxProvider } from './redux';
+import { getStore, RTCRoomReduxProvider } from './redux';
 
 interface RTCRoomClientContextState {
   client: RoomClient | undefined;
@@ -44,7 +44,7 @@ export const RTCRoomClientContextProvider: React.FC = TMemo((props) => {
 
   return (
     <RTCRoomClientContext.Provider value={{ client, createClient }}>
-      <RoomReduxProvider>{props.children}</RoomReduxProvider>
+      <RTCRoomReduxProvider>{props.children}</RTCRoomReduxProvider>
     </RTCRoomClientContext.Provider>
   );
 });

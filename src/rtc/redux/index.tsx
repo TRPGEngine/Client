@@ -15,6 +15,8 @@ import {
   ReactReduxContextValue,
 } from 'react-redux';
 import type { AllRTCStateType } from './types';
+import { RTC_DEBUG } from '@shared/utils/consts';
+import _get from 'lodash/get';
 
 const reduxMiddlewares: Middleware[] = [thunk];
 
@@ -23,13 +25,13 @@ const store = createReduxStore(
   undefined,
   applyReduxMiddleware(...reduxMiddlewares)
 );
-const RoomReduxContext = React.createContext<ReactReduxContextValue>({
+const RTCRoomReduxContext = React.createContext<ReactReduxContextValue>({
   store,
   storeState: undefined,
 });
-RoomReduxContext.displayName = 'RoomReduxContext';
+RTCRoomReduxContext.displayName = 'RTCRoomReduxContext';
 
-if (window.localStorage.getItem('__rtc_debug') === 'true') {
+if (_get(window, ['localStorage', RTC_DEBUG]) === 'true') {
   // 特殊标识下增加redux日志
   const logger = createLogger({
     level: 'info',
@@ -42,14 +44,14 @@ if (window.localStorage.getItem('__rtc_debug') === 'true') {
   reduxMiddlewares.push(logger);
 }
 
-export const RoomReduxProvider: React.FC = TMemo((props) => {
+export const RTCRoomReduxProvider: React.FC = TMemo((props) => {
   return (
-    <ReduxProvider store={store} context={RoomReduxContext}>
+    <ReduxProvider store={store} context={RTCRoomReduxContext}>
       {props.children}
     </ReduxProvider>
   );
 });
-RoomReduxProvider.displayName = 'RoomReduxProvider';
+RTCRoomReduxProvider.displayName = 'RTC(RTCRoomReduxProvider)';
 
 export function getStore() {
   return store;
@@ -60,6 +62,6 @@ type UseRTCRoomStateSelector = <TSelected = unknown>(
   equalityFn?: (left: TSelected, right: TSelected) => boolean
 ) => TSelected;
 export const useRTCRoomStateSelector: UseRTCRoomStateSelector = createSelectorHook(
-  RoomReduxContext
+  RTCRoomReduxContext
 );
-export const useRTCRoomStateDispatch = createDispatchHook(RoomReduxContext);
+export const useRTCRoomStateDispatch = createDispatchHook(RTCRoomReduxContext);

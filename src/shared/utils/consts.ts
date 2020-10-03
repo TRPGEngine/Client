@@ -15,6 +15,11 @@ export const IS_NEW_APP = '__isNewApp';
 export const IS_DEVELOPER = '__isDeveloper';
 
 /**
+ * 用于打印RTC调试的标识
+ */
+export const RTC_DEBUG = '__rtc_debug';
+
+/**
  * web端
  * 是否关闭了appBanner
  * 用于确保如果用户手动关闭其不多次显示
