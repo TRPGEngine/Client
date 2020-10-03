@@ -1,16 +1,32 @@
 import React, { useCallback, useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Button, Divider, Empty, Result, Space, Table, Typography } from 'antd';
-import { t, useTranslation } from '@shared/i18n';
+import {
+  Button,
+  Divider,
+  Empty,
+  Result,
+  Space,
+  Table,
+  Tooltip,
+  Typography,
+} from 'antd';
+import { useTranslation } from '@shared/i18n';
 import { openModal } from '@web/components/Modal';
 import { BotCreate } from '@web/components/modal/BotCreate';
 import { useAsyncFn } from 'react-use';
-import { getMsgTokenBotList, MsgTokenBot } from '@shared/model/bot';
+import {
+  getMsgTokenBotList,
+  MsgTokenBot,
+  removeMsgTokenBot,
+} from '@shared/model/bot';
 import _isNil from 'lodash/isNil';
+import _isString from 'lodash/isString';
 import LoadingSpinner from '@web/components/LoadingSpinner';
 import { ColumnsType } from 'antd/lib/table';
 import { GroupChannelName } from '@web/components/GroupChannelName';
 import styled from 'styled-components';
+import { DeleteOutlined } from '@ant-design/icons';
+import { showToasts } from '@shared/manager/ui';
 
 const TokenText = styled(Typography.Paragraph).attrs({
   copyable: true,
@@ -18,40 +34,79 @@ const TokenText = styled(Typography.Paragraph).attrs({
   margin: 0 !important;
 `;
 
-const columns: ColumnsType<MsgTokenBot> = [
-  {
-    title: '名称',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Token',
-    dataIndex: 'token',
-    key: 'token',
-    render: (value) => <TokenText>{value}</TokenText>,
-  },
-  {
-    title: '频道',
-    key: 'channel_uuid',
-    render: (_, record) => {
-      return (
-        <GroupChannelName
-          groupUUID={record.group_uuid}
-          channelUUID={record.channel_uuid}
-        />
-      );
+function useGroupBotManageAction(groupUUID: string) {
+  const { t } = useTranslation();
+  const [state, fetchList] = useAsyncFn(async () => {
+    const list = await getMsgTokenBotList(groupUUID);
+    return list;
+  }, [groupUUID]);
+
+  const handleCreateBot = useCallback(() => {
+    openModal(<BotCreate groupUUID={groupUUID} onSuccess={fetchList} />);
+  }, [groupUUID, fetchList]);
+
+  useEffect(() => {
+    fetchList();
+  }, []);
+
+  const handleRemoveBot = useCallback(
+    async (botUUID: string) => {
+      if (_isString(botUUID)) {
+        try {
+          await removeMsgTokenBot(groupUUID, botUUID);
+          fetchList();
+          showToasts(t('删除成功'));
+        } catch (err) {
+          showToasts(err, 'error');
+        }
+      }
     },
-  },
-  // {
-  //   title: t('操作'),
-  //   key: 'action',
-  //   render: (_, record) => (
-  //     <Space>
-  //       <Button danger={true}>删除</Button>
-  //     </Space>
-  //   ),
-  // },
-];
+    [groupUUID, fetchList]
+  );
+
+  const columns: ColumnsType<MsgTokenBot> = [
+    {
+      title: t('名称'),
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: t('Token'),
+      dataIndex: 'token',
+      key: 'token',
+      render: (value) => <TokenText>{value}</TokenText>,
+    },
+    {
+      title: t('频道'),
+      key: 'channel_uuid',
+      render: (_, record) => {
+        return (
+          <GroupChannelName
+            groupUUID={record.group_uuid}
+            channelUUID={record.channel_uuid}
+          />
+        );
+      },
+    },
+    {
+      title: t('操作'),
+      key: 'action',
+      render: (value, record) => (
+        <Space>
+          <Tooltip title={t('删除')}>
+            <Button
+              danger={true}
+              icon={<DeleteOutlined />}
+              onClick={() => handleRemoveBot(value.uuid)}
+            />
+          </Tooltip>
+        </Space>
+      ),
+    },
+  ];
+
+  return { columns, listState: state, handleCreateBot };
+}
 
 interface GroupBotManageProps {
   groupUUID: string;
@@ -60,37 +115,31 @@ export const GroupBotManage: React.FC<GroupBotManageProps> = TMemo(
   (props: GroupBotManageProps) => {
     const { groupUUID } = props;
     const { t } = useTranslation();
-
-    const [state, fetchList] = useAsyncFn(async () => {
-      const list = await getMsgTokenBotList(groupUUID);
-      return list;
-    }, [groupUUID]);
-
-    const handleCreateBot = useCallback(() => {
-      openModal(<BotCreate groupUUID={groupUUID} onSuccess={fetchList} />);
-    }, [groupUUID, fetchList]);
-
-    useEffect(() => {
-      fetchList();
-    }, []);
+    const { columns, listState, handleCreateBot } = useGroupBotManageAction(
+      groupUUID
+    );
 
     let list: React.ReactNode = null;
 
-    if (!_isNil(state.error)) {
+    if (!_isNil(listState.error)) {
       list = (
         <Result
           status="error"
-          title="获取列表失败"
-          subTitle={String(state.error)}
+          title={t('获取列表失败')}
+          subTitle={String(listState.error)}
         />
       );
-    } else if (state.loading === true) {
+    } else if (listState.loading === true) {
       list = <LoadingSpinner />;
-    } else if (state.value?.length === 0) {
+    } else if (listState.value?.length === 0) {
       list = <Empty />;
-    } else if (!_isNil(state.value)) {
+    } else if (!_isNil(listState.value)) {
       list = (
-        <Table dataSource={state.value} columns={columns} pagination={false} />
+        <Table
+          dataSource={listState.value}
+          columns={columns}
+          pagination={false}
+        />
       );
     }
 
