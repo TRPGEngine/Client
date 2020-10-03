@@ -8,6 +8,26 @@ import { getUserName } from '@shared/utils/data-helper';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { buildDeviceInfo } from '@web/utils/rtc-helper';
 import { useRTCRoomStateSelector } from '@rtc/redux';
+import styled from 'styled-components';
+
+const JoinRoomBtn = styled.div`
+  margin: auto;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: ${(props) => props.theme.color['tacao']};
+  border: 1px solid ${(props) => props.theme.color['tobacco-brown']};
+  cursor: pointer;
+  margin-top: 120px;
+  color: white;
+  font-size: 20px;
+
+  &:active {
+    margin-top: 121px;
+  }
+`;
 
 const VoiceMembers: React.FC = TMemo(() => {
   const peers = useRTCPeers();
@@ -45,7 +65,7 @@ export const VoiceChannel: React.FC<CommonPanelProps> = TMemo((props) => {
   return (
     <div>
       {!isInRoom ? (
-        <Button onClick={handleJoinRoom}>加入房间</Button>
+        <JoinRoomBtn onClick={handleJoinRoom}>加入房间</JoinRoomBtn>
       ) : (
         <div>
           <div>已加入房间</div>
