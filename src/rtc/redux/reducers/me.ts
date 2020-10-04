@@ -16,10 +16,10 @@ import { MeStateType } from '../types/me';
 import _isString from 'lodash/isString';
 
 const initialState: MeStateType = {
-  id: null,
-  displayName: null,
+  id: '',
+  displayName: '',
   displayNameSet: false,
-  device: null,
+  device: { flag: '', name: '', version: '' },
   canSendMic: false,
   canSendWebcam: false,
   canChangeWebcam: false,

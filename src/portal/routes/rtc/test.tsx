@@ -13,7 +13,7 @@ const RTCTest: React.FC = TMemo(() => {
 
   useEffect(() => {
     const roomId = getUrlQuerySeach('room') ?? 'testroom';
-    const peerId = shortid();
+    const peerId = getUrlQuerySeach('peerId') ?? shortid();
 
     console.log('正在加入房间');
     createClient({

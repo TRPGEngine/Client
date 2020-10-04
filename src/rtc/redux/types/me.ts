@@ -1,10 +1,7 @@
-import { DeviceType } from '@src/rtc/type';
+import { BasePeerType } from './peers';
 
-export interface MeStateType {
-  id: string | null;
-  displayName: string | null | undefined;
+export interface MeStateType extends BasePeerType {
   displayNameSet: boolean;
-  device: DeviceType | null;
   canSendMic: boolean;
   canSendWebcam: boolean;
   canChangeWebcam: boolean;

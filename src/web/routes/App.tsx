@@ -17,6 +17,7 @@ import { DarkMode } from './DarkMode';
 import { PWAContextProvider } from '@web/components/PWAContext';
 import { wrapSentry } from '@web/utils/sentry';
 import { RTCRoomClientContextProvider } from '@rtc/RoomContext';
+import { GlobalVoiceProvider } from '@web/components/rtc/GlobalVoice';
 
 import './App.less';
 
@@ -31,9 +32,11 @@ const CustomProvider: React.FC = (props) => {
   return (
     <PWAContextProvider>
       <RTCRoomClientContextProvider>
-        <PortalProvider>
-          <PortalHost>{props.children}</PortalHost>
-        </PortalProvider>
+        <GlobalVoiceProvider>
+          <PortalProvider>
+            <PortalHost>{props.children}</PortalHost>
+          </PortalProvider>
+        </GlobalVoiceProvider>
       </RTCRoomClientContextProvider>
     </PWAContextProvider>
   );

@@ -4,19 +4,16 @@ import { useRTCPeers } from '@rtc/hooks/useRTCPeers';
 import { useRTCRoomStateSelector } from '@rtc/redux';
 import { Button } from 'antd';
 import { useRTCRoomClientContext } from '@rtc/RoomContext';
-import { UserName } from '../UserName';
 import _isNil from 'lodash/isNil';
+import { VoicePeerController } from './VoicePeerController';
 
 const VoiceMembers: React.FC = TMemo(() => {
-  const me = useRTCRoomStateSelector((state) => state.me);
   const peers = useRTCPeers();
 
   return (
     <div>
-      {!_isNil(me.id) && <UserName uuid={me.id} />}
-
       {peers.map((peer) => (
-        <UserName key={peer.id} uuid={peer.id} />
+        <VoicePeerController key={peer.id} peerId={peer.id} />
       ))}
     </div>
   );
@@ -25,6 +22,7 @@ VoiceMembers.displayName = 'VoiceMembers';
 
 export const VoiceRoomDetail: React.FC = TMemo(() => {
   const { client } = useRTCRoomClientContext();
+  const roomId = useRTCRoomStateSelector((state) => state.room.roomId);
   const roomState = useRTCRoomStateSelector((state) => state.room.state);
 
   const handleLeaveRoom = useCallback(() => {
@@ -33,6 +31,8 @@ export const VoiceRoomDetail: React.FC = TMemo(() => {
 
   return (
     <div>
+      <div>房间号: {roomId}</div>
+
       <div>状态: {roomState}</div>
       <VoiceMembers />
 
