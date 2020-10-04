@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  applyMiddleware as applyReduxMiddleware,
-  createStore as createReduxStore,
-  Middleware,
-} from 'redux';
+import { applyMiddleware, createStore, Middleware, StoreEnhancer } from 'redux';
 import reducers from './reducers';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
@@ -17,32 +13,33 @@ import {
 import type { AllRTCStateType } from './types';
 import { RTC_DEBUG } from '@shared/utils/consts';
 import _get from 'lodash/get';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const reduxMiddlewares: Middleware[] = [thunk];
+let enhancer: StoreEnhancer = applyMiddleware(...reduxMiddlewares);
+if (_get(window, ['localStorage', RTC_DEBUG]) === 'true') {
+  // const logger = createLogger({
+  //   level: 'info',
+  //   logger: console,
+  //   collapsed: true,
+  //   titleFormatter(action: any, time, took) {
+  //     return `rtc-action @ ${action.type} (in ${took.toFixed(2)} ms)`;
+  //   },
+  // });
+  // reduxMiddlewares.push(logger);
 
-const store = createReduxStore(
-  reducers,
-  undefined,
-  applyReduxMiddleware(...reduxMiddlewares)
-);
+  // 特殊标识下增加redux调试工具
+  enhancer = composeWithDevTools({
+    name: 'RTC',
+  })(enhancer);
+}
+
+const store = createStore(reducers, undefined, enhancer);
 const RTCRoomReduxContext = React.createContext<ReactReduxContextValue>({
   store,
   storeState: undefined,
 });
 RTCRoomReduxContext.displayName = 'RTCRoomReduxContext';
-
-if (_get(window, ['localStorage', RTC_DEBUG]) === 'true') {
-  // 特殊标识下增加redux日志
-  const logger = createLogger({
-    level: 'info',
-    logger: console,
-    collapsed: true,
-    titleFormatter(action: any, time, took) {
-      return `rtc-action @ ${action.type} (in ${took.toFixed(2)} ms)`;
-    },
-  });
-  reduxMiddlewares.push(logger);
-}
 
 export const RTCRoomReduxProvider: React.FC = TMemo((props) => {
   return (
