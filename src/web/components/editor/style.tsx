@@ -4,25 +4,19 @@ import styled from 'styled-components';
 
 export const ToolbarButton = styled.span<{
   active?: boolean;
-  reversed?: boolean;
 }>`
   cursor: pointer;
-  color: ${(props) =>
-    props.reversed
-      ? props.active
-        ? 'white'
-        : '#aaa'
-      : props.active
-      ? 'black'
-      : '#ccc'};
-`;
+  color: #cccccc;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 3px;
+  background-color: ${(props) =>
+    props.active ? props.theme.color.transparent90 : 'transparent'};
 
-export const Menu = styled.div`
-  & > * {
-    display: inline-block;
-  }
-  & > * + * {
-    margin-left: 15px;
+  &:hover {
+    background-color: ${(props) => props.theme.color.transparent90};
   }
 `;
 
@@ -30,12 +24,20 @@ export const Portal = ({ children }) => {
   return ReactDOM.createPortal(children, document.body);
 };
 
-export const Toolbar = styled(Menu)`
+export const Toolbar = styled.div`
   position: relative;
   padding: 10px 18px;
   margin: 0;
   border-bottom: 2px solid #eee;
   margin-bottom: 20px;
+
+  & > * {
+    display: inline-block;
+  }
+
+  & > * + * {
+    margin-left: 2px;
+  }
 `;
 
 export const PlaceholderContainer = styled.div`
