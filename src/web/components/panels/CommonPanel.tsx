@@ -37,6 +37,7 @@ interface CommonPanelProps {
   style?: React.CSSProperties;
   headerPrefix?: React.ReactNode;
   headerActions?: React.ReactNode[];
+  headerSuffix?: React.ReactNode;
   rightPanel?: React.ReactNode;
 }
 export const CommonPanel: React.FC<CommonPanelProps> = TMemo((props) => {
@@ -45,6 +46,7 @@ export const CommonPanel: React.FC<CommonPanelProps> = TMemo((props) => {
       <CommonHeader
         headerPrefix={props.headerPrefix}
         headerActions={props.headerActions}
+        headerSuffix={props.headerSuffix}
       >
         {props.header}
       </CommonHeader>

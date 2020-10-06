@@ -11,6 +11,11 @@ const Container = styled.div`
   justify-content: space-between;
 
   ${(props) => props.theme.mixins.mobile('padding: 8px 0;')}
+
+  > div {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const HeaderPrefix = styled.span`
@@ -23,6 +28,10 @@ const HeaderText = styled.span`
   line-height: 28px;
 `;
 
+const HeaderSuffix = styled.span`
+  margin-left: 8px;
+`;
+
 const HeaderActionContainer = styled(Space)`
   ${(props) =>
     props.theme.mixins.mobile('width: 100%;justify-content: flex-end;')}
@@ -31,18 +40,18 @@ const HeaderActionContainer = styled(Space)`
 interface CommonHeaderProps {
   headerPrefix?: React.ReactNode;
   headerActions?: React.ReactNode[];
+  headerSuffix?: React.ReactNode;
 }
 export const CommonHeader: React.FC<CommonHeaderProps> = TMemo((props) => {
-  const { headerActions } = props;
-
   return (
     <SectionHeader>
       <Container>
         <div>
           <HeaderPrefix>{props.headerPrefix}</HeaderPrefix>
           <HeaderText>{props.children}</HeaderText>
+          <HeaderSuffix>{props.headerSuffix}</HeaderSuffix>
         </div>
-        <HeaderActionContainer>{headerActions}</HeaderActionContainer>
+        <HeaderActionContainer>{props.headerActions}</HeaderActionContainer>
       </Container>
     </SectionHeader>
   );
