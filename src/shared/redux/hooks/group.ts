@@ -4,6 +4,7 @@ import { useCurrentUserInfo, useCurrentUserUUID } from './user';
 import _get from 'lodash/get';
 import _uniq from 'lodash/uniq';
 import _isNil from 'lodash/isNil';
+import _without from 'lodash/without';
 import { useMemo } from 'react';
 import { GroupPanel } from '@shared/types/panel';
 import { isGroupPanelVisible } from '@shared/helper/group';
@@ -91,17 +92,28 @@ export function useSelectedGroupActorInfo(
 }
 
 /**
- * 获取团UUID管理员列表
+ * 获取团管理员列表
  * @param groupUUID 团UUID
  */
 export function useGroupManagerUUIDs(groupUUID: string): string[] {
-  const group = useTRPGSelector((state) =>
-    state.group.groups.find((g) => g.uuid === groupUUID)
-  );
+  const group = useJoinedGroupInfo(groupUUID);
   if (_isNil(group)) {
     return [];
   }
   return _uniq([group.owner_uuid, ...group.managers_uuid!]);
+}
+
+/**
+ * 获取团普通成员列表
+ * @param groupUUID 团UUID
+ */
+export function useGroupNormalMembers(groupUUID: string): string[] {
+  const group = useJoinedGroupInfo(groupUUID);
+  if (_isNil(group)) {
+    return [];
+  }
+
+  return _uniq(_without(group.group_members, ...(group.managers_uuid ?? [])));
 }
 
 /**
