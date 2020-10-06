@@ -40,6 +40,21 @@ const rnStorage = {
 
     return data;
   },
+  /**
+   * 自定义过期时间的存储
+   * set默认为1天，该方法自定义过期时间
+   */
+  setWithExpires: async (key: string, data: any, expires: number) => {
+    try {
+      if (!!key && typeof key === 'string' && !_isNil(data)) {
+        await storage.save({ key, data, expires });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    return data;
+  },
   get: async (key: string, defaultVal?: any) => {
     let res: any;
     try {

@@ -105,8 +105,10 @@ export const login = function (username: string, password: string): TRPGAction {
             rnStorage.save('uuid', uuid);
             rnStorage.save('token', app_token);
           } else {
-            rnStorage.set('uuid', uuid);
-            rnStorage.set('token', token);
+            // 7天后自动过期
+            const expires = 1000 * 3600 * 24 * 7;
+            rnStorage.setWithExpires('uuid', uuid, expires);
+            rnStorage.setWithExpires('token', token, expires);
           }
           console.log('set user token, user:', uuid);
           data.info.avatar = config.file.getAbsolutePath!(data.info.avatar);
