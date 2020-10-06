@@ -27,6 +27,7 @@ const RightPanel = styled.div`
   width: ${(props) => props.theme.style.sidebarWidth};
   background-color: ${(props) => props.theme.style.sidebarBackgroundColor};
   padding: 8px;
+  overflow: auto;
 
   ${(props) =>
     props.theme.mixins.mobile('position: absolute;height: 100%;right: 0;')}

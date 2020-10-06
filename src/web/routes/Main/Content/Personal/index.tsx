@@ -43,7 +43,7 @@ export const Personal: React.FC = TMemo(() => {
   return (
     <PageContent
       sidebar={
-        <div>
+        <>
           <SectionHeader>{getUserName(currentUserInfo)}</SectionHeader>
           <SidebarItemsContainer>
             <SidebarItem
@@ -99,7 +99,7 @@ export const Personal: React.FC = TMemo(() => {
               })}
             </div>
           </SidebarItemsContainer>
-        </div>
+        </>
       }
     >
       <Switch>
