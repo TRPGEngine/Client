@@ -16,6 +16,8 @@ export function serializeToBBCode(node: TRPGEditorNode): string {
         'data.text',
         ''
       )}[/at]`;
+    case 'image':
+      return `[img]${_get(node, 'url', '')}[/img]`;
     default:
       return children;
   }
