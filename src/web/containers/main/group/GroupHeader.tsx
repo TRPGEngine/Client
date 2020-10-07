@@ -10,8 +10,6 @@ import Select from 'react-select';
 import { changeSelectGroupActor, sendGroupInvite } from '@redux/actions/group';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { showSlidePanel, hideModal, showModal } from '@redux/actions/ui';
-import { checkIsTestUser } from '@web/utils/debug-helper';
-import { GroupChannelCreate } from './modal/GroupChannelCreate';
 import { UserSelector } from '@web/components/modal/UserSelector';
 import GroupMember from './GroupMember';
 import GroupActor from './GroupActor';
@@ -72,19 +70,6 @@ export const GroupHeader: React.FC = TMemo(() => {
 
   const actions = useMemo(() => {
     return [
-      ...(checkIsTestUser()
-        ? [
-            {
-              name: '创建频道',
-              icon: '&#xe61c;',
-              onClick: () => {
-                dispatch(
-                  showModal(<GroupChannelCreate groupUUID={groupUUID} />)
-                );
-              },
-            },
-          ]
-        : []),
       {
         name: '添加团员',
         icon: '&#xe61d;',

@@ -78,6 +78,7 @@ export const SettingAccountView: React.FC = TMemo(() => {
           <FullModalField
             title="简介"
             value={userInfo.sign}
+            content={<pre>{userInfo.sign}</pre>}
             editable={true}
             renderEditor={DefaultFullModalTextAreaEditorRender}
             onSave={buildUpdateFieldFn('sign')}

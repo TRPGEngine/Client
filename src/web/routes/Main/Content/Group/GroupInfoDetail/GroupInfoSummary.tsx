@@ -10,7 +10,11 @@ import ImageUploader from '@web/components/ImageUploader';
 import { requestUpdateGroupInfo } from '@redux/actions/group';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { useJoinedGroupInfo, useIsGroupManager } from '@redux/hooks/group';
-import { FullModalField } from '@web/components/FullModalField';
+import {
+  DefaultFullModalInputEditorRender,
+  DefaultFullModalTextAreaEditorRender,
+  FullModalField,
+} from '@web/components/FullModalField';
 
 const GroupInfoAvatarContainer = styled.div`
   display: flex;
@@ -18,29 +22,59 @@ const GroupInfoAvatarContainer = styled.div`
   align-items: center;
 `;
 
+function useGroupAction(groupUUID: string | undefined) {
+  const dispatch = useTRPGDispatch();
+
+  const handleUpdateAvatar = useCallback(
+    (imageInfo: any) => {
+      if (_isNil(groupUUID)) {
+        return;
+      }
+
+      dispatch(requestUpdateGroupInfo(groupUUID, { avatar: imageInfo.url }));
+    },
+    [groupUUID]
+  );
+
+  const handleUpdateGroupName = useCallback(
+    (val: string) => {
+      if (_isNil(groupUUID)) {
+        return;
+      }
+
+      dispatch(requestUpdateGroupInfo(groupUUID, { name: val }));
+    },
+    [groupUUID]
+  );
+
+  const handleUpdateGroupDesc = useCallback(
+    (val: string) => {
+      if (_isNil(groupUUID)) {
+        return;
+      }
+
+      dispatch(requestUpdateGroupInfo(groupUUID, { desc: val }));
+    },
+    [groupUUID]
+  );
+
+  return { handleUpdateAvatar, handleUpdateGroupName, handleUpdateGroupDesc };
+}
+
 interface GroupInfoSummaryProps {
   groupUUID: string;
 }
 export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
   (props) => {
     const { groupUUID } = props;
-    const dispatch = useTRPGDispatch();
     const groupInfo = useJoinedGroupInfo(groupUUID);
+    const {
+      handleUpdateAvatar,
+      handleUpdateGroupName,
+      handleUpdateGroupDesc,
+    } = useGroupAction(groupInfo?.uuid);
 
     const isGroupManager = useIsGroupManager(groupUUID);
-
-    const handleUpdateAvatar = useCallback(
-      (imageInfo: any) => {
-        if (_isNil(groupInfo)) {
-          return;
-        }
-
-        dispatch(
-          requestUpdateGroupInfo(groupInfo.uuid, { avatar: imageInfo.url })
-        );
-      },
-      [groupInfo?.uuid]
-    );
 
     if (_isNil(groupInfo)) {
       return <Result status="warning" title="找不到相关信息" />;
@@ -79,7 +113,13 @@ export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
             </GroupInfoAvatarContainer>
           </Col>
           <Col sm={12}>
-            <FullModalField title="团名称" value={groupInfo.name} />
+            <FullModalField
+              title="团名称"
+              value={groupInfo.name}
+              editable={true}
+              renderEditor={DefaultFullModalInputEditorRender}
+              onSave={handleUpdateGroupName}
+            />
             <FullModalField title="团唯一标识" value={groupInfo.uuid} />
           </Col>
         </Row>
@@ -94,7 +134,14 @@ export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
             />
           </Col>
           <Col flex={1}>
-            <FullModalField title="简介" value={groupInfo.desc} />
+            <FullModalField
+              title="简介"
+              value={groupInfo.desc}
+              content={<pre>{groupInfo.desc}</pre>}
+              editable={true}
+              renderEditor={DefaultFullModalTextAreaEditorRender}
+              onSave={handleUpdateGroupDesc}
+            />
           </Col>
         </Row>
 

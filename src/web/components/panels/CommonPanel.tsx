@@ -27,6 +27,7 @@ const RightPanel = styled.div`
   width: ${(props) => props.theme.style.sidebarWidth};
   background-color: ${(props) => props.theme.style.sidebarBackgroundColor};
   padding: 8px;
+  overflow: auto;
 
   ${(props) =>
     props.theme.mixins.mobile('position: absolute;height: 100%;right: 0;')}
@@ -37,6 +38,7 @@ interface CommonPanelProps {
   style?: React.CSSProperties;
   headerPrefix?: React.ReactNode;
   headerActions?: React.ReactNode[];
+  headerSuffix?: React.ReactNode;
   rightPanel?: React.ReactNode;
 }
 export const CommonPanel: React.FC<CommonPanelProps> = TMemo((props) => {
@@ -45,6 +47,7 @@ export const CommonPanel: React.FC<CommonPanelProps> = TMemo((props) => {
       <CommonHeader
         headerPrefix={props.headerPrefix}
         headerActions={props.headerActions}
+        headerSuffix={props.headerSuffix}
       >
         {props.header}
       </CommonHeader>

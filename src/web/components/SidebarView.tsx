@@ -64,6 +64,7 @@ const Sidebar = styled.nav`
 const Content = styled.div`
   flex: 1 1 800px;
   padding: 60px 40px 80px;
+  overflow: auto;
 `;
 
 const SidebarViewMenuGroupTitle = styled.div`

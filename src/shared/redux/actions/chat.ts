@@ -67,7 +67,7 @@ export const switchConverse = createAction(
 export const switchToConverse = function switchToConverse(
   converseUUID: string
 ): TRPGAction {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     dispatch(hideProfileCard());
     dispatch(switchMenuPannel(0));
     dispatch(switchConverse(converseUUID));
@@ -87,7 +87,7 @@ export const updateConversesMsglist = function updateConversesMsglist(
   convUUID: string,
   list: any[]
 ): TRPGAction {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     for (const item of list) {
       if (item.sender_uuid) {
         checkUser(item.sender_uuid);
@@ -103,10 +103,10 @@ export const updateConversesMsglist = function updateConversesMsglist(
 
 // 获取多人会话
 export const getConverses = function getConverses(cb?: () => void): TRPGAction {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     dispatch({ type: GET_CONVERSES_REQUEST });
     // 获取会话列表
-    return api.emit('chat::getConverses', {}, function(data) {
+    return api.emit('chat::getConverses', {}, function (data) {
       cb && cb();
       if (data.result) {
         const list = data.list;
@@ -125,7 +125,7 @@ export const getConverses = function getConverses(cb?: () => void): TRPGAction {
           api.emit(
             'chat::getConverseChatLog',
             { converse_uuid: convUUID },
-            function(data) {
+            function (data) {
               if (data.result) {
                 dispatch(updateConversesMsglist(convUUID, data.list));
               } else {
@@ -149,7 +149,7 @@ export const createConverse = function createConverse(
   type,
   isSwitchToConv = true
 ): TRPGAction {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     if (!!getState().chat.converses[uuid]) {
       console.log('已存在该会话');
       if (isSwitchToConv) {
@@ -157,7 +157,7 @@ export const createConverse = function createConverse(
       }
       return;
     }
-    return api.emit('chat::createConverse', { uuid, type }, function(data) {
+    return api.emit('chat::createConverse', { uuid, type }, function (data) {
       console.log('chat::createConverse', data);
       if (data.result) {
         const conv = data.data;
@@ -172,7 +172,7 @@ export const createConverse = function createConverse(
         api.emit(
           'chat::getConverseChatLog',
           { converse_uuid: convUUID },
-          function(data) {
+          function (data) {
             if (data.result) {
               const list = data.list;
               dispatch(updateConversesMsglist(convUUID, list));
@@ -195,8 +195,8 @@ export const createConverse = function createConverse(
 export const removeConverse = function removeConverse(
   converseUUID: string
 ): TRPGAction {
-  return function(dispatch, getState) {
-    return api.emit('chat::removeConverse', { converseUUID }, function(data) {
+  return function (dispatch, getState) {
+    return api.emit('chat::removeConverse', { converseUUID }, function (data) {
       if (data.result) {
         dispatch({ type: REMOVE_CONVERSES_SUCCESS, converseUUID });
       } else {
@@ -229,7 +229,7 @@ export const removeUserConverse = (userConverseUUID: string): TRPGAction => {
 export const addUserConverse = function addUserConverse(
   senders: string[]
 ): TRPGAction {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     if (typeof senders === 'string') {
       senders = [senders];
     }
@@ -280,7 +280,7 @@ export const addUserConverse = function addUserConverse(
       });
 
       // 更新消息列表
-      api.emit('chat::getUserChatLog', { user_uuid: uuid }, function(data) {
+      api.emit('chat::getUserChatLog', { user_uuid: uuid }, function (data) {
         if (data.result) {
           const list = data.list;
           dispatch(updateConversesMsglist(uuid, list));
@@ -291,7 +291,7 @@ export const addUserConverse = function addUserConverse(
     }
 
     // 更新系统消息
-    api.emit('chat::getUserChatLog', { user_uuid: 'trpgsystem' }, function(
+    api.emit('chat::getUserChatLog', { user_uuid: 'trpgsystem' }, function (
       data
     ) {
       if (data.result) {
@@ -307,8 +307,10 @@ export const addUserConverse = function addUserConverse(
 export const getOfflineUserConverse = function getOfflineUserConverse(
   lastLoginDate: string
 ): TRPGAction {
-  return function(dispatch, getState) {
-    api.emit('chat::getOfflineUserConverse', { lastLoginDate }, function(data) {
+  return function (dispatch, getState) {
+    api.emit('chat::getOfflineUserConverse', { lastLoginDate }, function (
+      data
+    ) {
       if (data.result === true) {
         dispatch(addUserConverse(data.senders));
       } else {
@@ -319,8 +321,8 @@ export const getOfflineUserConverse = function getOfflineUserConverse(
 };
 
 export const getAllUserConverse = function getAllUserConverse(): TRPGAction {
-  return function(dispatch, getState) {
-    api.emit('chat::getAllUserConverse', {}, function(data) {
+  return function (dispatch, getState) {
+    api.emit('chat::getAllUserConverse', {}, function (data) {
       if (data.result === true) {
         dispatch(addUserConverse(data.senders));
       } else {
@@ -335,12 +337,12 @@ export const getAllUserConverse = function getAllUserConverse(): TRPGAction {
 export const reloadConverseList = function reloadConverseList(
   cb?: () => void
 ): TRPGAction {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     const userInfo = getState().user.info;
     const userUUID = userInfo.uuid!;
 
     dispatch(getConverses(cb)); // 从服务端获取多人会话列表
-    rnStorage.get(getUserConversesHash(userUUID)).then(function(converse) {
+    rnStorage.get(getUserConversesHash(userUUID)).then(function (converse) {
       console.log('缓存中的用户会话列表:', converse);
       if (converse && converse.length > 0) {
         // 如果本地缓存有存在用户会话，则根据上次登录时间获取这段时间内新建的用户会话
@@ -416,7 +418,7 @@ export const sendMsg = function sendMsg(
   toUUID: string | null,
   payload: SendMsgPayload
 ): TRPGAction {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     const info = getState().user.info;
     const localUUID = getLocalUUID();
     const pkg = {
@@ -432,11 +434,10 @@ export const sendMsg = function sendMsg(
       data: payload.data,
       uuid: localUUID,
     };
-    console.log('send msg pkg:', pkg);
 
     const converseUUID = payload.converse_uuid || toUUID;
     dispatch(addMsg(converseUUID, pkg));
-    return api.emit('chat::message', pkg, function(data) {
+    return api.emit('chat::message', pkg, function (data) {
       if (data.result) {
         // TODO: 待实现SEND_MSG_COMPLETED的数据处理方法(用于送达提示)
         dispatch({
@@ -457,10 +458,10 @@ export const sendMsg = function sendMsg(
 export const sendFile = function sendFile(toUUID, payload, file): TRPGAction {
   if (!file) {
     console.error('发送文件错误。没有找到要发送的文件');
-    return function(dispatch, getState) {};
+    return function (dispatch, getState) {};
   }
 
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     const info = getState().user.info;
     const selfUserUUID = info.uuid!;
     const localUUID = getLocalUUID();
@@ -494,7 +495,7 @@ export const sendFile = function sendFile(toUUID, payload, file): TRPGAction {
         const filedata = Object.assign({}, pkg.data, fileinfo, { progress: 1 });
         pkg = Object.assign({}, pkg, { data: filedata });
         // 文件上传完毕。正式发送文件消息
-        api.emit('chat::message', pkg, function(data) {
+        api.emit('chat::message', pkg, function (data) {
           dispatch({
             type: SEND_MSG_COMPLETED,
             payload: data,
@@ -543,7 +544,7 @@ export const addFakeMsg = function addFakeMsg(
   pkg: Partial<MsgPayload>,
   callback?: (localUUID: string) => void
 ): TRPGAction {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     const info = getState().user.info;
     const localUUID = getLocalUUID();
     pkg.uuid = localUUID;
@@ -587,7 +588,7 @@ export const addLoadingMsg = function addLoadingMsg(
   converseUUID: string,
   cb: (event: LoadingCallbackEvent) => void
 ): TRPGAction {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     const fakeMsgPayload: Partial<MsgPayload> = {
       message: '[处理中...]',
       type: 'loading',
@@ -630,12 +631,12 @@ export const getMoreChatLog = function getMoreChatLog(
   offsetDate: string,
   isUserChat = true
 ): TRPGAction {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     if (isUserChat) {
       api.emit(
         'chat::getUserChatLog',
         { user_uuid: converseUUID, offsetDate },
-        function(data) {
+        function (data) {
           if (data.result === true) {
             dispatch(updateConversesMsglist(converseUUID, data.list));
             dispatch({
@@ -652,7 +653,7 @@ export const getMoreChatLog = function getMoreChatLog(
       api.emit(
         'chat::getConverseChatLog',
         { converse_uuid: converseUUID, offsetDate },
-        function(data) {
+        function (data) {
           if (data.result === true) {
             dispatch(updateConversesMsglist(converseUUID, data.list));
             dispatch({
@@ -669,35 +670,37 @@ export const getMoreChatLog = function getMoreChatLog(
   };
 };
 
-export const updateCardChatData = function(chatUUID, newData): TRPGAction {
-  return function(dispatch, getState) {
-    return api.emit('chat::updateCardChatData', { chatUUID, newData }, function(
-      data
-    ) {
-      if (data.result) {
-        dispatch({
-          type: UPDATE_SYSTEM_CARD_CHAT_DATA,
-          chatUUID,
-          payload: data.log,
-        });
-      } else {
-        console.error(data.msg);
+export const updateCardChatData = function (chatUUID, newData): TRPGAction {
+  return function (dispatch, getState) {
+    return api.emit(
+      'chat::updateCardChatData',
+      { chatUUID, newData },
+      function (data) {
+        if (data.result) {
+          dispatch({
+            type: UPDATE_SYSTEM_CARD_CHAT_DATA,
+            chatUUID,
+            payload: data.log,
+          });
+        } else {
+          console.error(data.msg);
+        }
       }
-    });
+    );
   };
 };
 
 const getWriteHash = (type: string, uuid: string, groupUUID?: string) => {
   return [type, uuid, groupUUID].join('#');
 };
-export const startWriting = function(
+export const startWriting = function (
   type = 'user',
   uuid: string,
   groupUUID?: string,
   channelUUID?: string,
   currentText?: string
 ): TRPGAction {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     dispatch({
       type: UPDATE_WRITING_STATUS,
       payload: {
@@ -712,14 +715,14 @@ export const startWriting = function(
 
     renewableDelayTimer(
       getWriteHash(type, uuid, groupUUID),
-      function() {
+      function () {
         dispatch(stopWriting(type, uuid, groupUUID)); // 如果在规定时间后没有再次收到正在输入的信号，则视为已经停止输入了
       },
       config.chat.isWriting.timeout
     );
   };
 };
-export const stopWriting = function(
+export const stopWriting = function (
   type = 'user',
   uuid: string,
   groupUUID?: string,
@@ -739,9 +742,11 @@ export const stopWriting = function(
   };
 };
 
-export const getUserEmotion = function(): TRPGAction {
-  return function(dispatch, getState) {
-    return api.emit('chatemotion::getUserEmotionCatalog', null, function(data) {
+export const getUserEmotion = function (): TRPGAction {
+  return function (dispatch, getState) {
+    return api.emit('chatemotion::getUserEmotionCatalog', null, function (
+      data
+    ) {
       if (data.result) {
         dispatch({
           type: UPDATE_USER_CHAT_EMOTION_CATALOG,
@@ -758,17 +763,17 @@ export const getUserEmotion = function(): TRPGAction {
  * 根据表情包暗号添加用户表情包
  * @param {string} code 表情包暗号
  */
-export const addUserEmotionCatalogWithSecretSignal = function(
+export const addUserEmotionCatalogWithSecretSignal = function (
   code: string
 ): TRPGAction {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     code = String(code).toUpperCase();
     return api.emit(
       'chatemotion::addUserEmotionWithSecretSignal',
       {
         code,
       },
-      function(data) {
+      function (data) {
         if (data.result) {
           const catalog = data.catalog;
           dispatch({
@@ -789,7 +794,7 @@ export const addUserEmotionCatalogWithSecretSignal = function(
  * 设定某一会话为已读
  * @param converseUUID 会话UUID
  */
-export const setConverseIsRead = function(converseUUID: string): TRPGAction {
+export const setConverseIsRead = function (converseUUID: string): TRPGAction {
   return { type: SET_CONVERSE_ISREAD, converseUUID };
 };
 

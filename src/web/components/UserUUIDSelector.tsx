@@ -3,6 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { Select } from 'antd';
 import { UserName } from './UserName';
 import _isFunction from 'lodash/isFunction';
+import { useTranslation } from '@shared/i18n';
 
 /**
  * TODO: 实现输入搜索 与 最大长度限制
@@ -18,6 +19,7 @@ interface UserUUIDSelectorProps {
 export const UserUUIDSelector: React.FC<UserUUIDSelectorProps> = TMemo(
   (props) => {
     const { allUserUUIDs, value, onChange } = props;
+    const { t } = useTranslation();
 
     const handleChange = useCallback(
       (val: string[]) => {
@@ -30,7 +32,7 @@ export const UserUUIDSelector: React.FC<UserUUIDSelectorProps> = TMemo(
       <Select<string[]>
         mode="multiple"
         value={value}
-        placeholder="选择用户"
+        placeholder={t('选择用户')}
         onChange={handleChange}
         style={{ width: '100%' }}
       >

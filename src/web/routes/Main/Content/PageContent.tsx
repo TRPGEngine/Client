@@ -39,6 +39,8 @@ const SidebarContainer = styled.div<{
   width: ${(props) => (props.showSidebar ? props.theme.style.sidebarWidth : 0)};
   background-color: ${(props) => props.theme.style.sidebarBackgroundColor};
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 `;
 
 interface PageContentProps {

@@ -25,6 +25,16 @@ export async function createMsgTokenBot(
 }
 
 /**
+ * 移除简单机器人
+ */
+export async function removeMsgTokenBot(groupUUID: string, botUUID: string) {
+  await request.post('/bot/msg/token/delete', {
+    groupUUID,
+    botUUID,
+  });
+}
+
+/**
  * 获取机器人列表
  * @param groupUUID 团UUID
  */

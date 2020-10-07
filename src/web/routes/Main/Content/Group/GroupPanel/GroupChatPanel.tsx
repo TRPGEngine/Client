@@ -5,10 +5,8 @@ import { Iconfont } from '@web/components/Iconfont';
 import styled from 'styled-components';
 import { useJoinedGroupInfo } from '@redux/hooks/group';
 import _isNil from 'lodash/isNil';
-import { UserListItem } from '@web/components/UserListItem';
 import { GroupActorSelector } from './GroupActorSelector';
-import { TPopover } from '@web/components/popover';
-import PopoverUserInfo from '@web/components/popover/UserInfo';
+import { GroupMembers } from './GroupMembers';
 
 const Root = styled.div`
   display: flex;
@@ -28,19 +26,6 @@ export const GroupChatPanel: React.FC<GroupChatPanelProps> = TMemo((props) => {
     return null;
   }
 
-  const members = (groupInfo.group_members ?? []).map((uuid) => (
-    <TPopover
-      key={uuid}
-      placement="left"
-      trigger="click"
-      content={<PopoverUserInfo userUUID={uuid} />}
-    >
-      <div>
-        <UserListItem userUUID={uuid} />
-      </div>
-    </TPopover>
-  ));
-
   return (
     <Root>
       <ChatContainer
@@ -56,7 +41,7 @@ export const GroupChatPanel: React.FC<GroupChatPanelProps> = TMemo((props) => {
             &#xe603;
           </Iconfont>,
         ]}
-        rightPanel={showMembers && <div>{members}</div>}
+        rightPanel={showMembers && <GroupMembers groupUUID={groupUUID} />}
       />
     </Root>
   );

@@ -9,7 +9,10 @@ import { MsgDataManager } from '@shared/utils/msg-helper';
 import _isNil from 'lodash/isNil';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { useSelectedGroupActorInfo } from '@redux/hooks/group';
-import { GroupInfoContext } from '@shared/context/GroupInfoContext';
+import {
+  GroupInfoContext,
+  useCurrentGroupUUID,
+} from '@shared/context/GroupInfoContext';
 
 /**
  * 消息输入相关事件
@@ -22,11 +25,12 @@ export function useMsgSend(converseUUID: string) {
   const converseType = converse?.type;
   const dispatch = useTRPGDispatch();
   const { replyMsg, clearReplyMsg } = useMsgContainerContext();
-  const groupInfo = useContext(GroupInfoContext);
-  const currentGroupUUID = groupInfo?.uuid;
+  const currentGroupUUID = useCurrentGroupUUID();
 
   // 获取选中团角色的信息 仅group类型会话有用
-  const selectedGroupActorInfo = useSelectedGroupActorInfo(converseUUID);
+  const selectedGroupActorInfo = useSelectedGroupActorInfo(
+    currentGroupUUID ?? ''
+  );
 
   useEffect(() => {
     // 当当前会话发生变化时，清空回复消息

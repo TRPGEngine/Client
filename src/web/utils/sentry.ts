@@ -48,7 +48,7 @@ export function error(err: Error | string) {
 export function setUser(userInfo: UserInfo) {
   Sentry.setUser({
     id: userInfo.uuid,
-    username: userInfo.username,
+    username: `${userInfo.nickname}(${userInfo.username})`,
   });
 }
 

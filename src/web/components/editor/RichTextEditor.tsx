@@ -59,6 +59,10 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
               icon={<Iconfont>&#xe644;</Iconfont>}
             />
             <BlockButton
+              format="heading-three"
+              icon={<Iconfont>&#xe647;</Iconfont>}
+            />
+            <BlockButton
               format="block-quote"
               icon={<Iconfont>&#xe639;</Iconfont>}
             />

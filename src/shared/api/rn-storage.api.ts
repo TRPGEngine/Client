@@ -29,19 +29,25 @@ const storage = new Storage({
 });
 
 const rnStorage = {
-  set: async (key: string | {}, data?: any) => {
+  set: async (key: string, data: any) => {
     try {
       if (!!key && typeof key === 'string' && !_isNil(data)) {
         await storage.save({ key, data });
-      } else if (!!key && typeof key === 'object' && !data) {
-        for (const subKey in key) {
-          if (key.hasOwnProperty(subKey)) {
-            await storage.save({
-              key: subKey,
-              data: key[subKey],
-            });
-          }
-        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    return data;
+  },
+  /**
+   * 自定义过期时间的存储
+   * set默认为1天，该方法自定义过期时间
+   */
+  setWithExpires: async (key: string, data: any, expires: number) => {
+    try {
+      if (!!key && typeof key === 'string' && !_isNil(data)) {
+        await storage.save({ key, data, expires });
       }
     } catch (e) {
       console.error(e);
@@ -50,7 +56,7 @@ const rnStorage = {
     return data;
   },
   get: async (key: string, defaultVal?: any) => {
-    let res;
+    let res: any;
     try {
       res = await storage.load({
         key,
@@ -74,7 +80,7 @@ const rnStorage = {
    * 持久化存储, 永不过期
    * TODO: 移除key允许为对象的写法
    */
-  save: async (key: string | {}, data?: {}) => {
+  save: async (key: string, data: any) => {
     try {
       if (!!key && typeof key === 'string' && !_isNil(data)) {
         await storage.save({
@@ -82,16 +88,6 @@ const rnStorage = {
           data,
           expires: null,
         });
-      } else if (!!key && typeof key === 'object' && !data) {
-        for (const subKey in key) {
-          if (key.hasOwnProperty(subKey)) {
-            await storage.save({
-              key: subKey,
-              data: key[subKey],
-              expires: null,
-            });
-          }
-        }
       }
     } catch (e) {
       console.error(e);

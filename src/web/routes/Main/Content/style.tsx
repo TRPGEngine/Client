@@ -10,4 +10,6 @@ export const SidebarHeaderText = styled.div`
 
 export const SidebarItemsContainer = styled.div`
   padding: 8px;
+  flex: 1;
+  overflow: auto;
 `;

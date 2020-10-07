@@ -1,4 +1,8 @@
-import { buildCacheFactory, CachePolicy } from '@shared/utils/cache-factory';
+import {
+  buildCacheFactory,
+  buildCacheHashFnPrefix,
+  CachePolicy,
+} from '@shared/utils/cache-factory';
 import rnStorage from '@shared/api/rn-storage.api';
 
 describe('buildCacheFactory', () => {
@@ -24,14 +28,22 @@ describe('buildCacheFactory', () => {
     });
   });
 
-  test('cache should be save in rnStorage by Temporary CachePolicy', async () => {
+  test('cache should be save in rnStorage by Persistent CachePolicy', async () => {
     const testFn = jest.fn((a: string) => {
       return a;
     });
     const cacheTestFn = buildCacheFactory(CachePolicy.Persistent, testFn);
 
     const ret = await cacheTestFn('a', 'b');
-    const cachedRet = await rnStorage.get('trpg:a$b');
+    const cachedRet = await rnStorage.get('cache:factory$a$b');
     expect(cachedRet).toBe(ret);
   });
+});
+
+test('buildCacheHashFnPrefix should be ok', () => {
+  const hashFn = buildCacheHashFnPrefix('any-prefix');
+
+  const hash = hashFn(1, 2, 3);
+
+  expect(hash).toBe('cache:factory$any-prefix:1$2$3');
 });

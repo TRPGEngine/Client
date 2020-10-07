@@ -35,7 +35,7 @@ export const Group: React.FC = TMemo(() => {
     <GroupProvider groupInfo={groupInfo}>
       <PageContent
         sidebar={
-          <div>
+          <>
             <GroupHeader groupUUID={groupUUID} />
             <SidebarItemsContainer>
               <SidebarItem
@@ -53,7 +53,7 @@ export const Group: React.FC = TMemo(() => {
                 />
               ))}
             </SidebarItemsContainer>
-          </div>
+          </>
         }
       >
         <Switch>

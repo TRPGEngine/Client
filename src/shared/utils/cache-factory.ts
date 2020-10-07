@@ -10,12 +10,45 @@ export enum CachePolicy {
   /**
    * 存储在rnStorage中
    * 过期时间为rnStorage的过期时间
+   * NOTE: 在使用持久化存储时必须自行实现hash
+   * 可以基于buildCacheHashPrefix来快速实现
    */
   Persistent,
 }
 
-function defaultHash(...args): string {
-  return 'trpg:' + args.join('$');
+/**
+ * 序列化参数
+ */
+function stringifyArgs(arg: any): string {
+  switch (typeof arg) {
+    case 'string':
+      return arg;
+    case 'number':
+      return String(arg);
+    default:
+      return JSON.stringify(arg);
+  }
+}
+
+/**
+ * 拼接参数
+ */
+function joinArgs(args: any[]): string {
+  return args.map(stringifyArgs).join('$');
+}
+
+function defaultHash(...args: any[]): string {
+  return `cache:factory$${joinArgs(args)}`;
+}
+
+/**
+ * 快速构建缓存的hash
+ * @param prefix 前缀
+ */
+export function buildCacheHashFnPrefix(
+  prefix: string
+): (...args: any[]) => string {
+  return (...args: any[]) => `cache:factory$${prefix}:${joinArgs(args)}`;
 }
 
 export function buildCacheFactory<T>(

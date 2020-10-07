@@ -3,8 +3,6 @@ import config from '@shared/project.config';
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import _isNil from 'lodash/isNil';
-import { showToasts } from '@shared/manager/ui';
-import { getUserJWT } from './jwt-helper';
 import _isFunction from 'lodash/isFunction';
 import { getErrorHook, tokenGetter } from '@shared/manager/request';
 import { errorCode } from './error';
@@ -67,11 +65,6 @@ export function createRequest() {
 
   ins.interceptors.response.use(
     (val) => {
-      if (val.data.result === false) {
-        // 通用错误处理
-        showToasts(val.data.msg, 'error');
-      }
-
       return val;
     },
     (err) => {

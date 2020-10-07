@@ -44,7 +44,7 @@ export const MsgItemTip = styled.div`
   }
 `;
 
-export const DefaultAddonContentContainer = styled.div`
+export const DefaultAddonContentContainer = styled.a`
   border-top: ${(props) => props.theme.border.thin};
   display: flex;
   padding: 4px 0;

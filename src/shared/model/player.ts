@@ -1,7 +1,11 @@
 import { request } from '@shared/utils/request';
 import md5 from 'md5';
 import { setUserJWT } from '@shared/utils/jwt-helper';
-import { CachePolicy, buildCacheFactory } from '@shared/utils/cache-factory';
+import {
+  CachePolicy,
+  buildCacheFactory,
+  buildCacheHashFnPrefix,
+} from '@shared/utils/cache-factory';
 
 export interface PlayerUser {
   id: number;
@@ -62,7 +66,8 @@ export const fetchUserInfo = buildCacheFactory<PlayerUser>(
   CachePolicy.Persistent,
   (uuid: string) => {
     return request.get(`/player/info/${uuid}`).then(({ data }) => data.user);
-  }
+  },
+  buildCacheHashFnPrefix('fetchUserInfo')
 );
 
 /**

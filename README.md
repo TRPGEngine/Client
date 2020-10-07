@@ -1,6 +1,7 @@
 # TRPG Engine - 一个专为TRPG打造的即时即时通讯应用
 
 ![node test](https://github.com/TRPGEngine/Client/workflows/node%20test/badge.svg)
+[![codecov](https://codecov.io/gh/TRPGEngine/Client/branch/master/graph/badge.svg?token=mVoHFyoLJy)](undefined)
 [![Release](https://img.shields.io/github/release/TRPGEngine/Client.svg)](https://github.com/TRPGEngine/Client/releases)
 [![Android](https://img.shields.io/badge/platform-android-orange.svg)]()
 [![Web](https://img.shields.io/badge/platform-web-green.svg)]()
@@ -56,10 +57,13 @@ $ npm run dev # 运行本地开发服务器
 - `ASSET_PATH`: 资源文件路径, 默认为`/`。用于指定打包出来的资源的cdn地址。如`//static3.moonrailgun.com/`
 
 ## 新版UI发布日志与预览
-![](https://trpgdoc.moonrailgun.com/blog/2020/09/16/new-ui-v0.4)
+
+[https://trpgdoc.moonrailgun.com/blog/2020/09/16/new-ui-v0.4](https://trpgdoc.moonrailgun.com/blog/2020/09/16/new-ui-v0.4)
 
 ## 旧版UI部分截图
+
 桌面版:
+
 ![](./doc/login.png)
 ![](./doc/converse.png)
 ![](./doc/actor.png)
