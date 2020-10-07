@@ -4,6 +4,14 @@ import config from '@shared/project.config';
 import str2int from 'str2int';
 
 /**
+ * 判断一个字符串是否是url
+ * @param str 要判断的字符串
+ */
+export function isUrl(str: string) {
+  return urlRegex({ exact: true }).test(str);
+}
+
+/**
  * 判断字符串是否是一个blobUrl
  * @param str url字符串
  */

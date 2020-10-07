@@ -2,6 +2,7 @@ import React from 'react';
 import { RenderElementProps, useSelected, useFocused } from 'slate-react';
 import { TMemo } from '@shared/components/TMemo';
 import _get from 'lodash/get';
+import Image from '@web/components/Image';
 
 export const SlateElement: React.FC<RenderElementProps> = (props) => {
   const { attributes, children, element } = props;
@@ -9,6 +10,8 @@ export const SlateElement: React.FC<RenderElementProps> = (props) => {
   switch (element.type) {
     case 'mention':
       return <MentionElement {...props} />;
+    case 'image':
+      return <ImageElement {...props} />;
     case 'block-quote':
       return <blockquote {...attributes}>{children}</blockquote>;
     case 'bulleted-list':
@@ -53,3 +56,27 @@ const MentionElement: React.FC<RenderElementProps> = TMemo((props) => {
     </span>
   );
 });
+MentionElement.displayName = 'MentionElement';
+
+const ImageElement: React.FC<RenderElementProps> = TMemo((props) => {
+  const { attributes, children, element } = props;
+  const selected = useSelected();
+  const focused = useFocused();
+
+  return (
+    <span {...attributes}>
+      <Image
+        src={String(element.url)}
+        style={{
+          display: 'inline-block',
+          maxWidth: '100%',
+          maxHeight: '4em',
+          boxShadow: selected && focused ? '0 0 0 3px #B4D5FF' : 'none',
+          verticalAlign: 'bottom',
+        }}
+      />
+      {children}
+    </span>
+  );
+});
+ImageElement.displayName = 'ImageElement';
