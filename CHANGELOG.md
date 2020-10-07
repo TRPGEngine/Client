@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.4](https://github.com/TRPGEngine/Client/compare/v0.4.3...v0.4.4) (2020-10-07)
+
+
+### Features
+
+* **web:** editor add heading level 3 ([52a2138](https://github.com/TRPGEngine/Client/commit/52a213866c0472cfad4462f9354327e654923d6b))
+* **web:** 变更邀请方式, 创建团邀请码 ([ad380db](https://github.com/TRPGEngine/Client/commit/ad380db52e8fe2741d04501ded5ee807dca3ec7a))
+* **web:** 团成员列表增加了分类 ([8b3738e](https://github.com/TRPGEngine/Client/commit/8b3738ec2c1e0c24b0a6733d575e08b9f7ade66f))
+* **web:** 增加删除机器人列表的功能 ([3396197](https://github.com/TRPGEngine/Client/commit/3396197ce2ce635b6861bf2436228095a4fe0787))
+* **web:** 增加团名与团简介的修改 ([58fdc44](https://github.com/TRPGEngine/Client/commit/58fdc44dc1dec58b9bdd39d978bc125b7be1abcb))
+
+
+### Bug Fixes
+
+* **web:** 修复GroupActor可能会拿不到当前GroupInfo的bug ([e73ac85](https://github.com/TRPGEngine/Client/commit/e73ac8516db969dc9a35a8393df2aaddd8748767))
+* 修复在频道中发送消息无法正常带出选中角色信息的bug ([ed46714](https://github.com/TRPGEngine/Client/commit/ed46714978246f5f9bda8d6ef775fe940a9dc680))
+
 ### [0.4.3](https://github.com/TRPGEngine/Client/compare/v0.4.2...v0.4.3) (2020-09-29)
 
 
