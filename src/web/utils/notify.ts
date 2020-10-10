@@ -31,7 +31,7 @@ const visibilityChangeEvent = hiddenProperty?.replace(
   /hidden/i,
   'visibilitychange'
 );
-const onVisibilityChange = function() {
+const onVisibilityChange = function () {
   if (!document[hiddenProperty ?? '']) {
     // 显示标签页时清空
     tinycon.setBubble(0);
@@ -43,7 +43,7 @@ if (typeof visibilityChangeEvent === 'string') {
   document.addEventListener(visibilityChangeEvent, onVisibilityChange); // TODO: 需要在electron环境下测试是否可以运行
 }
 
-export default function(store: TRPGStore) {
+export default function (store: TRPGStore) {
   // 通过blur事件处理浏览器不是当前激活窗口的情况
   let isBlur = false;
   window.addEventListener('focus', () => {
@@ -62,13 +62,16 @@ export default function(store: TRPGStore) {
           'system',
           'notification',
         ]);
-        if (allowNotify) {
+        if (allowNotify && Notification.permission === 'granted') {
+          // TODO: 这里在华为手机上会报个错误
+          // Failed to construct 'Notification': Illegal constructor. Use ServiceWorkerRegistration.showNotification() instead.
           const uuid = data.sender_uuid;
           const userinfo = getUserInfoCache(data.sender_uuid);
           let username = userinfo.nickname || userinfo.username;
           if (uuid && uuid.substr(0, 4) === 'trpg') {
             username = '系统消息';
           }
+
           const notification = new Notification(`来自 ${username}:`, {
             body: data.message,
             icon: userinfo.avatar || config.defaultImg.trpgsystem,
@@ -77,7 +80,7 @@ export default function(store: TRPGStore) {
             data: { uuid },
           });
 
-          notification.onclick = function() {
+          notification.onclick = function () {
             window.focus();
             store.dispatch(switchMenuPannel(0));
             store.dispatch(switchConverse(this.data.uuid));
