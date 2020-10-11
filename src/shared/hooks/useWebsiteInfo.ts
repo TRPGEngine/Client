@@ -50,10 +50,14 @@ export function useWebsiteInfo(rawMessage: string): UseWebsiteInfoRet {
     if (hasUrl) {
       // 如果messageUrl有值的话则获取
       setLoading(true);
-      fetchWebsiteInfo(messageUrl).then((info) => {
-        setLoading(false);
-        setInfo({ ...info, url: messageUrl });
-      });
+      fetchWebsiteInfo(messageUrl)
+        .then((info) => {
+          setLoading(false);
+          setInfo({ ...info, url: messageUrl });
+        })
+        .catch(() => {
+          // 出现错误不做任何处理
+        });
     }
   }, [hasUrl, messageUrl]);
 
