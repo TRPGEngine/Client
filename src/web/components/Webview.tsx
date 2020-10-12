@@ -48,20 +48,31 @@ class Webview extends React.Component<Props> {
     const webframe = this.webframe!;
     if (isElectron) {
       webframe.src = this.props.src;
-      webframe.addEventListener('dom-ready', function() {
+      webframe.addEventListener('dom-ready', function () {
         console.log('webview loadCompleted');
-        NProgress.done();
+        if (NProgress.isRendered()) {
+          NProgress.done();
+        }
       });
-      webframe.addEventListener('will-navigate', function(e: any) {
+      webframe.addEventListener('will-navigate', function (e: any) {
         console.log('webview change, url:', e.url);
         NProgress.start();
       });
     } else {
       webframe.src = this.props.src;
-      webframe.onload = function(e) {
+      webframe.onload = function (e) {
         console.log('webview loadCompleted');
-        NProgress.done();
+        if (NProgress.isRendered()) {
+          NProgress.done();
+        }
       };
+    }
+  }
+
+  componentWillUnmount() {
+    if (NProgress.isRendered()) {
+      NProgress.done();
+      NProgress.remove();
     }
   }
 
