@@ -1,0 +1,17 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "moonrailgun",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "lz-string": "^1.4.4",
+    "monaco-editor": "^0.21.2",
+    "monaco-editor-webpack-plugin": "^2.0.0",
+    "react-monaco-editor": "^0.40.0"
+  }
+}

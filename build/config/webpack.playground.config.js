@@ -5,7 +5,7 @@
 process.env.TRPG_APP_NAME = 'Playground';
 
 const webpackMerge = require('webpack-merge');
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const MonacoWebpackPlugin = require('../../src/playground/node_modules/monaco-editor-webpack-plugin');
 const path = require('path');
 const url = require('url');
 const _ = require('lodash');
