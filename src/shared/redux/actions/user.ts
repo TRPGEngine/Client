@@ -86,14 +86,24 @@ function loginSuccess(dispatch, getState) {
   }, 0);
 }
 
-export const login = function (username: string, password: string): TRPGAction {
-  return function (dispatch, getState) {
+/**
+ * 使用账号密码登录
+ * @param username 账号名
+ * @param password 密码
+ */
+export const login = function (
+  username: string,
+  password: string,
+  deviceInfo = {}
+): TRPGAction {
+  return async function (dispatch, getState) {
     password = md5(password);
     const isApp = config.platform === 'app';
     dispatch({ type: LOGIN_REQUEST });
+
     return api.emit(
       'player::login',
-      { username, password, platform: config.platform, isApp },
+      { username, password, platform: config.platform, isApp, deviceInfo },
       function (data) {
         dispatch(hideLoading());
 
@@ -131,17 +141,21 @@ export const login = function (username: string, password: string): TRPGAction {
   };
 };
 
+/**
+ * 使用Token登录
+ */
 export const loginWithToken = function (
   uuid: string,
   token: string,
-  channel: any = null
+  channel: string | null = null,
+  deviceInfo = {}
 ): TRPGAction {
   return function (dispatch, getState) {
     const isApp = config.platform === 'app';
     dispatch({ type: LOGIN_REQUEST });
     return api.emit(
       'player::loginWithToken',
-      { uuid, token, platform: config.platform, isApp, channel },
+      { uuid, token, platform: config.platform, isApp, channel, deviceInfo },
       function (data) {
         if (data.result) {
           data.info.avatar = config.file.getAbsolutePath!(data.info.avatar);

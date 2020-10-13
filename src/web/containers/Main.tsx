@@ -37,11 +37,6 @@ class Main extends React.Component<Props> {
       component: <ConverseList />,
     },
     {
-      name: '广场',
-      menuIndex: -1,
-      component: <Webview src={config.url.goddessfantasy} allowExopen={true} />,
-    },
-    {
       name: '应用',
       menuIndex: -1,
       component: <IsDeveloping />,

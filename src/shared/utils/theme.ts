@@ -250,5 +250,9 @@ export function getStyledTheme(mode: ThemeMode) {
   return theme;
 }
 
-const defaultStyledTheme = getStyledTheme('light'); // 这个是为了兼容原来的写法, 有机会应当移除掉
+/**
+ * @deprecated
+ * 这个是为了兼容原来的写法, 有机会应当移除掉
+ */
+const defaultStyledTheme = getStyledTheme('light');
 export default defaultStyledTheme;

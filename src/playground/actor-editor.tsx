@@ -6,15 +6,15 @@ import { Block } from './components/Block';
 import _isNil from 'lodash/isNil';
 import _find from 'lodash/find';
 import { Select, Button, Row, Col } from 'antd';
-import { registerLayoutCodeSuggest } from './editor/suggestions';
-import { exampleLayout, workingLabel, initCode } from './editor/example';
+import { registerLayoutCodeSuggest } from './editor/code/suggestions';
+import { exampleLayout, workingLabel, initCode } from './editor/code/example';
 import config from '@shared/project.config';
 import SplitPane from '@shared/components/web/SplitPane';
 import { TMemo } from '@shared/components/TMemo';
-import { useLayoutConfig } from './editor/useLayoutConfig';
-import { useStateWatcher } from './editor/useStateWatcher';
+import { useLayoutConfig } from './editor/code/useLayoutConfig';
+import { useStateWatcher } from './editor/code/useStateWatcher';
 import LZString from 'lz-string';
-import { useCodeEditor } from './editor/useCodeEditor';
+import { useCodeEditor } from './editor/code/useCodeEditor';
 
 const { Option } = Select;
 

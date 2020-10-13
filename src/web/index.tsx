@@ -69,13 +69,16 @@ window.onerror = (event, source, fileno, columnNumber, error) => {
   );
 };
 
+// 是否为新APP
+const isNewApp = checkIsNewApp();
+
 // 加载本地存储数据进行应用初始化
 (async () => {
   // token登录
   const uuid = await rnStorage.get('uuid');
   const token = await rnStorage.get('token');
   if (!!token && !!uuid) {
-    store.dispatch(loginWithToken(uuid, token));
+    store.dispatch(loginWithToken(uuid, token, null, { isNewApp }));
   }
 
   // 初始化配置
@@ -88,7 +91,7 @@ window.onerror = (event, source, fileno, columnNumber, error) => {
 if (config.platform !== 'web') {
   import('../shared/utils/check-version').then((module) => {
     const checkVersion = module.default;
-    checkVersion(function(isLatest) {
+    checkVersion(function (isLatest) {
       if (isLatest) {
         console.log('当前版本为最新版');
       } else {
@@ -106,15 +109,13 @@ if (config.platform !== 'web') {
   });
 }
 
-const isNewApp = checkIsNewApp();
-
 // 离开页面确认
 if (
   config.platform === 'web' &&
   config.environment === 'production' &&
   !isNewApp // 仅旧UI需要全局设定, 新UI根据当前场景决定是否使用退出阻止
 ) {
-  window.onbeforeunload = function() {
+  window.onbeforeunload = function () {
     return '确认离开当前页面吗？';
   };
 }

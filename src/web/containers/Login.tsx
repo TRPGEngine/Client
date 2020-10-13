@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { showLoading } from '../../shared/redux/actions/ui';
-import { login, loginWithToken } from '../../shared/redux/actions/user';
-import config from '../../shared/project.config';
-import rnStorage from '../../shared/api/rn-storage.api';
+import { showLoading } from '@shared/redux/actions/ui';
+import { login, loginWithToken } from '@shared/redux/actions/user';
+import config from '@shared/project.config';
+import rnStorage from '@shared/api/rn-storage.api';
 import './Login.scss';
 import { TRPGState } from '@redux/types/__all__';
 import { showPortal } from '@web/redux/action/ui';
+import { checkIsNewApp } from '@web/utils/debug-helper';
 
 interface Props extends DispatchProp<any> {
   isLogin: boolean;
@@ -58,7 +59,8 @@ class Login extends React.Component<Props> {
     this.props.dispatch(showLoading());
     const username = this.state.username;
     const password = this.state.password;
-    this.props.dispatch(login(username, password));
+    const isNewApp = checkIsNewApp();
+    this.props.dispatch(login(username, password, { isNewApp }));
   }
 
   handleQQLogin() {

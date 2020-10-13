@@ -43,6 +43,7 @@ interface MsgInputEditorProps extends EditorBaseProps {
   placeholder: string;
   onKeyDown?: (e: React.KeyboardEvent) => void;
   onEditor?: (editor: Editor) => void;
+  onPaste?: (event: React.ClipboardEvent<HTMLDivElement>) => void;
 }
 
 /**
@@ -157,10 +158,9 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
     if (target && el && mentionMatchList.length > 0) {
       const domRange = ReactEditor.toDOMRange(editor, target);
       const rect = domRange.getBoundingClientRect();
-      el.style.bottom = `${document.body.clientHeight -
-        rect.bottom +
-        window.pageYOffset +
-        24}px`;
+      el.style.bottom = `${
+        document.body.clientHeight - rect.bottom + window.pageYOffset + 24
+      }px`;
       el.style.left = `${rect.left + window.pageXOffset}px`;
     }
   }, [mentionMatchList.length, editor, index, search, target]);
@@ -183,6 +183,7 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
         <EditArea
           renderElement={renderElement}
           renderLeaf={renderLeaf}
+          onPaste={props.onPaste}
           onKeyDown={handleKeyDown}
           onCompositionStart={handleCompositionStart}
           onCompositionEnd={handleCompositionEnd}
