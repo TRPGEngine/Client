@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.5](https://github.com/TRPGEngine/Client/compare/v0.4.4...v0.4.5) (2020-10-13)
+
+
+### Features
+
+* **web:** 增加富文本编辑器内联图片的渲染与插入 ([73feede](https://github.com/TRPGEngine/Client/commit/73feedefff4ee5cc4f574577a37d252ca7a9fa18))
+* **web:** 登录时传输是否为新应用 ([c2865a5](https://github.com/TRPGEngine/Client/commit/c2865a5ceddf6e432951289ce10680429711c9db))
+* **web:** 聊天框粘贴图片发送与bbcode解析 ([de3782f](https://github.com/TRPGEngine/Client/commit/de3782f20cbd9ecd38a20147fb37ea8f40587b65))
+
 ### [0.4.4](https://github.com/TRPGEngine/Client/compare/v0.4.3...v0.4.4) (2020-10-07)
 
 
