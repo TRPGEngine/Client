@@ -1,8 +1,9 @@
 import React from 'react';
 import { RenderLeafProps } from 'slate-react';
+import { EditorType } from './type';
 
 interface EditorLeafProps extends RenderLeafProps {
-  editorType: 'richtext' | 'inline';
+  editorType: EditorType;
 }
 
 export const SlateLeaf: React.FC<EditorLeafProps> = ({

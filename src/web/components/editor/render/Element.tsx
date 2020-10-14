@@ -3,9 +3,10 @@ import { RenderElementProps, useSelected, useFocused } from 'slate-react';
 import { TMemo } from '@shared/components/TMemo';
 import _get from 'lodash/get';
 import Image from '@web/components/Image';
+import { EditorType } from './type';
 
 interface EditorElementProps extends RenderElementProps {
-  editorType: 'richtext' | 'inline';
+  editorType: EditorType;
 }
 
 export const SlateElement: React.FC<EditorElementProps> = (props) => {

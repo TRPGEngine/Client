@@ -34,6 +34,7 @@ import {
   MentionMatchedItem,
 } from './style';
 import { WebErrorBoundary } from '../WebErrorBoundary';
+import { useEditorRender } from './hooks/useEditorRender';
 
 const MentionsPortal = ({ children }) => {
   return ReactDOM.createPortal(children, document.body);
@@ -92,14 +93,7 @@ function usePlaceholder(props: MsgInputEditorProps) {
 
 export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const renderElement = useCallback(
-    (props) => <SlateElement editorType="inline" {...props} />,
-    []
-  );
-  const renderLeaf = useCallback(
-    (props) => <SlateLeaf editorType="inline" {...props} />,
-    []
-  );
+  const { renderElement, renderLeaf } = useEditorRender('inline');
   const editor = useMemo(() => createMsgInputEditor(), []);
 
   const [target, setTarget] = useState<Range | undefined>(undefined);

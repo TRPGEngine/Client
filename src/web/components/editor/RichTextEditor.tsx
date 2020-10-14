@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Slate } from 'slate-react';
 import { TMemo } from '@shared/components/TMemo';
 import { ToolbarButton, Toolbar } from './style';
@@ -10,11 +10,10 @@ import indentLines from './changes/indentLines';
 import { useBeforeUnload } from 'react-use';
 import { BlockButton } from './toolbar/BlockButton';
 import { MarkButton } from './toolbar/MarkButton';
-import { SlateLeaf } from './render/Leaf';
-import { SlateElement } from './render/Element';
 import { EditArea } from './render/EditArea';
 import { EditorBaseProps } from './types';
 import { WebErrorBoundary } from '../WebErrorBoundary';
+import { useEditorRender } from './hooks/useEditorRender';
 
 interface CustomAction {
   icon: React.ReactNode;
@@ -34,14 +33,7 @@ interface RichTextEditorProps extends EditorBaseProps {
   onSave?: () => void;
 }
 export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
-  const renderElement = useCallback(
-    (props) => <SlateElement editorType="richtext" {...props} />,
-    []
-  );
-  const renderLeaf = useCallback(
-    (props) => <SlateLeaf editorType="richtext" {...props} />,
-    []
-  );
+  const { renderElement, renderLeaf } = useEditorRender('richtext');
   const editor = useMemo(() => createStandardEditor(), []);
   useBeforeUnload(true, '确定要离开页面么? 未保存的笔记会丢失');
 
