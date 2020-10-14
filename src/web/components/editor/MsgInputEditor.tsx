@@ -92,8 +92,14 @@ function usePlaceholder(props: MsgInputEditorProps) {
 
 export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const renderElement = useCallback((props) => <SlateElement {...props} />, []);
-  const renderLeaf = useCallback((props) => <SlateLeaf {...props} />, []);
+  const renderElement = useCallback(
+    (props) => <SlateElement editorType="inline" {...props} />,
+    []
+  );
+  const renderLeaf = useCallback(
+    (props) => <SlateLeaf editorType="inline" {...props} />,
+    []
+  );
   const editor = useMemo(() => createMsgInputEditor(), []);
 
   const [target, setTarget] = useState<Range | undefined>(undefined);

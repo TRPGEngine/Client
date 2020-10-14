@@ -28,13 +28,20 @@ const Container = styled.div`
 
 interface RichTextEditorProps extends EditorBaseProps {
   style?: React.CSSProperties;
+  customButton?: React.ReactNode;
   customActions?: CustomAction[];
   onBlur?: () => void;
   onSave?: () => void;
 }
 export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
-  const renderElement = useCallback((props) => <SlateElement {...props} />, []);
-  const renderLeaf = useCallback((props) => <SlateLeaf {...props} />, []);
+  const renderElement = useCallback(
+    (props) => <SlateElement editorType="richtext" {...props} />,
+    []
+  );
+  const renderLeaf = useCallback(
+    (props) => <SlateLeaf editorType="richtext" {...props} />,
+    []
+  );
   const editor = useMemo(() => createStandardEditor(), []);
   useBeforeUnload(true, '确定要离开页面么? 未保存的笔记会丢失');
 
@@ -74,6 +81,8 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
               format="bulleted-list"
               icon={<Iconfont>&#xe638;</Iconfont>}
             />
+
+            {props.customButton}
 
             {/* 自定义操作 */}
             {props.customActions?.map((item, i) => (

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { Fragment, useState, useCallback, useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useParams } from 'react-router';
 import { useNoteInfo } from '@redux/hooks/note';
@@ -18,6 +18,7 @@ import { SectionHeader } from '@web/components/SectionHeader';
 import { Input, Empty, Modal } from 'antd';
 import { isSaveHotkey } from '@web/utils/hot-key';
 import { Iconfont } from '@web/components/Iconfont';
+import { ImageButton } from './ImageButton';
 
 function getNoteInitData(data?: Node[]): Node[] {
   if (_isEmpty(data)) {
@@ -144,6 +145,11 @@ const NoteEditor: React.FC<{ noteUUID: string }> = TMemo((props) => {
         style={{ flex: 1, overflow: 'hidden' }}
         value={value}
         onChange={setValue}
+        customButton={
+          <Fragment>
+            <ImageButton attachUUID={noteUUID} />
+          </Fragment>
+        }
         customActions={[
           {
             icon: <Iconfont key="del">&#xe76b;</Iconfont>,
