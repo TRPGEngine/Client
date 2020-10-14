@@ -4,12 +4,17 @@ import { CommonPanelProps } from '@shared/components/panel/type';
 import { GroupInfoContext } from '@shared/context/GroupInfoContext';
 import _isNil from 'lodash/isNil';
 import { Result } from 'antd';
-import { CommonPanel } from './CommonPanel';
 import { GroupActorSelector } from '@web/routes/Main/Content/Group/GroupPanel/GroupActorSelector';
-import { ChatBody } from '../chatBox/ChatBody';
 import { ensureGroupChannelConverse } from '@redux/actions/group';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { ChatContainer } from '../chatBox/ChatContainer';
 
+/**
+ * 确保频道被正确创建
+ * @param groupUUID 团UUID
+ * @param channelUUID 频道UUID
+ * @param channelName 频道名
+ */
 function useCheckGroupChannel(
   groupUUID: string,
   channelUUID: string,
@@ -38,15 +43,13 @@ export const TextChannel: React.FC<CommonPanelProps> = TMemo((props) => {
   }
 
   return (
-    <CommonPanel
-      headerPrefix="#"
+    <ChatContainer
       header={panel.name}
       headerActions={[
         <GroupActorSelector key="actor" groupUUID={groupInfo.uuid} />,
       ]}
-    >
-      <ChatBody converseUUID={panel.target_uuid} />
-    </CommonPanel>
+      converseUUID={panel.target_uuid}
+    />
   );
 });
 TextChannel.displayName = 'TextChannel';

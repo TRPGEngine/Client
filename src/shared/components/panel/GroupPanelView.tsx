@@ -4,7 +4,7 @@ import { CommonPanelProps } from './type';
 import { getPanel } from './reg';
 
 /**
- * 通用团面本渲染组件
+ * 通用团面板渲染组件
  */
 export const GroupPanelView: React.FC<CommonPanelProps> = TMemo((props) => {
   const { panel } = props;
