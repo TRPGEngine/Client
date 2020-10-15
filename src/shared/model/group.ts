@@ -274,10 +274,7 @@ export async function editGroupActor(
 export const fetchGroupActorDetail = async (
   groupActorUUID: string
 ): Promise<GroupActorItem> => {
-  const { data } = await request(
-    `/group/actor/detail/${groupActorUUID}`,
-    'get'
-  );
+  const { data } = await request.get(`/group/actor/detail/${groupActorUUID}`);
 
   return data.groupActor;
 };
