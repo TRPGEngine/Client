@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import { useTranslation } from '@shared/i18n';
 import { openModal } from '@web/components/Modal';
-import { BotCreate } from '@web/components/modal/BotCreate';
+import { BotCreate } from '@web/components/modals/BotCreate';
 import { useAsyncFn } from 'react-use';
 import {
   getMsgTokenBotList,

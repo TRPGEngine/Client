@@ -1,7 +1,7 @@
 import MessageHandler from '@shared/components/message/MessageHandler';
 import Default from './Default';
 import Tip from './Tip';
-import Card from './Card';
+import Card from './card/index';
 import File from './File';
 import Loading from './Loading';
 // import './bbcode/__all__';

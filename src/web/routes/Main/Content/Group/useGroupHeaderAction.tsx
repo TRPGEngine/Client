@@ -11,10 +11,10 @@ import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { useCurrentUserUUID } from '@redux/hooks/user';
 import { showAlert } from '@redux/actions/ui';
 import { dismissGroup, quitGroup } from '@redux/actions/group';
-import { GroupPanelCreate } from '@web/components/modal/GroupPanelCreate';
+import { GroupPanelCreate } from '@web/components/modals/GroupPanelCreate';
 import { openModal, ModalWrapper } from '@web/components/Modal';
 import { useTranslation } from '@shared/i18n';
-import { GroupInvite } from '@web/components/modal/GroupInvite';
+import { GroupInvite } from '@web/components/modals/GroupInvite';
 
 export function useGroupHeaderAction(groupInfo: GroupInfo) {
   const { t } = useTranslation();

@@ -16,11 +16,11 @@ import {
   getGroupActorTemplateUUID,
 } from '@shared/utils/data-helper';
 import { showToasts } from '@shared/manager/ui';
-import ActorInfo from '@web/components/modal/ActorInfo';
+import ActorInfo from '@web/components/modals/ActorInfo';
 import { openModal, ModalWrapper, closeModal } from '@web/components/Modal';
 import { GroupActorType } from '@redux/types/group';
 import { Iconfont } from '@web/components/Iconfont';
-import ActorEdit from '@web/components/modal/ActorEdit';
+import ActorEdit from '@web/components/modals/ActorEdit';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import {
   requestAddGroupActor,
@@ -30,7 +30,7 @@ import {
 import { showAlert } from '@redux/actions/ui';
 import { ActorCard, ActorCardListContainer } from '@web/components/ActorCard';
 import { GroupActorCheck } from '@web/containers/main/group/modal/GroupActorCheck';
-import ActorSelect from '@web/components/modal/ActorSelect';
+import ActorSelect from '@web/components/modals/ActorSelect';
 import { editGroupActor } from '@shared/model/group';
 import { useTranslation } from '@shared/i18n';
 const TabPane = PillTabs.TabPane;

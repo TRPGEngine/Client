@@ -1,20 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
-import { findUser } from '../../../shared/redux/actions/user';
+import { findGroup } from '../../../shared/redux/actions/group';
 import ModalPanel from '../ModalPanel';
 import FindResultItem from '../FindResultItem';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import { TRPGDispatchProp, TRPGState } from '@redux/types/__all__';
 
-import './FriendsAdd.scss';
+import './GroupAdd.scss';
 
 interface Props extends TRPGDispatchProp {
   isFinding: boolean;
   findingResult: any;
 }
-class FriendsAdd extends React.Component<Props> {
+class GroupAdd extends React.Component<Props> {
   state = {
-    selectValue: 'username',
+    selectValue: 'groupname',
     searchText: '',
   };
 
@@ -22,7 +22,7 @@ class FriendsAdd extends React.Component<Props> {
     const text = this.state.searchText.trim();
     const type = this.state.selectValue;
     if (!!text) {
-      this.props.dispatch(findUser(text, type));
+      this.props.dispatch(findGroup(text, type));
     } else {
       console.log('搜索内容不能为空');
     }
@@ -33,29 +33,35 @@ class FriendsAdd extends React.Component<Props> {
       findingResult = [];
     }
 
-    return findingResult.map(function(item, index) {
-      return <FindResultItem key={item.uuid + '#' + index} info={item} />;
+    return findingResult.map(function (item, index) {
+      return (
+        <FindResultItem
+          key={item.uuid + '#' + index}
+          info={item}
+          type="group"
+        />
+      );
     });
   }
 
   render() {
     const options = [
-      { value: 'uuid', label: '用户唯一标示符' },
-      { value: 'username', label: '用户名' },
-      { value: 'nickname', label: '昵称' },
+      { value: 'uuid', label: '团唯一标示符' },
+      { value: 'groupname', label: '团名称' },
+      { value: 'groupdesc', label: '团简介' },
     ];
     return (
-      <ModalPanel title="添加好友">
-        <div className="friends-add">
-          <div className="friends-search">
+      <ModalPanel title="添加团">
+        <div className="group-add">
+          <div className="group-search">
             <input
               type="text"
-              placeholder="请输入你要添加的好友信息"
+              placeholder="请输入你要添加的团信息"
               spellCheck={false}
               value={this.state.searchText}
               onChange={(e) => this.setState({ searchText: e.target.value })}
             />
-            <div className="friends-search-method">
+            <div className="group-search-method">
               <Select
                 name="form-field-name"
                 value={this.state.selectValue}
@@ -68,7 +74,7 @@ class FriendsAdd extends React.Component<Props> {
             </div>
             <button onClick={() => this.handleSearch()}>搜索</button>
           </div>
-          <div className="friends-search-result">
+          <div className="group-search-result">
             {this.props.isFinding
               ? '正在查询...'
               : this.getFriendResult(this.props.findingResult)}
@@ -80,6 +86,6 @@ class FriendsAdd extends React.Component<Props> {
 }
 
 export default connect((state: TRPGState) => ({
-  isFinding: state.user.isFindingUser,
-  findingResult: state.user.findingResult,
-}))(FriendsAdd);
+  isFinding: state.group.isFindingGroup,
+  findingResult: state.group.findingResult,
+}))(GroupAdd);

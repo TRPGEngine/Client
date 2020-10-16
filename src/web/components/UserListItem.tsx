@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import _isNil from 'lodash/isNil';
 import { Skeleton, Typography, Space } from 'antd';
 import { isUUID } from '@shared/utils/uuid';
-import { openUserProfile } from './modal/UserProfile';
+import { openUserProfile } from './modals/UserProfile';
 
 const Root = styled.div`
   display: flex;

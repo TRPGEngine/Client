@@ -21,7 +21,7 @@ const editorOptions = {
  * 代码编辑器
  */
 export function useCodeEditor() {
-  const [code, setCode] = useLocalStorage('playground:code', initCode);
+  const [code = '', setCode] = useLocalStorage('playground:code', initCode);
   const editorRef = useRef<editor.IStandaloneCodeEditor>();
 
   const handleEditorChange = useMemo(

@@ -10,6 +10,7 @@
     "sourceMap": true,
     "jsx": "react",
     "strict": true,
+    "skipLibCheck": true,
     "noImplicitAny": false,
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
