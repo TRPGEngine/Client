@@ -2,13 +2,22 @@ import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Button, Space, Typography } from 'antd';
 import { useTranslation } from '@shared/i18n';
-import { useIsGroupManager, useJoinedGroupInfo } from '@redux/hooks/group';
+import {
+  useIsGroupManager,
+  useJoinedGroupInfo,
+  useIsGroupOwner,
+} from '@redux/hooks/group';
 import styled from 'styled-components';
 import { useCachedUserInfo } from '@shared/hooks/useCache';
 import { getUserName } from '@shared/utils/data-helper';
 import { useCurrentUserUUID } from '@redux/hooks/user';
-import { setMemberToManager, tickMember } from '@shared/model/group';
+import {
+  setMemberToManager,
+  tickMember,
+  setManagerToMember,
+} from '@shared/model/group';
 import { showAlert, showToasts } from '@shared/manager/ui';
+import { UpSquareOutlined, DownSquareOutlined } from '@ant-design/icons';
 
 const GroupMemberItemContainer = styled.div`
   padding: 10px;
@@ -29,6 +38,7 @@ const GroupMemberItem: React.FC<{
   const { t } = useTranslation();
   const currentUserUUID = useCurrentUserUUID();
   const isGroupManager = useIsGroupManager(groupUUID, userUUID);
+  const isGroupOwner = useIsGroupOwner(groupUUID, currentUserUUID);
 
   const handleRaiseManager = useCallback(() => {
     showAlert({
@@ -36,6 +46,19 @@ const GroupMemberItem: React.FC<{
       onConfirm: async () => {
         try {
           await setMemberToManager(groupUUID, userUUID);
+        } catch (err) {
+          showToasts(String(err), 'error');
+        }
+      },
+    });
+  }, [groupUUID, userUUID]);
+
+  const handleDownManager = useCallback(() => {
+    showAlert({
+      message: '确定要将管理员降级为普通用户么?',
+      onConfirm: async () => {
+        try {
+          await setManagerToMember(groupUUID, userUUID);
         } catch (err) {
           showToasts(String(err), 'error');
         }
@@ -64,9 +87,16 @@ const GroupMemberItem: React.FC<{
         <div>你自己</div>
       ) : (
         <Space>
-          {!isGroupManager && (
-            <Button onClick={handleRaiseManager}>{t('升为管理')}</Button>
-          )}
+          {isGroupOwner === true &&
+            (!isGroupManager ? (
+              <Button icon={<UpSquareOutlined />} onClick={handleRaiseManager}>
+                {t('升为管理')}
+              </Button>
+            ) : (
+              <Button icon={<DownSquareOutlined />} onClick={handleDownManager}>
+                {t('降为成员')}
+              </Button>
+            ))}
           <Button danger={true} onClick={handleTickMember}>
             {t('踢出团')}
           </Button>

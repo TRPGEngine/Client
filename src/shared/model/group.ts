@@ -91,6 +91,21 @@ export async function setMemberToManager(
 }
 
 /**
+ * 将某位成员提升为管理员
+ * @param groupUUID 团UUID
+ * @param memberUUID 成员UUID
+ */
+export async function setManagerToMember(
+  groupUUID: string,
+  memberUUID: string
+): Promise<void> {
+  await request.post(`/group/setManagerToMember`, {
+    groupUUID,
+    memberUUID,
+  });
+}
+
+/**
  * 将某位成员踢出团
  * @param groupUUID 团UUID
  * @param memberUUID 成员UUID

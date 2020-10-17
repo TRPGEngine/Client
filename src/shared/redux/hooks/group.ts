@@ -126,10 +126,22 @@ export function useIsGroupManager(
   groupUUID: string,
   playerUUID?: string
 ): boolean {
-  const currentUserInfo = useCurrentUserInfo();
+  const currentUserUUID = useCurrentUserUUID();
   const managers = useGroupManagerUUIDs(groupUUID);
 
-  return managers.includes(playerUUID ?? currentUserInfo.uuid!);
+  return managers.includes(playerUUID ?? currentUserUUID);
+}
+
+/**
+ * 检测一个用户是否是团拥有者
+ */
+export function useIsGroupOwner(
+  groupUUID: string,
+  playerUUID: string
+): boolean {
+  const groupInfo = useJoinedGroupInfo(groupUUID);
+
+  return groupInfo?.owner_uuid === playerUUID;
 }
 
 /**
