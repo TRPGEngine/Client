@@ -30,6 +30,9 @@ const tsAlias = _(tspathMountMapping)
 
 module.exports = {
   // extends: '@snowpack/app-scripts-react',
+  install: [
+    'antd/dist/antd.dark.css'
+  ],
   exclude: [
     '**/node_modules/**/*',
     '**/__tests__/*',
@@ -44,7 +47,8 @@ module.exports = {
     src: '/_dist_',
   },
   scripts: {
-    'mount:font': 'mount src/web/assets/fonts --to /main/fonts',
+    'mount:font': 'mount src/web/assets/fonts --to /fonts',
+    'mount:font2': 'mount src/web/assets/fonts --to /main/fonts',
   },
   alias: {
     ...tsAlias,
@@ -72,10 +76,21 @@ module.exports = {
             to: 'import resBundle from "./langs/zh-CN/translation.json"',
           },
           {
+            from: `export const resources = resBundle;`,
+            to: 'export const resources = {"zh-CN": {translation: resBundle}};',
+          },
+          {
             from: 'import Config from "config";',
             to: `const Config = ${JSON.stringify({
               sentry: require('config').get('sentry'),
             })};`,
+          },
+
+          // 这里是临时解决方案
+          // https://github.com/snowpackjs/snowpack/discussions/1360
+          {
+            from: 'import "antd/dist/antd.dark.less";',
+            to: 'import "antd/dist/antd.dark.css";',
           },
         ],
       },
