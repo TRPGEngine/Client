@@ -266,3 +266,15 @@ export async function editGroupActor(
 
   return groupActor;
 }
+
+/**
+ * 获取团角色详情信息
+ * @param groupActorUUID 团角色UUID
+ */
+export const fetchGroupActorDetail = async (
+  groupActorUUID: string
+): Promise<GroupActorItem> => {
+  const { data } = await request.get(`/group/actor/detail/${groupActorUUID}`);
+
+  return data.groupActor;
+};

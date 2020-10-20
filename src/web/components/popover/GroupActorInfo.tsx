@@ -11,7 +11,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { Button, Divider } from 'antd';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { showModal } from '@redux/actions/ui';
-import ActorInfo from '../modal/ActorInfo';
+import ActorInfo from '../modals/ActorInfo';
 import { useTPopoverContext } from './index';
 import { useTranslation } from '@shared/i18n';
 

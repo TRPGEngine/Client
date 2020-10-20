@@ -5,7 +5,7 @@ import { Iconfont } from '@web/components/Iconfont';
 import { PillTabs } from '@web/components/PillTabs';
 import { FindGroup } from './FindGroup';
 import { Typography, Button } from 'antd';
-import { GroupCreate } from '@web/components/modal/GroupCreate';
+import { GroupCreate } from '@web/components/modals/GroupCreate';
 import { openModal, ModalWrapper } from '@web/components/Modal';
 const { TabPane } = PillTabs;
 

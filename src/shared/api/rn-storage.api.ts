@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime'; // react-native-storage 需要, 确保其存在
 import Storage, { NotFoundError } from 'react-native-storage';
 import config from '../project.config';
 import _isNil from 'lodash/isNil';

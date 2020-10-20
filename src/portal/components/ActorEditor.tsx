@@ -6,7 +6,7 @@ import XMLBuilder, {
   DataMap,
 } from '@shared/components/layout/XMLBuilder';
 import _isFunction from 'lodash/isFunction';
-import { fetchGroupActorDetail } from '@portal/model/group';
+import { fetchGroupActorDetail } from '@shared/model/group';
 
 interface Props {
   uuid: string; // 角色UUID或团角色UUID

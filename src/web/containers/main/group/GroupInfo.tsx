@@ -15,7 +15,7 @@ import {
   setGroupStatus,
 } from '../../../../shared/redux/actions/group';
 import ImageViewer from '../../../components/ImageViewer';
-import GroupEdit from '../../../components/modal/GroupEdit';
+import GroupEdit from '../../../components/modals/GroupEdit';
 // import GroupEdit from './modal/GroupEdit';
 import _get from 'lodash/get';
 

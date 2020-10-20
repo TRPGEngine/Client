@@ -46,14 +46,6 @@ export const fetchGroupActorList = async (
   return data.list;
 };
 
-export const fetchGroupActorDetail = async (
-  groupActorUUID: string
-): Promise<GroupActorItem> => {
-  const { data } = await request.get(`/group/actor/detail/${groupActorUUID}`);
-
-  return data.groupActor;
-};
-
 /**
  * 申请创建团角色
  * @param groupUUID 团UUID

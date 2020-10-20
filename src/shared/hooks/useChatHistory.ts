@@ -1,8 +1,8 @@
 import { useWebAuthRequest } from './useWebAuthRequest';
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useAsync } from 'react-use';
-import { ChatLogItem } from '@portal/model/chat';
 import _isNil from 'lodash/isNil';
+import { MsgPayload } from '@redux/types/chat';
 
 /**
  * 聊天历史记录
@@ -16,7 +16,7 @@ export function useChatHistory(converseUUID: string, size: number) {
 
   const { loading, value } = useAsync(() => {
     return request<{
-      logs: ChatLogItem[];
+      logs: MsgPayload[];
       count: number;
     }>(`/group/log/${converseUUID}`, 'get', {
       page,

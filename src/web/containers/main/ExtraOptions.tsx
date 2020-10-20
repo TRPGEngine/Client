@@ -4,15 +4,15 @@ import config from '@src/shared/project.config';
 import { logout, loginWithToken } from '@src/shared/redux/actions/user';
 import { showModal, switchMenuPannel } from '@shared/redux/actions/ui';
 import { addNote } from '@shared/redux/actions/note';
-import ActorCreate from '@web/components/modal/ActorCreate';
+import ActorCreate from '@web/components/modals/ActorCreate';
 // import IsDeveloping from '../../components/IsDeveloping';
-import GroupCreateOld from '@web/components/modal/GroupCreateOld';
+import GroupCreateOld from '@web/components/modals/GroupCreateOld';
 import ChangePassword from '@web/components/ChangePassword';
-import FriendsAdd from '@web/components/modal/FriendsAdd';
-import GroupAdd from '@web/components/modal/GroupAdd';
-import UserSettingsModal from '@web/components/modal/UserSettings';
-import SystemSettings from '@web/components/modal/SystemSettings';
-import SystemStatus from '@web/components/modal/SystemStatus';
+import FriendsAdd from '@web/components/modals/FriendsAdd';
+import GroupAdd from '@web/components/modals/GroupAdd';
+import UserSettingsModal from '@web/components/modals/UserSettings';
+import SystemSettings from '@web/components/modals/SystemSettings';
+import SystemStatus from '@web/components/modals/SystemStatus';
 import ModalPanel from '@web/components/ModalPanel';
 import rnStorage from '@shared/api/rn-storage.api';
 
@@ -20,7 +20,7 @@ import './ExtraOptions.scss';
 import { showPortal } from '@web/redux/action/ui';
 import DevContainer from '@web/components/DevContainer';
 import { PortalView } from '@web/components/PortalView';
-import { UserSelector } from '@web/components/modal/UserSelector';
+import { UserSelector } from '@web/components/modals/UserSelector';
 import { switchToAppVersion } from '@web/utils/debug-helper';
 
 interface ExtraActionItems {

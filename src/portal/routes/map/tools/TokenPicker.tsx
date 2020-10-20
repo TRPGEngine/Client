@@ -2,12 +2,12 @@ import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Collapse, List } from 'antd';
 import Avatar from '@web/components/Avatar';
-import { GroupActorItem } from '@shared/model/group';
 import { AppendTokenAction } from './actions/AppendTokenAction';
 import { AppendImageTokenAction } from './actions/AppendImageTokenAction';
 import { ActorToken } from '@shared/components/tiledmap/layer/token/ActorToken';
 import { TiledMapManager } from '@shared/components/tiledmap/core/manager';
 import { ImageToken } from '@shared/components/tiledmap/layer/token/ImageToken';
+import { GroupActorItem } from '@shared/types/group';
 
 const Panel = Collapse.Panel;
 

@@ -121,7 +121,7 @@ const ChatWritingIndicatorInner: React.FC<Props> = TMemo((props) => {
     );
   }, [list]);
 
-  const [ref, { height: detailHeight }] = useMeasure();
+  const [ref, { height: detailHeight }] = useMeasure<HTMLDivElement>();
   const detailStyle = useSpring({
     from: {
       height: 0,

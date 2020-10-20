@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Button } from 'antd';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { showModal } from '@redux/actions/ui';
-import ActorCreate from '@web/components/modal/ActorCreate';
+import ActorCreate from '@web/components/modals/ActorCreate';
 import { ActorList } from './ActorList';
 import { useTranslation } from '@shared/i18n';
 const { TabPane } = PillTabs;
