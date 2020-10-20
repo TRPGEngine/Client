@@ -12,6 +12,8 @@ import { LogEdit } from './log-edit';
 import { PortraitContainer } from '@portal/components/PortraitContainer';
 import { MsgPayload } from '@redux/types/chat';
 import { GroupItem } from '@shared/model/group';
+import { useLocation, useParams } from 'react-router';
+import qs from 'qs';
 const Option = Select.Option;
 const RangePicker = DatePicker.RangePicker;
 
@@ -24,18 +26,23 @@ function useGroupTimeRange() {
   const [groupList, setGroupList] = useState<GroupItem[]>([]);
   const [selectedGroupUUID, setSelectedGroupUUID] = useState<string>();
   const [timeRange, setTimeRange] = useState<[Moment | null, Moment | null]>([
-    moment()
-      .subtract(1, 'days')
-      .second(0)
-      .minute(0),
-    moment()
-      .add(1, 'hours')
-      .second(0)
-      .minute(0),
+    moment().subtract(1, 'days').second(0).minute(0),
+    moment().add(1, 'hours').second(0).minute(0),
   ]);
 
   useEffect(() => {
-    fetchOwnGroupList().then(setGroupList);
+    fetchOwnGroupList().then((groupList) => {
+      const query = qs.parse(window.location.search, {
+        ignoreQueryPrefix: true,
+      });
+      const autoGroupUUID = query.groupUUID;
+
+      if (groupList.map((group) => group.uuid).includes(autoGroupUUID)) {
+        // 如果列表包含传入的UUID，则自动选中
+        setSelectedGroupUUID(autoGroupUUID);
+      }
+      setGroupList(groupList);
+    });
   }, []);
 
   const node = useMemo(() => {
