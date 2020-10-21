@@ -252,7 +252,7 @@
     "sass-loader": "^8.0.2",
     "snowpack": "^2.14.0",
     "snowpack-plugin-less": "^1.0.3",
-    "snowpack-plugin-replace": "^1.0.3",
+    "snowpack-plugin-replace": "^1.0.4",
     "standard-version": "^7.0.1",
     "style-loader": "^1.2.1",
     "ts-jest": "^25.3.1",

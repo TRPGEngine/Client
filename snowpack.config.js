@@ -48,7 +48,7 @@ module.exports = {
   },
   scripts: {
     'mount:font': 'mount src/web/assets/fonts --to /fonts',
-    'mount:font2': 'mount src/web/assets/fonts --to /main/fonts',
+    'mount:favicon': 'mount src/web/assets/img --to /',
   },
   alias: {
     ...tsAlias,
@@ -92,6 +92,11 @@ module.exports = {
             from: 'import "antd/dist/antd.dark.less";',
             to: 'import "antd/dist/antd.dark.css";',
           },
+          {
+            file: require.resolve('./src/web/assets/css/iconfont.css'),
+            from: /\.\.\/fonts\/iconfont/g,
+            to: '/fonts/iconfont',
+          }
         ],
       },
     ],
@@ -105,6 +110,7 @@ module.exports = {
     open: 'none',
     port: 8089,
     out: '.snowpack',
-    output: 'stream'
+    output: 'stream',
+    hmrErrorOverlay: false
   },
 };
