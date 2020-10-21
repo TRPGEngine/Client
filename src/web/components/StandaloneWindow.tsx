@@ -6,6 +6,10 @@ import _isNumber from 'lodash/isNumber';
 import styled from 'styled-components';
 import styledTheme from '@shared/utils/theme';
 import { useWindowSize } from 'react-use';
+import Webview from './Webview';
+import { getUserJWT } from '@shared/utils/jwt-helper';
+import { getPortalUrl } from '@shared/utils/string-helper';
+import _isString from 'lodash/isString';
 
 export interface StandaloneWindowConfig {
   options?: RndProps;
@@ -22,6 +26,7 @@ const Container = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
+  z-index: 9999;
 
   > div {
     pointer-events: auto;
@@ -44,7 +49,7 @@ const WindowContainer = styled.div`
     padding: 10px 6px;
     font-size: 18px;
     border-bottom: ${styledTheme.border.standard};
-    cursor: default;
+    cursor: move;
 
     > .window-container-title-action {
       display: flex;
@@ -164,3 +169,23 @@ StandaloneWindow.open = (config) => {
 };
 
 export default StandaloneWindow;
+
+/**
+ * 打开一个portal窗口
+ */
+export async function openPortalWindow(
+  portalUrl: string,
+  options?: Omit<StandaloneWindowConfig, 'body'>
+) {
+  const jwt = await getUserJWT(); // 检查WebToken
+  // 将获取到的当前用户的WebToken设置到jwt上。jwt为portal需要使用的localStorage
+  if (_isString(jwt)) {
+    window.localStorage.setItem('jwt', jwt);
+  }
+  const node = React.createElement(Webview, { src: getPortalUrl(portalUrl) });
+
+  StandaloneWindow.open!({
+    ...options,
+    body: node,
+  });
+}
