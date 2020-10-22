@@ -6,10 +6,10 @@ import _isString from 'lodash/isString';
 import { toGroupActorWithBlobUrl } from '@web/utils/upload-helper';
 import { isBlobUrl } from '@shared/utils/string-helper';
 import { ModelAccess } from './types';
-import { ChatLogItem } from './chat';
 import { GroupActorItem, GroupItem } from '@shared/model/group';
 import { bindFileAvatarAttachUUID } from '@shared/model/file';
 import { getJWTUserInfo } from '@shared/utils/jwt-helper';
+import { ChatLogItem } from '@shared/model/chat';
 
 /**
  * 获取自己拥有的所有团

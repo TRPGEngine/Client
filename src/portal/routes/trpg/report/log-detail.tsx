@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { ReportLogItem } from '@portal/model/trpg';
+import { ReportLogItem } from '@shared/model/trpg';
 import { LogItem } from './log-item';
 import { useSpring, animated } from 'react-spring';
 import styled from 'styled-components';

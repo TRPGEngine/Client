@@ -177,7 +177,11 @@ const TRPGReportCreate: React.FC = TMemo(() => {
       {showSelector ? (
         Selector
       ) : (
-        <LogEdit playerUUID={_get(userInfo, 'uuid')} logs={logs} />
+        <LogEdit
+          playerUUID={_get(userInfo, 'uuid')}
+          groupUUID={selectedGroupUUID!}
+          logs={logs}
+        />
       )}
     </Container>
   );

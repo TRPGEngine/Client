@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { ChatLogItem } from '@portal/model/chat';
+import { ChatLogItem } from '@shared/model/chat';
 import styled from 'styled-components';
 import { Row, Button, Checkbox, Modal, Form, Input, message } from 'antd';
 import _pick from 'lodash/pick';
@@ -9,7 +9,7 @@ import {
   createTRPGGameReport,
   reportLogRequireKey,
   EditLogItem,
-} from '@portal/model/trpg';
+} from '@shared/model/trpg';
 import { handleError } from '@portal/utils/error';
 import history from '@portal/history';
 import { LogItem } from './log-item';
@@ -64,10 +64,12 @@ LogEditItem.displayName = 'LogEditItem';
 
 interface LogEditProps {
   playerUUID: string;
+  groupUUID: string;
   logs: ChatLogItem[];
 }
 export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
   const playerUUID = props.playerUUID;
+  const groupUUID = props.groupUUID;
   const [logs, setLogs] = useState<EditLogItem[]>([]);
   useEffect(() => {
     setLogs(
@@ -102,7 +104,7 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
       .map((log) => _pick(log, reportLogRequireKey)); // 仅提取需要的字段
 
     setModalLoading(true);
-    createTRPGGameReport(reportName, playerUUID, selectedLogs)
+    createTRPGGameReport(reportName, playerUUID, groupUUID, selectedLogs)
       .then((reportUUID) => {
         message.success('创建成功, 1秒后跳转到预览');
         setTimeout(
@@ -114,7 +116,7 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
       .finally(() => {
         setModalLoading(false);
       });
-  }, [reportName, playerUUID, logs]);
+  }, [reportName, playerUUID, groupUUID, logs]);
 
   const { modal, showModal, setLoading: setModalLoading } = useModal(
     '生成战报',
