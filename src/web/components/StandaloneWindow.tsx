@@ -141,7 +141,12 @@ StandaloneWindow.defaultProps = {
   title: '新窗口',
 };
 
-// 打开操作
+/**
+ * 打开操作
+ *
+ * TODO: 需要改成portal实现
+ * @param config
+ */
 StandaloneWindow.open = (config) => {
   const div = document.createElement('div');
   document.body.appendChild(div);

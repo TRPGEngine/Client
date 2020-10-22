@@ -2,17 +2,7 @@ import { request } from '@portal/utils/request';
 import { hpack, hunpack } from '@shared/utils/json-helper';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
-import { ReportLogItem } from '@shared/model/trpg';
-
-export interface GameReport {
-  uuid: string;
-  title: string;
-  cast: any;
-  content: {
-    playerUUID: string;
-    logs: ReportLogItem[];
-  };
-}
+import { GameReport } from '@shared/model/trpg';
 
 /**
  * 获取团战报

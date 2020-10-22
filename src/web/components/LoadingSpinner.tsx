@@ -2,7 +2,7 @@ import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import './LoadingSpinner.scss';
 
-const LoadingSpinner: React.FC = TMemo(() => {
+export const LoadingSpinner: React.FC = TMemo(() => {
   return (
     <div className="loading-spinner-container">
       <div className="loading-spinner-inner">

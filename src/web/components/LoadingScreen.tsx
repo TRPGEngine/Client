@@ -8,7 +8,7 @@ interface Props {
   text: string;
 }
 
-const Loading: React.FC<Props> = React.memo((props) => {
+const LoadingScreen: React.FC<Props> = React.memo((props) => {
   if (!props.show) {
     return null;
   }
@@ -25,4 +25,4 @@ const Loading: React.FC<Props> = React.memo((props) => {
   );
 });
 
-export default Loading;
+export default LoadingScreen;
