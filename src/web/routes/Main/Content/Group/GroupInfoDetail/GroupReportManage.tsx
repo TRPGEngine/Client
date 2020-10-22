@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { Fragment, useCallback, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Button, Divider, Table } from 'antd';
 import { openPortalWindow } from '@web/components/StandaloneWindow';
@@ -6,8 +6,9 @@ import { fetchGroupReport, GameReport } from '@shared/model/trpg';
 import { useAsync } from 'react-use';
 import { LoadingSpinner } from '@web/components/LoadingSpinner';
 import _isNil from 'lodash/isNil';
-import { t, useTranslation } from '@shared/i18n';
+import { useTranslation } from '@shared/i18n';
 import { TableProps } from 'antd/lib/table/Table';
+import { useIsGroupManager } from '@redux/hooks/group';
 
 interface GroupReportManageProps {
   groupUUID: string;
@@ -69,6 +70,7 @@ GroupReportList.displayName = 'GroupReportList';
 export const GroupReportManage: React.FC<GroupReportManageProps> = TMemo(
   (props) => {
     const { groupUUID } = props;
+    const isGroupManager = useIsGroupManager(groupUUID);
 
     const handleCreateReport = useCallback(() => {
       openPortalWindow(`/trpg/report/create?groupUUID=${groupUUID}`);
@@ -76,11 +78,15 @@ export const GroupReportManage: React.FC<GroupReportManageProps> = TMemo(
 
     return (
       <div>
-        <Button type="primary" onClick={handleCreateReport}>
-          创建战报
-        </Button>
+        {isGroupManager && (
+          <Fragment>
+            <Button type="primary" onClick={handleCreateReport}>
+              创建战报
+            </Button>
 
-        <Divider />
+            <Divider />
+          </Fragment>
+        )}
 
         {/* 战报列表 */}
         <GroupReportList groupUUID={groupUUID} />

@@ -50,8 +50,7 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
             },
             {
               type: 'item',
-              title: t('战报管理'),
-              hidden: !isGroupManager,
+              title: t('跑团战报'),
               content: <GroupReportManage groupUUID={groupUUID} />,
             },
             {
