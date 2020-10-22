@@ -1,6 +1,5 @@
 import React, { ReactNode, useMemo } from 'react';
 import { Rnd, Props as RndProps } from 'react-rnd';
-import ReactDOM from 'react-dom';
 import _isFunction from 'lodash/isFunction';
 import _isNumber from 'lodash/isNumber';
 import styled from 'styled-components';
@@ -10,6 +9,8 @@ import Webview from './Webview';
 import { getUserJWT } from '@shared/utils/jwt-helper';
 import { getPortalUrl } from '@shared/utils/string-helper';
 import _isString from 'lodash/isString';
+import { PortalAdd, PortalRemove } from '@web/utils/portal';
+import { useIsMobile } from '@web/hooks/useIsMobile';
 
 export interface StandaloneWindowConfig {
   options?: RndProps;
@@ -36,8 +37,10 @@ const Container = styled.div`
 const WindowContainer = styled.div`
   box-shadow: ${styledTheme.boxShadow.normal};
   border-radius: ${styledTheme.radius.standard};
-  background-color: white;
-  color: ${styledTheme.color['cod-gray']};
+  background-color: ${({ theme }) =>
+    theme.mixins.modeValue(['white', theme.color.graySet[9]])};
+  color: ${({ theme }) =>
+    theme.mixins.modeValue([theme.color['cod-gray'], theme.color['gallery']])};
   width: 100%;
   height: 100%;
   display: flex;
@@ -48,7 +51,7 @@ const WindowContainer = styled.div`
     justify-content: space-between;
     padding: 10px 6px;
     font-size: 18px;
-    border-bottom: ${styledTheme.border.standard};
+    border-bottom: ${({ theme }) => theme.border.standard};
     cursor: move;
 
     > .window-container-title-action {
@@ -99,13 +102,14 @@ const StandaloneWindow: React.FC<StandaloneWindowConfig> & {
   open?: (config: StandaloneWindowConfig) => void;
 } = React.memo((props) => {
   const { width, height } = useWindowSize();
+  const isMobile = useIsMobile();
 
   const defaultPos = useMemo(() => {
     const defaultPos = props.options!.default!;
 
     return {
       ...defaultPos,
-      x: width / 2 + currentWindowNum * 40,
+      x: isMobile ? 0 : width / 2 + currentWindowNum * 40,
       y: _isNumber(defaultPos?.height)
         ? height - defaultPos!.height
         : height / 2,
@@ -132,8 +136,8 @@ StandaloneWindow.defaultProps = {
     default: {
       x: 0,
       y: 0,
-      width: 360,
-      height: 420,
+      width: 375,
+      height: 600,
     },
     minWidth: 180,
     minHeight: 210,
@@ -143,33 +147,20 @@ StandaloneWindow.defaultProps = {
 
 /**
  * 打开操作
- *
- * TODO: 需要改成portal实现
  * @param config
  */
 StandaloneWindow.open = (config) => {
-  const div = document.createElement('div');
-  document.body.appendChild(div);
-
-  function destroy() {
-    const unmountResult = ReactDOM.unmountComponentAtNode(div);
-    if (unmountResult && div.parentNode) {
-      div.parentNode.removeChild(div);
-      currentWindowNum--;
-    }
-  }
-
   currentWindowNum++;
-  ReactDOM.render(
+  const key = PortalAdd(
     <StandaloneWindow
       {...config}
       onClose={(e) => {
         e.stopPropagation();
-        destroy();
+        PortalRemove(key);
+        currentWindowNum--;
         _isFunction(config.onClose) && config.onClose(e);
       }}
-    />,
-    div
+    />
   );
 };
 
