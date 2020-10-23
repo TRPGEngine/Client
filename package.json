@@ -1,6 +1,6 @@
 {
   "name": "trpg-game-client",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "专注于TRPG跑团的IM即时应用聊天软件",
   "main": "./dist/entry.js",
   "productName": "TRPG Engine",
@@ -253,7 +253,7 @@
     "snowpack": "^2.14.0",
     "snowpack-plugin-less": "^1.0.3",
     "snowpack-plugin-replace": "^1.0.4",
-    "standard-version": "^8.0.1",
+    "standard-version": "^9.0.0",
     "style-loader": "^1.2.1",
     "ts-jest": "^25.3.1",
     "ts-loader": "^7.0.2",
