@@ -6,6 +6,7 @@ config/local.js
 build/metro/conf.json
 build/emoji/emoji/
 android/gradle.properties
+.snowpack/
 
 # Logs
 logs

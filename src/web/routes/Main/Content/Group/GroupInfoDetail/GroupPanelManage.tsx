@@ -9,7 +9,7 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { updatePanelOrder, removePanel } from '@shared/model/panel';
 import { showToasts, showAlert } from '@shared/manager/ui';
 import { openModal, ModalWrapper } from '@web/components/Modal';
-import { GroupPanelUpdateInfo } from '@web/components/modal/GroupPanelUpdateInfo';
+import { GroupPanelUpdateInfo } from '@web/components/modals/GroupPanelUpdateInfo';
 import { useTranslation } from '@shared/i18n';
 import { GroupPanel } from '@shared/types/panel';
 

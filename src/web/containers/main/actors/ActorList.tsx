@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import * as at from 'trpg-actor-template';
 import { ActorCard, ActorCardContainer } from '@web/components/ActorCard';
-import ActorCreate from '@web/components/modal/ActorCreate';
-import ActorEdit from '@web/components/modal/ActorEdit';
+import ActorCreate from '@web/components/modals/ActorCreate';
+import ActorEdit from '@web/components/modals/ActorEdit';
 import { showModal, showAlert } from '@shared/redux/actions/ui';
 import {
   removeActor,
@@ -11,7 +11,7 @@ import {
   unshareActor,
   selectActor,
 } from '@shared/redux/actions/actor';
-import ActorInfo from '@web/components/modal/ActorInfo';
+import ActorInfo from '@web/components/modals/ActorInfo';
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
 

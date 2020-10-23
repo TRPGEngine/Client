@@ -1,4 +1,5 @@
 import _clamp from 'lodash/clamp';
+import _padStart from 'lodash/padStart';
 
 /**
  * 将hex颜色根据不透明度转化为相应的半透明色彩
@@ -10,8 +11,10 @@ export function buildTransparentColorWithHex(
   opacity: number
 ): string {
   opacity = _clamp(opacity, 0, 1);
-  const opacityHex = Number((opacity * 255).toFixed())
-    .toString(16)
-    .padStart(2, '0');
+  const opacityHex = _padStart(
+    Number((opacity * 255).toFixed()).toString(16),
+    2,
+    '0'
+  );
   return hexColor + opacityHex.toUpperCase();
 }

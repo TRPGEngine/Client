@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import config from '@shared/project.config';
 import { showAlert } from '@shared/redux/actions/ui';
-import ActorCreate from '@web/components/modal/ActorCreate';
+import ActorCreate from '@web/components/modals/ActorCreate';
 import { TMemo } from '@shared/components/TMemo';
 import {
   useTRPGDispatch,
@@ -53,8 +53,9 @@ const ActorSelect: React.FC<Props> = TMemo((props) => {
                 <div
                   className="actor-avatar"
                   style={{
-                    backgroundImage: `url(${item.avatar ||
-                      config.defaultImg.actor})`,
+                    backgroundImage: `url(${
+                      item.avatar || config.defaultImg.actor
+                    })`,
                   }}
                 />
                 <div className="actor-info">

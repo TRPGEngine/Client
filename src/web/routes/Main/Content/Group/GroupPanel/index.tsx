@@ -2,7 +2,7 @@ import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useParams } from 'react-router';
 import { Result } from 'antd';
-import { GroupChatPanel } from './GroupPanel/GroupChatPanel';
+import { GroupChatPanel } from './GroupChatPanel';
 import { useGroupPanelInfo } from '@redux/hooks/group';
 import _isNil from 'lodash/isNil';
 import { hasPanel } from '@shared/components/panel/reg';

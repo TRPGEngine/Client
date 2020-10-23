@@ -3,6 +3,7 @@ import { fileUrl } from '../api/trpg.api';
 import _set from 'lodash/set';
 import _isFunction from 'lodash/isFunction';
 import _isNil from 'lodash/isNil';
+import { request } from './request';
 
 export interface UploadOption {
   headers?: {};
@@ -18,7 +19,7 @@ export interface AvatarUpdateData {
   uuid: string; // 对应头像的UUID
 }
 
-export const generateFileMsgData = function(file) {
+export const generateFileMsgData = function (file) {
   const tmp = file.name.split('.');
   return {
     originalname: file.name,
@@ -31,8 +32,10 @@ export const generateFileMsgData = function(file) {
 /**
  * 上传到服务器
  * file api
+ * @deprecated 应该使用通用的jwt校验机制
+ * 可参考 toPersistenceImage
  */
-const _upload = function(
+const _upload = function (
   path: string,
   userUUID: string,
   file: File,
@@ -77,7 +80,7 @@ const _upload = function(
  * @param file 文件名
  * @param options 其他选项
  */
-export const toTemporary = function(
+export const toTemporary = function (
   userUUID: string,
   file: File,
   options?: UploadOption
@@ -91,7 +94,7 @@ export const toTemporary = function(
  * @param file 文件名
  * @param options 其他选项
  */
-export const toPersistence = function(
+export const toPersistence = function (
   userUUID: string,
   file: File,
   options?: UploadOption
@@ -105,7 +108,7 @@ export const toPersistence = function(
  * @param file 文件名
  * @param options 其他选项
  */
-export const toAvatar = function(
+export const toAvatar = function (
   userUUID: string,
   file: File,
   options: UploadOption = {}
@@ -121,7 +124,7 @@ export const toAvatar = function(
 /**
  * 类似于toAvatar， 但是avatar-type会被设置为团角色
  */
-export const toGroupAvatar = function(
+export const toGroupAvatar = function (
   userUUID: string,
   file: File,
   options: UploadOption = {}
@@ -129,3 +132,43 @@ export const toGroupAvatar = function(
   _set(options, 'headers.avatar-type', 'groupActor');
   return toAvatar(userUUID, file, options);
 };
+
+interface ToPersistenceImageOptions {
+  usage?: string;
+  attachUUID?: string;
+  onProgress?: (percent: number, progressEvent: any) => void;
+}
+interface ToPersistenceImageRet {
+  url: string;
+  isLocal: boolean;
+  uuid: string;
+}
+/**
+ * 上传持久化图片
+ */
+export async function toPersistenceImage(
+  file: File,
+  options: ToPersistenceImageOptions = {}
+): Promise<ToPersistenceImageRet> {
+  const { usage, attachUUID } = options;
+  const form = new FormData();
+  form.append('image', file);
+  const { data } = await request.post('/file/v2/image/upload', form, {
+    headers: {
+      usage,
+      'attach-uuid': attachUUID,
+    },
+    onUploadProgress(progressEvent) {
+      if (progressEvent.lengthComputable) {
+        options &&
+          _isFunction(options.onProgress) &&
+          options.onProgress(
+            progressEvent.loaded / progressEvent.total,
+            progressEvent
+          );
+      }
+    },
+  });
+
+  return data;
+}

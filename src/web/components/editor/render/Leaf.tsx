@@ -1,7 +1,12 @@
 import React from 'react';
 import { RenderLeafProps } from 'slate-react';
+import { EditorType } from './type';
 
-export const SlateLeaf: React.FC<RenderLeafProps> = ({
+interface EditorLeafProps extends RenderLeafProps {
+  editorType: EditorType;
+}
+
+export const SlateLeaf: React.FC<EditorLeafProps> = ({
   attributes,
   children,
   leaf,

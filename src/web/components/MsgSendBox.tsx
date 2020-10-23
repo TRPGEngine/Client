@@ -5,7 +5,7 @@ import EmojiPanel from './EmojiPanel';
 import * as pasteUtils from '@shared/utils/paste-utils';
 import { sendMsg } from '@shared/redux/actions/chat';
 import { showModal, hideModal } from '@shared/redux/actions/ui';
-import ActorSelect from './modal/ActorSelect';
+import ActorSelect from './modals/ActorSelect';
 import config from '@shared/project.config';
 import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { Mentions } from 'antd';

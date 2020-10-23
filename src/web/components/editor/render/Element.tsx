@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { RenderElementProps, useSelected, useFocused } from 'slate-react';
 import { TMemo } from '@shared/components/TMemo';
 import _get from 'lodash/get';
 import Image from '@web/components/Image';
+import { EditorType } from './type';
 
-export const SlateElement: React.FC<RenderElementProps> = (props) => {
-  const { attributes, children, element } = props;
+interface EditorElementProps extends RenderElementProps {
+  editorType: EditorType;
+}
+
+export const SlateElement: React.FC<EditorElementProps> = (props) => {
+  const { attributes, children, element, editorType } = props;
 
   switch (element.type) {
     case 'mention':
@@ -31,7 +36,7 @@ export const SlateElement: React.FC<RenderElementProps> = (props) => {
   }
 };
 
-const MentionElement: React.FC<RenderElementProps> = TMemo((props) => {
+const MentionElement: React.FC<EditorElementProps> = TMemo((props) => {
   const { attributes, children, element } = props;
   const selected = useSelected();
   const focused = useFocused();
@@ -58,23 +63,24 @@ const MentionElement: React.FC<RenderElementProps> = TMemo((props) => {
 });
 MentionElement.displayName = 'MentionElement';
 
-const ImageElement: React.FC<RenderElementProps> = TMemo((props) => {
-  const { attributes, children, element } = props;
+const ImageElement: React.FC<EditorElementProps> = TMemo((props) => {
+  const { attributes, children, element, editorType } = props;
   const selected = useSelected();
   const focused = useFocused();
+  const style = useMemo(
+    () => ({
+      display: 'inline-block',
+      maxWidth: '100%',
+      maxHeight: editorType === 'inline' ? '4em' : undefined,
+      boxShadow: selected && focused ? '0 0 0 3px #B4D5FF' : 'none',
+      verticalAlign: 'bottom',
+    }),
+    [editorType, selected, focused]
+  );
 
   return (
     <span {...attributes}>
-      <Image
-        src={String(element.url)}
-        style={{
-          display: 'inline-block',
-          maxWidth: '100%',
-          maxHeight: '4em',
-          boxShadow: selected && focused ? '0 0 0 3px #B4D5FF' : 'none',
-          verticalAlign: 'bottom',
-        }}
-      />
+      <Image src={String(element.url)} style={style} />
       {children}
     </span>
   );

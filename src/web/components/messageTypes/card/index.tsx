@@ -1,14 +1,14 @@
 import React from 'react';
-import Base from './Base';
+import Base from '../Base';
 
-import DefaultCard from './card/DefaultCard';
-import BaseCard from './card/BaseCard';
-import FriendInvite from './card/FriendInvite';
-import GroupRequest from './card/GroupRequest';
-import GroupInvite from './card/GroupInvite';
-import DiceRequest from './card/DiceRequest';
-import DiceInvite from './card/DiceInvite';
-import Actor from './card/Actor';
+import DefaultCard from './DefaultCard';
+import BaseCard from './BaseCard';
+import FriendInvite from './FriendInvite';
+import GroupRequest from './GroupRequest';
+import GroupInvite from './GroupInvite';
+import DiceRequest from './DiceRequest';
+import DiceInvite from './DiceInvite';
+import Actor from './Actor';
 
 const CardType = {
   default: DefaultCard,

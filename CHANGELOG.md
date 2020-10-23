@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.6](https://github.com/TRPGEngine/Client/compare/v0.4.5...v0.4.6) (2020-10-23)
+
+
+### Features
+
+* **portal:** 创建战报允许通过指定groupUUID来快速选中 ([f258bf1](https://github.com/TRPGEngine/Client/commit/f258bf1e2c8a634fe3a6703b1647eb1d223bb5e2))
+* **web:** 团面板增加未读消息提醒 ([82bd442](https://github.com/TRPGEngine/Client/commit/82bd4427bb32b7c00e82ce29c6ead2465b27105c))
+* **web:** 增加创建战报功能 ([45f96bf](https://github.com/TRPGEngine/Client/commit/45f96bfa12e45e9a75ad6f959a32ff4e4f6d8dff))
+* **web:** 增加将管理员降级为普通成员的功能 ([ce96622](https://github.com/TRPGEngine/Client/commit/ce96622d2d98dffb9e5c8016611bb46f343a5c64))
+* **web:** 增加战报列表与战报预览 ([2f4fff1](https://github.com/TRPGEngine/Client/commit/2f4fff12234058ce8a8642c1b3355b8d3851b36e))
+* **web:** 笔记图片上传 ([f028a30](https://github.com/TRPGEngine/Client/commit/f028a30aace8ae037b2a5ac00cc6d52984837e74))
+
+
+### Bug Fixes
+
+* **web:** 修复WaveBackground会遮挡输入框的bug ([f1d1919](https://github.com/TRPGEngine/Client/commit/f1d1919e2e0fa5c42cd89776fd48485a44e6c31a))
+* **web:** 修复过久版本chrome不支持padStart的问题 ([13b4799](https://github.com/TRPGEngine/Client/commit/13b479920322cb283c6b8bb15b771773b52cdcd7))
+
 ### [0.4.5](https://github.com/TRPGEngine/Client/compare/v0.4.4...v0.4.5) (2020-10-13)
 
 

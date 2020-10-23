@@ -8,6 +8,7 @@ import _without from 'lodash/without';
 import { useMemo } from 'react';
 import { GroupPanel } from '@shared/types/panel';
 import { isGroupPanelVisible } from '@shared/helper/group';
+import { useConverses } from './chat';
 
 /**
  * @deprecated
@@ -125,10 +126,22 @@ export function useIsGroupManager(
   groupUUID: string,
   playerUUID?: string
 ): boolean {
-  const currentUserInfo = useCurrentUserInfo();
+  const currentUserUUID = useCurrentUserUUID();
   const managers = useGroupManagerUUIDs(groupUUID);
 
-  return managers.includes(playerUUID ?? currentUserInfo.uuid!);
+  return managers.includes(playerUUID ?? currentUserUUID);
+}
+
+/**
+ * 检测一个用户是否是团拥有者
+ */
+export function useIsGroupOwner(
+  groupUUID: string,
+  playerUUID: string
+): boolean {
+  const groupInfo = useJoinedGroupInfo(groupUUID);
+
+  return groupInfo?.owner_uuid === playerUUID;
 }
 
 /**
@@ -169,4 +182,29 @@ export function useGroupChannel(groupUUID: string): GroupChannel[] {
   const channels = groupInfo?.channels ?? [];
 
   return channels;
+}
+
+/**
+ * 获取团所有未读消息列表
+ * @param groupUUID 团UUID
+ */
+export function useGroupUnreadConverseList(groupUUID: string): string[] {
+  const groupInfo = useJoinedGroupInfo(groupUUID);
+  const converses = useConverses(['group', 'channel']);
+  const allConverseUUID = useMemo(() => {
+    return groupInfo?.channels?.map((channel) => channel.uuid) ?? [];
+  }, [groupInfo?.channels]);
+
+  const allUnreadConverseUUIDs = useMemo(() => {
+    return converses
+      .filter(
+        (converse) =>
+          converse.unread === true &&
+          (converse.uuid === groupInfo?.uuid ||
+            allConverseUUID.includes(converse.uuid))
+      )
+      .map((converse) => converse.uuid);
+  }, [converses, allConverseUUID]);
+
+  return allUnreadConverseUUIDs;
 }

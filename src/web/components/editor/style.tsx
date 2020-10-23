@@ -5,6 +5,7 @@ import styled from 'styled-components';
 export const ToolbarButton = styled.span<{
   active?: boolean;
 }>`
+  display: block;
   cursor: pointer;
   color: #cccccc;
   width: 24px;

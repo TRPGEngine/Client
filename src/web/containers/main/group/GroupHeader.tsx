@@ -10,7 +10,7 @@ import Select from 'react-select';
 import { changeSelectGroupActor, sendGroupInvite } from '@redux/actions/group';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { showSlidePanel, hideModal, showModal } from '@redux/actions/ui';
-import { UserSelector } from '@web/components/modal/UserSelector';
+import { UserSelector } from '@web/components/modals/UserSelector';
 import GroupMember from './GroupMember';
 import GroupActor from './GroupActor';
 import { GroupMap } from './GroupMap';

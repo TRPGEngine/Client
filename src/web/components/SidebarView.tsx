@@ -65,6 +65,7 @@ const Content = styled.div`
   flex: 1 1 800px;
   padding: 60px 40px 80px;
   overflow: auto;
+  ${({ theme }) => theme.mixins.mobile('overflow: initial;')}
 `;
 
 const SidebarViewMenuGroupTitle = styled.div`
