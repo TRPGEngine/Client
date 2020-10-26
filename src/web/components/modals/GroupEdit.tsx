@@ -31,7 +31,7 @@ class GroupEdit extends React.Component<Props, State> {
   }
 
   handleSaveGroupInfo() {
-    const groupInfoData: State = Object.assign({}, this.state);
+    const groupInfoData: Partial<State> = { ...this.state };
     delete groupInfoData.avatar;
     this.props.dispatch(
       requestUpdateGroupInfo(this.props.selectedGroupUUID, groupInfoData)
