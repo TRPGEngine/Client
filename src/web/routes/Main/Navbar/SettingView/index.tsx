@@ -37,7 +37,6 @@ export const SettingView: React.FC = TMemo(() => {
           {
             type: 'item',
             title: t('个人设置'),
-            hidden: true, // 暂时没有设置
             content: <SettingUserConfig />,
           },
           {

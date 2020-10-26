@@ -17,6 +17,29 @@ import classNames from 'classnames';
 import { MsgProfile } from './addons/MsgProfile';
 import { MsgItem } from './style';
 import { getWebMsgDefaultAvatar } from '@web/utils/msg-helper';
+import { TMemo } from '@shared/components/TMemo';
+import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+
+/**
+ * 消息容器
+ * 主要是为了拿设置中的对话消息类型
+ */
+const MsgContainer: React.FC<{
+  me: boolean;
+  type: string;
+}> = TMemo((props) => {
+  const { me, type } = props;
+  const msgStyleType = useTRPGSelector(
+    (state) => state.settings.user.msgStyleType
+  );
+
+  return (
+    <MsgItem className={classNames({ me }, type, msgStyleType)}>
+      {props.children}
+    </MsgItem>
+  );
+});
+MsgContainer.displayName = 'MsgContainer';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -90,7 +113,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     }
 
     return (
-      <MsgItem className={classNames({ me }, type)}>
+      <MsgContainer me={me} type={type}>
         {emphasizeTime ? <EmphasizeTime date={info.date} /> : null}
         <MsgProfile name={senderName} date={info.date} />
         <div className="content">
@@ -112,7 +135,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
             )}
           </div>
         </div>
-      </MsgItem>
+      </MsgContainer>
     );
   }
 }

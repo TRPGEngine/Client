@@ -8,7 +8,6 @@ export function getWebMsgDefaultAvatar(uuid: string, name: string): string {
   if (uuid === 'trpgsystem') {
     return config.defaultImg.trpgsystem;
   } else if (uuid === 'trpgbot') {
-    console.log('config.defaultImg.robot', config.defaultImg.robot);
     return config.defaultImg.robot;
   } else {
     return config.defaultImg.getUser(name);

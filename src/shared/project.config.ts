@@ -1,5 +1,6 @@
 import _get from 'lodash/get';
 import robotImg from '@web/assets/img/robot_dark.svg';
+import { MsgStyleType } from './types/chat';
 
 const environment = process.env.NODE_ENV || 'development';
 const platform = process.env.PLATFORM || 'web';
@@ -111,7 +112,7 @@ interface ProjectConfig {
 const defaultSettings = {
   user: {
     favoriteDice: [] as { title: string; value: string }[],
-    msgType: 'bubble' as 'bubble' | 'compact',
+    msgStyleType: 'bubble' as MsgStyleType,
   },
   system: {
     notification: true, // 是否通知

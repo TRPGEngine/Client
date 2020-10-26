@@ -374,7 +374,7 @@ export const MsgItem = styled.div`
       ${(props) => props.theme.mixins.mobile('margin: 0 !important;')}
 
       .bubble {
-        font-family: $font;
+        font-family: ${(props) => props.theme.font.normal};
         min-width: 0;
         padding: 5px 11px;
         border: 1px solid #e1e0e4;
@@ -425,6 +425,22 @@ export const MsgItem = styled.div`
 
       &:hover > .operation {
         visibility: visible;
+      }
+    }
+  }
+
+  &.compact:not(.card) {
+    .content {
+      .avatar {
+        margin-top: -16px;
+      }
+
+      .bubble {
+        border: 0;
+        background-color: transparent;
+        color: ${({ theme }) => theme.color.textNormal};
+        padding: 0;
+        border-radius: initial;
       }
     }
   }
