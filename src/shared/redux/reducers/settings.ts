@@ -1,12 +1,16 @@
 import constants from '@redux/constants';
 import config from '@shared/project.config';
-import { SettingsState } from '@redux/types/settings';
+import { SettingsState, UserSettings } from '@redux/types/settings';
 import _isNil from 'lodash/isNil';
 import _pullAt from 'lodash/pullAt';
 import _set from 'lodash/set';
 import _merge from 'lodash/merge';
 import { createReducer } from '@reduxjs/toolkit';
-import { addFavoriteDice, removeFavoriteDice } from '@redux/actions/settings';
+import {
+  addFavoriteDice,
+  removeFavoriteDice,
+  setUserSettings,
+} from '@redux/actions/settings';
 
 const {
   RESET,
@@ -30,11 +34,11 @@ export default createReducer(initialState, (builder) => {
     .addCase(RESET, (state) => {
       state = initialState;
     })
-    .addCase(SET_USER_SETTINGS, (state, action: any) => {
+    .addCase(setUserSettings.fulfilled, (state, action) => {
       state.user = {
         ...state.user,
         ...action.payload,
-      };
+      } as UserSettings;
     })
     .addCase(SET_SYSTEM_SETTINGS, (state, action: any) => {
       state.system = {

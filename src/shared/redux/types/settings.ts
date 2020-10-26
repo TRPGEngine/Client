@@ -10,9 +10,12 @@ interface CustomConfig {
 
 export type ServerConfig = CustomConfig;
 
+export type UserSettings = DefaultSettings['user'] & CustomConfig;
+export type SystemSettings = DefaultSettings['system'] & CustomConfig;
+
 export interface SettingsState {
-  user: DefaultSettings['user'] & CustomConfig;
-  system: DefaultSettings['system'] & CustomConfig;
+  user: UserSettings;
+  system: SystemSettings;
   notificationPermission: NotificationType;
   config: ServerConfig; // 服务端配置
 }

@@ -111,6 +111,7 @@ interface ProjectConfig {
 const defaultSettings = {
   user: {
     favoriteDice: [] as { title: string; value: string }[],
+    msgType: 'bubble' as 'bubble' | 'compact',
   },
   system: {
     notification: true, // 是否通知
