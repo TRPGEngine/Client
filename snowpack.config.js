@@ -28,11 +28,37 @@ const tsAlias = _(tspathMountMapping)
 //     .filter(_.isArray)
 // );
 
+// ant design 相关
+// Copy from Client/build/config/webpack.base.config.js
+const modifyVars = _.toPairs({
+  'primary-color': '#8C6244',
+  'error-color': '#e44a4c',
+  'text-selection-bg': '#1890ff',
+})
+  .map(([key, value]) => `--modify-var="${key}=${value}"`)
+  .join(' ');
+const antdLessCompile = `${path.resolve(
+  __dirname,
+  './node_modules/.bin/lessc'
+)} ${path.resolve(
+  __dirname,
+  './node_modules/antd/dist/antd.less'
+)} ${path.resolve(
+  __dirname,
+  './public/.snowpack/antd.css'
+)} --js ${modifyVars}`;
+const antdDarkLessCompile = `${path.resolve(
+  __dirname,
+  './node_modules/.bin/lessc'
+)} ${path.resolve(
+  __dirname,
+  './node_modules/antd/dist/antd.dark.less'
+)} ${path.resolve(
+  __dirname,
+  './public/.snowpack/antd.dark.css'
+)} --js ${modifyVars}`;
+
 module.exports = {
-  // extends: '@snowpack/app-scripts-react',
-  install: [
-    'antd/dist/antd.dark.css'
-  ],
   exclude: [
     '**/node_modules/**/*',
     '**/__tests__/*',
@@ -55,6 +81,8 @@ module.exports = {
     '@src': './src/',
   },
   plugins: [
+    ['@snowpack/plugin-run-script', { name: 'antd compile', cmd: antdLessCompile }],
+    ['@snowpack/plugin-run-script', { name: 'antd dark mode compile', cmd: antdDarkLessCompile }],
     '@snowpack/plugin-typescript',
     '@snowpack/plugin-sass',
     'snowpack-plugin-less',
@@ -86,17 +114,15 @@ module.exports = {
             })};`,
           },
 
-          // 这里是临时解决方案
-          // https://github.com/snowpackjs/snowpack/discussions/1360
           {
             from: 'import "antd/dist/antd.dark.less";',
-            to: 'import "antd/dist/antd.dark.css";',
+            to: 'import "/.snowpack/antd.dark.css"',
           },
           {
             file: require.resolve('./src/web/assets/css/iconfont.css'),
             from: /\.\.\/fonts\/iconfont/g,
             to: '/fonts/iconfont',
-          }
+          },
         ],
       },
     ],
@@ -111,6 +137,6 @@ module.exports = {
     port: 8089,
     out: '.snowpack',
     output: 'stream',
-    hmrErrorOverlay: false
+    hmrErrorOverlay: false,
   },
 };
