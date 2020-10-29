@@ -1,15 +1,22 @@
 import React, { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Button, Divider, Row, Table } from 'antd';
+import { Button, Divider, Row, Space, Table } from 'antd';
 import { openPortalWindow } from '@web/components/StandaloneWindow';
-import { fetchGroupReport, GameReport } from '@shared/model/trpg';
-import { useAsync, useAsyncFn } from 'react-use';
+import {
+  deleteGroupReport,
+  fetchGroupReport,
+  GameReport,
+} from '@shared/model/trpg';
+import { useAsyncFn } from 'react-use';
+import { useAsync } from 'react-use';
 import { LoadingSpinner } from '@web/components/LoadingSpinner';
 import _isNil from 'lodash/isNil';
 import { useTranslation } from '@shared/i18n';
 import { TableProps } from 'antd/lib/table/Table';
 import { useIsGroupManager } from '@redux/hooks/group';
 import { ReloadOutlined } from '@ant-design/icons';
+import { Iconfont } from '@web/components/Iconfont';
+import { showAlert, showToasts } from '@shared/manager/ui';
 
 interface GroupReportManageProps {
   groupUUID: string;
@@ -32,6 +39,24 @@ const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
     refreshReportList();
   }, [groupUUID]);
 
+  const handleRemoveReport = useCallback(
+    (reportUUID: string) => {
+      showAlert({
+        message: '确认要删除该战报么?',
+        onConfirm: async () => {
+          try {
+            await deleteGroupReport(reportUUID, groupUUID);
+            showToasts('操作成功');
+            refreshReportList();
+          } catch (err) {
+            showToasts(String(err), 'error');
+          }
+        },
+      });
+    },
+    [groupUUID, refreshReportList]
+  );
+
   const columns: TableProps<GameReport>['columns'] = useMemo(() => {
     return [
       {
@@ -44,7 +69,7 @@ const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
         dataIndex: 'operation',
         key: 'operation',
         render: (value, record, index) => (
-          <div>
+          <Space>
             <Button
               onClick={() =>
                 openPortalWindow(`/trpg/report/preview/${record.uuid}`)
@@ -52,11 +77,18 @@ const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
             >
               {t('预览')}
             </Button>
-          </div>
+
+            <Button
+              type="ghost"
+              danger={true}
+              icon={<Iconfont>&#xe76b;</Iconfont>}
+              onClick={() => handleRemoveReport(record.uuid)}
+            />
+          </Space>
         ),
       },
     ];
-  }, []);
+  }, [handleRemoveReport]);
 
   if (loading) {
     return <LoadingSpinner />;
