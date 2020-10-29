@@ -1,14 +1,15 @@
-import React, { Fragment, useCallback, useMemo } from 'react';
+import React, { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Button, Divider, Table } from 'antd';
+import { Button, Divider, Row, Table } from 'antd';
 import { openPortalWindow } from '@web/components/StandaloneWindow';
 import { fetchGroupReport, GameReport } from '@shared/model/trpg';
-import { useAsync } from 'react-use';
+import { useAsync, useAsyncFn } from 'react-use';
 import { LoadingSpinner } from '@web/components/LoadingSpinner';
 import _isNil from 'lodash/isNil';
 import { useTranslation } from '@shared/i18n';
 import { TableProps } from 'antd/lib/table/Table';
 import { useIsGroupManager } from '@redux/hooks/group';
+import { ReloadOutlined } from '@ant-design/icons';
 
 interface GroupReportManageProps {
   groupUUID: string;
@@ -21,10 +22,15 @@ interface GroupReportManageProps {
 const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
   const { groupUUID } = props;
   const { t } = useTranslation();
-  const { value: reportList, loading } = useAsync(
+
+  const [{ value: reportList, loading }, refreshReportList] = useAsyncFn(
     () => fetchGroupReport(groupUUID),
     [groupUUID]
   );
+
+  useEffect(() => {
+    refreshReportList();
+  }, [groupUUID]);
 
   const columns: TableProps<GameReport>['columns'] = useMemo(() => {
     return [
@@ -60,7 +66,15 @@ const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
     return null;
   }
 
-  return <Table columns={columns} dataSource={reportList} pagination={false} />;
+  return (
+    <div>
+      <Row justify="end" style={{ marginBottom: 4 }}>
+        <Button icon={<ReloadOutlined />} onClick={refreshReportList} />
+      </Row>
+
+      <Table columns={columns} dataSource={reportList} pagination={false} />
+    </div>
+  );
 });
 GroupReportList.displayName = 'GroupReportList';
 
