@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Select } from 'antd';
+import { Select, Switch } from 'antd';
 import {
   useTRPGDispatch,
   useTRPGSelector,
@@ -13,6 +13,7 @@ import { MessageItem } from '@shared/components/message/MessageItem';
 import styled from 'styled-components';
 import { MsgPayload } from '@redux/types/chat';
 import { useCurrentUserUUID } from '@redux/hooks/user';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox/Checkbox';
 
 const MsgPreviewViewContainer = styled.div`
   max-width: 360px;
@@ -37,9 +38,22 @@ function buildMsgPayload(payload: Partial<MsgPayload>): MsgPayload {
 
 const MsgPreviewView: React.FC = TMemo(() => {
   const sender_uuid = useCurrentUserUUID();
+  const msgStyleCombine = useTRPGSelector(
+    (state) => state.settings.user.msgStyleCombine ?? false
+  );
 
   return (
     <MsgPreviewViewContainer>
+      <MessageItem
+        data={buildMsgPayload({
+          sender_uuid: 'trpgbot',
+          message: '欢迎使用',
+          data: {
+            name: '测试用户',
+          },
+        })}
+        emphasizeTime={true}
+      />
       <MessageItem
         data={buildMsgPayload({
           sender_uuid: 'trpgbot',
@@ -48,7 +62,8 @@ const MsgPreviewView: React.FC = TMemo(() => {
             name: '测试用户',
           },
         })}
-        emphasizeTime={true}
+        emphasizeTime={false}
+        omitSenderInfo={msgStyleCombine}
       />
       <MessageItem
         data={buildMsgPayload({
@@ -74,15 +89,28 @@ export const SettingUserConfig: React.FC = TMemo(() => {
     dispatch(setUserSettings({ msgStyleType: value }));
   }, []);
 
+  const handleSetMsgCombine = useCallback((checked: boolean) => {
+    dispatch(setUserSettings({ msgStyleCombine: checked }));
+  }, []);
+
   return (
     <div>
       <FullModalField
-        title="对话消息"
+        title={t('消息类型')}
         content={
           <Select value={userSettings.msgStyleType} onChange={handleSetMsgType}>
             <Select.Option value="bubble">{t('气泡模式')}</Select.Option>
             <Select.Option value="compact">{t('紧凑模式')}</Select.Option>
           </Select>
+        }
+      />
+      <FullModalField
+        title={t('合并消息')}
+        content={
+          <Switch
+            checked={Boolean(userSettings.msgStyleCombine)}
+            onChange={handleSetMsgCombine}
+          />
         }
       />
 

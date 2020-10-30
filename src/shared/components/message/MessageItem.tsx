@@ -9,9 +9,10 @@ import { getUserName } from '@shared/utils/data-helper';
 interface Props {
   data: MsgPayload;
   emphasizeTime: boolean;
+  omitSenderInfo?: boolean;
 }
 export const MessageItem: React.FC<Props> = TMemo((props) => {
-  const { data, emphasizeTime } = props;
+  const { data, emphasizeTime, omitSenderInfo } = props;
   const selfInfo = useCurrentUserInfo();
   const senderUUID = data.sender_uuid;
   const isMe = selfInfo.uuid === senderUUID;
@@ -26,6 +27,7 @@ export const MessageItem: React.FC<Props> = TMemo((props) => {
       name={name}
       avatar={avatar ?? ''}
       emphasizeTime={emphasizeTime}
+      omitSenderInfo={omitSenderInfo}
       info={data}
     />
   );

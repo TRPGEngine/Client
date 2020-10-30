@@ -113,6 +113,7 @@ const defaultSettings = {
   user: {
     favoriteDice: [] as { title: string; value: string }[],
     msgStyleType: 'bubble' as MsgStyleType,
+    msgStyleCombine: false,
   },
   system: {
     notification: true, // 是否通知

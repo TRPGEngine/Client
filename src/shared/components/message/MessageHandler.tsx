@@ -8,6 +8,7 @@ export interface MessageProps {
   avatar: string;
   info: RenderMsgPayload;
   emphasizeTime: boolean;
+  omitSenderInfo?: boolean;
 }
 class MessageHandler extends React.PureComponent<MessageProps> {
   static messageHandlers = {};

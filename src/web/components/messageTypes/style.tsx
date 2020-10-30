@@ -72,7 +72,7 @@ export const DefaultAddonContentContainer = styled.a`
 
 export const MsgItem = styled.div`
   margin-top: 20px;
-  margin-bottom: 22px;
+  margin-bottom: 10px;
   color: ${(props) => props.theme.color['mine-shaft']};
 
   &:hover > .profile .time {
@@ -441,7 +441,12 @@ export const MsgItem = styled.div`
         color: ${({ theme }) => theme.color.textNormal};
         padding: 0;
         border-radius: initial;
+        box-shadow: none;
       }
     }
+  }
+
+  &.omitSenderInfo {
+    margin-top: 10px;
   }
 `;
