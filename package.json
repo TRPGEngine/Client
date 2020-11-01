@@ -103,7 +103,7 @@
     "lodash": "^4.17.15",
     "lorem-ipsum": "^2.0.3",
     "md5": "^2.2.1",
-    "mediasoup-client": "^3.6.5",
+    "mediasoup-client": "^3.6.21",
     "memoize-one": "^5.1.1",
     "moment": "^2.27.0",
     "node-emoji": "^1.10.0",

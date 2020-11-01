@@ -2,10 +2,11 @@ import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useRTCPeers } from '@rtc/hooks/useRTCPeers';
 import { useRTCRoomStateSelector } from '@rtc/redux';
-import { Button } from 'antd';
+import { Button, Divider } from 'antd';
 import { useRTCRoomClientContext } from '@rtc/RoomContext';
 import _isNil from 'lodash/isNil';
 import { VoicePeerController } from './VoicePeerController';
+import { VoiceController } from './VoiceController';
 
 const VoiceMembers: React.FC = TMemo(() => {
   const peers = useRTCPeers();
@@ -34,6 +35,11 @@ export const VoiceRoomDetail: React.FC = TMemo(() => {
       <div>房间号: {roomId}</div>
 
       <div>状态: {roomState}</div>
+
+      <VoiceController />
+
+      <Divider />
+
       <VoiceMembers />
 
       <Button onClick={handleLeaveRoom}>离开房间</Button>

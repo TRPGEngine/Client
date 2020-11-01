@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useRTCPeerConsumersAudio } from '@rtc/hooks/useRTCPeerConsumers';
 import _isNil from 'lodash/isNil';
-import { useHark } from './hooks/useHark';
-import { useValueRef } from '@shared/hooks/useValueRef';
-import { Iconfont } from '../Iconfont';
 import { UserAvatar } from '../UserAvatar';
 import { UserName } from '../UserName';
 import styled from 'styled-components';
 import { VoiceMic } from './VoiceMic';
+import { useAudioVolumn } from './hooks/useAudioVolumn';
 
 const Root = styled.div`
   display: flex;
@@ -33,18 +31,7 @@ export const VoicePeerController: React.FC<VoicePeerControllerProps> = TMemo(
   (props) => {
     const { peerId } = props;
     const audio = useRTCPeerConsumersAudio(peerId);
-    const { runHark, audioVolume } = useHark();
-    const runHarkRef = useValueRef(runHark);
-
-    useEffect(() => {
-      const audioTrack = audio?.track;
-
-      if (!_isNil(audioTrack)) {
-        const stream = new MediaStream();
-        stream.addTrack(audioTrack);
-        runHarkRef.current(stream);
-      }
-    }, [audio?.track]);
+    const audioVolume = useAudioVolumn(audio?.track);
 
     return (
       <Root>

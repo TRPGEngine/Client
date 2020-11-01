@@ -5,8 +5,8 @@ import { Button, Tooltip, Space } from 'antd';
 import { setDevices } from '@src/rtc/settingManager';
 import styled from 'styled-components';
 import { useRTCRoomStateSelector } from '@rtc/redux';
-
-type CapablityState = 'on' | 'off' | 'unsupported';
+import { CapablityState } from '@rtc/type';
+import { useRTCProducers } from '@rtc/hooks/useRTCProducers';
 
 const CapablityBtn = styled(Button).attrs({
   shape: 'circle',
@@ -21,10 +21,7 @@ export const MeController: React.FC = TMemo(() => {
   const { client } = useRTCRoomClientContext();
   const me = useRTCRoomStateSelector((state) => state.me);
 
-  const producers = useRTCRoomStateSelector((state) => state.producers);
-  const producersArray = useMemo(() => Object.values<any>(producers), [
-    producers,
-  ]);
+  const producersArray = useRTCProducers();
   const audioProducer = useMemo(
     () => producersArray.find((producer) => producer.track.kind === 'audio'),
     [producersArray]

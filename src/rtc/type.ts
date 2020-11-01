@@ -23,3 +23,5 @@ export interface RoomClientOptions {
   datachannel?: boolean;
   externalVideo?: boolean;
 }
+
+export type CapablityState = 'on' | 'off' | 'unsupported';
