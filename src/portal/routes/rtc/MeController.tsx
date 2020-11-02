@@ -57,7 +57,7 @@ export const MeController: React.FC = TMemo(() => {
 
   const changeWebcamState: CapablityState = useMemo(() => {
     if (
-      Boolean(videoProducer) &&
+      !!videoProducer &&
       videoProducer.type !== 'share' &&
       me.canChangeWebcam
     ) {
@@ -68,7 +68,7 @@ export const MeController: React.FC = TMemo(() => {
   }, [videoProducer, videoProducer?.type, me.canChangeWebcam]);
 
   const shareState: CapablityState = useMemo(() => {
-    if (Boolean(videoProducer) && videoProducer.type === 'share') {
+    if (!!videoProducer && videoProducer.type === 'share') {
       return 'on';
     } else {
       return 'off';
