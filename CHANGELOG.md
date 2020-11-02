@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.7](https://github.com/TRPGEngine/Client/compare/v0.4.6...v0.4.7) (2020-11-02)
+
+
+### Features
+
+* **web:** 团战报列表刷新 ([269150f](https://github.com/TRPGEngine/Client/commit/269150f70535ceacb567880668f016528c52671c))
+* **web:** 增加对话消息类型设置 ([0ee2e16](https://github.com/TRPGEngine/Client/commit/0ee2e1654c81ebe8b717504e4b5b492e6d9e7089))
+* **web:** 增加战报移除功能 ([6656d76](https://github.com/TRPGEngine/Client/commit/6656d7675756e3b789de8f554d1025498bef2d19))
+* **web:** 增加消息合并 ([d0ffaff](https://github.com/TRPGEngine/Client/commit/d0ffaff6911a3f530f2d019e88dd6f1acaf216c7))
+
 ### [0.4.6](https://github.com/TRPGEngine/Client/compare/v0.4.5...v0.4.6) (2020-10-23)
 
 
