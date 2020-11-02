@@ -1,6 +1,4 @@
 import React from 'react';
-import dateHelper from '@shared/utils/date-helper';
-import config from '@shared/project.config';
 import { MessageProps } from '@shared/components/message/MessageHandler';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
@@ -17,6 +15,30 @@ import classNames from 'classnames';
 import { MsgProfile } from './addons/MsgProfile';
 import { MsgItem } from './style';
 import { getWebMsgDefaultAvatar } from '@web/utils/msg-helper';
+import { TMemo } from '@shared/components/TMemo';
+import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+
+/**
+ * 消息容器
+ * 主要是为了拿设置中的对话消息类型
+ */
+const MsgContainer: React.FC<{
+  me: boolean;
+  type: string;
+  omitSenderInfo: boolean;
+}> = TMemo((props) => {
+  const { me, type, omitSenderInfo = false } = props;
+  const msgStyleType = useTRPGSelector(
+    (state) => state.settings.user.msgStyleType
+  );
+
+  return (
+    <MsgItem className={classNames({ me, omitSenderInfo }, type, msgStyleType)}>
+      {props.children}
+    </MsgItem>
+  );
+});
+MsgContainer.displayName = 'MsgContainer';
 
 class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   P
@@ -79,7 +101,14 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
   }
 
   render() {
-    const { type, me, name, info, emphasizeTime } = this.props;
+    const {
+      type,
+      me,
+      name,
+      info,
+      emphasizeTime,
+      omitSenderInfo = false,
+    } = this.props;
     const operations = this.getOperation();
     const isLoading = this.isLoading;
     const senderName = this.getSenderName();
@@ -90,17 +119,19 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     }
 
     return (
-      <MsgItem className={classNames({ me }, type)}>
+      <MsgContainer me={me} type={type} omitSenderInfo={omitSenderInfo}>
         {emphasizeTime ? <EmphasizeTime date={info.date} /> : null}
-        <MsgProfile name={senderName} date={info.date} />
+        {!omitSenderInfo && <MsgProfile name={senderName} date={info.date} />}
         <div className="content">
           <div className="avatar">
-            <MsgAvatar
-              me={me}
-              name={senderName}
-              src={this.getAvatarUrl()}
-              info={info}
-            />
+            {!omitSenderInfo && (
+              <MsgAvatar
+                me={me}
+                name={senderName}
+                src={this.getAvatarUrl()}
+                info={info}
+              />
+            )}
           </div>
           <div className="body">
             {this.getContent()}
@@ -112,7 +143,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
             )}
           </div>
         </div>
-      </MsgItem>
+      </MsgContainer>
     );
   }
 }

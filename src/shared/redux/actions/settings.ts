@@ -9,13 +9,13 @@ const {
   UPDATE_FAVORITE_DICE,
   FETCH_REMOTE_SETTINGS,
 } = constants;
-import config from '@src/shared/project.config';
+import config, { DefaultSettings } from '@src/shared/project.config';
 import rnStorage from '../../api/rn-storage.api';
 import * as trpgApi from '../../api/trpg.api';
 import { TRPGAction, createTRPGAsyncThunk } from '@redux/types/__all__';
-import { ServerConfig } from '@redux/types/settings';
+import { ServerConfig, SettingsState } from '@redux/types/settings';
 import request from '@shared/utils/request';
-import { createAction } from '@reduxjs/toolkit';
+import { createAction, PrepareAction } from '@reduxjs/toolkit';
 import { showToasts } from '@shared/manager/ui';
 const api = trpgApi.getInstance();
 
@@ -53,8 +53,8 @@ export const initConfig = function initConfig(): TRPGAction {
 /**
  * 将本地的设置同步到云端
  */
-export const saveSettings = function(): TRPGAction {
-  return async function(dispatch, getState) {
+export const saveSettings = function (): TRPGAction {
+  return async function (dispatch, getState) {
     const userSettings = await rnStorage.save(
       'userSettings',
       getState().settings.user
@@ -69,7 +69,7 @@ export const saveSettings = function(): TRPGAction {
     return api.emit(
       'player::saveSettings',
       { userSettings, systemSettings },
-      function(data) {
+      function (data) {
         if (data.result) {
           console.log('设置成功保存到远程服务器');
         }
@@ -97,20 +97,22 @@ export const fetchRemoteSettings = createTRPGAsyncThunk<void>(
   }
 );
 
-export const setUserSettings = function setUserSettings(payload): TRPGAction {
-  return function(dispatch, getState) {
+export const setUserSettings = createTRPGAsyncThunk(
+  SET_USER_SETTINGS,
+  async (payload: Partial<DefaultSettings['user']>, { getState }) => {
     rnStorage.save('userSettings', {
       ...getState().settings.user,
       ...payload,
     }); // 异步
-    dispatch({ type: SET_USER_SETTINGS, payload });
-  };
-};
+
+    return payload;
+  }
+);
 
 export const setSystemSettings = function setSystemSettings(
   payload
 ): TRPGAction {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     if (
       config.platform !== 'app' &&
       payload.notification !== undefined &&
@@ -139,7 +141,7 @@ export const setNotificationPermission = function setNotificationPermission(
 };
 
 export const requestNotificationPermission = function requestNotificationPermission() {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     Notification.requestPermission((result) => {
       console.log('授权结果:', result);
       dispatch(setNotificationPermission(result));

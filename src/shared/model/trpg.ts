@@ -71,3 +71,15 @@ export async function fetchGroupReport(
 
   return data.list;
 }
+
+/**
+ * 移除团战报
+ * @param reportUUID 战报UUID
+ * @param groupUUID 团UUID
+ */
+export async function deleteGroupReport(reportUUID: string, groupUUID: string) {
+  await request.post('/trpg/game-report/delete', {
+    reportUUID,
+    groupUUID,
+  });
+}

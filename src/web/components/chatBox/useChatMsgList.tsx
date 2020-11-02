@@ -10,7 +10,10 @@ import _head from 'lodash/head';
 import _get from 'lodash/get';
 import _last from 'lodash/last';
 import { MessageItem } from '@shared/components/message/MessageItem';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import {
+  useTRPGDispatch,
+  useTRPGSelector,
+} from '@shared/hooks/useTRPGSelector';
 import { getMoreChatLog } from '@redux/actions/chat';
 import { useMsgList, useConverseDetail } from '@redux/hooks/chat';
 import { scrollToBottom } from '@shared/utils/animated-scroll-to';
@@ -98,24 +101,36 @@ export function useChatMsgList(converseUUID: string) {
   const containerRef = useRef<HTMLDivElement>(null);
   const userUUID = selfInfo.uuid;
   const { list: msgList, nomore } = useMsgList(converseUUID);
+  const msgStyleCombine = useTRPGSelector(
+    (state) => state.settings.user.msgStyleCombine ?? false
+  );
 
   // 消息列表
   const msgListEl = useMemo(() => {
-    return msgList.map((item, index) => {
-      const arr = msgList;
-      const prevDate = index > 0 ? _get(arr, [index - 1, 'date']) : 0;
+    return msgList.map((item, index, arr) => {
+      const prevMsg = arr[index - 1] ?? null;
+      const prevDate = index > 0 ? prevMsg.date : 0;
+      const prevSenderUUID = prevMsg?.sender_uuid;
       const date = item.date;
       const emphasizeTime = shouleEmphasizeTime(prevDate, date);
+
+      // 是否隐藏发送者信息
+      // 强调时间的信息永远不忽略发送者信息
+      const omitSenderInfo =
+        msgStyleCombine === true &&
+        emphasizeTime === false &&
+        item.sender_uuid === prevSenderUUID;
 
       return (
         <MessageItem
           key={item.uuid}
           data={item}
           emphasizeTime={emphasizeTime}
+          omitSenderInfo={omitSenderInfo}
         />
       );
     });
-  }, [msgList, selfInfo, userUUID]);
+  }, [msgList, selfInfo, userUUID, msgStyleCombine]);
 
   // 加载更多
   const { isSeekingLogRef, loadMoreEl } = useChatMsgListLoadMore(

@@ -5,7 +5,6 @@ import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { logout } from '@redux/actions/user';
 import config from '@shared/project.config';
 import { SystemStatusInfo } from '@web/components/modals/SystemStatus';
-import { UserSettings } from '@web/components/modals/UserSettings';
 import { SettingAccountView } from './SettingAccountView';
 import { AccountLoginLog } from './AccountLoginLog';
 import { SettingSystemConfig } from './SettingSystemConfig';
@@ -14,6 +13,7 @@ import { DevelopLab } from './DevelopLab';
 import { AboutView } from './AboutView';
 import { useTranslation } from '@shared/i18n';
 import { showAlert } from '@shared/manager/ui';
+import { SettingUserConfig } from './SettingUserConfig';
 
 export const SettingView: React.FC = TMemo(() => {
   const dispatch = useTRPGDispatch();
@@ -37,13 +37,12 @@ export const SettingView: React.FC = TMemo(() => {
           {
             type: 'item',
             title: t('个人设置'),
-            hidden: true, // 暂时没有设置
-            content: <UserSettings />, // 注意。这里没有办法保存设置. 里面内置的保存是取消挂载时生效。并不好用，需要修改
+            content: <SettingUserConfig />,
           },
           {
             type: 'item',
             title: t('系统设置'),
-            content: <SettingSystemConfig />, // 注意。这里没有办法保存设置. 里面内置的保存是取消挂载时生效。并不好用，需要修改
+            content: <SettingSystemConfig />,
           },
         ],
       },

@@ -67,6 +67,8 @@ describe('project.config', () => {
     expect(config).toHaveProperty('defaultSettings', {
       user: {
         favoriteDice: expect.any(Array),
+        msgStyleType: expect.any(String),
+        msgStyleCombine: expect.any(Boolean),
       },
       system: {
         notification: expect.any(Boolean),

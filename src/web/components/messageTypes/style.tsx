@@ -72,7 +72,7 @@ export const DefaultAddonContentContainer = styled.a`
 
 export const MsgItem = styled.div`
   margin-top: 20px;
-  margin-bottom: 22px;
+  margin-bottom: 10px;
   color: ${(props) => props.theme.color['mine-shaft']};
 
   &:hover > .profile .time {
@@ -374,7 +374,7 @@ export const MsgItem = styled.div`
       ${(props) => props.theme.mixins.mobile('margin: 0 !important;')}
 
       .bubble {
-        font-family: $font;
+        font-family: ${(props) => props.theme.font.normal};
         min-width: 0;
         padding: 5px 11px;
         border: 1px solid #e1e0e4;
@@ -427,5 +427,26 @@ export const MsgItem = styled.div`
         visibility: visible;
       }
     }
+  }
+
+  &.compact:not(.card) {
+    .content {
+      .avatar {
+        margin-top: -16px;
+      }
+
+      .bubble {
+        border: 0;
+        background-color: transparent;
+        color: ${({ theme }) => theme.color.textNormal};
+        padding: 0;
+        border-radius: initial;
+        box-shadow: none;
+      }
+    }
+  }
+
+  &.omitSenderInfo {
+    margin-top: 10px;
   }
 `;
