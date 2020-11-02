@@ -97,16 +97,6 @@ export const fetchRemoteSettings = createTRPGAsyncThunk<void>(
   }
 );
 
-// export const setUserSettings = function setUserSettings(payload): TRPGAction {
-//   return function(dispatch, getState) {
-//     rnStorage.save('userSettings', {
-//       ...getState().settings.user,
-//       ...payload,
-//     }); // 异步
-//     dispatch({ type: SET_USER_SETTINGS, payload });
-//   };
-// };
-
 export const setUserSettings = createTRPGAsyncThunk(
   SET_USER_SETTINGS,
   async (payload: Partial<DefaultSettings['user']>, { getState }) => {
