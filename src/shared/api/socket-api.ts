@@ -15,8 +15,9 @@ interface EmitErrorResponse {
 
 type EmitResponse = EmitSuccessResponse | EmitErrorResponse;
 
-const platformSocketParam = {
+const platformSocketParam: SocketIOClient.ConnectOpts = {
   jsonp: false,
+  transports: ['websocket'],
 };
 
 type SocketOnFunc = (
