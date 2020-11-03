@@ -27,6 +27,7 @@ import { checkIsNewApp } from './utils/debug-helper';
 import { ThemeContextProvider } from '@shared/context/ThemeContext';
 import { TRPGStore } from '@redux/types/__all__';
 import './init';
+import { SERVICE_URL } from '@shared/utils/consts';
 
 declare global {
   interface Window {
@@ -85,6 +86,14 @@ const isNewApp = checkIsNewApp();
   store.dispatch(initConfig());
 
   store.dispatch(setNotificationPermission(Notification.permission));
+})();
+
+(() => {
+  const customServiceUrl = window.localStorage[SERVICE_URL];
+  if (customServiceUrl) {
+    console.log('检测到自定义远程服务器地址:', customServiceUrl);
+    api.reconnect(customServiceUrl);
+  }
 })();
 
 // 检查版本, 网页版跳过检查

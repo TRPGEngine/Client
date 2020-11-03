@@ -46,3 +46,8 @@ export const PORTAL_JWT_KEY = 'jwt';
  * 仅用于web端 chrome浏览器
  */
 export const PWA_INSTALLED = 'pwaInstalled';
+
+/**
+ * 可以手动指定远程服务器的地址, 用于测试
+ */
+export const SERVICE_URL = 'serviceUrl';
