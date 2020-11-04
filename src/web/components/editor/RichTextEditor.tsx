@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Slate } from 'slate-react';
 import { TMemo } from '@shared/components/TMemo';
 import { ToolbarButton, Toolbar } from './style';
@@ -36,6 +36,19 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
   const { renderElement, renderLeaf } = useEditorRender('richtext');
   const editor = useMemo(() => createStandardEditor(), []);
   useBeforeUnload(true, '确定要离开页面么? 未保存的笔记会丢失');
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (isTabHotkey(e.nativeEvent)) {
+        e.preventDefault();
+        indentLines(editor);
+      } else if (isSaveHotkey(e.nativeEvent)) {
+        e.preventDefault();
+        props.onSave?.();
+      }
+    },
+    [props.onSave]
+  );
 
   return (
     <WebErrorBoundary>
@@ -93,15 +106,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             onBlur={props.onBlur}
-            onKeyDown={(e) => {
-              if (isTabHotkey(e.nativeEvent)) {
-                e.preventDefault();
-                indentLines(editor);
-              } else if (isSaveHotkey(e.nativeEvent)) {
-                e.preventDefault();
-                props.onSave?.();
-              }
-            }}
+            onKeyDown={handleKeyDown}
           />
         </Slate>
       </Container>
