@@ -116,6 +116,7 @@ export default createReducer(initialState, (builder) => {
       if (!_isNil(note)) {
         note.title = payload.title;
         note.data = payload.data;
+        note.updatedAt = payload.updatedAt;
         note.isSyncing = false;
         note.unsync = false;
       }

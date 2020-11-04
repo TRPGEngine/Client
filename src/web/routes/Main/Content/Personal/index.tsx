@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useConverses } from '@redux/hooks/chat';
 import { SidebarItem } from '../SidebarItem';
@@ -23,6 +23,8 @@ import { Divider } from 'antd';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { getUserName } from '@shared/utils/data-helper';
 import { useTranslation } from '@shared/i18n';
+import { useHistory } from 'react-router';
+import _orderBy from 'lodash/orderBy';
 
 /**
  * 个人面板
@@ -33,12 +35,22 @@ export const Personal: React.FC = TMemo(() => {
     (state) => state.chat.converses[SYSTE_CONVERSE_SPEC]
   );
   const noteList = useTRPGSelector((state) => state.note.list);
+  const orderedNoteList = useMemo(
+    () => _orderBy(noteList, ['updatedAt'], ['desc']),
+    [noteList]
+  );
   const dispatch = useTRPGDispatch();
-  const handleAddNote = useCallback(() => {
-    dispatch(createNote());
-  }, []);
   const currentUserInfo = useCurrentUserInfo();
   const { t } = useTranslation();
+  const history = useHistory();
+
+  const handleAddNote = useCallback(() => {
+    dispatch(
+      createNote((noteUUID) => {
+        history.push(`/main/personal/note/${noteUUID}`);
+      })
+    );
+  }, [history]);
 
   return (
     <PageContent
@@ -72,7 +84,7 @@ export const Personal: React.FC = TMemo(() => {
               action={<Iconfont onClick={handleAddNote}>&#xe604;</Iconfont>}
             />
             <div>
-              {noteList.map((note) => {
+              {orderedNoteList.map((note) => {
                 return (
                   <SidebarItem
                     key={note.uuid}
