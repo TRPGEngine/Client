@@ -26,8 +26,9 @@ type SocketOnFunc = (
 ) => void;
 
 export class API {
-  serverUrl = `${config.io.protocol}://${config.io.host}:${config.io.port}`;
-  socket = io(this.serverUrl, platformSocketParam);
+  public static serviceUrl = `${config.io.protocol}://${config.io.host}:${config.io.port}`;
+
+  socket = io(API.serviceUrl, platformSocketParam);
   handleEventError: any;
 
   emit(event: string, data?: {} | null, cb?: (res: any) => void) {
@@ -64,19 +65,4 @@ export class API {
   }
 
   on: SocketOnFunc = this.socket.on.bind(this.socket);
-
-  /**
-   * 修改远程服务地址并重新连接
-   * @param url 远程服务地址
-   */
-  reconnect(url: string) {
-    if (this.serverUrl !== url) {
-      console.log('正在使用新的地址重新连接', url);
-      this.serverUrl = url;
-      this.socket.close();
-      this.socket = io(url, platformSocketParam);
-    } else {
-      console.log('地址没有变更, 跳过');
-    }
-  }
 }
