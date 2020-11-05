@@ -7,10 +7,24 @@ export function isUUID(uuid = ''): uuid is string {
   return anyNonNil(uuid);
 }
 
-export const isUserUUID = (uuid: string) => {
+/**
+ * 检查是否为用户UUID
+ */
+export const isUserUUID = (uuid: string): boolean => {
   return v1(uuid);
 };
 
-export const isUserOrGroupUUID = (uuid: string) => {
+/**
+ * 检查是否为用户或者团UUID
+ */
+export const isUserOrGroupUUID = (uuid: string): boolean => {
   return v1(uuid);
+};
+
+/**
+ * 检查该条消息是否为本地消息
+ * @param uuid 消息UUID
+ */
+export const isLocalMsgUUID = (uuid: string): boolean => {
+  return uuid.startsWith('local#');
 };

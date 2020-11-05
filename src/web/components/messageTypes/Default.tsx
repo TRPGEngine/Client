@@ -16,6 +16,8 @@ import { useTPopoverContext } from '../popover';
 import { MsgQuote } from './addons/MsgQuote';
 import { Bubble, DefaultAddonContentContainer } from './style';
 import { t, useTranslation } from '@shared/i18n';
+import { isLocalMsgUUID } from '@shared/utils/uuid';
+import { showToasts } from '@shared/manager/ui';
 
 const DefaultAddonContent: React.FC<{ message: string }> = TMemo((props) => {
   const { loading, hasUrl, info } = useWebsiteInfo(props.message);
@@ -75,7 +77,13 @@ class Default extends Base {
       operations.push({
         name: t('撤回'),
         action: ({ dispatch, closePopover }) => {
-          dispatch(revokeMsg(info.uuid));
+          // 撤回消息
+          const msgUUID = this.props.info.uuid;
+          if (isLocalMsgUUID(msgUUID)) {
+            showToasts('操作过于频繁, 请稍后再试');
+          } else {
+            dispatch(revokeMsg(info.uuid));
+          }
           closePopover();
         },
       });
