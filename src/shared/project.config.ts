@@ -170,6 +170,9 @@ const config: ProjectConfig = {
   },
   defaultImg: {
     user: '/src/assets/img/gugugu1.png',
+    /**
+     * @deprecated 使用Avatar组件生成默认头像
+     */
     getUser(name) {
       if (name) {
         return `${config.file.url}/file/avatar/svg?name=${name}`;
@@ -178,6 +181,9 @@ const config: ProjectConfig = {
       }
     },
     group: '/src/web/assets/img/gugugu1.png',
+    /**
+     * @deprecated 使用Avatar组件生成默认头像
+     */
     getGroup(name) {
       // 同getUser
       if (name) {

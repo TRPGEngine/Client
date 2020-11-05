@@ -10,6 +10,6 @@ export function getWebMsgDefaultAvatar(uuid: string, name: string): string {
   } else if (uuid === 'trpgbot') {
     return config.defaultImg.robot;
   } else {
-    return config.defaultImg.getUser(name);
+    return ''; // 默认情况交给Avatar组件来处理
   }
 }

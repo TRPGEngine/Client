@@ -39,18 +39,10 @@ const PopoverUserInfo: React.FC<Props> = TMemo((props) => {
     userInfo.username,
   ]);
 
-  const avatar = useMemo(
-    () =>
-      _isEmpty(userInfo.avatar)
-        ? config.defaultImg.getUser(name)
-        : userInfo.avatar,
-    [userInfo.avatar]
-  );
-
   return (
     <Container>
       <div className="avatar">
-        <Avatar size="large" src={avatar} name={name} />
+        <Avatar size="large" src={userInfo.avatar} name={name} />
       </div>
       <div className="info">
         <div>

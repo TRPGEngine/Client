@@ -12,6 +12,8 @@ import _isNil from 'lodash/isNil';
 import { showModal } from '@redux/actions/ui';
 import PopoverGroupInfo from './popover/GroupInfo';
 import { Popover } from 'antd';
+import { getUserName } from '@shared/utils/data-helper';
+import Avatar from './Avatar';
 
 import './FindResultItem.scss';
 
@@ -100,11 +102,11 @@ class FindResultItem extends React.Component<Props> {
     const type = this.props.type || 'user';
 
     if (type === 'user') {
-      const name = info.nickname || info.username;
+      const name = getUserName(info);
       return (
         <div className="find-result-item">
           <div className="avatar">
-            <img src={info.avatar || config.defaultImg.getUser(name)} />
+            <Avatar size={60} src={info.avatar} name={name} />
           </div>
           <div className="profile">
             <span className="username">{name}</span>
@@ -121,7 +123,7 @@ class FindResultItem extends React.Component<Props> {
             content={<PopoverGroupInfo groupUUID={info.uuid} />}
           >
             <div className="avatar">
-              <img src={info.avatar || config.defaultImg.getGroup(info.name)} />
+              <Avatar size={60} src={info.avatar} name={info.name} />
             </div>
           </Popover>
           <div className="profile">
