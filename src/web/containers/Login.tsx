@@ -9,6 +9,7 @@ import './Login.scss';
 import { TRPGState } from '@redux/types/__all__';
 import { showPortal } from '@web/redux/action/ui';
 import { checkIsNewApp } from '@web/utils/debug-helper';
+import { t } from '@shared/i18n';
 
 interface Props extends DispatchProp<any> {
   isLogin: boolean;
@@ -88,10 +89,10 @@ class Login extends React.Component<Props> {
 
     return (
       <div className="login-screen">
-        <h2>欢迎来到TRPG的世界</h2>
+        <h2>{t('欢迎来到TRPG的世界')}</h2>
         <input
           type="text"
-          placeholder="用户名"
+          placeholder={t('用户名')}
           value={this.state.username}
           onChange={(e) => {
             this.setState({ username: e.target.value });
@@ -99,7 +100,7 @@ class Login extends React.Component<Props> {
         />
         <input
           type="password"
-          placeholder="密码"
+          placeholder={t('密码')}
           value={this.state.password}
           onChange={(e) => {
             this.setState({ password: e.target.value });
@@ -112,17 +113,23 @@ class Login extends React.Component<Props> {
             onClick={() => this.handleLogin()}
             disabled={!canLogin}
           >
-            登录
+            {t('登录')}
           </button>
-          {this.props.oauthList.includes('qq') ? (
+          {/* {this.props.oauthList.includes('qq') ? (
             <button onClick={() => this.handleQQLogin()}>
               <i className="iconfont">&#xe786;</i>
             </button>
-          ) : null}
+          ) : null} */}
         </div>
         <div className="login-action">
-          <a onClick={this.handleShowDownloadApp}>下载移动版APP</a>
-          <Link to="/register">没有账号？现在注册</Link>
+          {/* <a onClick={this.handleShowDownloadApp}>下载移动版APP</a> */}
+          <Link to="/register">{t('没有账号？现在注册')}</Link>
+        </div>
+
+        <div className="login-page-footer">
+          <a href={config.url.homepage} target="_blank" rel="noopener">
+            {t('官方网站')}
+          </a>
         </div>
       </div>
     );

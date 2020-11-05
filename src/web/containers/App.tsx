@@ -51,7 +51,7 @@ export const App: React.FC = TMemo(() => {
           </Switch>
           {config.platform === 'web' ? <NetworkIndicator /> : null}
           <div className="version">当前版本号v{appVersion}</div>
-          <AppBanner />
+          {/* <AppBanner /> */}
         </div>
       </ErrorBoundary>
     </Router>
