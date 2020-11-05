@@ -1,17 +1,22 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
-import { useConverseDetail } from '@redux/hooks/chat';
 import { useInputMsgEditorMsgSend } from './useInputMsgEditorMsgSend';
+import { ChatMsgOperation } from './ChatMsgOperation';
 
 const Wrapper = styled.div`
   padding: 0 16px 24px;
   font-size: 16px;
 
-  > .inner {
+  > .outer {
     border-radius: ${(props) => props.theme.radius.card};
-    padding: 6px;
     background-color: ${(props) => props.theme.color.graySet[6]};
+    padding: 6px;
+    display: flex;
+
+    > .inner {
+      flex: 1;
+    }
   }
 `;
 
@@ -24,7 +29,11 @@ export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
 
   return (
     <Wrapper>
-      <div className="inner">{editorEl}</div>
+      <div className="outer">
+        <div className="inner">{editorEl}</div>
+
+        <ChatMsgOperation />
+      </div>
     </Wrapper>
   );
 });

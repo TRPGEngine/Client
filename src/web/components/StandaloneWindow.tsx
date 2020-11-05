@@ -167,7 +167,24 @@ StandaloneWindow.open = (config) => {
 export default StandaloneWindow;
 
 /**
+ * 打开一个网页
+ * @param url 网址
+ */
+export async function openWebviewWindow(
+  url: string,
+  options?: Omit<StandaloneWindowConfig, 'body'>
+) {
+  const node = React.createElement(Webview, { src: url });
+
+  StandaloneWindow.open!({
+    ...options,
+    body: node,
+  });
+}
+
+/**
  * 打开一个portal窗口
+ * @param portalUrl portal页面的相对地址
  */
 export async function openPortalWindow(
   portalUrl: string,
@@ -178,10 +195,6 @@ export async function openPortalWindow(
   if (_isString(jwt)) {
     window.localStorage.setItem('jwt', jwt);
   }
-  const node = React.createElement(Webview, { src: getPortalUrl(portalUrl) });
 
-  StandaloneWindow.open!({
-    ...options,
-    body: node,
-  });
+  openWebviewWindow(getPortalUrl(portalUrl), options);
 }
