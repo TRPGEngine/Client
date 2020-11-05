@@ -10,6 +10,7 @@ import { TRPGState } from '@redux/types/__all__';
 import { showPortal } from '@web/redux/action/ui';
 import { checkIsNewApp } from '@web/utils/debug-helper';
 import { t } from '@shared/i18n';
+import { LanguageSwitchLink } from '@web/components/LanguageSwitchLink';
 
 interface Props extends DispatchProp<any> {
   isLogin: boolean;
@@ -131,6 +132,8 @@ class Login extends React.Component<Props> {
             {t('官方网站')}
           </a>
         </div>
+
+        <LanguageSwitchLink />
       </div>
     );
   }
