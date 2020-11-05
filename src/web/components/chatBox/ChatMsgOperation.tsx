@@ -39,10 +39,10 @@ export const ChatMsgOperation: React.FC<{
   const { t } = useTranslation();
 
   const handleOpenFilePizza = useCallback(() => {
+    setVisible(false);
     openWebviewWindow('https://file.pizza/', {
       title: '发送文件',
     });
-    // window.open('https://file.pizza');
   }, []);
 
   const content = (
@@ -60,7 +60,6 @@ export const ChatMsgOperation: React.FC<{
       overlayClassName="operation-popover"
       placement="top"
       trigger="click"
-      arrowContent={null}
       content={content}
     >
       <ChatOperationBtn style={props.style}>
