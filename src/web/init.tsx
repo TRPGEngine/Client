@@ -1,6 +1,6 @@
 import '@shared/i18n';
 import '../shared/utils/common';
-import { setToasts, setAlert } from '@shared/manager/ui';
+import { setToasts, setAlert, setGlobalLoading } from '@shared/manager/ui';
 import { message, Modal } from 'antd';
 import _isFunction from 'lodash/isFunction';
 import { injectLogoutSuccessCallback } from '@shared/utils/inject';
@@ -31,6 +31,12 @@ setAlert((options) => {
       _isFunction(options.onConfirm) && (await options.onConfirm());
     },
   });
+});
+
+setGlobalLoading((msg: React.ReactNode) => {
+  const closeFn = message.loading(msg, 0);
+
+  return closeFn;
 });
 
 injectLogoutSuccessCallback(() => {

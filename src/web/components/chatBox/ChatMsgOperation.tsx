@@ -10,7 +10,7 @@ import _isNil from 'lodash/isNil';
 import { uploadChatimg } from '@shared/utils/image-uploader';
 import { Editor } from 'slate';
 import { insertImage } from '../editor/changes/insertImage';
-import { showToasts } from '@shared/manager/ui';
+import { showGlobalLoading, showToasts } from '@shared/manager/ui';
 
 const ChatOperationBtn = styled.div`
   width: 24px;
@@ -53,24 +53,30 @@ export const ChatMsgOperation: React.FC<{
     });
   }, []);
 
-  const handleSelectFiles = useCallback(async (files: FileList) => {
-    setVisible(false);
-    if (_isNil(editorRef.current)) {
-      return;
-    }
+  const handleSelectFiles = useCallback(
+    async (files: FileList) => {
+      setVisible(false);
+      if (_isNil(editorRef.current)) {
+        return;
+      }
 
-    const file = files[0];
-    if (_isNil(file)) {
-      return;
-    }
+      const file = files[0];
+      if (_isNil(file)) {
+        return;
+      }
 
-    try {
-      const chatimgUrl = await uploadChatimg(file);
-      insertImage(editorRef.current, chatimgUrl);
-    } catch (err) {
-      showToasts(err, 'error');
-    }
-  }, []);
+      const hideLoading = showGlobalLoading(t('正在上传图片...'));
+      try {
+        const chatimgUrl = await uploadChatimg(file);
+        insertImage(editorRef.current, chatimgUrl);
+      } catch (err) {
+        showToasts(err, 'error');
+      } finally {
+        hideLoading();
+      }
+    },
+    [t]
+  );
 
   const content = (
     <div>

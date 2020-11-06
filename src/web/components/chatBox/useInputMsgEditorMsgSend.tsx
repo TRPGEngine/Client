@@ -9,11 +9,16 @@ import { MsgInputEditor } from '../editor/MsgInputEditor';
 import { useConverseDetail } from '@redux/hooks/chat';
 import { serializeToBBCode } from '../editor/utils/serialize/bbcode';
 import * as pasteUtils from '@shared/utils/paste-utils';
-import { showToasts } from '@shared/manager/ui';
+import { showGlobalLoading, showToasts } from '@shared/manager/ui';
 import { insertImage } from '../editor/changes/insertImage';
 import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
+import { t } from '@shared/i18n';
 
+/**
+ * 会话消息发送管理
+ * @param converseUUID 会话UUID
+ */
 export function useInputMsgEditorMsgSend(converseUUID: string) {
   const editorRef = useRef<Editor>();
   const { message, setMessage, handleSendMsg, inputRef } = useMsgSend(
@@ -41,6 +46,7 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
         if (image) {
           // 上传图片
           e.preventDefault();
+          const hideLoading = showGlobalLoading(t('正在上传图片...'));
           try {
             const file = image.getAsFile();
             const chatimgUrl = await pasteUtils.upload(file!);
@@ -49,6 +55,8 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
             }
           } catch (err) {
             showToasts(err, 'error');
+          } finally {
+            hideLoading();
           }
         }
       }

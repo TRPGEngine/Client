@@ -16,3 +16,10 @@ interface AlertOptions {
 export const [showAlert, setAlert] = buildRegFn<
   (options: AlertOptions) => void
 >('alert');
+
+/**
+ * 返回一个关闭方法
+ */
+export const [showGlobalLoading, setGlobalLoading] = buildRegFn<
+  (message: React.ReactNode) => () => void
+>('globalLoading');
