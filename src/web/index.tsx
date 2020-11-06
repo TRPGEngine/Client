@@ -1,5 +1,4 @@
 import './init';
-import { App } from './routes/App';
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
@@ -34,6 +33,15 @@ declare global {
   }
 }
 
+/**
+ * NOTICE:
+ * 注意这里有一个问题
+ * 就是为了异步加载i18n的语音。必须确保App(用语言的地方)在i18n在家之后才能正常使用
+ * 否则会抛出异常。目前该逻辑无法确保顺序必定一致
+ */
+const App = TLoadable<{}>(() =>
+  import('./routes/App').then((module) => module.App)
+);
 const OldApp = TLoadable<{}>(() =>
   import('./containers/App').then((module) => module.App)
 );
