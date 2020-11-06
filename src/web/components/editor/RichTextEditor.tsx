@@ -7,13 +7,14 @@ import styled from 'styled-components';
 import { Iconfont } from '../Iconfont';
 import { isSaveHotkey, isTabHotkey } from '@web/utils/hot-key';
 import indentLines from './changes/indentLines';
-import { useBeforeUnload } from 'react-use';
 import { BlockButton } from './toolbar/BlockButton';
 import { MarkButton } from './toolbar/MarkButton';
 import { EditArea } from './render/EditArea';
 import { EditorBaseProps } from './types';
 import { WebErrorBoundary } from '../WebErrorBoundary';
 import { useEditorRender } from './hooks/useEditorRender';
+import { serializeToPlaintext } from './utils/serialize/plaintext';
+import { t } from '@shared/i18n';
 
 interface CustomAction {
   icon: React.ReactNode;
@@ -35,7 +36,6 @@ interface RichTextEditorProps extends EditorBaseProps {
 export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
   const { renderElement, renderLeaf } = useEditorRender('richtext');
   const editor = useMemo(() => createStandardEditor(), []);
-  useBeforeUnload(true, '确定要离开页面么? 未保存的笔记会丢失');
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -49,6 +49,11 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
     },
     [props.onSave]
   );
+
+  const wordCount = useMemo(() => {
+    const str = serializeToPlaintext(props.value);
+    return str.replace(/\s/g, '').length;
+  }, [props.value]);
 
   return (
     <WebErrorBoundary>
@@ -101,6 +106,10 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = TMemo((props) => {
                 {item.icon}
               </ToolbarButton>
             ))}
+
+            <small>
+              &nbsp;&nbsp;{t('字数统计')}: {wordCount}
+            </small>
           </Toolbar>
           <EditArea
             renderElement={renderElement}

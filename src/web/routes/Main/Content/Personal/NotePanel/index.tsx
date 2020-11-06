@@ -13,7 +13,7 @@ import { Node } from 'slate';
 import { WebErrorBoundary } from '@web/components/WebErrorBoundary';
 import { AlertErrorView } from '@web/components/AlertErrorView';
 import { syncNote, markUnsyncNote, deleteNote } from '@redux/actions/note';
-import { useDebounce } from 'react-use';
+import { useBeforeUnload, useDebounce } from 'react-use';
 import { SectionHeader } from '@web/components/SectionHeader';
 import { Input, Empty, Modal } from 'antd';
 import { isSaveHotkey } from '@web/utils/hot-key';
@@ -38,6 +38,8 @@ function useNoteData(noteUUID: string) {
   const [value, setValue] = useState<Node[]>(() =>
     getNoteInitData(noteInfo?.data)
   );
+
+  const isUnsync = noteInfo?.unsync;
 
   const dispatch = useTRPGDispatch();
   const onSave = useCallback(() => {
@@ -104,12 +106,22 @@ function useNoteData(noteUUID: string) {
     value,
     setValue,
     onSave,
+    isUnsync,
   };
 }
 
+const NoteBeforeUnload: React.FC = () => {
+  useBeforeUnload(true, '确定要离开页面么? 未保存的笔记会丢失');
+
+  return null;
+};
+NoteBeforeUnload.displayName = 'NoteBeforeUnload';
+
 const NoteEditor: React.FC<{ noteUUID: string }> = TMemo((props) => {
   const noteUUID = props.noteUUID;
-  const { title, setTitle, value, setValue, onSave } = useNoteData(noteUUID);
+  const { title, setTitle, value, setValue, onSave, isUnsync } = useNoteData(
+    noteUUID
+  );
   const dispatch = useTRPGDispatch();
 
   // 删除笔记
@@ -124,6 +136,7 @@ const NoteEditor: React.FC<{ noteUUID: string }> = TMemo((props) => {
 
   return (
     <WebErrorBoundary renderError={AlertErrorView}>
+      {isUnsync && <NoteBeforeUnload />}
       <SectionHeader>
         <Input
           style={{ color: 'white', fontWeight: 'bold' }}
