@@ -25,14 +25,14 @@ interface ChatSendBoxProps {
 }
 export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
   const { converseUUID } = props;
-  const editorEl = useInputMsgEditorMsgSend(converseUUID);
+  const { editorRef, editorEl } = useInputMsgEditorMsgSend(converseUUID);
 
   return (
     <Wrapper>
       <div className="outer">
         <div className="inner">{editorEl}</div>
 
-        <ChatMsgOperation />
+        <ChatMsgOperation editorRef={editorRef} />
       </div>
     </Wrapper>
   );

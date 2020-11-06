@@ -88,5 +88,5 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
     />
   );
 
-  return editorEl;
+  return { editorRef, editorEl };
 }

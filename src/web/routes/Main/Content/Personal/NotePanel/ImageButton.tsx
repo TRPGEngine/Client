@@ -39,7 +39,7 @@ export const ImageButton: React.FC<Props> = TMemo((props) => {
   // TODO: 应当可以选择允许直接传入网址
 
   return (
-    <FileSelector onSelected={handleSelected}>
+    <FileSelector fileProps={{ accept: 'image/*' }} onSelected={handleSelected}>
       <ToolbarButton>
         <Iconfont>&#xe63b;</Iconfont>
       </ToolbarButton>

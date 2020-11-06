@@ -5,6 +5,12 @@ import { useTranslation } from '@shared/i18n';
 import styled from 'styled-components';
 import { openWebviewWindow } from '../StandaloneWindow';
 import { Popover } from 'antd';
+import { FileSelector } from '../FileSelector';
+import _isNil from 'lodash/isNil';
+import { uploadChatimg } from '@shared/utils/image-uploader';
+import { Editor } from 'slate';
+import { insertImage } from '../editor/changes/insertImage';
+import { showToasts } from '@shared/manager/ui';
 
 const ChatOperationBtn = styled.div`
   width: 24px;
@@ -33,8 +39,10 @@ const ChatOperationItemContainer = styled.div`
 `;
 
 export const ChatMsgOperation: React.FC<{
+  editorRef: React.MutableRefObject<Editor | undefined>;
   style?: React.CSSProperties;
 }> = TMemo((props) => {
+  const { editorRef } = props;
   const [visible, setVisible] = useState(false);
   const { t } = useTranslation();
 
@@ -45,8 +53,33 @@ export const ChatMsgOperation: React.FC<{
     });
   }, []);
 
+  const handleSelectFiles = useCallback(async (files: FileList) => {
+    setVisible(false);
+    if (_isNil(editorRef.current)) {
+      return;
+    }
+
+    const file = files[0];
+    if (_isNil(file)) {
+      return;
+    }
+
+    try {
+      const chatimgUrl = await uploadChatimg(file);
+      insertImage(editorRef.current, chatimgUrl);
+    } catch (err) {
+      showToasts(err, 'error');
+    }
+  }, []);
+
   const content = (
     <div>
+      <FileSelector
+        fileProps={{ accept: 'image/*' }}
+        onSelected={handleSelectFiles}
+      >
+        <ChatOperationItemContainer>{t('发送图片')}</ChatOperationItemContainer>
+      </FileSelector>
       <ChatOperationItemContainer onClick={handleOpenFilePizza}>
         {t('发送文件')}
       </ChatOperationItemContainer>
