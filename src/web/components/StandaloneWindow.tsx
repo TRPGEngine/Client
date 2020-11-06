@@ -48,11 +48,14 @@ const WindowContainer = styled.div`
 
   > .window-container-title {
     display: flex;
-    justify-content: space-between;
     padding: 10px 6px;
     font-size: 18px;
     border-bottom: ${({ theme }) => theme.border.standard};
     cursor: move;
+
+    > .window-container-title-text {
+      flex: 1;
+    }
 
     > .window-container-title-action {
       display: flex;
@@ -79,7 +82,7 @@ const Window: React.FC<WindowContainerProps> = React.memo((props) => {
   return (
     <WindowContainer>
       <div className="window-container-title">
-        <span>{props.title}</span>
+        <span className="window-container-title-text">{props.title}</span>
         <div className="window-container-title-action">
           {/* <div title="最小化" onClick={props.onMinimize}>
             <i className="iconfont">&#xe657;</i>
@@ -119,7 +122,7 @@ const StandaloneWindow: React.FC<StandaloneWindowConfig> & {
   return (
     <Container>
       <Rnd
-        dragHandleClassName="window-container-title"
+        dragHandleClassName="window-container-title-text"
         {...props.options}
         default={defaultPos}
       >
