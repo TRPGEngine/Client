@@ -11,10 +11,10 @@ export const checkIsTestUser = memoizeOne(() => {
 });
 
 /**
- * 获取是否使用新的界面
+ * 获取是否使用旧界面
  */
-export const checkIsNewApp = memoizeOne(() => {
-  return localStorage.getItem(IS_NEW_APP) === 'true';
+export const checkIsOldApp = memoizeOne(() => {
+  return localStorage.getItem(IS_NEW_APP) === 'false';
 });
 
 /**

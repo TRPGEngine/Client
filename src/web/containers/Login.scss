@@ -60,13 +60,9 @@
 
   .login-page-footer {
     position: fixed;
-    left: 10px;
     right: 10px;
     bottom: 4px;
     text-align: right;
-
-    a {
-      @include link-btn;
-    }
+    z-index: 1;
   }
 }
