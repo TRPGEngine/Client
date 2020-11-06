@@ -24,6 +24,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const config = webpackMerge({}, base, {
   entry: {
+    polyfill: '@babel/polyfill',
     app: path.resolve(APP_PATH, './portal/index.tsx'),
   },
 

@@ -73,6 +73,7 @@
   "dependencies": {
     "@ant-design/colors": "^3.2.2",
     "@ant-design/icons": "^4.0.5",
+    "@babel/polyfill": "^7.12.1",
     "@bbob/parser": "^2.5.4",
     "@reduxjs/toolkit": "^1.4.0",
     "@sentry/browser": "^5.15.5",

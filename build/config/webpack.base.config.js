@@ -68,6 +68,7 @@ const babelQuery = {
 module.exports = {
   entry: {
     // vendor: vendors,
+    polyfill: '@babel/polyfill',
     app: path.resolve(APP_PATH, './web/index.tsx'),
   },
   output: {
@@ -134,12 +135,6 @@ module.exports = {
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
-        // include: [
-        //   APP_PATH,
-        //   CONFIG_PATH,
-        //   path.resolve(ROOT_PATH, './node_modules/trpg-actor-template/'),
-        //   path.resolve(ROOT_PATH, './node_modules/react-native-storage/'),
-        // ],
         exclude: path.resolve(ROOT_PATH, './node_modules/**'),
         query: babelQuery,
       },
