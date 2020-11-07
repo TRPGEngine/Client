@@ -53,6 +53,22 @@ import { setUserJWT } from '@shared/utils/jwt-helper';
 
 const api = trpgApi.getInstance();
 
+/**
+ * 存储用户登录授权
+ */
+function saveUserToken(uuid: string, token: string, isApp = false) {
+  if (isApp) {
+    // 如果是app的话，则永久储存
+    rnStorage.save('uuid', uuid);
+    rnStorage.save('token', token);
+  } else {
+    // 7天后自动过期
+    const expires = 1000 * 3600 * 24 * 7;
+    rnStorage.setWithExpires('uuid', uuid, expires);
+    rnStorage.setWithExpires('token', token, expires);
+  }
+}
+
 // 登录成功后获取数据
 // 即设置初始化的用户信息
 function loginSuccess(dispatch, getState) {
@@ -110,17 +126,10 @@ export const login = function (
         if (data.result) {
           // 登录成功
           const { uuid, token, app_token } = data.info;
-          if (isApp) {
-            // 如果是app的话，则永久储存
-            rnStorage.save('uuid', uuid);
-            rnStorage.save('token', app_token);
-          } else {
-            // 7天后自动过期
-            const expires = 1000 * 3600 * 24 * 7;
-            rnStorage.setWithExpires('uuid', uuid, expires);
-            rnStorage.setWithExpires('token', token, expires);
-          }
-          console.log('set user token, user:', uuid);
+
+          saveUserToken(uuid, isApp === true ? app_token : token, isApp);
+          console.log('save user token, user:', uuid);
+
           data.info.avatar = config.file.getAbsolutePath!(data.info.avatar);
           dispatch({ type: LOGIN_SUCCESS, payload: data.info, isApp });
           loginSuccess(dispatch, getState); // 获取用户信息
@@ -158,11 +167,17 @@ export const loginWithToken = function (
       { uuid, token, platform: config.platform, isApp, channel, deviceInfo },
       function (data) {
         if (data.result) {
+          // 登录成功
+          const { uuid, token, app_token } = data.info;
+
+          saveUserToken(uuid, isApp === true ? app_token : token, isApp);
+          console.log('update user token, user:', uuid);
+
           data.info.avatar = config.file.getAbsolutePath!(data.info.avatar);
           dispatch({ type: LOGIN_TOKEN_SUCCESS, payload: data.info, isApp });
           loginSuccess(dispatch, getState); // 获取用户信息
         } else {
-          console.log(data);
+          console.error(data);
           dispatch({ type: LOGIN_FAILED, payload: data.msg });
           if (getState().user.isLogin) {
             // 登录超时

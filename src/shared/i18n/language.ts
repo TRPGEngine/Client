@@ -24,13 +24,13 @@ export function useLanguage() {
   const originLanguageRef = useRef<string>();
 
   const setLanguage = useCallback(
-    (newLanguage) => {
+    async (newLanguage) => {
       if (_isNil(originLanguageRef.current)) {
         originLanguageRef.current = language;
       }
 
       set(newLanguage);
-      setI18NLanguage(newLanguage);
+      await setI18NLanguage(newLanguage);
     },
     [language, set]
   );

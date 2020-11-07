@@ -201,6 +201,7 @@ module.exports = {
         },
       },
     ],
+    "react/jsx-no-target-blank": [2, { "allowReferrer": true }],
 
     // 以下是需要逐步打开的  直接删除即可
     '@typescript-eslint/no-unsafe-assignment': 'off',

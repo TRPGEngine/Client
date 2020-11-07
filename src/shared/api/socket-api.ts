@@ -15,8 +15,9 @@ interface EmitErrorResponse {
 
 type EmitResponse = EmitSuccessResponse | EmitErrorResponse;
 
-const platformSocketParam = {
+const platformSocketParam: SocketIOClient.ConnectOpts = {
   jsonp: false,
+  transports: ['websocket'],
 };
 
 type SocketOnFunc = (
@@ -25,8 +26,9 @@ type SocketOnFunc = (
 ) => void;
 
 export class API {
-  serverUrl = `${config.io.protocol}://${config.io.host}:${config.io.port}`;
-  socket = io(this.serverUrl, platformSocketParam);
+  public static serviceUrl = `${config.io.protocol}://${config.io.host}:${config.io.port}`;
+
+  socket = io(API.serviceUrl, platformSocketParam);
   handleEventError: any;
 
   emit(event: string, data?: {} | null, cb?: (res: any) => void) {

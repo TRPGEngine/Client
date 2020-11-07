@@ -57,4 +57,12 @@
       margin-right: 0;
     }
   }
+
+  .login-page-footer {
+    position: fixed;
+    right: 10px;
+    bottom: 4px;
+    text-align: right;
+    z-index: 1;
+  }
 }

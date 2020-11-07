@@ -8,6 +8,10 @@ import _isNil from 'lodash/isNil';
  */
 
 interface FileSelectorProps {
+  fileProps?: React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  >;
   /**
    * 选中文件
    */
@@ -38,6 +42,7 @@ export const FileSelector: React.FC<FileSelectorProps> = TMemo((props) => {
     <div onClick={handleSelect}>
       {props.children}
       <input
+        {...props.fileProps}
         type="file"
         ref={fileInputRef}
         onChange={handleChange}

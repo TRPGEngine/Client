@@ -1,4 +1,4 @@
-import { App } from './containers/App';
+import './init';
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
@@ -23,10 +23,9 @@ import { bindEventFunc } from '@shared/api/listener';
 import { watchLoginStatus } from '@redux/middlewares/watchLoginStatus';
 import { setUser as setUserSentryInfo } from './utils/sentry';
 import TLoadable from './components/TLoadable';
-import { checkIsNewApp } from './utils/debug-helper';
+import { checkIsOldApp } from './utils/debug-helper';
 import { ThemeContextProvider } from '@shared/context/ThemeContext';
 import { TRPGStore } from '@redux/types/__all__';
-import './init';
 
 declare global {
   interface Window {
@@ -34,8 +33,17 @@ declare global {
   }
 }
 
-const NewApp = TLoadable<{}>(() =>
+/**
+ * NOTICE:
+ * 注意这里有一个问题
+ * 就是为了异步加载i18n的语音。必须确保App(用语言的地方)在i18n在家之后才能正常使用
+ * 否则会抛出异常。目前该逻辑无法确保顺序必定一致
+ */
+const App = TLoadable<{}>(() =>
   import('./routes/App').then((module) => module.App)
+);
+const OldApp = TLoadable<{}>(() =>
+  import('./containers/App').then((module) => module.App)
 );
 
 installServiceWorker(); // 注册 service worker 服务
@@ -70,7 +78,7 @@ window.onerror = (event, source, fileno, columnNumber, error) => {
 };
 
 // 是否为新APP
-const isNewApp = checkIsNewApp();
+const isOldApp = checkIsOldApp();
 
 // 加载本地存储数据进行应用初始化
 (async () => {
@@ -78,7 +86,7 @@ const isNewApp = checkIsNewApp();
   const uuid = await rnStorage.get('uuid');
   const token = await rnStorage.get('token');
   if (!!token && !!uuid) {
-    store.dispatch(loginWithToken(uuid, token, null, { isNewApp }));
+    store.dispatch(loginWithToken(uuid, token, null, { isOldApp }));
   }
 
   // 初始化配置
@@ -113,7 +121,7 @@ if (config.platform !== 'web') {
 if (
   config.platform === 'web' &&
   config.environment === 'production' &&
-  !isNewApp // 仅旧UI需要全局设定, 新UI根据当前场景决定是否使用退出阻止
+  isOldApp === true // 仅旧UI需要全局设定, 新UI根据当前场景决定是否使用退出阻止
 ) {
   window.onbeforeunload = function () {
     return '确认离开当前页面吗？';
@@ -124,7 +132,7 @@ ReactDom.render(
   <Provider store={store}>
     <ThemeContextProvider>
       <ConfigProvider locale={zhCN}>
-        {isNewApp ? <NewApp /> : <App />}
+        {isOldApp === true ? <OldApp /> : <App />}
       </ConfigProvider>
     </ThemeContextProvider>
   </Provider>,

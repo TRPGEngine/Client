@@ -20,6 +20,7 @@ import * as trpgApi from '../../api/trpg.api';
 import { TRPGAction } from '@redux/types/__all__';
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import { NoteInfo } from '@redux/types/note';
+import _isFunction from 'lodash/isFunction';
 const api = trpgApi.getInstance();
 
 // 同步到服务器
@@ -29,7 +30,7 @@ const api = trpgApi.getInstance();
  */
 let isSync = false;
 const syncList: any[] = [];
-const trySyncNote = function(dispatch, payload) {
+const trySyncNote = function (dispatch, payload) {
   if (isSync === false) {
     isSync = true;
     dispatch({ type: SYNC_NOTE_REQUEST, uuid: payload.uuid });
@@ -40,7 +41,7 @@ const trySyncNote = function(dispatch, payload) {
         noteTitle: payload.title,
         noteContent: payload.content,
       },
-      function(data) {
+      function (data) {
         isSync = false;
         if (data.result) {
           dispatch({ type: SYNC_NOTE_SUCCESS });
@@ -66,7 +67,7 @@ export const addNote = function addNote() {
 };
 
 export const saveNote = function saveNote(uuid, title, content) {
-  return async function(dispatch, getState) {
+  return async function (dispatch, getState) {
     const noteObj = (await rnStorage.get('note')) || {};
     noteObj[uuid] = Object.assign({}, noteObj[uuid], {
       uuid,
@@ -81,8 +82,8 @@ export const saveNote = function saveNote(uuid, title, content) {
   };
 };
 
-export const getNote = function(): TRPGAction {
-  return async function(dispatch, getState) {
+export const getNote = function (): TRPGAction {
+  return async function (dispatch, getState) {
     const localNote = await rnStorage.get('note');
     if (localNote) {
       dispatch({ type: GET_NOTE, noteList: localNote });
@@ -100,9 +101,11 @@ export const switchNote = function switchNote(uuid) {
 /**
  * 创建笔记
  */
-export function createNote(): TRPGAction {
+export function createNote(cb?: (noteUUID: string) => void): TRPGAction {
   return async (dispatch, getState) => {
     const { note } = await api.emitP('note::createNote');
+
+    _isFunction(cb) && cb(note.uuid);
 
     dispatch({
       type: CREATE_NOTE,

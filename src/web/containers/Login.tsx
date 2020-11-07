@@ -8,7 +8,10 @@ import rnStorage from '@shared/api/rn-storage.api';
 import './Login.scss';
 import { TRPGState } from '@redux/types/__all__';
 import { showPortal } from '@web/redux/action/ui';
-import { checkIsNewApp } from '@web/utils/debug-helper';
+import { checkIsOldApp } from '@web/utils/debug-helper';
+import { t } from '@shared/i18n';
+import { LanguageSwitchLink } from '@web/components/LanguageSwitchLink';
+import { Button } from 'antd';
 
 interface Props extends DispatchProp<any> {
   isLogin: boolean;
@@ -59,8 +62,8 @@ class Login extends React.Component<Props> {
     this.props.dispatch(showLoading());
     const username = this.state.username;
     const password = this.state.password;
-    const isNewApp = checkIsNewApp();
-    this.props.dispatch(login(username, password, { isNewApp }));
+    const isOldApp = checkIsOldApp();
+    this.props.dispatch(login(username, password, { isOldApp }));
   }
 
   handleQQLogin() {
@@ -88,10 +91,10 @@ class Login extends React.Component<Props> {
 
     return (
       <div className="login-screen">
-        <h2>欢迎来到TRPG的世界</h2>
+        <h2>{t('欢迎来到TRPG的世界')}</h2>
         <input
           type="text"
-          placeholder="用户名"
+          placeholder={t('用户名')}
           value={this.state.username}
           onChange={(e) => {
             this.setState({ username: e.target.value });
@@ -99,7 +102,7 @@ class Login extends React.Component<Props> {
         />
         <input
           type="password"
-          placeholder="密码"
+          placeholder={t('密码')}
           value={this.state.password}
           onChange={(e) => {
             this.setState({ password: e.target.value });
@@ -112,18 +115,26 @@ class Login extends React.Component<Props> {
             onClick={() => this.handleLogin()}
             disabled={!canLogin}
           >
-            登录
+            {t('登录')}
           </button>
-          {this.props.oauthList.includes('qq') ? (
+          {/* {this.props.oauthList.includes('qq') ? (
             <button onClick={() => this.handleQQLogin()}>
               <i className="iconfont">&#xe786;</i>
             </button>
-          ) : null}
+          ) : null} */}
         </div>
         <div className="login-action">
-          <a onClick={this.handleShowDownloadApp}>下载移动版APP</a>
-          <Link to="/register">没有账号？现在注册</Link>
+          {/* <a onClick={this.handleShowDownloadApp}>下载移动版APP</a> */}
+          <Link to="/register">{t('没有账号？现在注册')}</Link>
         </div>
+
+        <div className="login-page-footer">
+          <Button type="link" onClick={() => window.open(config.url.homepage)}>
+            {t('官方网站')}
+          </Button>
+        </div>
+
+        <LanguageSwitchLink />
       </div>
     );
   }

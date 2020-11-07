@@ -167,7 +167,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
     return dataAvatar || avatar;
   }
 
-  getContent() {
+  getContent(): React.ReactNode {
     return null;
   }
 

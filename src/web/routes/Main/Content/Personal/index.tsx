@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useConverses } from '@redux/hooks/chat';
 import { SidebarItem } from '../SidebarItem';
@@ -23,6 +23,8 @@ import { Divider } from 'antd';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { getUserName } from '@shared/utils/data-helper';
 import { useTranslation } from '@shared/i18n';
+import { useHistory } from 'react-router';
+import _orderBy from 'lodash/orderBy';
 
 /**
  * 个人面板
@@ -33,75 +35,85 @@ export const Personal: React.FC = TMemo(() => {
     (state) => state.chat.converses[SYSTE_CONVERSE_SPEC]
   );
   const noteList = useTRPGSelector((state) => state.note.list);
+  const orderedNoteList = useMemo(
+    () => _orderBy(noteList, ['updatedAt'], ['desc']),
+    [noteList]
+  );
   const dispatch = useTRPGDispatch();
-  const handleAddNote = useCallback(() => {
-    dispatch(createNote());
-  }, []);
   const currentUserInfo = useCurrentUserInfo();
   const { t } = useTranslation();
+  const history = useHistory();
+
+  const handleAddNote = useCallback(() => {
+    dispatch(
+      createNote((noteUUID) => {
+        history.push(`/main/personal/note/${noteUUID}`);
+      })
+    );
+  }, [history]);
+
+  const sidebar = (
+    <>
+      <SectionHeader>{getUserName(currentUserInfo)}</SectionHeader>
+      <SidebarItemsContainer>
+        <SidebarItem
+          icon={<UserOutlined style={{ color: 'white', fontSize: 24 }} />}
+          name={t('好友')}
+          to="/main/personal/friends"
+        />
+        <SidebarItem
+          icon={
+            <Iconfont style={{ color: 'white', fontSize: 24 }}>
+              &#xe61b;
+            </Iconfont>
+          }
+          name={t('角色')}
+          to="/main/personal/actors"
+        />
+        <Divider />
+        <SidebarItem
+          icon="系统消息"
+          name={t('系统消息')}
+          to={`/main/personal/converse/${SYSTE_CONVERSE_SPEC}`}
+          badge={systemConverse?.unread}
+        />
+        <SidebarHeader
+          title={t('笔记')}
+          action={<Iconfont onClick={handleAddNote}>&#xe604;</Iconfont>}
+        />
+        <div>
+          {orderedNoteList.map((note) => {
+            return (
+              <SidebarItem
+                key={note.uuid}
+                icon=""
+                name={note.title}
+                to={`/main/personal/note/${note.uuid}`}
+                badge={note.unsync}
+              />
+            );
+          })}
+        </div>
+        <SidebarHeaderText>{t('私信')}</SidebarHeaderText>
+        <div>
+          {userConverses.map((converse) => {
+            return (
+              <SidebarItem
+                key={converse.uuid}
+                icon={converse.icon}
+                name={converse.name}
+                to={`/main/personal/converse/${converse.uuid}`}
+                badge={converse.unread}
+              />
+            );
+          })}
+        </div>
+      </SidebarItemsContainer>
+    </>
+  );
 
   return (
-    <PageContent
-      sidebar={
-        <>
-          <SectionHeader>{getUserName(currentUserInfo)}</SectionHeader>
-          <SidebarItemsContainer>
-            <SidebarItem
-              icon={<UserOutlined style={{ color: 'white', fontSize: 24 }} />}
-              name={t('好友')}
-              to="/main/personal/friends"
-            />
-            <SidebarItem
-              icon={
-                <Iconfont style={{ color: 'white', fontSize: 24 }}>
-                  &#xe61b;
-                </Iconfont>
-              }
-              name={t('角色')}
-              to="/main/personal/actors"
-            />
-            <Divider />
-            <SidebarItem
-              icon="系统消息"
-              name={t('系统消息')}
-              to={`/main/personal/converse/${SYSTE_CONVERSE_SPEC}`}
-              badge={systemConverse?.unread}
-            />
-            <SidebarHeader
-              title={t('笔记')}
-              action={<Iconfont onClick={handleAddNote}>&#xe604;</Iconfont>}
-            />
-            <div>
-              {noteList.map((note) => {
-                return (
-                  <SidebarItem
-                    key={note.uuid}
-                    icon=""
-                    name={note.title}
-                    to={`/main/personal/note/${note.uuid}`}
-                    badge={note.unsync}
-                  />
-                );
-              })}
-            </div>
-            <SidebarHeaderText>{t('私信')}</SidebarHeaderText>
-            <div>
-              {userConverses.map((converse) => {
-                return (
-                  <SidebarItem
-                    key={converse.uuid}
-                    icon={converse.icon}
-                    name={converse.name}
-                    to={`/main/personal/converse/${converse.uuid}`}
-                    badge={converse.unread}
-                  />
-                );
-              })}
-            </div>
-          </SidebarItemsContainer>
-        </>
-      }
-    >
+    <PageContent sidebar={sidebar}>
       <Switch>
         <Route path="/main/personal/friends" component={FriendPanel} />
         <Route path="/main/personal/actors" component={ActorPanel} />

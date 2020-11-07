@@ -10,6 +10,8 @@
 [![Linux](https://img.shields.io/badge/platform-linux-blue.svg)]() -->
 <!-- [![iOS](https://img.shields.io/badge/platform-ios-orange.svg)]() -->
 
+![Client](https://socialify.git.ci/TRPGEngine/Client/image?description=1&font=Rokkitt&forks=1&language=1&logo=https%3A%2F%2Ftrpgdoc.moonrailgun.com%2Fimg%2Ftrpg_logo.png&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Light)
+
 简单的来说就是类似于钉钉, Slack, Discord 那种以即时通讯为核心，以其他的业务需求为辅助而制作的功能性聊天软件。
 
 本项目包含以下内容:

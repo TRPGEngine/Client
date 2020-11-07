@@ -48,11 +48,14 @@ const WindowContainer = styled.div`
 
   > .window-container-title {
     display: flex;
-    justify-content: space-between;
     padding: 10px 6px;
     font-size: 18px;
     border-bottom: ${({ theme }) => theme.border.standard};
     cursor: move;
+
+    > .window-container-title-text {
+      flex: 1;
+    }
 
     > .window-container-title-action {
       display: flex;
@@ -79,7 +82,7 @@ const Window: React.FC<WindowContainerProps> = React.memo((props) => {
   return (
     <WindowContainer>
       <div className="window-container-title">
-        <span>{props.title}</span>
+        <span className="window-container-title-text">{props.title}</span>
         <div className="window-container-title-action">
           {/* <div title="最小化" onClick={props.onMinimize}>
             <i className="iconfont">&#xe657;</i>
@@ -119,7 +122,7 @@ const StandaloneWindow: React.FC<StandaloneWindowConfig> & {
   return (
     <Container>
       <Rnd
-        dragHandleClassName="window-container-title"
+        dragHandleClassName="window-container-title-text"
         {...props.options}
         default={defaultPos}
       >
@@ -167,7 +170,24 @@ StandaloneWindow.open = (config) => {
 export default StandaloneWindow;
 
 /**
+ * 打开一个网页
+ * @param url 网址
+ */
+export async function openWebviewWindow(
+  url: string,
+  options?: Omit<StandaloneWindowConfig, 'body'>
+) {
+  const node = React.createElement(Webview, { src: url });
+
+  StandaloneWindow.open!({
+    ...options,
+    body: node,
+  });
+}
+
+/**
  * 打开一个portal窗口
+ * @param portalUrl portal页面的相对地址
  */
 export async function openPortalWindow(
   portalUrl: string,
@@ -178,10 +198,6 @@ export async function openPortalWindow(
   if (_isString(jwt)) {
     window.localStorage.setItem('jwt', jwt);
   }
-  const node = React.createElement(Webview, { src: getPortalUrl(portalUrl) });
 
-  StandaloneWindow.open!({
-    ...options,
-    body: node,
-  });
+  openWebviewWindow(getPortalUrl(portalUrl), options);
 }

@@ -8,14 +8,11 @@ import { resources } from './resources';
 import { languageDetector } from './language';
 import { useState, useEffect } from 'react';
 
-i18next
-  .use(languageDetector)
-  .use(initReactI18next)
-  .init({
-    debug: true,
-    fallbackLng: 'zh-CN',
-    resources,
-  });
+i18next.use(languageDetector).use(initReactI18next).init({
+  // debug: true,
+  fallbackLng: 'zh-CN',
+  resources,
+});
 
 /**
  * 国际化翻译

@@ -13,7 +13,6 @@ const Container = styled.div`
 
   .avatar {
     overflow: hidden;
-    border: 1px solid white;
 
     > img {
       width: 100%;
@@ -35,18 +34,10 @@ const PopoverGroupInfo: React.FC<Props> = TMemo((props) => {
   const groupInfo = useCachedGroupInfo(props.groupUUID);
   const { t } = useTranslation();
 
-  const avatar = useMemo(
-    () =>
-      _isEmpty(groupInfo.avatar)
-        ? config.defaultImg.getGroup(groupInfo.name!)
-        : groupInfo.avatar,
-    [groupInfo.avatar]
-  );
-
   return (
     <Container>
       <div className="avatar">
-        <Avatar size="large" src={avatar} name={groupInfo.name} />
+        <Avatar size="large" src={groupInfo.avatar} name={groupInfo.name} />
       </div>
       <div className="info">
         <div>

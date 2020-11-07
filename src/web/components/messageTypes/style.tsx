@@ -442,6 +442,11 @@ export const MsgItem = styled.div`
         padding: 0;
         border-radius: initial;
         box-shadow: none;
+
+        &::before,
+        &::after {
+          content: '';
+        }
       }
     }
   }

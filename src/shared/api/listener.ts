@@ -46,20 +46,20 @@ export function bindEventFunc(
   }
 
   const api = this;
-  api.on('chat::message', function(data) {
+  api.on('chat::message', function (data) {
     const converseUUID = data.converse_uuid || data.sender_uuid;
     store.dispatch(addMsg(converseUUID, data));
 
     onReceiveMessage && onReceiveMessage(data);
   });
 
-  api.on('chat::updateMessage', function(data) {
+  api.on('chat::updateMessage', function (data) {
     const converseUUID = data.converseUUID;
     const payload = data.payload;
     store.dispatch(updateMsg(converseUUID, payload));
   });
 
-  api.on('chat::startWriting', function(data) {
+  api.on('chat::startWriting', function (data) {
     const { type = 'user', from, groupUUID, channelUUID, currentText } = data;
     const uuid = from;
     store.dispatch(
@@ -67,35 +67,35 @@ export function bindEventFunc(
     );
   });
 
-  api.on('chat::stopWriting', function(data) {
+  api.on('chat::stopWriting', function (data) {
     const { type = 'user', from, groupUUID, channelUUID } = data;
     const uuid = from;
     store.dispatch(stopWriting(type, uuid, groupUUID, channelUUID));
   });
 
-  api.on('player::appendFriend', function(data) {
+  api.on('player::appendFriend', function (data) {
     const uuid = data.uuid;
     getUserInfoCache(uuid);
     store.dispatch({ type: ADD_FRIEND_SUCCESS, friendUUID: uuid });
   });
-  api.on('player::invite', function(data) {
+  api.on('player::invite', function (data) {
     store.dispatch(addFriendInvite(data));
   });
-  api.on('player::removeInvite', function(data) {
+  api.on('player::removeInvite', function (data) {
     const { inviteUUID } = data;
     store.dispatch(removeFriendInvite({ inviteUUID }));
   });
-  api.on('player::tick', function(data) {
+  api.on('player::tick', function (data) {
     store.dispatch(showAlert(data.msg));
     store.dispatch({ type: RESET });
   });
-  api.on('group::updateGroupStatus', function(data) {
+  api.on('group::updateGroupStatus', function (data) {
     store.dispatch(updateGroupStatus(data.groupUUID, data.groupStatus));
   });
-  api.on('group::addGroupSuccess', function(data) {
+  api.on('group::addGroupSuccess', function (data) {
     store.dispatch(addGroup(data.group));
   });
-  api.on('group::updateGroupInfo', function(data) {
+  api.on('group::updateGroupInfo', function (data) {
     const { groupUUID, groupInfo } = data;
     store.dispatch(
       updateGroupInfo({
@@ -104,21 +104,21 @@ export function bindEventFunc(
       })
     );
   });
-  api.on('group::updateGroupActorInfo', function(data) {
+  api.on('group::updateGroupActorInfo', function (data) {
     const { groupUUID, groupActorUUID, groupActorInfo } = data;
     store.dispatch(
       updateGroupActorInfo(groupUUID, groupActorUUID, groupActorInfo)
     );
   });
-  api.on('group::addGroupActor', function(data) {
+  api.on('group::addGroupActor', function (data) {
     const { groupUUID, groupActor } = data;
     store.dispatch(addGroupActor(groupUUID, groupActor));
   });
-  api.on('group::updateGroupActor', function(data) {
+  api.on('group::updateGroupActor', function (data) {
     const { groupUUID, groupActor } = data;
     store.dispatch(updateGroupActor(groupUUID, groupActor));
   });
-  api.on('group::updatePlayerSelectedGroupActor', function(data) {
+  api.on('group::updatePlayerSelectedGroupActor', function (data) {
     store.dispatch(
       updatePlayerSelectedGroupActor(
         data.groupUUID,
@@ -127,11 +127,11 @@ export function bindEventFunc(
       )
     );
   });
-  api.on('trpg::updateGroupMaps', function(data) {
+  api.on('trpg::updateGroupMaps', function (data) {
     const { groupUUID, groupMaps } = data;
     store.dispatch(updateGroupMapList(groupUUID, groupMaps));
   });
-  api.on('trpg::addGroupMap', function(data) {
+  api.on('trpg::addGroupMap', function (data) {
     const { groupUUID, mapUUID, mapName } = data;
     store.dispatch(addGroupMap(groupUUID, mapUUID, mapName));
   });
@@ -148,16 +148,16 @@ export function bindEventFunc(
   // ------------------------------------------------
 
   // 网络状态管理
-  api.on('connect', function(data) {
+  api.on('connect', function (data) {
     store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
     store.dispatch(updateSocketId(api.socket.id));
     console.log('连接成功');
   });
-  api.on('connecting', function(data) {
+  api.on('connecting', function (data) {
     store.dispatch(changeNetworkStatue(false, '正在连接...', true));
     console.log('正在连接');
   });
-  api.on('reconnect', function(data) {
+  api.on('reconnect', function (data) {
     store.dispatch(changeNetworkStatue(true, '重连成功, 网络连接畅通'));
     store.dispatch(updateSocketId(api.socket.id));
     console.log('重连成功');
@@ -172,19 +172,19 @@ export function bindEventFunc(
       })();
     }
   });
-  api.on('reconnecting', function(data) {
+  api.on('reconnecting', function (data) {
     store.dispatch(changeNetworkStatue(false, '正在重新连接...', true));
-    console.log('重连中...', api.serverUrl);
+    console.log('重连中...', API.serviceUrl);
   });
-  api.on('disconnect', function(data) {
+  api.on('disconnect', function (data) {
     store.dispatch(changeNetworkStatue(false, '已断开连接'));
     console.log('已断开连接');
   });
-  api.on('connect_failed', function(data) {
+  api.on('connect_failed', function (data) {
     store.dispatch(changeNetworkStatue(false, '连接失败'));
     console.log('连接失败');
   });
-  api.on('error', function(data) {
+  api.on('error', function (data) {
     store.dispatch(changeNetworkStatue(false, '网络出现异常'));
     console.log('网络出现异常', data);
   });

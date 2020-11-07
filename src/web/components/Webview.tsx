@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import config from '@shared/project.config';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
@@ -80,42 +80,49 @@ class Webview extends React.Component<Props> {
     window.open(this.webframe!.src, 'square', 'frame=true');
   }
 
-  handleLoad = (e: React.SyntheticEvent<HTMLIFrameElement, Event>) => {
-    try {
-      // 尝试访问iframe内的窗口，如果访问失败则认为出现错误
-      console.log(e.currentTarget.contentWindow);
-    } catch (err) {
-      console.warn(err);
-      this.setState({ isError: true, errorMsg: err.message });
-    }
+  handleError = (e: React.SyntheticEvent<HTMLIFrameElement, Event>) => {
+    NProgress.done();
+    NProgress.remove();
+    this.setState({
+      isError: true,
+      errorMsg: `页面加载失败: ${this.props.src}`,
+    });
   };
 
   render() {
+    let inner: React.ReactNode = null;
+
     if (this.state.isError) {
-      return <WebviewError message={this.state.errorMsg} />;
+      inner = <WebviewError message={this.state.errorMsg} />;
+    } else {
+      inner = (
+        <Fragment>
+          {this.props.allowExopen && (
+            <div
+              className="open-new"
+              title="在新窗口打开"
+              onClick={() => this.handleOpenInNewWindow()}
+            >
+              <i className="iconfont">&#xe63c;</i>
+            </div>
+          )}
+          {isElectron ? (
+            <webview ref={(ref) => (this.webframe = ref as any)} />
+          ) : (
+            <iframe
+              ref={(ref) => (this.webframe = ref as any)}
+              onError={this.handleError}
+            >
+              <p>请使用现代浏览器打开本页面</p>
+            </iframe>
+          )}
+        </Fragment>
+      );
     }
 
     return (
       <div className="webview" id={this.id}>
-        {this.props.allowExopen && (
-          <div
-            className="open-new"
-            title="在新窗口打开"
-            onClick={() => this.handleOpenInNewWindow()}
-          >
-            <i className="iconfont">&#xe63c;</i>
-          </div>
-        )}
-        {isElectron ? (
-          <webview ref={(ref) => (this.webframe = ref as any)} />
-        ) : (
-          <iframe
-            ref={(ref) => (this.webframe = ref as any)}
-            onLoad={this.handleLoad}
-          >
-            <p>请使用现代浏览器打开本页面</p>
-          </iframe>
-        )}
+        {inner}
       </div>
     );
   }
