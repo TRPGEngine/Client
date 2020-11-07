@@ -14,6 +14,7 @@ export interface ConsumerInfo {
   priority: number;
   track: MediaStreamTrack;
   score: { ssrc: number; score: number }[];
+  muted: boolean;
 }
 
 export interface ConsumersStateType {

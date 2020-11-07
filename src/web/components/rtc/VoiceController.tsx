@@ -14,7 +14,7 @@ import { useRTCRoomStateSelector } from '@rtc/redux';
 import { Iconfont } from '../Iconfont';
 import { useRTCAudioProducer } from '@rtc/hooks/useRTCProducers';
 import { useRTCRoomClientContext } from '@rtc/RoomContext';
-import { useAudioVolumn } from './hooks/useAudioVolumn';
+import { useAudioVolume } from './hooks/useAudioVolume';
 
 const CapablityBtn = styled(Button).attrs({
   shape: 'circle',
@@ -29,7 +29,7 @@ export const VoiceController: React.FC = TMemo(() => {
   const { client } = useRTCRoomClientContext();
   const me = useRTCRoomStateSelector((state) => state.me);
   const audioProducer = useRTCAudioProducer();
-  const audioVolumn = useAudioVolumn(audioProducer?.track);
+  const audioVolumn = useAudioVolume(audioProducer?.track);
 
   // 麦克风状态
   const micState: CapablityState = useMemo(() => {

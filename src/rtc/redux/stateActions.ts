@@ -239,9 +239,24 @@ export const addConsumer = createAction('ADD_CONSUMER', (consumer, peerId) => {
 
 export const removeConsumer = createAction(
   'REMOVE_CONSUMER',
-  (consumerId, peerId) => {
+  (consumerId: string, peerId: string) => {
     return {
       payload: { consumerId, peerId },
+    };
+  }
+);
+
+/**
+ * 静音消费者(其他的成员)
+ */
+export const mutedConsumer = createAction(
+  'MUTED_CONSUMER',
+  (consumerId: string, isMuted: boolean) => {
+    return {
+      payload: {
+        consumerId,
+        isMuted,
+      },
     };
   }
 );

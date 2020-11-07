@@ -7,7 +7,7 @@ import _isNil from 'lodash/isNil';
  * 获取音频轨的音量
  * @param audioTrack 音频轨
  */
-export function useAudioVolumn(audioTrack: MediaStreamTrack | undefined) {
+export function useAudioVolume(audioTrack: MediaStreamTrack | undefined) {
   const { runHark, audioVolume } = useHark();
   const runHarkRef = useValueRef(runHark);
 

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useRTCPeerConsumersAudio } from '@rtc/hooks/useRTCPeerConsumers';
 import _isNil from 'lodash/isNil';
-import { useRTCAudioMuted } from '@rtc/hooks/useRTCAudioMuted';
+import { useRTCGlobalAudioMuted } from '@rtc/hooks/useRTCGlobalAudioMuted';
 import { showToasts } from '@shared/manager/ui';
 import memoizeOne from 'memoize-one';
 
@@ -34,7 +34,7 @@ export const VoicePeer: React.FC<VoicePeerProps> = TMemo((props) => {
   const { peerId } = props;
   const audio = useRTCPeerConsumersAudio(peerId);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const audioMuted = useRTCAudioMuted();
+  const globalAudioMuted = useRTCGlobalAudioMuted();
 
   useEffect(() => {
     const audioTrack = audio?.track;
@@ -52,7 +52,7 @@ export const VoicePeer: React.FC<VoicePeerProps> = TMemo((props) => {
       <audio
         ref={audioRef}
         autoPlay={true}
-        muted={audioMuted}
+        muted={globalAudioMuted || audio.muted}
         controls={false}
       />
     </div>

@@ -369,6 +369,7 @@ export class RoomClient {
                     '/'
                   )[1],
                   track: consumer.track,
+                  muted: false,
                 },
                 peerId
               )

@@ -10,6 +10,7 @@ import {
   setConsumerPriority,
   setConsumerTrack,
   setConsumerScore,
+  mutedConsumer,
 } from '../stateActions';
 import { ConsumersStateType } from '../types/consumers';
 
@@ -33,6 +34,13 @@ export default createReducer<ConsumersStateType>(initialState, (builder) => {
       const { consumerId } = action.payload;
 
       delete state[consumerId];
+    })
+    .addCase(mutedConsumer, (state, action) => {
+      const { consumerId, isMuted } = action.payload;
+
+      if (state[consumerId]) {
+        state[consumerId].muted = isMuted;
+      }
     })
     .addCase(setConsumerPaused, (state, action) => {
       const { consumerId, originator } = action.payload;
