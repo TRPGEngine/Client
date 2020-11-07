@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.8](https://github.com/TRPGEngine/Client/compare/v0.4.7...v0.4.8) (2020-11-07)
+
+
+### Features
+
+* **web:** 图片上传时增加全局loading以优化用户体验 ([52199da](https://github.com/TRPGEngine/Client/commit/52199da4cfe31430a66d732551f23b417157141b))
+* **web:** 增加发送文件的功能并调整了webview的错误处理实现 ([d58ceef](https://github.com/TRPGEngine/Client/commit/d58ceefb8d1329bad03d4e8971b11b2dfba6918d))
+* **web:** 笔记增加字数统计 ([3761fef](https://github.com/TRPGEngine/Client/commit/3761fefdda3300de8ea14d84dadbaa61b994dfbc))
+* **web:** 聊天框增加发送图片的入口 ([c46cc2f](https://github.com/TRPGEngine/Client/commit/c46cc2fff0cdd1614daa6a590cf6aac515dec413))
+* **web:** 首页增加语言切换功能 ([c674748](https://github.com/TRPGEngine/Client/commit/c6747481f4bf14b8d0c413e84e92f07539b2ef08))
+* **web:** 默认UI改为新UI，旧UI可以通过设置项切换回去 ([09535c0](https://github.com/TRPGEngine/Client/commit/09535c0fef635f5a7719de6a27197ee62ee20ba4))
+
+
+### Bug Fixes
+
+* 修复因为网络或者操作过快问题导致撤回消息时尚未发送到服务器导致返回错误异常的bug ([cf28df6](https://github.com/TRPGEngine/Client/commit/cf28df66d94a0f644c5aea4646473e13d3e150d4))
+* **portal:** 修复portal端战报汇报列表无法打开的bug ([aa2876d](https://github.com/TRPGEngine/Client/commit/aa2876dbffe5445e8cbdb397a3119d22eb089930))
+* **web:** 修复移动端无法正确关闭按钮StandaloneWindow的bug ([844875a](https://github.com/TRPGEngine/Client/commit/844875a92d450e6bb257d4fb4dee991879a1f1f2))
+* 修复时序性问题导致i18n加载语言完毕前就获取 ([db91821](https://github.com/TRPGEngine/Client/commit/db918213c169ebaa3caaeefea74fe83e85978ad6))
+* 移除svg。修复使用svg导致的部分浏览器对svg支持不正确导致的样式问题 ([2d1814c](https://github.com/TRPGEngine/Client/commit/2d1814c7c6e79fa5f331f078b66ffc58a7d41328))
+
 ### [0.4.7](https://github.com/TRPGEngine/Client/compare/v0.4.6...v0.4.7) (2020-11-02)
 
 
