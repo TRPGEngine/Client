@@ -6,6 +6,62 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5315767",
+      "name": "show",
+      "font_class": "show",
+      "unicode": "e760",
+      "unicode_decimal": 59232
+    },
+    {
+      "icon_id": "5316079",
+      "name": "hide",
+      "font_class": "hide",
+      "unicode": "e762",
+      "unicode_decimal": 59234
+    },
+    {
+      "icon_id": "5317896",
+      "name": "layer",
+      "font_class": "layer1",
+      "unicode": "e768",
+      "unicode_decimal": 59240
+    },
+    {
+      "icon_id": "4767098",
+      "name": "line",
+      "font_class": "line",
+      "unicode": "e7fd",
+      "unicode_decimal": 59389
+    },
+    {
+      "icon_id": "11992564",
+      "name": "draw-polygon-solid",
+      "font_class": "draw-polygon-solid",
+      "unicode": "e67b",
+      "unicode_decimal": 59003
+    },
+    {
+      "icon_id": "12309762",
+      "name": "circle",
+      "font_class": "circle",
+      "unicode": "e803",
+      "unicode_decimal": 59395
+    },
+    {
+      "icon_id": "7034734",
+      "name": "brick wall",
+      "font_class": "brickwall",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "13328248",
+      "name": "robot",
+      "font_class": "robot-dark",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
       "icon_id": "11975177",
       "name": "加粗",
       "font_class": "jiacu",
