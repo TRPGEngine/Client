@@ -8,6 +8,8 @@ import _isNil from 'lodash/isNil';
 import { VoicePeerController } from './VoicePeerController';
 import { VoiceController } from './VoiceController';
 import styled from 'styled-components';
+import { Loading } from '../Loading';
+import { useTranslation } from '@shared/i18n';
 
 const VoiceMembersContainer = styled.div`
   display: flex;
@@ -32,10 +34,15 @@ export const VoiceRoomDetail: React.FC = TMemo(() => {
   const { client } = useRTCRoomClientContext();
   const roomId = useRTCRoomStateSelector((state) => state.room.roomId);
   const roomState = useRTCRoomStateSelector((state) => state.room.state);
+  const { t } = useTranslation();
 
   const handleLeaveRoom = useCallback(() => {
     client?.close();
   }, [client?.close]);
+
+  if (roomState === 'connecting') {
+    return <Loading description={t('正在连接...')} />;
+  }
 
   return (
     <div>

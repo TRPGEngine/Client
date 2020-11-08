@@ -8,13 +8,15 @@
 import React, { useCallback, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
-import { Button, Tooltip } from 'antd';
+import { Button, Space, Tooltip } from 'antd';
 import { CapablityState } from '@rtc/type';
-import { useRTCRoomStateSelector } from '@rtc/redux';
+import { useRTCRoomStateDispatch, useRTCRoomStateSelector } from '@rtc/redux';
 import { Iconfont } from '../Iconfont';
 import { useRTCAudioProducer } from '@rtc/hooks/useRTCProducers';
 import { useRTCRoomClientContext } from '@rtc/RoomContext';
 import { useAudioVolume } from './hooks/useAudioVolume';
+import { setAudioMutedState } from '@rtc/redux/stateActions';
+import { VoiceLine } from './VoiceLine';
 
 const CapablityBtn = styled(Button).attrs({
   shape: 'circle',
@@ -29,7 +31,8 @@ export const VoiceController: React.FC = TMemo(() => {
   const { client } = useRTCRoomClientContext();
   const me = useRTCRoomStateSelector((state) => state.me);
   const audioProducer = useRTCAudioProducer();
-  const audioVolumn = useAudioVolume(audioProducer?.track);
+  const audioVolume = useAudioVolume(audioProducer?.track);
+  const dispatch = useRTCRoomStateDispatch();
 
   // 麦克风状态
   const micState: CapablityState = useMemo(() => {
@@ -44,29 +47,57 @@ export const VoiceController: React.FC = TMemo(() => {
     }
   }, [me.canSendMic, audioProducer, audioProducer?.paused]);
 
+  const volume = useMemo(() => {
+    if (micState === 'off' || micState === 'unsupported') {
+      return 0;
+    }
+
+    return audioVolume;
+  }, [audioVolume, micState]);
+
   const handleSwitchMic = useCallback(() => {
     if (micState === 'on') {
+      // 麦克风静音
       client?.muteMic();
     } else {
+      // 麦克风取消静音
       client?.unmuteMic();
     }
   }, [micState, client]);
 
+  const handleSwitchAudioVolumn = useCallback(() => {
+    dispatch(setAudioMutedState(!me.audioMuted));
+  }, [me.audioMuted]);
+
   return (
     <div>
-      <CapablityBtn className={micState} onClick={handleSwitchMic}>
-        {micState === 'on' ? (
-          <Tooltip title="关闭语音">
-            <Iconfont>&#xe666;</Iconfont>
-          </Tooltip>
-        ) : (
-          <Tooltip title="开启语音">
-            <Iconfont>&#xe667;</Iconfont>
-          </Tooltip>
-        )}
-      </CapablityBtn>
+      <Space>
+        <CapablityBtn className={micState} onClick={handleSwitchMic}>
+          {micState === 'on' ? (
+            <Tooltip title="关闭语音">
+              <Iconfont>&#xe666;</Iconfont>
+            </Tooltip>
+          ) : (
+            <Tooltip title="开启语音">
+              <Iconfont>&#xe667;</Iconfont>
+            </Tooltip>
+          )}
+        </CapablityBtn>
 
-      <div>当前音量: {audioVolumn}</div>
+        <Button shape="circle" onClick={handleSwitchAudioVolumn}>
+          {!me.audioMuted ? (
+            <Tooltip title="关闭音量">
+              <Iconfont>&#xe664;</Iconfont>
+            </Tooltip>
+          ) : (
+            <Tooltip title="开启音量">
+              <Iconfont>&#xe67e;</Iconfont>
+            </Tooltip>
+          )}
+        </Button>
+      </Space>
+
+      <VoiceLine level={volume} />
     </div>
   );
 });
