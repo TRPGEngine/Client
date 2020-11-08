@@ -87,7 +87,7 @@
     "crc": "^3.8.0",
     "debug": "^4.1.1",
     "emoji-mart": "^2.11.2",
-    "filesize": "^3.6.1",
+    "filesize": "^6.1.0",
     "formik": "^2.1.1",
     "handlebars": "^4.4.3",
     "html-to-react": "^1.4.2",
