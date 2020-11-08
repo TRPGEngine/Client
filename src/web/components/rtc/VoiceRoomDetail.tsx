@@ -10,6 +10,7 @@ import { VoiceController } from './VoiceController';
 import styled from 'styled-components';
 import { Loading } from '../Loading';
 import { useTranslation } from '@shared/i18n';
+import { VoiceNetwork } from './VoiceNetwork';
 
 const VoiceMembersContainer = styled.div`
   display: flex;
@@ -51,6 +52,8 @@ export const VoiceRoomDetail: React.FC = TMemo(() => {
       <div>状态: {roomState}</div>
 
       <VoiceController />
+
+      <VoiceNetwork />
 
       <Button onClick={handleLeaveRoom}>离开房间</Button>
 

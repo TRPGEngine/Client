@@ -50,7 +50,7 @@ export const VoiceChannel: React.FC<CommonPanelProps> = TMemo((props) => {
   }, [createClient, channelUUID, currentUserInfo]);
 
   return (
-    <div>
+    <div style={{ overflow: 'auto' }}>
       {!isInRoom ? (
         <JoinRoomBtn onClick={handleJoinRoom}>加入房间</JoinRoomBtn>
       ) : (
