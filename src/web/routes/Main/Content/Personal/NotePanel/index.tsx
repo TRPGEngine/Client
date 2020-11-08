@@ -12,7 +12,12 @@ import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { Node } from 'slate';
 import { WebErrorBoundary } from '@web/components/WebErrorBoundary';
 import { AlertErrorView } from '@web/components/AlertErrorView';
-import { syncNote, markUnsyncNote, deleteNote } from '@redux/actions/note';
+import {
+  syncNote,
+  markUnsyncNote,
+  deleteNote,
+  markSyncNote,
+} from '@redux/actions/note';
 import { useBeforeUnload, useDebounce } from 'react-use';
 import { SectionHeader } from '@web/components/SectionHeader';
 import { Input, Empty, Modal } from 'antd';
@@ -91,6 +96,13 @@ function useNoteData(noteUUID: string) {
       if (!_isEqual(value, noteInfo.data)) {
         dispatch(
           markUnsyncNote({
+            noteUUID,
+          })
+        );
+      } else {
+        // 数据相等
+        dispatch(
+          markSyncNote({
             noteUUID,
           })
         );

@@ -5,7 +5,12 @@ import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
 import _findIndex from 'lodash/findIndex';
 import { createReducer } from '@reduxjs/toolkit';
-import { syncNote, markUnsyncNote, deleteNote } from '@redux/actions/note';
+import {
+  syncNote,
+  markUnsyncNote,
+  deleteNote,
+  markSyncNote,
+} from '@redux/actions/note';
 
 const {
   RESET,
@@ -125,6 +130,12 @@ export default createReducer(initialState, (builder) => {
       const note = state.list.find((n) => n.uuid === action.payload.noteUUID);
       if (!_isNil(note)) {
         note.unsync = true;
+      }
+    })
+    .addCase(markSyncNote, (state, action) => {
+      const note = state.list.find((n) => n.uuid === action.payload.noteUUID);
+      if (!_isNil(note)) {
+        note.unsync = false;
       }
     })
     .addCase(deleteNote.fulfilled, (state, action) => {
