@@ -1,0 +1,151 @@
+import React, { useCallback, useState } from 'react';
+import { TMemo } from '@shared/components/TMemo';
+import { Iconfont } from '../Iconfont';
+import { useTranslation } from '@shared/i18n';
+import styled from 'styled-components';
+import { Input, Popover, Tabs } from 'antd';
+import _isNil from 'lodash/isNil';
+import { Editor } from 'slate';
+import { useLocalStorage } from 'react-use';
+import {
+  ChatEmotionItem,
+  searchEmotionWithKeyword,
+} from '@shared/model/chat-emotion';
+import Image from '../Image';
+import { insertImage } from '../editor/changes/insertImage';
+
+const { TabPane } = Tabs;
+const { Search } = Input;
+
+const ChatEmotionBtn = styled.div`
+  width: 24px;
+  height: 24px;
+  background-color: ${({ theme }) => theme.color.transparent90};
+  border-radius: 50%;
+  color: white;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
+`;
+
+const ChatEmotionPopoverContainer = styled.div`
+  width: 350px;
+  height: 280px;
+`;
+
+const ChatEmotionSearchResultList = styled.div`
+  width: 100%;
+  height: 200px;
+  overflow-y: auto;
+  padding: 4px;
+
+  > img {
+    width: 25%;
+  }
+`;
+
+const ChatEmotionSearchContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  margin-top: -16px;
+`;
+
+function useSearchEmotion() {
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [searchResultList, setSearchResultList] = useState<ChatEmotionItem[]>(
+    []
+  );
+  const [searching, setSearching] = useState(false);
+
+  const handleSearch = useCallback(async () => {
+    if (searching === true) {
+      return;
+    }
+
+    setSearching(true);
+    const list = await searchEmotionWithKeyword(searchKeyword);
+    setSearchResultList(list);
+    setSearching(false);
+  }, [searchKeyword, searching]);
+
+  return {
+    searchKeyword,
+    setSearchKeyword,
+    searchResultList,
+    handleSearch,
+    searching,
+  };
+}
+
+export const ChatMsgEmotion: React.FC<{
+  editorRef: React.MutableRefObject<Editor | undefined>;
+  style?: React.CSSProperties;
+}> = TMemo((props) => {
+  const { editorRef } = props;
+  const [visible, setVisible] = useState(false);
+  const { t } = useTranslation();
+  const [tabKey, setTabKey] = useLocalStorage('__emotion_tab', '1');
+  const {
+    searchKeyword,
+    setSearchKeyword,
+    searchResultList,
+    handleSearch,
+    searching,
+  } = useSearchEmotion();
+
+  const handleSelectImage = useCallback((imageUrl: string) => {
+    if (_isNil(editorRef.current)) {
+      return;
+    }
+
+    setVisible(false);
+    insertImage(editorRef.current, imageUrl);
+  }, []);
+
+  const content = (
+    <ChatEmotionPopoverContainer>
+      <Tabs activeKey={tabKey} onChange={setTabKey}>
+        <TabPane tab={t('搜索表情')} key="1">
+          <ChatEmotionSearchContainer>
+            <Search
+              style={{ width: '100%' }}
+              placeholder={t('关键字')}
+              onSearch={handleSearch}
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+              disabled={searching}
+            />
+
+            <ChatEmotionSearchResultList>
+              {searchResultList.map((item) => {
+                return (
+                  <Image
+                    key={item.url}
+                    src={item.url}
+                    onClick={() => handleSelectImage(item.url)}
+                  />
+                );
+              })}
+            </ChatEmotionSearchResultList>
+          </ChatEmotionSearchContainer>
+        </TabPane>
+      </Tabs>
+    </ChatEmotionPopoverContainer>
+  );
+
+  return (
+    <Popover
+      visible={visible}
+      onVisibleChange={setVisible}
+      overlayClassName="chat-sendbox-addon-popover"
+      placement="top"
+      trigger="click"
+      content={content}
+    >
+      <ChatEmotionBtn style={props.style}>
+        <Iconfont>&#xe683;</Iconfont>
+      </ChatEmotionBtn>
+    </Popover>
+  );
+});
+ChatMsgEmotion.displayName = 'ChatMsgEmotion';
