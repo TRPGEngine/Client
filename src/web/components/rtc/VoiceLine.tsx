@@ -11,6 +11,7 @@ const Root = styled.div`
   height: 4px;
   border-radius: 2px;
   transition: all 0.3s linear;
+  margin: 10px 0;
 
   &.level0 {
     width: 0;

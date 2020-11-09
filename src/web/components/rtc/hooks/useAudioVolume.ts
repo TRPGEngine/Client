@@ -8,8 +8,9 @@ import _isNil from 'lodash/isNil';
  * @param audioTrack 音频轨
  */
 export function useAudioVolume(audioTrack: MediaStreamTrack | undefined) {
-  const { runHark, audioVolume } = useHark();
+  const { runHark, stopHark, audioVolume } = useHark();
   const runHarkRef = useValueRef(runHark);
+  const stopHarkRef = useValueRef(stopHark);
 
   useEffect(() => {
     if (_isNil(audioTrack)) {
@@ -19,6 +20,10 @@ export function useAudioVolume(audioTrack: MediaStreamTrack | undefined) {
     const stream = new MediaStream();
     stream.addTrack(audioTrack);
     runHarkRef.current(stream);
+
+    return () => {
+      stopHarkRef.current();
+    };
   }, [audioTrack]);
 
   return audioVolume;

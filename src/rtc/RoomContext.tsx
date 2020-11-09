@@ -10,19 +10,21 @@ import { getStore, RTCRoomReduxProvider } from './redux';
 interface RTCRoomClientContextState {
   client: RoomClient | undefined;
   createClient: (options: RoomClientOptions) => Promise<void>;
+  deleteClient: () => void;
 }
 
 const RTCRoomClientContext = React.createContext<RTCRoomClientContextState>({
   client: undefined,
   createClient: async () => {},
+  deleteClient: async () => {},
 });
 RTCRoomClientContext.displayName = 'RTCRoomClientContext';
 
-const initRoomClientStore = _once(() => {
+const initRoomClientStore = () => {
   RoomClient.init({
     store: getStore(),
   });
-});
+};
 export const RTCRoomClientContextProvider: React.FC = TMemo((props) => {
   const [client, setClient] = useState<RoomClient>();
 
@@ -42,8 +44,18 @@ export const RTCRoomClientContextProvider: React.FC = TMemo((props) => {
     [client]
   );
 
+  const deleteClient = useCallback(() => {
+    if (!_isNil(client)) {
+      client.close();
+    }
+
+    setClient(undefined);
+  }, [client]);
+
   return (
-    <RTCRoomClientContext.Provider value={{ client, createClient }}>
+    <RTCRoomClientContext.Provider
+      value={{ client, createClient, deleteClient }}
+    >
       <RTCRoomReduxProvider>{props.children}</RTCRoomReduxProvider>
     </RTCRoomClientContext.Provider>
   );

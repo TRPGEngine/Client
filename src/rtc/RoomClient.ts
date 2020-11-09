@@ -12,6 +12,7 @@ import * as requestActions from './redux/requestActions';
 import * as stateActions from './redux/stateActions';
 import _isNil from 'lodash/isNil';
 import { RoomClientOptions } from './type';
+import shortid from 'shortid';
 
 declare global {
   interface MediaDevices {
@@ -61,6 +62,8 @@ export class RoomClient {
   static init(data) {
     store = data.store;
   }
+
+  public clientId = shortid();
 
   private _roomId: string;
 
@@ -222,7 +225,9 @@ export class RoomClient {
   }
 
   close() {
-    if (this._closed) return;
+    if (this._closed) {
+      return;
+    }
 
     this._roomId = '';
     this._closed = true;
@@ -234,10 +239,16 @@ export class RoomClient {
       this._protoo.close();
     }
 
-    // Close mediasoup Transports.
-    if (this._sendTransport) this._sendTransport.close();
+    this.disableAll();
 
-    if (this._recvTransport) this._recvTransport.close();
+    // Close mediasoup Transports.
+    if (this._sendTransport) {
+      this._sendTransport.close();
+    }
+
+    if (this._recvTransport) {
+      this._recvTransport.close();
+    }
 
     store.dispatch(stateActions.setRoomId(null));
     store.dispatch(stateActions.setRoomState('closed'));
@@ -1363,6 +1374,17 @@ export class RoomClient {
     store.dispatch(stateActions.setAudioOnlyState(false));
 
     store.dispatch(stateActions.setAudioOnlyInProgress(false));
+  }
+
+  /**
+   * 关闭所有生产者
+   */
+  async disableAll() {
+    return Promise.all([
+      this.disableMic(),
+      this.disableShare(),
+      this.disableWebcam(),
+    ]);
   }
 
   async muteAudio() {

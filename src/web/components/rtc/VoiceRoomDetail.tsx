@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import { Loading } from '../Loading';
 import { useTranslation } from '@shared/i18n';
 import { VoiceNetwork } from './VoiceNetwork';
+import { RoomState } from '@rtc/redux/types/room';
 
 const VoiceMembersContainer = styled.div`
   display: flex;
@@ -31,15 +32,29 @@ const VoiceMembers: React.FC = TMemo(() => {
 });
 VoiceMembers.displayName = 'VoiceMembers';
 
+/**
+ * 获取房间状态的文本
+ * @param roomState 房间状态
+ */
+function getRoomStateLabel(roomState: RoomState): string {
+  if (roomState === 'new') {
+    return '新建连接';
+  } else if (roomState === 'connected') {
+    return '已连接';
+  } else if (roomState === 'closed') {
+    return '已关闭';
+  } else if (roomState === 'connecting') {
+    return '正在连接';
+  } else {
+    return '';
+  }
+}
+
 export const VoiceRoomDetail: React.FC = TMemo(() => {
-  const { client } = useRTCRoomClientContext();
+  const { client, deleteClient } = useRTCRoomClientContext();
   const roomId = useRTCRoomStateSelector((state) => state.room.roomId);
   const roomState = useRTCRoomStateSelector((state) => state.room.state);
   const { t } = useTranslation();
-
-  const handleLeaveRoom = useCallback(() => {
-    client?.close();
-  }, [client?.close]);
 
   if (roomState === 'connecting') {
     return <Loading description={t('正在连接...')} />;
@@ -49,13 +64,13 @@ export const VoiceRoomDetail: React.FC = TMemo(() => {
     <div>
       <div>房间号: {roomId}</div>
 
-      <div>状态: {roomState}</div>
+      <div>状态: {getRoomStateLabel(roomState)}</div>
 
       <VoiceController />
 
       <VoiceNetwork />
 
-      <Button onClick={handleLeaveRoom}>离开房间</Button>
+      <Button onClick={deleteClient}>离开房间</Button>
 
       <Divider />
 

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useValueRef } from './useValueRef';
+import _isNumber from 'lodash/isNumber';
 
 /**
  * 每过一段时间执行一次函数
@@ -9,14 +10,21 @@ export function useAsyncTimeout(fn: () => Promise<void>, ms: number) {
   const fnRef = useValueRef(fn);
 
   useEffect(() => {
+    let timer: number;
     function loop() {
       fnRef.current().then(() => {
-        setTimeout(() => {
+        timer = setTimeout(() => {
           loop();
         }, ms);
       });
     }
 
     loop();
+
+    return () => {
+      if (_isNumber(timer)) {
+        clearTimeout(timer);
+      }
+    };
   }, [ms]);
 }

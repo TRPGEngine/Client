@@ -18,10 +18,9 @@ export function useRTCProducers(): ProducersStateItem[] {
 export function useRTCAudioProducer(): ProducersStateItem | undefined {
   const producersArray = useRTCProducers();
 
-  const audioProducer = useMemo(
-    () => producersArray.find((producer) => producer.track.kind === 'audio'),
-    [producersArray]
-  );
+  const audioProducer = useMemo(() => {
+    return producersArray.find((producer) => producer.track.kind === 'audio');
+  }, [producersArray]);
 
   return audioProducer;
 }
