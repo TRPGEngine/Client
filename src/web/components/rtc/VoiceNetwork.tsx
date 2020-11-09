@@ -10,7 +10,7 @@ import filesize from 'filesize';
  * @param bitrate 比特率
  */
 function getStreamRate(bitrate: number): string {
-  return filesize(Number(bitrate) / 8, { bit: true }) + '/s';
+  return filesize(Number(bitrate) / 8, { bits: true }) + '/s';
 }
 
 export const VoiceNetwork: React.FC = TMemo(() => {
