@@ -13,6 +13,7 @@ import {
 } from '@shared/model/chat-emotion';
 import Image from '../Image';
 import { insertImage } from '../editor/changes/insertImage';
+import Loading from '@portal/components/Loading';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -44,7 +45,7 @@ const ChatEmotionSearchResultList = styled.div`
   }
 `;
 
-const ChatEmotionSearchContainer = styled.div`
+const ChatEmotionPanelContainer = styled.div`
   height: 100%;
   width: 100%;
   margin-top: -16px;
@@ -85,6 +86,10 @@ export const ChatMsgEmotion: React.FC<{
   const [visible, setVisible] = useState(false);
   const { t } = useTranslation();
   const [tabKey, setTabKey] = useLocalStorage('__emotion_tab', '1');
+  const [emotionRecent = [], setEmotionRecent] = useLocalStorage<string[]>(
+    '__emotion_recent',
+    []
+  );
   const {
     searchKeyword,
     setSearchKeyword,
@@ -93,20 +98,53 @@ export const ChatMsgEmotion: React.FC<{
     searching,
   } = useSearchEmotion();
 
-  const handleSelectImage = useCallback((imageUrl: string) => {
-    if (_isNil(editorRef.current)) {
-      return;
-    }
+  const handleAddRecentEmotion = useCallback(
+    (imageUrl) => {
+      let newArr = [imageUrl, ...emotionRecent];
+      newArr = newArr.slice(0, 8); // 最多只保留8条
+      setEmotionRecent(newArr);
+    },
+    [emotionRecent]
+  );
 
-    setVisible(false);
-    insertImage(editorRef.current, imageUrl);
-  }, []);
+  const handleSelectImage = useCallback(
+    (imageUrl: string) => {
+      if (_isNil(editorRef.current)) {
+        return;
+      }
+
+      setVisible(false);
+      insertImage(editorRef.current, imageUrl);
+      handleAddRecentEmotion(imageUrl);
+    },
+    [handleAddRecentEmotion]
+  );
 
   const content = (
     <ChatEmotionPopoverContainer>
-      <Tabs activeKey={tabKey} onChange={setTabKey}>
-        <TabPane tab={t('搜索表情')} key="1">
-          <ChatEmotionSearchContainer>
+      <Tabs
+        activeKey={tabKey}
+        onChange={setTabKey}
+        tabBarStyle={{ padding: '0 10px' }}
+      >
+        <TabPane tab={t('最近')} key="1">
+          <ChatEmotionPanelContainer>
+            <ChatEmotionSearchResultList>
+              {emotionRecent.map((url, i) => {
+                return (
+                  <Image
+                    key={i + url}
+                    style={{ cursor: 'pointer' }}
+                    src={url}
+                    onClick={() => handleSelectImage(url)}
+                  />
+                );
+              })}
+            </ChatEmotionSearchResultList>
+          </ChatEmotionPanelContainer>
+        </TabPane>
+        <TabPane tab={t('搜索表情')} key="2">
+          <ChatEmotionPanelContainer>
             <Search
               style={{ width: '100%' }}
               placeholder={t('关键字')}
@@ -117,17 +155,22 @@ export const ChatMsgEmotion: React.FC<{
             />
 
             <ChatEmotionSearchResultList>
-              {searchResultList.map((item) => {
-                return (
-                  <Image
-                    key={item.url}
-                    src={item.url}
-                    onClick={() => handleSelectImage(item.url)}
-                  />
-                );
-              })}
+              {searching ? (
+                <Loading />
+              ) : (
+                searchResultList.map((item) => {
+                  return (
+                    <Image
+                      key={item.url}
+                      style={{ cursor: 'pointer' }}
+                      src={item.url}
+                      onClick={() => handleSelectImage(item.url)}
+                    />
+                  );
+                })
+              )}
             </ChatEmotionSearchResultList>
-          </ChatEmotionSearchContainer>
+          </ChatEmotionPanelContainer>
         </TabPane>
       </Tabs>
     </ChatEmotionPopoverContainer>
