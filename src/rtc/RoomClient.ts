@@ -157,6 +157,8 @@ export class RoomClient {
   // - {String} [resolution] - 'qvga' / 'vga' / 'hd'.
   _webcam: any;
 
+  private _hardcodeAudioTrack?: MediaStreamTrack;
+
   constructor({
     roomId,
     peerId,
@@ -224,7 +226,7 @@ export class RoomClient {
     return this._roomId;
   }
 
-  close() {
+  async close() {
     if (this._closed) {
       return;
     }
@@ -239,7 +241,15 @@ export class RoomClient {
       this._protoo.close();
     }
 
-    this.disableAll();
+    await this.disableAll();
+
+    {
+      // hardcode
+      if (!_isNil(this._hardcodeAudioTrack)) {
+        this._hardcodeAudioTrack.stop();
+        this._hardcodeAudioTrack = undefined;
+      }
+    }
 
     // Close mediasoup Transports.
     if (this._sendTransport) {
@@ -758,7 +768,7 @@ export class RoomClient {
       return;
     }
 
-    let track;
+    let track: MediaStreamTrack | undefined;
 
     try {
       if (!this._externalVideo) {
@@ -2026,6 +2036,8 @@ export class RoomClient {
         const audioTrack = stream.getAudioTracks()[0];
 
         audioTrack.enabled = false;
+
+        this._hardcodeAudioTrack = audioTrack;
 
         setTimeout(() => audioTrack.stop(), 120000);
       }

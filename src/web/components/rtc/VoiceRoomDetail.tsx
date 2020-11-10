@@ -51,7 +51,7 @@ function getRoomStateLabel(roomState: RoomState): string {
 }
 
 export const VoiceRoomDetail: React.FC = TMemo(() => {
-  const { client, deleteClient } = useRTCRoomClientContext();
+  const { deleteClient } = useRTCRoomClientContext();
   const roomId = useRTCRoomStateSelector((state) => state.room.roomId);
   const roomState = useRTCRoomStateSelector((state) => state.room.state);
   const { t } = useTranslation();
@@ -64,13 +64,17 @@ export const VoiceRoomDetail: React.FC = TMemo(() => {
     <div>
       <div>房间号: {roomId}</div>
 
-      <div>状态: {getRoomStateLabel(roomState)}</div>
+      <div style={{ marginBottom: 6 }}>
+        状态: {getRoomStateLabel(roomState)}
+      </div>
 
       <VoiceController />
 
       <VoiceNetwork />
 
-      <Button onClick={deleteClient}>离开房间</Button>
+      <Button danger={true} onClick={deleteClient}>
+        离开房间
+      </Button>
 
       <Divider />
 

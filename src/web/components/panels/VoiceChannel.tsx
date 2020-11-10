@@ -8,6 +8,12 @@ import { buildDeviceInfo } from '@web/utils/rtc-helper';
 import { useRTCRoomStateSelector } from '@rtc/redux';
 import styled from 'styled-components';
 import { VoiceRoomDetail } from '../rtc/VoiceRoomDetail';
+import { CommonPanel } from './CommonPanel';
+
+const Root = styled.div`
+  overflow: auto;
+  padding: 10px;
+`;
 
 const JoinRoomBtn = styled.div`
   margin: auto;
@@ -34,6 +40,7 @@ const JoinRoomBtn = styled.div`
 export const VoiceChannel: React.FC<CommonPanelProps> = TMemo((props) => {
   const { panel } = props;
   const channelUUID = panel.target_uuid;
+  const channelName = panel.name;
   const { createClient } = useRTCRoomClientContext();
   const currentUserInfo = useCurrentUserInfo();
   const isInRoom = useRTCRoomStateSelector(
@@ -50,13 +57,15 @@ export const VoiceChannel: React.FC<CommonPanelProps> = TMemo((props) => {
   }, [createClient, channelUUID, currentUserInfo]);
 
   return (
-    <div style={{ overflow: 'auto' }}>
-      {!isInRoom ? (
-        <JoinRoomBtn onClick={handleJoinRoom}>加入房间</JoinRoomBtn>
-      ) : (
-        <VoiceRoomDetail />
-      )}
-    </div>
+    <CommonPanel header={channelName}>
+      <Root>
+        {!isInRoom ? (
+          <JoinRoomBtn onClick={handleJoinRoom}>加入房间</JoinRoomBtn>
+        ) : (
+          <VoiceRoomDetail />
+        )}
+      </Root>
+    </CommonPanel>
   );
 });
 VoiceChannel.displayName = 'VoiceChannel';
