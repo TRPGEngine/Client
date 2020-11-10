@@ -14,7 +14,7 @@ interface Props extends TRPGDispatchProp {
 }
 class Alert extends React.Component<Props> {
   getAlertContent() {
-    const { showAlertInfo, showToastText } = this.props;
+    const { showAlertInfo = {}, showToastText } = this.props;
 
     const title = showAlertInfo.title ?? '';
     const content = showAlertInfo.content || showToastText;
