@@ -6,7 +6,6 @@ import {
   useSelfGroupActors,
 } from '@redux/hooks/group';
 import config from '@shared/project.config';
-import Select from 'react-select';
 import { changeSelectGroupActor, sendGroupInvite } from '@redux/actions/group';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { showSlidePanel, hideModal, showModal } from '@redux/actions/ui';
@@ -16,6 +15,7 @@ import GroupActor from './GroupActor';
 import { GroupMap } from './GroupMap';
 import GroupRule from './GroupRule';
 import GroupInfo from './GroupInfo';
+import { Select } from 'antd';
 
 /**
  * 团会话的头部
@@ -27,9 +27,9 @@ export const GroupHeader: React.FC = TMemo(() => {
   const selfGroupActors = useSelfGroupActors(groupUUID);
   const dispatch = useTRPGDispatch();
 
-  const handleSelectGroupActor = (item) => {
-    if (item.value !== selectedGroupActorUUID) {
-      dispatch(changeSelectGroupActor(groupUUID, item.value));
+  const handleSelectGroupActor = (value: string) => {
+    if (value !== selectedGroupActorUUID) {
+      dispatch(changeSelectGroupActor(groupUUID, value ?? null));
     }
   };
 
@@ -38,7 +38,7 @@ export const GroupHeader: React.FC = TMemo(() => {
    */
   const options = useMemo(() => {
     let list: {
-      value: string | null;
+      value: string;
       label: string;
     }[] = [];
     if (selfGroupActors && selfGroupActors.length > 0) {
@@ -46,12 +46,6 @@ export const GroupHeader: React.FC = TMemo(() => {
         value: item.uuid,
         label: item.name,
       }));
-    }
-    if (selectedGroupActorUUID) {
-      list.unshift({
-        value: null,
-        label: '取消选择',
-      });
     }
 
     return list;
@@ -146,16 +140,18 @@ export const GroupHeader: React.FC = TMemo(() => {
         <div className="sub-title">{groupInfo.sub_name}</div>
       </div>
       <Select
-        name="actor-select"
-        className="group-actor-select"
+        style={{ width: 120 }}
         value={selectedGroupActorUUID}
-        options={options}
-        clearable={false}
-        searchable={false}
+        allowClear={true}
         placeholder="请选择身份卡"
-        noResultsText="暂无身份卡..."
         onChange={handleSelectGroupActor}
-      />
+      >
+        {options.map((o) => (
+          <Select.Option key={o.value} value={o.value}>
+            {o.label}
+          </Select.Option>
+        ))}
+      </Select>
       <div className="actions">{headerActions}</div>
     </div>
   );

@@ -47,6 +47,8 @@ export const AnnouncementBar: React.FC = TMemo(() => {
     return null;
   }
 
+  return null; // 关闭公告
+
   return (
     <Root>
       <Content>

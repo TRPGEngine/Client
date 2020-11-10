@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Select from 'react-select';
 import { setLastDiceType } from '../../../../shared/redux/actions/ui';
+import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import { Select } from 'antd';
 
 import './QuickDice.scss';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 
 interface Props extends TRPGDispatchProp {
   lastDiceType: string;
@@ -48,15 +48,6 @@ class QuickDice extends React.Component<Props> {
 
   render() {
     const { diceNum, diceFace, diceExp, diceTempAdd } = this.state;
-    const diceTypeOptions = [
-      { value: 'basicDice', label: '基本骰' },
-      { value: 'complexDice', label: '复合骰' },
-      { value: 'favoriteDice', label: '常用骰' },
-    ];
-    const favoriteDice = this.props.favoriteDice.map((i) => ({
-      value: i.value,
-      label: `${i.title}(${i.value})`,
-    }));
 
     return (
       <div className="quick-dice">
@@ -64,15 +55,16 @@ class QuickDice extends React.Component<Props> {
           发起快速投骰<i className="iconfont">&#xe609;</i>
         </span>
         <Select
-          name="dice-select"
-          className="dice-select"
+          style={{ width: '100%' }}
           value={this.state.diceType}
-          options={diceTypeOptions}
-          clearable={false}
-          searchable={false}
+          allowClear={false}
           placeholder="请选择骰子类型..."
-          onChange={(item) => this.handleChangeDiceType(item.value)}
-        />
+          onChange={(value) => this.handleChangeDiceType(value)}
+        >
+          <Select.Option value="basicDice">基本骰</Select.Option>
+          <Select.Option value="complexDice">复合骰</Select.Option>
+          <Select.Option value="favoriteDice">常用骰</Select.Option>
+        </Select>
         {this.state.diceType === 'basicDice' ? (
           <div className="dice basicDice">
             <input
@@ -116,17 +108,18 @@ class QuickDice extends React.Component<Props> {
         ) : (
           <div className="dice favoriteDice">
             <Select
-              name="dice-favorite-select"
-              className="dice-favorite-select"
+              style={{ width: 200 }}
               value={this.state.favoriteDiceValue}
-              options={favoriteDice}
-              clearable={false}
-              searchable={false}
+              allowClear={false}
               placeholder="请选择常用骰"
-              onChange={(item) =>
-                this.setState({ favoriteDiceValue: item.value })
-              }
-            />
+              onChange={(value) => this.setState({ favoriteDiceValue: value })}
+            >
+              {this.props.favoriteDice.map((i) => (
+                <Select.Option key={i.value} value={i.value}>
+                  {i.title}({i.value})
+                </Select.Option>
+              ))}
+            </Select>
             <input
               key="dicereq-diceTempAdd"
               type="number"
