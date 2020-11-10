@@ -15,6 +15,7 @@ import { PortalHost } from '@web/utils/portal';
 import { NetworkStatusModal } from '@web/components/NetworkStatusModal';
 import { DarkMode } from './DarkMode';
 import { PWAContextProvider } from '@web/components/PWAContext';
+import { wrapSentry } from '@web/utils/sentry';
 
 import './App.less';
 
@@ -35,7 +36,7 @@ const CustomProvider: React.FC = (props) => {
   );
 };
 
-export const App = TMemo(() => {
+const _App = TMemo(() => {
   return (
     <Router>
       <ErrorBoundary>
@@ -60,4 +61,6 @@ export const App = TMemo(() => {
     </Router>
   );
 });
-App.displayName = 'App';
+_App.displayName = 'App';
+
+export const App = wrapSentry(_App);

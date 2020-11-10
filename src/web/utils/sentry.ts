@@ -1,4 +1,5 @@
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
 import Config from 'config';
 import _get from 'lodash/get';
 import _once from 'lodash/once';
@@ -18,10 +19,12 @@ export function getDSN(): string {
  */
 const initSentry = _once(() => {
   Sentry.init({
+    dsn: getDSN(),
     release:
       environment === 'production' ? _get(Config, 'sentry.release') : undefined,
     environment,
-    dsn: getDSN(),
+    integrations: [new Integrations.BrowserTracing()],
+    tracesSampleRate: 1.0,
   });
 });
 
@@ -73,4 +76,13 @@ export function getFeedbackUrl(): string | null {
 
 export function getLastEventId(): string | undefined {
   return Sentry.lastEventId();
+}
+
+/**
+ * 使用sentry包裹组件
+ */
+export function wrapSentry(Component: React.ComponentType) {
+  initSentry(); // 确保Sentry被初始化
+
+  return Sentry.withProfiler(Component);
 }
