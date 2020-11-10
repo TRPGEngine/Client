@@ -11,39 +11,52 @@ import {
 } from '@shared/components/FastForm/schema';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import _isString from 'lodash/isString';
-import { useTranslation } from '@shared/i18n';
-import { checkIsTestUser } from '@web/utils/debug-helper';
+import { t, useTranslation } from '@shared/i18n';
+import { useAlphaUser } from '@shared/hooks/useAlphaUser';
 
 const schema = createFastFormSchema({
-  name: fieldSchema.string().required('面板名不能为空'),
-  type: fieldSchema.string().required('类型不能为空'),
+  name: fieldSchema.string().required(t('面板名不能为空')),
+  type: fieldSchema.string().required(t('类型不能为空')),
 });
 
 const DEFAULT_TYPE = 'channel';
-const baseFields: FastFormFieldMeta[] = [
-  { type: 'text', name: 'name', label: '面板名' },
-  {
-    type: 'select',
-    name: 'type',
-    label: '类型',
-    options: [
-      {
-        label: '文字频道',
-        value: 'channel',
-      },
-      {
-        label: '笔记面板',
-        value: 'note',
-      },
-    ],
-  },
-];
 
-if (checkIsTestUser()) {
-  baseFields[1].options.push({
-    label: '语音频道',
-    value: 'voicechannel',
-  });
+/**
+ * 获取团面板的基础字段
+ */
+function useGroupPanelBaseFields(): FastFormFieldMeta[] {
+  const { isAlphaUser } = useAlphaUser();
+
+  return useMemo(() => {
+    const baseFields: FastFormFieldMeta[] = [
+      { type: 'text', name: 'name', label: t('面板名') },
+      {
+        type: 'select',
+        name: 'type',
+        label: t('类型'),
+        options: [
+          {
+            label: t('文字频道'),
+            value: 'channel',
+          },
+          {
+            label: t('笔记面板'),
+            value: 'note',
+          },
+        ],
+      },
+    ];
+
+    if (isAlphaUser) {
+      // 增加内测用户频道
+      baseFields[1].options.push({
+        label: t('语音频道') + '(Beta)',
+        value: 'voicechannel',
+      });
+    }
+
+    return baseFields;
+  }, [isAlphaUser]);
 }
 
 /**
@@ -54,6 +67,7 @@ function useGroupPanelCreateFields() {
   const handleChange = useCallback((values) => {
     setType(values.type ?? DEFAULT_TYPE);
   }, []);
+  const baseFields = useGroupPanelBaseFields();
 
   const notes = useTRPGSelector((state) => state.note.list ?? []);
   const fields = useMemo(() => {
@@ -63,7 +77,7 @@ function useGroupPanelCreateFields() {
         {
           type: 'select',
           name: 'noteUUID',
-          label: '目标笔记',
+          label: t('目标笔记'),
           options: notes
             .filter((note) => _isString(note.uuid))
             .map((note) => ({
@@ -75,7 +89,7 @@ function useGroupPanelCreateFields() {
     }
 
     return baseFields;
-  }, [type, notes]);
+  }, [type, notes, baseFields]);
 
   return { fields, handleChange };
 }

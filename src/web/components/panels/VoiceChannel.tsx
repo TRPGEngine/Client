@@ -9,6 +9,8 @@ import { useRTCRoomStateSelector } from '@rtc/redux';
 import styled from 'styled-components';
 import { VoiceRoomDetail } from '../rtc/VoiceRoomDetail';
 import { CommonPanel } from './CommonPanel';
+import { useAlphaUser } from '@shared/hooks/useAlphaUser';
+import { DisplayForAlphaUser } from '../DisplayForAlphaUser';
 
 const Root = styled.div`
   overflow: auto;
@@ -46,6 +48,7 @@ export const VoiceChannel: React.FC<CommonPanelProps> = TMemo((props) => {
   const isInRoom = useRTCRoomStateSelector(
     (state) => state.room.roomId === channelUUID
   );
+  const { isAlphaUser } = useAlphaUser();
 
   const handleJoinRoom = useCallback(() => {
     createClient({
@@ -55,6 +58,10 @@ export const VoiceChannel: React.FC<CommonPanelProps> = TMemo((props) => {
       device: buildDeviceInfo(),
     });
   }, [createClient, channelUUID, currentUserInfo]);
+
+  if (!isAlphaUser) {
+    return <DisplayForAlphaUser />;
+  }
 
   return (
     <CommonPanel header={channelName}>

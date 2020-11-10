@@ -15,6 +15,11 @@ export const IS_NEW_APP = '__isNewApp';
 export const IS_DEVELOPER = '__isDeveloper';
 
 /**
+ * 是否为内测用户
+ */
+export const IS_ALPHA_USER = 'isAlphaUser';
+
+/**
  * 用于打印RTC调试的标识
  */
 export const RTC_DEBUG = '__rtc_debug';

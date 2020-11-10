@@ -1,3 +1,4 @@
+import { IS_ALPHA_USER } from '@shared/utils/consts';
 import { useRNStorage } from './useRNStorage';
 
 /**
@@ -5,7 +6,7 @@ import { useRNStorage } from './useRNStorage';
  */
 export function useAlphaUser() {
   const [isAlphaUser, setIsAlphaUser] = useRNStorage<boolean>(
-    'isAlphaUser',
+    IS_ALPHA_USER,
     false,
     true
   );
