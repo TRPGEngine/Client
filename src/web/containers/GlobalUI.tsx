@@ -22,6 +22,7 @@ export const GlobalUI: React.FC = TMemo(() => {
   return (
     <React.Fragment>
       {showLigthbox ? (
+        // TODO: 这里要被弃用
         <Lightbox
           mainSrc={showLigthboxInfo.src}
           onCloseRequest={() => dispatch(hideLightbox())}
