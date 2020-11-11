@@ -14,7 +14,7 @@ export const LoginCheck: React.FC = TMemo(() => {
         history.push('/login');
       }
     }
-  }, [isTryLogin, isLogin]);
+  }, [isTryLogin, isLogin, history]);
 
   return null;
 });

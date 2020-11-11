@@ -11,7 +11,7 @@ export const LaunchRoute: React.FC = TMemo(() => {
     if (history.location.pathname !== '/login') {
       history.push('/login');
     }
-  }, []);
+  }, [history]);
 
   return <LoadingSpinner />;
 });
