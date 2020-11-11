@@ -165,6 +165,7 @@
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^8.2.0",
     "@prettier/plugin-xml": "^0.10.0",
+    "@sentry/types": "^5.27.3",
     "@sentry/webpack-plugin": "^1.13.0",
     "@snowpack/plugin-react-refresh": "^2.3.2",
     "@snowpack/plugin-run-script": "^2.1.7",
