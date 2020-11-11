@@ -36,11 +36,7 @@ export function useGroupHeaderAction(groupInfo: GroupInfo) {
 
   // 创建面板
   const handleCreateGroupPanel = useCallback(() => {
-    openModal(
-      <ModalWrapper title={t('创建面板')}>
-        <GroupPanelCreate groupUUID={groupUUID} />
-      </ModalWrapper>
-    );
+    openModal(<GroupPanelCreate groupUUID={groupUUID} />);
   }, [groupUUID]);
 
   // 解散/退出团
