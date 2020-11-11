@@ -10,7 +10,9 @@ export const LoginCheck: React.FC = TMemo(() => {
 
   useEffect(() => {
     if (isTryLogin === false && isLogin === false) {
-      history.push('/login');
+      if (history.location.pathname !== '/login') {
+        history.push('/login');
+      }
     }
   }, [isTryLogin, isLogin]);
 

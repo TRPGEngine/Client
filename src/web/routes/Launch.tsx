@@ -8,7 +8,9 @@ export const LaunchRoute: React.FC = TMemo(() => {
 
   useEffect(() => {
     // 先临时写一下，直接跳转到login
-    history.push('/login');
+    if (history.location.pathname !== '/login') {
+      history.push('/login');
+    }
   }, []);
 
   return <LoadingSpinner />;
