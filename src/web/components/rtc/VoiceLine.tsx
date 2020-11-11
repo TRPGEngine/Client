@@ -15,47 +15,47 @@ const Root = styled.div`
 
   &.level0 {
     width: 0;
-    background-color: yellow;
+    background-color: lightgreen;
   }
   &.level1 {
     width: 10%;
-    background-color: yellow;
+    background-color: lightgreen;
   }
   &.level2 {
     width: 20%;
-    background-color: yellow;
+    background-color: lightgreen;
   }
   &.level3 {
     width: 30%;
-    background-color: yellow;
+    background-color: lightgreen;
   }
   &.level4 {
     width: 40%;
-    background-color: orange;
+    background-color: yellow;
   }
   &.level5 {
     width: 50%;
-    background-color: orange;
+    background-color: yellow;
   }
   &.level6 {
     width: 60%;
-    background-color: red;
+    background-color: orange;
   }
   &.level7 {
     width: 70%;
-    background-color: red;
+    background-color: orange;
   }
   &.level8 {
     width: 80%;
-    background-color: #000;
+    background-color: red;
   }
   &.level9 {
     width: 90%;
-    background-color: #000;
+    background-color: red;
   }
   &.level10 {
     width: 100%;
-    background-color: #000;
+    background-color: red;
   }
 `;
 

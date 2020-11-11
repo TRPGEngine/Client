@@ -48,7 +48,7 @@ export const VoiceChannel: React.FC<CommonPanelProps> = TMemo((props) => {
   const isInRoom = useRTCRoomStateSelector(
     (state) => state.room.roomId === channelUUID
   );
-  const { isAlphaUser } = useAlphaUser();
+  const { isAlphaUser = true } = useAlphaUser();
 
   const handleJoinRoom = useCallback(() => {
     createClient({
