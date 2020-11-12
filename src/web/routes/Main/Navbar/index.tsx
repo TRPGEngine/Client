@@ -9,6 +9,7 @@ import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import { TMemo } from '@shared/components/TMemo';
 import { MobileNavbarSwitch } from './MobileNavbarSwitch';
 import { MoreAction } from './MoreAction';
+import { VoiceStatus } from '@web/components/rtc/VoiceStatus';
 
 const NavBar = styled.nav`
   position: absolute;
@@ -64,6 +65,8 @@ export const MainNavbar: React.FC = TMemo(() => {
       <NavbarSection>
         <NavbarLink src={avatar} name={name} to="/main/personal" />
       </NavbarSection>
+
+      <VoiceStatus />
 
       <Divider />
 

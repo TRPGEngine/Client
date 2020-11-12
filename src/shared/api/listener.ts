@@ -164,11 +164,16 @@ export function bindEventFunc(
 
     const isLogin = store.getState().user.isLogin;
     if (isLogin) {
+      // 应当是登录状态
       (async () => {
         const uuid = await rnStorage.get('uuid');
         const token = await rnStorage.get('token');
         console.log('正在尝试自动重新登录');
-        store.dispatch(loginWithToken(uuid, token));
+        if (!!token && !!uuid) {
+          store.dispatch(loginWithToken(uuid, token));
+        } else {
+          console.log('无法自动登录, 因为获取不到相关数据');
+        }
       })();
     }
   });

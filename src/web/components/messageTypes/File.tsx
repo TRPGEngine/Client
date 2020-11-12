@@ -2,8 +2,8 @@ import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import Base from './Base';
 import filesize from 'filesize';
-import config from '../../../shared/project.config';
-import { downloadFile, previewFile } from '../../../shared/redux/actions/file';
+import config from '@shared/project.config';
+import { downloadFile, previewFile } from '@shared/redux/actions/file';
 import { MessageProps } from '@shared/components/message/MessageHandler';
 import Webview from '@web/components/Webview';
 
@@ -26,6 +26,7 @@ class File extends Base<Props> {
   getContent() {
     const info = this.props.info;
     const data = info.data!;
+
     return (
       <div className="bubble">
         <div className="file-info">

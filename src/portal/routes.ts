@@ -148,4 +148,9 @@ export const routes: RouteConfig[] = [
     path: '/demo/editor',
     component: TLoadable(() => import('@portal/routes/demo/editor')),
   },
+  {
+    title: 'RTC测试',
+    path: '/rtc/test',
+    component: TLoadable(() => import('@portal/routes/rtc/test')),
+  },
 ];

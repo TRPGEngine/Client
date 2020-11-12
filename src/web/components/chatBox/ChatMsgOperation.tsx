@@ -96,7 +96,7 @@ export const ChatMsgOperation: React.FC<{
     <Popover
       visible={visible}
       onVisibleChange={setVisible}
-      overlayClassName="operation-popover"
+      overlayClassName="chat-sendbox-addon-popover"
       placement="top"
       trigger="click"
       content={content}

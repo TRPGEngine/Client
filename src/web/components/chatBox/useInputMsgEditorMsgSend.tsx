@@ -75,7 +75,7 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
   }, [message]);
 
   useEffect(() => {
-    setMessage(serializeToBBCode({ children: messageData }));
+    setMessage(serializeToBBCode(messageData));
   }, [messageData]);
 
   const handleMessageDataChange = useCallback((data) => {

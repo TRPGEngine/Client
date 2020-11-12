@@ -15,6 +15,7 @@
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
+    "downlevelIteration": true,
     "noImplicitThis": true,
     "paths": {
       "@redux/*": ["src/shared/redux/*"],
@@ -22,6 +23,7 @@
       "@web/*": ["./src/web/*"],
       "@app/*": ["./src/app/src/*"],
       "@portal/*": ["./src/portal/*"],
+      "@rtc/*": ["./src/rtc/*"],
       "@test/*": ["./test/*"],
       "@src/*": ["./src/*"]
     }

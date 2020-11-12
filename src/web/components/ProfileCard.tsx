@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import config from '../../shared/project.config';
-import Select from 'react-select';
 import ImageViewer from './ImageViewer';
 import ImageUploader from './ImageUploader';
 import { showAlert, hideProfileCard } from '../../shared/redux/actions/ui';
@@ -15,6 +14,7 @@ import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 import { AlertPayload } from '@redux/types/ui';
 import { getUserName } from '@shared/utils/data-helper';
 import { UserInfo } from '@redux/types/user';
+import { Select } from 'antd';
 
 interface Props {
   userInfo?: UserInfo;
@@ -200,27 +200,24 @@ class ProfileCard extends React.Component<Props, State> {
           <div className="item">
             <span>性别:</span>
             <Select
-              name="sex-select"
               className="sex-select"
               value={this.state.editedInfo.sex}
-              options={[
-                { value: '男', label: '男' },
-                { value: '女', label: '女' },
-                { value: '保密', label: '保密' },
-                { value: '其他', label: '其他' },
-              ]}
-              clearable={false}
-              searchable={false}
+              allowClear={false}
               placeholder="请选择性别..."
-              onChange={(item) =>
+              onChange={(value) =>
                 this.setState({
                   editedInfo: {
                     ...this.state.editedInfo,
-                    sex: item.value,
+                    sex: value,
                   },
                 })
               }
-            />
+            >
+              <Select.Option value="男">男</Select.Option>
+              <Select.Option value="女">女</Select.Option>
+              <Select.Option value="保密">保密</Select.Option>
+              <Select.Option value="其他">其他</Select.Option>
+            </Select>
           </div>
           <div className="item">
             <span>个人签名:</span>

@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/TRPGEngine/Client/compare/v0.4.8...v0.5.0) (2020-11-12)
+
+
+### Features
+
+* **web:** 增加最近使用的表情 ([715f4b8](https://github.com/TRPGEngine/Client/commit/715f4b8f83e190f8b1c42dae6464babf3d8ff197))
+* **web:** 增加表情包搜索 ([6af8372](https://github.com/TRPGEngine/Client/commit/6af8372f38740e383f438bee93443a415b9d0b7e))
+
+
+### Bug Fixes
+
+* error request in none uuid and token ([60f30cb](https://github.com/TRPGEngine/Client/commit/60f30cbfc015a29d8493eaea0f38eac7ade18cc9))
+* 修复新版UI无法正确处理图片lightbox的bug ([627518f](https://github.com/TRPGEngine/Client/commit/627518fe5528e1cc505414a0df1a1a2655647a52))
+* **web:** 修复解析成bbcode无法处理换行符的问题 ([001aef0](https://github.com/TRPGEngine/Client/commit/001aef00e6258712db4672e472d3dc090ea97705))
+* **web:** 增加跳转限制防止循环跳转 ([eec4e00](https://github.com/TRPGEngine/Client/commit/eec4e00f23392c515b906627d139728f2b9283e4))
+
 ### [0.4.8](https://github.com/TRPGEngine/Client/compare/v0.4.7...v0.4.8) (2020-11-07)
 
 

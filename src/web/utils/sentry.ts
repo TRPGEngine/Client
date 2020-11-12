@@ -1,10 +1,13 @@
-import * as Sentry from '@sentry/browser';
+import type { CaptureContext } from '@sentry/types';
+import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
 import Config from 'config';
 import _get from 'lodash/get';
 import _once from 'lodash/once';
 import _isNil from 'lodash/isNil';
 import config from '@shared/project.config';
 import { UserInfo } from '@redux/types/user';
+import { getJWTUserInfo } from '@shared/utils/jwt-helper';
 
 const environment = config.environment;
 
@@ -18,10 +21,12 @@ export function getDSN(): string {
  */
 const initSentry = _once(() => {
   Sentry.init({
+    dsn: getDSN(),
     release:
       environment === 'production' ? _get(Config, 'sentry.release') : undefined,
     environment,
-    dsn: getDSN(),
+    integrations: [new Integrations.BrowserTracing()],
+    tracesSampleRate: 1.0,
   });
 });
 
@@ -29,7 +34,7 @@ const initSentry = _once(() => {
  * 汇报错误
  * @param err 错误
  */
-export function error(err: Error | string) {
+export async function error(err: Error | string) {
   initSentry(); // 确保Sentry被初始化
 
   let fn;
@@ -38,7 +43,14 @@ export function error(err: Error | string) {
   } else {
     fn = Sentry.captureException.bind(Sentry);
   }
-  const sentryId = fn(err);
+  const context: CaptureContext = {
+    contexts: {
+      token: {
+        ...(await getJWTUserInfo()),
+      },
+    },
+  };
+  const sentryId = fn(err, context);
   console.warn('error: sentryId', sentryId);
 }
 
@@ -73,4 +85,13 @@ export function getFeedbackUrl(): string | null {
 
 export function getLastEventId(): string | undefined {
   return Sentry.lastEventId();
+}
+
+/**
+ * 使用sentry包裹组件
+ */
+export function wrapSentry(Component: React.ComponentType) {
+  initSentry(); // 确保Sentry被初始化
+
+  return Sentry.withProfiler(Component);
 }

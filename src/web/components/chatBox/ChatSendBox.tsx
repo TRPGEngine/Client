@@ -3,6 +3,10 @@ import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { useInputMsgEditorMsgSend } from './useInputMsgEditorMsgSend';
 import { ChatMsgOperation } from './ChatMsgOperation';
+import { ChatMsgEmotion } from './ChatMsgEmotion';
+import { Space } from 'antd';
+
+import './ChatMsg.less';
 
 const Wrapper = styled.div`
   padding: 0 16px 24px;
@@ -32,7 +36,10 @@ export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
       <div className="outer">
         <div className="inner">{editorEl}</div>
 
-        <ChatMsgOperation editorRef={editorRef} />
+        <Space>
+          <ChatMsgEmotion editorRef={editorRef} />
+          <ChatMsgOperation editorRef={editorRef} />
+        </Space>
       </div>
     </Wrapper>
   );

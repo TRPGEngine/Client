@@ -3,6 +3,7 @@ import Lightbox from 'react-image-lightbox';
 import _isEmpty from 'lodash/isEmpty';
 import _findLastIndex from 'lodash/findLastIndex';
 
+import 'react-image-lightbox/style.css';
 import './ImageViewer.scss';
 
 interface Props {

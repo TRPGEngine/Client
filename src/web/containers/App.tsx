@@ -11,7 +11,6 @@ import ErrorBoundary from './ErrorBoundary';
 import NetworkIndicator from '../components/NetworkIndicator';
 import config from '@shared/project.config';
 import './App.scss';
-import 'react-select/dist/react-select.css';
 import 'react-image-lightbox/style.css';
 import Login from './Login';
 import Register from './Register';

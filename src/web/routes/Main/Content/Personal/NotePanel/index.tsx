@@ -12,7 +12,12 @@ import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { Node } from 'slate';
 import { WebErrorBoundary } from '@web/components/WebErrorBoundary';
 import { AlertErrorView } from '@web/components/AlertErrorView';
-import { syncNote, markUnsyncNote, deleteNote } from '@redux/actions/note';
+import {
+  syncNote,
+  markUnsyncNote,
+  deleteNote,
+  markSyncNote,
+} from '@redux/actions/note';
 import { useBeforeUnload, useDebounce } from 'react-use';
 import { SectionHeader } from '@web/components/SectionHeader';
 import { Input, Empty, Modal } from 'antd';
@@ -94,6 +99,13 @@ function useNoteData(noteUUID: string) {
             noteUUID,
           })
         );
+      } else {
+        // 数据相等
+        dispatch(
+          markSyncNote({
+            noteUUID,
+          })
+        );
       }
     },
     200,
@@ -127,12 +139,12 @@ const NoteEditor: React.FC<{ noteUUID: string }> = TMemo((props) => {
   // 删除笔记
   const handleDeleteNote = useCallback(() => {
     Modal.confirm({
-      content: '确定要删除该笔记么',
+      content: `确定要删除笔记 ${title} 么`,
       onOk: () => {
         dispatch(deleteNote({ uuid: noteUUID }));
       },
     });
-  }, [noteUUID]);
+  }, [noteUUID, title]);
 
   return (
     <WebErrorBoundary renderError={AlertErrorView}>

@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Select from 'react-select';
 import { findGroup } from '../../../shared/redux/actions/group';
 import ModalPanel from '../ModalPanel';
 import FindResultItem from '../FindResultItem';
 import { TRPGDispatchProp, TRPGState } from '@redux/types/__all__';
+import { Select } from 'antd';
 
 import './GroupAdd.scss';
 
@@ -45,11 +45,6 @@ class GroupAdd extends React.Component<Props> {
   }
 
   render() {
-    const options = [
-      { value: 'uuid', label: '团唯一标示符' },
-      { value: 'groupname', label: '团名称' },
-      { value: 'groupdesc', label: '团简介' },
-    ];
     return (
       <ModalPanel title="添加团">
         <div className="group-add">
@@ -63,14 +58,17 @@ class GroupAdd extends React.Component<Props> {
             />
             <div className="group-search-method">
               <Select
-                name="form-field-name"
+                style={{ width: '100%' }}
+                size="large"
                 value={this.state.selectValue}
-                options={options}
-                clearable={false}
-                searchable={false}
+                allowClear={false}
                 placeholder="请选择搜索方式..."
-                onChange={(item) => this.setState({ selectValue: item.value })}
-              />
+                onChange={(value) => this.setState({ selectValue: value })}
+              >
+                <Select.Option value="uuid">团唯一标示符</Select.Option>
+                <Select.Option value="groupname">团名称</Select.Option>
+                <Select.Option value="groupdesc">团简介</Select.Option>
+              </Select>
             </div>
             <button onClick={() => this.handleSearch()}>搜索</button>
           </div>

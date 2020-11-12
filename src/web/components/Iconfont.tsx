@@ -1,8 +1,11 @@
+import classNames from 'classnames';
 import styled from 'styled-components';
 
-export const Iconfont = styled.i.attrs({
-  className: 'iconfont',
-})<{
+export const Iconfont = styled.i.attrs<{
+  className?: string;
+}>((props) => ({
+  className: classNames('iconfont', props.className),
+}))<{
   active?: boolean;
 }>`
   color: ${(props) =>

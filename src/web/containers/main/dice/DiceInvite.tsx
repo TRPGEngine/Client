@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Select from 'react-select';
 import { setLastDiceType } from '../../../../shared/redux/actions/ui';
+import { TRPGDispatchProp, TRPGState } from '@redux/types/__all__';
+import { Select } from 'antd';
 
 import './DiceInvite.scss';
-import { TRPGDispatchProp, TRPGState } from '@redux/types/__all__';
 
 interface Props extends TRPGDispatchProp {
   lastDiceType: string;
@@ -45,10 +45,6 @@ class DiceInvite extends React.Component<Props> {
   render() {
     const { diceNum, diceFace, diceExp } = this.state;
 
-    const diceTypeOptions = [
-      { value: 'basicDice', label: '基本骰' },
-      { value: 'complexDice', label: '复合骰' },
-    ];
     return (
       <div className="dice-invite">
         <span>因为</span>
@@ -65,15 +61,15 @@ class DiceInvite extends React.Component<Props> {
           投骰<i className="iconfont">&#xe609;</i>
         </span>
         <Select
-          name="dice-select"
-          className="dice-select"
+          style={{ width: '100%' }}
           value={this.state.diceType}
-          options={diceTypeOptions}
-          clearable={false}
-          searchable={false}
+          allowClear={false}
           placeholder="请选择骰子类型..."
-          onChange={(item) => this.handleChangeDiceType(item.value)}
-        />
+          onChange={(value) => this.handleChangeDiceType(value)}
+        >
+          <Select.Option value="basicDice">基本骰</Select.Option>
+          <Select.Option value="complexDice">复合骰</Select.Option>
+        </Select>
         {this.state.diceType === 'complexDice' ? (
           <div className="dice complexDice">
             <input

@@ -13,6 +13,7 @@ const {
   GET_USER_NOTES,
   SYNC_NOTE,
   MARK_UNSYNC_NOTE,
+  MARK_SYNC_NOTE,
   DELETE_NOTE,
 } = constants;
 import rnStorage from '../../api/rn-storage.api';
@@ -142,9 +143,13 @@ export const syncNote = createAsyncThunk(
   }
 );
 
-export const markUnsyncNote = createAction<{ noteUUID: string }>(
-  MARK_UNSYNC_NOTE
-);
+export const markUnsyncNote = createAction<{
+  noteUUID: string;
+}>(MARK_UNSYNC_NOTE);
+
+export const markSyncNote = createAction<{
+  noteUUID: string;
+}>(MARK_SYNC_NOTE);
 
 export const deleteNote = createAsyncThunk<
   void,
