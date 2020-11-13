@@ -164,7 +164,7 @@ class ExtraOptions extends React.Component<Props> {
         onClick: async () => {
           const uuid = await rnStorage.get('uuid');
           const token = await rnStorage.get('token');
-          console.log('正在尝试自动重新登录...');
+          console.log('正在重新登录...');
           this.props.dispatch(loginWithToken(uuid, token));
         },
       },

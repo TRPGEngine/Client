@@ -97,6 +97,7 @@ interface ProjectConfig {
   };
   url: {
     api?: string;
+    rtc: string;
     homepage: string;
     goddessfantasy: string;
     blog: string;
@@ -232,6 +233,7 @@ const config: ProjectConfig = {
       'https://raw.githubusercontent.com/TRPGEngine/Client/master/src/app/package.json',
   },
   url: {
+    rtc: 'wss://rtc.moonrailgun.com:4443', // 语音服务器地址 不包括前缀
     homepage: 'https://trpgdoc.moonrailgun.com/',
     goddessfantasy: 'http://www.goddessfantasy.net/',
     blog: 'https://trpgdoc.moonrailgun.com/blog/',

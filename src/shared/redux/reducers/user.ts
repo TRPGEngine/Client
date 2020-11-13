@@ -2,7 +2,7 @@ import constants from '@redux/constants';
 import { UserState } from '@redux/types/user';
 import _remove from 'lodash/remove';
 import { createReducer } from '@reduxjs/toolkit';
-import { removeFriendInvite } from '@redux/actions/user';
+import { removeFriendInvite, setLogout } from '@redux/actions/user';
 
 const {
   RESET,
@@ -10,7 +10,6 @@ const {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   LOGIN_TOKEN_SUCCESS,
-  LOGOUT,
   SET_WEB_TOKEN,
   FIND_USER_REQUEST,
   FIND_USER_SUCCESS,
@@ -60,7 +59,7 @@ export default createReducer(initialState, (builder) => {
       state.isTryLogin = false;
       state.info = {};
     })
-    .addCase(LOGOUT, (state) => {
+    .addCase(setLogout, (state) => {
       state.isLogin = false;
       state.info = {};
     })
