@@ -205,6 +205,10 @@ export const updateAllInfo = function (): TRPGAction {
   };
 };
 
+/**
+ * 登出
+ */
+export const setLogout = createAction(LOGOUT);
 export const logout = function (): TRPGAction {
   const isApp = config.platform === 'app';
   return function (dispatch, getState) {
@@ -212,7 +216,7 @@ export const logout = function (): TRPGAction {
     const uuid = info.uuid;
     const token = isApp ? info.app_token : info.token;
     dispatch(showLoading());
-    dispatch({ type: LOGOUT });
+    dispatch(setLogout());
     api.emit('player::logout', { uuid, token, isApp }, function (data) {
       dispatch(hideLoading());
       if (data.result) {
