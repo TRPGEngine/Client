@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/TRPGEngine/Client/compare/v0.5.0...v0.5.1) (2020-11-13)
+
+
+### Bug Fixes
+
+* **rtc:** 修复正式环境下的语音服务器地址错误的问题 ([737197f](https://github.com/TRPGEngine/Client/commit/737197f65d86d3f9d131e94b27e70a9b1807a98f))
+* **web:** 修复网络重连提示的modal无法提升到最高的bug ([b213e32](https://github.com/TRPGEngine/Client/commit/b213e3290e74035d0aec6656411ea34a11dfb743))
+
 ## [0.5.0](https://github.com/TRPGEngine/Client/compare/v0.4.8...v0.5.0) (2020-11-12)
 
 
