@@ -4,6 +4,9 @@ import { PortalContext } from './context';
 import _isNil from 'lodash/isNil';
 import ReactDOM from 'react-dom';
 
+/**
+ * @deprecated 应当使用@web/utils/portal
+ */
 export const PortalRender: React.FC = TMemo((props) => {
   const context = useContext(PortalContext);
 

@@ -3,7 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { Iconfont } from '@web/components/Iconfont';
 import { FullModal } from '@web/components/FullModal';
 import { SettingView } from './SettingView';
-import { PortalRender } from '@web/components/portal/PortalRender';
+import { PortalRender } from '@web/utils/portal';
 
 export const MoreAction: React.FC = TMemo((props) => {
   const [visible, setVisible] = useState(false);
@@ -12,13 +12,13 @@ export const MoreAction: React.FC = TMemo((props) => {
     <div>
       <Iconfont onClick={() => setVisible(true)}>&#xe625;</Iconfont>
 
-      <PortalRender>
-        {visible && (
+      {visible && (
+        <PortalRender>
           <FullModal visible={true} onChangeVisible={setVisible}>
             <SettingView />
           </FullModal>
-        )}
-      </PortalRender>
+        </PortalRender>
+      )}
     </div>
   );
 });
