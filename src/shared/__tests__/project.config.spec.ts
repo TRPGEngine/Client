@@ -58,6 +58,7 @@ describe('project.config', () => {
     });
     expect(config).toHaveProperty('url', {
       api: expect.any(String),
+      rtc: expect.any(String),
       homepage: expect.any(String),
       goddessfantasy: expect.any(String),
       blog: expect.any(String),
