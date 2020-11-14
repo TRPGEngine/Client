@@ -39,7 +39,7 @@ const Root = styled.div`
 
 const Sidebar = styled.nav`
   flex: 1 0 218px;
-  padding: 60px 10px 80px;
+  padding: 90px 10px 80px;
   background-color: ${(props) => props.theme.color.transparent90};
   display: flex;
   flex-direction: column;
@@ -63,7 +63,7 @@ const Sidebar = styled.nav`
 
 const Content = styled.div`
   flex: 1 1 800px;
-  padding: 60px 40px 80px;
+  padding: 90px 40px 80px;
   overflow: auto;
   ${({ theme }) => theme.mixins.mobile('overflow: initial;')}
 `;
