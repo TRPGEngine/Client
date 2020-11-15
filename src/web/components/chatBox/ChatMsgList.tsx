@@ -19,12 +19,16 @@ interface ChatMsgListProps {
 export const ChatMsgList: React.FC<ChatMsgListProps> = TMemo((props) => {
   const { converseUUID } = props;
 
-  const { containerRef, msgListEl, loadMoreEl, handleScroll } = useChatMsgList(
-    converseUUID
-  );
+  const {
+    containerRef,
+    msgListEl,
+    loadMoreEl,
+    handleWheel,
+    handleListLoad,
+  } = useChatMsgList(converseUUID);
 
   return (
-    <Root ref={containerRef} onScroll={handleScroll}>
+    <Root ref={containerRef} onWheel={handleWheel} onLoad={handleListLoad}>
       {loadMoreEl}
       {msgListEl}
     </Root>
