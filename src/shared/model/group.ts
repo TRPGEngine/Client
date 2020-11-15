@@ -50,6 +50,14 @@ export interface GroupInviteCodeInfo {
   times: number;
 }
 
+export interface GroupRequestItem {
+  uuid: string;
+  group_uuid: string;
+  from_uuid: string;
+  is_agree: boolean;
+  is_refuse: boolean;
+}
+
 /**
  * 获取团信息
  * @param groupUUID 团UUID
@@ -278,3 +286,37 @@ export const fetchGroupActorDetail = async (
 
   return data.groupActor;
 };
+
+/**
+ * 获取团请求加入列表
+ * @param groupUUID 团UUID
+ */
+export async function fetchGroupRequestList(
+  groupUUID: string
+): Promise<GroupRequestItem[]> {
+  const { data } = await request.get(
+    `/group/request/list?groupUUID=${groupUUID}`
+  );
+
+  return data.list;
+}
+
+/**
+ * 同意入团请求
+ * @param requestUUID 入团请求UUID
+ */
+export async function requestAgreeGroupRequest(requestUUID: string) {
+  await request.post('/group/request/agree', {
+    requestUUID,
+  });
+}
+
+/**
+ * 拒绝入团请求
+ * @param requestUUID 入团请求UUID
+ */
+export async function requestRefuseGroupRequest(requestUUID: string) {
+  await request.post('/group/request/refuse', {
+    requestUUID,
+  });
+}

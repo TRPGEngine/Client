@@ -18,6 +18,10 @@ import {
 } from '@shared/model/group';
 import { showAlert, showToasts } from '@shared/manager/ui';
 import { UpSquareOutlined, DownSquareOutlined } from '@ant-design/icons';
+import { PillTabs } from '@web/components/PillTabs';
+import { GroupRequestList } from './GroupRequestList';
+
+const { TabPane } = PillTabs;
 
 const GroupMemberItemContainer = styled.div`
   padding: 10px;
@@ -122,9 +126,21 @@ export const GroupMemberManage: React.FC<GroupMemberManageProps> = TMemo(
           {t('成员管理')}({memberUUIDs.length})
         </Typography.Title>
 
-        {memberUUIDs.map((uuid) => (
-          <GroupMemberItem key={uuid} groupUUID={groupUUID} userUUID={uuid} />
-        ))}
+        <PillTabs defaultActiveKey="1">
+          <TabPane tab={t('当前')} key="1">
+            {memberUUIDs.map((uuid) => (
+              <GroupMemberItem
+                key={uuid}
+                groupUUID={groupUUID}
+                userUUID={uuid}
+              />
+            ))}
+          </TabPane>
+
+          <TabPane tab={t('请求加入')} key="2">
+            <GroupRequestList groupUUID={groupUUID} />
+          </TabPane>
+        </PillTabs>
       </div>
     );
   }
