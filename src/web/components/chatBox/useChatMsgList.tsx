@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useCallback,
   useLayoutEffect,
+  useState,
 } from 'react';
 import { shouleEmphasizeTime } from '@shared/utils/date-helper';
 import _head from 'lodash/head';
@@ -23,6 +24,8 @@ import styled from 'styled-components';
 import { usePrevious } from 'react-use';
 import { MsgPayload } from '@redux/types/chat';
 import { useTranslation } from '@shared/i18n';
+import { Button } from 'antd';
+import { ArrowDownOutlined } from '@ant-design/icons';
 
 const LoadmoreText = styled.div<{
   disable?: boolean;
@@ -105,6 +108,7 @@ export function useChatMsgList(converseUUID: string) {
   const msgStyleCombine = useTRPGSelector(
     (state) => state.settings.user.msgStyleCombine ?? false
   );
+  const [showScrollToBottomBtn, setShowScrollToBottomBtn] = useState(false);
 
   // 消息列表
   const msgListEl = useMemo(() => {
@@ -148,6 +152,7 @@ export function useChatMsgList(converseUUID: string) {
           if (containerRef.current) {
             scrollToBottom(containerRef.current, 100);
           }
+          setShowScrollToBottomBtn(false);
         },
         100,
         {
@@ -168,15 +173,17 @@ export function useChatMsgList(converseUUID: string) {
     handleScrollToBottom();
   }, [_last(msgList)]);
 
-  const handleWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
+  const handleWheel = useCallback((e: React.SyntheticEvent<HTMLDivElement>) => {
     const el = e.currentTarget;
     const distance = el.scrollHeight - el.scrollTop - el.offsetHeight; // 滚动条距离底部的距离
     if (distance <= 20) {
       // 滚动容器接触到底部
       isSeekingLogRef.current = false;
+      setShowScrollToBottomBtn(false);
     } else {
       // 翻阅聊天记录
       isSeekingLogRef.current = true;
+      setShowScrollToBottomBtn(true);
     }
   }, []);
 
@@ -187,5 +194,13 @@ export function useChatMsgList(converseUUID: string) {
     }
   }, [handleScrollToBottom]);
 
-  return { containerRef, msgListEl, loadMoreEl, handleWheel, handleListLoad };
+  return {
+    containerRef,
+    msgListEl,
+    loadMoreEl,
+    handleWheel,
+    handleListLoad,
+    showScrollToBottomBtn,
+    handleScrollToBottom,
+  };
 }
