@@ -122,7 +122,7 @@ export function useSelectConverse(converseUUID: string) {
  * 检查一个团是否有未读信息
  * @param groupUUID 团UUID
  */
-export function useGroupUnread(
+export function useUnreadGroupMap(
   groupUUIDs: string[]
 ): { [groupUUID: string]: boolean } {
   const groups = useTRPGSelector((state) => state.group.groups);

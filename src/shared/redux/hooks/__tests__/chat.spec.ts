@@ -3,7 +3,7 @@ import {
   buildTestReduxProvider,
 } from '@redux/__tests__/utils';
 import { renderHook } from '@testing-library/react-hooks';
-import { useGroupUnread } from '../chat';
+import { useUnreadGroupMap } from '../chat';
 import {
   buildTestGroupChannelInfo,
   buildTestGroupInfo,
@@ -89,7 +89,7 @@ describe('redux hooks chat', () => {
 
     test('should be ok', () => {
       const { result } = renderHook(
-        () => useGroupUnread(['group1', 'group2', 'group3', 'group4']),
+        () => useUnreadGroupMap(['group1', 'group2', 'group3', 'group4']),
         {
           wrapper: TestUseGroupUnreadProvider,
         }
