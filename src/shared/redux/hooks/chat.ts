@@ -163,3 +163,12 @@ export function useUnreadGroupMap(
 
   return groupConversesUnreadMap;
 }
+
+/**
+ * 检查所有的私信是否有未读信息
+ */
+export function useUnreadPersonalConverse(): boolean {
+  const converses = useConverses(['user']);
+
+  return converses.some((c) => c.unread === true);
+}

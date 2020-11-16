@@ -10,7 +10,10 @@ import { TMemo } from '@shared/components/TMemo';
 import { MobileNavbarSwitch } from './MobileNavbarSwitch';
 import { MoreAction } from './MoreAction';
 import { VoiceStatus } from '@web/components/rtc/VoiceStatus';
-import { useUnreadGroupMap } from '@redux/hooks/chat';
+import {
+  useUnreadGroupMap,
+  useUnreadPersonalConverse,
+} from '@redux/hooks/chat';
 
 const NavBar = styled.nav`
   position: absolute;
@@ -59,6 +62,7 @@ export const MainNavbar: React.FC = TMemo(() => {
   const groups = useTRPGSelector((state) => state.group.groups);
   const currentUserInfo = useCurrentUserInfo();
   const name = getUserName(currentUserInfo);
+  const hasPersonalUnread = useUnreadPersonalConverse();
   const groupUUIDs = useMemo(() => groups.map((group) => group.uuid), [groups]);
   const groupUnreadMap = useUnreadGroupMap(groupUUIDs);
   const avatar = currentUserInfo.avatar;
@@ -68,7 +72,12 @@ export const MainNavbar: React.FC = TMemo(() => {
       <MobileNavbarSwitch />
 
       <NavbarSection>
-        <NavbarLink src={avatar} name={name} to="/main/personal" />
+        <NavbarLink
+          src={avatar}
+          name={name}
+          to="/main/personal"
+          showIndicator={hasPersonalUnread === true}
+        />
       </NavbarSection>
 
       <VoiceStatus />
