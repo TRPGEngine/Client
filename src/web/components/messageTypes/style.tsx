@@ -27,7 +27,7 @@ export const MsgItemTip = styled.div`
 
   .content {
     display: inline-block;
-    background-color: ${(props) => props.theme.color.transparent90};
+    background-color: ${(props) => props.theme.color.transparent80};
     color: ${({ theme }) =>
       theme.mixins.modeValue([
         theme.color['dove-gray'],
