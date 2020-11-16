@@ -1,6 +1,6 @@
 import React from 'react';
 import HTML from '@web/components/HTML';
-import { mount } from 'enzyme';
+import { create } from 'react-test-renderer';
 
 describe('HTML Component', () => {
   test.each([
@@ -8,7 +8,7 @@ describe('HTML Component', () => {
     ['<script src="http://example.com/script.js"></script>'],
     ['<style>*{color: red;}</style>'],
   ])('render "%s"', (originText) => {
-    const wrapper = mount(<HTML html={originText} />);
-    expect(wrapper.toJson()).toMatchSnapshot();
+    const wrapper = create(<HTML html={originText} />);
+    expect(wrapper.toJSON()).toMatchSnapshot();
   });
 });

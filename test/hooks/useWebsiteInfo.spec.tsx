@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { renderHook } from '@testing-library/react-hooks';
 import { useWebsiteInfo } from '@shared/hooks/useWebsiteInfo';
 import { sleep } from '@test/utils';
 
@@ -7,9 +7,9 @@ const TestComponent: React.FC<{ message: string }> = (props) => {
   const { loading, hasUrl, info } = useWebsiteInfo(props.message);
   return (
     <div>
-      <p className="loading">{String(loading)}</p>
-      <p className="hasUrl">{String(hasUrl)}</p>
-      <p className="info">{JSON.stringify(info)}</p>
+      <p role="loading">{String(loading)}</p>
+      <p role="hasUrl">{String(hasUrl)}</p>
+      <p role="info">{JSON.stringify(info)}</p>
     </div>
   );
 };
@@ -21,21 +21,26 @@ describe('useWebsiteInfo should be ok', () => {
     ['some text https://www.baidu.com'],
     ['https://www.baidu.com some text'],
   ])('message: %s', async (msg) => {
-    const wrapper = mount(<TestComponent message={msg} />);
+    const res = renderHook((props) => useWebsiteInfo(msg), {
+      initialProps: { msg },
+    });
 
-    expect(wrapper.find('.loading').text()).toBe('true');
-    expect(wrapper.find('.hasUrl').text()).toBe('true');
-    expect(wrapper.find('.info').text()).toBe(
-      '{"title":"","content":"","url":""}'
-    );
+    expect(res.result.current).toMatchObject({
+      loading: true,
+      hasUrl: true,
+      info: { title: '', content: '', url: '' },
+    });
 
-    await sleep(0);
-    wrapper.update();
+    await res.waitForNextUpdate();
 
-    expect(wrapper.find('.loading').text()).toBe('false');
-    expect(wrapper.find('.hasUrl').text()).toBe('true');
-    expect(wrapper.find('.info').text()).toBe(
-      '{"title":"mock title","content":"mock content","url":"https://www.baidu.com"}'
-    );
+    expect(res.result.current).toMatchObject({
+      loading: false,
+      hasUrl: true,
+      info: {
+        title: 'mock title',
+        content: 'mock content',
+        url: 'https://www.baidu.com',
+      },
+    });
   });
 });
