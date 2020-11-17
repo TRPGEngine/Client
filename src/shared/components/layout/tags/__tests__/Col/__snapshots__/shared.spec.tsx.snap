@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tag: Col sm="8" in 600 => 8 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-fzoLsD dtpKnj"
+    style="position: relative;"
+  >
+    <iframe
+      style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
+    />
+    <div
+      class="ant-col ant-col-8"
+    >
+      Test Content
+    </div>
+  </div>
+</DocumentFragment>
+`;

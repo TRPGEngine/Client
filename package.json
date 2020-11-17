@@ -210,6 +210,7 @@
     "@types/shortid": "0.0.29",
     "@types/socket.io-client": "^1.4.32",
     "@types/styled-components": "^5.1.0",
+    "@types/testing-library__jest-dom": "^5.9.5",
     "@types/uuid": "^3.4.6",
     "@types/yup": "^0.29.6",
     "@typescript-eslint/eslint-plugin": "^3.9.1",

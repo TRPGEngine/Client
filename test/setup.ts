@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom';
 import _noop from 'lodash/noop';
 
 // 用于处理mock

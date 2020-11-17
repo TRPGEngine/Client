@@ -1,18 +1,6 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { useWebsiteInfo } from '@shared/hooks/useWebsiteInfo';
-import { sleep } from '@test/utils';
-
-const TestComponent: React.FC<{ message: string }> = (props) => {
-  const { loading, hasUrl, info } = useWebsiteInfo(props.message);
-  return (
-    <div>
-      <p role="loading">{String(loading)}</p>
-      <p role="hasUrl">{String(hasUrl)}</p>
-      <p role="info">{JSON.stringify(info)}</p>
-    </div>
-  );
-};
 
 describe('useWebsiteInfo should be ok', () => {
   test.each([

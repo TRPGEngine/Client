@@ -9,8 +9,9 @@ describe('Tag: Col', () => {
   ])('%s in %i => %i', async (attrs, width, span) => {
     const xml = `<Col ${attrs}>Test Content</Col>`;
 
-    const res = render(<XMLBuilder xml={xml} />);
+    const wrapper = render(<XMLBuilder xml={xml} />);
 
-    expect(res.container.outerHTML).toMatchSnapshot();
+    expect(wrapper.getByText('Test Content')).toBeInTheDocument();
+    expect(wrapper.asFragment()).toMatchSnapshot();
   });
 });
