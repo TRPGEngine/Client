@@ -74,7 +74,7 @@
     "@ant-design/colors": "^3.2.2",
     "@ant-design/icons": "^4.0.5",
     "@babel/polyfill": "^7.12.1",
-    "@bbob/parser": "^2.5.4",
+    "@bbob/parser": "^2.5.8",
     "@reduxjs/toolkit": "^1.4.0",
     "@sentry/react": "^5.27.3",
     "@sentry/tracing": "^5.27.3",

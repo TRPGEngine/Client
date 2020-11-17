@@ -2,11 +2,14 @@ import React, { ComponentType, ReactNode } from 'react';
 import { TagProps, AstNode } from './type';
 import { parse } from '@bbob/parser';
 import _last from 'lodash/last';
+import _set from 'lodash/set';
 import _get from 'lodash/get';
 import _has from 'lodash/has';
 import _isObject from 'lodash/isObject';
 import _isArray from 'lodash/isArray';
 import _isEmpty from 'lodash/isEmpty';
+import _mapKeys from 'lodash/mapKeys';
+import _toPairs from 'lodash/toPairs';
 
 /**
  * 通用的bbcode解释器
@@ -73,8 +76,18 @@ class BBCodeParser {
           return processFn(text);
         }
 
-        const { tag, content } = node;
-        return `[${tag}]${content}[/${tag}]`;
+        const { tag, content, attrs } = node;
+        const attrsStr = _toPairs(attrs)
+          .map(([key, value]) => {
+            if (key === value) {
+              return `=${value}`;
+            } else {
+              return ` ${key}=${value}`;
+            }
+          })
+          // NOTICE: 这里排序看起来好像有问题，但是attrs的顺序是有序的，所以没有问题
+          .join('');
+        return `[${tag}${attrsStr}]${content}[/${tag}]`;
       })
       .join('');
   }
@@ -82,7 +95,7 @@ class BBCodeParser {
   // 将bbcode字符串转化为AstNode
   parse(input: string): AstNode[] {
     try {
-      return parse(input, this.options).map((node: any) => {
+      return parse(input, this.options).map((node: AstNode) => {
         if (_isObject(node)) {
           const content = _get(node, 'content');
           const attrs = _get(node, 'attrs');
@@ -97,6 +110,20 @@ class BBCodeParser {
               return `[${tag}]`;
             }
           }
+
+          // 将[url=http://baidu.com] 解析出的attrs: { 'http://baidu.com': 'http://baidu.com' }
+          // 转换为attrs: { 'url': 'http://baidu.com' }
+          _set(
+            node,
+            'attrs',
+            _mapKeys(attrs, (value, key) => {
+              if (value === key) {
+                return node.tag;
+              } else {
+                return key;
+              }
+            })
+          );
         }
 
         return node;

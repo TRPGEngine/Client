@@ -4,11 +4,12 @@ import { TMemo } from '@shared/components/TMemo';
 
 const UrlTag: React.FC<TagProps> = TMemo((props) => {
   const { node } = props;
-  const url = node.content.join('');
+  const text = node.content.join('');
+  const url = node.attrs.url ?? text;
 
   return (
-    <a href={url} title={url} target="_blank" rel="noreferrer">
-      {url}
+    <a href={url} title={text} target="_blank" rel="noopener">
+      {text}
     </a>
   );
 });
