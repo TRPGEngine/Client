@@ -11,6 +11,7 @@ describe('bbcode render', () => {
     ['[asd]unrecognized tag should be ignore[/asd]'],
     ['http://baidu.com'],
     ['[url]http://baidu.com[/url]'],
+    ['[url=http://baidu.com]百度[/url]'],
   ])('render "%s"', (originText) => {
     const { asFragment } = render(<BBCode plainText={originText} />);
 
