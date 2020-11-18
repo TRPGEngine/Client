@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.2](https://github.com/TRPGEngine/Client/compare/v0.5.1...v0.5.2) (2020-11-18)
+
+
+### Features
+
+* **web:** 增加团未读消息指示 ([2cc5b15](https://github.com/TRPGEngine/Client/commit/2cc5b1585ef3f45ebafe3226a57d24f24d6129a9))
+* **web:** 增加团请求加入列表 ([04853cd](https://github.com/TRPGEngine/Client/commit/04853cd9589f83f9a29eeb580a5b94d7ddadc2c0))
+* **web:** 增加导航栏的私信未读提示 ([e530735](https://github.com/TRPGEngine/Client/commit/e530735b167a1d2914a5c882dc9f81d5dbf4df27))
+* **web:** 聊天框增加滚动到底部按钮 ([e3d0d4b](https://github.com/TRPGEngine/Client/commit/e3d0d4b72028d8829d87889dc82e9060c4b084b5))
+
+
+### Bug Fixes
+
+* **web:** 修复私信列表没有头像的bug ([dbe303c](https://github.com/TRPGEngine/Client/commit/dbe303c3e275df3fc4a3f6e6d9f262ca832d58d3))
+* 修复bbcode url解析不支持自定义地址的问题 ([83a1466](https://github.com/TRPGEngine/Client/commit/83a14667349aec9d6e2a51e5d096a76b9ff70a5a))
+
 ### [0.5.1](https://github.com/TRPGEngine/Client/compare/v0.5.0...v0.5.1) (2020-11-13)
 
 
