@@ -30,6 +30,7 @@ const initSentry = _once(() => {
     ignoreErrors: [
       'ResizeObserver loop limit exceeded',
       'ResizeObserver loop completed with undelivered',
+      `Can't find variable: Notification`,
     ],
   });
 });
