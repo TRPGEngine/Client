@@ -11,6 +11,8 @@ import { useMemo, useEffect } from 'react';
 import _isNil from 'lodash/isNil';
 import _orderBy from 'lodash/orderBy';
 import _values from 'lodash/values';
+import _mapValues from 'lodash/mapValues';
+import _fromPairs from 'lodash/fromPairs';
 import { useSystemSetting } from './settings';
 import { useCurrentUserUUID } from './user';
 import { switchConverse, clearSelectedConverse } from '@redux/actions/chat';
@@ -114,4 +116,59 @@ export function useSelectConverse(converseUUID: string) {
       dispatch(clearSelectedConverse());
     };
   }, [converseUUID]);
+}
+
+/**
+ * 检查一个团是否有未读信息
+ * @param groupUUID 团UUID
+ */
+export function useUnreadGroupMap(
+  groupUUIDs: string[]
+): { [groupUUID: string]: boolean } {
+  const groups = useTRPGSelector((state) => state.group.groups);
+  const groupInfoMap = useMemo(
+    () =>
+      _mapValues(
+        _fromPairs(groupUUIDs.map((uuid) => [uuid, uuid])),
+        (groupUUID) => groups.find((g) => g.uuid === groupUUID)
+      ),
+    [groupUUIDs, groups]
+  );
+
+  const groupConversesMap = useMemo(
+    () =>
+      _mapValues(groupInfoMap, (groupInfo) => {
+        if (_isNil(groupInfo)) {
+          return [];
+        }
+
+        return [
+          groupInfo.uuid,
+          ...(groupInfo.channels ?? []).map((ch) => ch.uuid),
+        ];
+      }),
+    [groupInfoMap]
+  );
+
+  const allConverses = useTRPGSelector((state) => state.chat.converses);
+  const groupConversesUnreadMap = useMemo(
+    () =>
+      _mapValues(groupConversesMap, (converses) =>
+        converses.some(
+          (converseUUID) => allConverses[converseUUID]?.unread === true
+        )
+      ),
+    [groupConversesMap, allConverses]
+  );
+
+  return groupConversesUnreadMap;
+}
+
+/**
+ * 检查所有的私信是否有未读信息
+ */
+export function useUnreadPersonalConverse(): boolean {
+  const converses = useConverses(['user']);
+
+  return converses.some((c) => c.unread === true);
 }

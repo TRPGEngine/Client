@@ -8,7 +8,6 @@ import {
   GameReport,
 } from '@shared/model/trpg';
 import { useAsyncFn } from 'react-use';
-import { useAsync } from 'react-use';
 import { LoadingSpinner } from '@web/components/LoadingSpinner';
 import _isNil from 'lodash/isNil';
 import { useTranslation } from '@shared/i18n';
@@ -29,6 +28,7 @@ interface GroupReportManageProps {
 const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
   const { groupUUID } = props;
   const { t } = useTranslation();
+  const isGroupManager = useIsGroupManager(groupUUID);
 
   const [{ value: reportList, loading }, refreshReportList] = useAsyncFn(
     () => fetchGroupReport(groupUUID),
@@ -78,17 +78,19 @@ const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
               {t('预览')}
             </Button>
 
-            <Button
-              type="ghost"
-              danger={true}
-              icon={<Iconfont>&#xe76b;</Iconfont>}
-              onClick={() => handleRemoveReport(record.uuid)}
-            />
+            {isGroupManager && (
+              <Button
+                type="ghost"
+                danger={true}
+                icon={<Iconfont>&#xe76b;</Iconfont>}
+                onClick={() => handleRemoveReport(record.uuid)}
+              />
+            )}
           </Space>
         ),
       },
     ];
-  }, [handleRemoveReport]);
+  }, [isGroupManager, handleRemoveReport]);
 
   if (loading) {
     return <LoadingSpinner />;

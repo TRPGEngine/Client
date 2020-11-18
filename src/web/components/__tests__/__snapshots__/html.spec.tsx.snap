@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HTML Component render "<h1>Test Title</h1>" 1`] = `
+<div>
+  <h1>
+    Test Title
+  </h1>
+</div>
+`;
+
+exports[`HTML Component render "<script src="http://example.com/script.js"></script>" 1`] = `
+<div>
+  &lt;script src="http://example.com/script.js"&gt;&lt;/script&gt;
+</div>
+`;
+
+exports[`HTML Component render "<style>*{color: red;}</style>" 1`] = `
+<div>
+  &lt;style&gt;*{color: red;}&lt;/style&gt;
+</div>
+`;

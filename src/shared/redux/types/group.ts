@@ -36,6 +36,9 @@ export interface GroupDetail {
 
 type GroupChannelVisible = 'all' | 'manager' | 'assign';
 
+/**
+ * @deprecated 不直接通过channel实现管理，而通过panel实现相关信息
+ */
 export interface GroupChannel {
   uuid: string;
   name: string;

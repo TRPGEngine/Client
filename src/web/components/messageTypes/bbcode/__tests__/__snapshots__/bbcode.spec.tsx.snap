@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bbcode render render ":cat:" 1`] = `
+<DocumentFragment>
+  <pre
+    style="display: inline;"
+  >
+    🐱
+  </pre>
+</DocumentFragment>
+`;
+
+exports[`bbcode render render "[asd]unrecognized tag should be ignore[/asd]" 1`] = `
+<DocumentFragment>
+  <pre
+    style="display: inline;"
+  >
+    unrecognized, ,tag, ,should, ,be, ,ignore
+  </pre>
+</DocumentFragment>
+`;
+
+exports[`bbcode render render "[img]http://example.com[/img]" 1`] = `
+<DocumentFragment>
+  <div
+    class="image-viewer"
+  >
+    <mock-image
+      role="chatimage"
+      src="http://example.com"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`bbcode render render "[url=http://baidu.com]百度[/url]" 1`] = `
+<DocumentFragment>
+  <a
+    href="http://baidu.com"
+    rel="noopener"
+    target="_blank"
+    title="百度"
+  >
+    百度
+  </a>
+</DocumentFragment>
+`;
+
+exports[`bbcode render render "[url]http://baidu.com[/url]" 1`] = `
+<DocumentFragment>
+  <a
+    href="http://baidu.com"
+    rel="noopener"
+    target="_blank"
+    title="http://baidu.com"
+  >
+    http://baidu.com
+  </a>
+</DocumentFragment>
+`;
+
+exports[`bbcode render render "http://baidu.com" 1`] = `
+<DocumentFragment>
+  <a
+    href="http://baidu.com"
+    rel="noopener"
+    target="_blank"
+    title="http://baidu.com"
+  >
+    http://baidu.com
+  </a>
+</DocumentFragment>
+`;
+
+exports[`bbcode render render "mix text image[img]http://example.com[/img]" 1`] = `
+<DocumentFragment>
+  <pre
+    style="display: inline;"
+  >
+    mix text image
+  </pre>
+  <div
+    class="image-viewer"
+  >
+    <mock-image
+      role="chatimage"
+      src="http://example.com"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`bbcode render render "some sample text" 1`] = `
+<DocumentFragment>
+  <pre
+    style="display: inline;"
+  >
+    some sample text
+  </pre>
+</DocumentFragment>
+`;

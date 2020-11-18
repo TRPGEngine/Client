@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`layout basic 1`] = `
+<div
+  className="sc-fzoLsD dtpKnj"
+  style={
+    Object {
+      "position": "relative",
+    }
+  }
+>
+  <iframe
+    style={
+      Object {
+        "background": "transparent",
+        "border": "none",
+        "height": "100%",
+        "left": 0,
+        "position": "absolute",
+        "top": 0,
+        "width": "100%",
+        "zIndex": -1,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`layout some text 1`] = `
+<div
+  className="sc-fzoLsD dtpKnj"
+  style={
+    Object {
+      "position": "relative",
+    }
+  }
+>
+  <iframe
+    style={
+      Object {
+        "background": "transparent",
+        "border": "none",
+        "height": "100%",
+        "left": 0,
+        "position": "absolute",
+        "top": 0,
+        "width": "100%",
+        "zIndex": -1,
+      }
+    }
+  />
+  <div
+    className="sc-AxgMl hoELXQ"
+  >
+    <span>
+      some text
+    </span>
+  </div>
+</div>
+`;

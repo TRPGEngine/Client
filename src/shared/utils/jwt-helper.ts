@@ -14,7 +14,7 @@ export function getJWTPayload(jwt: string) {
     const decoded = jwtDecode(jwt);
     return decoded;
   } catch (e) {
-    console.error('getJWTInfo Error:', e);
+    console.error(`getJWTInfo Error: [jwt: ${jwt}]`, e);
   }
 
   return {};

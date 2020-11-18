@@ -31,15 +31,29 @@ describe('bbcode parser', () => {
     ]);
   });
 
-  test('tag text', () => {
-    const ast = bbcodeParser.parse('[url]a[/url]');
+  describe('tag url', () => {
+    test('with plain text', () => {
+      const ast = bbcodeParser.parse('[url]http://baidu.com[/url]');
 
-    expect(ast).toMatchObject([
-      {
-        tag: 'url',
-        attrs: {},
-        content: ['a'],
-      },
-    ]);
+      expect(ast).toMatchObject([
+        {
+          tag: 'url',
+          attrs: {},
+          content: ['http://baidu.com'],
+        },
+      ]);
+    });
+
+    test('with custom text', () => {
+      const ast = bbcodeParser.parse('[url=http://baidu.com]a[/url]');
+
+      expect(ast).toMatchObject([
+        {
+          tag: 'url',
+          attrs: { url: 'http://baidu.com' },
+          content: ['a'],
+        },
+      ]);
+    });
   });
 });

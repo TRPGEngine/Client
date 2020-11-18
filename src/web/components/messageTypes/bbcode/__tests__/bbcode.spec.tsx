@@ -1,6 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
 import BBCode from '@web/components/messageTypes/bbcode/__all__';
+import { render } from '@testing-library/react';
 
 describe('bbcode render', () => {
   test.each([
@@ -11,8 +11,10 @@ describe('bbcode render', () => {
     ['[asd]unrecognized tag should be ignore[/asd]'],
     ['http://baidu.com'],
     ['[url]http://baidu.com[/url]'],
+    ['[url=http://baidu.com]百度[/url]'],
   ])('render "%s"', (originText) => {
-    const wrapper = mount(<BBCode plainText={originText} />);
-    expect(wrapper.toJson()).toMatchSnapshot();
+    const { asFragment } = render(<BBCode plainText={originText} />);
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

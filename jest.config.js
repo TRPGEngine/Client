@@ -16,8 +16,6 @@ module.exports = {
   },
   rootDir: '.',
   roots: [
-    '<rootDir>/test/',
-    '<rootDir>/src/web/test/',
     '<rootDir>/src/',
   ],
   testRegex: ".*\\.(test|spec)\\.tsx?$",

@@ -5,12 +5,27 @@ import _last from 'lodash/last';
 import _head from 'lodash/head';
 import styled from 'styled-components';
 import { useChatMsgList } from './useChatMsgList';
+import { Button } from 'antd';
+import { ArrowDownOutlined } from '@ant-design/icons';
 
 const Root = styled.div`
-  padding: 0 10px;
+  position: relative;
   flex: 1;
+  overflow: hidden;
+`;
+
+const Container = styled.div`
+  height: 100%;
+  padding: 0 10px;
   overflow-x: hidden;
   overflow-y: scroll;
+`;
+
+const ScrollToBottomBtn = styled(Button)`
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  box-shadow: ${({ theme }) => theme.boxShadow.elevationMedium};
 `;
 
 interface ChatMsgListProps {
@@ -19,14 +34,37 @@ interface ChatMsgListProps {
 export const ChatMsgList: React.FC<ChatMsgListProps> = TMemo((props) => {
   const { converseUUID } = props;
 
-  const { containerRef, msgListEl, loadMoreEl, handleScroll } = useChatMsgList(
-    converseUUID
-  );
+  const {
+    containerRef,
+    msgListEl,
+    loadMoreEl,
+    handleWheel,
+    handleListLoad,
+    showScrollToBottomBtn,
+    handleScrollToBottom,
+  } = useChatMsgList(converseUUID);
 
   return (
-    <Root ref={containerRef} onScroll={handleScroll}>
-      {loadMoreEl}
-      {msgListEl}
+    <Root>
+      <Container
+        ref={containerRef}
+        onWheel={handleWheel}
+        onTouchEnd={handleWheel}
+        onLoad={handleListLoad}
+      >
+        {loadMoreEl}
+        {msgListEl}
+      </Container>
+
+      {showScrollToBottomBtn && (
+        <ScrollToBottomBtn
+          size="large"
+          type="primary"
+          shape="circle"
+          icon={<ArrowDownOutlined />}
+          onClick={handleScrollToBottom}
+        />
+      )}
     </Root>
   );
 });

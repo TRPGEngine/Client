@@ -1,6 +1,5 @@
 import React from 'react';
 import { MessageProps } from '@shared/components/message/MessageHandler';
-import { AnyKindOfDictionary } from 'lodash';
 
 class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
   P

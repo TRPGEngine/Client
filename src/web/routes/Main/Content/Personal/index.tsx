@@ -25,6 +25,7 @@ import { getUserName } from '@shared/utils/data-helper';
 import { useTranslation } from '@shared/i18n';
 import { useHistory } from 'react-router';
 import _orderBy from 'lodash/orderBy';
+import { UserAvatar } from '@web/components/UserAvatar';
 
 /**
  * 个人面板
@@ -100,7 +101,7 @@ export const Personal: React.FC = TMemo(() => {
             return (
               <SidebarItem
                 key={converse.uuid}
-                icon={converse.icon}
+                icon={<UserAvatar uuid={converse.uuid} />}
                 name={converse.name}
                 to={`/main/personal/converse/${converse.uuid}`}
                 badge={converse.unread}

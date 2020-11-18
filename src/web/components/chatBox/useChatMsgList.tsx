@@ -4,11 +4,13 @@ import React, {
   useEffect,
   useCallback,
   useLayoutEffect,
+  useState,
 } from 'react';
 import { shouleEmphasizeTime } from '@shared/utils/date-helper';
 import _head from 'lodash/head';
 import _get from 'lodash/get';
 import _last from 'lodash/last';
+import _throttle from 'lodash/throttle';
 import { MessageItem } from '@shared/components/message/MessageItem';
 import {
   useTRPGDispatch,
@@ -22,6 +24,8 @@ import styled from 'styled-components';
 import { usePrevious } from 'react-use';
 import { MsgPayload } from '@redux/types/chat';
 import { useTranslation } from '@shared/i18n';
+import { Button } from 'antd';
+import { ArrowDownOutlined } from '@ant-design/icons';
 
 const LoadmoreText = styled.div<{
   disable?: boolean;
@@ -104,6 +108,7 @@ export function useChatMsgList(converseUUID: string) {
   const msgStyleCombine = useTRPGSelector(
     (state) => state.settings.user.msgStyleCombine ?? false
   );
+  const [showScrollToBottomBtn, setShowScrollToBottomBtn] = useState(false);
 
   // 消息列表
   const msgListEl = useMemo(() => {
@@ -140,6 +145,24 @@ export function useChatMsgList(converseUUID: string) {
     nomore
   );
 
+  const handleScrollToBottom = useMemo(
+    () =>
+      _throttle(
+        () => {
+          if (containerRef.current) {
+            scrollToBottom(containerRef.current, 100);
+          }
+          setShowScrollToBottomBtn(false);
+        },
+        100,
+        {
+          leading: true,
+          trailing: true,
+        }
+      ),
+    []
+  );
+
   useEffect(() => {
     if (isSeekingLogRef.current === true) {
       // 如果正在浏览历史则不滚动到底部
@@ -147,22 +170,37 @@ export function useChatMsgList(converseUUID: string) {
     }
 
     // 元素更新时滚动到底部
-    if (containerRef.current) {
-      scrollToBottom(containerRef.current, 100);
-    }
+    handleScrollToBottom();
   }, [_last(msgList)]);
 
-  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+  const handleWheel = useCallback((e: React.SyntheticEvent<HTMLDivElement>) => {
     const el = e.currentTarget;
     const distance = el.scrollHeight - el.scrollTop - el.offsetHeight; // 滚动条距离底部的距离
     if (distance <= 20) {
       // 滚动容器接触到底部
       isSeekingLogRef.current = false;
+      setShowScrollToBottomBtn(false);
     } else {
       // 翻阅聊天记录
       isSeekingLogRef.current = true;
+      setShowScrollToBottomBtn(true);
     }
   }, []);
 
-  return { containerRef, msgListEl, loadMoreEl, handleScroll };
+  const handleListLoad = useCallback(() => {
+    if (isSeekingLogRef.current === false) {
+      // 如果没有手动翻阅 则滚动到底部
+      handleScrollToBottom();
+    }
+  }, [handleScrollToBottom]);
+
+  return {
+    containerRef,
+    msgListEl,
+    loadMoreEl,
+    handleWheel,
+    handleListLoad,
+    showScrollToBottomBtn,
+    handleScrollToBottom,
+  };
 }

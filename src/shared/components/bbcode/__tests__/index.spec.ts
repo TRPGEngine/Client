@@ -1,4 +1,4 @@
-import { preProcessLinkText } from '../index';
+import { preProcessLinkText, preProcessText } from '../index';
 
 describe('bbcode common', () => {
   describe('preprocess text', () => {
@@ -19,6 +19,23 @@ describe('bbcode common', () => {
       expect(text).toBe(
         'open:[url]http://baidu.com[/url] and [url]http://google.com[/url]'
       );
+    });
+  });
+
+  describe('preProcessText', () => {
+    test.each([
+      ['https://baidu.com', '[url]https://baidu.com[/url]'],
+      ['[url]https://baidu.com[/url]', '[url]https://baidu.com[/url]'],
+      [
+        '[url=https://baidu.com]百度[/url]',
+        '[url=https://baidu.com]百度[/url]',
+      ],
+      [
+        '[url=https://baidu.com alt=test]百度[/url]',
+        '[url=https://baidu.com alt=test]百度[/url]',
+      ],
+    ])('%s', (input, output) => {
+      expect(preProcessText(input)).toBe(output);
     });
   });
 });
