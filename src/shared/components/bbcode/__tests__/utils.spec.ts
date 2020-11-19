@@ -19,7 +19,7 @@ describe('getUrlTagRealUrl', () => {
       },
       'https://baidu.com',
     ],
-  ])('%s => %s', (input: AstNodeObj, output) => {
-    expect(getUrlTagRealUrl(input)).toMatchObject(output);
+  ])('%o => %s', (input: AstNodeObj, output) => {
+    expect(getUrlTagRealUrl(input)).toBe(output);
   });
 });
