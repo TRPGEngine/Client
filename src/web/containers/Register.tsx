@@ -22,7 +22,7 @@ class Register extends React.Component<Props> {
     }
   }
 
-  handleRegister() {
+  handleRegister = () => {
     this.props.dispatch(showLoading());
     const username = this.state.username;
     const password = this.state.password;
@@ -35,7 +35,7 @@ class Register extends React.Component<Props> {
         );
       })
     );
-  }
+  };
 
   _getErrorMsg() {
     const { username, password, passwordRepeat } = this.state;
@@ -94,14 +94,14 @@ class Register extends React.Component<Props> {
         <p>{errMsg}</p>
         <button
           className="active"
-          onClick={() => {
-            this.handleRegister();
-          }}
+          onClick={this.handleRegister}
           disabled={errMsg !== ''}
         >
           {t('成为祭品')}
         </button>
-        <Link to="/login">{t('已有账号？现在登录')}</Link>
+        <Link className="back-btn" to="/login">
+          {t('已有账号？现在登录')}
+        </Link>
       </div>
     );
   }

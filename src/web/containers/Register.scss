@@ -1,7 +1,7 @@
 @import "../../shared/utils/color";
 @import "../../shared/utils/mixins";
 
-.register-screen {
+.app .register-screen {
   width: 372px;
   background-color: rgba(230, 242, 248, 0.5);
   border-radius: 5px;
@@ -57,7 +57,7 @@
     }
   }
 
-  a, a:link, a:visited {
+  > .back-btn {
     float: right;
     @include link-btn;
   }
