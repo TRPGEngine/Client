@@ -16,8 +16,8 @@ import _isNil from 'lodash/isNil';
 import { showToasts } from '@shared/manager/ui';
 
 // 加载本地缓存信息
-export const loadLocalCache = function() {
-  return function(dispatch, getState) {
+export const loadLocalCache = function () {
+  return function (dispatch, getState) {
     // TODO: 用户缓存，列表缓存，等等等等
     rnStorage.get('localCache').then((res) => {
       console.log('TODO: loadLocalCache', res); // TODO: 待实现
@@ -25,8 +25,8 @@ export const loadLocalCache = function() {
   };
 };
 
-export const saveLocalCache = function(): TRPGAction {
-  return function(dispatch, getState) {
+export const saveLocalCache = function (): TRPGAction {
+  return function (dispatch, getState) {
     console.log('save local cache');
     const usercache = getState().cache.user;
     const templatecache = getState().cache.template;
@@ -36,13 +36,13 @@ export const saveLocalCache = function(): TRPGAction {
   };
 };
 
-export const getUserInfo = function(uuid, onCompleted?) {
+export const getUserInfo = function (uuid, onCompleted?) {
   if (!uuid) {
     throw new Error('getUserInfo need uuid');
   }
 
-  return function(dispatch, getState) {
-    return api.emit('player::getInfo', { type: 'user', uuid }, function(data) {
+  return function (dispatch, getState) {
+    return api.emit('player::getInfo', { type: 'user', uuid }, function (data) {
       if (data.result) {
         data.info.avatar = config.file.getAbsolutePath!(data.info.avatar);
         dispatch({ type: GET_USER_INFO, payload: data.info });
@@ -59,7 +59,7 @@ export const getUserInfo = function(uuid, onCompleted?) {
 /**
  * 获取角色模板信息
  */
-export const getTemplateInfo = function(
+export const getTemplateInfo = function (
   uuid: string,
   onCompleted?: () => void
 ): TRPGAction {
@@ -69,7 +69,7 @@ export const getTemplateInfo = function(
 
   const cacheKey = `cache$template#${uuid}`;
 
-  return async function(dispatch, getState) {
+  return async function (dispatch, getState) {
     // 先尝试从storage中获取
     try {
       const cache = await rnStorage.get(cacheKey);
@@ -100,13 +100,13 @@ export const getTemplateInfo = function(
   };
 };
 
-export const getActorInfo = function(uuid, onCompleted?) {
+export const getActorInfo = function (uuid, onCompleted?) {
   if (!uuid) {
     throw new Error('getActorInfo need uuid');
   }
 
-  return function(dispatch, getState) {
-    return api.emit('actor::getActor', { uuid }, function(data) {
+  return function (dispatch, getState) {
+    return api.emit('actor::getActor', { uuid }, function (data) {
       if (data.result) {
         const actor = data.actor ? data.actor : data.actors[0];
         actor.avatar = config.file.getAbsolutePath!(actor.avatar);
@@ -125,13 +125,13 @@ export const getActorInfo = function(uuid, onCompleted?) {
  * @param {string} uuid 团唯一标识
  * @param {function} onCompleted 完成后回调
  */
-export const getGroupInfo = function(uuid, onCompleted?) {
+export const getGroupInfo = function (uuid, onCompleted?) {
   if (!uuid) {
     throw new Error('getGroupInfo need uuid');
   }
 
-  return function(dispatch, getState) {
-    return api.emit('group::getInfo', { uuid }, function(data) {
+  return function (dispatch, getState) {
+    return api.emit('group::getInfo', { uuid }, function (data) {
       if (data.result) {
         data.group.avatar = config.file.getAbsolutePath!(data.group.avatar);
         dispatch({ type: GET_GROUP_INFO_SUCCESS, payload: data.group });
@@ -152,12 +152,13 @@ export const getFriendInviteInfo = (
     throw new Error('getGroupInviteInfo need uuid');
   }
 
-  return function(dispatch, getState) {
-    return api.emit('player::getFriendInviteDetail', { uuid }, function(data) {
+  return function (dispatch, getState) {
+    return api.emit('player::getFriendInviteDetail', { uuid }, function (data) {
       if (data.result) {
         dispatch({ type: GET_FRIEND_INVITE_INFO, payload: data.invite });
       } else {
         console.error(data.msg);
+        showToasts(data.msg);
       }
 
       onCompleted && onCompleted(data);
@@ -178,8 +179,8 @@ export const getGroupInviteInfo = (
     throw new Error('getGroupInviteInfo need uuid');
   }
 
-  return function(dispatch, getState) {
-    return api.emit('group::getGroupInviteDetail', { uuid }, function(data) {
+  return function (dispatch, getState) {
+    return api.emit('group::getGroupInviteDetail', { uuid }, function (data) {
       if (data.result) {
         dispatch({ type: GET_GROUP_INVITE_INFO, payload: data.invite });
       } else {
