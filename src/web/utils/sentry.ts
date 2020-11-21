@@ -31,6 +31,7 @@ const initSentry = _once(() => {
       'ResizeObserver loop limit exceeded',
       'ResizeObserver loop completed with undelivered',
       `Can't find variable: Notification`,
+      `'Notification' is undefined`,
     ],
   });
 });
