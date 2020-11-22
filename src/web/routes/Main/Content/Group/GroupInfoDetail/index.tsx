@@ -9,6 +9,7 @@ import { useTranslation } from '@shared/i18n';
 import { GroupMemberManage } from './GroupMemberManage';
 import { GroupBotManage } from './GroupBotManage';
 import { GroupReportManage } from './GroupReportManage';
+import { GroupDetailSettings } from './GroupDetailSettings';
 
 interface GroupInfoDetailProps {
   groupUUID: string;
@@ -36,6 +37,12 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
               title: t('面板'),
               hidden: !isGroupManager,
               content: <GroupPanelManage groupUUID={groupUUID} />,
+            },
+            {
+              type: 'item',
+              title: t('团设置'),
+              hidden: !isGroupManager,
+              content: <GroupDetailSettings groupUUID={groupUUID} />,
             },
             {
               type: 'item',

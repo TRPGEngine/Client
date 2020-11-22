@@ -1,5 +1,10 @@
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
-import { GroupInfo, GroupActorType, GroupChannel } from '@redux/types/group';
+import {
+  GroupInfo,
+  GroupActorType,
+  GroupChannel,
+  GroupDetail,
+} from '@redux/types/group';
 import { useCurrentUserInfo, useCurrentUserUUID } from './user';
 import _get from 'lodash/get';
 import _uniq from 'lodash/uniq';
@@ -207,4 +212,30 @@ export function useGroupUnreadConverseList(groupUUID: string): string[] {
   }, [converses, allConverseUUID]);
 
   return allUnreadConverseUUIDs;
+}
+
+/**
+ * 获取团详情设置
+ * @param groupUUID 团UUID
+ */
+export function useGroupDetail(groupUUID: string): GroupDetail | undefined {
+  const groupInfo = useJoinedGroupInfo(groupUUID);
+
+  return groupInfo?.detail;
+}
+
+/**
+ * 获取团详情信息的值
+ * @param groupUUID 团UUID
+ * @param key 数据键, 支持路径
+ * @param defaultValue 默认值
+ */
+export function useGroupDetailValue<T extends keyof GroupDetail>(
+  groupUUID: string,
+  key: T,
+  defaultValue: GroupDetail[T]
+) {
+  const groupDetail = useGroupDetail(groupUUID);
+
+  return _get(groupDetail, key, defaultValue);
 }
