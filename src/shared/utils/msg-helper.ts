@@ -5,6 +5,7 @@ import _pick from 'lodash/pick';
 import _isNil from 'lodash/isNil';
 import _isPlainObject from 'lodash/isPlainObject';
 import _has from 'lodash/has';
+import _trim from 'lodash/trim';
 import { GroupActorType } from '@redux/types/group';
 import { MsgPayload } from '@redux/types/chat';
 
@@ -68,4 +69,11 @@ export class MsgDataManager {
     }
     return _pick(this, names);
   }
+}
+
+/**
+ * 预处理消息. 移除一些无用的消息
+ */
+export function preProcessMessage(msg: string): string {
+  return _trim(msg);
 }

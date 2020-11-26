@@ -1,4 +1,4 @@
-import { MsgDataManager } from '../msg-helper';
+import { MsgDataManager, preProcessMessage } from '../msg-helper';
 
 describe('MsgDataManager', () => {
   test('toJS should be ok', () => {
@@ -40,5 +40,17 @@ describe('MsgDataManager', () => {
       avatar: 'avatar',
       groupActorUUID: 'uuid',
     });
+  });
+});
+
+describe('preProcessMessage', () => {
+  test.each([
+    ['\rtest', 'test'],
+    ['test\n', 'test'],
+    ['  test', 'test'],
+    ['test  ', 'test'],
+    ['  test  ', 'test'],
+  ])('%o => %o', (input, output) => {
+    expect(preProcessMessage(input)).toBe(output);
   });
 });
