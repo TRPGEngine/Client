@@ -2,7 +2,7 @@ import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { useInputMsgEditorMsgSend } from './useInputMsgEditorMsgSend';
-import { ChatMsgOperation } from './ChatMsgOperation';
+import { ChatMsgAddon } from './ChatMsgAddon';
 import { ChatMsgEmotion } from './ChatMsgEmotion';
 import { Space } from 'antd';
 
@@ -38,7 +38,7 @@ export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
 
         <Space>
           <ChatMsgEmotion editorRef={editorRef} />
-          <ChatMsgOperation editorRef={editorRef} />
+          <ChatMsgAddon editorRef={editorRef} />
         </Space>
       </div>
     </Wrapper>
