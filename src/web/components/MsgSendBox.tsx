@@ -25,6 +25,9 @@ interface Props extends TRPGDispatchProp {
   onSendDiceReq: () => void;
   onSendDiceInv: () => void;
 }
+/**
+ * @deprecated 使用ChatBox
+ */
 class MsgSendBox extends React.Component<Props> {
   inputMsgRef = React.createRef<HTMLElement>();
   fileUploader = React.createRef<HTMLInputElement>();
