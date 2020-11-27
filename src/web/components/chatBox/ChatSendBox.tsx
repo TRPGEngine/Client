@@ -5,6 +5,7 @@ import { useInputMsgEditorMsgSend } from './useInputMsgEditorMsgSend';
 import { ChatMsgAddon } from './ChatMsgAddon';
 import { ChatMsgEmotion } from './ChatMsgEmotion';
 import { Space } from 'antd';
+import { ChatMsgTypeSwitch } from './ChatMsgTypeSwitch';
 
 import './ChatMsg.less';
 
@@ -34,6 +35,8 @@ export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
   return (
     <Wrapper>
       <div className="outer">
+        <ChatMsgTypeSwitch />
+
         <div className="inner">{editorEl}</div>
 
         <Space>

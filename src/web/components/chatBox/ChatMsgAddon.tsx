@@ -11,17 +11,7 @@ import { uploadChatimg } from '@shared/utils/image-uploader';
 import { Editor } from 'slate';
 import { insertImage } from '../editor/changes/insertImage';
 import { showGlobalLoading, showToasts } from '@shared/manager/ui';
-
-const ChatMsgAddonBtn = styled.div`
-  width: 24px;
-  height: 24px;
-  background-color: ${({ theme }) => theme.color.transparent90};
-  border-radius: 50%;
-  color: white;
-  line-height: 24px;
-  text-align: center;
-  cursor: pointer;
-`;
+import { ChatBoxBtn } from './style';
 
 const ChatMsgAddonItemContainer = styled.div`
   padding: 6px 10px;
@@ -101,9 +91,9 @@ export const ChatMsgAddon: React.FC<{
       trigger="click"
       content={content}
     >
-      <ChatMsgAddonBtn style={props.style}>
+      <ChatBoxBtn style={props.style}>
         <Iconfont>&#xe604;</Iconfont>
-      </ChatMsgAddonBtn>
+      </ChatBoxBtn>
     </Popover>
   );
 });

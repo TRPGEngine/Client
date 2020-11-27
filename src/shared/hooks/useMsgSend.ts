@@ -14,6 +14,7 @@ import {
   useCurrentGroupUUID,
 } from '@shared/context/GroupInfoContext';
 import { showToasts } from '@shared/manager/ui';
+import { useChatMsgTypeContext } from '@shared/context/ChatMsgTypeContext';
 
 /**
  * 消息输入相关事件
@@ -27,6 +28,7 @@ export function useMsgSend(converseUUID: string) {
   const dispatch = useTRPGDispatch();
   const { replyMsg, clearReplyMsg } = useMsgContainerContext();
   const currentGroupUUID = useCurrentGroupUUID();
+  const { msgType } = useChatMsgTypeContext();
 
   // 获取选中团角色的信息 仅group类型会话有用
   const selectedGroupActorInfo = useSelectedGroupActorInfo(
@@ -108,11 +110,10 @@ export function useMsgSend(converseUUID: string) {
   );
 
   const handleSendMsg = useCallback(() => {
-    const type = 'normal';
     if (!!message) {
-      sendMsg(message, type);
+      sendMsg(message, msgType ?? 'normal');
     }
-  }, [message, sendMsg]);
+  }, [message, sendMsg, msgType]);
 
   // 发送输入状态
   useEffect(() => {
