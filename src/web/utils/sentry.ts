@@ -27,9 +27,12 @@ const initSentry = _once(() => {
     environment,
     integrations: [new Integrations.BrowserTracing()],
     tracesSampleRate: 1.0,
+    denyUrls: ['chrome-extension://'],
     ignoreErrors: [
       'ResizeObserver loop limit exceeded',
       'ResizeObserver loop completed with undelivered',
+      `Can't find variable: Notification`,
+      `'Notification' is undefined`,
     ],
   });
 });

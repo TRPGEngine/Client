@@ -5,7 +5,7 @@ import { sendStopWriting, sendStartWriting } from '@shared/api/event';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { sendMsg as sendMsgAction } from '@redux/actions/chat';
 import { MsgType } from '@redux/types/chat';
-import { MsgDataManager } from '@shared/utils/msg-helper';
+import { MsgDataManager, preProcessMessage } from '@shared/utils/msg-helper';
 import _isNil from 'lodash/isNil';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { useSelectedGroupActorInfo } from '@redux/hooks/group';
@@ -13,6 +13,8 @@ import {
   GroupInfoContext,
   useCurrentGroupUUID,
 } from '@shared/context/GroupInfoContext';
+import { showToasts } from '@shared/manager/ui';
+import { useChatMsgTypeContext } from '@shared/context/ChatMsgTypeContext';
 
 /**
  * 消息输入相关事件
@@ -26,6 +28,7 @@ export function useMsgSend(converseUUID: string) {
   const dispatch = useTRPGDispatch();
   const { replyMsg, clearReplyMsg } = useMsgContainerContext();
   const currentGroupUUID = useCurrentGroupUUID();
+  const { msgType } = useChatMsgTypeContext();
 
   // 获取选中团角色的信息 仅group类型会话有用
   const selectedGroupActorInfo = useSelectedGroupActorInfo(
@@ -42,6 +45,14 @@ export function useMsgSend(converseUUID: string) {
    */
   const sendMsg = useCallback(
     (message: string, type: MsgType) => {
+      message = preProcessMessage(message);
+
+      if (message === '') {
+        // 如果处理后消息为空则跳出
+        showToasts('消息不能为空', 'warning');
+        return;
+      }
+
       if (converseType === 'user' || converseType === 'system') {
         if (isUserUUID(converseUUID)) {
           // 通知服务器告知converseUUID当前用户停止输入
@@ -84,6 +95,9 @@ export function useMsgSend(converseUUID: string) {
           })
         );
       }
+
+      inputRef.current?.focus();
+      setMessage('');
     },
     [
       converseUUID,
@@ -96,13 +110,10 @@ export function useMsgSend(converseUUID: string) {
   );
 
   const handleSendMsg = useCallback(() => {
-    const type = 'normal';
     if (!!message) {
-      sendMsg(message, type);
-      inputRef.current?.focus();
-      setMessage('');
+      sendMsg(message, msgType ?? 'normal');
     }
-  }, [message, sendMsg]);
+  }, [message, sendMsg, msgType]);
 
   // 发送输入状态
   useEffect(() => {

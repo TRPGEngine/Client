@@ -11,19 +11,9 @@ import { uploadChatimg } from '@shared/utils/image-uploader';
 import { Editor } from 'slate';
 import { insertImage } from '../editor/changes/insertImage';
 import { showGlobalLoading, showToasts } from '@shared/manager/ui';
+import { ChatBoxBtn } from './style';
 
-const ChatOperationBtn = styled.div`
-  width: 24px;
-  height: 24px;
-  background-color: ${({ theme }) => theme.color.transparent90};
-  border-radius: 50%;
-  color: white;
-  line-height: 24px;
-  text-align: center;
-  cursor: pointer;
-`;
-
-const ChatOperationItemContainer = styled.div`
+const ChatMsgAddonItemContainer = styled.div`
   padding: 6px 10px;
   cursor: pointer;
   border-bottom: ${(props) => props.theme.border.standard};
@@ -38,7 +28,7 @@ const ChatOperationItemContainer = styled.div`
   }
 `;
 
-export const ChatMsgOperation: React.FC<{
+export const ChatMsgAddon: React.FC<{
   editorRef: React.MutableRefObject<Editor | undefined>;
   style?: React.CSSProperties;
 }> = TMemo((props) => {
@@ -84,11 +74,11 @@ export const ChatMsgOperation: React.FC<{
         fileProps={{ accept: 'image/*' }}
         onSelected={handleSelectFiles}
       >
-        <ChatOperationItemContainer>{t('发送图片')}</ChatOperationItemContainer>
+        <ChatMsgAddonItemContainer>{t('发送图片')}</ChatMsgAddonItemContainer>
       </FileSelector>
-      <ChatOperationItemContainer onClick={handleOpenFilePizza}>
+      <ChatMsgAddonItemContainer onClick={handleOpenFilePizza}>
         {t('发送文件')}
-      </ChatOperationItemContainer>
+      </ChatMsgAddonItemContainer>
     </div>
   );
 
@@ -101,10 +91,10 @@ export const ChatMsgOperation: React.FC<{
       trigger="click"
       content={content}
     >
-      <ChatOperationBtn style={props.style}>
+      <ChatBoxBtn style={props.style}>
         <Iconfont>&#xe604;</Iconfont>
-      </ChatOperationBtn>
+      </ChatBoxBtn>
     </Popover>
   );
 });
-ChatMsgOperation.displayName = 'ChatMsgOperation';
+ChatMsgAddon.displayName = 'ChatMsgAddon';

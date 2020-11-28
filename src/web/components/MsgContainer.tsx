@@ -25,6 +25,9 @@ interface Props {
   converseUUID: string;
   isGroup: boolean;
 }
+/**
+ * @deprecated 使用ChatBox
+ */
 export const MsgContainer: React.FC<Props> = TMemo((props) => {
   const { className, converseUUID, isGroup } = props;
   const { list: msgList, nomore } = useMsgList(converseUUID);

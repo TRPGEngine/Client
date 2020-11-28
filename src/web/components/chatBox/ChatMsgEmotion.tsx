@@ -14,20 +14,10 @@ import {
 import Image from '../Image';
 import { insertImage } from '../editor/changes/insertImage';
 import Loading from '@portal/components/Loading';
+import { ChatBoxBtn } from './style';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
-
-const ChatEmotionBtn = styled.div`
-  width: 24px;
-  height: 24px;
-  background-color: ${({ theme }) => theme.color.transparent90};
-  border-radius: 50%;
-  color: white;
-  line-height: 24px;
-  text-align: center;
-  cursor: pointer;
-`;
 
 const ChatEmotionPopoverContainer = styled.div`
   width: 350px;
@@ -185,9 +175,9 @@ export const ChatMsgEmotion: React.FC<{
       trigger="click"
       content={content}
     >
-      <ChatEmotionBtn style={props.style}>
+      <ChatBoxBtn style={props.style}>
         <Iconfont>&#xe683;</Iconfont>
-      </ChatEmotionBtn>
+      </ChatBoxBtn>
     </Popover>
   );
 });

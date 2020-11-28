@@ -196,7 +196,8 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
                 <MentionMatchedItem
                   key={item.text}
                   style={{
-                    background: i === index ? '#B4D5FF' : 'transparent',
+                    background:
+                      i === index ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
                   }}
                 >
                   {item.text}

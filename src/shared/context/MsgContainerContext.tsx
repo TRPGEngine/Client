@@ -3,6 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import _noop from 'lodash/noop';
 import _isNil from 'lodash/isNil';
 import { ReplyMsgType } from '@shared/utils/msg-helper';
+import { ChatMsgTypeContextProvider } from './ChatMsgTypeContext';
 
 /**
  * 该Context主要是为了让列表的操作与消息输入可以有一定关联性
@@ -25,7 +26,7 @@ export const MsgContainerContextProvider: React.FC<{}> = TMemo((props) => {
 
   return (
     <MsgContainerContext.Provider value={{ replyMsg, setReplyMsg }}>
-      {props.children}
+      <ChatMsgTypeContextProvider>{props.children}</ChatMsgTypeContextProvider>
     </MsgContainerContext.Provider>
   );
 });

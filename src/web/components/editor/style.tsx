@@ -54,7 +54,7 @@ export const MentionListContainer = styled.div`
   position: absolute;
   z-index: 1;
   padding: 3px;
-  background-color: white;
+  background-color: #333;
   border-radius: 4px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 `;
@@ -62,4 +62,21 @@ export const MentionListContainer = styled.div`
 export const MentionMatchedItem = styled.div`
   padding: 1px 3px;
   border-radius: 3px;
+`;
+
+export const MentionTagItem = styled.span`
+  padding: 3px 3px 2px;
+  margin: 0 1px;
+  vertical-align: baseline;
+  display: inline-block;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #7289da;
+  background-color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+
+  &:hover {
+    color: #fff;
+    background-color: #7289da;
+  }
 `;

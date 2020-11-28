@@ -2,13 +2,13 @@ import React, { Fragment, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Typography, Tooltip, Result, Button } from 'antd';
 import { PillTabs } from '@web/components/PillTabs';
-import { getAbsolutePath } from '@shared/utils/file-helper';
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
 import {
   useJoinedGroupInfo,
   useIsGroupManager,
   useSelfGroupActors,
+  useGroupDetailValue,
 } from '@redux/hooks/group';
 import {
   getGroupActorField,
@@ -34,6 +34,23 @@ import ActorSelect from '@web/components/modals/ActorSelect';
 import { editGroupActor } from '@shared/model/group';
 import { useTranslation } from '@shared/i18n';
 const TabPane = PillTabs.TabPane;
+
+/**
+ * 是否允许显示团角色面板
+ * 如果是管理员则全部显示
+ * 如果不是管理员。则仅未打开 disable_check_actor 时显示
+ * @param groupUUID 团UUID
+ */
+function useAllowDisplayActorPanel(groupUUID: string) {
+  const disableCheckActor = useGroupDetailValue(
+    groupUUID,
+    'disable_check_actor',
+    false
+  );
+  const isGroupManager = useIsGroupManager(groupUUID);
+
+  return isGroupManager || !disableCheckActor;
+}
 
 /**
  * 查看人物卡
@@ -276,6 +293,7 @@ export const GroupActorManage: React.FC<GroupActorManageProps> = TMemo(
     const groupInfo = useJoinedGroupInfo(groupUUID);
     const dispatch = useTRPGDispatch();
     const groupActorNum = groupInfo?.group_actors?.length ?? 0;
+    const allowDisplayActorPanel = useAllowDisplayActorPanel(groupUUID);
 
     const handleSendGroupActorCheck = useCallback(() => {
       const key = openModal(
@@ -310,12 +328,16 @@ export const GroupActorManage: React.FC<GroupActorManageProps> = TMemo(
             <TabPane key="1" tab={t('我的人物卡')}>
               <SelfGroupActorList groupUUID={groupUUID} />
             </TabPane>
-            <TabPane key="2" tab={t('正式人物卡')}>
-              <GroupActorsList groupUUID={groupUUID} />
-            </TabPane>
-            <TabPane key="3" tab={t('待审核人物卡')}>
-              <GroupActorChecksList groupUUID={groupUUID} />
-            </TabPane>
+            {allowDisplayActorPanel && (
+              <Fragment>
+                <TabPane key="2" tab={t('正式人物卡')}>
+                  <GroupActorsList groupUUID={groupUUID} />
+                </TabPane>
+                <TabPane key="3" tab={t('待审核人物卡')}>
+                  <GroupActorChecksList groupUUID={groupUUID} />
+                </TabPane>
+              </Fragment>
+            )}
           </PillTabs>
         </div>
       </div>

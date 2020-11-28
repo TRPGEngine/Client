@@ -69,6 +69,17 @@ export async function fetchGroupInfo(groupUUID: string): Promise<GroupInfo> {
 }
 
 /**
+ * 更新团详细信息
+ * @param groupUUID 团基本信息
+ * @param data 团信息
+ */
+export async function updateGroupDetail(groupUUID: string, data: {}) {
+  await request.post(`/group/${groupUUID}/detail/update`, {
+    data,
+  });
+}
+
+/**
  * 创建团
  */
 export async function createGroup(
