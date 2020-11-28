@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.3](https://github.com/TRPGEngine/Client/compare/v0.5.2...v0.5.3) (2020-11-28)
+
+
+### Features
+
+* **web:** web端输入框增加消息类型切换器 ([517483b](https://github.com/TRPGEngine/Client/commit/517483b11d2b6fe278b01628e7c3b3e69b56da64))
+* **web:** 增加配置项, 可以禁止普通成员查看所有人物卡 ([f7a3585](https://github.com/TRPGEngine/Client/commit/f7a3585bf83dceb77c7c46355013f738ccf87218))
+
+
+### Bug Fixes
+
+* 修复找不到好友邀请信息会不报错的bug ([5962053](https://github.com/TRPGEngine/Client/commit/5962053091d01da14dad79914a98f76a34ba8023))
+* 修复解析bbcode 对于自定义描述文本的url的信息的获取错误的问题 ([0035813](https://github.com/TRPGEngine/Client/commit/0035813be21c69361ad90b4ed3e2dd04acfaefc6))
+* **web:** 修复在某些情况下firefox浏览器会在消息前插入\r导致无法正常解析的bug ([edb327b](https://github.com/TRPGEngine/Client/commit/edb327b996ba80f2730a456408d65d32da63cbd2))
+
 ### [0.5.2](https://github.com/TRPGEngine/Client/compare/v0.5.1...v0.5.2) (2020-11-18)
 
 
