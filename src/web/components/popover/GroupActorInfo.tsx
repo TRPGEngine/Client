@@ -41,6 +41,12 @@ const Container = styled.div`
   }
 `;
 
+const ActorDescContainer = styled.p`
+  max-height: 160px;
+  overflow-y: auto;
+  overflow-x: hidden;
+`;
+
 /**
  * 是否允许显示聊天会话中的查看完整人物卡按钮
  * 如果是管理员则全部显示
@@ -109,7 +115,7 @@ const PopoverGroupActorInfo: React.FC<Props> = TMemo((props) => {
           </div>
           <div>
             <span>{t('描述')}: </span>
-            <p>{groupActorInfo.desc}</p>
+            <ActorDescContainer>{groupActorInfo.desc}</ActorDescContainer>
           </div>
         </div>
       </Container>
