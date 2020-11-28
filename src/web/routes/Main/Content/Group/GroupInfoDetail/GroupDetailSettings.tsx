@@ -48,6 +48,18 @@ export const GroupDetailSettings: React.FC<GroupDetailSettings> = TMemo(
           }
         />
 
+        <FullModalField
+          title={t('禁止普通成员查看会话中角色')}
+          content={
+            <Switch
+              checked={getData('disable_check_actor_in_chat', false)}
+              onChange={(checked) =>
+                setEditData('disable_check_actor_in_chat', checked)
+              }
+            />
+          }
+        />
+
         {!_isEmpty(editMap) && (
           <Button type="primary" loading={loading} onClick={handleSaveDetail}>
             {t('保存')}

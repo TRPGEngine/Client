@@ -41,7 +41,7 @@ const TabPane = PillTabs.TabPane;
  * 如果不是管理员。则仅未打开 disable_check_actor 时显示
  * @param groupUUID 团UUID
  */
-function useAllowDisplayActorPanel(groupUUID: string) {
+function useAllowDisplayActorPanel(groupUUID: string): boolean {
   const disableCheckActor = useGroupDetailValue(
     groupUUID,
     'disable_check_actor',

@@ -14,6 +14,7 @@ import { showModal } from '@redux/actions/ui';
 import ActorInfo from '../modals/ActorInfo';
 import { useTPopoverContext } from './index';
 import { useTranslation } from '@shared/i18n';
+import { useGroupDetailValue, useIsGroupManager } from '@redux/hooks/group';
 
 /**
  * NOTICE: 不同于别的Popover 团角色的popover不应该从缓存中获取而是应该直接获取团信息
@@ -40,6 +41,25 @@ const Container = styled.div`
   }
 `;
 
+/**
+ * 是否允许显示聊天会话中的查看完整人物卡按钮
+ * 如果是管理员则全部显示
+ * 如果不是管理员。则仅未打开 disable_check_actor_in_chat 时显示
+ * @param groupUUID 团UUID
+ */
+function useAllowDisplayActorBtn(groupUUID: string): boolean {
+  const disableCheckActor = useGroupDetailValue(
+    groupUUID,
+    'disable_check_actor_in_chat',
+    false
+  );
+  const isGroupManager = useIsGroupManager(groupUUID);
+
+  console.log(isGroupManager, !disableCheckActor, groupUUID);
+
+  return isGroupManager || !disableCheckActor;
+}
+
 interface Props {
   groupActorUUID: string;
 }
@@ -48,6 +68,7 @@ const PopoverGroupActorInfo: React.FC<Props> = TMemo((props) => {
   const groupInfo = useContext(GroupInfoContext);
   const dispatch = useTRPGDispatch();
   const { t } = useTranslation();
+  const allowDisplayActorBtn = useAllowDisplayActorBtn(groupInfo?.uuid ?? '');
 
   const groupActorInfo: GroupActorType = useMemo(() => {
     const groupActors = _get(groupInfo, ['group_actors'], []);
@@ -93,13 +114,17 @@ const PopoverGroupActorInfo: React.FC<Props> = TMemo((props) => {
         </div>
       </Container>
 
-      <Divider />
+      {allowDisplayActorBtn && (
+        <Fragment>
+          <Divider />
 
-      <div style={{ textAlign: 'right' }}>
-        <Button size="small" onClick={handleShowActorInfo}>
-          {t('查看完整人物卡')}
-        </Button>
-      </div>
+          <div style={{ textAlign: 'right' }}>
+            <Button size="small" onClick={handleShowActorInfo}>
+              {t('查看完整人物卡')}
+            </Button>
+          </div>
+        </Fragment>
+      )}
     </Fragment>
   );
 });

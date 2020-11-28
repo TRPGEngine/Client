@@ -29,6 +29,7 @@ export interface GroupActorType {
 export interface GroupDetail {
   master_name: string;
   disable_check_actor: boolean;
+  disable_check_actor_in_chat: boolean;
   background_image_url: string;
   welcome_msg_payload: MsgPayload;
   allow_quick_dice: boolean;
