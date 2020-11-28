@@ -14,6 +14,9 @@ import { getFullDate } from '@shared/utils/date-helper';
 import ImageUploader from '@web/components/ImageUploader';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { updateInfo } from '@redux/actions/user';
+import { AlignmentChoose } from '@web/components/AlignmentChoose';
+import { useTranslation } from '@shared/i18n';
+import { UserAlignment } from '@shared/model/player';
 
 const GenderSelector: FullModalFieldEditorRenderComponent = TMemo(
   ({ value, onChange }) => {
@@ -33,6 +36,7 @@ export const SettingAccountView: React.FC = TMemo(() => {
   const userInfo = useCurrentUserInfo();
   const userName = getUserName(userInfo);
   const dispatch = useTRPGDispatch();
+  const { t } = useTranslation();
 
   const handleUpdateAvatar = (imageInfo: any) => {
     dispatch(updateInfo({ avatar: imageInfo.url }));
@@ -74,6 +78,14 @@ export const SettingAccountView: React.FC = TMemo(() => {
             editable={true}
             renderEditor={GenderSelector}
             onSave={buildUpdateFieldFn('sex')}
+          />
+          <FullModalField
+            title="阵营"
+            value={userInfo.alignment}
+            content={t(userInfo.alignment ?? '未选择')}
+            editable={true}
+            renderEditor={AlignmentChoose as any}
+            onSave={buildUpdateFieldFn('alignment')}
           />
           <FullModalField
             title="简介"

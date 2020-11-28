@@ -39,6 +39,20 @@ export interface PlayerUserLoginLogType {
   createdAt: string;
 }
 
+// 阵营九宫格
+export type UserAlignment =
+  | 'LG'
+  | 'NG'
+  | 'CG'
+  | 'LN'
+  | 'TN'
+  | 'CN'
+  | 'LE'
+  | 'NE'
+  | 'CE';
+
+export type UserGender = '男' | '女' | '其他' | '保密';
+
 /**
  * 使用用户名密码登录来获取jwt
  * @param username 用户名

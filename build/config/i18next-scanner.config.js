@@ -6,9 +6,10 @@ console.log('Scanning Translation in src folder...')
 module.exports = {
   input: [
     'src/**/*.{ts,tsx}',
+    // 'src/shared/i18n/__internal__/__scan__.ts',
     // Use ! to filter out files or directories
     '!src/**/*.spec.{js,jsx,ts,tsx}',
-    '!src/shared/i18n/**',
+    // '!src/shared/i18n/**',
     '!**/node_modules/**',
   ],
   output: './', //输出目录
