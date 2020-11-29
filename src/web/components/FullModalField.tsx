@@ -15,7 +15,7 @@ interface FullModalFieldProps {
   /**
    * 字段标题
    */
-  title: string;
+  title: React.ReactNode;
 
   /**
    * 字段内容

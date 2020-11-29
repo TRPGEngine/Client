@@ -2,6 +2,7 @@ import _isString from 'lodash/isString';
 import urlRegex from 'url-regex';
 import config from '@shared/project.config';
 import str2int from 'str2int';
+import { resolve as resolveUrl } from 'url';
 
 /**
  * 判断一个字符串是否是url
@@ -58,5 +59,14 @@ export function getAvatarColorHex(name: string) {
  */
 export function getPortalUrl(url: string): string {
   const portalUrl = config.url.portal;
-  return url.startsWith(portalUrl) ? url : portalUrl + url;
+  return url.startsWith(portalUrl) ? url : resolveUrl(portalUrl, url);
+}
+
+/**
+ * 获取文档地址
+ * @param url 文档路径
+ */
+export function getDocsUrl(url: string): string {
+  const docsUrl = config.url.docs;
+  return url.startsWith(docsUrl) ? url : resolveUrl(docsUrl, url);
 }

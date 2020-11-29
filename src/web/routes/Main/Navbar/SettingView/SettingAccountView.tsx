@@ -1,6 +1,6 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Row, Col, Select } from 'antd';
+import { Row, Col, Select, Space } from 'antd';
 import { Avatar } from '@web/components/Avatar';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { getUserName } from '@shared/utils/data-helper';
@@ -16,6 +16,8 @@ import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { updateInfo } from '@redux/actions/user';
 import { AlignmentChoose } from '@web/components/AlignmentChoose';
 import { useTranslation } from '@shared/i18n';
+import { TipIcon } from '@web/components/TipIcon';
+import { getDocsUrl } from '@shared/utils/string-helper';
 
 const GenderSelector: FullModalFieldEditorRenderComponent = TMemo(
   ({ value, onChange }) => {
@@ -81,7 +83,15 @@ export const SettingAccountView: React.FC = TMemo(() => {
             onSave={buildUpdateFieldFn('sex')}
           />
           <FullModalField
-            title={t('阵营')}
+            title={
+              <Space size={4}>
+                {t('阵营')}
+                <TipIcon
+                  desc={t('你觉得你是一个怎么样的人？')}
+                  link={getDocsUrl('/docs/roleplay/alignment')}
+                />
+              </Space>
+            }
             value={userInfo.alignment}
             content={t(userInfo.alignment ?? '未选择')}
             editable={true}

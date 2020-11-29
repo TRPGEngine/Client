@@ -99,6 +99,7 @@ interface ProjectConfig {
     api?: string;
     rtc: string;
     homepage: string;
+    docs: string;
     goddessfantasy: string;
     blog: string;
     portal: string;
@@ -235,6 +236,7 @@ const config: ProjectConfig = {
   url: {
     rtc: 'wss://rtc.moonrailgun.com:4443', // 语音服务器地址 不包括前缀
     homepage: 'https://trpgdoc.moonrailgun.com/',
+    docs: 'https://trpgdoc.moonrailgun.com/',
     goddessfantasy: 'http://www.goddessfantasy.net/',
     blog: 'https://trpgdoc.moonrailgun.com/blog/',
     portal: portalUrl,
