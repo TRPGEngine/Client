@@ -41,11 +41,15 @@ export const UserListItem: React.FC<Props> = TMemo((props) => {
   const userInfo = useCachedUserInfo(props.userUUID);
   const userName = getUserName(userInfo);
 
-  const handleClick = useCallback(() => {
-    if (isUUID(userInfo.uuid)) {
-      openUserProfile(userInfo.uuid);
-    }
-  }, [userInfo.uuid]);
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      if (isUUID(userInfo.uuid)) {
+        e.stopPropagation();
+        openUserProfile(userInfo.uuid);
+      }
+    },
+    [userInfo.uuid]
+  );
 
   return (
     <Root>
