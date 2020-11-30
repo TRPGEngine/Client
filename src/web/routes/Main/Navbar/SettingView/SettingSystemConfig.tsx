@@ -9,16 +9,17 @@ import {
   useTRPGDispatch,
 } from '@shared/hooks/useTRPGSelector';
 import { setSystemSettings } from '@redux/actions/settings';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useAlphaUser } from '@shared/hooks/useAlphaUser';
+import { useTranslation } from '@shared/i18n';
 
 const SelectLanguage: React.FC = TMemo(() => {
   const { language, setLanguage, isChanged } = useLanguage();
+  const { t } = useTranslation();
 
   return (
     <div>
       <FullModalField
-        title="系统语言"
+        title={t('系统语言')}
         content={
           <Select
             style={{ width: 300 }}
@@ -41,7 +42,7 @@ const SelectLanguage: React.FC = TMemo(() => {
         />
       )}
 
-      <div>需要更多的语言支持? 请联系开发者</div>
+      <div>{t('需要更多的语言支持? 请联系开发者')}</div>
     </div>
   );
 });
@@ -49,10 +50,11 @@ SelectLanguage.displayName = 'SelectLanguage';
 
 const AlphaUser: React.FC = TMemo(() => {
   const { isAlphaUser, setIsAlphaUser } = useAlphaUser();
+  const { t } = useTranslation();
 
   return (
     <FullModalField
-      title="是否为内测用户"
+      title={t('是否为内测用户')}
       content={<Switch checked={isAlphaUser} onChange={setIsAlphaUser} />}
     />
   );
@@ -68,6 +70,7 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
     (state) => state.settings.notificationPermission
   );
   const dispatch = useTRPGDispatch();
+  const { t } = useTranslation();
 
   const handleRequestNotificationPermission = useCallback(
     (checked: boolean) => {
@@ -90,7 +93,7 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
         <SelectLanguage />
 
         <FullModalField
-          title="桌面通知权限"
+          title={t('桌面通知权限')}
           content={
             <Space>
               <Switch
@@ -103,7 +106,7 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
         />
 
         <FullModalField
-          title="不发送输入状态"
+          title={t('不发送输入状态')}
           content={
             <Switch
               checked={systemSettings.disableSendWritingState}
@@ -113,7 +116,7 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
         />
 
         <FullModalField
-          title="输入状态显示自己"
+          title={t('输入状态显示自己')}
           content={
             <Switch
               checked={systemSettings.showSelfInWritingState}
@@ -133,7 +136,7 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
           type="primary"
           onClick={() => switchToAppVersion(false)}
         >
-          切换到旧版UI
+          {t('切换到旧版UI')}
         </Button>
       </Space>
     </div>
