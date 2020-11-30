@@ -182,7 +182,7 @@ export const MsgItem = styled.div`
   &.card {
     & .content > .body > .bubble {
       padding: 0;
-      min-width: 230px;
+      min-width: 220px;
       max-width: 467px;
 
       > .card-title {
