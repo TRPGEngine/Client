@@ -1,16 +1,12 @@
-import {
-  getBrowserFlag,
-  getBrowserName,
-  getBrowserVersion,
-} from './browser-helper';
+import { browser } from './browser-helper';
 
 /**
  * 构建rtc设备信息
  */
 export function buildDeviceInfo() {
   return {
-    flag: getBrowserFlag(),
-    name: getBrowserName(),
-    version: getBrowserVersion(),
+    flag: browser.getBrowserFlag(),
+    name: browser.getBrowserName(),
+    version: browser.getBrowserVersion(),
   };
 }
