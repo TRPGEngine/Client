@@ -128,16 +128,26 @@ export const UserProfile: React.FC<UserProfileProps> = TMemo((props) => {
               </Col>
               <Col xs={24} sm={12}>
                 <FullModalField
-                  title={t('最后登录时间')}
-                  value={getFullDate(userInfo.last_login)}
+                  title={t('阵营')}
+                  content={t(userInfo.alignment ?? '未选择')}
                 />
               </Col>
             </Row>
             <Row>
-              <FullModalField
-                title={t('简介')}
-                content={<pre style={{ maxHeight: 240 }}>{userInfo.sign}</pre>}
-              />
+              <Col xs={24} sm={12}>
+                <FullModalField
+                  title={t('最后登录时间')}
+                  value={getFullDate(userInfo.last_login)}
+                />
+              </Col>
+              <Col xs={24} sm={12}>
+                <FullModalField
+                  title={t('简介')}
+                  content={
+                    <pre style={{ maxHeight: 240 }}>{userInfo.sign}</pre>
+                  }
+                />
+              </Col>
             </Row>
           </Tabs.TabPane>
         </Tabs>

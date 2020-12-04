@@ -1,4 +1,4 @@
-import { isUrl } from '../string-helper';
+import { getDocsUrl, isUrl } from '../string-helper';
 
 describe('string-helper', () => {
   describe('isUrl', () => {
@@ -11,6 +11,20 @@ describe('string-helper', () => {
       ['baidu', false],
     ])('%s => %p', (url, res) => {
       expect(isUrl(url)).toBe(res);
+    });
+  });
+
+  describe('getDocsUrl', () => {
+    test.each<[string, string]>([
+      [
+        'https://trpgdoc.moonrailgun.com/a',
+        'https://trpgdoc.moonrailgun.com/a',
+      ],
+      ['a', 'https://trpgdoc.moonrailgun.com/a'],
+      ['/a', 'https://trpgdoc.moonrailgun.com/a'],
+      ['/a/b', 'https://trpgdoc.moonrailgun.com/a/b'],
+    ])('%s => %p', (url, res) => {
+      expect(getDocsUrl(url)).toBe(res);
     });
   });
 });

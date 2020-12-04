@@ -1,15 +1,4 @@
-export type UserAlignment =
-  | 'LG'
-  | 'NG'
-  | 'CG'
-  | 'LN'
-  | 'TN'
-  | 'CN'
-  | 'LE'
-  | 'NE'
-  | 'CE';
-
-export type UserGender = '男' | '女' | '其他' | '保密';
+import { UserAlignment, UserGender } from '@shared/model/player';
 
 export interface UserInfo {
   id: number;

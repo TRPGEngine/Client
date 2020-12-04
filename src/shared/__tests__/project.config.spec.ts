@@ -60,6 +60,7 @@ describe('project.config', () => {
       api: expect.any(String),
       rtc: expect.any(String),
       homepage: expect.any(String),
+      docs: expect.any(String),
       goddessfantasy: expect.any(String),
       blog: expect.any(String),
       portal: expect.any(String),

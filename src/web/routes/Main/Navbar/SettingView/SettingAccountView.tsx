@@ -1,6 +1,6 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Row, Col, Select } from 'antd';
+import { Row, Col, Select, Space } from 'antd';
 import { Avatar } from '@web/components/Avatar';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { getUserName } from '@shared/utils/data-helper';
@@ -14,15 +14,21 @@ import { getFullDate } from '@shared/utils/date-helper';
 import ImageUploader from '@web/components/ImageUploader';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { updateInfo } from '@redux/actions/user';
+import { AlignmentChoose } from '@web/components/AlignmentChoose';
+import { useTranslation } from '@shared/i18n';
+import { TipIcon } from '@web/components/TipIcon';
+import { getDocsUrl } from '@shared/utils/string-helper';
 
 const GenderSelector: FullModalFieldEditorRenderComponent = TMemo(
   ({ value, onChange }) => {
+    const { t } = useTranslation();
+
     return (
       <Select style={{ width: 200 }} value={value} onChange={onChange}>
-        <Select.Option value="男">男</Select.Option>
-        <Select.Option value="女">女</Select.Option>
-        <Select.Option value="其他">其他</Select.Option>
-        <Select.Option value="保密">保密</Select.Option>
+        <Select.Option value="男">{t('男')}</Select.Option>
+        <Select.Option value="女">{t('女')}</Select.Option>
+        <Select.Option value="其他">{t('其他')}</Select.Option>
+        <Select.Option value="保密">{t('保密')}</Select.Option>
       </Select>
     );
   }
@@ -33,6 +39,7 @@ export const SettingAccountView: React.FC = TMemo(() => {
   const userInfo = useCurrentUserInfo();
   const userName = getUserName(userInfo);
   const dispatch = useTRPGDispatch();
+  const { t } = useTranslation();
 
   const handleUpdateAvatar = (imageInfo: any) => {
     dispatch(updateInfo({ avatar: imageInfo.url }));
@@ -60,23 +67,39 @@ export const SettingAccountView: React.FC = TMemo(() => {
           </ImageUploader>
         </Col>
         <Col sm={18}>
-          <FullModalField title="用户名" value={userInfo.username} />
+          <FullModalField title={t('用户名')} value={userInfo.username} />
           <FullModalField
-            title="昵称"
+            title={t('昵称')}
             value={userInfo.nickname}
             editable={true}
             renderEditor={DefaultFullModalInputEditorRender}
             onSave={buildUpdateFieldFn('nickname')}
           />
           <FullModalField
-            title="性别"
+            title={t('性别')}
             value={userInfo.sex}
             editable={true}
             renderEditor={GenderSelector}
             onSave={buildUpdateFieldFn('sex')}
           />
           <FullModalField
-            title="简介"
+            title={
+              <Space size={4}>
+                {t('阵营')}
+                <TipIcon
+                  desc={t('你觉得你是一个怎么样的人？')}
+                  link={getDocsUrl('/docs/roleplay/alignment')}
+                />
+              </Space>
+            }
+            value={userInfo.alignment}
+            content={t(userInfo.alignment ?? '未选择')}
+            editable={true}
+            renderEditor={AlignmentChoose as any}
+            onSave={buildUpdateFieldFn('alignment')}
+          />
+          <FullModalField
+            title={t('简介')}
             value={userInfo.sign}
             content={<pre>{userInfo.sign}</pre>}
             editable={true}
@@ -84,7 +107,7 @@ export const SettingAccountView: React.FC = TMemo(() => {
             onSave={buildUpdateFieldFn('sign')}
           />
           <FullModalField
-            title="最后登录"
+            title={t('最后登录')}
             value={`${getFullDate(userInfo.last_login)}`}
           />
         </Col>
