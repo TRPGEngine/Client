@@ -6,6 +6,7 @@ import Avatar from './Avatar';
 import { UserOutlined } from '@ant-design/icons';
 import _isNil from 'lodash/isNil';
 import { TMemo } from '@shared/components/TMemo';
+import { showToasts } from '@shared/manager/ui';
 
 let fileUrlTemp: string | null = null; // 缓存裁剪后的图片url
 
@@ -44,17 +45,22 @@ function getCroppedImg(
   }
 
   return new Promise<string>((resolve, reject) => {
-    canvas.toBlob((blob) => {
-      if (!blob) {
-        // reject(new Error('Canvas is empty'));
-        console.error('Canvas is empty');
-        return;
-      }
-      (blob as any).name = fileName;
-      window.URL.revokeObjectURL(fileUrlTemp!);
-      fileUrlTemp = window.URL.createObjectURL(blob);
-      resolve(fileUrlTemp);
-    }, 'image/jpeg');
+    try {
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          // reject(new Error('Canvas is empty'));
+          console.error('Canvas is empty');
+          return;
+        }
+        (blob as any).name = fileName;
+        window.URL.revokeObjectURL(fileUrlTemp!);
+        fileUrlTemp = window.URL.createObjectURL(blob);
+        resolve(fileUrlTemp);
+      }, 'image/jpeg');
+    } catch (err) {
+      console.error(err);
+      showToasts('无法正确生成图片, 可能是因为您的浏览器版本过旧', 'error');
+    }
   });
 }
 
