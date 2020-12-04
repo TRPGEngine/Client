@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.4](https://github.com/TRPGEngine/Client/compare/v0.5.3...v0.5.4) (2020-12-04)
+
+
+### Features
+
+* **group:** 增加配置项用于隐藏聊天框中查看人物卡 ([da6d137](https://github.com/TRPGEngine/Client/commit/da6d137b000ae973fa30247ccae0bf6d24681866))
+* **web:** 增加个人设置允许用户设置个人阵营 ([94313d9](https://github.com/TRPGEngine/Client/commit/94313d93106ea8153b2d1600d0934d9915c1327c))
+* **web:** 用户信息卡增加阵营显示 ([76ba90d](https://github.com/TRPGEngine/Client/commit/76ba90d59374cacfc2fd1af3f2cc666d89045f17))
+
 ### [0.5.3](https://github.com/TRPGEngine/Client/compare/v0.5.2...v0.5.3) (2020-11-28)
 
 
