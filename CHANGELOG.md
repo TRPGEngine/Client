@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.5](https://github.com/TRPGEngine/Client/compare/v0.5.4...v0.5.5) (2020-12-05)
+
+
+### Bug Fixes
+
+* 修复在低版本浏览器使用toBlob无法生效的问题 ([40ffa5f](https://github.com/TRPGEngine/Client/commit/40ffa5f206f136757f6ba8945690222d51defec2))
+* **web:** 修复portal地址路径计算不正确的bug ([620b7bc](https://github.com/TRPGEngine/Client/commit/620b7bcae59954e372e5fc59b5a849fbf3f74f37))
+
 ### [0.5.4](https://github.com/TRPGEngine/Client/compare/v0.5.3...v0.5.4) (2020-12-04)
 
 
