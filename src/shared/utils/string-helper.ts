@@ -59,7 +59,16 @@ export function getAvatarColorHex(name: string) {
  */
 export function getPortalUrl(url: string): string {
   const portalUrl = config.url.portal;
-  return url.startsWith(portalUrl) ? url : resolveUrl(portalUrl, url);
+
+  if (url.startsWith(portalUrl)) {
+    return url;
+  } else {
+    if (!url.startsWith('/')) {
+      url = '/' + url;
+    }
+
+    return portalUrl + url;
+  }
 }
 
 /**

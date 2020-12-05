@@ -1,4 +1,4 @@
-import { getDocsUrl, isUrl } from '../string-helper';
+import { getDocsUrl, getPortalUrl, isUrl } from '../string-helper';
 
 describe('string-helper', () => {
   describe('isUrl', () => {
@@ -25,6 +25,20 @@ describe('string-helper', () => {
       ['/a/b', 'https://trpgdoc.moonrailgun.com/a/b'],
     ])('%s => %p', (url, res) => {
       expect(getDocsUrl(url)).toBe(res);
+    });
+  });
+
+  describe('getPortalUrl', () => {
+    test.each<[string, string]>([
+      [
+        'https://trpg.moonrailgun.com/portal/a',
+        'https://trpg.moonrailgun.com/portal/a',
+      ],
+      ['a', 'https://trpg.moonrailgun.com/portal/a'],
+      ['/a', 'https://trpg.moonrailgun.com/portal/a'],
+      ['/a/b', 'https://trpg.moonrailgun.com/portal/a/b'],
+    ])('%s => %p', (url, res) => {
+      expect(getPortalUrl(url)).toBe(res);
     });
   });
 });
