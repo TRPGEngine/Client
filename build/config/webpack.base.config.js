@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlwebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const WebpackBar = require('webpackbar');
@@ -28,7 +28,7 @@ const dllHashName = 'dll_' + dllConfig.name; // 用于处理文件的hash使其�
  * 无法移除plugin-transform-modules-commonjs插件。生产环境编译后会出现问题(dev环境没有这个问题)
  * 解决问题前只能统一使用commonjs
  */
-const babelQuery = {
+const babelOptions = {
   babelrc: false,
   compact: false,
   presets: ['@babel/preset-env', '@babel/preset-react'],
@@ -100,7 +100,11 @@ module.exports = {
     rules: [
       {
         test: /\.(scss|css)$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader'],
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'sass-loader' },
+        ],
       },
       {
         test: /\.less$/,
@@ -128,7 +132,7 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-            query: babelQuery,
+            options: babelOptions,
           },
           { loader: 'ts-loader', options: { allowTsInNodeModules: true } },
         ],
@@ -137,7 +141,7 @@ module.exports = {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: path.resolve(ROOT_PATH, './node_modules/**'),
-        query: babelQuery,
+        options: babelOptions,
       },
       {
         test: /\.hbs$/,
@@ -145,7 +149,11 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf)$/,
-        loader: 'url-loader?limit=8192&name=assets/[name].[hash:7].[ext]',
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: 'assets/[name].[hash:7].[ext]',
+        },
       },
       {
         test: /\.(txt|xml)$/,
@@ -172,7 +180,7 @@ module.exports = {
       maxAsyncRequests: 6,
       maxInitialRequests: 4,
       automaticNameDelimiter: '~',
-      automaticNameMaxLength: 30,
+      // automaticNameMaxLength: 30,
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
@@ -207,30 +215,34 @@ module.exports = {
     new webpack.DllReferencePlugin({
       manifest: dllConfig,
     }),
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(BUILD_PATH, './template/pre-loading.css'),
-        to: 'pre-loading.css',
-      },
-      {
-        from: path.resolve(BUILD_PATH, './template/autotrack.js'),
-        to: 'autotrack.js',
-      },
-      {
-        from: path.resolve(BUILD_PATH, './config/dll/dll_vendor.js'),
-        to: `${dllHashName}.js`,
-      },
-      {
-        from: path.resolve(BUILD_PATH, './config/dll/dll_vendor.js.map'),
-        to: `${dllHashName}.js.map`,
-      },
-      {
-        from: path.resolve(APP_PATH, './web/assets'),
-        to: './src/web/assets',
-        ignore: ['fonts/*.html'],
-      },
-    ]),
-    new HtmlwebpackPlugin({
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(BUILD_PATH, './template/pre-loading.css'),
+          to: 'pre-loading.css',
+        },
+        {
+          from: path.resolve(BUILD_PATH, './template/autotrack.js'),
+          to: 'autotrack.js',
+        },
+        {
+          from: path.resolve(BUILD_PATH, './config/dll/dll_vendor.js'),
+          to: `${dllHashName}.js`,
+        },
+        {
+          from: path.resolve(BUILD_PATH, './config/dll/dll_vendor.js.map'),
+          to: `${dllHashName}.js.map`,
+        },
+        {
+          from: path.resolve(APP_PATH, './web/assets'),
+          to: './src/web/assets',
+          globOptions: {
+            ignore: ['fonts/*.html'],
+          },
+        },
+      ],
+    }),
+    new HtmlWebpackPlugin({
       title: 'TRPG-Game',
       // 手动编译html文件
       templateContent: buildTemplate({
@@ -242,9 +254,11 @@ module.exports = {
       favicon: path.resolve(APP_PATH, './web/assets/img/favicon.ico'),
       hash: true,
     }),
-    new HtmlWebpackIncludeAssetsPlugin({
-      assets: [`pre-loading.css?v=${config.version}`],
+    new HtmlWebpackTagsPlugin({
+      tags: ['pre-loading.css'],
       append: false,
+      useHash: false,
+      addHash: (assetPath, hash) => assetPath + '?' + config.version,
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new OfflinePlugin({

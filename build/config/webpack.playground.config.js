@@ -4,7 +4,7 @@
 
 process.env.TRPG_APP_NAME = 'Playground';
 
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const MonacoWebpackPlugin = require('../../src/playground/node_modules/monaco-editor-webpack-plugin');
 const path = require('path');
 const url = require('url');
@@ -23,7 +23,7 @@ const dllHashName = 'dll_' + dllConfig.name;
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const config = webpackMerge({}, base, {
+const config = merge({}, base, {
   entry: {
     app: path.resolve(APP_PATH, './playground/index.tsx'),
   },
