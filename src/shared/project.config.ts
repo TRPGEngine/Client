@@ -17,6 +17,9 @@ if (environment === 'production') {
   if (platform === 'app') {
     isSSL = true;
   }
+} else if (environment === 'development') {
+  // 在开发环境下强制后端请求全是http
+  isSSL = false;
 }
 
 const trpgHost = process.env.TRPG_HOST;
@@ -48,6 +51,7 @@ interface ProjectConfig {
   environment: string;
   platform: string;
   isSSL: boolean;
+  devSW: boolean;
   io: {
     protocol: 'wss' | 'ws';
     host: string;
@@ -131,6 +135,7 @@ const config: ProjectConfig = {
   environment,
   platform,
   isSSL,
+  devSW: process.env.DEV_SW === 'true' || false,
   io: {
     protocol: isSSL ? 'wss' : 'ws',
     host: currentHost,

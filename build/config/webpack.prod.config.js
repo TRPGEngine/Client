@@ -5,7 +5,6 @@ const webpackMerge = require('webpack-merge');
 const base = require('./webpack.base.config.js');
 const package = require('../../package.json');
 const config = require('config');
-const OfflinePlugin = require('offline-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
@@ -60,8 +59,5 @@ module.exports = webpackMerge({}, base, {
 
   plugins: [
     ...plugins,
-    new OfflinePlugin({
-      publicPath: '/',
-    }),
   ],
 });

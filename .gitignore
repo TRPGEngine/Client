@@ -7,6 +7,8 @@ build/metro/conf.json
 build/emoji/emoji/
 android/gradle.properties
 .snowpack/
+snowpack.crt
+snowpack.key
 
 # Logs
 logs

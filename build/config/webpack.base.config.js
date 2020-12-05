@@ -6,6 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const _get = require('lodash/get');
+const OfflinePlugin = require('offline-plugin');
 
 const buildTemplate = require('./html-template');
 
@@ -200,6 +201,7 @@ module.exports = {
         PLATFORM: JSON.stringify(process.env.PLATFORM),
         TRPG_HOST: JSON.stringify(process.env.TRPG_HOST),
         TRPG_PORTAL: JSON.stringify(process.env.TRPG_PORTAL),
+        DEV_SW: JSON.stringify(process.env.DEV_SW),
       },
     }),
     new webpack.DllReferencePlugin({
@@ -241,5 +243,8 @@ module.exports = {
       append: false,
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new OfflinePlugin({
+      publicPath: ASSET_PATH,
+    }),
   ],
 };
