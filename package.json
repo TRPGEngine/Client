@@ -7,9 +7,9 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development npm run dev:main",
     "dev:pro": "cross-env NODE_ENV=production npm run dev:main",
-    "dev:main": "cross-env NODE_OPTIONS='--max_old_space_size=4096' webpack-dev-server --progress --color --config ./build/config/webpack.config.js",
+    "dev:main": "cross-env NODE_OPTIONS='--max_old_space_size=4096' webpack serve --progress --color --config ./build/config/webpack.config.js",
     "dev:proserver": "cross-env TRPG_HOST=trpgapi.moonrailgun.com:80 npm run dev",
-    "dev:sandbox": "webpack-dev-server --config ./build/config/webpack.sandbox.config.js",
+    "dev:sandbox": "webpack serve --config ./build/config/webpack.sandbox.config.js",
     "dev:sw": "cross-env DEV_SW=true npm run dev",
     "build:main": "cross-env NODE_OPTIONS='--max_old_space_size=4096' webpack --progress --color --config ./build/config/webpack.config.js",
     "build:dev": "cross-env PLATFORM=web npm run build:main",
@@ -23,9 +23,9 @@
     "package": "cross-env PLATFORM=electron NODE_ENV=production gulp package --gulpfile build/gulpfile.js",
     "package-all": "cross-env PLATFORM=electron NODE_ENV=production gulp package:all --gulpfile build/gulpfile.js",
     "pc:builder": "cross-env PLATFORM=electron NODE_ENV=production gulp package:builder --gulpfile build/gulpfile.js",
-    "portal:dev": "cross-env NODE_ENV=development NODE_OPTIONS='--max_old_space_size=2048' webpack-dev-server --progress --color --config ./build/config/webpack.portal.config.js",
+    "portal:dev": "cross-env NODE_ENV=development NODE_OPTIONS='--max_old_space_size=2048' webpack serve --progress --color --config ./build/config/webpack.portal.config.js",
     "portal:build": "cross-env NODE_OPTIONS='--max_old_space_size=4096' NODE_ENV=production webpack --progress --color --config ./build/config/webpack.portal.config.js && npm run clean:sourcemap",
-    "playground:dev": "cross-env NODE_ENV=development NODE_OPTIONS='--max_old_space_size=4096' webpack-dev-server --progress --color --config ./build/config/webpack.playground.config.js",
+    "playground:dev": "cross-env NODE_ENV=development NODE_OPTIONS='--max_old_space_size=4096' webpack serve --progress --color --config ./build/config/webpack.playground.config.js",
     "playground:build": "cross-env NODE_ENV=production NODE_OPTIONS='--max_old_space_size=4096' webpack --progress --color --config ./build/config/webpack.playground.config.js && npm run clean:sourcemap",
     "clean:sourcemap": "rimraf ./dist/**/*.js.map",
     "translation:scan": "i18next-scanner --config build/config/i18next-scanner.config.js",
@@ -85,6 +85,7 @@
     "axios": "^0.19.0",
     "bbcode-to-react": "^0.2.9",
     "bowser": "^2.11.0",
+    "buffer": "^6.0.3",
     "canvas": "^2.6.1",
     "chalk": "^2.4.2",
     "classnames": "^2.2.6",
@@ -150,6 +151,7 @@
     "slate-react": "^0.59.0",
     "socket.io-client": "^2.3.0",
     "str2int": "^1.0.0",
+    "stream-browserify": "^3.0.0",
     "style-to-object": "^0.3.0",
     "styled-components": "^5.1.1",
     "tinycon": "^0.6.8",
@@ -263,7 +265,6 @@
     "less-loader": "^7.1.0",
     "lint-staged": "^10.2.11",
     "node-sass": "^4.14.1",
-    "offline-plugin": "^5.0.7",
     "plugin-error": "^1.0.1",
     "prettier": "^2.1.2",
     "raw-loader": "^4.0.2",
@@ -288,6 +289,7 @@
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^5.4.0",
-    "webpackbar": "^5.0.0-3"
+    "webpackbar": "^5.0.0-3",
+    "workbox-webpack-plugin": "^6.0.2"
   }
 }

@@ -10,7 +10,7 @@ const path = require('path');
 const url = require('url');
 const _ = require('lodash');
 const base = require('./webpack.base.config.js');
-const OfflinePlugin = require('offline-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
@@ -75,6 +75,6 @@ if (_.get(process, 'env.npm_config_report', false)) {
 /**
  * playground不需要offline插件
  */
-config.plugins = config.plugins.filter((x) => !(x instanceof OfflinePlugin));
+config.plugins = config.plugins.filter((x) => !(x instanceof WorkboxPlugin.GenerateSW));
 
 module.exports = config;

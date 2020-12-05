@@ -9,7 +9,7 @@ const { merge } = require('webpack-merge');
 const path = require('path');
 const url = require('url');
 const base = require('./webpack.config.js');
-const OfflinePlugin = require('offline-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
@@ -54,6 +54,6 @@ const config = merge({}, base, {
 /**
  * portal不需要offline插件
  */
-config.plugins = config.plugins.filter((x) => !(x instanceof OfflinePlugin));
+config.plugins = config.plugins.filter((x) => !(x instanceof WorkboxPlugin.GenerateSW));
 
 module.exports = config;

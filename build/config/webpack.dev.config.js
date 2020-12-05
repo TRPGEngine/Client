@@ -5,7 +5,7 @@ const devSW = process.env.DEV_SW === 'true';
 
 module.exports = merge({}, base, {
   mode: 'development',
-  devtool: 'cheap-module-eval-source-map', //开发环境
+  devtool: 'eval-cheap-module-source-map', //开发环境
   // devtool: 'eval-source-map', //开发环境
 
   devServer: {
