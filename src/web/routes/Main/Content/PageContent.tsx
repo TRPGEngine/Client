@@ -4,6 +4,7 @@ import { useSidebarContext } from '../SidebarContext';
 import { TMemo } from '@shared/components/TMemo';
 import _isNil from 'lodash/isNil';
 import { useIsMobile } from '@web/hooks/useIsMobile';
+import { useDrag } from 'react-use-gesture';
 
 const PageContentRoot = styled.div`
   display: flex;
@@ -47,6 +48,29 @@ interface PageContentProps {
   sidebar?: React.ReactNode;
 }
 
+const PageGestureWrapper: React.FC = TMemo((props) => {
+  const { setShowSidebar } = useSidebarContext();
+
+  const bind = useDrag(
+    (state) => {
+      const { swipe } = state;
+      const swipeX = swipe[0];
+      if (swipeX > 0) {
+        setShowSidebar(true);
+      } else if (swipeX < 0) {
+        setShowSidebar(false);
+      }
+    },
+    {
+      axis: 'x',
+      swipeDistance: 5,
+    }
+  );
+
+  return <PageContentRoot {...bind()}>{props.children}</PageContentRoot>;
+});
+PageGestureWrapper.displayName = 'PageGestureWrapper';
+
 /**
  * 用于渲染实际页面的组件，即除了导航栏剩余的内容
  */
@@ -74,14 +98,21 @@ export const PageContent: React.FC<PageContentProps> = TMemo((props) => {
 
   const contentEl = children;
 
-  return (
-    <PageContentRoot>
+  const el = (
+    <>
       {sidebarEl}
+
       <ContentDetail>
         {contentMaskEl}
         {contentEl}
       </ContentDetail>
-    </PageContentRoot>
+    </>
   );
+
+  if (isMobile) {
+    return <PageGestureWrapper>{el}</PageGestureWrapper>;
+  } else {
+    return <PageContentRoot>{el}</PageContentRoot>;
+  }
 });
 PageContent.displayName = 'PageContent';
