@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { TMemo } from '@shared/components/TMemo';
 import _isFunction from 'lodash/isFunction';
@@ -9,12 +9,14 @@ import _isString from 'lodash/isString';
 import _noop from 'lodash/noop';
 import { PortalAdd, PortalRemove } from '@web/utils/portal';
 import { Typography } from 'antd';
+import { animated, useSpring } from 'react-spring';
+import { easeQuadInOut } from 'd3-ease';
 
 /**
  * 新版模态框解决方案
  */
 
-const ModalMask = styled.div`
+const ModalMask = styled(animated.div)`
   width: 100vw;
   height: 100vh;
   background-color: ${(props) => props.theme.color.transparent50};
@@ -23,7 +25,7 @@ const ModalMask = styled.div`
   align-items: center;
 `;
 
-const ModalInner = styled.div`
+const ModalInner = styled(animated.div)`
   background-color: ${(props) => props.theme.color.graySet[7]};
   border-radius: ${(props) => props.theme.radius.standard};
   max-width: 80vw;
@@ -43,12 +45,45 @@ interface ModalProps {
 }
 export const Modal: React.FC<ModalProps> = TMemo((props) => {
   const { visible, onChangeVisible } = props;
+  const [closing, setClosing] = useState(false);
+  const maskStyle = useSpring({
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+    reverse: closing,
+    config: {
+      duration: 250,
+    },
+  });
+
+  const innerStyle = useSpring({
+    from: {
+      marginTop: -120,
+      opacity: 0,
+    },
+    to: {
+      marginTop: 0,
+      opacity: 1,
+    },
+    reverse: closing,
+    config: {
+      delay: 100,
+      duration: 250,
+      easing: easeQuadInOut,
+    },
+    onRest() {
+      if (closing === true && _isFunction(onChangeVisible)) {
+        onChangeVisible(false);
+      }
+    },
+  });
 
   const handleClose = useCallback(() => {
-    if (_isFunction(onChangeVisible)) {
-      onChangeVisible(false);
-    }
-  }, [onChangeVisible]);
+    setClosing(true);
+  }, []);
 
   const stopPropagation = useCallback((e: React.BaseSyntheticEvent) => {
     e.stopPropagation();
@@ -59,9 +94,11 @@ export const Modal: React.FC<ModalProps> = TMemo((props) => {
   }
 
   return (
-    <ModalMask onClick={handleClose}>
+    <ModalMask style={maskStyle} onClick={handleClose}>
       <ModalContext.Provider value={{ closeModal: handleClose }}>
-        <ModalInner onClick={stopPropagation}>{props.children}</ModalInner>
+        <ModalInner style={innerStyle} onClick={stopPropagation}>
+          {props.children}
+        </ModalInner>
       </ModalContext.Provider>
     </ModalMask>
   );
