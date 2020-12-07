@@ -54,3 +54,15 @@ export async function blobUrlToFile(
   const blob = await blobFromUrl(blobUrl);
   return blobToFile(blob, fileName);
 }
+
+/**
+ * 下载Blob文件
+ */
+export async function downloadBlob(blob: Blob, fileName: string) {
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName; // 这里填保存成的文件名
+  a.click();
+  URL.revokeObjectURL(url);
+}

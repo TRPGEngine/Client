@@ -10,7 +10,7 @@ import {
 import type { AllRTCStateType } from './types';
 import { RTC_DEBUG } from '@shared/utils/consts';
 import _get from 'lodash/get';
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 
 // const store = createStore(reducers, undefined, enhancer);
 const isDebug = _get(window, ['localStorage', RTC_DEBUG]) === 'true';
@@ -21,6 +21,9 @@ const store = configureStore({
         name: 'RTC',
       }
     : false,
+  middleware: getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });
 export type RTCStoreType = typeof store;
 const RTCRoomReduxContext = React.createContext<ReactReduxContextValue>({

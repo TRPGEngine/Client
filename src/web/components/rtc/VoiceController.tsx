@@ -5,7 +5,7 @@
  * 个人控制器是控制是否传输数据
  */
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { Button, Space, Tooltip } from 'antd';
@@ -34,6 +34,9 @@ export const VoiceController: React.FC = TMemo(() => {
   const audioProducer = useRTCAudioProducer();
   const audioVolume = useAudioVolume(audioProducer?.track);
   const dispatch = useRTCRoomStateDispatch();
+  const isRecordingAudio = useRTCRoomStateSelector(
+    (state) => state.recorder.isRecordingAudio
+  );
   const { t } = useTranslation();
 
   // 麦克风状态
@@ -71,6 +74,14 @@ export const VoiceController: React.FC = TMemo(() => {
     dispatch(setAudioMutedState(!me.audioMuted));
   }, [me.audioMuted]);
 
+  const handleSwitchRecordAudio = useCallback(() => {
+    if (isRecordingAudio === false) {
+      client?.startRecordAudio();
+    } else {
+      client?.stopRecordAudio();
+    }
+  }, [isRecordingAudio]);
+
   return (
     <div>
       <Space>
@@ -94,6 +105,18 @@ export const VoiceController: React.FC = TMemo(() => {
           ) : (
             <Tooltip title={t('开启音量')}>
               <Iconfont>&#xe67e;</Iconfont>
+            </Tooltip>
+          )}
+        </Button>
+
+        <Button shape="circle" onClick={handleSwitchRecordAudio}>
+          {isRecordingAudio === false ? (
+            <Tooltip title="开始录音">
+              <Iconfont>&#xe8d1;</Iconfont>
+            </Tooltip>
+          ) : (
+            <Tooltip title="结束录音">
+              <Iconfont style={{ color: 'red' }}>&#xe8d1;</Iconfont>
             </Tooltip>
           )}
         </Button>

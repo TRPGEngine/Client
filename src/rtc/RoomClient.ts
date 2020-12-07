@@ -13,6 +13,8 @@ import * as stateActions from './redux/stateActions';
 import _isNil from 'lodash/isNil';
 import { RoomClientOptions } from './type';
 import shortid from 'shortid';
+import { Recorder } from './Recorder';
+import { downloadBlob } from '@web/utils/file-helper';
 import type { RTCStoreType } from './redux';
 
 declare global {
@@ -922,6 +924,41 @@ export class RoomClient {
         })
       );
     }
+  }
+
+  /**
+   * 开始录制音频
+   */
+  audioRecorder: Recorder | null = null;
+  startRecordAudio() {
+    const stream = new MediaStream();
+
+    // TODO: 需要记录所有的音频
+    if (this._micProducer?.track) {
+      stream.addTrack(this._micProducer.track);
+    }
+
+    if (_isNil(this.audioRecorder)) {
+      this.audioRecorder = new Recorder(stream);
+    }
+
+    this.audioRecorder.start();
+    store.dispatch(stateActions.setIsRecordingAudio(true));
+  }
+
+  /**
+   * 结束录制音频
+   */
+  stopRecordAudio() {
+    if (_isNil(this.audioRecorder)) {
+      logger.error('stopRecordAudio() | cannot get audio recorder');
+      return;
+    }
+
+    const blob = this.audioRecorder.getBlob();
+    store.dispatch(stateActions.setIsRecordingAudio(false));
+
+    downloadBlob(blob, `${new Date().valueOf()}.wav`);
   }
 
   async enableWebcam() {
@@ -2008,7 +2045,7 @@ export class RoomClient {
     }
   }
 
-  async _joinRoom() {
+  private async _joinRoom() {
     logger.debug('_joinRoom()');
 
     try {
@@ -2283,7 +2320,7 @@ export class RoomClient {
     }
   }
 
-  async _updateWebcams() {
+  private async _updateWebcams() {
     logger.debug('_updateWebcams()');
 
     // Reset the list.
@@ -2314,7 +2351,7 @@ export class RoomClient {
     store.dispatch(stateActions.setCanChangeWebcam(this._webcams.size > 1));
   }
 
-  _getWebcamType(device) {
+  private _getWebcamType(device) {
     if (/(back|rear)/i.test(device.label)) {
       logger.debug('_getWebcamType() | it seems to be a back camera');
 
@@ -2326,7 +2363,7 @@ export class RoomClient {
     }
   }
 
-  async _pauseConsumer(consumer) {
+  private async _pauseConsumer(consumer: MediasoupType.Consumer) {
     if (consumer.paused) return;
 
     try {
@@ -2351,7 +2388,7 @@ export class RoomClient {
     }
   }
 
-  async _resumeConsumer(consumer) {
+  private async _resumeConsumer(consumer: MediasoupType.Consumer) {
     if (!consumer.paused) return;
 
     try {
@@ -2376,7 +2413,7 @@ export class RoomClient {
     }
   }
 
-  async _getExternalVideoStream() {
+  private async _getExternalVideoStream() {
     if (this._externalVideoStream) return this._externalVideoStream;
 
     if (this._externalVideo.readyState < 3) {
