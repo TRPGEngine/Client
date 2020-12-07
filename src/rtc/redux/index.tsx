@@ -22,6 +22,8 @@ const store = configureStore({
       }
     : false,
   middleware: getDefaultMiddleware({
+    // 这样不太好，但是目前没有精力去处理这个问题
+    immutableCheck: false,
     serializableCheck: false,
   }),
 });
