@@ -13,6 +13,7 @@ import * as stateActions from './redux/stateActions';
 import _isNil from 'lodash/isNil';
 import { RoomClientOptions } from './type';
 import shortid from 'shortid';
+import type { RTCStoreType } from './redux';
 
 declare global {
   interface MediaDevices {
@@ -52,7 +53,7 @@ const EXTERNAL_VIDEO_SRC = '/resources/videos/video-audio-stereo.mp4';
 
 const logger = new Logger('RoomClient');
 
-let store;
+let store: RTCStoreType;
 
 export class RoomClient {
   /**
