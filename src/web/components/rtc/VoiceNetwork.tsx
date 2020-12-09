@@ -4,6 +4,7 @@ import { useRTCRoomClientContext } from '@rtc/RoomContext';
 import { useAsyncTimeout } from '@shared/hooks/useAsyncTimeout';
 import _get from 'lodash/get';
 import filesize from 'filesize';
+import { useTranslation } from '@shared/i18n';
 
 /**
  * 获取传输速度字符串
@@ -13,9 +14,13 @@ function getStreamRate(bitrate: number): string {
   return filesize(Number(bitrate) / 8, { bits: true }) + '/s';
 }
 
+/**
+ * 语音网络状态显示
+ */
 export const VoiceNetwork: React.FC = TMemo(() => {
   const { client } = useRTCRoomClientContext();
   const [remoteStats, setRemoteStats] = useState<any>({});
+  const { t } = useTranslation();
 
   useAsyncTimeout(async () => {
     if (client) {
@@ -48,7 +53,7 @@ export const VoiceNetwork: React.FC = TMemo(() => {
 
   return (
     <pre>
-      上传: {bitrate.upstream} 下载: {bitrate.downstream}
+      {t('上传')}: {bitrate.upstream} {t('下载')}: {bitrate.downstream}
     </pre>
   );
 });

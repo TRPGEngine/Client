@@ -4,6 +4,7 @@ import { useRTCRoomStateSelector } from '@rtc/redux';
 import { Badge } from 'antd';
 import _isString from 'lodash/isString';
 import styled from 'styled-components';
+import { t } from '@shared/i18n';
 
 const Root = styled.div`
   height: 10px;
@@ -13,7 +14,7 @@ const Root = styled.div`
 
 const StatusBadge = styled(Badge).attrs({
   status: 'processing',
-  text: '通话中',
+  text: t('通话中'),
 })`
   position: absolute;
   top: 4px;
