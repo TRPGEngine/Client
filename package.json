@@ -189,6 +189,7 @@
     "@types/emoji-mart": "^2.11.0",
     "@types/enzyme": "^3.10.4",
     "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/google.analytics": "0.0.41",
     "@types/hark": "^1.2.0",
     "@types/is-uuid": "^1.0.0",
     "@types/jest": "^26.0.15",

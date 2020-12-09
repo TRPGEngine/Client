@@ -14,6 +14,17 @@
     <title>TRPG Engine —— 专为跑团而生的即时通讯应用</title>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121610011-1"></script>
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-121610011-1', 'auto');
+
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+
+      ga('send', 'pageview');
+    </script>
+    <script async src="/autotrack.js"></script>
     <!-- DLL -->
     <script src="/{{dllHashName}}.js"></script>
     <script>
