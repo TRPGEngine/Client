@@ -213,6 +213,10 @@ module.exports = {
         to: 'pre-loading.css',
       },
       {
+        from: path.resolve(BUILD_PATH, './template/autotrack.js'),
+        to: 'autotrack.js',
+      },
+      {
         from: path.resolve(BUILD_PATH, './config/dll/dll_vendor.js'),
         to: `${dllHashName}.js`,
       },
