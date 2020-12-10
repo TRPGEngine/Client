@@ -5,7 +5,7 @@ import { Input, Button, message } from 'antd';
 import { checkToken } from '@portal/utils/auth';
 import { useFormik } from 'formik';
 import styled from 'styled-components';
-import { createTemplate } from '@portal/model/template';
+import { createTemplate } from '@shared/model/template';
 
 const Container = styled.div`
   padding: 20px 10px;
