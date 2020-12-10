@@ -9,7 +9,7 @@ import { VoicePeerController } from './VoicePeerController';
 import { VoiceController } from './VoiceController';
 import styled from 'styled-components';
 import { Loading } from '../Loading';
-import { useTranslation } from '@shared/i18n';
+import { useTranslation, t } from '@shared/i18n';
 import { VoiceNetwork } from './VoiceNetwork';
 import { RoomState } from '@rtc/redux/types/room';
 
@@ -38,13 +38,13 @@ VoiceMembers.displayName = 'VoiceMembers';
  */
 function getRoomStateLabel(roomState: RoomState): string {
   if (roomState === 'new') {
-    return '新建连接';
+    return t('新建连接');
   } else if (roomState === 'connected') {
-    return '已连接';
+    return t('已连接');
   } else if (roomState === 'closed') {
-    return '已关闭';
+    return t('已关闭');
   } else if (roomState === 'connecting') {
-    return '正在连接';
+    return t('正在连接');
   } else {
     return '';
   }
@@ -62,10 +62,12 @@ export const VoiceRoomDetail: React.FC = TMemo(() => {
 
   return (
     <div>
-      <div>房间号: {roomId}</div>
+      <div>
+        {t('房间号')}: {roomId}
+      </div>
 
       <div style={{ marginBottom: 6 }}>
-        状态: {getRoomStateLabel(roomState)}
+        {t('状态')}: {getRoomStateLabel(roomState)}
       </div>
 
       <VoiceController />
@@ -73,7 +75,7 @@ export const VoiceRoomDetail: React.FC = TMemo(() => {
       <VoiceNetwork />
 
       <Button danger={true} onClick={deleteClient}>
-        离开房间
+        {t('离开房间')}
       </Button>
 
       <Divider />

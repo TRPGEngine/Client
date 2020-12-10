@@ -43,6 +43,10 @@ export const GlobalStyle = createGlobalStyle`
     background-color: ${(props) => props.theme.color.graySet[7]};
   }
 
+  .ant-empty-description {
+    user-select: none;
+  }
+
   /* 新版滚动条 */
   ::-webkit-scrollbar {
     width: 16px;

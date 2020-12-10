@@ -12,7 +12,6 @@ import {
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import _isString from 'lodash/isString';
 import { t, useTranslation } from '@shared/i18n';
-import { useAlphaUser } from '@shared/hooks/useAlphaUser';
 
 const schema = createFastFormSchema({
   name: fieldSchema.string().required(t('面板名不能为空')),
@@ -25,8 +24,6 @@ const DEFAULT_TYPE = 'channel';
  * 获取团面板的基础字段
  */
 function useGroupPanelBaseFields(): FastFormFieldMeta[] {
-  const { isAlphaUser } = useAlphaUser();
-
   return useMemo(() => {
     const baseFields: FastFormFieldMeta[] = [
       { type: 'text', name: 'name', label: t('面板名') },
@@ -43,20 +40,16 @@ function useGroupPanelBaseFields(): FastFormFieldMeta[] {
             label: t('笔记面板'),
             value: 'note',
           },
+          {
+            label: t('语音频道') + '(Beta)',
+            value: 'voicechannel',
+          },
         ],
       },
     ];
 
-    if (isAlphaUser) {
-      // 增加内测用户频道
-      baseFields[1].options.push({
-        label: t('语音频道') + '(Beta)',
-        value: 'voicechannel',
-      });
-    }
-
     return baseFields;
-  }, [isAlphaUser]);
+  }, []);
 }
 
 /**
@@ -109,7 +102,7 @@ export const GroupPanelCreate: React.FC<GroupPanelCreateProps> = TMemo(
           await createGroupPanel(groupUUID, name, type, others);
 
           closeModal();
-          showToasts('面板创建成功');
+          showToasts(t('面板创建成功'));
         } catch (err) {
           showToasts(err);
         }

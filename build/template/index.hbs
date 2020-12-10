@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Language" content="zh-cn" />
     <meta charset="utf-8">
-    <meta name="keywords" content="trpg,im,react,game">
+    <meta name="keywords" content="trpg,im,react,game,trpg engine">
     <meta name="description" content="TRPG Engine 即时通讯IM">
     <meta name="renderer" content="webkit">
     <meta name="force-rendering" content="webkit">
@@ -11,9 +11,20 @@
     {{#if isPro}}
     <link rel="manifest" href="/src/web/assets/lib/manifest.json">
     {{/if}}
-    <title>TRPG-Game</title>
+    <title>TRPG Engine —— 专为跑团而生的即时通讯应用</title>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121610011-1"></script>
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-121610011-1', 'auto');
+
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+
+      ga('send', 'pageview');
+    </script>
+    <script async src="/autotrack.js"></script>
     <!-- DLL -->
     <script src="/{{dllHashName}}.js"></script>
     <script>
@@ -35,7 +46,7 @@
   <body>
     <div id="app">
       <div id="pre-loading">
-        应用正在加载中....请稍后
+        Application is Loading...
       </div>
     </div>
   </body>

@@ -1,4 +1,4 @@
-import { getParser, Parser } from 'bowser';
+import Bowser, { Parser } from 'bowser';
 
 /**
  * 用于处理浏览器UA相关问题的帮助函数
@@ -7,7 +7,7 @@ export class BrowserHelper {
   parser: Parser.Parser;
 
   constructor(ua: string) {
-    this.parser = getParser(ua);
+    this.parser = Bowser.getParser(ua);
   }
 
   /**

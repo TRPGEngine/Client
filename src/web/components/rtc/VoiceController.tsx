@@ -17,6 +17,7 @@ import { useRTCRoomClientContext } from '@rtc/RoomContext';
 import { useAudioVolume } from './hooks/useAudioVolume';
 import { setAudioMutedState } from '@rtc/redux/stateActions';
 import { VoiceLine } from './VoiceLine';
+import { useTranslation } from '@shared/i18n';
 
 const CapablityBtn = styled(Button).attrs({
   shape: 'circle',
@@ -33,6 +34,7 @@ export const VoiceController: React.FC = TMemo(() => {
   const audioProducer = useRTCAudioProducer();
   const audioVolume = useAudioVolume(audioProducer?.track);
   const dispatch = useRTCRoomStateDispatch();
+  const { t } = useTranslation();
 
   // 麦克风状态
   const micState: CapablityState = useMemo(() => {
@@ -74,11 +76,11 @@ export const VoiceController: React.FC = TMemo(() => {
       <Space>
         <CapablityBtn className={micState} onClick={handleSwitchMic}>
           {micState === 'on' ? (
-            <Tooltip title="关闭语音">
+            <Tooltip title={t('关闭语音')}>
               <Iconfont>&#xe666;</Iconfont>
             </Tooltip>
           ) : (
-            <Tooltip title="开启语音">
+            <Tooltip title={t('开启语音')}>
               <Iconfont>&#xe667;</Iconfont>
             </Tooltip>
           )}
@@ -86,11 +88,11 @@ export const VoiceController: React.FC = TMemo(() => {
 
         <Button shape="circle" onClick={handleSwitchAudioVolumn}>
           {!me.audioMuted ? (
-            <Tooltip title="关闭音量">
+            <Tooltip title={t('关闭音量')}>
               <Iconfont>&#xe664;</Iconfont>
             </Tooltip>
           ) : (
-            <Tooltip title="开启音量">
+            <Tooltip title={t('开启音量')}>
               <Iconfont>&#xe67e;</Iconfont>
             </Tooltip>
           )}

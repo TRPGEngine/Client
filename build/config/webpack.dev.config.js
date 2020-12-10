@@ -1,6 +1,8 @@
 const webpackMerge = require('webpack-merge');
 const base = require('./webpack.base.config.js');
 
+const devSW = process.env.DEV_SW === 'true';
+
 module.exports = webpackMerge({}, base, {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map', //开发环境
@@ -13,7 +15,7 @@ module.exports = webpackMerge({}, base, {
     inline: true,
     host: '0.0.0.0',
     port: 8089, // 监听端口号
-    https: false, // 适用于ssl安全证书网站
+    https: devSW, // 适用于ssl安全证书网站
     noInfo: true, // 只在热加载错误和警告
     proxy: {
       '/api': {
