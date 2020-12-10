@@ -13,9 +13,9 @@ import * as stateActions from './redux/stateActions';
 import _isNil from 'lodash/isNil';
 import { RoomClientOptions } from './type';
 import shortid from 'shortid';
-import { Recorder } from './Recorder';
 import { downloadBlob } from '@web/utils/file-helper';
 import type { RTCStoreType } from './redux';
+import RTCRecord from 'recordrtc';
 
 declare global {
   interface MediaDevices {
@@ -929,36 +929,42 @@ export class RoomClient {
   /**
    * 开始录制音频
    */
-  audioRecorder: Recorder | null = null;
-  startRecordAudio() {
+  audioRTCRecorder: RTCRecord | null = null;
+  async startRecordAudio() {
     const stream = new MediaStream();
 
-    // TODO: 需要记录所有的音频
     if (this._micProducer?.track) {
       stream.addTrack(this._micProducer.track);
     }
 
-    if (_isNil(this.audioRecorder)) {
-      this.audioRecorder = new Recorder(stream);
-    }
+    // TODO: 监听所有的音频变更
 
-    this.audioRecorder.start();
+    this.audioRTCRecorder = new RTCRecord(stream, {
+      type: 'audio',
+      recorderType: RTCRecord.MediaStreamRecorder,
+      mimeType: 'audio/webm',
+      // numberOfAudioChannels: 1,
+    });
+
+    this.audioRTCRecorder.startRecording();
     store.dispatch(stateActions.setIsRecordingAudio(true));
   }
-
-  /**
-   * 结束录制音频
-   */
-  stopRecordAudio() {
-    if (_isNil(this.audioRecorder)) {
+  async stopRecordAudio() {
+    if (_isNil(this.audioRTCRecorder)) {
       logger.error('stopRecordAudio() | cannot get audio recorder');
       return;
     }
 
-    const blob = this.audioRecorder.getBlob();
     store.dispatch(stateActions.setIsRecordingAudio(false));
 
-    downloadBlob(blob, `${new Date().valueOf()}.wav`);
+    this.audioRTCRecorder.stopRecording(() => {
+      if (_isNil(this.audioRTCRecorder)) {
+        return;
+      }
+
+      const blob = this.audioRTCRecorder.getBlob();
+      downloadBlob(blob, `${new Date().valueOf()}.webm`);
+    });
   }
 
   async enableWebcam() {
