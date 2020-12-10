@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.6](https://github.com/TRPGEngine/Client/compare/v0.5.5...v0.5.6) (2020-12-10)
+
+
+### Features
+
+* **web:** 移动版增加手势操作。方便用户切换侧边栏收起 ([c539184](https://github.com/TRPGEngine/Client/commit/c539184074e4ab6a3edbf7c91227dbd38543c25e))
+
+
+### Bug Fixes
+
+* **portal:** 修复创建模板的请求地址错误的问题 ([38d545b](https://github.com/TRPGEngine/Client/commit/38d545bca9f70c2e75416bb0ef997a2544c1ff2c))
+
 ### [0.5.5](https://github.com/TRPGEngine/Client/compare/v0.5.4...v0.5.5) (2020-12-05)
 
 
