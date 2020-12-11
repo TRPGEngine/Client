@@ -5,6 +5,7 @@ import config from '@shared/project.config';
 import dateHelper from '@shared/utils/date-helper';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { browser } from '@web/utils/browser-helper';
 
 const SystemStatusPanel = styled(ModalPanel)`
   width: 420px;
@@ -62,6 +63,10 @@ export const SystemStatusInfo: React.FC<SystemStatusInfoProps> = TMemo(
       {
         label: '编译环境',
         value: config.environment,
+      },
+      {
+        label: '浏览器版本',
+        value: `${browser.getBrowserName()} ${browser.getBrowserVersion()}`,
       },
       {
         label: '当前版本号',
