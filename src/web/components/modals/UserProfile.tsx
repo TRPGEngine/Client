@@ -26,9 +26,10 @@ const Root = styled.div`
   max-width: 100%;
 `;
 
-const Info = styled.div`
-  display: flex;
-  flex-direction: row;
+const Info = styled(Row).attrs({
+  justify: 'space-between',
+  align: 'middle',
+})`
   padding: 16px 8px;
 `;
 
@@ -101,22 +102,28 @@ export const UserProfile: React.FC<UserProfileProps> = TMemo((props) => {
   return (
     <Root>
       <Info>
-        <InfoAvatar src={userInfo.avatar} name={name} />
-        <InfoText>
-          <div>{name}</div>
-          <InfoTextSub>{userInfo.username}</InfoTextSub>
-        </InfoText>
-        <Space>
-          {/* actions */}
-          {showFriendRequest && (
-            <Button type="default" onClick={handleFriendRequest}>
-              {t('发送好友申请')}
+        <Col>
+          <Row>
+            <InfoAvatar src={userInfo.avatar} name={name} />
+            <InfoText>
+              <div>{name}</div>
+              <InfoTextSub>{userInfo.username}</InfoTextSub>
+            </InfoText>
+          </Row>
+        </Col>
+        <Col style={{ padding: 8 }}>
+          <Space>
+            {/* actions */}
+            {showFriendRequest && (
+              <Button type="default" onClick={handleFriendRequest}>
+                {t('发送好友申请')}
+              </Button>
+            )}
+            <Button type="primary" onClick={handleSendMsg}>
+              {t('发送消息')}
             </Button>
-          )}
-          <Button type="primary" onClick={handleSendMsg}>
-            {t('发送消息')}
-          </Button>
-        </Space>
+          </Space>
+        </Col>
       </Info>
       <Divider style={{ margin: 0 }} />
       <TabsContainer>
