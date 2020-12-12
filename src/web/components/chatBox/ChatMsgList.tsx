@@ -49,6 +49,7 @@ export const ChatMsgList: React.FC<ChatMsgListProps> = TMemo((props) => {
       <Container
         ref={containerRef}
         onWheel={handleWheel}
+        onScroll={handleWheel}
         onTouchEnd={handleWheel}
         onLoad={handleListLoad}
       >

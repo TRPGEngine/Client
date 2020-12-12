@@ -11,6 +11,7 @@ import _head from 'lodash/head';
 import _get from 'lodash/get';
 import _last from 'lodash/last';
 import _throttle from 'lodash/throttle';
+import _isNil from 'lodash/isNil';
 import { MessageItem } from '@shared/components/message/MessageItem';
 import {
   useTRPGDispatch,
@@ -66,8 +67,8 @@ function useChatMsgListLoadMore(
     prevBottomDistanceRef.current =
       containerRef.current.scrollHeight - containerRef.current.scrollTop; // 记录位置
     const date = _head(msgList)!.date;
-    dispatch(getMoreChatLog(converseUUID, date, !isGroup));
     isSeekingLogRef.current = true;
+    dispatch(getMoreChatLog(converseUUID, date, !isGroup));
   };
   const prevMsgList = usePrevious(msgList);
   useLayoutEffect(() => {
