@@ -13,9 +13,10 @@ import * as stateActions from './redux/stateActions';
 import _isNil from 'lodash/isNil';
 import { RoomClientOptions } from './type';
 import shortid from 'shortid';
-import { downloadBlob } from '@web/utils/file-helper';
+import { downloadBlob, downloadBlobUrl } from '@web/utils/file-helper';
 import type { RTCStoreType } from './redux';
-import RTCRecord from 'recordrtc';
+import { startWatchAllAudioTrack, stopWatchAllAudioTrack } from './utils';
+import RecordRTC from 'recordrtc';
 
 declare global {
   interface MediaDevices {
@@ -252,6 +253,10 @@ export class RoomClient {
         this._hardcodeAudioTrack.stop();
         this._hardcodeAudioTrack = undefined;
       }
+    }
+
+    if (!_isNil(this.audioRTCRecorder)) {
+      this.stopRecordAudio();
     }
 
     // Close mediasoup Transports.
@@ -929,27 +934,38 @@ export class RoomClient {
   /**
    * 开始录制音频
    */
-  audioRTCRecorder: RTCRecord | null = null;
+  audioRTCRecorder: RecordRTC.MultiStreamRecorder | null = null;
   async startRecordAudio() {
     const stream = new MediaStream();
 
     if (this._micProducer?.track) {
       stream.addTrack(this._micProducer.track);
     }
-
-    // TODO: 监听所有的音频变更
-
-    this.audioRTCRecorder = new RTCRecord(stream, {
+    this.audioRTCRecorder = new RecordRTC.MultiStreamRecorder([stream], {
       type: 'audio',
-      recorderType: RTCRecord.MediaStreamRecorder,
       mimeType: 'audio/webm',
-      // numberOfAudioChannels: 1,
     });
 
-    this.audioRTCRecorder.startRecording();
+    // 监听所有音轨的变更，如果有新增的则增加录音流
+    startWatchAllAudioTrack(store, (newTrack) => {
+      if (_isNil(this.audioRTCRecorder)) {
+        return;
+      }
+
+      // TODO: 这里无法完全录制。需要处理
+      console.log('录音加入了新的音频轨道', newTrack.id);
+      this.audioRTCRecorder.addStreams([new MediaStream([newTrack])]);
+    });
+
+    this.audioRTCRecorder.record();
+
     store.dispatch(stateActions.setIsRecordingAudio(true));
   }
-  async stopRecordAudio() {
+
+  /**
+   * 停止录音
+   */
+  stopRecordAudio() {
     if (_isNil(this.audioRTCRecorder)) {
       logger.error('stopRecordAudio() | cannot get audio recorder');
       return;
@@ -957,12 +973,7 @@ export class RoomClient {
 
     store.dispatch(stateActions.setIsRecordingAudio(false));
 
-    this.audioRTCRecorder.stopRecording(() => {
-      if (_isNil(this.audioRTCRecorder)) {
-        return;
-      }
-
-      const blob = this.audioRTCRecorder.getBlob();
+    this.audioRTCRecorder.stop((blob) => {
       downloadBlob(blob, `${new Date().valueOf()}.webm`);
     });
   }
