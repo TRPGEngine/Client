@@ -47,6 +47,10 @@ export const GlobalStyle = createGlobalStyle`
     user-select: none;
   }
 
+  .ant-table {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   /* 新版滚动条 */
   ::-webkit-scrollbar {
     width: 16px;
