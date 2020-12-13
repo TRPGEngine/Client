@@ -99,6 +99,18 @@ export const SettingAccountView: React.FC = TMemo(() => {
             onSave={buildUpdateFieldFn('alignment')}
           />
           <FullModalField
+            title={
+              <Space size={4}>
+                {t('QQ号')}
+                <TipIcon desc={t('方便开发者联系到你')} />
+              </Space>
+            }
+            value={userInfo.qq_number}
+            editable={true}
+            renderEditor={DefaultFullModalInputEditorRender}
+            onSave={buildUpdateFieldFn('qq_number')}
+          />
+          <FullModalField
             title={t('简介')}
             value={userInfo.sign}
             content={<pre>{userInfo.sign}</pre>}
