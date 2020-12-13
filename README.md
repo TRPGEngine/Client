@@ -15,9 +15,9 @@
 简单的来说就是类似于钉钉, Slack, Discord 那种以即时通讯为核心，以其他的业务需求为辅助而制作的功能性聊天软件。
 
 本项目包含以下内容:
-- TRPG Engine 前端网页
-- TRPG Engine 手机移动端
-- TRPG Engine 通用Portal端
+- `TRPG Engine` 前端网页
+- `TRPG Engine` 手机移动端(改版后暂时弃用)
+- `TRPG Engine` 通用Portal端
 
 官方文档: [https://trpgdoc.moonrailgun.com/](https://trpgdoc.moonrailgun.com/)
 
