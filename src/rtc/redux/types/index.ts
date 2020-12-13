@@ -5,6 +5,7 @@ import { MeStateType } from './me';
 import { NotificationsStateType } from './notifications';
 import { PeersStateType } from './peers';
 import { ProducersStateType } from './producers';
+import { RecorderStateType } from './recorder';
 import { RoomStateType } from './room';
 
 export interface AllRTCStateType {
@@ -16,4 +17,5 @@ export interface AllRTCStateType {
   consumers: ConsumersStateType;
   dataConsumers: DataConsumersStateType;
   notifications: NotificationsStateType;
+  recorder: RecorderStateType;
 }

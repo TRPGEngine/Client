@@ -361,3 +361,7 @@ export const removeNotification = createAction(
 );
 
 export const removeAllNotifications = createAction('REMOVE_ALL_NOTIFICATIONS');
+
+export const setIsRecordingAudio = createAction<boolean>(
+  'SET_IS_RECORDING_AUDIO'
+);

@@ -13,6 +13,10 @@ import * as stateActions from './redux/stateActions';
 import _isNil from 'lodash/isNil';
 import { RoomClientOptions } from './type';
 import shortid from 'shortid';
+import { downloadBlob, downloadBlobUrl } from '@web/utils/file-helper';
+import type { RTCStoreType } from './redux';
+import { startWatchAllAudioTrack, stopWatchAllAudioTrack } from './utils';
+import RecordRTC from 'recordrtc';
 
 declare global {
   interface MediaDevices {
@@ -52,7 +56,7 @@ const EXTERNAL_VIDEO_SRC = '/resources/videos/video-audio-stereo.mp4';
 
 const logger = new Logger('RoomClient');
 
-let store;
+let store: RTCStoreType;
 
 export class RoomClient {
   /**
@@ -249,6 +253,10 @@ export class RoomClient {
         this._hardcodeAudioTrack.stop();
         this._hardcodeAudioTrack = undefined;
       }
+    }
+
+    if (!_isNil(this.audioRTCRecorder)) {
+      this.stopRecordAudio();
     }
 
     // Close mediasoup Transports.
@@ -921,6 +929,53 @@ export class RoomClient {
         })
       );
     }
+  }
+
+  /**
+   * 开始录制音频
+   */
+  audioRTCRecorder: RecordRTC.MultiStreamRecorder | null = null;
+  async startRecordAudio() {
+    const stream = new MediaStream();
+
+    if (this._micProducer?.track) {
+      stream.addTrack(this._micProducer.track);
+    }
+    this.audioRTCRecorder = new RecordRTC.MultiStreamRecorder([stream], {
+      type: 'audio',
+      mimeType: 'audio/webm',
+    });
+
+    // 监听所有音轨的变更，如果有新增的则增加录音流
+    startWatchAllAudioTrack(store, (newTrack) => {
+      if (_isNil(this.audioRTCRecorder)) {
+        return;
+      }
+
+      // TODO: 这里无法完全录制。需要处理
+      console.log('录音加入了新的音频轨道', newTrack.id);
+      this.audioRTCRecorder.addStreams([new MediaStream([newTrack])]);
+    });
+
+    this.audioRTCRecorder.record();
+
+    store.dispatch(stateActions.setIsRecordingAudio(true));
+  }
+
+  /**
+   * 停止录音
+   */
+  stopRecordAudio() {
+    if (_isNil(this.audioRTCRecorder)) {
+      logger.error('stopRecordAudio() | cannot get audio recorder');
+      return;
+    }
+
+    store.dispatch(stateActions.setIsRecordingAudio(false));
+
+    this.audioRTCRecorder.stop((blob) => {
+      downloadBlob(blob, `${new Date().valueOf()}.webm`);
+    });
   }
 
   async enableWebcam() {
@@ -2007,7 +2062,7 @@ export class RoomClient {
     }
   }
 
-  async _joinRoom() {
+  private async _joinRoom() {
     logger.debug('_joinRoom()');
 
     try {
@@ -2282,7 +2337,7 @@ export class RoomClient {
     }
   }
 
-  async _updateWebcams() {
+  private async _updateWebcams() {
     logger.debug('_updateWebcams()');
 
     // Reset the list.
@@ -2313,7 +2368,7 @@ export class RoomClient {
     store.dispatch(stateActions.setCanChangeWebcam(this._webcams.size > 1));
   }
 
-  _getWebcamType(device) {
+  private _getWebcamType(device) {
     if (/(back|rear)/i.test(device.label)) {
       logger.debug('_getWebcamType() | it seems to be a back camera');
 
@@ -2325,7 +2380,7 @@ export class RoomClient {
     }
   }
 
-  async _pauseConsumer(consumer) {
+  private async _pauseConsumer(consumer: MediasoupType.Consumer) {
     if (consumer.paused) return;
 
     try {
@@ -2350,7 +2405,7 @@ export class RoomClient {
     }
   }
 
-  async _resumeConsumer(consumer) {
+  private async _resumeConsumer(consumer: MediasoupType.Consumer) {
     if (!consumer.paused) return;
 
     try {
@@ -2375,7 +2430,7 @@ export class RoomClient {
     }
   }
 
-  async _getExternalVideoStream() {
+  private async _getExternalVideoStream() {
     if (this._externalVideoStream) return this._externalVideoStream;
 
     if (this._externalVideo.readyState < 3) {

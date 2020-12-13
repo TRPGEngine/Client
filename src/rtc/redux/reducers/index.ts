@@ -7,6 +7,7 @@ import peers from './peers';
 import consumers from './consumers';
 import dataConsumers from './dataConsumers';
 import notifications from './notifications';
+import recorder from './recorder';
 
 const reducers = combineReducers({
   room,
@@ -17,6 +18,7 @@ const reducers = combineReducers({
   consumers,
   dataConsumers,
   notifications,
+  recorder,
 });
 
 export default reducers;
