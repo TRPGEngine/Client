@@ -15,4 +15,5 @@ export const testUserInfo: UserInfo = {
   sex: '男' as const,
   sign: '',
   alignment: null as any,
+  qq_number: '',
 };
