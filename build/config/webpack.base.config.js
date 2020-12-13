@@ -98,6 +98,7 @@ const out = {
     fallback: {
       buffer: require.resolve('buffer/'),
       stream: require.resolve('stream-browserify'),
+      string_decoder: require.resolve('string_decoder/'),
     },
   },
   //babel重要的loader在这里
@@ -273,13 +274,15 @@ const out = {
   ],
 };
 
-if(process.env.NODE_ENV === 'production' || process.env.DEV_SW === 'true') {
-  out.plugins.push(new WorkboxPlugin.GenerateSW({
-    // these options encourage the ServiceWorkers to get in there fast
-    // and not allow any straggling "old" SWs to hang around
-    clientsClaim: true,
-    skipWaiting: true,
-  }),)
+if (process.env.NODE_ENV === 'production' || process.env.DEV_SW === 'true') {
+  out.plugins.push(
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true,
+    })
+  );
 }
 
 module.exports = out;
