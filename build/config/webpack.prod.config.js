@@ -1,7 +1,7 @@
 const path = require('path');
 const _ = require('lodash');
 const webpack = require('webpack');
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const base = require('./webpack.base.config.js');
 const package = require('../../package.json');
 const config = require('config');
@@ -49,7 +49,7 @@ if (_.get(process, 'env.npm_config_report', false)) {
   );
 }
 
-module.exports = webpackMerge({}, base, {
+module.exports = merge({}, base, {
   mode: 'production',
   output: {
     filename: '[name].[contenthash].js',
@@ -57,7 +57,5 @@ module.exports = webpackMerge({}, base, {
 
   ...extraConfig,
 
-  plugins: [
-    ...plugins,
-  ],
+  plugins: [...plugins],
 });
