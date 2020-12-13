@@ -5,9 +5,9 @@
 
 const { app, BrowserWindow } = require('electron');
 
-const isProd = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === 'development';
 const url =
-  isProd === true ? 'https://trpg.moonrailgun.com' : 'http://127.0.0.1:8089';
+  isDev === true ? 'http://127.0.0.1:8089' : 'https://trpg.moonrailgun.com';
 
 let window = null;
 // Wait until the app is ready
