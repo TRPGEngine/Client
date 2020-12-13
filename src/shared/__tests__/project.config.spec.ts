@@ -76,6 +76,7 @@ describe('project.config', () => {
         notification: expect.any(Boolean),
         disableSendWritingState: expect.any(Boolean),
         showSelfInWritingState: expect.any(Boolean),
+        chatBoxType: expect.any(String),
       },
     });
   });
