@@ -5,13 +5,13 @@ import {
   PolarGrid,
   PolarAngleAxis,
   Tooltip,
-  TooltipProps,
   ResponsiveContainer,
 } from 'recharts';
 import styled from 'styled-components';
 import _get from 'lodash/get';
 import { TMemo } from '@shared/components/TMemo';
 import { useThemeContext } from '@shared/context/ThemeContext';
+import type { TooltipProps } from 'recharts/types/component/Tooltip';
 
 interface RadarData {
   name: string;
@@ -31,12 +31,12 @@ const CustomTooltipContainer = styled.div`
   color: ${(props) => props.theme.color['mine-shaft']};
 `;
 
-const CustomTooltip: React.FC<TooltipProps> = TMemo(
+const CustomTooltip: React.FC<TooltipProps<number, string>> = TMemo(
   ({ active, payload, label }) => {
     if (active) {
       return (
         <CustomTooltipContainer>
-          <div>{`${label} : ${_get(payload, '0.value')}`}</div>
+          <div>{`${label} : ${_get(payload, [0, 'value'])}`}</div>
         </CustomTooltipContainer>
       );
     }
