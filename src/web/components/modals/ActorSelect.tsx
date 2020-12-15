@@ -8,6 +8,7 @@ import {
   useTRPGSelector,
 } from '@shared/hooks/useTRPGSelector';
 import { openModal } from '../Modal';
+import { useTranslation } from '@shared/i18n';
 
 import './ActorSelect.scss';
 
@@ -18,16 +19,17 @@ const ActorSelect: React.FC<Props> = TMemo((props) => {
   const [selectActorUUID, setSelectActorUUID] = useState<string | null>(null);
   const selfActors = useTRPGSelector((state) => state.actor.selfActors);
   const dispatch = useTRPGDispatch();
+  const { t } = useTranslation();
 
   const handleSelect = useCallback(() => {
     if (selectActorUUID) {
-      console.log('[人物卡列表]选择了' + selectActorUUID);
+      console.log('[人物卡列表]选择了:' + selectActorUUID);
       const selectActorInfo = selfActors.find(
         (a) => a.uuid === selectActorUUID
       );
       props.onSelect && props.onSelect(selectActorUUID, selectActorInfo);
     } else {
-      dispatch(showAlert('请选择人物卡'));
+      dispatch(showAlert(t('请选择人物卡')));
     }
   }, [props.onSelect, selfActors, selectActorUUID]);
 
@@ -37,7 +39,7 @@ const ActorSelect: React.FC<Props> = TMemo((props) => {
 
   return (
     <div className="actor-select">
-      <h3>请选择人物卡</h3>
+      <h3>{t('请选择人物卡')}</h3>
       <div className="actor-list">
         {selfActors.length > 0 ? (
           selfActors.map((item, index) => {
@@ -60,7 +62,9 @@ const ActorSelect: React.FC<Props> = TMemo((props) => {
                 />
                 <div className="actor-info">
                   <div className="actor-name">{item.name}</div>
-                  <div className="actor-desc">{item.desc}</div>
+                  <div className="actor-desc" title={item.desc}>
+                    {item.desc}
+                  </div>
                 </div>
                 <div className="actor-extra">
                   <i className="iconfont">&#xe620;</i>
@@ -70,13 +74,13 @@ const ActorSelect: React.FC<Props> = TMemo((props) => {
           })
         ) : (
           <div className="no-actor">
-            尚无人物卡, 现在去
-            <span onClick={handleActorCreate}>创建</span>
+            {t('尚无人物卡, 现在去')}
+            <span onClick={handleActorCreate}>{t('创建')}</span>
           </div>
         )}
       </div>
       <div className="action">
-        <button onClick={handleSelect}>确定</button>
+        <button onClick={handleSelect}>{t('确定')}</button>
       </div>
     </div>
   );

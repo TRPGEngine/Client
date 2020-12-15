@@ -57,6 +57,11 @@
 
         .actor-name {
           color: $color-dove-gray;
+          font-weight: bold;
+        }
+
+        .actor-desc {
+          color: $color-dusty-gray;
         }
       }
 
@@ -85,6 +90,8 @@
   }
 
   .action {
+    text-align: right;
+
     button {
       @include block-btn;
     }
