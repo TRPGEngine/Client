@@ -47,6 +47,8 @@ if (_isString(trpgPort!)) {
   apiPort = trpgPort!;
 }
 
+const rtc = process.env.RTC_HOST || 'wss://rtc.moonrailgun.com:4443'; // 语音服务器地址
+
 interface ProjectConfig {
   version: string;
   environment: string;
@@ -241,7 +243,7 @@ const config: ProjectConfig = {
       'https://raw.githubusercontent.com/TRPGEngine/Client/master/src/app/package.json',
   },
   url: {
-    rtc: 'wss://rtc.moonrailgun.com:4443', // 语音服务器地址 不包括前缀
+    rtc,
     homepage: 'https://trpgdoc.moonrailgun.com/',
     docs: 'https://trpgdoc.moonrailgun.com/',
     goddessfantasy: 'http://www.goddessfantasy.net/',

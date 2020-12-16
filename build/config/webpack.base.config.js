@@ -220,6 +220,7 @@ const out = {
         TRPG_HOST: JSON.stringify(process.env.TRPG_HOST),
         TRPG_PORTAL: JSON.stringify(process.env.TRPG_PORTAL),
         DEV_SW: JSON.stringify(process.env.DEV_SW),
+        RTC_HOST: JSON.stringify(process.env.RTC_HOST),
       },
     }),
     new webpack.DllReferencePlugin({
