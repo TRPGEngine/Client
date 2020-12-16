@@ -1,4 +1,5 @@
 import _get from 'lodash/get';
+import _isString from 'lodash/isString';
 import robotImg from '@web/assets/img/robot_dark.svg';
 import { MsgStyleType } from './types/chat';
 
@@ -42,7 +43,7 @@ const portalUrl =
 
 const standardPort = isSSL ? '443' : '80';
 let apiPort = environment === 'production' ? standardPort : '23256';
-if (trpgPort!) {
+if (_isString(trpgPort!)) {
   apiPort = trpgPort!;
 }
 
