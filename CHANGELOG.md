@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.7](https://github.com/TRPGEngine/Client/compare/v0.5.6...v0.5.7) (2020-12-18)
+
+
+### Features
+
+* **web:** 增加QQ号显示 ([90d32af](https://github.com/TRPGEngine/Client/commit/90d32aff6f6fc8b03396bc86e381bc02f66f689f))
+* **web:** 增加了兼容性聊天框，以支持一些旧版浏览器的使用 ([3333ccb](https://github.com/TRPGEngine/Client/commit/3333ccb031077c2b63501ce813a8c58b5b37c148))
+* **web:** 增加人物卡导出的功能 ([0c5b047](https://github.com/TRPGEngine/Client/commit/0c5b0470e8a6a189fdfaffbe335998cd8255479a))
+* **web:** 系统信息增加浏览器版本显示 ([e3d9745](https://github.com/TRPGEngine/Client/commit/e3d97452fddd20fec9635a26085dd4d1fd22c76c))
+
+
+### Bug Fixes
+
+* **web:** 修复鼠标拉动滚动条无法变更滚动到底部按钮状态的bug ([d1cf417](https://github.com/TRPGEngine/Client/commit/d1cf4175c45105aa42ffc0ea4da56fa72bfa3f0c))
+
 ### [0.5.6](https://github.com/TRPGEngine/Client/compare/v0.5.5...v0.5.6) (2020-12-10)
 
 

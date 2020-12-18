@@ -14,6 +14,7 @@ export interface UserInfo {
   sex: UserGender;
   sign: string;
   alignment: UserAlignment;
+  qq_number: string;
 }
 
 // 用户好友邀请

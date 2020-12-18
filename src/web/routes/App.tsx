@@ -69,4 +69,5 @@ const _App = TMemo(() => {
 });
 _App.displayName = 'App';
 
-export const App = wrapSentry(_App);
+export const App =
+  config.environment === 'development' ? _App : wrapSentry(_App);

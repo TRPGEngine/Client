@@ -5,11 +5,11 @@
 process.env.TRPG_APP_NAME = 'Portal';
 process.env.SENRTY_RELEASE_URL_PREFIX = '~/portal/';
 
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const path = require('path');
 const url = require('url');
 const base = require('./webpack.config.js');
-const OfflinePlugin = require('offline-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const ROOT_PATH = path.resolve(__dirname, '../../');
 const APP_PATH = path.resolve(ROOT_PATH, 'src');
@@ -22,7 +22,7 @@ const dllHashName = 'dll_' + dllConfig.name;
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const config = webpackMerge({}, base, {
+const config = merge({}, base, {
   entry: {
     polyfill: '@babel/polyfill',
     app: path.resolve(APP_PATH, './portal/index.tsx'),
@@ -54,6 +54,6 @@ const config = webpackMerge({}, base, {
 /**
  * portal不需要offline插件
  */
-config.plugins = config.plugins.filter((x) => !(x instanceof OfflinePlugin));
+config.plugins = config.plugins.filter((x) => !(x instanceof WorkboxPlugin.GenerateSW));
 
 module.exports = config;

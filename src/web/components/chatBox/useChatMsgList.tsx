@@ -11,6 +11,7 @@ import _head from 'lodash/head';
 import _get from 'lodash/get';
 import _last from 'lodash/last';
 import _throttle from 'lodash/throttle';
+import _isNil from 'lodash/isNil';
 import { MessageItem } from '@shared/components/message/MessageItem';
 import {
   useTRPGDispatch,
@@ -24,8 +25,6 @@ import styled from 'styled-components';
 import { usePrevious } from 'react-use';
 import { MsgPayload } from '@redux/types/chat';
 import { useTranslation } from '@shared/i18n';
-import { Button } from 'antd';
-import { ArrowDownOutlined } from '@ant-design/icons';
 
 const LoadmoreText = styled.div<{
   disable?: boolean;
@@ -42,6 +41,9 @@ const LoadmoreText = styled.div<{
       : props.theme.color['tacao']};
   cursor: ${(props) => (props.disable === true ? 'default' : 'pointer')};
 `;
+
+// 触及底部判定的距离
+const TRIGGER_DISTANCE = 60;
 
 /**
  * 加载更多相关hook
@@ -66,8 +68,8 @@ function useChatMsgListLoadMore(
     prevBottomDistanceRef.current =
       containerRef.current.scrollHeight - containerRef.current.scrollTop; // 记录位置
     const date = _head(msgList)!.date;
-    dispatch(getMoreChatLog(converseUUID, date, !isGroup));
     isSeekingLogRef.current = true;
+    dispatch(getMoreChatLog(converseUUID, date, !isGroup));
   };
   const prevMsgList = usePrevious(msgList);
   useLayoutEffect(() => {
@@ -176,7 +178,7 @@ export function useChatMsgList(converseUUID: string) {
   const handleWheel = useCallback((e: React.SyntheticEvent<HTMLDivElement>) => {
     const el = e.currentTarget;
     const distance = el.scrollHeight - el.scrollTop - el.offsetHeight; // 滚动条距离底部的距离
-    if (distance <= 20) {
+    if (distance <= TRIGGER_DISTANCE) {
       // 滚动容器接触到底部
       isSeekingLogRef.current = false;
       setShowScrollToBottomBtn(false);

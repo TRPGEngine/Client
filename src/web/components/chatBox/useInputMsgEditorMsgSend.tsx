@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { TRPGEditorNode } from '../editor/types';
 import { buildBlankInputData, getHeadSelection } from '../editor/utils';
 import { isEnterHotkey } from '@web/utils/hot-key';
@@ -14,6 +14,8 @@ import { insertImage } from '../editor/changes/insertImage';
 import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
 import { t } from '@shared/i18n';
+import { useSystemSetting } from '@redux/hooks/settings';
+import { Input } from 'antd';
 
 /**
  * 会话消息发送管理
@@ -28,6 +30,11 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
     buildBlankInputData()
   );
   const converse = useConverseDetail(converseUUID);
+  const chatBoxType = useSystemSetting('chatBoxType') ?? 'auto';
+  const showRichMsgEditor = useMemo(() => {
+    // 是否使用高级输入框
+    return chatBoxType !== 'compatible';
+  }, [chatBoxType]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -50,8 +57,16 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
           try {
             const file = image.getAsFile();
             const chatimgUrl = await pasteUtils.upload(file!);
-            if (!_isNil(editorRef.current) && _isString(chatimgUrl)) {
-              insertImage(editorRef.current, chatimgUrl);
+            if (_isString(chatimgUrl)) {
+              if (showRichMsgEditor) {
+                // 如果使用的是高级编辑器
+                if (!_isNil(editorRef.current)) {
+                  insertImage(editorRef.current, chatimgUrl);
+                }
+              } else {
+                // 如果使用的是兼容编辑器
+                setMessage(message + `[img]${chatimgUrl}[/img]`);
+              }
             }
           } catch (err) {
             showToasts(err, 'error');
@@ -61,7 +76,7 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
         }
       }
     },
-    []
+    [showRichMsgEditor, message]
   );
 
   useEffect(() => {
@@ -85,16 +100,28 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
   const prefix = converse?.type === 'user' ? '@' : '#';
   const placeholder = `给 ${prefix}${converse?.name} 发消息`;
 
-  const editorEl = (
-    <MsgInputEditor
-      placeholder={placeholder}
-      value={messageData}
-      onChange={handleMessageDataChange}
-      onKeyDown={handleKeyDown}
-      onPaste={handlePaste}
-      onEditor={(editor) => (editorRef.current = editor)}
-    />
-  );
+  const editorEl =
+    showRichMsgEditor === true ? (
+      <MsgInputEditor
+        placeholder={placeholder}
+        value={messageData}
+        onChange={handleMessageDataChange}
+        onKeyDown={handleKeyDown}
+        onPaste={handlePaste}
+        onEditor={(editor) => (editorRef.current = editor)}
+      />
+    ) : (
+      <Input
+        ref={inputRef}
+        style={{ paddingTop: 0, paddingBottom: 0 }}
+        bordered={false}
+        placeholder={placeholder}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={handleKeyDown}
+        onPaste={handlePaste}
+      />
+    );
 
   return { editorRef, editorEl };
 }

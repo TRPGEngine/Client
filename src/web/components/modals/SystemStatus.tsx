@@ -5,6 +5,8 @@ import config from '@shared/project.config';
 import dateHelper from '@shared/utils/date-helper';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { browser } from '@web/utils/browser-helper';
+import { useTranslation } from '@shared/i18n';
 
 const SystemStatusPanel = styled(ModalPanel)`
   width: 420px;
@@ -46,33 +48,39 @@ interface SystemStatusInfoProps {
 }
 export const SystemStatusInfo: React.FC<SystemStatusInfoProps> = TMemo(
   (props) => {
+    const { t } = useTranslation();
+
     const status = [
       {
-        label: '后台服务地址',
+        label: t('后台服务地址'),
         value: `${config.io.protocol}://${config.io.host}:${config.io.port}`,
       },
       {
-        label: '网页服务地址',
+        label: t('网页服务地址'),
         value: config.file.url,
       },
       {
-        label: 'Portal服务地址',
+        label: t('Portal服务地址'),
         value: config.url.portal,
       },
       {
-        label: '编译环境',
+        label: t('编译环境'),
         value: config.environment,
       },
       {
-        label: '当前版本号',
+        label: t('浏览器版本'),
+        value: `${browser.getBrowserName()} ${browser.getBrowserVersion()}`,
+      },
+      {
+        label: t('当前版本号'),
         value: config.version,
       },
       {
-        label: '当前连接',
+        label: t('当前连接'),
         value: <CurrentSocketId />,
       },
       {
-        label: '本地时间',
+        label: t('本地时间'),
         value: <LocalTimer />,
       },
     ];
@@ -94,8 +102,10 @@ export const SystemStatusInfo: React.FC<SystemStatusInfoProps> = TMemo(
 SystemStatusInfo.displayName = 'SystemStatusInfo';
 
 const SystemStatus: React.FC = TMemo(() => {
+  const { t } = useTranslation();
+
   return (
-    <SystemStatusPanel title="系统状态">
+    <SystemStatusPanel title={t('系统状态')}>
       <SystemStatusInfo />
     </SystemStatusPanel>
   );

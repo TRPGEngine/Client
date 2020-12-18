@@ -13,6 +13,9 @@ import {
   useCachedActorTemplateInfo,
   useCachedActorInfo,
 } from '@shared/hooks/useCache';
+import { AddonMore } from '../AddonMore';
+import { downloadBlob } from '@web/utils/file-helper';
+import { useTranslation } from '@shared/i18n';
 
 /**
  * 人物卡信息模态框
@@ -30,7 +33,9 @@ interface Props {
   templateUUID: string;
 }
 const ActorInfo: React.FC<Props> = TMemo((props) => {
-  let title = '人物卡';
+  const { t } = useTranslation();
+
+  let title = t('人物卡');
   const name = props.name ?? _get(props, ['data', '_name']);
   if (!_isNil(name)) {
     title += ' - ' + name;
@@ -44,10 +49,26 @@ const ActorInfo: React.FC<Props> = TMemo((props) => {
   const template = useCachedActorTemplateInfo(props.templateUUID);
   const layout = _get(template, 'layout');
 
+  const items = [
+    {
+      label: t('导出人物卡'),
+      onClick: () => {
+        const json = JSON.stringify(props.data);
+        const blob = new Blob([json], {
+          type: 'text/plain',
+        });
+        downloadBlob(blob, `${title}.json`);
+      },
+    },
+  ];
+
   return useMemo(
     () =>
       _isString(layout) ? (
-        <ModalPanel title={title}>
+        <ModalPanel
+          title={title}
+          headerActions={<AddonMore placement="bottomRight" items={items} />}
+        >
           <Container>
             <XMLBuilder
               xml={layout}

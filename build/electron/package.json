@@ -1,0 +1,11 @@
+{
+  "name": "trpg-engine",
+  "version": "1.0.0",
+  "description": "专注于TRPG跑团的IM即时应用聊天软件",
+  "main": "./entry.js",
+  "keywords": [
+    "trpg"
+  ],
+  "author": "moonrailgun",
+  "license": "GPL-3.0"
+}

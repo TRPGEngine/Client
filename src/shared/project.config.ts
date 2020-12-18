@@ -1,4 +1,5 @@
 import _get from 'lodash/get';
+import _isString from 'lodash/isString';
 import robotImg from '@web/assets/img/robot_dark.svg';
 import { MsgStyleType } from './types/chat';
 
@@ -42,9 +43,11 @@ const portalUrl =
 
 const standardPort = isSSL ? '443' : '80';
 let apiPort = environment === 'production' ? standardPort : '23256';
-if (trpgPort!) {
+if (_isString(trpgPort!)) {
   apiPort = trpgPort!;
 }
+
+const rtc = process.env.RTC_HOST || 'wss://rtc.moonrailgun.com:4443'; // 语音服务器地址
 
 interface ProjectConfig {
   version: string;
@@ -125,6 +128,7 @@ const defaultSettings = {
     notification: true, // 是否通知
     disableSendWritingState: false, // 不发送输入状态
     showSelfInWritingState: false, // 在输入状态中显示自己
+    chatBoxType: 'auto' as 'auto' | 'compatible', // 聊天框类型 有auto, compatible
   },
 };
 
@@ -239,7 +243,7 @@ const config: ProjectConfig = {
       'https://raw.githubusercontent.com/TRPGEngine/Client/master/src/app/package.json',
   },
   url: {
-    rtc: 'wss://rtc.moonrailgun.com:4443', // 语音服务器地址 不包括前缀
+    rtc,
     homepage: 'https://trpgdoc.moonrailgun.com/',
     docs: 'https://trpgdoc.moonrailgun.com/',
     goddessfantasy: 'http://www.goddessfantasy.net/',

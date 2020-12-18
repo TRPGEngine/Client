@@ -11,6 +11,7 @@ import {
 import { setSystemSettings } from '@redux/actions/settings';
 import { useAlphaUser } from '@shared/hooks/useAlphaUser';
 import { useTranslation } from '@shared/i18n';
+import { TipIcon } from '@web/components/TipIcon';
 
 const SelectLanguage: React.FC = TMemo(() => {
   const { language, setLanguage, isChanged } = useLanguage();
@@ -37,7 +38,7 @@ const SelectLanguage: React.FC = TMemo(() => {
       {isChanged && (
         <Alert
           style={{ marginBottom: 10 }}
-          message="语言变更需要重启后完全生效"
+          message={t('语言变更需要重启后完全生效')}
           type="error"
         />
       )}
@@ -91,6 +92,30 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
     <div>
       <Space direction="vertical">
         <SelectLanguage />
+
+        <FullModalField
+          title={
+            <Space>
+              <span>{t('聊天框类型')}</span>
+              <TipIcon
+                desc={t(
+                  '对于旧版浏览器, 可能无法使用一些现代特性。切换到兼容模式以正常使用TRPG Engine进行聊天'
+                )}
+              />
+            </Space>
+          }
+          content={
+            <Select
+              style={{ width: 300 }}
+              size="large"
+              value={systemSettings.chatBoxType}
+              onChange={(val) => setSystemSetting('chatBoxType', val)}
+            >
+              <Select.Option value="auto">{t('自动')}</Select.Option>
+              <Select.Option value="compatible">{t('兼容')}</Select.Option>
+            </Select>
+          }
+        />
 
         <FullModalField
           title={t('桌面通知权限')}

@@ -3,6 +3,7 @@ import { ActorType, ActorBaseAttr } from '@redux/types/actor';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { getAbsolutePath } from '@shared/utils/file-helper';
+import { useTranslation } from '@shared/i18n';
 
 export const ActorCardContainer = styled.div`
   display: flex;
@@ -97,6 +98,7 @@ interface Props {
 }
 export const ActorCard: React.FC<Props> = TMemo((props) => {
   const { actor, style } = props;
+  const { t } = useTranslation();
 
   const backgroundStyle = {
     backgroundImage: `url(${getAbsolutePath(actor.avatar)})`,
@@ -107,11 +109,11 @@ export const ActorCard: React.FC<Props> = TMemo((props) => {
       <div className="avatar" style={backgroundStyle} />
       <div className="profile">
         <p>
-          <span>角色:</span>
+          <span>{t('角色')}:</span>
           <span title={actor.name}>{actor.name}</span>
         </p>
         <p>
-          <span>说明:</span>
+          <span>{t('说明')}:</span>
           <span title={actor.desc}>{actor.desc}</span>
         </p>
         <p className="action">{props.actions}</p>

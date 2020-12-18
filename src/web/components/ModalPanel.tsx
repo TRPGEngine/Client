@@ -1,3 +1,4 @@
+import { t } from '@shared/i18n';
 import React from 'react';
 import styled, { css } from 'styled-components';
 
@@ -61,7 +62,8 @@ const ModalPanelActionGroup = styled.div`
   height: auto;
   z-index: 1;
 
-  .iconfont {
+  .iconfont,
+  .anticon {
     cursor: pointer;
     color: ${(props) =>
       props.theme.mixins.modeValue([
@@ -89,6 +91,7 @@ interface Props {
   className?: string;
   style?: React.CSSProperties;
   actions?: React.ReactNode;
+  headerActions?: React.ReactNode;
   children: React.ReactNode;
   allowMaximize?: boolean;
   padding?: number;
@@ -112,6 +115,7 @@ class ModalPanel extends React.PureComponent<Props> {
       style,
       children,
       actions,
+      headerActions,
       allowMaximize,
       padding,
     } = this.props;
@@ -123,21 +127,23 @@ class ModalPanel extends React.PureComponent<Props> {
         maximize={maximize}
         style={style}
       >
-        {allowMaximize && (
-          <ModalPanelActionGroup>
+        <ModalPanelActionGroup>
+          {headerActions}
+
+          {allowMaximize && (
             <div onClick={this.handleSwitchMaximize}>
               {maximize ? (
-                <i className="iconfont" title="最小化">
+                <i className="iconfont" title={t('最小化')}>
                   &#xe618;
                 </i>
               ) : (
-                <i className="iconfont" title="最大化">
+                <i className="iconfont" title={t('最大化')}>
                   &#xe60c;
                 </i>
               )}
             </div>
-          </ModalPanelActionGroup>
-        )}
+          )}
+        </ModalPanelActionGroup>
 
         <div className="head">
           <span>{title}</span>

@@ -5,6 +5,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import Avatar from './Avatar';
 import { UserOutlined } from '@ant-design/icons';
 import _isNil from 'lodash/isNil';
+import _isString from 'lodash/isString';
 import { TMemo } from '@shared/components/TMemo';
 import { showToasts } from '@shared/manager/ui';
 
@@ -53,7 +54,9 @@ function getCroppedImg(
           return;
         }
         (blob as any).name = fileName;
-        window.URL.revokeObjectURL(fileUrlTemp!);
+        if (_isString(fileUrlTemp)) {
+          window.URL.revokeObjectURL(fileUrlTemp);
+        }
         fileUrlTemp = window.URL.createObjectURL(blob);
         resolve(fileUrlTemp);
       }, 'image/jpeg');

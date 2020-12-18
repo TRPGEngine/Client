@@ -76,7 +76,99 @@ describe('project.config', () => {
         notification: expect.any(Boolean),
         disableSendWritingState: expect.any(Boolean),
         showSelfInWritingState: expect.any(Boolean),
+        chatBoxType: expect.any(String),
       },
+    });
+  });
+
+  describe('check environment variable', () => {
+    const oldEnv = process.env;
+
+    beforeEach(() => {
+      jest.resetModules();
+      process.env = { ...oldEnv };
+      delete process.env.NODE_ENV;
+    });
+
+    afterEach(() => {
+      process.env = oldEnv;
+    });
+
+    test.each([
+      [
+        'default test',
+        {},
+        {
+          environment: 'development',
+          io: {
+            host: 'localhost',
+            port: '23256',
+            protocol: 'ws',
+          },
+          url: {
+            rtc: 'wss://rtc.moonrailgun.com:4443',
+            portal: 'https://trpg.moonrailgun.com/portal',
+          },
+        },
+      ],
+      [
+        'default production',
+        {
+          NODE_ENV: 'production',
+        },
+        {
+          environment: 'production',
+          io: {
+            host: 'trpgapi.moonrailgun.com',
+            port: '80',
+          },
+        },
+      ],
+      [
+        'test trpg host',
+        {
+          NODE_ENV: 'production',
+          TRPG_HOST: '123.45.68.90:45632',
+        },
+        {
+          environment: 'production',
+          io: {
+            host: '123.45.68.90',
+            port: '45632',
+          },
+        },
+      ],
+      [
+        'test rtc server',
+        {
+          RTC_HOST: 'wss://192.168.1.101:4443',
+        },
+        {
+          url: {
+            rtc: 'wss://192.168.1.101:4443',
+          },
+        },
+      ],
+      [
+        'test portal url',
+        {
+          TRPG_PORTAL: 'http://127.0.0.1:1234/portal',
+        },
+        {
+          url: {
+            portal: 'http://127.0.0.1:1234/portal',
+          },
+        },
+      ],
+    ])('%s', (name: string, env: any, obj: any) => {
+      process.env = {
+        ...process.env,
+        ...env,
+      };
+
+      const testConfig = require('@shared/project.config').default;
+
+      expect(testConfig).toMatchObject(obj);
     });
   });
 });

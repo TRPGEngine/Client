@@ -11,8 +11,18 @@ import _without from 'lodash/without';
 import { TPopover } from '@web/components/popover';
 import PopoverUserInfo from '@web/components/popover/UserInfo';
 import { UserListItem } from '@web/components/UserListItem';
+import styled from 'styled-components';
 
-function renderMemberList(uuids: string[]) {
+const TipText = styled.div`
+  color: ${(props) => props.theme.color['dusty-gray']};
+  text-align: center;
+`;
+
+function renderMemberList(uuids: string[], emptyText: string = '') {
+  if (!Array.isArray(uuids) || uuids.length === 0) {
+    return <TipText>{emptyText}</TipText>;
+  }
+
   return uuids.map((uuid) => (
     <TPopover
       key={uuid}
@@ -50,9 +60,9 @@ export const GroupMembers: React.FC<GroupMembersProps> = TMemo((props) => {
       <div>{t('拥有者')}</div>
       {renderMemberList([groupInfo.owner_uuid])}
       <div>{t('主持人')}</div>
-      {renderMemberList(filterManagers)}
+      {renderMemberList(filterManagers, t('暂无其他主持人'))}
       <div>{t('成员')}</div>
-      {renderMemberList(normalMembers)}
+      {renderMemberList(normalMembers, t('暂无其他成员'))}
     </div>
   );
 });

@@ -26,7 +26,7 @@ const initSentry = _once(() => {
       environment === 'production' ? _get(Config, 'sentry.release') : undefined,
     environment,
     integrations: [new Integrations.BrowserTracing()],
-    tracesSampleRate: 1.0,
+    tracesSampleRate: 0.2,
     denyUrls: ['chrome-extension://'],
     ignoreErrors: [
       'ResizeObserver loop limit exceeded',

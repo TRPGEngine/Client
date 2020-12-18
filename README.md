@@ -15,9 +15,9 @@
 简单的来说就是类似于钉钉, Slack, Discord 那种以即时通讯为核心，以其他的业务需求为辅助而制作的功能性聊天软件。
 
 本项目包含以下内容:
-- TRPG Engine 前端网页
-- TRPG Engine 手机移动端
-- TRPG Engine 通用Portal端
+- `TRPG Engine` 前端网页
+- `TRPG Engine` 手机移动端(改版后暂时弃用)
+- `TRPG Engine` 通用Portal端
 
 官方文档: [https://trpgdoc.moonrailgun.com/](https://trpgdoc.moonrailgun.com/)
 
@@ -89,7 +89,7 @@ $ npm run dev # 运行本地开发服务器
 欢迎发送pr，请在发起pr时详细描述改动的目的，这样会更加方便进行审核
 
 ## 关于开源
-本项目基于[GPLv3开源协议](./LICENSE)。不允许用于任何未经授权的商业行为。
+本项目基于[GPLv3开源协议](./LICENSE)。请对此项目进行二次开发时遵从开源协议 :)
 
 
 Powered by [moonrailgun](http://moonrailgun.com) with ❤
