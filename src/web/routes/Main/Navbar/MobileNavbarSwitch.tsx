@@ -3,7 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { MenuOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { useSidebarContext } from '../SidebarContext';
-import { useIsMobile } from '@web/hooks/useIsMobile';
+import { ShowInMobile } from '@web/components/ShowInMobile';
 
 const Root = styled.div`
   padding: 0;
@@ -33,13 +33,11 @@ const MobileNavbarSwitchButton: React.FC = TMemo(() => {
 MobileNavbarSwitchButton.displayName = 'MobileNavbarSwitchButton';
 
 export const MobileNavbarSwitch: React.FC = TMemo(() => {
-  const isMobile = useIsMobile();
-
-  if (!isMobile) {
-    return null;
-  }
-
   // 视为手机 显示切换按钮
-  return <MobileNavbarSwitchButton />;
+  return (
+    <ShowInMobile>
+      <MobileNavbarSwitchButton />
+    </ShowInMobile>
+  );
 });
 MobileNavbarSwitch.displayName = 'MobileNavbarSwitch';

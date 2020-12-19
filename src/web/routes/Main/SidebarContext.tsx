@@ -2,7 +2,6 @@ import React, { useContext, useState, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import _noop from 'lodash/noop';
 import _isBoolean from 'lodash/isBoolean';
-import { useIsMobile } from '@web/hooks/useIsMobile';
 
 /**
  * 记录选中团的UUID
