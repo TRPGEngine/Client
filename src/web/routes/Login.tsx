@@ -8,6 +8,7 @@ import { useTranslation } from '@shared/i18n';
 import { showToasts } from '@shared/manager/ui';
 import config from '@shared/project.config';
 import { HiddenInMobile } from '@web/components/HiddenInMobile';
+import { LanguageSwitchLink } from '@web/components/LanguageSwitchLink';
 import { Logo } from '@web/components/Logo';
 import Webview from '@web/components/Webview';
 import { checkIsOldApp } from '@web/utils/debug-helper';
@@ -35,12 +36,26 @@ const LoginContainer = styled(Space).attrs({
   padding: 10vh 100px 0;
   background-image: url(${loginPatternUrl});
   background-repeat: repeat-y;
+  position: relative;
 
   ${({ theme }) => theme.mixins.mobile('padding: 10vh 20px 0;')};
 
   .ant-input,
   .ant-input-password {
     background-color: ${(props) => props.theme.color.graySet[7]};
+  }
+`;
+
+const LoginFooter = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+
+  > .home-page {
+    position: absolute;
+    right: 0;
+    bottom: 0;
   }
 `;
 
@@ -109,6 +124,18 @@ export const Login: React.FC = TMemo(() => {
             {t('没有账号？现在注册')}
           </Button>
         </div>
+
+        <LoginFooter>
+          <LanguageSwitchLink />
+
+          <Button
+            className="home-page"
+            type="link"
+            onClick={() => window.open(config.url.homepage)}
+          >
+            {t('官方网站')}
+          </Button>
+        </LoginFooter>
       </LoginContainer>
 
       <HiddenInMobile>
