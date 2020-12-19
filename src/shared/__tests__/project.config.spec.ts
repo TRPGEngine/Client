@@ -62,6 +62,7 @@ describe('project.config', () => {
       homepage: expect.any(String),
       docs: expect.any(String),
       goddessfantasy: expect.any(String),
+      loginUrl: expect.any(String),
       blog: expect.any(String),
       portal: expect.any(String),
       getInviteUrl: expect.any(Function),

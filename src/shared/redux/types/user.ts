@@ -1,4 +1,4 @@
-import { UserAlignment, UserGender } from '@shared/model/player';
+import { PlayerUser, UserAlignment, UserGender } from '@shared/model/player';
 
 export interface UserInfo {
   id: number;
@@ -32,7 +32,7 @@ interface UserInvite {
 export type UserState = {
   isTryLogin: boolean;
   isLogin: boolean;
-  info: Partial<UserInfo>;
+  info: Partial<PlayerUser>;
   webToken: string | null; // 用于portal登录的token
   friendList: string[];
   friendInvite: UserInvite[]; // 好友邀请(自己发给别人的)
