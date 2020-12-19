@@ -50,24 +50,9 @@ import { loadLocalCache } from './cache';
 import { TRPGAction } from '../types/__all__';
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import { setUserJWT } from '@shared/utils/jwt-helper';
+import { saveUserToken } from '@shared/helper/player';
 
 const api = trpgApi.getInstance();
-
-/**
- * 存储用户登录授权
- */
-function saveUserToken(uuid: string, token: string, isApp = false) {
-  if (isApp) {
-    // 如果是app的话，则永久储存
-    rnStorage.save('uuid', uuid);
-    rnStorage.save('token', token);
-  } else {
-    // 7天后自动过期
-    const expires = 1000 * 3600 * 24 * 7;
-    rnStorage.setWithExpires('uuid', uuid, expires);
-    rnStorage.setWithExpires('token', token, expires);
-  }
-}
 
 // 登录成功后获取数据
 // 即设置初始化的用户信息

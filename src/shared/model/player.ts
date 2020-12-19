@@ -61,16 +61,19 @@ export type UserGender = '男' | '女' | '其他' | '保密';
 export async function loginWithPassword(
   username: string,
   password: string
-): Promise<string> {
+): Promise<{
+  jwt: string;
+  info: PlayerUser;
+}> {
   const { data } = await request.post('/player/sso/login', {
     username,
     password: md5(password),
   });
 
-  const jwt = data.jwt;
+  const { jwt, info } = data;
   await setUserJWT(jwt);
 
-  return jwt;
+  return { jwt, info };
 }
 
 /**

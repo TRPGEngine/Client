@@ -27,7 +27,7 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  .ant-input, .ant-select-selector {
+  .ant-input, .ant-input-password, .ant-select-selector {
     border-color: ${(props) => props.theme.color.graySet[9]};
   }
 

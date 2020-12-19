@@ -54,7 +54,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = TMemo((props) => {
 
       try {
         await registerAccount(username, password);
-        const jwt = await loginWithPassword(username, password); // 注册成功后自动登录
+        const { jwt } = await loginWithPassword(username, password); // 注册成功后自动登录
 
         setPortalJWT(jwt);
         _isFunction(props.onLoginSuccess) && props.onLoginSuccess();

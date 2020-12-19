@@ -29,7 +29,7 @@ export const LoginForm: React.FC<LoginFormProps> = TMemo((props) => {
 
         setLoading(true);
         loginWithPassword(username, password)
-          .then((jwt) => {
+          .then(({ jwt }) => {
             setPortalJWT(jwt);
             _isFunction(props.onLoginSuccess) && props.onLoginSuccess();
           })
