@@ -13,7 +13,7 @@ import {
   RecruitPlatform,
   RecruitContactType,
 } from '@portal/model/trpg';
-import { handleError } from '@portal/utils/error';
+import { handleError } from '@web/utils/error';
 
 const RecruitCreateInitialValues = {
   title: '',

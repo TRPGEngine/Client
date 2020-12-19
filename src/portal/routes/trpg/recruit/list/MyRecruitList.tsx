@@ -8,7 +8,7 @@ import {
 import _orderBy from 'lodash/orderBy';
 import _isFunction from 'lodash/isFunction';
 import { List, Button, message, Tooltip } from 'antd';
-import { handleError } from '@portal/utils/error';
+import { handleError } from '@web/utils/error';
 import HTML from '@web/components/HTML';
 import Loading from '@portal/components/Loading';
 

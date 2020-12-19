@@ -17,7 +17,7 @@ import { getUserName } from '@shared/utils/data-helper';
 import { PortalCard } from '@portal/components/PortalCard';
 import Avatar from '@web/components/Avatar';
 import styled from 'styled-components';
-import { handleError } from '@portal/utils/error';
+import { handleError } from '@web/utils/error';
 import { WaveBackground } from '@web/components/WaveBackground';
 
 const Container = styled.div`

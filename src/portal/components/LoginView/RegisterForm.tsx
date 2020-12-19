@@ -3,7 +3,7 @@ import { WebFastForm } from '@web/components/WebFastForm';
 import { TMemo } from '@shared/components/TMemo';
 import { message, Col, Typography } from 'antd';
 import { registerAccount } from '@portal/model/player';
-import { handleError } from '@portal/utils/error';
+import { handleError } from '@web/utils/error';
 import _isFunction from 'lodash/isFunction';
 import { loginWithPassword } from '@shared/model/player';
 import { FastFormFieldMeta } from '@shared/components/FastForm/field';
