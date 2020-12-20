@@ -16,9 +16,9 @@ export interface PlayerUser {
   avatar: string;
   last_login: string;
   last_ip: string;
-  sex: string;
+  sex: UserGender;
   sign: string;
-  alignment: string;
+  alignment: UserAlignment;
   qq_number: string;
   token?: string;
   app_token?: string;
