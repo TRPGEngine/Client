@@ -80,6 +80,18 @@ export async function loginWithPassword(
 }
 
 /**
+ * 注册账号
+ * @param username 用户名
+ * @param password 密码
+ */
+export const registerAccount = (username: string, password: string) => {
+  return request.post('/player/register', {
+    username,
+    password: md5(password),
+  });
+};
+
+/**
  * 获取用户信息
  */
 export const fetchUserInfo = buildCacheFactory<PlayerUser>(

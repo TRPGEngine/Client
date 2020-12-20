@@ -2,10 +2,9 @@ import React, { useCallback, useState, Fragment } from 'react';
 import { WebFastForm } from '@web/components/WebFastForm';
 import { TMemo } from '@shared/components/TMemo';
 import { message, Col, Typography } from 'antd';
-import { registerAccount } from '@portal/model/player';
 import { handleError } from '@web/utils/error';
 import _isFunction from 'lodash/isFunction';
-import { loginWithPassword } from '@shared/model/player';
+import { loginWithPassword, registerAccount } from '@shared/model/player';
 import { FastFormFieldMeta } from '@shared/components/FastForm/field';
 import { setPortalJWT } from '@portal/utils/auth';
 

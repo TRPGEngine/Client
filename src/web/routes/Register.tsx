@@ -5,14 +5,14 @@ import {
   useTRPGSelector,
 } from '@shared/hooks/useTRPGSelector';
 import { useTranslation } from '@shared/i18n';
+import { registerAccount } from '@shared/model/player';
 import config from '@shared/project.config';
 import { HiddenInMobile } from '@web/components/HiddenInMobile';
-import { LanguageSwitchLink } from '@web/components/LanguageSwitchLink';
-import { Logo } from '@web/components/Logo';
 import Webview from '@web/components/Webview';
 import { checkIsOldApp } from '@web/utils/debug-helper';
-import { Button, Input, Space } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { handleError } from '@web/utils/error';
+import { Button, Input, Space, Typography } from 'antd';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
@@ -25,7 +25,7 @@ const Root = styled.div`
   width: 100vw;
 `;
 
-const LoginContainer = styled(Space).attrs({
+const RegisterContainer = styled(Space).attrs({
   direction: 'vertical',
   size: 12,
 })`
@@ -45,44 +45,58 @@ const LoginContainer = styled(Space).attrs({
   }
 `;
 
-const LoginFooter = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 10px;
-
-  > .home-page {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
-`;
-
 const InfoContainer = styled.div`
   flex: 1;
   background-color: white;
 `;
 
-const LoginView: React.FC = TMemo(() => {
+const RegisterView: React.FC = TMemo(() => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordRepeat, setPasswordRepeat] = useState('');
   const { t } = useTranslation();
   const dispatch = useTRPGDispatch();
 
-  const [{ loading }, handleLogin] = useAsyncFn(async () => {
-    const isOldApp = checkIsOldApp();
+  const [{ loading }, handleRegister] = useAsyncFn(async () => {
+    try {
+      await registerAccount(username, password);
 
-    dispatch(login(username, password, { isOldApp }));
-  }, [username, password, history]);
+      // 注册成功后自动登录
+      const isOldApp = checkIsOldApp();
+
+      dispatch(login(username, password, { isOldApp }));
+    } catch (err) {
+      handleError(err);
+    }
+  }, [username, password]);
+
+  const errorMsg = useMemo(() => {
+    if (!username) {
+      return t('用户名不能为空');
+    }
+
+    if (!/^[A-Za-z\d]{5,16}$/.test(username)) {
+      return t('用户名必须为5到16位英文或数字');
+    }
+
+    if (!password) {
+      return t('密码不能为空');
+    }
+
+    if (!/^[A-Za-z\d]{5,16}$/.test(password)) {
+      return t('密码必须为5到16位英文或数字');
+    }
+
+    if (password !== passwordRepeat) {
+      return t('重复密码不一致');
+    }
+
+    return '';
+  }, [username, password, passwordRepeat]);
 
   return (
-    <LoginContainer>
-      <Logo style={{ width: 128, height: 128 }} />
-
-      <h2 style={{ marginBottom: 12, textAlign: 'center' }}>
-        {t('欢迎来到TRPG的世界')}
-      </h2>
-
+    <RegisterContainer>
+      <h2>{t('注册账号')}</h2>
       <Input
         size="large"
         placeholder={t('用户名')}
@@ -95,38 +109,36 @@ const LoginView: React.FC = TMemo(() => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-
+      <Input.Password
+        size="large"
+        placeholder={t('重复密码')}
+        value={passwordRepeat}
+        onChange={(e) => setPasswordRepeat(e.target.value)}
+      />
+      <Typography.Text type="danger">{errorMsg}</Typography.Text>
       <Button
         size="large"
         type="primary"
         block={true}
         loading={loading}
-        onClick={handleLogin}
+        onClick={handleRegister}
+        disabled={errorMsg !== ''}
       >
-        {t('登录')}
+        {t('注册')}
       </Button>
       <div style={{ textAlign: 'right' }}>
-        <Link to="/register" replace={true}>
-          <Button type="link">{t('没有账号？现在注册')}</Button>
+        <Link to="/login" replace={true}>
+          <Button type="link">{t('已有账号？现在登录')}</Button>
         </Link>
       </div>
-
-      <LoginFooter>
-        <LanguageSwitchLink />
-
-        <Button
-          className="home-page"
-          type="link"
-          onClick={() => window.open(config.url.homepage)}
-        >
-          {t('官方网站')}
-        </Button>
-      </LoginFooter>
-    </LoginContainer>
+    </RegisterContainer>
   );
 });
-LoginView.displayName = 'LoginView';
+RegisterView.displayName = 'RegisterView';
 
+/**
+ * TODO: 需要合并
+ */
 function useWatchLoginStatus() {
   const history = useHistory();
   const isLogin = useTRPGSelector((state) => state.user.isLogin);
@@ -137,12 +149,12 @@ function useWatchLoginStatus() {
   }, [isLogin]);
 }
 
-export const Login: React.FC = TMemo(() => {
+export const Register: React.FC = TMemo(() => {
   useWatchLoginStatus();
 
   return (
     <Root>
-      <LoginView />
+      <RegisterView />
 
       <HiddenInMobile>
         <InfoContainer>
@@ -152,4 +164,4 @@ export const Login: React.FC = TMemo(() => {
     </Root>
   );
 });
-Login.displayName = 'Login';
+Register.displayName = 'Register';
