@@ -29,7 +29,7 @@ const BaseContainer = styled.div`
   background-repeat: repeat-y;
   position: relative;
 
-  ${({ theme }) => theme.mixins.mobile('padding: 10vh 20px 0;')};
+  ${({ theme }) => theme.mixins.mobile('width: 100%;padding: 10vh 20px 0;')};
 
   .ant-input,
   .ant-input-password {
