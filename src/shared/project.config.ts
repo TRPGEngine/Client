@@ -111,6 +111,7 @@ interface ProjectConfig {
     loginUrl: string;
     blog: string;
     portal: string;
+    rsshub: string;
     getInviteUrl: (inviteCode: string) => string;
   };
   defaultSettings: DefaultSettings;
@@ -251,6 +252,7 @@ const config: ProjectConfig = {
     loginUrl: 'https://trpgdoc.moonrailgun.com/features',
     blog: 'https://trpgdoc.moonrailgun.com/blog/',
     portal: portalUrl,
+    rsshub: 'https://rss.moonrailgun.com/',
     getInviteUrl(inviteCode: string) {
       return `${portalUrl}/group/invite/${inviteCode}`;
     },
