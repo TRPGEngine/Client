@@ -33,6 +33,7 @@ const initSentry = _once(() => {
       'ResizeObserver loop completed with undelivered',
       `Can't find variable: Notification`,
       `'Notification' is undefined`,
+      'ReferenceError: Notification is not defined',
     ],
   });
 });
