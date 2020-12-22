@@ -33,13 +33,14 @@ const config = merge({}, base, {
     publicPath,
   },
 
-  devtool: isProduction ? false : 'cheap-module-eval-source-map',
+  devtool: isProduction ? false : 'eval-cheap-module-source-map',
 
   devServer: {
     host: '0.0.0.0',
     port: 8190,
     compress: true,
     overlay: true,
+    publicPath: '/portal/',
     historyApiFallback: {
       rewrites: [
         { from: `${dllHashName}.js`, to: `/portal/${dllHashName}.js` },
