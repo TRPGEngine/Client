@@ -67,6 +67,7 @@ describe('project.config', () => {
       portal: expect.any(String),
       rsshub: expect.any(String),
       getInviteUrl: expect.any(Function),
+      rssNews: expect.any(Array),
     });
     expect(config).toHaveProperty('defaultSettings', {
       user: {
