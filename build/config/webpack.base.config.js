@@ -99,6 +99,9 @@ const out = {
       buffer: require.resolve('buffer/'),
       stream: require.resolve('stream-browserify'),
       string_decoder: require.resolve('string_decoder/'),
+      timers: require.resolve('timers-browserify'),
+      "http": require.resolve("stream-http"),
+      "https": require.resolve("https-browserify")
     },
   },
   //babel重要的loader在这里
