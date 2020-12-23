@@ -10,6 +10,10 @@ android/gradle.properties
 snowpack.crt
 snowpack.key
 
+# Cypress
+cypress/videos/
+cypress/screenshots/
+
 # Logs
 logs
 *.log
