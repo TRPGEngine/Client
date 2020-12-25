@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.8](https://github.com/TRPGEngine/Client/compare/v0.5.7...v0.5.8) (2020-12-25)
+
+
+### Features
+
+* **web:** popup可以点击头像显示详细用户信息 ([e059d2b](https://github.com/TRPGEngine/Client/commit/e059d2baa096f3b341352d907aa62780db136573))
+* **web:** 新版注册页 ([9b29099](https://github.com/TRPGEngine/Client/commit/9b290998fe272086ae3007d252f95372bf984150))
+* 新的登录页面 ([02d8514](https://github.com/TRPGEngine/Client/commit/02d8514dff924f33073f2b22a7b61d15e25bd2a8))
+
+
+### Bug Fixes
+
+* **web:** 修复Launch页面自动跳转不正确的bug ([7b98b77](https://github.com/TRPGEngine/Client/commit/7b98b77e11439b82e57f63c7461c64b1eb58ede5))
+
 ### [0.5.7](https://github.com/TRPGEngine/Client/compare/v0.5.6...v0.5.7) (2020-12-18)
 
 
