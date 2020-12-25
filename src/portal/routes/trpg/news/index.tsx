@@ -1,11 +1,11 @@
 import Loading from '@portal/components/Loading';
 import config from '@shared/project.config';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { useAsync } from 'react-use';
 import Parser from 'rss-parser';
-import { htmlToText } from 'html-to-text';
 import _orderBy from 'lodash/orderBy';
+import { transformToDom } from './utils';
 const parser = new Parser<RSSItem>();
 
 interface RSSItem {
@@ -40,7 +40,7 @@ const News: React.FC<Props> = React.memo((props) => {
             return (
               <div key={i}>
                 <p>{item.title}</p>
-                <p>{htmlToText(item.content ?? '')}</p>
+                <p>{transformToDom(item.content ?? '')}</p>
                 <hr />
               </div>
             );

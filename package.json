@@ -103,7 +103,7 @@
     "formik": "^2.1.1",
     "handlebars": "^4.7.6",
     "hark": "^1.2.3",
-    "html-to-react": "^1.4.2",
+    "html-to-react": "^1.4.5",
     "html-to-text": "^6.0.0",
     "https-browserify": "^1.0.0",
     "i18next": "^19.6.3",
