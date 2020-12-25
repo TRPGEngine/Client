@@ -12,7 +12,7 @@ import { GroupActorItem } from '@shared/model/group';
 import _isNil from 'lodash/isNil';
 import _isFunction from 'lodash/isFunction';
 import SplitPane from '@shared/components/web/SplitPane';
-import { handleError } from '@portal/utils/error';
+import { handleError } from '@web/utils/error';
 import { TiledMapManager } from '@shared/components/tiledmap/core/manager';
 import { checkToken } from '@portal/utils/auth';
 import { TMemo } from '@shared/components/TMemo';

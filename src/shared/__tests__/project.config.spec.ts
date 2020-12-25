@@ -62,9 +62,12 @@ describe('project.config', () => {
       homepage: expect.any(String),
       docs: expect.any(String),
       goddessfantasy: expect.any(String),
+      loginUrl: expect.any(String),
       blog: expect.any(String),
       portal: expect.any(String),
+      rsshub: expect.any(String),
       getInviteUrl: expect.any(Function),
+      rssNews: expect.any(Array),
     });
     expect(config).toHaveProperty('defaultSettings', {
       user: {

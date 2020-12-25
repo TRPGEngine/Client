@@ -47,31 +47,18 @@ import { getTemplate, getActor } from './actor';
 import { getGroupList, getGroupInvite } from './group';
 import { getNote, getNotes } from './note';
 import { loadLocalCache } from './cache';
-import { TRPGAction } from '../types/__all__';
+import { createTRPGAsyncThunk, TRPGAction } from '../types/__all__';
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import { setUserJWT } from '@shared/utils/jwt-helper';
+import { saveUserToken } from '@shared/helper/player';
+import { UserInfo } from '@redux/types/user';
+import { PlayerUser } from '@shared/model/player';
 
 const api = trpgApi.getInstance();
 
-/**
- * 存储用户登录授权
- */
-function saveUserToken(uuid: string, token: string, isApp = false) {
-  if (isApp) {
-    // 如果是app的话，则永久储存
-    rnStorage.save('uuid', uuid);
-    rnStorage.save('token', token);
-  } else {
-    // 7天后自动过期
-    const expires = 1000 * 3600 * 24 * 7;
-    rnStorage.setWithExpires('uuid', uuid, expires);
-    rnStorage.setWithExpires('token', token, expires);
-  }
-}
-
 // 登录成功后获取数据
 // 即设置初始化的用户信息
-function loginSuccess(dispatch, getState) {
+function _loginSuccess(dispatch, getState) {
   if (!dispatch || !getState) {
     return;
   }
@@ -102,6 +89,27 @@ function loginSuccess(dispatch, getState) {
   }, 0);
 }
 
+export const loginSuccess = createTRPGAsyncThunk<
+  {
+    playerInfo: PlayerUser;
+  },
+  {
+    info: PlayerUser;
+  }
+>(LOGIN_SUCCESS, async ({ playerInfo }, { dispatch, getState }) => {
+  const { uuid, token, app_token } = playerInfo;
+  const isApp = config.platform === 'app';
+  saveUserToken(uuid, isApp === true ? app_token! : token!, isApp);
+  console.log('save user token, user:', uuid);
+
+  playerInfo.avatar = config.file.getAbsolutePath!(playerInfo.avatar);
+  _loginSuccess(dispatch, getState); // 获取用户信息
+
+  return {
+    info: playerInfo,
+  };
+});
+
 /**
  * 使用账号密码登录
  * @param username 账号名
@@ -125,14 +133,11 @@ export const login = function (
 
         if (data.result) {
           // 登录成功
-          const { uuid, token, app_token } = data.info;
-
-          saveUserToken(uuid, isApp === true ? app_token : token, isApp);
-          console.log('save user token, user:', uuid);
-
-          data.info.avatar = config.file.getAbsolutePath!(data.info.avatar);
-          dispatch({ type: LOGIN_SUCCESS, payload: data.info, isApp });
-          loginSuccess(dispatch, getState); // 获取用户信息
+          dispatch(
+            loginSuccess({
+              playerInfo: data.info,
+            })
+          );
         } else {
           rnStorage.remove('uuid');
           rnStorage.remove('token');
@@ -175,7 +180,7 @@ export const loginWithToken = function (
 
           data.info.avatar = config.file.getAbsolutePath!(data.info.avatar);
           dispatch({ type: LOGIN_TOKEN_SUCCESS, payload: data.info, isApp });
-          loginSuccess(dispatch, getState); // 获取用户信息
+          _loginSuccess(dispatch, getState); // 获取用户信息
         } else {
           console.error(data);
           dispatch({ type: LOGIN_FAILED, payload: data.msg });
@@ -200,7 +205,7 @@ export const loginWithToken = function (
 export const updateAllInfo = function (): TRPGAction {
   return function (dispatch, getState) {
     if (getState().user.isLogin === true) {
-      loginSuccess(dispatch, getState);
+      _loginSuccess(dispatch, getState);
     }
   };
 };

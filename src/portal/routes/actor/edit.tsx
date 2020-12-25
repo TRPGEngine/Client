@@ -6,7 +6,7 @@ import { checkToken } from '@portal/utils/auth';
 import { editActor } from '@portal/model/actor';
 import history from '@portal/history';
 import { notification } from 'antd';
-import { handleError } from '@portal/utils/error';
+import { handleError } from '@web/utils/error';
 
 interface Props
   extends RouteComponentProps<{

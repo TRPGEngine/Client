@@ -4,9 +4,8 @@ import config from '@shared/project.config';
 import { TMemo } from '@shared/components/TMemo';
 import ErrorBoundary from '@web/containers/ErrorBoundary';
 import { GlobalUI } from '@web/containers/GlobalUI';
+import { EntryRoute } from './Entry';
 import { LaunchRoute } from './Launch';
-import Login from '@web/containers/Login';
-import Register from '@web/containers/Register';
 import { MainRoute } from './Main';
 import { GlobalStyle } from './style';
 import { LoginCheck } from './LoginCheck';
@@ -52,8 +51,7 @@ const _App = TMemo(() => {
         <div className="app new-ui-dark">
           <CustomProvider>
             <Switch>
-              <Route name="login" path="/login" component={Login} />
-              <Route name="register" path="/register" component={Register} />
+              <Route name="entry" path="/entry" component={EntryRoute} />
               <Route name="main" path="/main" component={MainRoute} />
               <Route name="index" path="/" component={LaunchRoute} />
             </Switch>

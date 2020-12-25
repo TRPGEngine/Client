@@ -2,6 +2,7 @@ import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import robotImg from '@web/assets/img/robot_dark.svg';
 import { MsgStyleType } from './types/chat';
+import url from 'url';
 
 const environment = process.env.NODE_ENV || 'development';
 const platform = process.env.PLATFORM || 'web';
@@ -108,9 +109,12 @@ interface ProjectConfig {
     homepage: string;
     docs: string;
     goddessfantasy: string;
+    loginUrl: string;
     blog: string;
     portal: string;
+    rsshub: string;
     getInviteUrl: (inviteCode: string) => string;
+    rssNews: { name: string; url: string }[];
   };
   defaultSettings: DefaultSettings;
 }
@@ -131,6 +135,20 @@ const defaultSettings = {
     chatBoxType: 'auto' as 'auto' | 'compatible', // 聊天框类型 有auto, compatible
   },
 };
+
+const rsshub = 'https://rss.moonrailgun.com/';
+/**
+ * 用于portal的新闻功能
+ */
+const rssNews = [
+  {
+    name: '贴吧',
+    url: url.resolve(
+      rsshub,
+      '/tieba/forum/跑团?code=42bacec52565b92308da5f98ec1509c9'
+    ),
+  },
+];
 
 export type DefaultSettings = typeof defaultSettings;
 
@@ -247,11 +265,17 @@ const config: ProjectConfig = {
     homepage: 'https://trpgdoc.moonrailgun.com/',
     docs: 'https://trpgdoc.moonrailgun.com/',
     goddessfantasy: 'http://www.goddessfantasy.net/',
+    loginUrl: 'https://trpgdoc.moonrailgun.com/features',
     blog: 'https://trpgdoc.moonrailgun.com/blog/',
     portal: portalUrl,
+    rsshub,
     getInviteUrl(inviteCode: string) {
       return `${portalUrl}/group/invite/${inviteCode}`;
     },
+    /**
+     *
+     */
+    rssNews,
   },
   defaultSettings,
 };

@@ -10,7 +10,7 @@ import {
   reportLogRequireKey,
   EditLogItem,
 } from '@shared/model/trpg';
-import { handleError } from '@portal/utils/error';
+import { handleError } from '@web/utils/error';
 import history from '@portal/history';
 import { LogItem } from './log-item';
 import Loading from '@portal/components/Loading';

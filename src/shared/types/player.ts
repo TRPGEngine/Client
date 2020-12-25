@@ -4,6 +4,9 @@ export interface PlayerTokenInfo {
   avatar: string;
 }
 
+/**
+ * @deprecated 应该使用Client\src\shared\model\player.ts
+ */
 export interface PlayerUser {
   id: number;
   name?: string;

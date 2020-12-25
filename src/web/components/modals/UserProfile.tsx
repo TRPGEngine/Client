@@ -36,7 +36,7 @@ const Info = styled(Row).attrs({
 const InfoAvatar = styled(Avatar).attrs({
   size: 64,
 })`
-  margin-right: 10px;
+  margin-right: 10px !important;
 `;
 
 const InfoText = styled.div`

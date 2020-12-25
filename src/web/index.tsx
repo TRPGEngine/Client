@@ -22,7 +22,7 @@ import '@web/assets/css/iconfont.css';
 import { bindEventFunc } from '@shared/api/listener';
 import { watchLoginStatus } from '@redux/middlewares/watchLoginStatus';
 import { setUser as setUserSentryInfo } from './utils/sentry';
-import TLoadable from './components/TLoadable';
+import { TLoadable } from './components/TLoadable';
 import { checkIsOldApp } from './utils/debug-helper';
 import { ThemeContextProvider } from '@shared/context/ThemeContext';
 import { TRPGStore } from '@redux/types/__all__';

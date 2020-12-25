@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`newsRSSUrl 1`] = `
+Array [
+  Object {
+    "name": "贴吧",
+    "url": "https://rss.moonrailgun.com/tieba/forum/跑团?code=42bacec52565b92308da5f98ec1509c9",
+  },
+]
+`;

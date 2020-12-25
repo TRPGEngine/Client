@@ -1,6 +1,6 @@
 import React, { useCallback, Fragment, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { handleError } from '@portal/utils/error';
+import { handleError } from '@web/utils/error';
 import { message, Input, Button, Col, Typography, Form } from 'antd';
 import { useFormik } from 'formik';
 import _isFunction from 'lodash/isFunction';
@@ -29,7 +29,7 @@ export const LoginForm: React.FC<LoginFormProps> = TMemo((props) => {
 
         setLoading(true);
         loginWithPassword(username, password)
-          .then((jwt) => {
+          .then(({ jwt }) => {
             setPortalJWT(jwt);
             _isFunction(props.onLoginSuccess) && props.onLoginSuccess();
           })

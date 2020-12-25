@@ -1,25 +1,21 @@
 import React from 'react';
-import Loadable, { LoadingComponentProps } from 'react-loadable';
-import LoadingSpinner from './LoadingSpinner';
-import { TMemo } from '@shared/components/TMemo';
-
-const Loading: React.FC<LoadingComponentProps> = TMemo((props) => {
-  return props.pastDelay ? <LoadingSpinner /> : null;
-});
-Loading.displayName = 'Loading';
-
-type LoaderType<T> = () => Promise<
-  React.ComponentType<T> | { default: React.ComponentType<T> }
->;
+import loadable, {
+  DefaultComponent,
+  LoadableComponent,
+} from '@loadable/component';
+import pMinDelay from 'p-min-delay';
+import { Loading } from './Loading';
 
 /**
  * 用法: Loadable(() => import('xxxxxx'))
  * @param loader 需要懒加载的组件
  */
-export default function TLoadable<T>(loader: LoaderType<T>) {
-  return Loadable({
-    loader,
-    loading: Loading,
-    delay: 200,
+export function TLoadable<Props>(
+  loadFn: (props: Props) => Promise<DefaultComponent<Props>>
+): LoadableComponent<Props> {
+  return loadable((props) => pMinDelay(loadFn(props), 200), {
+    fallback: <Loading />,
   });
 }
+
+export default TLoadable;

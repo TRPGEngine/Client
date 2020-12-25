@@ -2,7 +2,7 @@
 
 exports[`layout basic 1`] = `
 <div
-  className="sc-fzoLsD dtpKnj"
+  className="sc-fzpans jRldgn"
   style={
     Object {
       "position": "relative",
@@ -28,7 +28,7 @@ exports[`layout basic 1`] = `
 
 exports[`layout some text 1`] = `
 <div
-  className="sc-fzoLsD dtpKnj"
+  className="sc-fzpans jRldgn"
   style={
     Object {
       "position": "relative",

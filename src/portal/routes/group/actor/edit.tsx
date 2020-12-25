@@ -6,7 +6,7 @@ import { notification } from 'antd';
 import { nav, navReplace } from '@portal/history';
 import ActorEditor from '@portal/components/ActorEditor';
 import { ActionButton } from '@portal/components/ActionButton';
-import { handleError } from '@portal/utils/error';
+import { handleError } from '@web/utils/error';
 import { editGroupActor } from '@shared/model/group';
 
 interface Props

@@ -16,9 +16,12 @@ export interface PlayerUser {
   avatar: string;
   last_login: string;
   last_ip: string;
-  sex: string;
+  sex: UserGender;
   sign: string;
-  alignment: string;
+  alignment: UserAlignment;
+  qq_number: string;
+  token?: string;
+  app_token?: string;
   createdAt: string;
   updatedAt: string;
   deletedAt: string;
@@ -61,17 +64,32 @@ export type UserGender = '男' | '女' | '其他' | '保密';
 export async function loginWithPassword(
   username: string,
   password: string
-): Promise<string> {
+): Promise<{
+  jwt: string;
+  info: PlayerUser;
+}> {
   const { data } = await request.post('/player/sso/login', {
     username,
     password: md5(password),
   });
 
-  const jwt = data.jwt;
+  const { jwt, info } = data;
   await setUserJWT(jwt);
 
-  return jwt;
+  return { jwt, info };
 }
+
+/**
+ * 注册账号
+ * @param username 用户名
+ * @param password 密码
+ */
+export const registerAccount = (username: string, password: string) => {
+  return request.post('/player/register', {
+    username,
+    password: md5(password),
+  });
+};
 
 /**
  * 获取用户信息

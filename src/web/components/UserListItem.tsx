@@ -24,7 +24,7 @@ const Root = styled.div`
 
 const UserAvatar = styled(Avatar)`
   cursor: pointer !important;
-  margin-right: 10px;
+  margin-right: 10px !important;
 `;
 
 const UserNameText = styled(Typography)`

@@ -1,11 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useCachedUserInfo } from '@shared/hooks/useCache';
 import styled from 'styled-components';
 import Avatar from '../Avatar';
-import config from '@shared/project.config';
 import _isEmpty from 'lodash/isEmpty';
 import { TMemo } from '@shared/components/TMemo';
 import { useTranslation } from '@shared/i18n';
+import { openUserProfile } from '../modals/UserProfile';
+import { useTPopoverContext } from './index';
 
 const Container = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ const Container = styled.div`
 
   .avatar {
     overflow: hidden;
+    cursor: pointer;
 
     > img {
       width: 100%;
@@ -31,6 +33,7 @@ interface Props {
   userUUID: string;
 }
 const PopoverUserInfo: React.FC<Props> = TMemo((props) => {
+  const { closePopover } = useTPopoverContext();
   const userInfo = useCachedUserInfo(props.userUUID);
   const { t } = useTranslation();
 
@@ -39,9 +42,14 @@ const PopoverUserInfo: React.FC<Props> = TMemo((props) => {
     userInfo.username,
   ]);
 
+  const handleClickAvatar = useCallback(() => {
+    openUserProfile(props.userUUID);
+    closePopover();
+  }, [closePopover, props.userUUID]);
+
   return (
     <Container>
-      <div className="avatar">
+      <div className="avatar" onClick={handleClickAvatar}>
         <Avatar size="large" src={userInfo.avatar} name={name} />
       </div>
       <div className="info">
