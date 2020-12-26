@@ -8,7 +8,11 @@ import _orderBy from 'lodash/orderBy';
 import { Empty, List } from 'antd';
 import _flatten from 'lodash/flatten';
 import _isNil from 'lodash/isNil';
+import _isString from 'lodash/isString';
 import styled from 'styled-components';
+import { getFirstImageUrlFromHTML } from './utils';
+import { TMemo } from '@shared/components/TMemo';
+import { useIsMobile } from '@web/hooks/useIsMobile';
 
 const parser = new Parser<RSSItem>();
 
@@ -16,12 +20,54 @@ const Root = styled.div`
   padding: 16px;
 `;
 
+const RssListItem = styled(List.Item)`
+  align-items: flex-start !important;
+
+  .ant-list-vertical & .ant-list-item-extra {
+    width: 100%;
+  }
+`;
+
+const RssItemImageContainer = styled.div`
+  width: 272px;
+  height: 168px;
+  overflow: hidden;
+  position: relative;
+
+  .ant-list-vertical & {
+    width: 100%;
+  }
+
+  > img {
+    position: absolute;
+    width: 100%;
+  }
+`;
+
 interface RSSItem extends Parser.Output<{ [key: string]: any }> {
   title?: string;
 }
 
+const RssItemImage: React.FC<{
+  content: string;
+}> = TMemo(({ content }) => {
+  const url = getFirstImageUrlFromHTML(content);
+
+  if (_isString(url)) {
+    return (
+      <RssItemImageContainer>
+        <img referrerPolicy={'no-referrer'} src={url} />
+      </RssItemImageContainer>
+    );
+  } else {
+    return null;
+  }
+});
+RssItemImage.displayName = 'RssItemImage';
+
 interface Props extends RouteComponentProps {}
-const News: React.FC<Props> = React.memo((props) => {
+const News: React.FC<Props> = TMemo((props) => {
+  const isMobile = useIsMobile();
   const { value, loading } = useAsync(async () => {
     try {
       const list = await Promise.all(
@@ -60,17 +106,24 @@ const News: React.FC<Props> = React.memo((props) => {
     <Root>
       <h2>TRPG 动态</h2>
       <List
-        itemLayout="horizontal"
+        itemLayout={isMobile ? 'vertical' : 'horizontal'}
         dataSource={value}
         renderItem={(item) => (
-          <a href={item.link} target="_blank" rel="noopener">
-            <List.Item>
-              <List.Item.Meta
-                title={item.title}
-                description={item.contentSnippet}
-              />
-            </List.Item>
-          </a>
+          <RssListItem extra={<RssItemImage content={item.content ?? ''} />}>
+            <List.Item.Meta
+              title={
+                <a
+                  key={item.guid}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {item.title}
+                </a>
+              }
+              description={item.contentSnippet}
+            />
+          </RssListItem>
         )}
       />
     </Root>
