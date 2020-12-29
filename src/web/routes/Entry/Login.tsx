@@ -54,7 +54,9 @@ export const LoginView: React.FC = TMemo(() => {
       </Button>
       <div style={{ textAlign: 'right' }}>
         <Link to="/entry/register" replace={true}>
-          <Button type="link">{t('没有账号？现在注册')}</Button>
+          <Button type="link" data-testid="register-btn">
+            {t('没有账号？现在注册')}
+          </Button>
         </Link>
       </div>
     </ViewContainer>

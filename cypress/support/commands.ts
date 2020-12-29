@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/tslint/config */
+/* eslint-disable @typescript-eslint/no-namespace */
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -23,3 +26,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+declare namespace Cypress {
+  interface Chainable<Subject> {
+    getByTestId(selector: string, options?: any): Chainable<Subject>;
+  }
+}
+
+Cypress.Commands.add('getByTestId', (selector, ...args) => {
+  return cy.get(`[data-testid=${selector}]`, ...args);
+});

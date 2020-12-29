@@ -89,7 +89,9 @@ export const RegisterView: React.FC = TMemo(() => {
       </Button>
       <div style={{ textAlign: 'right' }}>
         <Link to="/entry/login" replace={true}>
-          <Button type="link">{t('已有账号？现在登录')}</Button>
+          <Button type="link" data-testid="login-btn">
+            {t('已有账号？现在登录')}
+          </Button>
         </Link>
       </div>
     </ViewContainer>
