@@ -13,13 +13,13 @@ import { MessageItem } from '@shared/components/message/MessageItem';
 import styled from 'styled-components';
 import { MsgPayload } from '@redux/types/chat';
 import { useCurrentUserUUID } from '@redux/hooks/user';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox/Checkbox';
 
 const MsgPreviewViewContainer = styled.div`
   max-width: 360px;
   border-radius: ${({ theme }) => theme.radius.card};
   border: ${({ theme }) => theme.border.standard};
   padding: 10px;
+  margin-bottom: 16px;
 `;
 
 function buildMsgPayload(payload: Partial<MsgPayload>): MsgPayload {
@@ -93,6 +93,10 @@ export const SettingUserConfig: React.FC = TMemo(() => {
     dispatch(setUserSettings({ msgStyleCombine: checked }));
   }, []);
 
+  const handleSetMsgInputHistorySwitch = useCallback((checked: boolean) => {
+    dispatch(setUserSettings({ msgInputHistorySwitch: checked }));
+  }, []);
+
   return (
     <div>
       <FullModalField
@@ -115,6 +119,16 @@ export const SettingUserConfig: React.FC = TMemo(() => {
       />
 
       <MsgPreviewView />
+
+      <FullModalField
+        title={t('上下键切换历史消息')}
+        content={
+          <Switch
+            checked={Boolean(userSettings.msgInputHistorySwitch)}
+            onChange={handleSetMsgInputHistorySwitch}
+          />
+        }
+      />
     </div>
   );
 });

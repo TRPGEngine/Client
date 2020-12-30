@@ -127,6 +127,7 @@ const defaultSettings = {
     favoriteDice: [] as { title: string; value: string }[],
     msgStyleType: 'bubble' as MsgStyleType,
     msgStyleCombine: false,
+    msgInputHistorySwitch: true, // 聊天输入框上下键快速切换历史消息
   },
   system: {
     notification: true, // 是否通知

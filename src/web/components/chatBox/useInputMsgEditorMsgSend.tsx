@@ -21,6 +21,7 @@ import { t } from '@shared/i18n';
 import { useSystemSetting } from '@redux/hooks/settings';
 import { Input } from 'antd';
 import { useMsgHistory } from '@shared/hooks/useMsgHistory';
+import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 
 /**
  * 会话消息发送管理
@@ -47,6 +48,9 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
     resetIndex,
     addHistoryMsg,
   } = useMsgHistory(converseUUID);
+  const msgInputHistorySwitch = useTRPGSelector(
+    (state) => state.settings.user.msgInputHistorySwitch ?? true
+  );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -59,7 +63,11 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
           resetIndex();
         }
       }
-      if (message === '' || currentIndex !== -1) {
+      if (
+        msgInputHistorySwitch === true &&
+        (message === '' || currentIndex !== -1)
+      ) {
+        // 当上下键快速切换消息历史功能开启时
         // 仅当前信息为空时 或 正在使用上下键切换时, 允许使用上下键切换当前消息
         if (isArrowUpHotkey(e.nativeEvent)) {
           e.preventDefault();
@@ -79,6 +87,7 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
     [
       message,
       handleSendMsg,
+      msgInputHistorySwitch,
       switchUp,
       switchDown,
       addHistoryMsg,

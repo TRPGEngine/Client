@@ -74,6 +74,7 @@ describe('project.config', () => {
         favoriteDice: expect.any(Array),
         msgStyleType: expect.any(String),
         msgStyleCombine: expect.any(Boolean),
+        msgInputHistorySwitch: expect.any(Boolean),
       },
       system: {
         notification: expect.any(Boolean),
