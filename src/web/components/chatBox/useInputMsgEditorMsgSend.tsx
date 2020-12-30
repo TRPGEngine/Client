@@ -1,7 +1,11 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { TRPGEditorNode } from '../editor/types';
 import { buildBlankInputData, getHeadSelection } from '../editor/utils';
-import { isEnterHotkey } from '@web/utils/hot-key';
+import {
+  isArrowDownHotkey,
+  isArrowUpHotkey,
+  isEnterHotkey,
+} from '@web/utils/hot-key';
 import { useMsgSend } from '@shared/hooks/useMsgSend';
 import { Editor } from 'slate';
 import React from 'react';
@@ -16,6 +20,7 @@ import _isString from 'lodash/isString';
 import { t } from '@shared/i18n';
 import { useSystemSetting } from '@redux/hooks/settings';
 import { Input } from 'antd';
+import { useMsgHistory } from '@shared/hooks/useMsgHistory';
 
 /**
  * 会话消息发送管理
@@ -35,15 +40,51 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
     // 是否使用高级输入框
     return chatBoxType !== 'compatible';
   }, [chatBoxType]);
+  const {
+    switchUp,
+    switchDown,
+    currentIndex,
+    resetIndex,
+    addHistoryMsg,
+  } = useMsgHistory(converseUUID);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (isEnterHotkey(e.nativeEvent)) {
         e.preventDefault();
+
         handleSendMsg();
+        if (message !== '') {
+          addHistoryMsg(message);
+          resetIndex();
+        }
+      }
+      if (message === '' || currentIndex !== -1) {
+        // 仅当前信息为空时 或 正在使用上下键切换时, 允许使用上下键切换当前消息
+        if (isArrowUpHotkey(e.nativeEvent)) {
+          e.preventDefault();
+          const newMsg = switchUp();
+          if (newMsg !== null) {
+            setMessage(newMsg);
+          }
+        } else if (isArrowDownHotkey(e.nativeEvent)) {
+          e.preventDefault();
+          const newMsg = switchDown();
+          if (newMsg !== null) {
+            setMessage(newMsg);
+          }
+        }
       }
     },
-    [handleSendMsg]
+    [
+      message,
+      handleSendMsg,
+      switchUp,
+      switchDown,
+      addHistoryMsg,
+      currentIndex,
+      resetIndex,
+    ]
   );
 
   const handlePaste = useCallback(

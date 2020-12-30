@@ -18,7 +18,10 @@ export function useMsgHistory(converseUUID: string) {
     [converseUUID]
   );
 
-  const switchUp = useCallback((): string | null => {
+  /**
+   * 从最远切换到最近
+   */
+  const switchDown = useCallback((): string | null => {
     const list = msgHistoryMap.get(converseUUID) ?? [];
     if (list.length === 0) {
       return null;
@@ -29,7 +32,10 @@ export function useMsgHistory(converseUUID: string) {
     return list[newIndex] ?? null;
   }, [converseUUID, index]);
 
-  const switchDown = useCallback((): string | null => {
+  /**
+   * 从最近切换到最远
+   */
+  const switchUp = useCallback((): string | null => {
     const list = msgHistoryMap.get(converseUUID) ?? [];
     if (list.length === 0) {
       return null;
@@ -49,6 +55,7 @@ export function useMsgHistory(converseUUID: string) {
     addHistoryMsg,
     switchUp,
     switchDown,
+    currentIndex: index,
     resetIndex,
   };
 }
