@@ -2,6 +2,7 @@ import { login } from '@redux/actions/user';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { useTranslation } from '@shared/i18n';
+import { showToasts } from '@shared/manager/ui';
 import { Logo } from '@web/components/Logo';
 import { checkIsOldApp } from '@web/utils/debug-helper';
 import { Button, Input } from 'antd';
@@ -17,6 +18,11 @@ export const LoginView: React.FC = TMemo(() => {
   const dispatch = useTRPGDispatch();
 
   const [{ loading }, handleLogin] = useAsyncFn(async () => {
+    if (!username || !password) {
+      showToasts(t('请输入账号密码'));
+      return;
+    }
+
     const isOldApp = checkIsOldApp();
 
     dispatch(login(username, password, { isOldApp }));
