@@ -76,7 +76,9 @@ export const RegisterView: React.FC = TMemo(() => {
         value={passwordRepeat}
         onChange={(e) => setPasswordRepeat(e.target.value)}
       />
-      <Typography.Text type="danger">{errorMsg}</Typography.Text>
+      <Typography.Text type="danger" data-testid="register-error-tip">
+        {errorMsg}
+      </Typography.Text>
       <Button
         size="large"
         type="primary"
@@ -89,7 +91,7 @@ export const RegisterView: React.FC = TMemo(() => {
       </Button>
       <div style={{ textAlign: 'right' }}>
         <Link to="/entry/login" replace={true}>
-          <Button type="link" data-testid="login-btn">
+          <Button type="link" data-testid="nav-login-btn">
             {t('已有账号？现在登录')}
           </Button>
         </Link>

@@ -50,6 +50,7 @@ export const LoginView: React.FC = TMemo(() => {
       />
 
       <Button
+        data-testid="login-submit-btn"
         size="large"
         type="primary"
         block={true}
@@ -60,7 +61,7 @@ export const LoginView: React.FC = TMemo(() => {
       </Button>
       <div style={{ textAlign: 'right' }}>
         <Link to="/entry/register" replace={true}>
-          <Button type="link" data-testid="register-btn">
+          <Button type="link" data-testid="nav-register-btn">
             {t('没有账号？现在注册')}
           </Button>
         </Link>
