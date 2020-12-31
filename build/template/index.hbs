@@ -8,12 +8,20 @@
     <meta name="renderer" content="webkit">
     <meta name="force-rendering" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TRPG Engine —— 专为跑团而生的即时通讯应用</title>
+
     {{#if isPro}}
     <link rel="manifest" href="/src/web/assets/lib/manifest.json">
-    {{/if}}
-    <title>TRPG Engine —— 专为跑团而生的即时通讯应用</title>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121610011-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'UA-121610011-1');
+    </script>
     <script>
       window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
       ga('create', 'UA-121610011-1', 'auto');
@@ -26,15 +34,10 @@
       ga('send', 'pageview');
     </script>
     <script async src="/autotrack.js"></script>
+    {{/if}}
+
     <!-- DLL -->
     <script src="/{{dllHashName}}.js"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('js', new Date());
-
-      gtag('config', 'UA-121610011-1');
-    </script>
     {{#if isDev}}
     <style>
       body {
