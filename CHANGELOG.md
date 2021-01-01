@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.9](https://github.com/TRPGEngine/Client/compare/v0.5.8...v0.5.9) (2021-01-01)
+
+
+### Features
+
+* **portal:** trpg news TRPG动态 ([2c75cb3](https://github.com/TRPGEngine/Client/commit/2c75cb3a2fb4cefc6574a8011a83d16222dc8c88))
+* 增加上下箭头快速切换历史消息 ([7e50b2b](https://github.com/TRPGEngine/Client/commit/7e50b2bbba0e6646b1fa8453976104898a387d50))
+* 增加配置项用于默认开启或关闭上下键切换历史消息的功能 ([0a5b064](https://github.com/TRPGEngine/Client/commit/0a5b064a84d11aaac096cffa8ecd1f6539998fe2))
+
+
+### Bug Fixes
+
+* **web:** 修复账号密码没有进行初步判定的bug ([3e7408f](https://github.com/TRPGEngine/Client/commit/3e7408f7fd8c44ba3eb4b27548d3854b2e3a7513))
+
 ### [0.5.8](https://github.com/TRPGEngine/Client/compare/v0.5.7...v0.5.8) (2020-12-25)
 
 

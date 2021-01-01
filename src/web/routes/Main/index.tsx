@@ -5,7 +5,9 @@ import { MainContent } from './Content';
 import { MainNavbar } from './Navbar';
 import { SidebarContextProvider } from './SidebarContext';
 
-const Root = styled.div`
+const Root = styled.div.attrs({
+  'data-testid': 'main-page-root',
+})`
   width: 100vw;
   height: 100vh;
   position: relative;

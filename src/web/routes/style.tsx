@@ -15,41 +15,45 @@ export const GlobalStyle = createGlobalStyle`
 
   /* antd 黑夜模式下样式 */
 
-  .ant-dropdown-menu {
-    background-color: ${(props) => props.theme.color.graySet[8]};
-  }
+  html body.trpg-engine {
+    /* 使用这些容器来增加权重 */
+    .ant-dropdown-menu {
+      background-color: ${(props) => props.theme.color.graySet[8]};
+    }
 
-  .ant-select-dropdown {
-    background-color: ${(props) => props.theme.color.graySet[8]};
+    .ant-select-dropdown {
+      background-color: ${(props) => props.theme.color.graySet[8]};
 
-    .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+      .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+        background-color: ${(props) => props.theme.color.graySet[6]};
+      }
+    }
+
+    /* .ant-input, .ant-input-password, .ant-select-selector {
+      border-color: ${(props) => props.theme.color.graySet[9]};
+    } */
+
+    .ant-select-selector {
+      background-color: ${(props) => props.theme.color.graySet[6]} !important;
+    }
+
+    .ant-select-clear {
       background-color: ${(props) => props.theme.color.graySet[6]};
+    }
+
+    .ant-collapse-content {
+      background-color: ${(props) => props.theme.color.graySet[7]} !important;
+    }
+
+    .ant-empty-description {
+      user-select: none;
+    }
+
+    .ant-table {
+      background-color: rgba(0, 0, 0, 0.5);
     }
   }
 
-  .ant-input, .ant-input-password, .ant-select-selector {
-    border-color: ${(props) => props.theme.color.graySet[9]};
-  }
-
-  .ant-select-selector {
-    background-color: ${(props) => props.theme.color.graySet[6]} !important;
-  }
-
-  .ant-select-clear {
-    background-color: ${(props) => props.theme.color.graySet[6]};
-  }
-
-  .ant-collapse-content {
-    background-color: ${(props) => props.theme.color.graySet[7]};
-  }
-
-  .ant-empty-description {
-    user-select: none;
-  }
-
-  .ant-table {
-    background-color: rgba(0, 0, 0, 0.5);
-  }
 
   /* 新版滚动条 */
   ::-webkit-scrollbar {

@@ -2,6 +2,7 @@ import { login } from '@redux/actions/user';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { useTranslation } from '@shared/i18n';
+import { showToasts } from '@shared/manager/ui';
 import { Logo } from '@web/components/Logo';
 import { checkIsOldApp } from '@web/utils/debug-helper';
 import { Button, Input } from 'antd';
@@ -17,6 +18,11 @@ export const LoginView: React.FC = TMemo(() => {
   const dispatch = useTRPGDispatch();
 
   const [{ loading }, handleLogin] = useAsyncFn(async () => {
+    if (!username || !password) {
+      showToasts(t('请输入账号密码'));
+      return;
+    }
+
     const isOldApp = checkIsOldApp();
 
     dispatch(login(username, password, { isOldApp }));
@@ -44,6 +50,7 @@ export const LoginView: React.FC = TMemo(() => {
       />
 
       <Button
+        data-testid="login-submit-btn"
         size="large"
         type="primary"
         block={true}
@@ -54,7 +61,9 @@ export const LoginView: React.FC = TMemo(() => {
       </Button>
       <div style={{ textAlign: 'right' }}>
         <Link to="/entry/register" replace={true}>
-          <Button type="link">{t('没有账号？现在注册')}</Button>
+          <Button type="link" data-testid="nav-register-btn">
+            {t('没有账号？现在注册')}
+          </Button>
         </Link>
       </div>
     </ViewContainer>

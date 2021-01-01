@@ -65,7 +65,7 @@ const FieldValue = styled.div`
 const FullModalFieldEditorRoot = styled(Space)`
   display: flex;
   width: 100%;
-  align-items: flex-end;
+  align-items: flex-end !important;
 `;
 
 /**

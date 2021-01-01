@@ -171,7 +171,7 @@ export const ChatMsgEmotion: React.FC<{
       visible={visible}
       onVisibleChange={setVisible}
       overlayClassName="chat-sendbox-addon-popover"
-      placement="top"
+      placement="topRight"
       trigger="click"
       content={content}
     >

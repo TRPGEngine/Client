@@ -26,6 +26,7 @@ import { TLoadable } from './components/TLoadable';
 import { checkIsOldApp } from './utils/debug-helper';
 import { ThemeContextProvider } from '@shared/context/ThemeContext';
 import { TRPGStore } from '@redux/types/__all__';
+import './debug';
 
 declare global {
   interface Window {
