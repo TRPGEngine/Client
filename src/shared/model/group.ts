@@ -331,3 +331,34 @@ export async function requestRefuseGroupRequest(requestUUID: string) {
     requestUUID,
   });
 }
+
+export interface CommonGroupPanelData {
+  [key: string]: any;
+}
+
+/**
+ * 获取通用团面板数据
+ */
+export async function getCommonGroupPanelData(
+  groupUUID: string,
+  panelUUID: string
+): Promise<CommonGroupPanelData> {
+  const { data } = await request.get(
+    `/group/${groupUUID}/panel/${panelUUID}/data/get`
+  );
+
+  return data;
+}
+
+/**
+ * 设置通用团面板数据
+ */
+export async function setCommonGroupPanelData(
+  groupUUID: string,
+  panelUUID: string,
+  panelData: CommonGroupPanelData
+): Promise<void> {
+  await request.post(`/group/${groupUUID}/panel/${panelUUID}/data/set`, {
+    data: panelData,
+  });
+}
