@@ -6,6 +6,7 @@ import _isString from 'lodash/isString';
 import _isObject from 'lodash/isObject';
 import { request, navToLoginPage } from './request';
 import { PORTAL_JWT_KEY } from '@shared/utils/consts';
+import { getJWTPayload, JWTUserInfoData } from '@shared/utils/jwt-helper';
 
 /**
  * 发送一个校验token的请求到服务端
@@ -27,6 +28,18 @@ export const checkToken = async (autoNav = true): Promise<void> => {
 };
 
 /**
+ * 类似于`checkToken`但是不跳转且返回boolean
+ */
+export async function checkTokenValid(): Promise<boolean> {
+  try {
+    await checkToken(false);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+/**
  * 设置portal端的JWT
  * portal端的jwt数据结构简单，这样可以方便的进行代码注入(app)
  */
@@ -36,4 +49,21 @@ export function setPortalJWT(jwt: string) {
 
 export function getPortalJWT(): string {
   return localStorage.getItem(PORTAL_JWT_KEY) ?? '';
+}
+
+/**
+ * 获取Portal的jwt信息
+ */
+export function getPortalInfo(): JWTUserInfoData {
+  try {
+    const token = getPortalJWT();
+    const info = getJWTPayload(token);
+    if (_isObject(info)) {
+      return info;
+    }
+  } catch (e) {
+    console.error('getJWTInfo Error:', e);
+  }
+
+  return {};
 }
