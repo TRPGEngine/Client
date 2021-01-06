@@ -10,6 +10,7 @@ const PageContentRoot = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1;
+  overflow: hidden;
 `;
 
 const ContentDetail = styled.div`
@@ -18,6 +19,7 @@ const ContentDetail = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: hidden;
 
   @media (max-width: 768px) {
     width: ${(props) => `calc(100vw - ${props.theme.style.navbarWidth})`};
