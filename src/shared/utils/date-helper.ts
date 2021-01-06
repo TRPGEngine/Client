@@ -55,6 +55,19 @@ export const getDateDiff = (
 };
 
 /**
+ * 判定是否为同一天
+ */
+export function isSameDate(
+  prevDate: MomentInput,
+  nextDate: MomentInput
+): boolean {
+  return (
+    moment(prevDate).format('YYYY-MM-DD') ===
+    moment(nextDate).format('YYYY-MM-DD')
+  );
+}
+
+/**
  * 判断是否需要强调时间(两个日期间隔超过设定值)
  */
 export const shouleEmphasizeTime = (

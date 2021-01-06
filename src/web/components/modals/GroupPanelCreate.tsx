@@ -12,6 +12,7 @@ import {
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import _isString from 'lodash/isString';
 import { t, useTranslation } from '@shared/i18n';
+import { checkIsTestUser } from '@web/utils/debug-helper';
 
 const schema = createFastFormSchema({
   name: fieldSchema.string().required(t('面板名不能为空')),
@@ -43,6 +44,10 @@ function useGroupPanelBaseFields(): FastFormFieldMeta[] {
           {
             label: t('语音频道') + '(Beta)',
             value: 'voicechannel',
+          },
+          {
+            label: t('日历面板'),
+            value: 'calendar',
           },
         ],
       },

@@ -347,7 +347,7 @@ export async function getCommonGroupPanelData(
     `/group/${groupUUID}/panel/${panelUUID}/data/get`
   );
 
-  return data;
+  return data.data;
 }
 
 /**
