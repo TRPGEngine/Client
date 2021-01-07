@@ -23,7 +23,7 @@
 
 线上地址: [https://trpg.moonrailgun.com](https://trpg.moonrailgun.com)
 
-移动端下载: [https://trpg.moonrailgun.com/portal/deploy](https://trpg.moonrailgun.com/portal/deploy)
+~~移动端下载: [https://trpg.moonrailgun.com/portal/deploy](https://trpg.moonrailgun.com/portal/deploy)~~(仅旧版暂不维护)
 
 ## Highlight
 
