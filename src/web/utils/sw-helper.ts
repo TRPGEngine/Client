@@ -1,4 +1,31 @@
 import config from '@shared/project.config';
+import { Button, notification } from 'antd';
+import React from 'react';
+import { checkIsTestUser } from './debug-helper';
+
+/**
+ * 弹出更新提示框
+ */
+function handleShowUpdateTip() {
+  if (checkIsTestUser()) {
+    // 仅内测用户进行提示
+    notification.open({
+      message: '更新页面',
+      description: '检测到有新的内容, 是否立即刷新以升级到最新内容',
+      btn: React.createElement(
+        Button,
+        {
+          type: 'primary',
+          size: 'small',
+          onClick: () => {
+            window.location.reload();
+          },
+        },
+        ['立即刷新']
+      ),
+    });
+  }
+}
 
 /**
  * 处理registration相关任务和状态
@@ -8,6 +35,7 @@ function handleRegistration(registration: ServiceWorkerRegistration) {
   console.log('registered', registration);
   if (registration.waiting) {
     console.log('updated', registration);
+    handleShowUpdateTip();
     return;
   }
   registration.onupdatefound = () => {
@@ -25,6 +53,7 @@ function handleRegistration(registration: ServiceWorkerRegistration) {
           // It's the perfect time to display a "New content is
           // available; please refresh." message in your web app.
           console.log('updated', registration);
+          handleShowUpdateTip();
         } else {
           // At this point, everything has been precached.
           // It's the perfect time to display a

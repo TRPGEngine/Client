@@ -12,6 +12,7 @@ import {
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import _isString from 'lodash/isString';
 import { t, useTranslation } from '@shared/i18n';
+import { useAlphaUser } from '@shared/hooks/useAlphaUser';
 
 const schema = createFastFormSchema({
   name: fieldSchema.string().required(t('面板名不能为空')),
@@ -24,6 +25,8 @@ const DEFAULT_TYPE = 'channel';
  * 获取团面板的基础字段
  */
 function useGroupPanelBaseFields(): FastFormFieldMeta[] {
+  const { isAlphaUser } = useAlphaUser();
+
   return useMemo(() => {
     const baseFields: FastFormFieldMeta[] = [
       { type: 'text', name: 'name', label: t('面板名') },
@@ -48,8 +51,15 @@ function useGroupPanelBaseFields(): FastFormFieldMeta[] {
       },
     ];
 
+    if (isAlphaUser === true) {
+      baseFields[1].options.push({
+        label: t('日历面板'),
+        value: 'calendar',
+      });
+    }
+
     return baseFields;
-  }, []);
+  }, [isAlphaUser]);
 }
 
 /**

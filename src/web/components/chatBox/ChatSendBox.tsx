@@ -18,9 +18,11 @@ const Wrapper = styled.div`
     background-color: ${(props) => props.theme.color.graySet[6]};
     padding: 6px;
     display: flex;
+    overflow: hidden;
 
     > .inner {
       flex: 1;
+      overflow: hidden;
     }
   }
 `;
@@ -39,7 +41,7 @@ export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
 
         <div className="inner">{editorEl}</div>
 
-        <Space>
+        <Space align="end">
           <ChatMsgEmotion editorRef={editorRef} />
           <ChatMsgAddon editorRef={editorRef} />
         </Space>

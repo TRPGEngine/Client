@@ -46,6 +46,7 @@ export const PlaceholderContainer = styled.div`
   pointer-events: none;
   color: ${(props) => props.theme.color.interactiveNormal};
   padding: 0 14px;
+  user-select: none;
 `;
 
 export const MentionListContainer = styled.div`

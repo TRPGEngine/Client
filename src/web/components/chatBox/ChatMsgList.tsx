@@ -22,10 +22,10 @@ const Container = styled.div`
 `;
 
 const ScrollToBottomBtn = styled(Button)`
-  position: absolute;
+  position: absolute !important;
   bottom: 20px;
   right: 30px;
-  box-shadow: ${({ theme }) => theme.boxShadow.elevationMedium};
+  box-shadow: ${({ theme }) => theme.boxShadow.elevationMedium} !important;
 `;
 
 interface ChatMsgListProps {

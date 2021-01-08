@@ -8,6 +8,7 @@ const Root = styled.div`
   flex-direction: column;
   height: 100%;
   max-height: 100vh;
+  overflow: hidden;
 `;
 
 const Main = styled.div`
@@ -21,6 +22,7 @@ const Content = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 const RightPanel = styled.div`
