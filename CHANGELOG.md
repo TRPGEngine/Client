@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.10](https://github.com/TRPGEngine/Client/compare/v0.5.9...v0.5.10) (2021-01-08)
+
+
+### Features
+
+* **web:** 增加团日历面板 ([cdd1241](https://github.com/TRPGEngine/Client/commit/cdd124102088a4ba46734a41dbbb20ce6532e470))
+
+
+### Bug Fixes
+
+* 修复修改样式加载顺序后滚动到底部按钮位置不正确的问题 ([ac64e92](https://github.com/TRPGEngine/Client/commit/ac64e92a10f0524672461582b5d3aa5fb24e5b2e))
+* 修复长文本消息不换行溢出的问题 ([c297195](https://github.com/TRPGEngine/Client/commit/c297195660c1ee59cba2c98ddb0e2d24a03670dd))
+
 ### [0.5.9](https://github.com/TRPGEngine/Client/compare/v0.5.8...v0.5.9) (2021-01-01)
 
 
