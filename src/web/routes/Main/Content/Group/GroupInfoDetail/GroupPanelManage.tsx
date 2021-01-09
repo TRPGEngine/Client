@@ -1,17 +1,18 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { useJoinedGroupInfo } from '@redux/hooks/group';
+import { useIsGroupManager, useJoinedGroupInfo } from '@redux/hooks/group';
 import _isNil from 'lodash/isNil';
 import { SortableList } from '@web/components/SortableList';
-import { Button, Space, Typography } from 'antd';
+import { Button, Divider, Row, Space, Typography } from 'antd';
 import styled from 'styled-components';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { updatePanelOrder, removePanel } from '@shared/model/panel';
 import { showToasts, showAlert } from '@shared/manager/ui';
-import { openModal, ModalWrapper } from '@web/components/Modal';
+import { openModal } from '@web/components/Modal';
 import { GroupPanelUpdateInfo } from '@web/components/modals/GroupPanelUpdateInfo';
 import { useTranslation } from '@shared/i18n';
 import { GroupPanel } from '@shared/types/panel';
+import { GroupPanelCreate } from '@web/components/modals/GroupPanelCreate';
 
 const GroupPanelListItemContainer = styled.div`
   padding: 10px;
@@ -140,8 +141,14 @@ interface GroupPanelManageProps {
 }
 export const GroupPanelManage: React.FC<GroupPanelManageProps> = TMemo(
   (props) => {
-    const groupInfo = useJoinedGroupInfo(props.groupUUID);
+    const { groupUUID } = props;
+    const groupInfo = useJoinedGroupInfo(groupUUID);
     const { t } = useTranslation();
+    const isGroupManager = useIsGroupManager(groupUUID);
+
+    const handleCreatePanel = useCallback(() => {
+      openModal(<GroupPanelCreate groupUUID={groupUUID} />);
+    }, [groupUUID]);
 
     if (_isNil(groupInfo)) {
       return null;
@@ -154,6 +161,16 @@ export const GroupPanelManage: React.FC<GroupPanelManageProps> = TMemo(
         <Typography.Title level={3}>
           {t('面板')}({panels.length})
         </Typography.Title>
+
+        <Row justify="end">
+          {isGroupManager && (
+            <Button type="primary" onClick={handleCreatePanel}>
+              {t('创建面板')}
+            </Button>
+          )}
+        </Row>
+
+        <Divider />
 
         <GroupPanelList groupUUID={groupInfo.uuid} panels={panels} />
       </div>
