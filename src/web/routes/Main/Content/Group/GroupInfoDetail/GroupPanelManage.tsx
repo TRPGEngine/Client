@@ -3,7 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { useIsGroupManager, useJoinedGroupInfo } from '@redux/hooks/group';
 import _isNil from 'lodash/isNil';
 import { SortableList } from '@web/components/SortableList';
-import { Button, Divider, Row, Space, Typography } from 'antd';
+import { Button, Divider, Empty, Row, Space, Typography } from 'antd';
 import styled from 'styled-components';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { updatePanelOrder, removePanel } from '@shared/model/panel';
@@ -112,6 +112,10 @@ const GroupPanelList: React.FC<GroupPanelListProps> = TMemo((props) => {
   useEffect(() => {
     setPanels(props.panels); // 总状态更新时强制更新内部状态
   }, [props.panels]);
+
+  if (panels.length === 0) {
+    return <Empty />;
+  }
 
   return (
     <div>
