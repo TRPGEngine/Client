@@ -10,6 +10,7 @@ import { useTPopoverContext } from './index';
 
 const Container = styled.div`
   display: flex;
+  min-width: 180px;
   max-width: 240px;
 
   .avatar {

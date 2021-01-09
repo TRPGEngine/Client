@@ -7,7 +7,7 @@ import PopoverGroupActorInfo from './GroupActorInfo';
 import { TMemo } from '@shared/components/TMemo';
 
 /**
- * 专门用于处理消息信息的Popover
+ * 专门用于处理消息信息中点击头像的Popover
  */
 
 interface Props {
@@ -18,8 +18,10 @@ const PopoverMsgSenderInfo: React.FC<Props> = TMemo((props) => {
   const isGroupActorMessage = !_isNil(groupActorUUID);
 
   if (isGroupActorMessage) {
+    // 显示团角色人物卡信息
     return <PopoverGroupActorInfo groupActorUUID={groupActorUUID} />;
   } else {
+    // 显示用户信息
     const senderUUID = props.payload.sender_uuid;
     return <PopoverUserInfo userUUID={senderUUID} />;
   }
