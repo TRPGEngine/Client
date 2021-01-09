@@ -108,6 +108,7 @@ interface SidebarViewContextProps {
 export const SidebarViewContext = React.createContext<SidebarViewContextProps | null>(
   null
 );
+SidebarViewContext.displayName = 'SidebarViewContext';
 
 export type SidebarViewMenuType =
   | {

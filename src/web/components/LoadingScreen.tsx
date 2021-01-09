@@ -24,5 +24,6 @@ const LoadingScreen: React.FC<Props> = React.memo((props) => {
     </div>
   );
 });
+LoadingScreen.displayName = 'LoadingScreen';
 
 export default LoadingScreen;
