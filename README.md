@@ -64,7 +64,7 @@ $ npm run dev # 运行本地开发服务器
 
 ## 旧版UI部分截图
 
-[点击查看](./doc/old-version.md)
+[点击查看](./docs/old-version.md)
 
 ## FAQ
 
