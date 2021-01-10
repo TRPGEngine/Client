@@ -24,7 +24,7 @@ export const Avatar: React.FC<AvatarProps> = TMemo((props) => {
       _isEmpty(src) && _isNil(props.icon)
         ? getAvatarColorHex(props.name!)
         : undefined,
-    [src, props.name]
+    [src, props.icon, props.name]
   );
 
   const style: React.CSSProperties = {

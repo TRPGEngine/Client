@@ -100,7 +100,6 @@ export const Personal: React.FC = TMemo(() => {
         />
         <Divider />
         <SidebarItem
-          icon="系统消息"
           name={t('系统消息')}
           to={`/main/personal/converse/${SYSTE_CONVERSE_SPEC}`}
           badge={systemConverse?.unread}
