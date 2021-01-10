@@ -29,6 +29,7 @@ import { UserAvatar } from '@web/components/UserAvatar';
 import { PortalAdd, PortalRemove } from '@web/utils/portal';
 import { FullModal } from '@web/components/FullModal';
 import { SettingView } from '../../Navbar/SettingView';
+import { HoverRotator } from '@web/components/HoverRotator';
 
 /**
  * 个人面板
@@ -72,7 +73,11 @@ export const Personal: React.FC = TMemo(() => {
           <Col>
             <Button
               type="text"
-              icon={<SettingOutlined />}
+              icon={
+                <HoverRotator>
+                  <SettingOutlined />
+                </HoverRotator>
+              }
               onClick={handleShowSetting}
             />
           </Col>
@@ -102,7 +107,11 @@ export const Personal: React.FC = TMemo(() => {
         />
         <SidebarHeader
           title={t('笔记')}
-          action={<Iconfont onClick={handleAddNote}>&#xe604;</Iconfont>}
+          action={
+            <HoverRotator>
+              <Iconfont onClick={handleAddNote}>&#xe604;</Iconfont>
+            </HoverRotator>
+          }
         />
         <div>
           {orderedNoteList.map((note) => {

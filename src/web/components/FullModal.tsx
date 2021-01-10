@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import _isFunction from 'lodash/isFunction';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { useKey } from 'react-use';
+import { HoverRotator } from './HoverRotator';
 
 const Container = styled.div<{
   visible: boolean;
@@ -61,7 +62,9 @@ export const FullModal: React.FC<FullModalProps> = TMemo((props) => {
 
       {_isFunction(onChangeVisible) && (
         <CloseBtn onClick={handleClose}>
-          <CloseCircleOutlined style={{ fontSize: 32 }} />
+          <HoverRotator>
+            <CloseCircleOutlined style={{ fontSize: 32 }} />
+          </HoverRotator>
           <CloseTip>ESC</CloseTip>
         </CloseBtn>
       )}

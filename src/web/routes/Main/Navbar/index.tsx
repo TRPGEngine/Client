@@ -14,6 +14,7 @@ import {
   useUnreadGroupMap,
   useUnreadPersonalConverse,
 } from '@redux/hooks/chat';
+import { HoverRotator } from '@web/components/HoverRotator';
 
 const NavBar = styled.nav`
   position: absolute;
@@ -95,7 +96,11 @@ export const MainNavbar: React.FC = TMemo(() => {
           />
         ))}
         <NavbarLink
-          icon={<Iconfont>&#xe604;</Iconfont>}
+          icon={
+            <HoverRotator>
+              <Iconfont>&#xe604;</Iconfont>
+            </HoverRotator>
+          }
           name="添加团"
           to="/main/group/add"
         />
