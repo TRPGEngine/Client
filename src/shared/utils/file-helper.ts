@@ -14,7 +14,10 @@ export const getOriginalImage = (thumbnailImageUrl: string): string => {
  * @param path 地址路径
  */
 export const getAbsolutePath = (path: string) => {
-  if (typeof path === 'string' && path.startsWith('/src/')) {
+  if (
+    typeof path === 'string' &&
+    (path.startsWith('/src/') || path.startsWith('/portal/assets/'))
+  ) {
     // 不处理client的内部路径的头像
     return path;
   }
