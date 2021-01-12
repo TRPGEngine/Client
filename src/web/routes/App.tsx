@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { Route, Switch, HashRouter, BrowserRouter } from 'react-router-dom';
 import config from '@shared/project.config';
 import { TMemo } from '@shared/components/TMemo';
@@ -17,6 +18,7 @@ import { PWAContextProvider } from '@web/components/PWAContext';
 import { wrapSentry } from '@web/utils/sentry';
 import { RTCRoomClientContextProvider } from '@rtc/RoomContext';
 import { GlobalVoiceProvider } from '@web/components/rtc/GlobalVoice';
+import { sendUrlChangeEvent } from '@web/utils/analytics-helper';
 
 import './App.less';
 
@@ -28,6 +30,18 @@ const Router: any =
     : HashRouter;
 
 const CustomProvider: React.FC = (props) => {
+  const history = useHistory();
+
+  useEffect(() => {
+    const unlisten = history.listen((location, action) => {
+      sendUrlChangeEvent();
+    });
+
+    return () => {
+      unlisten();
+    };
+  }, []);
+
   return (
     <PWAContextProvider>
       <RTCRoomClientContextProvider>
