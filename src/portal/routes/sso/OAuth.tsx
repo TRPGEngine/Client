@@ -44,6 +44,10 @@ const OAuthHasLoginConnection = styled(Row).attrs({
   }
 `;
 
+const ConnectionIcon = styled(Avatar).attrs({
+  size: 96,
+})``;
+
 const OAuthHasLoginInfo = styled.div`
   border: ${(props) => props.theme.border.standard};
   border-radius: ${(props) => props.theme.radius.card};
@@ -76,13 +80,13 @@ const OAuthHasLogin: React.FC = TMemo(() => {
   return (
     <OAuthHasLoginRoot>
       <OAuthHasLoginConnection>
-        <Avatar size={96} src={authorizeApp.icon} name={authorizeApp.name} />
+        <ConnectionIcon src={authorizeApp.icon} name={authorizeApp.name} />
 
         <CheckCircleFilled
           style={{ color: '#28a745', zIndex: 1, fontSize: 32 }}
         />
 
-        <Avatar size={96} src={logoUrl} name="TRPG Engine" />
+        <ConnectionIcon src={logoUrl} name="TRPG Engine" />
       </OAuthHasLoginConnection>
 
       <Typography.Title level={3} style={{ textAlign: 'center' }}>
@@ -98,9 +102,9 @@ const OAuthHasLogin: React.FC = TMemo(() => {
             <Col>
               <p>
                 {authorizeApp.name} by{' '}
-                <Button type="link" href={authorizeApp.website}>
+                <Typography.Link href={authorizeApp.website} target="_blank">
                   {authorizeApp.website}
-                </Button>
+                </Typography.Link>
               </p>
               <Typography.Text>
                 想要访问你的 {jwtInfo.name} 账户
@@ -113,8 +117,10 @@ const OAuthHasLogin: React.FC = TMemo(() => {
 
         {scope.includes('public') && (
           <Row align="middle">
-            <UserOutlined />
-            <Typography.Text>公开的账户信息</Typography.Text>
+            <Space>
+              <Avatar icon={<UserOutlined />} />
+              <Typography.Text>公开的账户信息</Typography.Text>
+            </Space>
           </Row>
         )}
 
@@ -167,7 +173,11 @@ const OAuthPage: React.FC = TMemo(() => {
   }, []);
 
   return (
-    <PortraitContainer>
+    <PortraitContainer
+      style={{
+        margin: '80px auto auto',
+      }}
+    >
       {isTokenValid ? (
         <OAuthHasLogin />
       ) : (
