@@ -81,8 +81,14 @@ module.exports = {
     '@src': './src/',
   },
   plugins: [
-    ['@snowpack/plugin-run-script', { name: 'antd compile', cmd: antdLessCompile }],
-    ['@snowpack/plugin-run-script', { name: 'antd dark mode compile', cmd: antdDarkLessCompile }],
+    [
+      '@snowpack/plugin-run-script',
+      { name: 'antd compile', cmd: antdLessCompile },
+    ],
+    [
+      '@snowpack/plugin-run-script',
+      { name: 'antd dark mode compile', cmd: antdDarkLessCompile },
+    ],
     '@snowpack/plugin-typescript',
     '@snowpack/plugin-sass',
     'snowpack-plugin-less',
@@ -111,6 +117,7 @@ module.exports = {
             from: 'import Config from "config";',
             to: `const Config = ${JSON.stringify({
               sentry: require('config').get('sentry'),
+              posthog: require('config').get('posthog'),
             })};`,
           },
 

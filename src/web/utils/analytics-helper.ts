@@ -2,10 +2,12 @@ import { UserInfo } from '@redux/types/user';
 import { getUserName } from '@shared/utils/data-helper';
 import posthog from 'posthog-js';
 import _isString from 'lodash/isString';
+import _get from 'lodash/get';
+import Config from 'config';
 
 // Posthog
-const token = 'lKcyZ6Yf5-AhXz4veCNsmsIrqrWPOcrUvnhhvvXbzxk';
-const instance = 'https://app.posthog.com';
+const token = _get(Config, 'posthog.token');
+const instance = _get(Config, 'posthog.instance');
 
 /**
  * 初始化统计分析系统
