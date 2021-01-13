@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.11](https://github.com/TRPGEngine/Client/compare/v0.5.10...v0.5.11) (2021-01-13)
+
+
+### Features
+
+* add posthog analytics ([bbe00e5](https://github.com/TRPGEngine/Client/commit/bbe00e58285e383ef9345146e749915a3a68b510))
+* 用户个人页侧边栏标题增加用户设置的入口 ([493b4be](https://github.com/TRPGEngine/Client/commit/493b4be2b5fb024bde8d3373d12fb559895cc373))
+* **web:** 团面板详情增加创建面板的按钮 ([826db04](https://github.com/TRPGEngine/Client/commit/826db049b388a3f7904abbadde3c210b4c8eadd0))
+* **web:** 用户信息页用户名增加说明 ([2612b9e](https://github.com/TRPGEngine/Client/commit/2612b9ee161f3d400b080cfb3eb2283ea31ed55a))
+
 ### [0.5.10](https://github.com/TRPGEngine/Client/compare/v0.5.9...v0.5.10) (2021-01-08)
 
 

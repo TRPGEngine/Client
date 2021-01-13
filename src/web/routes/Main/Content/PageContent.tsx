@@ -23,6 +23,7 @@ const ContentDetail = styled.div`
 
   @media (max-width: 768px) {
     width: ${(props) => `calc(100vw - ${props.theme.style.navbarWidth})`};
+    min-width: ${(props) => `calc(100vw - ${props.theme.style.navbarWidth})`};
   }
 `;
 
@@ -44,6 +45,7 @@ const SidebarContainer = styled.div<{
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  flex: none;
 `;
 
 interface PageContentProps {

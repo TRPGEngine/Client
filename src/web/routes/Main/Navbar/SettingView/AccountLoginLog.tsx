@@ -53,6 +53,8 @@ export const AccountLoginLog: React.FC = TMemo(() => {
     return null;
   }
 
-  return <Table columns={columns} dataSource={logs} pagination={false} />;
+  return (
+    <Table rowKey="id" columns={columns} dataSource={logs} pagination={false} />
+  );
 });
 AccountLoginLog.displayName = 'AccountLoginLog';

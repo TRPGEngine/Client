@@ -159,6 +159,7 @@ export function useModalContext() {
 const ModalWrapperContainer = styled.div`
   padding: 16px;
   min-width: 300px;
+  ${(props) => props.theme.mixins.desktop('min-width: 420px;')}
 `;
 export const ModalWrapper: React.FC<{
   title?: string;

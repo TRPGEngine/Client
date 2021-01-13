@@ -17,11 +17,12 @@ import { useTranslation } from '@shared/i18n';
 import { useGroupDetailValue, useIsGroupManager } from '@redux/hooks/group';
 
 /**
- * NOTICE: 不同于别的Popover 团角色的popover不应该从缓存中获取而是应该直接获取团信息
+ * NOTICE: 不同于别的 Popover 团角色的popover不应该从缓存中获取而是应该直接获取团信息
  */
 
 const Container = styled.div`
   display: flex;
+  min-width: 180px;
   max-width: 240px;
 
   .avatar {

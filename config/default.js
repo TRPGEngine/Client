@@ -31,6 +31,10 @@ module.exports = {
     pushRelease: false, // 仅在production环境使用该变量
     release: `${appName}-v${package.version}-${environment}`,
   },
+  posthog: {
+    token: '',
+    instance: '',
+  },
   umeng: {
     push: {
       channel: 'TRPG',

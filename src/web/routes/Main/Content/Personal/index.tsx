@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useConverses } from '@redux/hooks/chat';
 import { SidebarItem } from '../SidebarItem';
-import { UserOutlined } from '@ant-design/icons';
+import { SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { FriendPanel } from './FriendPanel';
 import { SectionHeader } from '@web/components/SectionHeader';
@@ -19,13 +19,17 @@ import { Iconfont } from '@web/components/Iconfont';
 import { createNote } from '@redux/actions/note';
 import { ActorPanel } from './ActorPanel';
 import { SYSTE_CONVERSE_SPEC } from '@shared/utils/consts';
-import { Divider } from 'antd';
+import { Button, Col, Divider, Row } from 'antd';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { getUserName } from '@shared/utils/data-helper';
 import { useTranslation } from '@shared/i18n';
 import { useHistory } from 'react-router';
 import _orderBy from 'lodash/orderBy';
 import { UserAvatar } from '@web/components/UserAvatar';
+import { PortalAdd, PortalRemove } from '@web/utils/portal';
+import { FullModal } from '@web/components/FullModal';
+import { SettingView } from '../../Navbar/SettingView';
+import { HoverRotator } from '@web/components/HoverRotator';
 
 /**
  * 个人面板
@@ -53,9 +57,32 @@ export const Personal: React.FC = TMemo(() => {
     );
   }, [history]);
 
+  const handleShowSetting = useCallback(() => {
+    const key = PortalAdd(
+      <FullModal visible={true} onChangeVisible={() => PortalRemove(key)}>
+        <SettingView />
+      </FullModal>
+    );
+  }, []);
+
   const sidebar = (
     <>
-      <SectionHeader>{getUserName(currentUserInfo)}</SectionHeader>
+      <SectionHeader>
+        <Row align="middle" justify="space-between">
+          <Col>{getUserName(currentUserInfo)}</Col>
+          <Col>
+            <Button
+              type="text"
+              icon={
+                <HoverRotator>
+                  <SettingOutlined />
+                </HoverRotator>
+              }
+              onClick={handleShowSetting}
+            />
+          </Col>
+        </Row>
+      </SectionHeader>
       <SidebarItemsContainer>
         <SidebarItem
           icon={<UserOutlined style={{ color: 'white', fontSize: 24 }} />}
@@ -73,14 +100,17 @@ export const Personal: React.FC = TMemo(() => {
         />
         <Divider />
         <SidebarItem
-          icon="系统消息"
           name={t('系统消息')}
           to={`/main/personal/converse/${SYSTE_CONVERSE_SPEC}`}
           badge={systemConverse?.unread}
         />
         <SidebarHeader
           title={t('笔记')}
-          action={<Iconfont onClick={handleAddNote}>&#xe604;</Iconfont>}
+          action={
+            <HoverRotator>
+              <Iconfont onClick={handleAddNote}>&#xe604;</Iconfont>
+            </HoverRotator>
+          }
         />
         <div>
           {orderedNoteList.map((note) => {

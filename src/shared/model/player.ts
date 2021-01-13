@@ -28,6 +28,7 @@ export interface PlayerUser {
 }
 
 export interface PlayerUserLoginLogType {
+  id: number;
   user_uuid: string;
   user_name: string;
   type: 'standard' | 'token' | 'app_standard' | 'app_token';

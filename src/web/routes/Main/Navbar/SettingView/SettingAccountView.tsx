@@ -67,7 +67,15 @@ export const SettingAccountView: React.FC = TMemo(() => {
           </ImageUploader>
         </Col>
         <Col sm={18}>
-          <FullModalField title={t('用户名')} value={userInfo.username} />
+          <FullModalField
+            title={
+              <Space size={4}>
+                {t('用户名')}
+                <TipIcon desc={t('唯一标识, 用于登录')} />
+              </Space>
+            }
+            value={userInfo.username}
+          />
           <FullModalField
             title={t('昵称')}
             value={userInfo.nickname}

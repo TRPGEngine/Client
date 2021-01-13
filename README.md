@@ -64,21 +64,7 @@ $ npm run dev # 运行本地开发服务器
 
 ## 旧版UI部分截图
 
-桌面版:
-
-![](./doc/login.png)
-![](./doc/converse.png)
-![](./doc/actor.png)
-![](./doc/group.png)
-![](./doc/note.png)
-
-移动端:
-
-<div><img width="375px" src="./doc/m1.jpg" /></div>
-<div><img width="375px" src="./doc/m2.jpg" /></div>
-<div><img width="375px" src="./doc/m3.jpg" /></div>
-<div><img width="375px" src="./doc/m4.jpg" /></div>
-<div><img width="375px" src="./doc/m5.jpg" /></div>
+[点击查看](./docs/old-version.md)
 
 ## FAQ
 

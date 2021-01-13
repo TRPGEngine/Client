@@ -6,6 +6,10 @@
 import _isFunction from 'lodash/isFunction';
 
 let _loginSuccessCallback: any = null;
+
+/**
+ * @deprecated 使用watchLoginStatus
+ */
 export function injectLoginSuccessCallback(callback: () => void) {
   _loginSuccessCallback = callback;
 }

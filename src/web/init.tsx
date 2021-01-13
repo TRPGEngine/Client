@@ -8,6 +8,9 @@ import { SERVICE_URL } from '@shared/utils/consts';
 import { API } from '@shared/api/socket-api';
 import { isUrl } from '@shared/utils/string-helper';
 import config from '@shared/project.config';
+import { initAnalytics } from './utils/analytics-helper';
+
+initAnalytics();
 
 const customServiceUrl = window.localStorage[SERVICE_URL];
 if (isUrl(customServiceUrl)) {

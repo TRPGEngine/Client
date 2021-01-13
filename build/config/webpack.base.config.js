@@ -100,8 +100,8 @@ const out = {
       stream: require.resolve('stream-browserify'),
       string_decoder: require.resolve('string_decoder/'),
       timers: require.resolve('timers-browserify'),
-      "http": require.resolve("stream-http"),
-      "https": require.resolve("https-browserify")
+      http: require.resolve('stream-http'),
+      https: require.resolve('https-browserify'),
     },
   },
   //babel重要的loader在这里
@@ -180,6 +180,7 @@ const out = {
     config: JSON.stringify({
       // 手动指定部分配置以防止私密配置泄漏
       sentry: require('config').get('sentry'),
+      posthog: require('config').get('posthog'),
     }), // 用于全局使用config，config由编译时的环境变量指定
   },
 

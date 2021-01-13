@@ -6,6 +6,10 @@ import { Button } from 'antd';
 
 import './GlobalAlert.scss';
 
+/**
+ * @deprecated 请使用其他的提示方式
+ */
+
 interface Props extends TRPGDispatchProp {
   showAlert: boolean;
   showAlertInfo: any;
@@ -73,6 +77,8 @@ class Alert extends React.Component<Props> {
     }
     let body: ReactNode = '';
     if (show) {
+      console.warn('该弹出方式已经被弃用'); // warning
+
       body = (
         <div className="mask" onClick={(e) => e.stopPropagation()}>
           <div className="content">{alertContent}</div>
@@ -84,7 +90,7 @@ class Alert extends React.Component<Props> {
   }
 }
 
-export default connect((state: TRPGState) => ({
+const GlobalAlert = connect((state: TRPGState) => ({
   showAlert: state.ui.showAlert,
   showAlertInfo: state.ui.showAlertInfo,
 
@@ -92,3 +98,6 @@ export default connect((state: TRPGState) => ({
   showToast: state.ui.showToast,
   showToastText: state.ui.showToastText,
 }))(Alert);
+GlobalAlert.displayName = 'GlobalAlert';
+
+export default GlobalAlert;

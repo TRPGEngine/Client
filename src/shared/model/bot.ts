@@ -45,7 +45,5 @@ export async function getMsgTokenBotList(
     `/bot/msg/token/list?groupUUID=${groupUUID}`
   );
 
-  console.log('data', data);
-
   return data.list ?? [];
 }
