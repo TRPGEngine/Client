@@ -3,6 +3,9 @@ import { setToasts } from '@shared/manager/ui';
 import { setErrorHook, setTokenGetter } from '@shared/manager/request';
 import { navToLoginPage } from './utils/request';
 import { getPortalJWT } from './utils/auth';
+import { initAnalytics } from '@web/utils/analytics-helper';
+
+initAnalytics();
 
 setToasts((msg, type = 'info') => {
   message.open({

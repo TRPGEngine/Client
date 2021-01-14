@@ -28,6 +28,11 @@ const Root = styled.div`
 
 const RssListItem = styled(List.Item)`
   align-items: flex-start !important;
+  transition: background-color 0.1s linear;
+
+  &:hover {
+    background-color: ${(props) => props.theme.color.transparent90};
+  }
 
   .ant-list-vertical & .ant-list-item-extra {
     width: 100%;

@@ -1,30 +1,27 @@
 import config from '@shared/project.config';
 import { Button, notification } from 'antd';
 import React from 'react';
-import { checkIsTestUser } from './debug-helper';
+import { t } from '@shared/i18n';
 
 /**
  * 弹出更新提示框
  */
 function handleShowUpdateTip() {
-  if (checkIsTestUser()) {
-    // 仅内测用户进行提示
-    notification.open({
-      message: '更新页面',
-      description: '检测到有新的内容, 是否立即刷新以升级到最新内容',
-      btn: React.createElement(
-        Button,
-        {
-          type: 'primary',
-          size: 'small',
-          onClick: () => {
-            window.location.reload();
-          },
+  notification.open({
+    message: t('更新版本'),
+    description: t('检测到有新版本, 是否立即刷新以升级到最新内容'),
+    btn: React.createElement(
+      Button,
+      {
+        type: 'primary',
+        size: 'small',
+        onClick: () => {
+          window.location.reload();
         },
-        ['立即刷新']
-      ),
-    });
-  }
+      },
+      [t('立即刷新')]
+    ),
+  });
 }
 
 /**
