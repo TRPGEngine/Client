@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.12](https://github.com/TRPGEngine/Client/compare/v0.5.11...v0.5.12) (2021-01-14)
+
+
+### Features
+
+* **web:** 增加新版本提示框 ([ff11190](https://github.com/TRPGEngine/Client/commit/ff11190e199f97f589607e632e2e8077991d9ec0))
+
 ### [0.5.11](https://github.com/TRPGEngine/Client/compare/v0.5.10...v0.5.11) (2021-01-13)
 
 
