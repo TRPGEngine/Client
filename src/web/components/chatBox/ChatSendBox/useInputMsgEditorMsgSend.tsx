@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
-import { TRPGEditorNode } from '../editor/types';
-import { buildBlankInputData, getHeadSelection } from '../editor/utils';
+import { TRPGEditorNode } from '../../editor/types';
+import { buildBlankInputData, getHeadSelection } from '../../editor/utils';
 import {
   isArrowDownHotkey,
   isArrowUpHotkey,
@@ -9,12 +9,12 @@ import {
 import { useMsgSend } from '@shared/hooks/useMsgSend';
 import { Editor } from 'slate';
 import React from 'react';
-import { MsgInputEditor } from '../editor/MsgInputEditor';
+import { MsgInputEditor } from '../../editor/MsgInputEditor';
 import { useConverseDetail } from '@redux/hooks/chat';
-import { serializeToBBCode } from '../editor/utils/serialize/bbcode';
+import { serializeToBBCode } from '../../editor/utils/serialize/bbcode';
 import * as pasteUtils from '@shared/utils/paste-utils';
 import { showGlobalLoading, showToasts } from '@shared/manager/ui';
-import { insertImage } from '../editor/changes/insertImage';
+import { insertImage } from '../../editor/changes/insertImage';
 import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
 import { t } from '@shared/i18n';

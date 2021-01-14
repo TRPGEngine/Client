@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Iconfont } from '../Iconfont';
+import { Iconfont } from '../../Iconfont';
 import { useTranslation } from '@shared/i18n';
 import styled from 'styled-components';
 import { Input, Popover, Tabs } from 'antd';
@@ -11,10 +11,10 @@ import {
   ChatEmotionItem,
   searchEmotionWithKeyword,
 } from '@shared/model/chat-emotion';
-import Image from '../Image';
-import { insertImage } from '../editor/changes/insertImage';
+import Image from '../../Image';
+import { insertImage } from '../../editor/changes/insertImage';
 import Loading from '@portal/components/Loading';
-import { ChatBoxBtn } from './style';
+import { ChatBoxBtn } from '../style';
 
 const { TabPane } = Tabs;
 const { Search } = Input;

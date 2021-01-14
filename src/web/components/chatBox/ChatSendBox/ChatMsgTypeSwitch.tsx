@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Popover, Space } from 'antd';
-import { ChatBoxBtn } from './style';
-import { Iconfont } from '../Iconfont';
+import { ChatBoxBtn } from '../style';
+import { Iconfont } from '../../Iconfont';
 import { useChatMsgTypeContext } from '@shared/context/ChatMsgTypeContext';
 import styled from 'styled-components';
 import { MsgType } from '@redux/types/chat';
