@@ -291,7 +291,7 @@
     "react-test-renderer": "17.0.1",
     "rimraf": "^3.0.2",
     "sass-loader": "^10.1.0",
-    "snowpack": "^2.17.0",
+    "snowpack": "^3.0.7",
     "snowpack-plugin-less": "^1.0.3",
     "snowpack-plugin-replace": "^1.0.4",
     "standard-version": "^9.0.0",
