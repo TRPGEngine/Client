@@ -34,7 +34,7 @@ const SelectLanguage: React.FC = TMemo(() => {
         }
       />
 
-      {/* TODO: 完全弄好后可以移除 */}
+      {/* TODO: 动态语言切换完全弄好后可以移除 */}
       {isChanged && (
         <Alert
           style={{ marginBottom: 10 }}

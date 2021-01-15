@@ -92,6 +92,8 @@ export class RoomClient {
   // @type {HTMLVideoElement}
   _externalVideo: any = null;
 
+  _audioConstraints: MediaTrackConstraints = {};
+
   // MediaStream of the external video.
   // @type {MediaStream}
   _externalVideoStream: MediaStream | null = null;
@@ -175,6 +177,7 @@ export class RoomClient {
     svc,
     datachannel = false,
     externalVideo = false,
+    audioConstraints,
   }: RoomClientOptions) {
     logger.debug(
       'constructor() [roomId:"%s", peerId:"%s", displayName:"%s", device:%s]',
@@ -191,6 +194,9 @@ export class RoomClient {
     this._produce = produce;
     this._consume = consume;
     this._useDataChannel = datachannel;
+    this._audioConstraints = {
+      ...audioConstraints,
+    };
 
     if (externalVideo) {
       // TODO: 需要处理成抽象代码
@@ -772,10 +778,12 @@ export class RoomClient {
 
     try {
       if (!this._externalVideo) {
-        logger.debug('enableMic() | calling getUserMedia()');
+        logger.debug('enableMic() | calling getUserMedia(), %o', {
+          audio: this._audioConstraints,
+        });
 
         const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true,
+          audio: this._audioConstraints,
         });
 
         track = stream.getAudioTracks()[0];
