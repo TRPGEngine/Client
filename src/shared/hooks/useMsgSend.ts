@@ -97,7 +97,6 @@ export function useMsgSend(converseUUID: string) {
       }
 
       inputRef.current?.focus();
-      setMessage('');
     },
     [
       converseUUID,
@@ -112,6 +111,7 @@ export function useMsgSend(converseUUID: string) {
   const handleSendMsg = useCallback(() => {
     if (!!message) {
       sendMsg(message, msgType ?? 'normal');
+      setMessage('');
     }
   }, [message, sendMsg, msgType]);
 
@@ -124,5 +124,5 @@ export function useMsgSend(converseUUID: string) {
     }
   }, [converseType, message]);
 
-  return { message, setMessage, handleSendMsg, inputRef };
+  return { message, setMessage, handleSendMsg, inputRef, sendMsg };
 }

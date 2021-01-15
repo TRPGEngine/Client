@@ -29,7 +29,7 @@ import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
  */
 export function useInputMsgEditorMsgSend(converseUUID: string) {
   const editorRef = useRef<Editor>();
-  const { message, setMessage, handleSendMsg, inputRef } = useMsgSend(
+  const { message, setMessage, handleSendMsg, inputRef, sendMsg } = useMsgSend(
     converseUUID
   );
   const [messageData, setMessageData] = useState<TRPGEditorNode[]>(
@@ -173,5 +173,5 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
       />
     );
 
-  return { editorRef, editorEl };
+  return { editorRef, editorEl, sendMsg };
 }
