@@ -32,65 +32,44 @@ export const ChatMsgDiceBuilder: React.FC<ChatMsgDiceBuilderProps> = TMemo(
         {/* 默认骰 */}
         <Tooltip title="1d4">
           <Button
-            icon={
-              <Iconfont onClick={() => handleSendDice('.r1d4')}>
-                &#xe626;
-              </Iconfont>
-            }
+            icon={<Iconfont>&#xe626;</Iconfont>}
+            onClick={() => handleSendDice('.r1d4')}
           />
         </Tooltip>
         <Tooltip title="1d6">
           <Button
-            icon={
-              <Iconfont onClick={() => handleSendDice('.r1d6')}>
-                &#xe628;
-              </Iconfont>
-            }
+            icon={<Iconfont>&#xe628;</Iconfont>}
+            onClick={() => handleSendDice('.r1d6')}
           />
         </Tooltip>
         <Tooltip title="1d8">
           <Button
-            icon={
-              <Iconfont onClick={() => handleSendDice('.r1d8')}>
-                &#xe627;
-              </Iconfont>
-            }
+            icon={<Iconfont>&#xe627;</Iconfont>}
+            onClick={() => handleSendDice('.r1d8')}
           />
         </Tooltip>
         <Tooltip title="1d10">
           <Button
-            icon={
-              <Iconfont onClick={() => handleSendDice('.r1d10')}>
-                &#xe62b;
-              </Iconfont>
-            }
+            icon={<Iconfont>&#xe62b;</Iconfont>}
+            onClick={() => handleSendDice('.r1d10')}
           />
         </Tooltip>
         <Tooltip title="1d12">
           <Button
-            icon={
-              <Iconfont onClick={() => handleSendDice('.r1d12')}>
-                &#xe62a;
-              </Iconfont>
-            }
+            icon={<Iconfont>&#xe62a;</Iconfont>}
+            onClick={() => handleSendDice('.r1d12')}
           />
         </Tooltip>
         <Tooltip title="1d20">
           <Button
-            icon={
-              <Iconfont onClick={() => handleSendDice('.r1d20')}>
-                &#xe629;
-              </Iconfont>
-            }
+            icon={<Iconfont>&#xe629;</Iconfont>}
+            onClick={() => handleSendDice('.r1d20')}
           />
         </Tooltip>
         <Tooltip title="1d100">
           <Button
-            icon={
-              <Iconfont onClick={() => handleSendDice('.r1d100')}>
-                &#xe62c;
-              </Iconfont>
-            }
+            icon={<Iconfont>&#xe62c;</Iconfont>}
+            onClick={() => handleSendDice('.r1d100')}
           />
         </Tooltip>
       </div>
