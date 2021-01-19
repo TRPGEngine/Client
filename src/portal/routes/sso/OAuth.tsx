@@ -3,22 +3,16 @@ import { PortraitContainer } from '@portal/components/PortraitContainer';
 import { checkTokenValid, getPortalJWTInfo } from '@portal/utils/auth';
 import { TMemo } from '@shared/components/TMemo';
 import Avatar from '@web/components/Avatar';
-import { Button, Col, Divider, Row, Space, Typography } from 'antd';
+import { Alert, Button, Col, Divider, Row, Space, Typography } from 'antd';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import logoUrl from '@web/assets/img/logo@192.png';
 import { CheckCircleFilled, UserOutlined } from '@ant-design/icons';
 import qs from 'qs';
 import { useLocation } from 'react-router';
-
-// just for test
-const authorizeApp = {
-  name: 'DaoCloud',
-  icon:
-    'https://avatars0.githubusercontent.com/oa/144265?s=100&u=3060aa5cb71b05e5385cc1f3fa981af46e7319b3&v=4',
-  website: 'https://api.daocloud.io',
-  redirect: 'https://api.daocloud.io',
-};
+import { useAsync } from 'react-use';
+import { fetchOAuthAppInfo } from '@shared/model/oauth';
+import Loading from '@portal/components/Loading';
 
 const OAuthHasLoginRoot = styled.div`
   /* text-align: center; */
@@ -58,24 +52,42 @@ const OAuthHasLoginInfo = styled.div`
   }
 `;
 
-function useOAuthParams() {
+function useOAuthParams(): {
+  appid: string;
+  scope: string[];
+  redirect: string;
+} {
   const { search } = useLocation();
-  const { scope: scopeStr = '' } = useMemo(() => {
+  const { appid, scope: scopeStr = '', redirect } = useMemo(() => {
     return qs.parse(search, { ignoreQueryPrefix: true });
   }, [search]);
 
   return {
+    appid,
     scope: scopeStr.split(','),
+    redirect,
   };
 }
 
 const OAuthHasLogin: React.FC = TMemo(() => {
   const jwtInfo = useMemo(() => getPortalJWTInfo(), []);
-  const { scope } = useOAuthParams();
+  const { appid, scope, redirect } = useOAuthParams();
+
+  const { value: authorizeApp, loading, error } = useAsync(() => {
+    return fetchOAuthAppInfo(appid);
+  }, [appid]);
 
   const handleAuthorize = useCallback(() => {
     console.log('授权结果:', scope);
   }, [scope]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (!authorizeApp || error) {
+    return <Alert message="加载失败, 应用不存在" />;
+  }
 
   return (
     <OAuthHasLoginRoot>
@@ -138,8 +150,7 @@ const OAuthHasLogin: React.FC = TMemo(() => {
         </Row>
 
         <Typography.Text>
-          Authorizing will redirect to{' '}
-          <a href={authorizeApp.redirect}>{authorizeApp.redirect}</a>
+          Authorizing will redirect to <a href={redirect}>{redirect}</a>
         </Typography.Text>
       </OAuthHasLoginInfo>
     </OAuthHasLoginRoot>
