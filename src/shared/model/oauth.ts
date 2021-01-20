@@ -18,3 +18,17 @@ export async function fetchOAuthAppInfo(
 
   return data.appInfo;
 }
+
+/**
+ * 授权app并获取到一个code
+ */
+export async function authorizeApp(
+  appid: string,
+  scope: string[]
+): Promise<string> {
+  const { data } = await request.post(`/oauth/app/${appid}/authorize`, {
+    scope,
+  });
+
+  return data.code;
+}

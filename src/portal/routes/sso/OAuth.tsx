@@ -10,9 +10,10 @@ import logoUrl from '@web/assets/img/logo@192.png';
 import { CheckCircleFilled, UserOutlined } from '@ant-design/icons';
 import qs from 'qs';
 import { useLocation } from 'react-router';
-import { useAsync } from 'react-use';
-import { fetchOAuthAppInfo } from '@shared/model/oauth';
+import { useAsync, useAsyncFn } from 'react-use';
+import { authorizeApp, fetchOAuthAppInfo } from '@shared/model/oauth';
 import Loading from '@portal/components/Loading';
+import _isString from 'lodash/isString';
 
 const OAuthHasLoginRoot = styled.div`
   /* text-align: center; */
@@ -73,26 +74,40 @@ const OAuthHasLogin: React.FC = TMemo(() => {
   const jwtInfo = useMemo(() => getPortalJWTInfo(), []);
   const { appid, scope, redirect } = useOAuthParams();
 
-  const { value: authorizeApp, loading, error } = useAsync(() => {
+  const { value: authorizeAppInfo, loading, error } = useAsync(() => {
     return fetchOAuthAppInfo(appid);
   }, [appid]);
 
-  const handleAuthorize = useCallback(() => {
-    console.log('授权结果:', scope);
-  }, [scope]);
+  const [
+    { loading: authorizeLoading },
+    handleAuthorize,
+  ] = useAsyncFn(async () => {
+    const code = await authorizeApp(appid, scope);
+
+    if (_isString(code)) {
+      const url = `${redirect}?code=${code}`;
+      console.log('正在跳转...', url);
+      window.location.replace(url);
+    } else {
+      console.error('获取授权代码失败');
+    }
+  }, [appid, scope, redirect]);
 
   if (loading) {
     return <Loading />;
   }
 
-  if (!authorizeApp || error) {
+  if (!authorizeAppInfo || error) {
     return <Alert message="加载失败, 应用不存在" />;
   }
 
   return (
     <OAuthHasLoginRoot>
       <OAuthHasLoginConnection>
-        <ConnectionIcon src={authorizeApp.icon} name={authorizeApp.name} />
+        <ConnectionIcon
+          src={authorizeAppInfo.icon}
+          name={authorizeAppInfo.name}
+        />
 
         <CheckCircleFilled
           style={{ color: '#28a745', zIndex: 1, fontSize: 32 }}
@@ -102,7 +117,7 @@ const OAuthHasLogin: React.FC = TMemo(() => {
       </OAuthHasLoginConnection>
 
       <Typography.Title level={3} style={{ textAlign: 'center' }}>
-        授权 {authorizeApp.name}
+        授权 {authorizeAppInfo.name}
       </Typography.Title>
 
       <OAuthHasLoginInfo>
@@ -113,9 +128,12 @@ const OAuthHasLogin: React.FC = TMemo(() => {
             </Col>
             <Col>
               <p>
-                {authorizeApp.name} by{' '}
-                <Typography.Link href={authorizeApp.website} target="_blank">
-                  {authorizeApp.website}
+                {authorizeAppInfo.name} by{' '}
+                <Typography.Link
+                  href={authorizeAppInfo.website}
+                  target="_blank"
+                >
+                  {authorizeAppInfo.website}
                 </Typography.Link>
               </p>
               <Typography.Text>
@@ -143,6 +161,7 @@ const OAuthHasLogin: React.FC = TMemo(() => {
             type="primary"
             block={true}
             size="large"
+            loading={authorizeLoading}
             onClick={handleAuthorize}
           >
             授权
