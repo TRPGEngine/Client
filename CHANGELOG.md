@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.13](https://github.com/TRPGEngine/Client/compare/v0.5.12...v0.5.13) (2021-01-21)
+
+
+### Features
+
+* **web:** 增加投骰构造器 ([7821e81](https://github.com/TRPGEngine/Client/commit/7821e81c0ffbd94b073fbd4925ddfff955f71b77))
+* **web:** 语音优化, 增加噪音抑制 自动增益 回声消除 ([c16a892](https://github.com/TRPGEngine/Client/commit/c16a8929723d931af32e2cb490077a757705b227))
+
 ### [0.5.12](https://github.com/TRPGEngine/Client/compare/v0.5.11...v0.5.12) (2021-01-14)
 
 
