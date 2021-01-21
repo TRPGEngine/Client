@@ -4,6 +4,7 @@ import posthog from 'posthog-js';
 import _isString from 'lodash/isString';
 import _get from 'lodash/get';
 import Config from 'config';
+import config from '@shared/project.config';
 
 // Posthog
 const token = _get(Config, 'posthog.token');
@@ -17,6 +18,11 @@ export function initAnalytics() {
     posthog.init(token, {
       api_host: instance,
     });
+    posthog.register({
+      environment: config.environment,
+      version: config.version,
+      platform: config.platform,
+    });
   }
 }
 
@@ -27,6 +33,7 @@ export function initAnalytics() {
 export function setAnalyticsUser(info: UserInfo) {
   posthog.identify(info.uuid, {
     name: getUserName(info),
+    username: info.username,
   });
 }
 
