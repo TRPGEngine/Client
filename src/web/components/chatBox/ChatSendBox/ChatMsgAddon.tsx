@@ -1,17 +1,17 @@
 import React, { useCallback, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Iconfont } from '../Iconfont';
+import { Iconfont } from '../../Iconfont';
 import { useTranslation } from '@shared/i18n';
 import styled from 'styled-components';
-import { openWebviewWindow } from '../StandaloneWindow';
+import { openWebviewWindow } from '../../StandaloneWindow';
 import { Popover } from 'antd';
-import { FileSelector } from '../FileSelector';
+import { FileSelector } from '../../FileSelector';
 import _isNil from 'lodash/isNil';
 import { uploadChatimg } from '@shared/utils/image-uploader';
 import { Editor } from 'slate';
-import { insertImage } from '../editor/changes/insertImage';
+import { insertImage } from '../../editor/changes/insertImage';
 import { showGlobalLoading, showToasts } from '@shared/manager/ui';
-import { ChatBoxBtn } from './style';
+import { ChatBoxBtn } from '../style';
 
 const ChatMsgAddonItemContainer = styled.div`
   padding: 6px 10px;

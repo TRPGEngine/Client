@@ -6,8 +6,9 @@ import { ChatMsgAddon } from './ChatMsgAddon';
 import { ChatMsgEmotion } from './ChatMsgEmotion';
 import { Space } from 'antd';
 import { ChatMsgTypeSwitch } from './ChatMsgTypeSwitch';
+import { ChatMsgDiceBuilder } from './ChatMsgDiceBuilder';
 
-import './ChatMsg.less';
+import './index.less';
 
 const Wrapper = styled.div`
   padding: 0 16px 24px;
@@ -32,7 +33,9 @@ interface ChatSendBoxProps {
 }
 export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
   const { converseUUID } = props;
-  const { editorRef, editorEl } = useInputMsgEditorMsgSend(converseUUID);
+  const { editorRef, editorEl, sendMsg } = useInputMsgEditorMsgSend(
+    converseUUID
+  );
 
   return (
     <Wrapper>
@@ -42,6 +45,10 @@ export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
         <div className="inner">{editorEl}</div>
 
         <Space align="end">
+          <ChatMsgDiceBuilder
+            editorRef={editorRef}
+            onSelectDice={(exp: string) => sendMsg(exp, 'normal')}
+          />
           <ChatMsgEmotion editorRef={editorRef} />
           <ChatMsgAddon editorRef={editorRef} />
         </Space>

@@ -22,6 +22,7 @@ export interface RoomClientOptions {
   svc?: string;
   datachannel?: boolean;
   externalVideo?: boolean;
+  audioConstraints?: MediaTrackConstraints;
 }
 
 export type CapablityState = 'on' | 'off' | 'unsupported';

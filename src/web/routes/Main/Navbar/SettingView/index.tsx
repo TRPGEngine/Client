@@ -14,6 +14,7 @@ import { AboutView } from './AboutView';
 import { useTranslation } from '@shared/i18n';
 import { showAlert } from '@shared/manager/ui';
 import { SettingUserConfig } from './SettingUserConfig';
+import { SettingAudioConfig } from './SettingAudioConfig';
 
 export const SettingView: React.FC = TMemo(() => {
   const dispatch = useTRPGDispatch();
@@ -43,6 +44,11 @@ export const SettingView: React.FC = TMemo(() => {
             type: 'item',
             title: t('系统设置'),
             content: <SettingSystemConfig />,
+          },
+          {
+            type: 'item',
+            title: t('语音设置'),
+            content: <SettingAudioConfig />,
           },
         ],
       },

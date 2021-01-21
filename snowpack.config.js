@@ -72,10 +72,10 @@ module.exports = {
     public: '/',
     src: '/_dist_',
   },
-  scripts: {
-    'mount:font': 'mount src/web/assets/fonts --to /fonts',
-    'mount:favicon': 'mount src/web/assets/img --to /',
-  },
+  routes: [
+    { match: 'routes', src: '.*', dest: '/index.html' },
+    { src: '/favicon.ico', dest: '/_dist_/web/assets/img/favicon.ico' },
+  ],
   alias: {
     ...tsAlias,
     '@src': './src/',
@@ -120,7 +120,6 @@ module.exports = {
               posthog: require('config').get('posthog'),
             })};`,
           },
-
           {
             from: 'import "antd/dist/antd.dark.less";',
             to: 'import "/.snowpack/antd.dark.css"',
@@ -128,13 +127,13 @@ module.exports = {
           {
             file: require.resolve('./src/web/assets/css/iconfont.css'),
             from: /\.\.\/fonts\/iconfont/g,
-            to: '/fonts/iconfont',
+            to: '/_dist_/web/assets/fonts/iconfont',
           },
         ],
       },
     ],
   ],
-  installOptions: {
+  packageOptions: {
     rollup: {
       context: 'window',
     },

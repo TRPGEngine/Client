@@ -81,6 +81,11 @@ describe('project.config', () => {
         disableSendWritingState: expect.any(Boolean),
         showSelfInWritingState: expect.any(Boolean),
         chatBoxType: expect.any(String),
+        audioConstraints: {
+          autoGainControl: expect.any(Boolean),
+          echoCancellation: expect.any(Boolean),
+          noiseSuppression: expect.any(Boolean),
+        },
       },
     });
   });

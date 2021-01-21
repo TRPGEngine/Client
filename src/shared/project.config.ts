@@ -134,6 +134,11 @@ const defaultSettings = {
     disableSendWritingState: false, // 不发送输入状态
     showSelfInWritingState: false, // 在输入状态中显示自己
     chatBoxType: 'auto' as 'auto' | 'compatible', // 聊天框类型 有auto, compatible
+    audioConstraints: {
+      noiseSuppression: false, // 噪音抑制
+      autoGainControl: false, // 自动增益
+      echoCancellation: false, // 回声消除
+    },
   },
 };
 

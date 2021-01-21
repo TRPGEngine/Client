@@ -1,5 +1,4 @@
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
-import { SettingsState } from '@redux/types/settings';
 import { DefaultSettings } from '@shared/project.config';
 
 /**

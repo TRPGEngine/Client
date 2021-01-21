@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { VoiceRoomDetail } from '../rtc/VoiceRoomDetail';
 import { CommonPanel } from './CommonPanel';
 import { useTranslation } from '@shared/i18n';
+import { useSystemSetting } from '@redux/hooks/settings';
 
 const Root = styled.div`
   overflow: auto;
@@ -47,6 +48,9 @@ export const VoiceChannel: React.FC<CommonPanelProps> = TMemo((props) => {
   const isInRoom = useRTCRoomStateSelector(
     (state) => state.room.roomId === channelUUID
   );
+  const audioConstraints = useSystemSetting(
+    'audioConstraints'
+  ) as MediaTrackConstraints;
   const { t } = useTranslation();
 
   const handleJoinRoom = useCallback(() => {
@@ -55,8 +59,9 @@ export const VoiceChannel: React.FC<CommonPanelProps> = TMemo((props) => {
       peerId: currentUserInfo.uuid ?? '',
       displayName: getUserName(currentUserInfo), // TODO: 这个应该取消
       device: buildDeviceInfo(),
+      audioConstraints,
     });
-  }, [createClient, channelUUID, currentUserInfo]);
+  }, [createClient, channelUUID, currentUserInfo, audioConstraints]);
 
   return (
     <CommonPanel header={channelName}>
