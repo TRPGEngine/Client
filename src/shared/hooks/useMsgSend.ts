@@ -7,6 +7,7 @@ import { sendMsg as sendMsgAction } from '@redux/actions/chat';
 import { MsgType } from '@redux/types/chat';
 import { MsgDataManager, preProcessMessage } from '@shared/utils/msg-helper';
 import _isNil from 'lodash/isNil';
+import _isFunction from 'lodash/isFunction';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { useSelectedGroupActorInfo } from '@redux/hooks/group';
 import {
@@ -26,7 +27,7 @@ export function useMsgSend(converseUUID: string) {
   const converse = useConverseDetail(converseUUID);
   const converseType = converse?.type;
   const dispatch = useTRPGDispatch();
-  const { replyMsg, clearReplyMsg } = useMsgContainerContext();
+  const { replyMsg, clearReplyMsg, scrollToBottom } = useMsgContainerContext();
   const currentGroupUUID = useCurrentGroupUUID();
   const { msgType } = useChatMsgTypeContext();
 
@@ -97,6 +98,9 @@ export function useMsgSend(converseUUID: string) {
       }
 
       inputRef.current?.focus();
+      requestAnimationFrame(() => {
+        _isFunction(scrollToBottom) && scrollToBottom();
+      });
     },
     [
       converseUUID,
@@ -105,6 +109,7 @@ export function useMsgSend(converseUUID: string) {
       replyMsg,
       clearReplyMsg,
       currentGroupUUID,
+      scrollToBottom,
     ]
   );
 

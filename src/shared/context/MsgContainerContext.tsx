@@ -14,18 +14,32 @@ import { ChatMsgTypeContextProvider } from './ChatMsgTypeContext';
 interface MsgContainerContextType {
   replyMsg: ReplyMsgType | null;
   setReplyMsg: (msg: ReplyMsgType | null) => void;
+  scrollToBottom: (() => void) | null;
+  setScrollToBottom: React.Dispatch<React.SetStateAction<(() => void) | null>>;
 }
 
 const MsgContainerContext = React.createContext<MsgContainerContextType>({
   replyMsg: null,
   setReplyMsg: _noop,
+  scrollToBottom: null,
+  setScrollToBottom: _noop,
 });
 
 export const MsgContainerContextProvider: React.FC<{}> = TMemo((props) => {
   const [replyMsg, setReplyMsg] = useState<ReplyMsgType | null>(null);
+  const [scrollToBottom, setScrollToBottom] = useState<(() => void) | null>(
+    null
+  );
 
   return (
-    <MsgContainerContext.Provider value={{ replyMsg, setReplyMsg }}>
+    <MsgContainerContext.Provider
+      value={{
+        replyMsg,
+        setReplyMsg,
+        scrollToBottom,
+        setScrollToBottom,
+      }}
+    >
       <ChatMsgTypeContextProvider>{props.children}</ChatMsgTypeContextProvider>
     </MsgContainerContext.Provider>
   );
@@ -46,5 +60,7 @@ export function useMsgContainerContext(): MsgContainerContextType & {
     replyMsg: context.replyMsg,
     setReplyMsg: context.setReplyMsg,
     clearReplyMsg,
+    scrollToBottom: context.scrollToBottom,
+    setScrollToBottom: context.setScrollToBottom,
   };
 }
