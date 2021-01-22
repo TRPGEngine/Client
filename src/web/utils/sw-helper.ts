@@ -10,6 +10,7 @@ function handleShowUpdateTip() {
   notification.open({
     message: t('更新版本'),
     description: t('检测到有新版本, 是否立即刷新以升级到最新内容'),
+    duration: 0,
     btn: React.createElement(
       Button,
       {
