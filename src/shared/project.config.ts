@@ -111,6 +111,7 @@ interface ProjectConfig {
     goddessfantasy: string;
     loginUrl: string;
     blog: string;
+    versionBlog: string; // 版本发布日志
     portal: string;
     rsshub: string;
     getInviteUrl: (inviteCode: string) => string;
@@ -276,6 +277,8 @@ const config: ProjectConfig = {
         ? 'https://trpgdoc.moonrailgun.com/features'
         : '', // 登录页面右侧的地址
     blog: 'https://trpgdoc.moonrailgun.com/blog/',
+    versionBlog:
+      'https://trpgdoc.moonrailgun.com/blog/tags/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83',
     portal: portalUrl,
     rsshub,
     getInviteUrl(inviteCode: string) {
