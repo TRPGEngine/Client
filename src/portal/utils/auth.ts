@@ -54,7 +54,7 @@ export function getPortalJWT(): string {
 /**
  * 获取Portal的jwt信息
  */
-export function getPortalInfo(): JWTUserInfoData {
+export function getPortalJWTInfo(): JWTUserInfoData {
   try {
     const token = getPortalJWT();
     const info = getJWTPayload(token);
