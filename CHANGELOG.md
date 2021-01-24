@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.14](https://github.com/TRPGEngine/Client/compare/v0.5.13...v0.5.14) (2021-01-24)
+
+
+### Features
+
+* **web:** 增加本人发送消息时列表自动滚动到底部 ([f05e287](https://github.com/TRPGEngine/Client/commit/f05e2877270e9c40c2f83fa102f3120acd51f952))
+* **web:** 弹出更新提示时增加更新日志按钮 ([b39eafb](https://github.com/TRPGEngine/Client/commit/b39eafb825290115558650747809fdb84501fa31))
+
 ### [0.5.13](https://github.com/TRPGEngine/Client/compare/v0.5.12...v0.5.13) (2021-01-21)
 
 

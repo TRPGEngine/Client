@@ -3,6 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import _get from 'lodash/get';
 import { usePWAContext } from './PWAContext';
+import pwaButtonImgUrl from '@web/assets/img/pwa-logo.svg';
 
 const Button = styled.div`
   padding: 8px 16px;
@@ -45,7 +46,7 @@ export const PWAButton: React.FC = TMemo((props) => {
 
   return (
     <Button onClick={handleInstallPWA}>
-      <img src="/src/web/assets/img/pwa-logo.svg" />
+      <img src={pwaButtonImgUrl} />
     </Button>
   );
 });

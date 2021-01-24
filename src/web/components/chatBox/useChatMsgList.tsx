@@ -25,6 +25,7 @@ import styled from 'styled-components';
 import { usePrevious } from 'react-use';
 import { MsgPayload } from '@redux/types/chat';
 import { useTranslation } from '@shared/i18n';
+import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 
 const LoadmoreText = styled.div<{
   disable?: boolean;
@@ -111,6 +112,7 @@ export function useChatMsgList(converseUUID: string) {
     (state) => state.settings.user.msgStyleCombine ?? false
   );
   const [showScrollToBottomBtn, setShowScrollToBottomBtn] = useState(false);
+  const { setScrollToBottom } = useMsgContainerContext();
 
   // 消息列表
   const msgListEl = useMemo(() => {
@@ -147,6 +149,9 @@ export function useChatMsgList(converseUUID: string) {
     nomore
   );
 
+  /**
+   * 滚动到底部
+   */
   const handleScrollToBottom = useMemo(
     () =>
       _throttle(
@@ -164,6 +169,9 @@ export function useChatMsgList(converseUUID: string) {
       ),
     []
   );
+  useEffect(() => {
+    setScrollToBottom(() => handleScrollToBottom);
+  }, [setScrollToBottom, handleScrollToBottom]);
 
   useEffect(() => {
     if (isSeekingLogRef.current === true) {

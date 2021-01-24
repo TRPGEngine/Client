@@ -1,7 +1,8 @@
 import config from '@shared/project.config';
-import { Button, notification } from 'antd';
+import { notification } from 'antd';
 import React from 'react';
 import { t } from '@shared/i18n';
+import { UpdateNotificationBtn } from '@web/components/UpdateNotificationBtn';
 
 /**
  * 弹出更新提示框
@@ -10,17 +11,8 @@ function handleShowUpdateTip() {
   notification.open({
     message: t('更新版本'),
     description: t('检测到有新版本, 是否立即刷新以升级到最新内容'),
-    btn: React.createElement(
-      Button,
-      {
-        type: 'primary',
-        size: 'small',
-        onClick: () => {
-          window.location.reload();
-        },
-      },
-      [t('立即刷新')]
-    ),
+    duration: 0,
+    btn: React.createElement(UpdateNotificationBtn),
   });
 }
 

@@ -14,6 +14,11 @@ export const routes: RouteConfig[] = [
     component: TLoadable(() => import('@portal/routes/sso/Login')),
   },
   {
+    title: 'OAuth - 授权',
+    path: '/sso/oauth',
+    component: TLoadable(() => import('@portal/routes/sso/OAuth')),
+  },
+  {
     title: '人物列表',
     path: '/actor/list',
     component: TLoadable(() => import('@portal/routes/actor/list')),
