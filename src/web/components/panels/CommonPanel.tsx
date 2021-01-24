@@ -3,6 +3,10 @@ import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { CommonHeader } from './CommonHeader';
 
+/**
+ * 通用面板容器
+ */
+
 const Root = styled.div`
   display: flex;
   flex-direction: column;

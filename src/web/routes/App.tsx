@@ -18,7 +18,7 @@ import { PWAContextProvider } from '@web/components/PWAContext';
 import { wrapSentry } from '@web/utils/sentry';
 import { RTCRoomClientContextProvider } from '@rtc/RoomContext';
 import { GlobalVoiceProvider } from '@web/components/rtc/GlobalVoice';
-import { sendUrlChangeEvent } from '@web/utils/analytics-helper';
+import { trackUrlChangeEvent } from '@web/utils/analytics-helper';
 
 import './App.less';
 
@@ -34,7 +34,7 @@ const CustomProvider: React.FC = (props) => {
 
   useEffect(() => {
     const unlisten = history.listen((location, action) => {
-      sendUrlChangeEvent();
+      trackUrlChangeEvent();
     });
 
     return () => {

@@ -6,6 +6,7 @@ import _noop from 'lodash/noop';
 import _isNil from 'lodash/isNil';
 import type { RoomClientOptions } from './type';
 import { getStore, RTCRoomReduxProvider } from './redux';
+import { trackEvent } from '@web/utils/analytics-helper';
 
 interface RTCRoomClientContextState {
   client: RoomClient | undefined;
@@ -28,29 +29,36 @@ const initRoomClientStore = () => {
 export const RTCRoomClientContextProvider: React.FC = TMemo((props) => {
   const [client, setClient] = useState<RoomClient>();
 
+  const deleteClient = useCallback(() => {
+    if (!_isNil(client)) {
+      trackEvent('rtc:leaveRoom', {
+        roomId: client.roomId,
+      });
+      client.close();
+    }
+
+    setClient(undefined);
+  }, [client]);
+
   const createClient = useCallback(
     async (options: RoomClientOptions) => {
       initRoomClientStore();
 
       if (!_isNil(client)) {
         // 关闭上一个连接
-        client.close();
+        deleteClient();
       }
+
+      trackEvent('rtc:joinRoom', {
+        roomId: options.roomId,
+      });
 
       const newClient = new RoomClient(options);
       await newClient.join();
       setClient(newClient);
     },
-    [client]
+    [client, deleteClient]
   );
-
-  const deleteClient = useCallback(() => {
-    if (!_isNil(client)) {
-      client.close();
-    }
-
-    setClient(undefined);
-  }, [client]);
 
   return (
     <RTCRoomClientContext.Provider
