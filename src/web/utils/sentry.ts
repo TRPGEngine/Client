@@ -34,6 +34,7 @@ const initSentry = _once(() => {
       `Can't find variable: Notification`,
       `'Notification' is undefined`,
       'ReferenceError: Notification is not defined',
+      `Cannot read property 'className' of null`,
     ],
   });
 });

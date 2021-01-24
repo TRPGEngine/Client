@@ -81,8 +81,9 @@ class Webview extends React.Component<Props> {
   }
 
   handleError = (e: React.SyntheticEvent<HTMLIFrameElement, Event>) => {
-    NProgress.done();
-    NProgress.remove();
+    if (NProgress.isRendered()) {
+      NProgress.done();
+    }
     this.setState({
       isError: true,
       errorMsg: `页面加载失败: ${this.props.src}`,
