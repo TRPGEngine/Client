@@ -9,15 +9,15 @@ import {
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
 import { isUserUUID } from './uuid';
-import { CacheKey } from '@redux/types/cache';
-import { TRPGAction } from '@redux/types/__all__';
+import type { CacheKey } from '@redux/types/cache';
+import type { TRPGAction } from '@redux/types/__all__';
 
 let _store;
-export const attachStore = function(store) {
+export const attachStore = function (store) {
   _store = store;
 };
 
-export const checkUser = function(uuid, type = 'user') {
+export const checkUser = function (uuid, type = 'user') {
   if (!uuid) {
     // 如果UUID不存在。则跳过
     return;
@@ -43,7 +43,7 @@ export const checkUser = function(uuid, type = 'user') {
   }
 };
 
-export const checkTemplate = function(uuid) {
+export const checkTemplate = function (uuid) {
   const store = _store;
   if (!!store && !!store.dispatch) {
     const state = store.getState();
@@ -56,11 +56,11 @@ export const checkTemplate = function(uuid) {
   }
 };
 
-export const savecache = function() {
+export const savecache = function () {
   // TODO
 };
 
-export const loadcache = function() {
+export const loadcache = function () {
   // TODO
 };
 

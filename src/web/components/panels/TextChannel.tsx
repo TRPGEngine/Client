@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { CommonPanelProps } from '@shared/components/panel/type';
+import type { CommonPanelProps } from '@shared/components/panel/type';
 import { GroupInfoContext } from '@shared/context/GroupInfoContext';
 import _isNil from 'lodash/isNil';
 import { Result } from 'antd';

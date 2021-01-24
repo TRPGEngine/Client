@@ -6,7 +6,7 @@ import { login, loginWithToken } from '@shared/redux/actions/user';
 import config from '@shared/project.config';
 import rnStorage from '@shared/api/rn-storage.api';
 import './Login.scss';
-import { TRPGState } from '@redux/types/__all__';
+import type { TRPGState } from '@redux/types/__all__';
 import { showPortal } from '@web/redux/action/ui';
 import { checkIsOldApp } from '@web/utils/debug-helper';
 import { t } from '@shared/i18n';

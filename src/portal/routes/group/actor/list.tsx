@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router';
+import type { RouteComponentProps } from 'react-router';
 import { fetchGroupActorList, applyGroupActor } from '@portal/model/group';
 import {
   requestAgreeGroupActor,
@@ -15,7 +15,7 @@ import { Modal, notification, Tabs } from 'antd';
 import ActorSelect from '@portal/components/ActorSelect';
 import GroupActorApprovalCard from '@portal/components/GroupActorApprovalCard';
 import { nav } from '@portal/history';
-import { GroupActorItem } from '@shared/types/group';
+import type { GroupActorItem } from '@shared/types/group';
 
 const { TabPane } = Tabs;
 

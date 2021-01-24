@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { CommonPanelProps } from './type';
+import type { CommonPanelProps } from './type';
 import { getPanel } from './reg';
 import { useEffect } from 'react';
 import { trackEvent } from '@web/utils/analytics-helper';

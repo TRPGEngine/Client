@@ -6,12 +6,12 @@ import {
 } from 'mediasoup-client';
 import Logger from './Logger';
 import { getProtooUrl } from './urlFactory';
-import { BuiltinHandlerName } from 'mediasoup-client/lib/types';
+import type { BuiltinHandlerName } from 'mediasoup-client/lib/types';
 import * as settingManager from './settingManager';
 import * as requestActions from './redux/requestActions';
 import * as stateActions from './redux/stateActions';
 import _isNil from 'lodash/isNil';
-import { RoomClientOptions } from './type';
+import type { RoomClientOptions } from './type';
 import shortid from 'shortid';
 
 declare global {

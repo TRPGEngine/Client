@@ -1,4 +1,4 @@
-import { UserInfo } from '@redux/types/user';
+import type { UserInfo } from '@redux/types/user';
 import { getUserName } from '@shared/utils/data-helper';
 import posthog from 'posthog-js';
 import _isString from 'lodash/isString';

@@ -1,7 +1,7 @@
-import { GroupPanel } from '@shared/types/panel';
-import { ActorType } from './actor';
-import { MsgPayload } from './chat';
-import { UserInfo } from './user';
+import type { GroupPanel } from '@shared/types/panel';
+import type { ActorType } from './actor';
+import type { MsgPayload } from './chat';
+import type { UserInfo } from './user';
 
 export type GroupType = 'group' | 'channel' | 'test';
 

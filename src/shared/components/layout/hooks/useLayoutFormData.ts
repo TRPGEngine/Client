@@ -1,4 +1,4 @@
-import { LayoutProps } from '../processor';
+import type { LayoutProps } from '../processor';
 import { parseMultilineText } from '../tags/utils';
 import { useMemo, useEffect } from 'react';
 import { useLayoutFieldState } from './useLayoutFieldState';

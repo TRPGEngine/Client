@@ -3,13 +3,13 @@ import { TMemo } from '@shared/components/TMemo';
 import { WebFastForm } from '../WebFastForm';
 import { closeModal, ModalWrapper } from '../Modal';
 import { showToasts } from '@shared/manager/ui';
-import {
+import type {
   FastFormFieldMeta,
   FastFormFieldProps,
 } from '@shared/components/FastForm/field';
 import { updateGroupPanelInfo } from '@shared/model/group';
 import { useGroupPanelInfo, useGroupMemberUUIDs } from '@redux/hooks/group';
-import { GroupPanel, GroupPanelVisible } from '@shared/types/panel';
+import type { GroupPanel, GroupPanelVisible } from '@shared/types/panel';
 import { useTranslation } from '@shared/i18n';
 import { UserUUIDSelector } from '../UserUUIDSelector';
 

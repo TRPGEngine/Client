@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router';
+import type { RouteComponentProps } from 'react-router';
 import { checkToken } from '@portal/utils/auth';
 import { fetchGroupActorAccess } from '@portal/model/group';
 import { notification } from 'antd';

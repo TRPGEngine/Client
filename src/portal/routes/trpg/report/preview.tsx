@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import type { RouteComponentProps } from 'react-router-dom';
 import { TMemo } from '@shared/components/TMemo';
 import { fetchTRPGGameReport } from '@portal/model/trpg';
 import { PortraitContainer } from '@portal/components/PortraitContainer';
@@ -17,7 +17,7 @@ import styled from 'styled-components';
 import { Divider, Typography } from 'antd';
 import { QRCode } from '@portal/components/QRCode';
 import Loading from '@portal/components/Loading';
-import { ReportLogItem } from '@shared/model/trpg';
+import type { ReportLogItem } from '@shared/model/trpg';
 
 const Container = styled(PortraitContainer)`
   padding: 10px;
@@ -77,7 +77,7 @@ const TRPGReportPreview: React.FC<Props> = TMemo((props) => {
         <QRCode value={src} />
         <div>或复制永久链接</div>
         <Typography.Text copyable={{ text: src }}>
-          <a href={src} target="_blank" rel="noreferrer">
+          <a href={src} target="_blank" rel="noopener">
             {src}
           </a>
         </Typography.Text>

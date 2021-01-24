@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { ChatLogItem } from '@shared/model/chat';
+import type { ChatLogItem } from '@shared/model/chat';
 import styled from 'styled-components';
 import { Row, Button, Checkbox, Modal, Form, Input, message } from 'antd';
 import _pick from 'lodash/pick';

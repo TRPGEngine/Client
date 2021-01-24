@@ -5,7 +5,7 @@ import _isNil from 'lodash/isNil';
 import _clone from 'lodash/clone';
 import _toPairs from 'lodash/toPairs';
 import _fromPairs from 'lodash/fromPairs';
-import {
+import type {
   XMLBuilderState,
   XMLBuilderContext,
 } from '@shared/components/layout/XMLBuilder';
@@ -13,7 +13,7 @@ import {
   StateDataType,
   StateActionType,
 } from '@shared/components/layout/types';
-import { XMLElement } from '../parser/xml-parser';
+import type { XMLElement } from '../parser/xml-parser';
 
 export type OperationDataType = {
   scope: string;

@@ -3,7 +3,7 @@ import { useLayoutGrid } from '@shared/components/layout/hooks/useLayoutGrid';
 import { Col } from 'antd';
 import { useLayoutChildren } from '@shared/components/layout/hooks/useLayoutChildren';
 import { TMemo } from '@shared/components/TMemo';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { removePrivateProps } from '../utils';
 
 interface LayoutColProps {

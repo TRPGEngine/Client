@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router';
+import type { RouteComponentProps } from 'react-router';
 import {
   TemplateItem,
   fetchTemplateInfo,
@@ -7,7 +7,7 @@ import {
 } from '@portal/model/actor';
 import XMLBuilder, { DataMap } from '@shared/components/layout/XMLBuilder';
 import _isNil from 'lodash/isNil';
-import { Affix, notification } from 'antd';
+import { notification } from 'antd';
 import { checkToken } from '@portal/utils/auth';
 import history from '@portal/history';
 import { ActionButton } from '@portal/components/ActionButton';

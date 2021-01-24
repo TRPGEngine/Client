@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Editor } from 'slate';
+import type { Editor } from 'slate';
 import { Iconfont } from '@web/components/Iconfont';
 import { Button, Divider, Popover, Tooltip } from 'antd';
 import { ChatBoxBtn } from '../style';

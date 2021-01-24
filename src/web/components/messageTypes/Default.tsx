@@ -1,6 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
 import Base from './Base';
-import { MsgPayload, RenderMsgPayload } from '@src/shared/redux/types/chat';
+import type {
+  MsgPayload,
+  RenderMsgPayload,
+} from '@src/shared/redux/types/chat';
 import BBCode from './bbcode/__all__';
 import { useWebsiteInfo } from '@shared/hooks/useWebsiteInfo';
 import _isString from 'lodash/isString';

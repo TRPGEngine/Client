@@ -4,7 +4,7 @@ import {
   removeNotification,
   removeAllNotifications,
 } from '../stateActions';
-import { NotificationsStateType } from '../types/notifications';
+import type { NotificationsStateType } from '../types/notifications';
 
 const initialState: NotificationsStateType = [];
 

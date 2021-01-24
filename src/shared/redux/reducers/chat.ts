@@ -10,7 +10,7 @@ import _get from 'lodash/get';
 import _pull from 'lodash/pull';
 import _findIndex from 'lodash/findIndex';
 import constants from '@redux/constants';
-import { ChatState } from '@redux/types/chat';
+import type { ChatState } from '@redux/types/chat';
 import { createReducer } from '@reduxjs/toolkit';
 import {
   addConverse,

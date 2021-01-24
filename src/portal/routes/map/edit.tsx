@@ -6,14 +6,14 @@ import React, {
   useRef,
 } from 'react';
 import { TiledMap } from '@shared/components/tiledmap';
-import { RouteComponentProps } from 'react-router-dom';
+import type { RouteComponentProps } from 'react-router-dom';
 import { fetchGroupActorList } from '@portal/model/group';
-import { GroupActorItem } from '@shared/model/group';
+import type { GroupActorItem } from '@shared/model/group';
 import _isNil from 'lodash/isNil';
 import _isFunction from 'lodash/isFunction';
 import SplitPane from '@shared/components/web/SplitPane';
 import { handleError } from '@web/utils/error';
-import { TiledMapManager } from '@shared/components/tiledmap/core/manager';
+import type { TiledMapManager } from '@shared/components/tiledmap/core/manager';
 import { checkToken } from '@portal/utils/auth';
 import { TMemo } from '@shared/components/TMemo';
 import { TokenPicker } from './tools/TokenPicker';

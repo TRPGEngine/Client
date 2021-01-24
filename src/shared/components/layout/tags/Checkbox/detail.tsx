@@ -1,6 +1,6 @@
 import React from 'react';
-import { TagComponent } from '../type';
-import { TagCheckboxProps } from './shared';
+import type { TagComponent } from '../type';
+import type { TagCheckboxProps } from './shared';
 import { TMemo } from '@shared/components/TMemo';
 import { TagCheckboxEdit } from './edit';
 

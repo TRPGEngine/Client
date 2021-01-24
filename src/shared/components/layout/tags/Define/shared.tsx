@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useCallback, Fragment } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { useBuildLayoutDefineStateContext } from '../../hooks/useBuildLayoutStateContext';
 import {
   LayoutStateContextProvider,

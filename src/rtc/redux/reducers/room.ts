@@ -8,7 +8,7 @@ import {
   setRoomFaceDetection,
   removePeer,
 } from '../stateActions';
-import { RoomStateType } from '../types/room';
+import type { RoomStateType } from '../types/room';
 
 const initialState: RoomStateType = {
   url: null,

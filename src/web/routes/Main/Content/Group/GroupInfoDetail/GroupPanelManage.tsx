@@ -11,7 +11,7 @@ import { showToasts, showAlert } from '@shared/manager/ui';
 import { openModal } from '@web/components/Modal';
 import { GroupPanelUpdateInfo } from '@web/components/modals/GroupPanelUpdateInfo';
 import { useTranslation } from '@shared/i18n';
-import { GroupPanel } from '@shared/types/panel';
+import type { GroupPanel } from '@shared/types/panel';
 import { GroupPanelCreate } from '@web/components/modals/GroupPanelCreate';
 
 const GroupPanelListItemContainer = styled.div`

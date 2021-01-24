@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { findGroup } from '../../../shared/redux/actions/group';
 import ModalPanel from '../ModalPanel';
 import FindResultItem from '../FindResultItem';
-import { TRPGDispatchProp, TRPGState } from '@redux/types/__all__';
+import type { TRPGDispatchProp, TRPGState } from '@redux/types/__all__';
 import { Select } from 'antd';
 
 import './GroupAdd.scss';

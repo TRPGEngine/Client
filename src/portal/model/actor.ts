@@ -1,6 +1,6 @@
 import { request } from '@portal/utils/request';
 import { getAbsolutePath } from '@shared/utils/file-helper';
-import { ModelAccess } from './types';
+import type { ModelAccess } from './types';
 import { isBlobUrl } from '@shared/utils/string-helper';
 import _get from 'lodash/get';
 import _set from 'lodash/set';

@@ -8,7 +8,7 @@ import { Popover } from 'antd';
 import { FileSelector } from '../../FileSelector';
 import _isNil from 'lodash/isNil';
 import { uploadChatimg } from '@shared/utils/image-uploader';
-import { Editor } from 'slate';
+import type { Editor } from 'slate';
 import { insertImage } from '../../editor/changes/insertImage';
 import { showGlobalLoading, showToasts } from '@shared/manager/ui';
 import { ChatBoxBtn } from '../style';

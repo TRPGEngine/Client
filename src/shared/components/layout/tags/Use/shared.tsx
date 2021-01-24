@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { removePrivateProps } from '../utils';
 import { TMemo } from '@shared/components/TMemo';

@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { TMemo } from '@shared/components/TMemo';
 import { Input, InputNumber } from 'antd';
 import { useLayoutFormData } from '../../hooks/useLayoutFormData';
-import { TagInputProps } from '../Input/shared';
+import type { TagInputProps } from '../Input/shared';
 import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';
 import { useToNumber } from '@shared/hooks/useToNumber';

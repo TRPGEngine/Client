@@ -1,4 +1,4 @@
-import { DeviceType } from '@src/rtc/type';
+import type { DeviceType } from '@src/rtc/type';
 
 export interface BasePeerType {
   id: string;

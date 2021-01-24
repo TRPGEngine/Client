@@ -1,6 +1,6 @@
 import { Editor, Transforms, Range } from 'slate';
-import { ReactEditor } from 'slate-react';
-import { TRPGEditorNode } from '../types';
+import type { ReactEditor } from 'slate-react';
+import type { TRPGEditorNode } from '../types';
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 

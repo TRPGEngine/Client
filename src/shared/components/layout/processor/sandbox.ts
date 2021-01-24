@@ -1,4 +1,4 @@
-import { XMLBuilderContext } from '../XMLBuilder';
+import type { XMLBuilderContext } from '../XMLBuilder';
 import memoizeOne from 'memoize-one';
 import { builtinFunc } from './builtinFunc';
 import { parseDataText } from './';
@@ -52,7 +52,7 @@ export function compileCode(src: string) {
     return target[String(key)];
   }
 
-  return function(sandbox: Sandbox) {
+  return function (sandbox: Sandbox) {
     if (!sandboxProxies.has(sandbox)) {
       const sandboxProxy = new Proxy<Sandbox>(sandbox, { has, get });
       sandboxProxies.set(sandbox, sandboxProxy);

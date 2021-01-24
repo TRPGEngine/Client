@@ -1,8 +1,8 @@
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import React, { useMemo } from 'react';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';
 import { Progress, Tooltip } from 'antd';
-import { ProgressSize } from 'antd/lib/progress/progress';
+import type { ProgressSize } from 'antd/lib/progress/progress';
 import styledTheme from '@shared/utils/theme';
 import _isEmpty from 'lodash/isEmpty';
 import { TMemo } from '@shared/components/TMemo';

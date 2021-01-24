@@ -1,4 +1,4 @@
-import { SlatePluginFunction } from '../types';
+import type { SlatePluginFunction } from '../types';
 import { Editor } from 'slate';
 
 export const withMentions: SlatePluginFunction = (editor) => {

@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, Fragment } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { TMemo } from '@shared/components/TMemo';
 import { useToBoolean } from '@shared/hooks/useToBoolean';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';

@@ -20,7 +20,7 @@ import { GroupInfoContext } from '@shared/context/GroupInfoContext';
 import { MsgDataManager } from '@shared/utils/msg-helper';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { GroupMsgReply } from './GroupMsgReply';
-import { MsgType } from '@redux/types/chat';
+import type { MsgType } from '@redux/types/chat';
 import { TMemo } from '@shared/components/TMemo';
 import {
   useSelectedGroupInfo,

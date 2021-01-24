@@ -2,7 +2,7 @@ import {
   useTRPGSelector,
   useTRPGDispatch,
 } from '@shared/hooks/useTRPGSelector';
-import {
+import type {
   WritingListGroupItem,
   SimpleConverseType,
   ChatStateConverse,

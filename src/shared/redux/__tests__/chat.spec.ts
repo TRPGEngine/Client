@@ -1,7 +1,7 @@
 import chatReducer from '@src/shared/redux/reducers/chat';
 import configureStore from '@src/shared/redux/configureStore';
 import * as chatActions from '@src/shared/redux/actions/chat';
-import { MsgPayload } from '@src/shared/redux/types/chat';
+import type { MsgPayload } from '@src/shared/redux/types/chat';
 import _isEmpty from 'lodash/isEmpty';
 import _isObject from 'lodash/isObject';
 import _isArray from 'lodash/isArray';

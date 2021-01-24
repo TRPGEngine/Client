@@ -13,7 +13,7 @@ import config, { DefaultSettings } from '@src/shared/project.config';
 import rnStorage from '../../api/rn-storage.api';
 import * as trpgApi from '../../api/trpg.api';
 import { TRPGAction, createTRPGAsyncThunk } from '@redux/types/__all__';
-import { ServerConfig, SettingsState } from '@redux/types/settings';
+import type { ServerConfig, SettingsState } from '@redux/types/settings';
 import request from '@shared/utils/request';
 import { createAction, PrepareAction } from '@reduxjs/toolkit';
 import { showToasts } from '@shared/manager/ui';

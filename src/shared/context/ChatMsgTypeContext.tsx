@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { MsgType } from '@redux/types/chat';
+import type { MsgType } from '@redux/types/chat';
 import { TMemo } from '@shared/components/TMemo';
 
 const ChatMsgTypeContext = React.createContext<{

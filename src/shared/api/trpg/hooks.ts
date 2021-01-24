@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { PlayerTokenInfo } from '@shared/types/player';
+import type { PlayerTokenInfo } from '@shared/types/player';
 import _isString from 'lodash/isString';
 import { getMapMemberSocketInfo } from './event';
 

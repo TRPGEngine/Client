@@ -1,5 +1,9 @@
 import configureStore from '@shared/redux/configureStore';
-import { TRPGState, TRPGMiddleware, TRPGStore } from '@redux/types/__all__';
+import type {
+  TRPGState,
+  TRPGMiddleware,
+  TRPGStore,
+} from '@redux/types/__all__';
 import { testUserInfo } from './example/user';
 import { Provider } from 'react-redux';
 import React from 'react';

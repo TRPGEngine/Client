@@ -4,7 +4,7 @@ import Base from './Base';
 import filesize from 'filesize';
 import config from '@shared/project.config';
 import { downloadFile, previewFile } from '@shared/redux/actions/file';
-import { MessageProps } from '@shared/components/message/MessageHandler';
+import type { MessageProps } from '@shared/components/message/MessageHandler';
 import Webview from '@web/components/Webview';
 
 interface Props extends MessageProps, DispatchProp<any> {}

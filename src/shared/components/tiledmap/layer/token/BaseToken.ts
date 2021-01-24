@@ -1,5 +1,11 @@
-import { Position, Size, Rect, TokenData, TokenAttrs } from '../../core/types';
-import { DrawContext } from '../../core/render';
+import type {
+  Position,
+  Size,
+  Rect,
+  TokenData,
+  TokenAttrs,
+} from '../../core/types';
+import type { DrawContext } from '../../core/render';
 import _isNumber from 'lodash/isNumber';
 import _inRange from 'lodash/inRange';
 import { isRectInsideRect } from '../../core/utils';

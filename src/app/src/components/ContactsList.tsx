@@ -11,7 +11,7 @@ import sb from 'react-native-style-block';
 import appConfig from '../config.app';
 import { TIcon } from './TComponent';
 import ConvItem from './ConvItem';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import { useTRPGTabNavigation, TRPGTabScreenProps } from '@app/router';
 import { TRPGTabNavigation } from '@app/types/navigation';

@@ -1,5 +1,5 @@
 import TLoadable from '@web/components/TLoadable';
-import { ComponentType } from 'react';
+import type { ComponentType } from 'react';
 
 interface RouteConfig {
   title: string;

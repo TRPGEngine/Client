@@ -1,5 +1,5 @@
 import constants from '@redux/constants';
-import { CacheState } from '@redux/types/cache';
+import type { CacheState } from '@redux/types/cache';
 import produce from 'immer';
 const {
   RESET,

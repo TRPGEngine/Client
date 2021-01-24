@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useContext } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { Button } from 'antd';
 import _isNil from 'lodash/isNil';
 import { roll } from './shared';

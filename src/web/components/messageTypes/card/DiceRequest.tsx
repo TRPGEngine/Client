@@ -1,8 +1,8 @@
 import BaseCard from './BaseCard';
 import { connect, DispatchProp } from 'react-redux';
 import { acceptDiceRequest } from '../../../../shared/redux/actions/dice';
-import { MessageProps } from '@shared/components/message/MessageHandler';
-import { TRPGState } from '@src/shared/redux/types/__all__';
+import type { MessageProps } from '@shared/components/message/MessageHandler';
+import type { TRPGState } from '@src/shared/redux/types/__all__';
 
 interface Props extends MessageProps, DispatchProp<any> {
   selfUUID: string;

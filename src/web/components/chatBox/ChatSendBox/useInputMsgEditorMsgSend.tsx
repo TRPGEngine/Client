@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
-import { TRPGEditorNode } from '../../editor/types';
+import type { TRPGEditorNode } from '../../editor/types';
 import { buildBlankInputData, getHeadSelection } from '../../editor/utils';
 import {
   isArrowDownHotkey,
@@ -7,7 +7,7 @@ import {
   isEnterHotkey,
 } from '@web/utils/hot-key';
 import { useMsgSend } from '@shared/hooks/useMsgSend';
-import { Editor } from 'slate';
+import type { Editor } from 'slate';
 import React from 'react';
 import { MsgInputEditor } from '../../editor/MsgInputEditor';
 import { useConverseDetail } from '@redux/hooks/chat';

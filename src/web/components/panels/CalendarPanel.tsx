@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { CommonPanelProps } from '@shared/components/panel/type';
+import type { CommonPanelProps } from '@shared/components/panel/type';
 import { Badge, Calendar, Dropdown, Menu } from 'antd';
 import type { Moment } from 'moment';
 import { useCurrentGroupUUID } from '@shared/context/GroupInfoContext';

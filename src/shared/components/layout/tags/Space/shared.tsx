@@ -1,9 +1,9 @@
 import React from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { TMemo } from '@shared/components/TMemo';
 import { useLayoutChildren } from '../../hooks/useLayoutChildren';
 import { Space } from 'antd';
-import { SizeType } from 'antd/lib/config-provider/SizeContext';
+import type { SizeType } from 'antd/lib/config-provider/SizeContext';
 
 interface TagProps {
   size?: SizeType | number;

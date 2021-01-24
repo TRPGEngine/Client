@@ -1,5 +1,5 @@
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
-import {
+import type {
   GroupInfo,
   GroupActorType,
   GroupChannel,
@@ -11,7 +11,7 @@ import _uniq from 'lodash/uniq';
 import _isNil from 'lodash/isNil';
 import _without from 'lodash/without';
 import { useMemo } from 'react';
-import { GroupPanel } from '@shared/types/panel';
+import type { GroupPanel } from '@shared/types/panel';
 import { isGroupPanelVisible } from '@shared/helper/group';
 import { useConverses } from './chat';
 

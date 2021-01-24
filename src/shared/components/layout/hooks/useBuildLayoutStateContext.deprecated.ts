@@ -1,4 +1,8 @@
-import { StateChangeHandler, DataMap, XMLBuilderState } from '../XMLBuilder';
+import type {
+  StateChangeHandler,
+  DataMap,
+  XMLBuilderState,
+} from '../XMLBuilder';
 import { useMemo, useReducer, useContext, useEffect } from 'react';
 import _clone from 'lodash/clone';
 import _set from 'lodash/set';

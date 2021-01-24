@@ -1,7 +1,7 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Input, Form } from 'antd';
-import { FastFormFieldComponent } from '@shared/components/FastForm/field';
+import type { FastFormFieldComponent } from '@shared/components/FastForm/field';
 import { getValidateStatus } from '../utils';
 
 export const FastFormTextArea: FastFormFieldComponent = TMemo((props) => {

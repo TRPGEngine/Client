@@ -1,5 +1,5 @@
 import { Editor, Transforms } from 'slate';
-import { EditorMentionListItem } from '../context/EditorMentionListContext';
+import type { EditorMentionListItem } from '../context/EditorMentionListContext';
 
 /**
  * 插入提及

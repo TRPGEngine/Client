@@ -1,4 +1,4 @@
-import { AstNodeObj } from '../type';
+import type { AstNodeObj } from '../type';
 import { getUrlTagRealUrl } from '../utils';
 
 describe('getUrlTagRealUrl', () => {

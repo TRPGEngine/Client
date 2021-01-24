@@ -1,4 +1,4 @@
-import { LanguageDetectorAsyncModule } from 'i18next';
+import type { LanguageDetectorAsyncModule } from 'i18next';
 import rnStorage from '@shared/api/rn-storage.api';
 import { useRNStorage } from '@shared/hooks/useRNStorage';
 import { useRef, useMemo, useCallback } from 'react';

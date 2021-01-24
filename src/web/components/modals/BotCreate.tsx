@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { WebFastForm } from '../WebFastForm';
-import { FastFormFieldMeta } from '@shared/components/FastForm/field';
+import type { FastFormFieldMeta } from '@shared/components/FastForm/field';
 import { useTranslation } from '@shared/i18n';
 import { ModalWrapper, useModalContext } from '../Modal';
 import { createMsgTokenBot } from '@shared/model/bot';

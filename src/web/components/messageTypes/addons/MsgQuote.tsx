@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReplyMsgType } from '@shared/utils/msg-helper';
+import type { ReplyMsgType } from '@shared/utils/msg-helper';
 import { useUserName } from '@redux/hooks/user';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { RenderMsgPayload } from '@redux/types/chat';
+import type { RenderMsgPayload } from '@redux/types/chat';
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
 import PopoverUserInfo from './UserInfo';

@@ -1,11 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
-import { TagComponent } from '../type';
-import { TagInputProps } from '../Input/shared';
+import type { TagComponent } from '../type';
+import type { TagInputProps } from '../Input/shared';
 import { useLayoutFormData } from '../../hooks/useLayoutFormData';
 import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
 import { TMemo } from '@shared/components/TMemo';
 import { Input } from 'antd';
-import { AutoSizeType } from 'rc-textarea';
+import type { AutoSizeType } from 'rc-textarea';
 const TextArea = Input.TextArea;
 
 interface TagProps extends TagInputProps {

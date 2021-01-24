@@ -3,7 +3,7 @@ import { getAbsolutePath } from '@shared/utils/file-helper';
 import _isNumber from 'lodash/isNumber';
 import _isEmpty from 'lodash/isEmpty';
 import config from '@shared/project.config';
-import { GroupActorItem } from '@shared/types/group';
+import type { GroupActorItem } from '@shared/types/group';
 import { fetchGroupActorDetail } from '@shared/model/group';
 
 interface ActorTokenData extends ImageTokenData {

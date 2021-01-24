@@ -5,7 +5,10 @@ import _get from 'lodash/get';
 import AvatarPicker from './AvatarPicker';
 import { blobUrlToFile } from '@web/utils/file-helper';
 import { toAvatar } from '@shared/utils/upload-helper';
-import { TRPGDispatchProp, TRPGState } from '@src/shared/redux/types/__all__';
+import type {
+  TRPGDispatchProp,
+  TRPGState,
+} from '@src/shared/redux/types/__all__';
 import classNames from 'classnames';
 
 import './ImageUploader.scss';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { RouteComponentProps } from 'react-router';
+import type { RouteComponentProps } from 'react-router';
 import { Result } from 'antd';
 import { useResultParams } from '@portal/hooks/useResultParams';
 

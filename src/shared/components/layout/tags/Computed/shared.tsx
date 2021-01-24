@@ -4,7 +4,7 @@
  */
 
 import React, { useContext, useEffect, useMemo } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { parseDataText } from '../../processor';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';

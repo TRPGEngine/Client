@@ -1,5 +1,5 @@
 import { getInstance } from '@shared/api/trpg.api';
-import { TokenData } from './core/types';
+import type { TokenData } from './core/types';
 const api = getInstance();
 
 /**
@@ -77,7 +77,7 @@ export const registerMapTokenEventListener = (
   mapUUID: string,
   cb: MapTokenEventCallback
 ) => {
-  api.on('trpg::updateMapToken', function(data) {
+  api.on('trpg::updateMapToken', function (data) {
     const { type, payload } = data;
 
     if (data.mapUUID === mapUUID) {
@@ -94,7 +94,7 @@ export function registerMapConnectsUpdate(
   mapUUID: string,
   cb: MapConnectUpdateCallback
 ) {
-  api.on('trpg::updateMapConnects', function(data) {
+  api.on('trpg::updateMapConnects', function (data) {
     const { socketIds } = data;
 
     if (data.mapUUID === mapUUID) {

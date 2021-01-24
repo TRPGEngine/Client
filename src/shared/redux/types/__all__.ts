@@ -1,12 +1,12 @@
-import { AnyAction, Action, Store, Middleware } from 'redux';
-import { ActorState } from './actor';
-import { CacheState } from './cache';
-import { ChatState } from './chat';
-import { GroupState } from './group';
-import { NoteState } from './note';
-import { SettingsState } from './settings';
-import { UIState } from './ui';
-import { UserState } from './user';
+import type { AnyAction, Action, Store, Middleware } from 'redux';
+import type { ActorState } from './actor';
+import type { CacheState } from './cache';
+import type { ChatState } from './chat';
+import type { GroupState } from './group';
+import type { NoteState } from './note';
+import type { SettingsState } from './settings';
+import type { UIState } from './ui';
+import type { UserState } from './user';
 import {
   createAsyncThunk,
   AsyncThunkPayloadCreator,

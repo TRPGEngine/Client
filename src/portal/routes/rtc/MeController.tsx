@@ -5,7 +5,7 @@ import { Button, Tooltip, Space } from 'antd';
 import { setDevices } from '@src/rtc/settingManager';
 import styled from 'styled-components';
 import { useRTCRoomStateSelector } from '@rtc/redux';
-import { CapablityState } from '@rtc/type';
+import type { CapablityState } from '@rtc/type';
 import { useRTCProducers } from '@rtc/hooks/useRTCProducers';
 
 const CapablityBtn = styled(Button).attrs({

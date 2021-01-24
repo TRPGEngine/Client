@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { useLayoutChildren } from '../../hooks/useLayoutChildren';
 import { normalizeTagName, removePrivateProps } from '../utils';
 import styled from 'styled-components';

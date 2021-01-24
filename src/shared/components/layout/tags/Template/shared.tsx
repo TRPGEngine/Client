@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { useLayoutChildren } from '../../hooks/useLayoutChildren';
 import { TMemo } from '@shared/components/TMemo';
 

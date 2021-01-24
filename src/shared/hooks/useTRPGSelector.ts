@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 
 /**
  * TRPG选择器

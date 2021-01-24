@@ -18,9 +18,9 @@ const {
 } = constants;
 import rnStorage from '../../api/rn-storage.api';
 import * as trpgApi from '../../api/trpg.api';
-import { TRPGAction } from '@redux/types/__all__';
+import type { TRPGAction } from '@redux/types/__all__';
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
-import { NoteInfo } from '@redux/types/note';
+import type { NoteInfo } from '@redux/types/note';
 import _isFunction from 'lodash/isFunction';
 const api = trpgApi.getInstance();
 

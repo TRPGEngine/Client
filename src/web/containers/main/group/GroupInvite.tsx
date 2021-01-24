@@ -4,7 +4,7 @@ import config from '@shared/project.config';
 import ReactTooltip from 'react-tooltip';
 import { sendGroupInvite } from '@shared/redux/actions/group';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
-import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 
 import './GroupInvite.scss';
 

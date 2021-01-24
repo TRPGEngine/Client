@@ -1,4 +1,4 @@
-import { Toolbox } from '../core/toolbox';
+import type { Toolbox } from '../core/toolbox';
 import { TiledMapToolMove } from './move';
 import { TiledMapToolSelect } from './select';
 

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { useLayoutChildren } from '../../hooks/useLayoutChildren';
-import { LayoutProps } from '../../processor';
+import type { LayoutProps } from '../../processor';
 import styled from 'styled-components';
 import { getChildrenText } from '../utils';
 import { TMemo } from '@shared/components/TMemo';

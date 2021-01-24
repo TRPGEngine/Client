@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ModalPanel from './ModalPanel';
 import { changePassword } from '../../shared/redux/actions/user';
 import { showAlert, hideModal } from '../../shared/redux/actions/ui';
-import { TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGDispatchProp } from '@redux/types/__all__';
 
 import './ChangePassword.scss';
 

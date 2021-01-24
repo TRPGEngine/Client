@@ -3,7 +3,7 @@
  */
 
 import _isNil from 'lodash/isNil';
-import { TRPGState, TRPGStore } from '@redux/types/__all__';
+import type { TRPGState, TRPGStore } from '@redux/types/__all__';
 
 let _store: TRPGStore;
 export function initStoreHelper(store: TRPGStore): void {

@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useMemo, useContext } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Popover } from 'antd';
-import { PopoverProps } from 'antd/lib/popover';
+import type { PopoverProps } from 'antd/lib/popover';
 import _noop from 'lodash/noop';
 
 const TPopoverContext = React.createContext({ closePopover: _noop });

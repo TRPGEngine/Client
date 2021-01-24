@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert } from 'antd';
-import { RenderErrorComponent } from '@shared/components/ErrorBoundary';
+import type { RenderErrorComponent } from '@shared/components/ErrorBoundary';
 import { TMemo } from '@shared/components/TMemo';
 
 export const AlertErrorView: RenderErrorComponent = TMemo((props) => {

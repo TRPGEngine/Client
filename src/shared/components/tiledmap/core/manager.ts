@@ -1,4 +1,4 @@
-import {
+import type {
   TiledMapOptions,
   TokenAttrs,
   TiledMapActions,
@@ -11,9 +11,9 @@ import _isNil from 'lodash/isNil';
 import { Toolbox } from './toolbox';
 import { LayerManager } from '../layer/manager';
 import { Layer } from '../layer/layer';
-import { BaseToken } from '../layer/token/BaseToken';
+import type { BaseToken } from '../layer/token/BaseToken';
 import { createTokenByData } from '../layer/token/helper';
-import { UpdateType, UpdateTokenPayload } from '../socket';
+import type { UpdateType, UpdateTokenPayload } from '../socket';
 
 /**
  * TiledMap统一管理类

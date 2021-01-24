@@ -10,10 +10,10 @@ import {
   switchToConverse,
 } from '../../shared/redux/actions/chat';
 import './ProfileCard.scss';
-import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
-import { AlertPayload } from '@redux/types/ui';
+import type { TRPGState, TRPGDispatch } from '@redux/types/__all__';
+import type { AlertPayload } from '@redux/types/ui';
 import { getUserName } from '@shared/utils/data-helper';
-import { UserInfo } from '@redux/types/user';
+import type { UserInfo } from '@redux/types/user';
 import { Select } from 'antd';
 
 interface Props {

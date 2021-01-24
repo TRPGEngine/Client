@@ -5,7 +5,7 @@ import _upperCase from 'lodash/upperCase';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import _isNumber from 'lodash/isNumber';
-import { AvatarProps as AntdAvatarProps } from 'antd/lib/avatar';
+import type { AvatarProps as AntdAvatarProps } from 'antd/lib/avatar';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import { getAvatarColorHex } from '@shared/utils/string-helper';
 import { TMemo } from '@shared/components/TMemo';

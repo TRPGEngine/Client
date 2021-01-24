@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMemo, ReactNode } from 'react';
-import { LayoutProps } from '../processor';
+import type { LayoutProps } from '../processor';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
 import _isEmpty from 'lodash/isEmpty';

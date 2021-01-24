@@ -1,6 +1,6 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { FastFormFieldComponent, FastFormFieldProps } from './field';
+import type { FastFormFieldComponent, FastFormFieldProps } from './field';
 
 export const CustomField: FastFormFieldComponent<{
   render: (props: FastFormFieldProps) => React.ReactNode;

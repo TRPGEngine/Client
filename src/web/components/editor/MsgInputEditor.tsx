@@ -13,7 +13,7 @@ import { createMsgInputEditor } from './instance';
 import { Range, Editor, Transforms } from 'slate';
 import { Slate, ReactEditor } from 'slate-react';
 import { EditArea } from './render/EditArea';
-import { EditorBaseProps, TRPGEditorNode } from './types';
+import type { EditorBaseProps, TRPGEditorNode } from './types';
 import _isFunction from 'lodash/isFunction';
 import _isString from 'lodash/isString';
 import {

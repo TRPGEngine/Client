@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import _isNil from 'lodash/isNil';
 import _fromPairs from 'lodash/fromPairs';
 import _isFunction from 'lodash/isFunction';
-import { ObjectSchema } from 'yup';
+import type { ObjectSchema } from 'yup';
 import { FastFormContext } from './context';
 import { FastFormFieldMeta, getField } from './field';
 import { getFormContainer } from './container';

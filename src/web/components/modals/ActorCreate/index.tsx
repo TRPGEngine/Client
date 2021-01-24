@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import ModalPanel from '../../ModalPanel';
 import { Button, Steps, Row, message } from 'antd';
-import { DataMap } from '@shared/components/layout/XMLBuilder';
+import type { DataMap } from '@shared/components/layout/XMLBuilder';
 import {
   getSuggestTemplate,
   createActor,
@@ -16,8 +16,8 @@ import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import { toAvatarWithBlobUrl } from '@web/utils/upload-helper';
 import { isBlobUrl } from '@shared/utils/string-helper';
-import { AvatarUpdateData } from '@shared/utils/upload-helper';
-import { ActorTemplateType } from '@redux/types/actor';
+import type { AvatarUpdateData } from '@shared/utils/upload-helper';
+import type { ActorTemplateType } from '@redux/types/actor';
 import { TMemo } from '@shared/components/TMemo';
 import {
   useTRPGSelector,

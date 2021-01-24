@@ -1,4 +1,8 @@
-import { PlayerUser, UserAlignment, UserGender } from '@shared/model/player';
+import type {
+  PlayerUser,
+  UserAlignment,
+  UserGender,
+} from '@shared/model/player';
 
 export interface UserInfo {
   id: number;

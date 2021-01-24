@@ -6,8 +6,8 @@ import _isNil from 'lodash/isNil';
 import _isPlainObject from 'lodash/isPlainObject';
 import _has from 'lodash/has';
 import _trim from 'lodash/trim';
-import { GroupActorType } from '@redux/types/group';
-import { MsgPayload } from '@redux/types/chat';
+import type { GroupActorType } from '@redux/types/group';
+import type { MsgPayload } from '@redux/types/chat';
 
 const replyMsgFields = ['uuid', 'message', 'sender_uuid'] as const;
 export type ReplyMsgType = Pick<MsgPayload, typeof replyMsgFields[number]>;

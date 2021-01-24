@@ -10,7 +10,7 @@ import indentLines from './changes/indentLines';
 import { BlockButton } from './toolbar/BlockButton';
 import { MarkButton } from './toolbar/MarkButton';
 import { EditArea } from './render/EditArea';
-import { EditorBaseProps } from './types';
+import type { EditorBaseProps } from './types';
 import { WebErrorBoundary } from '../WebErrorBoundary';
 import { useEditorRender } from './hooks/useEditorRender';
 import { serializeToPlaintext } from './utils/serialize/plaintext';

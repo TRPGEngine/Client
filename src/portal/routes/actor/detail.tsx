@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router';
+import type { RouteComponentProps } from 'react-router';
 import { fetchActorAccess, removeActor } from '@portal/model/actor';
 import { ActionButton } from '@portal/components/ActionButton';
 import _get from 'lodash/get';

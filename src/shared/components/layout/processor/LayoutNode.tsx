@@ -1,6 +1,6 @@
 import React, { useContext, Fragment, useEffect, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { XMLElement } from '../parser/xml-parser';
+import type { XMLElement } from '../parser/xml-parser';
 import { LayoutStateContext } from '../context/LayoutStateContext';
 import { parseDataText } from './index';
 import { parseAttrStyle } from './style';

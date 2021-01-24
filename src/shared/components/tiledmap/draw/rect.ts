@@ -1,4 +1,4 @@
-import { Rect } from '../core/types';
+import type { Rect } from '../core/types';
 
 /**
  * 绘制框选的图案

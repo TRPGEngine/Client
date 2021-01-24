@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { Tabs } from 'antd';
-import { TabsPosition } from 'antd/lib/tabs';
+import type { TabsPosition } from 'antd/lib/tabs';
 import styled from 'styled-components';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { TMemo } from '@shared/components/TMemo';

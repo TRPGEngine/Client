@@ -1,5 +1,5 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
-import { XMLBuilderState } from '../XMLBuilder';
+import type { XMLBuilderState } from '../XMLBuilder';
 import { StateActionType } from '../types';
 import _set from 'lodash/set';
 import _isFunction from 'lodash/isFunction';

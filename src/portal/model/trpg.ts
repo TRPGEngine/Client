@@ -2,7 +2,7 @@ import { request } from '@portal/utils/request';
 import { hpack, hunpack } from '@shared/utils/json-helper';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
-import { GameReport } from '@shared/model/trpg';
+import type { GameReport } from '@shared/model/trpg';
 
 /**
  * 获取团战报
