@@ -3,6 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { LoginForm } from './LoginForm';
 import { Button } from 'antd';
 import { RegisterForm } from './RegisterForm';
+import { t } from '@shared/i18n';
 
 interface Props {
   onLoginSuccess?: () => void;
@@ -20,11 +21,11 @@ export const LoginView: React.FC<Props> = TMemo((props) => {
       <p style={{ textAlign: 'right' }}>
         {!showRegister ? (
           <Button type="link" onClick={() => setShowRegister(true)}>
-            没有账号？现在注册
+            {t('没有账号？现在注册')}
           </Button>
         ) : (
           <Button type="link" onClick={() => setShowRegister(false)}>
-            已有账号？立即登录
+            {t('已有账号？现在登录')}
           </Button>
         )}
       </p>
