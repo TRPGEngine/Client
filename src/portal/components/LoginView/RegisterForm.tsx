@@ -4,9 +4,10 @@ import { TMemo } from '@shared/components/TMemo';
 import { message, Col, Typography } from 'antd';
 import { handleError } from '@web/utils/error';
 import _isFunction from 'lodash/isFunction';
-import { loginWithPassword, registerAccount } from '@shared/model/player';
+import { registerAccount } from '@shared/model/player';
 import { FastFormFieldMeta } from '@shared/components/FastForm/field';
-import { setPortalJWT } from '@portal/utils/auth';
+import { trackEvent } from '@web/utils/analytics-helper';
+import { loginPortalWithPassword } from '@portal/model/user';
 
 const fields: FastFormFieldMeta[] = [
   {
@@ -53,9 +54,11 @@ export const RegisterForm: React.FC<RegisterFormProps> = TMemo((props) => {
 
       try {
         await registerAccount(username, password);
-        const { jwt } = await loginWithPassword(username, password); // 注册成功后自动登录
+        trackEvent('portal:register', {
+          username,
+        });
 
-        setPortalJWT(jwt);
+        await loginPortalWithPassword(username, password); // 注册成功后自动登录
         _isFunction(props.onLoginSuccess) && props.onLoginSuccess();
       } catch (err) {
         handleError(err);

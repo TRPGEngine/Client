@@ -6,6 +6,7 @@ import {
   buildCacheFactory,
   buildCacheHashFnPrefix,
 } from '@shared/utils/cache-factory';
+import { setAnalyticsUser } from '@web/utils/analytics-helper';
 
 export interface PlayerUser {
   id: number;
@@ -76,6 +77,7 @@ export async function loginWithPassword(
 
   const { jwt, info } = data;
   await setUserJWT(jwt);
+  setAnalyticsUser(info);
 
   return { jwt, info };
 }

@@ -4,8 +4,7 @@ import { handleError } from '@web/utils/error';
 import { message, Input, Button, Col, Typography, Form } from 'antd';
 import { useFormik } from 'formik';
 import _isFunction from 'lodash/isFunction';
-import { loginWithPassword } from '@shared/model/player';
-import { setPortalJWT } from '@portal/utils/auth';
+import { loginPortalWithPassword } from '@portal/model/user';
 
 interface Values {
   username: string;
@@ -20,23 +19,23 @@ export const LoginForm: React.FC<LoginFormProps> = TMemo((props) => {
   const { values, handleChange, handleSubmit } = useFormik({
     initialValues: { username: '', password: '' },
     onSubmit: useCallback(
-      (values: Values) => {
+      async (values: Values) => {
         const { username, password } = values;
-        if (!values.username || !values.password) {
+        if (!username || !password) {
           message.error('用户名密码不能为空');
           return;
         }
 
         setLoading(true);
-        loginWithPassword(username, password)
-          .then(({ jwt }) => {
-            setPortalJWT(jwt);
-            _isFunction(props.onLoginSuccess) && props.onLoginSuccess();
-          })
-          .catch(handleError)
-          .finally(() => {
-            setLoading(false);
-          });
+
+        try {
+          await loginPortalWithPassword(username, password);
+          _isFunction(props.onLoginSuccess) && props.onLoginSuccess();
+        } catch (e) {
+          handleError(e);
+        } finally {
+          setLoading(false);
+        }
       },
       [props.onLoginSuccess, setLoading]
     ),
