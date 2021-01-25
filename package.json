@@ -111,7 +111,7 @@
     "https-browserify": "^1.0.0",
     "i18next": "^19.6.3",
     "i18next-resource-store-loader": "^0.1.2",
-    "immer": "^5.1.0",
+    "immer": "^8.0.1",
     "is-hotkey": "^0.1.6",
     "is-uuid": "^1.0.2",
     "jwt-decode": "^3.0.0-beta.2",
