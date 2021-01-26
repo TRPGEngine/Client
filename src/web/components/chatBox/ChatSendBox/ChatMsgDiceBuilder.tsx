@@ -5,6 +5,7 @@ import { Iconfont } from '@web/components/Iconfont';
 import { Button, Divider, Popover, Tooltip } from 'antd';
 import { ChatBoxBtn } from '../style';
 import _isNil from 'lodash/isNil';
+import { trackEvent } from '@web/utils/analytics-helper';
 
 interface ChatMsgDiceBuilderProps {
   editorRef: React.MutableRefObject<Editor | undefined>;
@@ -19,6 +20,7 @@ export const ChatMsgDiceBuilder: React.FC<ChatMsgDiceBuilderProps> = TMemo(
       (expressStr: string) => {
         onSelectDice(expressStr);
         setVisible(false);
+        trackEvent('chat:quickdice', { expressStr });
       },
       [onSelectDice]
     );

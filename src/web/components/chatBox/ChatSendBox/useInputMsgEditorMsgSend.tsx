@@ -22,6 +22,7 @@ import { useSystemSetting } from '@redux/hooks/settings';
 import { Input } from 'antd';
 import { useMsgHistory } from '@shared/hooks/useMsgHistory';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { trackEvent } from '@web/utils/analytics-helper';
 
 /**
  * 会话消息发送管理
@@ -59,6 +60,7 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
 
         handleSendMsg();
         if (message !== '') {
+          trackEvent('chat:sendMsg');
           addHistoryMsg(message);
           resetIndex();
         }

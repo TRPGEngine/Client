@@ -7,6 +7,7 @@ import { useChatMsgTypeContext } from '@shared/context/ChatMsgTypeContext';
 import styled from 'styled-components';
 import { MsgType } from '@redux/types/chat';
 import { useTranslation } from '@shared/i18n';
+import { trackEvent } from '@web/utils/analytics-helper';
 
 const ChatMsgTypeSwitchPopoverContainer = styled(Space)`
   padding: 6px 10px;
@@ -28,6 +29,7 @@ export const ChatMsgTypeSwitch: React.FC = TMemo((props) => {
   const actionIcon = <Iconfont>&#xe619;</Iconfont>;
 
   const handleSwitchMsgType = (newType: MsgType) => {
+    trackEvent('chat:switchMsgType', { newType, oldType: msgType });
     setMsgType(newType);
     setVisible(false);
   };
