@@ -1,13 +1,22 @@
 import React from 'react';
 import { regCup, saucerStoreHelper } from '@saucerjs/core';
+import { TagInputEdit } from '@shared/components/layout/tags/Input/edit';
 
 regCup({
   name: 'Input',
   displayName: '输入框',
   desc: '标准输入框',
   type: 'leaf',
-  render: ({ attrs }) => {
-    return <input />;
+  render: ({ nodeId, attrs }) => {
+    return (
+      <TagInputEdit
+        key={nodeId}
+        _name={'Input'}
+        _childrenEl={[]}
+        name={nodeId}
+        {...attrs}
+      />
+    );
   },
 });
 
