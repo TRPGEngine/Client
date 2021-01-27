@@ -1,4 +1,4 @@
-import { SlatePluginFunction } from '../types';
+import type { SlatePluginFunction } from '../types';
 
 export const withInlineImages: SlatePluginFunction = (editor) => {
   const { isInline, isVoid } = editor;

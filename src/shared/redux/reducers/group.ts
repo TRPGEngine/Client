@@ -2,7 +2,7 @@ import _get from 'lodash/get';
 import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
 import _remove from 'lodash/remove';
-import { GroupState } from '@redux/types/group';
+import type { GroupState } from '@redux/types/group';
 import constants from '@redux/constants';
 import produce from 'immer';
 import { createReducer } from '@reduxjs/toolkit';

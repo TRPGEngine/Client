@@ -1,4 +1,4 @@
-import { GroupPanel } from '@shared/types/panel';
+import type { GroupPanel } from '@shared/types/panel';
 import { request } from '@shared/utils/request';
 
 /**

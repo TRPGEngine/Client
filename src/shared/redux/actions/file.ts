@@ -2,7 +2,7 @@ import React, { ComponentType } from 'react';
 import * as trpgApi from '@shared/api/trpg.api';
 import config from '@shared/project.config';
 import { showSlidePanel, showLightbox } from './ui';
-import { TRPGAction } from '@redux/types/__all__';
+import type { TRPGAction } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import { downloadFileWeb } from '@shared/utils/file-helper';
@@ -12,12 +12,12 @@ const api = trpgApi.getInstance();
 interface PreviewFileOptions {
   WebviewComponent?: ComponentType<{ src: string }>;
 }
-export const previewFile = function(
+export const previewFile = function (
   fileuuid: string,
   options?: PreviewFileOptions
 ): TRPGAction {
-  return function(dispatch, getState) {
-    return api.emit('file::getFileInfo', { uuid: fileuuid }, function(data) {
+  return function (dispatch, getState) {
+    return api.emit('file::getFileInfo', { uuid: fileuuid }, function (data) {
       const previewUrl = data.previewUrl;
       if (previewUrl) {
         console.log('打开预览', data);
@@ -49,9 +49,9 @@ export const previewFile = function(
   };
 };
 
-export const downloadFile = function(fileuuid: string): TRPGAction {
-  return function(dispatch, getState) {
-    return api.emit('file::getFileInfo', { uuid: fileuuid }, function(data) {
+export const downloadFile = function (fileuuid: string): TRPGAction {
+  return function (dispatch, getState) {
+    return api.emit('file::getFileInfo', { uuid: fileuuid }, function (data) {
       const url = data.downloadUrl; // 下载地址
       if (url) {
         console.log('开始下载:', url);

@@ -9,7 +9,7 @@ import { getUserInfo } from '@shared/redux/actions/cache';
 import { sendFriendInvite } from '@shared/redux/actions/user';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
 import { addUserConverse } from '@src/shared/redux/actions/chat';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { TRPGStackScreenProps } from '@app/router';
 import { switchToChatScreen } from '@app/navigate';
 import { getUserName } from '@shared/utils/data-helper';
@@ -84,7 +84,9 @@ class ProfileScreen extends React.Component<ScreenProps> {
       );
     }
 
-    const avatar = userInfo.avatar ? userInfo.avatar : appConfig.defaultImg.user;
+    const avatar = userInfo.avatar
+      ? userInfo.avatar
+      : appConfig.defaultImg.user;
     const name = userInfo.nickname || userInfo.username;
 
     return (

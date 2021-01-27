@@ -1,4 +1,4 @@
-import { PlayerUser } from './player';
+import type { PlayerUser } from './player';
 
 export interface GroupActorItem {
   uuid: string;

@@ -1,4 +1,4 @@
-import { BasePeerType } from './peers';
+import type { BasePeerType } from './peers';
 
 export interface MeStateType extends BasePeerType {
   displayNameSet: boolean;

@@ -5,7 +5,7 @@ import { message, Col, Typography } from 'antd';
 import { handleError } from '@web/utils/error';
 import _isFunction from 'lodash/isFunction';
 import { registerAccount } from '@shared/model/player';
-import { FastFormFieldMeta } from '@shared/components/FastForm/field';
+import type { FastFormFieldMeta } from '@shared/components/FastForm/field';
 import { trackEvent } from '@web/utils/analytics-helper';
 import { loginPortalWithPassword } from '@portal/model/user';
 import { t } from '@shared/i18n';

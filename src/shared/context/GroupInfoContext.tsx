@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { GroupInfo } from '@redux/types/group';
+import type { GroupInfo } from '@redux/types/group';
 
 /**
  * 记录当前所在团的信息上下文

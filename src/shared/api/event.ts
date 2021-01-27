@@ -1,6 +1,6 @@
 import _throttle from 'lodash/throttle';
 import config from '@shared/project.config';
-import { ConverseType } from '@redux/types/chat';
+import type { ConverseType } from '@redux/types/chat';
 import * as trpgApi from './trpg.api';
 import { getSystemSettings } from '@redux/helpers/settings';
 const api = trpgApi.getInstance();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TagProps } from '@shared/components/bbcode/type';
+import type { TagProps } from '@shared/components/bbcode/type';
 import Image from '@web/components/Image';
 import config from '@shared/project.config';
 import ImageViewer from '@web/components/ImageViewer';

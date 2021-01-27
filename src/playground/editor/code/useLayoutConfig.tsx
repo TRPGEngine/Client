@@ -1,11 +1,11 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { LayoutType } from '@shared/components/layout/XMLBuilder';
+import type { LayoutType } from '@shared/components/layout/XMLBuilder';
 import LZString from 'lz-string';
 import { useCounter } from 'react-use';
 import copy from 'copy-to-clipboard';
 import { message, Checkbox, Tooltip, Button } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import type { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 /**
  * 布局设置

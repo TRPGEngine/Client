@@ -1,4 +1,4 @@
-import { Size, Position, Rect } from './types';
+import type { Size, Position, Rect } from './types';
 
 /**
  * 计算距离数最近的网格点

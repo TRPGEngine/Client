@@ -4,8 +4,8 @@ import {
   agreeGroupRequest,
   refuseGroupRequest,
 } from '@shared/redux/actions/group';
-import { TRPGState } from '@redux/types/__all__';
-import { MessageProps } from '@shared/components/message/MessageHandler';
+import type { TRPGState } from '@redux/types/__all__';
+import type { MessageProps } from '@shared/components/message/MessageHandler';
 import _isNil from 'lodash/isNil';
 
 interface Props extends MessageProps, DispatchProp<any> {

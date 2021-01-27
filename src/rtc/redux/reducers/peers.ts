@@ -10,7 +10,7 @@ import {
   addDataConsumer,
   removeDataConsumer,
 } from '../stateActions';
-import { PeersStateType } from '../types/peers';
+import type { PeersStateType } from '../types/peers';
 
 const initialState: PeersStateType = {};
 

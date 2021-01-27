@@ -17,8 +17,8 @@ import _get from 'lodash/get';
 
 import './ActorList.scss';
 import { message } from 'antd';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
-import { ActorType } from '@redux/types/actor';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import type { ActorType } from '@redux/types/actor';
 import { updateActor } from '@web/redux/action/actor';
 
 interface Props extends TRPGDispatchProp {

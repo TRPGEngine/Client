@@ -25,7 +25,7 @@ import { setUser as setUserSentryInfo } from './utils/sentry';
 import { TLoadable } from './components/TLoadable';
 import { checkIsOldApp } from './utils/debug-helper';
 import { ThemeContextProvider } from '@shared/context/ThemeContext';
-import { TRPGStore } from '@redux/types/__all__';
+import type { TRPGStore } from '@redux/types/__all__';
 import { setAnalyticsUser } from './utils/analytics-helper';
 import './debug';
 

@@ -6,7 +6,7 @@ import { TIcon, TInput, TAvatar } from '../components/TComponent';
 import { findUser } from '@shared/redux/actions/user';
 import { findGroup } from '@shared/redux/actions/group';
 import styled from 'styled-components/native';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { TRPGStackScreenProps } from '@app/router';
 
 const TextTip = styled.Text`

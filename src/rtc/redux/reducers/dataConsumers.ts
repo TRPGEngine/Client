@@ -4,7 +4,7 @@ import {
   addDataConsumer,
   removeDataConsumer,
 } from '../stateActions';
-import { DataConsumersStateType } from '../types/dataConsumers';
+import type { DataConsumersStateType } from '../types/dataConsumers';
 
 const initialState: DataConsumersStateType = {};
 

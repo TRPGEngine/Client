@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import ReactJson from 'react-json-view';
-import { XMLBuilderState } from '@shared/components/layout/XMLBuilder';
+import type { XMLBuilderState } from '@shared/components/layout/XMLBuilder';
 import _debounce from 'lodash/debounce';
 
 /**

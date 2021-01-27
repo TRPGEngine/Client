@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setLastDiceType } from '@shared/redux/actions/ui';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import _get from 'lodash/get';
 
 import './DiceRequest.scss';

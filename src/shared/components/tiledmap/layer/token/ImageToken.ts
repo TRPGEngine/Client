@@ -1,6 +1,6 @@
 import _isNumber from 'lodash/isNumber';
-import { Size, TokenData } from '../../core/types';
-import { DrawContext } from '../../core/render';
+import type { Size, TokenData } from '../../core/types';
+import type { DrawContext } from '../../core/render';
 import { BaseToken } from './BaseToken';
 
 export function loadImageP(imageUrl: string): Promise<HTMLImageElement> {

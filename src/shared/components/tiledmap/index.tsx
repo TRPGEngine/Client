@@ -10,8 +10,8 @@ import {
   registerMapTokenEventListener,
 } from './socket';
 import { message } from 'antd';
-import { TiledMapMode } from './core/types';
-import { BaseToken } from './layer/token/BaseToken';
+import type { TiledMapMode } from './core/types';
+import type { BaseToken } from './layer/token/BaseToken';
 import { ImageToken } from './layer/token/ImageToken';
 
 /**
@@ -63,9 +63,7 @@ function useTestTokenBtn(
   const [isDebug] = useLocalStorage('__tiledMapDebug', false);
   const testTokenRefs = useRef<BaseToken[]>([]);
   const handleAppendToken = useCallback(() => {
-    const name = Math.random()
-      .toString()
-      .substr(2);
+    const name = Math.random().toString().substr(2);
     const token = new ImageToken();
     token.imageSrc = `https://trpgapi.moonrailgun.com/file/avatar/svg?name=${name}`;
     // 生成随机坐标

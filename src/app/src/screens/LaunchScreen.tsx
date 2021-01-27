@@ -5,7 +5,7 @@ import sb from 'react-native-style-block';
 import config from '@shared/project.config';
 import { Modal } from '@ant-design/react-native';
 import SystemStatus from '../components/SystemStatus';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { TRPGStackScreenProps } from '@app/router';
 import { resetScreenAction } from '@app/navigate/actions';
 

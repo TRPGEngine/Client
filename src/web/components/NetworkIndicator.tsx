@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import type { TRPGState } from '@redux/types/__all__';
 
 import './NetworkIndicator.scss';
-import { TRPGState } from '@redux/types/__all__';
 
 interface Props {
   network: any;

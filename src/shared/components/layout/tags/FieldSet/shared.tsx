@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useLayoutChildren } from '@shared/components/layout/hooks/useLayoutChildren';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import styled from 'styled-components';
 import _isEmpty from 'lodash/isEmpty';
 import { TMemo } from '@shared/components/TMemo';

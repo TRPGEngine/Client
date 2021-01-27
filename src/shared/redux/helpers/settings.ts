@@ -1,5 +1,5 @@
 import { getStoreState } from '@redux/configureStore/helper';
-import { SettingType } from '@redux/types/settings';
+import type { SettingType } from '@redux/types/settings';
 import _get from 'lodash/get';
 
 /**

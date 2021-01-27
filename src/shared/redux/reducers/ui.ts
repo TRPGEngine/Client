@@ -1,5 +1,5 @@
 import constants from '@redux/constants';
-import { UIState } from '@redux/types/ui';
+import type { UIState } from '@redux/types/ui';
 import { produce } from 'immer';
 
 const {

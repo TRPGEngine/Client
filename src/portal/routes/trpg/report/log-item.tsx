@@ -1,7 +1,7 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import MessageHandler from '@web/components/messageTypes/__all__';
-import { ReportLogItem } from '@shared/model/trpg';
+import type { ReportLogItem } from '@shared/model/trpg';
 import { useUserInfo } from '@portal/hooks/useUserInfo';
 
 interface Props {

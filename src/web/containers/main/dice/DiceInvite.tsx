@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setLastDiceType } from '../../../../shared/redux/actions/ui';
-import { TRPGDispatchProp, TRPGState } from '@redux/types/__all__';
+import type { TRPGDispatchProp, TRPGState } from '@redux/types/__all__';
 import { Select } from 'antd';
 
 import './DiceInvite.scss';

@@ -35,13 +35,13 @@ import config from '../../project.config';
 import _without from 'lodash/without';
 import _isFunction from 'lodash/isFunction';
 import _filter from 'lodash/filter';
-import {
+import type {
   MsgPayload,
   ConverseInfo,
   SendMsgPayload,
   ChatStateConverse,
 } from '@src/shared/redux/types/chat';
-import { TRPGAction } from '../types/__all__';
+import type { TRPGAction } from '../types/__all__';
 import { isUserUUID } from '@shared/utils/uuid';
 import { createAction } from '@reduxjs/toolkit';
 

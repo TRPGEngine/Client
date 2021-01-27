@@ -27,7 +27,7 @@ import _isString from 'lodash/isString';
 import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
 
-import { TRPGAction } from '@redux/types/__all__';
+import type { TRPGAction } from '@redux/types/__all__';
 
 import * as trpgApi from '../../api/trpg.api';
 import rnStorage from '@shared/api/rn-storage.api';
@@ -45,8 +45,8 @@ export function setTemplate(uuid, name, desc, avatar, info) {
 }
 
 export function getTemplate(uuid?: string) {
-  return function(dispatch, getState) {
-    return api.emit('actor::getTemplate', { uuid }, function(data) {
+  return function (dispatch, getState) {
+    return api.emit('actor::getTemplate', { uuid }, function (data) {
       if (data.result) {
         const payload = uuid ? data.template : data.templates;
         dispatch({ type: GET_TEMPLATE_SUCCESS, uuid, payload });
@@ -64,7 +64,7 @@ export function getTemplate(uuid?: string) {
 export function getSuggestTemplate(): TRPGAction {
   const cacheKey = 'cache$suggestTemplate';
 
-  return async function(dispatch, getState) {
+  return async function (dispatch, getState) {
     if (getState().actor.suggestTemplate.length > 0) {
       return;
     }
@@ -94,8 +94,8 @@ export function getSuggestTemplate(): TRPGAction {
 }
 
 export function findTemplate(searchName) {
-  return function(dispatch, getState) {
-    return api.emit('actor::findTemplate', { name: searchName }, function(
+  return function (dispatch, getState) {
+    return api.emit('actor::findTemplate', { name: searchName }, function (
       data
     ) {
       console.log(data);
@@ -133,12 +133,12 @@ export function createActor(
   template_uuid: string,
   avatar_uuid?: string
 ) {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     dispatch(showLoading('创建人物中，请稍后...'));
     return api.emit(
       'actor::createActor',
       { name, avatar, desc, info, template_uuid },
-      function(data) {
+      function (data) {
         dispatch(hideLoading());
         dispatch(hideAlert());
         dispatch(hideModal());
@@ -165,8 +165,8 @@ export function createActor(
 }
 
 export function getActor(uuid = '') {
-  return function(dispatch, getState) {
-    return api.emit('actor::getActor', { uuid }, function(data) {
+  return function (dispatch, getState) {
+    return api.emit('actor::getActor', { uuid }, function (data) {
       if (data.result) {
         const payload = uuid ? data.actor : data.actors;
         if (data.actors) {
@@ -191,8 +191,8 @@ export function selectActor(uuid) {
 }
 
 export function removeActor(uuid) {
-  return function(dispatch, getState) {
-    return api.emit('actor::removeActor', { uuid }, function(data) {
+  return function (dispatch, getState) {
+    return api.emit('actor::removeActor', { uuid }, function (data) {
       dispatch(hideAlert());
       if (data.result) {
         dispatch({ type: REMOVE_ACTOR_SUCCESS, uuid });
@@ -209,8 +209,8 @@ export function removeActor(uuid) {
  * @param actorUUID 想分享的人物卡的UUID
  */
 export function shareActor(actorUUID: string): TRPGAction {
-  return function(dispatch, getState) {
-    return api.emit('actor::shareActor', { actorUUID }, function(data) {
+  return function (dispatch, getState) {
+    return api.emit('actor::shareActor', { actorUUID }, function (data) {
       if (data.result) {
         dispatch({
           type: SHARE_ACTOR_SUCCESS,
@@ -231,8 +231,8 @@ export function shareActor(actorUUID: string): TRPGAction {
  * @param actorUUID 想取消分享的人物卡的UUID
  */
 export function unshareActor(actorUUID: string): TRPGAction {
-  return function(dispatch, getState) {
-    return api.emit('actor::unshareActor', { actorUUID }, function(data) {
+  return function (dispatch, getState) {
+    return api.emit('actor::unshareActor', { actorUUID }, function (data) {
       if (data.result) {
         dispatch({
           type: UNSHARE_ACTOR_SUCCESS,
@@ -253,8 +253,8 @@ export function unshareActor(actorUUID: string): TRPGAction {
  * @param targetActorUUID 想fork的人物卡的UUID
  */
 export function forkActor(targetActorUUID: string): TRPGAction {
-  return function(dispatch, getState) {
-    return api.emit('actor::forkActor', { targetActorUUID }, function(data) {
+  return function (dispatch, getState) {
+    return api.emit('actor::forkActor', { targetActorUUID }, function (data) {
       if (data.result) {
         const actor = data.actor;
         dispatch({

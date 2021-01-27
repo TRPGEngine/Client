@@ -1,11 +1,11 @@
-import { ConsumersStateType } from './consumers';
-import { DataConsumersStateType } from './dataConsumers';
-import { DataProducersStateType } from './dataProducers';
-import { MeStateType } from './me';
-import { NotificationsStateType } from './notifications';
-import { PeersStateType } from './peers';
-import { ProducersStateType } from './producers';
-import { RoomStateType } from './room';
+import type { ConsumersStateType } from './consumers';
+import type { DataConsumersStateType } from './dataConsumers';
+import type { DataProducersStateType } from './dataProducers';
+import type { MeStateType } from './me';
+import type { NotificationsStateType } from './notifications';
+import type { PeersStateType } from './peers';
+import type { ProducersStateType } from './producers';
+import type { RoomStateType } from './room';
 
 export interface AllRTCStateType {
   room: RoomStateType;

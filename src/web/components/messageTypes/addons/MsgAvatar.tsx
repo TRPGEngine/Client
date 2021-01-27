@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { MessageProps } from '@shared/components/message/MessageHandler';
+import type { MessageProps } from '@shared/components/message/MessageHandler';
 import { TMemo } from '@shared/components/TMemo';
 import { isUserOrGroupUUID } from '@shared/utils/uuid';
 import _get from 'lodash/get';

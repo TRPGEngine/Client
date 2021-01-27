@@ -6,7 +6,7 @@ import {
 } from '@shared/model/player';
 import _isArray from 'lodash/isArray';
 import { Table } from 'antd';
-import { TableProps } from 'antd/lib/table/Table';
+import type { TableProps } from 'antd/lib/table/Table';
 import { getFullDate } from '@shared/utils/date-helper';
 import { t } from '@shared/i18n';
 

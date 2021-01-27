@@ -8,7 +8,7 @@ import _take from 'lodash/take';
 import _isArray from 'lodash/isArray';
 import { useSpring, animated } from 'react-spring';
 import { useMeasure } from 'react-use';
-import { WritingListGroupItem } from '@redux/types/chat';
+import type { WritingListGroupItem } from '@redux/types/chat';
 import { useRNStorage } from '@shared/hooks/useRNStorage';
 
 const MOST_DISPLAY_NUM = 3; // 最多在summary中显示的人数

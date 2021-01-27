@@ -4,7 +4,7 @@ import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import { preProcessText } from '@shared/components/bbcode';
 import bbcodeParser from '@shared/components/bbcode/parser';
-import { AstNodeObj } from '@shared/components/bbcode/type';
+import type { AstNodeObj } from '@shared/components/bbcode/type';
 import { fetchWebsiteInfo, WebsiteInfo } from '@shared/model/info';
 import { getUrlTagRealUrl } from '@shared/components/bbcode/utils';
 

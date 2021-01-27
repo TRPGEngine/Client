@@ -2,7 +2,7 @@
  * 每个Define组件有个私有的上下文用于管理数据的交互
  */
 import { createReducer } from '@reduxjs/toolkit';
-import { XMLBuilderContext, XMLBuilderState } from '../XMLBuilder';
+import type { XMLBuilderContext, XMLBuilderState } from '../XMLBuilder';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import { updateData } from './global';

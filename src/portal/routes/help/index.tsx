@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import type { RouteComponentProps } from 'react-router-dom';
 import { getHelpFAQ, HelpFAQItem, sendFeedback } from '@portal/model/help';
 import styled from 'styled-components';
 import { ActionButton } from '@portal/components/ActionButton';
 import { Divider, message } from 'antd';
-import { FormikHelpers } from 'formik';
+import type { FormikHelpers } from 'formik';
 import { FeedbackModal, FeedbackValues } from './modal/FeedbackModal';
 
 const FAQList = styled.ul`

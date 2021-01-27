@@ -4,8 +4,8 @@ import {
   agreeGroupInvite,
   refuseGroupInvite,
 } from '@shared/redux/actions/group';
-import { MessageProps } from '@shared/components/message/MessageHandler';
-import { TRPGState } from '@src/shared/redux/types/__all__';
+import type { MessageProps } from '@shared/components/message/MessageHandler';
+import type { TRPGState } from '@src/shared/redux/types/__all__';
 import { getGroupInviteInfoCache } from '@shared/utils/cache-helper';
 import _get from 'lodash/get';
 

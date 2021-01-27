@@ -1,4 +1,4 @@
-import { TRPGEditorNode } from '../../types';
+import type { TRPGEditorNode } from '../../types';
 import { Text } from 'slate';
 import _get from 'lodash/get';
 

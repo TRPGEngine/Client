@@ -52,7 +52,7 @@ import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import { setUserJWT } from '@shared/utils/jwt-helper';
 import { saveUserToken } from '@shared/helper/player';
 import { UserInfo } from '@redux/types/user';
-import { PlayerUser } from '@shared/model/player';
+import type { PlayerUser } from '@shared/model/player';
 
 const api = trpgApi.getInstance();
 

@@ -18,7 +18,7 @@ import {
 import { showToasts } from '@shared/manager/ui';
 import ActorInfo from '@web/components/modals/ActorInfo';
 import { openModal, ModalWrapper, closeModal } from '@web/components/Modal';
-import { GroupActorType } from '@redux/types/group';
+import type { GroupActorType } from '@redux/types/group';
 import { Iconfont } from '@web/components/Iconfont';
 import ActorEdit from '@web/components/modals/ActorEdit';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { findUser } from '../../../shared/redux/actions/user';
 import ModalPanel from '../ModalPanel';
 import FindResultItem from '../FindResultItem';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { Select } from 'antd';
 
 import './FriendsAdd.scss';

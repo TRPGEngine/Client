@@ -1,7 +1,7 @@
 import { Middleware } from 'redux';
 import _cloneDeepWith from 'lodash/cloneDeepWith';
 import React from 'react';
-import { TRPGMiddleware } from '@redux/types/__all__';
+import type { TRPGMiddleware } from '@redux/types/__all__';
 
 export type ActionsListItem = Readonly<[string, object]>;
 export type ActionsListType = ActionsListItem[];

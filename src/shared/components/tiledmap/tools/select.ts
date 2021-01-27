@@ -1,5 +1,5 @@
 import { TiledMapToolBase, ActionContext } from './base';
-import { DrawContext } from '../core/render';
+import type { DrawContext } from '../core/render';
 import {
   px2gridPos,
   pxRect2GridRect,
@@ -8,9 +8,9 @@ import {
 } from '../core/utils';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
-import { Position, Size, Rect } from '../core/types';
+import type { Position, Size, Rect } from '../core/types';
 import { drawSelectionRect, drawSelectedTokenRect } from '../draw/rect';
-import { BaseToken } from '../layer/token/BaseToken';
+import type { BaseToken } from '../layer/token/BaseToken';
 
 type HandlerType = 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom';
 interface ClickedHander {

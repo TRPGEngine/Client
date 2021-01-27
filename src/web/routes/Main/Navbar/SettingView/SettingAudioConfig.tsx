@@ -3,7 +3,7 @@ import { useSystemSetting } from '@redux/hooks/settings';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { useTranslation } from '@shared/i18n';
-import { DefaultSettings } from '@shared/project.config';
+import type { DefaultSettings } from '@shared/project.config';
 import { FullModalField } from '@web/components/FullModalField';
 import { Alert, Space, Switch } from 'antd';
 import React, { useCallback, useState } from 'react';

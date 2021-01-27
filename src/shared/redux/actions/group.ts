@@ -61,7 +61,7 @@ import _isNil from 'lodash/isNil';
 import * as trpgApi from '../../api/trpg.api';
 import { TRPGAction, createTRPGAsyncThunk } from '../types/__all__';
 import { getGroupInviteInfo } from './cache';
-import { GroupInfo, GroupActorType } from '@redux/types/group';
+import type { GroupInfo, GroupActorType } from '@redux/types/group';
 import { showToasts } from '@shared/manager/ui';
 import { createAction } from '@reduxjs/toolkit';
 const api = trpgApi.getInstance();

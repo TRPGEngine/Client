@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { RouteComponentProps } from 'react-router';
+import type { RouteComponentProps } from 'react-router';
 import { useAsync } from 'react-use';
 import {
   fetchGroupInviteCodeInfo,

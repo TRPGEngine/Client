@@ -5,7 +5,7 @@ import { ChatBoxBtn } from '../style';
 import { Iconfont } from '../../Iconfont';
 import { useChatMsgTypeContext } from '@shared/context/ChatMsgTypeContext';
 import styled from 'styled-components';
-import { MsgType } from '@redux/types/chat';
+import type { MsgType } from '@redux/types/chat';
 import { useTranslation } from '@shared/i18n';
 import { trackEvent } from '@web/utils/analytics-helper';
 

@@ -1,4 +1,4 @@
-import { ChatStateConverse } from '@redux/types/chat';
+import type { ChatStateConverse } from '@redux/types/chat';
 
 /**
  * 构建测试用的redux数据

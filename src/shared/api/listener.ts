@@ -1,7 +1,7 @@
 import { API } from './socket-api';
 import rnStorage from './rn-storage.api';
 import constants from '../redux/constants';
-import { TRPGStore } from '@redux/types/__all__';
+import type { TRPGStore } from '@redux/types/__all__';
 import {
   changeNetworkStatue,
   showAlert,

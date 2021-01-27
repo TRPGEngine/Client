@@ -1,4 +1,4 @@
-import { TRPGAction } from '@redux/types/__all__';
+import type { TRPGAction } from '@redux/types/__all__';
 import { showSlidePanel } from '@redux/actions/ui';
 import Webview from '@web/components/Webview';
 import React from 'react';

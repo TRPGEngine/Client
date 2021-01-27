@@ -1,5 +1,5 @@
 import React from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { TMemo } from '@shared/components/TMemo';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';
 import { ForEachComponent } from '../ForEach/shared';

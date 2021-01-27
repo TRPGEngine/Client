@@ -1,4 +1,4 @@
-import { UserInfo } from '@redux/types/user';
+import type { UserInfo } from '@redux/types/user';
 
 // 测试用户数据
 export const testUserInfo: UserInfo = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PortalMethods } from './context';
+import type { PortalMethods } from './context';
 
 export type PortalConsumerProps = {
   hostName: string;

@@ -1,15 +1,15 @@
-import { GroupInfo } from '@redux/types/group';
+import type { GroupInfo } from '@redux/types/group';
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import _set from 'lodash/set';
 import { request } from '@shared/utils/request';
-import { PlayerUser } from './player';
+import type { PlayerUser } from './player';
 import { isBlobUrl } from '@shared/utils/string-helper';
 import { toGroupActorWithBlobUrl } from '@web/utils/upload-helper';
 import { bindFileAvatarAttachUUID } from './file';
 import { getJWTUserInfo } from '@shared/utils/jwt-helper';
-import { GroupPanelVisible } from '@shared/types/panel';
+import type { GroupPanelVisible } from '@shared/types/panel';
 
 export interface GroupItem {
   uuid: string;

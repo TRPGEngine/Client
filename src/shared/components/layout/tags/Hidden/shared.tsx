@@ -1,5 +1,5 @@
 import React, { useContext, Fragment, useMemo } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { useLayoutChildren } from '../../hooks/useLayoutChildren';
 import { TMemo } from '@shared/components/TMemo';

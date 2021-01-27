@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, Fragment } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import type { RouteComponentProps } from 'react-router-dom';
 import { fetchLatestVersion, DeployVersion } from '@portal/model/deploy';
 import { Button } from 'antd';
 import { downloadFileWeb } from '@shared/utils/file-helper';

@@ -1,6 +1,6 @@
-import { TRPGMiddleware } from '@redux/types/__all__';
+import type { TRPGMiddleware } from '@redux/types/__all__';
 import constants from '../constants/index';
-import { UserInfo } from '@redux/types/user';
+import type { UserInfo } from '@redux/types/user';
 const { LOGIN_SUCCESS, LOGIN_TOKEN_SUCCESS, LOGIN_FAILED } = constants;
 
 /**

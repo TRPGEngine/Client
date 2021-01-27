@@ -1,6 +1,6 @@
 import React from 'react';
 import { TiledMap } from '@shared/components/tiledmap';
-import { RouteComponentProps } from 'react-router-dom';
+import type { RouteComponentProps } from 'react-router-dom';
 
 interface Props
   extends RouteComponentProps<{

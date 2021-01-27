@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { UserAlignment } from '@shared/model/player';
+import type { UserAlignment } from '@shared/model/player';
 import styled from 'styled-components';
 import { useTranslation } from '@shared/i18n';
 

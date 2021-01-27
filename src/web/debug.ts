@@ -1,5 +1,5 @@
 import { login } from '@redux/actions/user';
-import { API } from '@shared/api/socket-api';
+import type { API } from '@shared/api/socket-api';
 import * as trpgApi from '../shared/api/trpg.api';
 
 /**

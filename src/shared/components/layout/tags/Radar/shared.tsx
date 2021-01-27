@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import TLoadable from '@web/components/TLoadable';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import _zip from 'lodash/zip';
 import { useDeepCompareMemo } from '@shared/hooks/useDeepCompareMemo';
 import { TMemo } from '@shared/components/TMemo';

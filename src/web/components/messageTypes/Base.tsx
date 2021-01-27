@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageProps } from '@shared/components/message/MessageHandler';
+import type { MessageProps } from '@shared/components/message/MessageHandler';
 import _get from 'lodash/get';
 import { getAbsolutePath } from '@shared/utils/file-helper';
 import _isFunction from 'lodash/isFunction';

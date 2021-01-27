@@ -1,7 +1,7 @@
 import * as trpgApi from '../trpg.api';
 const api = trpgApi.getInstance();
 import { buildCacheFactory, CachePolicy } from '@shared/utils/cache-factory';
-import { PlayerTokenInfo } from '@shared/types/player';
+import type { PlayerTokenInfo } from '@shared/types/player';
 
 /**
  * 获取MapMemberSocketInfo的信息

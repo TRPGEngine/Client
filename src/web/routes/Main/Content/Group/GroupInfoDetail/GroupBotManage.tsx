@@ -22,7 +22,7 @@ import {
 import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
 import LoadingSpinner from '@web/components/LoadingSpinner';
-import { ColumnsType } from 'antd/lib/table';
+import type { ColumnsType } from 'antd/lib/table';
 import { GroupChannelName } from '@web/components/GroupChannelName';
 import styled from 'styled-components';
 import { DeleteOutlined } from '@ant-design/icons';

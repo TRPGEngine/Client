@@ -5,11 +5,11 @@ import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
 import { toGroupActorWithBlobUrl } from '@web/utils/upload-helper';
 import { isBlobUrl } from '@shared/utils/string-helper';
-import { ModelAccess } from './types';
-import { GroupActorItem, GroupItem } from '@shared/model/group';
+import type { ModelAccess } from './types';
+import type { GroupActorItem, GroupItem } from '@shared/model/group';
 import { bindFileAvatarAttachUUID } from '@shared/model/file';
 import { getJWTUserInfo } from '@shared/utils/jwt-helper';
-import { ChatLogItem } from '@shared/model/chat';
+import type { ChatLogItem } from '@shared/model/chat';
 
 /**
  * 获取自己拥有的所有团

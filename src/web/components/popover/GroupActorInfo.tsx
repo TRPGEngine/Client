@@ -4,7 +4,7 @@ import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
 import _find from 'lodash/find';
 import _isEmpty from 'lodash/isEmpty';
-import { GroupActorType } from '@redux/types/group';
+import type { GroupActorType } from '@redux/types/group';
 import styled from 'styled-components';
 import Avatar from '../Avatar';
 import { TMemo } from '@shared/components/TMemo';

@@ -1,5 +1,5 @@
 import React, { ComponentType, ReactNode } from 'react';
-import { TagProps, AstNode } from './type';
+import type { TagProps, AstNode } from './type';
 import { parse } from '@bbob/parser';
 import _last from 'lodash/last';
 import _set from 'lodash/set';

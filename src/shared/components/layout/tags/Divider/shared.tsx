@@ -1,6 +1,6 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { Divider } from 'antd';
 import { useLayoutChildren } from '../../hooks/useLayoutChildren';
 

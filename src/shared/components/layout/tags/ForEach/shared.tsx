@@ -1,5 +1,5 @@
 import React, { useMemo, Fragment } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import _isArray from 'lodash/isArray';
 import _isPlainObject from 'lodash/isPlainObject';
 import { useToArray } from '@shared/hooks/useToArray';

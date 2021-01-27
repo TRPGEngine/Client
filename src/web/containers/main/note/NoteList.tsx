@@ -4,7 +4,7 @@ import { addNote, switchNote } from '@shared/redux/actions/note';
 import moment from 'moment';
 import ReactTooltip from 'react-tooltip';
 import Spinner from '../../../components/Spinner';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import NoteDetail from './NoteDetail';
 import _values from 'lodash/values';
 import _orderBy from 'lodash/orderBy';

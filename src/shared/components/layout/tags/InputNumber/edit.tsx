@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
 import { InputNumber } from 'antd';
 import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
-import { TagInputProps } from '../Input/shared';
+import type { TagInputProps } from '../Input/shared';
 import _isNil from 'lodash/isNil';
 import { useToNumber } from '@shared/hooks/useToNumber';
 import { TMemo } from '@shared/components/TMemo';

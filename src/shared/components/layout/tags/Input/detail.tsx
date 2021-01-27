@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { DetailText, TagInputProps, TagLabel } from './shared';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
 import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';

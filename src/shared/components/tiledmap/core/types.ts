@@ -1,5 +1,5 @@
-import { Layer } from '../layer/layer';
-import { BaseToken } from '../layer/token/BaseToken';
+import type { Layer } from '../layer/layer';
+import type { BaseToken } from '../layer/token/BaseToken';
 
 export interface Size {
   width: number;

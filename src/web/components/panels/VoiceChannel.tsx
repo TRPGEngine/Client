@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { CommonPanelProps } from '@shared/components/panel/type';
+import type { CommonPanelProps } from '@shared/components/panel/type';
 import { useRTCRoomClientContext } from '@rtc/RoomContext';
 import { getUserName } from '@shared/utils/data-helper';
 import { useCurrentUserInfo } from '@redux/hooks/user';

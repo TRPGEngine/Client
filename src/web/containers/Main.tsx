@@ -8,13 +8,13 @@ import { GlobalShortcuts } from './main/GlobalShortcuts';
 import ProfileCard from '../components/ProfileCard';
 import IsDeveloping from '../components/IsDeveloping';
 import { AnnouncementBar } from '@web/components/AnnouncementBar';
+import type { TRPGDispatch, TRPGState } from '@src/shared/redux/types/__all__';
 const TitleToolbar =
   config.platform === 'electron'
     ? require('../components/electron/TitleToolbar')
     : null;
 
 import './Main.scss';
-import { TRPGDispatch, TRPGState } from '@src/shared/redux/types/__all__';
 if (config.platform === 'electron') {
   require('./Main.electron.scss');
 }

@@ -3,7 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { Select, Form } from 'antd';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
-import { FastFormFieldComponent } from '@shared/components/FastForm/field';
+import type { FastFormFieldComponent } from '@shared/components/FastForm/field';
 
 const Option = Select.Option;
 

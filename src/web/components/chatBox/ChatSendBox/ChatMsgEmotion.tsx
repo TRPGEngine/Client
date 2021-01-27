@@ -5,7 +5,7 @@ import { useTranslation } from '@shared/i18n';
 import styled from 'styled-components';
 import { Input, Popover, Tabs } from 'antd';
 import _isNil from 'lodash/isNil';
-import { Editor } from 'slate';
+import type { Editor } from 'slate';
 import { useLocalStorage } from 'react-use';
 import {
   ChatEmotionItem,

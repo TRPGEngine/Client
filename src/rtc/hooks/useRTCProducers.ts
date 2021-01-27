@@ -1,5 +1,5 @@
 import { useRTCRoomStateSelector } from '@rtc/redux';
-import { ProducersStateItem } from '@rtc/redux/types/producers';
+import type { ProducersStateItem } from '@rtc/redux/types/producers';
 import { useMemo } from 'react';
 
 /**

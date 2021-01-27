@@ -9,7 +9,7 @@ import React, { useCallback, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { Button, Space, Tooltip } from 'antd';
-import { CapablityState } from '@rtc/type';
+import type { CapablityState } from '@rtc/type';
 import { useRTCRoomStateDispatch, useRTCRoomStateSelector } from '@rtc/redux';
 import { Iconfont } from '../Iconfont';
 import { useRTCAudioProducer } from '@rtc/hooks/useRTCProducers';

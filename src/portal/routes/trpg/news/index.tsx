@@ -1,7 +1,7 @@
 import Loading from '@portal/components/Loading';
 import config from '@shared/project.config';
 import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import type { RouteComponentProps } from 'react-router-dom';
 import { useAsync } from 'react-use';
 import Parser from 'rss-parser';
 import _orderBy from 'lodash/orderBy';

@@ -7,7 +7,7 @@ import { sendMsg } from '@shared/redux/actions/chat';
 import { showModal, hideModal } from '@shared/redux/actions/ui';
 import ActorSelect from './modals/ActorSelect';
 import config from '@shared/project.config';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { Mentions } from 'antd';
 
 import './MsgSendBox.scss';

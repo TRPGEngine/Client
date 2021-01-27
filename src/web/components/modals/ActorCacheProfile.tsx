@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ModalPanel from '../ModalPanel';
 import ActorProfile from './ActorProfile';
-import { TRPGState } from '@redux/types/__all__';
+import type { TRPGState } from '@redux/types/__all__';
 import _get from 'lodash/get';
 
 /**

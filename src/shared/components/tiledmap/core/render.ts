@@ -1,8 +1,8 @@
-import { Size, Position, TiledMapOptions } from './types';
+import type { Size, Position, TiledMapOptions } from './types';
 import _isNil from 'lodash/isNil';
 import _throttle from 'lodash/throttle';
-import { LayerManager } from '../layer/manager';
-import { TiledMapManager } from './manager';
+import type { LayerManager } from '../layer/manager';
+import type { TiledMapManager } from './manager';
 
 export interface DrawContext {
   el: HTMLCanvasElement;

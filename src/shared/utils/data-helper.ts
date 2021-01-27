@@ -1,7 +1,7 @@
-import { GroupActorType } from '@src/shared/redux/types/group';
+import type { GroupActorType } from '@src/shared/redux/types/group';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
-import { PlayerUser } from '@shared/model/player';
+import type { PlayerUser } from '@shared/model/player';
 
 /**
  * 数据相关帮助函数

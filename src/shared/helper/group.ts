@@ -1,5 +1,5 @@
-import { GroupInfo } from '@redux/types/group';
-import { GroupPanel } from '@shared/types/panel';
+import type { GroupInfo } from '@redux/types/group';
+import type { GroupPanel } from '@shared/types/panel';
 import _isNil from 'lodash/isNil';
 import _isArray from 'lodash/isArray';
 

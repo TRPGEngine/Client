@@ -1,7 +1,7 @@
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import robotImg from '@web/assets/img/robot_dark.svg';
-import { MsgStyleType } from './types/chat';
+import type { MsgStyleType } from './types/chat';
 import url from 'url';
 
 const environment = process.env.NODE_ENV || 'development';

@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { CommonPanelProps } from '@shared/components/panel/type';
+import type { CommonPanelProps } from '@shared/components/panel/type';
 import { useAsync } from 'react-use';
 import _isString from 'lodash/isString';
 import _isNil from 'lodash/isNil';

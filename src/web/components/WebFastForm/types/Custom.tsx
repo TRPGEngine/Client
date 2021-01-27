@@ -3,7 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { Form } from 'antd';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
-import {
+import type {
   FastFormFieldComponent,
   FastFormFieldProps,
 } from '@shared/components/FastForm/field';
