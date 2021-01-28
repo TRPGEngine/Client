@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import { Loading } from '../Loading';
 import { useTranslation, t } from '@shared/i18n';
 import { VoiceNetwork } from './VoiceNetwork';
-import { RoomState } from '@rtc/redux/types/room';
+import type { RoomState } from '@rtc/redux/types/room';
 
 const VoiceMembersContainer = styled.div`
   display: flex;

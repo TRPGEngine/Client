@@ -5,9 +5,9 @@ import ModalPanel from '../ModalPanel';
 import ImageUploader from '../ImageUploader';
 import { hideModal } from '../../../shared/redux/actions/ui';
 import { requestUpdateGroupInfo } from '../../../shared/redux/actions/group';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 
 import './GroupEdit.scss';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 
 interface Props extends TRPGDispatchProp {
   selectedGroupUUID: string;

@@ -1,4 +1,4 @@
-import { TRPGEditorNode } from './types';
+import type { TRPGEditorNode } from './types';
 
 export const demoNode: TRPGEditorNode[] = [
   {

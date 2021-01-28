@@ -1,4 +1,4 @@
-import { UserInfo } from '@redux/types/user';
+import type { UserInfo } from '@redux/types/user';
 import { getUserName } from '@shared/utils/data-helper';
 import posthog from 'posthog-js';
 import _isString from 'lodash/isString';
@@ -42,13 +42,13 @@ export function setAnalyticsUser(info: UserInfo) {
  * @param name 事件名
  * @param properties 相关属性
  */
-export function sendEvent(name: string, properties?: posthog.Properties) {
+export function trackEvent(name: string, properties?: posthog.Properties) {
   posthog.capture(name, properties);
 }
 
 /**
  * 发送单页应用Url变更事件
  */
-export function sendUrlChangeEvent() {
+export function trackUrlChangeEvent() {
   posthog.capture('$pageview');
 }

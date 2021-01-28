@@ -1,5 +1,5 @@
-import { CacheKey } from '@redux/types/cache';
-import { GetCacheDispatchActionFn } from '@shared/utils/cache-helper';
+import type { CacheKey } from '@redux/types/cache';
+import type { GetCacheDispatchActionFn } from '@shared/utils/cache-helper';
 import {
   getGroupInfo,
   getUserInfo,
@@ -7,15 +7,15 @@ import {
   getActorInfo,
 } from '@redux/actions/cache';
 import { useSelector, useDispatch } from 'react-redux';
-import { TRPGState } from '@redux/types/__all__';
+import type { TRPGState } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import _toPairs from 'lodash/toPairs';
 import _fromPairs from 'lodash/fromPairs';
 import { useEffect, useMemo, useRef } from 'react';
-import { UserInfo } from '@redux/types/user';
-import { GroupInfo } from '@redux/types/group';
-import { ActorType } from '@redux/types/actor';
+import type { UserInfo } from '@redux/types/user';
+import type { GroupInfo } from '@redux/types/group';
+import type { ActorType } from '@redux/types/actor';
 
 // 检查是否需要跳过处理
 const isSkipUUID = (uuid: string) =>

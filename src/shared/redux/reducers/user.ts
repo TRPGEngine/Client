@@ -1,5 +1,5 @@
 import constants from '@redux/constants';
-import { UserState } from '@redux/types/user';
+import type { UserState } from '@redux/types/user';
 import _remove from 'lodash/remove';
 import { createReducer } from '@reduxjs/toolkit';
 import {

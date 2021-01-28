@@ -7,7 +7,7 @@ import { TButton, TAvatar, TImageViewer } from '@app/components/TComponent';
 import { getGroupInfo } from '@shared/redux/actions/cache';
 import { getGroupInfoCache } from '@shared/utils/cache-helper';
 import { requestJoinGroup } from '@src/shared/redux/actions/group';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { TRPGStackScreenProps } from '@app/router';
 import { switchToChatScreen } from '@app/navigate';
 

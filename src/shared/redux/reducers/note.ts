@@ -1,6 +1,6 @@
 import constants from '@redux/constants';
 import uuid from 'uuid/v1';
-import { NoteState } from '@redux/types/note';
+import type { NoteState } from '@redux/types/note';
 import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
 import _findIndex from 'lodash/findIndex';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { Form } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { LayoutCol } from '../Col/shared';

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ModalPanel from '../ModalPanel';
 import { createGroup } from '../../../shared/redux/actions/group';
-import { TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGDispatchProp } from '@redux/types/__all__';
 
 import './GroupCreateOld.scss';
 

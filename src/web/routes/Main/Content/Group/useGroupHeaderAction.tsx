@@ -1,5 +1,5 @@
 import React from 'react';
-import { GroupInfo } from '@redux/types/group';
+import type { GroupInfo } from '@redux/types/group';
 import { PortalAdd, PortalRemove } from '@web/utils/portal';
 import { useCallback } from 'react';
 import { FullModal } from '@web/components/FullModal';

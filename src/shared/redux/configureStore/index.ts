@@ -7,7 +7,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import actionCreators from '../actions';
 import { memoryLogger } from './memory-logger';
 import { initStoreHelper } from './helper';
-import { TRPGStore, TRPGState, TRPGMiddleware } from '@redux/types/__all__';
+import type {
+  TRPGStore,
+  TRPGState,
+  TRPGMiddleware,
+} from '@redux/types/__all__';
 
 console.log('当前环境:', config.environment);
 console.log('当前平台:', config.platform);

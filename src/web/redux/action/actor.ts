@@ -1,7 +1,7 @@
 import constants from '@shared/redux/constants';
 const { UPDATE_ACTOR_SUCCESS } = constants;
 
-import { TRPGAction } from '@redux/types/__all__';
+import type { TRPGAction } from '@redux/types/__all__';
 import {
   showLoading,
   showAlert,
@@ -33,7 +33,7 @@ export function updateActor(
   desc: string,
   info: {}
 ): TRPGAction {
-  return async function(dispatch, getState) {
+  return async function (dispatch, getState) {
     dispatch(showLoading('正在更新人物卡信息，请稍后...'));
     if (_isString(avatar) && isBlobUrl(avatar)) {
       // 如果avatar是blob url的话, 则上传一下
@@ -53,7 +53,7 @@ export function updateActor(
     return api.emit(
       'actor::updateActor',
       { uuid, name, avatar, desc, info },
-      function(data) {
+      function (data) {
         dispatch(hideLoading());
         dispatch(hideAlert());
         if (data.result) {

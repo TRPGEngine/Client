@@ -11,7 +11,7 @@ import { useAsyncFn } from 'react-use';
 import { LoadingSpinner } from '@web/components/LoadingSpinner';
 import _isNil from 'lodash/isNil';
 import { useTranslation } from '@shared/i18n';
-import { TableProps } from 'antd/lib/table/Table';
+import type { TableProps } from 'antd/lib/table/Table';
 import { useIsGroupManager } from '@redux/hooks/group';
 import { ReloadOutlined } from '@ant-design/icons';
 import { Iconfont } from '@web/components/Iconfont';

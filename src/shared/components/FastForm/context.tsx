@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useFormik } from 'formik';
+import type { useFormik } from 'formik';
 
 type FastFormContextType = ReturnType<typeof useFormik>;
 

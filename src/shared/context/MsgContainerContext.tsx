@@ -2,7 +2,7 @@ import React, { useState, useContext, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import _noop from 'lodash/noop';
 import _isNil from 'lodash/isNil';
-import { ReplyMsgType } from '@shared/utils/msg-helper';
+import type { ReplyMsgType } from '@shared/utils/msg-helper';
 import { ChatMsgTypeContextProvider } from './ChatMsgTypeContext';
 
 /**

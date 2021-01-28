@@ -5,7 +5,7 @@ import { useTranslation } from '@shared/i18n';
 import styled from 'styled-components';
 import { Input, Popover, Tabs } from 'antd';
 import _isNil from 'lodash/isNil';
-import { Editor } from 'slate';
+import type { Editor } from 'slate';
 import { useLocalStorage } from 'react-use';
 import {
   ChatEmotionItem,
@@ -15,6 +15,7 @@ import Image from '../../Image';
 import { insertImage } from '../../editor/changes/insertImage';
 import Loading from '@portal/components/Loading';
 import { ChatBoxBtn } from '../style';
+import { trackEvent } from '@web/utils/analytics-helper';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -54,6 +55,8 @@ function useSearchEmotion() {
     }
 
     setSearching(true);
+    trackEvent('chat:searchEmotion', { searchKeyword });
+
     const list = await searchEmotionWithKeyword(searchKeyword);
     setSearchResultList(list);
     setSearching(false);

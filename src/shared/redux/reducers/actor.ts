@@ -1,5 +1,5 @@
 import constants from '../constants';
-import { ActorState } from '@redux/types/actor';
+import type { ActorState } from '@redux/types/actor';
 import { produce } from 'immer';
 import _remove from 'lodash/remove';
 import _find from 'lodash/find';

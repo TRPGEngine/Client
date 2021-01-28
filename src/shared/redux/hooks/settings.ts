@@ -1,5 +1,5 @@
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
-import { DefaultSettings } from '@shared/project.config';
+import type { DefaultSettings } from '@shared/project.config';
 
 /**
  * 获取用户设置项

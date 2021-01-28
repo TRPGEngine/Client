@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Quill, Delta, Sources, DeltaStatic } from 'quill';
+import type { Quill, Delta, Sources, DeltaStatic } from 'quill';
 // 等 https://github.com/zenoamaro/react-quill/pull/549 这个pr过了以后看一下能不能把quill的类型搞到react-quill里
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';

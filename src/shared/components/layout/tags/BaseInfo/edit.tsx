@@ -1,5 +1,5 @@
 import React from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { Input, Form } from 'antd';
 import { LayoutCol } from '../Col/shared';
 import { useLayoutFieldState } from '../../hooks/useLayoutFieldState';

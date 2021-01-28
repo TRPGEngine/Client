@@ -12,7 +12,7 @@ import {
   setConsumerScore,
   mutedConsumer,
 } from '../stateActions';
-import { ConsumersStateType } from '../types/consumers';
+import type { ConsumersStateType } from '../types/consumers';
 
 const initialState: ConsumersStateType = {};
 

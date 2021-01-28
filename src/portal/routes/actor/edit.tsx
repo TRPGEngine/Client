@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router';
+import type { RouteComponentProps } from 'react-router';
 import { ActionButton } from '@portal/components/ActionButton';
 import ActorEditor from '@portal/components/ActorEditor';
 import { checkToken } from '@portal/utils/auth';

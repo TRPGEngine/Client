@@ -1,4 +1,4 @@
-import { TokenAttrs } from '../../core/types';
+import type { TokenAttrs } from '../../core/types';
 import { BaseToken } from './BaseToken';
 import { ImageToken } from './ImageToken';
 import _get from 'lodash/get';

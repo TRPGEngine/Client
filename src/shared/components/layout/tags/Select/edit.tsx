@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback, useState, Fragment } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
 import { Select, Divider, Input, Button } from 'antd';
 import { is } from '@shared/utils/string-helper';

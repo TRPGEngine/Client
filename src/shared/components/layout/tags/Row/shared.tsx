@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { useLayoutChildren } from '../../hooks/useLayoutChildren';
 import { Row } from 'antd';
 import { removePrivateProps } from '../utils';

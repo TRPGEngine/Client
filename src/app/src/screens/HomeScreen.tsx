@@ -9,7 +9,7 @@ import { reloadConverseList } from '@shared/redux/actions/chat';
 import styled from 'styled-components/native';
 import TRefreshControl from '../components/TComponent/TRefreshControl';
 import { ChatType } from '../types/params';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _values from 'lodash/values';
 import _sortBy from 'lodash/sortBy';

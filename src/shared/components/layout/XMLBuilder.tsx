@@ -6,7 +6,7 @@ import _isUndefined from 'lodash/isUndefined';
 import _isNil from 'lodash/isNil';
 import './tags/__all__';
 import styled from 'styled-components';
-import { StateDataType, StateActionType } from './types';
+import type { StateDataType, StateActionType } from './types';
 import { useSize } from 'react-use';
 import { LayoutWidthContextProvider } from './context/LayoutWidthContext';
 import { LayoutStateContextProvider } from './context/LayoutStateContext';

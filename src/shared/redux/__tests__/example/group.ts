@@ -1,4 +1,4 @@
-import { GroupChannel, GroupInfo } from '@redux/types/group';
+import type { GroupChannel, GroupInfo } from '@redux/types/group';
 
 /**
  * 构建测试用的redux数据

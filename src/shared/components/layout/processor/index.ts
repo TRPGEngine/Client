@@ -1,7 +1,7 @@
 import * as tags from '../tags';
-import { XMLElement } from '../parser/xml-parser';
+import type { XMLElement } from '../parser/xml-parser';
 import parseText from '../parser/text-parser';
-import { XMLBuilderContext } from '../XMLBuilder';
+import type { XMLBuilderContext } from '../XMLBuilder';
 import _has from 'lodash/has';
 import _isNil from 'lodash/isNil';
 import { compileCode, generateSandboxContext } from './sandbox';

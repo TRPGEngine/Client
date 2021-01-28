@@ -4,7 +4,7 @@ import { isUserUUID } from '@shared/utils/uuid';
 import { sendStopWriting, sendStartWriting } from '@shared/api/event';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { sendMsg as sendMsgAction } from '@redux/actions/chat';
-import { MsgType } from '@redux/types/chat';
+import type { MsgType } from '@redux/types/chat';
 import { MsgDataManager, preProcessMessage } from '@shared/utils/msg-helper';
 import _isNil from 'lodash/isNil';
 import _isFunction from 'lodash/isFunction';

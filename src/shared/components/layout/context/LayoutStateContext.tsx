@@ -1,6 +1,6 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { XMLBuilderContext } from '../XMLBuilder';
+import type { XMLBuilderContext } from '../XMLBuilder';
 
 export const LayoutStateContext = React.createContext<XMLBuilderContext | null>(
   null

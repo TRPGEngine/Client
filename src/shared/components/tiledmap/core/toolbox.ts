@@ -1,10 +1,10 @@
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import _pull from 'lodash/pull';
-import { TiledMapToolBase } from '../tools/base';
+import type { TiledMapToolBase } from '../tools/base';
 import { regAllTool } from '../tools/__all__';
-import { Size } from './types';
-import { TiledMapManager } from './manager';
+import type { Size } from './types';
+import type { TiledMapManager } from './manager';
 
 export class Toolbox {
   private tools: TiledMapToolBase[] = [];

@@ -1,6 +1,6 @@
 import constants from '@redux/constants';
 import config from '@shared/project.config';
-import { SettingsState, UserSettings } from '@redux/types/settings';
+import type { SettingsState, UserSettings } from '@redux/types/settings';
 import _isNil from 'lodash/isNil';
 import _pullAt from 'lodash/pullAt';
 import _set from 'lodash/set';

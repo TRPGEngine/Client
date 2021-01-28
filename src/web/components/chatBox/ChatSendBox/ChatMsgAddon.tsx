@@ -8,10 +8,11 @@ import { Popover } from 'antd';
 import { FileSelector } from '../../FileSelector';
 import _isNil from 'lodash/isNil';
 import { uploadChatimg } from '@shared/utils/image-uploader';
-import { Editor } from 'slate';
+import type { Editor } from 'slate';
 import { insertImage } from '../../editor/changes/insertImage';
 import { showGlobalLoading, showToasts } from '@shared/manager/ui';
 import { ChatBoxBtn } from '../style';
+import { trackEvent } from '@web/utils/analytics-helper';
 
 const ChatMsgAddonItemContainer = styled.div`
   padding: 6px 10px;
@@ -41,6 +42,7 @@ export const ChatMsgAddon: React.FC<{
     openWebviewWindow('https://file.pizza/', {
       title: '发送文件',
     });
+    trackEvent('chat:sendFile');
   }, []);
 
   const handleSelectFiles = useCallback(

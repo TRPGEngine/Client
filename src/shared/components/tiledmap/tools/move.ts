@@ -1,5 +1,5 @@
 import { TiledMapToolBase, ActionContext } from './base';
-import { DrawContext } from '../core/render';
+import type { DrawContext } from '../core/render';
 
 export class TiledMapToolMove extends TiledMapToolBase {
   name = 'move';

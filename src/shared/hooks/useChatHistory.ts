@@ -2,7 +2,7 @@ import { useWebAuthRequest } from './useWebAuthRequest';
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useAsync } from 'react-use';
 import _isNil from 'lodash/isNil';
-import { MsgPayload } from '@redux/types/chat';
+import type { MsgPayload } from '@redux/types/chat';
 
 /**
  * 聊天历史记录

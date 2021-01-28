@@ -11,7 +11,7 @@ import * as trpgApi from '@shared/api/trpg.api';
 const api = trpgApi.getInstance();
 import config from '@shared/project.config';
 import rnStorage from '@shared/api/rn-storage.api';
-import { TRPGAction } from '@shared/redux/types/__all__';
+import type { TRPGAction } from '@shared/redux/types/__all__';
 import _isNil from 'lodash/isNil';
 import { showToasts } from '@shared/manager/ui';
 

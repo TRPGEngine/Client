@@ -1,4 +1,4 @@
-import { DefaultSettings } from '@shared/project.config';
+import type { DefaultSettings } from '@shared/project.config';
 
 type NotificationType = 'granted' | 'denied' | 'default';
 

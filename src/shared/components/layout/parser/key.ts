@@ -1,4 +1,4 @@
-import { XMLElement } from './xml-parser';
+import type { XMLElement } from './xml-parser';
 import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
 import _isArray from 'lodash/isArray';

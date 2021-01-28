@@ -1,5 +1,5 @@
 import React, { useCallback, Fragment } from 'react';
-import { TRPGDispatch } from '@redux/types/__all__';
+import type { TRPGDispatch } from '@redux/types/__all__';
 import { useMessageItemConfigContext } from '@shared/components/message/MessageItemConfigContext';
 import { TMemo } from '@shared/components/TMemo';
 import { TPopover, useTPopoverContext } from '@web/components/popover';

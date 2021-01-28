@@ -17,6 +17,7 @@
     "noFallthroughCasesInSwitch": true,
     "downlevelIteration": true,
     "noImplicitThis": true,
+    "importsNotUsedAsValues": "error",
     "paths": {
       "@redux/*": ["src/shared/redux/*"],
       "@shared/*": ["./src/shared/*"],

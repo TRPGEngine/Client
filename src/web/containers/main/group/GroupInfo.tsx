@@ -20,12 +20,12 @@ import GroupEdit from '../../../components/modals/GroupEdit';
 import _get from 'lodash/get';
 
 import './GroupInfo.scss';
-import {
+import type {
   TRPGState,
   TRPGDispatch,
   TRPGDispatchProp,
 } from '@src/shared/redux/types/__all__';
-import { AlertPayload } from '@src/shared/redux/types/ui';
+import type { AlertPayload } from '@src/shared/redux/types/ui';
 import DevContainer from '@web/components/DevContainer';
 import { ChatHistory } from '@web/components/ChatHistory';
 

@@ -1,7 +1,7 @@
-import { Position } from '../core/types';
-import { DrawContext, DrawFunction } from '../core/render';
-import { LayerManager } from '../layer/manager';
-import { TiledMapManager } from '../core/manager';
+import type { Position } from '../core/types';
+import type { DrawContext, DrawFunction } from '../core/render';
+import type { LayerManager } from '../layer/manager';
+import type { TiledMapManager } from '../core/manager';
 
 export interface ActionContext extends DrawContext {
   manager: TiledMapManager;

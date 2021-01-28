@@ -1,5 +1,5 @@
 import React from 'react';
-import { TagProps } from '@shared/components/bbcode/type';
+import type { TagProps } from '@shared/components/bbcode/type';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 

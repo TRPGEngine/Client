@@ -5,7 +5,7 @@ import history from '@portal/history';
 import { fetchOwnReport } from '@portal/model/trpg';
 import { ListItem } from '@portal/components/ListItem';
 import { PortraitContainer } from '@portal/components/PortraitContainer';
-import { GameReport } from '@shared/model/trpg';
+import type { GameReport } from '@shared/model/trpg';
 
 const TRPGReportList: React.FC = TMemo(() => {
   const [list, setList] = useState<GameReport[]>([]);

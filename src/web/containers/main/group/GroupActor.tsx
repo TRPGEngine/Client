@@ -10,8 +10,8 @@ import {
 import { TabsController, Tab } from '../../../components/Tabs';
 import ActorSelect from '../../../components/modals/ActorSelect';
 import { GroupActorCheck } from './modal/GroupActorCheck';
-import { ActorType, ActorDataType } from '@src/shared/redux/types/actor';
-import { GroupActorType, GroupInfo } from '@src/shared/redux/types/group';
+import type { ActorType, ActorDataType } from '@src/shared/redux/types/actor';
+import type { GroupActorType, GroupInfo } from '@src/shared/redux/types/group';
 import ActorEdit from '@web/components/modals/ActorEdit';
 import { Tooltip } from 'antd';
 import styled from 'styled-components';
@@ -23,7 +23,7 @@ import {
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import { getAbsolutePath } from '@shared/utils/file-helper';
-import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
+import type { TRPGDispatch, TRPGState } from '@redux/types/__all__';
 import { editGroupActor } from '@shared/model/group';
 import { isGroupManager } from '@shared/helper/group';
 import ActorInfo from '@web/components/modals/ActorInfo';

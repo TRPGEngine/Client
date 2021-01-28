@@ -21,8 +21,8 @@ import { isUserUUID } from '@shared/utils/uuid';
 import { sendStartWriting, sendStopWriting } from '@shared/api/event';
 import _throttle from 'lodash/throttle';
 import _get from 'lodash/get';
-import { TRPGState } from '@redux/types/__all__';
-import { MsgType } from '@redux/types/chat';
+import type { TRPGState } from '@redux/types/__all__';
+import type { MsgType } from '@redux/types/chat';
 
 import './ConverseDetail.scss';
 

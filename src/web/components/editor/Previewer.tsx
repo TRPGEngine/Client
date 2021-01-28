@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import { Slate, Editable } from 'slate-react';
-import { TRPGEditorNode } from './types';
+import type { TRPGEditorNode } from './types';
 import { createStandardEditor } from './instance';
 import { SlateElement } from './render/Element';
 import { SlateLeaf } from './render/Leaf';

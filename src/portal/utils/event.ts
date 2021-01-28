@@ -1,6 +1,6 @@
 import _isUndefined from 'lodash/isUndefined';
 import _pull from 'lodash/pull';
-import { PortalEventTypes } from '@shared/types/portal';
+import type { PortalEventTypes } from '@shared/types/portal';
 
 type EventFn = (...args: any[]) => void;
 

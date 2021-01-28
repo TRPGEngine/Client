@@ -4,7 +4,7 @@ import { tickMember, setMemberToManager } from '@shared/redux/actions/group';
 import ModalPanel from '@web/components/ModalPanel';
 import config from '@shared/project.config';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 
 import './GroupMemberManage.scss';
 

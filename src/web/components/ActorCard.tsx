@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActorType, ActorBaseAttr } from '@redux/types/actor';
+import type { ActorType, ActorBaseAttr } from '@redux/types/actor';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { getAbsolutePath } from '@shared/utils/file-helper';

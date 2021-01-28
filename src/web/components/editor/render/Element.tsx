@@ -3,7 +3,7 @@ import { RenderElementProps, useSelected, useFocused } from 'slate-react';
 import { TMemo } from '@shared/components/TMemo';
 import _get from 'lodash/get';
 import Image from '@web/components/Image';
-import { EditorType } from './type';
+import type { EditorType } from './type';
 import { MentionTagItem } from '../style';
 
 interface EditorElementProps extends RenderElementProps {

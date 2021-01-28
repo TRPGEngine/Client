@@ -2,7 +2,7 @@ import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Dropdown, Menu } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
-import { DropDownProps } from 'antd/lib/dropdown';
+import type { DropDownProps } from 'antd/lib/dropdown';
 
 interface AddonMoreProps extends Partial<DropDownProps> {
   items: { label: string; onClick: () => void }[];

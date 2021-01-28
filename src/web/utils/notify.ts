@@ -4,7 +4,7 @@ import config from '@src/shared/project.config';
 import { switchMenuPannel } from '../../shared/redux/actions/ui';
 import { switchConverse } from '../../shared/redux/actions/chat';
 import _get from 'lodash/get';
-import { TRPGStore } from '@redux/types/__all__';
+import type { TRPGStore } from '@redux/types/__all__';
 
 /**
  * 设置小红点

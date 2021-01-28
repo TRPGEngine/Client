@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Col } from 'antd';
 import styled from 'styled-components';
-import { ButtonProps } from 'antd/lib/button';
+import type { ButtonProps } from 'antd/lib/button';
 
 const Container = styled(Col).attrs({
   xs: 24,

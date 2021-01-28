@@ -4,7 +4,7 @@ import {
   addDataProducer,
   removeDataProducer,
 } from '../stateActions';
-import { DataProducersStateType } from '../types/dataProducers';
+import type { DataProducersStateType } from '../types/dataProducers';
 
 const initialState: DataProducersStateType = {};
 

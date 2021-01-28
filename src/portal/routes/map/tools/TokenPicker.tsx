@@ -5,9 +5,9 @@ import Avatar from '@web/components/Avatar';
 import { AppendTokenAction } from './actions/AppendTokenAction';
 import { AppendImageTokenAction } from './actions/AppendImageTokenAction';
 import { ActorToken } from '@shared/components/tiledmap/layer/token/ActorToken';
-import { TiledMapManager } from '@shared/components/tiledmap/core/manager';
+import type { TiledMapManager } from '@shared/components/tiledmap/core/manager';
 import { ImageToken } from '@shared/components/tiledmap/layer/token/ImageToken';
-import { GroupActorItem } from '@shared/types/group';
+import type { GroupActorItem } from '@shared/types/group';
 
 const Panel = Collapse.Panel;
 

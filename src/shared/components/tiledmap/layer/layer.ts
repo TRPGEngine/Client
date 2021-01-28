@@ -1,8 +1,8 @@
-import { BaseToken } from './token/BaseToken';
+import type { BaseToken } from './token/BaseToken';
 import _remove from 'lodash/remove';
 import _pull from 'lodash/pull';
-import { DrawContext } from '../core/render';
-import { LayerAttrs } from '../core/types';
+import type { DrawContext } from '../core/render';
+import type { LayerAttrs } from '../core/types';
 import shortid from 'shortid';
 
 export class Layer {

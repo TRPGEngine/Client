@@ -1,4 +1,4 @@
-import { ChatLogItem } from '@shared/model/chat';
+import type { ChatLogItem } from '@shared/model/chat';
 import { hpack } from '@shared/utils/json-helper';
 import { request } from '@shared/utils/request';
 

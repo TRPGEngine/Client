@@ -10,7 +10,7 @@ import _isEqual from 'lodash/isEqual';
 import _isFunction from 'lodash/isFunction';
 import { useCachedUserInfo } from '@shared/hooks/useCache';
 import { OptionProps, OptionType } from 'antd/lib/select';
-import { GroupInfo } from '@redux/types/group';
+import type { GroupInfo } from '@redux/types/group';
 import Avatar from '../Avatar';
 
 const Option = Select.Option;

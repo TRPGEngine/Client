@@ -8,10 +8,10 @@ import {
 import { FullModalField } from '@web/components/FullModalField';
 import { useTranslation } from '@shared/i18n';
 import { setUserSettings } from '@redux/actions/settings';
-import { MsgStyleType } from '@shared/types/chat';
+import type { MsgStyleType } from '@shared/types/chat';
 import { MessageItem } from '@shared/components/message/MessageItem';
 import styled from 'styled-components';
-import { MsgPayload } from '@redux/types/chat';
+import type { MsgPayload } from '@redux/types/chat';
 import { useCurrentUserUUID } from '@redux/hooks/user';
 
 const MsgPreviewViewContainer = styled.div`

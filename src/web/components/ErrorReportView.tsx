@@ -12,7 +12,7 @@ import { sendUserFeedback } from '@shared/model/sentry';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { getUserName } from '@shared/utils/data-helper';
 import { showToasts } from '@shared/manager/ui';
-import { FastFormFieldMeta } from '@shared/components/FastForm/field';
+import type { FastFormFieldMeta } from '@shared/components/FastForm/field';
 import { useTranslation } from '@shared/i18n';
 
 const fields: FastFormFieldMeta[] = [

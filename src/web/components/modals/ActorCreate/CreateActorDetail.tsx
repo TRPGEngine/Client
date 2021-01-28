@@ -4,7 +4,7 @@ import XMLBuilder, {
   DataMap,
 } from '@shared/components/layout/XMLBuilder';
 import _clone from 'lodash/clone';
-import { ActorTemplateType } from '@redux/types/actor';
+import type { ActorTemplateType } from '@redux/types/actor';
 import { TMemo } from '@shared/components/TMemo';
 
 interface Props {

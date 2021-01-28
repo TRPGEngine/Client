@@ -1,4 +1,4 @@
-import { LayoutFormContainerProps } from '../../hooks/useLayoutFormContainer';
+import type { LayoutFormContainerProps } from '../../hooks/useLayoutFormContainer';
 
 export interface TagCheckboxProps extends LayoutFormContainerProps {
   name: string;

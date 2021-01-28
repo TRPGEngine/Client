@@ -23,7 +23,7 @@ import { scrollToBottom } from '@shared/utils/animated-scroll-to';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import styled from 'styled-components';
 import { usePrevious } from 'react-use';
-import { MsgPayload } from '@redux/types/chat';
+import type { MsgPayload } from '@redux/types/chat';
 import { useTranslation } from '@shared/i18n';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 

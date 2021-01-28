@@ -1,4 +1,4 @@
-import { CommonPanelProps } from './type';
+import type { CommonPanelProps } from './type';
 
 type GroupPanelComponent = React.ReactType<CommonPanelProps>;
 

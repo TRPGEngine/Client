@@ -1,11 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { TMemo } from '@shared/components/TMemo';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
 import { Checkbox } from 'antd';
 import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import { TagCheckboxProps } from './shared';
+import type { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import type { TagCheckboxProps } from './shared';
 import { useToBoolean } from '@shared/hooks/useToBoolean';
 
 export const TagCheckboxEdit: TagComponent<TagCheckboxProps> = TMemo(

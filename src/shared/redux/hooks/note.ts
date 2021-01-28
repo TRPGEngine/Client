@@ -1,5 +1,5 @@
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
-import { NoteInfo } from '@redux/types/note';
+import type { NoteInfo } from '@redux/types/note';
 
 /**
  * 笔记详情信息

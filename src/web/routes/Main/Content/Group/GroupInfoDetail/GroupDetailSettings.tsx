@@ -7,7 +7,7 @@ import { useGroupDetail } from '@redux/hooks/group';
 import { useAsyncFn, useMap } from 'react-use';
 import _isEmpty from 'lodash/isEmpty';
 import _get from 'lodash/get';
-import { GroupDetail } from '@redux/types/group';
+import type { GroupDetail } from '@redux/types/group';
 import { updateGroupDetail } from '@shared/model/group';
 import { showToasts } from '@shared/manager/ui';
 

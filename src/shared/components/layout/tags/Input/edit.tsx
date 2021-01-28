@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
-import { TagComponent } from '../type';
-import { TagInputProps } from './shared';
+import type { TagComponent } from '../type';
+import type { TagInputProps } from './shared';
 import { TMemo } from '@shared/components/TMemo';
 import { useLayoutFormData } from '@shared/components/layout/hooks/useLayoutFormData';
 import { Input } from 'antd';

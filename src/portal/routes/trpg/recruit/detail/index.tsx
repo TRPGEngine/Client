@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import type { RouteComponentProps } from 'react-router-dom';
 import { TMemo } from '@shared/components/TMemo';
 import { fetchUserRecruitDetail, RecruitItemType } from '@portal/model/trpg';
 import { RecruitItem } from '../RecruitItem';

@@ -1,9 +1,9 @@
 import { Layer } from './layer';
-import { DrawContext } from '../core/render';
+import type { DrawContext } from '../core/render';
 import _pull from 'lodash/pull';
 import _orderBy from 'lodash/orderBy';
-import { Position, Rect, LayerAttrs } from '../core/types';
-import { BaseToken } from './token/BaseToken';
+import type { Position, Rect, LayerAttrs } from '../core/types';
+import type { BaseToken } from './token/BaseToken';
 
 export class LayerManager {
   layers: Layer[] = [];

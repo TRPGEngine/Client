@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { saveNote } from '../../../../shared/redux/actions/note';
 import TLoadable from '@web/components/TLoadable';
+import type { TRPGDispatchProp } from '@redux/types/__all__';
 
 import './NoteDetail.scss';
-import { TRPGDispatchProp } from '@redux/types/__all__';
 
 const NoteEditor = TLoadable(() => import('../../../components/NoteEditor'));
 

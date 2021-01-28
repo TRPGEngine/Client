@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutProps } from '../processor';
+import type { LayoutProps } from '../processor';
 import { useMemo } from 'react';
 import { BaseTypeRow } from '../tags/Base/shared';
 import { LayoutCol } from '../tags/Col/shared';

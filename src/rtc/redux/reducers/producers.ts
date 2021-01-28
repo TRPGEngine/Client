@@ -8,7 +8,7 @@ import {
   setProducerTrack,
   setProducerScore,
 } from '../stateActions';
-import { ProducersStateType } from '../types/producers';
+import type { ProducersStateType } from '../types/producers';
 
 const initialState: ProducersStateType = {};
 

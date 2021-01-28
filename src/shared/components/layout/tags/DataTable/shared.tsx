@@ -1,10 +1,10 @@
 import React, { useMemo, useCallback } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { TMemo } from '@shared/components/TMemo';
 import { Table } from 'antd';
 import _head from 'lodash/head';
 import _tail from 'lodash/tail';
-import { SizeType } from 'antd/lib/config-provider/SizeContext';
+import type { SizeType } from 'antd/lib/config-provider/SizeContext';
 import { useToNumber } from '@shared/hooks/useToNumber';
 
 interface TagProps {

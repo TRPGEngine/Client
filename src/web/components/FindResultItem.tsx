@@ -6,7 +6,7 @@ import {
   agreeFriendInvite,
 } from '@shared/redux/actions/user';
 import { requestJoinGroup } from '@shared/redux/actions/group';
-import { TRPGState, TRPGDispatch } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatch } from '@redux/types/__all__';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import { showModal } from '@redux/actions/ui';

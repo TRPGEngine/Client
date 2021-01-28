@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react';
-import { MsgListType } from '@redux/types/chat';
+import type { MsgListType } from '@redux/types/chat';
 import bbcodeParser from '@shared/components/bbcode/parser';
 import _get from 'lodash/get';
 import _invoke from 'lodash/invoke';

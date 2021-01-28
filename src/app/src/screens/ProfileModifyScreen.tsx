@@ -13,7 +13,7 @@ import _last from 'lodash/last';
 import { List } from '@ant-design/react-native';
 import TModalPanel from '../components/TComponent/TModalPanel';
 import TPicker from '../components/TComponent/TPicker';
-import { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
+import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 const Item = List.Item;
 
 interface Props extends TRPGDispatchProp {

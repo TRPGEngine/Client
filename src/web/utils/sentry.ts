@@ -6,7 +6,7 @@ import _get from 'lodash/get';
 import _once from 'lodash/once';
 import _isNil from 'lodash/isNil';
 import config from '@shared/project.config';
-import { UserInfo } from '@redux/types/user';
+import type { UserInfo } from '@redux/types/user';
 import { getJWTUserInfo } from '@shared/utils/jwt-helper';
 
 const environment = config.environment;
@@ -34,6 +34,7 @@ const initSentry = _once(() => {
       `Can't find variable: Notification`,
       `'Notification' is undefined`,
       'ReferenceError: Notification is not defined',
+      `Cannot read property 'className' of null`,
     ],
   });
 });

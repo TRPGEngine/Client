@@ -12,7 +12,7 @@ import {
   setAudioMutedState,
   setRestartIceInProgress,
 } from '../stateActions';
-import { MeStateType } from '../types/me';
+import type { MeStateType } from '../types/me';
 import _isString from 'lodash/isString';
 
 const initialState: MeStateType = {

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useMemo } from 'react';
-import { TagComponent } from '../type';
+import type { TagComponent } from '../type';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
 import { StateActionType } from '../../types';
 import _isEqual from 'lodash/isEqual';

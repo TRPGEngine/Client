@@ -6,10 +6,10 @@ import { showAlert } from '@shared/redux/actions/ui';
 import { createActor } from '@shared/redux/actions/actor';
 import { updateActor } from '@web/redux/action/actor';
 import ImageUploader from '@web/components/ImageUploader';
+import type { AlertPayload } from '@redux/types/ui';
+import type { TRPGDispatch, TRPGState } from '@redux/types/__all__';
 
 import './ActorEdit.scss';
-import { AlertPayload } from '@redux/types/ui';
-import { TRPGDispatch, TRPGState } from '@redux/types/__all__';
 
 interface Props {
   selectedActorUUID: string;

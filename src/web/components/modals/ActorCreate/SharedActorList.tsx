@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import ModalPanel from '@web/components/ModalPanel';
-import { ActorType } from '@redux/types/actor';
+import type { ActorType } from '@redux/types/actor';
 import { fetchSharedActor } from '@shared/model/actor';
 import { ActorCard } from '@web/components/ActorCard';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';

@@ -1,8 +1,8 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router';
+import type { RouteComponentProps } from 'react-router';
 import ActorEditor from '@portal/components/ActorEditor';
 import { fetchGroupActorAccess, removeGroupActor } from '@portal/model/group';
-import { ModelAccess } from '@portal/model/types';
+import type { ModelAccess } from '@portal/model/types';
 import _get from 'lodash/get';
 import { ActionButton } from '@portal/components/ActionButton';
 import { nav } from '@portal/history';

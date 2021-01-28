@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { FastFormFieldMeta } from '@shared/components/FastForm/field';
+import type { FastFormFieldMeta } from '@shared/components/FastForm/field';
 import { WebFastForm } from '../WebFastForm';
 import { createGroup } from '@shared/model/group';
 import { showToasts } from '@shared/manager/ui';

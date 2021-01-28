@@ -1,5 +1,5 @@
 // 这个文件是用于获取与注册所有可用类型
-import React from 'react';
+import type React from 'react';
 import _set from 'lodash/set';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Row, Avatar, Col } from 'antd';
 import XMLBuilder, { DataMap } from '@shared/components/layout/XMLBuilder';
 import styled from 'styled-components';
-import { ActorTemplateType } from '@redux/types/actor';
+import type { ActorTemplateType } from '@redux/types/actor';
 
 const BasicBlock = styled(Row)`
   background-color: rgba(0, 0, 0, 0.05);
