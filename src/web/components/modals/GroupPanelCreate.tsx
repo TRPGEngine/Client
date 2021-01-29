@@ -56,6 +56,11 @@ function useGroupPanelBaseFields(): FastFormFieldMeta[] {
         label: t('日历面板'),
         value: 'calendar',
       });
+
+      baseFields[1].options.push({
+        label: t('网页面板'),
+        value: 'website',
+      });
     }
 
     return baseFields;
@@ -87,6 +92,15 @@ function useGroupPanelCreateFields() {
               label: note.title,
               value: note.uuid,
             })),
+        },
+      ];
+    } else if (type === 'website') {
+      return [
+        ...baseFields,
+        {
+          type: 'text',
+          name: 'url',
+          label: t('面板网址'),
         },
       ];
     }
