@@ -1,7 +1,6 @@
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
-import failedImg from '@web/assets/img/img_fail.png';
-import robotImg from '@web/assets/img/robot_dark.svg';
+import { getDefaultImage } from './assets';
 import type { MsgStyleType } from './types/chat';
 import url from 'url';
 
@@ -144,7 +143,7 @@ const defaultSettings = {
   },
 };
 
-const rsshub = 'https://rss.moonrailgun.com/';
+const rsshub = 'https://rss.moonrailgun.com/'; // rsshub 服务的地址
 /**
  * 用于portal的新闻功能
  */
@@ -159,6 +158,68 @@ const rssNews = [
 ];
 
 export type DefaultSettings = typeof defaultSettings;
+
+const file: ProjectConfig['file'] = {
+  protocol: isSSL ? 'https' : 'http',
+  host: currentHost,
+  port: apiPort,
+  getFileImage(ext) {
+    if (ext === 'jpg' || ext === 'png' || ext === 'gif') {
+      return config.defaultImg.file.pic;
+    }
+    if (ext === 'doc' || ext === 'docx') {
+      return config.defaultImg.file.word;
+    }
+    if (ext === 'xls' || ext === 'xlsx') {
+      return config.defaultImg.file.excel;
+    }
+    if (ext === 'ppt' || ext === 'pptx') {
+      return config.defaultImg.file.ppt;
+    }
+    if (ext === 'pdf') {
+      return config.defaultImg.file.pdf;
+    }
+    if (ext === 'txt') {
+      return config.defaultImg.file.txt;
+    }
+
+    return config.defaultImg.file.default;
+  },
+};
+file.url = `${file.protocol}://${file.host}:${file.port}`;
+
+// 获取基于API的绝对路径
+file.getAbsolutePath = function getAbsolutePath(path?: string) {
+  if (!path) {
+    path = ''; // 设置默认值
+  }
+  if (path && path[0] === '/') {
+    return file.url + path;
+  }
+  return path;
+};
+
+// 获取基于APi的相对路径
+file.getRelativePath = function getAbsolutePath(path) {
+  if (!path) {
+    path = ''; // 设置默认值
+  }
+  return path.replace(file.url!, '');
+};
+
+file.getUploadsImagePath = function getUploadsImagePath(
+  filename,
+  isTemporary = false
+) {
+  let relativePath = '';
+  if (isTemporary) {
+    relativePath = `/uploads/temporary/${filename}`;
+  } else {
+    relativePath = `/uploads/persistence/${filename}`;
+  }
+
+  return file.url + relativePath;
+};
 
 const config: ProjectConfig = {
   version: require('../../package.json').version,
@@ -178,70 +239,11 @@ const config: ProjectConfig = {
       timeout: 5000, // 超时时间，即多少毫秒后仍未接收到正在写操作则自动视为已经停止写。用于处理用户输入一段文字后长时间不进行操作的情况
     },
   },
-  file: {
-    protocol: isSSL ? 'https' : 'http',
-    host: currentHost,
-    port: apiPort,
-    getFileImage(ext) {
-      if (ext === 'jpg' || ext === 'png' || ext === 'gif') {
-        return config.defaultImg.file.pic;
-      }
-      if (ext === 'doc' || ext === 'docx') {
-        return config.defaultImg.file.word;
-      }
-      if (ext === 'xls' || ext === 'xlsx') {
-        return config.defaultImg.file.excel;
-      }
-      if (ext === 'ppt' || ext === 'pptx') {
-        return config.defaultImg.file.ppt;
-      }
-      if (ext === 'pdf') {
-        return config.defaultImg.file.pdf;
-      }
-      if (ext === 'txt') {
-        return config.defaultImg.file.txt;
-      }
-
-      return config.defaultImg.file.default;
-    },
-  },
+  file,
   defaultImg: {
-    user: '/src/assets/img/gugugu1.png',
-    /**
-     * @deprecated 使用Avatar组件生成默认头像
-     */
-    getUser(name) {
-      if (name) {
-        return `${config.file.url}/file/avatar/svg?name=${name}`;
-      } else {
-        return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; // 一像素透明图片
-      }
-    },
-    group: '/src/web/assets/img/gugugu1.png',
-    /**
-     * @deprecated 使用Avatar组件生成默认头像
-     */
-    getGroup(name) {
-      // 同getUser
-      if (name) {
-        return `${config.file.url}/file/avatar/svg?name=${name}`;
-      } else {
-        return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; // 一像素透明图片
-      }
-    },
-    trpgsystem: '/src/web/assets/img/system_notice.png',
-    robot: robotImg,
-    actor: '',
-    chatimg_fail: failedImg,
-    file: {
-      default: '/src/web/assets/img/file/default.png',
-      pdf: '/src/web/assets/img/file/pdf.png',
-      excel: '/src/web/assets/img/file/excel.png',
-      ppt: '/src/web/assets/img/file/ppt.png',
-      word: '/src/web/assets/img/file/word.png',
-      txt: '/src/web/assets/img/file/txt.png',
-      pic: '/src/web/assets/img/file/pic.png',
-    },
+    ...getDefaultImage({
+      fileUrl: file.url,
+    }),
     color: [
       '#333333',
       '#2c3e50',
@@ -292,40 +294,7 @@ const config: ProjectConfig = {
   },
   defaultSettings,
 };
-config.file.url = `${config.file.protocol}://${config.file.host}:${config.file.port}`;
+
 config.url.api = config.file.url;
-
-// 获取基于API的绝对路径
-config.file.getAbsolutePath = function getAbsolutePath(path?: string) {
-  if (!path) {
-    path = ''; // 设置默认值
-  }
-  if (path && path[0] === '/') {
-    return config.file.url + path;
-  }
-  return path;
-};
-
-// 获取基于APi的相对路径
-config.file.getRelativePath = function getAbsolutePath(path) {
-  if (!path) {
-    path = ''; // 设置默认值
-  }
-  return path.replace(config.file.url!, '');
-};
-
-config.file.getUploadsImagePath = function getUploadsImagePath(
-  filename,
-  isTemporary = false
-) {
-  let relativePath = '';
-  if (isTemporary) {
-    relativePath = `/uploads/temporary/${filename}`;
-  } else {
-    relativePath = `/uploads/persistence/${filename}`;
-  }
-
-  return config.file.url + relativePath;
-};
 
 export default config;
