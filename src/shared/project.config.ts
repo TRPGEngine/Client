@@ -1,5 +1,6 @@
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
+import failedImg from '@web/assets/img/img_fail.png';
 import robotImg from '@web/assets/img/robot_dark.svg';
 import type { MsgStyleType } from './types/chat';
 import url from 'url';
@@ -231,7 +232,7 @@ const config: ProjectConfig = {
     trpgsystem: '/src/web/assets/img/system_notice.png',
     robot: robotImg,
     actor: '',
-    chatimg_fail: '/src/web/assets/img/img_fail.png',
+    chatimg_fail: failedImg,
     file: {
       default: '/src/web/assets/img/file/default.png',
       pdf: '/src/web/assets/img/file/pdf.png',
