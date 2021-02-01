@@ -116,6 +116,7 @@ interface ProjectConfig {
     rsshub: string;
     getInviteUrl: (inviteCode: string) => string;
     rssNews: { name: string; url: string }[];
+    txcUrl: string; // 兔小巢地址
   };
   defaultSettings: DefaultSettings;
 }
@@ -291,6 +292,7 @@ const config: ProjectConfig = {
      *
      */
     rssNews,
+    txcUrl: 'https://support.qq.com/products/308023',
   },
   defaultSettings,
 };

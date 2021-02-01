@@ -1,0 +1,26 @@
+/**
+ * 通过post方式提交一个表单(打开新窗口)
+ */
+export function openPostWindow(url: string, data: object) {
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = url;
+  form.target = '_blank';
+
+  for (const key in data) {
+    if (Object.prototype.hasOwnProperty.call(data, key)) {
+      const value = data[key];
+
+      const hideInput = document.createElement('input');
+      hideInput.type = 'text';
+      hideInput.name = key;
+      hideInput.value = value;
+      form.appendChild(hideInput);
+    }
+  }
+
+  document.body.appendChild(form);
+
+  form.submit();
+  document.body.removeChild(form);
+}
