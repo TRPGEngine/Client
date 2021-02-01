@@ -107,10 +107,13 @@ export const SettingView: React.FC = TMemo(() => {
             type: 'link',
             title: t('意见反馈'),
             onClick: () =>
-              openPostWindow(config.url.txcUrl, {
-                openid: userInfo.uuid,
-                nickname: getUserName(userInfo),
-                avatar: userInfo.avatar,
+              openPostWindow({
+                url: config.url.txcUrl,
+                data: {
+                  openid: userInfo.uuid,
+                  nickname: getUserName(userInfo),
+                  avatar: userInfo.avatar,
+                },
               }),
           },
           {

@@ -89,8 +89,16 @@ export const routes: RouteConfig[] = [
     component: TLoadable(() => import('@portal/routes/deploy')),
   },
   {
-    title: '帮助反馈',
+    title: '问题反馈',
     path: '/help',
+    component: TLoadable(() => import('@portal/routes/help/txc')),
+  },
+  {
+    /**
+     * @deprecated
+     */
+    title: '帮助反馈',
+    path: '/help/old',
     component: TLoadable(() => import('@portal/routes/help')),
   },
   {
