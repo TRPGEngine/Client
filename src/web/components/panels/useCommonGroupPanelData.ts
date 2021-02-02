@@ -6,7 +6,7 @@ import { useAsync } from 'react-use';
 import _isString from 'lodash/isString';
 
 /**
- * 获取通用团数据的hooks
+ * 获取通用团面板数据的hooks
  * @param groupUUID 团UUID
  * @param panelUUID 面板UUID
  */

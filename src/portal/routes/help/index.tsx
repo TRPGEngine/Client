@@ -22,7 +22,7 @@ const FAQList = styled.ul`
 `;
 
 /**
- * @deprecated 使用兔小巢
+ * @deprecated 请使用兔小巢 txc.tsx
  */
 interface Props extends RouteComponentProps {}
 const Help: React.FC<Props> = React.memo((props) => {
