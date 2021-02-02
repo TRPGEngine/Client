@@ -5,3 +5,8 @@ export enum StateActionType {
   AddDefine = 'add_define',
   SetGlobal = 'set_global',
 }
+
+/**
+ * 预渲染的Tag
+ */
+export const preRenderTags = ['Static'];

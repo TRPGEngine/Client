@@ -47,7 +47,10 @@ const buildReducer = (onChange?: StateChangeHandler) => {
         newState.defines[payload.name] = payload.component;
         break;
       case StateActionType.SetGlobal:
-        newState.global[payload.name] = payload.value;
+        newState.global = {
+          ...newState.global,
+          [payload.name]: payload.value,
+        };
     }
 
     onChange && onChange(newState);
