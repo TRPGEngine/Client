@@ -21,6 +21,9 @@ const FAQList = styled.ul`
   }
 `;
 
+/**
+ * @deprecated 请使用兔小巢 txc.tsx
+ */
 interface Props extends RouteComponentProps {}
 const Help: React.FC<Props> = React.memo((props) => {
   const [faq, setFAQ] = useState<HelpFAQItem[]>([]);

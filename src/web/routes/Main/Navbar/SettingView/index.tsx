@@ -15,10 +15,15 @@ import { useTranslation } from '@shared/i18n';
 import { showAlert } from '@shared/manager/ui';
 import { SettingUserConfig } from './SettingUserConfig';
 import { SettingAudioConfig } from './SettingAudioConfig';
+import { useCurrentUserInfo } from '@redux/hooks/user';
+import { openPostWindow } from '@web/utils/dom-helper';
+import { getUserName } from '@shared/utils/data-helper';
 
 export const SettingView: React.FC = TMemo(() => {
+  const userInfo = useCurrentUserInfo();
   const dispatch = useTRPGDispatch();
   const { t } = useTranslation();
+
   const menu: SidebarViewMenuType[] = useMemo(
     () => [
       {
@@ -97,6 +102,19 @@ export const SettingView: React.FC = TMemo(() => {
                 },
               });
             },
+          },
+          {
+            type: 'link',
+            title: t('意见反馈'),
+            onClick: () =>
+              openPostWindow({
+                url: config.url.txcUrl,
+                data: {
+                  openid: userInfo.uuid,
+                  nickname: getUserName(userInfo),
+                  avatar: userInfo.avatar,
+                },
+              }),
           },
           {
             type: 'link',
