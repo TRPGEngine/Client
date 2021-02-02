@@ -11,19 +11,21 @@ import { useAsync } from 'react-use';
 
 const TXCFeedback: React.FC = TMemo(() => {
   const { loading } = useAsync(async () => {
-    await checkToken();
+    const isLogin = await checkToken();
 
-    // 跳转到兔小巢
-    const userInfo = await getJWTUserInfo();
-    openPostWindow({
-      url: config.url.txcUrl,
-      data: {
-        openid: userInfo.uuid,
-        nickname: userInfo.name,
-        avatar: userInfo.avatar,
-      },
-      target: '_self',
-    });
+    if (isLogin === true) {
+      // 跳转到兔小巢
+      const userInfo = await getJWTUserInfo();
+      openPostWindow({
+        url: config.url.txcUrl,
+        data: {
+          openid: userInfo.uuid,
+          nickname: userInfo.name,
+          avatar: userInfo.avatar,
+        },
+        target: '_self',
+      });
+    }
   });
 
   if (loading) {

@@ -14,14 +14,15 @@ import { getJWTPayload, JWTUserInfoData } from '@shared/utils/jwt-helper';
  * 该检查一般用于表单填写页面防止填了一堆数据后提交失败跳转到登录页的挫败感
  * @param 是否自动跳转。如果为登录页则此值应该为false
  */
-export const checkToken = async (autoNav = true): Promise<void> => {
+export const checkToken = async (autoNav = true): Promise<boolean> => {
   try {
     await request.post('/player/sso/check');
+    return true;
   } catch (err) {
     if (autoNav) {
       // 如果出错则跳转到登录页面
       navToLoginPage();
-      return;
+      return false;
     }
     throw err;
   }
