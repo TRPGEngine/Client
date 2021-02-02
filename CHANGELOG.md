@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.16](https://github.com/TRPGEngine/Client/compare/v0.5.15...v0.5.16) (2021-02-02)
+
+
+### Features
+
+* **portal:** 增加兔小巢的portal端登录后跳转 ([a323fba](https://github.com/TRPGEngine/Client/commit/a323fba8348a39faaab40d83daecef4263b9b4f2))
+* 增加意见反馈 ([9dbe674](https://github.com/TRPGEngine/Client/commit/9dbe67472b864200bb9c475adada0de52b00afe0))
+* **web:** 增加网页面板 ([f801e11](https://github.com/TRPGEngine/Client/commit/f801e1112a59d056e4f24ab6934f31e4cfcab127))
+
 ### [0.5.15](https://github.com/TRPGEngine/Client/compare/v0.5.14...v0.5.15) (2021-01-28)
 
 ### [0.5.14](https://github.com/TRPGEngine/Client/compare/v0.5.13...v0.5.14) (2021-01-24)
