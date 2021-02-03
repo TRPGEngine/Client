@@ -316,7 +316,7 @@
                 <table>
                   <Use define="skillTableHead" />
                   <tbody>
-                    <ForEach name="skill-本职技能" define="skill" :data="getJobDuty()" />
+                    <ForEach name="skill-本职技能" define="skill" :data="getJobDuty()" getItemName="(item) => item.name" />
                   </tbody>
                 </table>
 
