@@ -10,7 +10,23 @@ exports[`Tag: Col sm="8" in 600 => 8 1`] = `
       style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
     />
     <div
-      class="ant-col ant-col-8"
+      class="sc-AxgMl hoELXQ"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Tag: Col sm="8" in 600 => 8 2`] = `
+<DocumentFragment>
+  <div
+    class="sc-fzpans jRldgn"
+    style="position: relative;"
+  >
+    <iframe
+      style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
+    />
+    <div
+      class="sc-AxgMl hoELXQ"
     >
       Test Content
     </div>
