@@ -1,6 +1,6 @@
 {
   "name": "trpg-game-client",
-  "version": "0.5.16",
+  "version": "0.5.17",
   "description": "专注于TRPG跑团的IM即时应用聊天软件",
   "main": "./dist/entry.js",
   "productName": "TRPG Engine",
@@ -149,7 +149,7 @@
     "react-tooltip": "^3.11.1",
     "react-use": "^15.3.4",
     "react-use-gesture": "^8.0.1",
-    "recharts": "^2.0.0-beta.8",
+    "recharts": "^2.0.4",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",

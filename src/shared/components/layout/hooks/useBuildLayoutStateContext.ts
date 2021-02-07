@@ -26,6 +26,8 @@ const buildReducer = (onChange?: StateChangeHandler) => {
     debug(`[Action] ${type}: %o`, payload);
 
     switch (type) {
+      // NOTICE: 注意这里不能弄新对象
+      // 会导致script标签的引用失效
       case StateActionType.UpdateData: {
         const data = _clone(newState.data);
         const { scope, field, value } = payload;

@@ -41,6 +41,7 @@ const config = merge({}, base, {
     port: 8191,
     compress: true,
     overlay: true,
+    publicPath: '/playground/',
     historyApiFallback: {
       rewrites: [
         { from: `${dllHashName}.js`, to: `/playground/${dllHashName}.js` },
@@ -75,6 +76,8 @@ if (_.get(process, 'env.npm_config_report', false)) {
 /**
  * playground不需要offline插件
  */
-config.plugins = config.plugins.filter((x) => !(x instanceof WorkboxPlugin.GenerateSW));
+config.plugins = config.plugins.filter(
+  (x) => !(x instanceof WorkboxPlugin.GenerateSW)
+);
 
 module.exports = config;

@@ -6,7 +6,7 @@ import _isUndefined from 'lodash/isUndefined';
 import _isNil from 'lodash/isNil';
 import './tags/__all__';
 import styled from 'styled-components';
-import type { StateDataType, StateActionType } from './types';
+import { StateDataType, StateActionType, preRenderTags } from './types';
 import { useSize } from 'react-use';
 import { LayoutWidthContextProvider } from './context/LayoutWidthContext';
 import { LayoutStateContextProvider } from './context/LayoutStateContext';
@@ -14,6 +14,10 @@ import { useBuildLayoutStateContext } from './hooks/useBuildLayoutStateContext';
 import { iterativeConfigKey } from './parser/key';
 import { TMemo } from '../TMemo';
 import { LayoutNode } from './processor/LayoutNode';
+import {
+  getASTObjectWithoutTagName,
+  getASTObjectWithTagName,
+} from './parser/tagname-helper';
 
 /**
  * XML布局需求:
@@ -126,7 +130,15 @@ const XMLBuilder: React.FC<Props> = TMemo((props) => {
       ast.type = 'root';
       iterativeConfigKey(ast);
       console.log('layout', ast);
-      setLayout(ast);
+
+      // 渲染分两步
+      // 1. 渲染预加载组件
+      setLayout(getASTObjectWithTagName(ast, preRenderTags));
+      requestAnimationFrame(() => {
+        // 2. 待渲染完毕后渲染除了预加载组件以外的所有组件
+        setLayout(getASTObjectWithoutTagName(ast, preRenderTags));
+      });
+
       setError(null);
     } catch (err) {
       console.error(err);

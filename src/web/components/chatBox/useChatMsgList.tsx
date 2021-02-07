@@ -57,7 +57,7 @@ function useChatMsgListLoadMore(
 ) {
   const converseDetail = useConverseDetail(converseUUID);
   const dispatch = useTRPGDispatch();
-  const isGroup = converseDetail?.type === 'group';
+  const isGroup = ['channel', 'group'].includes(converseDetail?.type ?? ''); // 是否为团里面的会话
   const prevBottomDistanceRef = useRef(0);
   const isSeekingLogRef = useRef(false);
   const { t } = useTranslation();

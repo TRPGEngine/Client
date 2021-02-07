@@ -41,6 +41,12 @@
     <ForEach name="testForeach2" :data="[1,2,3,4]" define="foreach2" />
   </ul>
 
+  <p>循环输入框</p>
+  <Define name="foreach3">
+    <Input :name="'输入数据'+ _get(props, 'data')" />
+  </Define>
+  <ForEach name="testForeach3" :data="[1,2]" define="foreach3" />
+
   <p>自定义可输入列表</p>
   <Define name="customlist">
     <li>
