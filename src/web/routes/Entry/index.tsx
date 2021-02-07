@@ -10,7 +10,7 @@ import config from '@shared/project.config';
 import { Redirect, useHistory } from 'react-router';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
 import loginPatternUrl from '../../assets/img/login-pattern.svg';
-import { Button, Space } from 'antd';
+import { Button } from 'antd';
 import { LanguageSwitchLink } from '@web/components/LanguageSwitchLink';
 import { t } from '@shared/i18n';
 
@@ -27,7 +27,8 @@ const BaseContainer = styled.div`
   padding: 10vh 100px 0;
   background-image: url(${loginPatternUrl});
   background-repeat: repeat-y;
-  position: relative;
+  display: flex;
+  flex-direction: column;
 
   ${({ theme }) => theme.mixins.mobile('width: 100%;padding: 10vh 20px 0;')};
 
@@ -37,22 +38,23 @@ const BaseContainer = styled.div`
   }
 `;
 
-const InfoContainer = styled.div`
+const Main = styled.div`
   flex: 1;
-  background-color: white;
 `;
 
 const Footer = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 10px;
+  position: relative;
 
   > .home-page {
     position: absolute;
     right: 0;
     bottom: 0;
   }
+`;
+
+const InfoContainer = styled.div`
+  flex: 1;
+  background-color: white;
 `;
 
 function useWatchLoginStatus() {
@@ -71,15 +73,17 @@ export const EntryRoute: React.FC = TMemo(() => {
   return (
     <Root>
       <BaseContainer>
-        <Switch>
-          <Route name="login" path="/entry/login" component={LoginView} />
-          <Route
-            name="register"
-            path="/entry/register"
-            component={RegisterView}
-          />
-          <Redirect to="/entry/login" />
-        </Switch>
+        <Main>
+          <Switch>
+            <Route name="login" path="/entry/login" component={LoginView} />
+            <Route
+              name="register"
+              path="/entry/register"
+              component={RegisterView}
+            />
+            <Redirect to="/entry/login" />
+          </Switch>
+        </Main>
 
         <Footer>
           <LanguageSwitchLink />

@@ -5,10 +5,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Root = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 4px;
+  height: 40px;
   text-align: center;
 `;
 
