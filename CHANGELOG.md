@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.17](https://github.com/TRPGEngine/Client/compare/v0.5.16...v0.5.17) (2021-02-07)
+
+
+### Features
+
+* **playground:** 增加getItemName用于自定义ForEach的子名称 ([07f591f](https://github.com/TRPGEngine/Client/commit/07f591fceb2b983a085799e7659419f430c33166))
+
+
+### Bug Fixes
+
+* **portal:** 修复兔小巢portal跳转不正确的bug ([35be1b8](https://github.com/TRPGEngine/Client/commit/35be1b8eb03bf4e3ec934ed23cd03684c022d1fd))
+* 修复文字频道无法获取更多消息的bug ([5710bc0](https://github.com/TRPGEngine/Client/commit/5710bc03ccc85608ea2cb057e0134ef2dc3cad50))
+* **layout:** 布局系统增加分段式渲染,修复资产情况不能正常显示的bug ([2283935](https://github.com/TRPGEngine/Client/commit/22839356ead16034d6094ab160b335ddab8b6345))
+* 修复portal跳转兔小巢在某些情况下直接跳转的问题 ([718273b](https://github.com/TRPGEngine/Client/commit/718273ba6231427a6a7895e857da0b1477877045))
+
 ### [0.5.16](https://github.com/TRPGEngine/Client/compare/v0.5.15...v0.5.16) (2021-02-02)
 
 
