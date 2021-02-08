@@ -3,12 +3,8 @@ import _get from 'lodash/get';
 import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
-import { toGroupActorWithBlobUrl } from '@web/utils/upload-helper';
-import { isBlobUrl } from '@shared/utils/string-helper';
 import type { ModelAccess } from './types';
 import type { GroupActorItem, GroupItem } from '@shared/model/group';
-import { bindFileAvatarAttachUUID } from '@shared/model/file';
-import { getJWTUserInfo } from '@shared/utils/jwt-helper';
 import type { ChatLogItem } from '@shared/model/chat';
 
 /**
@@ -23,16 +19,18 @@ export async function fetchOwnGroupList(): Promise<GroupItem[]> {
 /**
  * 获取一定时间内所有的团会话
  * @param groupUUID 团UUID
+ * @param converseUUID 会话UUID
  * @param from 开始时间
  * @param to 结束时间
  */
 export async function fetchGroupRangeChatLog(
   groupUUID: string,
+  converseUUID: string | null,
   from: string,
   to: string
 ): Promise<ChatLogItem[]> {
   const { data } = await request.get(`/group/log/${groupUUID}/range`, {
-    params: { from, to },
+    params: { converseUUID, from, to },
   });
 
   return data.logs;
