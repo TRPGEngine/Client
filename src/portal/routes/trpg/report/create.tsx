@@ -13,13 +13,13 @@ import { LogEdit } from './log-edit';
 import { PortraitContainer } from '@portal/components/PortraitContainer';
 import type { MsgPayload } from '@redux/types/chat';
 import { fetchGroupChannelPanelList, GroupItem } from '@shared/model/group';
-import { useLocation, useParams } from 'react-router';
 import qs from 'qs';
 import { useAsync } from 'react-use';
 import { isUUID } from '@shared/utils/uuid';
 const Option = Select.Option;
 const RangePicker = DatePicker.RangePicker;
 
+// 仅以下类型的消息会被列入战报
 const WHITE_LIST_MSGTYPE = ['normal', 'ooc', 'action', 'speak', 'tip'];
 
 /**
