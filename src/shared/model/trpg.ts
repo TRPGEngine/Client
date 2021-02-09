@@ -14,6 +14,8 @@ export interface GameReport {
   };
 }
 
+export type GameReportSimple = Pick<GameReport, 'uuid' | 'title' | 'groupUUID'>;
+
 // 消息log必须的字段
 // 用于消息数据压缩
 export const reportLogRequireKey = [
@@ -65,7 +67,7 @@ export const createTRPGGameReport = async (
  */
 export async function fetchGroupReport(
   groupUUID: string
-): Promise<GameReport[]> {
+): Promise<GameReportSimple[]> {
   const { data } = await request.get(
     `/trpg/game-report/group/${groupUUID}/list`
   );

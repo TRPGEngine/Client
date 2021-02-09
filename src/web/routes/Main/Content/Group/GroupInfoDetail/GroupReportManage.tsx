@@ -1,21 +1,36 @@
 import React, { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Button, Divider, Row, Space, Table } from 'antd';
+import {
+  Button,
+  Divider,
+  Dropdown,
+  Menu,
+  message,
+  Row,
+  Space,
+  Table,
+} from 'antd';
 import { openPortalWindow } from '@web/components/StandaloneWindow';
 import {
   deleteGroupReport,
   fetchGroupReport,
-  GameReport,
+  fetchTRPGGameReport,
+  GameReportSimple,
 } from '@shared/model/trpg';
 import { useAsyncFn } from 'react-use';
 import { LoadingSpinner } from '@web/components/LoadingSpinner';
 import _isNil from 'lodash/isNil';
+import _uniq from 'lodash/uniq';
 import { useTranslation } from '@shared/i18n';
 import type { TableProps } from 'antd/lib/table/Table';
 import { useIsGroupManager } from '@redux/hooks/group';
-import { ReloadOutlined } from '@ant-design/icons';
+import { MoreOutlined, ReloadOutlined } from '@ant-design/icons';
 import { Iconfont } from '@web/components/Iconfont';
 import { showAlert, showToasts } from '@shared/manager/ui';
+import { fetchUserInfo } from '@shared/model/player';
+import { MsgDataManager } from '@shared/utils/msg-helper';
+import { getUserName } from '@shared/utils/data-helper';
+import { downloadBlob } from '@web/utils/file-helper';
 
 interface GroupReportManageProps {
   groupUUID: string;
@@ -57,7 +72,51 @@ const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
     [groupUUID, refreshReportList]
   );
 
-  const columns: TableProps<GameReport>['columns'] = useMemo(() => {
+  const handleExportToTxt = useCallback(async (record: GameReportSimple) => {
+    const hide = message.loading(t('正在生成战报...'), 0);
+    try {
+      const reportDetail = await fetchTRPGGameReport(record.uuid);
+
+      const logs = reportDetail.content.logs ?? [];
+
+      // 所有相关人员的用户信息
+      const userInfoMap = await Promise.all(
+        _uniq(logs.map((log) => log.sender_uuid)).map((uuid) =>
+          fetchUserInfo(uuid)
+        )
+      );
+
+      // 根据日志生成文本
+      const text = logs
+        .map((log) => {
+          const msgDataManager = new MsgDataManager();
+          msgDataManager.parseData(log.data);
+          const senderInfo = userInfoMap.find(
+            (info) => info.uuid === log.sender_uuid
+          );
+          const senderName =
+            msgDataManager.getMsgDataSenderName() ?? getUserName(senderInfo);
+
+          return `${senderName}:${log.message}`;
+        })
+        .join('\n');
+
+      // TODO: BBCode to Plain Text
+
+      const blob = new Blob([text], {
+        type: 'text/plain',
+      });
+      downloadBlob(blob, `${reportDetail.title}.txt`);
+
+      showToasts(t('生成完毕'), 'success');
+    } catch (err) {
+      showToasts(String(err), 'error');
+    } finally {
+      hide();
+    }
+  }, []);
+
+  const columns: TableProps<GameReportSimple>['columns'] = useMemo(() => {
     return [
       {
         title: t('标题'),
@@ -77,6 +136,20 @@ const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
             >
               {t('预览')}
             </Button>
+
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item key="1" onClick={() => handleExportToTxt(record)}>
+                    {t('导出为TXT')}
+                  </Menu.Item>
+                </Menu>
+              }
+              placement="bottomLeft"
+              trigger={['click']}
+            >
+              <Button icon={<MoreOutlined />} />
+            </Dropdown>
 
             {isGroupManager && (
               <Button

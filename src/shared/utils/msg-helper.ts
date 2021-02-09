@@ -22,6 +22,13 @@ export class MsgDataManager {
   replyMsg?: ReplyMsgType; // 回复消息相关
 
   /**
+   * 获取消息数据中的发送者名称, 用于hardcode
+   */
+  getMsgDataSenderName(): string | undefined {
+    return this.name;
+  }
+
+  /**
    * 设置相关的用户角色
    * 用于选中人物卡后所有的消息都会关联上该角色
    */

@@ -36,7 +36,13 @@ export const saveLocalCache = function (): TRPGAction {
   };
 };
 
-export const getUserInfo = function (uuid, onCompleted?) {
+/**
+ * 获取用户信息
+ */
+export const getUserInfo = function (
+  uuid: string,
+  onCompleted?: (data: any) => void
+): TRPGAction {
   if (!uuid) {
     throw new Error('getUserInfo need uuid');
   }
