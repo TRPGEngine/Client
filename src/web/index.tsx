@@ -28,6 +28,7 @@ import { ThemeContextProvider } from '@shared/context/ThemeContext';
 import type { TRPGStore } from '@redux/types/__all__';
 import { setAnalyticsUser } from './utils/analytics-helper';
 import './debug';
+import { reportError } from './utils/error';
 
 declare global {
   interface Window {
@@ -75,9 +76,7 @@ window.onerror = (event, source, fileno, columnNumber, error) => {
   }
 
   // 全局错误捕获
-  import('./utils/sentry').then((module) =>
-    module.error(error || String(event))
-  );
+  reportError(error || String(event));
 };
 
 // 是否为新APP
