@@ -21,6 +21,7 @@ import { useAsyncFn } from 'react-use';
 import { LoadingSpinner } from '@web/components/LoadingSpinner';
 import _isNil from 'lodash/isNil';
 import _uniq from 'lodash/uniq';
+import _keyBy from 'lodash/keyBy';
 import { useTranslation } from '@shared/i18n';
 import type { TableProps } from 'antd/lib/table/Table';
 import { useIsGroupManager } from '@redux/hooks/group';
@@ -31,6 +32,8 @@ import { fetchUserInfo } from '@shared/model/player';
 import { MsgDataManager } from '@shared/utils/msg-helper';
 import { getUserName } from '@shared/utils/data-helper';
 import { downloadBlob } from '@web/utils/file-helper';
+import { reportError } from '@web/utils/error';
+import { bbcodeToPlainText } from '@shared/components/bbcode/serialize';
 
 interface GroupReportManageProps {
   groupUUID: string;
@@ -80,10 +83,13 @@ const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
       const logs = reportDetail.content.logs ?? [];
 
       // 所有相关人员的用户信息
-      const userInfoMap = await Promise.all(
-        _uniq(logs.map((log) => log.sender_uuid)).map((uuid) =>
-          fetchUserInfo(uuid)
-        )
+      const userInfoMap = _keyBy(
+        await Promise.all(
+          _uniq(logs.map((log) => log.sender_uuid)).map((uuid) =>
+            fetchUserInfo(uuid)
+          )
+        ),
+        'uuid'
       );
 
       // 根据日志生成文本
@@ -91,17 +97,13 @@ const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
         .map((log) => {
           const msgDataManager = new MsgDataManager();
           msgDataManager.parseData(log.data);
-          const senderInfo = userInfoMap.find(
-            (info) => info.uuid === log.sender_uuid
-          );
+          const senderInfo = userInfoMap[log.sender_uuid];
           const senderName =
             msgDataManager.getMsgDataSenderName() ?? getUserName(senderInfo);
 
-          return `${senderName}:${log.message}`;
+          return `${senderName}: ${bbcodeToPlainText(log.message)}`;
         })
         .join('\n');
-
-      // TODO: BBCode to Plain Text
 
       const blob = new Blob([text], {
         type: 'text/plain',
@@ -111,6 +113,7 @@ const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
       showToasts(t('生成完毕'), 'success');
     } catch (err) {
       showToasts(String(err), 'error');
+      reportError(err);
     } finally {
       hide();
     }
