@@ -1,6 +1,7 @@
 import type { ChatLogItem } from '@shared/model/chat';
-import { hpack } from '@shared/utils/json-helper';
+import { hpack, hunpack } from '@shared/utils/json-helper';
 import { request } from '@shared/utils/request';
+import _isNil from 'lodash/isNil';
 
 export interface GameReport {
   uuid: string;
@@ -82,4 +83,19 @@ export async function deleteGroupReport(reportUUID: string, groupUUID: string) {
     reportUUID,
     groupUUID,
   });
+}
+
+/**
+ * 获取团战报
+ * @param uuid UUID
+ */
+export async function fetchTRPGGameReport(uuid: string): Promise<GameReport> {
+  const { data } = await request.get(`/trpg/game-report/${uuid}`);
+
+  const report = data.report;
+  if (!_isNil(report.content)) {
+    report.content.logs = hunpack(report.content.logs);
+  }
+
+  return report;
 }

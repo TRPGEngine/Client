@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import type { RouteComponentProps } from 'react-router-dom';
 import { TMemo } from '@shared/components/TMemo';
-import { fetchTRPGGameReport } from '@portal/model/trpg';
 import { PortraitContainer } from '@portal/components/PortraitContainer';
 import { LogDetail } from './log-detail';
 import { useNumber } from 'react-use';
@@ -17,7 +16,7 @@ import styled from 'styled-components';
 import { Divider, Typography } from 'antd';
 import { QRCode } from '@portal/components/QRCode';
 import Loading from '@portal/components/Loading';
-import type { ReportLogItem } from '@shared/model/trpg';
+import { fetchTRPGGameReport, ReportLogItem } from '@shared/model/trpg';
 
 const Container = styled(PortraitContainer)`
   padding: 10px;
