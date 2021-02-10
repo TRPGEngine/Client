@@ -60,12 +60,13 @@ export const LoginForm: React.FC<LoginFormProps> = TMemo((props) => {
           />
         </Form.Item>
         <Form.Item label={t('密码')}>
-          <Input
+          <Input.Password
             name="password"
             type="password"
             size="large"
             value={values.password}
             onChange={handleChange}
+            onPressEnter={() => handleSubmit()}
           />
         </Form.Item>
         <Form.Item wrapperCol={{ sm: 24, md: { span: 16, offset: 8 } }}>

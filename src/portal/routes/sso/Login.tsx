@@ -6,6 +6,7 @@ import _isString from 'lodash/isString';
 import { checkToken } from '@portal/utils/auth';
 import { LoginView } from '@portal/components/LoginView';
 import { WaveBackground } from '@web/components/WaveBackground';
+import { showToasts } from '@shared/manager/ui';
 
 const Container = styled.div`
   width: 100vw;
@@ -47,10 +48,13 @@ class Login extends React.Component {
     });
     if (_isString(query.next)) {
       window.location.href = decodeURIComponent(query.next);
+    } else {
+      showToasts('无法跳转, 跳转地址不正确', 'error');
     }
   }
 
   handleLoginSuccess = () => {
+    showToasts('登录成功, 正在跳转...', 'success');
     this.gotoNextUrl();
   };
 

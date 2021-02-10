@@ -47,6 +47,7 @@ export const LoginView: React.FC = TMemo(() => {
         placeholder={t('密码')}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        onPressEnter={handleLogin}
       />
 
       <Button
