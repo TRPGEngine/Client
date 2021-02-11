@@ -10,11 +10,11 @@ import Avatar from '../Avatar';
 import { TMemo } from '@shared/components/TMemo';
 import { Button, Divider } from 'antd';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
-import { showModal } from '@redux/actions/ui';
 import ActorInfo from '../modals/ActorInfo';
 import { useTPopoverContext } from './index';
 import { useTranslation } from '@shared/i18n';
 import { useGroupDetailValue, useIsGroupManager } from '@redux/hooks/group';
+import { openModal } from '../Modal';
 
 /**
  * NOTICE: 不同于别的 Popover 团角色的popover不应该从缓存中获取而是应该直接获取团信息
@@ -73,7 +73,6 @@ interface Props {
 const PopoverGroupActorInfo: React.FC<Props> = TMemo((props) => {
   const { closePopover } = useTPopoverContext();
   const groupInfo = useContext(GroupInfoContext);
-  const dispatch = useTRPGDispatch();
   const { t } = useTranslation();
   const allowDisplayActorBtn = useAllowDisplayActorBtn(groupInfo?.uuid ?? '');
 
@@ -87,15 +86,17 @@ const PopoverGroupActorInfo: React.FC<Props> = TMemo((props) => {
 
   const handleShowActorInfo = useCallback(() => {
     closePopover();
-    dispatch(
-      showModal(
-        <ActorInfo
-          templateUUID={groupActorInfo.actor_template_uuid!}
-          data={groupActorInfo.actor_info!}
-        />
-      )
+
+    openModal(
+      <ActorInfo
+        templateUUID={groupActorInfo.actor_template_uuid!}
+        data={groupActorInfo.actor_info!}
+      />,
+      {
+        closable: true,
+      }
     );
-  }, [dispatch, groupActorInfo, closePopover]);
+  }, [groupActorInfo, closePopover]);
 
   return _isEmpty(groupActorInfo) ? (
     <div>{t('人物卡不存在, 可能已经被删除')}</div>
