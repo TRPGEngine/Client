@@ -13,7 +13,7 @@ import {
   useCachedActorTemplateInfo,
   useCachedActorInfo,
 } from '@shared/hooks/useCache';
-import { AddonMore } from '../AddonMore';
+import { AddonMore, AddonMoreItem } from '../AddonMore';
 import { downloadBlob } from '@web/utils/file-helper';
 import { useTranslation } from '@shared/i18n';
 
@@ -31,6 +31,11 @@ interface Props {
   avatar?: string;
   data: {};
   templateUUID: string;
+
+  /**
+   * 附加操作
+   */
+  addonItems?: AddonMoreItem[];
 }
 const ActorInfo: React.FC<Props> = TMemo((props) => {
   const { t } = useTranslation();
@@ -50,6 +55,7 @@ const ActorInfo: React.FC<Props> = TMemo((props) => {
   const layout = _get(template, 'layout');
 
   const items = [
+    ...(props.addonItems ?? []),
     {
       label: t('导出人物卡'),
       onClick: () => {

@@ -4,8 +4,13 @@ import { Dropdown, Menu } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
 import type { DropDownProps } from 'antd/lib/dropdown';
 
+export interface AddonMoreItem {
+  label: string;
+  onClick: () => void;
+}
+
 interface AddonMoreProps extends Partial<DropDownProps> {
-  items: { label: string; onClick: () => void }[];
+  items: AddonMoreItem[];
 }
 export const AddonMore: React.FC<AddonMoreProps> = TMemo((props) => {
   const { items, ...dropDownProps } = props;

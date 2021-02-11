@@ -54,6 +54,9 @@ interface ModalProps {
   visible?: boolean;
   onChangeVisible?: (visible: boolean) => void;
 
+  /**
+   * 是否显示右上角的关闭按钮
+   */
   closable?: boolean;
 }
 export const Modal: React.FC<ModalProps> = TMemo((props) => {
