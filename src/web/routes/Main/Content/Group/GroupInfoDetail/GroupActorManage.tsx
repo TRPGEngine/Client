@@ -11,27 +11,21 @@ import {
   useGroupDetailValue,
 } from '@redux/hooks/group';
 import {
-  getGroupActorField,
   getGroupActorInfo,
   getGroupActorTemplateUUID,
 } from '@shared/utils/data-helper';
 import { showToasts } from '@shared/manager/ui';
 import ActorInfo from '@web/components/modals/ActorInfo';
-import { openModal, ModalWrapper, closeModal } from '@web/components/Modal';
+import { openModal, closeModal } from '@web/components/Modal';
 import type { GroupActorType } from '@redux/types/group';
 import { Iconfont } from '@web/components/Iconfont';
-import ActorEdit from '@web/components/modals/ActorEdit';
+import { GroupActorEditModal } from '@web/components/modals/ActorEdit';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
-import {
-  requestAddGroupActor,
-  removeGroupActor,
-  updateGroupActorInfo,
-} from '@redux/actions/group';
+import { requestAddGroupActor, removeGroupActor } from '@redux/actions/group';
 import { showAlert } from '@redux/actions/ui';
 import { ActorCard, ActorCardListContainer } from '@web/components/ActorCard';
 import { GroupActorCheck } from '@web/containers/main/group/modal/GroupActorCheck';
 import ActorSelect from '@web/components/modals/ActorSelect';
-import { editGroupActor } from '@shared/model/group';
 import { useTranslation } from '@shared/i18n';
 const TabPane = PillTabs.TabPane;
 
@@ -123,30 +117,22 @@ const GroupActorsList: React.FC<{
   const { t } = useTranslation();
 
   const handleEditActorInfo = (groupActor: GroupActorType) => {
-    const templateUUID = getGroupActorTemplateUUID(groupActor);
-
     const key = openModal(
-      <ActorEdit
+      <GroupActorEditModal
         name={groupActor.name}
         avatar={groupActor.avatar}
         desc={groupActor.desc}
         data={getGroupActorInfo(groupActor)}
-        templateUUID={templateUUID}
-        onSave={(data) => {
-          editGroupActor(groupInfo.uuid, groupActor.uuid, data)
-            .then(() => {
-              dispatch(
-                updateGroupActorInfo(groupInfo.uuid, groupActor.uuid, data)
-              );
-              dispatch(showAlert(t('保存完毕!')));
-              closeModal(key);
-            })
-            .catch((err) => {
-              dispatch(showAlert(err));
-              console.error(err);
-            });
+        templateUUID={getGroupActorTemplateUUID(groupActor)}
+        groupUUID={groupInfo.uuid}
+        groupActorUUID={groupActor.uuid}
+        onSave={() => {
+          closeModal(key);
         }}
-      />
+      />,
+      {
+        closable: true,
+      }
     );
   };
 
