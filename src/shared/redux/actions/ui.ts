@@ -71,7 +71,7 @@ export const showProfileCard = function (uuid?: string): TRPGAction {
       uuid = getState().user.info.uuid;
     }
     // 获取最新信息
-    dispatch(cache.getUserInfo(uuid));
+    dispatch(cache.getUserInfo(uuid!));
 
     dispatch({ type: SHOW_PROFILE_CARD, uuid });
   };

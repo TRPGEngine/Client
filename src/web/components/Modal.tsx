@@ -11,6 +11,7 @@ import { PortalAdd, PortalRemove } from '@web/utils/portal';
 import { Typography } from 'antd';
 import { animated, useSpring } from 'react-spring';
 import { easeQuadInOut } from 'd3-ease';
+import { Iconfont } from './Iconfont';
 
 /**
  * 新版模态框解决方案
@@ -31,6 +32,16 @@ const ModalInner = styled(animated.div)`
   max-width: 80vw;
   max-height: 80vh;
   overflow: auto;
+  position: relative;
+`;
+
+const CloseBtn = styled(Iconfont)`
+  position: absolute;
+  right: 10px;
+  top: 14px;
+  font-size: 21px;
+  line-height: 21px;
+  z-index: 1;
 `;
 
 const ModalContext = React.createContext<{
@@ -42,9 +53,14 @@ const ModalContext = React.createContext<{
 interface ModalProps {
   visible?: boolean;
   onChangeVisible?: (visible: boolean) => void;
+
+  /**
+   * 是否显示右上角的关闭按钮
+   */
+  closable?: boolean;
 }
 export const Modal: React.FC<ModalProps> = TMemo((props) => {
-  const { visible, onChangeVisible } = props;
+  const { visible, onChangeVisible, closable } = props;
   const [closing, setClosing] = useState(false);
   const maskStyle = useSpring({
     from: {
@@ -97,6 +113,9 @@ export const Modal: React.FC<ModalProps> = TMemo((props) => {
     <ModalMask style={maskStyle} onClick={handleClose}>
       <ModalContext.Provider value={{ closeModal: handleClose }}>
         <ModalInner style={innerStyle} onClick={stopPropagation}>
+          {closable === true && (
+            <CloseBtn onClick={handleClose}>&#xe70c;</CloseBtn>
+          )}
           {props.children}
         </ModalInner>
       </ModalContext.Provider>
@@ -125,9 +144,13 @@ export function closeModal(key?: number): void {
 /**
  * 打开新的Modal
  */
-export function openModal(content: React.ReactNode): number {
+export function openModal(
+  content: React.ReactNode,
+  props?: Pick<ModalProps, 'closable'>
+): number {
   const key = PortalAdd(
     <Modal
+      {...props}
       visible={true}
       onChangeVisible={(visible) => {
         if (visible === false) {

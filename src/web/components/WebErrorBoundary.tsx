@@ -7,6 +7,7 @@ import ErrorBoundary, {
 import config from '@shared/project.config';
 import { sendErrorReport } from '@shared/utils/error-report';
 import { AlertErrorView } from './AlertErrorView';
+import { reportError } from '@web/utils/error';
 
 /**
  * web页面通用的错误处理容器
@@ -26,7 +27,7 @@ export const WebErrorBoundary: React.FC<WebErrorBoundaryProps> = TMemo(
         stack: String(info.componentStack),
         version: config.version,
       });
-      import('../utils/sentry').then((module) => module.error(error));
+      reportError(error);
     }, []);
 
     return (

@@ -6,7 +6,7 @@ import { showToasts } from '@shared/manager/ui';
  * 获取是否为测试用户
  * 方法是手动在 localStorage上设置 __isDeveloper: true
  */
-export const checkIsTestUser = memoizeOne(() => {
+export const checkIsDeveloper = memoizeOne(() => {
   return localStorage.getItem(IS_DEVELOPER) === 'true';
 });
 

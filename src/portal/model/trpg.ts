@@ -1,25 +1,7 @@
 import { request } from '@portal/utils/request';
-import { hpack, hunpack } from '@shared/utils/json-helper';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import type { GameReport } from '@shared/model/trpg';
-
-/**
- * 获取团战报
- * @param uuid UUID
- */
-export const fetchTRPGGameReport = async (
-  uuid: string
-): Promise<GameReport> => {
-  const { data } = await request.get(`/trpg/game-report/${uuid}`);
-
-  const report = data.report;
-  if (!_isNil(report.content)) {
-    report.content.logs = hunpack(report.content.logs);
-  }
-
-  return report;
-};
 
 export const fetchOwnReport = async (): Promise<GameReport[]> => {
   const { data } = await request.get('/trpg/game-report/list');

@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.18](https://github.com/TRPGEngine/Client/compare/v0.5.17...v0.5.18) (2021-02-13)
+
+
+### Features
+
+* **portal:** 战报创建列表增加全选与重置 ([71da765](https://github.com/TRPGEngine/Client/commit/71da7653796b2ad7f8921863724301465ab3c35a))
+* **portal:** 战报导出增加频道导出 ([84f80bf](https://github.com/TRPGEngine/Client/commit/84f80bf47b93e021bdf4940f4dec9f18692930ca))
+* **web:** 增加战报导出为TXT格式 ([e4b9d53](https://github.com/TRPGEngine/Client/commit/e4b9d533f72ded98372404695bdd16fd925c9778))
+* 登录时允许在密码栏中按回车进行登录 ([9c3d5fd](https://github.com/TRPGEngine/Client/commit/9c3d5fd2e0275ecb966605901ff0fc8818443e2e))
+* **web:** 点击头像查看团角色卡上增加编辑角色卡操作 ([367a348](https://github.com/TRPGEngine/Client/commit/367a34882678ca96d12854bc4d4cf7e483c39f66))
+
 ### [0.5.17](https://github.com/TRPGEngine/Client/compare/v0.5.16...v0.5.17) (2021-02-07)
 
 

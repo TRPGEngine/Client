@@ -4,6 +4,7 @@ import {
   // showErrorDialog,
 } from '@shared/utils/error-report';
 import config from '../../shared/project.config';
+import { reportError } from '@web/utils/error';
 
 import './ErrorBoundary.scss';
 
@@ -23,7 +24,7 @@ class ErrorBoundary extends React.Component {
       stack: String(info.componentStack),
       version: config.version,
     });
-    import('../utils/sentry').then((module) => module.error(error));
+    reportError(error);
   }
 
   render() {

@@ -1,6 +1,7 @@
 import type { ChatLogItem } from '@shared/model/chat';
-import { hpack } from '@shared/utils/json-helper';
+import { hpack, hunpack } from '@shared/utils/json-helper';
 import { request } from '@shared/utils/request';
+import _isNil from 'lodash/isNil';
 
 export interface GameReport {
   uuid: string;
@@ -12,6 +13,8 @@ export interface GameReport {
     logs: ReportLogItem[];
   };
 }
+
+export type GameReportSimple = Pick<GameReport, 'uuid' | 'title' | 'groupUUID'>;
 
 // 消息log必须的字段
 // 用于消息数据压缩
@@ -64,7 +67,7 @@ export const createTRPGGameReport = async (
  */
 export async function fetchGroupReport(
   groupUUID: string
-): Promise<GameReport[]> {
+): Promise<GameReportSimple[]> {
   const { data } = await request.get(
     `/trpg/game-report/group/${groupUUID}/list`
   );
@@ -82,4 +85,19 @@ export async function deleteGroupReport(reportUUID: string, groupUUID: string) {
     reportUUID,
     groupUUID,
   });
+}
+
+/**
+ * 获取团战报
+ * @param uuid UUID
+ */
+export async function fetchTRPGGameReport(uuid: string): Promise<GameReport> {
+  const { data } = await request.get(`/trpg/game-report/${uuid}`);
+
+  const report = data.report;
+  if (!_isNil(report.content)) {
+    report.content.logs = hunpack(report.content.logs);
+  }
+
+  return report;
 }

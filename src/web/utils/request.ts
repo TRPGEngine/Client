@@ -1,8 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosPromise } from 'axios';
+import { reportError } from './error';
 
 export function request<T = any>(config: AxiosRequestConfig): AxiosPromise<T> {
   return axios(config).catch((err) => {
-    import('./sentry').then((module) => module.error(err));
+    reportError(err);
     throw err;
   });
 }

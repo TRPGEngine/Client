@@ -11,3 +11,12 @@ export function handleError(err: any, prefix: string = '') {
     notification.error({ message: prefix + String(err) });
   }
 }
+
+/**
+ * 汇报错误
+ * 异步加载sentry
+ * 以防止正常情况下sentry修改日志堆栈信息
+ */
+export function reportError(err: Error | string): void {
+  import('./sentry').then((module) => module.error(err));
+}

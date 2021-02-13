@@ -12,6 +12,7 @@ import type {
   TRPGState,
   TRPGMiddleware,
 } from '@redux/types/__all__';
+import { IS_DEVELOPER } from '@shared/utils/consts';
 
 console.log('当前环境:', config.environment);
 console.log('当前平台:', config.platform);
@@ -50,7 +51,11 @@ function configureStore(
   }
 
   let enhancer: StoreEnhancer<any> = applyMiddleware(...middlewares);
-  if (config.environment === 'development') {
+  if (
+    config.environment === 'development' ||
+    localStorage.getItem(IS_DEVELOPER) === 'true'
+  ) {
+    // 如果为开发环境或者为开发者
     // 增加redux-devtools-extension
     enhancer = composeWithDevTools({
       actionCreators,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import type { ChatLogItem } from '@shared/model/chat';
 import styled from 'styled-components';
@@ -71,19 +71,25 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
   const playerUUID = props.playerUUID;
   const groupUUID = props.groupUUID;
   const [logs, setLogs] = useState<EditLogItem[]>([]);
-  useEffect(() => {
-    setLogs(
-      props.logs
-        .filter((log) => log.type !== 'card') // 过滤卡片消息
-        .map((log) => {
-          const selected = log.type !== 'ooc'; // 如果消息类型为ooc, 则默认不选中
 
-          return {
-            ..._pick(log, reportLogRequireKey), // 压缩字段，只保留必要信息
-            selected,
-          };
-        })
-    );
+  const handleReset = useCallback(() => {
+    // 回到默认选择状态
+    const newLogs = props.logs
+      .filter((log) => log.type !== 'card') // 过滤卡片消息
+      .map((log) => {
+        const selected = log.type !== 'ooc'; // 如果消息类型为ooc, 则默认不选中
+
+        return {
+          ..._pick(log, reportLogRequireKey), // 压缩字段，只保留必要信息
+          selected,
+        };
+      });
+
+    setLogs(newLogs);
+  }, [props.logs]);
+
+  useEffect(() => {
+    handleReset();
   }, [props.logs]);
 
   const handleSelect = useCallback(
@@ -94,6 +100,39 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
     },
     [logs, setLogs]
   );
+
+  const handleChangeAll = useCallback(
+    (target: boolean) => {
+      // 批量选择(取消选择)
+      setLogs(
+        logs.map((log) => ({
+          ...log,
+          selected: target,
+        }))
+      );
+    },
+    [logs]
+  );
+
+  const checkAll = useMemo(() => {
+    const selectedList = logs.map((log) => Boolean(log.selected));
+
+    return !selectedList.some((x) => x === false);
+  }, [logs]);
+
+  const indeterminate = useMemo(() => {
+    const selectedList = logs.map((log) => Boolean(log.selected));
+
+    if (selectedList.length === 0) {
+      return true;
+    }
+
+    if (selectedList[0] === true) {
+      return selectedList.some((x) => x === false);
+    } else {
+      return selectedList.some((x) => x === true);
+    }
+  }, [logs]);
 
   const [reportName, setReportName] = useState('');
 
@@ -134,6 +173,18 @@ export const LogEdit: React.FC<LogEditProps> = TMemo((props) => {
   return (
     <ReportContextProvider>
       <div>
+        <Row style={{ padding: 10 }} align="middle" justify="space-between">
+          <Checkbox
+            indeterminate={indeterminate}
+            checked={checkAll}
+            onChange={(e) => handleChangeAll(e.target.checked)}
+          >
+            选择所有
+          </Checkbox>
+
+          <Button onClick={handleReset}>重置</Button>
+        </Row>
+
         {logs.map((log, index) => {
           return (
             <LogEditItem

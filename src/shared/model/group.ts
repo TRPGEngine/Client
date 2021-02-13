@@ -9,7 +9,7 @@ import { isBlobUrl } from '@shared/utils/string-helper';
 import { toGroupActorWithBlobUrl } from '@web/utils/upload-helper';
 import { bindFileAvatarAttachUUID } from './file';
 import { getJWTUserInfo } from '@shared/utils/jwt-helper';
-import type { GroupPanelVisible } from '@shared/types/panel';
+import type { GroupPanel, GroupPanelVisible } from '@shared/types/panel';
 
 export interface GroupItem {
   uuid: string;
@@ -361,4 +361,17 @@ export async function setCommonGroupPanelData(
   await request.post(`/group/${groupUUID}/panel/${panelUUID}/data/set`, {
     data: panelData,
   });
+}
+
+/**
+ * 获取文字聊天面板列表
+ */
+export async function fetchGroupChannelPanelList(
+  groupUUID: string
+): Promise<GroupPanel[]> {
+  const { data } = await request.get(
+    `/group/${groupUUID}/panel/textChannel/list`
+  );
+
+  return data.panels;
 }
