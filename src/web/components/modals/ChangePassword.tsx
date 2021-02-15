@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ModalPanel from './ModalPanel';
+import ModalPanel from '../ModalPanel';
 import { changePassword, logout } from '@shared/redux/actions/user';
 import type { TRPGDispatchProp } from '@redux/types/__all__';
+import { closeModal } from '../Modal';
+import { showToasts } from '@shared/manager/ui';
 
 import './ChangePassword.scss';
-import { showToasts } from '@shared/manager/ui';
-import { closeModal } from './Modal';
 
 interface Props extends TRPGDispatchProp {}
 class ChangePassword extends React.Component<Props> {

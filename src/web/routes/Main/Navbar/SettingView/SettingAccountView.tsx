@@ -19,7 +19,7 @@ import { useTranslation } from '@shared/i18n';
 import { TipIcon } from '@web/components/TipIcon';
 import { getDocsUrl } from '@shared/utils/string-helper';
 import { openModal } from '@web/components/Modal';
-import ChangePassword from '@web/components/ChangePassword';
+import ChangePassword from '@web/components/modals/ChangePassword';
 
 const GenderSelector: FullModalFieldEditorRenderComponent = TMemo(
   ({ value, onChange }) => {
