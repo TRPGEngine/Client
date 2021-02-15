@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ModalPanel from './ModalPanel';
-import { changePassword } from '../../shared/redux/actions/user';
-import { showAlert, hideModal } from '../../shared/redux/actions/ui';
+import { changePassword, logout } from '@shared/redux/actions/user';
 import type { TRPGDispatchProp } from '@redux/types/__all__';
 
 import './ChangePassword.scss';
+import { showToasts } from '@shared/manager/ui';
+import { closeModal } from './Modal';
 
 interface Props extends TRPGDispatchProp {}
 class ChangePassword extends React.Component<Props> {
@@ -40,8 +41,9 @@ class ChangePassword extends React.Component<Props> {
         this.state.newPassword,
         () => {
           // 成功
-          this.props.dispatch(hideModal());
-          this.props.dispatch(showAlert('密码修改成功'));
+          closeModal();
+          showToasts('密码修改成功', 'success');
+          this.props.dispatch(logout());
         },
         (msg) => {
           // 失败
