@@ -6,6 +6,11 @@ import type { ComponentType } from 'react';
 export interface FastFormContainerProps {
   loading: boolean;
   submitLabel?: string;
+
+  /**
+   * 是否允许提交
+   */
+  canSubmit?: boolean;
   handleSubmit: () => void;
 }
 export type FastFormContainerComponent = React.ComponentType<

@@ -31,12 +31,13 @@ const WebFastFormContainer: FastFormContainerComponent = TMemo((props) => {
           htmlType="button"
           style={{ width: '100%' }}
           onClick={() => props.handleSubmit()}
+          disabled={props.canSubmit === false}
         >
           {props.submitLabel ?? '提交'}
         </Button>
       </Form.Item>
     );
-  }, [props.loading, props.handleSubmit, props.submitLabel]);
+  }, [props.loading, props.handleSubmit, props.canSubmit, props.submitLabel]);
 
   return (
     <Form labelCol={{ sm: 24, md: 8 }} wrapperCol={{ sm: 24, md: 16 }}>
