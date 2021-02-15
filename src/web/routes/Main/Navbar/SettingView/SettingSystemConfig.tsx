@@ -70,6 +70,7 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
   const notificationPermission = useTRPGSelector(
     (state) => state.settings.notificationPermission
   );
+  const { isAlphaUser } = useAlphaUser();
   const dispatch = useTRPGDispatch();
   const { t } = useTranslation();
 
@@ -154,15 +155,19 @@ export const SettingSystemConfig: React.FC = TMemo((props) => {
 
         <AlphaUser />
 
-        <Divider />
+        {isAlphaUser && (
+          <>
+            <Divider />
 
-        <Button
-          size="large"
-          type="primary"
-          onClick={() => switchToAppVersion(false)}
-        >
-          {t('切换到旧版UI')}
-        </Button>
+            <Button
+              size="large"
+              type="primary"
+              onClick={() => switchToAppVersion(false)}
+            >
+              {t('切换到旧版UI')}
+            </Button>
+          </>
+        )}
       </Space>
     </div>
   );
