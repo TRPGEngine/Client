@@ -3,13 +3,102 @@ import { connect } from 'react-redux';
 import ModalPanel from '../ModalPanel';
 import { changePassword, logout } from '@shared/redux/actions/user';
 import type { TRPGDispatchProp } from '@redux/types/__all__';
-import { closeModal } from '../Modal';
+import { closeModal, ModalWrapper } from '../Modal';
 import { showToasts } from '@shared/manager/ui';
+import { TMemo } from '@shared/components/TMemo';
+import { WebFastForm } from '../WebFastForm';
+import type { FastFormFieldMeta } from '@shared/components/FastForm/field';
+import {
+  createFastFormSchema,
+  fieldSchema,
+} from '@shared/components/FastForm/schema';
+import { t } from '@shared/i18n';
+import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { hideModal } from '@redux/actions/ui';
 
 import './ChangePassword.scss';
 
+const schema = createFastFormSchema({
+  oldPassword: fieldSchema
+    .string()
+    .required(t('原密码不能为空'))
+    .min(5, t('密码不能小于5位'))
+    .max(20, t('密码不能大于20位')),
+  newPassword: fieldSchema
+    .string()
+    .required(t('新密码不能为空'))
+    .min(5, t('密码不能小于5位'))
+    .max(20, t('密码不能大于20位')),
+  newPasswordRepeat: fieldSchema
+    .string()
+    .required(t('重复密码不能为空'))
+    .oneOf(
+      [fieldSchema.ref('newPassword')],
+      t('重复密码不正确, 请检查您的输入')
+    ),
+});
+
+const fields: FastFormFieldMeta[] = [
+  {
+    type: 'password',
+    name: 'oldPassword',
+    label: t('原密码'),
+    maxLength: 20,
+    placeholder: t('原密码'),
+  },
+  {
+    type: 'password',
+    name: 'newPassword',
+    label: t('新密码'),
+    maxLength: 20,
+    placeholder: t('请输入5~20位新密码'),
+  },
+  {
+    type: 'password',
+    name: 'newPasswordRepeat',
+    label: t('重复密码'),
+    maxLength: 20,
+    placeholder: t('再次输入新密码'),
+  },
+];
+
+/**
+ * 修改密码的modal框
+ */
+export const ChangePassword: React.FC = TMemo(() => {
+  const dispatch = useTRPGDispatch();
+  const handleSubmit = ({ oldPassword, newPassword }) => {
+    dispatch(
+      changePassword(
+        oldPassword,
+        newPassword,
+        () => {
+          // 成功
+          closeModal();
+          showToasts(t('密码修改成功'), 'success');
+          dispatch(logout());
+        },
+        (msg) => {
+          // 失败
+          showToasts(msg, 'error');
+        }
+      )
+    );
+  };
+
+  return (
+    <ModalWrapper title={t('修改密码')}>
+      <WebFastForm schema={schema} fields={fields} onSubmit={handleSubmit} />
+    </ModalWrapper>
+  );
+});
+ChangePassword.displayName = 'ChangePassword';
+
 interface Props extends TRPGDispatchProp {}
-class ChangePassword extends React.Component<Props> {
+/**
+ * @deprecated 使用新版的
+ */
+class ChangePasswordOld extends React.Component<Props> {
   state = {
     error: '',
     oldPassword: '',
@@ -41,7 +130,7 @@ class ChangePassword extends React.Component<Props> {
         this.state.newPassword,
         () => {
           // 成功
-          closeModal();
+          this.props.dispatch(hideModal());
           showToasts('密码修改成功', 'success');
           this.props.dispatch(logout());
         },
@@ -88,5 +177,4 @@ class ChangePassword extends React.Component<Props> {
     );
   }
 }
-
-export default connect()(ChangePassword);
+export default connect()(ChangePasswordOld);
