@@ -17,6 +17,7 @@ export function initAnalytics() {
   if (_isString(token) && _isString(instance)) {
     posthog.init(token, {
       api_host: instance,
+      autocapture: false, // 关闭autocapture以节约事件用量
     });
     posthog.register({
       environment: config.environment,
