@@ -9,7 +9,7 @@ import {
   getCommonGroupPanelData,
   setCommonGroupPanelData,
 } from '@shared/model/group';
-import { useAsync, useNumber, useUpdate } from 'react-use';
+import { useAsync, useNumber } from 'react-use';
 import _isString from 'lodash/isString';
 import { Loading } from '../Loading';
 import classNames from 'classnames';
@@ -18,6 +18,7 @@ import { closeModal, openModal } from '../Modal';
 import { GroupCreateSchedule } from '../modals/GroupCreateSchedule';
 import { showToasts } from '@shared/manager/ui';
 import { useTranslation } from '@shared/i18n';
+import { useIsGroupManager } from '@redux/hooks/group';
 
 interface CalendarPanelData extends CommonGroupPanelData {
   calendar: {
@@ -32,6 +33,7 @@ export const CalendarPanel: React.FC<CommonPanelProps> = TMemo((props) => {
   const groupUUID = useCurrentGroupUUID();
   const [refetchIndex, { inc: refetchFn }] = useNumber();
   const { t } = useTranslation();
+  const isGroupManager = useIsGroupManager(groupUUID ?? '');
 
   const { value = [], loading } = useAsync(async (): Promise<
     CalendarPanelData['calendar']
@@ -92,9 +94,12 @@ export const CalendarPanel: React.FC<CommonPanelProps> = TMemo((props) => {
 
       const menu = (
         <Menu>
-          <Menu.Item key="1" onClick={() => handleCreateSchedule(dateStr)}>
-            {t('创建日程')}
-          </Menu.Item>
+          {isGroupManager && (
+            <Menu.Item key="1" onClick={() => handleCreateSchedule(dateStr)}>
+              {t('创建日程')}
+            </Menu.Item>
+          )}
+
           {/* TODO */}
           {/* <Menu.Item key="2">管理日程</Menu.Item> */}
         </Menu>
