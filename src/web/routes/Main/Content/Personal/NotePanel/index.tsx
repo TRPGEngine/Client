@@ -24,6 +24,7 @@ import { Input, Empty, Modal } from 'antd';
 import { isSaveHotkey } from '@web/utils/hot-key';
 import { Iconfont } from '@web/components/Iconfont';
 import { ImageButton } from './ImageButton';
+import { t } from '@shared/i18n';
 
 function getNoteInitData(data?: Node[]): Node[] {
   if (_isEmpty(data)) {
@@ -139,7 +140,7 @@ const NoteEditor: React.FC<{ noteUUID: string }> = TMemo((props) => {
   // 删除笔记
   const handleDeleteNote = useCallback(() => {
     Modal.confirm({
-      content: `确定要删除笔记 ${title} 么`,
+      content: t('确定要删除笔记 {{title}} 么', { title }),
       onOk: () => {
         dispatch(deleteNote({ uuid: noteUUID }));
       },
@@ -152,7 +153,7 @@ const NoteEditor: React.FC<{ noteUUID: string }> = TMemo((props) => {
       <SectionHeader>
         <Input
           style={{ color: 'white', fontWeight: 'bold' }}
-          placeholder="笔记标题"
+          placeholder={t('笔记标题')}
           bordered={false}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -197,7 +198,7 @@ export const NotePanel: React.FC = TMemo(() => {
   const noteInfo = useNoteInfo(noteUUID);
 
   if (_isNil(noteInfo)) {
-    return <Empty style={{ paddingTop: 100 }} description="找不到笔记" />;
+    return <Empty style={{ paddingTop: 100 }} description={t('找不到笔记')} />;
   }
 
   return <NoteEditor key={noteUUID} noteUUID={noteUUID} />;
