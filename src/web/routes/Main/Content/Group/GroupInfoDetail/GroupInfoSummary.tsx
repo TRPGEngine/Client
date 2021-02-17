@@ -15,6 +15,7 @@ import {
   DefaultFullModalTextAreaEditorRender,
   FullModalField,
 } from '@web/components/FullModalField';
+import { t } from '@shared/i18n';
 
 const GroupInfoAvatarContainer = styled.div`
   display: flex;
@@ -77,12 +78,12 @@ export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
     const isGroupManager = useIsGroupManager(groupUUID);
 
     if (_isNil(groupInfo)) {
-      return <Result status="warning" title="找不到相关信息" />;
+      return <Result status="warning" title={t('找不到相关信息')} />;
     }
 
     return (
       <div>
-        <Typography.Title level={3}>概况</Typography.Title>
+        <Typography.Title level={3}>{t('概况')}</Typography.Title>
         <Row>
           <Col sm={12}>
             <GroupInfoAvatarContainer>
@@ -114,13 +115,13 @@ export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
           </Col>
           <Col sm={12}>
             <FullModalField
-              title="团名称"
+              title={t('团名称')}
               value={groupInfo.name}
               editable={true}
               renderEditor={DefaultFullModalInputEditorRender}
               onSave={handleUpdateGroupName}
             />
-            <FullModalField title="团唯一标识" value={groupInfo.uuid} />
+            <FullModalField title={t('团唯一标识')} value={groupInfo.uuid} />
           </Col>
         </Row>
 
@@ -129,13 +130,13 @@ export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
         <Row>
           <Col flex={1}>
             <FullModalField
-              title="主持人"
+              title={t('主持人')}
               content={<UserName uuid={groupInfo.owner_uuid} />}
             />
           </Col>
           <Col flex={1}>
             <FullModalField
-              title="简介"
+              title={t('简介')}
               value={groupInfo.desc}
               content={<pre>{groupInfo.desc}</pre>}
               editable={true}
@@ -150,28 +151,28 @@ export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
         <Row>
           <Col flex={1}>
             <FullModalField
-              title="团管理数"
+              title={t('团管理数')}
               value={`${groupInfo.managers_uuid?.length} 人`}
             />
           </Col>
           <Col flex={1}>
             <FullModalField
-              title="成员数"
+              title={t('成员数')}
               value={`${groupInfo.group_members?.length} 人`}
             />
           </Col>
           <Col flex={1}>
             <FullModalField
-              title="团人物卡数"
+              title={t('团人物卡数')}
               value={`${groupInfo.group_actors?.length} 人`}
             />
           </Col>
-          <Col flex={1}>
+          {/* <Col flex={1}>
             <FullModalField
-              title="团地图数"
+              title={t("团地图数")}
               value={`${groupInfo.maps_uuid?.length} 人`}
             />
-          </Col>
+          </Col> */}
         </Row>
       </div>
     );

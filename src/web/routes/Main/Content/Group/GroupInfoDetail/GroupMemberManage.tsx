@@ -46,7 +46,7 @@ const GroupMemberItem: React.FC<{
 
   const handleRaiseManager = useCallback(() => {
     showAlert({
-      message: '确定要将用户提升为管理员么?',
+      message: t('确定要将用户提升为管理员么?'),
       onConfirm: async () => {
         try {
           await setMemberToManager(groupUUID, userUUID);
@@ -59,7 +59,7 @@ const GroupMemberItem: React.FC<{
 
   const handleDownManager = useCallback(() => {
     showAlert({
-      message: '确定要将管理员降级为普通用户么?',
+      message: t('确定要将管理员降级为普通用户么?'),
       onConfirm: async () => {
         try {
           await setManagerToMember(groupUUID, userUUID);
@@ -72,7 +72,7 @@ const GroupMemberItem: React.FC<{
 
   const handleTickMember = useCallback(() => {
     showAlert({
-      message: '确定要踢出用户么?',
+      message: t('确定要踢出用户么?'),
       onConfirm: async () => {
         try {
           await tickMember(groupUUID, userUUID);
@@ -88,7 +88,7 @@ const GroupMemberItem: React.FC<{
       <GroupMemberItemUserName>{getUserName(userInfo)}</GroupMemberItemUserName>
 
       {currentUserUUID === userUUID ? (
-        <div>你自己</div>
+        <div>{t('你自己')}</div>
       ) : (
         <Space>
           {isGroupOwner === true &&
