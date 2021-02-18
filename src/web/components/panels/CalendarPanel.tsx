@@ -28,6 +28,10 @@ import { Iconfont } from '../Iconfont';
 
 const DateFormat = 'YYYY-MM-DD';
 
+const Root = styled.div`
+  overflow: auto;
+`;
+
 const CalendarDetailList = styled.div`
   overflow-wrap: break-word;
 
@@ -196,7 +200,7 @@ export const CalendarPanel: React.FC<CommonPanelProps> = TMemo((props) => {
   }
 
   return (
-    <div>
+    <Root>
       <Calendar
         dateFullCellRender={dateFullCellRender}
         onSelect={setSelectedCalendarDate}
@@ -227,7 +231,7 @@ export const CalendarPanel: React.FC<CommonPanelProps> = TMemo((props) => {
           );
         })}
       </CalendarDetailList>
-    </div>
+    </Root>
   );
 });
 CalendarPanel.displayName = 'CalendarPanel';
