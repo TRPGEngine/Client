@@ -157,9 +157,6 @@ export const CalendarPanel: React.FC<CommonPanelProps> = TMemo((props) => {
               {t('创建日程')}
             </Menu.Item>
           )}
-
-          {/* TODO */}
-          {/* <Menu.Item key="2">管理日程</Menu.Item> */}
         </Menu>
       );
 
