@@ -6,6 +6,7 @@ import { openPostWindow } from '@web/utils/dom-helper';
 import React from 'react';
 import { useAsync } from 'react-use';
 import _isNil from 'lodash/isNil';
+import { trackEvent } from '@web/utils/analytics-helper';
 
 // 兔小巢反馈跳转
 
@@ -24,6 +25,7 @@ const TXCFeedback: React.FC = TMemo(() => {
         return;
       }
 
+      trackEvent('portal:txc');
       openPostWindow({
         url: config.url.txcUrl,
         data: {

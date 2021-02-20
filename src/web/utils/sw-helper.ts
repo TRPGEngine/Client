@@ -3,18 +3,22 @@ import { notification } from 'antd';
 import React from 'react';
 import { t } from '@shared/i18n';
 import { UpdateNotificationBtn } from '@web/components/UpdateNotificationBtn';
+import _once from 'lodash/once';
 
 /**
  * 弹出更新提示框
  */
-function handleShowUpdateTip() {
-  notification.open({
-    message: t('更新版本'),
-    description: t('检测到有新版本, 是否立即刷新以升级到最新内容'),
-    duration: 0,
-    btn: React.createElement(UpdateNotificationBtn),
-  });
-}
+const handleShowUpdateTip = _once(() => {
+  setTimeout(() => {
+    // 两秒后再弹出以确保不会出现加载到一半的情况
+    notification.open({
+      message: t('更新版本'),
+      description: t('检测到有新版本, 是否立即刷新以升级到最新内容'),
+      duration: 0,
+      btn: React.createElement(UpdateNotificationBtn),
+    });
+  }, 2000);
+});
 
 /**
  * 处理registration相关任务和状态

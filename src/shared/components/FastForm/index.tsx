@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import _isNil from 'lodash/isNil';
 import _fromPairs from 'lodash/fromPairs';
 import _isFunction from 'lodash/isFunction';
+import _isEmpty from 'lodash/isEmpty';
 import type { ObjectSchema } from 'yup';
 import { FastFormContext } from './context';
 import { FastFormFieldMeta, getField } from './field';
@@ -86,6 +87,7 @@ export const FastForm: React.FC<FastFormProps> = TMemo((props) => {
         loading={loading}
         submitLabel={props.submitLabel}
         handleSubmit={handleSubmit}
+        canSubmit={_isEmpty(errors)}
       >
         {fieldsRender}
       </FastFormContainer>

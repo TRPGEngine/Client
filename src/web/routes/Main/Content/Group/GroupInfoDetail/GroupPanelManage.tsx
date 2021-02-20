@@ -43,7 +43,7 @@ const GroupPanelListItem: React.FC<{
 
   const handleRemove = useCallback(() => {
     showAlert({
-      message: '确认要移除么？移除后数据无法找回',
+      message: t('确认要移除么？移除后数据无法找回'),
       onConfirm: async () => {
         setLoading(true);
         await removePanel(groupUUID, panelUUID);

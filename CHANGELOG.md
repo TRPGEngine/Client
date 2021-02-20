@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.19](https://github.com/TRPGEngine/Client/compare/v0.5.18...v0.5.19) (2021-02-20)
+
+
+### Features
+
+* **web:** 新版UI增加修改密码功能 ([cff59a1](https://github.com/TRPGEngine/Client/commit/cff59a184940c9c2ee4c96c8376e3a2120285a3c))
+* **web:** 日历面板事件增加预览与删除 ([63d1db5](https://github.com/TRPGEngine/Client/commit/63d1db5b6bf03281157ef71eb3fe3143eca20ae5))
+
 ### [0.5.18](https://github.com/TRPGEngine/Client/compare/v0.5.17...v0.5.18) (2021-02-13)
 
 

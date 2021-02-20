@@ -18,6 +18,7 @@ import { SettingAudioConfig } from './SettingAudioConfig';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { openPostWindow } from '@web/utils/dom-helper';
 import { getUserName } from '@shared/utils/data-helper';
+import { trackEvent } from '@web/utils/analytics-helper';
 
 export const SettingView: React.FC = TMemo(() => {
   const userInfo = useCurrentUserInfo();
@@ -106,7 +107,8 @@ export const SettingView: React.FC = TMemo(() => {
           {
             type: 'link',
             title: t('意见反馈'),
-            onClick: () =>
+            onClick: () => {
+              trackEvent('web:txc');
               openPostWindow({
                 url: config.url.txcUrl,
                 data: {
@@ -114,7 +116,8 @@ export const SettingView: React.FC = TMemo(() => {
                   nickname: getUserName(userInfo),
                   avatar: userInfo.avatar,
                 },
-              }),
+              });
+            },
           },
           {
             type: 'link',

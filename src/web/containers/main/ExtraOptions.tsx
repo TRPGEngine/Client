@@ -7,7 +7,7 @@ import { addNote } from '@shared/redux/actions/note';
 import ActorCreate from '@web/components/modals/ActorCreate';
 // import IsDeveloping from '../../components/IsDeveloping';
 import GroupCreateOld from '@web/components/modals/GroupCreateOld';
-import ChangePassword from '@web/components/ChangePassword';
+import ChangePassword from '@web/components/modals/ChangePassword';
 import FriendsAdd from '@web/components/modals/FriendsAdd';
 import GroupAdd from '@web/components/modals/GroupAdd';
 import UserSettingsModal from '@web/components/modals/UserSettings';

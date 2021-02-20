@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Row, Col, Select, Space } from 'antd';
+import { Row, Col, Select, Space, Divider, Button } from 'antd';
 import { Avatar } from '@web/components/Avatar';
 import { useCurrentUserInfo } from '@redux/hooks/user';
 import { getUserName } from '@shared/utils/data-helper';
@@ -18,6 +18,8 @@ import { AlignmentChoose } from '@web/components/AlignmentChoose';
 import { useTranslation } from '@shared/i18n';
 import { TipIcon } from '@web/components/TipIcon';
 import { getDocsUrl } from '@shared/utils/string-helper';
+import { openModal } from '@web/components/Modal';
+import { ChangePassword } from '@web/components/modals/ChangePassword';
 
 const GenderSelector: FullModalFieldEditorRenderComponent = TMemo(
   ({ value, onChange }) => {
@@ -50,6 +52,10 @@ export const SettingAccountView: React.FC = TMemo(() => {
       dispatch(updateInfo({ [field]: val }));
     };
   };
+
+  const handleChangePassword = useCallback(() => {
+    openModal(<ChangePassword />);
+  }, []);
 
   return (
     <div>
@@ -131,6 +137,14 @@ export const SettingAccountView: React.FC = TMemo(() => {
             value={`${getFullDate(userInfo.last_login)}`}
           />
         </Col>
+      </Row>
+
+      <Divider />
+
+      <Row>
+        <Button danger={true} onClick={handleChangePassword}>
+          {t('修改密码')}
+        </Button>
       </Row>
     </div>
   );

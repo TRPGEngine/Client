@@ -58,9 +58,14 @@ interface ModalProps {
    * 是否显示右上角的关闭按钮
    */
   closable?: boolean;
+
+  /**
+   * 遮罩层是否可关闭
+   */
+  maskClosable?: boolean;
 }
 export const Modal: React.FC<ModalProps> = TMemo((props) => {
-  const { visible, onChangeVisible, closable } = props;
+  const { visible, onChangeVisible, closable, maskClosable = true } = props;
   const [closing, setClosing] = useState(false);
   const maskStyle = useSpring({
     from: {
@@ -98,8 +103,12 @@ export const Modal: React.FC<ModalProps> = TMemo((props) => {
   });
 
   const handleClose = useCallback(() => {
+    if (maskClosable === false) {
+      return;
+    }
+
     setClosing(true);
-  }, []);
+  }, [maskClosable]);
 
   const stopPropagation = useCallback((e: React.BaseSyntheticEvent) => {
     e.stopPropagation();

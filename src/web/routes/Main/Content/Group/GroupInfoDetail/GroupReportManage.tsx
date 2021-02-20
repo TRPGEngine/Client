@@ -60,11 +60,11 @@ const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
   const handleRemoveReport = useCallback(
     (reportUUID: string) => {
       showAlert({
-        message: '确认要删除该战报么?',
+        message: t('确认要删除该战报么?'),
         onConfirm: async () => {
           try {
             await deleteGroupReport(reportUUID, groupUUID);
-            showToasts('操作成功');
+            showToasts(t('操作成功'));
             refreshReportList();
           } catch (err) {
             showToasts(String(err), 'error');
@@ -195,6 +195,7 @@ export const GroupReportManage: React.FC<GroupReportManageProps> = TMemo(
   (props) => {
     const { groupUUID } = props;
     const isGroupManager = useIsGroupManager(groupUUID);
+    const { t } = useTranslation();
 
     const handleCreateReport = useCallback(() => {
       openPortalWindow(`/trpg/report/create?groupUUID=${groupUUID}`);
@@ -205,7 +206,7 @@ export const GroupReportManage: React.FC<GroupReportManageProps> = TMemo(
         {isGroupManager && (
           <Fragment>
             <Button type="primary" onClick={handleCreateReport}>
-              创建战报
+              {t('创建战报')}
             </Button>
 
             <Divider />

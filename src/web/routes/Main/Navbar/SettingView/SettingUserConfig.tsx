@@ -6,7 +6,7 @@ import {
   useTRPGSelector,
 } from '@shared/hooks/useTRPGSelector';
 import { FullModalField } from '@web/components/FullModalField';
-import { useTranslation } from '@shared/i18n';
+import { t, useTranslation } from '@shared/i18n';
 import { setUserSettings } from '@redux/actions/settings';
 import type { MsgStyleType } from '@shared/types/chat';
 import { MessageItem } from '@shared/components/message/MessageItem';
@@ -47,9 +47,9 @@ const MsgPreviewView: React.FC = TMemo(() => {
       <MessageItem
         data={buildMsgPayload({
           sender_uuid: 'trpgbot',
-          message: '欢迎使用',
+          message: t('欢迎使用'),
           data: {
-            name: '测试用户',
+            name: t('测试用户'),
           },
         })}
         emphasizeTime={true}
@@ -59,7 +59,7 @@ const MsgPreviewView: React.FC = TMemo(() => {
           sender_uuid: 'trpgbot',
           message: 'TRPG Engine',
           data: {
-            name: '测试用户',
+            name: t('测试用户'),
           },
         })}
         emphasizeTime={false}
@@ -68,7 +68,7 @@ const MsgPreviewView: React.FC = TMemo(() => {
       <MessageItem
         data={buildMsgPayload({
           sender_uuid,
-          message: '专为跑团而生',
+          message: t('专为跑团而生'),
         })}
         emphasizeTime={false}
       />
