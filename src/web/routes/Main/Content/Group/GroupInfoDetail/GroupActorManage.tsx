@@ -55,7 +55,10 @@ function handleShowActorProfile(groupActor: GroupActorType) {
       <ActorInfo
         data={getGroupActorInfo(groupActor)}
         templateUUID={getGroupActorTemplateUUID(groupActor)}
-      />
+      />,
+      {
+        closable: true,
+      }
     );
   } else {
     showToasts('需要groupActor');
@@ -225,7 +228,10 @@ const GroupActorChecksList: React.FC<{
         templateUUID={getGroupActorTemplateUUID(groupActorInfo)}
         groupUUID={groupUUID}
         groupActorUUID={groupActorInfo.uuid}
-      />
+      />,
+      {
+        closable: true,
+      }
     );
   };
 
