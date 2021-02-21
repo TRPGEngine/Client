@@ -294,7 +294,8 @@ export const GroupActorManage: React.FC<GroupActorManageProps> = TMemo(
             dispatch(requestAddGroupActor(groupUUID, actorUUID));
             closeModal(key);
           }}
-        />
+        />,
+        { closable: true }
       );
     }, [groupUUID]);
 
