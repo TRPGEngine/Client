@@ -16,6 +16,7 @@ import ActorSelect from '@portal/components/ActorSelect';
 import GroupActorApprovalCard from '@portal/components/GroupActorApprovalCard';
 import { nav } from '@portal/history';
 import type { GroupActorItem } from '@shared/types/group';
+import { t } from '@shared/i18n';
 
 const { TabPane } = Tabs;
 
@@ -77,7 +78,7 @@ class GroupActorList extends React.Component<Props, State> {
       this.setState({ actors });
     } catch (err) {
       notification.error({
-        message: '获取列表失败: ' + err,
+        message: t('获取列表失败') + ': ' + err,
       });
     } finally {
       this.setState({ isLoading: false });
@@ -104,7 +105,7 @@ class GroupActorList extends React.Component<Props, State> {
       });
 
       notification.open({
-        message: `申请成功, 请等待团管理员审批: ${groupActor.uuid}`,
+        message: `${t('申请成功, 请等待团管理员审批')}: ${groupActor.uuid}`,
       });
 
       this.fetchList();
@@ -122,13 +123,13 @@ class GroupActorList extends React.Component<Props, State> {
     await requestAgreeGroupActor(this.groupUUID, uuid)
       .then(() => {
         notification.success({
-          message: '操作成功',
+          message: t('操作成功'),
         });
         this.fetchList();
       })
       .catch((err) =>
         notification.error({
-          message: '操作失败: ' + err,
+          message: t('操作失败') + ': ' + err,
         })
       );
   };
@@ -227,19 +228,19 @@ class GroupActorList extends React.Component<Props, State> {
   render() {
     return (
       <Tabs defaultActiveKey="actor">
-        <TabPane tab="人物卡" key="actor">
+        <TabPane tab={t('人物卡')} key="actor">
           <div>
             {this.renderList()}
             <ActionButton
               type="primary"
               onClick={() => this.setState({ applyActorModalVisible: true })}
             >
-              申请添加角色
+              {t('申请添加角色')}
             </ActionButton>
             {this.renderApplyActorModal()}
           </div>
         </TabPane>
-        <TabPane tab="待审批" key="approval">
+        <TabPane tab={t('待审批')} key="approval">
           {this.renderApprovalList()}
         </TabPane>
       </Tabs>
