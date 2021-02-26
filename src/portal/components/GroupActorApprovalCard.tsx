@@ -7,6 +7,8 @@ import _invoke from 'lodash/invoke';
 import _isEmpty from 'lodash/isEmpty';
 import { nav } from '@portal/history';
 import { fetchGroupActorDetail } from '@shared/model/group';
+import { Iconfont } from '@web/components/Iconfont';
+import { t } from '@shared/i18n';
 
 const Meta = Card.Meta;
 
@@ -47,16 +49,16 @@ const GroupActorApprovalCard: React.FC<ApprovalCardProps> = React.memo(
       <ApprovalCardContainer
         actions={[
           <div key="view" onClick={handleViewActor}>
-            <i className="iconfont">&#xe613;</i> 查看
+            <Iconfont>&#xe613;</Iconfont> {t('查看')}
           </div>,
           <div key="pass" onClick={() => _invoke(props, 'onAgree', props.uuid)}>
-            <i className="iconfont">&#xe66b;</i> 通过
+            <Iconfont>&#xe66b;</Iconfont> {t('通过')}
           </div>,
           <div
             key="reject"
             onClick={() => _invoke(props, 'onRefuse', props.uuid)}
           >
-            <i className="iconfont">&#xe680;</i> 拒绝
+            <Iconfont>&#xe680;</Iconfont> {t('拒绝')}
           </div>,
         ]}
       >

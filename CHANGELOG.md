@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.20](https://github.com/TRPGEngine/Client/compare/v0.5.19...v0.5.20) (2021-02-26)
+
+
+### Features
+
+* **web:** 团人物卡待审核弹出框增加关闭按钮, 方便移动端使用 ([0f7cbde](https://github.com/TRPGEngine/Client/commit/0f7cbde1d01d0b0f87febed0231921b1d4f17a42))
+
+
+### Bug Fixes
+
+* **web:** 修复了全屏模态框默认文本域修改大段文本样式奇怪的问题 ([be1b383](https://github.com/TRPGEngine/Client/commit/be1b383073694774748e6ad15282fd6196d03383))
+
 ### [0.5.19](https://github.com/TRPGEngine/Client/compare/v0.5.18...v0.5.19) (2021-02-20)
 
 
