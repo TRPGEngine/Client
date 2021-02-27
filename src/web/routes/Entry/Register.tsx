@@ -3,6 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { useTranslation } from '@shared/i18n';
 import { registerAccount } from '@shared/model/player';
+import { trackEvent } from '@web/utils/analytics-helper';
 import { checkIsOldApp } from '@web/utils/debug-helper';
 import { handleError } from '@web/utils/error';
 import { Button, Input, Typography } from 'antd';
@@ -21,6 +22,12 @@ export const RegisterView: React.FC = TMemo(() => {
   const [{ loading }, handleRegister] = useAsyncFn(async () => {
     try {
       await registerAccount(username, password);
+
+      // 发送注册成功
+      trackEvent('player:register', {
+        username,
+        platform: 'web',
+      });
 
       // 注册成功后自动登录
       const isOldApp = checkIsOldApp();

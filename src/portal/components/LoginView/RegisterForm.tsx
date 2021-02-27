@@ -55,8 +55,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = TMemo((props) => {
 
       try {
         await registerAccount(username, password);
-        trackEvent('portal:register', {
+        trackEvent('player:register', {
           username,
+          platform: 'portal',
         });
 
         await loginPortalWithPassword(username, password); // 注册成功后自动登录
