@@ -11,8 +11,9 @@ export async function loginPortalWithPassword(
   username: string,
   password: string
 ) {
-  trackEvent('portal:login', {
+  trackEvent('player:login', {
     username,
+    platform: 'portal',
   });
   const { jwt } = await loginWithPassword(username, password);
 
