@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Tooltip } from 'antd';
@@ -11,9 +11,11 @@ interface TipIconProps {
 export const TipIcon: React.FC<TipIconProps> = TMemo((props) => {
   const { desc, link } = props;
 
-  const handleClick = useCallback(() => {
+  const handleClick = useMemo(() => {
     if (_isString(link)) {
-      window.open(link);
+      return () => window.open(link);
+    } else {
+      return undefined;
     }
   }, [link]);
 
