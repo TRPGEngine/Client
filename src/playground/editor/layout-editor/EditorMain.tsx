@@ -47,7 +47,7 @@ export const EditorMain: React.FC = TMemo(() => {
                 pane2Style={{ overflow: 'auto' }}
               >
                 <TreeView />
-                <Inspector />
+                <Inspector style={{ padding: 10 }} />
               </SplitPane>
             </SplitPane>
           </SplitPane>
