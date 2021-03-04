@@ -1,5 +1,6 @@
 import { saucerStoreHelper } from '@saucerjs/core';
 
 import './components/Input';
+import './components/InputNumber';
 
-saucerStoreHelper.setAvailableCup(['Input']);
+saucerStoreHelper.setAvailableCup(['Input', 'InputNumber']);
