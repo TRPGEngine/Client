@@ -14,6 +14,7 @@ import {
   XMLErrorBoundary,
 } from '@shared/components/layout/XMLBuilder';
 import SplitPane from '@shared/components/web/SplitPane';
+import { Toolbar } from './Toolbar';
 
 const Root = styled.div`
   height: 100vh;
@@ -25,7 +26,7 @@ export const EditorMain: React.FC = TMemo(() => {
   return (
     <SaucerEditorProvider>
       <Root>
-        {/* <Toolbar /> */}
+        <Toolbar />
 
         <hr style={{ margin: 0 }} />
 
