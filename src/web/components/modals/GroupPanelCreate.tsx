@@ -47,6 +47,10 @@ function useGroupPanelBaseFields(): FastFormFieldMeta[] {
             label: t('语音频道') + '(Beta)',
             value: 'voicechannel',
           },
+          {
+            label: t('网页面板'),
+            value: 'website',
+          },
         ],
       },
     ];
@@ -55,11 +59,6 @@ function useGroupPanelBaseFields(): FastFormFieldMeta[] {
       baseFields[1].options.push({
         label: t('日历面板'),
         value: 'calendar',
-      });
-
-      baseFields[1].options.push({
-        label: t('网页面板'),
-        value: 'website',
       });
     }
 
