@@ -9,9 +9,9 @@
   "author": "moonrailgun",
   "license": "GPL-3.0",
   "dependencies": {
-    "@saucerjs/core": "^0.1.6",
-    "@saucerjs/editor": "^0.1.6",
-    "@saucerjs/xml": "^0.1.6",
+    "@saucerjs/core": "^0.1.7",
+    "@saucerjs/editor": "^0.1.7",
+    "@saucerjs/xml": "^0.1.7",
     "lz-string": "^1.4.4",
     "monaco-editor": "*",
     "monaco-editor-webpack-plugin": "^2.0.0",

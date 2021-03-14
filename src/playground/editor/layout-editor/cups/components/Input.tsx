@@ -9,6 +9,9 @@ regCup({
   displayName: '输入框',
   desc: '标准输入框',
   type: 'leaf',
+  defaultAttrs: ({ nodeId }) => ({
+    name: nodeId,
+  }),
   render({ nodeId, attrs }) {
     return (
       <TagInputEdit
