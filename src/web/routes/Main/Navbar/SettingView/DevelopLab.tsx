@@ -34,7 +34,7 @@ export const MockReconnect: React.FC = TMemo(() => {
     </div>
   );
 });
-MockDisconnected.displayName = 'MockDisconnected';
+MockReconnect.displayName = 'MockReconnect';
 
 export const DevelopLab: React.FC = TMemo(() => {
   return (
