@@ -5,6 +5,7 @@ import _noop from 'lodash/noop';
 jest.mock('@web/components/Image', () => 'mock-image');
 jest.mock('@shared/i18n');
 jest.mock('@shared/utils/request');
+jest.mock('@shared/api/socket-api');
 
 /**
  * mock console
