@@ -7,9 +7,9 @@ import {
   removeFriendInvite,
   setLogout,
 } from '@redux/actions/user';
+import { resetCreator } from '@redux/actions/__shared__';
 
 const {
-  RESET,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
@@ -42,7 +42,7 @@ const initialState: UserState = {
 
 export default createReducer(initialState, (builder) => {
   builder
-    .addCase(RESET, (state) => {
+    .addCase(resetCreator, (state) => {
       state = initialState;
     })
     .addCase(LOGIN_REQUEST, (state) => {

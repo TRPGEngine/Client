@@ -18,9 +18,9 @@ import {
   switchConverse,
   clearSelectedConverse,
 } from '@redux/actions/chat';
+import { resetCreator } from '@redux/actions/__shared__';
+
 const {
-  RESET,
-  ADD_CONVERSES,
   ADD_MSG,
   UPDATE_MSG,
   REMOVE_MSG,
@@ -33,8 +33,6 @@ const {
   UPDATE_CONVERSES_MSGLIST_SUCCESS,
   REMOVE_CONVERSES_SUCCESS,
   REMOVE_USER_CONVERSE,
-  SWITCH_CONVERSES,
-  CLEAR_SELECTED_CONVERSE,
   SEND_MSG_COMPLETED,
   SWITCH_GROUP,
   UPDATE_SYSTEM_CARD_CHAT_DATA,
@@ -89,7 +87,7 @@ const initialState: ChatState = {
 
 export default createReducer(initialState, (builder) => {
   builder
-    .addCase(RESET, (state) => {
+    .addCase(resetCreator, (state) => {
       state = initialState;
     })
     .addCase(addConverse, (state, action) => {

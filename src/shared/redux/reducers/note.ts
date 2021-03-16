@@ -11,6 +11,7 @@ import {
   deleteNote,
   markSyncNote,
 } from '@redux/actions/note';
+import { resetCreator } from '@redux/actions/__shared__';
 
 const {
   RESET,
@@ -47,7 +48,7 @@ function getBlankNote() {
 
 export default createReducer(initialState, (builder) => {
   builder
-    .addCase(RESET, (state) => {
+    .addCase(resetCreator, (state) => {
       state = initialState;
     })
     .addCase(ADD_NOTE, (state) => {

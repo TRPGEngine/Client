@@ -1,6 +1,5 @@
 import constants from '../constants';
 const {
-  RESET,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
@@ -53,6 +52,7 @@ import { setUserJWT } from '@shared/utils/jwt-helper';
 import { saveUserToken } from '@shared/helper/player';
 import { UserInfo } from '@redux/types/user';
 import type { PlayerUser } from '@shared/model/player';
+import { resetCreator } from './__shared__';
 
 const api = trpgApi.getInstance();
 
@@ -186,7 +186,7 @@ export const loginWithToken = function (
           dispatch({ type: LOGIN_FAILED, payload: data.msg });
           if (getState().user.isLogin) {
             // 登录超时
-            dispatch({ type: RESET }); // 登录超时以后重置数据内容。需要重新获取
+            dispatch(resetCreator()); // 登录超时以后重置数据内容。需要重新获取
             dispatch(
               showAlert({
                 type: 'alert',
@@ -230,7 +230,7 @@ export const logout = function (): TRPGAction {
         setTimeout(() => {
           runLogoutSuccessCallback();
         }, 0);
-        dispatch({ type: RESET });
+        dispatch(resetCreator());
       } else {
         dispatch(showAlert(data.msg));
       }
