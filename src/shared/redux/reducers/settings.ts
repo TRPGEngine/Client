@@ -11,6 +11,7 @@ import {
   removeFavoriteDice,
   setUserSettings,
 } from '@redux/actions/settings';
+import { resetCreator } from '@redux/actions/__shared__';
 
 const {
   RESET,
@@ -31,7 +32,7 @@ const initialState: SettingsState = {
 
 export default createReducer(initialState, (builder) => {
   builder
-    .addCase(RESET, (state) => {
+    .addCase(resetCreator, (state) => {
       state = initialState;
     })
     .addCase(setUserSettings.fulfilled, (state, action) => {

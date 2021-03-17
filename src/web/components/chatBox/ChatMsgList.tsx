@@ -40,7 +40,7 @@ export const ChatMsgList: React.FC<ChatMsgListProps> = TMemo((props) => {
     loadMoreEl,
     handleWheel,
     handleListLoad,
-    showScrollToBottomBtn,
+    isTriggerBottom,
     handleScrollToBottom,
   } = useChatMsgList(converseUUID);
 
@@ -57,7 +57,7 @@ export const ChatMsgList: React.FC<ChatMsgListProps> = TMemo((props) => {
         {msgListEl}
       </Container>
 
-      {showScrollToBottomBtn && (
+      {!isTriggerBottom && (
         <ScrollToBottomBtn
           size="large"
           type="primary"

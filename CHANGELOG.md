@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.22](https://github.com/TRPGEngine/Client/compare/v0.5.21...v0.5.22) (2021-03-17)
+
+
+### Features
+
+* **web:** 网页面板允许所有人创建 ([d6fbe99](https://github.com/TRPGEngine/Client/commit/d6fbe997e69f173263fae2a934652f635e22ab0e))
+
+
+### Bug Fixes
+
+* 修复在某些情况下断线重连无法自动重新登录的bug ([a55ca11](https://github.com/TRPGEngine/Client/commit/a55ca11a89ec413c69296d08db98ca416b5bfb40))
+
 ### [0.5.21](https://github.com/TRPGEngine/Client/compare/v0.5.20...v0.5.21) (2021-03-10)
 
 ### [0.5.20](https://github.com/TRPGEngine/Client/compare/v0.5.19...v0.5.20) (2021-02-26)

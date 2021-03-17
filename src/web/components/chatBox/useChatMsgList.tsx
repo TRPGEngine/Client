@@ -26,6 +26,8 @@ import { usePrevious } from 'react-use';
 import type { MsgPayload } from '@redux/types/chat';
 import { useTranslation } from '@shared/i18n';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
+import { setConverseAckWithMsgTime } from '@shared/api/chat/event';
+import moment from 'moment';
 
 const LoadmoreText = styled.div<{
   disable?: boolean;
@@ -103,6 +105,29 @@ function useChatMsgListLoadMore(
   return { isSeekingLogRef, loadMoreEl };
 }
 
+/**
+ * 管理会话已读的hook
+ * @param converseUUID 会话UUID
+ * @param msgList 消息列表(升序)
+ * @param isTriggerBottom 是否触底
+ */
+function useConverseAck(
+  converseUUID: string,
+  msgList: MsgPayload[],
+  isTriggerBottom: boolean
+) {
+  const lastMsg = useMemo(() => _last(msgList), [msgList]);
+
+  useEffect(() => {
+    if (_isNil(lastMsg) || _isNil(lastMsg.uuid) || _isNil(lastMsg.date)) {
+      return;
+    }
+    const lastMsgTime = moment(lastMsg.date).valueOf();
+
+    setConverseAckWithMsgTime(converseUUID, lastMsg.uuid, lastMsgTime);
+  }, [converseUUID, lastMsg, isTriggerBottom]);
+}
+
 export function useChatMsgList(converseUUID: string) {
   const selfInfo = useCurrentUserInfo();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -111,8 +136,10 @@ export function useChatMsgList(converseUUID: string) {
   const msgStyleCombine = useTRPGSelector(
     (state) => state.settings.user.msgStyleCombine ?? false
   );
-  const [showScrollToBottomBtn, setShowScrollToBottomBtn] = useState(false);
+  const [isTriggerBottom, setIsTriggerBottom] = useState(false);
   const { setScrollToBottom } = useMsgContainerContext();
+
+  useConverseAck(converseUUID, msgList, isTriggerBottom);
 
   // 消息列表
   const msgListEl = useMemo(() => {
@@ -159,7 +186,7 @@ export function useChatMsgList(converseUUID: string) {
           if (containerRef.current) {
             scrollToBottom(containerRef.current, 100);
           }
-          setShowScrollToBottomBtn(false);
+          setIsTriggerBottom(true);
         },
         100,
         {
@@ -189,11 +216,11 @@ export function useChatMsgList(converseUUID: string) {
     if (distance <= TRIGGER_DISTANCE) {
       // 滚动容器接触到底部
       isSeekingLogRef.current = false;
-      setShowScrollToBottomBtn(false);
+      setIsTriggerBottom(true);
     } else {
       // 翻阅聊天记录
       isSeekingLogRef.current = true;
-      setShowScrollToBottomBtn(true);
+      setIsTriggerBottom(false);
     }
   }, []);
 
@@ -210,7 +237,7 @@ export function useChatMsgList(converseUUID: string) {
     loadMoreEl,
     handleWheel,
     handleListLoad,
-    showScrollToBottomBtn,
+    isTriggerBottom,
     handleScrollToBottom,
   };
 }

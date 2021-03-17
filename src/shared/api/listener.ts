@@ -33,6 +33,7 @@ import {
   removeGroup,
 } from '@shared/redux/actions/group';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
+import { checkAuthStatus } from './player/event';
 
 const { RESET, ADD_FRIEND_SUCCESS } = constants;
 
@@ -147,11 +148,39 @@ export function bindEventFunc(
 
   // ------------------------------------------------
 
+  /**
+   * 尝试自动重新登录
+   */
+  async function tryAutoRelogin() {
+    const isLogin = store.getState().user.isLogin;
+    if (isLogin) {
+      // 先检查服务端状态
+      const isAuth = await checkAuthStatus();
+      if (isAuth === true) {
+        // 如果服务端这边表示当前Socket状态正常, 则不进行下一步
+        console.log('服务器用户状态正常, 跳过重新登录');
+        return;
+      }
+
+      // 应当是登录状态
+      const uuid = await rnStorage.get('uuid');
+      const token = await rnStorage.get('token');
+      console.log('正在尝试自动重新登录...');
+      if (!!token && !!uuid) {
+        store.dispatch(loginWithToken(uuid, token));
+      } else {
+        console.log('无法自动登录, 因为获取不到相关数据');
+      }
+    }
+  }
+
   // 网络状态管理
   api.on('connect', function (data) {
     store.dispatch(changeNetworkStatue(true, '网络连接畅通'));
     store.dispatch(updateSocketId(api.socket.id));
     console.log('连接成功');
+
+    tryAutoRelogin();
   });
   api.on('connecting', function (data) {
     store.dispatch(changeNetworkStatue(false, '正在连接...', true));
@@ -162,20 +191,7 @@ export function bindEventFunc(
     store.dispatch(updateSocketId(api.socket.id));
     console.log('重连成功');
 
-    const isLogin = store.getState().user.isLogin;
-    if (isLogin) {
-      // 应当是登录状态
-      (async () => {
-        const uuid = await rnStorage.get('uuid');
-        const token = await rnStorage.get('token');
-        console.log('正在尝试自动重新登录');
-        if (!!token && !!uuid) {
-          store.dispatch(loginWithToken(uuid, token));
-        } else {
-          console.log('无法自动登录, 因为获取不到相关数据');
-        }
-      })();
-    }
+    tryAutoRelogin();
   });
   api.on('reconnecting', function (data) {
     store.dispatch(changeNetworkStatue(false, '正在重新连接...', true));

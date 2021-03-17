@@ -11,8 +11,9 @@ import {
   refuseGroupActor,
   updateGroupActorInfo,
 } from '@redux/actions/group';
+import { resetCreator } from '@redux/actions/__shared__';
+
 const {
-  RESET,
   CREATE_GROUP_SUCCESS,
   GET_GROUP_INFO_SUCCESS,
   UPDATE_GROUP_INFO,
@@ -64,7 +65,7 @@ const initialState: GroupState = {
 
 export default createReducer(initialState, (builder) => {
   builder
-    .addCase(RESET, (state) => {
+    .addCase(resetCreator, (state) => {
       state = initialState;
     })
     .addCase(CREATE_GROUP_SUCCESS, (state, action: any) => {

@@ -1,7 +1,40 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Typography } from 'antd';
+import { Button, Typography } from 'antd';
 import { JumpLogo } from '@web/components/JumpLogo';
+import { getInstance } from '@shared/api/trpg.api';
+import { showToasts } from '@shared/manager/ui';
+
+export const MockReconnect: React.FC = TMemo(() => {
+  const [loading, setLoading] = useState(false);
+
+  const handleMockReconnect = useCallback(() => {
+    const instance = getInstance();
+    const socket = instance.socket;
+    const oldSocketId = socket.id;
+    socket.disconnect();
+    setLoading(true);
+
+    setTimeout(() => {
+      // 10秒后自动重连
+      socket.connect();
+      socket.once('connect', () => {
+        setLoading(false);
+        const newSocketId = socket.id;
+        showToasts(`Socket 连接成功: ${oldSocketId} => ${newSocketId}`);
+      });
+    }, 10000);
+  }, []);
+
+  return (
+    <div>
+      <Button type="primary" loading={loading} onClick={handleMockReconnect}>
+        模拟断线重连
+      </Button>
+    </div>
+  );
+});
+MockReconnect.displayName = 'MockReconnect';
 
 export const DevelopLab: React.FC = TMemo(() => {
   return (
@@ -10,6 +43,8 @@ export const DevelopLab: React.FC = TMemo(() => {
 
       <div>
         <JumpLogo />
+
+        <MockReconnect />
       </div>
     </div>
   );

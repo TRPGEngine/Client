@@ -13,7 +13,7 @@ interface EmitErrorResponse {
   msg: string;
 }
 
-type EmitResponse = EmitSuccessResponse | EmitErrorResponse;
+type EmitResponse<T = unknown> = (EmitSuccessResponse & T) | EmitErrorResponse;
 
 const platformSocketParam: SocketIOClient.ConnectOpts = {
   jsonp: false,
@@ -52,9 +52,13 @@ export class API {
     });
   }
 
-  emitP(this: API, event: string, data?: {}): Promise<EmitSuccessResponse> {
+  emitP<T>(
+    this: API,
+    event: string,
+    data?: {}
+  ): Promise<EmitSuccessResponse & T> {
     return new Promise((resolve, reject) => {
-      this.emit(event, data, (res: EmitResponse) => {
+      this.emit(event, data, (res: EmitResponse<T>) => {
         if (res.result === false) {
           reject(res.msg);
         } else {
