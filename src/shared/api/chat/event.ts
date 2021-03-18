@@ -6,12 +6,18 @@ const api = trpgApi.getInstance();
  * 设定会话已读
  * @param converseUUID 会话UUID, 可以为团UUID, 频道UUID 和 用户UUID
  * @param lastLogUUID 最后一条消息的UUID
+ * @param groupUUID 团UUID, 如果会私人会话可以为空
  */
-async function setConverseAck(converseUUID: string, lastLogUUID: string) {
+async function setConverseAck(
+  converseUUID: string,
+  lastLogUUID: string,
+  groupUUID?: string
+) {
   try {
     await api.emitP('chat::setConverseAck', {
       converseUUID,
       lastLogUUID,
+      groupUUID,
     });
   } catch (err) {
     console.error('发送ack信息失败:', err);
@@ -22,9 +28,10 @@ export const setConverseAckWithMsgTime = memoizeOne(
   async (
     converseUUID: string,
     lastLogUUID: string,
-    lastLogTimestamp: number
+    lastLogTimestamp: number,
+    groupUUID?: string
   ) => {
-    await setConverseAck(converseUUID, lastLogUUID);
+    await setConverseAck(converseUUID, lastLogUUID, groupUUID);
   },
   (newArgs, lastArgs) => {
     if (newArgs[0] !== lastArgs[0]) {

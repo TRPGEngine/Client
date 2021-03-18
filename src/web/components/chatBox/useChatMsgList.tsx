@@ -28,6 +28,7 @@ import { useTranslation } from '@shared/i18n';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { setConverseAckWithMsgTime } from '@shared/api/chat/event';
 import moment from 'moment';
+import { useCurrentGroupUUID } from '@shared/context/GroupInfoContext';
 
 const LoadmoreText = styled.div<{
   disable?: boolean;
@@ -116,6 +117,7 @@ function useConverseAck(
   msgList: MsgPayload[],
   isTriggerBottom: boolean
 ) {
+  const currentGroupUUID = useCurrentGroupUUID();
   const lastMsg = useMemo(() => _last(msgList), [msgList]);
 
   useEffect(() => {
@@ -124,8 +126,13 @@ function useConverseAck(
     }
     const lastMsgTime = moment(lastMsg.date).valueOf();
 
-    setConverseAckWithMsgTime(converseUUID, lastMsg.uuid, lastMsgTime);
-  }, [converseUUID, lastMsg, isTriggerBottom]);
+    setConverseAckWithMsgTime(
+      converseUUID,
+      lastMsg.uuid,
+      lastMsgTime,
+      currentGroupUUID
+    );
+  }, [converseUUID, lastMsg, isTriggerBottom, currentGroupUUID]);
 }
 
 export function useChatMsgList(converseUUID: string) {

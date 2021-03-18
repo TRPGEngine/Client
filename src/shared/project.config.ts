@@ -129,17 +129,49 @@ const defaultSettings = {
     favoriteDice: [] as { title: string; value: string }[],
     msgStyleType: 'bubble' as MsgStyleType,
     msgStyleCombine: false,
-    msgInputHistorySwitch: true, // 聊天输入框上下键快速切换历史消息
+
+    /**
+     * 聊天输入框上下键快速切换历史消息
+     */
+    msgInputHistorySwitch: true,
   },
   system: {
-    notification: true, // 是否通知
-    disableSendWritingState: false, // 不发送输入状态
-    showSelfInWritingState: false, // 在输入状态中显示自己
-    chatBoxType: 'auto' as 'auto' | 'compatible', // 聊天框类型 有auto, compatible
+    /**
+     * 是否进行通知
+     */
+    notification: true,
+
+    /**
+     * 不发送消息输入状态
+     */
+    disableSendWritingState: false,
+    /**
+     * 在输入状态中显示自己
+     */
+    showSelfInWritingState: false,
+    /**
+     * 聊天框类型 有auto, compatible
+     */
+    chatBoxType: 'auto' as 'auto' | 'compatible',
+
+    /**
+     * 音频设置
+     */
     audioConstraints: {
-      noiseSuppression: false, // 噪音抑制
-      autoGainControl: false, // 自动增益
-      echoCancellation: false, // 回声消除
+      /**
+       * 噪音抑制
+       */
+      noiseSuppression: false,
+
+      /**
+       * 自动增益
+       */
+      autoGainControl: false,
+
+      /**
+       * 回声消除
+       */
+      echoCancellation: false,
     },
   },
 };

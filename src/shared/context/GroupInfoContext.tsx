@@ -9,6 +9,7 @@ export const GroupInfoContext = React.createContext<GroupInfo | null>(null);
 GroupInfoContext.displayName = 'GroupInfoContext';
 
 /**
+ * 基于Context
  * 获取当前组件所在位置的团UUID
  */
 export function useCurrentGroupUUID(): string | undefined {
