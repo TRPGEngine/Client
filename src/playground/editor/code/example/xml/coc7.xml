@@ -79,13 +79,13 @@
             <Select name="精神状态" options="神志清醒,临时性疯狂,不定性疯狂,永久性疯狂" default="神志清醒" />
 
             <!-- 伤害加值与体格 -->
-            <Var name="sumStrSiz" value="力量+体型" />
-            <Var name="baseDamage" value="_inRange(sumStrSiz, 2, 65) ? '-2' : _inRange(sumStrSiz, 65, 85) ? '-1' : _inRange(sumStrSiz, 85, 125) ? '0' : _inRange(sumStrSiz, 125, 165) ? '+1d4' : _inRange(sumStrSiz, 165, 205) ? '+1d6' : _inRange(sumStrSiz, 205, 285) ? '+2d6' : _inRange(sumStrSiz, 285, 365) ? '+3d6' : _inRange(sumStrSiz, 365, 445) ? '+4d6' : _inRange(sumStrSiz, 445, 525) ? '+5d6' : '' " />
-            <Var name="baseBuild" value="_inRange(sumStrSiz, 2, 65) ? '-2' : _inRange(sumStrSiz, 65, 85) ? '-1' : _inRange(sumStrSiz, 85, 125) ? '0' : _inRange(sumStrSiz, 125, 165) ? '+1' : _inRange(sumStrSiz, 165, 205) ? '+2' : _inRange(sumStrSiz, 205, 285) ? '+3' : _inRange(sumStrSiz, 285, 365) ? '+4' : _inRange(sumStrSiz, 365, 445) ? '+5' : _inRange(sumStrSiz, 445, 525) ? '+6' : '' " />
+            <Computed target="sumStrSiz" deps="力量,体型" expression="力量+体型" />
+            <Computed target="baseDamage" deps="sumStrSiz" expression="_inRange(sumStrSiz, 2, 65) ? '-2' : _inRange(sumStrSiz, 65, 85) ? '-1' : _inRange(sumStrSiz, 85, 125) ? '0' : _inRange(sumStrSiz, 125, 165) ? '+1d4' : _inRange(sumStrSiz, 165, 205) ? '+1d6' : _inRange(sumStrSiz, 205, 285) ? '+2d6' : _inRange(sumStrSiz, 285, 365) ? '+3d6' : _inRange(sumStrSiz, 365, 445) ? '+4d6' : sumStrSiz >= 445 ? '+5d6' : '' " />
+            <Computed target="baseBuild" deps="sumStrSiz" expression="_inRange(sumStrSiz, 2, 65) ? '-2' : _inRange(sumStrSiz, 65, 85) ? '-1' : _inRange(sumStrSiz, 85, 125) ? '0' : _inRange(sumStrSiz, 125, 165) ? '+1' : _inRange(sumStrSiz, 165, 205) ? '+2' : _inRange(sumStrSiz, 205, 285) ? '+3' : _inRange(sumStrSiz, 285, 365) ? '+4' : _inRange(sumStrSiz, 365, 445) ? '+5' : sumStrSiz >= 445 ? '+6' : '' " />
 
-            <Var name="addonDBValue" value="Math.floor(sumStrSiz / 80)" />
-            <Var name="addonDamage" value="addonDBValue >= 1 ? '+' + addonDBValue + 'd6' : ''" />
-            <Var name="addonBuild" value="addonDBValue >= 1 ? '+' + addonDBValue : ''" />
+            <Computed target="addonDBValue" deps="sumStrSiz" expression="Math.ceil((sumStrSiz-524) / 80)" />
+            <Computed target="addonDamage" deps="addonDBValue" expression="addonDBValue >= 1 ? '+' + addonDBValue + 'd6' : ''" />
+            <Computed target="addonBuild" deps="addonDBValue" expression="addonDBValue >= 1 ? '+' + addonDBValue : ''" />
 
             <p>伤害加值: {{baseDamage + addonDamage}}</p>
             <p>体格: {{baseBuild + addonBuild}}</p>
