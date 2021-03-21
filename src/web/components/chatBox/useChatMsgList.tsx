@@ -124,11 +124,18 @@ function useConverseAck(
     if (_isNil(lastMsg) || _isNil(lastMsg.uuid) || _isNil(lastMsg.date)) {
       return;
     }
+
+    const lastMsgUUID = lastMsg.uuid;
     const lastMsgTime = moment(lastMsg.date).valueOf();
+
+    if (lastMsgUUID.startsWith('local')) {
+      // 跳过 local 开头的消息
+      return;
+    }
 
     setConverseAckWithMsgTime(
       converseUUID,
-      lastMsg.uuid,
+      lastMsgUUID,
       lastMsgTime,
       currentGroupUUID
     );
