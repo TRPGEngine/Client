@@ -158,9 +158,9 @@ export function useGroupPanelList(groupUUID: string): GroupPanel[] {
   const groupInfo = useJoinedGroupInfo(groupUUID);
   const allPanels = groupInfo?.panels ?? [];
 
-  return allPanels.filter((panel) => {
-    return isGroupPanelVisible(groupInfo, panel, currentUserUUID);
-  });
+  return allPanels.filter((panel) =>
+    isGroupPanelVisible(groupInfo, panel, currentUserUUID)
+  );
 }
 
 /**

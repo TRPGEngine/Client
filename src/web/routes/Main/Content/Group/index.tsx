@@ -16,6 +16,7 @@ import { Result } from 'antd';
 import _isNil from 'lodash/isNil';
 import { GroupProvider } from './GroupProvider';
 import { useTranslation } from '@shared/i18n';
+import { getGroupPanelIcon } from './utils';
 
 interface GroupParams {
   groupUUID: string;
@@ -54,7 +55,7 @@ export const Group: React.FC = TMemo(() => {
                 <SidebarItem
                   key={panel.uuid}
                   name={panel.name}
-                  icon={<span>#</span>}
+                  icon={getGroupPanelIcon(panel.type)}
                   to={`/main/group/${groupUUID}/${panel.uuid}`}
                   badge={
                     panel.type === 'channel' &&
