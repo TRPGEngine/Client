@@ -1,3 +1,5 @@
+import path from 'path';
+
 const config = {
   projectName: 'mini-program',
   date: '2021-3-22',
@@ -6,6 +8,10 @@ const config = {
     640: 2.34 / 2,
     750: 1,
     828: 1.81 / 2,
+  },
+  alias: {
+    '@shared': path.resolve(__dirname, '../../shared'),
+    '@web': path.resolve(__dirname, '../../web'),
   },
   sourceRoot: 'src',
   outputRoot: 'dist',

@@ -2,6 +2,8 @@ import { Component, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { View, Button, Text } from '@tarojs/components';
 import { AtCard } from 'taro-ui';
+import { useAsync } from 'react-use';
+import { fetchAllRecruitList } from '@shared/model/trpg';
 
 import { add, minus, asyncAdd } from '../../actions/counter';
 
@@ -90,8 +92,9 @@ interface Index {
 // }
 
 const Index: React.FC = () => {
-  useEffect(() => {
-    //
+  useAsync(async () => {
+    const reportList = await fetchAllRecruitList();
+    console.log(reportList);
   }, []);
 
   return (
