@@ -7,7 +7,7 @@ import { XMLBuilderTester } from '@shared/components/layout/__tests__/utils';
 
 const layout = String(fs.readFileSync(path.resolve(__dirname, '../coc7.xml')));
 
-test.only('basic snapshot', async () => {
+test('basic snapshot', async () => {
   const { container } = render(<XMLBuilderTester xml={layout} />);
 
   await sleep(100);
