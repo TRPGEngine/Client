@@ -1,6 +1,7 @@
-import { Component } from 'react';
+import { Component, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { View, Button, Text } from '@tarojs/components';
+import { AtCard } from 'taro-ui';
 
 import { add, minus, asyncAdd } from '../../actions/counter';
 
@@ -38,54 +39,73 @@ interface Index {
   props: IProps;
 }
 
-@connect(
-  ({ counter }) => ({
-    counter,
-  }),
-  (dispatch) => ({
-    add() {
-      dispatch(add());
-    },
-    dec() {
-      dispatch(minus());
-    },
-    asyncAdd() {
-      dispatch(asyncAdd());
-    },
-  })
-)
-class Index extends Component {
-  componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps);
-  }
+// @connect(
+//   ({ counter }) => ({
+//     counter,
+//   }),
+//   (dispatch) => ({
+//     add() {
+//       dispatch(add());
+//     },
+//     dec() {
+//       dispatch(minus());
+//     },
+//     asyncAdd() {
+//       dispatch(asyncAdd());
+//     },
+//   })
+// )
+// class Index extends Component {
+//   componentWillReceiveProps(nextProps) {
+//     console.log(this.props, nextProps);
+//   }
 
-  componentWillUnmount() {}
+//   componentWillUnmount() {}
 
-  componentDidShow() {}
+//   componentDidShow() {}
 
-  componentDidHide() {}
+//   componentDidHide() {}
 
-  render() {
-    return (
-      <View className="index">
-        <Button className="add_btn" onClick={this.props.add}>
-          +
-        </Button>
-        <Button className="dec_btn" onClick={this.props.dec}>
-          -
-        </Button>
-        <Button className="dec_btn" onClick={this.props.asyncAdd}>
-          async
-        </Button>
-        <View>
-          <Text>{this.props.counter.num}</Text>
-        </View>
-        <View>
-          <Text>Hello, World</Text>
-        </View>
-      </View>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <View className="index">
+//         <Button className="add_btn" onClick={this.props.add}>
+//           +
+//         </Button>
+//         <Button className="dec_btn" onClick={this.props.dec}>
+//           -
+//         </Button>
+//         <Button className="dec_btn" onClick={this.props.asyncAdd}>
+//           async
+//         </Button>
+//         <View>
+//           <Text>{this.props.counter.num}</Text>
+//         </View>
+//         <View>
+//           <Text>Hello, World</Text>
+//         </View>
+//       </View>
+//     );
+//   }
+// }
+
+const Index: React.FC = () => {
+  useEffect(() => {
+    //
+  }, []);
+
+  return (
+    <View>
+      <AtCard
+        note="小Tips"
+        extra="额外信息"
+        title="这是个标题"
+        thumb="http://www.logoquan.com/upload/list/20180421/logoquan15259400209.PNG"
+      >
+        这也是内容区 可以随意定义功能
+      </AtCard>
+    </View>
+  );
+};
 
 export default Index;
