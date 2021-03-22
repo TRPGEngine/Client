@@ -3,7 +3,12 @@
  */
 export type GroupPanelVisible = 'all' | 'manager' | 'assign';
 
-export type GroupPanelType = 'channel' | 'richtext';
+export type GroupPanelType =
+  | 'channel'
+  | 'note'
+  | 'voicechannel'
+  | 'calendar'
+  | 'website';
 
 export interface GroupPanel {
   uuid: string;

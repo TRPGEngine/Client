@@ -47,7 +47,7 @@ export const TagComputedShared: TagComponent<TagProps> = TMemo((props) => {
     const value = parseDataText(`{{(${props.expression})}}`, context);
 
     setStateValue(value ?? null);
-  }, [...watchValues, props.target, props.expression]);
+  }, [...watchValues, props.target, props.expression, setStateValue]);
 
   return null;
 });

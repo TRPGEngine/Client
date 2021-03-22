@@ -28,6 +28,7 @@ import { useTranslation } from '@shared/i18n';
 import { useMsgContainerContext } from '@shared/context/MsgContainerContext';
 import { setConverseAckWithMsgTime } from '@shared/api/chat/event';
 import moment from 'moment';
+import { useCurrentGroupUUID } from '@shared/context/GroupInfoContext';
 
 const LoadmoreText = styled.div<{
   disable?: boolean;
@@ -116,16 +117,29 @@ function useConverseAck(
   msgList: MsgPayload[],
   isTriggerBottom: boolean
 ) {
+  const currentGroupUUID = useCurrentGroupUUID();
   const lastMsg = useMemo(() => _last(msgList), [msgList]);
 
   useEffect(() => {
     if (_isNil(lastMsg) || _isNil(lastMsg.uuid) || _isNil(lastMsg.date)) {
       return;
     }
+
+    const lastMsgUUID = lastMsg.uuid;
     const lastMsgTime = moment(lastMsg.date).valueOf();
 
-    setConverseAckWithMsgTime(converseUUID, lastMsg.uuid, lastMsgTime);
-  }, [converseUUID, lastMsg, isTriggerBottom]);
+    if (lastMsgUUID.startsWith('local')) {
+      // 跳过 local 开头的消息
+      return;
+    }
+
+    setConverseAckWithMsgTime(
+      converseUUID,
+      lastMsgUUID,
+      lastMsgTime,
+      currentGroupUUID
+    );
+  }, [converseUUID, lastMsg, isTriggerBottom, currentGroupUUID]);
 }
 
 export function useChatMsgList(converseUUID: string) {

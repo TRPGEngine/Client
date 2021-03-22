@@ -14,8 +14,8 @@ export function useStateWatcher(renderKey: number) {
     () =>
       _debounce((newState: XMLBuilderState) => {
         // 此处使用debounce降低资源消耗
-        setCurrentData(newState.data);
-        setCurrentGlobal(newState.global);
+        setCurrentData({ ...newState.data });
+        setCurrentGlobal({ ...newState.global });
       }, 200),
     []
   );

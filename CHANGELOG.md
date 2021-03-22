@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.23](https://github.com/TRPGEngine/Client/compare/v0.5.22...v0.5.23) (2021-03-22)
+
+
+### Features
+
+* **web:** 团面板的语音频道使用了更加有区分度的标识 ([7cb9ad0](https://github.com/TRPGEngine/Client/commit/7cb9ad07d88cf6455883a17f082bb807e1d13cf4))
+
+
+### Bug Fixes
+
+* 修复playground无法正常更新的bug ([b4d8764](https://github.com/TRPGEngine/Client/commit/b4d876495bcf611878912491fb71e002456a8eeb))
+* **layout:** 修复coc7人物卡的勘误以及修复数据更新问题 ([85f2605](https://github.com/TRPGEngine/Client/commit/85f2605e1eb6fb654a8e02f11c393a444728aea8))
+
 ### [0.5.22](https://github.com/TRPGEngine/Client/compare/v0.5.21...v0.5.22) (2021-03-17)
 
 
