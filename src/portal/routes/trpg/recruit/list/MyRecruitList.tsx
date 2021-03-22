@@ -4,7 +4,7 @@ import {
   fetchUserRecruitList,
   RecruitItemType,
   setRecruitCompleted,
-} from '@portal/model/trpg';
+} from '@shared/model/trpg';
 import _orderBy from 'lodash/orderBy';
 import _isFunction from 'lodash/isFunction';
 import { List, Button, message, Tooltip } from 'antd';

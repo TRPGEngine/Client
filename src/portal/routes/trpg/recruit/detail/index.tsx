@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import type { RouteComponentProps } from 'react-router-dom';
 import { TMemo } from '@shared/components/TMemo';
-import { fetchUserRecruitDetail, RecruitItemType } from '@portal/model/trpg';
+import { fetchUserRecruitDetail, RecruitItemType } from '@shared/model/trpg';
 import { RecruitItem } from '../RecruitItem';
 import _isNil from 'lodash/isNil';
 import Loading from '@portal/components/Loading';
