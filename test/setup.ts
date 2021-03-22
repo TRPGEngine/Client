@@ -7,6 +7,17 @@ jest.mock('@shared/i18n');
 jest.mock('@shared/utils/request');
 jest.mock('@shared/api/socket-api');
 
+// window 相关
+window.matchMedia =
+  window.matchMedia ||
+  function () {
+    return {
+      matches: false,
+      addListener() {},
+      removeListener() {},
+    };
+  };
+
 /**
  * mock console
  * 忽略部分错误提示。
@@ -21,9 +32,12 @@ const mockConsoleMethod = (realConsoleMethod) => {
       return;
     }
 
-    const containsIgnoredMessage = ignoredMessages.some((ignoredMessage) =>
-      message.includes(ignoredMessage)
-    );
+    let containsIgnoredMessage = false;
+    if (typeof message === 'string') {
+      containsIgnoredMessage = ignoredMessages.some((ignoredMessage) =>
+        message.includes(ignoredMessage)
+      );
+    }
 
     if (!containsIgnoredMessage) {
       realConsoleMethod(message, ...args);

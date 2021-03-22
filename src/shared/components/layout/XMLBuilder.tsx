@@ -108,13 +108,13 @@ class XMLErrorBoundary extends React.Component {
   }
 }
 
-interface Props {
+interface XMLBuilderProps {
   xml: string;
   layoutType?: LayoutType;
   initialData?: DataMap;
   onChange?: StateChangeHandler;
 }
-const XMLBuilder: React.FC<Props> = TMemo((props) => {
+const XMLBuilder: React.FC<XMLBuilderProps> = TMemo((props) => {
   const { xml = '', onChange, layoutType = 'edit' } = props;
   const [error, setError] = useState<Error | null>(null);
   const [layout, setLayout] = useState<XMLElement>();

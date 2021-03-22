@@ -1,0 +1,3209 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic snapshot 1`] = `
+<div>
+  <div
+    class="sc-fzpans jRldgn"
+    style="position: relative;"
+  >
+    <iframe
+      style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
+    />
+    <div
+      class="sc-AxgMl hoELXQ"
+    >
+      <div
+        class="ant-row sc-AxheI cocUJO"
+        type="flex"
+      >
+        <div
+          class="ant-col ant-col-24"
+        >
+          <form
+            class="ant-form ant-form-vertical sc-Axmtr hBVTto"
+          >
+            <div
+              class="ant-row ant-form-item"
+            >
+              <div
+                class="ant-col ant-col-6 ant-form-item-label"
+              >
+                <label
+                  class="ant-form-item-required"
+                  title="名称"
+                >
+                  名称
+                </label>
+              </div>
+              <div
+                class="ant-col ant-col-18 ant-form-item-control"
+              >
+                <div
+                  class="ant-form-item-control-input"
+                >
+                  <div
+                    class="ant-form-item-control-input-content"
+                  >
+                    <input
+                      class="ant-input"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="ant-row ant-form-item"
+            >
+              <div
+                class="ant-col ant-col-6 ant-form-item-label"
+              >
+                <label
+                  class=""
+                  title="描述"
+                >
+                  描述
+                </label>
+              </div>
+              <div
+                class="ant-col ant-col-18 ant-form-item-control"
+              >
+                <div
+                  class="ant-form-item-control-input"
+                >
+                  <div
+                    class="ant-form-item-control-input-content"
+                  >
+                    <textarea
+                      class="ant-input"
+                      style="height: -32px; min-height: -16px; max-height: -32px; overflow-y: hidden; overflow-x: hidden;"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div
+          class="ant-col ant-col-24"
+          style="text-align: center; margin-bottom: 10px;"
+        >
+          <div>
+            <div
+              style="cursor: pointer; display: inline-block; position: relative;"
+            >
+              <input
+                accept="image/*"
+                style="display: none;"
+                type="file"
+              />
+              <span
+                class="ant-avatar ant-avatar-circle ant-avatar-image ant-avatar-icon"
+                style="width: 64px; height: 64px; line-height: 64px; font-size: 25.6px; cursor: inherit; user-select: none;"
+              >
+                <img
+                  src="undefined"
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          class="ant-row"
+          style="margin-left: -2px; margin-right: -2px;"
+        >
+          <div
+            class="ant-col ant-col-12"
+            style="padding-left: 2px; padding-right: 2px;"
+          >
+            <div
+              class="ant-row sc-AxjAm tJNTL tag-row"
+            >
+              <div
+                class="ant-col ant-col-6"
+              >
+                <div
+                  class="sc-AxirZ gXNkLn"
+                >
+                  <pre
+                    class="sc-AxiKw bemSeT"
+                  >
+                    时代
+                  </pre>
+                   
+                </div>
+              </div>
+              <div
+                class="ant-col ant-col-18"
+              >
+                <div
+                  class="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
+                  style="width: 100%;"
+                >
+                  <div
+                    class="ant-select-selector"
+                  >
+                    <span
+                      class="ant-select-selection-search"
+                    >
+                      <input
+                        aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                        aria-autocomplete="list"
+                        aria-controls="rc_select_TEST_OR_SSR_list"
+                        aria-haspopup="listbox"
+                        aria-owns="rc_select_TEST_OR_SSR_list"
+                        autocomplete="off"
+                        class="ant-select-selection-search-input"
+                        id="rc_select_TEST_OR_SSR"
+                        readonly=""
+                        role="combobox"
+                        style="opacity: 0;"
+                        type="search"
+                        unselectable="on"
+                        value=""
+                      />
+                    </span>
+                    <span
+                      class="ant-select-selection-placeholder"
+                    >
+                      请选择...
+                    </span>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="ant-select-arrow"
+                    style="user-select: none;"
+                    unselectable="on"
+                  >
+                    <span
+                      aria-label="down"
+                      class="anticon anticon-down ant-select-suffix"
+                      role="img"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class=""
+                        data-icon="down"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="ant-row"
+          style="margin-left: -2px; margin-right: -2px;"
+        >
+          <div
+            class="ant-col ant-col-12"
+            style="padding-left: 2px; padding-right: 2px;"
+          >
+            <div
+              class="ant-row sc-AxjAm tJNTL tag-row"
+            >
+              <div
+                class="ant-col ant-col-6"
+              >
+                <div
+                  class="sc-AxirZ gXNkLn"
+                >
+                  <pre
+                    class="sc-AxiKw bemSeT"
+                  >
+                    年龄
+                  </pre>
+                   
+                </div>
+              </div>
+              <div
+                class="ant-col ant-col-18"
+              >
+                <input
+                  class="ant-input"
+                  placeholder="年龄"
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="ant-col ant-col-12"
+            style="padding-left: 2px; padding-right: 2px;"
+          >
+            <div
+              class="ant-row sc-AxjAm tJNTL tag-row"
+            >
+              <div
+                class="ant-col ant-col-6"
+              >
+                <div
+                  class="sc-AxirZ gXNkLn"
+                >
+                  <pre
+                    class="sc-AxiKw bemSeT"
+                  >
+                    性别
+                  </pre>
+                   
+                </div>
+              </div>
+              <div
+                class="ant-col ant-col-18"
+              >
+                <div
+                  class="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
+                  style="width: 100%;"
+                >
+                  <div
+                    class="ant-select-selector"
+                  >
+                    <span
+                      class="ant-select-selection-search"
+                    >
+                      <input
+                        aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                        aria-autocomplete="list"
+                        aria-controls="rc_select_TEST_OR_SSR_list"
+                        aria-haspopup="listbox"
+                        aria-owns="rc_select_TEST_OR_SSR_list"
+                        autocomplete="off"
+                        class="ant-select-selection-search-input"
+                        id="rc_select_TEST_OR_SSR"
+                        readonly=""
+                        role="combobox"
+                        style="opacity: 0;"
+                        type="search"
+                        unselectable="on"
+                        value=""
+                      />
+                    </span>
+                    <span
+                      class="ant-select-selection-placeholder"
+                    >
+                      请选择...
+                    </span>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="ant-select-arrow"
+                    style="user-select: none;"
+                    unselectable="on"
+                  >
+                    <span
+                      aria-label="down"
+                      class="anticon anticon-down ant-select-suffix"
+                      role="img"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class=""
+                        data-icon="down"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="ant-row"
+          style="margin-left: -2px; margin-right: -2px;"
+        >
+          <div
+            class="ant-col ant-col-12"
+            style="padding-left: 2px; padding-right: 2px;"
+          >
+            <div
+              class="ant-row sc-AxjAm tJNTL tag-row"
+            >
+              <div
+                class="ant-col ant-col-6"
+              >
+                <div
+                  class="sc-AxirZ gXNkLn"
+                >
+                  <pre
+                    class="sc-AxiKw bemSeT"
+                  >
+                    住址
+                  </pre>
+                   
+                </div>
+              </div>
+              <div
+                class="ant-col ant-col-18"
+              >
+                <input
+                  class="ant-input"
+                  placeholder="住址"
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="ant-col ant-col-12"
+            style="padding-left: 2px; padding-right: 2px;"
+          >
+            <div
+              class="ant-row sc-AxjAm tJNTL tag-row"
+            >
+              <div
+                class="ant-col ant-col-6"
+              >
+                <div
+                  class="sc-AxirZ gXNkLn"
+                >
+                  <pre
+                    class="sc-AxiKw bemSeT"
+                  >
+                    故乡
+                  </pre>
+                   
+                </div>
+              </div>
+              <div
+                class="ant-col ant-col-18"
+              >
+                <input
+                  class="ant-input"
+                  placeholder="故乡"
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="sc-fzozJi dfgBEx"
+        >
+          <div
+            class="fieldset-divider"
+          >
+            <span
+              class="inner-text"
+            >
+              属性
+            </span>
+          </div>
+          <div
+            :gutter="16"
+            class="ant-row"
+            style="margin-left: -8px; margin-right: -8px;"
+          >
+            <div
+              class="ant-col ant-col-24"
+              style="padding-left: 8px; padding-right: 8px;"
+            >
+              <div
+                class="sc-fzozJi dfgBEx"
+              >
+                <div
+                  class="fieldset-divider"
+                />
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        力量
+                      </pre>
+                       
+                      <span
+                        aria-label="question-circle"
+                        class="anticon anticon-question-circle"
+                        role="img"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class=""
+                          data-icon="question-circle"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          viewBox="64 64 896 896"
+                          width="1em"
+                        >
+                          <path
+                            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                          />
+                          <path
+                            d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="力量"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        体质
+                      </pre>
+                       
+                      <span
+                        aria-label="question-circle"
+                        class="anticon anticon-question-circle"
+                        role="img"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class=""
+                          data-icon="question-circle"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          viewBox="64 64 896 896"
+                          width="1em"
+                        >
+                          <path
+                            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                          />
+                          <path
+                            d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="体质"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        体型
+                      </pre>
+                       
+                      <span
+                        aria-label="question-circle"
+                        class="anticon anticon-question-circle"
+                        role="img"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class=""
+                          data-icon="question-circle"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          viewBox="64 64 896 896"
+                          width="1em"
+                        >
+                          <path
+                            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                          />
+                          <path
+                            d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="体型"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        敏捷
+                      </pre>
+                       
+                      <span
+                        aria-label="question-circle"
+                        class="anticon anticon-question-circle"
+                        role="img"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class=""
+                          data-icon="question-circle"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          viewBox="64 64 896 896"
+                          width="1em"
+                        >
+                          <path
+                            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                          />
+                          <path
+                            d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="敏捷"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        外貌
+                      </pre>
+                       
+                      <span
+                        aria-label="question-circle"
+                        class="anticon anticon-question-circle"
+                        role="img"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class=""
+                          data-icon="question-circle"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          viewBox="64 64 896 896"
+                          width="1em"
+                        >
+                          <path
+                            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                          />
+                          <path
+                            d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="外貌"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        智力
+                      </pre>
+                       
+                      <span
+                        aria-label="question-circle"
+                        class="anticon anticon-question-circle"
+                        role="img"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class=""
+                          data-icon="question-circle"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          viewBox="64 64 896 896"
+                          width="1em"
+                        >
+                          <path
+                            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                          />
+                          <path
+                            d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="智力"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        意志
+                      </pre>
+                       
+                      <span
+                        aria-label="question-circle"
+                        class="anticon anticon-question-circle"
+                        role="img"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class=""
+                          data-icon="question-circle"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          viewBox="64 64 896 896"
+                          width="1em"
+                        >
+                          <path
+                            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                          />
+                          <path
+                            d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="意志"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        教育
+                      </pre>
+                       
+                      <span
+                        aria-label="question-circle"
+                        class="anticon anticon-question-circle"
+                        role="img"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class=""
+                          data-icon="question-circle"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          viewBox="64 64 896 896"
+                          width="1em"
+                        >
+                          <path
+                            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                          />
+                          <path
+                            d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="教育"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        幸运
+                      </pre>
+                       
+                      <span
+                        aria-label="question-circle"
+                        class="anticon anticon-question-circle"
+                        role="img"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class=""
+                          data-icon="question-circle"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          viewBox="64 64 896 896"
+                          width="1em"
+                        >
+                          <path
+                            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                          />
+                          <path
+                            d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="幸运"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <button
+                  class="ant-btn ant-btn-primary"
+                  type="button"
+                >
+                  <span>
+                    随机生成
+                  </span>
+                </button>
+                <p>
+                  总值(除幸运): 数据不全
+                </p>
+              </div>
+            </div>
+            <div
+              class="ant-col ant-col-24"
+              style="padding-left: 8px; padding-right: 8px;"
+            >
+              <div
+                class="sc-fzozJi dfgBEx"
+              >
+                <div
+                  class="fieldset-divider"
+                />
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        当前生命值
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="当前生命值"
+                      type="text"
+                      value="0"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        最大生命值
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input ant-input-disabled"
+                      disabled=""
+                      placeholder="最大生命值"
+                      type="text"
+                      value="0"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        SAN值
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <div
+                      class="ant-input-number"
+                      style="width: 100%;"
+                    >
+                      <div
+                        class="ant-input-number-handler-wrap"
+                      >
+                        <span
+                          aria-label="Increase Value"
+                          class="ant-input-number-handler ant-input-number-handler-up"
+                          role="button"
+                          unselectable="on"
+                        >
+                          <span
+                            aria-label="up"
+                            class="anticon anticon-up ant-input-number-handler-up-inner"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class=""
+                              data-icon="up"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                        <span
+                          aria-label="Decrease Value"
+                          class="ant-input-number-handler ant-input-number-handler-down"
+                          role="button"
+                          unselectable="on"
+                        >
+                          <span
+                            aria-label="down"
+                            class="anticon anticon-down ant-input-number-handler-down-inner"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class=""
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </div>
+                      <div
+                        class="ant-input-number-input-wrap"
+                      >
+                        <input
+                          aria-valuemax="9007199254740991"
+                          aria-valuemin="-9007199254740991"
+                          aria-valuenow="99"
+                          autocomplete="off"
+                          class="ant-input-number-input"
+                          max="9007199254740991"
+                          min="-9007199254740991"
+                          placeholder="SAN值"
+                          role="spinbutton"
+                          step="1"
+                          value="99"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        身体状态
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <div
+                      class="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
+                      style="width: 100%;"
+                    >
+                      <div
+                        class="ant-select-selector"
+                      >
+                        <span
+                          class="ant-select-selection-search"
+                        >
+                          <input
+                            aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                            aria-autocomplete="list"
+                            aria-controls="rc_select_TEST_OR_SSR_list"
+                            aria-haspopup="listbox"
+                            aria-owns="rc_select_TEST_OR_SSR_list"
+                            autocomplete="off"
+                            class="ant-select-selection-search-input"
+                            id="rc_select_TEST_OR_SSR"
+                            readonly=""
+                            role="combobox"
+                            style="opacity: 0;"
+                            type="search"
+                            unselectable="on"
+                            value=""
+                          />
+                        </span>
+                        <span
+                          class="ant-select-selection-item"
+                          title="健康"
+                        >
+                          健康
+                        </span>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="ant-select-arrow"
+                        style="user-select: none;"
+                        unselectable="on"
+                      >
+                        <span
+                          aria-label="down"
+                          class="anticon anticon-down ant-select-suffix"
+                          role="img"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class=""
+                            data-icon="down"
+                            fill="currentColor"
+                            focusable="false"
+                            height="1em"
+                            viewBox="64 64 896 896"
+                            width="1em"
+                          >
+                            <path
+                              d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        class="ant-select-clear"
+                        style="user-select: none;"
+                        unselectable="on"
+                      >
+                        <span
+                          aria-label="close-circle"
+                          class="anticon anticon-close-circle"
+                          role="img"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class=""
+                            data-icon="close-circle"
+                            fill="currentColor"
+                            focusable="false"
+                            height="1em"
+                            viewBox="64 64 896 896"
+                            width="1em"
+                          >
+                            <path
+                              d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        精神状态
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <div
+                      class="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
+                      style="width: 100%;"
+                    >
+                      <div
+                        class="ant-select-selector"
+                      >
+                        <span
+                          class="ant-select-selection-search"
+                        >
+                          <input
+                            aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                            aria-autocomplete="list"
+                            aria-controls="rc_select_TEST_OR_SSR_list"
+                            aria-haspopup="listbox"
+                            aria-owns="rc_select_TEST_OR_SSR_list"
+                            autocomplete="off"
+                            class="ant-select-selection-search-input"
+                            id="rc_select_TEST_OR_SSR"
+                            readonly=""
+                            role="combobox"
+                            style="opacity: 0;"
+                            type="search"
+                            unselectable="on"
+                            value=""
+                          />
+                        </span>
+                        <span
+                          class="ant-select-selection-item"
+                          title="神志清醒"
+                        >
+                          神志清醒
+                        </span>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="ant-select-arrow"
+                        style="user-select: none;"
+                        unselectable="on"
+                      >
+                        <span
+                          aria-label="down"
+                          class="anticon anticon-down ant-select-suffix"
+                          role="img"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class=""
+                            data-icon="down"
+                            fill="currentColor"
+                            focusable="false"
+                            height="1em"
+                            viewBox="64 64 896 896"
+                            width="1em"
+                          >
+                            <path
+                              d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        class="ant-select-clear"
+                        style="user-select: none;"
+                        unselectable="on"
+                      >
+                        <span
+                          aria-label="close-circle"
+                          class="anticon anticon-close-circle"
+                          role="img"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class=""
+                            data-icon="close-circle"
+                            fill="currentColor"
+                            focusable="false"
+                            height="1em"
+                            viewBox="64 64 896 896"
+                            width="1em"
+                          >
+                            <path
+                              d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  伤害加值: 
+                </p>
+                <p>
+                  体格: 
+                </p>
+                <p>
+                  移动速度: 8
+                </p>
+                <p>
+                  每轮可移动: 40 码(米)
+                </p>
+              </div>
+            </div>
+            <div
+              class="ant-col ant-col-24"
+              style="padding-left: 8px; padding-right: 8px;"
+            >
+              <div
+                class="sc-fzozJi dfgBEx"
+              >
+                <div
+                  class="fieldset-divider"
+                />
+                <div>
+                  <div
+                    class="loading-spinner-container"
+                  >
+                    <div
+                      class="loading-spinner-inner"
+                    >
+                      <div
+                        class="rect1"
+                      />
+                      <div
+                        class="rect2"
+                      />
+                      <div
+                        class="rect3"
+                      />
+                      <div
+                        class="rect4"
+                      />
+                      <div
+                        class="rect5"
+                      />
+                    </div>
+                  </div>
+                  <p
+                    class="sc-fzoLsD gkuSAF"
+                  >
+                    
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="ant-row"
+            style="margin-left: -2px; margin-right: -2px;"
+          >
+            <div
+              class="sc-fzozJi dfgBEx"
+            >
+              <div
+                class="fieldset-divider"
+              />
+              <p>
+                <span>
+                  根据年龄的调整
+                </span>
+                <span
+                  aria-label="question-circle"
+                  class="anticon anticon-question-circle"
+                  role="img"
+                  style="padding-left: 4px; padding-right: 4px;"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class=""
+                    data-icon="question-circle"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <path
+                      d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                    />
+                    <path
+                      d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                    />
+                  </svg>
+                </span>
+              </p>
+              <p>
+                玩家的调查员应选择年龄在15至90之间。若设想的调查员超过这个年龄范围，那么请找您的守秘人进行调整吧。对照相应年龄，调整调查员的属性（不同年龄段的调整不叠加）。
+              </p>
+              <p>
+                进行教育增强检定时，掷百分骰。若结果大于你当前的教育值，则给教育属性增加1d10点（教育值不能高于99）
+              </p>
+              <div>
+                <button
+                  class="ant-btn ant-btn-primary"
+                  type="button"
+                >
+                  <span>
+                    投骰1d100
+                  </span>
+                </button>
+                <p>
+                  1d100结果: 尚无结果
+                </p>
+                <button
+                  class="ant-btn ant-btn-primary"
+                  type="button"
+                >
+                  <span>
+                    投骰1d10
+                  </span>
+                </button>
+                <p>
+                  1d10结果: 尚无结果
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="sc-fzozJi dfgBEx"
+        >
+          <div
+            class="fieldset-divider"
+          >
+            <span
+              class="inner-text"
+            >
+              职业
+            </span>
+          </div>
+          <div
+            class="ant-row sc-AxjAm tJNTL tag-row"
+          >
+            <div
+              class="ant-col ant-col-6"
+            >
+              <div
+                class="sc-AxirZ gXNkLn"
+              >
+                <pre
+                  class="sc-AxiKw bemSeT"
+                >
+                  职业
+                </pre>
+                 
+                <span
+                  aria-label="question-circle"
+                  class="anticon anticon-question-circle"
+                  role="img"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class=""
+                    data-icon="question-circle"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <path
+                      d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                    />
+                    <path
+                      d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div
+              class="ant-col ant-col-18"
+            >
+              <div
+                class="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow ant-select-show-search"
+                style="width: 100%;"
+              >
+                <div
+                  class="ant-select-selector"
+                >
+                  <span
+                    class="ant-select-selection-search"
+                  >
+                    <input
+                      aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                      aria-autocomplete="list"
+                      aria-controls="rc_select_TEST_OR_SSR_list"
+                      aria-haspopup="listbox"
+                      aria-owns="rc_select_TEST_OR_SSR_list"
+                      autocomplete="off"
+                      class="ant-select-selection-search-input"
+                      id="rc_select_TEST_OR_SSR"
+                      readonly=""
+                      role="combobox"
+                      style="opacity: 0;"
+                      type="search"
+                      unselectable="on"
+                      value=""
+                    />
+                  </span>
+                  <span
+                    class="ant-select-selection-placeholder"
+                  >
+                    请选择...
+                  </span>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="ant-select-arrow"
+                  style="user-select: none;"
+                  unselectable="on"
+                >
+                  <span
+                    aria-label="down"
+                    class="anticon anticon-down ant-select-suffix"
+                    role="img"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class=""
+                      data-icon="down"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <pre
+              style="white-space: pre-wrap;"
+            />
+          </div>
+          <p>
+            信用范围: 0 ~ 0
+          </p>
+          <p>
+            本职技能: 
+          </p>
+          <p>
+            本职技能点: 
+          </p>
+          <p>
+            备注: 
+          </p>
+        </div>
+        <div
+          class="sc-fzozJi dfgBEx"
+        >
+          <div
+            class="fieldset-divider"
+          >
+            <span
+              class="inner-text"
+            >
+              技能
+            </span>
+          </div>
+          <div
+            :gutter="16"
+            class="ant-row"
+            style="margin-left: -8px; margin-right: -8px;"
+          >
+            <div
+              class="ant-col ant-col-24"
+              style="padding-left: 8px; padding-right: 8px;"
+            >
+              <div
+                class="sc-fzplWN krqhFh"
+              >
+                <div
+                  class="ant-tabs ant-tabs-top"
+                  style="width: 100%;"
+                >
+                  <div
+                    class="ant-tabs-nav"
+                    role="tablist"
+                  >
+                    <div
+                      class="ant-tabs-nav-wrap"
+                    >
+                      <div
+                        class="ant-tabs-nav-list"
+                        style="transform: translate(0px, 0px);"
+                      >
+                        <div
+                          class="ant-tabs-tab ant-tabs-tab-active"
+                        >
+                          <div
+                            aria-controls="rc-tabs-test-panel-本职#0"
+                            aria-selected="true"
+                            class="ant-tabs-tab-btn"
+                            id="rc-tabs-test-tab-本职#0"
+                            role="tab"
+                            tabindex="0"
+                          >
+                            本职
+                          </div>
+                        </div>
+                        <div
+                          class="ant-tabs-tab"
+                        >
+                          <div
+                            aria-controls="rc-tabs-test-panel-交流#1"
+                            aria-selected="false"
+                            class="ant-tabs-tab-btn"
+                            id="rc-tabs-test-tab-交流#1"
+                            role="tab"
+                            tabindex="0"
+                          >
+                            交流
+                          </div>
+                        </div>
+                        <div
+                          class="ant-tabs-tab"
+                        >
+                          <div
+                            aria-controls="rc-tabs-test-panel-探索#2"
+                            aria-selected="false"
+                            class="ant-tabs-tab-btn"
+                            id="rc-tabs-test-tab-探索#2"
+                            role="tab"
+                            tabindex="0"
+                          >
+                            探索
+                          </div>
+                        </div>
+                        <div
+                          class="ant-tabs-tab"
+                        >
+                          <div
+                            aria-controls="rc-tabs-test-panel-运动#3"
+                            aria-selected="false"
+                            class="ant-tabs-tab-btn"
+                            id="rc-tabs-test-tab-运动#3"
+                            role="tab"
+                            tabindex="0"
+                          >
+                            运动
+                          </div>
+                        </div>
+                        <div
+                          class="ant-tabs-tab"
+                        >
+                          <div
+                            aria-controls="rc-tabs-test-panel-技能#4"
+                            aria-selected="false"
+                            class="ant-tabs-tab-btn"
+                            id="rc-tabs-test-tab-技能#4"
+                            role="tab"
+                            tabindex="0"
+                          >
+                            技能
+                          </div>
+                        </div>
+                        <div
+                          class="ant-tabs-tab"
+                        >
+                          <div
+                            aria-controls="rc-tabs-test-panel-战斗#5"
+                            aria-selected="false"
+                            class="ant-tabs-tab-btn"
+                            id="rc-tabs-test-tab-战斗#5"
+                            role="tab"
+                            tabindex="0"
+                          >
+                            战斗
+                          </div>
+                        </div>
+                        <div
+                          class="ant-tabs-tab"
+                        >
+                          <div
+                            aria-controls="rc-tabs-test-panel-医疗#6"
+                            aria-selected="false"
+                            class="ant-tabs-tab-btn"
+                            id="rc-tabs-test-tab-医疗#6"
+                            role="tab"
+                            tabindex="0"
+                          >
+                            医疗
+                          </div>
+                        </div>
+                        <div
+                          class="ant-tabs-tab"
+                        >
+                          <div
+                            aria-controls="rc-tabs-test-panel-知识#7"
+                            aria-selected="false"
+                            class="ant-tabs-tab-btn"
+                            id="rc-tabs-test-tab-知识#7"
+                            role="tab"
+                            tabindex="0"
+                          >
+                            知识
+                          </div>
+                        </div>
+                        <div
+                          class="ant-tabs-tab"
+                        >
+                          <div
+                            aria-controls="rc-tabs-test-panel-自定义#8"
+                            aria-selected="false"
+                            class="ant-tabs-tab-btn"
+                            id="rc-tabs-test-tab-自定义#8"
+                            role="tab"
+                            tabindex="0"
+                          >
+                            自定义
+                          </div>
+                        </div>
+                        <div
+                          class="ant-tabs-ink-bar ant-tabs-ink-bar-animated"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="ant-tabs-nav-operations ant-tabs-nav-operations-hidden"
+                    >
+                      <button
+                        aria-controls="rc-tabs-test-more-popup"
+                        aria-expanded="false"
+                        aria-haspopup="listbox"
+                        aria-hidden="true"
+                        class="ant-tabs-nav-more"
+                        id="rc-tabs-test-more"
+                        style="visibility: hidden; order: 1;"
+                        tabindex="-1"
+                        type="button"
+                      >
+                        <span
+                          aria-label="ellipsis"
+                          class="anticon anticon-ellipsis"
+                          role="img"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class=""
+                            data-icon="ellipsis"
+                            fill="currentColor"
+                            focusable="false"
+                            height="1em"
+                            viewBox="64 64 896 896"
+                            width="1em"
+                          >
+                            <path
+                              d="M176 511a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0z"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="ant-tabs-content-holder"
+                  >
+                    <div
+                      class="ant-tabs-content ant-tabs-content-top"
+                    >
+                      <div
+                        aria-hidden="false"
+                        aria-labelledby="rc-tabs-test-tab-本职#0"
+                        class="ant-tabs-tabpane ant-tabs-tabpane-active"
+                        id="rc-tabs-test-panel-本职#0"
+                        role="tabpanel"
+                        tabindex="0"
+                      >
+                        <div
+                          class="sc-AxmLO eLxPdB"
+                        >
+                          <t-tab
+                            label="本职"
+                          >
+                            <table>
+                              <thead>
+                                <tr>
+                                  <td
+                                    width="150"
+                                  >
+                                    技能
+                                  </td>
+                                  <td
+                                    width="40"
+                                  >
+                                    初始
+                                  </td>
+                                  <td
+                                    width="60"
+                                  >
+                                    成长
+                                  </td>
+                                  <td
+                                    width="60"
+                                  >
+                                    职业
+                                  </td>
+                                  <td
+                                    width="60"
+                                  >
+                                    兴趣
+                                  </td>
+                                  <td
+                                    width="60"
+                                  >
+                                    成功率
+                                  </td>
+                                </tr>
+                              </thead>
+                              <tbody />
+                            </table>
+                            <center
+                              style="margin: 10px 0px;"
+                            >
+                              请先选择内置职业
+                            </center>
+                          </t-tab>
+                        </div>
+                      </div>
+                      <div
+                        aria-hidden="true"
+                        aria-labelledby="rc-tabs-test-tab-交流#1"
+                        class="ant-tabs-tabpane"
+                        id="rc-tabs-test-panel-交流#1"
+                        role="tabpanel"
+                        style="display: none;"
+                        tabindex="-1"
+                      />
+                      <div
+                        aria-hidden="true"
+                        aria-labelledby="rc-tabs-test-tab-探索#2"
+                        class="ant-tabs-tabpane"
+                        id="rc-tabs-test-panel-探索#2"
+                        role="tabpanel"
+                        style="display: none;"
+                        tabindex="-1"
+                      />
+                      <div
+                        aria-hidden="true"
+                        aria-labelledby="rc-tabs-test-tab-运动#3"
+                        class="ant-tabs-tabpane"
+                        id="rc-tabs-test-panel-运动#3"
+                        role="tabpanel"
+                        style="display: none;"
+                        tabindex="-1"
+                      />
+                      <div
+                        aria-hidden="true"
+                        aria-labelledby="rc-tabs-test-tab-技能#4"
+                        class="ant-tabs-tabpane"
+                        id="rc-tabs-test-panel-技能#4"
+                        role="tabpanel"
+                        style="display: none;"
+                        tabindex="-1"
+                      />
+                      <div
+                        aria-hidden="true"
+                        aria-labelledby="rc-tabs-test-tab-战斗#5"
+                        class="ant-tabs-tabpane"
+                        id="rc-tabs-test-panel-战斗#5"
+                        role="tabpanel"
+                        style="display: none;"
+                        tabindex="-1"
+                      />
+                      <div
+                        aria-hidden="true"
+                        aria-labelledby="rc-tabs-test-tab-医疗#6"
+                        class="ant-tabs-tabpane"
+                        id="rc-tabs-test-panel-医疗#6"
+                        role="tabpanel"
+                        style="display: none;"
+                        tabindex="-1"
+                      />
+                      <div
+                        aria-hidden="true"
+                        aria-labelledby="rc-tabs-test-tab-知识#7"
+                        class="ant-tabs-tabpane"
+                        id="rc-tabs-test-panel-知识#7"
+                        role="tabpanel"
+                        style="display: none;"
+                        tabindex="-1"
+                      />
+                      <div
+                        aria-hidden="true"
+                        aria-labelledby="rc-tabs-test-tab-自定义#8"
+                        class="ant-tabs-tabpane"
+                        id="rc-tabs-test-panel-自定义#8"
+                        role="tabpanel"
+                        style="display: none;"
+                        tabindex="-1"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="ant-col ant-col-24"
+              style="padding-left: 8px; padding-right: 8px;"
+            >
+              <div
+                class="sc-fzozJi dfgBEx"
+              >
+                <div
+                  class="fieldset-divider"
+                />
+                <p>
+                  <span>
+                    个人兴趣点
+                  </span>
+                  <span
+                    aria-label="question-circle"
+                    class="anticon anticon-question-circle"
+                    role="img"
+                    style="padding-left: 4px; padding-right: 4px;"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class=""
+                      data-icon="question-circle"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                      />
+                      <path
+                        d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                      />
+                    </svg>
+                  </span>
+                  <span>
+                    0
+                  </span>
+                </p>
+                <p>
+                  <span>
+                    本职技能点
+                  </span>
+                  <span
+                    aria-label="question-circle"
+                    class="anticon anticon-question-circle"
+                    role="img"
+                    style="padding-left: 4px; padding-right: 4px;"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class=""
+                      data-icon="question-circle"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                      />
+                      <path
+                        d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                      />
+                    </svg>
+                  </span>
+                  <span>
+                    0
+                  </span>
+                </p>
+                <p>
+                  <span>
+                    已加点数
+                  </span>
+                  <span
+                    aria-label="question-circle"
+                    class="anticon anticon-question-circle"
+                    role="img"
+                    style="padding-left: 4px; padding-right: 4px;"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class=""
+                      data-icon="question-circle"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                      />
+                      <path
+                        d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                      />
+                    </svg>
+                  </span>
+                  <span>
+                    0
+                  </span>
+                </p>
+                <p>
+                  <span>
+                    已加兴趣点数
+                  </span>
+                  <span
+                    aria-label="question-circle"
+                    class="anticon anticon-question-circle"
+                    role="img"
+                    style="padding-left: 4px; padding-right: 4px;"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class=""
+                      data-icon="question-circle"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                      />
+                      <path
+                        d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                      />
+                    </svg>
+                  </span>
+                  <span>
+                    0
+                  </span>
+                </p>
+                <p>
+                  <span>
+                    已加职业点数
+                  </span>
+                  <span
+                    aria-label="question-circle"
+                    class="anticon anticon-question-circle"
+                    role="img"
+                    style="padding-left: 4px; padding-right: 4px;"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class=""
+                      data-icon="question-circle"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                      />
+                      <path
+                        d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                      />
+                    </svg>
+                  </span>
+                  <span>
+                    0
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="sc-fzozJi dfgBEx"
+        >
+          <div
+            class="fieldset-divider"
+          >
+            <span
+              class="inner-text"
+            >
+              武器
+            </span>
+          </div>
+          <table
+            style="width: 100%;"
+          >
+            <thead>
+              <tr>
+                <td
+                  width="120"
+                >
+                  名称
+                </td>
+                <td
+                  width="60"
+                >
+                  技能
+                </td>
+                <td
+                  width="60"
+                >
+                  伤害
+                </td>
+                <td
+                  width="40"
+                >
+                  贯穿
+                </td>
+                <td
+                  width="60"
+                >
+                  基础射程
+                </td>
+                <td
+                  width="40"
+                >
+                  每轮
+                </td>
+                <td
+                  width="40"
+                >
+                  装弹量
+                </td>
+                <td
+                  width="80"
+                >
+                  价格
+                </td>
+                <td
+                  width="40"
+                >
+                  故障值
+                </td>
+                <td
+                  width="80"
+                >
+                  时代
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div
+                    class="ant-col ant-col-24"
+                  >
+                    <div
+                      class="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow ant-select-show-search"
+                      style="width: 100%;"
+                    >
+                      <div
+                        class="ant-select-selector"
+                      >
+                        <span
+                          class="ant-select-selection-search"
+                        >
+                          <input
+                            aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                            aria-autocomplete="list"
+                            aria-controls="rc_select_TEST_OR_SSR_list"
+                            aria-haspopup="listbox"
+                            aria-owns="rc_select_TEST_OR_SSR_list"
+                            autocomplete="off"
+                            class="ant-select-selection-search-input"
+                            id="rc_select_TEST_OR_SSR"
+                            readonly=""
+                            role="combobox"
+                            style="opacity: 0;"
+                            type="search"
+                            unselectable="on"
+                            value=""
+                          />
+                        </span>
+                        <span
+                          class="ant-select-selection-placeholder"
+                        >
+                          请选择...
+                        </span>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="ant-select-arrow"
+                        style="user-select: none;"
+                        unselectable="on"
+                      >
+                        <span
+                          aria-label="down"
+                          class="anticon anticon-down ant-select-suffix"
+                          role="img"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class=""
+                            data-icon="down"
+                            fill="currentColor"
+                            focusable="false"
+                            height="1em"
+                            viewBox="64 64 896 896"
+                            width="1em"
+                          >
+                            <path
+                              d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div
+                    class="ant-col ant-col-24"
+                  >
+                    <div
+                      class="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow ant-select-show-search"
+                      style="width: 100%;"
+                    >
+                      <div
+                        class="ant-select-selector"
+                      >
+                        <span
+                          class="ant-select-selection-search"
+                        >
+                          <input
+                            aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                            aria-autocomplete="list"
+                            aria-controls="rc_select_TEST_OR_SSR_list"
+                            aria-haspopup="listbox"
+                            aria-owns="rc_select_TEST_OR_SSR_list"
+                            autocomplete="off"
+                            class="ant-select-selection-search-input"
+                            id="rc_select_TEST_OR_SSR"
+                            readonly=""
+                            role="combobox"
+                            style="opacity: 0;"
+                            type="search"
+                            unselectable="on"
+                            value=""
+                          />
+                        </span>
+                        <span
+                          class="ant-select-selection-placeholder"
+                        >
+                          请选择...
+                        </span>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="ant-select-arrow"
+                        style="user-select: none;"
+                        unselectable="on"
+                      >
+                        <span
+                          aria-label="down"
+                          class="anticon anticon-down ant-select-suffix"
+                          role="img"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class=""
+                            data-icon="down"
+                            fill="currentColor"
+                            focusable="false"
+                            height="1em"
+                            viewBox="64 64 896 896"
+                            width="1em"
+                          >
+                            <path
+                              d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div
+                    class="ant-col ant-col-24"
+                  >
+                    <div
+                      class="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow ant-select-show-search"
+                      style="width: 100%;"
+                    >
+                      <div
+                        class="ant-select-selector"
+                      >
+                        <span
+                          class="ant-select-selection-search"
+                        >
+                          <input
+                            aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                            aria-autocomplete="list"
+                            aria-controls="rc_select_TEST_OR_SSR_list"
+                            aria-haspopup="listbox"
+                            aria-owns="rc_select_TEST_OR_SSR_list"
+                            autocomplete="off"
+                            class="ant-select-selection-search-input"
+                            id="rc_select_TEST_OR_SSR"
+                            readonly=""
+                            role="combobox"
+                            style="opacity: 0;"
+                            type="search"
+                            unselectable="on"
+                            value=""
+                          />
+                        </span>
+                        <span
+                          class="ant-select-selection-placeholder"
+                        >
+                          请选择...
+                        </span>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="ant-select-arrow"
+                        style="user-select: none;"
+                        unselectable="on"
+                      >
+                        <span
+                          aria-label="down"
+                          class="anticon anticon-down ant-select-suffix"
+                          role="img"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class=""
+                            data-icon="down"
+                            fill="currentColor"
+                            focusable="false"
+                            height="1em"
+                            viewBox="64 64 896 896"
+                            width="1em"
+                          >
+                            <path
+                              d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div
+                    class="ant-col ant-col-24"
+                  >
+                    <div
+                      class="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow ant-select-show-search"
+                      style="width: 100%;"
+                    >
+                      <div
+                        class="ant-select-selector"
+                      >
+                        <span
+                          class="ant-select-selection-search"
+                        >
+                          <input
+                            aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                            aria-autocomplete="list"
+                            aria-controls="rc_select_TEST_OR_SSR_list"
+                            aria-haspopup="listbox"
+                            aria-owns="rc_select_TEST_OR_SSR_list"
+                            autocomplete="off"
+                            class="ant-select-selection-search-input"
+                            id="rc_select_TEST_OR_SSR"
+                            readonly=""
+                            role="combobox"
+                            style="opacity: 0;"
+                            type="search"
+                            unselectable="on"
+                            value=""
+                          />
+                        </span>
+                        <span
+                          class="ant-select-selection-placeholder"
+                        >
+                          请选择...
+                        </span>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="ant-select-arrow"
+                        style="user-select: none;"
+                        unselectable="on"
+                      >
+                        <span
+                          aria-label="down"
+                          class="anticon anticon-down ant-select-suffix"
+                          role="img"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class=""
+                            data-icon="down"
+                            fill="currentColor"
+                            focusable="false"
+                            height="1em"
+                            viewBox="64 64 896 896"
+                            width="1em"
+                          >
+                            <path
+                              d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div
+                    class="ant-col ant-col-24"
+                  >
+                    <div
+                      class="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow ant-select-show-search"
+                      style="width: 100%;"
+                    >
+                      <div
+                        class="ant-select-selector"
+                      >
+                        <span
+                          class="ant-select-selection-search"
+                        >
+                          <input
+                            aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                            aria-autocomplete="list"
+                            aria-controls="rc_select_TEST_OR_SSR_list"
+                            aria-haspopup="listbox"
+                            aria-owns="rc_select_TEST_OR_SSR_list"
+                            autocomplete="off"
+                            class="ant-select-selection-search-input"
+                            id="rc_select_TEST_OR_SSR"
+                            readonly=""
+                            role="combobox"
+                            style="opacity: 0;"
+                            type="search"
+                            unselectable="on"
+                            value=""
+                          />
+                        </span>
+                        <span
+                          class="ant-select-selection-placeholder"
+                        >
+                          请选择...
+                        </span>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="ant-select-arrow"
+                        style="user-select: none;"
+                        unselectable="on"
+                      >
+                        <span
+                          aria-label="down"
+                          class="anticon anticon-down ant-select-suffix"
+                          role="img"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class=""
+                            data-icon="down"
+                            fill="currentColor"
+                            focusable="false"
+                            height="1em"
+                            viewBox="64 64 896 896"
+                            width="1em"
+                          >
+                            <path
+                              d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    
+                  </span>
+                </td>
+              </tr>
+              <div
+                class="ant-row ant-row-end"
+              >
+                <button
+                  class="ant-btn ant-btn-link"
+                  type="button"
+                >
+                  <span>
+                    新增
+                  </span>
+                </button>
+              </div>
+            </tbody>
+          </table>
+          <p>
+            *: 星号代表有额外说明，具体请查阅规则书附录部分
+          </p>
+        </div>
+        <div
+          class="sc-fzozJi dfgBEx"
+        >
+          <div
+            class="fieldset-divider"
+          />
+          <div
+            :gutter="16"
+            class="ant-row"
+            style="margin-left: -8px; margin-right: -8px;"
+          >
+            <div
+              class="ant-col ant-col-24"
+              style="padding-left: 8px; padding-right: 8px;"
+            >
+              <div
+                class="sc-fzozJi dfgBEx"
+              >
+                <div
+                  class="fieldset-divider"
+                >
+                  <span
+                    class="inner-text"
+                  >
+                    资产情况
+                  </span>
+                </div>
+                <div
+                  class="ant-row"
+                  style="margin-left: -2px; margin-right: -2px;"
+                >
+                  <div
+                    class="ant-col ant-col-24"
+                    style="padding-left: 2px; padding-right: 2px;"
+                  >
+                    <p>
+                      信用评级: 
+                    </p>
+                    <p>
+                      现金数量: 
+                    </p>
+                  </div>
+                  <div
+                    class="ant-col ant-col-24"
+                    style="padding-left: 2px; padding-right: 2px;"
+                  >
+                    <p>
+                      消费水平: 
+                    </p>
+                    <p>
+                      其它资产: 
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        资产说明
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <textarea
+                      class="ant-input"
+                      placeholder="资产说明"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="sc-fzozJi dfgBEx"
+              >
+                <div
+                  class="fieldset-divider"
+                >
+                  <span
+                    class="inner-text"
+                  >
+                    随身物品
+                  </span>
+                </div>
+                <div
+                  class="ant-col ant-col-24"
+                  style="padding-left: 8px; padding-right: 8px;"
+                >
+                  <textarea
+                    class="ant-input"
+                    placeholder="随身物品"
+                    rows="11"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="ant-col ant-col-24"
+              style="padding-left: 8px; padding-right: 8px;"
+            >
+              <div
+                class="sc-fzozJi dfgBEx"
+              >
+                <div
+                  class="fieldset-divider"
+                >
+                  <span
+                    class="inner-text"
+                  >
+                    背景故事
+                  </span>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        个人描述
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="个人描述"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        思想/信念
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="思想/信念"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        重要之人
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="重要之人"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        意义非凡之地
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="意义非凡之地"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        宝贵之物
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="宝贵之物"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        特点
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="特点"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        伤口/疤痕
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="伤口/疤痕"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        恐惧症/狂躁症
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <input
+                      class="ant-input"
+                      placeholder="恐惧症/狂躁症"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ant-row sc-AxjAm tJNTL tag-row"
+                >
+                  <div
+                    class="ant-col ant-col-6"
+                  >
+                    <div
+                      class="sc-AxirZ gXNkLn"
+                    >
+                      <pre
+                        class="sc-AxiKw bemSeT"
+                      >
+                        详细描述
+                      </pre>
+                       
+                    </div>
+                  </div>
+                  <div
+                    class="ant-col ant-col-18"
+                  >
+                    <textarea
+                      class="ant-input"
+                      placeholder="详细描述"
+                      rows="4"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="ant-row"
+          style="margin-left: -2px; margin-right: -2px;"
+        >
+          <div
+            class="ant-col ant-col-24"
+            style="padding-left: 2px; padding-right: 2px;"
+          >
+            <div
+              class="sc-fzozJi dfgBEx"
+            >
+              <div
+                class="fieldset-divider"
+              >
+                <span
+                  class="inner-text"
+                >
+                  调查员经历
+                </span>
+              </div>
+              <div
+                class="ant-col ant-col-24"
+                style="padding-left: 2px; padding-right: 2px;"
+              >
+                <textarea
+                  class="ant-input"
+                  placeholder="调查员经历"
+                  rows="8"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="ant-col ant-col-24"
+            style="padding-left: 2px; padding-right: 2px;"
+          >
+            <div
+              class="sc-fzozJi dfgBEx"
+            >
+              <div
+                class="fieldset-divider"
+              >
+                <span
+                  class="inner-text"
+                >
+                  调查员伙伴
+                </span>
+              </div>
+              <div
+                class="ant-col ant-col-24"
+                style="padding-left: 2px; padding-right: 2px;"
+              >
+                <textarea
+                  class="ant-input"
+                  placeholder="调查员伙伴"
+                  rows="8"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="ant-col ant-col-24"
+            style="padding-left: 2px; padding-right: 2px;"
+          >
+            <div
+              class="sc-fzozJi dfgBEx"
+            >
+              <div
+                class="fieldset-divider"
+              >
+                <span
+                  class="inner-text"
+                >
+                  克苏鲁神话
+                </span>
+              </div>
+              <div
+                class="ant-col ant-col-24"
+                style="padding-left: 2px; padding-right: 2px;"
+              >
+                <textarea
+                  class="ant-input"
+                  placeholder="克苏鲁神话"
+                  rows="8"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
