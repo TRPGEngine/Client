@@ -5,11 +5,16 @@ import { useAudioVolume } from './rtc/hooks/useAudioVolume';
 import { GradientProgress } from './GradientProgress';
 import { Button, Space } from 'antd';
 import { showToasts } from '@shared/manager/ui';
+import { useSystemSetting } from '@redux/hooks/settings';
+import { t } from '@shared/i18n';
 
 function useRTCAudioCheck() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const audioTrackRef = useRef<MediaStreamTrack>();
   const [inited, setIsInited] = useState(false);
+  const audioConstraints = useSystemSetting(
+    'audioConstraints'
+  ) as MediaTrackConstraints;
 
   useEffect(() => {
     if (_isNil(audioRef.current)) {
@@ -18,7 +23,7 @@ function useRTCAudioCheck() {
 
     navigator.mediaDevices
       .getUserMedia({
-        audio: true,
+        audio: audioConstraints,
         video: false,
       })
       .then((stream) => {
@@ -31,7 +36,7 @@ function useRTCAudioCheck() {
         setIsInited(true);
       })
       .catch(() => {
-        showToasts('获取用户媒体失败');
+        showToasts(t('获取用户媒体失败'));
       });
 
     return () => {
@@ -57,10 +62,7 @@ const AudioCheckerPlayer: React.FC<{
 }> = TMemo((props) => {
   const { onChangeVolume } = props;
   const { audioEl, audioTrackRef } = useRTCAudioCheck();
-  console.log('audioTrackRef.current', audioTrackRef.current);
   const volume = useAudioVolume(audioTrackRef.current);
-
-  console.log('volume', volume);
 
   useEffect(() => {
     onChangeVolume(volume);
@@ -81,7 +83,7 @@ export const AudioChecker: React.FC = TMemo(() => {
     <div>
       <Space direction="vertical" style={{ width: '100%' }}>
         <Button type="primary" onClick={toggleIsChecking}>
-          {isChecking ? '关闭麦克风' : '测试麦克风'}
+          {isChecking ? t('关闭麦克风') : t('测试麦克风')}
         </Button>
 
         <GradientProgress progress={volume * 10} />

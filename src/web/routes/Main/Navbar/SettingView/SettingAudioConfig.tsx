@@ -95,7 +95,7 @@ export const SettingAudioConfig: React.FC = TMemo((props) => {
         {isChanged && (
           <Alert
             style={{ marginBottom: 10 }}
-            message={t('语音设置变更在通话中无法生效')}
+            message={t('语音设置变更在使用麦克风时无法立即生效')}
             type="warning"
           />
         )}
