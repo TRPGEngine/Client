@@ -12,6 +12,7 @@ const config = {
   alias: {
     '@shared': path.resolve(__dirname, '../../shared'),
     '@web': path.resolve(__dirname, '../../web'),
+    axios: 'taro-axios',
   },
   sourceRoot: 'src',
   outputRoot: 'dist',

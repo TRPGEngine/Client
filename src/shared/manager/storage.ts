@@ -1,6 +1,9 @@
 import { buildRegFn } from './buildRegFn';
 
 interface StorageObject {
+  /**
+   * NOTICE: 与save不同， set存储 1 天
+   */
   set: (key: string, data: any) => Promise<void>;
   get: (key: string, defaultVal?: any) => Promise<any>;
   remove: (key: string) => Promise<void>;
