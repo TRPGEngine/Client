@@ -11,6 +11,8 @@ import config from '@shared/project.config';
 import { initAnalytics } from './utils/analytics-helper';
 import { getUserJWT } from '@shared/utils/jwt-helper';
 import { setTokenGetter } from '@shared/manager/request';
+import { setStorage } from '@shared/manager/storage';
+import rnStorage from '@shared/api/rn-storage.api';
 
 initAnalytics();
 
@@ -51,3 +53,5 @@ injectLogoutSuccessCallback(() => {
 setTokenGetter(async () => {
   return await getUserJWT();
 });
+
+setStorage(() => rnStorage);

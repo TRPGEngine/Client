@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import rnStorage from '@shared/api/rn-storage.api';
+import { getStorage } from '@shared/manager/storage';
 
 /**
  * 沟通RNStorage的hook
@@ -8,7 +8,7 @@ import rnStorage from '@shared/api/rn-storage.api';
  * @param defaultValue 默认值
  * @param isPersist 是否永久存储
  */
-export function useRNStorage<T = {}>(
+export function useStorage<T = {}>(
   key: string,
   defaultValue?: T,
   isPersist = false
@@ -16,14 +16,18 @@ export function useRNStorage<T = {}>(
   const [value, setValue] = useState<T>(defaultValue ?? (null as any));
 
   useEffect(() => {
-    rnStorage.get(key, defaultValue).then((val) => setValue(val));
+    getStorage()
+      .get(key, defaultValue)
+      .then((val) => setValue(val));
   }, [key]);
 
   const set = useCallback(
     (val: T): Promise<T> => {
       setValue(val!);
 
-      const p = isPersist ? rnStorage.save(key, val) : rnStorage.set(key, val);
+      const p = isPersist
+        ? getStorage().save(key, val)
+        : getStorage().set(key, val);
 
       return p.then((val: any) => {
         return val!;
