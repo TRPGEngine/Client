@@ -83,16 +83,9 @@ export const GradientProgress: React.FC<GradientProgressProps> = TMemo(
     const gradientStyle = useMemo(() => {
       return {
         width: barWidth,
-        background:
-          progress <= 0
-            ? 'none'
-            : 'linear-gradient(to right, ' +
-              gradientStart +
-              ', ' +
-              gradientEnd +
-              ')',
+        background: `linear-gradient(to right, ${gradientStart}, ${gradientEnd})`,
       };
-    }, [barWidth, progress, gradientStart, gradientEnd]);
+    }, [barWidth, gradientStart, gradientEnd]);
 
     const progressStyle = useMemo(() => {
       const t = 100 - Math.max(0, Math.min(100, progress));
@@ -101,6 +94,7 @@ export const GradientProgress: React.FC<GradientProgressProps> = TMemo(
 
       return {
         transform: 'translateX(' + Math.abs(step - barWidth) + 'px)',
+        transition: 'all 0.3s ease-in-out',
       };
     }, [progress, barWidth]);
 

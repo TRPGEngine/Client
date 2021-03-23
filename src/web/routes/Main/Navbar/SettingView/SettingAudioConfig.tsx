@@ -4,8 +4,9 @@ import { TMemo } from '@shared/components/TMemo';
 import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
 import { useTranslation } from '@shared/i18n';
 import type { DefaultSettings } from '@shared/project.config';
+import { AudioChecker } from '@web/components/AudioChecker';
 import { FullModalField } from '@web/components/FullModalField';
-import { Alert, Space, Switch } from 'antd';
+import { Alert, Divider, Space, Switch } from 'antd';
 import React, { useCallback, useState } from 'react';
 
 /**
@@ -36,7 +37,13 @@ export const SettingAudioConfig: React.FC = TMemo((props) => {
 
   return (
     <div>
-      <Space direction="vertical">
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <div>
+          <AudioChecker />
+        </div>
+
+        <Divider />
+
         <FullModalField
           title={t('噪音抑制')}
           content={
