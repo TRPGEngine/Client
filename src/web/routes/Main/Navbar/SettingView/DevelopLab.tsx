@@ -4,6 +4,7 @@ import { Button, Typography } from 'antd';
 import { JumpLogo } from '@web/components/JumpLogo';
 import { getInstance } from '@shared/api/trpg.api';
 import { showToasts } from '@shared/manager/ui';
+import { GradientProgress } from '@web/components/GradientProgress';
 
 export const MockReconnect: React.FC = TMemo(() => {
   const [loading, setLoading] = useState(false);
@@ -45,6 +46,8 @@ export const DevelopLab: React.FC = TMemo(() => {
         <JumpLogo />
 
         <MockReconnect />
+
+        <GradientProgress progress={50} />
       </div>
     </div>
   );
