@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.tsx",
   "scripts": {
+    "up:saucer": "npx npm-check-updates '/saucerjs/' -u && npm install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "moonrailgun",
