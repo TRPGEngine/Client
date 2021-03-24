@@ -1,5 +1,6 @@
 import path from 'path';
 
+// https://taro-docs.jd.com/taro/docs/config
 const config = {
   projectName: 'mini-program',
   date: '2021-3-22',
@@ -13,6 +14,10 @@ const config = {
     '@shared': path.resolve(__dirname, '../../shared'),
     '@web': path.resolve(__dirname, '../../web'),
     axios: 'taro-axios',
+  },
+  env: {
+    TRPG_HOST: JSON.stringify('trpgapi.moonrailgun.com'),
+    PLATFORM: 'mini-program',
   },
   sourceRoot: 'src',
   outputRoot: 'dist',
