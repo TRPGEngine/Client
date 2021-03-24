@@ -24,7 +24,11 @@ window.matchMedia =
  * https://github.com/airbnb/enzyme/issues/2073
  */
 const mockConsoleMethod = (realConsoleMethod) => {
-  const ignoredMessages = ['test was not wrapped in act(...)']; // 该问题在升级react 16.9似乎能解决，先忽略
+  const ignoredMessages = [
+    'test was not wrapped in act(...)', // 该问题在升级react 16.9似乎能解决，先忽略
+    'The width(0) and height(0) of chart should be greater than 0',
+    `You may see this warning because you've called styled inside another component.`, // styled动态生成
+  ];
 
   return (message, ...args) => {
     // 如果环境变量指定安静则不输出打印日志
