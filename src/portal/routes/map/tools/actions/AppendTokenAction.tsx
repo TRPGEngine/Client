@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import _isFunction from 'lodash/Function';
+import _isFunction from 'lodash/isFunction';
 import { Space, InputNumber, Button, Popover } from 'antd';
 
 /**
