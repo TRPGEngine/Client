@@ -14,6 +14,7 @@ module.exports = merge({}, base, {
     hot: true, // 模块热更新，配置HotModuleReplacementPlugin
     inline: true,
     host: '0.0.0.0',
+    disableHostCheck: true,
     port: 8089, // 监听端口号
     https: devSW, // 适用于ssl安全证书网站
     noInfo: true, // 只在热加载错误和警告
