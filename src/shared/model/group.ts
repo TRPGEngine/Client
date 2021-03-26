@@ -41,6 +41,16 @@ export interface GroupActorItem {
   owner?: PlayerUser;
 }
 
+export interface GroupInviteInfo {
+  id: number;
+  uuid: string;
+  group_uuid: string;
+  from_uuid: string;
+  to_uuid: string;
+  is_agree: string;
+  is_refuse: string;
+}
+
 export interface GroupInviteCodeInfo {
   id: number;
   code: string;
@@ -92,6 +102,31 @@ export async function createGroup(
   });
 
   return data.group;
+}
+
+/**
+ * 获取所有待处理的团邀请
+ */
+export async function getAllPendingInvites(): Promise<GroupInviteInfo[]> {
+  const { data } = await request.get(`/group/invite/all`);
+
+  return data.invites ?? [];
+}
+
+/**
+ * 同意团邀请
+ * @param inviteUUID 团邀请UUID
+ */
+export async function agreeGroupInvite(inviteUUID: string): Promise<void> {
+  await request.post(`/group/invite/${inviteUUID}/agree`);
+}
+
+/**
+ * 拒绝团邀请
+ * @param inviteUUID 团邀请UUID
+ */
+export async function refuseGroupInvite(inviteUUID: string): Promise<void> {
+  await request.post(`/group/invite/${inviteUUID}/refuse`);
 }
 
 /**
