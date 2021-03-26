@@ -5,7 +5,7 @@
 export function fileToDataUrl(img: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.addEventListener('load', () => resolve(reader.result?.toString()));
+    reader.addEventListener('load', () => resolve(String(reader.result)));
     reader.addEventListener('error', () => reject(reader.error));
     reader.readAsDataURL(img);
   });
@@ -69,7 +69,7 @@ export async function downloadBlobUrl(blobUrl: string, fileName: string) {
  * 下载Blob文件
  */
 export async function downloadBlob(blob: Blob, fileName: string) {
-  const url = window.URL.createObjectURL(blob);
+  const url = String(URL.createObjectURL(blob));
   downloadBlobUrl(url, fileName);
   URL.revokeObjectURL(url);
 }
