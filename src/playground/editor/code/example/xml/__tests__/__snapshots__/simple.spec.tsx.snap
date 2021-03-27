@@ -77,7 +77,7 @@ exports[`basic snapshot 1`] = `
                   >
                     <textarea
                       class="ant-input"
-                      style="height: -32px; min-height: -16px; max-height: -32px; overflow-y: hidden; overflow-x: hidden;"
+                      style="height: -32px; min-height: -16px; max-height: -32px;"
                     />
                   </div>
                 </div>
@@ -139,7 +139,7 @@ exports[`basic snapshot 1`] = `
             <textarea
               class="ant-input"
               placeholder="人物卡信息"
-              style="height: -32px; min-height: -16px; max-height: -32px; overflow-y: hidden; overflow-x: hidden;"
+              style="height: -32px; min-height: -16px; max-height: -32px;"
             />
           </div>
         </div>
