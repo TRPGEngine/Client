@@ -16,8 +16,8 @@ const config = {
     axios: 'taro-axios',
   },
   env: {
-    TRPG_HOST: JSON.stringify('trpgapi.moonrailgun.com'),
-    PLATFORM: 'mini-program',
+    TRPG_HOST: JSON.stringify('trpgapi.moonrailgun.com:443'),
+    PLATFORM: JSON.stringify('mini-program'),
   },
   sourceRoot: 'src',
   outputRoot: 'dist',

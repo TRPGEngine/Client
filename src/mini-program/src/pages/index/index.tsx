@@ -1,10 +1,8 @@
-import { Component, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { View, Button, Text } from '@tarojs/components';
-import { AtCard } from 'taro-ui';
-import { fetchAllRecruitList } from '@shared/model/trpg';
-
-import { add, minus, asyncAdd } from '../../actions/counter';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, RichText } from '@tarojs/components';
+import { AtCard, AtDivider } from 'taro-ui';
+import { fetchAllRecruitList, RecruitItemType } from '@shared/model/trpg';
+import Taro from '@tarojs/taro';
 
 import './index.less';
 
@@ -18,95 +16,49 @@ import './index.less';
 //
 // #endregion
 
-type PageStateProps = {
-  counter: {
-    num: number;
-  };
-};
-
-type PageDispatchProps = {
-  add: () => void;
-  dec: () => void;
-  asyncAdd: () => any;
-};
-
-type PageOwnProps = {};
-
-type PageState = {};
-
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps;
-
-interface Index {
-  props: IProps;
-}
-
-// @connect(
-//   ({ counter }) => ({
-//     counter,
-//   }),
-//   (dispatch) => ({
-//     add() {
-//       dispatch(add());
-//     },
-//     dec() {
-//       dispatch(minus());
-//     },
-//     asyncAdd() {
-//       dispatch(asyncAdd());
-//     },
-//   })
-// )
-// class Index extends Component {
-//   componentWillReceiveProps(nextProps) {
-//     console.log(this.props, nextProps);
-//   }
-
-//   componentWillUnmount() {}
-
-//   componentDidShow() {}
-
-//   componentDidHide() {}
-
-//   render() {
-//     return (
-//       <View className="index">
-//         <Button className="add_btn" onClick={this.props.add}>
-//           +
-//         </Button>
-//         <Button className="dec_btn" onClick={this.props.dec}>
-//           -
-//         </Button>
-//         <Button className="dec_btn" onClick={this.props.asyncAdd}>
-//           async
-//         </Button>
-//         <View>
-//           <Text>{this.props.counter.num}</Text>
-//         </View>
-//         <View>
-//           <Text>Hello, World</Text>
-//         </View>
-//       </View>
-//     );
-//   }
-// }
-
 const Index: React.FC = () => {
+  const [recruitList, setRecruitList] = useState<RecruitItemType[]>([]);
   useEffect(() => {
-    fetchAllRecruitList().then((reportList) => {
-      console.log(reportList);
+    fetchAllRecruitList()
+      .then((list) => {
+        console.log(list);
+        setRecruitList(list);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
+  const handleClick = useCallback((recruitUUID: string) => {
+    Taro.navigateTo({
+      url: `/pages/recruitDetail/index?recruitUUID=${recruitUUID}`,
     });
   }, []);
 
   return (
-    <View>
-      <AtCard
-        note="小Tips"
-        extra="额外信息"
-        title="这是个标题"
-        thumb="http://www.logoquan.com/upload/list/20180421/logoquan15259400209.PNG"
-      >
-        这也是内容区 可以随意定义功能
-      </AtCard>
+    <View className="root">
+      {recruitList.map((recruit) => {
+        return (
+          <View
+            key={recruit.uuid}
+            style={{
+              marginBottom: 10,
+            }}
+            onClick={() => handleClick(recruit.uuid)}
+          >
+            <AtCard
+              note={recruit.author}
+              extra={recruit.platform}
+              title={recruit.title}
+              thumb="http://www.logoquan.com/upload/list/20180421/logoquan15259400209.PNG"
+            >
+              <RichText nodes={recruit.content} />
+            </AtCard>
+          </View>
+        );
+      })}
+
+      {recruitList.length > 3 && <AtDivider content="没有更多了" />}
     </View>
   );
 };
