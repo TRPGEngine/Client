@@ -50,7 +50,10 @@ const Index: React.FC = () => {
               note={recruit.author}
               extra={recruit.platform}
               title={recruit.title}
-              thumb="http://www.logoquan.com/upload/list/20180421/logoquan15259400209.PNG"
+              icon={{
+                value: 'calendar',
+                color: '#999',
+              }}
             >
               <RichText nodes={recruit.content} />
             </AtCard>
