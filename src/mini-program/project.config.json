@@ -1,6 +1,6 @@
 {
   "miniprogramRoot": "dist/",
-  "projectname": "mini-program",
+  "projectname": "trpg-engine-mini-program",
   "description": "专注于TRPG的即时通讯应用",
   "appid": "wx914fa59ce7b2799f",
   "setting": {
