@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, RichText } from '@tarojs/components';
 import { fetchUserRecruitDetail, RecruitItemType } from '@shared/model/trpg';
 import _isNil from 'lodash/isNil';
-
+import { getFromNow } from '@shared/utils/date-helper';
 import Taro, { useRouter } from '@tarojs/taro';
 import { AtActivityIndicator, AtButton, AtDivider, AtTag } from 'taro-ui';
 
@@ -65,7 +65,10 @@ const Page: React.FC = () => {
           {recruitDetail.platform}
         </AtTag>
       </View>
-      <View className="author">by {recruitDetail.author}</View>
+      <View className="author">
+        <View>{getFromNow(recruitDetail.updatedAt)}</View>
+        <View>by {recruitDetail.author}</View>
+      </View>
 
       <AtDivider />
 
