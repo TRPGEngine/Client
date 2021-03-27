@@ -4,13 +4,13 @@ import _isFunction from 'lodash/isFunction';
  * 用于在不同平台拥有统一方式调用体验
  */
 
-export function buildRegFn<F extends (...args: any[]) => any>(
+export function buildRegFn<F extends (...args: any) => any>(
   name: string,
   defaultFunc?: F
 ) {
   let func: F;
 
-  const get = (...args: Parameters<F>) => {
+  const get = (...args: Parameters<F>): ReturnType<F> => {
     if (!func) {
       if (_isFunction(defaultFunc)) {
         return defaultFunc(...args);
@@ -21,7 +21,7 @@ export function buildRegFn<F extends (...args: any[]) => any>(
     return func(...args);
   };
 
-  const set = (fn: F) => {
+  const set = (fn: F): void => {
     func = fn;
   };
 

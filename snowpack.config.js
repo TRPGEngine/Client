@@ -65,6 +65,7 @@ module.exports = {
     '**/*.@(spec|test).@(js|mjs)',
     '**/src/app/**/*',
     '**/src/appv2/**/*',
+    '**/src/mini-program/**/*',
     '**/src/portal/**/*',
     '**/src/playground/**/*',
   ],

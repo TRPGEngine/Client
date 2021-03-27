@@ -9,7 +9,7 @@ import _isArray from 'lodash/isArray';
 import { useSpring, animated } from 'react-spring';
 import { useMeasure } from 'react-use';
 import type { WritingListGroupItem } from '@redux/types/chat';
-import { useRNStorage } from '@shared/hooks/useRNStorage';
+import { useStorage } from '@shared/hooks/useStorage';
 
 const MOST_DISPLAY_NUM = 3; // 最多在summary中显示的人数
 
@@ -65,7 +65,7 @@ interface Props {
 }
 
 const ChatWritingIndicatorInner: React.FC<Props> = TMemo((props) => {
-  const [showDetail, setShowDetail] = useRNStorage(
+  const [showDetail, setShowDetail] = useStorage(
     'chat-writing-indicator-show',
     false
   );

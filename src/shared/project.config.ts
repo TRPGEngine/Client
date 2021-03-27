@@ -3,6 +3,7 @@ import _isString from 'lodash/isString';
 import { getDefaultImage } from './assets';
 import type { MsgStyleType } from './types/chat';
 import url from 'url';
+import { generateShorterUrl } from './utils/url-helper';
 
 const environment = process.env.NODE_ENV || 'development';
 const platform = process.env.PLATFORM || 'web';
@@ -219,7 +220,8 @@ const file: ProjectConfig['file'] = {
     return config.defaultImg.file.default;
   },
 };
-file.url = `${file.protocol}://${file.host}:${file.port}`;
+
+file.url = generateShorterUrl(file);
 
 // 获取基于API的绝对路径
 file.getAbsolutePath = function getAbsolutePath(path?: string) {
