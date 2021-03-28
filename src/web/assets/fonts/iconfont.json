@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "18125962",
+      "name": "Calendar alt 1",
+      "font_class": "Calendaralt1",
+      "unicode": "e867",
+      "unicode_decimal": 59495
+    },
+    {
+      "icon_id": "7204913",
+      "name": "Web",
+      "font_class": "Web",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "544922",
+      "name": "record",
+      "font_class": "record",
+      "unicode": "e8d1",
+      "unicode_decimal": 59601
+    },
+    {
       "icon_id": "5315767",
       "name": "show",
       "font_class": "show",

@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getGroupPanelIcon calendar 1`] = `
+<Iconfont>
+  
+</Iconfont>
+`;
+
+exports[`getGroupPanelIcon channel 1`] = `
+<styled.div>
+  #
+</styled.div>
+`;
+
+exports[`getGroupPanelIcon note 1`] = `
+<Iconfont>
+  
+</Iconfont>
+`;
+
+exports[`getGroupPanelIcon voicechannel 1`] = `
+<Iconfont>
+  
+</Iconfont>
+`;
+
+exports[`getGroupPanelIcon website 1`] = `
+<Iconfont>
+  
+</Iconfont>
+`;

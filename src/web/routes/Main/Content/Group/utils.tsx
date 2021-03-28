@@ -14,6 +14,12 @@ const DefaultPanelIconContainer = styled.div`
 export function getGroupPanelIcon(panelType: GroupPanelType) {
   if (panelType === 'voicechannel') {
     return <Iconfont>&#xe664;</Iconfont>;
+  } else if (panelType === 'note') {
+    return <Iconfont>&#xe621;</Iconfont>;
+  } else if (panelType === 'website') {
+    return <Iconfont>&#xe651;</Iconfont>;
+  } else if (panelType === 'calendar') {
+    return <Iconfont>&#xe867;</Iconfont>;
   }
 
   return <DefaultPanelIconContainer>#</DefaultPanelIconContainer>;
