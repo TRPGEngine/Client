@@ -25,6 +25,7 @@ import moment from 'moment';
 import styled from 'styled-components';
 import shortid from 'shortid';
 import { Iconfont } from '../Iconfont';
+import { CommonPanel } from './CommonPanel';
 
 const DateFormat = 'YYYY-MM-DD';
 
@@ -54,7 +55,7 @@ interface CalendarPanelData extends CommonGroupPanelData {
 
 export const CalendarPanel: React.FC<CommonPanelProps> = TMemo((props) => {
   const { panel } = props;
-  const { uuid: panelUUID } = panel;
+  const { uuid: panelUUID, name: panelName } = panel;
   const groupUUID = useCurrentGroupUUID();
   const [refetchIndex, { inc: refetchFn }] = useNumber();
   const { t } = useTranslation();
@@ -197,38 +198,40 @@ export const CalendarPanel: React.FC<CommonPanelProps> = TMemo((props) => {
   }
 
   return (
-    <Root>
-      <Calendar
-        dateFullCellRender={dateFullCellRender}
-        onSelect={setSelectedCalendarDate}
-      />
+    <CommonPanel header={panelName}>
+      <Root>
+        <Calendar
+          dateFullCellRender={dateFullCellRender}
+          onSelect={setSelectedCalendarDate}
+        />
 
-      <CalendarDetailList>
-        {selectedCalendarDataList.map((item, i) => {
-          return (
-            <div key={i} title={item.note}>
-              {item.note}
+        <CalendarDetailList>
+          {selectedCalendarDataList.map((item, i) => {
+            return (
+              <div key={i} title={item.note}>
+                {item.note}
 
-              {typeof item._id === 'string' && (
-                <Button
-                  type="link"
-                  onClick={() => {
-                    showAlert({
-                      message: t('确认要删除么?'),
-                      onConfirm: () => {
-                        removeCalendarSchedule(item._id);
-                      },
-                    });
-                  }}
-                >
-                  <Iconfont>&#xe76b;</Iconfont>
-                </Button>
-              )}
-            </div>
-          );
-        })}
-      </CalendarDetailList>
-    </Root>
+                {typeof item._id === 'string' && (
+                  <Button
+                    type="link"
+                    onClick={() => {
+                      showAlert({
+                        message: t('确认要删除么?'),
+                        onConfirm: () => {
+                          removeCalendarSchedule(item._id);
+                        },
+                      });
+                    }}
+                  >
+                    <Iconfont>&#xe76b;</Iconfont>
+                  </Button>
+                )}
+              </div>
+            );
+          })}
+        </CalendarDetailList>
+      </Root>
+    </CommonPanel>
   );
 });
 CalendarPanel.displayName = 'CalendarPanel';
