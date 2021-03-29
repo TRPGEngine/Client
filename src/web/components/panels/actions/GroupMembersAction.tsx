@@ -14,10 +14,18 @@ interface Props {
 }
 export const GroupMembersAction: React.FC<Props> = TMemo((props) => {
   const { groupUUID } = props;
-  const { rightPanelName, setRightPanel } = useRightPanelContext();
+  const {
+    rightPanelName,
+    setRightPanel,
+    resetRightPanel,
+  } = useRightPanelContext();
   const handleClick = useCallback(() => {
-    setRightPanel(ACTION_NAME, <GroupMembers groupUUID={groupUUID} />);
-  }, [setRightPanel, groupUUID]);
+    if (rightPanelName === ACTION_NAME) {
+      resetRightPanel();
+    } else {
+      setRightPanel(ACTION_NAME, <GroupMembers groupUUID={groupUUID} />);
+    }
+  }, [rightPanelName, setRightPanel, resetRightPanel, groupUUID]);
 
   return (
     <Iconfont active={rightPanelName === ACTION_NAME} onClick={handleClick}>

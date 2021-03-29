@@ -5,12 +5,14 @@ interface RightPanelContextProps {
   rightPanel: React.ReactNode;
   rightPanelName: string;
   setRightPanel: (name: string, node: React.ReactNode) => void;
+  resetRightPanel: () => void;
 }
 
 const RightPanelContext = React.createContext<RightPanelContextProps>({
   rightPanel: null,
   rightPanelName: '',
   setRightPanel: () => {},
+  resetRightPanel: () => {},
 });
 
 /**
@@ -26,11 +28,17 @@ export const RightPanelContextProvider: React.FC = TMemo((props) => {
     setRightPanelNode(node);
   }, []);
 
+  const resetRightPanel = useCallback(() => {
+    setRightPanelName('');
+    setRightPanelNode(null);
+  }, []);
+
   const value = useMemo(
     () => ({
       rightPanel,
       rightPanelName,
       setRightPanel,
+      resetRightPanel,
     }),
     [rightPanel, rightPanelName]
   );
