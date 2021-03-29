@@ -9,14 +9,15 @@ const ACTION_NAME = 'group-members';
 /**
  * 用户列表
  */
-export const GroupMembersAction: React.FC<{
+interface Props {
   groupUUID: string;
-}> = TMemo((props) => {
+}
+export const GroupMembersAction: React.FC<Props> = TMemo((props) => {
   const { groupUUID } = props;
   const { rightPanelName, setRightPanel } = useRightPanelContext();
   const handleClick = useCallback(() => {
     setRightPanel(ACTION_NAME, <GroupMembers groupUUID={groupUUID} />);
-  }, [setRightPanel]);
+  }, [setRightPanel, groupUUID]);
 
   return (
     <Iconfont active={rightPanelName === ACTION_NAME} onClick={handleClick}>
