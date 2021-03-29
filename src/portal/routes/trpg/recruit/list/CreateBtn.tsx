@@ -12,7 +12,7 @@ import {
   createRecruit,
   RecruitPlatform,
   RecruitContactType,
-} from '@portal/model/trpg';
+} from '@shared/model/trpg';
 import { handleError } from '@web/utils/error';
 
 const RecruitCreateInitialValues = {

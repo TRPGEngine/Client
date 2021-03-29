@@ -1,0 +1,10 @@
+# Document: https://docs.github.com/cn/code-security/supply-chain-security/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "wangeditor"

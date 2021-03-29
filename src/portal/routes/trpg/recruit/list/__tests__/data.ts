@@ -1,7 +1,7 @@
 import uuid from 'uuid/v1';
 import { lorem } from '@test/lorem';
 import { getRandomItem } from '@shared/utils/array-helper';
-import type { RecruitItemType } from '@portal/model/trpg';
+import type { RecruitItemType } from '@shared/model/trpg';
 import moment from 'moment';
 
 /**

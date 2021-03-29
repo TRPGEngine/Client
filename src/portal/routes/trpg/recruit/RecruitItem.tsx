@@ -5,7 +5,7 @@ import {
   RecruitItemType,
   recruitPlatformMap,
   recruitContactTypeMap,
-} from '@portal/model/trpg';
+} from '@shared/model/trpg';
 import { Divider, Tooltip, Tag } from 'antd';
 import { ColorTag } from '@web/components/ColorTag';
 import { getFromNow, getFullDate } from '@shared/utils/date-helper';

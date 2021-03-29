@@ -1,5 +1,5 @@
 import { TMemo } from '@shared/components/TMemo';
-import { useRNStorage } from '@shared/hooks/useRNStorage';
+import { useStorage } from '@shared/hooks/useStorage';
 import { ANNOUNCEMENT_BAR_CLOSE } from '@shared/utils/consts';
 import { switchToAppVersion } from '@web/utils/debug-helper';
 import { Typography } from 'antd';
@@ -34,7 +34,7 @@ const Content = styled.div`
 const announcementId = 1; // 每次新的公告都应当+1
 const announcementCloseKey = `${ANNOUNCEMENT_BAR_CLOSE}$${announcementId}`;
 export const AnnouncementBar: React.FC = TMemo(() => {
-  const [appBannerClose, setAppBannerClose] = useRNStorage(
+  const [appBannerClose, setAppBannerClose] = useStorage(
     announcementCloseKey,
     false,
     true

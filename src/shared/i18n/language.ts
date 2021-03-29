@@ -1,10 +1,10 @@
 import type { LanguageDetectorAsyncModule } from 'i18next';
-import rnStorage from '@shared/api/rn-storage.api';
-import { useRNStorage } from '@shared/hooks/useRNStorage';
+import { useStorage } from '@shared/hooks/useStorage';
 import { useRef, useMemo, useCallback } from 'react';
 import _isNil from 'lodash/isNil';
 import { setLanguage as setI18NLanguage } from './index';
 import { LANGUAGE_KEY } from '@shared/utils/consts';
+import { getStorage } from '@shared/manager/storage';
 
 export const defaultLanguage = 'zh-CN';
 
@@ -12,14 +12,14 @@ export const defaultLanguage = 'zh-CN';
  * 获取当前语言
  */
 export async function getLanguage(): Promise<string> {
-  return await rnStorage.get(LANGUAGE_KEY, defaultLanguage);
+  return await getStorage().get(LANGUAGE_KEY, defaultLanguage);
 }
 
 /**
  * 当前语言管理hook
  */
 export function useLanguage() {
-  const [language, set] = useRNStorage(LANGUAGE_KEY, defaultLanguage, true);
+  const [language, set] = useStorage(LANGUAGE_KEY, defaultLanguage, true);
 
   const originLanguageRef = useRef<string>();
 
@@ -51,7 +51,7 @@ export function useLanguage() {
  * @param lang 语言代码
  */
 export async function saveLanguage(lang: string) {
-  await rnStorage.save(LANGUAGE_KEY, lang);
+  await getStorage().save(LANGUAGE_KEY, lang);
 }
 
 /**

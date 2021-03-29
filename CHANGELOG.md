@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.24](https://github.com/TRPGEngine/Client/compare/v0.5.23...v0.5.24) (2021-03-29)
+
+
+### Features
+
+* **taro:** 小程序招募列表与详情 ([6fb7e82](https://github.com/TRPGEngine/Client/commit/6fb7e8289e90d5cf38dfbb18808a38e805a3e6d0))
+* **web:** 团邀请管理 ([43e31bd](https://github.com/TRPGEngine/Client/commit/43e31bdc633a2236f2f9a8749203bc249a0d16ba))
+* **web:** 增加了更多的面板图标 ([52f71aa](https://github.com/TRPGEngine/Client/commit/52f71aa27fcf3d0b539146cbe7a753a13faea1c5))
+* **web:** 日历面板增加标题 ([ad1c87e](https://github.com/TRPGEngine/Client/commit/ad1c87e79972f8084bbf87adab13845b27a0eeca))
+* **web:** 语音设置增加测试麦克风 ([399e565](https://github.com/TRPGEngine/Client/commit/399e56533f35579c29db5265ccdf067511c7b817))
+
 ### [0.5.23](https://github.com/TRPGEngine/Client/compare/v0.5.22...v0.5.23) (2021-03-22)
 
 

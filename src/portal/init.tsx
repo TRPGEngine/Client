@@ -4,6 +4,8 @@ import { setErrorHook, setTokenGetter } from '@shared/manager/request';
 import { navToLoginPage } from './utils/request';
 import { getPortalJWT } from './utils/auth';
 import { initAnalytics } from '@web/utils/analytics-helper';
+import { setStorage } from '@shared/manager/storage';
+import rnStorage from '@shared/api/rn-storage.api';
 
 initAnalytics();
 
@@ -41,3 +43,5 @@ setTokenGetter(() => {
   // 因为跨webview写入比较麻烦
   return Promise.resolve(getPortalJWT());
 });
+
+setStorage(() => rnStorage);

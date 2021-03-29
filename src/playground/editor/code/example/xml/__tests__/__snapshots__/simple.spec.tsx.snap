@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic snapshot 1`] = `
+<div>
+  <div
+    class="sc-fzpans jRldgn"
+    style="position: relative;"
+  >
+    <iframe
+      style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
+    />
+    <div
+      class="sc-AxgMl hoELXQ"
+    >
+      <div
+        class="ant-row sc-AxheI cocUJO"
+        type="flex"
+      >
+        <div
+          class="ant-col ant-col-24"
+        >
+          <form
+            class="ant-form ant-form-vertical sc-Axmtr hBVTto"
+          >
+            <div
+              class="ant-row ant-form-item"
+            >
+              <div
+                class="ant-col ant-col-6 ant-form-item-label"
+              >
+                <label
+                  class="ant-form-item-required"
+                  title="名称"
+                >
+                  名称
+                </label>
+              </div>
+              <div
+                class="ant-col ant-col-18 ant-form-item-control"
+              >
+                <div
+                  class="ant-form-item-control-input"
+                >
+                  <div
+                    class="ant-form-item-control-input-content"
+                  >
+                    <input
+                      class="ant-input"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="ant-row ant-form-item"
+            >
+              <div
+                class="ant-col ant-col-6 ant-form-item-label"
+              >
+                <label
+                  class=""
+                  title="描述"
+                >
+                  描述
+                </label>
+              </div>
+              <div
+                class="ant-col ant-col-18 ant-form-item-control"
+              >
+                <div
+                  class="ant-form-item-control-input"
+                >
+                  <div
+                    class="ant-form-item-control-input-content"
+                  >
+                    <textarea
+                      class="ant-input"
+                      style="height: -32px; min-height: -16px; max-height: -32px;"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div
+          class="ant-col ant-col-24"
+          style="text-align: center; margin-bottom: 10px;"
+        >
+          <div>
+            <div
+              style="cursor: pointer; display: inline-block; position: relative;"
+            >
+              <input
+                accept="image/*"
+                style="display: none;"
+                type="file"
+              />
+              <span
+                class="ant-avatar ant-avatar-circle ant-avatar-image ant-avatar-icon"
+                style="width: 64px; height: 64px; line-height: 64px; font-size: 25.6px; cursor: inherit; user-select: none;"
+              >
+                <img
+                  src="undefined"
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        _childrenel="[object Object]"
+        _el="[object Object]"
+        _name="BaseAttr"
+        class="ant-col ant-col-24"
+      >
+        <div
+          class="ant-row sc-AxjAm tJNTL tag-row"
+        >
+          <div
+            class="ant-col ant-col-6"
+          >
+            <div
+              class="sc-AxirZ gXNkLn"
+            >
+              <pre
+                class="sc-AxiKw bemSeT"
+              >
+                人物卡信息
+              </pre>
+               
+            </div>
+          </div>
+          <div
+            class="ant-col ant-col-18"
+          >
+            <textarea
+              class="ant-input"
+              placeholder="人物卡信息"
+              style="height: -32px; min-height: -16px; max-height: -32px;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

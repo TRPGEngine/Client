@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getDefaultImage snapshot 1`] = `
+Object {
+  "actor": "",
+  "chatimg_fail": "img_fail.png",
+  "file": Object {
+    "default": "default.png",
+    "excel": "excel.png",
+    "pdf": "pdf.png",
+    "pic": "pic.png",
+    "ppt": "ppt.png",
+    "txt": "txt.png",
+    "word": "word.png",
+  },
+  "getGroup": [Function],
+  "getUser": [Function],
+  "group": "gugugu1.png",
+  "robot": "robot_dark.svg",
+  "trpgsystem": "system_notice.png",
+  "user": "gugugu1.png",
+}
+`;

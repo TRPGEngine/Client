@@ -1,0 +1,19 @@
+{
+	"projectname": "trpg-engine-mini-program",
+	"description": "专注于TRPG的即时通讯应用",
+	"appid": "1111637142",
+	"setting": {
+		"newFeature": true,
+		"minified": true,
+		"uploadWithSourceMap": true,
+		"uglifyFileName": true,
+		"postcss": true
+	},
+	"qqappid": "1111637142",
+	"scripts": {
+		"beforeCompile": "",
+		"beforePreview": "",
+		"beforeUpload": ""
+	},
+	"condition": {}
+}

@@ -38,6 +38,8 @@
     "./cypress/"
   ],
   "exclude": [
-    "./src/app/"
+    "./src/app/",
+    "./src/appv2/",
+    "./src/mini-program/"
   ]
 }

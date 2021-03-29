@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { ActionButton } from '@portal/components/ActionButton';
 import history from '@portal/history';
-import { fetchOwnReport } from '@portal/model/trpg';
+import { fetchOwnReport } from '@shared/model/trpg';
 import { ListItem } from '@portal/components/ListItem';
 import { PortraitContainer } from '@portal/components/PortraitContainer';
 import type { GameReport } from '@shared/model/trpg';

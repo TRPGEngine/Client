@@ -1,6 +1,6 @@
 import { builtinFunc } from '../builtinFunc';
 
-const { AND, SUM } = builtinFunc;
+const { AND, SUM, _inRange } = builtinFunc;
 
 describe('builtinFunc', () => {
   describe('AND', () => {
@@ -27,6 +27,17 @@ describe('builtinFunc', () => {
       [['', 2, 7], 9],
     ])('%s => %s', (params, result) => {
       expect(SUM(...params)).toBe(result);
+    });
+  });
+
+  describe('_inRange', () => {
+    test.each<[any, boolean]>([
+      [[10, 1, 20], true],
+      [[30, 1, 20], false],
+      [[1, 1, 20], true],
+      [[20, 1, 20], false],
+    ])('%s => %s', (params, result) => {
+      expect(_inRange(params[0], params[1], params[2])).toBe(result);
     });
   });
 });

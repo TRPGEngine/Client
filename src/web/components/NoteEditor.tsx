@@ -10,6 +10,10 @@ interface Props {
   onChange: (html: string) => void;
   onSave: (html: string) => void;
 }
+
+/**
+ * @deprecated
+ */
 class NoteEditor extends React.Component<Props> {
   constructor(props) {
     super(props);
