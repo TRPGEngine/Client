@@ -9,10 +9,9 @@ interface Props {
   style?: React.CSSProperties;
   header?: React.ReactNode;
   headerActions?: React.ReactNode[];
-  rightPanel?: React.ReactNode;
 }
 export const ChatContainer: React.FC<Props> = TMemo((props) => {
-  const { converseUUID, style, header, headerActions, rightPanel } = props;
+  const { converseUUID, style, header, headerActions } = props;
   const converse = useConverseDetail(converseUUID);
   useSelectConverse(converseUUID);
 
@@ -21,7 +20,6 @@ export const ChatContainer: React.FC<Props> = TMemo((props) => {
       style={style}
       headerPrefix={['user', 'system'].includes(converse?.type!) ? '@' : '#'}
       header={header ?? converse?.name}
-      rightPanel={rightPanel}
       headerActions={headerActions}
     >
       <ChatBody converseUUID={converseUUID} />
