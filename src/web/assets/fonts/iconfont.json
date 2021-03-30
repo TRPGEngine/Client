@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "16852632",
+      "name": "聊天记录",
+      "font_class": "chatRecord",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
       "icon_id": "18125962",
       "name": "Calendar alt 1",
       "font_class": "Calendaralt1",
