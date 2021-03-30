@@ -334,6 +334,10 @@ export const MsgItem = styled.div`
     flex-direction: row;
     align-items: center;
 
+    &.nopadding {
+      padding: 0;
+    }
+
     .name {
       ${(props) => props.theme.mixins.oneline};
       color: #8e97a1;
