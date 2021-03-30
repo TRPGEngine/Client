@@ -1,0 +1,237 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageItem testcase 0 1`] = `
+<div>
+  <div
+    class="sc-AxhCb eDdIFT normal bubble"
+  >
+    <div
+      class="sc-fzoYkl ivWgOR"
+    >
+      <span>
+        中午 12:00
+      </span>
+    </div>
+    <div
+      class="profile"
+    >
+      <span
+        class="name"
+      >
+        Tester
+      </span>
+      <span
+        class="time"
+      >
+        12:00:00
+      </span>
+    </div>
+    <div
+      class="content"
+    >
+      <div
+        class="avatar"
+      >
+        <span
+          class="ant-avatar ant-avatar-circle"
+          name="Tester"
+          style="width: 38px; height: 38px; line-height: 38px; font-size: 15.200000000000001px; cursor: inherit; user-select: none; background-color: rgb(211, 84, 0);"
+        >
+          <span
+            class="ant-avatar-string"
+            style="line-height: 38px; transform: scale(1) translateX(-50%);"
+          >
+            T
+          </span>
+        </span>
+      </div>
+      <div
+        class="body"
+      >
+        <pre
+          class="sc-AxjAm bmodJx bubble"
+        >
+          <pre
+            style="display: inline;"
+          >
+            Any Message
+          </pre>
+        </pre>
+        <div
+          class="operation"
+        >
+          <i
+            class="iconfont"
+          >
+            
+          </i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MessageItem testcase 1 1`] = `
+<div>
+  <div
+    class="sc-AxhCb eDdIFT normal bubble"
+  >
+    <div
+      class="profile"
+    >
+      <span
+        class="name"
+      />
+      <span
+        class="time"
+      >
+        12:00:00
+      </span>
+    </div>
+    <div
+      class="content"
+    >
+      <div
+        class="avatar"
+      >
+        <span
+          class="ant-avatar ant-avatar-circle"
+          name=""
+          style="width: 38px; height: 38px; line-height: 38px; font-size: 15.200000000000001px; cursor: inherit; user-select: none; background-color: rgb(255, 255, 255);"
+        >
+          <span
+            class="ant-avatar-string"
+            style="line-height: 38px; transform: scale(1) translateX(-50%);"
+          />
+        </span>
+      </div>
+      <div
+        class="body"
+      >
+        <pre
+          class="sc-AxjAm bmodJx bubble"
+        >
+          <pre
+            style="display: inline;"
+          >
+            Any Message
+          </pre>
+        </pre>
+        <div
+          class="operation"
+        >
+          <i
+            class="iconfont"
+          >
+            
+          </i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MessageItem testcase 2 1`] = `
+<div>
+  <div
+    class="sc-AxhCb eDdIFT omitSenderInfo normal bubble"
+  >
+    <div
+      class="content"
+    >
+      <div
+        class="avatar"
+      />
+      <div
+        class="body"
+      >
+        <pre
+          class="sc-AxjAm bmodJx bubble"
+        >
+          <pre
+            style="display: inline;"
+          >
+            Any Message
+          </pre>
+        </pre>
+        <div
+          class="operation"
+        >
+          <i
+            class="iconfont"
+          >
+            
+          </i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MessageItem testcase 3 1`] = `
+<div>
+  <div
+    class="sc-AxhCb eDdIFT normal bubble"
+  >
+    <div
+      class="profile"
+    >
+      <span
+        class="name"
+      >
+        Tester
+      </span>
+      <span
+        class="time"
+      >
+        12:00:00
+      </span>
+    </div>
+    <div
+      class="content"
+    >
+      <div
+        class="avatar"
+      >
+        <span
+          class="ant-avatar ant-avatar-circle"
+          name="Tester"
+          style="width: 38px; height: 38px; line-height: 38px; font-size: 15.200000000000001px; cursor: inherit; user-select: none; background-color: rgb(211, 84, 0);"
+        >
+          <span
+            class="ant-avatar-string"
+            style="line-height: 38px; transform: scale(1) translateX(-50%);"
+          >
+            T
+          </span>
+        </span>
+      </div>
+      <div
+        class="body"
+      >
+        <pre
+          class="sc-AxjAm bmodJx bubble"
+        >
+          <pre
+            style="display: inline;"
+          >
+            Any Message
+          </pre>
+        </pre>
+        <div
+          class="operation"
+        >
+          <i
+            class="iconfont"
+          >
+            
+          </i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

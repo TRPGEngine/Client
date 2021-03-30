@@ -11,8 +11,8 @@ import { setUserSettings } from '@redux/actions/settings';
 import type { MsgStyleType } from '@shared/types/chat';
 import { MessageItem } from '@shared/components/message/MessageItem';
 import styled from 'styled-components';
-import type { MsgPayload } from '@redux/types/chat';
 import { useCurrentUserUUID } from '@redux/hooks/user';
+import { buildMsgPayload } from '@shared/utils/data-helper';
 
 const MsgPreviewViewContainer = styled.div`
   max-width: 360px;
@@ -21,20 +21,6 @@ const MsgPreviewViewContainer = styled.div`
   padding: 10px;
   margin-bottom: 16px;
 `;
-
-function buildMsgPayload(payload: Partial<MsgPayload>): MsgPayload {
-  return {
-    type: 'normal',
-    uuid: '',
-    sender_uuid: '',
-    message: '',
-    is_public: false,
-    is_group: false,
-    date: new Date().toISOString(),
-    revoke: false,
-    ...payload,
-  };
-}
 
 const MsgPreviewView: React.FC = TMemo(() => {
   const sender_uuid = useCurrentUserUUID();

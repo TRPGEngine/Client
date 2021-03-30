@@ -284,6 +284,7 @@
     "less": "^3.10.3",
     "less-loader": "^7.1.0",
     "lint-staged": "^10.2.11",
+    "mockdate": "^3.0.5",
     "node-sass": "^4.14.1",
     "plugin-error": "^1.0.1",
     "prettier": "^2.2.1",

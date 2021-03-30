@@ -2,6 +2,7 @@ import type { GroupActorType } from '@src/shared/redux/types/group';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import type { PlayerUser } from '@shared/model/player';
+import type { MsgPayload } from '@redux/types/chat';
 
 /**
  * 数据相关帮助函数
@@ -57,4 +58,18 @@ export function getUserName(
   }
 
   return userInfo?.nickname || userInfo?.username || '';
+}
+
+export function buildMsgPayload(payload: Partial<MsgPayload>): MsgPayload {
+  return {
+    type: 'normal',
+    uuid: '',
+    sender_uuid: '',
+    message: '',
+    is_public: false,
+    is_group: false,
+    date: new Date().toISOString(),
+    revoke: false,
+    ...payload,
+  };
 }
