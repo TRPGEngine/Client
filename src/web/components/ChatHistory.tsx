@@ -6,12 +6,15 @@ import LoadingSpinner from './LoadingSpinner';
 import styled from 'styled-components';
 import { MessageItem } from '@shared/components/message/MessageItem';
 import { MessageItemConfigContextProvider } from '@shared/components/message/MessageItemConfigContext';
+import _get from 'lodash/get';
+import { shouleEmphasizeTime } from '@shared/utils/date-helper';
 
 const Container = styled.div`
   padding: 10px;
 `;
 
 interface Props {
+  groupUUID: string;
   converseUUID: string;
 }
 
@@ -21,8 +24,10 @@ const SIZE = 25;
  * 先实现团聊天记录
  */
 export const ChatHistory: React.FC<Props> = TMemo((props) => {
+  const { groupUUID, converseUUID } = props;
   const { loading, error, logs, page, changePage, count } = useChatHistory(
-    props.converseUUID,
+    groupUUID,
+    converseUUID,
     SIZE
   );
 
@@ -45,14 +50,27 @@ export const ChatHistory: React.FC<Props> = TMemo((props) => {
 
   return (
     <MessageItemConfigContextProvider
-      config={{ operation: false, popover: false }}
+      config={{
+        operation: false,
+        popover: false,
+        showAvatar: false,
+        showInlineTime: false,
+      }}
     >
       <Container>
         {paginationEl}
         {loading && <LoadingSpinner />}
-        {logs.map((log) => {
+        {logs.map((log, index, arr) => {
+          const prevDate =
+            index < arr.length - 1 ? _get(arr, [index - 1, 'date']) : 0;
+          const emphasizeTime = shouleEmphasizeTime(prevDate, log.date);
+
           return (
-            <MessageItem key={log.uuid} emphasizeTime={false} data={log} />
+            <MessageItem
+              key={log.uuid}
+              emphasizeTime={emphasizeTime}
+              data={log}
+            />
           );
         })}
         {paginationEl}

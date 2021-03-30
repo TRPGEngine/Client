@@ -20,7 +20,7 @@ export const UserConversePanel: React.FC = TMemo(() => {
 
   return (
     <Root>
-      <ChatContainer converseUUID={converseUUID} />
+      <ChatContainer converseType="user" converseUUID={converseUUID} />
     </Root>
   );
 });

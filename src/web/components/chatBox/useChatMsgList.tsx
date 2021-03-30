@@ -164,7 +164,8 @@ export function useChatMsgList(converseUUID: string) {
       const date = item.date;
       const emphasizeTime = shouleEmphasizeTime(prevDate, date);
 
-      // 是否隐藏发送者信息
+      // 当消息类型为合并模式且上一条消息是同一个用户
+      // 此时隐藏发送者头像
       // 强调时间的信息永远不忽略发送者信息
       const omitSenderInfo =
         msgStyleCombine === true &&

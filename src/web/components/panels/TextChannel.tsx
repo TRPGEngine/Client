@@ -49,6 +49,7 @@ export const TextChannel: React.FC<CommonPanelProps> = TMemo((props) => {
         <GroupActorSelector key="actor" groupUUID={groupInfo.uuid} />,
       ]}
       converseUUID={panel.target_uuid}
+      converseType="channel"
     />
   );
 });

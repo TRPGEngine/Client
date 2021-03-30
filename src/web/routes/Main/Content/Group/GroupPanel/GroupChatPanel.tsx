@@ -30,6 +30,7 @@ export const GroupChatPanel: React.FC<GroupChatPanelProps> = TMemo((props) => {
       <ChatContainer
         style={{ flex: 1 }}
         converseUUID={groupUUID}
+        converseType="group"
         headerActions={[
           <GroupActorSelector key="actor" groupUUID={groupUUID} />,
           <GroupMembersAction key="members" groupUUID={groupUUID} />,
