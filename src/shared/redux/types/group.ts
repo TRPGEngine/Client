@@ -33,6 +33,7 @@ export interface GroupDetail {
   background_image_url: string;
   welcome_msg_payload: MsgPayload;
   allow_quick_dice: boolean;
+  disable_system_notify_on_actor_updated: boolean;
 }
 
 type GroupChannelVisible = 'all' | 'manager' | 'assign';
