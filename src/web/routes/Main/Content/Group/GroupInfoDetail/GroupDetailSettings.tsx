@@ -31,6 +31,7 @@ export const GroupDetailSettings: React.FC<GroupDetailSettings> = TMemo(
       try {
         await updateGroupDetail(groupUUID, editMap);
         showToasts(t('更新成功', 'success'));
+        resetEditData();
       } catch (err) {
         showToasts(t('失败') + err, 'error');
       }
