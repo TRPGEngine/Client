@@ -9,6 +9,7 @@ android/gradle.properties
 .snowpack/
 snowpack.crt
 snowpack.key
+stats.json
 
 # Cypress
 cypress/videos/

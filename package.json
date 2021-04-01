@@ -16,6 +16,7 @@
     "build:pro": "cross-env NODE_ENV=production npm run build:main && npm run clean:sourcemap",
     "build:report": "cross-env npm_config_report=true npm run build:pro",
     "build:dll": "webpack --config build/config/webpack.dll.config.js",
+    "build:stats": "cross-env NODE_ENV=production npm run build:main -- --profile --json > stats.json",
     "smbrowser:dev": "cross-env NODE_ENV=development electron ./build/electron/entry.js",
     "smbrowser": "electron ./build/electron/entry.js",
     "smbrowser:build": "electron-builder -c ./build/config/builder.config.js",
