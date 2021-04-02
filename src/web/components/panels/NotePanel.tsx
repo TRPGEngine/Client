@@ -61,7 +61,7 @@ export const NotePanel: React.FC<CommonPanelProps> = TMemo((props) => {
         headerSuffix={noteEditBtn}
       >
         <div style={{ padding: 10 }}>
-          <Previewer value={value.data as any} />
+          <Previewer nodes={value.data as any} />
         </div>
       </CommonPanel>
     );
