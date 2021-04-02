@@ -20,7 +20,7 @@ import LoadingSpinner from '@web/components/LoadingSpinner';
 interface Props {}
 export const SharedActorList: React.FC<Props> = TMemo(() => {
   const [sharedActors, setSharedActors] = useState<ActorType[]>([]);
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useTRPGDispatch();
@@ -87,6 +87,8 @@ export const SharedActorList: React.FC<Props> = TMemo(() => {
         <Pagination
           size="small"
           current={page}
+          hideOnSinglePage={true}
+          showSizeChanger={false}
           onChange={(page) => setPage(page)}
           disabled={isLoading}
           total={count}
