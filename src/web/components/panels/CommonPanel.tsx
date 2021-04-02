@@ -24,6 +24,7 @@ const Main = styled.div`
   display: flex;
   flex-direction: row;
   overflow: auto;
+  position: relative;
 `;
 
 const Content = styled.div`
@@ -40,7 +41,9 @@ const RightPanel = styled.div`
   overflow: auto;
 
   ${(props) =>
-    props.theme.mixins.mobile('position: absolute;height: 100%;right: 0;')}
+    props.theme.mixins.mobile(
+      'position: absolute; top: 0; bottom: 0;right: 0;'
+    )}
 `;
 
 interface CommonPanelProps {
