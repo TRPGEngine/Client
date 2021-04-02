@@ -40,6 +40,8 @@ export const ChatHistory: React.FC<Props> = TMemo((props) => {
         total={count}
         onChange={changePage}
         pageSize={SIZE}
+        hideOnSinglePage={true}
+        showSizeChanger={false}
       />
     );
   }, [page, count, changePage]);
