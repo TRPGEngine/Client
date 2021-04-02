@@ -84,6 +84,11 @@ export const routes: RouteConfig[] = [
     component: TLoadable(() => import('@portal/routes/note/create')),
   },
   {
+    title: '预览笔记',
+    path: '/note/:noteUUID',
+    component: TLoadable(() => import('@portal/routes/note/preview')),
+  },
+  {
     title: '下载App',
     path: '/deploy',
     component: TLoadable(() => import('@portal/routes/deploy')),
