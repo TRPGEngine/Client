@@ -2,8 +2,8 @@ import _isObject from 'lodash/isObject';
 import _get from 'lodash/get';
 import _isNull from 'lodash/isNull';
 import _isNil from 'lodash/isNil';
-import rnStorage from '@shared/api/rn-storage.api';
 import jwtDecode from 'jwt-decode';
+import { getStorage } from '@shared/manager/storage';
 
 /**
  * 获取完整jwt字符串的载荷信息(尝试解析json)
@@ -28,7 +28,8 @@ let _userJWT: string | null = null;
  */
 export async function setUserJWT(jwt: string): Promise<void> {
   _userJWT = jwt; // 更新内存中的缓存
-  await rnStorage.set('jsonwebtoken', jwt);
+
+  await getStorage().set('jsonwebtoken', jwt);
 }
 
 /**
@@ -36,7 +37,7 @@ export async function setUserJWT(jwt: string): Promise<void> {
  */
 export async function getUserJWT(): Promise<string> {
   if (_isNull(_userJWT)) {
-    const jwt = await rnStorage.get('jsonwebtoken');
+    const jwt = await getStorage().get('jsonwebtoken');
     _userJWT = jwt; // 将其缓存到内存中
 
     return jwt;
