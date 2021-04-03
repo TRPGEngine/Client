@@ -1,32 +1,42 @@
-import { Button, View } from '@tarojs/components';
-import React, { useEffect } from 'react';
+import { Text, View } from '@tarojs/components';
+import React, { useEffect, useCallback } from 'react';
 import Taro from '@tarojs/taro';
-// import { AtButton } from 'taro-ui';
+import { AtAvatar, AtGrid } from 'taro-ui';
 
 import './index.less';
 
 const Page: React.FC = () => {
-  useEffect(() => {
-    Taro.authorize({
-      scope: 'scope.userInfo',
-      success: () => {
-        Taro.getUserInfo({
-          success: (result) => {
-            console.log(result);
-          },
-          fail: () => {
-            console.log('获取用户信息失败');
-          },
-        });
-      },
-    });
+  const handleLogin = useCallback(() => {
+    // TODO
+    console.log('aaa');
   }, []);
 
   return (
     <View className="root">
-      Profile
-      {/* <AtButton openType="getUserInfo">授权访问用户数据</AtButton> */}
-      <Button open-type="getUserInfo">授权访问用户数据</Button>
+      <View className="profile-header" onClick={handleLogin}>
+        <AtAvatar circle text="凹凸实验室"></AtAvatar>
+        <Text>点击以登录账号</Text>
+      </View>
+
+      <AtGrid
+        data={[
+          {
+            image:
+              'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
+            value: '我的招募',
+          },
+          {
+            image:
+              'https://img20.360buyimg.com/jdphoto/s72x72_jfs/t15151/308/1012305375/2300/536ee6ef/5a411466N040a074b.png',
+            value: '发布招募',
+          },
+          // {
+          //   image:
+          //     'https://img10.360buyimg.com/jdphoto/s72x72_jfs/t5872/209/5240187906/2872/8fa98cd/595c3b2aN4155b931.png',
+          //   value: '我的关注',
+          // },
+        ]}
+      />
     </View>
   );
 };

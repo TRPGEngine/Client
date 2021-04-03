@@ -1,5 +1,13 @@
+import type { Config } from '@tarojs/taro';
+
+const pages = [
+  'pages/index/index',
+  'pages/me/index',
+  'pages/recruitDetail/index',
+];
+
 export default {
-  pages: ['pages/index/index', 'pages/me/index', 'pages/recruitDetail/index'],
+  pages,
   tabBar: {
     list: [
       {
@@ -26,4 +34,4 @@ export default {
     navigationBarTitleText: 'WeChat',
     navigationBarTextStyle: 'black',
   },
-};
+} as Config;
