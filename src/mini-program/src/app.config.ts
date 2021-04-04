@@ -3,6 +3,7 @@ import type { Config } from '@tarojs/taro';
 const pages = [
   'pages/index/index',
   'pages/me/index',
+  'pages/login/index',
   'pages/recruitDetail/index',
 ];
 

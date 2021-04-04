@@ -7,8 +7,9 @@ import './index.less';
 
 const Page: React.FC = () => {
   const handleLogin = useCallback(() => {
-    // TODO
-    console.log('aaa');
+    Taro.navigateTo({
+      url: `/pages/login/index`,
+    });
   }, []);
 
   return (
