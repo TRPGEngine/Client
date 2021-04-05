@@ -3,10 +3,10 @@ import type { PlayerUser } from '@shared/model/player';
 
 interface UserState {
   jwt: string | null;
-  userInfo: PlayerUser | null;
+  info: PlayerUser | null;
 }
 
-const initialState = { jwt: null, userInfo: null } as UserState;
+const initialState = { jwt: null, info: null } as UserState;
 
 const userSlice = createSlice({
   name: 'user',
@@ -16,11 +16,11 @@ const userSlice = createSlice({
       state,
       action: PayloadAction<{
         jwt: string;
-        userInfo: PlayerUser;
+        info: PlayerUser;
       }>
     ) {
       state.jwt = action.payload.jwt;
-      state.userInfo = action.payload.userInfo;
+      state.info = action.payload.info;
     },
   },
 });

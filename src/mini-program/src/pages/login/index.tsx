@@ -1,16 +1,18 @@
 import { View } from '@tarojs/components';
 import React, { useCallback, useState } from 'react';
 import { AtButton, AtForm, AtInput } from 'taro-ui';
-
 import { loginWithPassword } from '@shared/model/player';
 import { showToasts } from '@shared/manager/ui';
 import Taro from '@tarojs/taro';
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '../../slices/user';
 
 import './index.less';
 
 const Page: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   const handleLogin = useCallback(() => {
     loginWithPassword(username, password)
@@ -18,6 +20,12 @@ const Page: React.FC = () => {
         ({ jwt, info }) => {
           showToasts('登录成功');
           console.log(jwt, info);
+          dispatch(
+            setUserInfo({
+              jwt,
+              info,
+            })
+          );
           Taro.navigateBack();
         },
         () => {
@@ -28,6 +36,8 @@ const Page: React.FC = () => {
         showToasts('操作失败, 请联系管理员');
         console.error(err);
       });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username, password]);
 
   return (

@@ -1,11 +1,15 @@
 import { Text, View } from '@tarojs/components';
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import Taro from '@tarojs/taro';
 import { AtAvatar, AtGrid } from 'taro-ui';
+import { getUserName } from '@shared/utils/data-helper';
+import { useTaroSelector } from '../../store';
 
 import './index.less';
 
 const Page: React.FC = () => {
+  const userInfo = useTaroSelector((state) => state.user.info);
+
   const handleLogin = useCallback(() => {
     Taro.navigateTo({
       url: `/pages/login/index`,
@@ -14,10 +18,23 @@ const Page: React.FC = () => {
 
   return (
     <View className="root">
-      <View className="profile-header" onClick={handleLogin}>
-        <AtAvatar circle text="凹凸实验室"></AtAvatar>
-        <Text>点击以登录账号</Text>
-      </View>
+      {userInfo === null ? (
+        <View className="profile-header" onClick={handleLogin}>
+          <AtAvatar circle text="我"></AtAvatar>
+          <Text>点击以登录账号</Text>
+        </View>
+      ) : (
+        <View className="profile-header">
+          <AtAvatar
+            circle
+            text={getUserName(userInfo)}
+            image={userInfo.avatar}
+          ></AtAvatar>
+          <Text>
+            {getUserName(userInfo)}({userInfo.username})
+          </Text>
+        </View>
+      )}
 
       <AtGrid
         data={[
