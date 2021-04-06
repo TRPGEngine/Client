@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.25](https://github.com/TRPGEngine/Client/compare/v0.5.24...v0.5.25) (2021-04-06)
+
+
+### Features
+
+* **portal:** 增加笔记的的portal端预览页面 ([da95488](https://github.com/TRPGEngine/Client/commit/da95488db75919fea1429893a9fd5b7579d0c189))
+* **web:** 增加团配置: 更新角色卡时不发送系统提示 ([9f54c83](https://github.com/TRPGEngine/Client/commit/9f54c837285d463c6f518ff66a4dc6f8a651c63a))
+* **web:** 增加聊天记录列表右边框 ([41e12a6](https://github.com/TRPGEngine/Client/commit/41e12a62e8938c83673ce1c55e030adab4600ee7))
+
+
+### Bug Fixes
+
+* **web:** 修复右边栏在手机端视图下高度问题 ([d05a72d](https://github.com/TRPGEngine/Client/commit/d05a72de8e0aa7545256af995aeca85a7ad81744))
+
 ### [0.5.24](https://github.com/TRPGEngine/Client/compare/v0.5.23...v0.5.24) (2021-03-29)
 
 
