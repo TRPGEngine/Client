@@ -171,7 +171,6 @@
     "styled-components": "^5.1.1",
     "timers-browserify": "^2.0.12",
     "tinycon": "^0.6.8",
-    "trpg-actor-template": "git+https://github.com/TRPGEngine/ActorTemplate.git",
     "url-regex": "^5.0.0",
     "uuid": "^3.4.0",
     "wangeditor": "^3.1.1",
