@@ -10,13 +10,13 @@ import _isArray from 'lodash/isArray';
 import { Result } from 'antd';
 
 export const Previewer: React.FC<{
-  value: TRPGEditorNode[];
+  nodes: TRPGEditorNode[];
 }> = TMemo((props) => {
   const editor = useMemo(() => createStandardEditor(), []);
   const renderElement = useCallback((props) => <SlateElement {...props} />, []);
   const renderLeaf = useCallback((props) => <SlateLeaf {...props} />, []);
 
-  if (!_isArray(props.value)) {
+  if (!_isArray(props.nodes)) {
     return (
       <Result status="warning" title="笔记数据异常, 请检查是否为旧版笔记" />
     );
@@ -24,7 +24,7 @@ export const Previewer: React.FC<{
 
   return (
     <WebErrorBoundary>
-      <Slate editor={editor} value={props.value} onChange={(value) => {}}>
+      <Slate editor={editor} value={props.nodes} onChange={(value) => {}}>
         <Editable
           readOnly={true}
           renderElement={renderElement}

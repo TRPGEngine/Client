@@ -1,6 +1,6 @@
 {
   "name": "trpg-game-client",
-  "version": "0.5.24",
+  "version": "0.5.25",
   "description": "专注于TRPG跑团的IM即时应用聊天软件",
   "main": "./dist/entry.js",
   "productName": "TRPG Engine",
@@ -16,6 +16,7 @@
     "build:pro": "cross-env NODE_ENV=production npm run build:main && npm run clean:sourcemap",
     "build:report": "cross-env npm_config_report=true npm run build:pro",
     "build:dll": "webpack --config build/config/webpack.dll.config.js",
+    "build:stats": "cross-env NODE_ENV=production npm run build:main -- --profile --json > stats.json",
     "smbrowser:dev": "cross-env NODE_ENV=development electron ./build/electron/entry.js",
     "smbrowser": "electron ./build/electron/entry.js",
     "smbrowser:build": "electron-builder -c ./build/config/builder.config.js",
@@ -284,6 +285,7 @@
     "less": "^3.10.3",
     "less-loader": "^7.1.0",
     "lint-staged": "^10.2.11",
+    "mockdate": "^3.0.5",
     "node-sass": "^4.14.1",
     "plugin-error": "^1.0.1",
     "prettier": "^2.2.1",

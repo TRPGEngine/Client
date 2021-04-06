@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { ChatContainer } from '@web/components/chatBox/ChatContainer';
-import { Iconfont } from '@web/components/Iconfont';
 import styled from 'styled-components';
 import { useJoinedGroupInfo } from '@redux/hooks/group';
 import _isNil from 'lodash/isNil';
-import { GroupActorSelector } from './GroupActorSelector';
-import { GroupMembers } from './GroupMembers';
+import { GroupActorSelector } from '@web/components/panels/actions/GroupActorSelector';
+import { GroupMembersAction } from '@web/components/panels/actions/GroupMembersAction';
 
 const Root = styled.div`
   display: flex;
@@ -31,17 +30,11 @@ export const GroupChatPanel: React.FC<GroupChatPanelProps> = TMemo((props) => {
       <ChatContainer
         style={{ flex: 1 }}
         converseUUID={groupUUID}
+        converseType="group"
         headerActions={[
           <GroupActorSelector key="actor" groupUUID={groupUUID} />,
-          <Iconfont
-            key="members"
-            active={showMembers}
-            onClick={() => setShowMembers(!showMembers)}
-          >
-            &#xe603;
-          </Iconfont>,
+          <GroupMembersAction key="members" groupUUID={groupUUID} />,
         ]}
-        rightPanel={showMembers && <GroupMembers groupUUID={groupUUID} />}
       />
     </Root>
   );

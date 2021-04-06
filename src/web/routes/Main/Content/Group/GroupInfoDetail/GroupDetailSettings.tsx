@@ -19,7 +19,9 @@ export const GroupDetailSettings: React.FC<GroupDetailSettings> = TMemo(
     const { groupUUID } = props;
     const { t } = useTranslation();
     const groupDetail = useGroupDetail(groupUUID);
-    const [editMap, { set: setEditData }] = useMap<Partial<GroupDetail>>({});
+    const [editMap, { set: setEditData, reset: resetEditData }] = useMap<
+      Partial<GroupDetail>
+    >({});
 
     const getData = (key: keyof GroupDetail, defaultValue: any) => {
       return editMap[key] ?? _get(groupDetail, key, defaultValue);
@@ -29,10 +31,11 @@ export const GroupDetailSettings: React.FC<GroupDetailSettings> = TMemo(
       try {
         await updateGroupDetail(groupUUID, editMap);
         showToasts(t('更新成功', 'success'));
+        resetEditData();
       } catch (err) {
         showToasts(t('失败') + err, 'error');
       }
-    }, [groupUUID, editMap]);
+    }, [groupUUID, editMap, resetEditData]);
 
     return (
       <div>
@@ -55,6 +58,18 @@ export const GroupDetailSettings: React.FC<GroupDetailSettings> = TMemo(
               checked={getData('disable_check_actor_in_chat', false)}
               onChange={(checked) =>
                 setEditData('disable_check_actor_in_chat', checked)
+              }
+            />
+          }
+        />
+
+        <FullModalField
+          title={t('更新角色卡时不发送系统提示')}
+          content={
+            <Switch
+              checked={getData('disable_system_notify_on_actor_updated', false)}
+              onChange={(checked) =>
+                setEditData('disable_system_notify_on_actor_updated', checked)
               }
             />
           }

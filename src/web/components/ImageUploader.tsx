@@ -54,7 +54,6 @@ class ImageUploader extends React.Component<Props> {
     this.setState({ isUploading: true });
 
     toAvatar(this.props.user_uuid, file, {
-      uploadField: 'avatar',
       headers,
       onProgress: (percent) => {
         const uploadProgress = (percent * 100).toFixed();

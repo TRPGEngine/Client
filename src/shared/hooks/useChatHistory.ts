@@ -9,19 +9,25 @@ import type { MsgPayload } from '@redux/types/chat';
  * 显示是从最后一页往前数
  * 查询是从第一页往后数。倒序
  */
-export function useChatHistory(converseUUID: string, size: number) {
+export function useChatHistory(
+  groupUUID: string,
+  converseUUID: string,
+  size: number
+) {
   const request = useWebAuthRequest();
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
 
-  const { loading, value } = useAsync(() => {
-    return request<{
+  const { loading, value } = useAsync(async () => {
+    const { data } = await request<{
       logs: MsgPayload[];
       count: number;
-    }>(`/group/log/${converseUUID}`, 'get', {
+    }>(`/group/chatlog/${groupUUID}/${converseUUID}`, 'get', {
       page,
       size,
-    }).then((d) => d.data);
+    });
+
+    return data;
   }, [page, size]);
 
   useEffect(() => {

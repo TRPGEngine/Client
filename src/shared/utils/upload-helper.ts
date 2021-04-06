@@ -13,6 +13,11 @@ export interface UploadOption {
 }
 export type UploadReturn<T = any> = Promise<T>;
 
+export type AvatarUploadOption = Omit<
+  UploadOption,
+  'uploadField' | 'onCompleted'
+>;
+
 export interface AvatarUpdateData {
   url: string;
   isLocal: string; // 是否存在单机本地
@@ -75,6 +80,7 @@ const _upload = function (
 };
 
 /**
+ * @deprecated
  * 上传到临时文件
  * @param userUUID 用户UUID
  * @param file 文件名
@@ -89,6 +95,7 @@ export const toTemporary = function (
 };
 
 /**
+ * @deprecated
  * 上传到永久文件夹
  * @param userUUID 用户UUID
  * @param file 文件名
@@ -108,18 +115,36 @@ export const toPersistence = function (
  * @param file 文件名
  * @param options 其他选项
  */
-export const toAvatar = function (
+export async function toAvatar(
+  /**
+   * @deprecated 该参数被弃用
+   */
   userUUID: string,
   file: File,
-  options: UploadOption = {}
-): UploadReturn<AvatarUpdateData> {
+  options: AvatarUploadOption = {}
+): Promise<AvatarUpdateData> {
   if (_isNil(userUUID)) {
     throw new Error('当前未登录, 无法上传头像');
   }
 
-  options.uploadField = 'avatar';
-  return _upload('/v2/avatar/upload', userUUID, file, options);
-};
+  const form = new FormData();
+  form.append('avatar', file);
+  const { data } = await request.post('/file/v2/avatar/upload', form, {
+    headers: options.headers,
+    onUploadProgress(progressEvent) {
+      if (progressEvent.lengthComputable) {
+        options &&
+          _isFunction(options.onProgress) &&
+          options.onProgress(
+            progressEvent.loaded / progressEvent.total,
+            progressEvent
+          );
+      }
+    },
+  });
+
+  return data;
+}
 
 /**
  * 类似于toAvatar， 但是avatar-type会被设置为团角色
@@ -127,13 +152,17 @@ export const toAvatar = function (
 export const toGroupAvatar = function (
   userUUID: string,
   file: File,
-  options: UploadOption = {}
+  options: AvatarUploadOption = {}
 ): UploadReturn<AvatarUpdateData> {
   _set(options, 'headers.avatar-type', 'groupActor');
   return toAvatar(userUUID, file, options);
 };
 
 interface ToPersistenceImageOptions {
+  /**
+   * 图片用途:
+   * - note
+   */
   usage?: string;
   attachUUID?: string;
   onProgress?: (percent: number, progressEvent: any) => void;
@@ -144,7 +173,8 @@ interface ToPersistenceImageRet {
   uuid: string;
 }
 /**
- * 上传持久化图片
+ * 上传持久化图片(通用)
+ * NOTICE: 这个上传是占用服务器带宽来上传的
  */
 export async function toPersistenceImage(
   file: File,

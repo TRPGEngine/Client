@@ -83,7 +83,10 @@ class GroupInfo extends React.Component<Props> {
   handleShowChatHistory = () => {
     const groupUUID = this.props.groupInfo.uuid;
     this.props.dispatch(
-      showSlidePanel('聊天记录', <ChatHistory converseUUID={groupUUID} />)
+      showSlidePanel(
+        '聊天记录',
+        <ChatHistory groupUUID={groupUUID} converseUUID={groupUUID} />
+      )
     );
   };
 

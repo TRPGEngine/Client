@@ -17,6 +17,7 @@ import { MsgItem } from './style';
 import { getWebMsgDefaultAvatar } from '@web/utils/msg-helper';
 import { TMemo } from '@shared/components/TMemo';
 import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { useMessageItemConfigContext } from '@shared/components/message/MessageItemConfigContext';
 
 /**
  * 消息容器
@@ -40,9 +41,20 @@ const MsgContainer: React.FC<{
 });
 MsgContainer.displayName = 'MsgContainer';
 
-class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
-  P
-> {
+const AvatarRenderContainer: React.FC = TMemo((props) => {
+  const { showAvatar } = useMessageItemConfigContext();
+
+  if (showAvatar === false) {
+    return null;
+  }
+
+  return <div className="avatar">{props.children}</div>;
+});
+AvatarRenderContainer.displayName = 'AvatarRenderContainer';
+
+class Base<
+  P extends MessageProps = MessageProps
+> extends React.PureComponent<P> {
   static defaultProps = {
     type: 'normal',
     me: false,
@@ -123,7 +135,7 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
         {emphasizeTime ? <EmphasizeTime date={info.date} /> : null}
         {!omitSenderInfo && <MsgProfile name={senderName} date={info.date} />}
         <div className="content">
-          <div className="avatar">
+          <AvatarRenderContainer>
             {!omitSenderInfo && (
               <MsgAvatar
                 me={me}
@@ -132,7 +144,8 @@ class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
                 info={info}
               />
             )}
-          </div>
+          </AvatarRenderContainer>
+
           <div className="body">
             {this.getContent()}
 

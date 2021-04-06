@@ -1,4 +1,4 @@
-import { Node as TRPGEditorNode, Editor } from 'slate';
+import type { Node as TRPGEditorNode, Editor } from 'slate';
 
 export interface EditorBaseProps {
   value: TRPGEditorNode[];
@@ -11,4 +11,4 @@ export type SlatePluginFunction<PluginEditor extends Editor = Editor> = <
   editor: InputEditor
 ) => InputEditor & PluginEditor;
 
-export { TRPGEditorNode };
+export type { TRPGEditorNode };

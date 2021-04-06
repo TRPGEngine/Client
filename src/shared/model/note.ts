@@ -4,7 +4,10 @@ export interface NoteModelInfo {
   uuid: string;
   title: string;
   content: string;
-  data: object;
+
+  // 类型: src/web/components/editor/types.ts#TRPGEditorNode
+  // 但是目前slate尚不能实现通用，先不引用
+  data: any[];
 }
 
 /**

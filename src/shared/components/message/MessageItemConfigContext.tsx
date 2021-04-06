@@ -18,6 +18,16 @@ const defaultMessageItemConfig = {
    * 对于portal来说因为没有Redux的上下文所以不太好显示回复消息。用这个配置将其关闭掉
    */
   showMsgReply: true,
+
+  /**
+   * 是否显示头像
+   */
+  showAvatar: true,
+
+  /**
+   * 显示行内时间
+   */
+  showInlineTime: true,
 };
 
 type MessageItemConfig = typeof defaultMessageItemConfig;
@@ -37,6 +47,10 @@ MessageItemConfigContext.displayName = 'MessageItemConfigContext';
  */
 export type MessageItemConfigPartial = Partial<MessageItemConfig>;
 export const MessageItemConfigContextProvider: React.FC<{
+  /**
+   * 配置信息
+   * NOTICE: 为了性能考虑只接受第一次的输入，之后再也不变更
+   */
   config: MessageItemConfigPartial;
 }> = TMemo((props) => {
   const config = useMemo(() => {
@@ -44,7 +58,7 @@ export const MessageItemConfigContextProvider: React.FC<{
       ...defaultMessageItemConfig,
       ...props.config,
     };
-  }, [props.config]);
+  }, []);
 
   return (
     <MessageItemConfigContext.Provider value={config}>

@@ -9,6 +9,11 @@ import { getUserName } from '@shared/utils/data-helper';
 interface Props {
   data: MsgPayload;
   emphasizeTime: boolean;
+
+  /**
+   * 是否隐藏发送者信息
+   * @default false
+   */
   omitSenderInfo?: boolean;
 }
 export const MessageItem: React.FC<Props> = TMemo((props) => {
