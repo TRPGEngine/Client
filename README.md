@@ -1,6 +1,7 @@
 # TRPG Engine - 一个专为TRPG打造的即时即时通讯应用
 
 ![node test](https://github.com/TRPGEngine/Client/workflows/node%20test/badge.svg)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d5f4812de10448cca2f08b8dd57143e4)](https://app.codacy.com/gh/TRPGEngine/Client?utm_source=github.com&utm_medium=referral&utm_content=TRPGEngine/Client&utm_campaign=Badge_Grade_Settings)
 [![codecov](https://codecov.io/gh/TRPGEngine/Client/branch/master/graph/badge.svg?token=mVoHFyoLJy)](undefined)
 [![Release](https://img.shields.io/github/release/TRPGEngine/Client.svg)](https://github.com/TRPGEngine/Client/releases)
 [![Android](https://img.shields.io/badge/platform-android-orange.svg)]()
