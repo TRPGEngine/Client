@@ -15,30 +15,34 @@ const Page: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = useCallback(() => {
-    loginWithPassword(username, password)
-      .then(
-        ({ jwt, info }) => {
-          showToasts('登录成功');
-          console.log(jwt, info);
-          dispatch(
-            setUserInfo({
-              jwt,
-              info,
-            })
-          );
-          getStorage().save(TARO_JWT_KEY, jwt);
-          Taro.navigateBack();
-        },
-        () => {
-          showToasts('登录失败, 请检查用户名密码');
-        }
-      )
-      .catch((err) => {
+  const handleLogin = useCallback(async () => {
+    setLoading(true);
+
+    try {
+      const { jwt, info } = await loginWithPassword(username, password);
+      showToasts('登录成功');
+      dispatch(
+        setUserInfo({
+          jwt,
+          info,
+        })
+      );
+
+      getStorage().save(TARO_JWT_KEY, jwt);
+      try {
+        Taro.navigateBack();
+      } catch (err) {
         showToasts('操作失败, 请联系管理员');
         console.error(err);
-      });
+      }
+    } catch (err) {
+      showToasts('登录失败, 请检查用户名密码');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username, password]);
@@ -63,7 +67,13 @@ const Page: React.FC = () => {
           onChange={(v) => setPassword(String(v))}
         />
 
-        <AtButton className="login-btn" type="primary" onClick={handleLogin}>
+        <AtButton
+          className="login-btn"
+          type="primary"
+          loading={loading}
+          disabled={loading}
+          onClick={handleLogin}
+        >
           登录
         </AtButton>
       </AtForm>

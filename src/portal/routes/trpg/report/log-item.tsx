@@ -2,7 +2,7 @@ import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import MessageHandler from '@web/components/messageTypes/__all__';
 import type { ReportLogItem } from '@shared/model/trpg';
-import { useUserInfo } from '@portal/hooks/useUserInfo';
+import { useUserInfo } from '@shared/hooks/useUserInfo';
 
 interface Props {
   playerUUID: string; // 表示当前用户的UUID(即kp)

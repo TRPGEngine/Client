@@ -98,9 +98,10 @@ export const registerAccount = (username: string, password: string) => {
  * 获取用户信息
  */
 export const fetchUserInfo = buildCacheFactory<PlayerUser>(
-  CachePolicy.Persistent,
-  (uuid: string) => {
-    return request.get(`/player/info/${uuid}`).then(({ data }) => data.user);
+  CachePolicy.Temporary,
+  async (uuid: string) => {
+    const { data } = await request.get(`/player/info/${uuid}`);
+    return data.user;
   },
   buildCacheHashFnPrefix('fetchUserInfo')
 );

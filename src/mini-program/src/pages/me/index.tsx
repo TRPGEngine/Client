@@ -3,12 +3,12 @@ import React, { useCallback } from 'react';
 import Taro from '@tarojs/taro';
 import { AtAvatar, AtGrid } from 'taro-ui';
 import { getUserName } from '@shared/utils/data-helper';
-import { useTaroSelector } from '../../store';
+import { useTaroUserInfo } from '../../hooks/useTaroUserInfo';
 
 import './index.less';
 
 const Page: React.FC = () => {
-  const userInfo = useTaroSelector((state) => state.user.info);
+  const userInfo = useTaroUserInfo();
 
   const handleLogin = useCallback(() => {
     Taro.navigateTo({

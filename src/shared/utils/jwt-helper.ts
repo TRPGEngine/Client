@@ -9,9 +9,9 @@ import { getStorage } from '@shared/manager/storage';
  * 获取完整jwt字符串的载荷信息(尝试解析json)
  * @param jwt 完整的jwt字符串
  */
-export function getJWTPayload(jwt: string) {
+export function getJWTPayload<T>(jwt: string): Partial<T> {
   try {
-    const decoded = jwtDecode(jwt);
+    const decoded = jwtDecode<T>(jwt);
     return decoded;
   } catch (e) {
     console.error(`getJWTInfo Error: [jwt: ${jwt}]`, e);
