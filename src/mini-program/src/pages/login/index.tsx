@@ -5,6 +5,8 @@ import { loginWithPassword } from '@shared/model/player';
 import { showToasts } from '@shared/manager/ui';
 import Taro from '@tarojs/taro';
 import { useDispatch } from 'react-redux';
+import { getStorage } from '@shared/manager/storage';
+import { TARO_JWT_KEY } from '@shared/utils/consts';
 import { setUserInfo } from '../../slices/user';
 
 import './index.less';
@@ -26,6 +28,7 @@ const Page: React.FC = () => {
               info,
             })
           );
+          getStorage().save(TARO_JWT_KEY, jwt);
           Taro.navigateBack();
         },
         () => {

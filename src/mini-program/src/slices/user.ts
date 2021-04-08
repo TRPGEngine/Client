@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getStorage } from '@shared/manager/storage';
 import type { PlayerUser } from '@shared/model/player';
-import { TARO_JWT_KEY } from '@shared/utils/consts';
-import _get from 'lodash/get';
 
 interface UserState {
   jwt: string | null;
@@ -25,11 +22,6 @@ const userSlice = createSlice({
       const { jwt, info } = action.payload;
       state.jwt = jwt;
       state.info = info;
-
-      if (typeof jwt === 'string') {
-        // 存储jwt
-        getStorage().save(TARO_JWT_KEY, jwt);
-      }
     },
   },
 });
