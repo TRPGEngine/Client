@@ -47,7 +47,7 @@ export function buildCachedRegFn<F extends (...args: any) => any>(
       return _result;
     } else {
       const result = get(...args);
-      _result = result;
+      _result = result ?? null;
       _lastArgs = args;
       return result;
     }

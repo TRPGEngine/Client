@@ -72,12 +72,12 @@ describe('buildCachedRegFn should be ok', () => {
 
   test('should be refresh if re-set', () => {
     const [get, set] = buildCachedRegFn('test');
-    const fn = jest.fn();
+    const fn = jest.fn((v) => v);
     set(fn);
     get(1);
     get(1);
 
-    const fn2 = jest.fn();
+    const fn2 = jest.fn((v) => v);
     set(fn2);
     get(1);
     get(1);
@@ -87,5 +87,27 @@ describe('buildCachedRegFn should be ok', () => {
 
     expect(fn2.mock.calls.length).toBe(1);
     expect(fn2.mock.calls[0]).toEqual([1]);
+  });
+
+  test('should call forever if return null', () => {
+    const [get, set] = buildCachedRegFn('test');
+    const fn = jest.fn(() => null);
+    set(fn);
+
+    get();
+    get();
+    get();
+    expect(fn.mock.calls.length).toBe(3);
+  });
+
+  test('should call forever if return undefined', () => {
+    const [get, set] = buildCachedRegFn('test');
+    const fn = jest.fn(() => undefined);
+    set(fn);
+
+    get();
+    get();
+    get();
+    expect(fn.mock.calls.length).toBe(3);
   });
 });
