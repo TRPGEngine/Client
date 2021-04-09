@@ -29,9 +29,12 @@ CupEditorWrapper.displayName = 'CupEditorWrapper';
 /**
  * 通用组件编辑设置
  */
-export const CommonEditorEditor: React.FC = TMemo(() => {
+export const CommonEditorSettings: React.FC<{
+  hasLabel?: boolean;
+}> = TMemo((props) => {
   const { currentTeaAttrs, setCurrentTeaAttrs } = useTeaAttrsContext();
   const currentTeaId = useCurrentTeaId();
+  const { hasLabel = true } = props;
 
   return (
     <>
@@ -54,24 +57,27 @@ export const CommonEditorEditor: React.FC = TMemo(() => {
         />
       </CupEditorWrapper>
 
-      <CupEditorWrapper title="标签名">
-        <Input
-          value={currentTeaAttrs['label']}
-          onChange={(e) =>
-            setCurrentTeaAttrs({
-              label: e.target.value || undefined,
-            })
-          }
-        />
-      </CupEditorWrapper>
+      {hasLabel === true && (
+        <CupEditorWrapper title="标签名">
+          <Input
+            value={currentTeaAttrs['label']}
+            onChange={(e) =>
+              setCurrentTeaAttrs({
+                label: e.target.value || undefined,
+              })
+            }
+          />
+        </CupEditorWrapper>
+      )}
     </>
   );
 });
+CommonEditorSettings.displayName = 'CommonEditorSettings';
 
 /**
  * 通用输入组件的编辑组件
  */
-export const InputEditorEditor: React.FC = TMemo(() => {
+export const InputEditorSettings: React.FC = TMemo(() => {
   const { currentTeaAttrs, setCurrentTeaAttrs } = useTeaAttrsContext();
 
   return (
@@ -111,4 +117,4 @@ export const InputEditorEditor: React.FC = TMemo(() => {
     </>
   );
 });
-InputEditorEditor.displayName = 'InputEditorEditor';
+InputEditorSettings.displayName = 'InputEditorSettings';

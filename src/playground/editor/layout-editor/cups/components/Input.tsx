@@ -1,7 +1,7 @@
 import React from 'react';
 import { regCup } from '@saucerjs/core';
 import { Space } from 'antd';
-import { CommonEditorEditor, InputEditorEditor } from '../shared';
+import { CommonEditorSettings, InputEditorSettings } from '../shared';
 import { TagInputEdit } from '@shared/components/layout/tags/Input/edit';
 
 regCup({
@@ -26,9 +26,9 @@ regCup({
   editor() {
     return (
       <Space direction="vertical">
-        <CommonEditorEditor />
+        <CommonEditorSettings />
 
-        <InputEditorEditor />
+        <InputEditorSettings />
       </Space>
     );
   },
