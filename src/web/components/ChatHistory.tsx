@@ -11,6 +11,11 @@ import { shouleEmphasizeTime } from '@shared/utils/date-helper';
 
 const Container = styled.div`
   padding: 10px;
+
+  .content > .body {
+    /* 取消左边距 */
+    margin-left: 0 !important;
+  }
 `;
 
 interface Props {
