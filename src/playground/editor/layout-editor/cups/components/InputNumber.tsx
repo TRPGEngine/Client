@@ -16,10 +16,10 @@ regCup({
     return (
       <TagInputNumberEdit
         key={nodeId}
+        {...attrs}
         _name={'InputNumber'}
         _childrenEl={[]}
         name={attrs['name'] || nodeId}
-        {...attrs}
       />
     );
   },

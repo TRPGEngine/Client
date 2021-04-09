@@ -17,10 +17,10 @@ regCup({
     return (
       <TagTextAreaEdit
         key={nodeId}
+        {...attrs}
         _name={'TextArea'}
         _childrenEl={[]}
         name={attrs['name'] || nodeId}
-        {...attrs}
       />
     );
   },

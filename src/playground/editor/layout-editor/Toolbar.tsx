@@ -19,6 +19,7 @@ export const Toolbar: React.FC = TMemo(() => {
   }, [ast]);
 
   const handleExportXML = useCallback(() => {
+    console.log('ast', ast);
     const innerXML = serializeToXML(ast);
     const xml = `<?xml version="1.0" encoding="utf-8" ?><Template>${innerXML}</Template>`;
 
