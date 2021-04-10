@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import { useHistory } from 'react-router';
 
 const loginUrl = '/entry/login';

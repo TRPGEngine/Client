@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import { FullScreenLoading } from './FullScreenLoading';
 import { useDebounce } from 'react-use';
 import { Button } from 'antd';

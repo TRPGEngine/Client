@@ -1,10 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { UserUUIDSelector } from '../UserUUIDSelector';
-import {
-  useTRPGDispatch,
-  useTRPGSelector,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch, useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import _isString from 'lodash/isString';
 import _isNil from 'lodash/isNil';
 import { useJoinedGroupInfo } from '@redux/hooks/group';

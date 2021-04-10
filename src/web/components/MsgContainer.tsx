@@ -10,10 +10,7 @@ import _isNil from 'lodash/isNil';
 import _orderBy from 'lodash/orderBy';
 import { MsgListContextProvider } from '@shared/context/MsgListContext';
 import { TMemo } from '@shared/components/TMemo';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { usePrevious } from 'react-use';
 import { MessageItem } from '@shared/components/message/MessageItem';
 import { useMsgList } from '@redux/hooks/chat';

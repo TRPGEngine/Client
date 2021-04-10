@@ -4,7 +4,7 @@ import ModalPanel from '../ModalPanel';
 import config from '@shared/project.config';
 import dateHelper from '@shared/utils/date-helper';
 import { TMemo } from '@shared/components/TMemo';
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import { browser } from '@web/utils/browser-helper';
 import { useTranslation } from '@shared/i18n';
 

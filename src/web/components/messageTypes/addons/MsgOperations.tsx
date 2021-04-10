@@ -4,7 +4,7 @@ import { useMessageItemConfigContext } from '@shared/components/message/MessageI
 import { TMemo } from '@shared/components/TMemo';
 import { TPopover, useTPopoverContext } from '@web/components/popover';
 import styled from 'styled-components';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import _isFunction from 'lodash/isFunction';
 import _isNil from 'lodash/isNil';
 import _has from 'lodash/has';

@@ -8,10 +8,7 @@ import GroupList from './group/GroupList';
 import NoteList from './note/NoteList';
 import ExtraOptions from './ExtraOptions';
 import { TMemo } from '@shared/components/TMemo';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import _get from 'lodash/get';
 import Avatar from '@web/components/Avatar';
 import { getUserName } from '@shared/utils/data-helper';

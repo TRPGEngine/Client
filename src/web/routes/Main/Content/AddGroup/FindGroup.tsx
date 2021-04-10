@@ -2,10 +2,7 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Select, Button, Input, Empty } from 'antd';
 import styled from 'styled-components';
-import {
-  useTRPGDispatch,
-  useTRPGSelector,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch, useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import { findGroup } from '@redux/actions/group';
 import _isEmpty from 'lodash/isEmpty';
 import { Loading } from '@web/components/Loading';

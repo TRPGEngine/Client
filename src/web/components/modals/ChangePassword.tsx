@@ -13,7 +13,7 @@ import {
   fieldSchema,
 } from '@shared/components/FastForm/schema';
 import { t } from '@shared/i18n';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { hideModal } from '@redux/actions/ui';
 
 import './ChangePassword.scss';

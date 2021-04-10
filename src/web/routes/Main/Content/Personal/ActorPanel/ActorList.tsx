@@ -1,9 +1,6 @@
 import React, { Fragment } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { ActorCard, ActorCardListContainer } from '@web/components/ActorCard';
 import { removeActor, unshareActor, shareActor } from '@redux/actions/actor';
 import { showAlert, showModal } from '@redux/actions/ui';

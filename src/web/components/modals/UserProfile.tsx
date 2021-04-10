@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { useCachedUserInfo } from '@shared/hooks/useCache';
+import { useCachedUserInfo } from '@redux/hooks/useCache';
 import Avatar from '../Avatar';
 import { getUserName } from '@shared/utils/data-helper';
 import { Button, Tabs, Divider, Space, Row, Col } from 'antd';
@@ -10,10 +10,7 @@ import { getFullDate } from '@shared/utils/date-helper';
 import { openModal, useModalContext } from '../Modal';
 import styled from 'styled-components';
 import { useCurrentUserInfo } from '@redux/hooks/user';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { useHistory } from 'react-router';
 import { sendFriendRequest } from '@redux/actions/user';
 import { addConverse } from '@redux/actions/chat';

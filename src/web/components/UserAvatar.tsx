@@ -1,6 +1,6 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { useCachedUserInfo } from '@shared/hooks/useCache';
+import { useCachedUserInfo } from '@redux/hooks/useCache';
 import Avatar from './Avatar';
 import { getUserName } from '@shared/utils/data-helper';
 

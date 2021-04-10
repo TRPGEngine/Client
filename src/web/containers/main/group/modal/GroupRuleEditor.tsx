@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { TRPGState } from '@redux/types/__all__';
 import { requestUpdateGroupInfo } from '@redux/actions/group';
 import { GroupInfo } from '@redux/types/group';
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 
 interface Props {}
 const GroupRuleEditor: React.FC<Props> = React.memo((props) => {

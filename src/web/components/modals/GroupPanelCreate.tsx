@@ -9,7 +9,7 @@ import {
   createFastFormSchema,
   fieldSchema,
 } from '@shared/components/FastForm/schema';
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import _isString from 'lodash/isString';
 import { t, useTranslation } from '@shared/i18n';
 import { useAlphaUser } from '@shared/hooks/useAlphaUser';

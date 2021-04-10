@@ -7,10 +7,7 @@ import { GroupDetail } from './GroupDetail';
 import _get from 'lodash/get';
 import _sortBy from 'lodash/sortBy';
 import { TMemo } from '@shared/components/TMemo';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { useConverses } from '@redux/hooks/chat';
 import { MsgContainerContextProvider } from '@shared/context/MsgContainerContext';
 

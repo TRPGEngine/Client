@@ -12,7 +12,7 @@ import {
 } from '@web/components/FullModalField';
 import { getFullDate } from '@shared/utils/date-helper';
 import ImageUploader from '@web/components/ImageUploader';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { updateInfo } from '@redux/actions/user';
 import { AlignmentChoose } from '@web/components/AlignmentChoose';
 import { useTranslation } from '@shared/i18n';

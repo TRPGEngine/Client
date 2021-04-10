@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { useChatHistory } from '@shared/hooks/useChatHistory';
+import { useChatHistory } from '@redux/hooks/useChatHistory';
 import { Pagination } from 'antd';
 import LoadingSpinner from './LoadingSpinner';
 import styled from 'styled-components';

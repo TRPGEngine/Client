@@ -1,9 +1,6 @@
 import React, { useMemo } from 'react';
 import { hideModal } from '../../shared/redux/actions/ui';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 

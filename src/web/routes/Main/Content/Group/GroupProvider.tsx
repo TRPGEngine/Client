@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { GroupInfoContext } from '@shared/context/GroupInfoContext';
 import type { GroupInfo } from '@redux/types/group';
 import { TMemo } from '@shared/components/TMemo';
-import { useCachedUserInfoList } from '@shared/hooks/useCache';
+import { useCachedUserInfoList } from '@redux/hooks/useCache';
 import {
   EditorMentionListContext,
   EditorMentionListItem,

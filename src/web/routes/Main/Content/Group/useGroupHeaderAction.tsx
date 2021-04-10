@@ -7,7 +7,7 @@ import { GroupInfoDetail } from './GroupInfoDetail';
 import { showToasts } from '@shared/manager/ui';
 import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { useCurrentUserUUID } from '@redux/hooks/user';
 import { showAlert } from '@redux/actions/ui';
 import { dismissGroup, quitGroup } from '@redux/actions/group';

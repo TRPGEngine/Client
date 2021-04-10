@@ -2,7 +2,7 @@ import { useConverseDetail } from '@redux/hooks/chat';
 import { useCallback, useEffect, useContext, useState, useRef } from 'react';
 import { isUserUUID } from '@shared/utils/uuid';
 import { sendStopWriting, sendStartWriting } from '@shared/api/event';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { sendMsg as sendMsgAction } from '@redux/actions/chat';
 import type { MsgType } from '@redux/types/chat';
 import { MsgDataManager, preProcessMessage } from '@shared/utils/msg-helper';

@@ -6,7 +6,7 @@ import _isNil from 'lodash/isNil';
 import { Result } from 'antd';
 import { GroupActorSelector } from '@web/components/panels/actions/GroupActorSelector';
 import { ensureGroupChannelConverse } from '@redux/actions/group';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { ChatContainer } from '../chatBox/ChatContainer';
 
 /**

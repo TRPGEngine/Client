@@ -5,10 +5,7 @@ import GroupRuleEditor from './modal/GroupRuleEditor';
 import { isGroupManager } from '@shared/helper/group';
 import HTML from '@web/components/HTML';
 import _isEmpty from 'lodash/isEmpty';
-import {
-  useTRPGDispatch,
-  useTRPGSelector,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch, useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 
 const GroupRule = React.memo(() => {
   const dispatch = useTRPGDispatch();

@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { useCachedUserInfo } from '@shared/hooks/useCache';
+import { useCachedUserInfo } from '@redux/hooks/useCache';
 import styled from 'styled-components';
 import Avatar from '../Avatar';
 import _isEmpty from 'lodash/isEmpty';

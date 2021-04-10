@@ -1,8 +1,8 @@
-import { useWebAuthRequest } from './useWebAuthRequest';
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useAsync } from 'react-use';
 import _isNil from 'lodash/isNil';
 import type { MsgPayload } from '@redux/types/chat';
+import { request } from '@shared/utils/request';
 
 /**
  * 聊天历史记录
@@ -14,17 +14,18 @@ export function useChatHistory(
   converseUUID: string,
   size: number
 ) {
-  const request = useWebAuthRequest();
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
 
   const { loading, value } = useAsync(async () => {
-    const { data } = await request<{
+    const { data } = await request.get<{
       logs: MsgPayload[];
       count: number;
-    }>(`/group/chatlog/${groupUUID}/${converseUUID}`, 'get', {
-      page,
-      size,
+    }>(`/group/chatlog/${groupUUID}/${converseUUID}`, {
+      params: {
+        page,
+        size,
+      },
     });
 
     return data;

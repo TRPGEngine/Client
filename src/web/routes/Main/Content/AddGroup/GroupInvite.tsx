@@ -1,5 +1,5 @@
 import { TMemo } from '@shared/components/TMemo';
-import { useCachedGroupInfo } from '@shared/hooks/useCache';
+import { useCachedGroupInfo } from '@redux/hooks/useCache';
 import { t } from '@shared/i18n';
 import { showToasts } from '@shared/manager/ui';
 import {

@@ -4,10 +4,7 @@ import { Select, Alert, Button, Space, Divider, Switch } from 'antd';
 import { FullModalField } from '@web/components/FullModalField';
 import { useLanguage } from '@shared/i18n/language';
 import { switchToAppVersion } from '@web/utils/debug-helper';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { setSystemSettings } from '@redux/actions/settings';
 import { useAlphaUser } from '@shared/hooks/useAlphaUser';
 import { useTranslation } from '@shared/i18n';

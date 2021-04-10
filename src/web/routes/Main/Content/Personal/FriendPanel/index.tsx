@@ -1,9 +1,6 @@
 import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { Tabs, Badge, Tooltip as AntdTooltip, Button, Typography } from 'antd';
 import { UserListItem } from '@web/components/UserListItem';
 import { PillTabs } from '@web/components/PillTabs';

@@ -7,7 +7,7 @@ import {
 } from '@redux/hooks/group';
 import config from '@shared/project.config';
 import { changeSelectGroupActor, sendGroupInvite } from '@redux/actions/group';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { showSlidePanel, hideModal, showModal } from '@redux/actions/ui';
 import { UserSelector } from '@web/components/modals/UserSelector';
 import GroupMember from './GroupMember';

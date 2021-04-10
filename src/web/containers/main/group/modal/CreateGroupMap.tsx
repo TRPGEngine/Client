@@ -3,7 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import ModalPanel from '@web/components/ModalPanel';
 import { useFormik } from 'formik';
 import { Form, Input, Button, InputNumber } from 'antd';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { createGroupMap } from '@redux/actions/group';
 
 const initialValues = {

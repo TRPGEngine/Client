@@ -1,10 +1,7 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Select, Input, Button, Empty } from 'antd';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import _isEmpty from 'lodash/isEmpty';
 import FindResultItem from '@web/components/FindResultItem';
 import { findUser } from '@redux/actions/user';
@@ -51,7 +48,7 @@ export const AddFriend: React.FC = TMemo(() => {
       return <NoneResult />;
     }
 
-    return findingResult.map(function(item, index) {
+    return findingResult.map(function (item, index) {
       return <FindResultItem key={item.uuid + '#' + index} info={item} />;
     });
   }, [isFinding, findingResult]);

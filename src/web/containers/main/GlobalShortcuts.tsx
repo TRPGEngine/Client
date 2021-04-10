@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useKey } from 'react-use';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { switchMenuPannel } from '@redux/actions/ui';
 
 /**

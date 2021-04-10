@@ -12,7 +12,7 @@ import { TMemo } from '@shared/components/TMemo';
 import {
   useCachedActorTemplateInfo,
   useCachedActorInfo,
-} from '@shared/hooks/useCache';
+} from '@redux/hooks/useCache';
 import { AddonMore, AddonMoreItem } from '../AddonMore';
 import { downloadBlob } from '@web/utils/file-helper';
 import { useTranslation } from '@shared/i18n';

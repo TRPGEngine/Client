@@ -8,7 +8,7 @@ import {
   useIsGroupOwner,
 } from '@redux/hooks/group';
 import styled from 'styled-components';
-import { useCachedUserInfo } from '@shared/hooks/useCache';
+import { useCachedUserInfo } from '@redux/hooks/useCache';
 import { getUserName } from '@shared/utils/data-helper';
 import { useCurrentUserUUID } from '@redux/hooks/user';
 import {

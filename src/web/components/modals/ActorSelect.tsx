@@ -3,10 +3,7 @@ import config from '@shared/project.config';
 import { showAlert } from '@shared/redux/actions/ui';
 import ActorCreate from '@web/components/modals/ActorCreate';
 import { TMemo } from '@shared/components/TMemo';
-import {
-  useTRPGDispatch,
-  useTRPGSelector,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch, useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import { openModal } from '../Modal';
 import { useTranslation } from '@shared/i18n';
 

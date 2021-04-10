@@ -10,7 +10,7 @@ import ModalPanel from '@web/components/ModalPanel';
 import type { ActorType } from '@redux/types/actor';
 import { fetchSharedActor } from '@shared/model/actor';
 import { ActorCard } from '@web/components/ActorCard';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { forkActor } from '@redux/actions/actor';
 import { showModal } from '@redux/actions/ui';
 import ActorInfo from '../ActorInfo';
