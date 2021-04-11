@@ -43,6 +43,15 @@ export default async function requestOld<T = any>(
 
 // ====================以下为新版请求接口
 
+export type CommonRequestResult<T> =
+  | ({
+      result: false;
+      msg: string;
+    } & Partial<T>) // 并上一个T是为了方便取值, 但需要判定
+  | ({
+      result: true;
+    } & T);
+
 /**
  * 创建请求实例
  */
