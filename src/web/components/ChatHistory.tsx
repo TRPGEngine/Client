@@ -15,8 +15,8 @@ const Container = styled.div`
   padding: 10px;
 
   .content > .body {
-    /* 取消左边距 */
-    margin-left: 0 !important;
+    /* 在消息历史中取消两边外边距 */
+    margin: 0 !important;
   }
 `;
 
