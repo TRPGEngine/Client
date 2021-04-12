@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.26](https://github.com/TRPGEngine/Client/compare/v0.5.25...v0.5.26) (2021-04-12)
+
+
+### Features
+
+* **web:** 聊天记录搜索 ([283d557](https://github.com/TRPGEngine/Client/commit/283d5577e047e65f9c72d6c37d87c92d2bbe995a))
+
+
+### Bug Fixes
+
+* **web:** 修复桌面端历史消息宽度异常的问题 ([8bf73f2](https://github.com/TRPGEngine/Client/commit/8bf73f23f32b78afc39e8eb84e89f3789768dc26))
+
 ### [0.5.25](https://github.com/TRPGEngine/Client/compare/v0.5.24...v0.5.25) (2021-04-06)
 
 
