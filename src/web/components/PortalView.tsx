@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Webview from './Webview';
 import config from '@shared/project.config';
 import _isString from 'lodash/isString';
 import _isEmpty from 'lodash/isEmpty';
-import { useWebToken } from '@shared/hooks/useWebToken';
+import { useWebToken } from '@redux/hooks/useWebToken';
 
 interface PortalViewProps {
   url: string;

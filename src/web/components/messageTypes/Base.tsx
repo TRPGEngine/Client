@@ -16,7 +16,7 @@ import { MsgProfile } from './addons/MsgProfile';
 import { MsgItem } from './style';
 import { getWebMsgDefaultAvatar } from '@web/utils/msg-helper';
 import { TMemo } from '@shared/components/TMemo';
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import { useMessageItemConfigContext } from '@shared/components/message/MessageItemConfigContext';
 
 /**
@@ -52,9 +52,9 @@ const AvatarRenderContainer: React.FC = TMemo((props) => {
 });
 AvatarRenderContainer.displayName = 'AvatarRenderContainer';
 
-class Base<
-  P extends MessageProps = MessageProps
-> extends React.PureComponent<P> {
+class Base<P extends MessageProps = MessageProps> extends React.PureComponent<
+  P
+> {
   static defaultProps = {
     type: 'normal',
     me: false,

@@ -13,10 +13,7 @@ import _last from 'lodash/last';
 import _throttle from 'lodash/throttle';
 import _isNil from 'lodash/isNil';
 import { MessageItem } from '@shared/components/message/MessageItem';
-import {
-  useTRPGDispatch,
-  useTRPGSelector,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch, useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import { getMoreChatLog } from '@redux/actions/chat';
 import { useMsgList, useConverseDetail } from '@redux/hooks/chat';
 import { scrollToBottom } from '@shared/utils/animated-scroll-to';

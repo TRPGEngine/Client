@@ -26,7 +26,7 @@ import {
   useSelectedGroupInfo,
   useSelectedGroupActorInfo,
 } from '@redux/hooks/group';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { useCurrentUserUUID } from '@redux/hooks/user';
 import { getUserInfoCache } from '@shared/utils/cache-helper';
 import { getUserName } from '@shared/utils/data-helper';

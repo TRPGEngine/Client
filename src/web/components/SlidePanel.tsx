@@ -3,10 +3,7 @@ import { hideSlidePanel } from '../../shared/redux/actions/ui';
 
 import './SlidePanel.scss';
 import { TMemo } from '@shared/components/TMemo';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 
 export const SlidePanel: React.FC = TMemo(() => {
   const isSlidePanelShow = useTRPGSelector((state) => state.ui.showSlidePanel);

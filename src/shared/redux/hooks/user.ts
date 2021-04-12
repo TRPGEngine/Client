@@ -1,5 +1,5 @@
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
-import { useCachedUserInfo } from '@shared/hooks/useCache';
+import { useTRPGSelector } from '@redux/hooks/useTRPGSelector';
+import { useCachedUserInfo } from '@redux/hooks/useCache';
 import { getUserName } from '@shared/utils/data-helper';
 import type { UserInfo } from '@redux/types/user';
 

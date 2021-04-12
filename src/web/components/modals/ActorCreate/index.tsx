@@ -19,10 +19,7 @@ import { isBlobUrl } from '@shared/utils/string-helper';
 import type { AvatarUpdateData } from '@shared/utils/upload-helper';
 import type { ActorTemplateType } from '@redux/types/actor';
 import { TMemo } from '@shared/components/TMemo';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 const Step = Steps.Step;
 
 const Container = styled.div`

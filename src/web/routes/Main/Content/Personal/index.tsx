@@ -9,10 +9,7 @@ import { SectionHeader } from '@web/components/SectionHeader';
 import { UserConversePanel } from './UserConversePanel';
 import { PageContent } from '../PageContent';
 import { SidebarHeaderText, SidebarItemsContainer } from '../style';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { SidebarHeader } from '../SidebarHeader';
 import { NotePanel } from './NotePanel';
 import { Iconfont } from '@web/components/Iconfont';

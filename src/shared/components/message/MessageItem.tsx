@@ -2,7 +2,7 @@ import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import MessageHandler from './MessageHandler';
 import { useCurrentUserInfo } from '@redux/hooks/user';
-import { useCachedUserInfo } from '@shared/hooks/useCache';
+import { useCachedUserInfo } from '@redux/hooks/useCache';
 import type { MsgPayload } from '@redux/types/chat';
 import { getUserName } from '@shared/utils/data-helper';
 

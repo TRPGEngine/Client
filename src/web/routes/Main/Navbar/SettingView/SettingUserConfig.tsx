@@ -1,10 +1,7 @@
 import React, { useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { Select, Switch } from 'antd';
-import {
-  useTRPGDispatch,
-  useTRPGSelector,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch, useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import { FullModalField } from '@web/components/FullModalField';
 import { t, useTranslation } from '@shared/i18n';
 import { setUserSettings } from '@redux/actions/settings';

@@ -5,7 +5,7 @@ import {
   useSelfGroupActors,
   useSelectedGroupActorUUID,
 } from '@redux/hooks/group';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { changeSelectGroupActor } from '@redux/actions/group';
 import { useTranslation } from '@shared/i18n';
 const Option = Select.Option;

@@ -1,4 +1,4 @@
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import type { DefaultSettings } from '@shared/project.config';
 
 /**

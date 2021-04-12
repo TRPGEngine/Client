@@ -1,7 +1,4 @@
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import type {
   WritingListGroupItem,
   SimpleConverseType,

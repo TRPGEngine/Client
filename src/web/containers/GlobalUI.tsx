@@ -4,10 +4,7 @@ import GlobalModal from '../components/GlobalModal';
 import LoadingScreen from '../components/LoadingScreen';
 import GlobalAlert from '../components/GlobalAlert';
 import { hideLightbox } from '../../shared/redux/actions/ui';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { TMemo } from '@shared/components/TMemo';
 
 export const GlobalUI: React.FC = TMemo(() => {

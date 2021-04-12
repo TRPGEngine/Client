@@ -5,7 +5,7 @@ import { WebFastForm } from '../WebFastForm';
 import { createGroup } from '@shared/model/group';
 import { showToasts } from '@shared/manager/ui';
 import { closeModal } from '../Modal';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { createGroupSuccess } from '@redux/actions/group';
 import {
   createFastFormSchema,

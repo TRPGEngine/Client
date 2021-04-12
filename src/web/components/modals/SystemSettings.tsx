@@ -3,10 +3,7 @@ import ModalPanel from '../ModalPanel';
 import Checkbox from '../Checkbox';
 import { setSystemSettings } from '@shared/redux/actions/settings';
 import { TMemo } from '@shared/components/TMemo';
-import {
-  useTRPGSelector,
-  useTRPGDispatch,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import styled from 'styled-components';
 import { useAlphaUser } from '@shared/hooks/useAlphaUser';
 

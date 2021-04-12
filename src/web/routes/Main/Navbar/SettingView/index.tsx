@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { SidebarViewMenuType, SidebarView } from '@web/components/SidebarView';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { logout } from '@redux/actions/user';
 import config from '@shared/project.config';
 import { SystemStatusInfo } from '@web/components/modals/SystemStatus';

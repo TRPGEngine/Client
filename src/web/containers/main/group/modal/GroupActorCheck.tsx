@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import ModalPanel from '@web/components/ModalPanel';
 import { TMemo } from '@shared/components/TMemo';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
-import { useCachedActorTemplateInfo } from '@shared/hooks/useCache';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
+import { useCachedActorTemplateInfo } from '@redux/hooks/useCache';
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import XMLBuilder from '@shared/components/layout/XMLBuilder';

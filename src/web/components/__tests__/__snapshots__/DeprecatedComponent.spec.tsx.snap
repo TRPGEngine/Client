@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DeprecatedComponent render 1`] = `
+<div>
+  <div
+    class="ant-alert ant-alert-error ant-alert-no-icon"
+    data-show="true"
+    role="alert"
+  >
+    <span
+      class="ant-alert-message"
+    >
+      该组件已被弃用, 如果影响到您的使用请联系开发者
+    </span>
+    <span
+      class="ant-alert-description"
+    />
+  </div>
+</div>
+`;

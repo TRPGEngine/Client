@@ -5,7 +5,7 @@ import { getUserName } from '@shared/utils/data-helper';
 import { Divider, Space } from 'antd';
 import { NavbarLink } from './NavbarLink';
 import { Iconfont } from '@web/components/Iconfont';
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import { TMemo } from '@shared/components/TMemo';
 import { MobileNavbarSwitch } from './MobileNavbarSwitch';
 import { MoreAction } from './MoreAction';

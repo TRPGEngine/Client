@@ -8,7 +8,7 @@ import _isString from 'lodash/isString';
 import _isNil from 'lodash/isNil';
 import ImageUploader from '@web/components/ImageUploader';
 import { requestUpdateGroupInfo } from '@redux/actions/group';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { useJoinedGroupInfo, useIsGroupManager } from '@redux/hooks/group';
 import {
   DefaultFullModalInputEditorRender,

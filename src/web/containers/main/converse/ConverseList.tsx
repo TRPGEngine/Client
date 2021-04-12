@@ -13,10 +13,7 @@ import _filter from 'lodash/filter';
 import _sortBy from 'lodash/sortBy';
 import _size from 'lodash/size';
 import { TMemo } from '@shared/components/TMemo';
-import {
-  useTRPGDispatch,
-  useTRPGSelector,
-} from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch, useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 
 import './ConverseList.scss';
 

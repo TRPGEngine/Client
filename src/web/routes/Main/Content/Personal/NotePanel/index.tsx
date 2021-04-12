@@ -8,7 +8,7 @@ import _isString from 'lodash/isString';
 import _isEqual from 'lodash/isEqual';
 import _isEmpty from 'lodash/isEmpty';
 import { RichTextEditor } from '@web/components/editor/RichTextEditor';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import type { Node } from 'slate';
 import { WebErrorBoundary } from '@web/components/WebErrorBoundary';
 import { AlertErrorView } from '@web/components/AlertErrorView';

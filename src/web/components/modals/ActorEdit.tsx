@@ -9,12 +9,12 @@ import XMLBuilder from '@shared/components/layout/XMLBuilder';
 import { Row, Button } from 'antd';
 import styled from 'styled-components';
 import { TMemo } from '@shared/components/TMemo';
-import { useCachedActorTemplateInfo } from '@shared/hooks/useCache';
+import { useCachedActorTemplateInfo } from '@redux/hooks/useCache';
 import { showToasts } from '@shared/manager/ui';
 import { updateGroupActorInfo } from '@redux/actions/group';
 import { editGroupActor } from '@shared/model/group';
 import { useTranslation } from '@shared/i18n';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 
 /**
  * 人物卡编辑模态框

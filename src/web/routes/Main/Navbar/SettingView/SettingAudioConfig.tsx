@@ -1,7 +1,7 @@
 import { setSystemSettings } from '@redux/actions/settings';
 import { useSystemSetting } from '@redux/hooks/settings';
 import { TMemo } from '@shared/components/TMemo';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { useTranslation } from '@shared/i18n';
 import type { DefaultSettings } from '@shared/project.config';
 import { AudioChecker } from '@web/components/AudioChecker';

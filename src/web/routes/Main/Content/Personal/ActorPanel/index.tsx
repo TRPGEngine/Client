@@ -3,7 +3,7 @@ import { TMemo } from '@shared/components/TMemo';
 import { PillTabs } from '@web/components/PillTabs';
 import styled from 'styled-components';
 import { Button } from 'antd';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { showModal } from '@redux/actions/ui';
 import ActorCreate from '@web/components/modals/ActorCreate';
 import { ActorList } from './ActorList';

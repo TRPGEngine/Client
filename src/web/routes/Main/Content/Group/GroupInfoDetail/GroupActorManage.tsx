@@ -20,7 +20,7 @@ import { openModal, closeModal } from '@web/components/Modal';
 import type { GroupActorType } from '@redux/types/group';
 import { Iconfont } from '@web/components/Iconfont';
 import { GroupActorEditModal } from '@web/components/modals/ActorEdit';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { requestAddGroupActor, removeGroupActor } from '@redux/actions/group';
 import { showAlert } from '@redux/actions/ui';
 import { ActorCard, ActorCardListContainer } from '@web/components/ActorCard';

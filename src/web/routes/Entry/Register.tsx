@@ -1,6 +1,6 @@
 import { login } from '@redux/actions/user';
 import { TMemo } from '@shared/components/TMemo';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { useTranslation } from '@shared/i18n';
 import { registerAccount } from '@shared/model/player';
 import { trackEvent } from '@web/utils/analytics-helper';

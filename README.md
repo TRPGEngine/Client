@@ -1,6 +1,7 @@
 # TRPG Engine - 一个专为TRPG打造的即时即时通讯应用
 
 ![node test](https://github.com/TRPGEngine/Client/workflows/node%20test/badge.svg)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d5f4812de10448cca2f08b8dd57143e4)](https://app.codacy.com/gh/TRPGEngine/Client?utm_source=github.com&utm_medium=referral&utm_content=TRPGEngine/Client&utm_campaign=Badge_Grade_Settings)
 [![codecov](https://codecov.io/gh/TRPGEngine/Client/branch/master/graph/badge.svg?token=mVoHFyoLJy)](undefined)
 [![Release](https://img.shields.io/github/release/TRPGEngine/Client.svg)](https://github.com/TRPGEngine/Client/releases)
 [![Android](https://img.shields.io/badge/platform-android-orange.svg)]()
@@ -41,6 +42,8 @@ $ npm install
 
 $ npm run dev # 运行本地开发服务器
 ```
+
+*如果出现 cypress 因为网络问题无法下载的情况，可以自己构造下载地址来正常安装, 如`CYPRESS_INSTALL_BINARY=https://npm.taobao.org/mirrors/cypress/6.2.1/linux-x64/cypress.zip`*
 
 **开发服务器访问`http://127.0.0.1:8089/`即可访问客户端**
 **客户端需要配合服务端才能正常运行, 具体可以查看服务端项目[TRPGEngine/Server](https://github.com/TRPGEngine/Server)**

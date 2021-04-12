@@ -6,7 +6,7 @@ import {
   isArrowUpHotkey,
   isEnterHotkey,
 } from '@web/utils/hot-key';
-import { useMsgSend } from '@shared/hooks/useMsgSend';
+import { useMsgSend } from '@redux/hooks/useMsgSend';
 import type { Editor } from 'slate';
 import React from 'react';
 import { MsgInputEditor } from '../../editor/MsgInputEditor';
@@ -21,7 +21,7 @@ import { t } from '@shared/i18n';
 import { useSystemSetting } from '@redux/hooks/settings';
 import { Input } from 'antd';
 import { useMsgHistory } from '@shared/hooks/useMsgHistory';
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import { trackEvent } from '@web/utils/analytics-helper';
 
 /**

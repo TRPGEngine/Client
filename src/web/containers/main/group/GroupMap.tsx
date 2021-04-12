@@ -5,7 +5,7 @@ import IsDeveloping from '@web/components/IsDeveloping';
 import { useSelectedGroupInfo } from '@redux/hooks/group';
 import _isEmpty from 'lodash/isEmpty';
 import { Button, Card } from 'antd';
-import { useTRPGDispatch } from '@shared/hooks/useTRPGSelector';
+import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { CreateGroupMap } from './modal/CreateGroupMap';
 import { showModal } from '@shared/redux/actions/ui';
 import styled from 'styled-components';

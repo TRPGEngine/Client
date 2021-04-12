@@ -8,7 +8,7 @@ import { HiddenInMobile } from '@web/components/HiddenInMobile';
 import Webview from '@web/components/Webview';
 import config from '@shared/project.config';
 import { Redirect, useHistory } from 'react-router';
-import { useTRPGSelector } from '@shared/hooks/useTRPGSelector';
+import { useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import loginPatternUrl from '../../assets/img/login-pattern.svg';
 import { Button } from 'antd';
 import { LanguageSwitchLink } from '@web/components/LanguageSwitchLink';
