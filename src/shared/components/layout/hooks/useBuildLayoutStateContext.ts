@@ -7,6 +7,7 @@ import type {
 } from '../XMLBuilder';
 import { useMemo, useReducer, useContext } from 'react';
 import _clone from 'lodash/clone';
+import _cloneDeep from 'lodash/cloneDeep';
 import _set from 'lodash/set';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
@@ -50,6 +51,11 @@ const buildReducer = (onChange?: StateChangeHandler) => {
         break;
       case StateActionType.SetGlobal:
         newState.global[payload.name] = payload.value;
+        break;
+      case StateActionType.UpdateAllData: {
+        newState.data = _cloneDeep(payload.data);
+        break;
+      }
     }
 
     onChange && onChange(newState);
