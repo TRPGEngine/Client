@@ -1,11 +1,14 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import ModalPanel from '../ModalPanel';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
 import _isFunction from 'lodash/isFunction';
 import _cloneDeep from 'lodash/cloneDeep';
-import XMLBuilder from '@shared/components/layout/XMLBuilder';
+import {
+  XMLBuilder,
+  XMLBuilderRef,
+} from '@shared/components/layout/XMLBuilder';
 import { Row, Button } from 'antd';
 import styled from 'styled-components';
 import { TMemo } from '@shared/components/TMemo';
@@ -13,8 +16,10 @@ import { useCachedActorTemplateInfo } from '@redux/hooks/useCache';
 import { showToasts } from '@shared/manager/ui';
 import { updateGroupActorInfo } from '@redux/actions/group';
 import { editGroupActor } from '@shared/model/group';
-import { useTranslation } from '@shared/i18n';
+import { t, useTranslation } from '@shared/i18n';
 import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
+import { AddonMore } from '../AddonMore';
+import { fileToText, openFile } from '@web/utils/file-helper';
 
 /**
  * 人物卡编辑模态框
@@ -34,6 +39,7 @@ interface ActorEditModalProps {
 }
 const ActorEdit: React.FC<ActorEditModalProps> = TMemo((props) => {
   const [actorData, setActorData] = useState(_cloneDeep(props.data));
+  const xmlRef = useRef<XMLBuilderRef>(null);
 
   let title = '人物卡';
   if (!_isNil(props.name)) {
@@ -54,22 +60,56 @@ const ActorEdit: React.FC<ActorEditModalProps> = TMemo((props) => {
   const template = useCachedActorTemplateInfo(props.templateUUID);
   const layout = _get(template, 'layout');
 
-  return useMemo(
-    () =>
-      _isString(layout) ? (
-        <ModalPanel title={title} actions={actions} allowMaximize={true}>
-          <Container>
-            <XMLBuilder
-              xml={layout}
-              initialData={actorData}
-              layoutType="edit"
-              onChange={(newState) => setActorData(newState.data)}
-            />
-          </Container>
-        </ModalPanel>
-      ) : null,
-    [layout, title, actions, actorData, setActorData]
-  );
+  const addonItems = [
+    {
+      label: t('导入人物卡'),
+      onClick: async () => {
+        if (_isNil(xmlRef.current)) {
+          return;
+        }
+
+        if (typeof xmlRef.current.updateAllData === 'function') {
+          // 导入人物卡
+          const file = await openFile({
+            accept: 'application/json',
+          });
+
+          if (_isNil(file)) {
+            return;
+          }
+
+          try {
+            const text = await fileToText(file);
+            const data = JSON.parse(text);
+            xmlRef.current.updateAllData(data);
+            showToasts(t('人物卡加载成功'));
+          } catch (err) {
+            console.error(err);
+            showToasts(`${t('人物卡解析错误')}: ${err}`, 'error');
+          }
+        }
+      },
+    },
+  ];
+
+  return _isString(layout) ? (
+    <ModalPanel
+      title={title}
+      headerActions={<AddonMore placement="bottomRight" items={addonItems} />}
+      actions={actions}
+      allowMaximize={true}
+    >
+      <Container>
+        <XMLBuilder
+          ref={xmlRef}
+          xml={layout}
+          initialData={actorData}
+          layoutType="edit"
+          onChange={(newState) => setActorData(newState.data)}
+        />
+      </Container>
+    </ModalPanel>
+  ) : null;
 });
 ActorEdit.defaultProps = {
   data: {},

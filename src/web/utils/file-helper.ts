@@ -13,6 +13,10 @@ export function fileToDataUrl(img: File): Promise<string> {
   });
 }
 
+/**
+ * 传入文件并返回该文件的内容
+ * @param file 文件对象
+ */
 export function fileToText(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
