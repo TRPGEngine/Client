@@ -3,6 +3,7 @@ import { View, RichText } from '@tarojs/components';
 import { AtCard, AtDivider } from 'taro-ui';
 import { fetchAllRecruitList, RecruitItemType } from '@shared/model/trpg';
 import Taro from '@tarojs/taro';
+import { PageView } from '../../components/PageView';
 
 import './index.less';
 
@@ -36,7 +37,7 @@ const Index: React.FC = () => {
   }, []);
 
   return (
-    <View className="root">
+    <PageView className="root">
       {recruitList.map((recruit) => {
         return (
           <View
@@ -62,7 +63,7 @@ const Index: React.FC = () => {
       })}
 
       {recruitList.length > 3 && <AtDivider content="没有更多了" />}
-    </View>
+    </PageView>
   );
 };
 

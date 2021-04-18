@@ -1,4 +1,3 @@
-import { View } from '@tarojs/components';
 import React, { useCallback, useState } from 'react';
 import { AtButton, AtForm, AtInput } from 'taro-ui';
 import { loginWithPassword } from '@shared/model/player';
@@ -8,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { getStorage } from '@shared/manager/storage';
 import { TARO_JWT_KEY } from '@shared/utils/consts';
 import { setUserInfo } from '../../slices/user';
+import { PageView } from '../../components/PageView';
 
 import './index.less';
 
@@ -48,7 +48,7 @@ const Page: React.FC = () => {
   }, [username, password]);
 
   return (
-    <View className="root">
+    <PageView className="root">
       <AtForm>
         <AtInput
           name="username"
@@ -77,7 +77,7 @@ const Page: React.FC = () => {
           登录
         </AtButton>
       </AtForm>
-    </View>
+    </PageView>
   );
 };
 

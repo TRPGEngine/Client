@@ -4,6 +4,7 @@ import Taro from '@tarojs/taro';
 import { AtAvatar, AtGrid } from 'taro-ui';
 import { getUserName } from '@shared/utils/data-helper';
 import { useTaroUserInfo } from '../../hooks/useTaroUserInfo';
+import { PageView } from '../../components/PageView';
 
 import './index.less';
 
@@ -17,7 +18,7 @@ const Page: React.FC = () => {
   }, []);
 
   return (
-    <View className="root">
+    <PageView className="root">
       {userInfo === null ? (
         <View className="profile-header" onClick={handleLogin}>
           <AtAvatar circle text="我"></AtAvatar>
@@ -65,7 +66,7 @@ const Page: React.FC = () => {
           }
         }}
       />
-    </View>
+    </PageView>
   );
 };
 

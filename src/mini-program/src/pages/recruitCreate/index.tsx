@@ -7,11 +7,11 @@ import {
   RecruitPlatform,
   recruitPlatformMap,
 } from '@shared/model/trpg';
-import _isNil from 'lodash/isNil';
 import Taro from '@tarojs/taro';
 import { AtButton, AtForm, AtInput, AtRadio, AtTextarea } from 'taro-ui';
 import _toPairs from 'lodash/toPairs';
 import { useTaroAuthCheck } from '../../hooks/useTaroAuthCheck';
+import { PageView } from '../../components/PageView';
 
 import './index.less';
 
@@ -49,7 +49,7 @@ const Page: React.FC = () => {
   }, [title, content, platform, contactType, contactContent]);
 
   return (
-    <View className="root">
+    <PageView className="root">
       <AtForm>
         <AtInput
           name="title"
@@ -101,7 +101,7 @@ const Page: React.FC = () => {
           提交
         </AtButton>
       </AtForm>
-    </View>
+    </PageView>
   );
 };
 
