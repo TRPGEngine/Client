@@ -2,7 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { View, RichText } from '@tarojs/components';
 import { AtCard, AtDivider } from 'taro-ui';
 import { fetchAllRecruitList, RecruitItemType } from '@shared/model/trpg';
-import Taro from '@tarojs/taro';
+import Taro, { usePullDownRefresh } from '@tarojs/taro';
+import { showToasts } from '@shared/manager/ui';
 import { PageView } from '../../components/PageView';
 
 import './index.less';
@@ -19,15 +20,27 @@ import './index.less';
 
 const Index: React.FC = () => {
   const [recruitList, setRecruitList] = useState<RecruitItemType[]>([]);
+
+  const fetchList = useCallback(async () => {
+    try {
+      const list = await fetchAllRecruitList();
+      setRecruitList(list);
+      showToasts('加载成功', 'success');
+    } catch (err) {
+      console.error(err);
+      showToasts('加载招募列表失败: ' + String(err), 'error');
+      setRecruitList([]);
+    }
+  }, []);
+
+  usePullDownRefresh(() => {
+    fetchList().then(() => {
+      Taro.stopPullDownRefresh();
+    });
+  });
+
   useEffect(() => {
-    fetchAllRecruitList()
-      .then((list) => {
-        console.log(list);
-        setRecruitList(list);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    fetchList();
   }, []);
 
   const handleClick = useCallback((recruitUUID: string) => {
