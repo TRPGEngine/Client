@@ -38,15 +38,20 @@ const Page: React.FC = () => {
 
       <AtGrid
         data={[
-          {
-            image:
-              'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
-            value: '我的招募',
-          },
+          // {
+          //   image:
+          //     'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
+          //   value: '我的招募',
+          // },
           {
             image:
               'https://img20.360buyimg.com/jdphoto/s72x72_jfs/t15151/308/1012305375/2300/536ee6ef/5a411466N040a074b.png',
             value: '发布招募',
+            onClick() {
+              Taro.navigateTo({
+                url: `/pages/recruitCreate/index`,
+              });
+            },
           },
           // {
           //   image:
@@ -54,6 +59,11 @@ const Page: React.FC = () => {
           //   value: '我的关注',
           // },
         ]}
+        onClick={(item) => {
+          if (typeof item.onClick === 'function') {
+            item.onClick();
+          }
+        }}
       />
     </View>
   );

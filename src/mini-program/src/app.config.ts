@@ -5,6 +5,7 @@ const pages = [
   'pages/me/index',
   'pages/login/index',
   'pages/recruitDetail/index',
+  'pages/recruitCreate/index',
 ];
 
 export default {
