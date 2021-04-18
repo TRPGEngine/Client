@@ -1,47 +1,22 @@
 import { setTokenGetter } from '@shared/manager/request';
 import { getStorage, setStorage } from '@shared/manager/storage';
-import { PORTAL_JWT_KEY } from '@shared/utils/consts';
+import { setToasts } from '@shared/manager/ui';
+import { TARO_JWT_KEY } from '@shared/utils/consts';
 import Taro from '@tarojs/taro';
+import { miniProgramStorage } from './utils/storage';
 
 setTokenGetter(async () => {
-  const token = await getStorage().get(PORTAL_JWT_KEY, '');
+  const token = await getStorage().get(TARO_JWT_KEY, '');
 
   return String(token);
 });
 
-setStorage(() => {
-  return {
-    async set(key, data) {
-      /**
-       * NOTICE: Taro 不管过期
-       * 此处行为与save一致
-       */
-      await Taro.setStorage({
-        key,
-        data,
-      });
-    },
-    async get(key, defaultVal) {
-      try {
-        const { data } = await Taro.getStorage({
-          key,
-        });
+setStorage(() => miniProgramStorage);
 
-        return data ?? defaultVal;
-      } catch (e) {
-        return defaultVal;
-      }
-    },
-    async remove(key) {
-      await Taro.removeStorage({
-        key,
-      });
-    },
-    async save(key, data) {
-      await Taro.setStorage({
-        key,
-        data,
-      });
-    },
-  };
+setToasts((msg, type = 'info') => {
+  Taro.atMessage({
+    message: msg,
+    type: type,
+    duration: 3000,
+  });
 });

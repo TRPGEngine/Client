@@ -6,7 +6,7 @@ import {
   buildCacheFactory,
   buildCacheHashFnPrefix,
 } from '@shared/utils/cache-factory';
-import { setAnalyticsUser } from '@web/utils/analytics-helper';
+import { getAnalytics } from '@shared/manager/analytics';
 
 export interface PlayerUser {
   id: number;
@@ -77,7 +77,7 @@ export async function loginWithPassword(
 
   const { jwt, info } = data;
   await setUserJWT(jwt);
-  setAnalyticsUser(info);
+  getAnalytics().setAnalyticsUser(info);
 
   return { jwt, info };
 }
@@ -98,9 +98,10 @@ export const registerAccount = (username: string, password: string) => {
  * 获取用户信息
  */
 export const fetchUserInfo = buildCacheFactory<PlayerUser>(
-  CachePolicy.Persistent,
-  (uuid: string) => {
-    return request.get(`/player/info/${uuid}`).then(({ data }) => data.user);
+  CachePolicy.Temporary,
+  async (uuid: string) => {
+    const { data } = await request.get(`/player/info/${uuid}`);
+    return data.user;
   },
   buildCacheHashFnPrefix('fetchUserInfo')
 );

@@ -1,4 +1,4 @@
-import rnStorage from '@shared/api/rn-storage.api';
+import { getStorage } from '@shared/manager/storage';
 import _isNil from 'lodash/isNil';
 
 export enum CachePolicy {
@@ -97,9 +97,9 @@ class TemporaryCache implements CacheManager {
 
 class PersistentCache implements CacheManager {
   async get(hash: string) {
-    return await rnStorage.get(hash);
+    return await getStorage().get(hash);
   }
   async set(hash: string, value: any) {
-    rnStorage.set(hash, value);
+    getStorage().set(hash, value);
   }
 }

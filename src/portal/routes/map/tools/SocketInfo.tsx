@@ -1,7 +1,7 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useMapMemberSocketInfo } from '@shared/api/trpg/hooks';
-import { useUserInfo } from '@portal/hooks/useUserInfo';
+import { useUserInfo } from '@shared/hooks/useUserInfo';
 import Avatar from '@web/components/Avatar';
 import { Tooltip } from 'antd';
 

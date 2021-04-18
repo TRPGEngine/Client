@@ -116,10 +116,9 @@ module.exports = {
           },
           {
             from: 'import Config from "config";',
-            to: `const Config = ${JSON.stringify({
-              sentry: require('config').get('sentry'),
-              posthog: require('config').get('posthog'),
-            })};`,
+            to: `const Config = ${JSON.stringify(
+              require('./build/config/configObj')
+            )};`,
           },
           {
             from: 'import "antd/dist/antd.dark.less";',

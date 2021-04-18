@@ -1,3 +1,5 @@
+import rnStorage from '@shared/api/rn-storage.api';
+import { setStorage } from '@shared/manager/storage';
 import '@testing-library/jest-dom';
 import _noop from 'lodash/noop';
 
@@ -58,3 +60,5 @@ console.error = jest.fn(mockConsoleMethod(console.error));
 function is(it?: string) {
   return !!it && it !== '0' && it !== 'false';
 }
+
+setStorage(() => rnStorage);

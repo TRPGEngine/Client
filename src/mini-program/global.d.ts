@@ -25,3 +25,7 @@ declare const process: {
     [key: string]: any;
   };
 };
+
+interface Window {
+  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
+}

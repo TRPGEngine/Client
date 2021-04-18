@@ -1,6 +1,5 @@
 import type { PageConfig } from '@tarojs/taro';
 
 export default {
-  navigationBarTitleText: '首页',
-  enablePullDownRefresh: true,
+  navigationBarTitleText: '登录',
 } as PageConfig;

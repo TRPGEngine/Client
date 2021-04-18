@@ -47,9 +47,14 @@ export const SYSTE_CONVERSE_SPEC = 'trpgsystem';
 export const LANGUAGE_KEY = 'trpg:i18n:language';
 
 /**
- * portal端的jwt键
+ * portal端的jwt存储key
  */
 export const PORTAL_JWT_KEY = 'jwt';
+
+/**
+ * 小程序端的jwt存储key
+ */
+export const TARO_JWT_KEY = 'jwt';
 
 /**
  * 是否已安装PWA
