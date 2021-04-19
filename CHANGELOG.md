@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.27](https://github.com/TRPGEngine/Client/compare/v0.5.26...v0.5.27) (2021-04-19)
+
+
+### Features
+
+* **taro:** 增加小程序 我 与 发布招募 ([ca2e139](https://github.com/TRPGEngine/Client/commit/ca2e139344b26d5eea94d08846a90a70a4643737))
+* **taro:** 小程序登录页 ([936cb44](https://github.com/TRPGEngine/Client/commit/936cb44ff7bd85c190290b4ff132d652f8d7fd63))
+* **taro:** 首页下拉刷新 ([92d8118](https://github.com/TRPGEngine/Client/commit/92d8118bd23de93fcc7f913cf3f5f90e99a9c2e9))
+* **web:** 增加导入人物卡功能 ([97d6eb0](https://github.com/TRPGEngine/Client/commit/97d6eb06df82cc7d221136977720c37249a0ed8f))
+
+
+### Bug Fixes
+
+* **web:** 修复外边距仍然无法正常移除外边距的问题 ([4dbae0f](https://github.com/TRPGEngine/Client/commit/4dbae0ff7eebc01287d3ec2b09efc5e22d254225))
+
 ### [0.5.26](https://github.com/TRPGEngine/Client/compare/v0.5.25...v0.5.26) (2021-04-12)
 
 
