@@ -8,11 +8,16 @@ import { SERVICE_URL } from '@shared/utils/consts';
 import { API } from '@shared/api/socket-api';
 import { isUrl } from '@shared/utils/string-helper';
 import config from '@shared/project.config';
-import { initAnalytics } from './utils/analytics-helper';
+import {
+  initAnalytics,
+  setAnalyticsUser,
+  trackEvent,
+} from './utils/analytics-helper';
 import { getUserJWT } from '@shared/utils/jwt-helper';
 import { setTokenGetter } from '@shared/manager/request';
 import { setStorage } from '@shared/manager/storage';
 import rnStorage from '@shared/api/rn-storage.api';
+import { setAnalytics } from '@shared/manager/analytics';
 
 initAnalytics();
 
@@ -55,3 +60,5 @@ setTokenGetter(async () => {
 });
 
 setStorage(() => rnStorage);
+
+setAnalytics(() => ({ setAnalyticsUser, trackEvent }));

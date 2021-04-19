@@ -1,3 +1,5 @@
+import _get from 'lodash/get';
+
 /**
  * 传入一个图片文件， 返回对应的 Base64 编码
  * @param img 图片文件
@@ -8,6 +10,19 @@ export function fileToDataUrl(img: File): Promise<string> {
     reader.addEventListener('load', () => resolve(String(reader.result ?? '')));
     reader.addEventListener('error', () => reject(reader.error));
     reader.readAsDataURL(img);
+  });
+}
+
+/**
+ * 传入文件并返回该文件的内容
+ * @param file 文件对象
+ */
+export function fileToText(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => resolve(String(reader.result ?? '')));
+    reader.addEventListener('error', () => reject(reader.error));
+    reader.readAsText(file);
   });
 }
 
@@ -72,4 +87,30 @@ export async function downloadBlob(blob: Blob, fileName: string) {
   const url = String(URL.createObjectURL(blob));
   downloadBlobUrl(url, fileName);
   URL.revokeObjectURL(url);
+}
+
+/**
+ * 打开一个选择文件的窗口, 并返回文件
+ */
+interface FileDialogOptions {
+  accept?: string;
+}
+export async function openFile(
+  fileDialogOptions?: FileDialogOptions
+): Promise<File | null> {
+  return new Promise((resolve) => {
+    const fileEl = document.createElement('input');
+    fileEl.setAttribute('type', 'file');
+    if (typeof fileDialogOptions?.accept === 'string') {
+      fileEl.accept = fileDialogOptions.accept;
+    }
+    fileEl.addEventListener('change', function (e) {
+      const file: File | null = _get(this, ['files', 0], null);
+      resolve(file);
+
+      fileEl.remove();
+    });
+
+    fileEl.click();
+  });
 }

@@ -5,6 +5,7 @@ import _isNil from 'lodash/isNil';
 import { getFromNow } from '@shared/utils/date-helper';
 import Taro, { useRouter } from '@tarojs/taro';
 import { AtActivityIndicator, AtButton, AtDivider, AtTag } from 'taro-ui';
+import { PageView } from '../../components/PageView';
 
 import './index.less';
 
@@ -58,7 +59,7 @@ const Page: React.FC = () => {
   }
 
   return (
-    <View className="root">
+    <PageView className="root">
       <View className="title">
         <Text>{recruitDetail.title}</Text>
         <AtTag type="primary" circle>
@@ -83,7 +84,7 @@ const Page: React.FC = () => {
           请求加入
         </AtButton>
       )}
-    </View>
+    </PageView>
   );
 };
 

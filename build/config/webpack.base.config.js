@@ -174,11 +174,7 @@ const out = {
   externals: {
     electron: "require('electron')",
     'react-native': "require('react-native')",
-    config: JSON.stringify({
-      // 手动指定部分配置以防止私密配置泄漏
-      sentry: require('config').get('sentry'),
-      posthog: require('config').get('posthog'),
-    }), // 用于全局使用config，config由编译时的环境变量指定
+    config: JSON.stringify(require('./configObj')), // 用于全局使用config，config由编译时的环境变量指定
   },
 
   // TODO: 在Webpack5 先注释，使用默认行为

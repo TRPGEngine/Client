@@ -1,14 +1,13 @@
 /* eslint-disable */
 
 import './init';
+import './polyfill';
 import { Component } from 'react';
 import { Provider } from 'react-redux';
+import { store } from './store';
+
 import 'taro-ui/dist/style/index.scss';
-
-import configStore from './store';
 import './app.less';
-
-const store = configStore();
 
 class App extends Component {
   componentDidMount() {}

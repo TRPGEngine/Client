@@ -1,6 +1,6 @@
 import { buildRegFn } from './buildRegFn';
 
-interface StorageObject {
+export interface StorageObject {
   /**
    * NOTICE: 与save不同， set存储 1 天
    */

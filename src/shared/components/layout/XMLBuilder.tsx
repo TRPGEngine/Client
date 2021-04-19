@@ -1,4 +1,9 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, {
+  useMemo,
+  useState,
+  useEffect,
+  useImperativeHandle,
+} from 'react';
 import parser, { XMLElement } from './parser/xml-parser';
 import * as processor from './processor';
 import _isEmpty from 'lodash/isEmpty';
@@ -114,81 +119,104 @@ interface XMLBuilderProps {
   initialData?: DataMap;
   onChange?: StateChangeHandler;
 }
-const XMLBuilder: React.FC<XMLBuilderProps> = TMemo((props) => {
-  const { xml = '', onChange, layoutType = 'edit' } = props;
-  const [error, setError] = useState<Error | null>(null);
-  const [layout, setLayout] = useState<XMLElement>();
+export interface XMLBuilderRef {
+  /**
+   * 更新所有数据
+   */
+  updateAllData: (data: Record<string, any>) => void;
+}
+export const XMLBuilder = TMemo(
+  React.forwardRef<XMLBuilderRef, XMLBuilderProps>((props, ref) => {
+    const { xml = '', onChange, layoutType = 'edit' } = props;
+    const [error, setError] = useState<Error | null>(null);
+    const [layout, setLayout] = useState<XMLElement>();
 
-  const { state, dispatch } = useBuildLayoutStateContext({
-    initialData: props.initialData!,
-    onChange: onChange!,
-  });
+    const { state, dispatch } = useBuildLayoutStateContext({
+      initialData: props.initialData!,
+      onChange: onChange!,
+    });
 
-  useEffect(() => {
-    try {
-      const ast = parser(xml);
-      ast.type = 'root';
-      iterativeConfigKey(ast);
-      console.log('layout', ast);
+    useImperativeHandle(
+      ref,
+      () => ({
+        updateAllData: (data) => {
+          dispatch({
+            type: StateActionType.UpdateAllData,
+            payload: {
+              data,
+            },
+          });
+        },
+      }),
+      []
+    );
 
-      // 渲染分两步
-      // 1. 渲染预加载组件
-      setLayout(getASTObjectWithTagName(ast, preRenderTags));
-      requestAnimationFrame(() => {
-        // 2. 待渲染完毕后渲染除了预加载组件以外的所有组件
-        setLayout(getASTObjectWithoutTagName(ast, preRenderTags));
-      });
+    useEffect(() => {
+      try {
+        const ast = parser(xml);
+        ast.type = 'root';
+        iterativeConfigKey(ast);
+        console.log('layout', ast);
 
-      setError(null);
-    } catch (err) {
-      console.error(err);
-      setError(err);
-    }
-  }, [xml]);
+        // 渲染分两步
+        // 1. 渲染预加载组件
+        setLayout(getASTObjectWithTagName(ast, preRenderTags));
+        requestAnimationFrame(() => {
+          // 2. 待渲染完毕后渲染除了预加载组件以外的所有组件
+          setLayout(getASTObjectWithoutTagName(ast, preRenderTags));
+        });
 
-  const context = useMemo(() => ({ state, dispatch, layoutType }), [
-    state,
-    dispatch,
-    layoutType,
-  ]);
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError(err);
+      }
+    }, [xml]);
 
-  const LayoutDOM = useMemo(() => {
-    if (!_isNil(error)) {
-      return (
-        <div>
-          <p>XML解析出现错误:</p>
-          <p>{String(error)}</p>
-        </div>
-      );
-    }
+    const context = useMemo(() => ({ state, dispatch, layoutType }), [
+      state,
+      dispatch,
+      layoutType,
+    ]);
 
-    if (_isEmpty(layout)) {
-      return null;
-    }
+    const LayoutDOM = useMemo(() => {
+      if (!_isNil(error)) {
+        return (
+          <div>
+            <p>XML解析出现错误:</p>
+            <p>{String(error)}</p>
+          </div>
+        );
+      }
 
-    try {
-      return <LayoutNode node={layout!} />;
-    } catch (err) {
-      console.error(err);
-      setError(err);
-      return null;
-    }
-  }, [layout, error]);
+      if (_isEmpty(layout)) {
+        return null;
+      }
 
-  const [XMLRender, { width }] = useSize(
-    <XMLBuilderContainer>{LayoutDOM}</XMLBuilderContainer>
-  );
+      try {
+        return <LayoutNode node={layout!} />;
+      } catch (err) {
+        console.error(err);
+        setError(err);
+        return null;
+      }
+    }, [layout, error]);
 
-  return (
-    <XMLErrorBoundary>
-      <LayoutWidthContextProvider width={width}>
-        <LayoutStateContextProvider state={context}>
-          {XMLRender}
-        </LayoutStateContextProvider>
-      </LayoutWidthContextProvider>
-    </XMLErrorBoundary>
-  );
-});
+    const [XMLRender, { width }] = useSize(
+      <XMLBuilderContainer>{LayoutDOM}</XMLBuilderContainer>
+    );
+
+    return (
+      <XMLErrorBoundary>
+        <LayoutWidthContextProvider width={width}>
+          <LayoutStateContextProvider state={context}>
+            {XMLRender}
+          </LayoutStateContextProvider>
+        </LayoutWidthContextProvider>
+      </XMLErrorBoundary>
+    );
+  })
+);
 XMLBuilder.displayName = 'XMLBuilder';
 
 export default XMLBuilder;

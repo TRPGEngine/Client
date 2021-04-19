@@ -1,4 +1,5 @@
 import { t } from '@shared/i18n';
+import { Space } from 'antd';
 import React from 'react';
 import styled, { css } from 'styled-components';
 
@@ -54,7 +55,7 @@ const ModalPanelContainer = styled.div<{ maximize?: boolean }>`
   }
 `;
 
-const ModalPanelActionGroup = styled.div`
+const ModalPanelActionGroup = styled(Space)`
   position: absolute;
   top: 14px;
   right: 40px;

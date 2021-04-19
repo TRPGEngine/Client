@@ -3,9 +3,14 @@ import { setToasts } from '@shared/manager/ui';
 import { setErrorHook, setTokenGetter } from '@shared/manager/request';
 import { navToLoginPage } from './utils/request';
 import { getPortalJWT } from './utils/auth';
-import { initAnalytics } from '@web/utils/analytics-helper';
+import {
+  initAnalytics,
+  setAnalyticsUser,
+  trackEvent,
+} from '@web/utils/analytics-helper';
 import { setStorage } from '@shared/manager/storage';
 import rnStorage from '@shared/api/rn-storage.api';
+import { setAnalytics } from '@shared/manager/analytics';
 
 initAnalytics();
 
@@ -45,3 +50,5 @@ setTokenGetter(() => {
 });
 
 setStorage(() => rnStorage);
+
+setAnalytics(() => ({ setAnalyticsUser, trackEvent }));
