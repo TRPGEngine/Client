@@ -22,6 +22,7 @@ export async function checkTaroToken(autoNav = true): Promise<boolean> {
         });
       } else {
         const lastPage = _last(currentPages);
+
         Taro.redirectTo({
           url: `/pages/login/index?next=${lastPage?.route ?? ''}`,
         });

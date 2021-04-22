@@ -12,11 +12,12 @@ import { AtButton, AtForm, AtInput, AtRadio, AtTextarea } from 'taro-ui';
 import _toPairs from 'lodash/toPairs';
 import { useTaroAuthCheck } from '../../hooks/useTaroAuthCheck';
 import { PageView } from '../../components/PageView';
+import { Loading } from '../../components/Loading';
 
 import './index.less';
 
 const Page: React.FC = () => {
-  useTaroAuthCheck();
+  const valid = useTaroAuthCheck();
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -47,6 +48,10 @@ const Page: React.FC = () => {
         setLoading(false);
       });
   }, [title, content, platform, contactType, contactContent]);
+
+  if (!valid) {
+    return <Loading />;
+  }
 
   return (
     <PageView className="root">
