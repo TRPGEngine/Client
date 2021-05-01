@@ -176,7 +176,7 @@
     "wangeditor": "^3.1.1",
     "xml-js": "^1.6.11",
     "xss": "^1.0.6",
-    "yup": "^0.29.3"
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
