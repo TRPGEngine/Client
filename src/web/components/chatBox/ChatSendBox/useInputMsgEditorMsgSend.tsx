@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
-import type { TRPGEditorNode } from '../../editor/types';
+import type { TRPGEditorValue } from '../../editor/types';
 import { buildBlankInputData, getHeadSelection } from '../../editor/utils';
 import {
   isArrowDownHotkey,
@@ -33,7 +33,7 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
   const { message, setMessage, handleSendMsg, inputRef, sendMsg } = useMsgSend(
     converseUUID
   );
-  const [messageData, setMessageData] = useState<TRPGEditorNode[]>(
+  const [messageData, setMessageData] = useState<TRPGEditorValue[]>(
     buildBlankInputData()
   );
   const converse = useConverseDetail(converseUUID);

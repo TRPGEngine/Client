@@ -1,5 +1,5 @@
 import type { TRPGEditorNode } from '../../types';
-import { Text } from 'slate';
+import { Text, Editor } from 'slate';
 import _get from 'lodash/get';
 
 /**
@@ -11,6 +11,10 @@ function serializeToBBCodeNode(node: TRPGEditorNode): string {
   }
 
   const children = node.children.map((n) => serializeToBBCodeNode(n)).join('');
+
+  if (Editor.isEditor(node)) {
+    return children;
+  }
 
   switch (node.type) {
     case 'mention':

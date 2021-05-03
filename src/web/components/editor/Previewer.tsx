@@ -1,6 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
 import { Slate, Editable } from 'slate-react';
-import type { TRPGEditorNode } from './types';
 import { createStandardEditor } from './instance';
 import { SlateElement } from './render/Element';
 import { SlateLeaf } from './render/Leaf';
@@ -8,9 +7,10 @@ import { TMemo } from '@shared/components/TMemo';
 import { WebErrorBoundary } from '../WebErrorBoundary';
 import _isArray from 'lodash/isArray';
 import { Result } from 'antd';
+import type { TRPGEditorValue } from './types';
 
 export const Previewer: React.FC<{
-  nodes: TRPGEditorNode[];
+  nodes: TRPGEditorValue[];
 }> = TMemo((props) => {
   const editor = useMemo(() => createStandardEditor(), []);
   const renderElement = useCallback((props) => <SlateElement {...props} />, []);

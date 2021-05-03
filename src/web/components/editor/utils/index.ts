@@ -1,17 +1,16 @@
-import { Editor, Transforms, Range } from 'slate';
-import type { ReactEditor } from 'slate-react';
-import type { TRPGEditorNode } from '../types';
+import { Editor, Transforms, Range, Element } from 'slate';
+import type { FormatType, TRPGEditor, TRPGEditorValue } from '../types';
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 
 /**
  * 创建一个空的slate数据对象
  */
-export function buildBlankInputData(): TRPGEditorNode[] {
+export function buildBlankInputData(): TRPGEditorValue[] {
   return [
     {
       children: [{ text: '' }],
-    },
+    } as TRPGEditorValue,
   ];
 }
 
@@ -28,10 +27,11 @@ export function getHeadSelection(): Range {
 /**
  * 判定块级元素是否生效
  */
-export const isBlockActive = (editor: ReactEditor, format: string) => {
+export const isBlockActive = (editor: TRPGEditor, format: FormatType) => {
   const [match] = Array.from(
     Editor.nodes(editor, {
-      match: (n) => n.type === format,
+      match: (n) =>
+        !Editor.isEditor(n) && Element.isElement(n) && n.type === format,
     })
   );
 
@@ -41,12 +41,15 @@ export const isBlockActive = (editor: ReactEditor, format: string) => {
 /**
  * 切换块级元素属性
  */
-export const toggleBlock = (editor: ReactEditor, format: string) => {
+export const toggleBlock = (editor: TRPGEditor, format: FormatType) => {
   const isActive = isBlockActive(editor, format);
   const isList = LIST_TYPES.includes(format);
 
   Transforms.unwrapNodes(editor, {
-    match: (n) => LIST_TYPES.includes(n.type as string),
+    match: (n) =>
+      !Editor.isEditor(n) &&
+      Element.isElement(n) &&
+      LIST_TYPES.includes(n.type),
     split: true,
   });
 
@@ -63,7 +66,7 @@ export const toggleBlock = (editor: ReactEditor, format: string) => {
 /**
  * 判断标记是否生效
  */
-export const isMarkActive = (editor: ReactEditor, format: string) => {
+export const isMarkActive = (editor: TRPGEditor, format: string) => {
   const marks = Editor.marks(editor);
   return marks ? marks[format] === true : false;
 };
@@ -71,7 +74,7 @@ export const isMarkActive = (editor: ReactEditor, format: string) => {
 /**
  * 切换标记
  */
-export const toggleMark = (editor: ReactEditor, format: string) => {
+export const toggleMark = (editor: TRPGEditor, format: string) => {
   const isActive = isMarkActive(editor, format);
 
   if (isActive) {

@@ -10,7 +10,7 @@ export function createTestEditorWithContent(text: string): Editor {
     {
       children: [{ text: '' }],
     },
-  ];
+  ] as any;
   editor.selection = getHeadSelection();
 
   editor.insertText(text);

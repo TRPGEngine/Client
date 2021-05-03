@@ -15,7 +15,7 @@ import { getFormContainer } from './container';
  */
 export interface FastFormProps {
   fields: FastFormFieldMeta[]; // 字段详情
-  schema?: ObjectSchema; // yup schame object 用于表单校验
+  schema?: ObjectSchema<any>; // yup schame object 用于表单校验
   submitLabel?: string; // 提交按钮的标签名
   onSubmit: (values: any) => Promise<void> | void; // 点击提交按钮的回调
   onChange?: (values: any) => void; // 数据更新回调

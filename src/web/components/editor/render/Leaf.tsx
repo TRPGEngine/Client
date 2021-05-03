@@ -1,6 +1,6 @@
 import React from 'react';
 import type { RenderLeafProps } from 'slate-react';
-import type { EditorType } from './type';
+import type { EditorType } from './types';
 
 interface EditorLeafProps extends RenderLeafProps {
   editorType: EditorType;

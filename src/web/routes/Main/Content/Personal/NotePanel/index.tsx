@@ -1,15 +1,13 @@
-import React, { Fragment, useState, useCallback, useEffect } from 'react';
+import React, { Fragment, useState, useCallback } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import { useParams } from 'react-router';
 import { useNoteInfo } from '@redux/hooks/note';
-import { Loading } from '@web/components/Loading';
 import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
 import _isEqual from 'lodash/isEqual';
 import _isEmpty from 'lodash/isEmpty';
 import { RichTextEditor } from '@web/components/editor/RichTextEditor';
 import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
-import type { Node } from 'slate';
 import { WebErrorBoundary } from '@web/components/WebErrorBoundary';
 import { AlertErrorView } from '@web/components/AlertErrorView';
 import {
@@ -25,8 +23,9 @@ import { isSaveHotkey } from '@web/utils/hot-key';
 import { Iconfont } from '@web/components/Iconfont';
 import { ImageButton } from './ImageButton';
 import { t } from '@shared/i18n';
+import type { TRPGEditorValue } from '@web/components/editor/types';
 
-function getNoteInitData(data?: Node[]): Node[] {
+function getNoteInitData(data?: TRPGEditorValue[]): TRPGEditorValue[] {
   if (_isEmpty(data)) {
     return [
       {
@@ -36,12 +35,13 @@ function getNoteInitData(data?: Node[]): Node[] {
     ];
   }
 
-  return data as Node[];
+  return data as TRPGEditorValue[];
 }
+
 function useNoteData(noteUUID: string) {
   const noteInfo = useNoteInfo(noteUUID);
   const [title, setTitle] = useState(noteInfo?.title ?? '');
-  const [value, setValue] = useState<Node[]>(() =>
+  const [value, setValue] = useState<TRPGEditorValue[]>(() =>
     getNoteInitData(noteInfo?.data)
   );
 
