@@ -12,7 +12,7 @@ const layout = String(
 test('basic snapshot', async () => {
   const { container } = render(<XMLBuilderTester xml={layout} />);
 
-  await sleep(100);
+  await sleep(500);
 
   expect(container).toMatchSnapshot();
 });
