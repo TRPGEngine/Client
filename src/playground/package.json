@@ -4,15 +4,15 @@
   "description": "",
   "main": "index.tsx",
   "scripts": {
-    "up:saucer": "npx npm-check-updates '/saucerjs/' -u && npm install",
+    "up:saucer": "npx npm-check-updates '/@saucerjs/' -u && npm install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "moonrailgun",
   "license": "GPL-3.0",
   "dependencies": {
-    "@saucerjs/core": "^0.1.7",
-    "@saucerjs/editor": "^0.1.8",
-    "@saucerjs/xml": "^0.1.8",
+    "@saucerjs/core": "0.1.9",
+    "@saucerjs/editor": "0.1.9",
+    "@saucerjs/xml": "0.1.9",
     "lz-string": "^1.4.4",
     "monaco-editor": "*",
     "monaco-editor-webpack-plugin": "^2.0.0",
