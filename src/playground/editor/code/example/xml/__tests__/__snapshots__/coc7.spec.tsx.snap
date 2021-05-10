@@ -1270,35 +1270,14 @@ exports[`basic snapshot 1`] = `
                 <div
                   class="fieldset-divider"
                 />
-                <div>
+                <div
+                  style="width: 100%; height: 300px;"
+                >
                   <div
-                    class="loading-spinner-container"
-                  >
-                    <div
-                      class="loading-spinner-inner"
-                    >
-                      <div
-                        class="rect1"
-                      />
-                      <div
-                        class="rect2"
-                      />
-                      <div
-                        class="rect3"
-                      />
-                      <div
-                        class="rect4"
-                      />
-                      <div
-                        class="rect5"
-                      />
-                    </div>
-                  </div>
-                  <p
-                    class="sc-fzoLsD gkuSAF"
-                  >
-                    
-                  </p>
+                    class="recharts-responsive-container"
+                    id="undefined"
+                    style="width: 100%; height: 100%;"
+                  />
                 </div>
               </div>
             </div>
@@ -1533,7 +1512,7 @@ exports[`basic snapshot 1`] = `
               style="padding-left: 8px; padding-right: 8px;"
             >
               <div
-                class="sc-fzplWN hibMBN"
+                class="sc-fzplWN krqhFh"
               >
                 <div
                   class="ant-tabs ant-tabs-top"
@@ -1678,6 +1657,7 @@ exports[`basic snapshot 1`] = `
                         </div>
                         <div
                           class="ant-tabs-ink-bar ant-tabs-ink-bar-animated"
+                          style="left: 0px; width: 0px;"
                         />
                       </div>
                     </div>
@@ -2767,7 +2747,6 @@ exports[`basic snapshot 1`] = `
                     class="ant-col ant-col-18"
                   >
                     <mock-antd-input-textarea
-                      autosize="false"
                       placeholder="资产说明"
                     />
                   </div>
@@ -2790,7 +2769,6 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 8px; padding-right: 8px;"
                 >
                   <mock-antd-input-textarea
-                    autosize="false"
                     placeholder="随身物品"
                     rows="11"
                   />
@@ -3034,7 +3012,6 @@ exports[`basic snapshot 1`] = `
                     class="ant-col ant-col-18"
                   >
                     <mock-antd-input-textarea
-                      autosize="false"
                       placeholder="详细描述"
                       rows="4"
                     />
@@ -3069,7 +3046,6 @@ exports[`basic snapshot 1`] = `
                 style="padding-left: 2px; padding-right: 2px;"
               >
                 <mock-antd-input-textarea
-                  autosize="false"
                   placeholder="调查员经历"
                   rows="8"
                 />
@@ -3097,7 +3073,6 @@ exports[`basic snapshot 1`] = `
                 style="padding-left: 2px; padding-right: 2px;"
               >
                 <mock-antd-input-textarea
-                  autosize="false"
                   placeholder="调查员伙伴"
                   rows="8"
                 />
@@ -3125,7 +3100,6 @@ exports[`basic snapshot 1`] = `
                 style="padding-left: 2px; padding-right: 2px;"
               >
                 <mock-antd-input-textarea
-                  autosize="false"
                   placeholder="克苏鲁神话"
                   rows="8"
                 />

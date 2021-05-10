@@ -2550,35 +2550,14 @@ exports[`basic snapshot 1`] = `
             class="ant-col ant-col-24"
             style="padding-left: 2px; padding-right: 2px;"
           >
-            <div>
+            <div
+              style="width: 100%; height: 300px;"
+            >
               <div
-                class="loading-spinner-container"
-              >
-                <div
-                  class="loading-spinner-inner"
-                >
-                  <div
-                    class="rect1"
-                  />
-                  <div
-                    class="rect2"
-                  />
-                  <div
-                    class="rect3"
-                  />
-                  <div
-                    class="rect4"
-                  />
-                  <div
-                    class="rect5"
-                  />
-                </div>
-              </div>
-              <p
-                class="sc-fzoLsD gkuSAF"
-              >
-
-              </p>
+                class="recharts-responsive-container"
+                id="undefined"
+                style="width: 100%; height: 100%;"
+              />
             </div>
             <div>
               <center>
