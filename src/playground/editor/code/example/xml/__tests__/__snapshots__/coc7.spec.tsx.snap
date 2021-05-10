@@ -6501,6 +6501,7 @@ exports[`basic snapshot 1`] = `
                     class="ant-col ant-col-18"
                   >
                     <mock-antd-input-textarea
+                      autosize="false"
                       placeholder="资产说明"
                     />
                   </div>
@@ -6523,6 +6524,7 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 8px; padding-right: 8px;"
                 >
                   <mock-antd-input-textarea
+                    autosize="false"
                     placeholder="随身物品"
                     rows="11"
                   />
@@ -6766,6 +6768,7 @@ exports[`basic snapshot 1`] = `
                     class="ant-col ant-col-18"
                   >
                     <mock-antd-input-textarea
+                      autosize="false"
                       placeholder="详细描述"
                       rows="4"
                     />
@@ -6800,6 +6803,7 @@ exports[`basic snapshot 1`] = `
                 style="padding-left: 2px; padding-right: 2px;"
               >
                 <mock-antd-input-textarea
+                  autosize="false"
                   placeholder="调查员经历"
                   rows="8"
                 />
@@ -6827,6 +6831,7 @@ exports[`basic snapshot 1`] = `
                 style="padding-left: 2px; padding-right: 2px;"
               >
                 <mock-antd-input-textarea
+                  autosize="false"
                   placeholder="调查员伙伴"
                   rows="8"
                 />
@@ -6854,6 +6859,7 @@ exports[`basic snapshot 1`] = `
                 style="padding-left: 2px; padding-right: 2px;"
               >
                 <mock-antd-input-textarea
+                  autosize="false"
                   placeholder="克苏鲁神话"
                   rows="8"
                   value="0"

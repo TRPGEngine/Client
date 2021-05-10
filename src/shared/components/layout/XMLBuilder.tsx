@@ -123,7 +123,7 @@ export const LayoutProviderContainer: React.FC<{
   layoutType?: LayoutType;
   initialData?: DataMap;
   onChange?: StateChangeHandler;
-  builderRef: React.Ref<XMLBuilderRef>;
+  builderRef?: React.Ref<XMLBuilderRef>;
 }> = TMemo((props) => {
   const { style, layoutType = 'edit', builderRef } = props;
   const handleChange = useCallback(
@@ -186,7 +186,7 @@ export interface XMLBuilderRef {
 }
 export const XMLBuilder = TMemo(
   React.forwardRef<XMLBuilderRef, XMLBuilderProps>((props, ref) => {
-    const { xml = '', onChange, layoutType = 'edit' } = props;
+    const { xml = '', initialData, onChange, layoutType = 'edit' } = props;
     const [error, setError] = useState<Error | null>(null);
     const [layout, setLayout] = useState<XMLElement>();
 
@@ -237,7 +237,12 @@ export const XMLBuilder = TMemo(
 
     return (
       <XMLErrorBoundary>
-        <LayoutProviderContainer builderRef={ref}>
+        <LayoutProviderContainer
+          initialData={initialData}
+          layoutType={layoutType}
+          onChange={onChange}
+          builderRef={ref}
+        >
           {LayoutDOM}
         </LayoutProviderContainer>
       </XMLErrorBoundary>
