@@ -1,5 +1,4 @@
 import type { SlatePluginFunction } from '../types';
-import { Editor } from 'slate';
 
 export const withMentions: SlatePluginFunction = (editor) => {
   const { isInline, isVoid } = editor;

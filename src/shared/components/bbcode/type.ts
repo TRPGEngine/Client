@@ -2,7 +2,7 @@ export type AstNode = AstNodeObj | AstNodeStr;
 
 export type AstNodeObj = {
   tag: string;
-  attrs: { [name: string]: string };
+  attrs: Record<string, string>;
   content: AstNode[];
 };
 

@@ -44,11 +44,7 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-form-item-control-input-content"
                   >
-                    <input
-                      class="ant-input"
-                      type="text"
-                      value=""
-                    />
+                    <mock-antd-input />
                   </div>
                 </div>
               </div>
@@ -75,9 +71,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-form-item-control-input-content"
                   >
-                    <textarea
-                      class="ant-input"
-                      style="height: -32px; min-height: -16px; max-height: -32px;"
+                    <mock-antd-input-textarea
+                      autosize="[object Object]"
                     />
                   </div>
                 </div>
@@ -136,10 +131,9 @@ exports[`basic snapshot 1`] = `
           <div
             class="ant-col ant-col-18"
           >
-            <textarea
-              class="ant-input"
+            <mock-antd-input-textarea
+              autosize="[object Object]"
               placeholder="人物卡信息"
-              style="height: -32px; min-height: -16px; max-height: -32px;"
             />
           </div>
         </div>

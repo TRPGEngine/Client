@@ -1,4 +1,5 @@
 import { Transforms, Editor } from 'slate';
+import type { TRPGEditorElement } from '../types';
 
 /**
  * 插入图片
@@ -6,7 +7,11 @@ import { Transforms, Editor } from 'slate';
  * @param url 图片URL
  */
 export function insertImage(editor: Editor, url: string) {
-  const image = { type: 'image', url, children: [{ text: url }] };
+  const image: TRPGEditorElement = {
+    type: 'image',
+    url,
+    children: [{ text: url }],
+  };
   Transforms.insertNodes(editor, image);
   Transforms.move(editor);
 }

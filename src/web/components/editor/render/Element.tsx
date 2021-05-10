@@ -3,8 +3,9 @@ import { RenderElementProps, useSelected, useFocused } from 'slate-react';
 import { TMemo } from '@shared/components/TMemo';
 import _get from 'lodash/get';
 import Image from '@web/components/Image';
-import type { EditorType } from './type';
+import type { ImageElement as ImageElementType } from '../types';
 import { MentionTagItem } from '../style';
+import type { EditorType } from './types';
 
 interface EditorElementProps extends RenderElementProps {
   editorType: EditorType;
@@ -74,7 +75,7 @@ const ImageElement: React.FC<EditorElementProps> = TMemo((props) => {
 
   return (
     <span {...attributes}>
-      <Image src={String(element.url)} style={style} />
+      <Image src={String((element as ImageElementType).url)} style={style} />
       {children}
     </span>
   );

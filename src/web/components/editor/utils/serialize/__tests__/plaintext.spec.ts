@@ -7,7 +7,7 @@ test('serializeToPlaintext', () => {
       children: [{ text: 'An opening paragraph...' }],
     },
     {
-      type: 'quote',
+      type: 'block-quote',
       children: [{ text: 'A wise quote.' }],
     },
     {

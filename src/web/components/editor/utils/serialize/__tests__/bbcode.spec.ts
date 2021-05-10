@@ -1,3 +1,4 @@
+import type { TRPGEditorElement } from '@web/components/editor/types';
 import { serializeToBBCode } from '../bbcode';
 
 describe('serializeToBBCode', () => {
@@ -16,7 +17,7 @@ describe('serializeToBBCode', () => {
           },
           { text: '' },
         ],
-      },
+      } as TRPGEditorElement,
     ]);
 
     expect(res).toBe(
@@ -36,7 +37,7 @@ describe('serializeToBBCode', () => {
           },
           { text: '' },
         ],
-      },
+      } as TRPGEditorElement,
     ]);
 
     expect(res).toBe('测试[img]http://image.baidu.com[/img]');
@@ -44,8 +45,8 @@ describe('serializeToBBCode', () => {
 
   test('parse line break', () => {
     const res = serializeToBBCode([
-      { children: [{ text: '这是第一行' }] },
-      { children: [{ text: '这是第二行' }] },
+      { type: 'paragraph', children: [{ text: '这是第一行' }] },
+      { type: 'paragraph', children: [{ text: '这是第二行' }] },
     ]);
 
     expect(res).toBe('这是第一行\n这是第二行');

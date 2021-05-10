@@ -3,9 +3,10 @@ import { useSlate } from 'slate-react';
 import { ToolbarButton } from '../style';
 import { isBlockActive, toggleBlock } from '../utils';
 import { TMemo } from '@shared/components/TMemo';
+import type { FormatType } from '../types';
 
 interface Props {
-  format: string;
+  format: FormatType;
   icon: React.ReactNode;
 }
 export const BlockButton: React.FC<Props> = TMemo((props) => {

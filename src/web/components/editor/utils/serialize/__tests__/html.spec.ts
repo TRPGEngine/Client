@@ -1,3 +1,4 @@
+import type { TRPGEditorNode } from '../../../types';
 import { serializeToHtml } from '../html';
 
 test('serializeToHtml', () => {
@@ -16,7 +17,7 @@ test('serializeToHtml', () => {
         ],
       },
       {
-        type: 'quote',
+        type: 'block-quote',
         children: [{ text: 'A wise quote.' }],
       },
       {
@@ -24,7 +25,7 @@ test('serializeToHtml', () => {
         children: [{ text: 'A closing paragraph!' }],
       },
     ],
-  });
+  } as TRPGEditorNode);
 
   expect(html).toBe(
     '<p>An opening paragraph with a <a href="https://example.com">link</a> in it.</p><blockquote><p>A wise quote.</p></blockquote><p>A closing paragraph!</p>'

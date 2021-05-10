@@ -4,6 +4,15 @@ import '@testing-library/jest-dom';
 import _noop from 'lodash/noop';
 
 // 用于处理mock
+jest.mock('antd/lib/input', () => {
+  const ret: any = 'mock-antd-input';
+  ret.__proto__.Group = 'mock-antd-input-group';
+  ret.__proto__.Search = 'mock-antd-input-search';
+  ret.__proto__.TextArea = 'mock-antd-input-textarea';
+  ret.__proto__.Password = 'mock-antd-input-password';
+
+  return ret;
+});
 jest.mock('@web/components/Image', () => 'mock-image');
 jest.mock('@shared/i18n');
 jest.mock('@shared/utils/request');

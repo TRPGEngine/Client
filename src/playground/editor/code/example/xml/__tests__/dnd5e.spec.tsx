@@ -10,7 +10,7 @@ const layout = String(fs.readFileSync(path.resolve(__dirname, '../dnd5e.xml')));
 test('basic snapshot', async () => {
   const { container } = render(<XMLBuilderTester xml={layout} />);
 
-  await sleep(100);
+  await sleep(500);
 
   expect(container).toMatchSnapshot();
 });
