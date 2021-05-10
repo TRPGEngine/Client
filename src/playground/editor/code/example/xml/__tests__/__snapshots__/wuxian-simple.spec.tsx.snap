@@ -44,11 +44,7 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-form-item-control-input-content"
                   >
-                    <input
-                      class="ant-input"
-                      type="text"
-                      value=""
-                    />
+                    <mock-antd-input />
                   </div>
                 </div>
               </div>
@@ -75,9 +71,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-form-item-control-input-content"
                   >
-                    <textarea
-                      class="ant-input"
-                      style="height: -32px; min-height: -16px; max-height: -32px; overflow-y: hidden; overflow-x: hidden;"
+                    <mock-antd-input-textarea
+                      autosize="[object Object]"
                     />
                   </div>
                 </div>
@@ -136,11 +131,8 @@ exports[`basic snapshot 1`] = `
           <div
             class="ant-col ant-col-18"
           >
-            <input
-              class="ant-input"
+            <mock-antd-input
               placeholder="外号"
-              type="text"
-              value=""
             />
           </div>
         </div>
@@ -164,11 +156,8 @@ exports[`basic snapshot 1`] = `
           <div
             class="ant-col ant-col-18"
           >
-            <input
-              class="ant-input"
+            <mock-antd-input
               placeholder="种族"
-              type="text"
-              value=""
             />
           </div>
         </div>
@@ -1295,8 +1284,8 @@ exports[`basic snapshot 1`] = `
           <div
             class="ant-col ant-col-18"
           >
-            <textarea
-              class="ant-input"
+            <mock-antd-input-textarea
+              autosize="false"
               placeholder="能力"
             />
           </div>
@@ -1321,8 +1310,8 @@ exports[`basic snapshot 1`] = `
           <div
             class="ant-col ant-col-18"
           >
-            <textarea
-              class="ant-input"
+            <mock-antd-input-textarea
+              autosize="false"
               placeholder="状态"
             />
           </div>
@@ -1347,8 +1336,8 @@ exports[`basic snapshot 1`] = `
           <div
             class="ant-col ant-col-18"
           >
-            <textarea
-              class="ant-input"
+            <mock-antd-input-textarea
+              autosize="false"
               placeholder="爱好"
             />
           </div>
@@ -1373,8 +1362,8 @@ exports[`basic snapshot 1`] = `
           <div
             class="ant-col ant-col-18"
           >
-            <textarea
-              class="ant-input"
+            <mock-antd-input-textarea
+              autosize="false"
               placeholder="性格"
             />
           </div>
@@ -1399,8 +1388,8 @@ exports[`basic snapshot 1`] = `
           <div
             class="ant-col ant-col-18"
           >
-            <textarea
-              class="ant-input"
+            <mock-antd-input-textarea
+              autosize="false"
               placeholder="物品"
             />
           </div>
@@ -1425,8 +1414,8 @@ exports[`basic snapshot 1`] = `
           <div
             class="ant-col ant-col-18"
           >
-            <textarea
-              class="ant-input"
+            <mock-antd-input-textarea
+              autosize="false"
               placeholder="卡牌"
             />
           </div>
@@ -1451,8 +1440,8 @@ exports[`basic snapshot 1`] = `
           <div
             class="ant-col ant-col-18"
           >
-            <textarea
-              class="ant-input"
+            <mock-antd-input-textarea
+              autosize="false"
               placeholder="粉尘"
             />
           </div>
@@ -1477,8 +1466,8 @@ exports[`basic snapshot 1`] = `
           <div
             class="ant-col ant-col-18"
           >
-            <textarea
-              class="ant-input"
+            <mock-antd-input-textarea
+              autosize="false"
               placeholder="身世"
               rows="6"
             />

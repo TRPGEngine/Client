@@ -44,11 +44,7 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-form-item-control-input-content"
                   >
-                    <input
-                      class="ant-input"
-                      type="text"
-                      value=""
-                    />
+                    <mock-antd-input />
                   </div>
                 </div>
               </div>
@@ -75,9 +71,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-form-item-control-input-content"
                   >
-                    <textarea
-                      class="ant-input"
-                      style="height: -32px; min-height: -16px; max-height: -32px; overflow-y: hidden; overflow-x: hidden;"
+                    <mock-antd-input-textarea
+                      autosize="[object Object]"
                     />
                   </div>
                 </div>
@@ -232,11 +227,8 @@ exports[`basic snapshot 1`] = `
               <div
                 class="ant-col ant-col-18"
               >
-                <input
-                  class="ant-input"
+                <mock-antd-input
                   placeholder="年龄"
-                  type="text"
-                  value=""
                 />
               </div>
             </div>
@@ -358,11 +350,8 @@ exports[`basic snapshot 1`] = `
               <div
                 class="ant-col ant-col-18"
               >
-                <input
-                  class="ant-input"
+                <mock-antd-input
                   placeholder="住址"
-                  type="text"
-                  value=""
                 />
               </div>
             </div>
@@ -391,11 +380,8 @@ exports[`basic snapshot 1`] = `
               <div
                 class="ant-col ant-col-18"
               >
-                <input
-                  class="ant-input"
+                <mock-antd-input
                   placeholder="故乡"
-                  type="text"
-                  value=""
                 />
               </div>
             </div>
@@ -471,11 +457,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="力量"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -522,11 +505,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="体质"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -573,11 +553,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="体型"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -624,11 +601,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="敏捷"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -675,11 +649,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="外貌"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -726,11 +697,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="智力"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -777,11 +745,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="意志"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -828,11 +793,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="教育"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -879,11 +841,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="幸运"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -930,10 +889,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="当前生命值"
-                      type="text"
                       value="0"
                     />
                   </div>
@@ -958,11 +915,9 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input ant-input-disabled"
-                      disabled=""
+                    <mock-antd-input
+                      disabled="true"
                       placeholder="最大生命值"
-                      type="text"
                       value="0"
                     />
                   </div>
@@ -2811,8 +2766,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <textarea
-                      class="ant-input"
+                    <mock-antd-input-textarea
+                      autosize="false"
                       placeholder="资产说明"
                     />
                   </div>
@@ -2834,8 +2789,8 @@ exports[`basic snapshot 1`] = `
                   class="ant-col ant-col-24"
                   style="padding-left: 8px; padding-right: 8px;"
                 >
-                  <textarea
-                    class="ant-input"
+                  <mock-antd-input-textarea
+                    autosize="false"
                     placeholder="随身物品"
                     rows="11"
                   />
@@ -2878,11 +2833,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="个人描述"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -2906,11 +2858,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="思想/信念"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -2934,11 +2883,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="重要之人"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -2962,11 +2908,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="意义非凡之地"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -2990,11 +2933,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="宝贵之物"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -3018,11 +2958,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="特点"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -3046,11 +2983,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="伤口/疤痕"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -3074,11 +3008,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <input
-                      class="ant-input"
+                    <mock-antd-input
                       placeholder="恐惧症/狂躁症"
-                      type="text"
-                      value=""
                     />
                   </div>
                 </div>
@@ -3102,8 +3033,8 @@ exports[`basic snapshot 1`] = `
                   <div
                     class="ant-col ant-col-18"
                   >
-                    <textarea
-                      class="ant-input"
+                    <mock-antd-input-textarea
+                      autosize="false"
                       placeholder="详细描述"
                       rows="4"
                     />
@@ -3137,8 +3068,8 @@ exports[`basic snapshot 1`] = `
                 class="ant-col ant-col-24"
                 style="padding-left: 2px; padding-right: 2px;"
               >
-                <textarea
-                  class="ant-input"
+                <mock-antd-input-textarea
+                  autosize="false"
                   placeholder="调查员经历"
                   rows="8"
                 />
@@ -3165,8 +3096,8 @@ exports[`basic snapshot 1`] = `
                 class="ant-col ant-col-24"
                 style="padding-left: 2px; padding-right: 2px;"
               >
-                <textarea
-                  class="ant-input"
+                <mock-antd-input-textarea
+                  autosize="false"
                   placeholder="调查员伙伴"
                   rows="8"
                 />
@@ -3193,8 +3124,8 @@ exports[`basic snapshot 1`] = `
                 class="ant-col ant-col-24"
                 style="padding-left: 2px; padding-right: 2px;"
               >
-                <textarea
-                  class="ant-input"
+                <mock-antd-input-textarea
+                  autosize="false"
                   placeholder="克苏鲁神话"
                   rows="8"
                 />
