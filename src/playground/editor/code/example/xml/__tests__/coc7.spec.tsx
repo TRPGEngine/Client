@@ -10,7 +10,7 @@ const layout = String(fs.readFileSync(path.resolve(__dirname, '../coc7.xml')));
 test('basic snapshot', async () => {
   const { container } = render(<XMLBuilderTester xml={layout} />);
 
-  await sleep(500);
+  await sleep(1000);
 
   expect(container).toMatchSnapshot();
 });
