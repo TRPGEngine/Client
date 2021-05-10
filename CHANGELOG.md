@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.28](https://github.com/TRPGEngine/Client/compare/v0.5.27...v0.5.28) (2021-05-10)
+
+
+### Features
+
+* **web:** 当@时没有内容的时候，自动根据uuid获取显示名 ([d0cf2db](https://github.com/TRPGEngine/Client/commit/d0cf2dba2f237dc477ee29dfbe152d8f31781509))
+* **web:** 增加仅@时弹出提及功能 ([bff6066](https://github.com/TRPGEngine/Client/commit/bff6066d2cc50551f0166333ac5441db858d893c))
+
+
+### Bug Fixes
+
+* **taro:** 修复小程序原生组件异常覆盖的问题 ([056f440](https://github.com/TRPGEngine/Client/commit/056f4408141d4430f995b78142ebe398f1e87513))
+
 ### [0.5.27](https://github.com/TRPGEngine/Client/compare/v0.5.26...v0.5.27) (2021-04-19)
 
 
