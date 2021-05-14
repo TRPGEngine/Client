@@ -6,14 +6,14 @@ import {
   useRTCRoomClientContext,
 } from '@rtc/RoomContext';
 import shortid from 'shortid';
-import { getUrlQuerySeach } from '@web/utils/url-helper';
+import { getUrlQuerySearch } from '@web/utils/url-helper';
 
 const RTCTest: React.FC = TMemo(() => {
   const { createClient } = useRTCRoomClientContext();
 
   useEffect(() => {
-    const roomId = getUrlQuerySeach('room') ?? 'testroom';
-    const peerId = getUrlQuerySeach('peerId') ?? shortid();
+    const roomId = getUrlQuerySearch('room') ?? 'testroom';
+    const peerId = getUrlQuerySearch('peerId') ?? shortid();
 
     console.log('正在加入房间');
     createClient({

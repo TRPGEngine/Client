@@ -6,6 +6,8 @@ import {
   toGroupAvatar,
 } from '@shared/utils/upload-helper';
 
+const DUMMY_FILE_NAME = 'avatar.jpg';
+
 /**
  * 基于BlobUrl上传头像
  * @param userUUID 用户UUID
@@ -19,7 +21,7 @@ export const toAvatarWithBlobUrl = async function (
 ): Promise<AvatarUpdateData> {
   // TODO: 上传前需要先检查是否存在
   const blob = await blobFromUrl(blobUrl);
-  const file = blobToFile(blob, 'avatar.jpg');
+  const file = blobToFile(blob, DUMMY_FILE_NAME);
   const avatarRet = await toAvatar(userUUID, file, options);
 
   return avatarRet;
@@ -35,7 +37,7 @@ export const toGroupActorWithBlobUrl = async function (
   options: AvatarUploadOption = {}
 ): Promise<AvatarUpdateData> {
   const blob = await blobFromUrl(blobUrl);
-  const file = blobToFile(blob, 'avatar.jpg');
+  const file = blobToFile(blob, DUMMY_FILE_NAME);
   const avatarRet = await toGroupAvatar(userUUID, file, options);
 
   return avatarRet;
