@@ -13,10 +13,13 @@ import config, { DefaultSettings } from '@src/shared/project.config';
 import rnStorage from '../../api/rn-storage.api';
 import * as trpgApi from '../../api/trpg.api';
 import { TRPGAction, createTRPGAsyncThunk } from '@redux/types/__all__';
-import type { ServerConfig, SettingsState } from '@redux/types/settings';
+import type { ServerConfig } from '@redux/types/settings';
 import request from '@shared/utils/request';
-import { createAction, PrepareAction } from '@reduxjs/toolkit';
+import { createAction } from '@reduxjs/toolkit';
 import { showToasts } from '@shared/manager/ui';
+import _once from 'lodash/once';
+import { t } from '@shared/i18n';
+
 const api = trpgApi.getInstance();
 
 /**
@@ -109,6 +112,10 @@ export const setUserSettings = createTRPGAsyncThunk(
   }
 );
 
+const showNotificationPermissionDeniedToasts = _once(() => {
+  showToasts(t('桌面通知权限已被禁止'));
+});
+
 export const setSystemSettings = function setSystemSettings(
   payload
 ): TRPGAction {
@@ -119,7 +126,7 @@ export const setSystemSettings = function setSystemSettings(
       payload.notification === true
     ) {
       if (Notification.permission === 'denied') {
-        showToasts('桌面通知权限已被禁止');
+        showNotificationPermissionDeniedToasts();
         payload.notification = false;
       } else if (Notification.permission === 'default') {
         dispatch(requestNotificationPermission());
