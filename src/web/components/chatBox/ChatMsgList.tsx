@@ -21,11 +21,16 @@ const Container = styled.div`
   overflow-y: scroll;
 `;
 
-const ScrollToBottomBtn = styled(Button)`
+const ScrollToBottomBtn = styled(Button)<{
+  isShow: boolean;
+}>`
   position: absolute !important;
   bottom: 20px;
   right: 30px;
   box-shadow: ${({ theme }) => theme.boxShadow.elevationMedium} !important;
+  opacity: ${({ isShow }) => (isShow ? 1 : 0)};
+  transition-property: opacity;
+  transition-delay: 0.4s;
 `;
 
 interface ChatMsgListProps {
@@ -57,15 +62,14 @@ export const ChatMsgList: React.FC<ChatMsgListProps> = TMemo((props) => {
         {msgListEl}
       </Container>
 
-      {!isTriggerBottom && (
-        <ScrollToBottomBtn
-          size="large"
-          type="primary"
-          shape="circle"
-          icon={<ArrowDownOutlined />}
-          onClick={handleScrollToBottom}
-        />
-      )}
+      <ScrollToBottomBtn
+        isShow={!isTriggerBottom}
+        size="large"
+        type="primary"
+        shape="circle"
+        icon={<ArrowDownOutlined />}
+        onClick={handleScrollToBottom}
+      />
     </Root>
   );
 });
