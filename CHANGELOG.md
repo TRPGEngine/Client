@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.29](https://github.com/TRPGEngine/Client/compare/v0.5.28...v0.5.29) (2021-05-18)
+
+
+### Bug Fixes
+
+* 修复桌面通知权限已被禁止的提示会弹出多次的bug ([a87c2d2](https://github.com/TRPGEngine/Client/commit/a87c2d20013d4dd2f160e6c18d3e42e17d17526d))
+
 ### [0.5.28](https://github.com/TRPGEngine/Client/compare/v0.5.27...v0.5.28) (2021-05-10)
 
 

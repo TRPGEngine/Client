@@ -3,7 +3,7 @@
 exports[`basic snapshot 1`] = `
 <div>
   <div
-    class="sc-fzpans jRldgn"
+    class="sc-fzoLsD dtpKnj"
     style="position: relative;"
   >
     <iframe
@@ -1270,15 +1270,13 @@ exports[`basic snapshot 1`] = `
                 <div
                   class="fieldset-divider"
                 />
-                <div
-                  style="width: 100%; height: 300px;"
-                >
-                  <div
-                    class="recharts-responsive-container"
-                    id="undefined"
-                    style="width: 100%; height: 100%;"
-                  />
-                </div>
+                <mock-tag-radar
+                  :datavalue="[力量,体质,体型,敏捷,外貌,智力,意志,教育]"
+                  _el="[object Object]"
+                  _name="Radar"
+                  datakey="力量,体质,体型,敏捷,外貌,智力,意志,教育"
+                  datavalue=",,,,,,,"
+                />
               </div>
             </div>
           </div>
@@ -1512,7 +1510,7 @@ exports[`basic snapshot 1`] = `
               style="padding-left: 8px; padding-right: 8px;"
             >
               <div
-                class="sc-fzplWN krqhFh"
+                class="sc-fzpans jITdpo"
               >
                 <div
                   class="ant-tabs ant-tabs-top"

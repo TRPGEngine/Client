@@ -3,7 +3,7 @@
 exports[`layout basic 1`] = `
 <DocumentFragment>
   <div
-    class="sc-fzpans jRldgn"
+    class="sc-fzoLsD dtpKnj"
     style="position: relative;"
   >
     <iframe
@@ -19,7 +19,7 @@ exports[`layout basic 1`] = `
 exports[`layout basic 2`] = `
 <DocumentFragment>
   <div
-    class="sc-fzpans jRldgn"
+    class="sc-fzoLsD dtpKnj"
     style="position: relative;"
   >
     <iframe
@@ -35,7 +35,7 @@ exports[`layout basic 2`] = `
 exports[`layout some text 1`] = `
 <DocumentFragment>
   <div
-    class="sc-fzpans jRldgn"
+    class="sc-fzoLsD dtpKnj"
     style="position: relative;"
   >
     <iframe
@@ -51,7 +51,7 @@ exports[`layout some text 1`] = `
 exports[`layout some text 2`] = `
 <DocumentFragment>
   <div
-    class="sc-fzpans jRldgn"
+    class="sc-fzoLsD dtpKnj"
     style="position: relative;"
   >
     <iframe

@@ -13,6 +13,9 @@ jest.mock('antd/lib/input', () => {
 
   return ret;
 });
+jest.mock('@shared/components/layout/tags/Radar/shared', () => ({
+  TagRadarShared: 'mock-tag-radar',
+}));
 jest.mock('@web/components/Image', () => 'mock-image');
 jest.mock('@shared/i18n');
 jest.mock('@shared/utils/request');
