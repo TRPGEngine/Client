@@ -7,14 +7,18 @@ exports[`DeprecatedComponent render 1`] = `
     data-show="true"
     role="alert"
   >
-    <span
-      class="ant-alert-message"
+    <div
+      class="ant-alert-content"
     >
-      该组件已被弃用, 如果影响到您的使用请联系开发者
-    </span>
-    <span
-      class="ant-alert-description"
-    />
+      <div
+        class="ant-alert-message"
+      >
+        该组件已被弃用, 如果影响到您的使用请联系开发者
+      </div>
+      <div
+        class="ant-alert-description"
+      />
+    </div>
   </div>
 </div>
 `;

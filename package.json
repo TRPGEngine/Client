@@ -46,7 +46,7 @@
     "install:app": "cd ./src/app && yarn",
     "install:appv2": "cd ./src/appv2 && yarn",
     "install:web": "cd ./src/web && yarn",
-    "install:all": "yarn run install:app && yarn run install:appv2 && yarn run install:web",
+    "install:all": "yarn run install:appv2 && yarn run install:web",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "release": "standard-version -a"
   },
