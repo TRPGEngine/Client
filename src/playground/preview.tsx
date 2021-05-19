@@ -18,7 +18,7 @@ const ActorTemplatePreviewer = React.memo(() => {
     const hash = window.location.hash;
     if (hash.startsWith('#code')) {
       const codehash = hash.split('/')[1] ?? '';
-      setCode(LZString.decompressFromEncodedURIComponent(codehash));
+      setCode(LZString.decompressFromEncodedURIComponent(codehash) ?? '');
     }
   }, []);
 

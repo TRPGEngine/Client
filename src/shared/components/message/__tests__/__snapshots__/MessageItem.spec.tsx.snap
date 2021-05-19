@@ -3,10 +3,10 @@
 exports[`MessageItem testcase 0 1`] = `
 <div>
   <div
-    class="sc-AxhCb eDdIFT normal bubble"
+    class="sc-hKFxyN iMqKQT normal bubble"
   >
     <div
-      class="sc-fzoKki lbuIHO"
+      class="sc-gXfVKN leCvQc"
     >
       <span>
         中午 12:00
@@ -49,7 +49,7 @@ exports[`MessageItem testcase 0 1`] = `
         class="body"
       >
         <pre
-          class="sc-AxjAm bmodJx bubble"
+          class="sc-bdnxRM gfkJP bubble"
         >
           <pre
             style="display: inline;"
@@ -75,7 +75,7 @@ exports[`MessageItem testcase 0 1`] = `
 exports[`MessageItem testcase 1 1`] = `
 <div>
   <div
-    class="sc-AxhCb eDdIFT normal bubble"
+    class="sc-hKFxyN iMqKQT normal bubble"
   >
     <div
       class="profile"
@@ -110,7 +110,7 @@ exports[`MessageItem testcase 1 1`] = `
         class="body"
       >
         <pre
-          class="sc-AxjAm bmodJx bubble"
+          class="sc-bdnxRM gfkJP bubble"
         >
           <pre
             style="display: inline;"
@@ -136,7 +136,7 @@ exports[`MessageItem testcase 1 1`] = `
 exports[`MessageItem testcase 2 1`] = `
 <div>
   <div
-    class="sc-AxhCb eDdIFT omitSenderInfo normal bubble"
+    class="sc-hKFxyN iMqKQT omitSenderInfo normal bubble"
   >
     <div
       class="content"
@@ -148,7 +148,7 @@ exports[`MessageItem testcase 2 1`] = `
         class="body"
       >
         <pre
-          class="sc-AxjAm bmodJx bubble"
+          class="sc-bdnxRM gfkJP bubble"
         >
           <pre
             style="display: inline;"
@@ -174,7 +174,7 @@ exports[`MessageItem testcase 2 1`] = `
 exports[`MessageItem testcase 3 1`] = `
 <div>
   <div
-    class="sc-AxhCb eDdIFT normal bubble"
+    class="sc-hKFxyN iMqKQT normal bubble"
   >
     <div
       class="profile"
@@ -213,7 +213,7 @@ exports[`MessageItem testcase 3 1`] = `
         class="body"
       >
         <pre
-          class="sc-AxjAm bmodJx bubble"
+          class="sc-bdnxRM gfkJP bubble"
         >
           <pre
             style="display: inline;"

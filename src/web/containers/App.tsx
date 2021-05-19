@@ -33,15 +33,10 @@ export const App: React.FC = TMemo(() => {
         <GlobalUI />
         <div className="app">
           <Switch>
-            <Route name="login" path="/login" exact={true} component={Login} />
-            <Route
-              name="register"
-              path="/register"
-              exact={true}
-              component={Register}
-            />
-            <Route name="main" path="/main" exact={true} component={Main} />
-            <Route name="index" path="/">
+            <Route path="/login" exact={true} component={Login} />
+            <Route path="/register" exact={true} component={Register} />
+            <Route path="/main" exact={true} component={Main} />
+            <Route path="/">
               <Link to="/login" className="start-btn">
                 <div className="main">点击屏幕登录</div>
                 <div className="sub">Press screen to login</div>

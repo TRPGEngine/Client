@@ -39,7 +39,7 @@ function useGroupTimeRange() {
       const query = qs.parse(window.location.search, {
         ignoreQueryPrefix: true,
       });
-      const autoGroupUUID = query.groupUUID;
+      const autoGroupUUID = String(query.groupUUID);
 
       if (groupList.map((group) => group.uuid).includes(autoGroupUUID)) {
         // 如果列表包含传入的UUID，则自动选中

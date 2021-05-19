@@ -9,13 +9,13 @@ interface MainContentProps {}
 export const MainContent: React.FC<MainContentProps> = TMemo((props) => {
   return (
     <Switch>
-      <Route name="personal" path="/main/personal">
+      <Route path="/main/personal">
         <Personal />
       </Route>
-      <Route name="AddGroup" path="/main/group/add">
+      <Route path="/main/group/add">
         <AddGroup />
       </Route>
-      <Route name="group" path="/main/group/:groupUUID">
+      <Route path="/main/group/:groupUUID">
         <Group />
       </Route>
       <Redirect to="/main/personal" />

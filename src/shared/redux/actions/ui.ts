@@ -47,7 +47,7 @@ export const hideModal = function (): TRPGAction {
   return { type: HIDE_MODAL };
 };
 
-let toastTimer: number | null;
+let toastTimer: ReturnType<typeof setTimeout> | null;
 export const showToast = function (msg: string): TRPGAction {
   return (dispatch, getState) => {
     dispatch({ type: SHOW_TOAST, text: msg });

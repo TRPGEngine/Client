@@ -13,6 +13,8 @@ jest.mock('antd/lib/input', () => {
 
   return ret;
 });
+// 在做快照时不希望里面的内容隐藏起来
+jest.mock('@shared/components/layout/tags/Tabs/shared', () => 'mock-tag-tabs');
 jest.mock('@shared/components/layout/tags/Radar/shared', () => ({
   TagRadarShared: 'mock-tag-radar',
 }));

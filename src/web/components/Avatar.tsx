@@ -14,7 +14,12 @@ interface AvatarProps extends AntdAvatarProps {
   name?: string;
 }
 export const Avatar: React.FC<AvatarProps> = TMemo((props) => {
-  const src = !_isEmpty(props.src) ? getAbsolutePath(props.src!) : undefined;
+  const src =
+    typeof props.src !== 'string'
+      ? props.src
+      : !_isEmpty(props.src)
+      ? getAbsolutePath(props.src!)
+      : undefined;
 
   const name = useMemo(() => _upperCase(_head(props.name)), [props.name]);
 

@@ -28,8 +28,8 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - run: npm install
-      - run: npm run test:coverage
+      - run: yarn install
+      - run: yarn run test:coverage
       - uses: codecov/codecov-action@v1
         with:
           file: ./coverage/clover.xml
