@@ -65,9 +65,9 @@ const _App = TMemo(() => {
         <div className="app new-ui-dark">
           <CustomProvider>
             <Switch>
-              <Route name="entry" path="/entry" component={EntryRoute} />
-              <Route name="main" path="/main" component={MainRoute} />
-              <Route name="index" path="/" component={LaunchRoute} />
+              <Route path="/entry" component={EntryRoute} />
+              <Route path="/main" component={MainRoute} />
+              <Route path="/" component={LaunchRoute} />
             </Switch>
             {config.platform === 'web' && <NetworkStatusModal />}
             {/* 新版本先注释掉, 等新版app做好了再放出来 */}

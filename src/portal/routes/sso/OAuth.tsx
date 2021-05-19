@@ -59,8 +59,15 @@ function useOAuthParams(): {
   redirect: string;
 } {
   const { search } = useLocation();
-  const { appid, scope: scopeStr = '', redirect } = useMemo(() => {
-    return qs.parse(search, { ignoreQueryPrefix: true });
+  const {
+    appid,
+    scope: scopeStr = '',
+    redirect,
+  } = useMemo(() => {
+    return qs.parse(search, { ignoreQueryPrefix: true }) as Record<
+      string,
+      string
+    >;
   }, [search]);
 
   return {
@@ -74,24 +81,26 @@ const OAuthHasLogin: React.FC = TMemo(() => {
   const jwtInfo = useMemo(() => getPortalJWTInfo(), []);
   const { appid, scope, redirect } = useOAuthParams();
 
-  const { value: authorizeAppInfo, loading, error } = useAsync(() => {
+  const {
+    value: authorizeAppInfo,
+    loading,
+    error,
+  } = useAsync(() => {
     return fetchOAuthAppInfo(appid);
   }, [appid]);
 
-  const [
-    { loading: authorizeLoading },
-    handleAuthorize,
-  ] = useAsyncFn(async () => {
-    const code = await authorizeApp(appid, scope);
+  const [{ loading: authorizeLoading }, handleAuthorize] =
+    useAsyncFn(async () => {
+      const code = await authorizeApp(appid, scope);
 
-    if (_isString(code)) {
-      const url = `${redirect}?code=${code}`;
-      console.log('正在跳转...', url);
-      window.location.replace(url);
-    } else {
-      console.error('获取授权代码失败');
-    }
-  }, [appid, scope, redirect]);
+      if (_isString(code)) {
+        const url = `${redirect}?code=${code}`;
+        console.log('正在跳转...', url);
+        window.location.replace(url);
+      } else {
+        console.error('获取授权代码失败');
+      }
+    }, [appid, scope, redirect]);
 
   if (loading) {
     return <Loading />;

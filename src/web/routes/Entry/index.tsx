@@ -75,12 +75,8 @@ export const EntryRoute: React.FC = TMemo(() => {
       <BaseContainer>
         <Main>
           <Switch>
-            <Route name="login" path="/entry/login" component={LoginView} />
-            <Route
-              name="register"
-              path="/entry/register"
-              component={RegisterView}
-            />
+            <Route path="/entry/login" component={LoginView} />
+            <Route path="/entry/register" component={RegisterView} />
             <Redirect to="/entry/login" />
           </Switch>
         </Main>

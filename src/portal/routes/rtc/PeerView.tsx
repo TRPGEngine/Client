@@ -120,16 +120,18 @@ const ProducerScore: React.FC<{
           if (a.rid) return a.rid > b.rid ? 1 : -1;
           else return a.ssrc > b.ssrc ? 1 : -1;
         })
-        .map((
-          { ssrc, rid, score },
-          idx // eslint-disable-line no-shadow
-        ) => (
-          <p key={idx} className="indent">
-            {rid !== undefined
-              ? `rid:${rid}, ssrc:${ssrc}, score:${score}`
-              : `ssrc:${ssrc}, score:${score}`}
-          </p>
-        ))}
+        .map(
+          (
+            { ssrc, rid, score },
+            idx // eslint-disable-line no-shadow
+          ) => (
+            <p key={idx} className="indent">
+              {rid !== undefined
+                ? `rid:${rid}, ssrc:${ssrc}, score:${score}`
+                : `ssrc:${ssrc}, score:${score}`}
+            </p>
+          )
+        )}
     </Fragment>
   );
 });
@@ -179,17 +181,16 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
   } = props;
   const [audioVolume, setAudioVolume] = useState(0);
   const [showInfo, setShowInfo] = useState(false);
-  const [videoResolutionWidth, setVideoResolutionWidth] = useState<
-    number | null
-  >(null);
-  const [videoResolutionHeight, setVideoResolutionHeight] = useState<
-    number | null
-  >(null);
+  const [videoResolutionWidth, setVideoResolutionWidth] =
+    useState<number | null>(null);
+  const [videoResolutionHeight, setVideoResolutionHeight] =
+    useState<number | null>(null);
   const [videoCanPlay, setVideoCanPlay] = useState(false);
   const [videoElemPaused, setVideoElemPaused] = useState(false);
   const [maxSpatialLayer, setMaxSpatialLayer] = useState(0);
   const harkRef = useRef<hark.Harker>();
-  const videoResolutionPeriodicTimerRef = useRef<number>();
+  const videoResolutionPeriodicTimerRef =
+    useRef<ReturnType<typeof setInterval>>();
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const audioTrackRef = useRef<MediaStreamTrack>();
@@ -222,7 +223,9 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
   ]);
 
   const _stopVideoResolution = useCallback(() => {
-    clearInterval(videoResolutionPeriodicTimerRef.current);
+    if (videoResolutionPeriodicTimerRef.current !== undefined) {
+      clearInterval(videoResolutionPeriodicTimerRef.current);
+    }
 
     setVideoResolutionWidth(null);
     setVideoResolutionHeight(null);
@@ -344,7 +347,9 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
     return () => {
       if (harkRef.current) harkRef.current.stop();
 
-      clearInterval(videoResolutionPeriodicTimerRef.current);
+      if (videoResolutionPeriodicTimerRef.current !== undefined) {
+        clearInterval(videoResolutionPeriodicTimerRef.current);
+      }
 
       const videoElem = videoRef.current as HTMLVideoElement;
 
@@ -530,7 +535,8 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                         onClick={(event) => {
                           event.stopPropagation();
 
-                          let newPreferredSpatialLayer = consumerPreferredSpatialLayer;
+                          let newPreferredSpatialLayer =
+                            consumerPreferredSpatialLayer;
                           let newPreferredTemporalLayer: number;
 
                           if (consumerPreferredTemporalLayer > 0) {
@@ -563,7 +569,8 @@ export const PeerView: React.FC<Props> = TMemo((props) => {
                         onClick={(event) => {
                           event.stopPropagation();
 
-                          let newPreferredSpatialLayer = consumerPreferredSpatialLayer;
+                          let newPreferredSpatialLayer =
+                            consumerPreferredSpatialLayer;
                           let newPreferredTemporalLayer;
 
                           if (

@@ -14,12 +14,6 @@ import { getFirstImageUrlFromHTML } from './utils';
 import { TMemo } from '@shared/components/TMemo';
 import { useIsMobile } from '@web/hooks/useIsMobile';
 
-declare module 'react' {
-  interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
-    referrerPolicy?: string;
-  }
-}
-
 const parser = new Parser<RSSItem>();
 
 const Root = styled.div`

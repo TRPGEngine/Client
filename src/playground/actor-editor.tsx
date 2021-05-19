@@ -48,25 +48,17 @@ const XMLRenderContainer = styled.div<{ isMobile: boolean }>`
 
 const ActorEditor = TMemo(() => {
   const { code, setCode, codeEditorEl } = useCodeEditor();
-  const {
-    layoutType,
-    isMobile,
-    renderKey,
-    incRenderKey,
-    LayoutConfigEl,
-  } = useLayoutConfig(code);
-  const {
-    stateDataEl,
-    stateGlobalDataEl,
-    updateWatcherState,
-  } = useStateWatcher(renderKey);
+  const { layoutType, isMobile, renderKey, incRenderKey, LayoutConfigEl } =
+    useLayoutConfig(code);
+  const { stateDataEl, stateGlobalDataEl, updateWatcherState } =
+    useStateWatcher(renderKey);
 
   useEffect(() => {
     // 尝试载入url中的code
     const hash = window.location.hash;
     if (hash.startsWith('#code')) {
       const codehash = hash.split('/')[1] ?? '';
-      setCode(LZString.decompressFromEncodedURIComponent(codehash));
+      setCode(LZString.decompressFromEncodedURIComponent(codehash) ?? '');
     }
   }, []);
 

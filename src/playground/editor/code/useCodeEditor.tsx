@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback, useRef } from 'react';
 import _debounce from 'lodash/debounce';
 import { useLocalStorage } from 'react-use';
-import { IPosition, editor, KeyMod, KeyCode } from 'monaco-editor';
+import { IPosition, KeyMod, KeyCode, editor } from 'monaco-editor';
 import MonacoEditor, { EditorDidMount } from 'react-monaco-editor';
 import { message } from 'antd';
 import copy from 'copy-to-clipboard';
