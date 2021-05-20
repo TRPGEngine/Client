@@ -18,7 +18,20 @@ export function initPlugins() {
   regDependency('react-router-dom', () => import('react-router-dom'));
   regDependency('styled-components', () => import('styled-components'));
   regSharedModule(
-    '@capital/routes/Main/Content/SidebarItem',
+    '@capital/web/routes/Main/Content/SidebarItem',
     () => import('./routes/Main/Content/SidebarItem')
   );
+  regSharedModule(
+    '@capital/web/reg/regPersonalPanel',
+    () => import('./reg/regPersonalPanel')
+  );
+  regSharedModule(
+    '@capital/web/components/Iconfont',
+    () => import('./components/Iconfont')
+  );
+  regSharedModule(
+    '@capital/web/components/Iconfont',
+    () => import('./components/Iconfont')
+  );
+  regSharedModule('@capital/shared/i18n', () => import('../shared/i18n'));
 }
