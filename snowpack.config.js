@@ -68,6 +68,7 @@ module.exports = {
     '**/src/mini-program/**/*',
     '**/src/portal/**/*',
     '**/src/playground/**/*',
+    '**/src/plugins/**/*',
   ],
   mount: {
     public: '/',

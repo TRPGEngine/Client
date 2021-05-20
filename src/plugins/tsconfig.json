@@ -13,6 +13,6 @@
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
     "downlevelIteration": true,
-    "importsNotUsedAsValues": "error",
+    "importsNotUsedAsValues": "error"
   }
 }

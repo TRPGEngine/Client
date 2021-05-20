@@ -4,7 +4,9 @@
     "rootDir": "./src",
     "baseUrl": "./src",
     "paths": {
-      "@plugins/*": ["../../../plugins/*"]
+      "@plugins/*": ["../../../plugins/*"],
+      "@capital/*": ["../../../web/*"]
     }
-  }
+  },
+  "include": ["./src"]
 }
