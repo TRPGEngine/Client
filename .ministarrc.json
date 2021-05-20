@@ -1,0 +1,7 @@
+{
+  "scope": "trpgengine-plugins",
+  "pluginRoot": "./src",
+  "outDir": "./public",
+  "author": "moonrailgun",
+  "license": "GPL-3.0"
+}
