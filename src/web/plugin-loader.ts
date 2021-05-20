@@ -17,6 +17,11 @@ export function initPlugins() {
   regDependency('react-router', () => import('react-router'));
   regDependency('react-router-dom', () => import('react-router-dom'));
   regDependency('styled-components', () => import('styled-components'));
+  regDependency('immer', () => import('immer'));
+  regDependency('lodash/remove', () => import('lodash/remove'));
+  regDependency('lodash/find', () => import('lodash/find'));
+  regDependency('lodash/isNil', () => import('lodash/isNil'));
+
   regSharedModule(
     '@capital/web/routes/Main/Content/SidebarItem',
     () => import('./routes/Main/Content/SidebarItem')
@@ -34,4 +39,8 @@ export function initPlugins() {
     () => import('./components/Iconfont')
   );
   regSharedModule('@capital/shared/i18n', () => import('../shared/i18n'));
+  regSharedModule(
+    '@capital/shared/redux/configureStore/helper',
+    () => import('../shared/redux/configureStore/helper')
+  );
 }

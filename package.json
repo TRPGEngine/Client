@@ -123,7 +123,7 @@
     "md5": "^2.2.1",
     "mediasoup-client": "^3.6.21",
     "memoize-one": "^5.1.1",
-    "mini-star": "^0.0.14",
+    "mini-star": "^0.0.15",
     "moment": "^2.27.0",
     "node-emoji": "^1.10.0",
     "nprogress": "^0.2.0",

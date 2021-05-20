@@ -1,2 +1,2 @@
-import React from 'react';
+import './redux/inject';
 import './reg';

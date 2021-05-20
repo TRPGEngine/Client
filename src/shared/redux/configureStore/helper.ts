@@ -3,11 +3,18 @@
  */
 
 import _isNil from 'lodash/isNil';
-import type { TRPGState, TRPGStore } from '@redux/types/__all__';
+import type { TRPGReducer, TRPGState, TRPGStore } from '@redux/types/__all__';
+import { combineReducers } from '@reduxjs/toolkit';
 
 let _store: TRPGStore;
-export function initStoreHelper(store: TRPGStore): void {
+let _allReducers: Record<string, TRPGReducer> = {};
+
+export function initStoreHelper(
+  store: TRPGStore,
+  reducers: Record<string, TRPGReducer>
+): void {
   _store = store;
+  _allReducers = reducers;
 }
 
 export function getStoreState(): TRPGState | null {
@@ -20,4 +27,28 @@ export function getStoreState(): TRPGState | null {
 
 export function getCurrentStore(): TRPGStore | undefined {
   return _store;
+}
+
+const makeAllReducer = (asyncReducers: Record<string, TRPGReducer>) =>
+  combineReducers({
+    ...asyncReducers,
+  });
+
+/**
+ * 注入 Reducer 用于动态加载
+ */
+export function injectReducer(key: string, reducer: TRPGReducer) {
+  if (Object.hasOwnProperty.call(_allReducers, key)) {
+    return;
+  }
+
+  _allReducers[key] = reducer;
+  _store.replaceReducer(makeAllReducer(_allReducers) as any);
+}
+
+export function setAllReducer(reducers: Record<string, TRPGReducer>) {
+  _allReducers = {
+    ..._allReducers,
+    ...reducers,
+  };
 }
