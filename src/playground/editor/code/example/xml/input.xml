@@ -10,6 +10,7 @@
     :autosize="{minRows: 2, maxRows: 6}"
   />
   <Select name="下拉选择" options="选项A,选项B,选项C" />
+  <Select name="动态下拉选择" :options="['选项A','选项B','选项C']" />
   <Select
     name="下拉选择分组"
     :options="[{name: '组1', items: ['选项A', '选项B']}, {name: '组2', items: ['选项C']}]"
