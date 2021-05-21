@@ -34,7 +34,7 @@
     redux-thunk "^2.3.0"
     reselect "^4.0.0"
 
-"@saucerjs/core@^0.1.6", "@saucerjs/core@^0.1.9":
+"@saucerjs/core@0.1.9", "@saucerjs/core@^0.1.9":
   version "0.1.9"
   resolved "https://registry.nlark.com/@saucerjs/core/download/@saucerjs/core-0.1.9.tgz#dffc1e42cb23a992c89fc2fc9558836e68477d69"
   integrity sha1-3/weQssjqZLIn8L8lViDbmhHfWk=
@@ -42,7 +42,7 @@
     "@reduxjs/toolkit" "^1.4.0"
     lodash "^4.17.20"
 
-"@saucerjs/editor@^0.1.6":
+"@saucerjs/editor@0.1.9":
   version "0.1.9"
   resolved "https://registry.nlark.com/@saucerjs/editor/download/@saucerjs/editor-0.1.9.tgz#02a73f51a3003559d6430236af45d7d9532308aa"
   integrity sha1-Aqc/UaMANVnWQwI2r0XX2VMjCKo=
@@ -56,7 +56,7 @@
     react-split-pane "^0.1.92"
     shortid "^2.2.16"
 
-"@saucerjs/xml@^0.1.6":
+"@saucerjs/xml@0.1.9":
   version "0.1.9"
   resolved "https://registry.nlark.com/@saucerjs/xml/download/@saucerjs/xml-0.1.9.tgz#5de9405d4d71d8b114ea7bed50c6e70eb0606df1"
   integrity sha1-XelAXU1x2LEU6nvtUMbnDrBgbfE=
