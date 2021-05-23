@@ -19,7 +19,9 @@ export async function setUser({ displayName }: UserSetting): Promise<void> {
 }
 
 export function getDevices(): Promise<DevicesSetting> {
-  return rnStorage.get(DEVICES_KEY);
+  return rnStorage.get(DEVICES_KEY, {
+    webcamEnabled: false,
+  });
 }
 
 export async function setDevices({
