@@ -242,11 +242,6 @@ export class RoomClient {
 
     logger.debug('close()');
 
-    // Close protoo Peer
-    if (!_isNil(this._protoo)) {
-      this._protoo.close();
-    }
-
     await this.disableAll();
 
     {
@@ -264,6 +259,11 @@ export class RoomClient {
 
     if (this._recvTransport) {
       this._recvTransport.close();
+    }
+
+    // Close protoo Peer
+    if (!_isNil(this._protoo)) {
+      this._protoo.close();
     }
 
     store.dispatch(stateActions.setRoomId(null));
@@ -1375,9 +1375,7 @@ export class RoomClient {
 
     store.dispatch(stateActions.setAudioOnlyInProgress(true));
 
-    const devices = (await settingManager.getDevices()) || {
-      webcamEnabled: false,
-    };
+    const devices = await settingManager.getDevices();
 
     if (!this._webcamProducer && this._produce && devices.webcamEnabled) {
       this.enableWebcam();
