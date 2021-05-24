@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import xss from 'xss';
+import { filterXSS } from 'xss';
 import { Parser } from 'html-to-react';
 import { TMemo } from '@shared/components/TMemo';
 
@@ -10,7 +10,7 @@ interface Props {
 }
 const HTML: React.FC<Props> = TMemo((props) => {
   const el = useMemo(() => {
-    const html = xss.filterXSS(props.html, { css: false }); // 防止xss
+    const html = filterXSS(props.html, { css: false }); // 防止xss
     return parser.parse(html);
   }, [props.html]);
 

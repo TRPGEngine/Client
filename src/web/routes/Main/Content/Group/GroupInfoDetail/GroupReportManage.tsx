@@ -34,6 +34,7 @@ import { getUserName } from '@shared/utils/data-helper';
 import { downloadBlob } from '@web/utils/file-helper';
 import { reportError } from '@web/utils/error';
 import { bbcodeToPlainText } from '@shared/components/bbcode/serialize';
+import { isUserUUID } from '@shared/utils/uuid';
 
 interface GroupReportManageProps {
   groupUUID: string;
@@ -83,14 +84,23 @@ const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
       const logs = reportDetail.content.logs ?? [];
 
       // 所有相关人员的用户信息
-      const userInfoMap = _keyBy(
+      const userInfoMap: Record<
+        string,
+        { username: string; nickname: string }
+      > = _keyBy(
         await Promise.all(
-          _uniq(logs.map((log) => log.sender_uuid)).map((uuid) =>
-            fetchUserInfo(uuid)
-          )
+          _uniq(logs.map((log) => log.sender_uuid))
+            .filter((uuid) => isUserUUID(uuid))
+            .map((uuid) => fetchUserInfo(uuid))
         ),
         'uuid'
       );
+
+      // Builtin user
+      userInfoMap['trpgsystem'] = {
+        username: t('系统消息'),
+        nickname: t('系统消息'),
+      };
 
       // 根据日志生成文本
       const text = logs

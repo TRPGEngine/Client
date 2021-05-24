@@ -18,6 +18,7 @@ export function initAnalytics() {
     posthog.init(token, {
       api_host: instance,
       autocapture: false, // 关闭autocapture以节约事件用量
+      disable_session_recording: true, // 关闭自动录屏(不需要且一直报错)
     });
     posthog.register({
       environment: config.environment,

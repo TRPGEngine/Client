@@ -16,8 +16,8 @@ export function useResultParams(): ResultParams {
     });
 
     return {
-      title: query.title,
-      subTitle: query.subTitle,
+      title: String(query.title),
+      subTitle: String(query.subTitle),
     };
   }, []);
 }

@@ -25,7 +25,7 @@ const initSentry = _once(() => {
     release:
       environment === 'production' ? _get(Config, 'sentry.release') : undefined,
     environment,
-    integrations: [new Integrations.BrowserTracing()],
+    integrations: [new Integrations.BrowserTracing() as any],
     tracesSampleRate: 0.2,
     denyUrls: ['chrome-extension://'],
     ignoreErrors: [

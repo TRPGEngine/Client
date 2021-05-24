@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.30](https://github.com/TRPGEngine/Client/compare/v0.5.29...v0.5.30) (2021-05-24)
+
+
+### Bug Fixes
+
+* **rtc:** 修复rtc服务异常不抛出的bug ([1658174](https://github.com/TRPGEngine/Client/commit/1658174cc8f2aeefb11c26a0c9a06c54700ea296))
+* **rtc:** 修复无法在语音会话中切换频道的bug ([34db8ab](https://github.com/TRPGEngine/Client/commit/34db8ab1edd80f6a467846398cfb6c0779bc28fc))
+* **rtc:** 修复每次语音会话自动尝试打开视频的bug ([e8ac37a](https://github.com/TRPGEngine/Client/commit/e8ac37aae3d1045f230c4f2f4c10d59fddf282f1))
+* 修复了当导出战报包括系统消息时会报错的bug ([439b639](https://github.com/TRPGEngine/Client/commit/439b639ff8cac9bbac6740595b573b4852f31a2e))
+
 ### [0.5.29](https://github.com/TRPGEngine/Client/compare/v0.5.28...v0.5.29) (2021-05-18)
 
 

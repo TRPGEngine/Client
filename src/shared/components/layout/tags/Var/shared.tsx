@@ -13,14 +13,16 @@ interface TagProps {
   name: string;
   value: any;
   ':value': any;
-  static: string;
+  static: string | boolean;
 }
 export const TagVarShared: TagComponent<TagProps> = TMemo(
   (props) => {
     const context = useContext(LayoutStateContext)!;
 
     const watchDeps = useMemo(() => {
-      if (is(props.static)) {
+      if (typeof props.static === 'boolean' && props.static === true) {
+        return [];
+      } else if (typeof props.static === 'string' && is(props.static)) {
         return [];
       } else {
         return [context.state.data, props.name, props.value];

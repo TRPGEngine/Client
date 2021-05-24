@@ -3,14 +3,14 @@
 exports[`layout basic 1`] = `
 <DocumentFragment>
   <div
-    class="sc-fzoLsD dtpKnj"
+    class="sc-pNWdM eAMRol"
     style="position: relative;"
   >
     <iframe
       style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
     />
     <div
-      class="sc-AxgMl hoELXQ"
+      class="sc-jSFjdj cdvkCS"
     />
   </div>
 </DocumentFragment>
@@ -19,14 +19,14 @@ exports[`layout basic 1`] = `
 exports[`layout basic 2`] = `
 <DocumentFragment>
   <div
-    class="sc-fzoLsD dtpKnj"
+    class="sc-pNWdM eAMRol"
     style="position: relative;"
   >
     <iframe
       style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
     />
     <div
-      class="sc-AxgMl hoELXQ"
+      class="sc-jSFjdj cdvkCS"
     />
   </div>
 </DocumentFragment>
@@ -35,14 +35,14 @@ exports[`layout basic 2`] = `
 exports[`layout some text 1`] = `
 <DocumentFragment>
   <div
-    class="sc-fzoLsD dtpKnj"
+    class="sc-pNWdM eAMRol"
     style="position: relative;"
   >
     <iframe
       style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
     />
     <div
-      class="sc-AxgMl hoELXQ"
+      class="sc-jSFjdj cdvkCS"
     />
   </div>
 </DocumentFragment>
@@ -51,14 +51,14 @@ exports[`layout some text 1`] = `
 exports[`layout some text 2`] = `
 <DocumentFragment>
   <div
-    class="sc-fzoLsD dtpKnj"
+    class="sc-pNWdM eAMRol"
     style="position: relative;"
   >
     <iframe
       style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
     />
     <div
-      class="sc-AxgMl hoELXQ"
+      class="sc-jSFjdj cdvkCS"
     >
       <span>
         some text

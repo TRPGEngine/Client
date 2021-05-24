@@ -29,12 +29,12 @@ const initRoomClientStore = () => {
 export const RTCRoomClientContextProvider: React.FC = TMemo((props) => {
   const [client, setClient] = useState<RoomClient>();
 
-  const deleteClient = useCallback(() => {
+  const deleteClient = useCallback(async () => {
     if (!_isNil(client)) {
       trackEvent('rtc:leaveRoom', {
         roomId: client.roomId,
       });
-      client.close();
+      await client.close();
     }
 
     setClient(undefined);
@@ -46,7 +46,7 @@ export const RTCRoomClientContextProvider: React.FC = TMemo((props) => {
 
       if (!_isNil(client)) {
         // 关闭上一个连接
-        deleteClient();
+        await deleteClient();
       }
 
       trackEvent('rtc:joinRoom', {

@@ -14,8 +14,10 @@ import type { AllRTCStateType } from './types';
 import { RTC_DEBUG } from '@shared/utils/consts';
 import _get from 'lodash/get';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { watchNotify } from './middleware';
 
 const reduxMiddlewares: Middleware[] = [thunk];
+reduxMiddlewares.push(watchNotify()); // 增加rtc服务的错误toast弹出
 let enhancer: StoreEnhancer = applyMiddleware(...reduxMiddlewares);
 if (_get(window, ['localStorage', RTC_DEBUG]) === 'true') {
   // const logger = createLogger({

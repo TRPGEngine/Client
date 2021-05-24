@@ -10,7 +10,7 @@ export function useAsyncTimeout(fn: () => Promise<void>, ms: number) {
   const fnRef = useValueRef(fn);
 
   useEffect(() => {
-    let timer: number;
+    let timer: ReturnType<typeof setTimeout>;
     function loop() {
       fnRef.current().then(() => {
         timer = setTimeout(() => {

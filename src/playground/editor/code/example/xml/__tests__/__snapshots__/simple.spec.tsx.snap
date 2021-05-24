@@ -3,24 +3,24 @@
 exports[`basic snapshot 1`] = `
 <div>
   <div
-    class="sc-fzoLsD dtpKnj"
+    class="sc-pNWdM eAMRol"
     style="position: relative;"
   >
     <iframe
       style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
     />
     <div
-      class="sc-AxgMl hoELXQ"
+      class="sc-jSFjdj cdvkCS"
     >
       <div
-        class="ant-row sc-AxheI cocUJO"
+        class="ant-row sc-gKAaRy dGYfOy"
         type="flex"
       >
         <div
           class="ant-col ant-col-24"
         >
           <form
-            class="ant-form ant-form-vertical sc-Axmtr hBVTto"
+            class="ant-form ant-form-vertical sc-iCoGMd"
           >
             <div
               class="ant-row ant-form-item"
@@ -112,16 +112,16 @@ exports[`basic snapshot 1`] = `
         class="ant-col ant-col-24"
       >
         <div
-          class="ant-row sc-AxjAm tJNTL tag-row"
+          class="ant-row sc-bdnxRM gMgxgx tag-row"
         >
           <div
             class="ant-col ant-col-6"
           >
             <div
-              class="sc-AxirZ gXNkLn"
+              class="sc-gtsrHT hNfaxf"
             >
               <pre
-                class="sc-AxiKw bemSeT"
+                class="sc-dlnjwi cUIFtP"
               >
                 人物卡信息
               </pre>
