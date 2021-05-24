@@ -233,10 +233,10 @@ minimist@^1.2.5:
   resolved "https://registry.nlark.com/minimist/download/minimist-1.2.5.tgz?cache=0&sync_timestamp=1618847181284&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fminimist%2Fdownload%2Fminimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha1-Z9ZgFLZqaoqqDAg8X9WN9OTpdgI=
 
-monaco-editor-webpack-plugin@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.nlark.com/monaco-editor-webpack-plugin/download/monaco-editor-webpack-plugin-2.1.0.tgz#216bd35512a282beac7befd2fcdc5adb110403ff"
-  integrity sha1-IWvTVRKigr6se+/S/Nxa2xEEA/8=
+monaco-editor-webpack-plugin@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.nlark.com/monaco-editor-webpack-plugin/download/monaco-editor-webpack-plugin-3.1.0.tgz#972efc47a91b3bf3bd977885684a3180eb8f341b"
+  integrity sha1-ly78R6kbO/O9l3iFaEoxgOuPNBs=
   dependencies:
     loader-utils "^2.0.0"
 
@@ -354,10 +354,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
 
-react-monaco-editor@^0.40.0:
-  version "0.40.0"
-  resolved "https://registry.nlark.com/react-monaco-editor/download/react-monaco-editor-0.40.0.tgz#f1b021b32952cfc63a4bf2661fd20f61b2b8309f"
-  integrity sha1-8bAhsylSz8Y6S/JmH9IPYbK4MJ8=
+react-monaco-editor@^0.43.0:
+  version "0.43.0"
+  resolved "https://registry.nlark.com/react-monaco-editor/download/react-monaco-editor-0.43.0.tgz#495578470db7b27ab306af813b31f206a6bf9d1c"
+  integrity sha1-SVV4Rw23snqzBq+BOzHyBqa/nRw=
   dependencies:
     monaco-editor "*"
     prop-types "^15.7.2"
