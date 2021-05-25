@@ -5,8 +5,10 @@ import { CommonEditorSettings, CupEditorWrapper } from '../shared';
 import { TagTextAreaEdit } from '@shared/components/layout/tags/TextArea/edit';
 import { useTeaAttrsContext } from '@saucerjs/editor';
 
+const CUP_NAME = 'TextArea';
+
 regCup({
-  name: 'TextArea',
+  name: CUP_NAME,
   displayName: '多行文本',
   desc: '多行文本输入',
   type: 'leaf',
@@ -18,7 +20,7 @@ regCup({
       <TagTextAreaEdit
         key={nodeId}
         {...attrs}
-        _name={'TextArea'}
+        _name={CUP_NAME}
         _childrenEl={[]}
         name={attrs['name'] || nodeId}
       />

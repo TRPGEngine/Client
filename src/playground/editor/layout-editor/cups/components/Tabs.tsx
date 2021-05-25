@@ -6,7 +6,7 @@ import {
   useASTDispatchAction,
   useCurrentTeaId,
 } from '@saucerjs/core';
-import { Button, Col, Divider, Input, Space, Tabs } from 'antd';
+import { Button, Divider, Input, Tabs } from 'antd';
 import {
   TextEditorField,
   useTeaAttrsContext,

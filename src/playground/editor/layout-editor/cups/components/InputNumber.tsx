@@ -4,8 +4,10 @@ import { Space } from 'antd';
 import React from 'react';
 import { CommonEditorSettings, InputEditorSettings } from '../shared';
 
+const CUP_NAME = 'InputNumber';
+
 regCup({
-  name: 'InputNumber',
+  name: CUP_NAME,
   displayName: '数字输入框',
   desc: '标准数字输入框',
   type: 'leaf',
@@ -17,7 +19,7 @@ regCup({
       <TagInputNumberEdit
         key={nodeId}
         {...attrs}
-        _name={'InputNumber'}
+        _name={CUP_NAME}
         _childrenEl={[]}
         name={attrs['name'] || nodeId}
       />
