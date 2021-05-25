@@ -8,12 +8,12 @@ import {
 } from '@saucerjs/core';
 import { Button, Divider, Input, Tabs } from 'antd';
 import {
-  TextEditorField,
   useTeaAttrsContext,
   renderChildren,
   useTeaRenderOptionsContext,
 } from '@saucerjs/editor';
 import shortid from 'shortid';
+import { InputEditorField } from '../shared';
 
 const CUP_NAME = 'Tabs';
 const SUB_CUP_NAME = 'Tab';
@@ -114,7 +114,7 @@ regCup({
 
     return (
       <>
-        <TextEditorField field="activePanelNodeId" label="当前面板Key" />
+        <InputEditorField field="activePanelNodeId" label="当前面板Key" />
 
         <Divider>新增面板</Divider>
         <Input
@@ -143,7 +143,7 @@ regCup({
   editor: () => {
     return (
       <>
-        <TextEditorField field="name" label="当前面板名" />
+        <InputEditorField field="name" label="当前面板名" />
       </>
     );
   },

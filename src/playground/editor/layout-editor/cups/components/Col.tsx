@@ -1,7 +1,6 @@
 import React from 'react';
 import { regCup } from '@saucerjs/core';
-import { Col, Space } from 'antd';
-import { useTeaAttrsContext } from '@saucerjs/editor';
+import { Space } from 'antd';
 import { LayoutCol } from '@shared/components/layout/tags/Col/shared';
 
 const CUP_NAME = 'Col';

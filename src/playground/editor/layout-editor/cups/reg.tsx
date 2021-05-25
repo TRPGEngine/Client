@@ -7,6 +7,9 @@ import './components/InputNumber';
 import './components/TextArea';
 import './components/Tip';
 import './components/Tabs';
+import './components/Divider';
+import './components/CurrMax';
+import './components/Space';
 
 export const availableCup = [
   'Row',
@@ -18,4 +21,7 @@ export const availableCup = [
   'TextArea',
   'Tip',
   'Tabs',
+  'Divider',
+  'CurrMax',
+  'Space',
 ];

@@ -34,20 +34,20 @@
     redux-thunk "^2.3.0"
     reselect "^4.0.0"
 
-"@saucerjs/core@0.1.10", "@saucerjs/core@^0.1.10":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@saucerjs/core/-/core-0.1.10.tgz#8ad52a670c820b33427c408288a675c6d82e3ca1"
-  integrity sha512-WajNKWwyvm+em2LXsrXOLAUbbESmGvaMlVGacKvDZcf0YWp44ZsYsv+serRvV+gUAh6bRgIVrtwkOJeCEJecNg==
+"@saucerjs/core@0.1.11", "@saucerjs/core@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@saucerjs/core/-/core-0.1.11.tgz#c3b7d08b489bba542fd7269c276a64468f4c680c"
+  integrity sha512-BYkgzjnkhaNzaCvUFuOb3TtwNFdt3CZbuKCbBFRR5cVvj2fIeE01kYbADQGBzF3Y2NDglVe9cISORJL4hu04lw==
   dependencies:
     "@reduxjs/toolkit" "^1.4.0"
     lodash "^4.17.20"
 
-"@saucerjs/editor@0.1.10":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@saucerjs/editor/-/editor-0.1.10.tgz#fe305c715bd8f3d01c25fba34015fdbdbe1ee1fe"
-  integrity sha512-ZvNWJu0VVaebH53VLz5a36ZjIouD/ThhzlGmCxnKVINrpGNPjydFoJJNM4+ktzF3Te/1wwQVDHbFHbukMHH7lw==
+"@saucerjs/editor@0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@saucerjs/editor/-/editor-0.1.12.tgz#4eecc0ae621f82fe35170930d71c9ed57d84a2ff"
+  integrity sha512-BPtpiSfPLYm6CJ0nEM5um1CvdOPJ84/PtriLIcZkobPOqUTggW0CwCBqg6+EnFbaa+3mZVWbNEoRX/NGd+90Fg==
   dependencies:
-    "@saucerjs/core" "^0.1.10"
+    "@saucerjs/core" "^0.1.11"
     classnames "^2.2.6"
     less "^3.12.2"
     rc-tree "^4.0.0-beta.2"
@@ -56,12 +56,12 @@
     react-split-pane "^0.1.92"
     shortid "^2.2.16"
 
-"@saucerjs/xml@0.1.10":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@saucerjs/xml/-/xml-0.1.10.tgz#11c9f37a40384610a41e8f512628a37e517664f1"
-  integrity sha512-JbLQy8lHfu0ryFNnFOm+FR2Y3vTVeERnT9JeqMOKkuLecGNWObJ0LMTZ/k0EcAgeLDSeQ9tdyx+/e67+ZXc40w==
+"@saucerjs/xml@0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@saucerjs/xml/-/xml-0.1.11.tgz#6592e8de4a6d3ef32898467d7a872349aebb1cba"
+  integrity sha512-NNy/X6cknW1ARG0/tRCm1i58S8FcEovAVOsxnOS/7Hvnlt/+oUW3C9CPOVhL3T8ejj4nCnD+1SHGQKh8OWSIhQ==
   dependencies:
-    "@saucerjs/core" "^0.1.10"
+    "@saucerjs/core" "^0.1.11"
     xml-js "^1.6.11"
 
 "@types/hoist-non-react-statics@^3.3.1":

@@ -1,10 +1,48 @@
 import React from 'react';
 import { TMemo } from '@shared/components/TMemo';
-import { Checkbox, Input, Space, Typography } from 'antd';
+import { Checkbox, Input, Select, Space, Typography } from 'antd';
 import _isString from 'lodash/isString';
 import { TipIcon } from '@web/components/TipIcon';
 import { useCurrentTeaId } from '@saucerjs/core';
-import { useTeaAttrsContext } from '@saucerjs/editor';
+import { buildEditorFields, useTeaAttrsContext } from '@saucerjs/editor';
+import type { OptionData, OptionGroupData } from 'rc-select/es/interface';
+
+export const InputEditorField = buildEditorFields(
+  'Input',
+  ({ label, field, currentTeaAttrs, setCurrentTeaAttrs }) => {
+    return (
+      <Input
+        placeholder={label}
+        value={currentTeaAttrs[field]}
+        onChange={(e) =>
+          setCurrentTeaAttrs({
+            [field]: e.target.value,
+          })
+        }
+      />
+    );
+  }
+);
+
+export const SelectEditorField = buildEditorFields<{
+  options: (OptionData | OptionGroupData)[];
+}>(
+  'Select',
+  ({ label, field, currentTeaAttrs, setCurrentTeaAttrs, options }) => {
+    return (
+      <Select
+        placeholder={label}
+        value={currentTeaAttrs[field]}
+        onChange={(value) =>
+          setCurrentTeaAttrs({
+            [field]: value,
+          })
+        }
+        options={options}
+      />
+    );
+  }
+);
 
 export const CupEditorWrapper: React.FC<{
   title: string;
