@@ -34,20 +34,20 @@
     redux-thunk "^2.3.0"
     reselect "^4.0.0"
 
-"@saucerjs/core@0.1.9", "@saucerjs/core@^0.1.9":
-  version "0.1.9"
-  resolved "https://registry.nlark.com/@saucerjs/core/download/@saucerjs/core-0.1.9.tgz#dffc1e42cb23a992c89fc2fc9558836e68477d69"
-  integrity sha1-3/weQssjqZLIn8L8lViDbmhHfWk=
+"@saucerjs/core@0.1.10", "@saucerjs/core@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@saucerjs/core/-/core-0.1.10.tgz#8ad52a670c820b33427c408288a675c6d82e3ca1"
+  integrity sha512-WajNKWwyvm+em2LXsrXOLAUbbESmGvaMlVGacKvDZcf0YWp44ZsYsv+serRvV+gUAh6bRgIVrtwkOJeCEJecNg==
   dependencies:
     "@reduxjs/toolkit" "^1.4.0"
     lodash "^4.17.20"
 
-"@saucerjs/editor@0.1.9":
-  version "0.1.9"
-  resolved "https://registry.nlark.com/@saucerjs/editor/download/@saucerjs/editor-0.1.9.tgz#02a73f51a3003559d6430236af45d7d9532308aa"
-  integrity sha1-Aqc/UaMANVnWQwI2r0XX2VMjCKo=
+"@saucerjs/editor@0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@saucerjs/editor/-/editor-0.1.10.tgz#fe305c715bd8f3d01c25fba34015fdbdbe1ee1fe"
+  integrity sha512-ZvNWJu0VVaebH53VLz5a36ZjIouD/ThhzlGmCxnKVINrpGNPjydFoJJNM4+ktzF3Te/1wwQVDHbFHbukMHH7lw==
   dependencies:
-    "@saucerjs/core" "^0.1.9"
+    "@saucerjs/core" "^0.1.10"
     classnames "^2.2.6"
     less "^3.12.2"
     rc-tree "^4.0.0-beta.2"
@@ -56,12 +56,12 @@
     react-split-pane "^0.1.92"
     shortid "^2.2.16"
 
-"@saucerjs/xml@0.1.9":
-  version "0.1.9"
-  resolved "https://registry.nlark.com/@saucerjs/xml/download/@saucerjs/xml-0.1.9.tgz#5de9405d4d71d8b114ea7bed50c6e70eb0606df1"
-  integrity sha1-XelAXU1x2LEU6nvtUMbnDrBgbfE=
+"@saucerjs/xml@0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@saucerjs/xml/-/xml-0.1.10.tgz#11c9f37a40384610a41e8f512628a37e517664f1"
+  integrity sha512-JbLQy8lHfu0ryFNnFOm+FR2Y3vTVeERnT9JeqMOKkuLecGNWObJ0LMTZ/k0EcAgeLDSeQ9tdyx+/e67+ZXc40w==
   dependencies:
-    "@saucerjs/core" "^0.1.9"
+    "@saucerjs/core" "^0.1.10"
     xml-js "^1.6.11"
 
 "@types/hoist-non-react-statics@^3.3.1":

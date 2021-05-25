@@ -15,6 +15,7 @@ import {
 } from '@shared/components/layout/XMLBuilder';
 import SplitPane from '@shared/components/web/SplitPane';
 import { Toolbar } from './Toolbar';
+import { availableCup } from './cups/reg';
 
 const Root = styled.div`
   height: 100vh;
@@ -32,7 +33,7 @@ export const EditorMain: React.FC = TMemo(() => {
 
         <div style={{ position: 'relative', flex: 1 }}>
           <SplitPane split="vertical" minSize={180}>
-            <TemplateMenu />
+            <TemplateMenu cupNames={availableCup} />
 
             <SplitPane split="vertical" primary="second" minSize={240}>
               {/* 主渲染内容 */}
