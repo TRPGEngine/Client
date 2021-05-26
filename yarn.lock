@@ -2440,10 +2440,10 @@
   resolved "https://registry.npm.taobao.org/@types/debug/download/@types/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
   integrity sha1-sU76iFK3do2JiQZhPCP2iHE+As0=
 
-"@types/emoji-mart@^2.11.0":
-  version "2.11.3"
-  resolved "https://registry.npm.taobao.org/@types/emoji-mart/download/@types/emoji-mart-2.11.3.tgz#9949f6a8a231aea47aac1b2d4212597b41140b07"
-  integrity sha1-mUn2qKIxrqR6rBstQhJZe0EUCwc=
+"@types/emoji-mart@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.nlark.com/@types/emoji-mart/download/@types/emoji-mart-3.0.4.tgz#418868330c13b510a7b4b86b1ee9904291daeec1"
+  integrity sha1-QYhoMwwTtRCntLhrHumQQpHa7sE=
   dependencies:
     "@types/react" "*"
 
