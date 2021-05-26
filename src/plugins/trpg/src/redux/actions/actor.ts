@@ -1,4 +1,4 @@
-import constants from '../constants';
+import { actorConstants } from '../constants/actor';
 const {
   GET_TEMPLATE_SUCCESS,
   GET_SUGGEST_TEMPLATES_SUCCESS,
@@ -12,29 +12,37 @@ const {
   SHARE_ACTOR_SUCCESS,
   UNSHARE_ACTOR_SUCCESS,
   FORK_ACTOR_SUCCESS,
-} = constants;
-import config from '../../project.config';
-import { checkTemplate } from '../../utils/cache-helper';
+} = actorConstants;
+import config from '@capital/shared/project.config';
+import { checkTemplate } from '@capital/shared/utils/cache-helper';
 import {
   showLoading,
   hideLoading,
   showAlert,
   hideAlert,
   hideModal,
-} from './ui';
+} from '@capital/shared/redux/actions/ui';
 import _isUndefined from 'lodash/isUndefined';
 import _isString from 'lodash/isString';
 import _set from 'lodash/set';
 import _isNil from 'lodash/isNil';
+import type { TRPGAction } from '@capital/shared/redux/types/__all__';
 
-import type { TRPGAction } from '@redux/types/__all__';
+import * as trpgApi from '@capital/shared/api/trpg.api';
+import rnStorage from '@capital/shared/api/rn-storage.api';
+import { showToasts } from '@capital/shared/manager/ui';
+import { isBlobUrl } from '@capital/shared/utils/string-helper';
+import { toAvatarWithBlobUrl } from '@capital/web/utils/upload-helper';
 
-import * as trpgApi from '../../api/trpg.api';
-import rnStorage from '@shared/api/rn-storage.api';
-import { showToasts } from '@shared/manager/ui';
 const api = trpgApi.getInstance();
 
-export function setTemplate(uuid, name, desc, avatar, info) {
+export function setTemplate(
+  uuid: string,
+  name: string,
+  desc: string,
+  avatar: string,
+  info: any
+) {
   return {
     uuid,
     name,
@@ -44,7 +52,7 @@ export function setTemplate(uuid, name, desc, avatar, info) {
   };
 }
 
-export function getTemplate(uuid?: string) {
+export function getTemplate(uuid?: string): TRPGAction {
   return function (dispatch, getState) {
     return api.emit('actor::getTemplate', { uuid }, function (data) {
       if (data.result) {
@@ -93,26 +101,28 @@ export function getSuggestTemplate(): TRPGAction {
   };
 }
 
-export function findTemplate(searchName) {
+export function findTemplate(searchName: string): TRPGAction {
   return function (dispatch, getState) {
-    return api.emit('actor::findTemplate', { name: searchName }, function (
-      data
-    ) {
-      console.log(data);
-      if (data.result) {
-        dispatch({ type: FIND_TEMPLATE_SUCCESS, payload: data.templates });
-      } else {
-        console.error(data.msg);
+    return api.emit(
+      'actor::findTemplate',
+      { name: searchName },
+      function (data) {
+        console.log(data);
+        if (data.result) {
+          dispatch({ type: FIND_TEMPLATE_SUCCESS, payload: data.templates });
+        } else {
+          console.error(data.msg);
+        }
       }
-    });
+    );
   };
 }
 
-export function setEditedTemplate(obj) {
+export function setEditedTemplate(obj: any) {
   return { type: SET_EDITED_TEMPLATE, payload: obj };
 }
 
-export function selectTemplate(template) {
+export function selectTemplate(template: any) {
   return { type: SELECT_TEMPLATE, payload: template };
 }
 
@@ -132,7 +142,7 @@ export function createActor(
   info: {},
   template_uuid: string,
   avatar_uuid?: string
-) {
+): TRPGAction {
   return function (dispatch, getState) {
     dispatch(showLoading('创建人物中，请稍后...'));
     return api.emit(
@@ -164,7 +174,7 @@ export function createActor(
   };
 }
 
-export function getActor(uuid = '') {
+export function getActor(uuid = ''): TRPGAction {
   return function (dispatch, getState) {
     return api.emit('actor::getActor', { uuid }, function (data) {
       if (data.result) {
@@ -186,11 +196,11 @@ export function getActor(uuid = '') {
   };
 }
 
-export function selectActor(uuid) {
+export function selectActor(uuid: string) {
   return { type: SELECT_ACTOR, payload: uuid };
 }
 
-export function removeActor(uuid) {
+export function removeActor(uuid: string): TRPGAction {
   return function (dispatch, getState) {
     return api.emit('actor::removeActor', { uuid }, function (data) {
       dispatch(hideAlert());
@@ -271,5 +281,57 @@ export function forkActor(targetActorUUID: string): TRPGAction {
         dispatch(showAlert(data.msg));
       }
     });
+  };
+}
+
+/**
+ * 根据UUID更新角色信息
+ * @param uuid 角色唯一标识
+ * @param name 角色名
+ * @param avatar 角色头像
+ * @param desc 角色描述
+ * @param info 角色信息
+ */
+export function updateActor(
+  uuid: string,
+  name: string,
+  avatar: string,
+  desc: string,
+  info: {}
+): TRPGAction {
+  return async function (dispatch, getState) {
+    dispatch(showLoading('正在更新人物卡信息，请稍后...'));
+    if (_isString(avatar) && isBlobUrl(avatar)) {
+      // 如果avatar是blob url的话, 则上传一下
+      const userUUID = getState().user.info.uuid!;
+      try {
+        const { url } = await toAvatarWithBlobUrl(userUUID, avatar);
+        // 上传成功后更新属性
+        _set(info, '_avatar', url);
+        avatar = url;
+      } catch (err) {
+        dispatch(hideLoading());
+        dispatch(showAlert('上传头像失败'));
+        throw err;
+      }
+    }
+
+    return api.emit(
+      'actor::updateActor',
+      { uuid, name, avatar, desc, info },
+      function (data) {
+        dispatch(hideLoading());
+        dispatch(hideAlert());
+        if (data.result) {
+          const actor = data.actor;
+          actor.avatar = config.file.getAbsolutePath?.(actor.avatar);
+          dispatch(hideModal()); // 保存成功后再隐藏模态框
+          dispatch({ type: UPDATE_ACTOR_SUCCESS, payload: actor });
+        } else {
+          dispatch(showAlert(data.msg));
+          console.error(data.msg);
+        }
+      }
+    );
   };
 }

@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import ModalPanel from '../../ModalPanel';
+import ModalPanel from '@capital/web/components/ModalPanel';
 import { Button, Steps, Row, message } from 'antd';
-import type { DataMap } from '@shared/components/layout/XMLBuilder';
-import {
-  getSuggestTemplate,
-  createActor,
-} from '@src/shared/redux/actions/actor';
+import type { DataMap } from '@capital/shared/components/layout/XMLBuilder';
+import { getSuggestTemplate, createActor } from '../../../redux/actions/actor';
 import TemplateSelect from './TemplateSelect';
 import CreateActorDetail from './CreateActorDetail';
 import CreateActorConfirm from './CreateActorConfirm';
@@ -14,12 +11,15 @@ import _get from 'lodash/get';
 import _isString from 'lodash/isString';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
-import { toAvatarWithBlobUrl } from '@web/utils/upload-helper';
-import { isBlobUrl } from '@shared/utils/string-helper';
-import type { AvatarUpdateData } from '@shared/utils/upload-helper';
-import type { ActorTemplateType } from '@redux/types/actor';
-import { TMemo } from '@shared/components/TMemo';
-import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
+import { toAvatarWithBlobUrl } from '@capital/web/utils/upload-helper';
+import { isBlobUrl } from '@capital/shared/utils/string-helper';
+import type { AvatarUpdateData } from '@capital/shared/utils/upload-helper';
+import type { ActorTemplateType } from '../../../redux/types/actor';
+import { TMemo } from '@capital/shared/components/TMemo';
+import {
+  useTRPGSelector,
+  useTRPGDispatch,
+} from '@capital/shared/redux/hooks/useTRPGSelector';
 const Step = Steps.Step;
 
 const Container = styled.div`
@@ -41,10 +41,8 @@ const Actions = styled(Row).attrs(() => ({
 
 const ActorCreate: React.FC = TMemo(() => {
   const [current, setCurrent] = useState(0);
-  const [
-    selectedTemplate,
-    setSelectedTemplate,
-  ] = useState<ActorTemplateType | null>(null);
+  const [selectedTemplate, setSelectedTemplate] =
+    useState<ActorTemplateType | null>(null);
   const [stateData, setStateData] = useState<DataMap>({});
   const selfUUID = useTRPGSelector((state) => state.user.info.uuid!);
   const dispatch = useTRPGDispatch();

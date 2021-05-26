@@ -6,6 +6,8 @@ import {
 import { SidebarItem } from '@capital/web/routes/Main/Content/SidebarItem';
 import { Iconfont } from '@capital/web/components/Iconfont';
 import { t } from '@capital/shared/i18n';
+import { Route } from 'react-router';
+import { TLoadable } from '@capital/web/components/TLoadable';
 
 regPersonalPanelItem(
   <SidebarItem
@@ -18,5 +20,11 @@ regPersonalPanelItem(
   />
 );
 
-regPersonalPanelContent();
-//
+regPersonalPanelContent(
+  <Route
+    path="/main/personal/actors"
+    component={TLoadable(() =>
+      import('./panels/ActorPanel').then((module) => module.ActorPanel)
+    )}
+  />
+);

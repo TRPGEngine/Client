@@ -1,9 +1,9 @@
 import React from 'react';
-import type { ActorType, ActorBaseAttr } from '@redux/types/actor';
-import { TMemo } from '@shared/components/TMemo';
+import type { ActorBaseAttr } from '../redux/types/actor';
+import { TMemo } from '@capital/shared/components/TMemo';
 import styled from 'styled-components';
-import { getAbsolutePath } from '@shared/utils/file-helper';
-import { useTranslation } from '@shared/i18n';
+import { getAbsolutePath } from '@capital/shared/utils/file-helper';
+import { useTranslation } from '@capital/shared/i18n';
 
 export const ActorCardContainer = styled.div`
   display: flex;

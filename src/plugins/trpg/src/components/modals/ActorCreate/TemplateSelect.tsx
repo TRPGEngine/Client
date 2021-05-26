@@ -1,13 +1,16 @@
 import React, { useState, useCallback } from 'react';
 import { Input, Empty, Row, Col, Button } from 'antd';
 import { connect, useDispatch } from 'react-redux';
-import { findTemplate } from '@src/shared/redux/actions/actor';
-import TemplateItem from '../../TemplateItem';
+import { findTemplate } from '../../../redux/actions/actor';
+import TemplateItem from '@capital/web/components/TemplateItem';
 import styled from 'styled-components';
-import type { ActorTemplateType } from '@redux/types/actor';
-import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
-import { TMemo } from '@shared/components/TMemo';
-import { showModal, hideModal } from '@redux/actions/ui';
+import type { ActorTemplateType } from '../../../redux/types/actor';
+import type {
+  TRPGState,
+  TRPGDispatchProp,
+} from '@capital/shared/redux/types/__all__';
+import { TMemo } from '@capital/shared/components/TMemo';
+import { showModal, hideModal } from '@capital/shared/redux/actions/ui';
 import { SharedActorList } from './SharedActorList';
 
 const Search = Input.Search;

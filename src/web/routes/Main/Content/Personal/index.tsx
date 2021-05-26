@@ -14,7 +14,6 @@ import { SidebarHeader } from '../SidebarHeader';
 import { NotePanel } from './NotePanel';
 import { Iconfont } from '@web/components/Iconfont';
 import { createNote } from '@redux/actions/note';
-import { ActorPanel } from './ActorPanel';
 import { SYSTE_CONVERSE_SPEC } from '@shared/utils/consts';
 import { Button, Col, Divider, Row } from 'antd';
 import { useCurrentUserInfo } from '@redux/hooks/user';
@@ -146,9 +145,8 @@ export const Personal: React.FC = TMemo(() => {
           component={UserConversePanel}
         />
 
-        {/* TODO */}
-        <Route path="/main/personal/actors" component={ActorPanel} />
         {...personalPanelContentList}
+
         <Redirect to="/main/personal/friends" />
       </Switch>
     </PageContent>

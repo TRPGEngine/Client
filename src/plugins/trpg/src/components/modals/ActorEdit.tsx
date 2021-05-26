@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef } from 'react';
-import ModalPanel from '../ModalPanel';
+import ModalPanel from '@capital/web/components/ModalPanel';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
@@ -8,18 +8,18 @@ import _cloneDeep from 'lodash/cloneDeep';
 import {
   XMLBuilder,
   XMLBuilderRef,
-} from '@shared/components/layout/XMLBuilder';
+} from '@capital/shared/components/layout/XMLBuilder';
 import { Row, Button } from 'antd';
 import styled from 'styled-components';
-import { TMemo } from '@shared/components/TMemo';
-import { useCachedActorTemplateInfo } from '@redux/hooks/useCache';
-import { showToasts } from '@shared/manager/ui';
-import { updateGroupActorInfo } from '@redux/actions/group';
-import { editGroupActor } from '@shared/model/group';
-import { t, useTranslation } from '@shared/i18n';
-import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
-import { AddonMore } from '../AddonMore';
-import { fileToText, openFile } from '@web/utils/file-helper';
+import { TMemo } from '@capital/shared/components/TMemo';
+import { useCachedActorTemplateInfo } from '@capital/shared/redux/hooks/useCache';
+import { showToasts } from '@capital/shared/manager/ui';
+import { updateGroupActorInfo } from '@capital/shared/redux/actions/group';
+import { editGroupActor } from '@capital/shared/model/group';
+import { t, useTranslation } from '@capital/shared/i18n';
+import { useTRPGDispatch } from '@capital/shared/redux/hooks/useTRPGSelector';
+import { AddonMore } from '@capital/web/components/AddonMore';
+import { fileToText, openFile } from '@capital/web/utils/file-helper';
 
 /**
  * 人物卡编辑模态框
@@ -140,7 +140,7 @@ export const GroupActorEditModal: React.FC<GroupActorModalEditProps> = TMemo(
     const { t } = useTranslation();
     const dispatch = useTRPGDispatch();
 
-    const handleSave = (data) => {
+    const handleSave = (data: any) => {
       editGroupActor(groupUUID, groupActorUUID, data)
         .then(() => {
           dispatch(updateGroupActorInfo(groupUUID, groupActorUUID, data));

@@ -5,17 +5,17 @@ import React, {
   Fragment,
   useMemo,
 } from 'react';
-import { TMemo } from '@shared/components/TMemo';
-import ModalPanel from '@web/components/ModalPanel';
-import type { ActorType } from '@redux/types/actor';
-import { fetchSharedActor } from '@shared/model/actor';
-import { ActorCard } from '@web/components/ActorCard';
-import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
-import { forkActor } from '@redux/actions/actor';
-import { showModal } from '@redux/actions/ui';
+import { TMemo } from '@capital/shared/components/TMemo';
+import ModalPanel from '@capital/web/components/ModalPanel';
+import type { ActorType } from '../../../redux/types/actor';
+import { fetchSharedActor } from '@capital/shared/model/actor';
+import { ActorCard } from '../../ActorCard';
+import { useTRPGDispatch } from '@capital/shared/redux/hooks/useTRPGSelector';
+import { forkActor } from '../../../redux/actions/actor';
+import { showModal } from '@capital/shared/redux/actions/ui';
 import ActorInfo from '../ActorInfo';
 import { Pagination } from 'antd';
-import LoadingSpinner from '@web/components/LoadingSpinner';
+import LoadingSpinner from '@capital/web/components/LoadingSpinner';
 
 interface Props {}
 export const SharedActorList: React.FC<Props> = TMemo(() => {

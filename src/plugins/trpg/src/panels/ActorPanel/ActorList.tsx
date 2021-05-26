@@ -1,17 +1,24 @@
 import React, { Fragment } from 'react';
-import { TMemo } from '@shared/components/TMemo';
-import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
-import { ActorCard, ActorCardListContainer } from '@web/components/ActorCard';
-import { removeActor, unshareActor, shareActor } from '@redux/actions/actor';
-import { showAlert, showModal } from '@redux/actions/ui';
+import {
+  useTRPGSelector,
+  useTRPGDispatch,
+} from '@capital/shared/redux/hooks/useTRPGSelector';
+import { TMemo } from '@capital/shared/components/TMemo';
+import { ActorCard, ActorCardListContainer } from '../../components/ActorCard';
+import {
+  removeActor,
+  unshareActor,
+  shareActor,
+  updateActor,
+} from '../../redux/actions/actor';
+import { showAlert, showModal } from '@capital/shared/redux/actions/ui';
 import _isNil from 'lodash/isNil';
-import ActorEdit from '@web/components/modals/ActorEdit';
-import { updateActor } from '@web/redux/action/actor';
-import { showToasts } from '@shared/manager/ui';
-import ActorInfo from '@web/components/modals/ActorInfo';
+import ActorEdit from '../../components/modals/ActorEdit';
+import { showToasts } from '@capital/shared/manager/ui';
+import ActorInfo from '../../components/modals/ActorInfo';
 import { Typography } from 'antd';
-import { openModal } from '@web/components/Modal';
-import { useTranslation } from '@shared/i18n';
+import { openModal } from '@capital/web/components/Modal';
+import { useTranslation } from '@capital/shared/i18n';
 
 export const ActorList: React.FC = TMemo(() => {
   const selfActors = useTRPGSelector((state) => state.actor.selfActors);

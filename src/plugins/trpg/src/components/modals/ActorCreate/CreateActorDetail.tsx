@@ -2,10 +2,10 @@ import React, { useCallback, useMemo } from 'react';
 import XMLBuilder, {
   XMLBuilderState,
   DataMap,
-} from '@shared/components/layout/XMLBuilder';
+} from '@capital/shared/components/layout/XMLBuilder';
 import _clone from 'lodash/clone';
-import type { ActorTemplateType } from '@redux/types/actor';
-import { TMemo } from '@shared/components/TMemo';
+import type { ActorTemplateType } from '../../../redux/types/actor';
+import { TMemo } from '@capital/shared/components/TMemo';
 
 interface Props {
   template: ActorTemplateType;

@@ -1,21 +1,21 @@
 import React, { useMemo } from 'react';
-import ModalPanel from '../ModalPanel';
+import ModalPanel from '@capital/web/components/ModalPanel';
 import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import _isString from 'lodash/isString';
 import _cloneDeep from 'lodash/cloneDeep';
-import XMLBuilder from '@shared/components/layout/XMLBuilder';
+import XMLBuilder from '@capital/shared/components/layout/XMLBuilder';
 import { Row } from 'antd';
 import styled from 'styled-components';
-import { TMemo } from '@shared/components/TMemo';
+import { TMemo } from '@capital/shared/components/TMemo';
 import {
   useCachedActorTemplateInfo,
   useCachedActorInfo,
-} from '@redux/hooks/useCache';
-import { AddonMore, AddonMoreItem } from '../AddonMore';
-import { downloadBlob } from '@web/utils/file-helper';
-import { useTranslation } from '@shared/i18n';
+} from '@capital/shared/redux/hooks/useCache';
+import { AddonMore, AddonMoreItem } from '@capital/web/components/AddonMore';
+import { downloadBlob } from '@capital/web/utils/file-helper';
+import { useTranslation } from '@capital/shared/i18n';
 
 /**
  * 人物卡信息模态框
