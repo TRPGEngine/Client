@@ -104,7 +104,7 @@
     "debug": "^4.1.1",
     "emoji-mart": "^2.11.2",
     "filesize": "^6.1.0",
-    "formik": "^2.1.1",
+    "formik": "^2.2.8",
     "handlebars": "^4.7.6",
     "hark": "^1.2.3",
     "html-to-react": "^1.4.5",

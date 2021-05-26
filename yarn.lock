@@ -8765,10 +8765,10 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-formik@^2.1.1:
-  version "2.2.6"
-  resolved "https://registry.npm.taobao.org/formik/download/formik-2.2.6.tgz#378a4bafe4b95caf6acf6db01f81f3fe5147559d"
-  integrity sha1-N4pLr+S5XK9qz22wH4Hz/lFHVZ0=
+formik@^2.2.8:
+  version "2.2.8"
+  resolved "https://registry.nlark.com/formik/download/formik-2.2.8.tgz#986c3cd73849dde7c5154e5f6093a5568e482854"
+  integrity sha1-mGw81zhJ3efFFU5fYJOlVo5IKFQ=
   dependencies:
     deepmerge "^2.1.1"
     hoist-non-react-statics "^3.3.0"
