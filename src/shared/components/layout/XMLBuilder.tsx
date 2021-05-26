@@ -2,6 +2,7 @@ import React, {
   useMemo,
   useState,
   useEffect,
+  useCallback,
   useImperativeHandle,
 } from 'react';
 import parser, { XMLElement } from './parser/xml-parser';
@@ -9,6 +10,7 @@ import * as processor from './processor';
 import _isEmpty from 'lodash/isEmpty';
 import _isUndefined from 'lodash/isUndefined';
 import _isNil from 'lodash/isNil';
+import _isFunction from 'lodash/isFunction';
 import './tags/__all__';
 import styled from 'styled-components';
 import { StateDataType, StateActionType, preRenderTags } from './types';
@@ -85,7 +87,7 @@ const XMLBuilderContainer = styled.div`
   }
 `;
 
-class XMLErrorBoundary extends React.Component {
+export class XMLErrorBoundary extends React.Component {
   state = { hasError: false, error: null };
 
   static getDerivedStateFromError(error) {
@@ -113,6 +115,63 @@ class XMLErrorBoundary extends React.Component {
   }
 }
 
+/**
+ * 容器与上下文抽象
+ */
+export const LayoutProviderContainer: React.FC<{
+  style?: React.CSSProperties;
+  layoutType?: LayoutType;
+  initialData?: DataMap;
+  onChange?: StateChangeHandler;
+  builderRef?: React.Ref<XMLBuilderRef>;
+}> = TMemo((props) => {
+  const { style, layoutType = 'edit', builderRef } = props;
+  const handleChange = useCallback(
+    (newState: XMLBuilderState) => {
+      _isFunction(props.onChange) && props.onChange(newState);
+    },
+    [props.onChange]
+  );
+  const { state, dispatch } = useBuildLayoutStateContext({
+    initialData: props.initialData ?? {},
+    onChange: handleChange,
+  });
+
+  const context = useMemo(() => ({ state, dispatch, layoutType }), [
+    state,
+    dispatch,
+    layoutType,
+  ]);
+
+  const [XMLRender, { width }] = useSize(
+    <XMLBuilderContainer style={style}>{props.children}</XMLBuilderContainer>
+  );
+
+  useImperativeHandle(
+    builderRef,
+    () => ({
+      updateAllData: (data) => {
+        dispatch({
+          type: StateActionType.UpdateAllData,
+          payload: {
+            data,
+          },
+        });
+      },
+    }),
+    []
+  );
+
+  return (
+    <LayoutWidthContextProvider width={width}>
+      <LayoutStateContextProvider state={context}>
+        {XMLRender}
+      </LayoutStateContextProvider>
+    </LayoutWidthContextProvider>
+  );
+});
+LayoutProviderContainer.displayName = 'LayoutProvider';
+
 interface XMLBuilderProps {
   xml: string;
   layoutType?: LayoutType;
@@ -127,29 +186,9 @@ export interface XMLBuilderRef {
 }
 export const XMLBuilder = TMemo(
   React.forwardRef<XMLBuilderRef, XMLBuilderProps>((props, ref) => {
-    const { xml = '', onChange, layoutType = 'edit' } = props;
+    const { xml = '', initialData, onChange, layoutType = 'edit' } = props;
     const [error, setError] = useState<Error | null>(null);
     const [layout, setLayout] = useState<XMLElement>();
-
-    const { state, dispatch } = useBuildLayoutStateContext({
-      initialData: props.initialData!,
-      onChange: onChange!,
-    });
-
-    useImperativeHandle(
-      ref,
-      () => ({
-        updateAllData: (data) => {
-          dispatch({
-            type: StateActionType.UpdateAllData,
-            payload: {
-              data,
-            },
-          });
-        },
-      }),
-      []
-    );
 
     useEffect(() => {
       try {
@@ -172,12 +211,6 @@ export const XMLBuilder = TMemo(
         setError(err);
       }
     }, [xml]);
-
-    const context = useMemo(() => ({ state, dispatch, layoutType }), [
-      state,
-      dispatch,
-      layoutType,
-    ]);
 
     const LayoutDOM = useMemo(() => {
       if (!_isNil(error)) {
@@ -202,17 +235,16 @@ export const XMLBuilder = TMemo(
       }
     }, [layout, error]);
 
-    const [XMLRender, { width }] = useSize(
-      <XMLBuilderContainer>{LayoutDOM}</XMLBuilderContainer>
-    );
-
     return (
       <XMLErrorBoundary>
-        <LayoutWidthContextProvider width={width}>
-          <LayoutStateContextProvider state={context}>
-            {XMLRender}
-          </LayoutStateContextProvider>
-        </LayoutWidthContextProvider>
+        <LayoutProviderContainer
+          initialData={initialData}
+          layoutType={layoutType}
+          onChange={onChange}
+          builderRef={ref}
+        >
+          {LayoutDOM}
+        </LayoutProviderContainer>
       </XMLErrorBoundary>
     );
   })

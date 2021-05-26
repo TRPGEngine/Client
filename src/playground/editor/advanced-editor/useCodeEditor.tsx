@@ -6,6 +6,7 @@ import MonacoEditor, { EditorDidMount } from 'react-monaco-editor';
 import { message } from 'antd';
 import copy from 'copy-to-clipboard';
 import { initCode } from './example';
+import { CODE_STORE_KEY } from '../../helper';
 
 const initCodePos: IPosition = {
   lineNumber: 3,
@@ -21,7 +22,7 @@ const editorOptions = {
  * 代码编辑器
  */
 export function useCodeEditor() {
-  const [code = '', setCode] = useLocalStorage('playground:code', initCode);
+  const [code = '', setCode] = useLocalStorage(CODE_STORE_KEY, initCode);
   const editorRef = useRef<editor.IStandaloneCodeEditor>();
 
   const handleEditorChange = useMemo(

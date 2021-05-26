@@ -2,19 +2,19 @@ import React, { useMemo, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocalStorage } from 'react-use';
 import XMLBuilder from '@shared/components/layout/XMLBuilder';
-import { Block } from './components/Block';
+import { Block } from '../../components/Block';
 import _isNil from 'lodash/isNil';
 import _find from 'lodash/find';
 import { Select, Button, Row, Col } from 'antd';
-import { registerLayoutCodeSuggest } from './editor/code/suggestions';
-import { exampleLayout, workingLabel, initCode } from './editor/code/example';
+import { registerLayoutCodeSuggest } from './suggestions';
+import { exampleLayout, workingLabel, initCode } from './example';
 import config from '@shared/project.config';
 import SplitPane from '@shared/components/web/SplitPane';
 import { TMemo } from '@shared/components/TMemo';
-import { useLayoutConfig } from './editor/code/useLayoutConfig';
-import { useStateWatcher } from './editor/code/useStateWatcher';
+import { useLayoutConfig } from './useLayoutConfig';
+import { useStateWatcher } from './useStateWatcher';
 import LZString from 'lz-string';
-import { useCodeEditor } from './editor/code/useCodeEditor';
+import { useCodeEditor } from './useCodeEditor';
 
 const { Option } = Select;
 
@@ -46,7 +46,7 @@ const XMLRenderContainer = styled.div<{ isMobile: boolean }>`
       : `width: 100%`}
 `;
 
-const ActorEditor = TMemo(() => {
+export const ActorAdvancedEditor = TMemo(() => {
   const { code, setCode, codeEditorEl } = useCodeEditor();
   const { layoutType, isMobile, renderKey, incRenderKey, LayoutConfigEl } =
     useLayoutConfig(code);
@@ -151,6 +151,4 @@ const ActorEditor = TMemo(() => {
     </Container>
   );
 });
-ActorEditor.displayName = 'ActorEditor';
-
-export default ActorEditor;
+ActorAdvancedEditor.displayName = 'ActorAdvancedEditor';

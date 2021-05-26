@@ -34,7 +34,14 @@ export const TagInputEdit: TagComponent<TagInputProps> = TMemo((props) => {
         />
       </FormContainer>
     ),
-    [label, placeholder, stateValue, handleChange, props.disabled]
+    [
+      FormContainer,
+      label,
+      placeholder,
+      stateValue,
+      handleChange,
+      props.disabled,
+    ]
   );
 });
 TagInputEdit.displayName = 'TagInputEdit';
