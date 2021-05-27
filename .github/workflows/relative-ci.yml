@@ -1,4 +1,4 @@
-name: "node test"
+name: "relative-ci"
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [14.x]
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -29,9 +29,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - run: yarn install
-      - run: yarn run test:coverage
-      - uses: codecov/codecov-action@v1
-        with:
-          file: ./coverage/clover.xml
-          flags: unittests
-          name: TRPGEngine-Client
+      - name: build
+        run: yarn run build:ci
+      - name: Push to RelativeCI
+        env:
+          RELATIVE_CI_KEY: ${{ secrets.RELATIVE_CI_KEY }}
+        run: npx relative-ci-agent
