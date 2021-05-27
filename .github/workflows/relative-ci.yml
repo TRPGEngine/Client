@@ -2,8 +2,11 @@ name: "relative-ci"
 
 on:
   push:
+    branches:
+      - master
   pull_request:
     branches:
+      - master
       - release
 
 jobs:
