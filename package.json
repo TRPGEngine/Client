@@ -1,6 +1,6 @@
 {
   "name": "trpg-game-client",
-  "version": "0.5.30",
+  "version": "0.5.31",
   "description": "专注于TRPG跑团的IM即时应用聊天软件",
   "main": "./dist/entry.js",
   "productName": "TRPG Engine",
