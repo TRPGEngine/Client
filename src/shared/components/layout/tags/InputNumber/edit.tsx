@@ -63,7 +63,17 @@ export const TagInputNumberEdit: TagComponent<TagProps> = TMemo((props) => {
         />
       </FormContainer>
     ),
-    [label, placeholder, min, max, step, value, handleChange, props.disabled]
+    [
+      FormContainer,
+      label,
+      placeholder,
+      min,
+      max,
+      step,
+      value,
+      handleChange,
+      props.disabled,
+    ]
   );
 });
 TagInputNumberEdit.displayName = 'TagInputNumberEdit';

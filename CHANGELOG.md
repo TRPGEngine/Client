@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.32](https://github.com/TRPGEngine/Client/compare/v0.5.31...v0.5.32) (2021-05-28)
+
+### [0.5.31](https://github.com/TRPGEngine/Client/compare/v0.5.30...v0.5.31) (2021-05-28)
+
+
+### Features
+
+* **playground:** 增加可视化布局编辑器 ([4dd83f8](https://github.com/TRPGEngine/Client/commit/4dd83f80eecebe74857dd3f589b7b14bed029273))
+* **playground:** 增加布局编辑器 ([eef6d04](https://github.com/TRPGEngine/Client/commit/eef6d042ff87a9fbb4fa3434e09efe8100d1147f))
+
 ### [0.5.30](https://github.com/TRPGEngine/Client/compare/v0.5.29...v0.5.30) (2021-05-24)
 
 

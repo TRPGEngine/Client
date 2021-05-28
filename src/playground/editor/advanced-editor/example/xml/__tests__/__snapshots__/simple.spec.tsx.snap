@@ -132,7 +132,7 @@ exports[`basic snapshot 1`] = `
             class="ant-col ant-col-18"
           >
             <mock-antd-input-textarea
-              autosize="[object Object]"
+              autosize="true"
               placeholder="人物卡信息"
             />
           </div>

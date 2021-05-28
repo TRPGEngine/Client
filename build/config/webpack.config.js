@@ -7,7 +7,10 @@ console.log(
   process.env.PLATFORM
 );
 
-module.exports =
-  process.env.NODE_ENV === 'production'
-    ? require('./webpack.prod.config.js')
-    : require('./webpack.dev.config.js');
+if (process.env.CI === 'true') {
+  module.exports = require('./webpack.ci.config.js');
+} else if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./webpack.prod.config.js');
+} else {
+  module.exports = require('./webpack.dev.config.js');
+}

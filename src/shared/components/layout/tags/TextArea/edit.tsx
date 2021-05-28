@@ -6,19 +6,21 @@ import { useLayoutFormContainer } from '../../hooks/useLayoutFormContainer';
 import { TMemo } from '@shared/components/TMemo';
 import { Input } from 'antd';
 import type { AutoSizeType } from 'rc-textarea';
+import { useToNumber } from '@shared/hooks/useToNumber';
+import { useToBoolean } from '@shared/hooks/useToBoolean';
 const TextArea = Input.TextArea;
 
 interface TagProps extends TagInputProps {
-  autosize: boolean | AutoSizeType;
-  rows: number;
+  autosize?: boolean | AutoSizeType;
+  rows?: number;
 }
 export const TagTextAreaEdit: TagComponent<TagProps> = TMemo((props) => {
   const { label, placeholder, stateValue, setStateValue } = useLayoutFormData(
     props
   );
 
-  const autosize = useMemo(() => props.autosize, []); // autosize 只在最初获取一次。不会接受后续的动态变更
-  const rows = props.rows;
+  const autosize = useToBoolean(useMemo(() => props.autosize, [])); // autosize 只在最初获取一次。不会接受后续的动态变更
+  const rows = useToNumber(props.rows) ?? undefined;
 
   const FormContainer = useLayoutFormContainer(props);
 

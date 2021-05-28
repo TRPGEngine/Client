@@ -9688,6 +9688,7 @@ exports[`basic snapshot 1`] = `
               style="padding-left: 2px; padding-right: 2px;"
             >
               <mock-antd-input-textarea
+                autosize="false"
                 placeholder="其他特性"
               />
             </div>
@@ -9700,6 +9701,7 @@ exports[`basic snapshot 1`] = `
               style="padding-left: 2px; padding-right: 2px;"
             >
               <mock-antd-input-textarea
+                autosize="false"
                 placeholder="笔记"
               />
             </div>
