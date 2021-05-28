@@ -2,6 +2,7 @@
 
 /**
  * TODO: 这些操作应当使用 shared/redux/middlewares/watchLoginStatus.tsx 来实现
+ * 或者使用 shared/manager/userState.ts
  */
 import _isFunction from 'lodash/isFunction';
 

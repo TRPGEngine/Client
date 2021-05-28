@@ -3,7 +3,12 @@
  */
 
 import _isNil from 'lodash/isNil';
-import type { TRPGReducer, TRPGState, TRPGStore } from '@redux/types/__all__';
+import type {
+  TRPGAction,
+  TRPGReducer,
+  TRPGState,
+  TRPGStore,
+} from '@redux/types/__all__';
 import { combineReducers } from '@reduxjs/toolkit';
 
 let _store: TRPGStore;
@@ -23,6 +28,10 @@ export function getStoreState(): TRPGState | null {
   }
 
   return _store.getState();
+}
+
+export function dispatchAction(action: TRPGAction): void {
+  _store.dispatch(action);
 }
 
 export function getCurrentStore(): TRPGStore | undefined {

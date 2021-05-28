@@ -100,6 +100,12 @@ export function initPlugins() {
     '@capital/shared/manager/ui',
     () => import('@shared/manager/ui')
   );
+  regSharedModule('@capital/shared/manager/userState', () =>
+    import('@shared/manager/userState').then((module) => ({
+      subscribeToUserLoginSuccess: module.subscribeToUserLoginSuccess,
+      subscribeToUserLogoutSuccess: module.subscribeToUserLogoutSuccess,
+    }))
+  );
   regSharedModule(
     '@capital/shared/utils/cache-helper',
     () => import('@shared/utils/cache-helper')
