@@ -15,7 +15,7 @@ export const Toolbar: React.FC = TMemo(() => {
     const { destroy } = Modal.confirm({
       title: '确认要切换到进阶编辑器么',
       content:
-        '切换后无法返回到可视化编辑器, 因为进阶编辑器拥有更加强大的自定义能力。',
+        '切换后修改的布局无法返回到可视化编辑器, 因为进阶编辑器拥有更加强大的自定义能力。(切换到进阶编辑器会将丢失之前存储在本地缓存中进阶编辑器的内容)',
       onOk() {
         const innerXML = serializeToXML(ast);
         const xml = `<?xml version="1.0" encoding="utf-8" ?><Template>${innerXML}</Template>`;

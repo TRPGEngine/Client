@@ -24,7 +24,8 @@ const App: React.FC = React.memo((props) => {
           path="/layout/advanced"
           component={ActorAdvancedEditor}
         />
-        <Redirect to="/layout/edit" />
+        {/* <Redirect to="/layout/edit" /> */}
+        <Redirect to="/layout/advanced" />
       </Switch>
     </Router>
   );
