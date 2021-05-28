@@ -1,25 +1,28 @@
 import React, { useContext, useMemo, Fragment, useCallback } from 'react';
-import { GroupInfoContext } from '@shared/context/GroupInfoContext';
+import { GroupInfoContext } from '@capital/shared/context/GroupInfoContext';
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
 import _find from 'lodash/find';
 import _isEmpty from 'lodash/isEmpty';
-import type { GroupActorType } from '@redux/types/group';
+import type { GroupActorType } from '@capital/shared/redux/types/group';
 import styled from 'styled-components';
-import Avatar from '../Avatar';
-import { TMemo } from '@shared/components/TMemo';
+import Avatar from '@capital/web/components/Avatar';
+import { TMemo } from '@capital/shared/components/TMemo';
 import { Button, Divider } from 'antd';
 import ActorInfo from '../modals/ActorInfo';
-import { useTPopoverContext } from './index';
-import { useTranslation } from '@shared/i18n';
-import { useGroupDetailValue, useIsGroupManager } from '@redux/hooks/group';
-import { closeModal, openModal } from '../Modal';
+import { useTPopoverContext } from '@capital/web/components/popover/index';
+import { useTranslation } from '@capital/shared/i18n';
+import {
+  useGroupDetailValue,
+  useIsGroupManager,
+} from '@capital/shared/redux/hooks/group';
+import { closeModal, openModal } from '@capital/web/components/Modal';
 import { GroupActorEditModal } from '../modals/ActorEdit';
-import type { AddonMoreItem } from '../AddonMore';
+import type { AddonMoreItem } from '@capital/web/components/AddonMore';
 import {
   getGroupActorInfo,
   getGroupActorTemplateUUID,
-} from '@shared/utils/data-helper';
+} from '@capital/shared/utils/data-helper';
 
 /**
  * NOTICE: 不同于别的 Popover 团角色的popover不应该从缓存中获取而是应该直接获取团信息

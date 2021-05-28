@@ -15,7 +15,7 @@ import _fromPairs from 'lodash/fromPairs';
 import { useEffect, useMemo, useRef } from 'react';
 import type { UserInfo } from '@redux/types/user';
 import type { GroupInfo } from '@redux/types/group';
-import type { ActorType } from '@redux/types/actor';
+// import type { ActorType } from '@redux/types/actor';
 
 // 检查是否需要跳过处理
 const isSkipUUID = (uuid: string) =>
@@ -91,7 +91,7 @@ export const useCachedGroupInfo = reduxHookCacheFactory<GroupInfo>(
   (uuid, onCompleted) => getGroupInfo(uuid, onCompleted)
 );
 
-export const useCachedActorInfo = reduxHookCacheFactory<ActorType>(
+export const useCachedActorInfo = reduxHookCacheFactory<any>(
   'actor',
   (uuid, onCompleted) => getActorInfo(uuid, onCompleted)
 );

@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback } from 'react';
-import { TMemo } from '@shared/components/TMemo';
+import { TMemo } from '@capital/shared/components/TMemo';
 import { Typography, Tooltip, Result, Button } from 'antd';
-import { PillTabs } from '@web/components/PillTabs';
+import { PillTabs } from '@capital/web/components/PillTabs';
 import _isNil from 'lodash/isNil';
 import _get from 'lodash/get';
 import {
@@ -9,24 +9,28 @@ import {
   useIsGroupManager,
   useSelfGroupActors,
   useGroupDetailValue,
-} from '@redux/hooks/group';
+} from '@capital/shared/redux/hooks/group';
 import {
   getGroupActorInfo,
   getGroupActorTemplateUUID,
-} from '@shared/utils/data-helper';
-import { showToasts } from '@shared/manager/ui';
-import ActorInfo from '@web/components/modals/ActorInfo';
-import { openModal, closeModal } from '@web/components/Modal';
-import type { GroupActorType } from '@redux/types/group';
-import { Iconfont } from '@web/components/Iconfont';
-import { GroupActorEditModal } from '@web/components/modals/ActorEdit';
-import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
-import { requestAddGroupActor, removeGroupActor } from '@redux/actions/group';
-import { showAlert } from '@redux/actions/ui';
-import { ActorCard, ActorCardListContainer } from '@web/components/ActorCard';
-import { GroupActorCheck } from '@web/containers/main/group/modal/GroupActorCheck';
-import ActorSelect from '@web/components/modals/ActorSelect';
-import { useTranslation } from '@shared/i18n';
+} from '@capital/shared/utils/data-helper';
+import { showToasts } from '@capital/shared/manager/ui';
+import ActorInfo from '../../components/modals/ActorInfo';
+import { openModal, closeModal } from '@capital/web/components/Modal';
+import type { GroupActorType } from '@capital/shared/redux/types/group';
+import { Iconfont } from '@capital/web/components/Iconfont';
+import { GroupActorEditModal } from '../../components/modals/ActorEdit';
+import { useTRPGDispatch } from '@capital/shared/redux/hooks/useTRPGSelector';
+import {
+  requestAddGroupActor,
+  removeGroupActor,
+} from '@capital/shared/redux/actions/group';
+import { showAlert } from '@capital/shared/redux/actions/ui';
+import { ActorCard, ActorCardListContainer } from '../../components/ActorCard';
+import { GroupActorCheck } from '../../components/modals/GroupActorCheck';
+import ActorSelect from '../../components/modals/ActorSelect';
+import { useTranslation } from '@capital/shared/i18n';
+import { useCurrentGroupUUID } from '@capital/shared/context/GroupInfoContext';
 const TabPane = PillTabs.TabPane;
 
 /**
@@ -151,7 +155,7 @@ const GroupActorsList: React.FC<{
   };
 
   const passedActors = (groupActors ?? []).filter(
-    (item) => item.passed === true
+    (item: any) => item.passed === true
   );
 
   if (passedActors.length === 0) {
@@ -160,7 +164,7 @@ const GroupActorsList: React.FC<{
 
   return (
     <ActorCardListContainer>
-      {passedActors.map((item) => {
+      {passedActors.map((item: any) => {
         const groupActor = item; // 团人物卡信息
         const originActor = groupActor.actor;
         const groupActorUUID = groupActor.uuid;
@@ -212,7 +216,7 @@ const GroupActorChecksList: React.FC<{
   const groupActors = groupInfo.group_actors;
   const isGroupManager = useIsGroupManager(groupUUID);
   const noPassedActors = (groupActors ?? []).filter(
-    (item) => item.passed === false
+    (item: any) => item.passed === false
   );
   const { t } = useTranslation();
 
@@ -241,7 +245,7 @@ const GroupActorChecksList: React.FC<{
 
   return (
     <ActorCardListContainer>
-      {noPassedActors.map((item) => {
+      {noPassedActors.map((item: any) => {
         const groupActor: GroupActorType = item; // 团人物卡信息
 
         const actions = [
@@ -275,66 +279,61 @@ const GroupActorChecksList: React.FC<{
 });
 GroupActorChecksList.displayName = 'GroupActorChecksList';
 
-interface GroupActorManageProps {
-  groupUUID: string;
-}
-export const GroupActorManage: React.FC<GroupActorManageProps> = TMemo(
-  (props) => {
-    const { groupUUID } = props;
-    const { t } = useTranslation();
-    const groupInfo = useJoinedGroupInfo(groupUUID);
-    const dispatch = useTRPGDispatch();
-    const groupActorNum = groupInfo?.group_actors?.length ?? 0;
-    const allowDisplayActorPanel = useAllowDisplayActorPanel(groupUUID);
+export const GroupActorManage: React.FC = TMemo(() => {
+  const groupUUID = useCurrentGroupUUID() ?? '';
+  const { t } = useTranslation();
+  const groupInfo = useJoinedGroupInfo(groupUUID);
+  const dispatch = useTRPGDispatch();
+  const groupActorNum = groupInfo?.group_actors?.length ?? 0;
+  const allowDisplayActorPanel = useAllowDisplayActorPanel(groupUUID);
 
-    const handleSendGroupActorCheck = useCallback(() => {
-      const key = openModal(
-        <ActorSelect
-          onSelect={(actorUUID) => {
-            dispatch(requestAddGroupActor(groupUUID, actorUUID));
-            closeModal(key);
-          }}
-        />,
-        { closable: true }
-      );
-    }, [groupUUID]);
-
-    if (_isNil(groupInfo)) {
-      return <Result status="warning" title={t('找不到相关信息')} />;
-    }
-
-    return (
-      <div>
-        <Typography.Title level={3}>{t('人物卡管理')}</Typography.Title>
-
-        <Typography.Title level={4}>
-          <span style={{ marginRight: 10 }}>
-            {t('共 {{groupActorNum}} 张角色卡', { groupActorNum })}
-          </span>
-          <Button type="primary" onClick={handleSendGroupActorCheck}>
-            {t('提交人物卡')}
-          </Button>
-        </Typography.Title>
-
-        <div>
-          <PillTabs>
-            <TabPane key="1" tab={t('我的人物卡')}>
-              <SelfGroupActorList groupUUID={groupUUID} />
-            </TabPane>
-            {allowDisplayActorPanel && (
-              <Fragment>
-                <TabPane key="2" tab={t('正式人物卡')}>
-                  <GroupActorsList groupUUID={groupUUID} />
-                </TabPane>
-                <TabPane key="3" tab={t('待审核人物卡')}>
-                  <GroupActorChecksList groupUUID={groupUUID} />
-                </TabPane>
-              </Fragment>
-            )}
-          </PillTabs>
-        </div>
-      </div>
+  const handleSendGroupActorCheck = useCallback(() => {
+    const key = openModal(
+      <ActorSelect
+        onSelect={(actorUUID) => {
+          dispatch(requestAddGroupActor(groupUUID, actorUUID));
+          closeModal(key);
+        }}
+      />,
+      { closable: true }
     );
+  }, [groupUUID]);
+
+  if (_isNil(groupInfo)) {
+    return <Result status="warning" title={t('找不到相关信息')} />;
   }
-);
+
+  return (
+    <div>
+      <Typography.Title level={3}>{t('人物卡管理')}</Typography.Title>
+
+      <Typography.Title level={4}>
+        <span style={{ marginRight: 10 }}>
+          {t('共 {{groupActorNum}} 张角色卡', { groupActorNum })}
+        </span>
+        <Button type="primary" onClick={handleSendGroupActorCheck}>
+          {t('提交人物卡')}
+        </Button>
+      </Typography.Title>
+
+      <div>
+        <PillTabs>
+          <TabPane key="1" tab={t('我的人物卡')}>
+            <SelfGroupActorList groupUUID={groupUUID} />
+          </TabPane>
+          {allowDisplayActorPanel && (
+            <Fragment>
+              <TabPane key="2" tab={t('正式人物卡')}>
+                <GroupActorsList groupUUID={groupUUID} />
+              </TabPane>
+              <TabPane key="3" tab={t('待审核人物卡')}>
+                <GroupActorChecksList groupUUID={groupUUID} />
+              </TabPane>
+            </Fragment>
+          )}
+        </PillTabs>
+      </div>
+    </div>
+  );
+});
 GroupActorManage.displayName = 'GroupActorManage';

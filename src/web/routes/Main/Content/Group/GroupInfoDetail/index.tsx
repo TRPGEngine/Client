@@ -4,12 +4,12 @@ import { SidebarView, SidebarViewMenuType } from '@web/components/SidebarView';
 import { GroupInfoSummary } from './GroupInfoSummary';
 import { useIsGroupManager, useJoinedGroupInfo } from '@redux/hooks/group';
 import { GroupPanelManage } from './GroupPanelManage';
-import { GroupActorManage } from './GroupActorManage';
 import { useTranslation } from '@shared/i18n';
 import { GroupMemberManage } from './GroupMemberManage';
 import { GroupBotManage } from './GroupBotManage';
 import { GroupReportManage } from './GroupReportManage';
 import { GroupDetailSettings } from './GroupDetailSettings';
+import { groupInfoMenuList } from '@web/reg/regGroupInfoMenu';
 
 interface GroupInfoDetailProps {
   groupUUID: string;
@@ -52,11 +52,6 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
             },
             {
               type: 'item',
-              title: t('人物卡管理'),
-              content: <GroupActorManage groupUUID={groupUUID} />,
-            },
-            {
-              type: 'item',
               title: t('跑团战报'),
               content: <GroupReportManage groupUUID={groupUUID} />,
             },
@@ -66,6 +61,7 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
               hidden: !isGroupManager,
               content: <GroupBotManage groupUUID={groupUUID} />,
             },
+            ...groupInfoMenuList,
           ],
         },
       ],

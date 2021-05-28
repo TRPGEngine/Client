@@ -21,9 +21,11 @@ export function initPlugins() {
   regDependency('styled-components', () => import('styled-components'));
   regDependency('immer', () => import('immer'));
   regDependency('antd', () => import('antd')); // TODO: Not good
+  regDependency('lodash/get', () => import('lodash/get'));
   regDependency('lodash/remove', () => import('lodash/remove'));
   regDependency('lodash/find', () => import('lodash/find'));
   regDependency('lodash/isNil', () => import('lodash/isNil'));
+  regDependency('lodash/isEmpty', () => import('lodash/isEmpty'));
 
   // Web
   regSharedModule(
@@ -33,6 +35,18 @@ export function initPlugins() {
   regSharedModule(
     '@capital/web/reg/regPersonalPanel',
     () => import('@web/reg/regPersonalPanel')
+  );
+  regSharedModule(
+    '@capital/web/reg/regGroupInfoMenu',
+    () => import('@web/reg/regGroupInfoMenu')
+  );
+  regSharedModule(
+    '@capital/web/reg/regMessageCard',
+    () => import('@web/reg/regMessageCard')
+  );
+  regSharedModule(
+    '@capital/web/reg/regMsgSenderPopover',
+    () => import('@web/reg/regMsgSenderPopover')
   );
   regSharedModule(
     '@capital/web/components/TLoadable',
@@ -79,6 +93,10 @@ export function initPlugins() {
     () => import('@web/components/messageTypes/card/BaseCard')
   );
   regSharedModule(
+    '@capital/web/components/popover/index',
+    () => import('@web/components/popover/index')
+  );
+  regSharedModule(
     '@capital/web/utils/upload-helper',
     () => import('@web/utils/upload-helper')
   );
@@ -116,12 +134,20 @@ export function initPlugins() {
     }))
   );
   regSharedModule(
+    '@capital/shared/context/GroupInfoContext',
+    () => import('@shared/context/GroupInfoContext')
+  );
+  regSharedModule(
     '@capital/shared/utils/cache-helper',
     () => import('@shared/utils/cache-helper')
   );
   regSharedModule(
     '@capital/shared/utils/file-helper',
     () => import('@shared/utils/file-helper')
+  );
+  regSharedModule(
+    '@capital/shared/utils/data-helper',
+    () => import('@shared/utils/data-helper')
   );
   regSharedModule(
     '@capital/shared/components/layout/XMLBuilder',
@@ -138,6 +164,10 @@ export function initPlugins() {
   regSharedModule(
     '@capital/shared/redux/hooks/useCache',
     () => import('@shared/redux/hooks/useCache')
+  );
+  regSharedModule(
+    '@capital/shared/redux/hooks/group',
+    () => import('@shared/redux/hooks/group')
   );
   regSharedModule(
     '@capital/shared/utils/string-helper',

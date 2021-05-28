@@ -1,22 +1,25 @@
 import React, { useCallback, useMemo } from 'react';
-import ModalPanel from '@web/components/ModalPanel';
-import { TMemo } from '@shared/components/TMemo';
-import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
-import { useCachedActorTemplateInfo } from '@redux/hooks/useCache';
+import ModalPanel from '@capital/web/components/ModalPanel';
+import { TMemo } from '@capital/shared/components/TMemo';
+import { useTRPGDispatch } from '@capital/shared/redux/hooks/useTRPGSelector';
+import { useCachedActorTemplateInfo } from '@capital/shared/redux/hooks/useCache';
 import _get from 'lodash/get';
 import _isString from 'lodash/isString';
-import XMLBuilder from '@shared/components/layout/XMLBuilder';
-import { Iconfont } from '@web/components/Iconfont';
+import XMLBuilder from '@capital/shared/components/layout/XMLBuilder';
+import { Iconfont } from '@capital/web/components/Iconfont';
 import {
   requestAgreeGroupActor,
   requestRefuseGroupActor,
-} from '@shared/model/group';
-import { closeModal } from '@web/components/Modal';
-import { showToasts } from '@shared/manager/ui';
-import { agreeGroupActor, refuseGroupActor } from '@redux/actions/group';
-import { hideModal } from '@redux/actions/ui';
+} from '@capital/shared/model/group';
+import { closeModal } from '@capital/web/components/Modal';
+import { showToasts } from '@capital/shared/manager/ui';
+import {
+  agreeGroupActor,
+  refuseGroupActor,
+} from '@capital/shared/redux/actions/group';
+import { hideModal } from '@capital/shared/redux/actions/ui';
 
-import './GroupActorCheck.scss';
+import './GroupActorCheck.less';
 
 interface Props {
   actorData: {};

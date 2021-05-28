@@ -1,5 +1,4 @@
 import type { AnyAction, Action, Store, Middleware, Reducer } from 'redux';
-import type { ActorState } from './actor';
 import type { CacheState } from './cache';
 import type { ChatState } from './chat';
 import type { GroupState } from './group';
@@ -14,7 +13,6 @@ import {
 } from '@reduxjs/toolkit';
 
 interface AllState {
-  actor: ActorState;
   cache: CacheState;
   chat: ChatState;
   group: GroupState;
