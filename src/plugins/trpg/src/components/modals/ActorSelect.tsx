@@ -1,13 +1,16 @@
 import React, { useCallback, useState } from 'react';
-import config from '@shared/project.config';
-import { showAlert } from '@shared/redux/actions/ui';
-import ActorCreate from '@web/components/modals/ActorCreate';
-import { TMemo } from '@shared/components/TMemo';
-import { useTRPGDispatch, useTRPGSelector } from '@redux/hooks/useTRPGSelector';
-import { openModal } from '../Modal';
-import { useTranslation } from '@shared/i18n';
+import config from '@capital/shared/project.config';
+import { showAlert } from '@capital/shared/redux/actions/ui';
+import ActorCreate from './ActorCreate';
+import { TMemo } from '@capital/shared/components/TMemo';
+import {
+  useTRPGDispatch,
+  useTRPGSelector,
+} from '@capital/shared/redux/hooks/useTRPGSelector';
+import { openModal } from '@capital/web/components/Modal';
+import { useTranslation } from '@capital/shared/i18n';
 
-import './ActorSelect.scss';
+import './ActorSelect.less';
 
 interface Props {
   onSelect: (selectActorUUID: string, selectActorInfo: any) => void;
@@ -22,7 +25,7 @@ const ActorSelect: React.FC<Props> = TMemo((props) => {
     if (selectActorUUID) {
       console.log('[人物卡列表]选择了:' + selectActorUUID);
       const selectActorInfo = selfActors.find(
-        (a) => a.uuid === selectActorUUID
+        (a: any) => a.uuid === selectActorUUID
       );
       props.onSelect && props.onSelect(selectActorUUID, selectActorInfo);
     } else {
@@ -38,7 +41,7 @@ const ActorSelect: React.FC<Props> = TMemo((props) => {
     <div className="actor-select">
       <h3>{t('请选择人物卡')}</h3>
       <div className="actor-list">
-        {selfActors.length > 0 ? (
+        {Array.isArray(selfActors) && selfActors.length > 0 ? (
           selfActors.map((item, index) => {
             const uuid = item.uuid;
             return (

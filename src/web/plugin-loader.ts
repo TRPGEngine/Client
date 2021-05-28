@@ -15,6 +15,7 @@ export function initPlugins() {
 
   // Dependency
   regDependency('react', () => import('react'));
+  regDependency('react-redux', () => import('react-redux'));
   regDependency('react-router', () => import('react-router'));
   regDependency('react-router-dom', () => import('react-router-dom'));
   regDependency('styled-components', () => import('styled-components'));
@@ -68,6 +69,14 @@ export function initPlugins() {
   regSharedModule(
     '@capital/web/components/TemplateItem',
     () => import('@web/components/TemplateItem')
+  );
+  regSharedModule(
+    '@capital/web/components/Avatar',
+    () => import('@web/components/Avatar')
+  );
+  regSharedModule(
+    '@capital/web/components/messageTypes/card/BaseCard',
+    () => import('@web/components/messageTypes/card/BaseCard')
   );
   regSharedModule(
     '@capital/web/utils/upload-helper',

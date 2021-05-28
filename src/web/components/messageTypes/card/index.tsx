@@ -8,7 +8,7 @@ import GroupRequest from './GroupRequest';
 import GroupInvite from './GroupInvite';
 import DiceRequest from './DiceRequest';
 import DiceInvite from './DiceInvite';
-import Actor from './Actor';
+import { messageCardList } from '@web/reg/regMessageCard';
 
 const CardType = {
   default: DefaultCard,
@@ -17,11 +17,12 @@ const CardType = {
   groupInvite: GroupInvite,
   diceRequest: DiceRequest,
   diceInvite: DiceInvite,
-  actor: Actor,
 
   // alias
   groupRequestSuccess: BaseCard,
   groupRequestFail: BaseCard,
+
+  ...messageCardList,
 };
 
 class Card extends Base {

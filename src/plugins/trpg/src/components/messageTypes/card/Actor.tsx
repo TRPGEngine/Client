@@ -1,13 +1,11 @@
 import React from 'react';
-import BaseCard from './BaseCard';
+import BaseCard from '@capital/web/components/messageTypes/card/BaseCard';
 import { connect, DispatchProp } from 'react-redux';
-import { showModal } from '@shared/redux/actions/ui';
-import { getActorInfo } from '@shared/redux/actions/cache';
-import config from '@shared/project.config';
-import ActorCacheProfile from '../../modals/ActorCacheProfile';
-import type { MessageProps } from '@shared/components/message/MessageHandler';
-import Avatar from '@web/components/Avatar';
-import { ActorInfoWithUUID } from '@web/components/modals/ActorInfo';
+import { showModal } from '@capital/shared/redux/actions/ui';
+import config from '@capital/shared/project.config';
+import type { MessageProps } from '@capital/shared/components/message/MessageHandler';
+import Avatar from '@capital/web/components/Avatar';
+import { ActorInfoWithUUID } from '../../modals/ActorInfo';
 import { message } from 'antd';
 
 interface Props extends MessageProps, DispatchProp<any> {}
