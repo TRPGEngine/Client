@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { TMemo } from '@shared/components/TMemo';
+import { TMemo } from '@capital/shared/components/TMemo';
 import { Popover, Space } from 'antd';
-import { ChatBoxBtn } from '../style';
-import { Iconfont } from '../../Iconfont';
-import { useChatMsgTypeContext } from '@shared/context/ChatMsgTypeContext';
+import { ChatBoxBtn } from '@capital/web/components/chatBox/style';
+import { Iconfont } from '@capital/web/components/Iconfont';
+import { useChatMsgTypeContext } from '@capital/shared/context/ChatMsgTypeContext';
 import styled from 'styled-components';
-import type { MsgType } from '@redux/types/chat';
-import { useTranslation } from '@shared/i18n';
-import { trackEvent } from '@web/utils/analytics-helper';
+import type { MsgType } from '@capital/shared/redux/types/chat';
+import { useTranslation } from '@capital/shared/i18n';
+import { trackEvent } from '@capital/web/utils/analytics-helper';
 
 const ChatMsgTypeSwitchPopoverContainer = styled(Space)`
   padding: 6px 10px;

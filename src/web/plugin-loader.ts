@@ -63,6 +63,10 @@ export function initPlugins() {
     () => import('@web/reg/regGroupPanelAction')
   );
   regSharedModule(
+    '@capital/web/reg/regChatSendBoxAction',
+    () => import('@web/reg/regChatSendBoxAction')
+  );
+  regSharedModule(
     '@capital/web/components/TLoadable',
     () => import('@web/components/TLoadable')
   );
@@ -111,6 +115,14 @@ export function initPlugins() {
     () => import('@web/components/popover/index')
   );
   regSharedModule(
+    '@capital/web/components/chatBox/style',
+    () => import('@web/components/chatBox/style')
+  );
+  regSharedModule(
+    '@capital/web/components/chatBox/ChatSendBox/ChatSendBoxContext',
+    () => import('@web/components/chatBox/ChatSendBox/ChatSendBoxContext')
+  );
+  regSharedModule(
     '@capital/web/utils/upload-helper',
     () => import('@web/utils/upload-helper')
   );
@@ -119,6 +131,10 @@ export function initPlugins() {
     () => import('@web/utils/file-helper')
   );
   regSharedModule('@capital/web/utils/error', () => import('@web/utils/error'));
+  regSharedModule(
+    '@capital/web/utils/analytics-helper',
+    () => import('@web/utils/analytics-helper')
+  );
 
   // Shared
   regSharedModule(
@@ -229,5 +245,9 @@ export function initPlugins() {
   regSharedModule(
     '@capital/shared/model/trpg',
     () => import('@shared/model/trpg')
+  );
+  regSharedModule(
+    '@capital/shared/context/ChatMsgTypeContext',
+    () => import('@shared/context/ChatMsgTypeContext')
   );
 }

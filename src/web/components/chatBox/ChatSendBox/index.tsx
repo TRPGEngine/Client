@@ -5,8 +5,11 @@ import { useInputMsgEditorMsgSend } from './useInputMsgEditorMsgSend';
 import { ChatMsgAddon } from './ChatMsgAddon';
 import { ChatMsgEmotion } from './ChatMsgEmotion';
 import { Space } from 'antd';
-import { ChatMsgTypeSwitch } from './ChatMsgTypeSwitch';
-import { ChatMsgDiceBuilder } from './ChatMsgDiceBuilder';
+import {
+  chatSendBoxLeftAction,
+  chatSendBoxRightAction,
+} from '@web/reg/regChatSendBoxAction';
+import { ChatSendBoxContext } from './ChatSendBoxContext';
 
 import './index.less';
 
@@ -33,26 +36,27 @@ interface ChatSendBoxProps {
 }
 export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
   const { converseUUID } = props;
-  const { editorRef, editorEl, sendMsg } = useInputMsgEditorMsgSend(
-    converseUUID
-  );
+  const { editorRef, editorEl, sendMsg } =
+    useInputMsgEditorMsgSend(converseUUID);
 
   return (
     <Wrapper>
-      <div className="outer">
-        <ChatMsgTypeSwitch />
+      <ChatSendBoxContext.Provider value={{ editorRef, editorEl, sendMsg }}>
+        <div className="outer">
+          <Space align="start">
+            {/* 左侧操作 */}
+            {...chatSendBoxLeftAction}
+          </Space>
 
-        <div className="inner">{editorEl}</div>
+          <div className="inner">{editorEl}</div>
 
-        <Space align="end">
-          <ChatMsgDiceBuilder
-            editorRef={editorRef}
-            onSelectDice={(exp: string) => sendMsg(exp, 'normal')}
-          />
-          <ChatMsgEmotion editorRef={editorRef} />
-          <ChatMsgAddon editorRef={editorRef} />
-        </Space>
-      </div>
+          <Space align="end">
+            {...chatSendBoxRightAction.reverse()}
+            <ChatMsgEmotion editorRef={editorRef} />
+            <ChatMsgAddon editorRef={editorRef} />
+          </Space>
+        </div>
+      </ChatSendBoxContext.Provider>
     </Wrapper>
   );
 });
