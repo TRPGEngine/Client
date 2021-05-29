@@ -22,10 +22,16 @@ export function initPlugins() {
   regDependency('immer', () => import('immer'));
   regDependency('antd', () => import('antd')); // TODO: Not good
   regDependency('lodash/get', () => import('lodash/get'));
+  regDependency('lodash/set', () => import('lodash/set'));
   regDependency('lodash/remove', () => import('lodash/remove'));
   regDependency('lodash/find', () => import('lodash/find'));
   regDependency('lodash/isNil', () => import('lodash/isNil'));
   regDependency('lodash/isEmpty', () => import('lodash/isEmpty'));
+  regDependency('lodash/isUndefined', () => import('lodash/isUndefined'));
+  regDependency('lodash/isString', () => import('lodash/isString'));
+  regDependency('lodash/isFunction', () => import('lodash/isFunction'));
+  regDependency('lodash/clone', () => import('lodash/clone'));
+  regDependency('lodash/cloneDeep', () => import('lodash/cloneDeep'));
 
   // Web
   regSharedModule(
