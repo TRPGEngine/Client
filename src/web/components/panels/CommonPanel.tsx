@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TMemo } from '@shared/components/TMemo';
 import styled from 'styled-components';
 import { CommonHeader } from './CommonHeader';
@@ -6,6 +6,7 @@ import {
   RightPanelContextProvider,
   useRightPanelContext,
 } from './context/RightPanelContext';
+import { groupPanelActionList } from '@web/reg/regGroupPanelAction';
 
 /**
  * 通用面板容器
@@ -47,6 +48,7 @@ const RightPanel = styled.div`
 `;
 
 interface CommonPanelProps {
+  type: string; // 面板类型
   header: React.ReactNode;
   style?: React.CSSProperties;
   headerPrefix?: React.ReactNode;
@@ -57,11 +59,20 @@ interface CommonPanelProps {
 const CommonPanelInner: React.FC<CommonPanelProps> = TMemo((props) => {
   const { rightPanel } = useRightPanelContext();
 
+  const headerActions: React.ReactNode[] = useMemo(() => {
+    return [
+      ...(props.headerActions ?? []),
+      ...groupPanelActionList
+        .filter((item) => item.type === props.type)
+        .map((item) => item.action),
+    ].reverse();
+  }, [props.type, props.headerActions]);
+
   return (
     <Root style={props.style}>
       <CommonHeader
         headerPrefix={props.headerPrefix}
-        headerActions={props.headerActions}
+        headerActions={headerActions}
         headerSuffix={props.headerSuffix}
       >
         {props.header}

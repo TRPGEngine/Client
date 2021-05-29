@@ -38,15 +38,13 @@ import { bbcodeToPlainText } from '@capital/shared/components/bbcode/serialize';
 import { isUserUUID } from '@capital/shared/utils/uuid';
 import { useCurrentGroupUUID } from '@capital/shared/context/GroupInfoContext';
 
-interface GroupReportManageProps {
-  groupUUID: string;
-}
-
 /**
  * 战报列表
  */
 
-const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
+const GroupReportList: React.FC<{
+  groupUUID: string;
+}> = TMemo((props) => {
   const { groupUUID } = props;
   const { t } = useTranslation();
   const isGroupManager = useIsGroupManager(groupUUID);
@@ -203,32 +201,30 @@ GroupReportList.displayName = 'GroupReportList';
 /**
  * 战报管理器
  */
-export const GroupReportManage: React.FC<GroupReportManageProps> = TMemo(
-  (props) => {
-    const groupUUID = useCurrentGroupUUID() ?? '';
-    const isGroupManager = useIsGroupManager(groupUUID);
-    const { t } = useTranslation();
+export const GroupReportManage: React.FC = TMemo((props) => {
+  const groupUUID = useCurrentGroupUUID() ?? '';
+  const isGroupManager = useIsGroupManager(groupUUID);
+  const { t } = useTranslation();
 
-    const handleCreateReport = useCallback(() => {
-      openPortalWindow(`/trpg/report/create?groupUUID=${groupUUID}`);
-    }, [groupUUID]);
+  const handleCreateReport = useCallback(() => {
+    openPortalWindow(`/trpg/report/create?groupUUID=${groupUUID}`);
+  }, [groupUUID]);
 
-    return (
-      <div>
-        {isGroupManager && (
-          <Fragment>
-            <Button type="primary" onClick={handleCreateReport}>
-              {t('创建战报')}
-            </Button>
+  return (
+    <div>
+      {isGroupManager && (
+        <Fragment>
+          <Button type="primary" onClick={handleCreateReport}>
+            {t('创建战报')}
+          </Button>
 
-            <Divider />
-          </Fragment>
-        )}
+          <Divider />
+        </Fragment>
+      )}
 
-        {/* 战报列表 */}
-        <GroupReportList groupUUID={groupUUID} />
-      </div>
-    );
-  }
-);
+      {/* 战报列表 */}
+      <GroupReportList groupUUID={groupUUID} />
+    </div>
+  );
+});
 GroupReportManage.displayName = 'GroupReportManage';

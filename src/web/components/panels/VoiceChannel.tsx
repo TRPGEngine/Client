@@ -64,7 +64,7 @@ export const VoiceChannel: React.FC<CommonPanelProps> = TMemo((props) => {
   }, [createClient, channelUUID, currentUserInfo, audioConstraints]);
 
   return (
-    <CommonPanel header={channelName}>
+    <CommonPanel type="voice" header={channelName}>
       <Root>
         {!isInRoom ? (
           <JoinRoomBtn onClick={handleJoinRoom}>{t('加入房间')} </JoinRoomBtn>

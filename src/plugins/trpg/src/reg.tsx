@@ -6,6 +6,7 @@ import {
 import { regMessageCard } from '@capital/web/reg/regMessageCard';
 import { regMsgSenderPopover } from '@capital/web/reg/regMsgSenderPopover';
 import { regGroupInfoMenu } from '@capital/web/reg/regGroupInfoMenu';
+import { regGroupPanelAction } from '@capital/web/reg/regGroupPanelAction';
 import { SidebarItem } from '@capital/web/routes/Main/Content/SidebarItem';
 import { Iconfont } from '@capital/web/components/Iconfont';
 import { t } from '@capital/shared/i18n';
@@ -20,6 +21,7 @@ import _isNil from 'lodash/isNil';
 import PopoverGroupActorInfo from './components/popover/GroupActorInfo';
 import { GroupActorManage } from './panels/GroupDetail/GroupActorManage';
 import { GroupReportManage } from './panels/GroupDetail/GroupReportManage';
+import { GroupActorSelector } from './panels/actions/GroupActorSelector';
 
 subscribeToUserLoginSuccess(() => {
   dispatchAction(getTemplate());
@@ -73,4 +75,9 @@ regGroupInfoMenu({
   type: 'item',
   title: t('跑团战报'),
   content: <GroupReportManage />,
+});
+
+regGroupPanelAction({
+  type: 'chat',
+  action: <GroupActorSelector key="actor" />,
 });

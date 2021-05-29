@@ -59,6 +59,10 @@ export function initPlugins() {
     () => import('@web/reg/regMsgSenderPopover')
   );
   regSharedModule(
+    '@capital/web/reg/regGroupPanelAction',
+    () => import('@web/reg/regGroupPanelAction')
+  );
+  regSharedModule(
     '@capital/web/components/TLoadable',
     () => import('@web/components/TLoadable')
   );
