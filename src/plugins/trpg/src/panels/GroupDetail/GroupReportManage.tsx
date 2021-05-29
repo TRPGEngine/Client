@@ -1,40 +1,42 @@
 import React, { Fragment, useCallback, useEffect, useMemo } from 'react';
-import { TMemo } from '@shared/components/TMemo';
+import { TMemo } from '@capital/shared/components/TMemo';
 import {
   Button,
   Divider,
   Dropdown,
   Menu,
   message,
+  Result,
   Row,
   Space,
   Table,
 } from 'antd';
-import { openPortalWindow } from '@web/components/StandaloneWindow';
+import { openPortalWindow } from '@capital/web/components/StandaloneWindow';
 import {
   deleteGroupReport,
   fetchGroupReport,
   fetchTRPGGameReport,
   GameReportSimple,
-} from '@shared/model/trpg';
+} from '@capital/shared/model/trpg';
 import { useAsyncFn } from 'react-use';
-import { LoadingSpinner } from '@web/components/LoadingSpinner';
+import { LoadingSpinner } from '@capital/web/components/LoadingSpinner';
 import _isNil from 'lodash/isNil';
 import _uniq from 'lodash/uniq';
 import _keyBy from 'lodash/keyBy';
-import { useTranslation } from '@shared/i18n';
+import { useTranslation } from '@capital/shared/i18n';
 import type { TableProps } from 'antd/lib/table/Table';
-import { useIsGroupManager } from '@redux/hooks/group';
+import { useIsGroupManager } from '@capital/shared/redux/hooks/group';
 import { MoreOutlined, ReloadOutlined } from '@ant-design/icons';
-import { Iconfont } from '@web/components/Iconfont';
-import { showAlert, showToasts } from '@shared/manager/ui';
-import { fetchUserInfo } from '@shared/model/player';
-import { MsgDataManager } from '@shared/utils/msg-helper';
-import { getUserName } from '@shared/utils/data-helper';
-import { downloadBlob } from '@web/utils/file-helper';
-import { reportError } from '@web/utils/error';
-import { bbcodeToPlainText } from '@shared/components/bbcode/serialize';
-import { isUserUUID } from '@shared/utils/uuid';
+import { Iconfont } from '@capital/web/components/Iconfont';
+import { showAlert, showToasts } from '@capital/shared/manager/ui';
+import { fetchUserInfo } from '@capital/shared/model/player';
+import { MsgDataManager } from '@capital/shared/utils/msg-helper';
+import { getUserName } from '@capital/shared/utils/data-helper';
+import { downloadBlob } from '@capital/web/utils/file-helper';
+import { reportError } from '@capital/web/utils/error';
+import { bbcodeToPlainText } from '@capital/shared/components/bbcode/serialize';
+import { isUserUUID } from '@capital/shared/utils/uuid';
+import { useCurrentGroupUUID } from '@capital/shared/context/GroupInfoContext';
 
 interface GroupReportManageProps {
   groupUUID: string;
@@ -183,7 +185,7 @@ const GroupReportList: React.FC<GroupReportManageProps> = TMemo((props) => {
   }
 
   if (_isNil(reportList)) {
-    return null;
+    return <Result status="warning" title={t('找不到相关信息')} />;
   }
 
   return (
@@ -203,7 +205,7 @@ GroupReportList.displayName = 'GroupReportList';
  */
 export const GroupReportManage: React.FC<GroupReportManageProps> = TMemo(
   (props) => {
-    const { groupUUID } = props;
+    const groupUUID = useCurrentGroupUUID() ?? '';
     const isGroupManager = useIsGroupManager(groupUUID);
     const { t } = useTranslation();
 

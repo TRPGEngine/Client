@@ -16,9 +16,11 @@ export function initPlugins() {
   // Dependency
   regDependency('react', () => import('react'));
   regDependency('react-redux', () => import('react-redux'));
+  regDependency('react-use', () => import('react-use')); // TODO: Not good
   regDependency('react-router', () => import('react-router'));
   regDependency('react-router-dom', () => import('react-router-dom'));
   regDependency('styled-components', () => import('styled-components'));
+  regDependency('@ant-design/icons', () => import('@ant-design/icons')); // TODO: Not good
   regDependency('immer', () => import('immer'));
   regDependency('antd', () => import('antd')); // TODO: Not good
   regDependency('lodash/get', () => import('lodash/get'));
@@ -32,6 +34,8 @@ export function initPlugins() {
   regDependency('lodash/isFunction', () => import('lodash/isFunction'));
   regDependency('lodash/clone', () => import('lodash/clone'));
   regDependency('lodash/cloneDeep', () => import('lodash/cloneDeep'));
+  regDependency('lodash/uniq', () => import('lodash/uniq'));
+  regDependency('lodash/keyBy', () => import('lodash/keyBy'));
 
   // Web
   regSharedModule(
@@ -65,6 +69,10 @@ export function initPlugins() {
   regSharedModule(
     '@capital/web/components/PillTabs',
     () => import('@web/components/PillTabs')
+  );
+  regSharedModule(
+    '@capital/web/components/StandaloneWindow',
+    () => import('@web/components/StandaloneWindow')
   );
   regSharedModule(
     '@capital/web/components/Modal',
@@ -106,6 +114,7 @@ export function initPlugins() {
     '@capital/web/utils/file-helper',
     () => import('@web/utils/file-helper')
   );
+  regSharedModule('@capital/web/utils/error', () => import('@web/utils/error'));
 
   // Shared
   regSharedModule(
@@ -126,6 +135,10 @@ export function initPlugins() {
     () => import('@shared/components/TMemo')
   );
   regSharedModule(
+    '@capital/shared/components/bbcode/serialize',
+    () => import('@shared/components/bbcode/serialize')
+  );
+  regSharedModule(
     '@capital/shared/manager/ui',
     () => import('@shared/manager/ui')
   );
@@ -140,6 +153,10 @@ export function initPlugins() {
     () => import('@shared/context/GroupInfoContext')
   );
   regSharedModule(
+    '@capital/shared/utils/uuid',
+    () => import('@shared/utils/uuid')
+  );
+  regSharedModule(
     '@capital/shared/utils/cache-helper',
     () => import('@shared/utils/cache-helper')
   );
@@ -150,6 +167,10 @@ export function initPlugins() {
   regSharedModule(
     '@capital/shared/utils/data-helper',
     () => import('@shared/utils/data-helper')
+  );
+  regSharedModule(
+    '@capital/shared/utils/msg-helper',
+    () => import('@shared/utils/msg-helper')
   );
   regSharedModule(
     '@capital/shared/components/layout/XMLBuilder',
@@ -180,6 +201,10 @@ export function initPlugins() {
     () => import('@shared/utils/upload-helper')
   );
   regSharedModule(
+    '@capital/shared/model/player',
+    () => import('@shared/model/player')
+  );
+  regSharedModule(
     '@capital/shared/model/group',
     () => import('@shared/model/group')
   );
@@ -196,5 +221,9 @@ export function initPlugins() {
   regSharedModule(
     '@capital/shared/model/actor',
     () => import('@shared/model/actor')
+  );
+  regSharedModule(
+    '@capital/shared/model/trpg',
+    () => import('@shared/model/trpg')
   );
 }

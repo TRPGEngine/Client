@@ -182,6 +182,11 @@ SidebarViewMenuItem.displayName = 'SidebarViewMenuItem';
 
 interface SidebarViewProps {
   menu: SidebarViewMenuType[];
+
+  /**
+   * 默认内容路径
+   * @default "0.children.0.content"
+   */
   defaultContentPath: string;
 }
 export const SidebarView: React.FC<SidebarViewProps> = TMemo((props) => {

@@ -19,6 +19,7 @@ import _get from 'lodash/get';
 import _isNil from 'lodash/isNil';
 import PopoverGroupActorInfo from './components/popover/GroupActorInfo';
 import { GroupActorManage } from './panels/GroupDetail/GroupActorManage';
+import { GroupReportManage } from './panels/GroupDetail/GroupReportManage';
 
 subscribeToUserLoginSuccess(() => {
   dispatchAction(getTemplate());
@@ -66,4 +67,10 @@ regGroupInfoMenu({
   type: 'item',
   title: t('人物卡管理'),
   content: <GroupActorManage />,
+});
+
+regGroupInfoMenu({
+  type: 'item',
+  title: t('跑团战报'),
+  content: <GroupReportManage />,
 });
