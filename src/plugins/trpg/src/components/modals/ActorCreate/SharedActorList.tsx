@@ -14,7 +14,7 @@ import { useTRPGDispatch } from '@capital/shared/redux/hooks/useTRPGSelector';
 import { forkActor } from '../../../redux/actions/actor';
 import { showModal } from '@capital/shared/redux/actions/ui';
 import ActorInfo from '../ActorInfo';
-import { Pagination } from 'antd';
+import { Empty, Pagination } from 'antd';
 import LoadingSpinner from '@capital/web/components/LoadingSpinner';
 
 interface Props {}
@@ -58,7 +58,7 @@ export const SharedActorList: React.FC<Props> = TMemo(() => {
       <ModalPanel title="人物库" style={{ width: 620, height: 540 }}>
         {isLoading ? (
           <LoadingSpinner />
-        ) : (
+        ) : Array.isArray(sharedActors) && sharedActors.length > 0 ? (
           <div
             style={{
               padding: '0 10px',
@@ -81,7 +81,10 @@ export const SharedActorList: React.FC<Props> = TMemo(() => {
                 }
               />
             ))}
+            )
           </div>
+        ) : (
+          <Empty />
         )}
 
         <Pagination

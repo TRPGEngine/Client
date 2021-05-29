@@ -38,6 +38,7 @@ regPersonalPanelItem(
 
 regPersonalPanelContent(
   <Route
+    key="main-personal-actors"
     path="/main/personal/actors"
     component={TLoadable(() =>
       import('./panels/ActorPanel').then((module) => module.ActorPanel)

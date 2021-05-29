@@ -63,10 +63,6 @@ export function initPlugins() {
     () => import('@web/components/Iconfont')
   );
   regSharedModule(
-    '@capital/web/components/Iconfont',
-    () => import('@web/components/Iconfont')
-  );
-  regSharedModule(
     '@capital/web/components/PillTabs',
     () => import('@web/components/PillTabs')
   );
