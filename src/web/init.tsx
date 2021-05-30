@@ -18,10 +18,8 @@ import { setTokenGetter } from '@shared/manager/request';
 import { setStorage } from '@shared/manager/storage';
 import rnStorage from '@shared/api/rn-storage.api';
 import { setAnalytics } from '@shared/manager/analytics';
-import { initPlugins } from './plugin-loader';
 
 initAnalytics();
-initPlugins();
 
 const customServiceUrl = window.localStorage[SERVICE_URL];
 if (isUrl(customServiceUrl)) {

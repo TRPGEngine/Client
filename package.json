@@ -13,7 +13,7 @@
     "dev:sw": "cross-env DEV_SW=true yarn run dev",
     "build:main": "cross-env NODE_OPTIONS='--max_old_space_size=4096' webpack --progress --color --config ./build/config/webpack.config.js",
     "build:dev": "cross-env PLATFORM=web yarn run build:main",
-    "build:pro": "cross-env NODE_ENV=production yarn run build:main && yarn run clean:sourcemap",
+    "build:pro": "yarn run plugins:all && cross-env NODE_ENV=production yarn run build:main && yarn run clean:sourcemap",
     "build:report": "cross-env npm_config_report=true yarn run build:pro",
     "build:dll": "webpack --config build/config/webpack.dll.config.js",
     "build:ci": "cross-env CI=true NODE_ENV=production yarn run build:main --profile --json=./stats.json",

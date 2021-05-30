@@ -3,16 +3,7 @@ import { initMiniStar, regDependency, regSharedModule } from 'mini-star';
 /**
  * 初始化插件
  */
-export function initPlugins() {
-  initMiniStar({
-    plugins: [
-      {
-        name: 'trpg',
-        url: '/plugins/trpg/index.js',
-      },
-    ],
-  });
-
+export function initPlugins(): Promise<void> {
   // Dependency
   regDependency('react', () => import('react'));
   regDependency('react-redux', () => import('react-redux'));
@@ -250,4 +241,13 @@ export function initPlugins() {
     '@capital/shared/context/ChatMsgTypeContext',
     () => import('@shared/context/ChatMsgTypeContext')
   );
+
+  return initMiniStar({
+    plugins: [
+      {
+        name: 'trpg',
+        url: '/plugins/trpg/index.js',
+      },
+    ],
+  });
 }

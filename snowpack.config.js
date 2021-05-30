@@ -72,6 +72,7 @@ module.exports = {
   ],
   mount: {
     public: '/',
+    dist: '/',
     src: '/_dist_',
   },
   routes: [
