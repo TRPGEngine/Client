@@ -13016,10 +13016,10 @@ mini-create-react-context@^0.4.0:
     "@babel/runtime" "^7.12.1"
     tiny-warning "^1.0.3"
 
-mini-star@^0.0.18:
-  version "0.0.18"
-  resolved "https://registry.nlark.com/mini-star/download/mini-star-0.0.18.tgz#6fefcb33c2ef579882dd5759fa381f2a7fb0af94"
-  integrity sha1-b+/LM8LvV5iC3VdZ+jgfKn+wr5Q=
+mini-star@^0.0.19:
+  version "0.0.19"
+  resolved "https://registry.nlark.com/mini-star/download/mini-star-0.0.19.tgz#dbf086c82f6d436094aa0a158fa7e96306b9d38f"
+  integrity sha1-2/CGyC9tQ2CUqgoVj6fpYwa5048=
   dependencies:
     "@rollup/plugin-commonjs" "^19.0.0"
     "@rollup/plugin-node-resolve" "^13.0.0"
