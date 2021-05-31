@@ -36,12 +36,12 @@
 
 ## 打包&运行
 
-推荐NodeJS版本: `v10.19.0`
+推荐NodeJS版本: `v14.15.1`
 
 ```bash
-$ npm install
+$ yarn install
 
-$ npm run dev # 运行本地开发服务器
+$ yarn run dev # 运行本地开发服务器
 ```
 
 *如果出现 cypress 因为网络问题无法下载的情况，可以自己构造下载地址来正常安装, 如`CYPRESS_INSTALL_BINARY=https://npm.taobao.org/mirrors/cypress/6.2.1/linux-x64/cypress.zip`*

@@ -27,7 +27,7 @@ import { GroupActorManage } from './panels/GroupDetail/GroupActorManage';
 import { GroupReportManage } from './panels/GroupDetail/GroupReportManage';
 import { GroupActorSelector } from './panels/actions/GroupActorSelector';
 import { ChatMsgTypeSwitch } from './components/chatBox/ChatSendBox/ChatMsgTypeSwitch';
-import { ChatMsgDiceBuilder } from 'components/chatBox/ChatSendBox/ChatMsgDiceBuilder';
+import { ChatMsgDiceBuilder } from './components/chatBox/ChatSendBox/ChatMsgDiceBuilder';
 
 subscribeToUserLoginSuccess(() => {
   dispatchAction(getTemplate());
