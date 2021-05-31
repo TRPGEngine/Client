@@ -3012,10 +3012,10 @@
   dependencies:
     "@types/react-test-renderer" "*"
 
-"@types/uuid@^3.4.6":
-  version "3.4.9"
-  resolved "https://registry.npm.taobao.org/@types/uuid/download/@types/uuid-3.4.9.tgz#fcf01997bbc9f7c09ae5f91383af076d466594e1"
-  integrity sha1-/PAZl7vJ98Ca5fkTg68HbUZllOE=
+"@types/uuid@^8.3.0":
+  version "8.3.0"
+  resolved "https://registry.nlark.com/@types/uuid/download/@types/uuid-8.3.0.tgz#215c231dff736d5ba92410e6d602050cce7e273f"
+  integrity sha1-IVwjHf9zbVupJBDm1gIFDM5+Jz8=
 
 "@types/websocket@*":
   version "1.0.2"
