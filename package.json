@@ -91,7 +91,7 @@
     "@bbob/parser": "^2.5.8",
     "@loadable/component": "^5.14.1",
     "@reduxjs/toolkit": "^1.4.0",
-    "@sentry/react": "6.2.2",
+    "@sentry/react": "6.4.1",
     "@sentry/tracing": "6.2.3",
     "antd": "^4.15.6",
     "axios": "^0.21.1",
