@@ -4,7 +4,6 @@ import type { CommonPanelProps } from '@shared/components/panel/type';
 import { GroupInfoContext } from '@shared/context/GroupInfoContext';
 import _isNil from 'lodash/isNil';
 import { Result } from 'antd';
-import { GroupActorSelector } from '@web/components/panels/actions/GroupActorSelector';
 import { ensureGroupChannelConverse } from '@redux/actions/group';
 import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { ChatContainer } from '../chatBox/ChatContainer';
@@ -45,9 +44,6 @@ export const TextChannel: React.FC<CommonPanelProps> = TMemo((props) => {
   return (
     <ChatContainer
       header={panel.name}
-      headerActions={[
-        <GroupActorSelector key="actor" groupUUID={groupInfo.uuid} />,
-      ]}
       converseUUID={panel.target_uuid}
       converseType="channel"
     />

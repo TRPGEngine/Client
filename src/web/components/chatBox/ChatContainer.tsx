@@ -40,6 +40,7 @@ export const ChatContainer: React.FC<Props> = TMemo((props) => {
 
   return (
     <CommonPanel
+      type="chat"
       style={style}
       headerPrefix={['user', 'system'].includes(converse?.type!) ? '@' : '#'}
       header={header ?? converse?.name}

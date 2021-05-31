@@ -60,10 +60,8 @@ export const CalendarPanel: React.FC<CommonPanelProps> = TMemo((props) => {
   const [refetchIndex, { inc: refetchFn }] = useNumber();
   const { t } = useTranslation();
   const isGroupManager = useIsGroupManager(groupUUID ?? '');
-  const [
-    selectedCalendarDate,
-    setSelectedCalendarDate,
-  ] = useState<Moment | null>(null);
+  const [selectedCalendarDate, setSelectedCalendarDate] =
+    useState<Moment | null>(null);
 
   const { value = [], loading } = useAsync(async (): Promise<
     CalendarPanelData['calendar']
@@ -198,7 +196,7 @@ export const CalendarPanel: React.FC<CommonPanelProps> = TMemo((props) => {
   }
 
   return (
-    <CommonPanel header={panelName}>
+    <CommonPanel type="calendar" header={panelName}>
       <Root>
         <Calendar
           dateFullCellRender={dateFullCellRender}

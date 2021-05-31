@@ -42,7 +42,6 @@ import {
 } from './settings';
 import _isNil from 'lodash/isNil';
 import { reloadConverseList, getUserEmotion } from './chat';
-import { getTemplate, getActor } from './actor';
 import { getGroupList, getGroupInvite } from './group';
 import { getNote, getNotes } from './note';
 import { loadLocalCache } from './cache';
@@ -50,9 +49,12 @@ import { createTRPGAsyncThunk, TRPGAction } from '../types/__all__';
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import { setUserJWT } from '@shared/utils/jwt-helper';
 import { saveUserToken } from '@shared/helper/player';
-import { UserInfo } from '@redux/types/user';
 import type { PlayerUser } from '@shared/model/player';
 import { resetCreator } from './__shared__';
+import {
+  callUserLoginSuccess,
+  callUserLogoutSuccess,
+} from '@shared/manager/userState';
 
 const api = trpgApi.getInstance();
 
@@ -67,8 +69,6 @@ function _loginSuccess(dispatch, getState) {
   dispatch(reloadConverseList()); // 重新加载所有会话列表
 
   dispatch(getUserInitData());
-  dispatch(getTemplate());
-  dispatch(getActor());
   dispatch(getGroupList()); // 获取团列表
   dispatch(getGroupInvite());
 
@@ -85,6 +85,7 @@ function _loginSuccess(dispatch, getState) {
   dispatch(fetchRemoteSettings());
 
   setTimeout(() => {
+    callUserLoginSuccess();
     runLoginSuccessCallback();
   }, 0);
 }
@@ -229,6 +230,7 @@ export const logout = function (): TRPGAction {
         rnStorage.remove('token');
         setTimeout(() => {
           runLogoutSuccessCallback();
+          callUserLogoutSuccess();
         }, 0);
         dispatch(resetCreator());
       } else {
@@ -246,25 +248,27 @@ export const register = function (
   password = md5(password);
   return function (dispatch, getState) {
     dispatch({ type: REGISTER_REQUEST });
-    return api.emit('player::register', { username, password }, function (
-      data
-    ) {
-      dispatch(hideLoading());
-      console.log(data);
-      if (data.result) {
-        dispatch({ type: REGISTER_SUCCESS, payload: data.results });
-        onSuccess && onSuccess();
-      } else {
-        dispatch({ type: REGISTER_FAILED, payload: data.msg });
-        dispatch(
-          showAlert({
-            type: 'alert',
-            title: '注册失败',
-            content: data.msg,
-          })
-        );
+    return api.emit(
+      'player::register',
+      { username, password },
+      function (data) {
+        dispatch(hideLoading());
+        console.log(data);
+        if (data.result) {
+          dispatch({ type: REGISTER_SUCCESS, payload: data.results });
+          onSuccess && onSuccess();
+        } else {
+          dispatch({ type: REGISTER_FAILED, payload: data.msg });
+          dispatch(
+            showAlert({
+              type: 'alert',
+              title: '注册失败',
+              content: data.msg,
+            })
+          );
+        }
       }
-    });
+    );
   };
 };
 
@@ -470,9 +474,10 @@ export const addFriendInvite = function (invite: any): TRPGAction {
 /**
  * 移除好友请求
  */
-export const removeFriendInvite = createAction<{
-  inviteUUID: string;
-}>(REMOVE_FRIEND_INVITE);
+export const removeFriendInvite =
+  createAction<{
+    inviteUUID: string;
+  }>(REMOVE_FRIEND_INVITE);
 
 /**
  * 发送请求移除好友请求

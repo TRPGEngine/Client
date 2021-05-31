@@ -56,6 +56,7 @@ export const NotePanel: React.FC<CommonPanelProps> = TMemo((props) => {
   if (!_isNil(value)) {
     return (
       <CommonPanel
+        type="note"
         headerPrefix="#"
         header={panel.name}
         headerSuffix={noteEditBtn}

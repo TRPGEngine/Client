@@ -14,7 +14,6 @@ import { SidebarHeader } from '../SidebarHeader';
 import { NotePanel } from './NotePanel';
 import { Iconfont } from '@web/components/Iconfont';
 import { createNote } from '@redux/actions/note';
-import { ActorPanel } from './ActorPanel';
 import { SYSTE_CONVERSE_SPEC } from '@shared/utils/consts';
 import { Button, Col, Divider, Row } from 'antd';
 import { useCurrentUserInfo } from '@redux/hooks/user';
@@ -27,6 +26,10 @@ import { PortalAdd, PortalRemove } from '@web/utils/portal';
 import { FullModal } from '@web/components/FullModal';
 import { SettingView } from '../../Navbar/SettingView';
 import { HoverRotator } from '@web/components/HoverRotator';
+import {
+  personalPanelContentList,
+  personalPanelItemList,
+} from '@web/reg/regPersonalPanel';
 
 /**
  * 个人面板
@@ -86,15 +89,7 @@ export const Personal: React.FC = TMemo(() => {
           name={t('好友')}
           to="/main/personal/friends"
         />
-        <SidebarItem
-          icon={
-            <Iconfont style={{ color: 'white', fontSize: 24 }}>
-              &#xe61b;
-            </Iconfont>
-          }
-          name={t('角色')}
-          to="/main/personal/actors"
-        />
+        {...personalPanelItemList}
         <Divider />
         <SidebarItem
           name={t('系统消息')}
@@ -144,12 +139,14 @@ export const Personal: React.FC = TMemo(() => {
     <PageContent sidebar={sidebar}>
       <Switch>
         <Route path="/main/personal/friends" component={FriendPanel} />
-        <Route path="/main/personal/actors" component={ActorPanel} />
         <Route path="/main/personal/note/:noteUUID" component={NotePanel} />
         <Route
           path="/main/personal/converse/:converseUUID"
           component={UserConversePanel}
         />
+
+        {...personalPanelContentList}
+
         <Redirect to="/main/personal/friends" />
       </Switch>
     </PageContent>

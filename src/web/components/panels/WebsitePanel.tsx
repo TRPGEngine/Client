@@ -22,11 +22,8 @@ export const WebsitePanel: React.FC<CommonPanelProps> = TMemo((props) => {
   const { uuid: panelUUID, name: channelName } = panel;
   const groupUUID = useCurrentGroupUUID();
 
-  const {
-    panelData,
-    panelDataLoading,
-    panelDataError,
-  } = useCommonGroupPanelData<WebsitePanelData>(groupUUID, panelUUID);
+  const { panelData, panelDataLoading, panelDataError } =
+    useCommonGroupPanelData<WebsitePanelData>(groupUUID, panelUUID);
 
   if (panelDataLoading) {
     return <Loading />;
@@ -38,7 +35,7 @@ export const WebsitePanel: React.FC<CommonPanelProps> = TMemo((props) => {
 
   const url = panelData.url;
   return (
-    <CommonPanel header={channelName}>
+    <CommonPanel type="website" header={channelName}>
       <Webview src={url} allowExopen={true} />
     </CommonPanel>
   );

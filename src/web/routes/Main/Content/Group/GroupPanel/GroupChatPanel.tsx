@@ -4,7 +4,6 @@ import { ChatContainer } from '@web/components/chatBox/ChatContainer';
 import styled from 'styled-components';
 import { useJoinedGroupInfo } from '@redux/hooks/group';
 import _isNil from 'lodash/isNil';
-import { GroupActorSelector } from '@web/components/panels/actions/GroupActorSelector';
 import { GroupMembersAction } from '@web/components/panels/actions/GroupMembersAction';
 
 const Root = styled.div`
@@ -32,7 +31,6 @@ export const GroupChatPanel: React.FC<GroupChatPanelProps> = TMemo((props) => {
         converseUUID={groupUUID}
         converseType="group"
         headerActions={[
-          <GroupActorSelector key="actor" groupUUID={groupUUID} />,
           <GroupMembersAction key="members" groupUUID={groupUUID} />,
         ]}
       />

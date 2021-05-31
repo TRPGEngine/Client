@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import classNames from 'classnames';
 import { DevContainer } from './DevContainer';
 
-interface SidebarViewMenuItemType {
+export interface SidebarViewMenuItemType {
   type: 'item';
   title: string;
   content: React.ReactNode;
@@ -105,9 +105,8 @@ interface SidebarViewContextProps {
   content: React.ReactNode;
   setContent: (content: React.ReactNode) => void;
 }
-export const SidebarViewContext = React.createContext<SidebarViewContextProps | null>(
-  null
-);
+export const SidebarViewContext =
+  React.createContext<SidebarViewContextProps | null>(null);
 SidebarViewContext.displayName = 'SidebarViewContext';
 
 export type SidebarViewMenuType =
@@ -183,6 +182,11 @@ SidebarViewMenuItem.displayName = 'SidebarViewMenuItem';
 
 interface SidebarViewProps {
   menu: SidebarViewMenuType[];
+
+  /**
+   * 默认内容路径
+   * @default "0.children.0.content"
+   */
   defaultContentPath: string;
 }
 export const SidebarView: React.FC<SidebarViewProps> = TMemo((props) => {

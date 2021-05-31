@@ -5,7 +5,7 @@ import EmojiPanel from './EmojiPanel';
 import * as pasteUtils from '@shared/utils/paste-utils';
 import { sendMsg } from '@shared/redux/actions/chat';
 import { showModal, hideModal } from '@shared/redux/actions/ui';
-import ActorSelect from './modals/ActorSelect';
+// import ActorSelect from './modals/ActorSelect';
 import config from '@shared/project.config';
 import type { TRPGState, TRPGDispatchProp } from '@redux/types/__all__';
 import { Mentions } from 'antd';
@@ -47,11 +47,11 @@ class MsgSendBox extends React.Component<Props> {
         this.handleShowEmoticon();
       },
     },
-    {
-      label: '发送人物卡',
-      icon: '&#xe61b;',
-      onClick: (e) => this.handleShowSendActor(),
-    },
+    // {
+    //   label: '发送人物卡',
+    //   icon: '&#xe61b;',
+    //   onClick: (e) => this.handleShowSendActor(),
+    // },
     {
       label: '发送文件',
       icon: '&#xe640;',
@@ -217,52 +217,52 @@ class MsgSendBox extends React.Component<Props> {
   // 发送人物卡
   handleShowSendActor() {
     console.log('发送人物卡');
-    this.props.dispatch(
-      showModal(
-        <ActorSelect
-          onSelect={(actorUUID, actorInfo) => {
-            this.props.dispatch(hideModal());
-            console.log('人物卡信息', actorUUID, actorInfo);
-            const { converseUUID, isGroup } = this.props;
-            if (isGroup) {
-              // 发送到团
-              this.props.dispatch(
-                sendMsg(null, {
-                  converse_uuid: converseUUID,
-                  type: 'card',
-                  message: '[人物卡]',
-                  is_group: isGroup,
-                  is_public: isGroup,
-                  data: {
-                    type: 'actor',
-                    uuid: actorUUID,
-                    avatar: config.file.getRelativePath!(actorInfo.avatar),
-                    name: actorInfo.name,
-                    desc: actorInfo.desc,
-                  },
-                })
-              );
-            } else {
-              this.props.dispatch(
-                sendMsg(converseUUID, {
-                  type: 'card',
-                  message: '[人物卡]',
-                  is_group: isGroup,
-                  is_public: isGroup,
-                  data: {
-                    type: 'actor',
-                    uuid: actorUUID,
-                    avatar: config.file.getRelativePath!(actorInfo.avatar),
-                    name: actorInfo.name,
-                    desc: actorInfo.desc,
-                  },
-                })
-              );
-            }
-          }}
-        />
-      )
-    );
+    // this.props.dispatch(
+    //   showModal(
+    //     <ActorSelect
+    //       onSelect={(actorUUID, actorInfo) => {
+    //         this.props.dispatch(hideModal());
+    //         console.log('人物卡信息', actorUUID, actorInfo);
+    //         const { converseUUID, isGroup } = this.props;
+    //         if (isGroup) {
+    //           // 发送到团
+    //           this.props.dispatch(
+    //             sendMsg(null, {
+    //               converse_uuid: converseUUID,
+    //               type: 'card',
+    //               message: '[人物卡]',
+    //               is_group: isGroup,
+    //               is_public: isGroup,
+    //               data: {
+    //                 type: 'actor',
+    //                 uuid: actorUUID,
+    //                 avatar: config.file.getRelativePath!(actorInfo.avatar),
+    //                 name: actorInfo.name,
+    //                 desc: actorInfo.desc,
+    //               },
+    //             })
+    //           );
+    //         } else {
+    //           this.props.dispatch(
+    //             sendMsg(converseUUID, {
+    //               type: 'card',
+    //               message: '[人物卡]',
+    //               is_group: isGroup,
+    //               is_public: isGroup,
+    //               data: {
+    //                 type: 'actor',
+    //                 uuid: actorUUID,
+    //                 avatar: config.file.getRelativePath!(actorInfo.avatar),
+    //                 name: actorInfo.name,
+    //                 desc: actorInfo.desc,
+    //               },
+    //             })
+    //           );
+    //         }
+    //       }}
+    //     />
+    //   )
+    // );
   }
 
   handleContainerDrop(e) {

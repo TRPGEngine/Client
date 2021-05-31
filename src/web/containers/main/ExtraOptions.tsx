@@ -4,7 +4,7 @@ import config from '@src/shared/project.config';
 import { logout, loginWithToken } from '@src/shared/redux/actions/user';
 import { showModal, switchMenuPannel } from '@shared/redux/actions/ui';
 import { addNote } from '@shared/redux/actions/note';
-import ActorCreate from '@web/components/modals/ActorCreate';
+// import ActorCreate from '@web/components/modals/ActorCreate';
 // import IsDeveloping from '../../components/IsDeveloping';
 import GroupCreateOld from '@web/components/modals/GroupCreateOld';
 import ChangePassword from '@web/components/modals/ChangePassword';
@@ -60,12 +60,12 @@ class ExtraOptions extends React.Component<Props> {
 
   actions: ExtraActions = {
     add: [
-      {
-        label: '创建人物',
-        onClick: () => {
-          this.props.dispatch(showModal(<ActorCreate />));
-        },
-      },
+      // {
+      //   label: '创建人物',
+      //   onClick: () => {
+      //     this.props.dispatch(showModal(<ActorCreate />));
+      //   },
+      // },
       {
         label: '创建人物(测试)',
         isDev: true,
