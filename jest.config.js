@@ -15,11 +15,13 @@ module.exports = {
     }),
   },
   rootDir: '.',
-  roots: [
-    '<rootDir>/src/',
+  roots: ['<rootDir>/src/'],
+  testRegex: '.*\\.(test|spec)\\.tsx?$',
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '<rootDir>/src/app/',
+    '<rootDir>/src/appv2/',
   ],
-  testRegex: ".*\\.(test|spec)\\.tsx?$",
-  testPathIgnorePatterns: ["/node_modules/", "<rootDir>/src/app/", "<rootDir>/src/appv2/"],
   transform: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/test/fileTransformer.js',
@@ -33,5 +35,5 @@ module.exports = {
     window: {},
   },
   snapshotSerializers: ['enzyme-to-json/serializer'],
-  verbose: true,
+  // verbose: true,
 };

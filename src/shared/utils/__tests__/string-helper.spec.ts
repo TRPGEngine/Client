@@ -1,6 +1,26 @@
-import { getDocsUrl, getPortalUrl, isUrl } from '../string-helper';
+import {
+  isAvailableString,
+  isUrl,
+  getDocsUrl,
+  getPortalUrl,
+} from '../string-helper';
 
 describe('string-helper', () => {
+  describe('isAvailableString', () => {
+    test.each<[any, boolean]>([
+      ['any string', true],
+      ['', false],
+      [1, false],
+      [() => {}, false],
+      [{}, false],
+      [[], false],
+      [undefined, false],
+      [null, false],
+    ])('%p => %p', (url, res) => {
+      expect(isAvailableString(url)).toBe(res);
+    });
+  });
+
   describe('isUrl', () => {
     test.each<[string, boolean]>([
       ['http://baidu.com', true],

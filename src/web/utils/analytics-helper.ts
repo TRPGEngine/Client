@@ -1,10 +1,10 @@
 import type { UserInfo } from '@redux/types/user';
 import { getUserName } from '@shared/utils/data-helper';
 import posthog from 'posthog-js';
-import _isString from 'lodash/isString';
 import _get from 'lodash/get';
 import Config from 'config';
 import config from '@shared/project.config';
+import { isAvailableString } from '@shared/utils/string-helper';
 
 // Posthog
 const token = _get(Config, 'posthog.token');
@@ -14,7 +14,7 @@ const instance = _get(Config, 'posthog.instance');
  * 初始化统计分析系统
  */
 export function initAnalytics() {
-  if (_isString(token) && _isString(instance)) {
+  if (isAvailableString(token) && isAvailableString(instance)) {
     posthog.init(token, {
       api_host: instance,
       autocapture: false, // 关闭autocapture以节约事件用量
