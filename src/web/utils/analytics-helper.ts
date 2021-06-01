@@ -11,6 +11,11 @@ const token = _get(Config, 'posthog.token');
 const instance = _get(Config, 'posthog.instance');
 
 /**
+ * 分析系统是否启用
+ */
+let enabled = false;
+
+/**
  * 初始化统计分析系统
  */
 export function initAnalytics() {
@@ -25,6 +30,8 @@ export function initAnalytics() {
       version: config.version,
       platform: config.platform,
     });
+
+    enabled = true;
   }
 }
 
@@ -33,6 +40,10 @@ export function initAnalytics() {
  * @param info 用户信息
  */
 export function setAnalyticsUser(info: UserInfo) {
+  if (!enabled) {
+    return;
+  }
+
   posthog.identify(info.uuid, {
     name: getUserName(info),
     username: info.username,
@@ -45,6 +56,10 @@ export function setAnalyticsUser(info: UserInfo) {
  * @param properties 相关属性
  */
 export function trackEvent(name: string, properties?: posthog.Properties) {
+  if (!enabled) {
+    return;
+  }
+
   posthog.capture(name, properties);
 }
 
@@ -52,5 +67,9 @@ export function trackEvent(name: string, properties?: posthog.Properties) {
  * 发送单页应用Url变更事件
  */
 export function trackUrlChangeEvent() {
+  if (!enabled) {
+    return;
+  }
+
   posthog.capture('$pageview');
 }
