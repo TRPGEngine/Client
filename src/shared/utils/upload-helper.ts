@@ -183,11 +183,16 @@ export async function toPersistenceImage(
   const { usage, attachUUID } = options;
   const form = new FormData();
   form.append('image', file);
+
+  const headers = {};
+  if (typeof usage === 'string') {
+    headers['usage'] = usage;
+  }
+  if (typeof attachUUID === 'string') {
+    headers['attach-uuid'] = attachUUID;
+  }
   const { data } = await request.post('/file/v2/image/upload', form, {
-    headers: {
-      usage,
-      'attach-uuid': attachUUID,
-    },
+    headers,
     onUploadProgress(progressEvent) {
       if (progressEvent.lengthComputable) {
         options &&
