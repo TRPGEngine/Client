@@ -41,6 +41,7 @@
 ```bash
 $ yarn install
 
+$ yarn run plugins:all # 编译TRPG相关插件
 $ yarn run dev # 运行本地开发服务器
 ```
 
