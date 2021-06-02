@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.33](https://github.com/TRPGEngine/Client/compare/v0.5.32...v0.5.33) (2021-06-02)
+
+
+### Bug Fixes
+
+* **web:** [#172](https://github.com/TRPGEngine/Client/issues/172) 修复未配置posthog会导致错误的校验逻辑的问题 ([10ac798](https://github.com/TRPGEngine/Client/commit/10ac798d51155f9a6731e21668dc16cb00722d82))
+* **web:** [#173](https://github.com/TRPGEngine/Client/issues/173) 修复用户行为分析不启用时使用会导致报错的bug ([94e7dba](https://github.com/TRPGEngine/Client/commit/94e7dbada49d15cfb78791af71c90ea1395057f7))
+* 修复布局编辑器默认背景透明的问题 ([1956e55](https://github.com/TRPGEngine/Client/commit/1956e55179704e0ddf2c5a2a492479b8fe2c1865))
+
 ### [0.5.32](https://github.com/TRPGEngine/Client/compare/v0.5.31...v0.5.32) (2021-05-28)
 
 ### [0.5.31](https://github.com/TRPGEngine/Client/compare/v0.5.30...v0.5.31) (2021-05-28)

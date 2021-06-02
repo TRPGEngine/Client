@@ -1,5 +1,5 @@
 import type { GroupPanel } from '@shared/types/panel';
-import type { ActorType } from './actor';
+// import type { ActorType } from './actor'; // TODO
 import type { MsgPayload } from './chat';
 import type { UserInfo } from './user';
 
@@ -21,7 +21,8 @@ export interface GroupActorType {
   actor_uuid: string;
   actor_info?: {}; // 当通过审批以后会保存一份。未通过的到actor中查看
   actor_template_uuid?: string; // 当通过审批以后会保存一份。未通过的到actor中查看
-  actor: ActorType;
+  // actor: ActorType;
+  actor: any; // TODO
 
   owner?: Pick<UserInfo, 'uuid'>;
 }

@@ -11,6 +11,7 @@ snowpack.crt
 snowpack.key
 stats.json
 package-lock.json
+public/plugins
 
 # Cypress
 cypress/videos/

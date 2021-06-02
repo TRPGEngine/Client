@@ -1,0 +1,36 @@
+.group-actor-check {
+  .actions {
+    display: flex;
+    justify-content: center;
+
+    button {
+      // Block btn
+      font-size: 16px;
+      border: 0;
+      cursor: pointer;
+      color: white;
+      border-radius: 3px;
+      background-color: #999;
+      padding: 6px 12px;
+      outline: 0;
+      user-select: none;
+
+      &:hover, &:active, &.active {
+        background-color: #705949;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        background-color: #999999;
+      }
+
+
+      margin: 0 10px;
+      width: 120px;
+
+      .iconfont {
+        margin-right: 2px;
+      }
+    }
+  }
+}

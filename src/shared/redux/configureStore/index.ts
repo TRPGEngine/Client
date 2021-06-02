@@ -1,8 +1,13 @@
 import thunk from 'redux-thunk';
-import { createStore, applyMiddleware, StoreEnhancer } from 'redux';
-import { createLogger } from 'redux-logger';
+import {
+  createStore,
+  applyMiddleware,
+  StoreEnhancer,
+  combineReducers,
+} from 'redux';
+// import { createLogger } from 'redux-logger';
 import config from '../../project.config';
-import { getCombineReducers } from '../reducers';
+import { getReducers } from '../reducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import actionCreators from '../actions';
 import { memoryLogger } from './memory-logger';
@@ -61,13 +66,11 @@ function configureStore(
       actionCreators,
     })(applyMiddleware(...middlewares));
   }
-  const store = createStore(
-    getCombineReducers(options.additionReducer),
-    initialState,
-    enhancer
-  );
 
-  initStoreHelper(store); // 注册Helper
+  const reducers = getReducers(options.additionReducer);
+  const store = createStore(combineReducers(reducers), initialState, enhancer);
+
+  initStoreHelper(store, reducers); // 注册Helper
 
   return store;
 }

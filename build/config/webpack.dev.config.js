@@ -9,6 +9,7 @@ module.exports = merge({}, base, {
   // devtool: 'eval-source-map', //开发环境
 
   devServer: {
+    contentBase: './dist',
     compress: true, // 启用Gzip压缩
     historyApiFallback: true, // 为404页启用多个路径
     hot: true, // 模块热更新，配置HotModuleReplacementPlugin

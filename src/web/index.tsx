@@ -29,6 +29,7 @@ import type { TRPGStore } from '@redux/types/__all__';
 import { setAnalyticsUser } from './utils/analytics-helper';
 import './debug';
 import { reportError } from './utils/error';
+import { initPlugins } from './plugin-loader';
 
 declare global {
   interface Window {
@@ -130,13 +131,17 @@ if (
   };
 }
 
-ReactDom.render(
-  <Provider store={store}>
-    <ThemeContextProvider>
-      <ConfigProvider locale={zhCN}>
-        {isOldApp === true ? <OldApp /> : <App />}
-      </ConfigProvider>
-    </ThemeContextProvider>
-  </Provider>,
-  document.querySelector('#app')
-);
+initPlugins().finally(() => {
+  // 确保插件加载完毕后再渲染组件
+  // TODO: 想办法看看有没有不是阻塞的方法, 比如当插件加载完毕后通知代码更新
+  ReactDom.render(
+    <Provider store={store}>
+      <ThemeContextProvider>
+        <ConfigProvider locale={zhCN}>
+          {isOldApp === true ? <OldApp /> : <App />}
+        </ConfigProvider>
+      </ThemeContextProvider>
+    </Provider>,
+    document.querySelector('#app')
+  );
+});

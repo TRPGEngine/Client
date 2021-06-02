@@ -4,12 +4,13 @@ import { SidebarView, SidebarViewMenuType } from '@web/components/SidebarView';
 import { GroupInfoSummary } from './GroupInfoSummary';
 import { useIsGroupManager, useJoinedGroupInfo } from '@redux/hooks/group';
 import { GroupPanelManage } from './GroupPanelManage';
-import { GroupActorManage } from './GroupActorManage';
 import { useTranslation } from '@shared/i18n';
 import { GroupMemberManage } from './GroupMemberManage';
 import { GroupBotManage } from './GroupBotManage';
-import { GroupReportManage } from './GroupReportManage';
 import { GroupDetailSettings } from './GroupDetailSettings';
+import { groupInfoMenuList } from '@web/reg/regGroupInfoMenu';
+import { GroupInfoContext } from '@shared/context/GroupInfoContext';
+import { Result } from 'antd';
 
 interface GroupInfoDetailProps {
   groupUUID: string;
@@ -52,28 +53,25 @@ export const GroupInfoDetail: React.FC<GroupInfoDetailProps> = TMemo(
             },
             {
               type: 'item',
-              title: t('人物卡管理'),
-              content: <GroupActorManage groupUUID={groupUUID} />,
-            },
-            {
-              type: 'item',
-              title: t('跑团战报'),
-              content: <GroupReportManage groupUUID={groupUUID} />,
-            },
-            {
-              type: 'item',
               title: t('机器人管理'),
               hidden: !isGroupManager,
               content: <GroupBotManage groupUUID={groupUUID} />,
             },
+            ...groupInfoMenuList,
           ],
         },
       ],
       [groupInfo?.name, groupUUID, t, isGroupManager]
     );
 
+    if (groupInfo === undefined) {
+      return <Result status="warning" title={t('找不到相关信息')} />;
+    }
+
     return (
-      <SidebarView defaultContentPath="0.children.0.content" menu={menu} />
+      <GroupInfoContext.Provider value={groupInfo}>
+        <SidebarView defaultContentPath="0.children.0.content" menu={menu} />
+      </GroupInfoContext.Provider>
     );
   }
 );

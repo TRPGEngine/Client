@@ -3,7 +3,7 @@ import { EditorMain } from './EditorMain';
 
 export const ActorLayoutEditor: React.FC = React.memo(() => {
   return (
-    <div>
+    <div style={{ backgroundColor: 'white' }}>
       <EditorMain />
     </div>
   );
