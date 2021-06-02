@@ -14,6 +14,7 @@ import { useTRPGSelector, useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { useHistory } from 'react-router';
 import { sendFriendRequest } from '@redux/actions/user';
 import { addConverse } from '@redux/actions/chat';
+import ImageViewer from '../ImageViewer';
 
 const Root = styled.div`
   padding: 8px;
@@ -96,12 +97,25 @@ export const UserProfile: React.FC<UserProfileProps> = TMemo((props) => {
     dispatch(sendFriendRequest(userUUID));
   }, [userUUID]);
 
+  const getAvatar = () => {
+    if (userInfo.avatar) {
+      return (
+        <ImageViewer
+          originImageUrl={userInfo.avatar!.replace('/thumbnail', '')}
+        >
+          <InfoAvatar src={userInfo.avatar} name={name} />
+        </ImageViewer>
+      );
+    }
+    return <InfoAvatar src={userInfo.avatar} name={name} />;
+  };
+
   return (
     <Root>
       <Info>
         <Col>
           <Row>
-            <InfoAvatar src={userInfo.avatar} name={name} />
+            {getAvatar()}
             <InfoText>
               <div>{name}</div>
               <InfoTextSub>{userInfo.username}</InfoTextSub>
