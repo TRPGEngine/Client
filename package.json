@@ -1,6 +1,6 @@
 {
   "name": "trpg-game-client",
-  "version": "0.5.33",
+  "version": "0.6.0",
   "description": "专注于TRPG跑团的IM即时应用聊天软件",
   "main": "./dist/entry.js",
   "productName": "TRPG Engine",
@@ -51,7 +51,7 @@
     "install:playground": "cd ./src/playground && yarn",
     "install:all": "yarn run install:appv2 && yarn run install:web && yarn run install:playground",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "release": "standard-version -a"
+    "release": "standard-version -a -r patch"
   },
   "husky": {
     "hooks": {
