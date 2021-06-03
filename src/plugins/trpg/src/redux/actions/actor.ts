@@ -12,6 +12,7 @@ const {
   SHARE_ACTOR_SUCCESS,
   UNSHARE_ACTOR_SUCCESS,
   FORK_ACTOR_SUCCESS,
+  UPDATE_ACTOR_SUCCESS,
 } = actorConstants;
 import config from '@capital/shared/project.config';
 import { checkTemplate } from '@capital/shared/utils/cache-helper';
