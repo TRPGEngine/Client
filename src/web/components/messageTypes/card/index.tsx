@@ -9,6 +9,7 @@ import GroupInvite from './GroupInvite';
 import DiceRequest from './DiceRequest';
 import DiceInvite from './DiceInvite';
 import { messageCardList } from '@web/reg/regMessageCard';
+import { Media } from './MediaCard';
 
 const CardType = {
   default: DefaultCard,
@@ -17,6 +18,7 @@ const CardType = {
   groupInvite: GroupInvite,
   diceRequest: DiceRequest,
   diceInvite: DiceInvite,
+  media: Media,
 
   // alias
   groupRequestSuccess: BaseCard,
