@@ -43,7 +43,9 @@ export class Media extends BaseCard {
         </div>
       );
     } else if (this.mediaType === 'iframe') {
-      return <Webview allowExopen={true} src={this.mediaUrl} />;
+      return (
+        <Webview allowExopen={true} allowPopup={true} src={this.mediaUrl} />
+      );
     }
 
     return <div>{t('未知的媒体类型')}</div>;

@@ -1,4 +1,5 @@
 {
+  "k1065a4b7": "The view has popped up",
   "k1141d649": "New Version",
   "k1208a432": "Generate Completed",
   "k131598d0": "New version detected, do you want to refresh now to upgrade to the latest content",
@@ -211,6 +212,7 @@
   "ka93a38e0": "Voice Channel",
   "ka9a9cdc8": "Is Alpha User",
   "kaa9fd559": "Voice setting changes cannot take effect when using mic",
+  "kaaaa20cb": "Illegal parameter",
   "kab82f88e": "Backend Service URL",
   "kabc13834": "No other moderator",
   "kabfe9512": "Save",
@@ -223,6 +225,7 @@
   "kb07659b0": "Repeat Password",
   "kb16db122": "This Feature just open for alpha user",
   "kb19fd1f2": "Language changes need to be restarted and fully effective",
+  "kb25989c2": "Popup",
   "kb270c2c3": "Website Panel",
   "kb47a9aa4": "Password is Empty",
   "kb50ad3c1": "Browser Version",
