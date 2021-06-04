@@ -13,8 +13,11 @@ const Container = styled.div<{
   pointer-events: ${(props) => (props.visible ? 'auto' : 'none')};
   transition: opacity 0.2s ease-in-out;
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   z-index: 100;
   background-color: ${(props) => props.theme.color.graySet[8]};
   display: flex;
