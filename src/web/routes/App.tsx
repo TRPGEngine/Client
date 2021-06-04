@@ -19,6 +19,7 @@ import { wrapSentry } from '@web/utils/sentry';
 import { RTCRoomClientContextProvider } from '@rtc/RoomContext';
 import { GlobalVoiceProvider } from '@web/components/rtc/GlobalVoice';
 import { trackUrlChangeEvent } from '@web/utils/analytics-helper';
+import { PopupViewerManagerContextProvider } from '@web/components/PopupViewer';
 
 import './App.less';
 
@@ -47,7 +48,11 @@ const CustomProvider: React.FC = (props) => {
       <RTCRoomClientContextProvider>
         <GlobalVoiceProvider>
           <PortalProvider>
-            <PortalHost>{props.children}</PortalHost>
+            <PortalHost>
+              <PopupViewerManagerContextProvider>
+                {props.children}
+              </PopupViewerManagerContextProvider>
+            </PortalHost>
           </PortalProvider>
         </GlobalVoiceProvider>
       </RTCRoomClientContextProvider>
