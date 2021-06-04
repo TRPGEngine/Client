@@ -107,14 +107,14 @@ const StandaloneWindow: React.FC<StandaloneWindowConfig> = React.memo(
     const isMobile = useIsMobile();
 
     const defaultPos = useMemo(() => {
-      const defaultPos = props.options!.default!;
+      const defaultWidth = 375;
+      const defaultHeight = 600;
 
       return {
-        ...defaultPos,
         x: isMobile ? 0 : width / 2 + currentWindowNum * 40,
-        y: _isNumber(defaultPos?.height)
-          ? height - defaultPos!.height
-          : height / 2,
+        y: height - defaultHeight,
+        width: defaultWidth,
+        height: defaultHeight,
       };
     }, []);
 
@@ -123,7 +123,7 @@ const StandaloneWindow: React.FC<StandaloneWindowConfig> = React.memo(
         <Rnd
           dragHandleClassName="window-container-title-text"
           {...props.options}
-          default={defaultPos}
+          default={props.options?.default ?? defaultPos}
         >
           <Window title={props.title} onClose={props.onClose}>
             {props.body}
@@ -136,12 +136,6 @@ const StandaloneWindow: React.FC<StandaloneWindowConfig> = React.memo(
 StandaloneWindow.displayName = 'StandaloneWindow';
 StandaloneWindow.defaultProps = {
   options: {
-    default: {
-      x: 0,
-      y: 0,
-      width: 375,
-      height: 600,
-    },
     minWidth: 180,
     minHeight: 210,
   },
