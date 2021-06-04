@@ -11,6 +11,8 @@ import DiceInvite from './DiceInvite';
 import { messageCardList } from '@web/reg/regMessageCard';
 import { Media } from './MediaCard';
 
+import './style.less';
+
 const CardType = {
   default: DefaultCard,
   friendInvite: FriendInvite,
@@ -31,9 +33,9 @@ class Card extends Base {
   getContent() {
     const info = this.props.info;
     const data = info.data!;
-    const Card = CardType[data.type] || CardType['default'];
+    const CardComponent = CardType[data.type] || CardType['default'];
 
-    return <Card {...this.props} />;
+    return <CardComponent {...this.props} />;
   }
 }
 

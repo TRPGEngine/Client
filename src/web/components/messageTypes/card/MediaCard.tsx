@@ -2,10 +2,12 @@ import React from 'react';
 import BaseCard from './BaseCard';
 import _get from 'lodash/get';
 import TLoadable from '@web/components/TLoadable';
+import Webview from '@web/components/Webview';
+import { t } from '@shared/i18n';
 
 const AudioPlayer = TLoadable(() => import('./media/AudioPlayer'));
 
-type AllowedMediaType = 'audio' | 'video';
+type AllowedMediaType = 'audio' | 'video' | 'iframe';
 type AllowedMediaSource = 'bilibili' | 'netease';
 
 /**
@@ -40,8 +42,10 @@ export class Media extends BaseCard {
           <AudioPlayer url={this.mediaUrl} />
         </div>
       );
+    } else if (this.mediaType === 'iframe') {
+      return <Webview allowExopen={true} src={this.mediaUrl} />;
     }
 
-    return null;
+    return <div>{t('未知的媒体类型')}</div>;
   }
 }

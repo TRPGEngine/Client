@@ -4,6 +4,7 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import './Webview.scss';
 import { Result } from 'antd';
+import { t } from '@shared/i18n';
 
 let webframeIndex = 0;
 const isElectron = config.platform === 'electron';
@@ -12,7 +13,7 @@ function WebviewError(props: { message?: string }) {
   return (
     <Result
       status="warning"
-      title="页面无法正常打开"
+      title={t('页面无法正常打开')}
       subTitle={props.message}
     />
   );
@@ -86,7 +87,7 @@ class Webview extends React.Component<Props> {
     }
     this.setState({
       isError: true,
-      errorMsg: `页面加载失败: ${this.props.src}`,
+      errorMsg: `${t('页面加载失败')}: ${this.props.src}`,
     });
   };
 
@@ -101,7 +102,7 @@ class Webview extends React.Component<Props> {
           {this.props.allowExopen && (
             <div
               className="open-new"
-              title="在新窗口打开"
+              title={t('在新窗口打开')}
               onClick={() => this.handleOpenInNewWindow()}
             >
               <i className="iconfont">&#xe63c;</i>
@@ -114,7 +115,7 @@ class Webview extends React.Component<Props> {
               ref={(ref) => (this.webframe = ref as any)}
               onError={this.handleError}
             >
-              <p>请使用现代浏览器打开本页面</p>
+              <p>{t('请使用现代浏览器打开本页面')}</p>
             </iframe>
           )}
         </Fragment>
