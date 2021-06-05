@@ -9,6 +9,8 @@ import { useCommonGroupPanelData } from './useCommonGroupPanelData';
 import { AlertErrorMessage } from '../AlertErrorView';
 import Webview from '../Webview';
 import { CommonPanel } from './CommonPanel';
+import { Result } from 'antd';
+import { t } from '@shared/i18n';
 
 interface WebsitePanelData extends CommonGroupPanelData {
   url: string;
@@ -36,7 +38,11 @@ export const WebsitePanel: React.FC<CommonPanelProps> = TMemo((props) => {
   const url = panelData.url;
   return (
     <CommonPanel type="website" header={channelName}>
-      <Webview src={url} allowExopen={true} />
+      {typeof url === 'string' ? (
+        <Webview src={url} allowExopen={true} />
+      ) : (
+        <Result status="error" title={t('参数不合法')} />
+      )}
     </CommonPanel>
   );
 });

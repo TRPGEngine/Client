@@ -2,7 +2,8 @@ import type { TRPGAction } from '@redux/types/__all__';
 import { showSlidePanel } from '@redux/actions/ui';
 import Webview from '@web/components/Webview';
 import React from 'react';
-import StandaloneWindow, {
+import {
+  openStandaloneWindow,
   StandaloneWindowConfig,
 } from '@web/components/StandaloneWindow';
 import { getPortalUrl } from '@shared/utils/string-helper';
@@ -35,7 +36,7 @@ export const showPortal = (
     if (type === 'slidepanel') {
       dispatch(showSlidePanel('', node));
     } else if (type === 'standalonewindow') {
-      StandaloneWindow.open!({
+      openStandaloneWindow({
         ...options,
         body: node,
       });

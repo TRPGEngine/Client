@@ -1574,6 +1574,16 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@iconify/icons-mdi@^1.0.46":
+  version "1.1.15"
+  resolved "https://registry.nlark.com/@iconify/icons-mdi/download/@iconify/icons-mdi-1.1.15.tgz#e035130cc480c4318fb4cb21b8b836a2ba32c8b9"
+  integrity sha1-4DUTDMSAxDGPtMshuLg2oroyyLk=
+
+"@iconify/react@^1.1.3":
+  version "1.1.4"
+  resolved "https://registry.nlark.com/@iconify/react/download/@iconify/react-1.1.4.tgz#c778eddbaf196e55705d0bedff00d039dc1de8d3"
+  integrity sha1-x3jt268ZblVwXQvt/wDQOdwd6NM=
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.npm.taobao.org/@istanbuljs/load-nyc-config/download/@istanbuljs/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -15745,6 +15755,15 @@ react-fileupload@^2.4.0:
   integrity sha1-dm6K5jeabiNlHHkEQ+dxbu2Urmg=
   dependencies:
     react "^15.0.2"
+
+react-h5-audio-player@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.nlark.com/react-h5-audio-player/download/react-h5-audio-player-3.7.1.tgz#7401f1385a5bd369652dde18cca5823fd6cc6f30"
+  integrity sha1-dAHxOFpb02llLd4YzKWCP9bMbzA=
+  dependencies:
+    "@babel/runtime" "^7.10.2"
+    "@iconify/icons-mdi" "^1.0.46"
+    "@iconify/react" "^1.1.3"
 
 react-i18next@^11.7.2:
   version "11.8.15"

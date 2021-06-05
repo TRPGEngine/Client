@@ -78,7 +78,7 @@ class ExtraOptions extends React.Component<Props> {
         isDev: true,
         onClick: () => {
           import('@web/components/StandaloneWindow').then((module) =>
-            module.default.open!({
+            module.openStandaloneWindow({
               body: 'test',
             })
           );

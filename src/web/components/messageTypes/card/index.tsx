@@ -9,6 +9,9 @@ import GroupInvite from './GroupInvite';
 import DiceRequest from './DiceRequest';
 import DiceInvite from './DiceInvite';
 import { messageCardList } from '@web/reg/regMessageCard';
+import { Media } from './MediaCard';
+
+import './style.less';
 
 const CardType = {
   default: DefaultCard,
@@ -17,6 +20,7 @@ const CardType = {
   groupInvite: GroupInvite,
   diceRequest: DiceRequest,
   diceInvite: DiceInvite,
+  media: Media,
 
   // alias
   groupRequestSuccess: BaseCard,
@@ -29,9 +33,9 @@ class Card extends Base {
   getContent() {
     const info = this.props.info;
     const data = info.data!;
-    const Card = CardType[data.type] || CardType['default'];
+    const CardComponent = CardType[data.type] || CardType['default'];
 
-    return <Card {...this.props} />;
+    return <CardComponent {...this.props} />;
   }
 }
 
