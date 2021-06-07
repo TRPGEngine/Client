@@ -9,6 +9,7 @@ import { TMemo } from '@capital/shared/components/TMemo';
 import { showToasts } from '@capital/shared/manager/ui';
 import { Button, Divider, Empty, Input } from 'antd';
 import {
+  fetchMusicDetail,
   NeteaseMusicSongInfo,
   searchMusicList,
 } from '../../model/netease-music';
@@ -16,6 +17,7 @@ import { ModalWrapper } from '@capital/web/components/Modal';
 import { t } from '@capital/shared/i18n';
 import styled from 'styled-components';
 import _get from 'lodash/get';
+import { useMsgSend } from '@capital/shared/redux/hooks/useMsgSend';
 
 const Search = Input.Search;
 
@@ -31,21 +33,26 @@ const SongItem = styled.div`
   }
 `;
 
-export const NeteaseMusicSelector: React.FC = TMemo(() => {
+export const NeteaseMusicSelector: React.FC<{
+  converseUUID: string;
+  onSendMusicCard?: () => void;
+}> = TMemo((props) => {
+  const { converseUUID, onSendMusicCard } = props;
   const [loading, setLoading] = useState(false);
   const [searchedList, setSearchedList] =
     useState<NeteaseMusicSongInfo[] | null>(null);
+  const { sendCardMsg } = useMsgSend(converseUUID);
 
   const onSearch = useCallback(async (text: string) => {
     try {
       setLoading(true);
       const res = await searchMusicList(text);
 
-      if (res.code === 200) {
-        setSearchedList(res.result.songs);
-      } else {
+      if (res.code !== 200) {
         showToasts(t('搜索音乐失败'), 'error');
+        return;
       }
+      setSearchedList(res.result.songs);
     } catch (err) {
       console.error(err);
       showToasts(`${t('搜索失败')}: ${String(err)}`, 'error');
@@ -54,9 +61,46 @@ export const NeteaseMusicSelector: React.FC = TMemo(() => {
     }
   }, []);
 
-  const handleClick = useCallback((songId: number) => {
-    console.log('songId', songId);
-  }, []);
+  const handleClick = useCallback(
+    async (songId: number) => {
+      try {
+        setLoading(true);
+
+        const res = await fetchMusicDetail(songId);
+        if (res.code !== 200) {
+          showToasts(`${t('发送失败')}: 网络异常`, 'error');
+          return;
+        }
+
+        const detail = _get(res, ['data', 0]);
+        const url = detail.url;
+
+        if (typeof url === 'string' && url !== '') {
+          sendCardMsg('media', {
+            mediaType: 'audio',
+            mediaSource: 'netease',
+            mediaUrl: url,
+            neteaseSongId: songId,
+          });
+          showToasts(t('发送成功'), 'success');
+
+          if (typeof onSendMusicCard === 'function') {
+            onSendMusicCard();
+          }
+        } else {
+          showToasts(
+            `${t('发送失败')}: 该音乐可能是一个版权音乐, 无法获取播放地址`,
+            'error'
+          );
+        }
+      } catch (err) {
+        showToasts(`${t('请求失败')}: ${String(err)}`, 'error');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [sendCardMsg, onSendMusicCard]
+  );
 
   return (
     <ModalWrapper title={t('网易云音乐')}>

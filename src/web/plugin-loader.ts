@@ -200,6 +200,10 @@ export function initPlugins(): Promise<void> {
     () => import('@shared/redux/hooks/useCache')
   );
   regSharedModule(
+    '@capital/shared/redux/hooks/useMsgSend',
+    () => import('@shared/redux/hooks/useMsgSend')
+  );
+  regSharedModule(
     '@capital/shared/redux/hooks/group',
     () => import('@shared/redux/hooks/group')
   );

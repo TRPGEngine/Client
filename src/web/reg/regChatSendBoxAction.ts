@@ -25,5 +25,5 @@ export const [chatSendBoxRightAction, regChatSendBoxRightAction] =
 export const [chatSendBoxAddonAction, regChatSendBoxAddonAction] =
   buildRegList<{
     label: string;
-    onClick: () => void;
+    onClick: (context: { converseUUID: string }) => void;
   }>();

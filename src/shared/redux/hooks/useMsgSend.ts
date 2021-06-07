@@ -1,5 +1,12 @@
 import { useConverseDetail } from '@redux/hooks/chat';
-import { useCallback, useEffect, useContext, useState, useRef } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useContext,
+  useState,
+  useRef,
+  useMemo,
+} from 'react';
 import { isUserUUID } from '@shared/utils/uuid';
 import { sendStopWriting, sendStartWriting } from '@shared/api/event';
 import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
@@ -16,6 +23,7 @@ import {
 } from '@shared/context/GroupInfoContext';
 import { showToasts } from '@shared/manager/ui';
 import { useChatMsgTypeContext } from '@shared/context/ChatMsgTypeContext';
+import { t } from '@shared/i18n';
 
 /**
  * 消息输入相关事件
@@ -45,12 +53,12 @@ export function useMsgSend(converseUUID: string) {
    * 发送消息到远程服务器
    */
   const sendMsg = useCallback(
-    (message: string, type: MsgType) => {
+    (message: string, type: MsgType, data?: {}) => {
       message = preProcessMessage(message);
 
       if (message === '') {
         // 如果处理后消息为空则跳出
-        showToasts('消息不能为空', 'warning');
+        showToasts(t('消息不能为空'), 'warning');
         return;
       }
 
@@ -66,6 +74,7 @@ export function useMsgSend(converseUUID: string) {
             is_public: false,
             is_group: false,
             type,
+            data,
           })
         );
       } else if (converseType === 'group' || converseType === 'channel') {
@@ -74,6 +83,7 @@ export function useMsgSend(converseUUID: string) {
         const msgDataManager = new MsgDataManager();
 
         // 选中的角色
+        // TODO: Not good
         if (!_isNil(selectedGroupActorInfo)) {
           msgDataManager.setGroupActorInfo(selectedGroupActorInfo);
         }
@@ -92,7 +102,10 @@ export function useMsgSend(converseUUID: string) {
             is_public: true,
             is_group: true,
             type,
-            data: msgDataManager.toJS(),
+            data: {
+              ...msgDataManager.toJS(),
+              ...data,
+            },
           })
         );
       }
@@ -113,6 +126,19 @@ export function useMsgSend(converseUUID: string) {
     ]
   );
 
+  /**
+   * 发送卡片消息到远程服务器
+   */
+  const sendCardMsg = useCallback(
+    (cardType: string, otherData: {}, message: string = t('[卡片消息]')) => {
+      sendMsg(message, 'card', {
+        ...otherData,
+        type: cardType,
+      });
+    },
+    [sendMsg]
+  );
+
   const handleSendMsg = useCallback(() => {
     if (!!message) {
       sendMsg(message, msgType ?? 'normal');
@@ -129,5 +155,5 @@ export function useMsgSend(converseUUID: string) {
     }
   }, [converseType, message]);
 
-  return { message, setMessage, handleSendMsg, inputRef, sendMsg };
+  return { message, setMessage, handleSendMsg, inputRef, sendMsg, sendCardMsg };
 }

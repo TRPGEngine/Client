@@ -32,9 +32,10 @@ const ChatMsgAddonItemContainer = styled.div`
 
 export const ChatMsgAddon: React.FC<{
   editorRef: React.MutableRefObject<Editor | undefined>;
+  converseUUID: string;
   style?: React.CSSProperties;
 }> = TMemo((props) => {
-  const { editorRef } = props;
+  const { editorRef, converseUUID } = props;
   const [visible, setVisible] = useState(false);
   const { t } = useTranslation();
 
@@ -88,7 +89,7 @@ export const ChatMsgAddon: React.FC<{
           key={item.label}
           onClick={() => {
             setVisible(false);
-            item.onClick();
+            item.onClick({ converseUUID });
           }}
         >
           {item.label}
