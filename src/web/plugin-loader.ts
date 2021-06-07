@@ -212,6 +212,10 @@ export function initPlugins(): Promise<void> {
     () => import('@shared/utils/upload-helper')
   );
   regSharedModule(
+    '@capital/shared/utils/request',
+    () => import('@shared/utils/request')
+  );
+  regSharedModule(
     '@capital/shared/model/player',
     () => import('@shared/model/player')
   );
@@ -243,11 +247,9 @@ export function initPlugins(): Promise<void> {
   );
 
   return initMiniStar({
-    plugins: [
-      {
-        name: 'trpg',
-        url: '/plugins/trpg/index.js',
-      },
-    ],
+    plugins: ['trpg', 'netease-music'].map((plugin) => ({
+      name: plugin,
+      url: `/plugins/${plugin}/index.js`,
+    })),
   });
 }
