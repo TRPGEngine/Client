@@ -2158,14 +2158,14 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@sentry/browser@6.2.2":
-  version "6.2.2"
-  resolved "https://registry.nlark.com/@sentry/browser/download/@sentry/browser-6.2.2.tgz?cache=0&sync_timestamp=1622184870046&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Fbrowser%2Fdownload%2F%40sentry%2Fbrowser-6.2.2.tgz#4df4ad7026b269d85b63b79a75387ce5370bc705"
-  integrity sha1-TfStcCayadhbY7eadTh85TcLxwU=
+"@sentry/browser@6.5.1":
+  version "6.5.1"
+  resolved "https://registry.nlark.com/@sentry/browser/download/@sentry/browser-6.5.1.tgz#9a6ed5607b3b0f4e83f38720e3e202906f8c5bdb"
+  integrity sha1-mm7VYHs7D06D84cg4+ICkG+MW9s=
   dependencies:
-    "@sentry/core" "6.2.2"
-    "@sentry/types" "6.2.2"
-    "@sentry/utils" "6.2.2"
+    "@sentry/core" "6.5.1"
+    "@sentry/types" "6.5.1"
+    "@sentry/utils" "6.5.1"
     tslib "^1.9.3"
 
 "@sentry/cli@^1.64.1":
@@ -2180,24 +2180,15 @@
     progress "^2.0.3"
     proxy-from-env "^1.1.0"
 
-"@sentry/core@6.2.2":
-  version "6.2.2"
-  resolved "https://registry.nlark.com/@sentry/core/download/@sentry/core-6.2.2.tgz?cache=0&sync_timestamp=1622184869558&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Fcore%2Fdownload%2F%40sentry%2Fcore-6.2.2.tgz#ec86b5769f8855f43cb58e839f81f87074ec9a3f"
-  integrity sha1-7Ia1dp+IVfQ8tY6Dn4H4cHTsmj8=
+"@sentry/core@6.5.1":
+  version "6.5.1"
+  resolved "https://registry.nlark.com/@sentry/core/download/@sentry/core-6.5.1.tgz#c8b6c3ed86ed07b193c95d599c1b9a4a161e500e"
+  integrity sha1-yLbD7YbtB7GTyV1ZnBuaShYeUA4=
   dependencies:
-    "@sentry/hub" "6.2.2"
-    "@sentry/minimal" "6.2.2"
-    "@sentry/types" "6.2.2"
-    "@sentry/utils" "6.2.2"
-    tslib "^1.9.3"
-
-"@sentry/hub@6.2.2":
-  version "6.2.2"
-  resolved "https://registry.nlark.com/@sentry/hub/download/@sentry/hub-6.2.2.tgz?cache=0&sync_timestamp=1622184870994&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Fhub%2Fdownload%2F%40sentry%2Fhub-6.2.2.tgz#f451d8d3ad207e81556b4846d810226693e0444e"
-  integrity sha1-9FHY060gfoFVa0hG2BAiZpPgRE4=
-  dependencies:
-    "@sentry/types" "6.2.2"
-    "@sentry/utils" "6.2.2"
+    "@sentry/hub" "6.5.1"
+    "@sentry/minimal" "6.5.1"
+    "@sentry/types" "6.5.1"
+    "@sentry/utils" "6.5.1"
     tslib "^1.9.3"
 
 "@sentry/hub@6.2.3":
@@ -2209,13 +2200,13 @@
     "@sentry/utils" "6.2.3"
     tslib "^1.9.3"
 
-"@sentry/minimal@6.2.2":
-  version "6.2.2"
-  resolved "https://registry.nlark.com/@sentry/minimal/download/@sentry/minimal-6.2.2.tgz?cache=0&sync_timestamp=1622184869225&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Fminimal%2Fdownload%2F%40sentry%2Fminimal-6.2.2.tgz#01f41e0a6a6a2becfc99f6bb6f9c4bddf54f8dae"
-  integrity sha1-AfQeCmpqK+z8mfa7b5xL3fVPja4=
+"@sentry/hub@6.5.1":
+  version "6.5.1"
+  resolved "https://registry.nlark.com/@sentry/hub/download/@sentry/hub-6.5.1.tgz#135ef09d07d32e87a53f664c0ae8fcc4f5963519"
+  integrity sha1-E17wnQfTLoelP2ZMCuj8xPWWNRk=
   dependencies:
-    "@sentry/hub" "6.2.2"
-    "@sentry/types" "6.2.2"
+    "@sentry/types" "6.5.1"
+    "@sentry/utils" "6.5.1"
     tslib "^1.9.3"
 
 "@sentry/minimal@6.2.3":
@@ -2227,15 +2218,24 @@
     "@sentry/types" "6.2.3"
     tslib "^1.9.3"
 
-"@sentry/react@6.2.2":
-  version "6.2.2"
-  resolved "https://registry.nlark.com/@sentry/react/download/@sentry/react-6.2.2.tgz#6a93fa1013b2b9e37a8c0bc16cf0cbf4353de4c6"
-  integrity sha1-apP6EBOyueN6jAvBbPDL9DU95MY=
+"@sentry/minimal@6.5.1":
+  version "6.5.1"
+  resolved "https://registry.nlark.com/@sentry/minimal/download/@sentry/minimal-6.5.1.tgz#b8c1b382c2ea788eec3d32d203e5081b00eb6838"
+  integrity sha1-uMGzgsLqeI7sPTLSA+UIGwDraDg=
   dependencies:
-    "@sentry/browser" "6.2.2"
-    "@sentry/minimal" "6.2.2"
-    "@sentry/types" "6.2.2"
-    "@sentry/utils" "6.2.2"
+    "@sentry/hub" "6.5.1"
+    "@sentry/types" "6.5.1"
+    tslib "^1.9.3"
+
+"@sentry/react@6.5.1":
+  version "6.5.1"
+  resolved "https://registry.nlark.com/@sentry/react/download/@sentry/react-6.5.1.tgz#1c7019fc3d8b1168c1ab8936cb65971b314d060d"
+  integrity sha1-HHAZ/D2LEWjBq4k2y2WXGzFNBg0=
+  dependencies:
+    "@sentry/browser" "6.5.1"
+    "@sentry/minimal" "6.5.1"
+    "@sentry/types" "6.5.1"
+    "@sentry/utils" "6.5.1"
     hoist-non-react-statics "^3.3.2"
     tslib "^1.9.3"
 
@@ -2250,28 +2250,20 @@
     "@sentry/utils" "6.2.3"
     tslib "^1.9.3"
 
-"@sentry/types@6.2.2":
-  version "6.2.2"
-  resolved "https://registry.nlark.com/@sentry/types/download/@sentry/types-6.2.2.tgz?cache=0&sync_timestamp=1622184868393&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Ftypes%2Fdownload%2F%40sentry%2Ftypes-6.2.2.tgz#9fc7795156680d3da5fc6ecc66702d8f7917f2b1"
-  integrity sha1-n8d5UVZoDT2l/G7MZnAtj3kX8rE=
-
 "@sentry/types@6.2.3":
   version "6.2.3"
   resolved "https://registry.nlark.com/@sentry/types/download/@sentry/types-6.2.3.tgz?cache=0&sync_timestamp=1622184868393&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Ftypes%2Fdownload%2F%40sentry%2Ftypes-6.2.3.tgz#0c06a475a51d28c73a69b05f0d43db05310ec241"
   integrity sha1-DAakdaUdKMc6abBfDUPbBTEOwkE=
 
+"@sentry/types@6.5.1":
+  version "6.5.1"
+  resolved "https://registry.nlark.com/@sentry/types/download/@sentry/types-6.5.1.tgz#0a34ecfd1ae9275a416a105640eb4bed45a46a1d"
+  integrity sha1-CjTs/RrpJ1pBahBWQOtL7UWkah0=
+
 "@sentry/types@^5.27.3":
   version "5.30.0"
   resolved "https://registry.nlark.com/@sentry/types/download/@sentry/types-5.30.0.tgz#19709bbe12a1a0115bc790b8942917da5636f402"
   integrity sha1-GXCbvhKhoBFbx5C4lCkX2lY29AI=
-
-"@sentry/utils@6.2.2":
-  version "6.2.2"
-  resolved "https://registry.nlark.com/@sentry/utils/download/@sentry/utils-6.2.2.tgz?cache=0&sync_timestamp=1622184868743&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sentry%2Futils%2Fdownload%2F%40sentry%2Futils-6.2.2.tgz#69f7151db74e65a010cec062cc9ab3e30bf2c80a"
-  integrity sha1-afcVHbdOZaAQzsBizJqz4wvyyAo=
-  dependencies:
-    "@sentry/types" "6.2.2"
-    tslib "^1.9.3"
 
 "@sentry/utils@6.2.3":
   version "6.2.3"
@@ -2279,6 +2271,14 @@
   integrity sha1-yWU5Vxpn+y7tVolxM2SfNTCeP3Q=
   dependencies:
     "@sentry/types" "6.2.3"
+    tslib "^1.9.3"
+
+"@sentry/utils@6.5.1":
+  version "6.5.1"
+  resolved "https://registry.nlark.com/@sentry/utils/download/@sentry/utils-6.5.1.tgz#046baf7d1a6564d6d555437ad3674dba9bc0806a"
+  integrity sha1-BGuvfRplZNbVVUN602dNupvAgGo=
+  dependencies:
+    "@sentry/types" "6.5.1"
     tslib "^1.9.3"
 
 "@sentry/webpack-plugin@^1.13.0":
