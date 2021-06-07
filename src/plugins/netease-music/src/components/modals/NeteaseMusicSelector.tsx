@@ -6,19 +6,32 @@
 
 import React, { useCallback, useState } from 'react';
 import { TMemo } from '@capital/shared/components/TMemo';
-import { ChatBoxBtn } from '@capital/web/components/chatBox/style';
 import { showToasts } from '@capital/shared/manager/ui';
-import { Button, Empty, Input, Popover } from 'antd';
+import { Button, Divider, Empty, Input } from 'antd';
 import {
   NeteaseMusicSongInfo,
   searchMusicList,
-} from '../../../model/netease-music';
-import logo from '../../../../assets/netease-music.svg';
+} from '../../model/netease-music';
+import { ModalWrapper } from '@capital/web/components/Modal';
+import { t } from '@capital/shared/i18n';
+import styled from 'styled-components';
+import _get from 'lodash/get';
 
 const Search = Input.Search;
 
-export const ChatNeteaseMusicSendBox: React.FC = TMemo(() => {
-  const [visible, setVisible] = useState(false);
+const SongItem = styled.div`
+  display: flex;
+
+  > .name {
+    flex: 1;
+  }
+
+  > .action {
+    width: 80px;
+  }
+`;
+
+export const NeteaseMusicSelector: React.FC = TMemo(() => {
   const [loading, setLoading] = useState(false);
   const [searchedList, setSearchedList] =
     useState<NeteaseMusicSongInfo[] | null>(null);
@@ -31,11 +44,11 @@ export const ChatNeteaseMusicSendBox: React.FC = TMemo(() => {
       if (res.code === 200) {
         setSearchedList(res.result.songs);
       } else {
-        showToasts('搜索音乐失败', 'error');
+        showToasts(t('搜索音乐失败'), 'error');
       }
     } catch (err) {
       console.error(err);
-      showToasts('搜索失败:' + String(err), 'error');
+      showToasts(`${t('搜索失败')}: ${String(err)}`, 'error');
     } finally {
       setLoading(false);
     }
@@ -45,39 +58,36 @@ export const ChatNeteaseMusicSendBox: React.FC = TMemo(() => {
     console.log('songId', songId);
   }, []);
 
-  const content = (
-    <div>
+  return (
+    <ModalWrapper title={t('网易云音乐')}>
       <Search onSearch={onSearch} disabled={loading} />
+
+      <Divider />
 
       {Array.isArray(searchedList) ? (
         searchedList.length > 0 ? (
           searchedList.map((song) => (
-            <div>
-              <div>{song.name}</div>
-              <div>
-                <Button onClick={() => handleClick(song.id)}>发送</Button>
+            <SongItem>
+              <div className="name">{song.name}</div>
+              <div className="artist">
+                {_get(song, ['artists', 0, 'name'], '')}
               </div>
-            </div>
+              <div className="action">
+                <Button
+                  type="link"
+                  disabled={loading}
+                  onClick={() => handleClick(song.id)}
+                >
+                  {t('发送')}
+                </Button>
+              </div>
+            </SongItem>
           ))
         ) : (
           <Empty />
         )
       ) : null}
-    </div>
-  );
-
-  return (
-    <Popover
-      visible={visible}
-      onVisibleChange={setVisible}
-      placement="topRight"
-      trigger="click"
-      content={content}
-    >
-      <ChatBoxBtn>
-        <img src={logo} />
-      </ChatBoxBtn>
-    </Popover>
+    </ModalWrapper>
   );
 });
-ChatNeteaseMusicSendBox.displayName = 'ChatNeteaseMusicSendBox';
+NeteaseMusicSelector.displayName = 'NeteaseMusicSelector';

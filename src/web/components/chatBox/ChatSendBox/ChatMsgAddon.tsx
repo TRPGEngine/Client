@@ -13,6 +13,7 @@ import { insertImage } from '../../editor/changes/insertImage';
 import { showGlobalLoading, showToasts } from '@shared/manager/ui';
 import { ChatBoxBtn } from '../style';
 import { trackEvent } from '@web/utils/analytics-helper';
+import { chatSendBoxAddonAction } from '@web/reg/regChatSendBoxAction';
 
 const ChatMsgAddonItemContainer = styled.div`
   padding: 6px 10px;
@@ -81,6 +82,18 @@ export const ChatMsgAddon: React.FC<{
       <ChatMsgAddonItemContainer onClick={handleOpenFilePizza}>
         {t('发送文件')}
       </ChatMsgAddonItemContainer>
+
+      {chatSendBoxAddonAction.map((item) => (
+        <ChatMsgAddonItemContainer
+          key={item.label}
+          onClick={() => {
+            setVisible(false);
+            item.onClick();
+          }}
+        >
+          {item.label}
+        </ChatMsgAddonItemContainer>
+      ))}
     </div>
   );
 

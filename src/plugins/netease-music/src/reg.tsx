@@ -1,7 +1,12 @@
 import React from 'react';
-import { regChatSendBoxRightAction } from '@capital/web/reg/regChatSendBoxAction';
-import { ChatNeteaseMusicSendBox } from './components/chatBox/ChatSendBox/ChatNeteaseMusicSendBox';
+import { regChatSendBoxAddonAction } from '@capital/web/reg/regChatSendBoxAction';
+import { openModal } from '@capital/web/components/Modal';
+import { NeteaseMusicSelector } from './components/modals/NeteaseMusicSelector';
+import { t } from '@capital/shared/i18n';
 
-regChatSendBoxRightAction(
-  <ChatNeteaseMusicSendBox key="ChatNeteaseMusicSendBox" />
-);
+regChatSendBoxAddonAction({
+  label: t('发送网易云音乐'),
+  onClick: () => {
+    openModal(<NeteaseMusicSelector />);
+  },
+});
