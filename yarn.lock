@@ -6404,7 +6404,7 @@ cross-env@^5.2.1:
   dependencies:
     cross-spawn "^6.0.5"
 
-cross-fetch@^3.0.4:
+cross-fetch@3.1.4, cross-fetch@^3.0.4:
   version "3.1.4"
   resolved "https://registry.npm.taobao.org/cross-fetch/download/cross-fetch-3.1.4.tgz#9723f3a3a247bf8b89039f3a380a9244e8fa2f39"
   integrity sha1-lyPzo6JHv4uJA586OAqSROj6Lzk=
@@ -10336,6 +10336,13 @@ hyphenate-style-name@^1.0.2:
   version "1.0.4"
   resolved "https://registry.npm.taobao.org/hyphenate-style-name/download/hyphenate-style-name-1.0.4.tgz#691879af8e220aea5750e8827db4ef62a54e361d"
   integrity sha1-aRh5r44iCupXUOiCfbTvYqVONh0=
+
+i18next-http-backend@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.nlark.com/i18next-http-backend/download/i18next-http-backend-1.2.6.tgz#80b12e8b207814aebb3b8a74c4487dd156973bee"
+  integrity sha1-gLEuiyB4FK67O4p0xEh90VaXO+4=
+  dependencies:
+    cross-fetch "3.1.4"
 
 i18next-resource-store-loader@^0.1.2:
   version "0.1.2"
