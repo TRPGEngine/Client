@@ -1574,6 +1574,16 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@iconify/icons-mdi@^1.0.46":
+  version "1.1.15"
+  resolved "https://registry.nlark.com/@iconify/icons-mdi/download/@iconify/icons-mdi-1.1.15.tgz#e035130cc480c4318fb4cb21b8b836a2ba32c8b9"
+  integrity sha1-4DUTDMSAxDGPtMshuLg2oroyyLk=
+
+"@iconify/react@^1.1.3":
+  version "1.1.4"
+  resolved "https://registry.nlark.com/@iconify/react/download/@iconify/react-1.1.4.tgz#c778eddbaf196e55705d0bedff00d039dc1de8d3"
+  integrity sha1-x3jt268ZblVwXQvt/wDQOdwd6NM=
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.npm.taobao.org/@istanbuljs/load-nyc-config/download/@istanbuljs/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -2123,6 +2133,15 @@
   dependencies:
     "@rollup/pluginutils" "^3.1.0"
     magic-string "^0.25.7"
+
+"@rollup/plugin-url@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.npm.taobao.org/@rollup/plugin-url/download/@rollup/plugin-url-6.0.0.tgz#20fbc8cda9bc5f0c31d7225f633002ce73e920b0"
+  integrity sha1-IPvIzam8Xwwx1yJfYzACznPpILA=
+  dependencies:
+    "@rollup/pluginutils" "^3.1.0"
+    make-dir "^3.1.0"
+    mime "^2.4.6"
 
 "@rollup/pluginutils@^3.0.4", "@rollup/pluginutils@^3.0.8", "@rollup/pluginutils@^3.1.0":
   version "3.1.0"
@@ -12973,7 +12992,7 @@ mime@1.6.0, mime@^1.4.1:
   resolved "https://registry.npm.taobao.org/mime/download/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
   integrity sha1-Ms2eXGRVO9WNGaVor0Uqz/BJgbE=
 
-mime@^2.3.1, mime@^2.4.4:
+mime@^2.3.1, mime@^2.4.4, mime@^2.4.6:
   version "2.5.2"
   resolved "https://registry.npm.taobao.org/mime/download/mime-2.5.2.tgz#6e3dc6cc2b9510643830e5f19d5cb753da5eeabe"
   integrity sha1-bj3GzCuVEGQ4MOXxnVy3U9pe6r4=
@@ -13016,13 +13035,14 @@ mini-create-react-context@^0.4.0:
     "@babel/runtime" "^7.12.1"
     tiny-warning "^1.0.3"
 
-mini-star@^0.0.20:
-  version "0.0.20"
-  resolved "https://registry.nlark.com/mini-star/download/mini-star-0.0.20.tgz#2453b1991d48603ebc444c8411e9c2486c48079a"
-  integrity sha1-JFOxmR1IYD68REyEEenCSGxIB5o=
+mini-star@^0.0.21:
+  version "0.0.21"
+  resolved "https://registry.nlark.com/mini-star/download/mini-star-0.0.21.tgz?cache=0&sync_timestamp=1623051489582&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fmini-star%2Fdownload%2Fmini-star-0.0.21.tgz#0ebec35e3d515e1d29ba6a178c68a31ed920dd1c"
+  integrity sha1-Dr7DXj1RXh0pumoXjGijHtkg3Rw=
   dependencies:
     "@rollup/plugin-commonjs" "^19.0.0"
     "@rollup/plugin-node-resolve" "^13.0.0"
+    "@rollup/plugin-url" "^6.0.0"
     cosmiconfig "^7.0.0"
     fs-extra "^9.1.0"
     inquirer "^8.1.0"
@@ -15745,6 +15765,15 @@ react-fileupload@^2.4.0:
   integrity sha1-dm6K5jeabiNlHHkEQ+dxbu2Urmg=
   dependencies:
     react "^15.0.2"
+
+react-h5-audio-player@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.nlark.com/react-h5-audio-player/download/react-h5-audio-player-3.7.1.tgz#7401f1385a5bd369652dde18cca5823fd6cc6f30"
+  integrity sha1-dAHxOFpb02llLd4YzKWCP9bMbzA=
+  dependencies:
+    "@babel/runtime" "^7.10.2"
+    "@iconify/icons-mdi" "^1.0.46"
+    "@iconify/react" "^1.1.3"
 
 react-i18next@^11.7.2:
   version "11.8.15"

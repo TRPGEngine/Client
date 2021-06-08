@@ -12,6 +12,7 @@ import type {
 import { TMemo } from '@capital/shared/components/TMemo';
 import { showModal, hideModal } from '@capital/shared/redux/actions/ui';
 import { SharedActorList } from './SharedActorList';
+import { t } from '@capital/shared/i18n';
 
 const Search = Input.Search;
 
@@ -69,7 +70,7 @@ const TemplateSelect: React.FC<Props> = TMemo((props: Props) => {
     if (search === '') {
       return (
         <div>
-          <p>推荐模板</p>
+          <p>{t('推荐模板')}</p>
           <TemplateList
             list={props.suggestTemplate}
             onSelectTemplate={props.onSelectTemplate}
@@ -79,10 +80,10 @@ const TemplateSelect: React.FC<Props> = TMemo((props: Props) => {
     }
 
     return props.findingResult.length === 0 ? (
-      <Empty description="暂未搜索结果" />
+      <Empty description={t('暂未搜索结果')} />
     ) : (
       <div>
-        <p>搜索结果</p>
+        <p>{t('搜索结果')}</p>
         <TemplateList
           list={props.findingResult}
           onSelectTemplate={props.onSelectTemplate}
@@ -102,12 +103,12 @@ const TemplateSelect: React.FC<Props> = TMemo((props: Props) => {
     <div>
       <div style={{ display: 'flex' }}>
         <Button type="primary" onClick={handleShowSharedActorList}>
-          从人物库中创建
+          {t('从人物库中创建')}
         </Button>
         <Search
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="搜索模板"
+          placeholder={t('搜索模板')}
           onSearch={handleSearch}
           enterButton={true}
         />

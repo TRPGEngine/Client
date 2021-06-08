@@ -18,8 +18,11 @@ import { Iconfont } from './Iconfont';
  */
 
 const ModalMask = styled(animated.div)`
-  width: 100vw;
-  height: 100vh;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   background-color: ${(props) => props.theme.color.transparent50};
   display: flex;
   justify-content: center;

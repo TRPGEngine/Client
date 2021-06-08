@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.1](https://github.com/TRPGEngine/Client/compare/v0.6.0...v0.6.1) (2021-06-08)
+
+
+### Features
+
+* **web:** 增加网易云音乐卡片发送 ([9386655](https://github.com/TRPGEngine/Client/commit/93866551788b2395edd7165a6e34c499809aa988))
+* 增加PopupViewer ([caf07cd](https://github.com/TRPGEngine/Client/commit/caf07cd3238739becbbe439f13f4bb7a048b3bc7))
+* 增加多媒体卡片 ([a5299a9](https://github.com/TRPGEngine/Client/commit/a5299a9a54bf3802acbd74fac3dae969d205089c))
+* 增加网易云音乐插件搜索 ([79a7df8](https://github.com/TRPGEngine/Client/commit/79a7df851e9dda43d55b9a02fde4c3ed02f1b314))
+* **web:** 增加iframe类型多媒体卡片 ([452c529](https://github.com/TRPGEngine/Client/commit/452c529fc876d91bcde584ea25f57e6c2ca5be1e))
+* **web:** 增加点击头像查看原图功能 ([0b0f341](https://github.com/TRPGEngine/Client/commit/0b0f341e78f77b293d391d4f82731ab6c16aa6ab))
+
+
+### Bug Fixes
+
+* 移除人物库列表多余的) ([86b8953](https://github.com/TRPGEngine/Client/commit/86b8953a916f19f5857b4234a70463c775be1ef9))
+* **web:** 修复StandaloneWindow自定义位置不生效的bug ([0f24c45](https://github.com/TRPGEngine/Client/commit/0f24c4585fa82ca054abec03d0576462a866a3ff))
+* 修复action actor UPDATE_ACTOR_SUCCESS 缺失的bug ([56df1ae](https://github.com/TRPGEngine/Client/commit/56df1ae86ce6f3eb38761182565905a59d2bf694))
+
+## [0.6.0](https://github.com/TRPGEngine/Client/compare/v0.5.33...v0.6.0) (2021-06-02)
+
 ### [0.5.33](https://github.com/TRPGEngine/Client/compare/v0.5.32...v0.5.33) (2021-06-02)
 
 

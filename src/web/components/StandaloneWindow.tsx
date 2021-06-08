@@ -101,47 +101,41 @@ const Window: React.FC<WindowContainerProps> = React.memo((props) => {
  * 独立窗口
  */
 let currentWindowNum = 0;
-const StandaloneWindow: React.FC<StandaloneWindowConfig> & {
-  open?: (config: StandaloneWindowConfig) => void;
-} = React.memo((props) => {
-  const { width, height } = useWindowSize();
-  const isMobile = useIsMobile();
+const StandaloneWindow: React.FC<StandaloneWindowConfig> = React.memo(
+  (props) => {
+    const { width, height } = useWindowSize();
+    const isMobile = useIsMobile();
 
-  const defaultPos = useMemo(() => {
-    const defaultPos = props.options!.default!;
+    const defaultPos = useMemo(() => {
+      const defaultWidth = 375;
+      const defaultHeight = 600;
 
-    return {
-      ...defaultPos,
-      x: isMobile ? 0 : width / 2 + currentWindowNum * 40,
-      y: _isNumber(defaultPos?.height)
-        ? height - defaultPos!.height
-        : height / 2,
-    };
-  }, []);
+      return {
+        x: isMobile ? 0 : width / 2 + currentWindowNum * 40,
+        y: height - defaultHeight,
+        width: defaultWidth,
+        height: defaultHeight,
+      };
+    }, []);
 
-  return (
-    <Container>
-      <Rnd
-        dragHandleClassName="window-container-title-text"
-        {...props.options}
-        default={defaultPos}
-      >
-        <Window title={props.title} onClose={props.onClose}>
-          {props.body}
-        </Window>
-      </Rnd>
-    </Container>
-  );
-});
+    return (
+      <Container>
+        <Rnd
+          dragHandleClassName="window-container-title-text"
+          {...props.options}
+          default={props.options?.default ?? defaultPos}
+        >
+          <Window title={props.title} onClose={props.onClose}>
+            {props.body}
+          </Window>
+        </Rnd>
+      </Container>
+    );
+  }
+);
 StandaloneWindow.displayName = 'StandaloneWindow';
 StandaloneWindow.defaultProps = {
   options: {
-    default: {
-      x: 0,
-      y: 0,
-      width: 375,
-      height: 600,
-    },
     minWidth: 180,
     minHeight: 210,
   },
@@ -149,10 +143,10 @@ StandaloneWindow.defaultProps = {
 };
 
 /**
- * 打开操作
+ * 打开独立窗口
  * @param config
  */
-StandaloneWindow.open = (config) => {
+export function openStandaloneWindow(config: StandaloneWindowConfig) {
   currentWindowNum++;
   const key = PortalAdd(
     <StandaloneWindow
@@ -165,9 +159,7 @@ StandaloneWindow.open = (config) => {
       }}
     />
   );
-};
-
-export default StandaloneWindow;
+}
 
 /**
  * 打开一个网页
@@ -179,7 +171,7 @@ export async function openWebviewWindow(
 ) {
   const node = React.createElement(Webview, { src: url });
 
-  StandaloneWindow.open!({
+  openStandaloneWindow({
     ...options,
     body: node,
   });

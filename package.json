@@ -1,6 +1,6 @@
 {
   "name": "trpg-game-client",
-  "version": "0.5.33",
+  "version": "0.6.1",
   "description": "专注于TRPG跑团的IM即时应用聊天软件",
   "main": "./dist/entry.js",
   "productName": "TRPG Engine",
@@ -51,7 +51,7 @@
     "install:playground": "cd ./src/playground && yarn",
     "install:all": "yarn run install:appv2 && yarn run install:web && yarn run install:playground",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "release": "standard-version -a"
+    "release": "standard-version -a -r patch"
   },
   "husky": {
     "hooks": {
@@ -124,7 +124,7 @@
     "md5": "^2.2.1",
     "mediasoup-client": "^3.6.21",
     "memoize-one": "^5.1.1",
-    "mini-star": "^0.0.20",
+    "mini-star": "^0.0.21",
     "moment": "^2.27.0",
     "node-emoji": "^1.10.0",
     "nprogress": "^0.2.0",
@@ -138,6 +138,7 @@
     "react-dnd-html5-backend": "^11.1.3",
     "react-dom": "17.0.1",
     "react-fileupload": "^2.4.0",
+    "react-h5-audio-player": "^3.7.1",
     "react-i18next": "^11.7.2",
     "react-image-crop": "^8.3.1",
     "react-image-lightbox": "^5.1.0",
@@ -198,6 +199,7 @@
     "@percy/cypress": "^2.3.3",
     "@prettier/plugin-xml": "^0.10.0",
     "@relative-ci/agent": "^2.0.0-beta.0",
+    "@rollup/plugin-url": "^6.0.0",
     "@sentry/types": "^5.27.3",
     "@sentry/webpack-plugin": "^1.13.0",
     "@snowpack/plugin-react-refresh": "^2.3.2",

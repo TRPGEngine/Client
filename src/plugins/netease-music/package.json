@@ -1,0 +1,9 @@
+{
+  "name": "@trpgengine-plugins/netease-music",
+  "main": "src/index.ts",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {},
+  "author": "moonrailgun",
+  "license": "GPL-3.0"
+}

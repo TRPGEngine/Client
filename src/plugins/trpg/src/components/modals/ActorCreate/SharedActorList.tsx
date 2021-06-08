@@ -16,6 +16,7 @@ import { showModal } from '@capital/shared/redux/actions/ui';
 import ActorInfo from '../ActorInfo';
 import { Empty, Pagination } from 'antd';
 import LoadingSpinner from '@capital/web/components/LoadingSpinner';
+import { t } from '@capital/shared/i18n';
 
 interface Props {}
 export const SharedActorList: React.FC<Props> = TMemo(() => {
@@ -55,7 +56,7 @@ export const SharedActorList: React.FC<Props> = TMemo(() => {
 
   return useMemo(
     () => (
-      <ModalPanel title="人物库" style={{ width: 620, height: 540 }}>
+      <ModalPanel title={t('人物库')} style={{ width: 620, height: 540 }}>
         {isLoading ? (
           <LoadingSpinner />
         ) : Array.isArray(sharedActors) && sharedActors.length > 0 ? (
@@ -75,13 +76,12 @@ export const SharedActorList: React.FC<Props> = TMemo(() => {
                   <Fragment>
                     <button onClick={() => handleFork(actor.uuid)}>Fork</button>
                     <button onClick={() => handleShowActorInfo(actor)}>
-                      查看
+                      {t('查看')}
                     </button>
                   </Fragment>
                 }
               />
             ))}
-            )
           </div>
         ) : (
           <Empty />

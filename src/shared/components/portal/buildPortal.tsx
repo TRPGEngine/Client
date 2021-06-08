@@ -6,6 +6,7 @@ import { PortalManager } from './Manager';
 import { createPortalContext } from './context';
 import { PortalConsumer } from './Consumer';
 import _isNil from 'lodash/isNil';
+import { DefaultEventEmitter } from './defaultEventEmitter';
 
 type Operation =
   | { type: 'mount'; key: number; children: React.ReactNode }
@@ -19,18 +20,36 @@ const removeType = 'REMOVE_PORTAL';
 // For react-native
 // const TopViewEventEmitter = DeviceEventEmitter || new NativeEventEmitter();
 
+const defaultRenderManagerViewFn = (children) => <>{children}</>;
+
 interface EventEmitterFunc {
   emit: (...args: any[]) => any;
   addListener: (...args: any[]) => any;
   removeListener: (...args: any[]) => any;
 }
 export interface BuildPortalOptions {
-  hostName: string;
-  eventEmitter: EventEmitterFunc;
-  renderManagerView: (children: React.ReactNode) => React.ReactElement;
+  /**
+   * 唯一标识名
+   * 用于多实例的情况
+   */
+  hostName?: string;
+
+  /**
+   * 事件监听函数
+   */
+  eventEmitter?: EventEmitterFunc;
+
+  /**
+   * 负责Portal Manager如何生成函数的逻辑
+   */
+  renderManagerView?: (children: React.ReactNode) => React.ReactElement;
 }
 export function buildPortal(options: BuildPortalOptions) {
-  const { hostName, eventEmitter, renderManagerView } = options;
+  const {
+    hostName = 'default',
+    eventEmitter = new DefaultEventEmitter(),
+    renderManagerView = defaultRenderManagerViewFn,
+  } = options;
   let nextKey = 10000;
 
   const add = (el: React.ReactNode): number => {

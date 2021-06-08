@@ -1,11 +1,17 @@
 import React from 'react';
 import type { MessageProps } from '@shared/components/message/MessageHandler';
+import _get from 'lodash/get';
+import classNames from 'classnames';
 
-class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
-  P
-> {
+class BaseCard<
+  P extends MessageProps = MessageProps
+> extends React.Component<P> {
+  get cardType() {
+    return _get(this.props.info, ['data', 'type']);
+  }
+
   // 获取卡片视图
-  getCardView() {
+  getCardView(): React.ReactNode {
     const info = this.props.info;
 
     return <pre className="card-content">{info.message}</pre>;
@@ -44,8 +50,9 @@ class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
 
   // 获取卡片标题
   getCardTitle() {
-    if (this.props.info && this.props.info.data && this.props.info.data.title) {
-      return <div className="card-title">{this.props.info.data.title}</div>;
+    const title = _get(this.props.info, 'data.title');
+    if (typeof title === 'string') {
+      return <div className="card-title">{title}</div>;
     }
 
     return null;
@@ -53,7 +60,7 @@ class BaseCard<P extends MessageProps = MessageProps> extends React.Component<
 
   render() {
     return (
-      <div className="bubble">
+      <div className={classNames('bubble', `bubble-${this.cardType}`)}>
         {this.getCardTitle()}
         {this.getCardView()}
         {this.getCardAction()}

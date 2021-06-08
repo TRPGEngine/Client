@@ -18,3 +18,12 @@ export const [chatSendBoxLeftAction, regChatSendBoxLeftAction] =
  */
 export const [chatSendBoxRightAction, regChatSendBoxRightAction] =
   buildRegList<React.ReactElement>();
+
+/**
+ * Addon操作
+ */
+export const [chatSendBoxAddonAction, regChatSendBoxAddonAction] =
+  buildRegList<{
+    label: string;
+    onClick: (context: { converseUUID: string }) => void;
+  }>();
