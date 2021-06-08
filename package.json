@@ -31,7 +31,7 @@
     "playground:build": "cross-env NODE_ENV=production NODE_OPTIONS='--max_old_space_size=4096' webpack --progress --color --config ./build/config/webpack.playground.config.js && yarn run clean:sourcemap",
     "clean:sourcemap": "rimraf ./dist/**/*.js.map",
     "translation:build": "node ./build/script/buildPublicTranslation.js",
-    "translation:scan": "i18next-scanner --config build/config/i18next-scanner.config.js",
+    "translation:scan": "node ./build/script/scanTranslation.js",
     "snowpack": "cross-env NODE_OPTIONS='--max_old_space_size=4096' snowpack dev --polyfill-node",
     "snowpack:build": "cross-env NODE_OPTIONS='--max_old_space_size=4096' snowpack build --polyfill-node",
     "plugins:all": "ministar buildPlugin all",
