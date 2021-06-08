@@ -4,7 +4,6 @@ import {
   initReactI18next,
 } from 'react-i18next';
 import { crc32 } from 'crc';
-// import { resources } from './resources';
 import { languageDetector } from './language';
 import { useState, useEffect } from 'react';
 import HttpApi from 'i18next-http-backend'; // https://github.com/i18next/i18next-http-backend
@@ -16,7 +15,6 @@ i18next
   .init({
     // debug: true,
     fallbackLng: 'zh-CN',
-    // resources,
     backend: {
       loadPath: '/locales/{{lng}}/{{ns}}.json',
       addPath: (...args) => {
