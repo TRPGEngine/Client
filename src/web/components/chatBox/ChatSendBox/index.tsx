@@ -53,7 +53,7 @@ export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
           <Space align="end">
             {...chatSendBoxRightAction.reverse()}
             <ChatMsgEmotion editorRef={editorRef} />
-            <ChatMsgAddon editorRef={editorRef} />
+            <ChatMsgAddon editorRef={editorRef} converseUUID={converseUUID} />
           </Space>
         </div>
       </ChatSendBoxContext.Provider>

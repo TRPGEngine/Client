@@ -200,6 +200,10 @@ export function initPlugins(): Promise<void> {
     () => import('@shared/redux/hooks/useCache')
   );
   regSharedModule(
+    '@capital/shared/redux/hooks/useMsgSend',
+    () => import('@shared/redux/hooks/useMsgSend')
+  );
+  regSharedModule(
     '@capital/shared/redux/hooks/group',
     () => import('@shared/redux/hooks/group')
   );
@@ -210,6 +214,10 @@ export function initPlugins(): Promise<void> {
   regSharedModule(
     '@capital/shared/utils/upload-helper',
     () => import('@shared/utils/upload-helper')
+  );
+  regSharedModule(
+    '@capital/shared/utils/request',
+    () => import('@shared/utils/request')
   );
   regSharedModule(
     '@capital/shared/model/player',
@@ -243,11 +251,9 @@ export function initPlugins(): Promise<void> {
   );
 
   return initMiniStar({
-    plugins: [
-      {
-        name: 'trpg',
-        url: '/plugins/trpg/index.js',
-      },
-    ],
+    plugins: ['trpg', 'netease-music'].map((plugin) => ({
+      name: plugin,
+      url: `/plugins/${plugin}/index.js`,
+    })),
   });
 }
