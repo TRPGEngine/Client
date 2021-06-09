@@ -109,14 +109,6 @@ module.exports = {
             to: '"0.0.0"',
           },
           {
-            from: `const resBundle = require("i18next-resource-store-loader!./langs/index.js");`,
-            to: 'import resBundle from "./langs/zh-CN/translation.json"',
-          },
-          {
-            from: `export const resources = resBundle;`,
-            to: 'export const resources = {"zh-CN": {translation: resBundle}};',
-          },
-          {
             from: 'import Config from "config";',
             to: `const Config = ${JSON.stringify(
               require('./build/config/configObj')
