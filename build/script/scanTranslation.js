@@ -43,8 +43,8 @@ mainstream.on('finish', () => {
             ...scannerConfig.options,
             resource: {
               ...scannerConfig.options.resource,
-              loadPath: `./src/plugins/${plugin}/{{lng}}/{{ns}}.json`, //输入路径
-              savePath: `./src/plugins/${plugin}/{{lng}}/{{ns}}.json`, //输出路径
+              loadPath: `./src/plugins/${plugin}/i18n/{{lng}}/{{ns}}.json`, //输入路径
+              savePath: `./src/plugins/${plugin}/i18n/{{lng}}/{{ns}}.json`, //输出路径
             },
           },
           scannerConfig.transform

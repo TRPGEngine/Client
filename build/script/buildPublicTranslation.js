@@ -4,13 +4,21 @@
 const path = require('path');
 const fs = require('fs-extra');
 const scannerConfig = require('../config/i18next-scanner.config');
+const utils = require('./utils');
 const langs = scannerConfig.options.lngs;
 const distDir = path.resolve(__dirname, '../../dist');
+const plugins = utils.getPluginDirs();
 
 const filepath = [
   path.resolve(
     __dirname,
     '../../src/shared/i18n/langs/{{lang}}/translation.json'
+  ),
+  ...plugins.map((plugin) =>
+    path.resolve(
+      __dirname,
+      `../../src/plugins/${plugin}/i18n/{{lang}}/translation.json`
+    )
   ),
 ];
 
