@@ -85,7 +85,7 @@ const initGroupInfo = function (group: GroupInfo): TRPGAction {
     // 获取团初始数据
     api.emit('group::getGroupInitData', { groupUUID }, function (data) {
       if (data.result) {
-        const { members, groupActors, groupActorsMapping, groupPanels } = data;
+        const { members } = data;
 
         // 处理团成员
         const uuidList: string[] = [];
@@ -99,6 +99,16 @@ const initGroupInfo = function (group: GroupInfo): TRPGAction {
           groupUUID,
           payload: uuidList,
         });
+      } else {
+        console.error('获取团初始数据失败:', data.msg);
+      }
+    });
+
+    // TODO: 待抽到插件中
+    api
+      .emitP('actor::getGroupActorInitData', { groupUUID })
+      .then((data) => {
+        const { groupActors, groupActorsMapping } = data;
 
         // 处理团人物
         for (const ga of groupActors) {
@@ -126,10 +136,12 @@ const initGroupInfo = function (group: GroupInfo): TRPGAction {
           groupUUID,
           payload: groupActorsMapping,
         });
-      } else {
-        console.error('获取团初始数据失败:', data.msg);
-      }
-    });
+      })
+      .catch((err) => {
+        console.error(err);
+
+        showToasts('团人物卡信息获取失败', 'error');
+      });
 
     // 获取自己选择的团角色
     dispatch(getSelectedGroupActor(groupUUID));
@@ -352,18 +364,20 @@ export const sendGroupInvite = function (
   to_uuid: string
 ): TRPGAction {
   return function (dispatch, getState) {
-    api.emit('group::sendGroupInvite', { group_uuid, to_uuid }, function (
-      data
-    ) {
-      if (data.result) {
-        dispatch(showAlert('发送邀请成功!'));
-        dispatch(hideSlidePanel());
-        dispatch({ type: SEND_GROUP_INVITE_SUCCESS, payload: data.invite });
-      } else {
-        dispatch(showAlert(data.msg));
-        console.error(data);
+    api.emit(
+      'group::sendGroupInvite',
+      { group_uuid, to_uuid },
+      function (data) {
+        if (data.result) {
+          dispatch(showAlert('发送邀请成功!'));
+          dispatch(hideSlidePanel());
+          dispatch({ type: SEND_GROUP_INVITE_SUCCESS, payload: data.invite });
+        } else {
+          dispatch(showAlert(data.msg));
+          console.error(data);
+        }
       }
-    });
+    );
   };
 };
 /**
@@ -557,17 +571,19 @@ export const requestAddGroupActor = function (
   actorUUID: string
 ): TRPGAction {
   return function (dispatch, getState) {
-    return api.emit('group::addGroupActor', { groupUUID, actorUUID }, function (
-      data
-    ) {
-      if (data.result) {
-        dispatch(hideModal());
-        dispatch(showAlert('提交成功!'));
-      } else {
-        dispatch(showAlert(data.msg));
-        console.error(data);
+    return api.emit(
+      'group::addGroupActor',
+      { groupUUID, actorUUID },
+      function (data) {
+        if (data.result) {
+          dispatch(hideModal());
+          dispatch(showAlert('提交成功!'));
+        } else {
+          dispatch(showAlert(data.msg));
+          console.error(data);
+        }
       }
-    });
+    );
   };
 };
 
@@ -747,18 +763,20 @@ export const dismissGroup = function (groupUUID: string): TRPGAction {
 
 export const tickMember = function (groupUUID, memberUUID) {
   return function (dispatch, getState) {
-    return api.emit('group::tickMember', { groupUUID, memberUUID }, function (
-      data
-    ) {
-      if (data.result) {
-        dispatch({ type: TICK_MEMBER_SUCCESS, groupUUID, memberUUID });
-        dispatch(showAlert('操作成功'));
-        dispatch(hideModal());
-      } else {
-        dispatch(showToast(data?.msg));
-        console.error(data);
+    return api.emit(
+      'group::tickMember',
+      { groupUUID, memberUUID },
+      function (data) {
+        if (data.result) {
+          dispatch({ type: TICK_MEMBER_SUCCESS, groupUUID, memberUUID });
+          dispatch(showAlert('操作成功'));
+          dispatch(hideModal());
+        } else {
+          dispatch(showToast(data?.msg));
+          console.error(data);
+        }
       }
-    });
+    );
   };
 };
 
