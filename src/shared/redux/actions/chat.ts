@@ -44,6 +44,9 @@ import type {
 import type { TRPGAction } from '../types/__all__';
 import { isUserUUID } from '@shared/utils/uuid';
 import { createAction } from '@reduxjs/toolkit';
+import { showToasts } from '@shared/manager/ui';
+import { reportError } from '@web/utils/error';
+import { t } from '@shared/i18n';
 
 const getUserConversesHash = (userUUID: string): string => {
   return `userConverses#${userUUID}`;
@@ -79,9 +82,11 @@ export const switchToConverse = function switchToConverse(
  */
 export const clearSelectedConverse = createAction('CLEAR_SELECTED_CONVERSE');
 
-export const addConverse = createAction<
-  Partial<ChatStateConverse> & Pick<ChatStateConverse, 'uuid' | 'type' | 'name'>
->(ADD_CONVERSES);
+export const addConverse =
+  createAction<
+    Partial<ChatStateConverse> &
+      Pick<ChatStateConverse, 'uuid' | 'type' | 'name'>
+  >(ADD_CONVERSES);
 
 export const updateConversesMsglist = function updateConversesMsglist(
   convUUID: string,
@@ -101,43 +106,50 @@ export const updateConversesMsglist = function updateConversesMsglist(
   };
 };
 
-// 获取多人会话
+/**
+ * 获取多人会话
+ */
 export const getConverses = function getConverses(cb?: () => void): TRPGAction {
-  return function (dispatch, getState) {
+  return async function (dispatch, getState) {
     dispatch({ type: GET_CONVERSES_REQUEST });
-    // 获取会话列表
-    return api.emit('chat::getConverses', {}, function (data) {
-      cb && cb();
-      if (data.result) {
-        const list = data.list;
-        dispatch({ type: GET_CONVERSES_SUCCESS, payload: list });
-        const uuid = getState().user.info.uuid;
-        checkUser(uuid);
-        // 用户聊天记录
-        for (const item of list) {
-          const convUUID = item.uuid;
-          // 获取日志
-          if (!/^trpg/.test(convUUID)) {
-            checkUser(convUUID);
-          }
 
-          // TODO
-          api.emit(
-            'chat::getConverseChatLog',
-            { converse_uuid: convUUID },
-            function (data) {
-              if (data.result) {
-                dispatch(updateConversesMsglist(convUUID, data.list));
-              } else {
-                console.error('获取聊天记录失败:', data.msg);
-              }
-            }
-          );
-        }
-      } else {
-        console.error(data);
+    try {
+      // 获取会话列表
+      const data = await api.emitP('chat::getConverses', {});
+      if (typeof cb === 'function') {
+        cb();
       }
-    });
+
+      const list = data.list;
+      dispatch({ type: GET_CONVERSES_SUCCESS, payload: list });
+      const uuid = getState().user.info.uuid;
+      checkUser(uuid);
+      // 用户聊天记录
+      for (const item of list) {
+        const convUUID = item.uuid;
+        // 获取日志
+        if (!/^trpg/.test(convUUID)) {
+          checkUser(convUUID);
+        }
+
+        // TODO
+        api.emit(
+          'chat::getConverseChatLog',
+          { converse_uuid: convUUID },
+          function (data) {
+            if (data.result) {
+              dispatch(updateConversesMsglist(convUUID, data.list));
+            } else {
+              console.error('获取聊天记录失败:', data.msg);
+            }
+          }
+        );
+      }
+    } catch (err) {
+      showToasts(t('多人会话加载失败'));
+      reportError('多人会话加载失败:' + String(err));
+      console.error(err);
+    }
   };
 };
 
@@ -224,6 +236,7 @@ export const removeUserConverse = (userConverseUUID: string): TRPGAction => {
 
 /**
  * 增加用户UUID会话列表
+ * 并获取用户的信息
  * @param senders 会话UUID列表
  */
 export const addUserConverse = function addUserConverse(
@@ -291,16 +304,18 @@ export const addUserConverse = function addUserConverse(
     }
 
     // 更新系统消息
-    api.emit('chat::getUserChatLog', { user_uuid: 'trpgsystem' }, function (
-      data
-    ) {
-      if (data.result) {
-        const list = data.list;
-        dispatch(updateConversesMsglist('trpgsystem', list));
-      } else {
-        console.error('获取聊天记录失败:' + data.msg);
+    api.emit(
+      'chat::getUserChatLog',
+      { user_uuid: 'trpgsystem' },
+      function (data) {
+        if (data.result) {
+          const list = data.list;
+          dispatch(updateConversesMsglist('trpgsystem', list));
+        } else {
+          console.error('获取聊天记录失败:' + data.msg);
+        }
       }
-    });
+    );
   };
 };
 
@@ -308,15 +323,17 @@ export const getOfflineUserConverse = function getOfflineUserConverse(
   lastLoginDate: string
 ): TRPGAction {
   return function (dispatch, getState) {
-    api.emit('chat::getOfflineUserConverse', { lastLoginDate }, function (
-      data
-    ) {
-      if (data.result === true) {
-        dispatch(addUserConverse(data.senders));
-      } else {
-        console.error(data);
+    api.emit(
+      'chat::getOfflineUserConverse',
+      { lastLoginDate },
+      function (data) {
+        if (data.result === true) {
+          dispatch(addUserConverse(data.senders));
+        } else {
+          console.error(data);
+        }
       }
-    });
+    );
   };
 };
 
@@ -341,7 +358,10 @@ export const reloadConverseList = function reloadConverseList(
     const userInfo = getState().user.info;
     const userUUID = userInfo.uuid!;
 
-    dispatch(getConverses(cb)); // 从服务端获取多人会话列表
+    // 多人会话
+    dispatch(getConverses(cb));
+
+    // 用户会话
     rnStorage.get(getUserConversesHash(userUUID)).then(function (converse) {
       console.log('缓存中的用户会话列表:', converse);
       if (converse && converse.length > 0) {
@@ -744,18 +764,20 @@ export const stopWriting = function (
 
 export const getUserEmotion = function (): TRPGAction {
   return function (dispatch, getState) {
-    return api.emit('chatemotion::getUserEmotionCatalog', null, function (
-      data
-    ) {
-      if (data.result) {
-        dispatch({
-          type: UPDATE_USER_CHAT_EMOTION_CATALOG,
-          payload: data.catalogs,
-        });
-      } else {
-        console.error(data.msg);
+    return api.emit(
+      'chatemotion::getUserEmotionCatalog',
+      null,
+      function (data) {
+        if (data.result) {
+          dispatch({
+            type: UPDATE_USER_CHAT_EMOTION_CATALOG,
+            payload: data.catalogs,
+          });
+        } else {
+          console.error(data.msg);
+        }
       }
-    });
+    );
   };
 };
 

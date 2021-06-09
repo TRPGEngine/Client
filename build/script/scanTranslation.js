@@ -64,7 +64,7 @@ mainstream.on('finish', () => {
 
         const pluginTransPath = path.resolve(
           output,
-          `./src/plugins/${plugin}/${lang}/translation.json`
+          `./src/plugins/${plugin}/i18n/${lang}/translation.json`
         );
         const pluginTrans = fs.readJSONSync(pluginTransPath);
 
