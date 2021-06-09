@@ -27,6 +27,7 @@ const ModalMask = styled(animated.div)`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 200; // Full Modal 是100, 普通的modal应该比FullModal高
 `;
 
 const ModalInner = styled(animated.div)`
