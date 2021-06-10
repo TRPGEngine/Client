@@ -2,9 +2,21 @@ import { neteaseMusicAPI } from '../config';
 import _get from 'lodash/get';
 import axios from 'axios';
 
+const dynamicHeader: Record<string, string> = {};
 const request = axios.create({
   baseURL: neteaseMusicAPI,
   withCredentials: true,
+  // transformRequest: [
+  //   function (data, headers) {
+  //     // headers['common'] = {
+  //     //   ...headers,
+  //     //   ...dynamicHeader,
+  //     // };
+
+  //     // Do not change data
+  //     return data;
+  //   },
+  // ],
 });
 
 interface NeteaseMusicResponse<T = unknown> {
@@ -155,5 +167,23 @@ export async function checkLoginQRCodeStatus(unikey: string) {
   );
   const { code, message, cookie } = data;
 
-  return { code, message, cookie };
+  if (code === 803) {
+    // 授权成功
+    dynamicHeader['Cookie'] = cookie;
+  }
+
+  return { code, message };
+}
+
+/**
+ * 获取用户状态
+ */
+export async function fetchUserLoginStatus(): Promise<any> {
+  const { data } = await request.get(`/login/status?_=${Date.now()}`, {
+    headers: {
+      ...dynamicHeader,
+    },
+  });
+
+  return data;
 }

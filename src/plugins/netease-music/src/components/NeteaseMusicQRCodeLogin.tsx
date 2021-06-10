@@ -2,6 +2,7 @@ import { TMemo } from '@capital/shared/components/TMemo';
 import { QRCode } from '@capital/web/components/QRCode';
 import {
   checkLoginQRCodeStatus,
+  fetchUserLoginStatus,
   generateLoginQRCodeUrl,
 } from '../model/netease-music';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -54,21 +55,23 @@ export const NeteaseMusicQRCodeLogin: React.FC = TMemo(() => {
     let timer: ReturnType<typeof setTimeout>;
     function loop() {
       timer = setTimeout(() => {
-        checkLoginQRCodeStatus(unikeyRef.current).then(
-          ({ code, message, cookie }) => {
-            setQRStatus(qrStatusMap[code as QRStatusCode] ?? 'unknown');
-            setQRStatusMessage(message);
+        checkLoginQRCodeStatus(unikeyRef.current).then(({ code, message }) => {
+          setQRStatus(qrStatusMap[code as QRStatusCode] ?? 'unknown');
+          setQRStatusMessage(message);
 
-            if (code === 803) {
-              setQRStatus('success');
-              console.log('登录成功', cookie); // TODO
-            } else if (code === 800) {
-              // 二维码失效。 不再次检查
-            } else {
-              loop();
-            }
+          if (code === 803) {
+            setQRStatus('success');
+            console.log('登录成功');
+            // TODO
+            fetchUserLoginStatus().then((data) => {
+              console.log('data', data);
+            });
+          } else if (code === 800) {
+            // 二维码失效。 不再次检查
+          } else {
+            loop();
           }
-        );
+        });
       }, 1500);
     }
     loop(); // start
