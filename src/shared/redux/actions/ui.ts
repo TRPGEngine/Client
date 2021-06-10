@@ -29,6 +29,10 @@ export const showLoading = function (text = '加载中...'): TRPGAction {
 export const hideLoading = function (): TRPGAction {
   return { type: HIDE_LOADING };
 };
+
+/**
+ * @deprecated 请使用 @shared/manager/ui#showAlert
+ */
 export const showAlert = function (payload: AlertPayload): TRPGAction {
   if (typeof payload === 'string') {
     payload = {
@@ -40,6 +44,10 @@ export const showAlert = function (payload: AlertPayload): TRPGAction {
 export const hideAlert = function (): TRPGAction {
   return { type: HIDE_ALERT };
 };
+
+/**
+ * @deprecated 请使用 @web/components/Modal#openModal
+ */
 export const showModal = function (body): TRPGAction {
   return { type: SHOW_MODAL, payload: body };
 };
@@ -48,6 +56,10 @@ export const hideModal = function (): TRPGAction {
 };
 
 let toastTimer: ReturnType<typeof setTimeout> | null;
+
+/**
+ * @deprecated 请使用 请使用 @shared/manager/ui#showToasts
+ */
 export const showToast = function (msg: string): TRPGAction {
   return (dispatch, getState) => {
     dispatch({ type: SHOW_TOAST, text: msg });

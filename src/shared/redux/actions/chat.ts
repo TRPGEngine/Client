@@ -146,7 +146,7 @@ export const getConverses = function getConverses(cb?: () => void): TRPGAction {
         );
       }
     } catch (err) {
-      showToasts(t('多人会话加载失败'));
+      showToasts(t('多人会话加载失败'), 'error');
       reportError('多人会话加载失败:' + String(err));
       console.error(err);
     }
