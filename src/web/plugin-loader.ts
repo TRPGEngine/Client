@@ -114,6 +114,10 @@ export function initPlugins(): Promise<void> {
     () => import('@web/components/chatBox/ChatSendBox/ChatSendBoxContext')
   );
   regSharedModule(
+    '@capital/web/components/QRCode',
+    () => import('@web/components/QRCode')
+  );
+  regSharedModule(
     '@capital/web/utils/upload-helper',
     () => import('@web/utils/upload-helper')
   );

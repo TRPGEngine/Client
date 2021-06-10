@@ -14,7 +14,7 @@ import { useNumber } from 'react-use';
 import scrollTo from '@shared/utils/animated-scroll-to';
 import styled from 'styled-components';
 import { Divider, Typography } from 'antd';
-import { QRCode } from '@portal/components/QRCode';
+import { QRCode } from '@web/components/QRCode';
 import Loading from '@portal/components/Loading';
 import { fetchTRPGGameReport, ReportLogItem } from '@shared/model/trpg';
 
