@@ -1,4 +1,11 @@
 import { neteaseMusicAPI } from '../config';
+import _get from 'lodash/get';
+import axios from 'axios';
+
+const request = axios.create({
+  baseURL: neteaseMusicAPI,
+  withCredentials: true,
+});
 
 interface NeteaseMusicResponse<T = unknown> {
   code: number; // 200
@@ -88,11 +95,9 @@ interface NeteaseMusicSongDetail {
  * 搜索音乐
  */
 export async function searchMusicList(keywords: string) {
-  const res = await fetch(`${neteaseMusicAPI}/search?keywords=${keywords}`, {
-    credentials: 'include',
-  });
-  const data =
-    (await res.json()) as NeteaseMusicResponse<NeteaseMusicSearchResult>;
+  const { data } = await request.get<
+    NeteaseMusicResponse<NeteaseMusicSearchResult>
+  >(`/search?keywords=${keywords}`);
 
   return data;
 }
@@ -101,12 +106,54 @@ export async function searchMusicList(keywords: string) {
  * 获取音乐Url
  */
 export async function fetchMusicDetail(songId: number) {
-  const res = await fetch(`${neteaseMusicAPI}/song/url?id=${songId}`, {
-    credentials: 'include',
-  });
-  const data = (await res.json()) as NeteaseMusicResponseData<
-    NeteaseMusicSongDetail[]
-  >;
+  const { data } = await request.get<
+    NeteaseMusicResponseData<NeteaseMusicSongDetail[]>
+  >(`/song/url?id=${songId}`);
 
   return data;
+}
+
+/**
+ * 生成扫描二维码登录的地址
+ */
+export async function generateLoginQRCodeUrl(): Promise<{
+  unikey: string;
+  qrurl: string;
+}> {
+  const { data: keyData } = await request.get(`/login/qr/key?_=${Date.now()}`);
+  const unikey: string = _get(keyData, 'data.unikey');
+
+  if (typeof unikey !== 'string') {
+    throw new Error('无法生成登录二维码key');
+  }
+
+  const { data: qrData } = await request.get(
+    `/login/qr/create?key=${unikey}&_=${Date.now()}`
+  );
+  const qrurl: string = _get(qrData, 'data.qrurl');
+  if (typeof qrurl !== 'string') {
+    throw new Error('无法生成登录二维码url');
+  }
+
+  console.log('qrurl', qrurl);
+
+  return { unikey, qrurl };
+}
+
+/**
+ * 检查二维码登录状态
+ *
+ * 二维码扫码状态:
+ *  800为二维码过期
+ *  801为等待扫码
+ *  802为待确认
+ *  803为授权登录成功(803状态码下会返回cookies)
+ */
+export async function checkLoginQRCodeStatus(unikey: string) {
+  const { data } = await request.get(
+    `/login/qr/check?key=${unikey}&_=${Date.now()}`
+  );
+  const { code, message, cookie } = data;
+
+  return { code, message, cookie };
 }

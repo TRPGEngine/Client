@@ -7,7 +7,7 @@
 import React, { useCallback, useState } from 'react';
 import { TMemo } from '@capital/shared/components/TMemo';
 import { showToasts } from '@capital/shared/manager/ui';
-import { Button, Divider, Empty, Input } from 'antd';
+import { Button, Divider, Empty, Input, Tabs } from 'antd';
 import {
   fetchMusicDetail,
   NeteaseMusicSongInfo,
@@ -18,6 +18,7 @@ import { t } from '@capital/shared/i18n';
 import styled from 'styled-components';
 import _get from 'lodash/get';
 import { useMsgSend } from '@capital/shared/redux/hooks/useMsgSend';
+import { NeteaseMusicQRCodeLogin } from 'components/NeteaseMusicQRCodeLogin';
 
 const Search = Input.Search;
 
@@ -104,33 +105,40 @@ export const NeteaseMusicSelector: React.FC<{
 
   return (
     <ModalWrapper title={t('网易云音乐')}>
-      <Search onSearch={onSearch} disabled={loading} />
+      <Tabs defaultActiveKey="1">
+        <Tabs.TabPane key="1" tab={t('搜索')}>
+          <Search onSearch={onSearch} disabled={loading} />
 
-      <Divider />
+          <Divider />
 
-      {Array.isArray(searchedList) ? (
-        searchedList.length > 0 ? (
-          searchedList.map((song) => (
-            <SongItem>
-              <div className="name">{song.name}</div>
-              <div className="artist">
-                {_get(song, ['artists', 0, 'name'], '')}
-              </div>
-              <div className="action">
-                <Button
-                  type="link"
-                  disabled={loading}
-                  onClick={() => handleClick(song.id)}
-                >
-                  {t('发送')}
-                </Button>
-              </div>
-            </SongItem>
-          ))
-        ) : (
-          <Empty />
-        )
-      ) : null}
+          {Array.isArray(searchedList) ? (
+            searchedList.length > 0 ? (
+              searchedList.map((song) => (
+                <SongItem>
+                  <div className="name">{song.name}</div>
+                  <div className="artist">
+                    {_get(song, ['artists', 0, 'name'], '')}
+                  </div>
+                  <div className="action">
+                    <Button
+                      type="link"
+                      disabled={loading}
+                      onClick={() => handleClick(song.id)}
+                    >
+                      {t('发送')}
+                    </Button>
+                  </div>
+                </SongItem>
+              ))
+            ) : (
+              <Empty />
+            )
+          ) : null}
+        </Tabs.TabPane>
+        <Tabs.TabPane key="2" tab={t('云盘')}>
+          <NeteaseMusicQRCodeLogin />
+        </Tabs.TabPane>
+      </Tabs>
     </ModalWrapper>
   );
 });
