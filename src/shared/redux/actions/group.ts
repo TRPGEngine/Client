@@ -86,7 +86,7 @@ const initGroupInfo = function (group: GroupInfo): TRPGAction {
     // 获取团初始数据
     api.emit('group::getGroupInitData', { groupUUID }, function (data) {
       if (data.result) {
-        const { members, groupActors, groupActorsMapping, groupPanels } = data;
+        const { members } = data;
 
         // 处理团成员
         const uuidList: string[] = [];
@@ -100,6 +100,16 @@ const initGroupInfo = function (group: GroupInfo): TRPGAction {
           groupUUID,
           payload: uuidList,
         });
+      } else {
+        console.error('获取团初始数据失败:', data.msg);
+      }
+    });
+
+    // TODO: 待抽到插件中
+    api
+      .emitP('actor::getGroupActorInitData', { groupUUID })
+      .then((data) => {
+        const { groupActors, groupActorsMapping } = data;
 
         // 处理团人物
         for (const ga of groupActors) {
@@ -127,10 +137,12 @@ const initGroupInfo = function (group: GroupInfo): TRPGAction {
           groupUUID,
           payload: groupActorsMapping,
         });
-      } else {
-        console.error('获取团初始数据失败:', data.msg);
-      }
-    });
+      })
+      .catch((err) => {
+        console.error(err);
+
+        showToasts('团人物卡信息获取失败', 'error');
+      });
 
     // 获取自己选择的团角色
     dispatch(getSelectedGroupActor(groupUUID));
