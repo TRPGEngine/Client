@@ -4,7 +4,6 @@ import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { useTranslation } from '@shared/i18n';
 import { showToasts } from '@shared/manager/ui';
 import { Logo } from '@web/components/Logo';
-import { checkIsOldApp } from '@web/utils/debug-helper';
 import { Button, Input } from 'antd';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -23,9 +22,7 @@ export const LoginView: React.FC = TMemo(() => {
       return;
     }
 
-    const isOldApp = checkIsOldApp();
-
-    dispatch(login(username, password, { isOldApp }));
+    dispatch(login(username, password));
   }, [username, password, history]);
 
   return (

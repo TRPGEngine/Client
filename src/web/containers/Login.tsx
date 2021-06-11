@@ -8,7 +8,6 @@ import rnStorage from '@shared/api/rn-storage.api';
 import './Login.scss';
 import type { TRPGState } from '@redux/types/__all__';
 import { showPortal } from '@web/redux/action/ui';
-import { checkIsOldApp } from '@web/utils/debug-helper';
 import { t } from '@shared/i18n';
 import { LanguageSwitchLink } from '@web/components/LanguageSwitchLink';
 import { Button } from 'antd';
@@ -62,8 +61,7 @@ class Login extends React.Component<Props> {
     this.props.dispatch(showLoading());
     const username = this.state.username;
     const password = this.state.password;
-    const isOldApp = checkIsOldApp();
-    this.props.dispatch(login(username, password, { isOldApp }));
+    this.props.dispatch(login(username, password));
   }
 
   handleQQLogin() {
