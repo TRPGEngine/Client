@@ -15,8 +15,10 @@ i18next
   .init({
     // debug: true,
     fallbackLng: 'zh-CN',
+    load: 'currentOnly',
     backend: {
       loadPath: '/locales/{{lng}}/{{ns}}.json',
+      allowMultiLoading: false,
       addPath: (...args) => {
         console.log('缺少翻译', ...args);
       },

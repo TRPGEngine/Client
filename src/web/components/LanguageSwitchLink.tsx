@@ -5,7 +5,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Root = styled.div`
-  height: 40px;
+  height: 50px;
   text-align: center;
 `;
 
@@ -14,7 +14,6 @@ export const LanguageSwitchLink: React.FC = TMemo(() => {
 
   const handleSwitchLanguage = async (lang: string) => {
     await setLanguage(lang);
-    window.location.reload();
   };
 
   return (
