@@ -8,7 +8,7 @@ import React, {
 import config from '@shared/project.config';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import './Webview.scss';
+import './Webview.less';
 import { Button, Result, Space } from 'antd';
 import { t } from '@shared/i18n';
 import {

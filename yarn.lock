@@ -6588,13 +6588,6 @@ emittery@^0.7.1:
   resolved "https://registry.npm.taobao.org/emittery/download/emittery-0.7.2.tgz#25595908e13af0f5674ab419396e2fb394cdfa82"
   integrity sha1-JVlZCOE68PVnSrQZOW4vs5TN+oI=
 
-emoji-mart@^2.11.2:
-  version "2.11.2"
-  resolved "https://registry.npm.taobao.org/emoji-mart/download/emoji-mart-2.11.2.tgz#ed331867f7f55bb33c8421c9a493090fa4a378c7"
-  integrity sha1-7TMYZ/f1W7M8hCHJpJMJD6SjeMc=
-  dependencies:
-    prop-types "^15.6.0"
-
 emoji-regex@^7.0.1:
   version "7.0.3"
   resolved "https://registry.npm.taobao.org/emoji-regex/download/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"

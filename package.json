@@ -103,7 +103,6 @@
     "crc": "^3.8.0",
     "d3-ease": "^2.0.0",
     "debug": "~3.1.0",
-    "emoji-mart": "^2.11.2",
     "filesize": "^6.1.0",
     "formik": "^2.2.8",
     "handlebars": "^4.7.6",
