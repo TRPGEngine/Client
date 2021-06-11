@@ -2,15 +2,36 @@
 
 exports[`layout basic 1`] = `
 <DocumentFragment>
-  <div
-    class="sc-pNWdM eAMRol"
+  .c1 {
+  padding: 10px;
+}
+
+.c0 {
+  text-align: left;
+  width: 100%;
+}
+
+.c0 pre {
+  margin: 0;
+}
+
+.c0 code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 3px;
+}
+
+<div
+    class="c0"
     style="position: relative;"
   >
     <iframe
       style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
     />
     <div
-      class="sc-jSFjdj cdvkCS"
+      class="c1"
     />
   </div>
 </DocumentFragment>
@@ -18,15 +39,36 @@ exports[`layout basic 1`] = `
 
 exports[`layout basic 2`] = `
 <DocumentFragment>
-  <div
-    class="sc-pNWdM eAMRol"
+  .c1 {
+  padding: 10px;
+}
+
+.c0 {
+  text-align: left;
+  width: 100%;
+}
+
+.c0 pre {
+  margin: 0;
+}
+
+.c0 code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 3px;
+}
+
+<div
+    class="c0"
     style="position: relative;"
   >
     <iframe
       style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
     />
     <div
-      class="sc-jSFjdj cdvkCS"
+      class="c1"
     />
   </div>
 </DocumentFragment>
@@ -34,15 +76,36 @@ exports[`layout basic 2`] = `
 
 exports[`layout some text 1`] = `
 <DocumentFragment>
-  <div
-    class="sc-pNWdM eAMRol"
+  .c1 {
+  padding: 10px;
+}
+
+.c0 {
+  text-align: left;
+  width: 100%;
+}
+
+.c0 pre {
+  margin: 0;
+}
+
+.c0 code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 3px;
+}
+
+<div
+    class="c0"
     style="position: relative;"
   >
     <iframe
       style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
     />
     <div
-      class="sc-jSFjdj cdvkCS"
+      class="c1"
     />
   </div>
 </DocumentFragment>
@@ -50,15 +113,36 @@ exports[`layout some text 1`] = `
 
 exports[`layout some text 2`] = `
 <DocumentFragment>
-  <div
-    class="sc-pNWdM eAMRol"
+  .c1 {
+  padding: 10px;
+}
+
+.c0 {
+  text-align: left;
+  width: 100%;
+}
+
+.c0 pre {
+  margin: 0;
+}
+
+.c0 code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 3px;
+}
+
+<div
+    class="c0"
     style="position: relative;"
   >
     <iframe
       style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
     />
     <div
-      class="sc-jSFjdj cdvkCS"
+      class="c1"
     >
       <span>
         some text

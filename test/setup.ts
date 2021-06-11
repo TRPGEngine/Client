@@ -1,6 +1,7 @@
 import rnStorage from '@shared/api/rn-storage.api';
 import { setStorage } from '@shared/manager/storage';
 import '@testing-library/jest-dom';
+import 'jest-styled-components';
 import _noop from 'lodash/noop';
 
 // 用于处理mock

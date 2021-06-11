@@ -1,26 +1,127 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`basic snapshot 1`] = `
+.c4 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-right: 4px;
+}
+
+.c6 {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.c1 {
+  padding: 10px;
+}
+
+.c2 {
+  -webkit-flex-wrap: wrap-reverse !important;
+  -ms-flex-wrap: wrap-reverse !important;
+  flex-wrap: wrap-reverse !important;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(232,232,232,0.8);
+  padding-top: 24px;
+}
+
+.c3 {
+  margin-top: 10px;
+  padding: 10px;
+  padding-top: 15px;
+  border-left: 1px solid rgba(232,232,232,0.8);
+  border-bottom: 1px solid rgba(232,232,232,0.8);
+  border-right: 1px solid rgba(232,232,232,0.8);
+  position: relative;
+}
+
+.c3 .fieldset-divider {
+  position: absolute;
+  display: table;
+  top: -10px;
+  width: 100%;
+  left: 0;
+  right: 0;
+  color: rgba(0,0,0,0.85);
+  font-weight: 500;
+  font-size: 16px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.c3 .fieldset-divider::before {
+  top: 10px;
+  width: 5%;
+  display: table-cell;
+  position: relative;
+  content: '';
+  border-top: 1px solid rgba(232,232,232,0.8);
+}
+
+.c3 .fieldset-divider::after {
+  top: 10px;
+  width: 95%;
+  display: table-cell;
+  position: relative;
+  content: '';
+  border-top: 1px solid rgba(232,232,232,0.8);
+}
+
+.c3 .fieldset-divider .inner-text {
+  display: inline-block;
+  padding: 0 10px;
+}
+
+.c0 {
+  text-align: left;
+  width: 100%;
+}
+
+.c0 pre {
+  margin: 0;
+}
+
+.c0 code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 3px;
+}
+
 <div>
   <div
-    class="sc-pNWdM eAMRol"
+    class="c0"
     style="position: relative;"
   >
     <iframe
       style="background: transparent; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; z-index: -1;"
     />
     <div
-      class="sc-jSFjdj cdvkCS"
+      class="c1"
     >
       <div
-        class="ant-row sc-gKAaRy dGYfOy"
+        class="ant-row c2"
         type="flex"
       >
         <div
           class="ant-col ant-col-24"
         >
           <form
-            class="ant-form ant-form-vertical sc-iCoGMd"
+            class="ant-form ant-form-vertical "
           >
             <div
               class="ant-row ant-form-item"
@@ -106,7 +207,7 @@ exports[`basic snapshot 1`] = `
         </div>
       </div>
       <div
-        class="sc-fujyAs XYbcz"
+        class="c3"
       >
         <div
           class="fieldset-divider"
@@ -126,16 +227,16 @@ exports[`basic snapshot 1`] = `
             style="padding-left: 2px; padding-right: 2px;"
           >
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     当前生命值
                   </pre>
@@ -151,16 +252,16 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     年龄
                   </pre>
@@ -176,16 +277,16 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     身高
                   </pre>
@@ -201,16 +302,16 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     体重
                   </pre>
@@ -226,16 +327,16 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     信仰
                   </pre>
@@ -256,16 +357,16 @@ exports[`basic snapshot 1`] = `
             style="padding-left: 2px; padding-right: 2px;"
           >
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     最大生命值
                   </pre>
@@ -281,16 +382,16 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     阵营
                   </pre>
@@ -363,16 +464,16 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     经验值
                   </pre>
@@ -476,16 +577,16 @@ exports[`basic snapshot 1`] = `
               总负重: 0
             </p>
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     铜币
                   </pre>
@@ -574,16 +675,16 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     银币
                   </pre>
@@ -672,16 +773,16 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     银金币
                   </pre>
@@ -770,16 +871,16 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     金币
                   </pre>
@@ -868,16 +969,16 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     铂金币
                   </pre>
@@ -972,7 +1073,7 @@ exports[`basic snapshot 1`] = `
         </div>
       </div>
       <div
-        class="sc-fujyAs XYbcz"
+        class="c3"
       >
         <div
           class="fieldset-divider"
@@ -984,16 +1085,16 @@ exports[`basic snapshot 1`] = `
           </span>
         </div>
         <div
-          class="ant-row sc-bdnxRM gMgxgx tag-row"
+          class="ant-row c4 tag-row"
         >
           <div
             class="ant-col ant-col-6"
           >
             <div
-              class="sc-gtsrHT hNfaxf"
+              class="c5"
             >
               <pre
-                class="sc-dlnjwi cUIFtP"
+                class="c6"
               >
                 种族
               </pre>
@@ -1077,7 +1178,7 @@ exports[`basic snapshot 1`] = `
         </ul>
       </div>
       <div
-        class="sc-fujyAs XYbcz"
+        class="c3"
       >
         <div
           class="fieldset-divider"
@@ -1089,16 +1190,16 @@ exports[`basic snapshot 1`] = `
           </span>
         </div>
         <div
-          class="ant-row sc-bdnxRM gMgxgx tag-row"
+          class="ant-row c4 tag-row"
         >
           <div
             class="ant-col ant-col-6"
           >
             <div
-              class="sc-gtsrHT hNfaxf"
+              class="c5"
             >
               <pre
-                class="sc-dlnjwi cUIFtP"
+                class="c6"
               >
                 职业
               </pre>
@@ -1389,7 +1490,7 @@ exports[`basic snapshot 1`] = `
         </div>
       </div>
       <div
-        class="sc-fujyAs XYbcz"
+        class="c3"
       >
         <div
           class="fieldset-divider"
@@ -1417,16 +1518,16 @@ exports[`basic snapshot 1`] = `
                 style="padding-left: 2px; padding-right: 2px;"
               >
                 <div
-                  class="ant-row sc-bdnxRM gMgxgx tag-row"
+                  class="ant-row c4 tag-row"
                 >
                   <div
                     class="ant-col ant-col-6"
                   >
                     <div
-                      class="sc-gtsrHT hNfaxf"
+                      class="c5"
                     >
                       <pre
-                        class="sc-dlnjwi cUIFtP"
+                        class="c6"
                       >
                         力量
                       </pre>
@@ -1599,16 +1700,16 @@ exports[`basic snapshot 1`] = `
                 style="padding-left: 2px; padding-right: 2px;"
               >
                 <div
-                  class="ant-row sc-bdnxRM gMgxgx tag-row"
+                  class="ant-row c4 tag-row"
                 >
                   <div
                     class="ant-col ant-col-6"
                   >
                     <div
-                      class="sc-gtsrHT hNfaxf"
+                      class="c5"
                     >
                       <pre
-                        class="sc-dlnjwi cUIFtP"
+                        class="c6"
                       >
                         敏捷
                       </pre>
@@ -1781,16 +1882,16 @@ exports[`basic snapshot 1`] = `
                 style="padding-left: 2px; padding-right: 2px;"
               >
                 <div
-                  class="ant-row sc-bdnxRM gMgxgx tag-row"
+                  class="ant-row c4 tag-row"
                 >
                   <div
                     class="ant-col ant-col-6"
                   >
                     <div
-                      class="sc-gtsrHT hNfaxf"
+                      class="c5"
                     >
                       <pre
-                        class="sc-dlnjwi cUIFtP"
+                        class="c6"
                       >
                         体质
                       </pre>
@@ -1963,16 +2064,16 @@ exports[`basic snapshot 1`] = `
                 style="padding-left: 2px; padding-right: 2px;"
               >
                 <div
-                  class="ant-row sc-bdnxRM gMgxgx tag-row"
+                  class="ant-row c4 tag-row"
                 >
                   <div
                     class="ant-col ant-col-6"
                   >
                     <div
-                      class="sc-gtsrHT hNfaxf"
+                      class="c5"
                     >
                       <pre
-                        class="sc-dlnjwi cUIFtP"
+                        class="c6"
                       >
                         智力
                       </pre>
@@ -2145,16 +2246,16 @@ exports[`basic snapshot 1`] = `
                 style="padding-left: 2px; padding-right: 2px;"
               >
                 <div
-                  class="ant-row sc-bdnxRM gMgxgx tag-row"
+                  class="ant-row c4 tag-row"
                 >
                   <div
                     class="ant-col ant-col-6"
                   >
                     <div
-                      class="sc-gtsrHT hNfaxf"
+                      class="c5"
                     >
                       <pre
-                        class="sc-dlnjwi cUIFtP"
+                        class="c6"
                       >
                         感知
                       </pre>
@@ -2327,16 +2428,16 @@ exports[`basic snapshot 1`] = `
                 style="padding-left: 2px; padding-right: 2px;"
               >
                 <div
-                  class="ant-row sc-bdnxRM gMgxgx tag-row"
+                  class="ant-row c4 tag-row"
                 >
                   <div
                     class="ant-col ant-col-6"
                   >
                     <div
-                      class="sc-gtsrHT hNfaxf"
+                      class="c5"
                     >
                       <pre
-                        class="sc-dlnjwi cUIFtP"
+                        class="c6"
                       >
                         魅力
                       </pre>
@@ -2521,7 +2622,7 @@ exports[`basic snapshot 1`] = `
         </div>
       </div>
       <div
-        class="sc-fujyAs XYbcz"
+        class="c3"
       >
         <div
           class="fieldset-divider"
@@ -2541,16 +2642,16 @@ exports[`basic snapshot 1`] = `
             style="padding-left: 2px; padding-right: 2px;"
           >
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     AC调整值
                   </pre>
@@ -2678,16 +2779,16 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     体型
                   </pre>
@@ -2760,16 +2861,16 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ant-row sc-bdnxRM gMgxgx tag-row"
+              class="ant-row c4 tag-row"
             >
               <div
                 class="ant-col ant-col-6"
               >
                 <div
-                  class="sc-gtsrHT hNfaxf"
+                  class="c5"
                 >
                   <pre
-                    class="sc-dlnjwi cUIFtP"
+                    class="c6"
                   >
                     生命骰(HD)
                   </pre>
@@ -2952,16 +3053,16 @@ exports[`basic snapshot 1`] = `
           >
             <div>
               <div
-                class="ant-row sc-bdnxRM gMgxgx tag-row"
+                class="ant-row c4 tag-row"
               >
                 <div
                   class="ant-col ant-col-6"
                 >
                   <div
-                    class="sc-gtsrHT hNfaxf"
+                    class="c5"
                   >
                     <pre
-                      class="sc-dlnjwi cUIFtP"
+                      class="c6"
                     >
                       关键属性
                     </pre>
@@ -3065,16 +3166,16 @@ exports[`basic snapshot 1`] = `
             </div>
             <div>
               <div
-                class="ant-row sc-bdnxRM gMgxgx tag-row"
+                class="ant-row c4 tag-row"
               >
                 <div
                   class="ant-col ant-col-6"
                 >
                   <div
-                    class="sc-gtsrHT hNfaxf"
+                    class="c5"
                   >
                     <pre
-                      class="sc-dlnjwi cUIFtP"
+                      class="c6"
                     >
                       速度
                     </pre>
@@ -3163,16 +3264,16 @@ exports[`basic snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="ant-row sc-bdnxRM gMgxgx tag-row"
+                class="ant-row c4 tag-row"
               >
                 <div
                   class="ant-col ant-col-6"
                 >
                   <div
-                    class="sc-gtsrHT hNfaxf"
+                    class="c5"
                   >
                     <pre
-                      class="sc-dlnjwi cUIFtP"
+                      class="c6"
                     >
                       被动察觉
                     </pre>
@@ -3273,7 +3374,7 @@ exports[`basic snapshot 1`] = `
           style="padding-left: 2px; padding-right: 2px;"
         >
           <div
-            class="sc-fujyAs XYbcz"
+            class="c3"
           >
             <div
               class="fieldset-divider"
@@ -3285,7 +3386,7 @@ exports[`basic snapshot 1`] = `
               </span>
             </div>
             <div
-              class="sc-fujyAs XYbcz"
+              class="c3"
             >
               <div
                 class="fieldset-divider"
@@ -3305,16 +3406,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           运动 Athletics
                         </pre>
@@ -3451,7 +3552,7 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="sc-fujyAs XYbcz"
+              class="c3"
             >
               <div
                 class="fieldset-divider"
@@ -3471,16 +3572,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           体操 Acrobatics
                         </pre>
@@ -3624,16 +3725,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           巧手 Sleight of Hand
                         </pre>
@@ -3777,16 +3878,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           隐匿 Stealth
                         </pre>
@@ -3923,7 +4024,7 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="sc-fujyAs XYbcz"
+              class="c3"
             >
               <div
                 class="fieldset-divider"
@@ -3943,16 +4044,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           奥秘 Arcana
                         </pre>
@@ -4096,16 +4197,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           历史 History
                         </pre>
@@ -4249,16 +4350,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           调查 Investigation
                         </pre>
@@ -4402,16 +4503,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           自然 Nature
                         </pre>
@@ -4555,16 +4656,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           宗教 Religion
                         </pre>
@@ -4701,7 +4802,7 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="sc-fujyAs XYbcz"
+              class="c3"
             >
               <div
                 class="fieldset-divider"
@@ -4721,16 +4822,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           驯兽 Animal Handling
                         </pre>
@@ -4874,16 +4975,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           洞悉 Insight
                         </pre>
@@ -5027,16 +5128,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           医药 Medicine
                         </pre>
@@ -5180,16 +5281,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           察觉 Perception
                         </pre>
@@ -5333,16 +5434,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           求生 Survival
                         </pre>
@@ -5479,7 +5580,7 @@ exports[`basic snapshot 1`] = `
               </div>
             </div>
             <div
-              class="sc-fujyAs XYbcz"
+              class="c3"
             >
               <div
                 class="fieldset-divider"
@@ -5499,16 +5600,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           欺瞒 Deception
                         </pre>
@@ -5652,16 +5753,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           威吓 Intimidation
                         </pre>
@@ -5805,16 +5906,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           表演 Performance
                         </pre>
@@ -5958,16 +6059,16 @@ exports[`basic snapshot 1`] = `
                   style="padding-left: 2px; padding-right: 2px;"
                 >
                   <div
-                    class="ant-row sc-bdnxRM gMgxgx tag-row"
+                    class="ant-row c4 tag-row"
                   >
                     <div
                       class="ant-col ant-col-6"
                     >
                       <div
-                        class="sc-gtsrHT hNfaxf"
+                        class="c5"
                       >
                         <pre
-                          class="sc-dlnjwi cUIFtP"
+                          class="c6"
                         >
                           游说 Persuasion
                         </pre>
@@ -6110,7 +6211,7 @@ exports[`basic snapshot 1`] = `
           style="padding-left: 2px; padding-right: 2px;"
         >
           <div
-            class="sc-fujyAs XYbcz"
+            class="c3"
           >
             <div
               class="fieldset-divider"
@@ -6354,7 +6455,7 @@ exports[`basic snapshot 1`] = `
             </div>
           </div>
           <div
-            class="sc-fujyAs XYbcz"
+            class="c3"
           >
             <div
               class="fieldset-divider"
@@ -7520,7 +7621,7 @@ exports[`basic snapshot 1`] = `
             </div>
           </div>
           <div
-            class="sc-fujyAs XYbcz"
+            class="c3"
           >
             <div
               class="fieldset-divider"
