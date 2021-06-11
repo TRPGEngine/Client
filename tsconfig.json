@@ -34,7 +34,7 @@
     "./config/",
     "./src/",
     "./test/",
-    "./types/",
+    "./types/"
   ],
   "exclude": [
     "./cypress/",
