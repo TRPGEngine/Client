@@ -35,9 +35,9 @@
     "./src/",
     "./test/",
     "./types/",
-    "./cypress/"
   ],
   "exclude": [
+    "./cypress/",
     "./src/app/",
     "./src/appv2/",
     "./src/mini-program/",
