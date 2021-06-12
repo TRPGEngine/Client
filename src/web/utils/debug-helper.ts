@@ -11,13 +11,6 @@ export const checkIsDeveloper = memoizeOne(() => {
 });
 
 /**
- * 获取是否使用旧界面
- */
-export const checkIsOldApp = memoizeOne(() => {
-  return localStorage.getItem(IS_NEW_APP) === 'false';
-});
-
-/**
  * 切换APP
  * @param toNewApp 是否切换到新版
  */

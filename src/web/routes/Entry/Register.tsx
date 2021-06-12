@@ -4,7 +4,6 @@ import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { useTranslation } from '@shared/i18n';
 import { registerAccount } from '@shared/model/player';
 import { trackEvent } from '@web/utils/analytics-helper';
-import { checkIsOldApp } from '@web/utils/debug-helper';
 import { handleError } from '@web/utils/error';
 import { Button, Input, Typography } from 'antd';
 import React, { useMemo, useState } from 'react';
@@ -30,9 +29,7 @@ export const RegisterView: React.FC = TMemo(() => {
       });
 
       // 注册成功后自动登录
-      const isOldApp = checkIsOldApp();
-
-      dispatch(login(username, password, { isOldApp }));
+      dispatch(login(username, password));
     } catch (err) {
       handleError(err);
     }

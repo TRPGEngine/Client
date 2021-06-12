@@ -47,6 +47,9 @@ interface AlignmentChooseProps {
   value: string;
   onChange: (newValue: string) => void;
 }
+/**
+ * TODO: Not good, should move to plugin:trpg
+ */
 export const AlignmentChoose: React.FC<AlignmentChooseProps> = TMemo(
   (props) => {
     const { t } = useTranslation();

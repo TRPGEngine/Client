@@ -32,6 +32,10 @@ interface Props {
   info: any;
   type?: string;
 }
+
+/**
+ * TODO: wait for refactor
+ */
 class FindResultItem extends React.Component<Props> {
   getUserAction(uuid: string) {
     const friendList = this.props.friendList;
