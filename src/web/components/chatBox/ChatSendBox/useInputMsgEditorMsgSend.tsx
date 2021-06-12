@@ -19,10 +19,20 @@ import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
 import { t } from '@shared/i18n';
 import { useSystemSetting } from '@redux/hooks/settings';
-import { Input } from 'antd';
+import { Button, Input, Row } from 'antd';
 import { useMsgHistory } from '@shared/hooks/useMsgHistory';
 import { useTRPGSelector } from '@redux/hooks/useTRPGSelector';
 import { trackEvent } from '@web/utils/analytics-helper';
+import { buildCustomMessageAlertErrorView } from '@web/components/AlertErrorView';
+
+const MessageInputErrorView = buildCustomMessageAlertErrorView(() => (
+  <Row>
+    {t('消息组件渲染异常, 如果经常发生该问题请在设置页中切换为兼容模式')}
+    <Button type="link" size="small" onClick={() => window.location.reload()}>
+      {t('刷新页面')}
+    </Button>
+  </Row>
+));
 
 /**
  * 会话消息发送管理
@@ -30,9 +40,8 @@ import { trackEvent } from '@web/utils/analytics-helper';
  */
 export function useInputMsgEditorMsgSend(converseUUID: string) {
   const editorRef = useRef<Editor>();
-  const { message, setMessage, handleSendMsg, inputRef, sendMsg } = useMsgSend(
-    converseUUID
-  );
+  const { message, setMessage, handleSendMsg, inputRef, sendMsg } =
+    useMsgSend(converseUUID);
   const [messageData, setMessageData] = useState<TRPGEditorValue[]>(
     buildBlankInputData()
   );
@@ -42,13 +51,8 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
     // 是否使用高级输入框
     return chatBoxType !== 'compatible';
   }, [chatBoxType]);
-  const {
-    switchUp,
-    switchDown,
-    currentIndex,
-    resetIndex,
-    addHistoryMsg,
-  } = useMsgHistory(converseUUID);
+  const { switchUp, switchDown, currentIndex, resetIndex, addHistoryMsg } =
+    useMsgHistory(converseUUID);
   const msgInputHistorySwitch = useTRPGSelector(
     (state) => state.settings.user.msgInputHistorySwitch ?? true
   );
@@ -161,6 +165,7 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
         onKeyDown={handleKeyDown}
         onPaste={handlePaste}
         onEditor={(editor) => (editorRef.current = editor)}
+        customErrorView={MessageInputErrorView}
       />
     ) : (
       <Input

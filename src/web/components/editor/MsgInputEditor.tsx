@@ -35,6 +35,7 @@ import {
 } from './style';
 import { WebErrorBoundary } from '../WebErrorBoundary';
 import { useEditorRender } from './hooks/useEditorRender';
+import type { RenderErrorComponent } from '@shared/components/ErrorBoundary';
 
 const MentionsPortal = ({ children }) => {
   return ReactDOM.createPortal(children, document.body);
@@ -45,6 +46,7 @@ interface MsgInputEditorProps extends EditorBaseProps {
   onKeyDown?: (e: React.KeyboardEvent) => void;
   onEditor?: (editor: Editor) => void;
   onPaste?: (event: React.ClipboardEvent<HTMLDivElement>) => void;
+  customErrorView?: RenderErrorComponent;
 }
 
 /**
@@ -91,7 +93,11 @@ function usePlaceholder(props: MsgInputEditorProps) {
   return { placeholderEl, handleCompositionStart, handleCompositionEnd };
 }
 
+/**
+ * 富文本消息输入组件
+ */
 export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
+  const { customErrorView } = props;
   const ref = useRef<HTMLDivElement | null>(null);
   const { renderElement, renderLeaf } = useEditorRender('inline');
   const editor = useMemo(() => createMsgInputEditor(), []);
@@ -169,14 +175,11 @@ export const MsgInputEditor: React.FC<MsgInputEditorProps> = TMemo((props) => {
     _isFunction(props.onEditor) && props.onEditor(editor);
   }, [editor]);
 
-  const {
-    placeholderEl,
-    handleCompositionStart,
-    handleCompositionEnd,
-  } = usePlaceholder(props);
+  const { placeholderEl, handleCompositionStart, handleCompositionEnd } =
+    usePlaceholder(props);
 
   return (
-    <WebErrorBoundary>
+    <WebErrorBoundary renderError={customErrorView}>
       <Slate editor={editor} value={props.value} onChange={handleChange}>
         {placeholderEl}
 

@@ -18,6 +18,17 @@ export const AlertErrorView: RenderErrorComponent = TMemo((props) => {
 AlertErrorView.displayName = 'AlertErrorView';
 
 /**
+ * 构建一个自定义的消息错误
+ */
+export function buildCustomMessageAlertErrorView(
+  getMessage: (error: Error) => React.ReactNode
+): RenderErrorComponent {
+  return TMemo((props) => {
+    return <Alert type="error" message={getMessage(props.error)} />;
+  });
+}
+
+/**
  * 用于接口错误显示的组件
  */
 export const AlertErrorMessage: React.FC<{
