@@ -11,7 +11,8 @@ import { NeteaseEnsureLoginView } from './NeteaseEnsureLoginView';
 interface Props {
   onSendSong: (songId: number, url: string) => void;
 }
-export const NeteaseMusicCloudList: React.FC<Props> = TMemo((props) => {
+
+const NeteaseMusicCloudSongs: React.FC<Props> = TMemo((props) => {
   const { onSendSong } = props;
   const { data: resp, isValidating } = useSWR<UserCloudMusicListResp>(
     '/user/cloud',
@@ -29,7 +30,7 @@ export const NeteaseMusicCloudList: React.FC<Props> = TMemo((props) => {
   }
 
   return (
-    <NeteaseEnsureLoginView>
+    <div>
       {list.map((item) => (
         <SongItem
           id={item.songId}
@@ -37,6 +38,15 @@ export const NeteaseMusicCloudList: React.FC<Props> = TMemo((props) => {
           onSendSong={onSendSong}
         />
       ))}
+    </div>
+  );
+});
+NeteaseMusicCloudSongs.displayName = 'NeteaseMusicCloudSongs';
+
+export const NeteaseMusicCloudList: React.FC<Props> = TMemo((props) => {
+  return (
+    <NeteaseEnsureLoginView>
+      <NeteaseMusicCloudSongs {...props} />
     </NeteaseEnsureLoginView>
   );
 });
