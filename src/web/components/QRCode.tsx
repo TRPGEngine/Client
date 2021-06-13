@@ -4,7 +4,7 @@ import ReactQRCode, { BaseQRCodeProps, ImageSettings } from 'qrcode.react';
 import logoUrl from '@web/assets/img/logo@192.png';
 
 interface Props extends Omit<BaseQRCodeProps, 'imageSettings'> {
-  imageSettings: Partial<ImageSettings>;
+  imageSettings?: Partial<ImageSettings>;
 }
 export const QRCode: React.FC<Props> = TMemo((props) => {
   return (
