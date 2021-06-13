@@ -21,3 +21,4 @@ export const QRCode: React.FC<Props> = TMemo((props) => {
     />
   );
 });
+QRCode.displayName = 'QRCode';

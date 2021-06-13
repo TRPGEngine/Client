@@ -109,14 +109,14 @@ export const SidebarViewContext =
   React.createContext<SidebarViewContextProps | null>(null);
 SidebarViewContext.displayName = 'SidebarViewContext';
 
+export type SidebarViewMenuItem = SidebarViewMenuItemType | SidebarViewLinkType;
 export type SidebarViewMenuType =
   | {
       type: 'group';
       title: string;
-      children: (SidebarViewMenuItemType | SidebarViewLinkType)[];
+      children: SidebarViewMenuItem[];
     }
-  | SidebarViewMenuItemType
-  | SidebarViewLinkType;
+  | SidebarViewMenuItem;
 
 interface SidebarViewMenuProps {
   menu: SidebarViewMenuType;

@@ -60,6 +60,10 @@ export function initPlugins(): Promise<void> {
     () => import('@web/reg/regChatSendBoxAction')
   );
   regSharedModule(
+    '@capital/web/reg/regSettingViewMenu',
+    () => import('@web/reg/regSettingViewMenu')
+  );
+  regSharedModule(
     '@capital/web/components/TLoadable',
     () => import('@web/components/TLoadable')
   );
@@ -98,6 +102,10 @@ export function initPlugins(): Promise<void> {
   regSharedModule(
     '@capital/web/components/Avatar',
     () => import('@web/components/Avatar')
+  );
+  regSharedModule(
+    '@capital/web/components/FullModalField',
+    () => import('@web/components/FullModalField')
   );
   regSharedModule(
     '@capital/web/components/messageTypes/card/BaseCard',
@@ -192,6 +200,10 @@ export function initPlugins(): Promise<void> {
   regSharedModule(
     '@capital/shared/components/layout/XMLBuilder',
     () => import('@shared/components/layout/XMLBuilder')
+  );
+  regSharedModule(
+    '@capital/shared/hooks/useValueRef',
+    () => import('@shared/hooks/useValueRef')
   );
   regSharedModule(
     '@capital/shared/redux/configureStore/helper',

@@ -1,5 +1,6 @@
 {
   "k19a60a55": "Search music failed",
+  "k1c31af72": "NetEase Nickname",
   "k6d4e5958": "Send Netease Music",
   "k7862cd02": "Send Success",
   "k901e9f6f": "Request Failed",
@@ -9,6 +10,9 @@
   "kb76d94e0": "Refresh",
   "kc50aa39a": "Login Netease Cloud Music",
   "kc60e4ac2": "Send",
+  "kc61fa1c0": "Abnormal",
+  "kccf0c5a9": "Logout successfully",
+  "kced30d2b": "NetEase Username",
   "ke2a47ea5": "The music may be a copyrighted music, and the playback address cannot be obtained",
   "ke5262837": "Search Failed"
 }

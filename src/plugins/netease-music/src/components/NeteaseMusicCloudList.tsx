@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useSWR from 'swr';
 import { TMemo } from '@capital/shared/components/TMemo';
 import { UserCloudMusicListResp, musicFetcher } from '../model/netease-music';
@@ -6,6 +6,7 @@ import LoadingSpinner from '@capital/web/components/LoadingSpinner';
 import { SongItem } from './SongItem';
 import _get from 'lodash/get';
 import { Empty } from 'antd';
+import { NeteaseEnsureLoginView } from './NeteaseEnsureLoginView';
 
 interface Props {
   onSendSong: (songId: number, url: string) => void;
@@ -28,7 +29,7 @@ export const NeteaseMusicCloudList: React.FC<Props> = TMemo((props) => {
   }
 
   return (
-    <div>
+    <NeteaseEnsureLoginView>
       {list.map((item) => (
         <SongItem
           id={item.songId}
@@ -36,7 +37,7 @@ export const NeteaseMusicCloudList: React.FC<Props> = TMemo((props) => {
           onSendSong={onSendSong}
         />
       ))}
-    </div>
+    </NeteaseEnsureLoginView>
   );
 });
 NeteaseMusicCloudList.displayName = 'NeteaseMusicCloudList';

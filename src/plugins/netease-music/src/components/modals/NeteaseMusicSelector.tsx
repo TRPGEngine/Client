@@ -16,7 +16,6 @@ import { ModalWrapper } from '@capital/web/components/Modal';
 import { t } from '@capital/shared/i18n';
 import _get from 'lodash/get';
 import { useMsgSend } from '@capital/shared/redux/hooks/useMsgSend';
-// import { NeteaseMusicQRCodeLogin } from '../NeteaseMusicQRCodeLogin';
 import { NeteaseMusicCloudList } from '../NeteaseMusicCloudList';
 import { SongItem } from '../../components/SongItem';
 
@@ -91,7 +90,6 @@ export const NeteaseMusicSelector: React.FC<{
           ) : null}
         </Tabs.TabPane>
         <Tabs.TabPane key="2" tab={t('云盘')}>
-          {/* <NeteaseMusicQRCodeLogin /> */}
           <NeteaseMusicCloudList onSendSong={onSendSong} />
         </Tabs.TabPane>
       </Tabs>

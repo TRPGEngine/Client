@@ -11,6 +11,7 @@ import React from 'react';
 import { LoadingSpinner } from '@capital/web/components/LoadingSpinner';
 import { Button, Typography } from 'antd';
 import { t } from '@capital/shared/i18n';
+import { useValueRef } from '@capital/shared/hooks/useValueRef';
 
 const qrStatusMap = {
   800: 'expired' as const,
@@ -23,7 +24,11 @@ const qrStatusType = Object.values(qrStatusMap);
 type QRStatusCode = keyof typeof qrStatusMap;
 type QRStatusType = typeof qrStatusType[number] | 'unknown';
 
-export const NeteaseMusicQRCodeLogin: React.FC = TMemo(() => {
+interface Props {
+  onAuthorization?: () => void;
+}
+export const NeteaseMusicQRCodeLogin: React.FC<Props> = TMemo((props) => {
+  const { onAuthorization } = props;
   const [qrurl, setQRurl] = useState<string | undefined>();
   const [qrStatus, setQRStatus] = useState<QRStatusType>('unknown');
   const [qrStatusMessage, setQRStatusMessage] = useState('');
@@ -41,6 +46,8 @@ export const NeteaseMusicQRCodeLogin: React.FC = TMemo(() => {
   useEffect(() => {
     generateLoginQRCode();
   }, []);
+
+  const onAuthorizationRef = useValueRef(onAuthorization);
 
   useEffect(() => {
     // 当qrurl发生一次变化时，进行监听轮询
@@ -62,10 +69,9 @@ export const NeteaseMusicQRCodeLogin: React.FC = TMemo(() => {
           if (code === 803) {
             setQRStatus('success');
             console.log('登录成功');
-            // TODO
-            fetchUserLoginStatus().then((data) => {
-              console.log('data', data);
-            });
+            if (typeof onAuthorizationRef.current === 'function') {
+              onAuthorizationRef.current();
+            }
           } else if (code === 800) {
             // 二维码失效。 不再次检查
           } else {

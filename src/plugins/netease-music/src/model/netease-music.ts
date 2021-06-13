@@ -102,7 +102,7 @@ export interface UserCloudMusicListResp {
   code: number;
   count: number;
   data: CloudMusicListItem[];
-  hasMore: false;
+  hasMore: boolean;
   maxSize: string;
   size: string;
   upgradeSign: number;
@@ -122,6 +122,65 @@ interface CloudMusicListItem {
   songId: number;
   songName: string;
   version: number;
+}
+
+/**
+ * 网易云音乐用户信息
+ */
+export interface UserAccount {
+  id: number;
+  userName: string;
+  type: number;
+  status: number;
+  whitelistAuthority: number;
+  createTime: number;
+  tokenVersion: number;
+  ban: number;
+  baoyueVersion: number;
+  donateVersion: number;
+  vipType: number;
+  anonimousUser: boolean;
+  paidFee: boolean;
+}
+
+export interface UserProfile {
+  userId: number;
+  userType: number;
+  nickname: string;
+  avatarImgId: number;
+  avatarUrl: string;
+  backgroundImgId: number;
+  backgroundUrl: string;
+  signature: unknown;
+  createTime: number;
+  userName: string;
+  accountType: number;
+  shortUserName: string;
+  birthday: number;
+  authority: number;
+  gender: number;
+  accountStatus: number;
+  province: number;
+  city: number;
+  authStatus: number;
+  description: unknown;
+  detailDescription: unknown;
+  defaultAvatar: boolean;
+  expertTags: unknown;
+  experts: unknown;
+  djStatus: number;
+  locationStatus: number;
+  vipType: number;
+  followed: boolean;
+  mutual: boolean;
+  authenticated: boolean;
+  lastLoginTime: number;
+  lastLoginIP: string;
+  remarkName: unknown;
+  viptypeVersion: number;
+  authenticationTypes: number;
+  avatarDetail: unknown;
+  anchor: boolean;
 }
 
 /**
@@ -197,5 +256,12 @@ export async function checkLoginQRCodeStatus(unikey: string) {
 export async function fetchUserLoginStatus(): Promise<any> {
   const { data } = await request.get(`/login/status?_=${Date.now()}`);
 
-  return data;
+  return data.data;
+}
+
+/**
+ * 退出登录
+ */
+export async function logout(): Promise<any> {
+  await request.get(`/logout?_=${Date.now()}`);
 }
