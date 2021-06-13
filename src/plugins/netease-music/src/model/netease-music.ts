@@ -2,22 +2,17 @@ import { neteaseMusicAPI } from '../config';
 import _get from 'lodash/get';
 import axios from 'axios';
 
-const dynamicHeader: Record<string, string> = {};
 const request = axios.create({
   baseURL: neteaseMusicAPI,
   withCredentials: true,
-  // transformRequest: [
-  //   function (data, headers) {
-  //     // headers['common'] = {
-  //     //   ...headers,
-  //     //   ...dynamicHeader,
-  //     // };
-
-  //     // Do not change data
-  //     return data;
-  //   },
-  // ],
 });
+
+/**
+ * 网易云音乐获取器
+ * 用于SWR
+ */
+export const musicFetcher = (url: string) =>
+  request.get(url).then((res) => res.data);
 
 interface NeteaseMusicResponse<T = unknown> {
   code: number; // 200
@@ -103,6 +98,32 @@ interface NeteaseMusicSongDetail {
   urlSource: number;
 }
 
+export interface UserCloudMusicListResp {
+  code: number;
+  count: number;
+  data: CloudMusicListItem[];
+  hasMore: false;
+  maxSize: string;
+  size: string;
+  upgradeSign: number;
+}
+
+interface CloudMusicListItem {
+  addTime: number;
+  album: string;
+  artist: string;
+  bitrate: number;
+  cover: number;
+  coverId: string;
+  fileName: string;
+  fileSize: number;
+  lyricId: string;
+  simpleSong: unknown;
+  songId: number;
+  songName: string;
+  version: number;
+}
+
 /**
  * 搜索音乐
  */
@@ -167,11 +188,6 @@ export async function checkLoginQRCodeStatus(unikey: string) {
   );
   const { code, message, cookie } = data;
 
-  if (code === 803) {
-    // 授权成功
-    dynamicHeader['Cookie'] = cookie;
-  }
-
   return { code, message };
 }
 
@@ -179,11 +195,7 @@ export async function checkLoginQRCodeStatus(unikey: string) {
  * 获取用户状态
  */
 export async function fetchUserLoginStatus(): Promise<any> {
-  const { data } = await request.get(`/login/status?_=${Date.now()}`, {
-    headers: {
-      ...dynamicHeader,
-    },
-  });
+  const { data } = await request.get(`/login/status?_=${Date.now()}`);
 
   return data;
 }

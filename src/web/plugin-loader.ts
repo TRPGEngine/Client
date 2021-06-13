@@ -15,6 +15,7 @@ export function initPlugins(): Promise<void> {
   regDependency('immer', () => import('immer'));
   regDependency('antd', () => import('antd')); // TODO: Not good
   regDependency('axios', () => import('axios'));
+  regDependency('swr', () => import('swr'));
   regDependency('lodash/get', () => import('lodash/get'));
   regDependency('lodash/set', () => import('lodash/set'));
   regDependency('lodash/remove', () => import('lodash/remove'));
