@@ -207,7 +207,6 @@
     "@types/classnames": "^2.2.10",
     "@types/crc": "^3.4.0",
     "@types/d3-ease": "^2.0.0",
-    "@types/emoji-mart": "^2.11.0",
     "@types/enzyme": "^3.10.4",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/google.analytics": "0.0.41",
