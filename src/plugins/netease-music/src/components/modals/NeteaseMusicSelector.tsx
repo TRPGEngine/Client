@@ -7,31 +7,19 @@
 import React, { useCallback, useState } from 'react';
 import { TMemo } from '@capital/shared/components/TMemo';
 import { showToasts } from '@capital/shared/manager/ui';
-import { Button, Divider, Empty, Input } from 'antd';
+import { Divider, Empty, Input, Tabs } from 'antd';
 import {
-  fetchMusicDetail,
   NeteaseMusicSongInfo,
   searchMusicList,
 } from '../../model/netease-music';
 import { ModalWrapper } from '@capital/web/components/Modal';
 import { t } from '@capital/shared/i18n';
-import styled from 'styled-components';
 import _get from 'lodash/get';
 import { useMsgSend } from '@capital/shared/redux/hooks/useMsgSend';
+import { NeteaseMusicCloudList } from '../NeteaseMusicCloudList';
+import { SongItem } from '../../components/SongItem';
 
 const Search = Input.Search;
-
-const SongItem = styled.div`
-  display: flex;
-
-  > .name {
-    flex: 1;
-  }
-
-  > .action {
-    width: 80px;
-  }
-`;
 
 export const NeteaseMusicSelector: React.FC<{
   converseUUID: string;
@@ -61,42 +49,18 @@ export const NeteaseMusicSelector: React.FC<{
     }
   }, []);
 
-  const handleClick = useCallback(
-    async (songId: number) => {
-      try {
-        setLoading(true);
+  const onSendSong = useCallback(
+    (songId: number, url: string) => {
+      sendCardMsg('media', {
+        mediaType: 'audio',
+        mediaSource: 'netease',
+        mediaUrl: url,
+        neteaseSongId: songId,
+      });
+      showToasts(t('发送成功'), 'success');
 
-        const res = await fetchMusicDetail(songId);
-        if (res.code !== 200) {
-          showToasts(`${t('发送失败')}: 网络异常`, 'error');
-          return;
-        }
-
-        const detail = _get(res, ['data', 0]);
-        const url = detail.url;
-
-        if (typeof url === 'string' && url !== '') {
-          sendCardMsg('media', {
-            mediaType: 'audio',
-            mediaSource: 'netease',
-            mediaUrl: url,
-            neteaseSongId: songId,
-          });
-          showToasts(t('发送成功'), 'success');
-
-          if (typeof onSendMusicCard === 'function') {
-            onSendMusicCard();
-          }
-        } else {
-          showToasts(
-            `${t('发送失败')}: 该音乐可能是一个版权音乐, 无法获取播放地址`,
-            'error'
-          );
-        }
-      } catch (err) {
-        showToasts(`${t('请求失败')}: ${String(err)}`, 'error');
-      } finally {
-        setLoading(false);
+      if (typeof onSendMusicCard === 'function') {
+        onSendMusicCard();
       }
     },
     [sendCardMsg, onSendMusicCard]
@@ -104,33 +68,31 @@ export const NeteaseMusicSelector: React.FC<{
 
   return (
     <ModalWrapper title={t('网易云音乐')}>
-      <Search onSearch={onSearch} disabled={loading} />
+      <Tabs defaultActiveKey="1">
+        <Tabs.TabPane key="1" tab={t('搜索')}>
+          <Search onSearch={onSearch} disabled={loading} />
 
-      <Divider />
+          <Divider />
 
-      {Array.isArray(searchedList) ? (
-        searchedList.length > 0 ? (
-          searchedList.map((song) => (
-            <SongItem>
-              <div className="name">{song.name}</div>
-              <div className="artist">
-                {_get(song, ['artists', 0, 'name'], '')}
-              </div>
-              <div className="action">
-                <Button
-                  type="link"
-                  disabled={loading}
-                  onClick={() => handleClick(song.id)}
-                >
-                  {t('发送')}
-                </Button>
-              </div>
-            </SongItem>
-          ))
-        ) : (
-          <Empty />
-        )
-      ) : null}
+          {Array.isArray(searchedList) ? (
+            searchedList.length > 0 ? (
+              searchedList.map((song) => (
+                <SongItem
+                  id={song.id}
+                  name={song.name}
+                  artist={_get(song, ['artists', 0, 'name'], '')}
+                  onSendSong={onSendSong}
+                />
+              ))
+            ) : (
+              <Empty />
+            )
+          ) : null}
+        </Tabs.TabPane>
+        <Tabs.TabPane key="2" tab={t('云盘')}>
+          <NeteaseMusicCloudList onSendSong={onSendSong} />
+        </Tabs.TabPane>
+      </Tabs>
     </ModalWrapper>
   );
 });

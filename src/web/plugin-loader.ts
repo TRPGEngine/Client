@@ -14,6 +14,8 @@ export function initPlugins(): Promise<void> {
   regDependency('@ant-design/icons', () => import('@ant-design/icons')); // TODO: Not good
   regDependency('immer', () => import('immer'));
   regDependency('antd', () => import('antd')); // TODO: Not good
+  regDependency('axios', () => import('axios'));
+  regDependency('swr', () => import('swr'));
   regDependency('lodash/get', () => import('lodash/get'));
   regDependency('lodash/set', () => import('lodash/set'));
   regDependency('lodash/remove', () => import('lodash/remove'));
@@ -58,6 +60,10 @@ export function initPlugins(): Promise<void> {
     () => import('@web/reg/regChatSendBoxAction')
   );
   regSharedModule(
+    '@capital/web/reg/regSettingViewMenu',
+    () => import('@web/reg/regSettingViewMenu')
+  );
+  regSharedModule(
     '@capital/web/components/TLoadable',
     () => import('@web/components/TLoadable')
   );
@@ -98,6 +104,10 @@ export function initPlugins(): Promise<void> {
     () => import('@web/components/Avatar')
   );
   regSharedModule(
+    '@capital/web/components/FullModalField',
+    () => import('@web/components/FullModalField')
+  );
+  regSharedModule(
     '@capital/web/components/messageTypes/card/BaseCard',
     () => import('@web/components/messageTypes/card/BaseCard')
   );
@@ -112,6 +122,10 @@ export function initPlugins(): Promise<void> {
   regSharedModule(
     '@capital/web/components/chatBox/ChatSendBox/ChatSendBoxContext',
     () => import('@web/components/chatBox/ChatSendBox/ChatSendBoxContext')
+  );
+  regSharedModule(
+    '@capital/web/components/QRCode',
+    () => import('@web/components/QRCode')
   );
   regSharedModule(
     '@capital/web/utils/upload-helper',
@@ -186,6 +200,10 @@ export function initPlugins(): Promise<void> {
   regSharedModule(
     '@capital/shared/components/layout/XMLBuilder',
     () => import('@shared/components/layout/XMLBuilder')
+  );
+  regSharedModule(
+    '@capital/shared/hooks/useValueRef',
+    () => import('@shared/hooks/useValueRef')
   );
   regSharedModule(
     '@capital/shared/redux/configureStore/helper',

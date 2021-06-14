@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import { downloadFileWeb } from '@shared/utils/file-helper';
 import _isEmpty from 'lodash/isEmpty';
 import Loading from '@portal/components/Loading';
-import { QRCode } from '@portal/components/QRCode';
+import { QRCode } from '@web/components/QRCode';
 
 interface Props extends RouteComponentProps {}
 
