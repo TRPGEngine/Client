@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
-import { TMemo } from '@shared/components/TMemo';
-import type { UserAlignment } from '@shared/model/player';
+import { TMemo } from '@capital/shared/components/TMemo';
+import type { UserAlignment } from '@capital/shared/model/player';
 import styled from 'styled-components';
-import { useTranslation } from '@shared/i18n';
+import { useTranslation } from '@capital/shared/i18n';
 
 const AlignmentItemContainer = styled.td<{
   isSelected: boolean;
@@ -47,9 +47,6 @@ interface AlignmentChooseProps {
   value: string;
   onChange: (newValue: string) => void;
 }
-/**
- * TODO: Not good, should move to plugin:trpg
- */
 export const AlignmentChoose: React.FC<AlignmentChooseProps> = TMemo(
   (props) => {
     const { t } = useTranslation();

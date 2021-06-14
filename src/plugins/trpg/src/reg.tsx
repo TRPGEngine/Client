@@ -28,6 +28,15 @@ import { GroupReportManage } from './panels/GroupDetail/GroupReportManage';
 import { GroupActorSelector } from './panels/actions/GroupActorSelector';
 import { ChatMsgTypeSwitch } from './components/chatBox/ChatSendBox/ChatMsgTypeSwitch';
 import { ChatMsgDiceBuilder } from './components/chatBox/ChatSendBox/ChatMsgDiceBuilder';
+import {
+  DefaultFullModalInputEditorRender,
+  FullModalField,
+} from '@capital/web/components/FullModalField';
+import { regSettingAccountAttribute } from '@capital/web/reg/regSettingAccount';
+import { Space } from 'antd';
+import { TipIcon } from '@capital/web/components/TipIcon';
+import { getDocsUrl } from '@capital/shared/utils/string-helper';
+import { AlignmentChoose } from './components/AlignmentChoose';
 
 subscribeToUserLoginSuccess(() => {
   dispatchAction(getTemplate());
@@ -91,3 +100,39 @@ regGroupPanelAction({
 regChatSendBoxLeftAction(<ChatMsgTypeSwitch key="ChatMsgTypeSwitch" />);
 
 regChatSendBoxRightAction(<ChatMsgDiceBuilder key="ChatMsgDiceBuilder" />);
+
+regSettingAccountAttribute(({ userInfo, buildUpdateFieldFn }: any) => (
+  <FullModalField
+    key="alignment"
+    title={
+      <Space size={4}>
+        {t('阵营')}
+        <TipIcon
+          desc={t('你觉得你是一个怎么样的人？')}
+          link={getDocsUrl('/docs/roleplay/alignment')}
+        />
+      </Space>
+    }
+    value={userInfo.alignment}
+    content={t(userInfo.alignment ?? '未选择')}
+    editable={true}
+    renderEditor={AlignmentChoose}
+    onSave={buildUpdateFieldFn('alignment')}
+  />
+));
+
+regSettingAccountAttribute(({ userInfo, buildUpdateFieldFn }: any) => (
+  <FullModalField
+    key="qqnumber"
+    title={
+      <Space size={4}>
+        {t('QQ号')}
+        <TipIcon desc={t('方便开发者联系到你')} />
+      </Space>
+    }
+    value={userInfo.qq_number}
+    editable={true}
+    renderEditor={DefaultFullModalInputEditorRender}
+    onSave={buildUpdateFieldFn('qq_number')}
+  />
+));

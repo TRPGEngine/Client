@@ -20,6 +20,7 @@ import { TipIcon } from '@web/components/TipIcon';
 import { getDocsUrl } from '@shared/utils/string-helper';
 import { openModal } from '@web/components/Modal';
 import { ChangePassword } from '@web/components/modals/ChangePassword';
+import { extraSettingAccountAttribute } from '@web/reg/regSettingAccount';
 
 const GenderSelector: FullModalFieldEditorRenderComponent = TMemo(
   ({ value, onChange }) => {
@@ -96,34 +97,11 @@ export const SettingAccountView: React.FC = TMemo(() => {
             renderEditor={GenderSelector}
             onSave={buildUpdateFieldFn('sex')}
           />
-          <FullModalField
-            title={
-              <Space size={4}>
-                {t('阵营')}
-                <TipIcon
-                  desc={t('你觉得你是一个怎么样的人？')}
-                  link={getDocsUrl('/docs/roleplay/alignment')}
-                />
-              </Space>
-            }
-            value={userInfo.alignment}
-            content={t(userInfo.alignment ?? '未选择')}
-            editable={true}
-            renderEditor={AlignmentChoose as any}
-            onSave={buildUpdateFieldFn('alignment')}
-          />
-          <FullModalField
-            title={
-              <Space size={4}>
-                {t('QQ号')}
-                <TipIcon desc={t('方便开发者联系到你')} />
-              </Space>
-            }
-            value={userInfo.qq_number}
-            editable={true}
-            renderEditor={DefaultFullModalInputEditorRender}
-            onSave={buildUpdateFieldFn('qq_number')}
-          />
+
+          {...extraSettingAccountAttribute.map((builder) =>
+            builder({ userInfo, buildUpdateFieldFn })
+          )}
+
           <FullModalField
             title={t('简介')}
             value={userInfo.sign}

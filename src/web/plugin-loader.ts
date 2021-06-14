@@ -60,6 +60,10 @@ export function initPlugins(): Promise<void> {
     () => import('@web/reg/regChatSendBoxAction')
   );
   regSharedModule(
+    '@capital/web/reg/regSettingAccount',
+    () => import('@web/reg/regSettingAccount')
+  );
+  regSharedModule(
     '@capital/web/reg/regSettingViewMenu',
     () => import('@web/reg/regSettingViewMenu')
   );
@@ -70,6 +74,10 @@ export function initPlugins(): Promise<void> {
   regSharedModule(
     '@capital/web/components/Iconfont',
     () => import('@web/components/Iconfont')
+  );
+  regSharedModule(
+    '@capital/web/components/TipIcon',
+    () => import('@web/components/TipIcon')
   );
   regSharedModule(
     '@capital/web/components/PillTabs',
