@@ -1,4 +1,5 @@
 import { initMiniStar, regDependency, regSharedModule } from 'mini-star';
+import config from '@shared/project.config';
 
 /**
  * 初始化插件
@@ -277,9 +278,10 @@ export function initPlugins(): Promise<void> {
   );
 
   return initMiniStar({
+    pluginUrlBuilder: (plugin) =>
+      `/plugins/${plugin}/index.js?v=${config.version}`,
     plugins: ['trpg', 'netease-music'].map((plugin) => ({
       name: plugin,
-      url: `/plugins/${plugin}/index.js`,
     })),
   });
 }
