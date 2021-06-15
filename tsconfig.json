@@ -34,10 +34,10 @@
     "./config/",
     "./src/",
     "./test/",
-    "./types/",
-    "./cypress/"
+    "./types/"
   ],
   "exclude": [
+    "./cypress/",
     "./src/app/",
     "./src/appv2/",
     "./src/mini-program/",

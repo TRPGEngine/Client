@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import './Spinner.scss';
+import './Spinner.less';
 
 interface Props {
   visible?: boolean;

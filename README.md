@@ -42,8 +42,15 @@
 $ yarn install
 
 $ yarn run plugins:all # 编译TRPG相关插件
+$ yarn run translation:build # 编译翻译文件
 $ yarn run dev # 运行本地开发服务器
 ```
+
+### 其他命令
+
+- `yarn run translation:scan` 自动收集并生成主项目与插件项目的翻译
+- `yarn run snowpack` 更加快的开发环境调试方式
+- `yarn run plugins:watch:all` 开发环境监听插件变更
 
 *如果出现 cypress 因为网络问题无法下载的情况，可以自己构造下载地址来正常安装, 如`CYPRESS_INSTALL_BINARY=https://npm.taobao.org/mirrors/cypress/6.2.1/linux-x64/cypress.zip`*
 

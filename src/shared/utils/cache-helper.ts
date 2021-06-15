@@ -17,9 +17,13 @@ export const attachStore = function (store) {
   _store = store;
 };
 
-export const checkUser = function (uuid, type = 'user') {
-  if (!uuid) {
-    // 如果UUID不存在。则跳过
+/**
+ * 异步请求用户信息缓存
+ * 以确保缓存存在
+ */
+export function ensureUserInfoCache(uuid: string, type = 'user') {
+  if (!uuid || typeof uuid !== 'string') {
+    // 如果UUID为falsy 或 类型不为字符串。 则跳过
     return;
   }
 
@@ -41,6 +45,13 @@ export const checkUser = function (uuid, type = 'user') {
   } else {
     throw new Error('checkUser func should bind store');
   }
+}
+
+/**
+ * @deprecated 请使用 ensureUserInfoCache
+ */
+export const checkUser = function (uuid, type = 'user') {
+  ensureUserInfoCache(uuid, type);
 };
 
 export const checkTemplate = function (uuid) {

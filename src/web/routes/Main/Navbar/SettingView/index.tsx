@@ -19,6 +19,7 @@ import { useCurrentUserInfo } from '@redux/hooks/user';
 import { openPostWindow } from '@web/utils/dom-helper';
 import { getUserName } from '@shared/utils/data-helper';
 import { trackEvent } from '@web/utils/analytics-helper';
+import { extraSettingViewMenu } from '@web/reg/regSettingViewMenu';
 
 export const SettingView: React.FC = TMemo(() => {
   const userInfo = useCurrentUserInfo();
@@ -56,6 +57,7 @@ export const SettingView: React.FC = TMemo(() => {
             title: t('语音设置'),
             content: <SettingAudioConfig />,
           },
+          ...(extraSettingViewMenu ?? []),
         ],
       },
       {

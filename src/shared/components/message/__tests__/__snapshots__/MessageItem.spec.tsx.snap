@@ -1,12 +1,578 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MessageItem testcase 0 1`] = `
+.c2 {
+  font-family: PingFang SC,"Microsoft YaHei",arial,serif;
+  min-width: 0;
+  padding: 5px 11px;
+  border: 1px solid #e1e0e4;
+  border-radius: 6px;
+  background-color: #fff;
+  line-height: 1.5;
+  word-break: break-all;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+.c2 img {
+  max-width: 100%;
+}
+
+.c0 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #333333;
+}
+
+.c0:hover > .profile .time {
+  visibility: visible;
+}
+
+.c0.me .profile,
+.c0.me .content {
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.c0.me .content .avatar {
+  margin-right: 0;
+  margin-left: 7px;
+}
+
+.c0.me .content > .body {
+  margin-right: 0;
+  margin-left: 140px;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.c0.me .content > .body .bubble {
+  float: right;
+}
+
+.c0.ooc .content > .body > .bubble,
+.c0.speak .content > .body > .bubble,
+.c0.action .content > .body > .bubble {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
+.c0.ooc .content > .body > .bubble {
+  color: #ccc;
+  border-style: dashed;
+}
+
+.c0.ooc .content > .body > .bubble:before {
+  content: '(';
+  position: absolute;
+  top: 4px;
+  left: 14px;
+}
+
+.c0.ooc .content > .body > .bubble:after {
+  content: ')';
+  position: absolute;
+  bottom: 6px;
+  right: 14px;
+}
+
+.c0.speak .content > .body > .bubble {
+  border-color: #bec9ff;
+  box-shadow: 0px 0px 2px 0px #bec9ff;
+}
+
+.c0.speak .content > .body > .bubble:before {
+  content: '\\e605';
+  top: 0;
+  left: 6px;
+}
+
+.c0.speak .content > .body > .bubble:after {
+  content: '\\e601';
+  bottom: 13px;
+  right: 6px;
+}
+
+.c0.speak .content > .body > .bubble:before,
+.c0.speak .content > .body > .bubble:after {
+  font-family: 'iconfont';
+  color: #ccc;
+  position: absolute;
+  font-size: 12px;
+}
+
+.c0.action .content > .body > .bubble {
+  border-color: #ffa787;
+  box-shadow: 0px 0px 2px 0px #ffa787;
+}
+
+.c0.action .content > .body > .bubble:before {
+  content: '\\e619';
+  font-family: 'iconfont';
+  color: #ccc;
+  position: absolute;
+  right: 6px;
+}
+
+.c0.action.me .content > .body > .bubble:before {
+  position: absolute;
+  left: 6px;
+  right: auto;
+}
+
+.c0.card .content > .body > .bubble {
+  padding: 0;
+  min-width: 220px;
+  max-width: 467px;
+}
+
+.c0.card .content > .body > .bubble > .card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: white;
+  line-height: 30px;
+  padding: 0 6px;
+  background-color: #D0A282;
+}
+
+.c0.card .content > .body > .bubble > .card-content {
+  padding: 10px 6px;
+  color: #4a4a4a;
+  min-height: 60px;
+}
+
+.c0.card .content > .body > .bubble > .card-action {
+  margin: 0 6px;
+  padding: 4px 0;
+  border-top: 1px solid #DDDCDD;
+}
+
+.c0.card .content > .body > .bubble > .card-action button {
+  font-size: 14px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  color: #705949;
+  padding: 0 2px;
+  margin: 4px 6px;
+  outline: 0;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.c0.card .content > .body > .bubble > .card-action button:disabled {
+  cursor: not-allowed;
+  color: #999999;
+}
+
+.c0.card .content > .body > .bubble > .card-action button:enabled:after {
+  content: ' ';
+  position: absolute;
+  border-top: 1px solid #705949;
+  bottom: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  left: 0;
+  width: 0;
+}
+
+.c0.card .content > .body > .bubble > .card-action button:enabled:hover:after,
+.c0.card .content > .body > .bubble > .card-action button:enabled:active:after,
+.c0.card .content > .body > .bubble > .card-action button:enabled.active:after {
+  border-top: 1px solid #705949;
+  width: 100%;
+}
+
+.c0.card .content > .body > .bubble > .card-action .no-support {
+  color: #999999;
+  font-size: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor {
+  padding: 10px;
+  max-height: 160;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-avatar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 60px;
+  height: 60px;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-position: center;
+  background-size: cover;
+  font-size: 24px;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding: 0 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile > h3 {
+  margin: 0;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile > p {
+  margin: 0;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile > p:hover {
+  overflow-y: auto;
+  overflow-y: overlay;
+}
+
+.c0.file .content > .body > .bubble {
+  width: 260px;
+}
+
+.c0.file .content > .body > .bubble .file-info {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 7px 0;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-avatar {
+  margin-right: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-prop {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-prop h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  width: 100%;
+  color: #333;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-prop p {
+  color: #CCCCCC;
+  line-height: 18px;
+}
+
+.c0.file .content > .body > .bubble .file-progress {
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.c0.file .content > .body > .bubble .file-progress > div {
+  border-top: 3px solid #D0A282;
+  -webkit-transition: width 0.4s;
+  transition: width 0.4s;
+}
+
+.c0.file .content > .body > .bubble .file-action {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 10px;
+  border-top: 1px solid #CCCCCC;
+}
+
+.c0.file .content > .body > .bubble .file-action button {
+  font-size: 14px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  color: #705949;
+  padding: 0 2px;
+  margin: 4px 6px;
+  outline: 0;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  border-right: 1px solid #CCCCCC;
+}
+
+.c0.file .content > .body > .bubble .file-action button:disabled {
+  cursor: not-allowed;
+  color: #999999;
+}
+
+.c0.file .content > .body > .bubble .file-action button:enabled:after {
+  content: ' ';
+  position: absolute;
+  border-top: 1px solid #705949;
+  bottom: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  left: 0;
+  width: 0;
+}
+
+.c0.file .content > .body > .bubble .file-action button:enabled:hover:after,
+.c0.file .content > .body > .bubble .file-action button:enabled:active:after,
+.c0.file .content > .body > .bubble .file-action button:enabled.active:after {
+  border-top: 1px solid #705949;
+  width: 100%;
+}
+
+.c0.file .content > .body > .bubble .file-action button:last-child {
+  border-right: 0;
+}
+
+.c0.file .content > .body > .bubble .file-action button:after {
+  content: none !important;
+}
+
+.c0 .profile {
+  padding: 0 45px;
+  margin: 2px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c0 .profile.nopadding {
+  padding: 0;
+}
+
+.c0 .profile .name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #8e97a1;
+  max-width: 180px;
+  word-wrap: normal;
+  font-size: 12px;
+}
+
+.c0 .profile .time {
+  visibility: hidden;
+  color: #BDBEBF;
+  font-size: 12px;
+  margin: 0 6px;
+}
+
+.c0 .content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c0 .content .avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 7px;
+}
+
+.c0 .content .avatar > img {
+  width: 100%;
+  height: 100%;
+}
+
+.c0 .content > .body {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin-right: 140px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 .content > .body .bubble {
+  font-family: PingFang SC,"Microsoft YaHei",arial,serif;
+  min-width: 0;
+  padding: 5px 11px;
+  border: 1px solid #e1e0e4;
+  border-radius: 6px;
+  background-color: #fff;
+  line-height: 1.5;
+  word-break: break-all;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+.c0 .content > .body .bubble img {
+  max-width: 100%;
+}
+
+.c0 .content > .body > .loading {
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+}
+
+.c0 .content > .body > .operation {
+  border: 1px solid #e1e0e4;
+  color: #e1e0e4;
+  border-radius: 3px;
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+  margin: 0 4px;
+  height: 16px;
+  width: 18px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  visibility: hidden;
+}
+
+.c0 .content > .body > .operation > .iconfont {
+  font-size: 8px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  line-height: normal;
+}
+
+.c0 .content > .body:hover > .operation {
+  visibility: visible;
+}
+
+.c0.compact:not(.card) .content .avatar {
+  margin-top: -16px;
+}
+
+.c0.compact:not(.card) .content .bubble {
+  border: 0;
+  background-color: transparent;
+  color: #dcddde;
+  padding: 0;
+  border-radius: initial;
+  box-shadow: none;
+}
+
+.c0.compact:not(.card) .content .bubble::before,
+.c0.compact:not(.card) .content .bubble::after {
+  content: '';
+}
+
+.c0.omitSenderInfo {
+  margin-top: 10px;
+}
+
+.c1 {
+  text-align: center;
+}
+
+.c1 > span {
+  color: white;
+  font-size: 12px;
+  padding: 1px 5px;
+  background-color: #CCCCCC80;
+  border-radius: 3px;
+}
+
+@media (max-width:768px) {
+  .c0 .content > .body {
+    margin: 0 !important;
+  }
+}
+
 <div>
   <div
-    class="sc-hKFxyN iMqKQT normal bubble"
+    class="c0 normal bubble"
   >
     <div
-      class="sc-dIvrsQ hvIHuB"
+      class="c1"
     >
       <span>
         中午 12:00
@@ -49,7 +615,7 @@ exports[`MessageItem testcase 0 1`] = `
         class="body"
       >
         <pre
-          class="sc-bdnxRM gfkJP bubble"
+          class="c2 bubble"
         >
           <pre
             style="display: inline;"
@@ -73,9 +639,563 @@ exports[`MessageItem testcase 0 1`] = `
 `;
 
 exports[`MessageItem testcase 1 1`] = `
+.c1 {
+  font-family: PingFang SC,"Microsoft YaHei",arial,serif;
+  min-width: 0;
+  padding: 5px 11px;
+  border: 1px solid #e1e0e4;
+  border-radius: 6px;
+  background-color: #fff;
+  line-height: 1.5;
+  word-break: break-all;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+.c1 img {
+  max-width: 100%;
+}
+
+.c0 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #333333;
+}
+
+.c0:hover > .profile .time {
+  visibility: visible;
+}
+
+.c0.me .profile,
+.c0.me .content {
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.c0.me .content .avatar {
+  margin-right: 0;
+  margin-left: 7px;
+}
+
+.c0.me .content > .body {
+  margin-right: 0;
+  margin-left: 140px;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.c0.me .content > .body .bubble {
+  float: right;
+}
+
+.c0.ooc .content > .body > .bubble,
+.c0.speak .content > .body > .bubble,
+.c0.action .content > .body > .bubble {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
+.c0.ooc .content > .body > .bubble {
+  color: #ccc;
+  border-style: dashed;
+}
+
+.c0.ooc .content > .body > .bubble:before {
+  content: '(';
+  position: absolute;
+  top: 4px;
+  left: 14px;
+}
+
+.c0.ooc .content > .body > .bubble:after {
+  content: ')';
+  position: absolute;
+  bottom: 6px;
+  right: 14px;
+}
+
+.c0.speak .content > .body > .bubble {
+  border-color: #bec9ff;
+  box-shadow: 0px 0px 2px 0px #bec9ff;
+}
+
+.c0.speak .content > .body > .bubble:before {
+  content: '\\e605';
+  top: 0;
+  left: 6px;
+}
+
+.c0.speak .content > .body > .bubble:after {
+  content: '\\e601';
+  bottom: 13px;
+  right: 6px;
+}
+
+.c0.speak .content > .body > .bubble:before,
+.c0.speak .content > .body > .bubble:after {
+  font-family: 'iconfont';
+  color: #ccc;
+  position: absolute;
+  font-size: 12px;
+}
+
+.c0.action .content > .body > .bubble {
+  border-color: #ffa787;
+  box-shadow: 0px 0px 2px 0px #ffa787;
+}
+
+.c0.action .content > .body > .bubble:before {
+  content: '\\e619';
+  font-family: 'iconfont';
+  color: #ccc;
+  position: absolute;
+  right: 6px;
+}
+
+.c0.action.me .content > .body > .bubble:before {
+  position: absolute;
+  left: 6px;
+  right: auto;
+}
+
+.c0.card .content > .body > .bubble {
+  padding: 0;
+  min-width: 220px;
+  max-width: 467px;
+}
+
+.c0.card .content > .body > .bubble > .card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: white;
+  line-height: 30px;
+  padding: 0 6px;
+  background-color: #D0A282;
+}
+
+.c0.card .content > .body > .bubble > .card-content {
+  padding: 10px 6px;
+  color: #4a4a4a;
+  min-height: 60px;
+}
+
+.c0.card .content > .body > .bubble > .card-action {
+  margin: 0 6px;
+  padding: 4px 0;
+  border-top: 1px solid #DDDCDD;
+}
+
+.c0.card .content > .body > .bubble > .card-action button {
+  font-size: 14px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  color: #705949;
+  padding: 0 2px;
+  margin: 4px 6px;
+  outline: 0;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.c0.card .content > .body > .bubble > .card-action button:disabled {
+  cursor: not-allowed;
+  color: #999999;
+}
+
+.c0.card .content > .body > .bubble > .card-action button:enabled:after {
+  content: ' ';
+  position: absolute;
+  border-top: 1px solid #705949;
+  bottom: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  left: 0;
+  width: 0;
+}
+
+.c0.card .content > .body > .bubble > .card-action button:enabled:hover:after,
+.c0.card .content > .body > .bubble > .card-action button:enabled:active:after,
+.c0.card .content > .body > .bubble > .card-action button:enabled.active:after {
+  border-top: 1px solid #705949;
+  width: 100%;
+}
+
+.c0.card .content > .body > .bubble > .card-action .no-support {
+  color: #999999;
+  font-size: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor {
+  padding: 10px;
+  max-height: 160;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-avatar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 60px;
+  height: 60px;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-position: center;
+  background-size: cover;
+  font-size: 24px;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding: 0 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile > h3 {
+  margin: 0;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile > p {
+  margin: 0;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile > p:hover {
+  overflow-y: auto;
+  overflow-y: overlay;
+}
+
+.c0.file .content > .body > .bubble {
+  width: 260px;
+}
+
+.c0.file .content > .body > .bubble .file-info {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 7px 0;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-avatar {
+  margin-right: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-prop {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-prop h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  width: 100%;
+  color: #333;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-prop p {
+  color: #CCCCCC;
+  line-height: 18px;
+}
+
+.c0.file .content > .body > .bubble .file-progress {
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.c0.file .content > .body > .bubble .file-progress > div {
+  border-top: 3px solid #D0A282;
+  -webkit-transition: width 0.4s;
+  transition: width 0.4s;
+}
+
+.c0.file .content > .body > .bubble .file-action {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 10px;
+  border-top: 1px solid #CCCCCC;
+}
+
+.c0.file .content > .body > .bubble .file-action button {
+  font-size: 14px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  color: #705949;
+  padding: 0 2px;
+  margin: 4px 6px;
+  outline: 0;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  border-right: 1px solid #CCCCCC;
+}
+
+.c0.file .content > .body > .bubble .file-action button:disabled {
+  cursor: not-allowed;
+  color: #999999;
+}
+
+.c0.file .content > .body > .bubble .file-action button:enabled:after {
+  content: ' ';
+  position: absolute;
+  border-top: 1px solid #705949;
+  bottom: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  left: 0;
+  width: 0;
+}
+
+.c0.file .content > .body > .bubble .file-action button:enabled:hover:after,
+.c0.file .content > .body > .bubble .file-action button:enabled:active:after,
+.c0.file .content > .body > .bubble .file-action button:enabled.active:after {
+  border-top: 1px solid #705949;
+  width: 100%;
+}
+
+.c0.file .content > .body > .bubble .file-action button:last-child {
+  border-right: 0;
+}
+
+.c0.file .content > .body > .bubble .file-action button:after {
+  content: none !important;
+}
+
+.c0 .profile {
+  padding: 0 45px;
+  margin: 2px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c0 .profile.nopadding {
+  padding: 0;
+}
+
+.c0 .profile .name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #8e97a1;
+  max-width: 180px;
+  word-wrap: normal;
+  font-size: 12px;
+}
+
+.c0 .profile .time {
+  visibility: hidden;
+  color: #BDBEBF;
+  font-size: 12px;
+  margin: 0 6px;
+}
+
+.c0 .content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c0 .content .avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 7px;
+}
+
+.c0 .content .avatar > img {
+  width: 100%;
+  height: 100%;
+}
+
+.c0 .content > .body {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin-right: 140px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 .content > .body .bubble {
+  font-family: PingFang SC,"Microsoft YaHei",arial,serif;
+  min-width: 0;
+  padding: 5px 11px;
+  border: 1px solid #e1e0e4;
+  border-radius: 6px;
+  background-color: #fff;
+  line-height: 1.5;
+  word-break: break-all;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+.c0 .content > .body .bubble img {
+  max-width: 100%;
+}
+
+.c0 .content > .body > .loading {
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+}
+
+.c0 .content > .body > .operation {
+  border: 1px solid #e1e0e4;
+  color: #e1e0e4;
+  border-radius: 3px;
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+  margin: 0 4px;
+  height: 16px;
+  width: 18px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  visibility: hidden;
+}
+
+.c0 .content > .body > .operation > .iconfont {
+  font-size: 8px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  line-height: normal;
+}
+
+.c0 .content > .body:hover > .operation {
+  visibility: visible;
+}
+
+.c0.compact:not(.card) .content .avatar {
+  margin-top: -16px;
+}
+
+.c0.compact:not(.card) .content .bubble {
+  border: 0;
+  background-color: transparent;
+  color: #dcddde;
+  padding: 0;
+  border-radius: initial;
+  box-shadow: none;
+}
+
+.c0.compact:not(.card) .content .bubble::before,
+.c0.compact:not(.card) .content .bubble::after {
+  content: '';
+}
+
+.c0.omitSenderInfo {
+  margin-top: 10px;
+}
+
+@media (max-width:768px) {
+  .c0 .content > .body {
+    margin: 0 !important;
+  }
+}
+
 <div>
   <div
-    class="sc-hKFxyN iMqKQT normal bubble"
+    class="c0 normal bubble"
   >
     <div
       class="profile"
@@ -110,7 +1230,7 @@ exports[`MessageItem testcase 1 1`] = `
         class="body"
       >
         <pre
-          class="sc-bdnxRM gfkJP bubble"
+          class="c1 bubble"
         >
           <pre
             style="display: inline;"
@@ -134,9 +1254,563 @@ exports[`MessageItem testcase 1 1`] = `
 `;
 
 exports[`MessageItem testcase 2 1`] = `
+.c1 {
+  font-family: PingFang SC,"Microsoft YaHei",arial,serif;
+  min-width: 0;
+  padding: 5px 11px;
+  border: 1px solid #e1e0e4;
+  border-radius: 6px;
+  background-color: #fff;
+  line-height: 1.5;
+  word-break: break-all;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+.c1 img {
+  max-width: 100%;
+}
+
+.c0 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #333333;
+}
+
+.c0:hover > .profile .time {
+  visibility: visible;
+}
+
+.c0.me .profile,
+.c0.me .content {
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.c0.me .content .avatar {
+  margin-right: 0;
+  margin-left: 7px;
+}
+
+.c0.me .content > .body {
+  margin-right: 0;
+  margin-left: 140px;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.c0.me .content > .body .bubble {
+  float: right;
+}
+
+.c0.ooc .content > .body > .bubble,
+.c0.speak .content > .body > .bubble,
+.c0.action .content > .body > .bubble {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
+.c0.ooc .content > .body > .bubble {
+  color: #ccc;
+  border-style: dashed;
+}
+
+.c0.ooc .content > .body > .bubble:before {
+  content: '(';
+  position: absolute;
+  top: 4px;
+  left: 14px;
+}
+
+.c0.ooc .content > .body > .bubble:after {
+  content: ')';
+  position: absolute;
+  bottom: 6px;
+  right: 14px;
+}
+
+.c0.speak .content > .body > .bubble {
+  border-color: #bec9ff;
+  box-shadow: 0px 0px 2px 0px #bec9ff;
+}
+
+.c0.speak .content > .body > .bubble:before {
+  content: '\\e605';
+  top: 0;
+  left: 6px;
+}
+
+.c0.speak .content > .body > .bubble:after {
+  content: '\\e601';
+  bottom: 13px;
+  right: 6px;
+}
+
+.c0.speak .content > .body > .bubble:before,
+.c0.speak .content > .body > .bubble:after {
+  font-family: 'iconfont';
+  color: #ccc;
+  position: absolute;
+  font-size: 12px;
+}
+
+.c0.action .content > .body > .bubble {
+  border-color: #ffa787;
+  box-shadow: 0px 0px 2px 0px #ffa787;
+}
+
+.c0.action .content > .body > .bubble:before {
+  content: '\\e619';
+  font-family: 'iconfont';
+  color: #ccc;
+  position: absolute;
+  right: 6px;
+}
+
+.c0.action.me .content > .body > .bubble:before {
+  position: absolute;
+  left: 6px;
+  right: auto;
+}
+
+.c0.card .content > .body > .bubble {
+  padding: 0;
+  min-width: 220px;
+  max-width: 467px;
+}
+
+.c0.card .content > .body > .bubble > .card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: white;
+  line-height: 30px;
+  padding: 0 6px;
+  background-color: #D0A282;
+}
+
+.c0.card .content > .body > .bubble > .card-content {
+  padding: 10px 6px;
+  color: #4a4a4a;
+  min-height: 60px;
+}
+
+.c0.card .content > .body > .bubble > .card-action {
+  margin: 0 6px;
+  padding: 4px 0;
+  border-top: 1px solid #DDDCDD;
+}
+
+.c0.card .content > .body > .bubble > .card-action button {
+  font-size: 14px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  color: #705949;
+  padding: 0 2px;
+  margin: 4px 6px;
+  outline: 0;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.c0.card .content > .body > .bubble > .card-action button:disabled {
+  cursor: not-allowed;
+  color: #999999;
+}
+
+.c0.card .content > .body > .bubble > .card-action button:enabled:after {
+  content: ' ';
+  position: absolute;
+  border-top: 1px solid #705949;
+  bottom: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  left: 0;
+  width: 0;
+}
+
+.c0.card .content > .body > .bubble > .card-action button:enabled:hover:after,
+.c0.card .content > .body > .bubble > .card-action button:enabled:active:after,
+.c0.card .content > .body > .bubble > .card-action button:enabled.active:after {
+  border-top: 1px solid #705949;
+  width: 100%;
+}
+
+.c0.card .content > .body > .bubble > .card-action .no-support {
+  color: #999999;
+  font-size: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor {
+  padding: 10px;
+  max-height: 160;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-avatar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 60px;
+  height: 60px;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-position: center;
+  background-size: cover;
+  font-size: 24px;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding: 0 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile > h3 {
+  margin: 0;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile > p {
+  margin: 0;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile > p:hover {
+  overflow-y: auto;
+  overflow-y: overlay;
+}
+
+.c0.file .content > .body > .bubble {
+  width: 260px;
+}
+
+.c0.file .content > .body > .bubble .file-info {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 7px 0;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-avatar {
+  margin-right: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-prop {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-prop h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  width: 100%;
+  color: #333;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-prop p {
+  color: #CCCCCC;
+  line-height: 18px;
+}
+
+.c0.file .content > .body > .bubble .file-progress {
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.c0.file .content > .body > .bubble .file-progress > div {
+  border-top: 3px solid #D0A282;
+  -webkit-transition: width 0.4s;
+  transition: width 0.4s;
+}
+
+.c0.file .content > .body > .bubble .file-action {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 10px;
+  border-top: 1px solid #CCCCCC;
+}
+
+.c0.file .content > .body > .bubble .file-action button {
+  font-size: 14px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  color: #705949;
+  padding: 0 2px;
+  margin: 4px 6px;
+  outline: 0;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  border-right: 1px solid #CCCCCC;
+}
+
+.c0.file .content > .body > .bubble .file-action button:disabled {
+  cursor: not-allowed;
+  color: #999999;
+}
+
+.c0.file .content > .body > .bubble .file-action button:enabled:after {
+  content: ' ';
+  position: absolute;
+  border-top: 1px solid #705949;
+  bottom: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  left: 0;
+  width: 0;
+}
+
+.c0.file .content > .body > .bubble .file-action button:enabled:hover:after,
+.c0.file .content > .body > .bubble .file-action button:enabled:active:after,
+.c0.file .content > .body > .bubble .file-action button:enabled.active:after {
+  border-top: 1px solid #705949;
+  width: 100%;
+}
+
+.c0.file .content > .body > .bubble .file-action button:last-child {
+  border-right: 0;
+}
+
+.c0.file .content > .body > .bubble .file-action button:after {
+  content: none !important;
+}
+
+.c0 .profile {
+  padding: 0 45px;
+  margin: 2px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c0 .profile.nopadding {
+  padding: 0;
+}
+
+.c0 .profile .name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #8e97a1;
+  max-width: 180px;
+  word-wrap: normal;
+  font-size: 12px;
+}
+
+.c0 .profile .time {
+  visibility: hidden;
+  color: #BDBEBF;
+  font-size: 12px;
+  margin: 0 6px;
+}
+
+.c0 .content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c0 .content .avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 7px;
+}
+
+.c0 .content .avatar > img {
+  width: 100%;
+  height: 100%;
+}
+
+.c0 .content > .body {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin-right: 140px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 .content > .body .bubble {
+  font-family: PingFang SC,"Microsoft YaHei",arial,serif;
+  min-width: 0;
+  padding: 5px 11px;
+  border: 1px solid #e1e0e4;
+  border-radius: 6px;
+  background-color: #fff;
+  line-height: 1.5;
+  word-break: break-all;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+.c0 .content > .body .bubble img {
+  max-width: 100%;
+}
+
+.c0 .content > .body > .loading {
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+}
+
+.c0 .content > .body > .operation {
+  border: 1px solid #e1e0e4;
+  color: #e1e0e4;
+  border-radius: 3px;
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+  margin: 0 4px;
+  height: 16px;
+  width: 18px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  visibility: hidden;
+}
+
+.c0 .content > .body > .operation > .iconfont {
+  font-size: 8px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  line-height: normal;
+}
+
+.c0 .content > .body:hover > .operation {
+  visibility: visible;
+}
+
+.c0.compact:not(.card) .content .avatar {
+  margin-top: -16px;
+}
+
+.c0.compact:not(.card) .content .bubble {
+  border: 0;
+  background-color: transparent;
+  color: #dcddde;
+  padding: 0;
+  border-radius: initial;
+  box-shadow: none;
+}
+
+.c0.compact:not(.card) .content .bubble::before,
+.c0.compact:not(.card) .content .bubble::after {
+  content: '';
+}
+
+.c0.omitSenderInfo {
+  margin-top: 10px;
+}
+
+@media (max-width:768px) {
+  .c0 .content > .body {
+    margin: 0 !important;
+  }
+}
+
 <div>
   <div
-    class="sc-hKFxyN iMqKQT omitSenderInfo normal bubble"
+    class="c0 omitSenderInfo normal bubble"
   >
     <div
       class="content"
@@ -148,7 +1822,7 @@ exports[`MessageItem testcase 2 1`] = `
         class="body"
       >
         <pre
-          class="sc-bdnxRM gfkJP bubble"
+          class="c1 bubble"
         >
           <pre
             style="display: inline;"
@@ -172,9 +1846,563 @@ exports[`MessageItem testcase 2 1`] = `
 `;
 
 exports[`MessageItem testcase 3 1`] = `
+.c1 {
+  font-family: PingFang SC,"Microsoft YaHei",arial,serif;
+  min-width: 0;
+  padding: 5px 11px;
+  border: 1px solid #e1e0e4;
+  border-radius: 6px;
+  background-color: #fff;
+  line-height: 1.5;
+  word-break: break-all;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+.c1 img {
+  max-width: 100%;
+}
+
+.c0 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #333333;
+}
+
+.c0:hover > .profile .time {
+  visibility: visible;
+}
+
+.c0.me .profile,
+.c0.me .content {
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.c0.me .content .avatar {
+  margin-right: 0;
+  margin-left: 7px;
+}
+
+.c0.me .content > .body {
+  margin-right: 0;
+  margin-left: 140px;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.c0.me .content > .body .bubble {
+  float: right;
+}
+
+.c0.ooc .content > .body > .bubble,
+.c0.speak .content > .body > .bubble,
+.c0.action .content > .body > .bubble {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
+.c0.ooc .content > .body > .bubble {
+  color: #ccc;
+  border-style: dashed;
+}
+
+.c0.ooc .content > .body > .bubble:before {
+  content: '(';
+  position: absolute;
+  top: 4px;
+  left: 14px;
+}
+
+.c0.ooc .content > .body > .bubble:after {
+  content: ')';
+  position: absolute;
+  bottom: 6px;
+  right: 14px;
+}
+
+.c0.speak .content > .body > .bubble {
+  border-color: #bec9ff;
+  box-shadow: 0px 0px 2px 0px #bec9ff;
+}
+
+.c0.speak .content > .body > .bubble:before {
+  content: '\\e605';
+  top: 0;
+  left: 6px;
+}
+
+.c0.speak .content > .body > .bubble:after {
+  content: '\\e601';
+  bottom: 13px;
+  right: 6px;
+}
+
+.c0.speak .content > .body > .bubble:before,
+.c0.speak .content > .body > .bubble:after {
+  font-family: 'iconfont';
+  color: #ccc;
+  position: absolute;
+  font-size: 12px;
+}
+
+.c0.action .content > .body > .bubble {
+  border-color: #ffa787;
+  box-shadow: 0px 0px 2px 0px #ffa787;
+}
+
+.c0.action .content > .body > .bubble:before {
+  content: '\\e619';
+  font-family: 'iconfont';
+  color: #ccc;
+  position: absolute;
+  right: 6px;
+}
+
+.c0.action.me .content > .body > .bubble:before {
+  position: absolute;
+  left: 6px;
+  right: auto;
+}
+
+.c0.card .content > .body > .bubble {
+  padding: 0;
+  min-width: 220px;
+  max-width: 467px;
+}
+
+.c0.card .content > .body > .bubble > .card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: white;
+  line-height: 30px;
+  padding: 0 6px;
+  background-color: #D0A282;
+}
+
+.c0.card .content > .body > .bubble > .card-content {
+  padding: 10px 6px;
+  color: #4a4a4a;
+  min-height: 60px;
+}
+
+.c0.card .content > .body > .bubble > .card-action {
+  margin: 0 6px;
+  padding: 4px 0;
+  border-top: 1px solid #DDDCDD;
+}
+
+.c0.card .content > .body > .bubble > .card-action button {
+  font-size: 14px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  color: #705949;
+  padding: 0 2px;
+  margin: 4px 6px;
+  outline: 0;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.c0.card .content > .body > .bubble > .card-action button:disabled {
+  cursor: not-allowed;
+  color: #999999;
+}
+
+.c0.card .content > .body > .bubble > .card-action button:enabled:after {
+  content: ' ';
+  position: absolute;
+  border-top: 1px solid #705949;
+  bottom: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  left: 0;
+  width: 0;
+}
+
+.c0.card .content > .body > .bubble > .card-action button:enabled:hover:after,
+.c0.card .content > .body > .bubble > .card-action button:enabled:active:after,
+.c0.card .content > .body > .bubble > .card-action button:enabled.active:after {
+  border-top: 1px solid #705949;
+  width: 100%;
+}
+
+.c0.card .content > .body > .bubble > .card-action .no-support {
+  color: #999999;
+  font-size: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor {
+  padding: 10px;
+  max-height: 160;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-avatar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 60px;
+  height: 60px;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-position: center;
+  background-size: cover;
+  font-size: 24px;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding: 0 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile > h3 {
+  margin: 0;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile > p {
+  margin: 0;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+}
+
+.c0.card .content > .body > .bubble > .card-content-actor > .card-content-profile > p:hover {
+  overflow-y: auto;
+  overflow-y: overlay;
+}
+
+.c0.file .content > .body > .bubble {
+  width: 260px;
+}
+
+.c0.file .content > .body > .bubble .file-info {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 7px 0;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-avatar {
+  margin-right: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-prop {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-prop h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  width: 100%;
+  color: #333;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.c0.file .content > .body > .bubble .file-info .file-prop p {
+  color: #CCCCCC;
+  line-height: 18px;
+}
+
+.c0.file .content > .body > .bubble .file-progress {
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.c0.file .content > .body > .bubble .file-progress > div {
+  border-top: 3px solid #D0A282;
+  -webkit-transition: width 0.4s;
+  transition: width 0.4s;
+}
+
+.c0.file .content > .body > .bubble .file-action {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 10px;
+  border-top: 1px solid #CCCCCC;
+}
+
+.c0.file .content > .body > .bubble .file-action button {
+  font-size: 14px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  color: #705949;
+  padding: 0 2px;
+  margin: 4px 6px;
+  outline: 0;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  border-right: 1px solid #CCCCCC;
+}
+
+.c0.file .content > .body > .bubble .file-action button:disabled {
+  cursor: not-allowed;
+  color: #999999;
+}
+
+.c0.file .content > .body > .bubble .file-action button:enabled:after {
+  content: ' ';
+  position: absolute;
+  border-top: 1px solid #705949;
+  bottom: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  left: 0;
+  width: 0;
+}
+
+.c0.file .content > .body > .bubble .file-action button:enabled:hover:after,
+.c0.file .content > .body > .bubble .file-action button:enabled:active:after,
+.c0.file .content > .body > .bubble .file-action button:enabled.active:after {
+  border-top: 1px solid #705949;
+  width: 100%;
+}
+
+.c0.file .content > .body > .bubble .file-action button:last-child {
+  border-right: 0;
+}
+
+.c0.file .content > .body > .bubble .file-action button:after {
+  content: none !important;
+}
+
+.c0 .profile {
+  padding: 0 45px;
+  margin: 2px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c0 .profile.nopadding {
+  padding: 0;
+}
+
+.c0 .profile .name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #8e97a1;
+  max-width: 180px;
+  word-wrap: normal;
+  font-size: 12px;
+}
+
+.c0 .profile .time {
+  visibility: hidden;
+  color: #BDBEBF;
+  font-size: 12px;
+  margin: 0 6px;
+}
+
+.c0 .content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c0 .content .avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 7px;
+}
+
+.c0 .content .avatar > img {
+  width: 100%;
+  height: 100%;
+}
+
+.c0 .content > .body {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin-right: 140px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 .content > .body .bubble {
+  font-family: PingFang SC,"Microsoft YaHei",arial,serif;
+  min-width: 0;
+  padding: 5px 11px;
+  border: 1px solid #e1e0e4;
+  border-radius: 6px;
+  background-color: #fff;
+  line-height: 1.5;
+  word-break: break-all;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+.c0 .content > .body .bubble img {
+  max-width: 100%;
+}
+
+.c0 .content > .body > .loading {
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+}
+
+.c0 .content > .body > .operation {
+  border: 1px solid #e1e0e4;
+  color: #e1e0e4;
+  border-radius: 3px;
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+  margin: 0 4px;
+  height: 16px;
+  width: 18px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  visibility: hidden;
+}
+
+.c0 .content > .body > .operation > .iconfont {
+  font-size: 8px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  line-height: normal;
+}
+
+.c0 .content > .body:hover > .operation {
+  visibility: visible;
+}
+
+.c0.compact:not(.card) .content .avatar {
+  margin-top: -16px;
+}
+
+.c0.compact:not(.card) .content .bubble {
+  border: 0;
+  background-color: transparent;
+  color: #dcddde;
+  padding: 0;
+  border-radius: initial;
+  box-shadow: none;
+}
+
+.c0.compact:not(.card) .content .bubble::before,
+.c0.compact:not(.card) .content .bubble::after {
+  content: '';
+}
+
+.c0.omitSenderInfo {
+  margin-top: 10px;
+}
+
+@media (max-width:768px) {
+  .c0 .content > .body {
+    margin: 0 !important;
+  }
+}
+
 <div>
   <div
-    class="sc-hKFxyN iMqKQT normal bubble"
+    class="c0 normal bubble"
   >
     <div
       class="profile"
@@ -213,7 +2441,7 @@ exports[`MessageItem testcase 3 1`] = `
         class="body"
       >
         <pre
-          class="sc-bdnxRM gfkJP bubble"
+          class="c1 bubble"
         >
           <pre
             style="display: inline;"

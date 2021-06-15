@@ -4,15 +4,26 @@ import {
   initReactI18next,
 } from 'react-i18next';
 import { crc32 } from 'crc';
-import { resources } from './resources';
 import { languageDetector } from './language';
 import { useState, useEffect } from 'react';
+import HttpApi from 'i18next-http-backend'; // https://github.com/i18next/i18next-http-backend
 
-i18next.use(languageDetector).use(initReactI18next).init({
-  // debug: true,
-  fallbackLng: 'zh-CN',
-  resources,
-});
+i18next
+  .use(languageDetector)
+  .use(HttpApi)
+  .use(initReactI18next)
+  .init({
+    // debug: true,
+    fallbackLng: 'zh-CN',
+    load: 'currentOnly',
+    backend: {
+      loadPath: '/locales/{{lng}}/{{ns}}.json',
+      allowMultiLoading: false,
+      addPath: (...args) => {
+        console.log('缺少翻译', ...args);
+      },
+    },
+  });
 
 /**
  * 国际化翻译
@@ -23,7 +34,7 @@ export const t: TFunction = (key, defaultValue?, options?) => {
     let words = i18next.t(hashKey, defaultValue, options);
     if (words === hashKey) {
       words = key;
-      console.warn(`翻译缺失: [${hashKey}]${key}`);
+      console.info(`[i18n] 翻译缺失: [${hashKey}]${key}`);
     }
     return words;
   } catch (err) {
@@ -56,7 +67,11 @@ export function useTranslation() {
 
   const [_t, _setT] = useState<TFunction>(() => t);
   useEffect(() => {
-    _setT(() => (...args) => (t as any)(...args));
+    _setT(
+      () =>
+        (...args) =>
+          (t as any)(...args)
+    );
   }, [i18nT]);
 
   return { t: _t, ready };

@@ -10,6 +10,7 @@ import './AudioPlayer.less';
 
 interface Props {
   url: string;
+  onError?: (e: Event) => void;
 }
 const AudioPlayer: React.FC<Props> = TMemo((props) => {
   return (
@@ -18,6 +19,7 @@ const AudioPlayer: React.FC<Props> = TMemo((props) => {
       autoPlayAfterSrcChange={false}
       src={props.url}
       onPlay={(e) => console.log('onPlay')}
+      onError={props.onError}
       showSkipControls={false}
       showJumpControls={false}
       customProgressBarSection={[

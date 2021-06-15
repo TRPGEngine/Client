@@ -5,21 +5,18 @@ import { buildRegFn } from './buildRegFn';
  */
 
 type ToastsType = 'info' | 'success' | 'error' | 'warning';
-export const [showToasts, setToasts] = buildRegFn<
-  (message: string, type?: ToastsType) => void
->('toasts');
+export const [showToasts, setToasts] =
+  buildRegFn<(message: string, type?: ToastsType) => void>('toasts');
 
 interface AlertOptions {
   message: React.ReactNode;
   onConfirm?: () => void | Promise<void>;
 }
-export const [showAlert, setAlert] = buildRegFn<
-  (options: AlertOptions) => void
->('alert');
+export const [showAlert, setAlert] =
+  buildRegFn<(options: AlertOptions) => void>('alert');
 
 /**
- * 返回一个关闭方法
+ * @returns 返回一个关闭方法
  */
-export const [showGlobalLoading, setGlobalLoading] = buildRegFn<
-  (message: React.ReactNode) => () => void
->('globalLoading');
+export const [showGlobalLoading, setGlobalLoading] =
+  buildRegFn<(message: React.ReactNode) => () => void>('globalLoading');

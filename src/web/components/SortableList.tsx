@@ -101,6 +101,10 @@ interface SortableListProps<T = any> {
   onChange: (list: T[]) => void;
   renderItem: RenderItemFunc;
 }
+
+/**
+ * 可排序列表
+ */
 export const SortableList: React.FC<SortableListProps> = TMemo((props) => {
   const { list, onChange, itemKey, renderItem } = props;
 

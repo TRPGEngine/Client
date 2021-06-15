@@ -20,9 +20,17 @@ const plugins = [
   }),
 ];
 
+const generateBuildReport = _.get(process, 'env.npm_config_report', false);
+const pushReleaseToSentry = _.get(config, 'sentry.pushRelease', false) === true;
+
 // use npm run build:report or npm run build:pro --report
 // to generate bundle-report
-if (_.get(process, 'env.npm_config_report', false)) {
+if (generateBuildReport) {
+  console.log('打包统计已启动...');
+  if (pushReleaseToSentry) {
+    console.log('请注意: 在该模式下不会发布 release map 到 sentry');
+  }
+
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
   plugins.push(
@@ -32,7 +40,7 @@ if (_.get(process, 'env.npm_config_report', false)) {
       openAnalyzer: true,
     })
   );
-} else if (_.get(config, 'sentry.pushRelease', false) === true) {
+} else if (pushReleaseToSentry) {
   // 仅在不使用report功能时生效
   // 增加推送到sentry插件
   const SentryCliPlugin = require('@sentry/webpack-plugin');

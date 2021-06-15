@@ -9,7 +9,6 @@ import _without from 'lodash/without';
 import _isEqual from 'lodash/isEqual';
 import _isFunction from 'lodash/isFunction';
 import { useCachedUserInfo } from '@redux/hooks/useCache';
-import { OptionProps, OptionType } from 'antd/lib/select';
 import type { GroupInfo } from '@redux/types/group';
 import Avatar from '../Avatar';
 

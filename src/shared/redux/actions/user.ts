@@ -68,9 +68,9 @@ function _loginSuccess(dispatch, getState) {
   dispatch(loadLocalCache()); // 加载本地缓存信息
   dispatch(reloadConverseList()); // 重新加载所有会话列表
 
-  dispatch(getUserInitData());
+  dispatch(getUserInitData()); // 获取用户初始信息
   dispatch(getGroupList()); // 获取团列表
-  dispatch(getGroupInvite());
+  dispatch(getGroupInvite()); // 获取团邀请
 
   /**
    * @deprecated 旧版的获取笔记 准备弃用
@@ -82,9 +82,12 @@ function _loginSuccess(dispatch, getState) {
 
   dispatch(fetchWebToken()); // 登录成功后立刻获取最新的jwt信息
 
-  dispatch(fetchRemoteSettings());
+  dispatch(fetchRemoteSettings()); // 获取云端设置信息
 
   setTimeout(() => {
+    /**
+     * 登录成功的回调
+     */
     callUserLoginSuccess();
     runLoginSuccessCallback();
   }, 0);
