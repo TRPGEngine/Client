@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/TRPGEngine/Client/compare/v0.6.1...v0.6.2) (2021-06-15)
+
+
+### Features
+
+* **netease:** 网易云音乐设置页与统一登录 ([9c7e96f](https://github.com/TRPGEngine/Client/commit/9c7e96f767e14d694ce64091fe7a0c27f24b473d))
+* **netease:** 网易音乐云盘音乐发送 ([d9eee78](https://github.com/TRPGEngine/Client/commit/d9eee78908611c58e7c17d5e943ed0658f5b572e))
+* **web:** 网易云扫码登录 ([49e52d4](https://github.com/TRPGEngine/Client/commit/49e52d430ca69192d39e96ce83dd72b171a05cf5))
+
+
+### Bug Fixes
+
+* 修复modal的zIndex比fullmodal低的问题 ([5638625](https://github.com/TRPGEngine/Client/commit/5638625dad95a7e92db2eaf7e421333b0eb88d42))
+
 ### [0.6.1](https://github.com/TRPGEngine/Client/compare/v0.6.0...v0.6.1) (2021-06-08)
 
 
