@@ -7045,6 +7045,11 @@ es6-weak-map@^2.0.1:
     es6-iterator "^2.0.3"
     es6-symbol "^3.1.1"
 
+esbuild@^0.12.9:
+  version "0.12.9"
+  resolved "https://registry.nlark.com/esbuild/download/esbuild-0.12.9.tgz?cache=0&sync_timestamp=1623820849461&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fesbuild%2Fdownload%2Fesbuild-0.12.9.tgz#bed4e7087c286cd81d975631f77d47feb1660070"
+  integrity sha1-vtTnCHwobNgdl1Yx931H/rFmAHA=
+
 esbuild@^0.8.7:
   version "0.8.57"
   resolved "https://registry.nlark.com/esbuild/download/esbuild-0.8.57.tgz#a42d02bc2b57c70bcd0ef897fe244766bb6dd926"
@@ -7998,15 +8003,6 @@ fs-extra-p@^8.0.2:
     bluebird-lst "^1.0.9"
     fs-extra "^8.1.0"
 
-fs-extra@8.1.0, fs-extra@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.npm.taobao.org/fs-extra/download/fs-extra-8.1.0.tgz#49d43c45a88cd9677668cb7be1b46efdb8d2e1c0"
-  integrity sha1-SdQ8RaiM2Wd2aMt74bRu/bjS4cA=
-  dependencies:
-    graceful-fs "^4.2.0"
-    jsonfile "^4.0.0"
-    universalify "^0.1.0"
-
 fs-extra@^10.0.0:
   version "10.0.0"
   resolved "https://registry.npm.taobao.org/fs-extra/download/fs-extra-10.0.0.tgz#9ff61b655dde53fb34a82df84bb214ce802e17c1"
@@ -8031,6 +8027,15 @@ fs-extra@^7.0.0, fs-extra@^7.0.1:
   integrity sha1-TxicRKoSO4lfcigE9V6iPq3DSOk=
   dependencies:
     graceful-fs "^4.1.2"
+    jsonfile "^4.0.0"
+    universalify "^0.1.0"
+
+fs-extra@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.npm.taobao.org/fs-extra/download/fs-extra-8.1.0.tgz#49d43c45a88cd9677668cb7be1b46efdb8d2e1c0"
+  integrity sha1-SdQ8RaiM2Wd2aMt74bRu/bjS4cA=
+  dependencies:
+    graceful-fs "^4.2.0"
     jsonfile "^4.0.0"
     universalify "^0.1.0"
 
@@ -10394,6 +10399,11 @@ joi@^17.3.0:
     "@sideway/formula" "^3.0.0"
     "@sideway/pinpoint" "^2.0.0"
 
+joycon@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npm.taobao.org/joycon/download/joycon-3.0.1.tgz#9074c9b08ccf37a6726ff74a18485f85efcaddaf"
+  integrity sha1-kHTJsIzPN6Zyb/dKGEhfhe/K3a8=
+
 js-base64@^2.1.8:
   version "2.6.4"
   resolved "https://registry.npm.taobao.org/js-base64/download/js-base64-2.6.4.tgz?cache=0&sync_timestamp=1604450395858&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjs-base64%2Fdownload%2Fjs-base64-2.6.4.tgz#f4e686c5de1ea1f867dbcad3d46d969428df98c4"
@@ -10560,6 +10570,11 @@ json5@^1.0.1:
   integrity sha1-d5+wAYYE+oVOrL9iUhgNg1Q+Pb4=
   dependencies:
     minimist "^1.2.0"
+
+jsonc-parser@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/jsonc-parser/download/jsonc-parser-3.0.0.tgz?cache=0&sync_timestamp=1605282527742&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjsonc-parser%2Fdownload%2Fjsonc-parser-3.0.0.tgz#abdd785701c7e7eaca8a9ec8cf070ca51a745a22"
+  integrity sha1-q914VwHH5+rKip7IzwcMpRp0WiI=
 
 jsonfile@^4.0.0:
   version "4.0.0"
@@ -11514,22 +11529,23 @@ mini-create-react-context@^0.4.0:
     "@babel/runtime" "^7.12.1"
     tiny-warning "^1.0.3"
 
-mini-star@^0.0.23:
-  version "0.0.23"
-  resolved "https://registry.nlark.com/mini-star/download/mini-star-0.0.23.tgz?cache=0&sync_timestamp=1623751724848&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fmini-star%2Fdownload%2Fmini-star-0.0.23.tgz#b9fa464c8bc54f3e52f1029260c7fff246adc2ad"
-  integrity sha1-ufpGTIvFTz5S8QKSYMf/8katwq0=
+mini-star@^0.0.24:
+  version "0.0.24"
+  resolved "https://registry.nlark.com/mini-star/download/mini-star-0.0.24.tgz#93eca283ac2cb45ab6b61ea43f4afe234c1ffb4c"
+  integrity sha1-k+yig6wstFq2th6kP0r+I0wf+0w=
   dependencies:
     "@rollup/plugin-commonjs" "^19.0.0"
     "@rollup/plugin-node-resolve" "^13.0.0"
     "@rollup/plugin-url" "^6.0.0"
     cosmiconfig "^7.0.0"
+    esbuild "^0.12.9"
     fs-extra "^9.1.0"
     inquirer "^8.1.0"
     ora "^5.4.0"
     rimraf "^3.0.2"
     rollup "^2.48.0"
+    rollup-plugin-esbuild "^4.5.0"
     rollup-plugin-styles "^3.14.1"
-    rollup-plugin-typescript2 "^0.30.0"
     yargs "^16.2.0"
 
 mini-store@^3.0.1:
@@ -14855,7 +14871,7 @@ resolve-url@^0.2.1:
   resolved "https://registry.npm.taobao.org/resolve-url/download/resolve-url-0.2.1.tgz#2c637fe77c893afd2a663fe21aa9080068e2052a"
   integrity sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=
 
-resolve@1.20.0, resolve@^1.1.6, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.14.2, resolve@^1.17.0, resolve@^1.18.1, resolve@^1.19.0, resolve@^1.20.0, resolve@^1.3.2, resolve@^1.4.0, resolve@^1.9.0:
+resolve@^1.1.6, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.14.2, resolve@^1.17.0, resolve@^1.18.1, resolve@^1.19.0, resolve@^1.20.0, resolve@^1.3.2, resolve@^1.4.0, resolve@^1.9.0:
   version "1.20.0"
   resolved "https://registry.npm.taobao.org/resolve/download/resolve-1.20.0.tgz#629a013fb3f70755d6f0b7935cc1c2c5378b1975"
   integrity sha1-YpoBP7P3B1XW8LeTXMHCxTeLGXU=
@@ -14952,6 +14968,15 @@ roarr@^2.15.3:
     semver-compare "^1.0.0"
     sprintf-js "^1.1.2"
 
+rollup-plugin-esbuild@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.nlark.com/rollup-plugin-esbuild/download/rollup-plugin-esbuild-4.5.0.tgz#0fbcb6d2d651d87dc540c4fc3b2db669f48da1f0"
+  integrity sha1-D7y20tZR2H3FQMT8Oy22afSNofA=
+  dependencies:
+    "@rollup/pluginutils" "^4.1.0"
+    joycon "^3.0.1"
+    jsonc-parser "^3.0.0"
+
 rollup-plugin-polyfill-node@^0.6.2:
   version "0.6.2"
   resolved "https://registry.nlark.com/rollup-plugin-polyfill-node/download/rollup-plugin-polyfill-node-0.6.2.tgz#dea62e00f5cc2c174e4b4654b5daab79b1a92fc3"
@@ -14992,17 +15017,6 @@ rollup-plugin-terser@^7.0.0:
     jest-worker "^26.2.1"
     serialize-javascript "^4.0.0"
     terser "^5.0.0"
-
-rollup-plugin-typescript2@^0.30.0:
-  version "0.30.0"
-  resolved "https://registry.npmjs.org/rollup-plugin-typescript2/-/rollup-plugin-typescript2-0.30.0.tgz#1cc99ac2309bf4b9d0a3ebdbc2002aecd56083d3"
-  integrity sha512-NUFszIQyhgDdhRS9ya/VEmsnpTe+GERDMmFo0Y+kf8ds51Xy57nPNGglJY+W6x1vcouA7Au7nsTgsLFj2I0PxQ==
-  dependencies:
-    "@rollup/pluginutils" "^4.1.0"
-    find-cache-dir "^3.3.1"
-    fs-extra "8.1.0"
-    resolve "1.20.0"
-    tslib "2.1.0"
 
 rollup@^2.23.0:
   version "2.50.4"
@@ -16891,11 +16905,6 @@ tslib@2.0.3:
   version "2.0.3"
   resolved "https://registry.npm.taobao.org/tslib/download/tslib-2.0.3.tgz?cache=0&sync_timestamp=1617647331485&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
   integrity sha1-jgdBrEX8DCJuWKF7/D5kubxsphw=
-
-tslib@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
-  integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
 
 tslib@^1.10.0, tslib@^1.13.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.14.1"

@@ -282,6 +282,7 @@ export function initPlugins(): Promise<void> {
       `/plugins/${plugin}/index.js?v=${config.version}`,
     plugins: ['trpg', 'netease-music'].map((plugin) => ({
       name: plugin,
+      url: `/plugins/${plugin}/index.js?v=${config.version}`,
     })),
   });
 }
