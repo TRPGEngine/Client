@@ -27,6 +27,11 @@ const isElectron = config.platform === 'electron';
 const WebviewContainer = styled.div`
   height: 100%;
   position: relative;
+`;
+
+const WebviewRenderContainer = styled.div`
+  height: 100%;
+  position: relative;
 
   iframe,
   webview {
@@ -129,7 +134,7 @@ const WebviewRender: React.FC<WebviewRenderProps> = TMemo((props) => {
     );
   }
 
-  return <WebviewContainer id={webId}>{inner}</WebviewContainer>;
+  return <WebviewRenderContainer id={webId}>{inner}</WebviewRenderContainer>;
 });
 WebviewRender.displayName = 'WebviewRender';
 
@@ -177,13 +182,17 @@ export const Webview: React.FC<WebviewProps> = TMemo((props) => {
     </WebviewActions>
   );
   return (
-    <div>
+    <WebviewContainer>
       {actions}
 
-      <PopupViewer viewId={viewId} ref={popupViewRef}>
+      <PopupViewer
+        viewId={viewId}
+        containerStyle={{ height: '100%' }}
+        ref={popupViewRef}
+      >
         <WebviewRender url={props.src} onError={() => setIsError(true)} />
       </PopupViewer>
-    </div>
+    </WebviewContainer>
   );
 });
 Webview.displayName = 'Webview';
