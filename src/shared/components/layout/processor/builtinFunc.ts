@@ -15,6 +15,7 @@ import _forEach from 'lodash/forEach';
 import _assign from 'lodash/assign';
 import _concat from 'lodash/concat';
 import _range from 'lodash/range';
+import _filter from 'lodash/filter';
 
 import Debug from 'debug';
 const debug = Debug('trpg:layout:sandbox');
@@ -42,6 +43,7 @@ export const builtinFunc = {
   _indexOf,
   _flatten,
   _range,
+  _filter,
   AND(...args: any[]): boolean {
     return args.map(Boolean).reduce((prev, cur) => prev && cur, true);
   },
