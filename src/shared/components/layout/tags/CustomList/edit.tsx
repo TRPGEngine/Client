@@ -18,7 +18,7 @@ interface TagProps extends TagCustomListSharedProps {
   newBtn?: boolean;
 }
 export const TagCustomListEdit: TagComponent<TagProps> = TMemo((props) => {
-  const newBtn = useToBoolean(props.newBtn);
+  const newBtn = useToBoolean(props.newBtn ?? true);
   const [stateValue, setStateValue] = useLayoutFieldState(props.name);
 
   const handleAppendNewItem = useCallback(() => {
@@ -50,6 +50,3 @@ export const TagCustomListEdit: TagComponent<TagProps> = TMemo((props) => {
   );
 });
 TagCustomListEdit.displayName = 'TagCustomListEdit';
-TagCustomListEdit.defaultProps = {
-  newBtn: true,
-};

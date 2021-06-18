@@ -6,7 +6,7 @@ import { TMemo } from '@shared/components/TMemo';
 
 interface UseDefineComponentProps {
   name: string; // 用于存储数据
-  define: string; //
+  define: string;
   [useProps: string]: any;
 }
 export const UseDefineComponent: React.FC<UseDefineComponentProps> = TMemo(
@@ -17,6 +17,7 @@ export const UseDefineComponent: React.FC<UseDefineComponentProps> = TMemo(
 
     const DefineComponent = defines[define];
     if (DefineComponent) {
+      DefineComponent.displayName = `Define(${define})`;
       return <DefineComponent {...useProps} name={name} key={name} />;
     } else {
       return null;

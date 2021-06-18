@@ -4,6 +4,8 @@ import { builtinFunc } from './builtinFunc';
 import { parseDataText } from './';
 import _isEmpty from 'lodash/isEmpty';
 import _isString from 'lodash/isString';
+import { StateActionType } from '../types';
+import { getOperationData } from '../tags/utils';
 
 /**
  * 生成沙盒上下文
@@ -25,6 +27,18 @@ export const generateSandboxContext = memoizeOne(
       },
       getStateData() {
         return { ...context.state.data };
+      },
+      setStateDate(name: string, value: any) {
+        const { scope, field } = getOperationData(name);
+
+        context.dispatch({
+          type: StateActionType.UpdateData,
+          payload: {
+            scope,
+            field,
+            value,
+          },
+        });
       },
     };
 
