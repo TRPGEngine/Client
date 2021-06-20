@@ -392,7 +392,7 @@
               </Row>
             </Col>
             <Col flex="0">
-              <Button :onClick="() => { setStateDate('parent.背包', _filter(parent.背包, (_,i) => i !== _toNumber(props.index))) }">删除</Button>
+              <Button type="link" :onClick="() => { setStateDate('parent.背包', _filter(parent.背包, (_,i) => i !== _toNumber(props.index))) }">删除</Button>
             </Col>
           </Row>
         </Define>
