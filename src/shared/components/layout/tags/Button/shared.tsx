@@ -6,7 +6,7 @@ import { useLayoutChildren } from '../../hooks/useLayoutChildren';
 import { LayoutStateContext } from '../../context/LayoutStateContext';
 
 interface TagButtonSharedProps {
-  showInDetail: boolean;
+  showInDetail?: boolean;
   type: ButtonProps['type'];
   danger: ButtonProps['danger'];
   onClick: ButtonProps['onClick'];
