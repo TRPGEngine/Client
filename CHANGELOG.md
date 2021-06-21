@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.3](https://github.com/TRPGEngine/Client/compare/v0.6.2...v0.6.3) (2021-06-21)
+
+
+### Features
+
+* **layout:** 增加button组件 ([ad0369b](https://github.com/TRPGEngine/Client/commit/ad0369b672927661bd055b6b538e53df06433701))
+* **playground:** 增加删除功能 ([dca8102](https://github.com/TRPGEngine/Client/commit/dca810208e4bdd4893fba7d9207827679c693ffb))
+
+
+### Bug Fixes
+
+* **web:** 修复webview高度问题 ([d3e9d9b](https://github.com/TRPGEngine/Client/commit/d3e9d9bfb9a3c010bcd6056e8d8a4f7ac8015140))
+* **web:** 修复插件缓存问题 ([26b335f](https://github.com/TRPGEngine/Client/commit/26b335f4bf1cb06b669f8137d7ac45812c3218c8))
+
 ### [0.6.2](https://github.com/TRPGEngine/Client/compare/v0.6.1...v0.6.2) (2021-06-15)
 
 
