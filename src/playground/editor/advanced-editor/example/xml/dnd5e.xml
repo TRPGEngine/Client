@@ -381,7 +381,7 @@
             <Col sm="6">
               <Input name="name" label="名称" hideLabel="true" />
             </Col>
-            <Col sm="10">
+            <Col flex="1">
               <Input name="desc" label="描述" hideLabel="true" />
             </Col>
             <Col sm="8">
@@ -390,6 +390,9 @@
                 <span>x</span>
                 <InputNumber name="number" label="数量" style="flex: 1;" inline="true" hideLabel="true" default="1" />
               </Row>
+            </Col>
+            <Col flex="0">
+              <Button type="link" :onClick="() => { setStateDate('parent.背包', _filter(parent.背包, (_,i) => i !== _toNumber(props.index))) }">删除</Button>
             </Col>
           </Row>
         </Define>

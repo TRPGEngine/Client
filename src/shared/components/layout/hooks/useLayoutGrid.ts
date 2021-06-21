@@ -65,6 +65,7 @@ export const useLayoutGrid = (props: {}) => {
     // flex布局
     return { flex: tryToNumber(props['flex']) };
   } else {
+    // Span布局
     return ret;
   }
 };

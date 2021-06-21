@@ -36,6 +36,7 @@ export const TagDefineComponent: TagComponent<TagDefineComponentProps> = TMemo(
     );
   }
 );
+TagDefineComponent.displayName = 'TagDefineComponent';
 
 interface TagProps {
   name: string; // 用于存储数据
@@ -56,3 +57,4 @@ export const TagDefineShared: TagComponent<TagProps> = TMemo((props) => {
 
   return null;
 });
+TagDefineShared.displayName = 'TagDefineShared';

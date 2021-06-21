@@ -101,6 +101,7 @@ PopupViewerContext.displayName = 'PopupViewerContext';
 
 type PopupViewerProps = React.PropsWithChildren<{
   viewId: string;
+  containerStyle?: React.CSSProperties;
 }>;
 
 interface PopupViewerCallOptions {
@@ -199,7 +200,10 @@ export const PopupViewer = TMemo(
 
     return (
       <PopupViewerContext.Provider value={{ popup, isPopup }}>
-        <div style={containerStyle} ref={containerRef}>
+        <div
+          style={{ ...containerStyle, ...props.containerStyle }}
+          ref={containerRef}
+        >
           {isPopup ? (
             <PopupTipText>{t('该视图已弹出')}</PopupTipText>
           ) : (
