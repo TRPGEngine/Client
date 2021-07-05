@@ -2694,10 +2694,10 @@
   dependencies:
     "@types/react-test-renderer" "*"
 
-"@types/uuid@^3.4.6":
-  version "3.4.9"
-  resolved "https://registry.npm.taobao.org/@types/uuid/download/@types/uuid-3.4.9.tgz#fcf01997bbc9f7c09ae5f91383af076d466594e1"
-  integrity sha1-/PAZl7vJ98Ca5fkTg68HbUZllOE=
+"@types/uuid@^8.3.1":
+  version "8.3.1"
+  resolved "https://registry.nlark.com/@types/uuid/download/@types/uuid-8.3.1.tgz#1a32969cf8f0364b3d8c8af9cc3555b7805df14f"
+  integrity sha1-GjKWnPjwNks9jIr5zDVVt4Bd8U8=
 
 "@types/websocket@*":
   version "1.0.2"
