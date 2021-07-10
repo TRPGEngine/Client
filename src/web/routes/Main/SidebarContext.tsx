@@ -4,7 +4,7 @@ import _noop from 'lodash/noop';
 import _isBoolean from 'lodash/isBoolean';
 
 /**
- * 记录选中团的UUID
+ * 侧边栏上下文
  */
 
 interface SidebarContextProps {
