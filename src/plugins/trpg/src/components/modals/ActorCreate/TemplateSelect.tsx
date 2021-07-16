@@ -101,20 +101,25 @@ const TemplateSelect: React.FC<Props> = TMemo((props: Props) => {
 
   return (
     <div>
-      <div style={{ display: 'flex' }}>
-        <Button type="primary" onClick={handleShowSharedActorList}>
-          {t('从人物库中创建')}
-        </Button>
-        <Search
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder={t('搜索模板')}
-          onSearch={handleSearch}
-          enterButton={true}
-        />
-      </div>
-
+      <h2>{t('从现有模板中创建')}</h2>
+      <Search
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder={t('搜索模板')}
+        onSearch={handleSearch}
+        enterButton={true}
+      />
       <Body>{renderList()}</Body>
+      <Body>
+        <h2>{t('或以现有人物卡为模板创建')}</h2>
+        <Button
+          type="primary"
+          onClick={handleShowSharedActorList}
+          style={{ width: '100%' }}
+        >
+          {t('从人物库中选择')}
+        </Button>
+      </Body>
     </div>
   );
 });
