@@ -32,10 +32,10 @@ const ContainerBody = styled.div`
   padding: 20px 0;
 `;
 
-const Actions = styled(Row).attrs(() => ({
+const Actions = styled(Row).attrs({
   type: 'flex',
   justify: 'space-between',
-}))`
+})`
   padding: 0 10px;
 `;
 

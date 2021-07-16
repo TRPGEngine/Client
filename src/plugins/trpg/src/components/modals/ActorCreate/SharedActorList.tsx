@@ -8,16 +8,15 @@ import React, {
 import { TMemo } from '@capital/shared/components/TMemo';
 import ModalPanel from '@capital/web/components/ModalPanel';
 import type { ActorType } from '../../../redux/types/actor';
-import { fetchSharedActor } from '@capital/shared/model/actor';
+import { fetchSharedActor } from '../../../model/actor';
 import { ActorCard } from '../../ActorCard';
 import { useTRPGDispatch } from '@capital/shared/redux/hooks/useTRPGSelector';
 import { forkActor } from '../../../redux/actions/actor';
-import { hideModal, showModal } from '@capital/shared/redux/actions/ui';
 import ActorInfo from '../ActorInfo';
-import { Button, Empty, Pagination } from 'antd';
+import { Empty, Pagination } from 'antd';
 import LoadingSpinner from '@capital/web/components/LoadingSpinner';
 import { t } from '@capital/shared/i18n';
-import ActorCreate from '.';
+import { closeModal, openModal } from '@capital/web/components/Modal';
 
 interface Props {}
 export const SharedActorList: React.FC<Props> = TMemo(() => {
@@ -39,41 +38,27 @@ export const SharedActorList: React.FC<Props> = TMemo(() => {
 
   const handleFork = useCallback(
     (uuid: string) => {
-      dispatch(forkActor(uuid));
+      dispatch(
+        forkActor(uuid, () => {
+          closeModal();
+        })
+      );
     },
     [dispatch]
   );
 
   const handleShowActorInfo = useCallback(
     (actor: ActorType) => {
-      dispatch(
-        showModal(
-          <ActorInfo templateUUID={actor.template_uuid} data={actor.info} />
-        )
+      openModal(
+        <ActorInfo templateUUID={actor.template_uuid} data={actor.info} />
       );
     },
     [dispatch]
   );
 
-  const actions = (
-    <Button
-      style={{ width: '30%' }}
-      onClick={() => {
-        dispatch(hideModal());
-        dispatch(showModal(<ActorCreate />));
-      }}
-    >
-      {t('返回')}
-    </Button>
-  );
-
   return useMemo(
     () => (
-      <ModalPanel
-        title={t('人物库')}
-        style={{ width: 620, height: 540 }}
-        actions={actions}
-      >
+      <ModalPanel title={t('人物库')} style={{ width: 620, height: 540 }}>
         {isLoading ? (
           <LoadingSpinner />
         ) : Array.isArray(sharedActors) && sharedActors.length > 0 ? (
