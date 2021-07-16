@@ -12,11 +12,12 @@ import { fetchSharedActor } from '@capital/shared/model/actor';
 import { ActorCard } from '../../ActorCard';
 import { useTRPGDispatch } from '@capital/shared/redux/hooks/useTRPGSelector';
 import { forkActor } from '../../../redux/actions/actor';
-import { showModal } from '@capital/shared/redux/actions/ui';
+import { hideModal, showModal } from '@capital/shared/redux/actions/ui';
 import ActorInfo from '../ActorInfo';
-import { Empty, Pagination } from 'antd';
+import { Button, Empty, Pagination } from 'antd';
 import LoadingSpinner from '@capital/web/components/LoadingSpinner';
 import { t } from '@capital/shared/i18n';
+import ActorCreate from '.';
 
 interface Props {}
 export const SharedActorList: React.FC<Props> = TMemo(() => {
@@ -54,9 +55,25 @@ export const SharedActorList: React.FC<Props> = TMemo(() => {
     [dispatch]
   );
 
+  const actions = (
+    <Button
+      style={{ width: '30%' }}
+      onClick={() => {
+        dispatch(hideModal());
+        dispatch(showModal(<ActorCreate />));
+      }}
+    >
+      {t('返回')}
+    </Button>
+  );
+
   return useMemo(
     () => (
-      <ModalPanel title={t('人物库')} style={{ width: 620, height: 540 }}>
+      <ModalPanel
+        title={t('人物库')}
+        style={{ width: 620, height: 540 }}
+        actions={actions}
+      >
         {isLoading ? (
           <LoadingSpinner />
         ) : Array.isArray(sharedActors) && sharedActors.length > 0 ? (
