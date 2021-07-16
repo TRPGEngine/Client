@@ -265,10 +265,6 @@ export function initPlugins(): Promise<void> {
     () => import('@shared/redux/actions/group')
   );
   regSharedModule(
-    '@capital/shared/model/actor',
-    () => import('@shared/model/actor')
-  );
-  regSharedModule(
     '@capital/shared/model/trpg',
     () => import('@shared/model/trpg')
   );
