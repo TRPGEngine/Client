@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Input, Empty, Row, Col, Button } from 'antd';
+import { Input, Empty, Row, Col, Button, Typography } from 'antd';
 import { connect, useDispatch } from 'react-redux';
 import { findTemplate } from '../../../redux/actions/actor';
 import TemplateItem from '@capital/web/components/TemplateItem';
@@ -10,9 +10,10 @@ import type {
   TRPGDispatchProp,
 } from '@capital/shared/redux/types/__all__';
 import { TMemo } from '@capital/shared/components/TMemo';
-import { showModal, hideModal } from '@capital/shared/redux/actions/ui';
+import { hideModal } from '@capital/shared/redux/actions/ui';
 import { SharedActorList } from './SharedActorList';
 import { t } from '@capital/shared/i18n';
+import { openModal } from '@capital/web/components/Modal';
 
 const Search = Input.Search;
 
@@ -96,25 +97,32 @@ const TemplateSelect: React.FC<Props> = TMemo((props: Props) => {
   const handleSearch = (name: string) => props.dispatch(findTemplate(name));
   const handleShowSharedActorList = useCallback(() => {
     dispatch(hideModal()); // 关闭掉当前的模态框
-    dispatch(showModal(<SharedActorList />));
+    openModal(<SharedActorList />);
   }, []);
 
   return (
     <div>
-      <div style={{ display: 'flex' }}>
-        <Button type="primary" onClick={handleShowSharedActorList}>
-          {t('从人物库中创建')}
-        </Button>
-        <Search
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder={t('搜索模板')}
-          onSearch={handleSearch}
-          enterButton={true}
-        />
-      </div>
-
+      <Typography.Title level={5}>{t('从现有模板中创建')}</Typography.Title>
+      <Search
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder={t('搜索模板')}
+        onSearch={handleSearch}
+        enterButton={true}
+      />
       <Body>{renderList()}</Body>
+      <Body>
+        <Typography.Title level={5}>
+          {t('或以现有人物卡为模板创建')}
+        </Typography.Title>
+        <Button
+          type="primary"
+          onClick={handleShowSharedActorList}
+          style={{ width: '100%' }}
+        >
+          {t('从人物库中选择')}
+        </Button>
+      </Body>
     </div>
   );
 });
