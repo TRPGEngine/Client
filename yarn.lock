@@ -2508,10 +2508,10 @@
   resolved "https://registry.nlark.com/@types/q/download/@types/q-1.5.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fq%2Fdownload%2F%40types%2Fq-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
   integrity sha1-FZJUFOCtLNdlv+9YhC9+JqesyyQ=
 
-"@types/qrcode.react@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.npm.taobao.org/@types/qrcode.react/download/@types/qrcode.react-1.0.1.tgz#0904e7a075a6274a5258f19567b4f64013c159d8"
-  integrity sha1-CQTnoHWmJ0pSWPGVZ7T2QBPBWdg=
+"@types/qrcode.react@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.nlark.com/@types/qrcode.react/download/@types/qrcode.react-1.0.2.tgz#f892432cc41b5dac52e3ca8873b717c8bfea6002"
+  integrity sha1-+JJDLMQbXaxS48qIc7cXyL/qYAI=
   dependencies:
     "@types/react" "*"
 
