@@ -17,6 +17,7 @@ const Container = styled.div`
 const MainContent = styled.div`
   flex: 1;
   position: relative;
+  height: 100%;
 `;
 
 const MainPeerContainer = styled.div`

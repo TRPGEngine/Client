@@ -16,7 +16,7 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-height: 100vh;
+  max-height: 100%;
   overflow: hidden;
 `;
 

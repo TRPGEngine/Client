@@ -15,8 +15,8 @@ html, body {
   overflow-y: auto;
   /* 不显示横向滚动条, 至少不在html, body层显示横向滚动条 */
   overflow-x: hidden;
-  height: auto !important;
-  min-height: 100vh !important;
+  height: 100% !important;
+  min-height: 100% !important;
 }
 
 body {
@@ -27,13 +27,9 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-width: 100vw;
-  min-height: 100vh;
 }
 
 #app {
-  min-width: 100vw;
-  min-height: 100vh;
   display: flex;
 }
 
