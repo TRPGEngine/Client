@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.4](https://github.com/TRPGEngine/Client/compare/v0.6.3...v0.6.4) (2021-08-16)
+
+
+### Features
+
+* **web:** 给人物卡选择界面添加返回按钮 ([648a4f6](https://github.com/TRPGEngine/Client/commit/648a4f6d3608a97a10f76228fd1e1d80dd27985d))
+
+
+### Bug Fixes
+
+* 修复移动端下会被虚拟导航栏遮挡的问题 ([a992c9c](https://github.com/TRPGEngine/Client/commit/a992c9cf1df5fe8fba84e899b4e1b1bf8817d49f))
+
 ### [0.6.3](https://github.com/TRPGEngine/Client/compare/v0.6.2...v0.6.3) (2021-06-21)
 
 
