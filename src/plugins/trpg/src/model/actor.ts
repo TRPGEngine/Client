@@ -1,6 +1,6 @@
-import { request } from '@shared/utils/request';
+import { request } from '@capital/shared/utils/request';
 // import type { ActorType } from '@redux/types/actor';
-import type { PaginationType } from '@shared/types/query';
+import type { PaginationType } from '@capital/shared/types/query';
 
 /**
  * 获取所有的共享角色

@@ -6,8 +6,8 @@ import styled from 'styled-components';
 
 const Root = styled.div`
   display: flex;
-  flex: 1;
   flex-direction: column;
+  height: 100%;
 `;
 
 interface UserConversePanelParams {

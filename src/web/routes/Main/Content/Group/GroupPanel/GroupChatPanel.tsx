@@ -9,7 +9,7 @@ import { GroupMembersAction } from '@web/components/panels/actions/GroupMembersA
 const Root = styled.div`
   display: flex;
   flex-direction: row;
-  flex: 1;
+  height: 100%;
 `;
 
 interface GroupChatPanelProps {
@@ -17,7 +17,6 @@ interface GroupChatPanelProps {
 }
 export const GroupChatPanel: React.FC<GroupChatPanelProps> = TMemo((props) => {
   const { groupUUID } = props;
-  const [showMembers, setShowMembers] = useState(false);
   const groupInfo = useJoinedGroupInfo(groupUUID);
 
   if (_isNil(groupInfo)) {

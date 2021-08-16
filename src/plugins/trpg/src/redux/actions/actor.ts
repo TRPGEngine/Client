@@ -263,7 +263,10 @@ export function unshareActor(actorUUID: string): TRPGAction {
  * fork人物卡
  * @param targetActorUUID 想fork的人物卡的UUID
  */
-export function forkActor(targetActorUUID: string): TRPGAction {
+export function forkActor(
+  targetActorUUID: string,
+  onSuccess: () => void
+): TRPGAction {
   return function (dispatch, getState) {
     return api.emit('actor::forkActor', { targetActorUUID }, function (data) {
       if (data.result) {
@@ -274,12 +277,13 @@ export function forkActor(targetActorUUID: string): TRPGAction {
             actor,
           },
         });
-        dispatch(hideModal());
-        dispatch(
-          showAlert(`Fork 人物卡[${actor.name}]成功, 请在人物卡列表中查看`)
+        showToasts(
+          `Fork 人物卡[${actor.name}]成功, 请在人物卡列表中查看`,
+          'success'
         );
+        typeof onSuccess === 'function' && onSuccess();
       } else {
-        dispatch(showAlert(data.msg));
+        showToasts(data.msg, 'error');
       }
     });
   };
