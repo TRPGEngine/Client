@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.5](https://github.com/TRPGEngine/Client/compare/v0.6.4...v0.6.5) (2021-08-19)
+
+
+### Bug Fixes
+
+* [#224](https://github.com/TRPGEngine/Client/issues/224) 修复GlobalAlert定位问题样式 ([ebfa3a4](https://github.com/TRPGEngine/Client/commit/ebfa3a489e50883427237280e20384d146dc22ee))
+
 ### [0.6.4](https://github.com/TRPGEngine/Client/compare/v0.6.3...v0.6.4) (2021-08-16)
 
 
