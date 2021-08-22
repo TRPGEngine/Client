@@ -10,7 +10,7 @@ export function buildRegMap<T>(): [
 
   const reg = (name: string, item: T) => {
     if (mapping[name]) {
-      console.warn('[buildRegList] 重复注册:', name);
+      console.warn('[buildRegMap] 重复注册:', name);
     }
 
     mapping[name] = item;
