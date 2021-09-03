@@ -186,7 +186,7 @@ export const createGroup = function (
       dispatch(hideLoading());
       if (data.result) {
         dispatch(hideModal());
-        showAlert({ message: '创建成功' });
+        showToasts('创建成功');
         dispatch(createGroupSuccess(data.group));
       } else {
         console.error(data);
@@ -242,7 +242,7 @@ export const requestUpdateGroupInfo = function (
         group.avatar = config.file.getAbsolutePath!(group.avatar);
         dispatch(updateGroupInfo(group));
         dispatch(hideModal());
-        showAlert({ message: '操作成功' });
+        showToasts('操作成功');
       } else {
         console.error(data);
         showAlert({ message: data.msg });
@@ -281,7 +281,7 @@ export const requestJoinGroup = function (group_uuid: string) {
     return api.emit('group::requestJoinGroup', { group_uuid }, function (data) {
       if (data.result) {
         dispatch({ type: REQUEST_JOIN_GROUP_SUCCESS, payload: data.request });
-        showAlert({ message: '已发送入团申请' });
+        showToasts('已发送入团申请');
       } else {
         dispatch(showAlert(data.msg));
         console.error(data.msg);
@@ -368,7 +368,7 @@ export const sendGroupInvite = function (
       { group_uuid, to_uuid },
       function (data) {
         if (data.result) {
-          showAlert({ message: '发送邀请成功!' });
+          showToasts('发送邀请成功!');
           dispatch(hideSlidePanel());
           dispatch({ type: SEND_GROUP_INVITE_SUCCESS, payload: data.invite });
         } else {
@@ -394,7 +394,7 @@ export const sendGroupInviteBatch = (
       { group_uuid, target_uuids },
       function (data) {
         if (data.result) {
-          showAlert({ message: '发送邀请成功!' });
+          showToasts('发送邀请成功!');
           dispatch(hideSlidePanel());
         } else {
           showAlert({ message: data.msg });
@@ -578,7 +578,7 @@ export const requestAddGroupActor = function (
       function (data) {
         if (data.result) {
           dispatch(hideModal());
-          showAlert({ message: '提交成功!' });
+          showToasts('提交成功!');
         } else {
           showAlert({ message: data.msg });
           console.error(data);
@@ -615,7 +615,7 @@ export const removeGroupActor = function (groupUUID, groupActorUUID) {
             groupActorUUID,
           });
           dispatch(hideAlert());
-          showAlert({ message: '提交成功!' });
+          showToasts('提交成功!');
         } else {
           showAlert({ message: data.msg });
           console.error(data);
@@ -772,7 +772,7 @@ export const tickMember = function (groupUUID, memberUUID) {
       function (data) {
         if (data.result) {
           dispatch({ type: TICK_MEMBER_SUCCESS, groupUUID, memberUUID });
-          showAlert({ message: '操作成功' });
+          showToasts('操作成功!', 'success');
           dispatch(hideModal());
         } else {
           showToasts(data?.msg);
@@ -833,7 +833,7 @@ export const setMemberToManager = function (groupUUID, memberUUID) {
             groupUUID,
             memberUUID,
           });
-          showAlert({ message: '操作成功' });
+          showToasts('操作成功!', 'success');
           dispatch(hideModal());
         } else {
           console.error(data);

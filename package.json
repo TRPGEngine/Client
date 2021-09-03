@@ -93,7 +93,7 @@
     "@reduxjs/toolkit": "^1.4.0",
     "@sentry/react": "^6.5.1",
     "@sentry/tracing": "^6.5.1",
-    "antd": "^4.15.6",
+    "antd": "^4.16.13",
     "axios": "^0.21.1",
     "bbcode-to-react": "^0.2.9",
     "bowser": "^2.11.0",
