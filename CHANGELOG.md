@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.6](https://github.com/TRPGEngine/Client/compare/v0.6.5...v0.6.6) (2021-09-03)
+
+
+### Bug Fixes
+
+* 修复使用旧的alert导致层级问题的bug ([f06b14c](https://github.com/TRPGEngine/Client/commit/f06b14c11a0205e247c17aea1bab93c7a1e5343f))
+
 ### [0.6.5](https://github.com/TRPGEngine/Client/compare/v0.6.4...v0.6.5) (2021-08-19)
 
 
