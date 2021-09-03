@@ -9201,6 +9201,11 @@ immer@^8.0.1:
   resolved "https://registry.npm.taobao.org/immer/download/immer-8.0.4.tgz?cache=0&sync_timestamp=1619363065556&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fimmer%2Fdownload%2Fimmer-8.0.4.tgz#3a21605a4e2dded852fb2afd208ad50969737b7a"
   integrity sha1-OiFgWk4t3thS+yr9IIrVCWlze3o=
 
+immer@^9.0.6:
+  version "9.0.6"
+  resolved "https://registry.nlark.com/immer/download/immer-9.0.6.tgz#7a96bf2674d06c8143e327cbf73539388ddf1a73"
+  integrity sha1-epa/JnTQbIFD4yfL9zU5OI3fGnM=
+
 import-fresh@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/import-fresh/download/import-fresh-2.0.0.tgz?cache=0&sync_timestamp=1608469472392&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fimport-fresh%2Fdownload%2Fimport-fresh-2.0.0.tgz#d81355c15612d386c61f9ddd3922d4304822a546"
