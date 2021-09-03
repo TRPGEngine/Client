@@ -42,6 +42,7 @@ setAlert((options) => {
     onOk: async () => {
       _isFunction(options.onConfirm) && (await options.onConfirm());
     },
+    okCancel: _isFunction(options.onConfirm),
   });
 });
 
