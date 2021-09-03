@@ -48,11 +48,9 @@ import { checkUser, checkTemplate } from '../../utils/cache-helper';
 import {
   showLoading,
   hideLoading,
-  showAlert,
   hideModal,
   hideAlert,
   hideSlidePanel,
-  showToast,
 } from './ui';
 import _set from 'lodash/set';
 import _get from 'lodash/get';
@@ -62,7 +60,7 @@ import * as trpgApi from '../../api/trpg.api';
 import { TRPGAction, createTRPGAsyncThunk } from '../types/__all__';
 import { getGroupInviteInfo } from './cache';
 import type { GroupInfo, GroupActorType } from '@redux/types/group';
-import { showToasts } from '@shared/manager/ui';
+import { showAlert, showToasts } from '@shared/manager/ui';
 import { createAction } from '@reduxjs/toolkit';
 import { t } from '@shared/i18n';
 const api = trpgApi.getInstance();
@@ -188,11 +186,11 @@ export const createGroup = function (
       dispatch(hideLoading());
       if (data.result) {
         dispatch(hideModal());
-        dispatch(showAlert('创建成功'));
+        showAlert({ message: '创建成功' });
         dispatch(createGroupSuccess(data.group));
       } else {
         console.error(data);
-        dispatch(showAlert(data.msg));
+        showAlert({ message: data.msg });
       }
     });
   };
@@ -244,10 +242,10 @@ export const requestUpdateGroupInfo = function (
         group.avatar = config.file.getAbsolutePath!(group.avatar);
         dispatch(updateGroupInfo(group));
         dispatch(hideModal());
-        dispatch(showAlert('操作成功'));
+        showAlert({ message: '操作成功' });
       } else {
         console.error(data);
-        dispatch(showAlert(data.msg));
+        showAlert({ message: data.msg });
       }
     });
   };
@@ -283,7 +281,7 @@ export const requestJoinGroup = function (group_uuid: string) {
     return api.emit('group::requestJoinGroup', { group_uuid }, function (data) {
       if (data.result) {
         dispatch({ type: REQUEST_JOIN_GROUP_SUCCESS, payload: data.request });
-        dispatch(showAlert('已发送入团申请'));
+        showAlert({ message: '已发送入团申请' });
       } else {
         dispatch(showAlert(data.msg));
         console.error(data.msg);
@@ -370,11 +368,11 @@ export const sendGroupInvite = function (
       { group_uuid, to_uuid },
       function (data) {
         if (data.result) {
-          dispatch(showAlert('发送邀请成功!'));
+          showAlert({ message: '发送邀请成功!' });
           dispatch(hideSlidePanel());
           dispatch({ type: SEND_GROUP_INVITE_SUCCESS, payload: data.invite });
         } else {
-          dispatch(showAlert(data.msg));
+          showAlert({ message: data.msg });
           console.error(data);
         }
       }
@@ -396,10 +394,10 @@ export const sendGroupInviteBatch = (
       { group_uuid, target_uuids },
       function (data) {
         if (data.result) {
-          dispatch(showAlert('发送邀请成功!'));
+          showAlert({ message: '发送邀请成功!' });
           dispatch(hideSlidePanel());
         } else {
-          dispatch(showAlert(data.msg));
+          showAlert({ message: data.msg });
           console.error(data);
         }
       }
@@ -580,9 +578,9 @@ export const requestAddGroupActor = function (
       function (data) {
         if (data.result) {
           dispatch(hideModal());
-          dispatch(showAlert('提交成功!'));
+          showAlert({ message: '提交成功!' });
         } else {
-          dispatch(showAlert(data.msg));
+          showAlert({ message: data.msg });
           console.error(data);
         }
       }
@@ -617,9 +615,9 @@ export const removeGroupActor = function (groupUUID, groupActorUUID) {
             groupActorUUID,
           });
           dispatch(hideAlert());
-          dispatch(showAlert('提交成功!'));
+          showAlert({ message: '提交成功!' });
         } else {
-          dispatch(showAlert(data.msg));
+          showAlert({ message: data.msg });
           console.error(data);
         }
       }
@@ -724,7 +722,7 @@ export const createGroupMap = function (
         if (data.result) {
           dispatch(hideModal());
         } else {
-          dispatch(showAlert(data.msg));
+          showAlert({ message: data.msg });
         }
       }
     );
@@ -737,10 +735,11 @@ export const quitGroup = function (groupUUID: string): TRPGAction {
     return api.emit('group::quitGroup', { groupUUID }, function (data) {
       if (data.result) {
         dispatch(removeGroup(groupUUID));
-        dispatch(showAlert('已退出本群!'));
+        showAlert({ message: '已退出本群!' });
         dispatch(hideLoading());
       } else {
-        dispatch(showToast(data?.msg));
+        showToasts(data?.msg);
+
         console.error(data);
       }
     });
@@ -754,10 +753,11 @@ export const dismissGroup = function (groupUUID: string): TRPGAction {
       if (data.result) {
         dispatch({ type: DISMISS_GROUP_SUCCESS, groupUUID });
         dispatch({ type: REMOVE_CONVERSES_SUCCESS, converseUUID: groupUUID }); // 移除聊天会话
-        dispatch(showAlert('已解散本群!'));
+        showAlert({ message: '已解散本群!' });
         dispatch(hideLoading());
       } else {
-        dispatch(showToast(data?.msg));
+        showToasts(data?.msg);
+
         console.error(data);
       }
     });
@@ -772,10 +772,10 @@ export const tickMember = function (groupUUID, memberUUID) {
       function (data) {
         if (data.result) {
           dispatch({ type: TICK_MEMBER_SUCCESS, groupUUID, memberUUID });
-          dispatch(showAlert('操作成功'));
+          showAlert({ message: '操作成功' });
           dispatch(hideModal());
         } else {
-          dispatch(showToast(data?.msg));
+          showToasts(data?.msg);
           console.error(data);
         }
       }
@@ -833,11 +833,11 @@ export const setMemberToManager = function (groupUUID, memberUUID) {
             groupUUID,
             memberUUID,
           });
-          dispatch(showAlert('操作成功'));
+          showAlert({ message: '操作成功' });
           dispatch(hideModal());
         } else {
           console.error(data);
-          dispatch(showAlert(data.msg));
+          showAlert({ message: data.msg });
         }
       }
     );

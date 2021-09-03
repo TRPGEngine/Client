@@ -14,7 +14,7 @@ import {
   getGroupActorInfo,
   getGroupActorTemplateUUID,
 } from '@capital/shared/utils/data-helper';
-import { showToasts } from '@capital/shared/manager/ui';
+import { showToasts, showAlert } from '@capital/shared/manager/ui';
 import ActorInfo from '../../components/modals/ActorInfo';
 import { openModal, closeModal } from '@capital/web/components/Modal';
 import type { GroupActorType } from '@capital/shared/redux/types/group';
@@ -25,7 +25,6 @@ import {
   requestAddGroupActor,
   removeGroupActor,
 } from '@capital/shared/redux/actions/group';
-import { showAlert } from '@capital/shared/redux/actions/ui';
 import { ActorCard, ActorCardListContainer } from '../../components/ActorCard';
 import { GroupActorCheck } from '../../components/modals/GroupActorCheck';
 import ActorSelect from '../../components/modals/ActorSelect';
@@ -109,6 +108,7 @@ const SelfGroupActorList: React.FC<{
     </ActorCardListContainer>
   );
 });
+SelfGroupActorList.displayName = 'SelfGroupActorList';
 
 /**
  * 正式人物卡列表
@@ -144,14 +144,12 @@ const GroupActorsList: React.FC<{
   };
 
   const handleRemoveGroupActor = (groupActorUUID: string) => {
-    dispatch(
-      showAlert({
-        content: t('你确定要删除该人物卡么？删除后无法找回'),
-        onConfirm: () => {
-          dispatch(removeGroupActor(groupUUID, groupActorUUID));
-        },
-      })
-    );
+    showAlert({
+      message: t('你确定要删除该人物卡么？删除后无法找回'),
+      onConfirm: () => {
+        dispatch(removeGroupActor(groupUUID, groupActorUUID));
+      },
+    });
   };
 
   const passedActors = (groupActors ?? []).filter(
