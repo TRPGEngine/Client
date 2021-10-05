@@ -9,10 +9,9 @@ import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
 import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { useCurrentUserUUID } from '@redux/hooks/user';
-// import { showAlert } from '@redux/actions/ui';
 import { dismissGroup, quitGroup } from '@redux/actions/group';
 import { GroupPanelCreate } from '@web/components/modals/GroupPanelCreate';
-import { openModal, ModalWrapper } from '@web/components/Modal';
+import { openModal } from '@web/components/Modal';
 import { useTranslation } from '@shared/i18n';
 import { GroupInvite } from '@web/components/modals/GroupInvite';
 
