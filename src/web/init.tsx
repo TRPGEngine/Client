@@ -38,6 +38,7 @@ setToasts((msg, type = 'info') => {
 
 setAlert((options) => {
   Modal.confirm({
+    title: options.title,
     content: options.message,
     onOk: async () => {
       _isFunction(options.onConfirm) && (await options.onConfirm());

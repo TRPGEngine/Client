@@ -9,6 +9,7 @@ export const [showToasts, setToasts] =
   buildRegFn<(message: string, type?: ToastsType) => void>('toasts');
 
 interface AlertOptions {
+  title?: React.ReactNode;
   message: React.ReactNode;
   onConfirm?: () => void | Promise<void>;
 }

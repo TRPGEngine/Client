@@ -4,12 +4,12 @@ import { PortalAdd, PortalRemove } from '@web/utils/portal';
 import { useCallback } from 'react';
 import { FullModal } from '@web/components/FullModal';
 import { GroupInfoDetail } from './GroupInfoDetail';
-import { showToasts } from '@shared/manager/ui';
+import { showAlert, showToasts } from '@shared/manager/ui';
 import _isNil from 'lodash/isNil';
 import _isString from 'lodash/isString';
 import { useTRPGDispatch } from '@redux/hooks/useTRPGSelector';
 import { useCurrentUserUUID } from '@redux/hooks/user';
-import { showAlert } from '@redux/actions/ui';
+// import { showAlert } from '@redux/actions/ui';
 import { dismissGroup, quitGroup } from '@redux/actions/group';
 import { GroupPanelCreate } from '@web/components/modals/GroupPanelCreate';
 import { openModal, ModalWrapper } from '@web/components/Modal';
@@ -48,26 +48,23 @@ export function useGroupHeaderAction(groupInfo: GroupInfo) {
 
     const groupUUID = groupInfo.uuid;
     if (currentUserUUID === groupInfo.owner_uuid) {
-      // 解散团
-      dispatch(
-        showAlert({
-          title: t('是否要解散群'),
-          content: t('一旦确定无法撤销'),
-          onConfirm: () => {
-            dispatch(dismissGroup(groupUUID));
-          },
-        })
-      );
+      // 解散团(群组所有者)
+      showAlert({
+        title: t('是否要解散群'),
+        message: t('一旦确定无法撤销'),
+        onConfirm: () => {
+          dispatch(dismissGroup(groupUUID));
+        },
+      });
     } else {
-      dispatch(
-        showAlert({
-          title: t('是否要退出群'),
-          content: t('一旦确定无法撤销'),
-          onConfirm: () => {
-            dispatch(quitGroup(groupUUID));
-          },
-        })
-      );
+      // 退出群(普通用户)
+      showAlert({
+        title: t('是否要退出群'),
+        message: t('一旦确定无法撤销'),
+        onConfirm: () => {
+          dispatch(quitGroup(groupUUID));
+        },
+      });
     }
   }, [currentUserUUID, groupInfo?.owner_uuid, groupInfo?.uuid, t]);
 
