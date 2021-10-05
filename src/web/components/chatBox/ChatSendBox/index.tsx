@@ -36,7 +36,7 @@ interface ChatSendBoxProps {
 }
 export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
   const { converseUUID } = props;
-  const { editorRef, editorEl, sendMsg } =
+  const { editorRef, editorEl, appendImage, sendMsg } =
     useInputMsgEditorMsgSend(converseUUID);
 
   return (
@@ -52,8 +52,12 @@ export const ChatSendBox: React.FC<ChatSendBoxProps> = TMemo((props) => {
 
           <Space align="end">
             {...chatSendBoxRightAction.reverse()}
-            <ChatMsgEmotion editorRef={editorRef} />
-            <ChatMsgAddon editorRef={editorRef} converseUUID={converseUUID} />
+            <ChatMsgEmotion onSelectEmotion={(url) => appendImage(url)} />
+            <ChatMsgAddon
+              editorRef={editorRef}
+              onAppendImage={appendImage}
+              converseUUID={converseUUID}
+            />
           </Space>
         </div>
       </ChatSendBoxContext.Provider>

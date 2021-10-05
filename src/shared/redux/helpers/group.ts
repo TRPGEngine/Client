@@ -1,5 +1,11 @@
 import { getStoreState } from '@redux/configureStore/helper';
+import type { GroupInfo } from '@redux/types/group';
+import type { TRPGStore } from '@redux/types/__all__';
+import type { GroupPanel } from '@shared/types/panel';
 import _get from 'lodash/get';
+import _isNil from 'lodash/isNil';
+import _compact from 'lodash/compact';
+import { isGroupPanelVisible } from '../../helper/group';
 
 /**
  * @deprecated 应当用hook来代替
@@ -24,4 +30,47 @@ export function getCurrentGroupActor(groupUUID: string) {
     (actor) => actor.uuid === selectedGroupActorUUID
   );
   return currentGroupActorInfo;
+}
+
+/**
+ * 根据过滤条件筛选出符合条件的群组面板
+ */
+function getAllGroupPanelWithFilter(
+  store: TRPGStore,
+  filter: (group: GroupInfo, panel: GroupPanel) => boolean
+) {
+  const state = store.getState();
+  const groups = state.group.groups;
+
+  const filteredPanel: GroupPanel[] = [];
+  groups.forEach((group) => {
+    group.panels
+      ?.filter((panel) => filter(group, panel))
+      .forEach((panel) => {
+        filteredPanel.push(panel);
+      });
+  });
+
+  return filteredPanel;
+}
+
+/**
+ * 获取所有隐藏群组会话的会话列表
+ * 用于在一些场合下阻止默认行为
+ */
+export function getAllHiddenGroupConverses(store: TRPGStore): string[] {
+  const state = store.getState();
+  const currentUserUUID = _get(state, ['user', 'info', 'uuid']);
+  if (_isNil(currentUserUUID)) {
+    return [];
+  }
+
+  const allHiddenGroupConverseUUIDs = _compact(
+    getAllGroupPanelWithFilter(
+      store,
+      (group, panel) => !isGroupPanelVisible(group, panel, currentUserUUID)
+    ).map((panel) => panel.target_uuid)
+  );
+
+  return allHiddenGroupConverseUUIDs;
 }

@@ -69,11 +69,8 @@ export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
   (props) => {
     const { groupUUID } = props;
     const groupInfo = useJoinedGroupInfo(groupUUID);
-    const {
-      handleUpdateAvatar,
-      handleUpdateGroupName,
-      handleUpdateGroupDesc,
-    } = useGroupAction(groupInfo?.uuid);
+    const { handleUpdateAvatar, handleUpdateGroupName, handleUpdateGroupDesc } =
+      useGroupAction(groupInfo?.uuid);
 
     const isGroupManager = useIsGroupManager(groupUUID);
 
@@ -117,7 +114,7 @@ export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
             <FullModalField
               title={t('团名称')}
               value={groupInfo.name}
-              editable={true}
+              editable={isGroupManager}
               renderEditor={DefaultFullModalInputEditorRender}
               onSave={handleUpdateGroupName}
             />
@@ -139,7 +136,7 @@ export const GroupInfoSummary: React.FC<GroupInfoSummaryProps> = TMemo(
               title={t('简介')}
               value={groupInfo.desc}
               content={<pre>{groupInfo.desc}</pre>}
-              editable={true}
+              editable={isGroupManager}
               renderEditor={DefaultFullModalTextAreaEditorRender}
               onSave={handleUpdateGroupDesc}
             />

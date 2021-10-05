@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { attachStore } from '../shared/utils/cache-helper';
 import configureStore from '../shared/redux/configureStore';
 import * as trpgApi from '../shared/api/trpg.api';
-import notify from './utils/notify';
+import { notifyBuilder } from './utils/notify';
 import rnStorage from '../shared/api/rn-storage.api';
 import { loginWithToken } from '../shared/redux/actions/user';
 import {
@@ -61,7 +61,7 @@ window.store = store; // for debug
 
 const api = trpgApi.getInstance();
 bindEventFunc.call(api, store, {
-  onReceiveMessage: notify(store).onReceiveMessage,
+  onReceiveMessage: notifyBuilder(store).onReceiveMessage,
 });
 window.onerror = (event, source, fileno, columnNumber, error) => {
   if (String(event) === 'ResizeObserver loop limit exceeded') {

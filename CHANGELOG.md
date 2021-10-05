@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.7](https://github.com/TRPGEngine/Client/compare/v0.6.6...v0.6.7) (2021-10-05)
+
+
+### Bug Fixes
+
+* [#233](https://github.com/TRPGEngine/Client/issues/233) 修复群组解散时的模态框显示有点问题 ([a7c358e](https://github.com/TRPGEngine/Client/commit/a7c358e0e9b60c44830e3adb2e26a5b283d9ca54))
+* [#235](https://github.com/TRPGEngine/Client/issues/235) 滚动到最新的按钮会挡住头像点击查看信息 ([31cd65f](https://github.com/TRPGEngine/Client/commit/31cd65f133275f56191904d9ae4798dac3078c50))
+* [#236](https://github.com/TRPGEngine/Client/issues/236) 修复兼容输入框中无法正常插入图片路径的bug ([2083df7](https://github.com/TRPGEngine/Client/commit/2083df76142fedda57980ecccc0ff27dc31e5cf0))
+* [#241](https://github.com/TRPGEngine/Client/issues/241) 修复隐藏面板接收到web通知也会收到信息的bug ([fc0c20e](https://github.com/TRPGEngine/Client/commit/fc0c20ef0a15ffa89bb033db9d4990ceba14105b))
+* [#244](https://github.com/TRPGEngine/Client/issues/244) 修复没有权限的成员也能修改群组信息的bug ([0d65cfa](https://github.com/TRPGEngine/Client/commit/0d65cfac554b4ae126718aac428e5a47935453af))
+
 ### [0.6.6](https://github.com/TRPGEngine/Client/compare/v0.6.5...v0.6.6) (2021-09-03)
 
 

@@ -57,6 +57,21 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
     (state) => state.settings.user.msgInputHistorySwitch ?? true
   );
 
+  const appendImage = useCallback(
+    (imageUrl: string) => {
+      if (editorRef.current) {
+        // 如果是富文本输入框
+        insertImage(editorRef.current, imageUrl);
+        // TODO: 富文本输入框在插入图片后应当focus, 但是我不会
+      } else {
+        // 是兼容的plain输入框
+        setMessage(message + `[img]${imageUrl}[/img]`);
+        inputRef.current?.focus();
+      }
+    },
+    [message]
+  );
+
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (isEnterHotkey(e.nativeEvent)) {
@@ -125,7 +140,7 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
               }
             }
           } catch (err) {
-            showToasts(err, 'error');
+            showToasts(err as any, 'error');
           } finally {
             hideLoading();
           }
@@ -180,5 +195,5 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
       />
     );
 
-  return { editorRef, editorEl, sendMsg };
+  return { editorRef, editorEl, appendImage, sendMsg };
 }
