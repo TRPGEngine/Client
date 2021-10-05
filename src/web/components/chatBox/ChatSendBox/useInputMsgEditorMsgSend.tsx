@@ -62,9 +62,11 @@ export function useInputMsgEditorMsgSend(converseUUID: string) {
       if (editorRef.current) {
         // 如果是富文本输入框
         insertImage(editorRef.current, imageUrl);
+        // TODO: 富文本输入框在插入图片后应当focus, 但是我不会
       } else {
         // 是兼容的plain输入框
         setMessage(message + `[img]${imageUrl}[/img]`);
+        inputRef.current?.focus();
       }
     },
     [message]

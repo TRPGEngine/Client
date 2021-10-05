@@ -47,6 +47,9 @@ export function useMsgHistory(converseUUID: string) {
     return list[newIndex] ?? null;
   }, [converseUUID, index]);
 
+  /**
+   * 切换消息历史选择阶段为初始阶段
+   */
   const resetIndex = useCallback(() => {
     setIndex(-1);
   }, []);
