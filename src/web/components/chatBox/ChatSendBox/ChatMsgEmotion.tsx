@@ -5,14 +5,13 @@ import { useTranslation } from '@shared/i18n';
 import styled from 'styled-components';
 import { Input, Popover, Tabs } from 'antd';
 import _isNil from 'lodash/isNil';
-import type { Editor } from 'slate';
+import _uniq from 'lodash/uniq';
 import { useLocalStorage } from 'react-use';
 import {
   ChatEmotionItem,
   searchEmotionWithKeyword,
 } from '@shared/model/chat-emotion';
 import Image from '../../Image';
-import { insertImage } from '../../editor/changes/insertImage';
 import Loading from '@portal/components/Loading';
 import { ChatBoxBtn } from '../style';
 import { trackEvent } from '@web/utils/analytics-helper';
@@ -72,10 +71,10 @@ function useSearchEmotion() {
 }
 
 export const ChatMsgEmotion: React.FC<{
-  editorRef: React.MutableRefObject<Editor | undefined>;
+  onSelectEmotion: (emotionUrl: string) => void;
   style?: React.CSSProperties;
 }> = TMemo((props) => {
-  const { editorRef } = props;
+  const { onSelectEmotion } = props;
   const [visible, setVisible] = useState(false);
   const { t } = useTranslation();
   const [tabKey, setTabKey] = useLocalStorage('__emotion_tab', '1');
@@ -94,7 +93,7 @@ export const ChatMsgEmotion: React.FC<{
   const handleAddRecentEmotion = useCallback(
     (imageUrl) => {
       let newArr = [imageUrl, ...emotionRecent];
-      newArr = newArr.slice(0, 8); // 最多只保留8条
+      newArr = _uniq(newArr).slice(0, 8); // 去重后最多只保留8条
       setEmotionRecent(newArr);
     },
     [emotionRecent]
@@ -102,15 +101,12 @@ export const ChatMsgEmotion: React.FC<{
 
   const handleSelectImage = useCallback(
     (imageUrl: string) => {
-      if (_isNil(editorRef.current)) {
-        return;
-      }
-
       setVisible(false);
-      insertImage(editorRef.current, imageUrl);
       handleAddRecentEmotion(imageUrl);
+
+      typeof onSelectEmotion === 'function' && onSelectEmotion(imageUrl);
     },
-    [handleAddRecentEmotion]
+    [handleAddRecentEmotion, onSelectEmotion]
   );
 
   const content = (

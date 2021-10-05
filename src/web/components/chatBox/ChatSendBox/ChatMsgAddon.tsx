@@ -9,7 +9,6 @@ import { FileSelector } from '../../FileSelector';
 import _isNil from 'lodash/isNil';
 import { uploadChatimg } from '@shared/utils/image-uploader';
 import type { Editor } from 'slate';
-import { insertImage } from '../../editor/changes/insertImage';
 import { showGlobalLoading, showToasts } from '@shared/manager/ui';
 import { ChatBoxBtn } from '../style';
 import { trackEvent } from '@web/utils/analytics-helper';
@@ -33,9 +32,10 @@ const ChatMsgAddonItemContainer = styled.div`
 export const ChatMsgAddon: React.FC<{
   editorRef: React.MutableRefObject<Editor | undefined>;
   converseUUID: string;
+  onAppendImage: (url: string) => void;
   style?: React.CSSProperties;
 }> = TMemo((props) => {
-  const { editorRef, converseUUID } = props;
+  const { editorRef, converseUUID, onAppendImage } = props;
   const [visible, setVisible] = useState(false);
   const { t } = useTranslation();
 
@@ -47,7 +47,7 @@ export const ChatMsgAddon: React.FC<{
     trackEvent('chat:sendFile');
   }, []);
 
-  const handleSelectFiles = useCallback(
+  const handleSelectImages = useCallback(
     async (files: FileList) => {
       setVisible(false);
       if (_isNil(editorRef.current)) {
@@ -62,21 +62,21 @@ export const ChatMsgAddon: React.FC<{
       const hideLoading = showGlobalLoading(t('正在上传图片...'));
       try {
         const chatimgUrl = await uploadChatimg(file);
-        insertImage(editorRef.current, chatimgUrl);
+        typeof onAppendImage === 'function' && onAppendImage(chatimgUrl);
       } catch (err) {
-        showToasts(err, 'error');
+        showToasts(err as any, 'error');
       } finally {
         hideLoading();
       }
     },
-    [t]
+    [t, onAppendImage]
   );
 
   const content = (
     <div>
       <FileSelector
         fileProps={{ accept: 'image/*' }}
-        onSelected={handleSelectFiles}
+        onSelected={handleSelectImages}
       >
         <ChatMsgAddonItemContainer>{t('发送图片')}</ChatMsgAddonItemContainer>
       </FileSelector>
