@@ -2705,10 +2705,10 @@
   dependencies:
     "@types/react-test-renderer" "*"
 
-"@types/uuid@^3.4.6":
-  version "3.4.9"
-  resolved "https://registry.npm.taobao.org/@types/uuid/download/@types/uuid-3.4.9.tgz#fcf01997bbc9f7c09ae5f91383af076d466594e1"
-  integrity sha1-/PAZl7vJ98Ca5fkTg68HbUZllOE=
+"@types/uuid@^8.3.3":
+  version "8.3.3"
+  resolved "https://registry.npmmirror.com/@types/uuid/download/@types/uuid-8.3.3.tgz#c6a60686d953dbd1b1d45e66f4ecdbd5d471b4d0"
+  integrity sha512-0LbEEx1zxrYB3pgpd1M5lEhLcXjKJnYghvhTRgaBeUivLHMDM1TzF3IJ6hXU2+8uA4Xz+5BA63mtZo5DjVT8iA==
 
 "@types/websocket@*":
   version "1.0.2"
