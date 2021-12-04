@@ -8,6 +8,8 @@ import styled from 'styled-components';
 import type { MsgType } from '@capital/shared/redux/types/chat';
 import { useTranslation } from '@capital/shared/i18n';
 import { trackEvent } from '@capital/web/utils/analytics-helper';
+import { useGlobalKeyDown } from '@capital/web/hooks/useGlobalKeyDown';
+import { isAlt1, isAlt2, isAlt3, isAlt4 } from '@capital/web/utils/hot-key';
 
 const ChatMsgTypeSwitchPopoverContainer = styled(Space)`
   padding: 6px 10px;
@@ -33,6 +35,21 @@ export const ChatMsgTypeSwitch: React.FC = TMemo((props) => {
     setMsgType(newType);
     setVisible(false);
   };
+
+  /**
+   * 会话消息类型的快捷键
+   */
+  useGlobalKeyDown((e) => {
+    if (isAlt1(e)) {
+      setMsgType('normal');
+    } else if (isAlt2(e)) {
+      setMsgType('ooc');
+    } else if (isAlt3(e)) {
+      setMsgType('speak');
+    } else if (isAlt4(e)) {
+      setMsgType('action');
+    }
+  });
 
   const content = (
     <ChatMsgTypeSwitchPopoverContainer>

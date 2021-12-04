@@ -137,6 +137,10 @@ export function initPlugins(): Promise<void> {
     () => import('@web/components/QRCode')
   );
   regSharedModule(
+    '@capital/web/hooks/useGlobalKeyDown',
+    () => import('@web/hooks/useGlobalKeyDown')
+  );
+  regSharedModule(
     '@capital/web/utils/upload-helper',
     () => import('@web/utils/upload-helper')
   );
@@ -148,6 +152,10 @@ export function initPlugins(): Promise<void> {
   regSharedModule(
     '@capital/web/utils/analytics-helper',
     () => import('@web/utils/analytics-helper')
+  );
+  regSharedModule(
+    '@capital/web/utils/hot-key',
+    () => import('@web/utils/hot-key')
   );
 
   // Shared
