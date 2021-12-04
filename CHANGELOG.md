@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.8](https://github.com/TRPGEngine/Client/compare/v0.6.7...v0.6.8) (2021-12-04)
+
+
+### Features
+
+* 增加快速切换会话类型的快捷方式 ([541b062](https://github.com/TRPGEngine/Client/commit/541b062a1f016cde7011335e25e4c8a413ce74de))
+
 ### [0.6.7](https://github.com/TRPGEngine/Client/compare/v0.6.6...v0.6.7) (2021-10-05)
 
 
