@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.9](https://github.com/TRPGEngine/Client/compare/v0.6.8...v0.6.9) (2022-08-07)
+
+
+### Bug Fixes
+
+* 修复在撤回消息时出现的异常表现 ([6293f06](https://github.com/TRPGEngine/Client/commit/6293f06b54f49850cad279b287e7ec5465382366))
+
 ### [0.6.8](https://github.com/TRPGEngine/Client/compare/v0.6.7...v0.6.8) (2021-12-04)
 
 
