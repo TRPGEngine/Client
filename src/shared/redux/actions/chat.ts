@@ -28,7 +28,7 @@ import * as trpgApi from '../../api/trpg.api';
 const api = trpgApi.getInstance();
 import rnStorage from '../../api/rn-storage.api';
 import { checkUser } from '../../utils/cache-helper';
-import { hideProfileCard, switchMenuPannel, showToast, showAlert } from './ui';
+import { hideProfileCard, switchMenuPannel } from './ui';
 import * as uploadHelper from '../../utils/upload-helper';
 import { renewableDelayTimer, cancelDelayTimer } from '../../utils/timer';
 import config from '../../project.config';
@@ -468,7 +468,7 @@ export const sendMsg = function sendMsg(
         });
         console.log('发送成功');
       } else {
-        dispatch(showToast('消息发送失败'));
+        showToasts('消息发送失败', 'error');
         console.log('发送失败', pkg);
       }
     });
@@ -548,7 +548,9 @@ export const revokeMsg = function revokeMsg(messageUUID: string): TRPGAction {
         if (data.result === false) {
           // 撤回提示
           console.error('消息撤回失败', data.msg);
-          dispatch(showToast('消息撤回失败:' + data.msg));
+          showToasts('消息撤回失败:' + data.msg, 'error');
+        } else {
+          showToasts('消息撤回成功');
         }
       }
     );
@@ -802,9 +804,9 @@ export const addUserEmotionCatalogWithSecretSignal = function (
             type: ADD_USER_CHAT_EMOTION_CATALOG,
             payload: catalog,
           });
-          dispatch(showAlert('添加成功'));
+          showToasts('添加成功');
         } else {
-          dispatch(showAlert('添加失败:' + data.msg));
+          showToasts('添加失败:' + data.msg, 'error');
           console.error(data.msg);
         }
       }
