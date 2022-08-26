@@ -44,7 +44,7 @@ import type {
 import type { TRPGAction } from '../types/__all__';
 import { isUserUUID } from '@shared/utils/uuid';
 import { createAction } from '@reduxjs/toolkit';
-import { showToasts } from '@shared/manager/ui';
+import { showGlobalLoading, showToasts } from '@shared/manager/ui';
 import { reportError } from '@web/utils/error';
 import { t } from '@shared/i18n';
 
@@ -539,18 +539,20 @@ export const sendFile = function sendFile(toUUID, payload, file): TRPGAction {
  */
 export const revokeMsg = function revokeMsg(messageUUID: string): TRPGAction {
   return (dispatch, getState) => {
+    const closeLoading = showGlobalLoading(t('正在撤回消息...'));
     api.emit(
       'chat::revokeMsg',
       {
         messageUUID,
       },
       (data) => {
+        closeLoading();
         if (data.result === false) {
           // 撤回提示
           console.error('消息撤回失败', data.msg);
-          showToasts('消息撤回失败:' + data.msg, 'error');
+          showToasts(t('消息撤回失败:') + data.msg, 'error');
         } else {
-          showToasts('消息撤回成功');
+          showToasts(t('消息撤回成功'));
         }
       }
     );
