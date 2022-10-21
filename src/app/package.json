@@ -49,7 +49,7 @@
     "react-native-permissions": "^2.1.5",
     "react-native-progress": "^4.1.2",
     "react-native-qrcode-scanner": "^1.4.1",
-    "react-native-reanimated": "^1.9.0",
+    "react-native-reanimated": "^2.10.0",
     "react-native-render-html": "^4.2.0",
     "react-native-root-siblings": "^4.0.6",
     "react-native-root-toast": "^3.2.1",
