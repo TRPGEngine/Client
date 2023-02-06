@@ -9318,6 +9318,11 @@ immer@^8.0.1:
   resolved "https://registry.npmmirror.com/immer/download/immer-8.0.4.tgz?cache=0&sync_timestamp=1619363065556&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fimmer%2Fdownload%2Fimmer-8.0.4.tgz#3a21605a4e2dded852fb2afd208ad50969737b7a"
   integrity sha1-OiFgWk4t3thS+yr9IIrVCWlze3o=
 
+immer@^9.0.19:
+  version "9.0.19"
+  resolved "https://registry.npmmirror.com/immer/-/immer-9.0.19.tgz#67fb97310555690b5f9cd8380d38fc0aabb6b38b"
+  integrity sha512-eY+Y0qcsB4TZKwgQzLaE/lqYMlKhv5J9dyd2RhhtGhNo2njPXDqU9XPfcNfa3MIDsdtZt5KlkIsirlo4dHsWdQ==
+
 import-fresh@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmmirror.com/import-fresh/download/import-fresh-2.0.0.tgz?cache=0&sync_timestamp=1608469472392&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fimport-fresh%2Fdownload%2Fimport-fresh-2.0.0.tgz#d81355c15612d386c61f9ddd3922d4304822a546"
