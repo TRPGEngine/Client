@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.11](https://github.com/TRPGEngine/Client/compare/v0.6.10...v0.6.11) (2023-07-08)
+
+
+### Features
+
+* add listName in ForEachComponent which can pass into define ([8de14e6](https://github.com/TRPGEngine/Client/commit/8de14e6e086aa6b20d19fee64f4ba4cc8df52ee5))
+
 ### [0.6.10](https://github.com/TRPGEngine/Client/compare/v0.6.9...v0.6.10) (2022-08-26)
 
 
