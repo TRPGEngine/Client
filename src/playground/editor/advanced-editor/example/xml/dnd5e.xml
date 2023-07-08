@@ -368,8 +368,11 @@
         <Col sm="6">
           <Input name="name" label="名称" hideLabel="true" />
         </Col>
-        <Col sm="14">
-          <Input name="name" label="描述" hideLabel="true" />
+        <Col sm="10">
+          <Input name="desc" label="描述" hideLabel="true" />
+        </Col>
+        <Col flex="0">
+          <Button type="link" :onClick="() => { setStateDate(`parent.${props.listName}`, _filter(parent[props.listName], (_,i) => i !== _toNumber(props.index))) }">删除</Button>
         </Col>
       </Row>
     </Define>
