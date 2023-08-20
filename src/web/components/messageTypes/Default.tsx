@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
+import { connect, DispatchProp } from 'react-redux';
 import Base from './Base';
 import type {
   MsgPayload,
@@ -21,6 +22,8 @@ import { Bubble, DefaultAddonContentContainer } from './style';
 import { t, useTranslation } from '@shared/i18n';
 import { isLocalMsgUUID } from '@shared/utils/uuid';
 import { showToasts } from '@shared/manager/ui';
+import type { MessageProps } from '@shared/components/message/MessageHandler';
+import type { TRPGState } from '@redux/types/__all__';
 
 const DefaultAddonContent: React.FC<{ message: string }> = TMemo((props) => {
   const { loading, hasUrl, info } = useWebsiteInfo(props.message);
@@ -67,7 +70,10 @@ const DefaultMsgReply: React.FC<{
 });
 DefaultMsgReply.displayName = 'DefaultMsgReply';
 
-class Default extends Base {
+interface Props extends MessageProps, DispatchProp<any> {
+  isGroupOwner: boolean;
+}
+class Default extends Base<Props> {
   getOperation(): MsgOperationItem[] {
     const { info, me } = this.props;
 
@@ -75,7 +81,7 @@ class Default extends Base {
     operations.push({
       component: <DefaultMsgReply payload={this.props.info} />,
     });
-    if (me) {
+    if (me || this.props.isGroupOwner) {
       // 当消息时自己发起的时候，可以撤回
       operations.push({
         name: t('撤回'),
@@ -109,4 +115,9 @@ class Default extends Base {
   }
 }
 
-export default Default;
+export default connect((state: TRPGState, props: MessageProps) => ({
+  isGroupOwner:
+    props.info.group_uuid &&
+    state.group.groups.find((group) => group.uuid === props.info.group_uuid)
+      ?.owner_uuid === state.user.info.uuid,
+}))(Default as any);

@@ -40,6 +40,7 @@ export const ForEachComponent: React.FC<ForEachComponentProps> = TMemo(
             key={`${name}.${i}`}
             index={i}
             name={useName}
+            listName={name}
             define={props.define}
           />
         );

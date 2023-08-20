@@ -35,7 +35,14 @@ export interface MsgPayload {
 // 渲染消息时所必须的参数
 export type RenderMsgPayload = Pick<
   MsgPayload,
-  'uuid' | 'sender_uuid' | 'message' | 'type' | 'date' | 'data' | 'revoke'
+  | 'uuid'
+  | 'sender_uuid'
+  | 'message'
+  | 'type'
+  | 'date'
+  | 'data'
+  | 'revoke'
+  | 'group_uuid'
 >;
 
 // 发送消息时所必须的参数
