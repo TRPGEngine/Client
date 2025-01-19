@@ -202,9 +202,9 @@ astral-regex@^2.0.0:
   integrity sha1-SDFDxWeu7UeFdZwIZXhtx319LjE=
 
 async@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.npm.taobao.org/async/-/async-3.2.0.tgz#b3a2685c5ebb641d3de02d161002c60fc9f85720"
-  integrity sha1-s6JoXF67ZB094C0WEALGD8n4VyA=
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/async/-/async-3.2.4.tgz#2d22e00f8cddeb5fde5dd33522b56d1cf569a81c"
+  integrity sha512-iAB+JbDEGXhyIUavoDl9WP/Jj106Kz9DEn1DPgYw5ruDn0e3Wgi3sKFm55sASdGBNOQB8F59d9qQ7deqrHA8wQ==
 
 asynckit@^0.4.0:
   version "0.4.0"
